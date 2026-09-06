@@ -96,6 +96,18 @@ class BarcodeTests(unittest.TestCase):
         self.assertEqual(suggestions[0]["score"], 0.94)
         self.assertIsNone(self.module.confident_match(suggestions))
 
+    def test_near_plural_form_is_suggested_but_not_auto_mapped(self):
+        product = {"genericName": "", "productName": "Datteln", "categories": []}
+        catalog = [
+            {"key": "M_FOOD_DATE", "name": "Dattel"},
+            {"key": "M_FOOD_BUTTER", "name": "Butter"},
+        ]
+        suggestions = self.module.suggest_catalog_matches(product, catalog)
+        self.assertEqual(suggestions[0]["ingredient"]["key"], "M_FOOD_DATE")
+        self.assertEqual(suggestions[0]["score"], 0.93)
+        self.assertEqual(suggestions[0]["reason"], "near_token")
+        self.assertIsNone(self.module.confident_match(suggestions))
+
 
 if __name__ == "__main__":
     unittest.main()
