@@ -1,9 +1,9 @@
 # HA-Cook4me — Recipe Hub
 
 [![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz/)
-![Version](https://img.shields.io/badge/version-2026.9.6.5-blue.svg)
+![Version](https://img.shields.io/badge/version-2026.9.6.6-blue.svg)
 
-**Current version:** `2026.9.6.5` · version format: `YYYY.M.D.BUILD`
+**Current version:** `2026.9.6.6` · version format: `YYYY.M.D.BUILD`
 
 Home Assistant custom integration for KRUPS/Tefal **Cook4Me / Cookeo** Wi-Fi cookers, with cloud-push state, a Recipe Hub, official recipe delivery, pantry-aware recommendations, diet/allergy filtering, manual cook-along recipes and Home Assistant AI features.
 
@@ -43,6 +43,8 @@ Recipe Hub has a **Recipe language** selector:
 The language list is limited to language/market combinations observed in the SEB/KRUPS recipe content used by the integration. This includes Greek, German, English, French, Italian, Spanish, Portuguese, Slovak, Hungarian, Czech, Bulgarian, Polish, Romanian, Turkish, Ukrainian, Russian, Japanese, Korean, Chinese and others.
 
 Recipe display language and appliance delivery remain separate. A displayed/localized sibling can be shown while the Cook4Me/device-compatible official variant is retained independently for sending.
+
+When no exact sibling exists in the selected/HA language, Recipe Hub falls back to the configured Cook4Me/device-locale recipe rather than an arbitrary foreign sibling returned by the target market. If that fallback arrived as an ID-only search row, the panel fetches its official detail on demand so the user still sees the real source-language title, photo, ingredients and instructions rather than a numeric recipe ID.
 
 ### Optional translation with the default Home Assistant AI Task
 
