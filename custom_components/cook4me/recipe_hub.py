@@ -11,6 +11,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
 
 from .const import DOMAIN
+from .ingredient_catalog import enrich_match_with_house_keys, normalize_house_ingredients
 from .recipe_logic import normalize_manual_recipe, normalize_text, recipe_ingredient_names, score_recipe
 
 _STORAGE_VERSION = 1
@@ -20,15 +21,17 @@ _DEFAULT_PROFILE: dict[str, Any] = {
     "allergies": [],
     "avoid": [],
     "preferences": [],
+    # pantry is retained for storage/backwards compatibility. New UI writes the
+    # structured houseIngredients list so stable SEB food keys survive language
+    # changes; pantry mirrors its display names for older code/AI prompts.
     "pantry": [],
+    "houseIngredients": [],
 }
 
 _DEFAULT_UI_PREFERENCES: dict[str, Any] = {
     "catalogLanguage": "auto",
     "translateResults": True,
     "lastTab": "official",
-    # Per logical recipe selections are bounded below.  They let the same card
-    # remember its preferred source language and serving across panel reloads.
     "recipeLanguageSelections": {},
     "recipeServingSelections": {},
 }
@@ -37,7 +40,7 @@ _ALLOWED_TABS = {"official", "recommend", "mine", "profile", "ai"}
 
 
 class Cook4MeRecipeHub:
-    """Persist Cook4Me pantry/preferences, user recipes, and Recipe Hub UI state."""
+    """Persist Cook4Me house inventory/preferences, recipes, and Recipe Hub UI state."""
 
     def __init__(self, hass: HomeAssistant, entry_id: str) -> None:
         self.hass = hass
@@ -80,11 +83,18 @@ class Cook4MeRecipeHub:
         if diet not in {"omnivore", "pescatarian", "vegetarian", "vegan"}:
             diet = "omnivore"
         out: dict[str, Any] = {"diet": diet}
-        for key in ("allergies", "avoid", "preferences", "pantry"):
+        for key in ("allergies", "avoid", "preferences"):
             values = profile.get(key) or []
             if isinstance(values, str):
                 values = [x.strip() for x in values.replace(",", "\n").splitlines()]
             out[key] = list(dict.fromkeys(str(x).strip() for x in values if str(x).strip()))[:250]
+
+        house = normalize_house_ingredients(profile.get("houseIngredients"))
+        if not house:
+            # Seamless migration from the old free-text pantry list.
+            house = normalize_house_ingredients(profile.get("pantry"))
+        out["houseIngredients"] = house
+        out["pantry"] = [row["name"] for row in house]
         return out
 
     @staticmethod
@@ -103,8 +113,6 @@ class Cook4MeRecipeHub:
             if not isinstance(value, dict):
                 return {}
             out: dict[str, str] = {}
-            # Keep the newest/current map insertion order and cap storage. The
-            # frontend writes only stable grouping/family keys, never recipe text.
             for raw_key, raw_value in list(value.items())[-250:]:
                 key = str(raw_key or "").strip()[:160]
                 selected = str(raw_value or "").strip()[:max_value_length]
@@ -155,7 +163,6 @@ class Cook4MeRecipeHub:
             return self.profile
 
     async def async_set_ui_preferences(self, preferences: dict[str, Any]) -> dict[str, Any]:
-        """Persist Recipe Hub display controls without touching dietary profile data."""
         async with self._lock:
             merged = deepcopy(self._data["uiPreferences"])
             merged.update(preferences)
@@ -216,7 +223,6 @@ class Cook4MeRecipeHub:
             await self._save()
 
     def _habit_terms(self) -> list[str]:
-        """Return frequent past-send terms as ranking-only hints, never safety rules."""
         counts: Counter[str] = Counter()
         original: dict[str, str] = {}
         for entry in self._data.get("history", [])[-30:]:
@@ -243,7 +249,11 @@ class Cook4MeRecipeHub:
 
     def annotate(self, recipe: dict[str, Any]) -> dict[str, Any]:
         result = deepcopy(recipe)
-        result["match"] = score_recipe(result, self._scoring_profile())
+        profile = self._scoring_profile()
+        match = score_recipe(result, profile)
+        result["match"] = enrich_match_with_house_keys(
+            result, match, profile.get("houseIngredients")
+        )
         return result
 
     def rank(self, recipes: list[dict[str, Any]], limit: int = 12) -> list[dict[str, Any]]:
