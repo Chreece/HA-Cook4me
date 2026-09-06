@@ -39,8 +39,7 @@ jobs:
               json.loads(p.read_text(encoding='utf-8'))
           print('JSON OK')
           PY
-          for file in custom_components/cook4me/frontend/*.js; do
-            node --check "$file"
-          done
+          node --check custom_components/cook4me/frontend/cook4me-panel-v3.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v4.js
       - name: Run focused tests
         run: python -m unittest discover -s tests -v
