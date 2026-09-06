@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026.9.6.16
+
+- Remove the accidental frontend truncation of the ingredient catalog. The recommendation editor no longer stops after the first 150 sorted entries, and the profile editor no longer stops after 100; both now expose the full cleaned cached catalog (up to the backend 5,000-item bound) and search across all of it.
+- Ship and cache-bust Recipe Hub v14 and validate its JavaScript syntax in CI.
+
+## 2026.9.6.15
+
+- Remove the obsolete “one ingredient per line” notice from the recommendation UI.
+- Add a final visual-name deduplication pass after quantity/unit cleanup so identical cleaned ingredient names are shown only once, preferring a row with a stable SEB `M_FOOD_*` key when available.
+
 ## 2026.9.6.14
 
 - Put the **What I have in my house** ingredient-catalog editor directly on the recommendation tab, so users can search/select/remove house ingredients where those ingredients are actually used. Changes are saved immediately and invalidate stale recommendation results.
