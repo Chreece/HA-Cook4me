@@ -23,7 +23,7 @@ _OFF_FIELDS = (
     "code,product_name,generic_name,quantity,product_quantity,"
     "product_quantity_unit,brands,categories,categories_tags"
 )
-_USER_AGENT = "HA-Cook4me/2026.9.6.20 (https://github.com/Chreece/HA-Cook4me)"
+_USER_AGENT = "HA-Cook4me/2026.9.6.22 (https://github.com/Chreece/HA-Cook4me)"
 
 
 def _text(value: Any) -> str:
@@ -157,6 +157,23 @@ def _tokens(value: Any) -> set[str]:
     return {token for token in _norm(value).split() if len(token) >= 2}
 
 
+def _near_token(left: str, right: str) -> bool:
+    """Return true for a conservative short suffix/prefix variation.
+
+    This is intentionally language-neutral and suggestion-only. It catches forms such
+    as German ``Dattel`` / ``Datteln`` without introducing language-specific stemming.
+    """
+    if len(left) < 4 or len(right) < 4 or abs(len(left) - len(right)) > 2:
+        return False
+    return left.startswith(right) or right.startswith(left)
+
+
+def _near_token_set(candidate_tokens: set[str], source_tokens: set[str]) -> bool:
+    if not candidate_tokens or not source_tokens:
+        return False
+    return all(any(_near_token(candidate, source) for source in source_tokens) for candidate in candidate_tokens)
+
+
 def suggest_catalog_matches(
     product: dict[str, Any], catalog: list[dict[str, Any]], *, limit: int = 12
 ) -> list[dict[str, Any]]:
@@ -187,6 +204,8 @@ def suggest_catalog_matches(
             score, reason = 0.95, "product_tokens"
         elif candidate in category_names:
             score, reason = 0.94, "category_exact"
+        elif _near_token_set(candidate_tokens, generic_tokens) or _near_token_set(candidate_tokens, product_tokens):
+            score, reason = 0.93, "near_token"
         elif product_tokens and candidate_tokens:
             union = product_tokens | candidate_tokens
             overlap = len(product_tokens & candidate_tokens) / len(union) if union else 0.0
