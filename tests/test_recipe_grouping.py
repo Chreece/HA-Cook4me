@@ -115,6 +115,7 @@ class RecipeGroupingTests(unittest.TestCase):
                 "title": "Pfifferling-Risotto",
                 "cover": "https://example.test/risotto.jpg",
                 "steps": [{"instruction": "Zutaten vorbereiten."}],
+                "yield": {"quantity": 2},
                 "variants": [variant("270859", 2, "de", "GS_DE")],
             }]
         }
@@ -147,6 +148,7 @@ class RecipeGroupingTests(unittest.TestCase):
                 "language": "de",
                 "market": "GS_DE",
                 "title": "Pfifferling-Risotto",
+                "yield": {"quantity": 2},
                 "variants": [variant("270859", 2, "de", "GS_DE")],
             }]
         }
@@ -173,6 +175,7 @@ class RecipeGroupingTests(unittest.TestCase):
                 "language": "el",
                 "market": "GS_GR",
                 "title": "Ριζότο",
+                "yield": {"quantity": 4},
                 "variants": [variant("el2", 2, "el", "GS_GR"), variant("el4", 4, "el", "GS_GR")],
             }]
         }
@@ -185,6 +188,7 @@ class RecipeGroupingTests(unittest.TestCase):
                 "language": "de",
                 "market": "GS_DE",
                 "title": "Risotto",
+                "yield": {"quantity": 4},
                 "variants": [variant("de2", 2, "de", "GS_DE"), variant("de4", 4, "de", "GS_DE")],
             }]
         }
@@ -211,6 +215,7 @@ class RecipeGroupingTests(unittest.TestCase):
                 "language": "el",
                 "market": "GS_GR",
                 "title": "Ριζότο",
+                "yield": {"quantity": 4},
                 "variants": [variant("el2", 2, "el", "GS_GR"), variant("el4", 4, "el", "GS_GR")],
             }]
         }
@@ -222,6 +227,7 @@ class RecipeGroupingTests(unittest.TestCase):
                 "language": "de",
                 "market": "GS_DE",
                 "title": "Risotto",
+                "yield": {"quantity": 4},
                 "variants": [variant("de2", 2, "de", "GS_DE"), variant("de4", 4, "de", "GS_DE")],
             }]
         }
@@ -240,8 +246,6 @@ class RecipeGroupingTests(unittest.TestCase):
         german = item["languageVariants"][1]
         self.assertEqual([row["servings"] for row in greek["servingVariants"]], [2.0, 4.0])
         self.assertEqual([row["servings"] for row in german["servingVariants"]], [2.0, 4.0])
-        # Both display languages map the selected serving to the independently
-        # validated device-locale send variant.
         self.assertEqual(greek["servingVariants"][0]["sendVariantId"], "de2")
         self.assertEqual(german["servingVariants"][0]["sendVariantId"], "de2")
 
