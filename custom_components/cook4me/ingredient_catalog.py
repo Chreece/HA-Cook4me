@@ -89,6 +89,73 @@ def catalog_items_from_recipes(recipes: list[dict[str, Any]]) -> list[dict[str, 
     return sorted(by_identity.values(), key=lambda row: _norm(row["name"]))
 
 
+def _localized_name(value: Any, language: str) -> str:
+    if isinstance(value, str):
+        return _text(value)
+    if isinstance(value, dict):
+        return _text(value.get("value") or value.get("name") or value.get("label"))
+    if not isinstance(value, list):
+        return ""
+    language = str(language or "").lower()
+    fallback = ""
+    for row in value:
+        if isinstance(row, str):
+            fallback = fallback or _text(row)
+            continue
+        if not isinstance(row, dict):
+            continue
+        name = _text(row.get("value") or row.get("name") or row.get("label"))
+        if not name:
+            continue
+        fallback = fallback or name
+        row_language = _text(
+            row.get("lang") or row.get("language") or row.get("languageKey")
+        ).lower().replace("_", "-").split("-", 1)[0]
+        if row_language == language:
+            return name
+    return fallback
+
+
+def marketing_food_items(payload: Any, language: str) -> list[dict[str, str]]:
+    """Normalize the flexible DcpMarketingFood wrapper returned by SEB."""
+    if not isinstance(payload, dict):
+        return []
+    candidates: list[Any] = []
+    for key in ("content", "marketingFoods", "items", "data"):
+        value = payload.get(key)
+        if isinstance(value, list):
+            candidates.extend(value)
+        elif isinstance(value, dict):
+            nested = value.get("content") or value.get("items") or value.get("marketingFoods")
+            if isinstance(nested, list):
+                candidates.extend(nested)
+    if not candidates and payload.get("key"):
+        candidates = [payload]
+
+    out: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for raw in candidates:
+        if not isinstance(raw, dict):
+            continue
+        key = _text(raw.get("key") or raw.get("id") or raw.get("reference"))
+        name = _localized_name(raw.get("name"), language)
+        if not name:
+            name = _text(raw.get("label") or raw.get("title"))
+        if not name:
+            continue
+        identity = f"k:{key}" if key else f"n:{_norm(name)}"
+        if identity in seen:
+            continue
+        seen.add(identity)
+        row = {"name": name}
+        if key:
+            row["key"] = key
+        out.append(row)
+        if len(out) >= _MAX_ITEMS:
+            break
+    return sorted(out, key=lambda row: _norm(row["name"]))
+
+
 def enrich_match_with_house_keys(
     recipe: dict[str, Any], match: dict[str, Any], house_ingredients: Any
 ) -> dict[str, Any]:
@@ -117,7 +184,6 @@ def enrich_match_with_house_keys(
             missing.append(name)
             relevant += 1
         else:
-            # score_recipe deliberately omits staples such as water/salt/oil.
             status = "staple"
         availability.append(
             {
