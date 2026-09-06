@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import defaultdict
 from copy import deepcopy
 import re
 import time
@@ -15,7 +16,7 @@ _STORAGE_VERSION = 1
 _TTL = 24 * 60 * 60
 _MAX_LANGUAGES = 8
 _MAX_ITEMS = 5000
-_RECIPE_FALLBACK_SOURCE_V2 = "hydrated_official_recipes_fallback:v2_amount_clean"
+RECIPE_FALLBACK_SOURCE = "hydrated_official_recipes_fallback:v3_food_identity"
 
 # Unicode vulgar fractions used in recipe quantities. Python's \d already
 # matches non-ASCII decimal digits (for example Arabic-Indic numerals).
@@ -23,6 +24,7 @@ _VULGAR_FRACTIONS = "¼½¾⅐⅑⅒⅓⅔⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞"
 _NUMBER = rf"(?:\d+(?:[.,٫]\d+)?|\d+\s*/\s*\d+|[{_VULGAR_FRACTIONS}])"
 _AMOUNT = rf"(?:{_NUMBER})(?:\s*(?:[-–—]\s*|to\s+){_NUMBER})?"
 _GENERIC_AMOUNT_PREFIX = re.compile(rf"^\s*{_AMOUNT}\s+", re.IGNORECASE | re.UNICODE)
+_RECIPE_DETAIL_SPLIT = re.compile(r"\s*(?:[,;:]|[\(\[\{（【])\s*", re.UNICODE)
 
 
 def _text(value: Any) -> str:
@@ -30,9 +32,21 @@ def _text(value: Any) -> str:
 
 
 def _norm(value: Any) -> str:
+    """Unicode-safe comparison form for names in every supported language."""
     text = unicodedata.normalize("NFKD", _text(value).casefold())
-    text = "".join(char for char in text if not unicodedata.combining(char))
-    return re.sub(r"[^a-z0-9]+", " ", text).strip()
+    out: list[str] = []
+    pending_space = False
+    for char in text:
+        if unicodedata.category(char).startswith("M"):
+            continue
+        if char.isalnum():
+            if pending_space and out:
+                out.append(" ")
+            out.append(char)
+            pending_space = False
+        else:
+            pending_space = True
+    return "".join(out).strip()
 
 
 def _quantity_strings(value: Any) -> list[str]:
@@ -64,8 +78,6 @@ def _strip_structured_amount(name: str, item: dict[str, Any]) -> str:
 
     if unit:
         escaped_unit = re.escape(unit)
-        # The generic numeric form also catches display fractions such as ½
-        # when the structured quantity is stored as 0.5.
         patterns.append(
             rf"^\s*{_AMOUNT}\s*{escaped_unit}{boundary}\s*[-–—,:;]?\s*"
         )
@@ -77,9 +89,6 @@ def _strip_structured_amount(name: str, item: dict[str, Any]) -> str:
             patterns.append(
                 rf"^\s*{escaped_q}\s*{escaped_unit}{boundary}\s*[-–—,:;]?\s*"
             )
-        # Unitless structured quantities (eggs, onions, cloves...) still need
-        # the amount removed. This is safe because quantity came from SEB's
-        # structured field rather than a guessed language token.
         patterns.append(rf"^\s*{escaped_q}\s+")
 
     for pattern in patterns:
@@ -101,18 +110,8 @@ def _strip_generic_amount_prefix(name: str) -> str:
     return cleaned or name
 
 
-def _starts_with_amount(value: Any) -> bool:
-    return bool(_GENERIC_AMOUNT_PREFIX.match(_text(value)))
-
-
 def catalog_ingredient_name(item: Any) -> str:
-    """Return an amount-free ingredient label suitable for catalog selection.
-
-    Prefer SEB's canonical food name. If it is absent, applianceDescription is
-    generally quantity-free. Only then fall back to recipe descriptions, where
-    structured quantity/unit data and a Unicode numeric fallback remove the
-    recipe-specific amount. This logic is language-independent.
-    """
+    """Return an amount-free ingredient label suitable for catalog selection."""
     if isinstance(item, str):
         return _strip_generic_amount_prefix(_text(item))
     if not isinstance(item, dict):
@@ -132,6 +131,47 @@ def catalog_ingredient_name(item: Any) -> str:
         return ""
     cleaned = _strip_structured_amount(candidate, item)
     return _strip_generic_amount_prefix(cleaned)
+
+
+def _recipe_core_label(value: Any, item: dict[str, Any]) -> str:
+    """Reduce recipe prose to its leading ingredient phrase structurally."""
+    name = _text(value)
+    if not name:
+        return ""
+    name = _strip_structured_amount(name, item)
+    name = _strip_generic_amount_prefix(name)
+    # Commas, semicolons, colons and opening brackets delimit preparation,
+    # quantity, optionality or serving details in every catalog without needing
+    # to know the language of those details.
+    core = _RECIPE_DETAIL_SPLIT.split(name, maxsplit=1)[0].strip()
+    return core or name
+
+
+def _label_score(value: str) -> tuple[int, int, int, str]:
+    """Prefer the least recipe-specific label without language dictionaries."""
+    text = _text(value)
+    token_count = len(text.split())
+    punctuation = sum(not char.isalnum() and not char.isspace() for char in text)
+    return (token_count, len(text), punctuation, _norm(text))
+
+
+def _best_recipe_group_name(items: list[dict[str, Any]]) -> str:
+    """Choose one stable display name for all occurrences of one SEB food key."""
+    canonical = {
+        _text(item.get("foodName"))
+        for item in items
+        if _text(item.get("foodName"))
+    }
+    if canonical:
+        return min(canonical, key=_label_score)
+
+    candidates: set[str] = set()
+    for item in items:
+        for field in ("applianceDescription", "name", "applicationDescription"):
+            candidate = _recipe_core_label(item.get(field), item)
+            if candidate:
+                candidates.add(candidate)
+    return min(candidates, key=_label_score) if candidates else ""
 
 
 def ingredient_identity(item: Any) -> tuple[str | None, str]:
@@ -160,8 +200,9 @@ def normalize_house_ingredients(value: Any) -> list[dict[str, str]]:
         key, name = ingredient_identity(raw)
         if not name:
             continue
-        identity = f"k:{key}" if key else f"n:{_norm(name)}"
-        if not identity or identity in seen:
+        normalized = _norm(name)
+        identity = f"k:{key}" if key else f"n:{normalized}"
+        if not normalized or identity in seen:
             continue
         seen.add(identity)
         row = {"name": name}
@@ -173,50 +214,84 @@ def normalize_house_ingredients(value: Any) -> list[dict[str, str]]:
     return out
 
 
-def _clean_catalog_rows(rows: list[Any]) -> list[dict[str, str]]:
-    """Normalize and dedupe catalog rows."""
+def _dedupe_catalog_names(rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    """Ensure the final user-visible catalog has no duplicate cleaned names."""
     out: list[dict[str, str]] = []
-    seen: set[str] = set()
+    by_name: dict[str, int] = {}
+    for row in rows:
+        normalized = _norm(row.get("name"))
+        if not normalized:
+            continue
+        existing_index = by_name.get(normalized)
+        if existing_index is None:
+            by_name[normalized] = len(out)
+            out.append(row)
+            continue
+        # Prefer the occurrence that preserves a stable SEB food identity.
+        if not out[existing_index].get("key") and row.get("key"):
+            out[existing_index] = row
+    return out
+
+
+def _clean_catalog_rows(rows: list[Any]) -> list[dict[str, str]]:
+    """Normalize and dedupe already-trusted catalog rows."""
+    out: list[dict[str, str]] = []
+    seen_identity: set[str] = set()
     for raw in rows:
         if not isinstance(raw, (str, dict)):
             continue
         key = _text(raw.get("key")) if isinstance(raw, dict) else ""
         name = catalog_ingredient_name(raw)
-        if not name:
+        normalized = _norm(name)
+        if not normalized:
             continue
-        identity = f"k:{key}" if key else f"n:{_norm(name)}"
-        if not identity or identity in seen:
+        identity = f"k:{key}" if key else f"n:{normalized}"
+        if identity in seen_identity:
             continue
-        seen.add(identity)
+        seen_identity.add(identity)
         row = {"name": name}
         if key:
             row["key"] = key
         out.append(row)
         if len(out) >= _MAX_ITEMS:
             break
+    out = _dedupe_catalog_names(out)
     return sorted(out, key=lambda row: _norm(row["name"]))
 
 
 def catalog_items_from_recipes(recipes: list[dict[str, Any]]) -> list[dict[str, str]]:
-    rows: list[dict[str, Any]] = []
+    """Build a conservative ingredient catalog from official recipe details.
+
+    Recipe prose is not itself an ingredient identity. A row is admitted only
+    when SEB supplied a stable food key, or at minimum a canonical foodName from
+    the recipe's `food` object. This universally excludes cookware, paper,
+    presentation instructions and other non-food free text without dictionaries.
+    """
+    by_key: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    canonical_without_key: list[dict[str, str]] = []
+
     for recipe in recipes:
         if not isinstance(recipe, dict):
             continue
         for ingredient in recipe.get("ingredients") or []:
-            if not isinstance(ingredient, (str, dict)):
+            if not isinstance(ingredient, dict):
                 continue
-            if isinstance(ingredient, dict):
-                key = _text(ingredient.get("foodKey") or ingredient.get("key"))
-                row = dict(ingredient)
-                if key:
-                    row["key"] = key
-                rows.append(row)
-            else:
-                rows.append({"name": ingredient})
-            if len(rows) >= _MAX_ITEMS * 4:
-                break
-        if len(rows) >= _MAX_ITEMS * 4:
-            break
+            key = _text(ingredient.get("foodKey") or ingredient.get("key"))
+            canonical = _text(ingredient.get("foodName"))
+            if key:
+                by_key[key].append(ingredient)
+            elif canonical:
+                canonical_without_key.append({"name": canonical})
+            # Deliberately ignore keyless/canonical-less recipe descriptions.
+            # They are not proven foods and are the source of utensil/instruction
+            # pollution in the fallback catalog.
+
+    rows: list[dict[str, str]] = []
+    for key, items in by_key.items():
+        name = _best_recipe_group_name(items)
+        if name:
+            rows.append({"key": key, "name": name})
+    rows.extend(canonical_without_key)
     return _clean_catalog_rows(rows)
 
 
@@ -248,7 +323,7 @@ def _localized_name(value: Any, language: str) -> str:
 
 
 def marketing_food_items(payload: Any, language: str) -> list[dict[str, str]]:
-    """Normalize the flexible DcpMarketingFood wrapper returned by SEB."""
+    """Normalize the dedicated DcpMarketingFood wrapper returned by SEB."""
     if not isinstance(payload, dict):
         return []
     candidates: list[Any] = []
@@ -277,6 +352,8 @@ def marketing_food_items(payload: Any, language: str) -> list[dict[str, str]]:
         if key:
             row["key"] = key
         rows.append(row)
+    # This endpoint is itself a food data-reference catalog, so its names are
+    # trusted even if a particular response omits a key.
     return _clean_catalog_rows(rows)
 
 
@@ -387,10 +464,10 @@ class Cook4MeIngredientCatalogCache:
         row = self._data.get(str(language))
         if not row:
             return None
-        # v11 recipe-derived rows may already have lost quantity/unit structure,
-        # so do not guess how to clean them. Force one immediate rebuild under
-        # the v2 amount-clean contract instead of waiting for the 24h TTL.
-        if str(row.get("source") or "") == "hydrated_official_recipes_fallback":
+        source = str(row.get("source") or "")
+        if source.startswith("hydrated_official_recipes_fallback") and source != RECIPE_FALLBACK_SOURCE:
+            # Old recipe-derived cache rows have already lost the raw food
+            # metadata required by the hardened v3 filter. Rebuild immediately.
             self._data.pop(str(language), None)
             return None
         result = deepcopy(row)
