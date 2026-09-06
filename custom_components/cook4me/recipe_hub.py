@@ -36,7 +36,7 @@ _DEFAULT_UI_PREFERENCES: dict[str, Any] = {
     "recipeServingSelections": {},
 }
 
-_ALLOWED_TABS = {"official", "recommend", "mine", "profile", "ai"}
+_ALLOWED_TABS = {"official", "recommend", "mine", "profile", "shopping", "ai"}
 
 
 class Cook4MeRecipeHub:
@@ -163,6 +163,7 @@ class Cook4MeRecipeHub:
             return self.profile
 
     async def async_set_ui_preferences(self, preferences: dict[str, Any]) -> dict[str, Any]:
+        """Persist Recipe Hub display controls without touching dietary profile data."""
         async with self._lock:
             merged = deepcopy(self._data["uiPreferences"])
             merged.update(preferences)
@@ -223,6 +224,7 @@ class Cook4MeRecipeHub:
             await self._save()
 
     def _habit_terms(self) -> list[str]:
+        """Return frequent past-send terms as ranking-only hints, never safety rules."""
         counts: Counter[str] = Counter()
         original: dict[str, str] = {}
         for entry in self._data.get("history", [])[-30:]:
@@ -249,10 +251,9 @@ class Cook4MeRecipeHub:
 
     def annotate(self, recipe: dict[str, Any]) -> dict[str, Any]:
         result = deepcopy(recipe)
-        profile = self._scoring_profile()
-        match = score_recipe(result, profile)
+        base_match = score_recipe(result, self._scoring_profile())
         result["match"] = enrich_match_with_house_keys(
-            result, match, profile.get("houseIngredients")
+            result, base_match, self._data["profile"].get("houseIngredients")
         )
         return result
 
