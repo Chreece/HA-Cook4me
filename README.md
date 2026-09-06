@@ -1,9 +1,9 @@
 # HA-Cook4me — Recipe Hub
 
 [![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz/)
-![Version](https://img.shields.io/badge/version-2026.9.6.7-blue.svg)
+![Version](https://img.shields.io/badge/version-2026.9.6.8-blue.svg)
 
-**Current version:** `2026.9.6.7` · version format: `YYYY.M.D.BUILD`
+**Current version:** `2026.9.6.8` · version format: `YYYY.M.D.BUILD`
 
 Home Assistant custom integration for KRUPS/Tefal **Cook4Me / Cookeo** Wi-Fi cookers, with cloud-push state, a Recipe Hub, official recipe delivery, pantry-aware recommendations, diet/allergy filtering, manual cook-along recipes and Home Assistant AI features.
 
@@ -33,30 +33,53 @@ A **Cook4Me** sidebar panel is registered automatically and provides:
 
 Official search data is fully hydrated before the first card render, so title/photo/ingredients/steps are present before the user can open a result.
 
-### One recipe card, multiple serving variants
+### APK-aligned official search
 
-SEB often returns separate variants of the same logical recipe for different serving amounts. Recipe Hub resolves full detail first and then groups by the proven SEB `groupingId`.
+Recipe Hub uses the current KRUPS APK `SearchRecipesV2` endpoint and request context. The active v8 search still calls the proven:
 
-That means a recipe with 2, 4 and 6-person variants appears as **one card** with a servings selector instead of three duplicate cards.
+`POST /common-api/v4/search/recipes`
 
-Changing the servings selector:
+but no longer sends an empty JSON body. It now includes the app-observed `fieldList` and the app's language/market, privacy, PRO-source and food-cooking field filters. This matters because the KRUPS app applies those filters inside the request body as well as the query parameters.
 
-- loads the matching display variant, so ingredient quantities correspond to the selected serving count;
-- keeps the matching Cook4Me/device-locale send variant separately; and
-- sends that exact official variant when **Send to Cook4Me** is pressed.
+The search result is then hydrated through official recipe detail before language filtering, grouping or rendering.
+
+### One logical recipe: languages → servings
+
+Recipe Hub models one logical recipe as:
+
+- **language variants** for that recipe; and
+- **serving variants** inside each language.
+
+Recipes sharing the proven SEB `groupingId` are shown as one card even when several language siblings are returned. The card/detail exposes a recipe-language selector containing only languages actually discovered for that logical recipe.
+
+Within the selected language, 2/4/6-person publications appear in a servings selector instead of separate cards. For same-language publications where SEB used different top IDs, v8 also collapses only the conservative exact-match case: identical normalized title **and** identical recipe-cover URL.
+
+Changing either selector reloads the corresponding official detail so title, ingredients and steps match the chosen source language and serving amount.
+
+Appliance delivery remains separate from display selection. A displayed serving is sendable only when an exact same-serving device-locale official variant is available; the integration never invents or scales a send variant.
 
 ## Recipe language controls
 
-Recipe Hub has a **Recipe language** selector:
+Recipe Hub has a global **Recipe language** selector:
 
 - **Automatic (Home Assistant language)** — use the current HA UI language for the display catalog.
-- A specific SEB/KRUPS catalog language — strictly filter hydrated results to that language instead of silently falling back to a different one.
+- A specific SEB/KRUPS catalog language — request/filter that source language.
 
-The language list is limited to language/market combinations observed in the SEB/KRUPS recipe content used by the integration. This includes Greek, German, English, French, Italian, Spanish, Portuguese, Slovak, Hungarian, Czech, Bulgarian, Polish, Romanian, Turkish, Ukrainian, Russian, Japanese, Korean, Chinese and others.
+The language list is limited to language/market combinations observed in SEB/KRUPS recipe content. This includes Greek, German, English, French, Italian, Spanish, Portuguese, Slovak, Hungarian, Czech, Bulgarian, Polish, Romanian, Turkish, Ukrainian, Russian, Japanese, Korean, Chinese and others.
 
-Recipe display language and appliance delivery remain separate. A displayed/localized sibling can be shown while the Cook4Me/device-compatible official variant is retained independently for sending.
+In addition to the global source-language filter, each logical recipe can expose its own language selector when multiple siblings were actually found.
 
-In **Automatic** mode, when no exact sibling exists in the Home Assistant language, Recipe Hub falls back to the fully hydrated configured Cook4Me/device-locale recipe rather than an arbitrary foreign sibling returned by the target market.
+### Persistent Recipe Hub preferences
+
+Recipe Hub controls are stored through Home Assistant `Store` per Cook4Me config entry. The integration remembers:
+
+- global recipe-language selection;
+- translate-results toggle;
+- last Recipe Hub tab;
+- per-recipe selected source language; and
+- per-recipe selected serving amount.
+
+These settings survive panel reloads and Home Assistant restarts.
 
 ### Optional translation with the default Home Assistant AI Task
 
@@ -70,17 +93,15 @@ The panel enables **Translate results to Home Assistant language** only when Hom
 - If the AI Task provider fails, search/detail still succeeds and the untranslated recipe remains visible.
 - Translation is display-only. `groupingFunctionalId`, recipe IDs, serving/send variants and Cook4Me commands are never changed by AI.
 
-A manually selected recipe language can therefore be used either as a strict original-language filter, or together with the translation toggle when a default AI Task is configured.
-
 ## Persistent Recipe Hub cache
 
 Normalized catalog data is cached through Home Assistant `Store` per Cook4Me config entry:
 
-- **search cache** — keyed by query, display/device locale, page, size and strict-language mode;
+- **search cache** — keyed by search-contract revision, query, display/device locale, page, size and strict-language mode;
 - **detail cache** — keyed by display locale and variant ID;
 - **translation cache** — keyed by a hash of the source recipe text plus target language.
 
-This means repeated searches and translations survive panel reloads and Home Assistant restarts instead of repeatedly calling SEB or the AI Task provider. Serving variants have different source content and therefore receive separate translation cache entries when needed.
+Repeated searches and translations survive panel reloads and Home Assistant restarts instead of repeatedly calling SEB or the AI Task provider. The v8 search-contract revision is part of the cache key, so old empty-body search results are not reused after upgrade.
 
 Caches are bounded and time-limited. Search entries currently live up to 7 days, detail entries up to 30 days, and translations up to 90 days. Explicit refresh bypasses cached catalog results.
 
@@ -129,7 +150,7 @@ For `send_recipe`, the recommended input is only `variant_id`; the integration f
 
 ## Storage
 
-Per-config-entry Recipe Hub profile/user data and the persistent recipe cache are stored through Home Assistant `Store` under `.storage`.
+Per-config-entry Recipe Hub profile/user data, UI preferences and the persistent recipe cache are stored through Home Assistant `Store` under `.storage`.
 
 ## Upgrade
 
