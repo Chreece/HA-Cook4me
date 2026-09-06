@@ -12,6 +12,7 @@ from .bridge import Cook4MeBridge
 from .const import DATA_BRIDGES, DOMAIN, PLATFORMS
 from .panel import async_register_panel
 from .websocket import async_register as async_register_websocket
+from .websocket_v5 import async_register as async_register_websocket_v5
 
 SERVICE_SEND_RECIPE = "send_recipe"
 SERVICE_SEARCH_RECIPES = "search_recipes"
@@ -42,15 +43,11 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
         recipe = call.data.get("recipe_functional_id")
         variant = call.data.get("variant_id")
         if grouping:
-            # Backwards compatibility: old functional_id + variant_id mapped to
-            # the same exact shadow fields now named grouping + recipe IDs.
             recipe = recipe or variant
             if not recipe:
                 raise HomeAssistantError("recipe_functional_id (or legacy variant_id) is required")
             result = await bridge.async_send_recipe(str(grouping), str(recipe))
         elif variant:
-            # Recommended path: resolve exact groupingId + recipe fid from the
-            # official SEB recipe detail before sending.
             result = await bridge.async_send_variant(str(variant))
         else:
             raise HomeAssistantError("Provide variant_id, or grouping_functional_id + recipe_functional_id")
@@ -117,6 +114,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     )
 
     async_register_websocket(hass)
+    async_register_websocket_v5(hass)
     await async_register_panel(hass)
     return True
 
