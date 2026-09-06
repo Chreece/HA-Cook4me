@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026.9.6.13
+
+- Restrict the explicit official **Recipe language** selector to the 21 source catalogs proven by the standalone v2 audit: `ar`, `bg`, `cs`, `de`, `en`, `es`, `fr`, `hr`, `hu`, `it`, `ja`, `ko`, `pl`, `pt`, `ro`, `ru`, `sk`, `sl`, `tr`, `uk`, `zh`. Greek and other unsupported source catalogs remain valid Home Assistant UI / AI translation targets but are no longer presented as official SEB source catalogs.
+- Make **Automatic** recipe-catalog language resolve from the Cook4Me setup/device language instead of the Home Assistant UI language. AI Task translation remains independently targeted at the Home Assistant language.
+- Replace the free-text fridge/pantry concept with structured **What I have in my house** inventory. House ingredients retain stable SEB `M_FOOD_*` keys when available, so availability matching survives switching catalog display languages.
+- Add a per-language ingredient catalog with a persistent **24-hour cache**. The integration first tries the APK-proven `common-api/datarefs/marketingFoods/search` route using only its proven query parameters and an empty/default body; because the exact `th0.d` request body remains unrecovered, rejection safely falls back to a bounded crawl of hydrated official recipe ingredients rather than inventing body fields.
+- Keep compatibility with existing profiles by migrating the previous `pantry` string list into structured house ingredients and mirroring their display names back to `pantry` for older ranking/AI code.
+- Show each recipe ingredient as **At home**, **Basic staple**, or **Missing**. Stable food keys take precedence over localized text when determining whether an ingredient is already in the house.
+- Integrate missing ingredients with Home Assistant's native **Shopping List**. Every missing ingredient can be added individually, and every recipe/card can add all missing ingredients at once. Existing shopping-list entries are skipped when the native todo list can be read.
+- Fix stale SEB search publications (observed in Spanish and Portuguese): dead/404 recipe IDs no longer occupy result slots. The hydrator keeps advancing through source pages until the requested number of valid grouped recipes is filled or the catalog is exhausted.
+- Add Recipe Hub v11 APIs/UI, cache-bust the panel, and extend CI frontend validation to the v11 module.
+
 ## 2026.9.6.12
 
 - Replace the active Recipe Hub search body with the **standalone-proven Cookeo/KRUPS contract**. The exact request uses `lang.key`, `market.key`, `applianceGroups.reference.key=APPLIANCE_GROUP_15` and `topRecipe.type.key=BRAND` with `groupBy=""`.
@@ -33,7 +45,7 @@
 - Replace the active official-search request body with the current APK `SearchRecipesV2` contract instead of sending an empty JSON object. The v8 request repeats `lang`/`market` as the app's field filters and includes the app-observed privacy/source-system/food-cooking constraints plus its requested field list.
 - Keep the proven `/common-api/v4/search/recipes` endpoint and `q` query parameter; the change is the missing app search context/body, not an invented replacement catalog.
 - Continue hydrating recipe details before render, then group only after exact recipe metadata is available.
-- Merge same-language serving publications with an exact same title + exact same recipe cover fallback even when SEB published their serving variants under different top/grouping IDs. This fixes repeated identical cards such as 2/4/6-serving versions of one recipe.
+- Merge same-language serving publications with an exact same title + exact recipe cover fallback even when SEB published their serving variants under different top/grouping IDs. This fixes repeated identical cards such as 2/4/6-serving versions of one recipe.
 - Represent a logical recipe as **language variants → serving variants**. Recipes sharing a proven SEB grouping ID across languages are rendered once and expose a per-card/per-detail language selector; each selected language then exposes only its own available serving variants.
 - Keep appliance delivery identity separate from display language: each displayed serving is paired only with an exact same-serving device-locale send variant. A display variant without a proven device serving variant remains viewable but not sendable.
 - Preserve the existing persistent search/detail/AI-translation cache from v7; v8 search cache keys include the new APK search-contract revision so stale empty-body results are not reused.
@@ -131,9 +143,6 @@
 - Added state-aware send guard when another recipe/session is loaded.
 - Added profile hard gate for diet/allergy/avoid restrictions on every official send path.
 - Added pantry/fridge matching and missing-ingredient ranking.
-- Added omnivore, pescatarian, vegetarian and vegan modes.
-- Added conservative multilingual allergy/category aliases and backend exclusion-key matching.
-- Added ranking-only eating-habit affinity from repeated successful official sends.
 - Added persistent manual recipe library and cook-along view.
 - Added Home Assistant Conversation-agent recipe generation.
 - Added deterministic backend validation of AI recipes before save.
