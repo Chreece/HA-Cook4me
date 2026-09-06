@@ -54,6 +54,55 @@ class RecipeGroupingTests(unittest.TestCase):
         self.assertEqual(item["availableServings"], [2.0, 4.0, 6.0])
         self.assertEqual(len(item["servingVariants"]), 3)
 
+    def test_exact_same_title_photo_different_top_ids_merge_as_servings(self):
+        items = {
+            "items": [
+                {
+                    "groupingFunctionalId": "g2",
+                    "recipeFunctionalId": "v2",
+                    "displayVariantId": "v2",
+                    "language": "it",
+                    "market": "GS_IT",
+                    "title": "Omelette di mele",
+                    "cover": "https://example.test/apple-omelette.jpg",
+                    "yield": {"quantity": 2},
+                    "variants": [variant("v2", 2, "it", "GS_IT")],
+                },
+                {
+                    "groupingFunctionalId": "g4",
+                    "recipeFunctionalId": "v4",
+                    "displayVariantId": "v4",
+                    "language": "it",
+                    "market": "GS_IT",
+                    "title": "Omelette di mele",
+                    "cover": "https://example.test/apple-omelette.jpg",
+                    "yield": {"quantity": 4},
+                    "variants": [variant("v4", 4, "it", "GS_IT")],
+                },
+                {
+                    "groupingFunctionalId": "g6",
+                    "recipeFunctionalId": "v6",
+                    "displayVariantId": "v6",
+                    "language": "it",
+                    "market": "GS_IT",
+                    "title": "Omelette di mele",
+                    "cover": "https://example.test/apple-omelette.jpg",
+                    "yield": {"quantity": 6},
+                    "variants": [variant("v6", 6, "it", "GS_IT")],
+                },
+            ]
+        }
+        result = grouping.merge_hydrated_catalogs(
+            items,
+            items,
+            target_language="it",
+            configured_language="it",
+            device_country="IT",
+            strict_language=True,
+        )
+        self.assertEqual(len(result["items"]), 1)
+        self.assertEqual(result["items"][0]["availableServings"], [2.0, 4.0, 6.0])
+
     def test_strict_german_keeps_hydrated_german_recipe(self):
         de = {
             "items": [{
@@ -152,6 +201,49 @@ class RecipeGroupingTests(unittest.TestCase):
         self.assertEqual(options[0]["sendVariantId"], "de2")
         self.assertEqual(options[1]["displayVariantId"], "el4")
         self.assertEqual(options[1]["sendVariantId"], "de4")
+
+    def test_same_group_exposes_language_menu_with_servings_per_language(self):
+        display = {
+            "items": [{
+                "groupingFunctionalId": "500",
+                "recipeFunctionalId": "el4",
+                "displayVariantId": "el4",
+                "language": "el",
+                "market": "GS_GR",
+                "title": "Ριζότο",
+                "variants": [variant("el2", 2, "el", "GS_GR"), variant("el4", 4, "el", "GS_GR")],
+            }]
+        }
+        device = {
+            "items": [{
+                "groupingFunctionalId": "500",
+                "recipeFunctionalId": "de4",
+                "displayVariantId": "de4",
+                "language": "de",
+                "market": "GS_DE",
+                "title": "Risotto",
+                "variants": [variant("de2", 2, "de", "GS_DE"), variant("de4", 4, "de", "GS_DE")],
+            }]
+        }
+        result = grouping.merge_hydrated_catalogs(
+            display,
+            device,
+            target_language="el",
+            configured_language="de",
+            device_country="DE",
+            strict_language=False,
+        )
+        item = result["items"][0]
+        self.assertEqual(item["availableLanguages"], ["el", "de"])
+        self.assertEqual([row["language"] for row in item["languageVariants"]], ["el", "de"])
+        greek = item["languageVariants"][0]
+        german = item["languageVariants"][1]
+        self.assertEqual([row["servings"] for row in greek["servingVariants"]], [2.0, 4.0])
+        self.assertEqual([row["servings"] for row in german["servingVariants"]], [2.0, 4.0])
+        # Both display languages map the selected serving to the independently
+        # validated device-locale send variant.
+        self.assertEqual(greek["servingVariants"][0]["sendVariantId"], "de2")
+        self.assertEqual(german["servingVariants"][0]["sendVariantId"], "de2")
 
 
 if __name__ == "__main__":
