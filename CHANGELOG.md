@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026.9.6.3
+
+- Group official search results by the proven SEB `groupingId`, so serving/language variants no longer appear as duplicate recipe cards.
+- Preserve a separate device-locale `sendVariantId` while preferring the Home Assistant UI language for the displayed sibling variant when the catalog returns one.
+- Replace recursive media discovery with strict recipe-level `cover` / root `resourceMedias` extraction, preventing brand/partner/technique logos from being shown as recipe photos.
+- Parse the real SEB step text fields `applicationDescription` and `applianceDescription`; automatic steps also retain program/type fallbacks instead of rendering empty numbered rows.
+- Send the Home Assistant UI language with Recipe Hub search/detail/recommend requests and expose the source recipe language when an exact translation is unavailable.
+- Use canonical ingredient names/quantities in cards and details instead of mixing full application descriptions with food names from another locale.
+- Move recipe details above the result grid, preserve the search query while opening a recipe, auto-scroll the selected detail into view, and add a clear “Back to results” action.
+- Add neutral cooker artwork when no valid recipe photo exists or an image fails to load.
+- Add focused regressions for recipe grouping, device-vs-display variant selection, strict cover selection, and API step text extraction.
+- Extend CI with JavaScript syntax validation for every shipped Recipe Hub frontend file.
+
 ## 2026.9.6.2
 
 - Added a standard MIT `LICENSE` so the HACS repository license validation passes.
