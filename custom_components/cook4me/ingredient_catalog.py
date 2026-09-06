@@ -16,6 +16,20 @@ _TTL = 24 * 60 * 60
 _MAX_LANGUAGES = 8
 _MAX_ITEMS = 5000
 
+# Unicode vulgar fractions used in recipe quantities. Python's \d already
+# matches non-ASCII decimal digits (for example Arabic-Indic numerals).
+_VULGAR_FRACTIONS = "¼½¾⅐⅑⅒⅓⅔⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞"
+_NUMBER = rf"(?:\d+(?:[.,٫]\d+)?|\d+\s*/\s*\d+|[{_VULGAR_FRACTIONS}])"
+_AMOUNT = rf"(?:{_NUMBER})(?:\s*(?:[-–—]\s*|to\s+){_NUMBER})?"
+# This fallback intentionally strips only a leading numeric amount plus a
+# compact unit-like token/phrase. Structured quantity/unit removal below is
+# preferred and exact; this exists for old/partial SEB publications where only
+# free-form applicationDescription is available.
+_GENERIC_AMOUNT_PREFIX = re.compile(
+    rf"^\s*{_AMOUNT}\s+(?:[^\W\d_]+(?:[.·]?\s+)?(?:[^\W\d_]+\s+){{0,2}})?",
+    re.IGNORECASE | re.UNICODE,
+)
+
 
 def _text(value: Any) -> str:
     return re.sub(r"\s+", " ", str(value or "").strip())
@@ -25,6 +39,85 @@ def _norm(value: Any) -> str:
     text = unicodedata.normalize("NFKD", _text(value).casefold())
     text = "".join(char for char in text if not unicodedata.combining(char))
     return re.sub(r"[^a-z0-9]+", " ", text).strip()
+
+
+def _quantity_strings(value: Any) -> list[str]:
+    """Return textual forms that SEB may use for a structured quantity."""
+    if value in (None, ""):
+        return []
+    forms: list[str] = []
+    text = _text(value)
+    if text:
+        forms.append(text)
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return list(dict.fromkeys(forms))
+    if number.is_integer():
+        forms.append(str(int(number)))
+    else:
+        compact = f"{number:g}"
+        forms.extend((compact, compact.replace(".", ",")))
+    return list(dict.fromkeys(forms))
+
+
+def _strip_structured_amount(name: str, item: dict[str, Any]) -> str:
+    """Strip exact recipe quantity/unit prefix without language assumptions."""
+    quantity_forms = _quantity_strings(item.get("quantity"))
+    unit = _text(item.get("unit"))
+    if not quantity_forms:
+        return name
+
+    for quantity in sorted(quantity_forms, key=len, reverse=True):
+        escaped_q = re.escape(quantity)
+        patterns: list[str] = []
+        if unit:
+            escaped_unit = re.escape(unit)
+            patterns.append(rf"^\s*{escaped_q}\s*{escaped_unit}\b\s*[-–—,:;]?\s*")
+        patterns.append(rf"^\s*{escaped_q}\s*[-–—,:;]\s*")
+        for pattern in patterns:
+            cleaned = re.sub(pattern, "", name, count=1, flags=re.IGNORECASE | re.UNICODE).strip()
+            if cleaned != name and cleaned:
+                return cleaned
+    return name
+
+
+def _strip_generic_amount_prefix(name: str) -> str:
+    """Best-effort cleanup for free-form descriptions lacking structured data."""
+    match = _GENERIC_AMOUNT_PREFIX.match(name)
+    if not match:
+        return name
+    cleaned = name[match.end():].lstrip(" -–—,:;")
+    return cleaned.strip() or name
+
+
+def catalog_ingredient_name(item: Any) -> str:
+    """Return an amount-free ingredient label suitable for catalog selection.
+
+    Prefer SEB's canonical food name. If it is absent, applianceDescription is
+    generally quantity-free. Only then fall back to recipe descriptions, where
+    structured quantity/unit data and a Unicode numeric fallback remove the
+    recipe-specific amount. This logic is language-independent.
+    """
+    if isinstance(item, str):
+        return _strip_generic_amount_prefix(_text(item))
+    if not isinstance(item, dict):
+        return ""
+
+    canonical = _text(item.get("foodName"))
+    if canonical:
+        return canonical
+
+    appliance = _text(item.get("applianceDescription"))
+    if appliance:
+        cleaned = _strip_structured_amount(appliance, item)
+        return _strip_generic_amount_prefix(cleaned)
+
+    candidate = _text(item.get("name") or item.get("applicationDescription"))
+    if not candidate:
+        return ""
+    cleaned = _strip_structured_amount(candidate, item)
+    return _strip_generic_amount_prefix(cleaned)
 
 
 def ingredient_identity(item: Any) -> tuple[str | None, str]:
@@ -66,27 +159,51 @@ def normalize_house_ingredients(value: Any) -> list[dict[str, str]]:
     return out
 
 
+def _clean_catalog_rows(rows: list[Any]) -> list[dict[str, str]]:
+    """Normalize and dedupe catalog rows, including already-cached old rows."""
+    out: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for raw in rows:
+        if not isinstance(raw, (str, dict)):
+            continue
+        key = _text(raw.get("key")) if isinstance(raw, dict) else ""
+        name = catalog_ingredient_name(raw)
+        if not name:
+            continue
+        identity = f"k:{key}" if key else f"n:{_norm(name)}"
+        if not identity or identity in seen:
+            continue
+        seen.add(identity)
+        row = {"name": name}
+        if key:
+            row["key"] = key
+        out.append(row)
+        if len(out) >= _MAX_ITEMS:
+            break
+    return sorted(out, key=lambda row: _norm(row["name"]))
+
+
 def catalog_items_from_recipes(recipes: list[dict[str, Any]]) -> list[dict[str, str]]:
-    by_identity: dict[str, dict[str, str]] = {}
+    rows: list[dict[str, Any]] = []
     for recipe in recipes:
         if not isinstance(recipe, dict):
             continue
         for ingredient in recipe.get("ingredients") or []:
-            key, name = ingredient_identity(ingredient)
-            if not name:
+            if not isinstance(ingredient, (str, dict)):
                 continue
-            identity = f"k:{key}" if key else f"n:{_norm(name)}"
-            if identity in by_identity:
-                continue
-            row = {"name": name}
-            if key:
-                row["key"] = key
-            by_identity[identity] = row
-            if len(by_identity) >= _MAX_ITEMS:
+            if isinstance(ingredient, dict):
+                key = _text(ingredient.get("foodKey") or ingredient.get("key"))
+                row = dict(ingredient)
+                if key:
+                    row["key"] = key
+                rows.append(row)
+            else:
+                rows.append({"name": ingredient})
+            if len(rows) >= _MAX_ITEMS * 4:
                 break
-        if len(by_identity) >= _MAX_ITEMS:
+        if len(rows) >= _MAX_ITEMS * 4:
             break
-    return sorted(by_identity.values(), key=lambda row: _norm(row["name"]))
+    return _clean_catalog_rows(rows)
 
 
 def _localized_name(value: Any, language: str) -> str:
@@ -132,8 +249,7 @@ def marketing_food_items(payload: Any, language: str) -> list[dict[str, str]]:
     if not candidates and payload.get("key"):
         candidates = [payload]
 
-    out: list[dict[str, str]] = []
-    seen: set[str] = set()
+    rows: list[dict[str, str]] = []
     for raw in candidates:
         if not isinstance(raw, dict):
             continue
@@ -143,17 +259,11 @@ def marketing_food_items(payload: Any, language: str) -> list[dict[str, str]]:
             name = _text(raw.get("label") or raw.get("title"))
         if not name:
             continue
-        identity = f"k:{key}" if key else f"n:{_norm(name)}"
-        if identity in seen:
-            continue
-        seen.add(identity)
         row = {"name": name}
         if key:
             row["key"] = key
-        out.append(row)
-        if len(out) >= _MAX_ITEMS:
-            break
-    return sorted(out, key=lambda row: _norm(row["name"]))
+        rows.append(row)
+    return _clean_catalog_rows(rows)
 
 
 def enrich_match_with_house_keys(
@@ -261,13 +371,19 @@ class Cook4MeIngredientCatalogCache:
     def get(self, language: str) -> dict[str, Any] | None:
         self._prune()
         row = self._data.get(str(language))
-        return deepcopy(row) if row else None
+        if not row:
+            return None
+        result = deepcopy(row)
+        # Clean old v11 cache rows on read so users do not have to wait 24h or
+        # force a network rebuild after upgrading.
+        result["items"] = _clean_catalog_rows(result.get("items") or [])
+        return result
 
     async def async_set(self, language: str, items: list[dict[str, str]], *, source: str) -> None:
         self._data[str(language)] = {
             "timestamp": time.time(),
             "source": str(source),
-            "items": deepcopy(items[:_MAX_ITEMS]),
+            "items": deepcopy(_clean_catalog_rows(items)),
         }
         self._prune()
         await self._store.async_save(deepcopy(self._data))
