@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026.9.6.18
+
+- Harden the recipe-derived ingredient catalog around **SEB food identity** instead of language-specific text cleanup. Official recipe rows are admitted only when SEB supplies a stable `foodKey` or at least a canonical `foodName`; keyless free-form recipe prose is excluded from the ingredient selector.
+- Group every occurrence of the same `M_FOOD_*` key and choose one least recipe-specific label, preferring canonical `foodName` whenever present. This collapses preparation/serving variants such as parenthetical quantities and comma-delimited preparation notes without maintaining per-language word lists.
+- Drop cookware, paper, molds, serving dishes and other non-food recipe-description rows structurally because they have no proven SEB food identity, rather than trying to recognize those objects by translated names.
+- Make ingredient-name normalization Unicode-safe for Latin, Cyrillic, Arabic, CJK and the rest of the 21 source catalogs; deduplication no longer relies on ASCII-only normalization.
+- Keep the dedicated SEB `marketingFoods` endpoint trusted as a food catalog, while applying the conservative identity gate only to the recipe-derived fallback.
+- Perform final backend deduplication on the cleaned visible ingredient name as well as food identity, preferring a row that preserves a stable SEB key.
+- Version the recipe-derived ingredient cache to `v3_food_identity`; older fallback catalogs are invalidated and rebuilt immediately instead of retaining already-flattened polluted labels for 24 hours.
+- Add regressions for amount cleanup, Unicode normalization, keyless-prose rejection, cross-occurrence canonicalization and post-cleanup duplicate removal.
+
 ## 2026.9.6.17
 
 - Remove the ingredient-catalog editor from **For what I have in my house**. Ingredient selection now lives only under **House ingredients & diet**.
