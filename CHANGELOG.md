@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026.9.6.22
+
+- Replace the barcode mapping form's WebView-dependent `datalist` text field with a real searchable Cook4Me ingredient picker. Likely matches are shown first and the user can search/select from the cached full ingredient catalog on mobile and desktop.
+- Load the ingredient catalog on demand when a scanned product needs mapping, so the mapping selector does not appear empty merely because the profile catalog had not finished loading yet.
+- Keep catalog identity intact when a user confirms a mapping: the selected SEB `M_FOOD_*` key and canonical catalog name are stored instead of accepting arbitrary free text.
+- Add a conservative language-neutral near-token suggestion path for small word-ending variations such as German `Datteln` → `Dattel`. These fuzzy candidates are suggestion-only and never cross the automatic-mapping confidence threshold.
+- Preserve exact/high-confidence automatic mapping for products that genuinely match the catalog, and keep manual confirmation for ambiguous products.
+- Ship and cache-bust Recipe Hub v19 and validate the new picker plus barcode matching regression in CI.
+
 ## 2026.9.6.21
 
 - Use the Home Assistant Android Companion app's native barcode-scanner capability when `hasBarCodeScanner` is advertised, instead of relying on WebView camera / `BarcodeDetector` support.
