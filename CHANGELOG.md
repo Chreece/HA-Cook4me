@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026.9.6.17
+
+- Remove the ingredient-catalog editor from **For what I have in my house**. Ingredient selection now lives only under **House ingredients & diet**.
+- Make the recommendation tab a filter/results view: optional recipe text query (for example `risotto`), optional transient diet filter, recipe language/translation controls, and the recipe results grid.
+- Send the recipe text filter to the real SEB catalog search instead of filtering only the already-loaded cards locally.
+- Keep the saved house ingredients active automatically for availability scoring/ranking, together with saved allergy/avoid rules and learned preference hints.
+- A transient diet choice affects only the current recommendation request; **Profile diet** keeps the saved profile diet without modifying it.
+- Expand recommendation sampling to up to 50 matching catalog recipes and return up to 24 ranked results.
+- Ship Recipe Hub v15 plus the v13 filtered-recommendation WebSocket API and regression checks that the recommendation tab contains no house-catalog editor.
+
 ## 2026.9.6.16
 
 - Remove the accidental frontend truncation of the ingredient catalog. The recommendation editor no longer stops after the first 150 sorted entries, and the profile editor no longer stops after 100; both now expose the full cleaned cached catalog (up to the backend 5,000-item bound) and search across all of it.
