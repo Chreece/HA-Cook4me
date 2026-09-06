@@ -22,6 +22,8 @@ from . import websocket_v9 as v9
 from .vendor import cook4me_phonefree as c4m
 from .vendor import cook4me_recipe_catalog as recipe_catalog
 
+_RECIPE_FALLBACK_SOURCE = "hydrated_official_recipes_fallback:v2_amount_clean"
+
 
 async def _cache(bridge) -> Cook4MeIngredientCatalogCache:
     cache = getattr(bridge, "_ingredient_catalog_cache", None)
@@ -117,10 +119,10 @@ async def _ingredient_catalog(
             )
         except Exception:
             items = await _recipe_fallback_catalog(hass, bridge, language)
-            source = "hydrated_official_recipes_fallback"
+            source = _RECIPE_FALLBACK_SOURCE
     except Exception:
         items = await _recipe_fallback_catalog(hass, bridge, language)
-        source = "hydrated_official_recipes_fallback"
+        source = _RECIPE_FALLBACK_SOURCE
 
     if not items:
         raise HomeAssistantError("Cook4Me ingredient catalog returned no usable ingredients")
