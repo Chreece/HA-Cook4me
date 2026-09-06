@@ -60,6 +60,15 @@ def load_recipe_hub_module():
     sys.modules["cook4me_hub_test.const"] = const
     sys.modules["cook4me_hub_test.recipe_logic"] = logic
 
+    ingredient_spec = importlib.util.spec_from_file_location(
+        "cook4me_hub_test.ingredient_catalog",
+        ROOT / "custom_components/cook4me/ingredient_catalog.py",
+    )
+    ingredient_module = importlib.util.module_from_spec(ingredient_spec)
+    sys.modules[ingredient_spec.name] = ingredient_module
+    assert ingredient_spec.loader is not None
+    ingredient_spec.loader.exec_module(ingredient_module)
+
     spec = importlib.util.spec_from_file_location(
         "cook4me_hub_test.recipe_hub",
         ROOT / "custom_components/cook4me/recipe_hub.py",
@@ -112,6 +121,32 @@ class RecipeHubV8Tests(unittest.TestCase):
         self.assertEqual(normalized["lastTab"], "recommend")
         self.assertEqual(normalized["recipeLanguageSelections"], {"g:500": "it"})
         self.assertEqual(normalized["recipeServingSelections"], {"g:500": "6"})
+
+    def test_old_pantry_migrates_to_structured_house_inventory(self):
+        module = load_recipe_hub_module()
+        normalized = module.Cook4MeRecipeHub._normalize_profile(
+            {"diet": "vegetarian", "pantry": ["Tomate", "Reis"]}
+        )
+        self.assertEqual(
+            normalized["houseIngredients"],
+            [{"name": "Tomate"}, {"name": "Reis"}],
+        )
+        self.assertEqual(normalized["pantry"], ["Tomate", "Reis"])
+
+    def test_house_inventory_preserves_stable_food_keys(self):
+        module = load_recipe_hub_module()
+        normalized = module.Cook4MeRecipeHub._normalize_profile(
+            {
+                "houseIngredients": [
+                    {"key": "M_FOOD_123", "name": "Fenchel"},
+                    {"key": "M_FOOD_123", "name": "fenouil"},
+                ]
+            }
+        )
+        self.assertEqual(
+            normalized["houseIngredients"],
+            [{"key": "M_FOOD_123", "name": "Fenchel"}],
+        )
 
 
 if __name__ == "__main__":
