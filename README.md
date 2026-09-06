@@ -1,11 +1,11 @@
 # HA-Cook4me — Recipe Hub
 
 [![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz/)
-![Version](https://img.shields.io/badge/version-2026.9.6.4-blue.svg)
+![Version](https://img.shields.io/badge/version-2026.9.6.5-blue.svg)
 
-**Current version:** `2026.9.6.4` · version format: `YYYY.M.D.BUILD`
+**Current version:** `2026.9.6.5` · version format: `YYYY.M.D.BUILD`
 
-Home Assistant custom integration for KRUPS/Tefal **Cook4Me / Cookeo** Wi-Fi cookers, with cloud-push state, a Recipe Hub, official recipe delivery, pantry-aware recommendations, diet/allergy filtering, manual cook-along recipes and Home Assistant Conversation-powered AI recipes.
+Home Assistant custom integration for KRUPS/Tefal **Cook4Me / Cookeo** Wi-Fi cookers, with cloud-push state, a Recipe Hub, official recipe delivery, pantry-aware recommendations, diet/allergy filtering, manual cook-along recipes and Home Assistant AI features.
 
 > This project is independent and is not affiliated with or endorsed by Groupe SEB, KRUPS or Tefal. Product names are used only to describe compatibility.
 
@@ -20,8 +20,6 @@ HACS installs directly from the repository source, so installation does not depe
 
 Minimum Home Assistant version for bundled local brand assets: **2026.3.0**.
 
-This release builds on the existing Cook4Me cloud integration and adds a recipe-focused Home Assistant experience without replacing the proven AWS IoT monitoring/sending core.
-
 ## Recipe Hub panel
 
 A **Cook4Me** sidebar panel is registered automatically and provides:
@@ -35,20 +33,29 @@ A **Cook4Me** sidebar panel is registered automatically and provides:
 
 Official search results are grouped by the SEB recipe `groupingId`, so serving/language variants do not appear as duplicate cards. Recipe photos are selected only from recipe-level media, and step text comes from the real SEB mobile recipe fields.
 
-### Display language vs Cook4Me language
+### Recipe language controls
 
-Recipe Hub deliberately treats the **Home Assistant UI language** and the **Cook4Me/account locale** as two different things.
+Recipe Hub has a **Recipe language** selector:
 
-For example, with Home Assistant in Greek and a Cook4Me configured for Germany:
+- **Automatic (Home Assistant language)** — use the current HA UI language for the display catalog.
+- A specific SEB/KRUPS catalog language — strictly filter results to that language instead of silently falling back to a different one.
 
-- display catalog: `el` / `GS_GR`
-- device/send catalog: `de` / `GS_DE`
+The language list is limited to language/market combinations observed in the SEB/KRUPS recipe content used by the integration. This includes Greek, German, English, French, Italian, Spanish, Portuguese, Slovak, Hungarian, Czech, Bulgarian, Polish, Romanian, Turkish, Ukrainian, Russian, Japanese, Korean, Chinese and others.
 
-Results are merged by the proven SEB `groupingId`. The Greek sibling supplies the title, photo, ingredients and instructions shown in Home Assistant, while the German/device sibling retains the official variant IDs used for appliance delivery.
+Recipe display language and appliance delivery remain separate. A displayed/localized sibling can be shown while the Cook4Me/device-compatible official variant is retained independently for sending.
 
-If SEB has no official sibling in the Home Assistant UI language, Recipe Hub automatically uses a configured **Home Assistant generative Conversation agent** to translate only the visible recipe text. Translation is done in small batches and cached for the panel session. Recipe IDs, grouping IDs and the device-send variant are never translated or modified. If no suitable generative Conversation agent is configured, the original source language remains visible and the panel reports that automatic translation is unavailable.
+### Optional translation with the default Home Assistant AI Task
 
-Official SEB localization is always preferred over AI translation.
+Recipe translation is **not** tied to an arbitrary Conversation agent.
+
+The panel enables **Translate results to Home Assistant language** only when Home Assistant has a usable preferred/default AI Task for data generation (`gen_data_entity_id`). Translation follows Home Assistant's native `ai_task.generate_data` preference behavior.
+
+- If a default AI Task exists, foreign-language result text can be translated to the HA UI language.
+- If no default AI Task exists, nothing is treated as an error: the original SEB/KRUPS text is left exactly as-is.
+- If the AI Task provider fails, search/detail still succeeds and the untranslated recipe remains visible.
+- Translation is display-only. `groupingFunctionalId`, recipe IDs, send variants and Cook4Me commands are never changed by AI.
+
+A manually selected recipe language can therefore be used either as a strict original-language filter, or together with the translation toggle when a default AI Task is configured.
 
 ## Official recipe delivery
 
