@@ -20,6 +20,7 @@ from .const import (
     DEFAULT_LANGUAGE,
     DOMAIN,
 )
+from . import recipe_locale
 from .vendor import cook4me_phonefree as c4m
 from .vendor import cook4me_recipe_catalog as recipe_catalog
 
@@ -41,16 +42,23 @@ def _send_error(connection, msg, exc: Exception) -> None:
 
 
 def _ui_language(value: str | None, fallback: str) -> str:
-    text = str(value or fallback or "en").strip().lower().replace("_", "-")
-    return text.split("-", 1)[0] or fallback
+    return recipe_locale.normalize_language(value, fallback)
 
 
-def _catalog_context(bridge, language: str | None) -> tuple[str, str, str, str, str]:
-    country = str(bridge.entry.data.get(CONF_COUNTRY, DEFAULT_COUNTRY)).upper()
+def _catalog_context(bridge, language: str | None) -> tuple[str, str, str, str, str, str]:
+    device_country = str(bridge.entry.data.get(CONF_COUNTRY, DEFAULT_COUNTRY)).upper()
     configured_language = str(bridge.entry.data.get(CONF_LANGUAGE, DEFAULT_LANGUAGE)).lower()
     app_version = str(bridge.entry.data.get(CONF_APP_VERSION, DEFAULT_APP_VERSION))
     requested_language = _ui_language(language, configured_language)
-    return str(bridge.storage_home), country, configured_language, requested_language, app_version
+    display_country = recipe_locale.display_country_for_language(requested_language, device_country)
+    return (
+        str(bridge.storage_home),
+        device_country,
+        display_country,
+        configured_language,
+        requested_language,
+        app_version,
+    )
 
 
 def _catalog_tokens(storage_home: str) -> dict[str, Any]:
@@ -64,9 +72,10 @@ def _catalog_tokens(storage_home: str) -> dict[str, Any]:
     return value if isinstance(value, dict) else {}
 
 
-def _catalog_search_sync(
+def _catalog_search_pair_sync(
     storage_home: str,
-    country: str,
+    device_country: str,
+    display_country: str,
     configured_language: str,
     requested_language: str,
     app_version: str,
@@ -74,35 +83,94 @@ def _catalog_search_sync(
     page: int,
     size: int,
 ) -> dict[str, Any]:
-    return recipe_catalog.search_recipes(
-        c4m.read_apk_config(None),
-        _catalog_tokens(storage_home),
-        query,
-        page=page,
-        size=size,
-        max_details=size,
-        country=country,
-        language=requested_language,
-        configured_language=configured_language,
-        app_version=app_version,
+    """Search UI locale and device locale separately, then merge by grouping ID."""
+    cfg = c4m.read_apk_config(None)
+    tokens = _catalog_tokens(storage_home)
+
+    device_result: dict[str, Any] = {}
+    display_result: dict[str, Any] = {}
+    device_error: Exception | None = None
+    display_error: Exception | None = None
+
+    # The device pass is deliberately lightweight. Its purpose is to retain a
+    # proven device/account-market variant for sending, not to supply UI text.
+    try:
+        device_result = recipe_catalog.search_recipes(
+            cfg,
+            tokens,
+            query,
+            page=page,
+            size=size,
+            max_details=0,
+            country=device_country,
+            language=configured_language,
+            configured_language=configured_language,
+            app_version=app_version,
+        )
+    except recipe_catalog.CatalogAuthError:
+        raise
+    except Exception as exc:
+        device_error = exc
+
+    # The display pass uses the Home Assistant UI language's natural SEB market
+    # (Greek -> GS_GR, German -> GS_DE, etc.) and is fully enriched for cards.
+    try:
+        display_result = recipe_catalog.search_recipes(
+            cfg,
+            tokens,
+            query,
+            page=page,
+            size=size,
+            max_details=size,
+            country=display_country,
+            language=requested_language,
+            configured_language=requested_language,
+            app_version=app_version,
+        )
+    except recipe_catalog.CatalogAuthError as exc:
+        # A display-market auth/config mismatch must not hide otherwise usable
+        # device-market results. If device search also failed, let auth refresh.
+        if not device_result:
+            raise
+        display_error = exc
+    except Exception as exc:
+        display_error = exc
+
+    if not device_result and not display_result:
+        raise device_error or display_error or recipe_catalog.CatalogError(
+            "SEB recipe search returned no usable catalog response"
+        )
+
+    result = recipe_locale.merge_display_and_device_catalogs(
+        display_result,
+        device_result,
+        target_language=requested_language,
     )
+    result["displayCountry"] = display_country
+    result["deviceCountry"] = device_country
+    if display_error is not None:
+        result["displayLocaleFallback"] = type(display_error).__name__
+    if device_error is not None:
+        result["deviceLocaleFallback"] = type(device_error).__name__
+    return result
 
 
 def _catalog_detail_sync(
     storage_home: str,
-    country: str,
-    configured_language: str,
+    display_country: str,
     requested_language: str,
     app_version: str,
     variant_id: str,
 ) -> dict[str, Any]:
+    # Detail is for display only here. The send path independently re-fetches
+    # and validates the device-locale variant through Cook4MeBridge.
     return recipe_catalog.recipe_detail(
         c4m.read_apk_config(None),
         _catalog_tokens(storage_home),
         variant_id,
-        country=country,
+        country=display_country,
         language=requested_language,
-        configured_language=configured_language,
+        configured_language=requested_language,
         app_version=app_version,
     )
 
@@ -118,7 +186,7 @@ async def _async_catalog_call(
         return await hass.async_add_executor_job(func, *args)
     except recipe_catalog.CatalogAuthError:
         # The long-running watcher already owns the proven browserless auth
-        # lifecycle.  A one-shot status call makes it refresh KRUPS/AWS tokens,
+        # lifecycle. A one-shot status call refreshes KRUPS/AWS credentials,
         # then the recipe request is retried with the freshly saved token file.
         await bridge._run_client_json("status", timeout=75)
         return await hass.async_add_executor_job(func, *args)
@@ -180,13 +248,27 @@ def ws_overview(hass: HomeAssistant, connection: websocket_api.ActiveConnection,
 async def ws_search(hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: dict[str, Any]) -> None:
     try:
         bridge = _bridge(hass, msg.get("entry_id"))
-        storage_home, country, configured_language, language, app_version = _catalog_context(
-            bridge, msg.get("language")
-        )
+        (
+            storage_home,
+            device_country,
+            display_country,
+            configured_language,
+            language,
+            app_version,
+        ) = _catalog_context(bridge, msg.get("language"))
         query = str(msg.get("query", ""))
         page = int(msg.get("page", 0))
         size = int(msg.get("size", 20))
-        cache_key = ("recipe_hub_v2", language, query.casefold(), page, size)
+        cache_key = (
+            "recipe_hub_v3",
+            device_country,
+            display_country,
+            configured_language,
+            language,
+            query.casefold(),
+            page,
+            size,
+        )
         cached = bridge._search_cache.get(cache_key)
         if not msg.get("refresh") and cached and time.monotonic() - cached[0] < 900:
             result = deepcopy(cached[1])
@@ -194,9 +276,10 @@ async def ws_search(hass: HomeAssistant, connection: websocket_api.ActiveConnect
             result = await _async_catalog_call(
                 hass,
                 bridge,
-                _catalog_search_sync,
+                _catalog_search_pair_sync,
                 storage_home,
-                country,
+                device_country,
+                display_country,
                 configured_language,
                 language,
                 app_version,
@@ -235,11 +318,16 @@ async def ws_search(hass: HomeAssistant, connection: websocket_api.ActiveConnect
 async def ws_recipe_detail(hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: dict[str, Any]) -> None:
     try:
         bridge = _bridge(hass, msg.get("entry_id"))
-        storage_home, country, configured_language, language, app_version = _catalog_context(
-            bridge, msg.get("language")
-        )
+        (
+            storage_home,
+            _device_country,
+            display_country,
+            _configured_language,
+            language,
+            app_version,
+        ) = _catalog_context(bridge, msg.get("language"))
         variant = str(msg["variant_id"])
-        cache_key = f"recipe_hub_v2:{language}:{variant}"
+        cache_key = f"recipe_hub_v3:{display_country}:{language}:{variant}"
         cached = bridge._recipe_cache.get(cache_key)
         if cached is not None and not msg.get("refresh"):
             result = deepcopy(cached)
@@ -249,8 +337,7 @@ async def ws_recipe_detail(hass: HomeAssistant, connection: websocket_api.Active
                 bridge,
                 _catalog_detail_sync,
                 storage_home,
-                country,
-                configured_language,
+                display_country,
                 language,
                 app_version,
                 variant,
@@ -258,6 +345,11 @@ async def ws_recipe_detail(hass: HomeAssistant, connection: websocket_api.Active
             bridge._recipe_cache[cache_key] = deepcopy(result)
         result = bridge.recipe_hub.annotate(result)
         result["deviceCanAccept"] = bridge.can_accept_recipe
+        source_language = recipe_locale.normalize_language(result.get("language"), "")
+        result["requestedLanguage"] = language
+        result["translationRequired"] = bool(source_language and source_language != language)
+        if result["translationRequired"]:
+            result["sourceLanguage"] = source_language
     except Exception as exc:
         _send_error(connection, msg, exc)
         return
@@ -277,11 +369,25 @@ async def ws_recipe_detail(hass: HomeAssistant, connection: websocket_api.Active
 async def ws_recommend(hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: dict[str, Any]) -> None:
     try:
         bridge = _bridge(hass, msg.get("entry_id"))
-        storage_home, country, configured_language, language, app_version = _catalog_context(
-            bridge, msg.get("language")
-        )
+        (
+            storage_home,
+            device_country,
+            display_country,
+            configured_language,
+            language,
+            app_version,
+        ) = _catalog_context(bridge, msg.get("language"))
         catalog_size = int(msg["catalog_size"])
-        cache_key = ("recipe_hub_v2_recommend", language, "", 0, catalog_size)
+        cache_key = (
+            "recipe_hub_v3_recommend",
+            device_country,
+            display_country,
+            configured_language,
+            language,
+            "",
+            0,
+            catalog_size,
+        )
         cached = bridge._search_cache.get(cache_key)
         if cached and time.monotonic() - cached[0] < 900:
             catalog = deepcopy(cached[1])
@@ -289,9 +395,10 @@ async def ws_recommend(hass: HomeAssistant, connection: websocket_api.ActiveConn
             catalog = await _async_catalog_call(
                 hass,
                 bridge,
-                _catalog_search_sync,
+                _catalog_search_pair_sync,
                 storage_home,
-                country,
+                device_country,
+                display_country,
                 configured_language,
                 language,
                 app_version,
@@ -307,6 +414,8 @@ async def ws_recommend(hass: HomeAssistant, connection: websocket_api.ActiveConn
             "items": ranked,
             "profile": bridge.recipe_hub.profile,
             "requestedLanguage": language,
+            "displayCountry": display_country,
+            "deviceCountry": device_country,
             "deviceCanAccept": bridge.can_accept_recipe,
             "loadedRecipe": bridge.loaded_recipe,
         }
