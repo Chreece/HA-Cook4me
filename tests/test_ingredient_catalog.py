@@ -136,6 +136,8 @@ class IngredientCatalogTests(unittest.TestCase):
                     {"foodKey": "M_FOOD_12", "name": "Crème Double, über den Butter-Schoko-Mix gegeben"},
                     {"foodKey": "M_FOOD_13", "name": "Salatköpfe, gewaschen und Außenblätter entfernt"},
                     {"foodKey": "M_FOOD_14", "name": "Weiße Fischfilets (400 g) (z.B. Lotte oder Kabeljau)"},
+                    {"foodKey": "M_FOOD_15", "name": "طماطم، مقطعة"},
+                    {"foodKey": "M_FOOD_16", "name": "しょうゆ、少量"},
                 ]
             }
         ]
@@ -147,6 +149,8 @@ class IngredientCatalogTests(unittest.TestCase):
                 {"key": "M_FOOD_11", "name": "Mungobohnen"},
                 {"key": "M_FOOD_13", "name": "Salatköpfe"},
                 {"key": "M_FOOD_14", "name": "Weiße Fischfilets"},
+                {"key": "M_FOOD_15", "name": "طماطم"},
+                {"key": "M_FOOD_16", "name": "しょうゆ"},
             ],
         )
 
