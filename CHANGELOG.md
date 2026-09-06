@@ -1,5 +1,32 @@
 # Changelog
 
+## 2026.9.6.12
+
+- Replace the active Recipe Hub search body with the **standalone-proven Cookeo/KRUPS contract**. The exact request uses `lang.key`, `market.key`, `applianceGroups.reference.key=APPLIANCE_GROUP_15` and `topRecipe.type.key=BRAND` with `groupBy=""`.
+- Remove the speculative v8 `fieldList`, `FOOD_COOKING`, privacy/source and empty-filter-list body members from the active search path.
+- Preserve the proven `/common-api/v4/search/recipes` endpoint and its normal query parameters.
+- Add a regression from the real standalone proof: **29 German serving variants collapse by `groupingId` to exactly 11 logical recipes**, including `Pfifferling-Risotto`, `Risotto "Aus Vorräten"` and `Risotto mit roten Linsen`.
+- Selectively invalidate only pre-proof persistent **search** cache entries while keeping persistent UI preferences, hydrated detail cache and AI-translation cache intact.
+- Keep one-card-per-recipe grouping, per-language/per-serving selectors, default-AI-Task translation rules and device-locale send identity unchanged.
+- Cache-bust the Recipe Hub panel URL for the v12 upgrade.
+
+## 2026.9.6.11
+
+- Fix the v10 diagnostic path so recipe catalog authentication refresh stays on the v9 **KRUPS HTTP-only** flow and never starts an unrelated MQTT status request when the cooker is offline.
+- Add a regression preventing the diagnostic wrapper from routing back through the old MQTT-dependent search/auth path.
+
+## 2026.9.6.10
+
+- Add a redacted, read-only A/B diagnostic for rejected recipe searches so legacy-body success can be distinguished from request-body rejection or real credential/context failure.
+- Keep tokens/passwords/credentials out of diagnostics and UI errors.
+- Add a temporary compatibility fallback only when the diagnostic proves the legacy search body is accepted while the newer reconstructed body is rejected.
+
+## 2026.9.6.9
+
+- Refresh recipe-catalog authentication with browserless KRUPS HTTP login only; do not require an AWS IoT/MQTT round-trip for ordinary recipe search/detail operations.
+- Preserve the live search draft independently from the last submitted query so changing language/translation/tab controls no longer clears text being typed.
+- Persist the search draft with the rest of the Recipe Hub preferences.
+
 ## 2026.9.6.8
 
 - Persist Recipe Hub UI preferences in Home Assistant storage: global recipe-language mode, translation toggle, last tab, per-recipe source-language choice, and per-recipe serving choice now survive panel reloads and Home Assistant restarts.
