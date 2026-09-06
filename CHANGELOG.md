@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026.9.6.2
+
+- Added a standard MIT `LICENSE` so the HACS repository license validation passes.
+- Removed `zip_release` / `filename` from `hacs.json`; HACS now installs directly from the repository source when no GitHub Release asset exists, avoiding commit-SHA release-download 404 errors.
+- Kept tagged GitHub Release packaging for future date.build releases, while making HACS installation independent of a release asset.
+
 ## 2026.9.6.1
 
 - First HACS-ready `HA-Cook4me` repository release using `YYYY.M.D.BUILD` versioning.
