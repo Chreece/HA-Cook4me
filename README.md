@@ -1,9 +1,9 @@
 # HA-Cook4me — Recipe Hub
 
 [![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz/)
-![Version](https://img.shields.io/badge/version-2026.9.6.2-blue.svg)
+![Version](https://img.shields.io/badge/version-2026.9.6.3-blue.svg)
 
-**Current version:** `2026.9.6.2` · version format: `YYYY.M.D.BUILD`
+**Current version:** `2026.9.6.3` · version format: `YYYY.M.D.BUILD`
 
 Home Assistant custom integration for KRUPS/Tefal **Cook4Me / Cookeo** Wi-Fi cookers, with cloud-push state, a Recipe Hub, official recipe delivery, pantry-aware recommendations, diet/allergy filtering, manual cook-along recipes and Home Assistant Conversation-powered AI recipes.
 
@@ -32,6 +32,8 @@ A **Cook4Me** sidebar panel is registered automatically and provides:
 - **Pantry & diet** — save pantry items, omnivore/pescatarian/vegetarian/vegan mode, allergies, dislikes/avoid terms, and preferences.
 - **Eating-habit ranking** — repeated ingredients/categories from successful official recipe sends become small ranking-only hints. They never override dietary/allergy safety rules.
 - **AI recipe** — use an already configured Home Assistant Conversation agent to generate a recipe from the pantry/profile/request. AI output is revalidated deterministically before it can be saved.
+
+Official search results are grouped by the SEB recipe `groupingId`, so serving/language variants do not appear as duplicate cards. Recipe photos are selected only from recipe-level media. The panel asks the catalog for the current Home Assistant UI language and shows the actual source language if an exact localized sibling is unavailable. Display localization and appliance delivery remain separate: a localized sibling can be shown while the device-locale official variant is retained for sending.
 
 ## Official recipe delivery
 
@@ -80,9 +82,9 @@ Per-config-entry Recipe Hub data is stored through Home Assistant `Store` under 
 
 ## Upgrade
 
-Replace `custom_components/cook4me` with the current release directory and restart Home Assistant. The config-flow version is unchanged because no config-entry schema migration is required.
+Update HA-Cook4me from HACS and restart Home Assistant. The config-flow version is unchanged because no config-entry schema migration is required.
 
-After restart, open **Cook4Me** from the Home Assistant sidebar.
+After restart, open **Cook4Me** from the Home Assistant sidebar. The Recipe Hub panel module is versioned so this release does not reuse an older cached JavaScript panel.
 
 ## License
 
