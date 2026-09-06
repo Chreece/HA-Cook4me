@@ -16,12 +16,22 @@ _STORAGE_VERSION = 1
 _SEARCH_TTL = 7 * 24 * 60 * 60
 _DETAIL_TTL = 30 * 24 * 60 * 60
 _TRANSLATION_TTL = 90 * 24 * 60 * 60
+_INGREDIENT_TTL = 24 * 60 * 60
 _UI_TTL = 10 * 365 * 24 * 60 * 60
-_LIMITS = {"search": 120, "detail": 500, "translation": 1000, "ui": 20}
+_LIMITS = {
+    "search": 120,
+    "detail": 500,
+    "translation": 1000,
+    # One localized MarketingFood catalog per audited source language, with
+    # room for a few previous/future locale keys without unbounded storage.
+    "ingredient": 40,
+    "ui": 20,
+}
 _TTLS = {
     "search": _SEARCH_TTL,
     "detail": _DETAIL_TTL,
     "translation": _TRANSLATION_TTL,
+    "ingredient": _INGREDIENT_TTL,
     "ui": _UI_TTL,
 }
 
@@ -43,14 +53,7 @@ def translation_cache_key(recipe: dict[str, Any], target_language: str) -> str:
 
 
 def _is_current_search_value(value: Any) -> bool:
-    """Reject search results produced before the standalone-proven v12 contract.
-
-    We intentionally keep the Store schema version unchanged so persistent UI
-    preferences, details and expensive AI translations survive the upgrade.
-    Only the search bucket is selectively invalidated.  New search results carry
-    the proven Cookeo appliance group and branded-recipe type at top level.
-    """
-
+    """Reject search results produced before the standalone-proven v12 contract."""
     return bool(
         isinstance(value, dict)
         and value.get("applianceGroup") == "APPLIANCE_GROUP_15"
@@ -59,7 +62,7 @@ def _is_current_search_value(value: Any) -> bool:
 
 
 class Cook4MeRecipeCache:
-    """Persistent bounded cache for normalized recipe catalog and UI data."""
+    """Persistent bounded cache for recipe, ingredient-catalog, and UI data."""
 
     def __init__(self, hass: HomeAssistant, entry_id: str) -> None:
         self._store: Store[dict[str, Any]] = Store(
@@ -70,6 +73,7 @@ class Cook4MeRecipeCache:
             "search": {},
             "detail": {},
             "translation": {},
+            "ingredient": {},
             "ui": {},
         }
 
