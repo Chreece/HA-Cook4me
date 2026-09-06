@@ -16,8 +16,14 @@ _STORAGE_VERSION = 1
 _SEARCH_TTL = 7 * 24 * 60 * 60
 _DETAIL_TTL = 30 * 24 * 60 * 60
 _TRANSLATION_TTL = 90 * 24 * 60 * 60
-_LIMITS = {"search": 120, "detail": 500, "translation": 1000}
-_TTLS = {"search": _SEARCH_TTL, "detail": _DETAIL_TTL, "translation": _TRANSLATION_TTL}
+_UI_TTL = 10 * 365 * 24 * 60 * 60
+_LIMITS = {"search": 120, "detail": 500, "translation": 1000, "ui": 20}
+_TTLS = {
+    "search": _SEARCH_TTL,
+    "detail": _DETAIL_TTL,
+    "translation": _TRANSLATION_TTL,
+    "ui": _UI_TTL,
+}
 
 
 def stable_cache_key(*parts: Any) -> str:
@@ -37,7 +43,7 @@ def translation_cache_key(recipe: dict[str, Any], target_language: str) -> str:
 
 
 class Cook4MeRecipeCache:
-    """Persistent bounded cache for normalized recipe catalog data."""
+    """Persistent bounded cache for normalized recipe catalog and UI data."""
 
     def __init__(self, hass: HomeAssistant, entry_id: str) -> None:
         self._store: Store[dict[str, Any]] = Store(
@@ -48,6 +54,7 @@ class Cook4MeRecipeCache:
             "search": {},
             "detail": {},
             "translation": {},
+            "ui": {},
         }
 
     async def async_load(self) -> None:
