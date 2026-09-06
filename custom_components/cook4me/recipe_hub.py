@@ -20,14 +20,19 @@ _DEFAULT_PROFILE: dict[str, Any] = {
     "allergies": [],
     "avoid": [],
     "preferences": [],
+    # ``pantry`` is retained for storage/API compatibility with older releases.
+    # v13 presents this as "what I have in my house" and additionally stores
+    # exact SEB MarketingFood selections in pantryItems.
     "pantry": [],
+    "pantryItems": [],
 }
 
 _DEFAULT_UI_PREFERENCES: dict[str, Any] = {
     "catalogLanguage": "auto",
+    "ingredientCatalogLanguage": "auto",
     "translateResults": True,
     "lastTab": "official",
-    # Per logical recipe selections are bounded below.  They let the same card
+    # Per logical recipe selections are bounded below. They let the same card
     # remember its preferred source language and serving across panel reloads.
     "recipeLanguageSelections": {},
     "recipeServingSelections": {},
@@ -37,7 +42,7 @@ _ALLOWED_TABS = {"official", "recommend", "mine", "profile", "ai"}
 
 
 class Cook4MeRecipeHub:
-    """Persist Cook4Me pantry/preferences, user recipes, and Recipe Hub UI state."""
+    """Persist Cook4Me house ingredients/preferences, recipes, and UI state."""
 
     def __init__(self, hass: HomeAssistant, entry_id: str) -> None:
         self.hass = hass
@@ -85,15 +90,41 @@ class Cook4MeRecipeHub:
             if isinstance(values, str):
                 values = [x.strip() for x in values.replace(",", "\n").splitlines()]
             out[key] = list(dict.fromkeys(str(x).strip() for x in values if str(x).strip()))[:250]
+
+        pantry_items: list[dict[str, str]] = []
+        seen_items: set[tuple[str, str]] = set()
+        raw_items = profile.get("pantryItems") or []
+        if isinstance(raw_items, list):
+            for raw in raw_items[-500:]:
+                if not isinstance(raw, dict):
+                    continue
+                item_id = str(raw.get("id") or raw.get("key") or "").strip()[:160]
+                name = str(raw.get("name") or "").strip()[:240]
+                language = str(raw.get("language") or "").strip().lower().replace("_", "-").split("-", 1)[0][:12]
+                if not name:
+                    continue
+                identity = (item_id, normalize_text(name))
+                if identity in seen_items:
+                    continue
+                seen_items.add(identity)
+                item = {"name": name}
+                if item_id:
+                    item["id"] = item_id
+                if language:
+                    item["language"] = language
+                pantry_items.append(item)
+        out["pantryItems"] = pantry_items[:500]
         return out
 
     @staticmethod
     def _normalize_ui_preferences(preferences: dict[str, Any]) -> dict[str, Any]:
-        language = str(preferences.get("catalogLanguage") or "auto").strip().lower().replace("_", "-")
-        if language != "auto":
-            language = language.split("-", 1)[0][:12]
-            if not language.isalpha():
-                language = "auto"
+        def source_language(key: str) -> str:
+            language = str(preferences.get(key) or "auto").strip().lower().replace("_", "-")
+            if language != "auto":
+                language = language.split("-", 1)[0][:12]
+                if not language.isalpha():
+                    language = "auto"
+            return language
 
         tab = str(preferences.get("lastTab") or "official").strip().lower()
         if tab not in _ALLOWED_TABS:
@@ -103,8 +134,6 @@ class Cook4MeRecipeHub:
             if not isinstance(value, dict):
                 return {}
             out: dict[str, str] = {}
-            # Keep the newest/current map insertion order and cap storage. The
-            # frontend writes only stable grouping/family keys, never recipe text.
             for raw_key, raw_value in list(value.items())[-250:]:
                 key = str(raw_key or "").strip()[:160]
                 selected = str(raw_value or "").strip()[:max_value_length]
@@ -113,7 +142,8 @@ class Cook4MeRecipeHub:
             return out
 
         return {
-            "catalogLanguage": language,
+            "catalogLanguage": source_language("catalogLanguage"),
+            "ingredientCatalogLanguage": source_language("ingredientCatalogLanguage"),
             "translateResults": bool(preferences.get("translateResults", True)),
             "lastTab": tab,
             "recipeLanguageSelections": selection_map(
@@ -238,6 +268,14 @@ class Cook4MeRecipeHub:
 
     def _scoring_profile(self) -> dict[str, Any]:
         profile = deepcopy(self._data["profile"])
+        # Exact MarketingFood selections participate in the existing localized
+        # name matcher while their stable SEB ids remain persisted separately.
+        house_names = [
+            str(item.get("name") or "").strip()
+            for item in profile.get("pantryItems") or []
+            if isinstance(item, dict) and str(item.get("name") or "").strip()
+        ]
+        profile["pantry"] = list(dict.fromkeys([*profile.get("pantry", []), *house_names]))
         profile["habitTerms"] = self._habit_terms()
         return profile
 
