@@ -50,6 +50,33 @@ class RecipeLocaleTests(unittest.TestCase):
         self.assertTrue(item["localizedBySeb"])
         self.assertFalse(item["translationRequired"])
 
+    def test_foreign_target_market_sibling_does_not_replace_device_language(self):
+        display = {
+            "market": "GS_GR",
+            "items": [{
+                "groupingFunctionalId": "500",
+                "searchVariantId": "900-sk",
+                "language": "sk",
+                "title": "Chrumkavé rizoto",
+            }],
+        }
+        device = {
+            "market": "GS_DE",
+            "items": [{
+                "groupingFunctionalId": "500",
+                "searchVariantId": "900-de",
+                "variantFunctionalId": "900-de",
+                "language": "de",
+                "title": "Knuspriges Risotto",
+            }],
+        }
+        result = locale.merge_display_and_device_catalogs(display, device, target_language="el")
+        item = result["items"][0]
+        self.assertEqual(item["title"], "Knuspriges Risotto")
+        self.assertEqual(item["language"], "de")
+        self.assertEqual(item["sourceLanguage"], "de")
+        self.assertTrue(item["translationRequired"])
+
     def test_foreign_device_result_requests_translation(self):
         device = {
             "market": "GS_DE",
