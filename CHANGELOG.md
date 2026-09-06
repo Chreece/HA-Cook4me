@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026.9.6.20
+
+- Add **Scan shopping** to **House ingredients & diet** for physically scanning EAN/UPC product barcodes with the phone/rear camera while keeping the scanner open between products.
+- Use the browser Barcode Detection API when available for `EAN-13`, `EAN-8`, `UPC-A`, `UPC-E` and ITF-compatible scans, with a manual barcode field retained as a fallback when the current browser cannot expose live barcode detection/camera access.
+- Resolve scanned barcodes through the current Open Food Facts product API and read product name, generic name, brand and package quantity/unit when available.
+- Match product metadata against the cleaned Cook4Me ingredient catalog conservatively. Exact/high-confidence generic/product-name matches are automatically mapped and immediately added to house stock.
+- Never silently guess weak matches. Unknown or ambiguous products open a one-time mapping form where the user selects the Cook4Me ingredient and edits the package amount/unit.
+- Persist barcode-to-ingredient/package mappings per Cook4Me config entry. After the first confirmed mapping, every future scan of that barcode automatically adds the remembered package amount to the existing stock.
+- Repeated scans of the same product add repeated packages, so scanning two 500 g packages increases the same stable ingredient stock by another 1 kg through the existing unit-safe inventory contract.
+- Keep stable SEB `M_FOOD_*` ingredient identity in remembered mappings so barcode-stock additions participate in recipe availability/missing-ingredient/shopping-list decisions exactly like manually selected house stock.
+- Add Recipe Hub v17, v15 barcode WebSocket APIs and focused tests for barcode validation, multi-pack quantity parsing, Open Food Facts normalization and conservative catalog matching.
+
 ## 2026.9.6.19
 
 - Turn **What I have in my house** into quantity-aware stock. Each ingredient can store an amount and unit, or be marked **unlimited (∞)** for things such as water.
@@ -101,7 +113,7 @@
 - Continue hydrating recipe details before render, then group only after exact recipe metadata is available.
 - Merge same-language serving publications with an exact same title + exact recipe cover fallback even when SEB published their serving variants under different top/grouping IDs. This fixes repeated identical cards such as 2/4/6-serving versions of one recipe.
 - Represent a logical recipe as **language variants → serving variants**. Recipes sharing a proven SEB grouping ID across languages are rendered once and expose a per-card/per-detail language selector; each selected language then exposes only its own available serving variants.
-- Keep appliance delivery identity separate from display language: each displayed serving is paired only with an exact same-serving device-locale send variant. A display variant without a proven device serving variant remains viewable but not sendable.
+- Keep appliance delivery identity separate from display language: each displayed serving is paired only with an exact same-serving device-locale variant. A display variant without a proven device serving variant remains viewable but not sendable.
 - Preserve the existing persistent search/detail/AI-translation cache from v7; v8 search cache keys include the new APK search-contract revision so stale empty-body results are not reused.
 - Add regressions for APK search-body fields, persistent UI preferences, exact 2/4/6 serving collapse, and same-group language menus with independent serving lists.
 - Ship cache-busted Recipe Hub v8 frontend/backend APIs.
