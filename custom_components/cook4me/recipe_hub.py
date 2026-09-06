@@ -11,7 +11,15 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
 
 from .const import DOMAIN
-from .ingredient_catalog import enrich_match_with_house_keys, normalize_house_ingredients
+from .ingredient_catalog import enrich_match_with_house_keys
+from .inventory import (
+    add_inventory_item,
+    apply_consumption,
+    normalize_inventory,
+    recipe_consumption_items,
+    remove_inventory_item,
+    update_inventory_item,
+)
 from .recipe_logic import normalize_manual_recipe, normalize_text, recipe_ingredient_names, score_recipe
 
 _STORAGE_VERSION = 1
@@ -22,8 +30,8 @@ _DEFAULT_PROFILE: dict[str, Any] = {
     "avoid": [],
     "preferences": [],
     # pantry is retained for storage/backwards compatibility. New UI writes the
-    # structured houseIngredients list so stable SEB food keys survive language
-    # changes; pantry mirrors its display names for older code/AI prompts.
+    # structured houseIngredients stock list; pantry mirrors display names for
+    # older ranking/AI code.
     "pantry": [],
     "houseIngredients": [],
 }
@@ -54,6 +62,7 @@ class Cook4MeRecipeHub:
             "recipes": [],
             "history": [],
             "uiPreferences": deepcopy(_DEFAULT_UI_PREFERENCES),
+            "pendingConsumption": None,
         }
 
     async def async_load(self) -> None:
@@ -76,6 +85,9 @@ class Cook4MeRecipeHub:
             merged_ui = deepcopy(_DEFAULT_UI_PREFERENCES)
             merged_ui.update(ui_preferences)
             self._data["uiPreferences"] = self._normalize_ui_preferences(merged_ui)
+        pending = saved.get("pendingConsumption")
+        if isinstance(pending, dict) and isinstance(pending.get("ingredients"), list):
+            self._data["pendingConsumption"] = deepcopy(pending)
 
     @staticmethod
     def _normalize_profile(profile: dict[str, Any]) -> dict[str, Any]:
@@ -89,10 +101,10 @@ class Cook4MeRecipeHub:
                 values = [x.strip() for x in values.replace(",", "\n").splitlines()]
             out[key] = list(dict.fromkeys(str(x).strip() for x in values if str(x).strip()))[:250]
 
-        house = normalize_house_ingredients(profile.get("houseIngredients"))
+        house = normalize_inventory(profile.get("houseIngredients"))
         if not house:
             # Seamless migration from the old free-text pantry list.
-            house = normalize_house_ingredients(profile.get("pantry"))
+            house = normalize_inventory(profile.get("pantry"))
         out["houseIngredients"] = house
         out["pantry"] = [row["name"] for row in house]
         return out
@@ -151,6 +163,11 @@ class Cook4MeRecipeHub:
         return deepcopy(self._data["uiPreferences"])
 
     @property
+    def pending_consumption(self) -> dict[str, Any] | None:
+        pending = self._data.get("pendingConsumption")
+        return deepcopy(pending) if isinstance(pending, dict) else None
+
+    @property
     def habit_terms(self) -> list[str]:
         return self._habit_terms()
 
@@ -161,6 +178,108 @@ class Cook4MeRecipeHub:
             self._data["profile"] = self._normalize_profile(merged)
             await self._save()
             return self.profile
+
+    async def async_inventory_add(
+        self,
+        ingredient: dict[str, Any],
+        *,
+        quantity: Any = None,
+        unit: str = "",
+        unlimited: bool = False,
+    ) -> dict[str, Any]:
+        async with self._lock:
+            profile = deepcopy(self._data["profile"])
+            house = add_inventory_item(
+                profile.get("houseIngredients"),
+                ingredient,
+                quantity=quantity,
+                unit=unit,
+                unlimited=unlimited,
+            )
+            profile["houseIngredients"] = house
+            profile["pantry"] = [row["name"] for row in house]
+            self._data["profile"] = self._normalize_profile(profile)
+            await self._save()
+            return self.profile
+
+    async def async_inventory_update(
+        self,
+        identity: str,
+        *,
+        quantity: Any = None,
+        unit: str = "",
+        unlimited: bool = False,
+    ) -> dict[str, Any]:
+        async with self._lock:
+            profile = deepcopy(self._data["profile"])
+            house = update_inventory_item(
+                profile.get("houseIngredients"),
+                identity,
+                quantity=quantity,
+                unit=unit,
+                unlimited=unlimited,
+            )
+            profile["houseIngredients"] = house
+            profile["pantry"] = [row["name"] for row in house]
+            self._data["profile"] = self._normalize_profile(profile)
+            await self._save()
+            return self.profile
+
+    async def async_inventory_remove(self, identity: str) -> dict[str, Any]:
+        async with self._lock:
+            profile = deepcopy(self._data["profile"])
+            house = remove_inventory_item(profile.get("houseIngredients"), identity)
+            profile["houseIngredients"] = house
+            profile["pantry"] = [row["name"] for row in house]
+            self._data["profile"] = self._normalize_profile(profile)
+            await self._save()
+            return self.profile
+
+    async def async_prepare_consumption(self, recipe: dict[str, Any]) -> dict[str, Any] | None:
+        ingredients = recipe_consumption_items(
+            recipe, self._data["profile"].get("houseIngredients")
+        )
+        if not ingredients:
+            return None
+        pending = {
+            "id": str(uuid4()),
+            "createdAt": datetime.now(timezone.utc).isoformat(),
+            "recipeTitle": str(recipe.get("title") or "Cook4Me recipe"),
+            "groupingFunctionalId": recipe.get("groupingFunctionalId"),
+            "variantFunctionalId": recipe.get("variantFunctionalId") or recipe.get("recipeFunctionalId"),
+            "ingredients": ingredients,
+        }
+        async with self._lock:
+            self._data["pendingConsumption"] = pending
+            await self._save()
+        return deepcopy(pending)
+
+    async def async_confirm_consumption(
+        self, pending_id: str, consumptions: list[dict[str, Any]]
+    ) -> dict[str, Any]:
+        async with self._lock:
+            pending = self._data.get("pendingConsumption")
+            if not isinstance(pending, dict) or str(pending.get("id")) != str(pending_id):
+                raise ValueError("Consumption confirmation is no longer pending")
+            profile = deepcopy(self._data["profile"])
+            house, report = apply_consumption(
+                profile.get("houseIngredients"), consumptions
+            )
+            profile["houseIngredients"] = house
+            profile["pantry"] = [row["name"] for row in house]
+            self._data["profile"] = self._normalize_profile(profile)
+            self._data["pendingConsumption"] = None
+            await self._save()
+            return {"profile": self.profile, "report": report}
+
+    async def async_clear_pending_consumption(self, pending_id: str) -> bool:
+        async with self._lock:
+            pending = self._data.get("pendingConsumption")
+            if not isinstance(pending, dict) or str(pending.get("id")) != str(pending_id):
+                return False
+            self._data["pendingConsumption"] = None
+            await self._save()
+            return True
 
     async def async_set_ui_preferences(self, preferences: dict[str, Any]) -> dict[str, Any]:
         """Persist Recipe Hub display controls without touching dietary profile data."""
