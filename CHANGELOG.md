@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026.9.6.7
+
+- Rework official-search loading so Recipe Hub returns **fully hydrated recipe objects before the first render**. Cards no longer appear first as numeric IDs/no-photo placeholders and then mutate only after opening Steps.
+- Perform deduplication only after detail hydration has exposed the proven SEB `groupingId`, so the same recipe is shown once even when the search endpoint returned separate 2/4/6-serving variants.
+- Preserve those serving variants as a **servings selector** on the single recipe card/detail instead of duplicate cards. Selecting a serving loads the corresponding display variant and sends the corresponding device-locale official variant.
+- Replace the v6 lightweight device/display merge in the active panel with a fully hydrated merge. Explicit German (`de` / `GS_DE`) search is therefore filtered after real recipe detail has established its language instead of filtering ID-only rows.
+- Automatic/Home-Assistant-language mode uses a real target-language sibling when one exists; otherwise it falls back to the fully hydrated Cook4Me/device-locale recipe, never an arbitrary foreign sibling.
+- Translation now runs only after recipes are fully hydrated, including their steps. The list is rendered after translation completes when translation is enabled, so opening Steps cannot leave the selected recipe untranslated while only the cards change.
+- Add a persistent Home Assistant `Store` cache for normalized **search results, recipe details and AI Task translations**. Search cache is locale/query aware; detail cache is locale/variant aware; translation cache is keyed by source-content hash + target language.
+- Cached translations survive panel reloads and Home Assistant restarts; changing serving quantities or source recipe text creates a different translation key rather than reusing incompatible text.
+- Cache entries are bounded and time-limited, and explicit refresh bypasses cached search/detail data.
+- Add regressions for one-card-per-grouping behavior, 2/4/6 serving preservation, strict German hydrated results, target-language/device-language fallback, and display/send serving-variant pairing.
+- Ship cache-busted Recipe Hub v7 frontend/backend APIs and validate Python, tests, JSON, HACS and frontend syntax in CI.
+
 ## 2026.9.6.6
 
 - When an exact selected/HA-language SEB sibling is unavailable, prefer the configured Cook4Me/device-locale recipe as the original-language fallback instead of an arbitrary foreign sibling returned by the display market.
