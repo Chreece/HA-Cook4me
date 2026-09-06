@@ -3,7 +3,7 @@ from __future__ import annotations
 from copy import deepcopy
 from typing import Any
 
-# SEB recipe search is market-aware as well as language-aware.  Home Assistant
+# SEB recipe search is market-aware as well as language-aware. Home Assistant
 # UI language is independent from the appliance/account country, so use a
 # language-appropriate display market for catalog localization while retaining
 # a separate device-market result for safe sending.
@@ -72,8 +72,18 @@ def _send_fields(item: dict[str, Any]) -> dict[str, Any]:
         or item.get("groupingFunctionalId"),
         "sendRecipeFunctionalId": item.get("sendRecipeFunctionalId")
         or item.get("recipeFunctionalId")
-        or item.get("variantFunctionalId"),
+        or item.get("variantFunctionalId")
+        or item.get("searchVariantId"),
     }
+
+
+def _has_send_fields(item: dict[str, Any]) -> bool:
+    values = _send_fields(item)
+    return bool(
+        values.get("sendVariantId")
+        and values.get("sendGroupingFunctionalId")
+        and values.get("sendRecipeFunctionalId")
+    )
 
 
 def merge_display_and_device_catalogs(
@@ -85,9 +95,12 @@ def merge_display_and_device_catalogs(
     """Overlay localized display recipes onto device-compatible send variants.
 
     Device-market results remain the authority for the exact recipe variant used
-    when sending.  Display-market siblings are used only for title/photo/
-    ingredients/steps.  If no localized sibling exists, the device result is
-    kept and marked translationRequired for the frontend translation fallback.
+    when sending. Display-market siblings are used only for title/photo/
+    ingredients/steps. If no localized sibling exists, the device result is
+    kept and marked ``translationRequired`` for the frontend translation
+    fallback. The final send path still refetches official detail and validates
+    exact IDs before publishing, so lightweight device search rows are safe to
+    use as send-variant hints here.
     """
 
     target = normalize_language(target_language)
@@ -119,18 +132,13 @@ def merge_display_and_device_catalogs(
             for name, value in _send_fields(device).items():
                 if value is not None:
                     merged[name] = value
-            merged["sendable"] = bool(
-                device.get("sendable")
-                and merged.get("sendVariantId")
-                and merged.get("sendGroupingFunctionalId")
-                and merged.get("sendRecipeFunctionalId")
-            )
+            merged["sendable"] = _has_send_fields(merged)
         else:
             merged = deepcopy(device)
             for name, value in _send_fields(device).items():
                 if value is not None:
                     merged[name] = value
-            merged["sendable"] = bool(device.get("sendable"))
+            merged["sendable"] = _has_send_fields(merged)
 
         source_language = _language(merged)
         merged["requestedLanguage"] = target
@@ -142,27 +150,29 @@ def merge_display_and_device_catalogs(
         output.append(merged)
         seen.add(key)
 
-    # If the device-market search returned nothing (for example a query written
-    # entirely in the UI language), still expose display-market results.  They
-    # remain viewable but are conservatively not sendable until a device-locale
-    # sibling is proven.
-    if not device_items:
-        for display in display_items:
-            key = _group_key(display)
-            if key in seen:
-                continue
-            merged = deepcopy(display)
-            merged["requestedLanguage"] = target
-            source_language = _language(merged)
-            merged["translationRequired"] = bool(source_language and source_language != target)
-            if source_language and source_language != target:
-                merged["sourceLanguage"] = source_language
-            else:
-                merged["localizedBySeb"] = bool(source_language == target)
-            merged["sendable"] = False
-            merged["deviceVariantMissing"] = True
-            output.append(merged)
-            seen.add(key)
+    # Append target-language display-only groups too. They remain viewable but
+    # deliberately unsendable until a device-market sibling is proven.
+    for display in display_items:
+        key = _group_key(display)
+        if key in seen:
+            continue
+        source_language = _language(display)
+        # When device results exist, only append genuinely localized display
+        # extras; otherwise a second set of foreign-language cards would defeat
+        # the purpose of the display-market pass.
+        if device_items and source_language != target:
+            continue
+        merged = deepcopy(display)
+        merged["requestedLanguage"] = target
+        merged["translationRequired"] = bool(source_language and source_language != target)
+        if source_language and source_language != target:
+            merged["sourceLanguage"] = source_language
+        else:
+            merged["localizedBySeb"] = bool(source_language == target)
+        merged["sendable"] = False
+        merged["deviceVariantMissing"] = True
+        output.append(merged)
+        seen.add(key)
 
     result = deepcopy(device_result if device_result else display_result)
     result["items"] = output
