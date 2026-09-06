@@ -1,9 +1,9 @@
 # HA-Cook4me — Recipe Hub
 
 [![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz/)
-![Version](https://img.shields.io/badge/version-2026.9.6.3-blue.svg)
+![Version](https://img.shields.io/badge/version-2026.9.6.4-blue.svg)
 
-**Current version:** `2026.9.6.3` · version format: `YYYY.M.D.BUILD`
+**Current version:** `2026.9.6.4` · version format: `YYYY.M.D.BUILD`
 
 Home Assistant custom integration for KRUPS/Tefal **Cook4Me / Cookeo** Wi-Fi cookers, with cloud-push state, a Recipe Hub, official recipe delivery, pantry-aware recommendations, diet/allergy filtering, manual cook-along recipes and Home Assistant Conversation-powered AI recipes.
 
@@ -20,9 +20,9 @@ HACS installs directly from the repository source, so installation does not depe
 
 Minimum Home Assistant version for bundled local brand assets: **2026.3.0**.
 
-This release builds on the existing v0.2.8 Cook4Me cloud integration and adds a recipe-focused Home Assistant experience without replacing the proven AWS IoT monitoring/sending core.
+This release builds on the existing Cook4Me cloud integration and adds a recipe-focused Home Assistant experience without replacing the proven AWS IoT monitoring/sending core.
 
-## New Recipe Hub panel
+## Recipe Hub panel
 
 A **Cook4Me** sidebar panel is registered automatically and provides:
 
@@ -33,7 +33,22 @@ A **Cook4Me** sidebar panel is registered automatically and provides:
 - **Eating-habit ranking** — repeated ingredients/categories from successful official recipe sends become small ranking-only hints. They never override dietary/allergy safety rules.
 - **AI recipe** — use an already configured Home Assistant Conversation agent to generate a recipe from the pantry/profile/request. AI output is revalidated deterministically before it can be saved.
 
-Official search results are grouped by the SEB recipe `groupingId`, so serving/language variants do not appear as duplicate cards. Recipe photos are selected only from recipe-level media. The panel asks the catalog for the current Home Assistant UI language and shows the actual source language if an exact localized sibling is unavailable. Display localization and appliance delivery remain separate: a localized sibling can be shown while the device-locale official variant is retained for sending.
+Official search results are grouped by the SEB recipe `groupingId`, so serving/language variants do not appear as duplicate cards. Recipe photos are selected only from recipe-level media, and step text comes from the real SEB mobile recipe fields.
+
+### Display language vs Cook4Me language
+
+Recipe Hub deliberately treats the **Home Assistant UI language** and the **Cook4Me/account locale** as two different things.
+
+For example, with Home Assistant in Greek and a Cook4Me configured for Germany:
+
+- display catalog: `el` / `GS_GR`
+- device/send catalog: `de` / `GS_DE`
+
+Results are merged by the proven SEB `groupingId`. The Greek sibling supplies the title, photo, ingredients and instructions shown in Home Assistant, while the German/device sibling retains the official variant IDs used for appliance delivery.
+
+If SEB has no official sibling in the Home Assistant UI language, Recipe Hub automatically uses a configured **Home Assistant generative Conversation agent** to translate only the visible recipe text. Translation is done in small batches and cached for the panel session. Recipe IDs, grouping IDs and the device-send variant are never translated or modified. If no suitable generative Conversation agent is configured, the original source language remains visible and the panel reports that automatic translation is unavailable.
+
+Official SEB localization is always preferred over AI translation.
 
 ## Official recipe delivery
 
