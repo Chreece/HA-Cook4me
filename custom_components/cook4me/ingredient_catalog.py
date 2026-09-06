@@ -18,13 +18,10 @@ _MAX_LANGUAGES = 8
 _MAX_ITEMS = 5000
 RECIPE_FALLBACK_SOURCE = "hydrated_official_recipes_fallback:v3_food_identity"
 
-# Unicode vulgar fractions used in recipe quantities. Python's \d already
-# matches non-ASCII decimal digits (for example Arabic-Indic numerals).
 _VULGAR_FRACTIONS = "¼½¾⅐⅑⅒⅓⅔⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞"
 _NUMBER = rf"(?:\d+(?:[.,٫]\d+)?|\d+\s*/\s*\d+|[{_VULGAR_FRACTIONS}])"
 _AMOUNT = rf"(?:{_NUMBER})(?:\s*(?:[-–—]\s*|to\s+){_NUMBER})?"
 _GENERIC_AMOUNT_PREFIX = re.compile(rf"^\s*{_AMOUNT}\s+", re.IGNORECASE | re.UNICODE)
-_RECIPE_DETAIL_SPLIT = re.compile(r"\s*(?:[,;:]|[\(\[\{（【])\s*", re.UNICODE)
 
 
 def _text(value: Any) -> str:
@@ -50,7 +47,6 @@ def _norm(value: Any) -> str:
 
 
 def _quantity_strings(value: Any) -> list[str]:
-    """Return textual forms that SEB may use for a structured quantity."""
     if value in (None, ""):
         return []
     forms: list[str] = []
@@ -70,7 +66,6 @@ def _quantity_strings(value: Any) -> list[str]:
 
 
 def _strip_structured_amount(name: str, item: dict[str, Any]) -> str:
-    """Strip recipe quantity/unit prefix without language assumptions."""
     quantity_forms = _quantity_strings(item.get("quantity"))
     unit = _text(item.get("unit"))
     boundary = r"(?=\s|[-–—,:;]|$)"
@@ -105,13 +100,11 @@ def _strip_structured_amount(name: str, item: dict[str, Any]) -> str:
 
 
 def _strip_generic_amount_prefix(name: str) -> str:
-    """Remove a leading numeric amount when only free-form text exists."""
     cleaned = _GENERIC_AMOUNT_PREFIX.sub("", name, count=1).strip()
     return cleaned or name
 
 
 def catalog_ingredient_name(item: Any) -> str:
-    """Return an amount-free ingredient label suitable for catalog selection."""
     if isinstance(item, str):
         return _strip_generic_amount_prefix(_text(item))
     if not isinstance(item, dict):
@@ -133,6 +126,25 @@ def catalog_ingredient_name(item: Any) -> str:
     return _strip_generic_amount_prefix(cleaned)
 
 
+def _is_recipe_detail_delimiter(char: str) -> bool:
+    """Detect structural clause delimiters without language-specific tokens."""
+    category = unicodedata.category(char)
+    if category == "Ps":
+        return True
+    name = unicodedata.name(char, "")
+    return "COMMA" in name or "SEMICOLON" in name or "COLON" in name
+
+
+def _leading_recipe_clause(value: str) -> str:
+    out: list[str] = []
+    for char in value:
+        if _is_recipe_detail_delimiter(char):
+            break
+        out.append(char)
+    core = "".join(out).strip()
+    return core or value
+
+
 def _recipe_core_label(value: Any, item: dict[str, Any]) -> str:
     """Reduce recipe prose to its leading ingredient phrase structurally."""
     name = _text(value)
@@ -140,15 +152,10 @@ def _recipe_core_label(value: Any, item: dict[str, Any]) -> str:
         return ""
     name = _strip_structured_amount(name, item)
     name = _strip_generic_amount_prefix(name)
-    # Commas, semicolons, colons and opening brackets delimit preparation,
-    # quantity, optionality or serving details in every catalog without needing
-    # to know the language of those details.
-    core = _RECIPE_DETAIL_SPLIT.split(name, maxsplit=1)[0].strip()
-    return core or name
+    return _leading_recipe_clause(name)
 
 
 def _label_score(value: str) -> tuple[int, int, int, str]:
-    """Prefer the least recipe-specific label without language dictionaries."""
     text = _text(value)
     token_count = len(text.split())
     punctuation = sum(not char.isalnum() and not char.isspace() for char in text)
@@ -156,7 +163,6 @@ def _label_score(value: str) -> tuple[int, int, int, str]:
 
 
 def _best_recipe_group_name(items: list[dict[str, Any]]) -> str:
-    """Choose one stable display name for all occurrences of one SEB food key."""
     canonical = {
         _text(item.get("foodName"))
         for item in items
@@ -215,7 +221,6 @@ def normalize_house_ingredients(value: Any) -> list[dict[str, str]]:
 
 
 def _dedupe_catalog_names(rows: list[dict[str, str]]) -> list[dict[str, str]]:
-    """Ensure the final user-visible catalog has no duplicate cleaned names."""
     out: list[dict[str, str]] = []
     by_name: dict[str, int] = {}
     for row in rows:
@@ -227,14 +232,12 @@ def _dedupe_catalog_names(rows: list[dict[str, str]]) -> list[dict[str, str]]:
             by_name[normalized] = len(out)
             out.append(row)
             continue
-        # Prefer the occurrence that preserves a stable SEB food identity.
         if not out[existing_index].get("key") and row.get("key"):
             out[existing_index] = row
     return out
 
 
 def _clean_catalog_rows(rows: list[Any]) -> list[dict[str, str]]:
-    """Normalize and dedupe already-trusted catalog rows."""
     out: list[dict[str, str]] = []
     seen_identity: set[str] = set()
     for raw in rows:
@@ -260,13 +263,7 @@ def _clean_catalog_rows(rows: list[Any]) -> list[dict[str, str]]:
 
 
 def catalog_items_from_recipes(recipes: list[dict[str, Any]]) -> list[dict[str, str]]:
-    """Build a conservative ingredient catalog from official recipe details.
-
-    Recipe prose is not itself an ingredient identity. A row is admitted only
-    when SEB supplied a stable food key, or at minimum a canonical foodName from
-    the recipe's `food` object. This universally excludes cookware, paper,
-    presentation instructions and other non-food free text without dictionaries.
-    """
+    """Build a conservative catalog from proven SEB food identity only."""
     by_key: dict[str, list[dict[str, Any]]] = defaultdict(list)
     canonical_without_key: list[dict[str, str]] = []
 
@@ -282,9 +279,6 @@ def catalog_items_from_recipes(recipes: list[dict[str, Any]]) -> list[dict[str, 
                 by_key[key].append(ingredient)
             elif canonical:
                 canonical_without_key.append({"name": canonical})
-            # Deliberately ignore keyless/canonical-less recipe descriptions.
-            # They are not proven foods and are the source of utensil/instruction
-            # pollution in the fallback catalog.
 
     rows: list[dict[str, str]] = []
     for key, items in by_key.items():
@@ -323,7 +317,6 @@ def _localized_name(value: Any, language: str) -> str:
 
 
 def marketing_food_items(payload: Any, language: str) -> list[dict[str, str]]:
-    """Normalize the dedicated DcpMarketingFood wrapper returned by SEB."""
     if not isinstance(payload, dict):
         return []
     candidates: list[Any] = []
@@ -352,8 +345,6 @@ def marketing_food_items(payload: Any, language: str) -> list[dict[str, str]]:
         if key:
             row["key"] = key
         rows.append(row)
-    # This endpoint is itself a food data-reference catalog, so its names are
-    # trusted even if a particular response omits a key.
     return _clean_catalog_rows(rows)
 
 
@@ -424,8 +415,6 @@ def shopping_item_name(item: Any) -> str:
 
 
 class Cook4MeIngredientCatalogCache:
-    """Persist a bounded per-language ingredient catalog for 24 hours."""
-
     def __init__(self, hass: HomeAssistant, entry_id: str) -> None:
         self._store: Store[dict[str, Any]] = Store(
             hass, _STORAGE_VERSION, f"{DOMAIN}.{entry_id}.ingredient_catalog"
@@ -466,8 +455,6 @@ class Cook4MeIngredientCatalogCache:
             return None
         source = str(row.get("source") or "")
         if source.startswith("hydrated_official_recipes_fallback") and source != RECIPE_FALLBACK_SOURCE:
-            # Old recipe-derived cache rows have already lost the raw food
-            # metadata required by the hardened v3 filter. Rebuild immediately.
             self._data.pop(str(language), None)
             return None
         result = deepcopy(row)
