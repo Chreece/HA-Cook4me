@@ -104,6 +104,62 @@ class IngredientCatalogTests(unittest.TestCase):
         self.assertEqual(self.module.catalog_ingredient_name("٣ طماطم"), "طماطم")
         self.assertEqual(self.module.catalog_ingredient_name("3 tomates"), "tomates")
 
+    def test_unicode_normalization_keeps_non_latin_food_names(self):
+        self.assertEqual(self.module._norm("زيت"), "زيت")
+        self.assertEqual(self.module._norm("しょうゆ"), "しょうゆ")
+        self.assertEqual(self.module._norm("Żółta papryka"), "zołta papryka")
+
+    def test_recipe_fallback_rejects_keyless_recipe_prose(self):
+        recipes = [
+            {
+                "ingredients": [
+                    {"name": "Runde Backform, mit Backpapier ausgelegt, 13 cm"},
+                    {"applianceDescription": "Backpapier"},
+                    {"name": "Förmchen aus Porzellan, 150 ml"},
+                    {"name": "Hübsche Schälchen oder kleine tiefe Teller"},
+                    {"foodName": "Salz", "name": "Salz und Pfeffer, zum Würzen"},
+                ]
+            }
+        ]
+        self.assertEqual(
+            self.module.catalog_items_from_recipes(recipes),
+            [{"name": "Salz"}],
+        )
+
+    def test_same_food_identity_collapses_preparation_prose(self):
+        recipes = [
+            {
+                "ingredients": [
+                    {"foodKey": "M_FOOD_10", "name": "Lachsfilet (à 100 g)"},
+                    {"foodKey": "M_FOOD_10", "name": "Lachsfilet"},
+                    {"foodKey": "M_FOOD_11", "name": "Mungobohnen, bereits 12 Stunden eingeweicht"},
+                    {"foodKey": "M_FOOD_12", "name": "Crème Double, über den Butter-Schoko-Mix gegeben"},
+                    {"foodKey": "M_FOOD_13", "name": "Salatköpfe, gewaschen und Außenblätter entfernt"},
+                    {"foodKey": "M_FOOD_14", "name": "Weiße Fischfilets (400 g) (z.B. Lotte oder Kabeljau)"},
+                ]
+            }
+        ]
+        self.assertEqual(
+            self.module.catalog_items_from_recipes(recipes),
+            [
+                {"key": "M_FOOD_12", "name": "Crème Double"},
+                {"key": "M_FOOD_10", "name": "Lachsfilet"},
+                {"key": "M_FOOD_11", "name": "Mungobohnen"},
+                {"key": "M_FOOD_13", "name": "Salatköpfe"},
+                {"key": "M_FOOD_14", "name": "Weiße Fischfilets"},
+            ],
+        )
+
+    def test_final_catalog_dedupes_same_clean_name_across_different_keys(self):
+        rows = self.module._clean_catalog_rows(
+            [
+                {"key": "M_FOOD_A", "name": "Olivenöl"},
+                {"key": "M_FOOD_B", "name": "Olivenöl"},
+                {"name": "Olivenöl"},
+            ]
+        )
+        self.assertEqual(rows, [{"key": "M_FOOD_A", "name": "Olivenöl"}])
+
 
 if __name__ == "__main__":
     unittest.main()
