@@ -25,7 +25,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Validate version, JSON, and Python syntax
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate version, JSON, Python, and frontend syntax
         run: |
           python scripts/version.py validate
           python -m compileall -q custom_components/cook4me tests
@@ -36,5 +39,8 @@ jobs:
               json.loads(p.read_text(encoding='utf-8'))
           print('JSON OK')
           PY
+          for file in custom_components/cook4me/frontend/*.js; do
+            node --check "$file"
+          done
       - name: Run focused tests
         run: python -m unittest discover -s tests -v
