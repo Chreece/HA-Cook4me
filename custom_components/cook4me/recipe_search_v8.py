@@ -6,62 +6,40 @@ from typing import Any
 
 from .vendor import cook4me_recipe_catalog as catalog
 
-# SearchRecipesV2 / wc0.a body fields recovered from the current KRUPS APK.
-# Keep this deliberately conservative: every field/filter below is directly
-# evidenced by the app.  We do not invent a PRODUCT value for the user's cooker
-# until the exact selected-appliance search filter is available from account
-# metadata.
-_APP_FIELD_LIST: tuple[str, ...] = (
-    "resourceMedias",
-    "domain",
-    "identifier",
-    "title",
-    "lang",
-    "market",
-    "brand",
-    "creator",
-    "publicationDate",
-    "creationDate",
-    "modificationDate",
-    "community",
-    "topRecipe.type",
-    "topRecipe.id",
-    "privacyLevel",
-    "durations.totalTime",
-    "classifications",
-    "marketingFood",
-    "yield.quantity",
-    "yield.unit",
-    "isPersonalizedAdaptation",
-)
+# Standalone-proven against the current KRUPS backend and the user's Cookeo.
+# For de / GS_DE + q=risotto this exact contract returns 29 serving variants,
+# which hydrate and collapse by groupingId to the 11 logical recipes shown by
+# the KRUPS application.  Do not add the old speculative fieldList,
+# FOOD_COOKING, privacy/source or empty-list filters back here without a fresh
+# standalone proof.
+SEARCH_CONTRACT = "standalone-proven-cookeo-brand-v5"
+DEFAULT_APPLIANCE_GROUP = "APPLIANCE_GROUP_15"
+DEFAULT_RECIPE_TYPE = "BRAND"
 
 
-def app_search_body(language: str, market: str) -> dict[str, Any]:
-    """Return the evidence-backed SearchRecipesV2 request body.
-
-    The APK builds the same lang/market constraints both as query parameters and
-    as field filters.  The previous HA implementation sent only ``{}``, which
-    allowed unrelated-language variants into a market result and made strict
-    post-filtering drop otherwise valid searches.
-    """
+def app_search_body(
+    language: str,
+    market: str,
+    *,
+    appliance_group: str = DEFAULT_APPLIANCE_GROUP,
+    recipe_type: str = DEFAULT_RECIPE_TYPE,
+) -> dict[str, Any]:
+    """Return the exact standalone-proven Cookeo branded-recipe search body."""
 
     language = str(language or "").strip().lower()
     market = str(market or "").strip().upper()
+    appliance_group = str(appliance_group or DEFAULT_APPLIANCE_GROUP).strip()
+    recipe_type = str(recipe_type or DEFAULT_RECIPE_TYPE).strip().upper()
     return {
-        "fieldList": list(_APP_FIELD_LIST),
         "fieldFilters": [
             {"field": "lang.key", "values": [language]},
             {"field": "market.key", "values": [market]},
-            {"field": "privacyLevel.key", "values": ["COMMUNITY", "PUBLIC"]},
-            {"field": "id.sourceSystem.key", "values": ["PRO"]},
             {
-                "field": "classifications.key_FOOD_COOKING",
-                "values": ["IS_FOOD_COOKING"],
-                "type": "inclusion",
+                "field": "applianceGroups.reference.key",
+                "values": [appliance_group],
             },
-        ],
-        "facetFilters": [],
-        "ingredientsSelectedNestedFieldFiltersGroups": [],
+            {"field": "topRecipe.type.key", "values": [recipe_type]},
+        ]
     }
 
 
@@ -77,8 +55,10 @@ def search_recipes(
     language: str = "de",
     configured_language: str | None = None,
     app_version: str = "36.0.0-RC3",
+    appliance_group: str = DEFAULT_APPLIANCE_GROUP,
+    recipe_type: str = DEFAULT_RECIPE_TYPE,
 ) -> dict[str, Any]:
-    """Search with the current-app body, then hydrate before grouping/rendering."""
+    """Search the proven Cookeo/KRUPS catalog contract and hydrate before grouping."""
 
     if catalog.c4m.curl_requests is None:
         raise catalog.CatalogError("curl-cffi is not available")
@@ -90,6 +70,8 @@ def search_recipes(
     configured_language = str(configured_language or language or "de").lower()
     language = str(language or configured_language).lower()
     market = f"GS_{country}"
+    appliance_group = str(appliance_group or DEFAULT_APPLIANCE_GROUP).strip()
+    recipe_type = str(recipe_type or DEFAULT_RECIPE_TYPE).strip().upper()
 
     cfg = dict(cfg)
     pcfg = catalog._platform_context(cfg, country, configured_language, app_version)
@@ -106,7 +88,12 @@ def search_recipes(
         "myOwnRecipe": "false",
         "withAutomaticSpellcheck": "true",
     }
-    body = app_search_body(language, market)
+    body = app_search_body(
+        language,
+        market,
+        appliance_group=appliance_group,
+        recipe_type=recipe_type,
+    )
     payload, auth_mode = catalog._http_json(
         "POST",
         url,
@@ -181,10 +168,12 @@ def search_recipes(
         "requestedLanguage": language,
         "configuredLanguage": configured_language,
         "market": market,
+        "applianceGroup": appliance_group,
+        "recipeType": recipe_type,
         "page": page_obj,
         "rawVariantCount": len(lightweight),
         "groupedRecipeCount": len(collapsed),
         "items": collapsed,
         "authMode": auth_mode,
-        "searchContract": "apk-searchrecipesv2-v4",
+        "searchContract": SEARCH_CONTRACT,
     }
