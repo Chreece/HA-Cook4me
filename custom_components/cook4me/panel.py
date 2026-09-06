@@ -25,7 +25,7 @@ async def async_register_panel(hass: HomeAssistant) -> None:
         hass=hass,
         frontend_url_path=DOMAIN,
         webcomponent_name=_PANEL_ELEMENT,
-        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.6.10",
+        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.6.11",
         sidebar_title="Cook4Me",
         sidebar_icon="mdi:pot-steam",
         embed_iframe=False,
