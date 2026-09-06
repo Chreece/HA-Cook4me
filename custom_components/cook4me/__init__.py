@@ -16,6 +16,7 @@ from .websocket_v5 import async_register as async_register_websocket_v5
 from .websocket_v7 import async_register as async_register_websocket_v7
 from .websocket_v8 import async_register as async_register_websocket_v8
 from .websocket_v9 import async_register as async_register_websocket_v9
+from .websocket_v10 import async_register as async_register_websocket_v10
 
 SERVICE_SEND_RECIPE = "send_recipe"
 SERVICE_SEARCH_RECIPES = "search_recipes"
@@ -121,6 +122,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     async_register_websocket_v7(hass)
     async_register_websocket_v8(hass)
     async_register_websocket_v9(hass)
+    async_register_websocket_v10(hass)
     await async_register_panel(hass)
     return True
 
