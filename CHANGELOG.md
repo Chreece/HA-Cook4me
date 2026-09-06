@@ -1,16 +1,29 @@
 # Changelog
 
+## 2026.9.6.5
+
+- Add a Recipe Hub **recipe-language selector** with Auto/Home Assistant plus the SEB/KRUPS catalog languages observed by the integration (including Greek, German, English, Slovak, Hungarian, Czech, Portuguese and others).
+- A specifically selected language is a strict filter: recipes that are not actually returned in that language are omitted instead of silently falling back to another language.
+- Keep **Automatic** mode tied to the Home Assistant UI language while preserving the separate Cook4Me/device-locale send variant.
+- Replace the v4 Conversation-agent translation heuristic with Home Assistant's native **default AI Task** contract. Translation uses the preferred `gen_data_entity_id` through `ai_task.generate_data` semantics and never guesses a Conversation agent.
+- Show/enable the **Translate results to Home Assistant language** toggle only when a usable preferred/default AI Task exists.
+- If no default AI Task exists, do not show an error banner and do not modify recipe text: the original SEB/KRUPS language is displayed as-is.
+- AI Task translation remains display-only; grouping IDs, recipe IDs, send variants and Cook4Me commands are never translated or modified.
+- Translation provider/task failures are non-fatal and leave the original recipe visible.
+- Add Recipe Hub v5 WebSocket APIs for capabilities, language-filtered search/detail/recommendations, and optional default-AI-Task translation.
+- Add catalog-language regressions and validate the v5 frontend with Node syntax checks.
+
 ## 2026.9.6.4
 
 - Decouple Recipe Hub **display locale** from the Cook4Me/device account locale. A Greek Home Assistant UI now searches the SEB Greek display catalog (`el` / `GS_GR`) while the device-side recipe lookup remains on its configured locale (for example `de` / `GS_DE`).
 - Merge display and device catalog results by the proven SEB `groupingId`: localized title/photo/ingredients/steps come from the display sibling, while recipe delivery keeps the device-compatible variant IDs.
 - Keep display-only localized recipes visible but conservatively disable sending until a matching device-market sibling is proven.
 - Mark recipes with no official SEB sibling in the Home Assistant UI language as requiring translation instead of silently presenting foreign content as localized.
-- Add automatic **Home Assistant Conversation AI translation fallback** for card titles/ingredients and full recipe steps when SEB does not provide the requested language. Translation never changes recipe/grouping/device IDs or the send path.
+- Add automatic Home Assistant Conversation AI translation fallback for card titles/ingredients and full recipe steps when SEB does not provide the requested language.
 - Translate in small batches and cache translations in the panel session; official SEB localization is always preferred over AI translation.
-- Show the original source language when AI translation is used, and clearly report when no generative Conversation agent is available.
+- Show the original source language when AI translation is used.
 - Add localization regressions for Greek display-market selection, display/device grouping merge, device-send variant preservation, translation fallback markers, and display-only safety.
-- Validate the new Recipe Hub v4 frontend with Node syntax checks in CI.
+- Validate the Recipe Hub v4 frontend with Node syntax checks in CI.
 
 ## 2026.9.6.3
 
