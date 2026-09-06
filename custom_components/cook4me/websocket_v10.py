@@ -6,12 +6,14 @@ from typing import Any
 import voluptuous as vol
 from homeassistant.components import websocket_api
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.exceptions import HomeAssistantError
 
 from . import recipe_catalog_diagnostics as catalog_diag
 from . import websocket as legacy
 from . import websocket_v5 as v5
 from . import websocket_v7 as v7
 from . import websocket_v8 as v8
+from . import websocket_v9 as v9
 from .vendor import cook4me_recipe_catalog as recipe_catalog
 
 
@@ -95,6 +97,24 @@ def _decorate_result(bridge, raw: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
+def _is_catalog_rejection(exc: Exception) -> bool:
+    """Return True only for a recipe-catalog rejection worth diagnosing.
+
+    v9 owns the HTTP-only KRUPS refresh. If that refresh succeeds but the
+    catalog still rejects the refreshed token, v9 intentionally converts the
+    second CatalogAuthError into a short HomeAssistantError. Treat that one
+    exact condition as a catalog rejection so v10 can run its read-only A/B
+    diagnostic. Other Home Assistant errors (including auth refresh network
+    failures) must keep their real meaning and must not be mislabeled.
+    """
+
+    if isinstance(exc, (recipe_catalog.CatalogAuthError, recipe_catalog.CatalogError)):
+        return True
+    return isinstance(exc, HomeAssistantError) and str(exc) == (
+        "KRUPS recipe-catalog authentication is still rejected after refresh"
+    )
+
+
 async def _search_with_diagnostic(
     hass: HomeAssistant,
     bridge,
@@ -107,7 +127,13 @@ async def _search_with_diagnostic(
     refresh: bool,
 ) -> dict[str, Any]:
     try:
-        raw, cache_hit = await v8._raw_search(
+        # v9 is intentionally used here rather than v8. v9 performs a
+        # browserless KRUPS HTTP-only token refresh on CatalogAuthError. The old
+        # v8/legacy path refreshed by running the `status` command, which starts
+        # an unrelated AWS IoT MQTT round-trip and can time out whenever the
+        # cooker is offline. That regression produced raw websocket-client
+        # tracebacks in the Recipe Hub instead of reaching this diagnostic.
+        raw, cache_hit = await v9._raw_search(
             hass,
             bridge,
             query=query,
@@ -120,11 +146,13 @@ async def _search_with_diagnostic(
         result = _decorate_result(bridge, raw)
         result["cacheHit"] = cache_hit
         result["searchContract"] = raw.get("searchContract") or "apk-searchrecipesv2-v4"
+        result["catalogAuthRefresh"] = "krups-http-only"
         return result
     except Exception as exc:
-        # Only run the network A/B diagnostic for catalog HTTP failures. Local
-        # programming/schema errors should still surface as normal errors.
-        if not isinstance(exc, (recipe_catalog.CatalogAuthError, recipe_catalog.CatalogError)):
+        # Only run the network A/B diagnostic for an actual catalog rejection.
+        # In particular, do not turn unrelated cloud/MQTT/network failures into
+        # a fake catalog-auth diagnosis.
+        if not _is_catalog_rejection(exc):
             raise
 
         diagnostic = await _diagnose(hass, bridge, query=query, language=language)
@@ -149,6 +177,7 @@ async def _search_with_diagnostic(
                         "fallbackUsed": True,
                         "fallbackReason": "v8_app_body_rejected_legacy_body_accepted",
                         "searchContract": "legacy-empty-body-compatibility-fallback",
+                        "catalogAuthRefresh": "krups-http-only",
                         "catalogDiagnostic": diagnostic,
                         "catalogDiagnosticSummary": catalog_diag.diagnostic_summary(diagnostic),
                     }
@@ -161,6 +190,7 @@ async def _search_with_diagnostic(
             "errorCode": "catalog_request_rejected",
             "error": catalog_diag.diagnostic_summary(diagnostic),
             "catalogDiagnostic": diagnostic,
+            "catalogAuthRefresh": "krups-http-only",
             "deviceCanAccept": bridge.can_accept_recipe,
             "loadedRecipe": bridge.loaded_recipe,
         }
