@@ -1,9 +1,9 @@
 # HA-Cook4me — Recipe Hub
 
 [![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz/)
-![Version](https://img.shields.io/badge/version-2026.9.6.8-blue.svg)
+![Version](https://img.shields.io/badge/version-2026.9.6.12-blue.svg)
 
-**Current version:** `2026.9.6.8` · version format: `YYYY.M.D.BUILD`
+**Current version:** `2026.9.6.12` · version format: `YYYY.M.D.BUILD`
 
 Home Assistant custom integration for KRUPS/Tefal **Cook4Me / Cookeo** Wi-Fi cookers, with cloud-push state, a Recipe Hub, official recipe delivery, pantry-aware recommendations, diet/allergy filtering, manual cook-along recipes and Home Assistant AI features.
 
@@ -24,35 +24,52 @@ Minimum Home Assistant version for bundled local brand assets: **2026.3.0**.
 
 A **Cook4Me** sidebar panel is registered automatically and provides:
 
-- **Official recipes** — search the SEB/Cook4Me catalog, inspect ingredients and steps, and send official recipes to the appliance.
+- **Official recipes** — search the SEB/KRUPS catalog, inspect ingredients and steps, and send official recipes to the appliance.
 - **For my fridge** — rank official recipes against the saved pantry/fridge list and show matched/missing ingredients.
 - **My recipes** — create and store manual cook-along recipes in Home Assistant.
 - **Pantry & diet** — save pantry items, omnivore/pescatarian/vegetarian/vegan mode, allergies, dislikes/avoid terms, and preferences.
 - **Eating-habit ranking** — repeated ingredients/categories from successful official recipe sends become small ranking-only hints. They never override dietary/allergy safety rules.
 - **AI recipe** — use an already configured Home Assistant Conversation agent to generate a recipe from the pantry/profile/request. AI output is revalidated deterministically before it can be saved.
 
-Official search data is fully hydrated before the first card render, so title/photo/ingredients/steps are present before the user can open a result.
+Official search data is hydrated before card rendering so title/photo/ingredients/steps can be normalized before grouping and display.
 
-### APK-aligned official search
+## Standalone-proven official search
 
-Recipe Hub uses the current KRUPS APK `SearchRecipesV2` endpoint and request context. The active v8 search still calls the proven:
+The active Recipe Hub search uses the current KRUPS endpoint:
 
 `POST /common-api/v4/search/recipes`
 
-but no longer sends an empty JSON body. It now includes the app-observed `fieldList` and the app's language/market, privacy, PRO-source and food-cooking field filters. This matters because the KRUPS app applies those filters inside the request body as well as the query parameters.
+The request body was not guessed inside Home Assistant. It was isolated and verified in a standalone process with **no Home Assistant, no MQTT and no login token**.
 
-The search result is then hydrated through official recipe detail before language filtering, grouping or rendering.
+For the German Cookeo proof (`q=risotto`, `de`, `GS_DE`) the working request body is exactly:
 
-### One logical recipe: languages → servings
+```json
+{
+  "fieldFilters": [
+    {"field": "lang.key", "values": ["de"]},
+    {"field": "market.key", "values": ["GS_DE"]},
+    {"field": "applianceGroups.reference.key", "values": ["APPLIANCE_GROUP_15"]},
+    {"field": "topRecipe.type.key", "values": ["BRAND"]}
+  ]
+}
+```
+
+with the normal v4 query parameters (`lang`, `market`, `page`, `size`, `q`, `groupBy`, `myUniverse`, `myOwnRecipe`, `withAutomaticSpellcheck`).
+
+The proof returned **29 German KRUPS Cookeo serving variants** and hydration collapsed them by the real SEB `groupingId` into **exactly 11 logical recipes**, matching the KRUPS app result count. The proof set includes `Pfifferling-Risotto`, `Risotto "Aus Vorräten"` and `Risotto mit roten Linsen`.
+
+The older speculative request body containing `fieldList`, `classifications.key_FOOD_COOKING`, privacy/source filters and empty filter lists is deliberately no longer used. Those fields were tested independently outside HA: some were unnecessary, some reduced the result to zero, and the old full field list could produce `INVALID_INPUT`.
+
+## One logical recipe: languages → servings
 
 Recipe Hub models one logical recipe as:
 
 - **language variants** for that recipe; and
 - **serving variants** inside each language.
 
-Recipes sharing the proven SEB `groupingId` are shown as one card even when several language siblings are returned. The card/detail exposes a recipe-language selector containing only languages actually discovered for that logical recipe.
+Recipes sharing the proven SEB `groupingId` are shown as one card even when several siblings are returned. The card/detail exposes a recipe-language selector containing only languages actually discovered for that logical recipe.
 
-Within the selected language, 2/4/6-person publications appear in a servings selector instead of separate cards. For same-language publications where SEB used different top IDs, v8 also collapses only the conservative exact-match case: identical normalized title **and** identical recipe-cover URL.
+Within the selected language, 2/4/6-person publications appear in a servings selector instead of separate cards. For same-language publications where SEB used different top IDs, the integration also collapses only the conservative exact-match case: identical normalized title **and** identical recipe-cover URL.
 
 Changing either selector reloads the corresponding official detail so title, ingredients and steps match the chosen source language and serving amount.
 
@@ -76,6 +93,7 @@ Recipe Hub controls are stored through Home Assistant `Store` per Cook4Me config
 - global recipe-language selection;
 - translate-results toggle;
 - last Recipe Hub tab;
+- live search draft;
 - per-recipe selected source language; and
 - per-recipe selected serving amount.
 
@@ -89,7 +107,7 @@ The panel enables **Translate results to Home Assistant language** only when Hom
 
 - If a default AI Task exists, foreign-language result text can be translated to the HA UI language.
 - Search results are hydrated first, including full step instructions, and only then translated; cards and Steps therefore stay in sync.
-- If no default AI Task exists, nothing is treated as an error: the original SEB/KRUPS text is left exactly as-is.
+- If no default AI Task exists, nothing is treated as an error: the original SEB/KRUPS text is left as-is.
 - If the AI Task provider fails, search/detail still succeeds and the untranslated recipe remains visible.
 - Translation is display-only. `groupingFunctionalId`, recipe IDs, serving/send variants and Cook4Me commands are never changed by AI.
 
@@ -97,11 +115,11 @@ The panel enables **Translate results to Home Assistant language** only when Hom
 
 Normalized catalog data is cached through Home Assistant `Store` per Cook4Me config entry:
 
-- **search cache** — keyed by search-contract revision, query, display/device locale, page, size and strict-language mode;
+- **search cache** — keyed by search context/query/locale and automatically invalidated when it predates the standalone-proven Cookeo/BRAND contract;
 - **detail cache** — keyed by display locale and variant ID;
 - **translation cache** — keyed by a hash of the source recipe text plus target language.
 
-Repeated searches and translations survive panel reloads and Home Assistant restarts instead of repeatedly calling SEB or the AI Task provider. The v8 search-contract revision is part of the cache key, so old empty-body search results are not reused after upgrade.
+Repeated searches and translations survive panel reloads and Home Assistant restarts instead of repeatedly calling SEB or the AI Task provider. The v12 upgrade selectively invalidates only pre-proof search entries; saved UI preferences, recipe details and expensive AI translations are preserved.
 
 Caches are bounded and time-limited. Search entries currently live up to 7 days, detail entries up to 30 days, and translations up to 90 days. Explicit refresh bypasses cached catalog results.
 
@@ -156,7 +174,7 @@ Per-config-entry Recipe Hub profile/user data, UI preferences and the persistent
 
 Update HA-Cook4me from HACS and restart Home Assistant. The config-flow version is unchanged because no config-entry schema migration is required.
 
-After restart, open **Cook4Me** from the Home Assistant sidebar. The Recipe Hub panel module is versioned so this release does not reuse an older cached JavaScript panel.
+After restart, open **Cook4Me** from the Home Assistant sidebar. The panel module URL is versioned so the v12 update is cache-busted.
 
 ## License
 
