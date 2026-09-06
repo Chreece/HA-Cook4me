@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026.9.6.4
+
+- Decouple Recipe Hub **display locale** from the Cook4Me/device account locale. A Greek Home Assistant UI now searches the SEB Greek display catalog (`el` / `GS_GR`) while the device-side recipe lookup remains on its configured locale (for example `de` / `GS_DE`).
+- Merge display and device catalog results by the proven SEB `groupingId`: localized title/photo/ingredients/steps come from the display sibling, while recipe delivery keeps the device-compatible variant IDs.
+- Keep display-only localized recipes visible but conservatively disable sending until a matching device-market sibling is proven.
+- Mark recipes with no official SEB sibling in the Home Assistant UI language as requiring translation instead of silently presenting foreign content as localized.
+- Add automatic **Home Assistant Conversation AI translation fallback** for card titles/ingredients and full recipe steps when SEB does not provide the requested language. Translation never changes recipe/grouping/device IDs or the send path.
+- Translate in small batches and cache translations in the panel session; official SEB localization is always preferred over AI translation.
+- Show the original source language when AI translation is used, and clearly report when no generative Conversation agent is available.
+- Add localization regressions for Greek display-market selection, display/device grouping merge, device-send variant preservation, translation fallback markers, and display-only safety.
+- Validate the new Recipe Hub v4 frontend with Node syntax checks in CI.
+
 ## 2026.9.6.3
 
 - Group official search results by the proven SEB `groupingId`, so serving/language variants no longer appear as duplicate recipe cards.
