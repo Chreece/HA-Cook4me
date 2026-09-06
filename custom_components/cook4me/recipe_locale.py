@@ -92,15 +92,13 @@ def merge_display_and_device_catalogs(
     *,
     target_language: str,
 ) -> dict[str, Any]:
-    """Overlay localized display recipes onto device-compatible send variants.
+    """Overlay exact target-language siblings onto device-compatible variants.
 
-    Device-market results remain the authority for the exact recipe variant used
-    when sending. Display-market siblings are used only for title/photo/
-    ingredients/steps. If no localized sibling exists, the device result is
-    kept and marked ``translationRequired`` for the frontend translation
-    fallback. The final send path still refetches official detail and validates
-    exact IDs before publishing, so lightweight device search rows are safe to
-    use as send-variant hints here.
+    The device-market result is the fallback source of visible recipe content and
+    the authority for send-variant hints. A display-market sibling replaces its
+    visible fields only when that sibling is actually in ``target_language``.
+    This avoids showing an arbitrary Slovak/Hungarian/etc. fallback merely
+    because a target-market search happened to return it.
     """
 
     target = normalize_language(target_language)
@@ -110,21 +108,16 @@ def merge_display_and_device_catalogs(
     device_items = [x for x in device_result.get("items") or [] if isinstance(x, dict)]
 
     localized_by_group: dict[str, dict[str, Any]] = {}
-    fallback_display_by_group: dict[str, dict[str, Any]] = {}
     for item in display_items:
-        key = _group_key(item)
-        fallback_display_by_group.setdefault(key, item)
         if _language(item) == target:
-            localized_by_group.setdefault(key, item)
+            localized_by_group.setdefault(_group_key(item), item)
 
     output: list[dict[str, Any]] = []
     seen: set[str] = set()
 
-    # Base the visible list on device-market results whenever possible so every
-    # card can keep a proven device-locale send variant.
     for device in device_items:
         key = _group_key(device)
-        display = localized_by_group.get(key) or fallback_display_by_group.get(key)
+        display = localized_by_group.get(key)
         if display is not None:
             merged = deepcopy(display)
             merged["deviceSourceLanguage"] = device.get("language")
@@ -150,25 +143,16 @@ def merge_display_and_device_catalogs(
         output.append(merged)
         seen.add(key)
 
-    # Append target-language display-only groups too. They remain viewable but
-    # deliberately unsendable until a device-market sibling is proven.
+    # Exact target-language display-only groups stay visible, but sending is
+    # disabled until a device-market sibling has been proven.
     for display in display_items:
         key = _group_key(display)
-        if key in seen:
-            continue
-        source_language = _language(display)
-        # When device results exist, only append genuinely localized display
-        # extras; otherwise a second set of foreign-language cards would defeat
-        # the purpose of the display-market pass.
-        if device_items and source_language != target:
+        if key in seen or _language(display) != target:
             continue
         merged = deepcopy(display)
         merged["requestedLanguage"] = target
-        merged["translationRequired"] = bool(source_language and source_language != target)
-        if source_language and source_language != target:
-            merged["sourceLanguage"] = source_language
-        else:
-            merged["localizedBySeb"] = bool(source_language == target)
+        merged["translationRequired"] = False
+        merged["localizedBySeb"] = True
         merged["sendable"] = False
         merged["deviceVariantMissing"] = True
         output.append(merged)
