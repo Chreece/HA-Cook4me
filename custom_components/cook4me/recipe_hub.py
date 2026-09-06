@@ -23,9 +23,21 @@ _DEFAULT_PROFILE: dict[str, Any] = {
     "pantry": [],
 }
 
+_DEFAULT_UI_PREFERENCES: dict[str, Any] = {
+    "catalogLanguage": "auto",
+    "translateResults": True,
+    "lastTab": "official",
+    # Per logical recipe selections are bounded below.  They let the same card
+    # remember its preferred source language and serving across panel reloads.
+    "recipeLanguageSelections": {},
+    "recipeServingSelections": {},
+}
+
+_ALLOWED_TABS = {"official", "recommend", "mine", "profile", "ai"}
+
 
 class Cook4MeRecipeHub:
-    """Persist Cook4Me pantry/preferences and user recipes."""
+    """Persist Cook4Me pantry/preferences, user recipes, and Recipe Hub UI state."""
 
     def __init__(self, hass: HomeAssistant, entry_id: str) -> None:
         self.hass = hass
@@ -38,6 +50,7 @@ class Cook4MeRecipeHub:
             "profile": deepcopy(_DEFAULT_PROFILE),
             "recipes": [],
             "history": [],
+            "uiPreferences": deepcopy(_DEFAULT_UI_PREFERENCES),
         }
 
     async def async_load(self) -> None:
@@ -55,6 +68,11 @@ class Cook4MeRecipeHub:
         history = saved.get("history")
         if isinstance(history, list):
             self._data["history"] = [x for x in history[-100:] if isinstance(x, dict)]
+        ui_preferences = saved.get("uiPreferences")
+        if isinstance(ui_preferences, dict):
+            merged_ui = deepcopy(_DEFAULT_UI_PREFERENCES)
+            merged_ui.update(ui_preferences)
+            self._data["uiPreferences"] = self._normalize_ui_preferences(merged_ui)
 
     @staticmethod
     def _normalize_profile(profile: dict[str, Any]) -> dict[str, Any]:
@@ -68,6 +86,43 @@ class Cook4MeRecipeHub:
                 values = [x.strip() for x in values.replace(",", "\n").splitlines()]
             out[key] = list(dict.fromkeys(str(x).strip() for x in values if str(x).strip()))[:250]
         return out
+
+    @staticmethod
+    def _normalize_ui_preferences(preferences: dict[str, Any]) -> dict[str, Any]:
+        language = str(preferences.get("catalogLanguage") or "auto").strip().lower().replace("_", "-")
+        if language != "auto":
+            language = language.split("-", 1)[0][:12]
+            if not language.isalpha():
+                language = "auto"
+
+        tab = str(preferences.get("lastTab") or "official").strip().lower()
+        if tab not in _ALLOWED_TABS:
+            tab = "official"
+
+        def selection_map(value: Any, *, max_value_length: int) -> dict[str, str]:
+            if not isinstance(value, dict):
+                return {}
+            out: dict[str, str] = {}
+            # Keep the newest/current map insertion order and cap storage. The
+            # frontend writes only stable grouping/family keys, never recipe text.
+            for raw_key, raw_value in list(value.items())[-250:]:
+                key = str(raw_key or "").strip()[:160]
+                selected = str(raw_value or "").strip()[:max_value_length]
+                if key and selected:
+                    out[key] = selected
+            return out
+
+        return {
+            "catalogLanguage": language,
+            "translateResults": bool(preferences.get("translateResults", True)),
+            "lastTab": tab,
+            "recipeLanguageSelections": selection_map(
+                preferences.get("recipeLanguageSelections"), max_value_length=12
+            ),
+            "recipeServingSelections": selection_map(
+                preferences.get("recipeServingSelections"), max_value_length=32
+            ),
+        }
 
     async def _save(self) -> None:
         await self._store.async_save(self._data)
@@ -84,6 +139,10 @@ class Cook4MeRecipeHub:
         return deepcopy(self._data["recipes"])
 
     @property
+    def ui_preferences(self) -> dict[str, Any]:
+        return deepcopy(self._data["uiPreferences"])
+
+    @property
     def habit_terms(self) -> list[str]:
         return self._habit_terms()
 
@@ -94,6 +153,15 @@ class Cook4MeRecipeHub:
             self._data["profile"] = self._normalize_profile(merged)
             await self._save()
             return self.profile
+
+    async def async_set_ui_preferences(self, preferences: dict[str, Any]) -> dict[str, Any]:
+        """Persist Recipe Hub display controls without touching dietary profile data."""
+        async with self._lock:
+            merged = deepcopy(self._data["uiPreferences"])
+            merged.update(preferences)
+            self._data["uiPreferences"] = self._normalize_ui_preferences(merged)
+            await self._save()
+            return self.ui_preferences
 
     async def async_save_recipe(self, recipe: dict[str, Any], *, source: str = "manual") -> dict[str, Any]:
         normalized = normalize_manual_recipe(recipe, source=source)
