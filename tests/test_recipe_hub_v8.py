@@ -122,6 +122,13 @@ class RecipeHubV8Tests(unittest.TestCase):
         self.assertEqual(normalized["recipeLanguageSelections"], {"g:500": "it"})
         self.assertEqual(normalized["recipeServingSelections"], {"g:500": "6"})
 
+    def test_shopping_tab_is_a_persistable_recipe_hub_tab(self):
+        module = load_recipe_hub_module()
+        normalized = module.Cook4MeRecipeHub._normalize_ui_preferences(
+            {"lastTab": "shopping"}
+        )
+        self.assertEqual(normalized["lastTab"], "shopping")
+
     def test_old_pantry_migrates_to_structured_house_inventory(self):
         module = load_recipe_hub_module()
         normalized = module.Cook4MeRecipeHub._normalize_profile(
