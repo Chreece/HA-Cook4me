@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026.9.6.6
+
+- When an exact selected/HA-language SEB sibling is unavailable, prefer the configured Cook4Me/device-locale recipe as the original-language fallback instead of an arbitrary foreign sibling returned by the display market.
+- Hydrate ID-only fallback cards on demand using the fallback recipe's own source language, so “leave as-is” shows the real title/photo/ingredients/steps instead of numeric IDs such as `913005`.
+- Hydration runs only for missing/numeric titles and in batches of four, avoiding unnecessary detail requests when the display catalog already supplied usable content.
+- Preserve device-send IDs, profile scoring and availability state while hydrating display content.
+- If a default AI Task exists and translation is enabled, hydrated source-language content is translated afterward; otherwise it remains untouched.
+- Add a regression ensuring a foreign sibling from the requested market cannot override the device-language fallback when it is not actually in the target language.
+- Ship a cache-busted Recipe Hub v6 frontend and validate it in CI.
+
 ## 2026.9.6.5
 
 - Add a Recipe Hub **recipe-language selector** with Auto/Home Assistant plus the SEB/KRUPS catalog languages observed by the integration (including Greek, German, English, Slovak, Hungarian, Czech, Portuguese and others).
