@@ -69,6 +69,15 @@ def load_recipe_hub_module():
     assert ingredient_spec.loader is not None
     ingredient_spec.loader.exec_module(ingredient_module)
 
+    inventory_spec = importlib.util.spec_from_file_location(
+        "cook4me_hub_test.inventory",
+        ROOT / "custom_components/cook4me/inventory.py",
+    )
+    inventory_module = importlib.util.module_from_spec(inventory_spec)
+    sys.modules[inventory_spec.name] = inventory_module
+    assert inventory_spec.loader is not None
+    inventory_spec.loader.exec_module(inventory_module)
+
     spec = importlib.util.spec_from_file_location(
         "cook4me_hub_test.recipe_hub",
         ROOT / "custom_components/cook4me/recipe_hub.py",
@@ -154,6 +163,20 @@ class RecipeHubV8Tests(unittest.TestCase):
             normalized["houseIngredients"],
             [{"key": "M_FOOD_123", "name": "Fenchel"}],
         )
+
+    def test_house_inventory_preserves_quantity_unit_and_unlimited(self):
+        module = load_recipe_hub_module()
+        normalized = module.Cook4MeRecipeHub._normalize_profile(
+            {
+                "houseIngredients": [
+                    {"key": "M_FOOD_1", "name": "Rice", "quantity": 750, "unit": "g"},
+                    {"key": "M_FOOD_2", "name": "Water", "unlimited": True, "unit": "l"},
+                ]
+            }
+        )
+        self.assertEqual(normalized["houseIngredients"][0]["quantity"], 750)
+        self.assertEqual(normalized["houseIngredients"][0]["unit"], "g")
+        self.assertTrue(normalized["houseIngredients"][1]["unlimited"])
 
 
 if __name__ == "__main__":
