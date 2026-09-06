@@ -1,9 +1,9 @@
 # HA-Cook4me — Recipe Hub
 
 [![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz/)
-![Version](https://img.shields.io/badge/version-2026.9.6.6-blue.svg)
+![Version](https://img.shields.io/badge/version-2026.9.6.7-blue.svg)
 
-**Current version:** `2026.9.6.6` · version format: `YYYY.M.D.BUILD`
+**Current version:** `2026.9.6.7` · version format: `YYYY.M.D.BUILD`
 
 Home Assistant custom integration for KRUPS/Tefal **Cook4Me / Cookeo** Wi-Fi cookers, with cloud-push state, a Recipe Hub, official recipe delivery, pantry-aware recommendations, diet/allergy filtering, manual cook-along recipes and Home Assistant AI features.
 
@@ -31,20 +31,32 @@ A **Cook4Me** sidebar panel is registered automatically and provides:
 - **Eating-habit ranking** — repeated ingredients/categories from successful official recipe sends become small ranking-only hints. They never override dietary/allergy safety rules.
 - **AI recipe** — use an already configured Home Assistant Conversation agent to generate a recipe from the pantry/profile/request. AI output is revalidated deterministically before it can be saved.
 
-Official search results are grouped by the SEB recipe `groupingId`, so serving/language variants do not appear as duplicate cards. Recipe photos are selected only from recipe-level media, and step text comes from the real SEB mobile recipe fields.
+Official search data is fully hydrated before the first card render, so title/photo/ingredients/steps are present before the user can open a result.
 
-### Recipe language controls
+### One recipe card, multiple serving variants
+
+SEB often returns separate variants of the same logical recipe for different serving amounts. Recipe Hub resolves full detail first and then groups by the proven SEB `groupingId`.
+
+That means a recipe with 2, 4 and 6-person variants appears as **one card** with a servings selector instead of three duplicate cards.
+
+Changing the servings selector:
+
+- loads the matching display variant, so ingredient quantities correspond to the selected serving count;
+- keeps the matching Cook4Me/device-locale send variant separately; and
+- sends that exact official variant when **Send to Cook4Me** is pressed.
+
+## Recipe language controls
 
 Recipe Hub has a **Recipe language** selector:
 
 - **Automatic (Home Assistant language)** — use the current HA UI language for the display catalog.
-- A specific SEB/KRUPS catalog language — strictly filter results to that language instead of silently falling back to a different one.
+- A specific SEB/KRUPS catalog language — strictly filter hydrated results to that language instead of silently falling back to a different one.
 
 The language list is limited to language/market combinations observed in the SEB/KRUPS recipe content used by the integration. This includes Greek, German, English, French, Italian, Spanish, Portuguese, Slovak, Hungarian, Czech, Bulgarian, Polish, Romanian, Turkish, Ukrainian, Russian, Japanese, Korean, Chinese and others.
 
 Recipe display language and appliance delivery remain separate. A displayed/localized sibling can be shown while the Cook4Me/device-compatible official variant is retained independently for sending.
 
-When no exact sibling exists in the selected/HA language, Recipe Hub falls back to the configured Cook4Me/device-locale recipe rather than an arbitrary foreign sibling returned by the target market. If that fallback arrived as an ID-only search row, the panel fetches its official detail on demand so the user still sees the real source-language title, photo, ingredients and instructions rather than a numeric recipe ID.
+In **Automatic** mode, when no exact sibling exists in the Home Assistant language, Recipe Hub falls back to the fully hydrated configured Cook4Me/device-locale recipe rather than an arbitrary foreign sibling returned by the target market.
 
 ### Optional translation with the default Home Assistant AI Task
 
@@ -53,11 +65,26 @@ Recipe translation is **not** tied to an arbitrary Conversation agent.
 The panel enables **Translate results to Home Assistant language** only when Home Assistant has a usable preferred/default AI Task for data generation (`gen_data_entity_id`). Translation follows Home Assistant's native `ai_task.generate_data` preference behavior.
 
 - If a default AI Task exists, foreign-language result text can be translated to the HA UI language.
+- Search results are hydrated first, including full step instructions, and only then translated; cards and Steps therefore stay in sync.
 - If no default AI Task exists, nothing is treated as an error: the original SEB/KRUPS text is left exactly as-is.
 - If the AI Task provider fails, search/detail still succeeds and the untranslated recipe remains visible.
-- Translation is display-only. `groupingFunctionalId`, recipe IDs, send variants and Cook4Me commands are never changed by AI.
+- Translation is display-only. `groupingFunctionalId`, recipe IDs, serving/send variants and Cook4Me commands are never changed by AI.
 
 A manually selected recipe language can therefore be used either as a strict original-language filter, or together with the translation toggle when a default AI Task is configured.
+
+## Persistent Recipe Hub cache
+
+Normalized catalog data is cached through Home Assistant `Store` per Cook4Me config entry:
+
+- **search cache** — keyed by query, display/device locale, page, size and strict-language mode;
+- **detail cache** — keyed by display locale and variant ID;
+- **translation cache** — keyed by a hash of the source recipe text plus target language.
+
+This means repeated searches and translations survive panel reloads and Home Assistant restarts instead of repeatedly calling SEB or the AI Task provider. Serving variants have different source content and therefore receive separate translation cache entries when needed.
+
+Caches are bounded and time-limited. Search entries currently live up to 7 days, detail entries up to 30 days, and translations up to 90 days. Explicit refresh bypasses cached catalog results.
+
+Recipe photo URLs are retained as part of normalized recipe data; normal browser/HTTP caching remains responsible for the image bytes themselves.
 
 ## Official recipe delivery
 
@@ -102,7 +129,7 @@ For `send_recipe`, the recommended input is only `variant_id`; the integration f
 
 ## Storage
 
-Per-config-entry Recipe Hub data is stored through Home Assistant `Store` under `.storage` and includes only the pantry/profile, manual/AI recipes, and limited recipe-send history used for ranking.
+Per-config-entry Recipe Hub profile/user data and the persistent recipe cache are stored through Home Assistant `Store` under `.storage`.
 
 ## Upgrade
 
