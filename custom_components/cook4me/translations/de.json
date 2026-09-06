@@ -1,0 +1,46 @@
+{
+  "title": "Cook4Me",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Cook4Me verbinden",
+        "description": "Melde dich mit deinem KRUPS-Konto an. Cook4Me-Geräte, die deinem Konto gehören, werden automatisch ermittelt; eine Geräte-UUID ist nicht erforderlich.",
+        "data": {
+          "email": "KRUPS-E-Mail",
+          "password": "KRUPS-Passwort",
+          "country": "Land",
+          "language": "Sprache"
+        }
+      },
+      "bluetooth_confirm": {
+        "title": "Cook4Me entdeckt",
+        "description": "Home Assistant hat {device} lokal über das Cook4Me-Bluetooth-Protokoll entdeckt. Melde dich mit deinem KRUPS-Konto an, um es sicher einem Gerät deines Kontos zuzuordnen.",
+        "data": {
+          "email": "KRUPS-E-Mail",
+          "password": "KRUPS-Passwort",
+          "country": "Land",
+          "language": "Sprache"
+        }
+      },
+      "appliance": {
+        "title": "Cook4Me auswählen",
+        "description": "Dieses KRUPS-Konto besitzt mehr als ein kompatibles Cook4Me-Gerät.",
+        "data": {
+          "device_uuid": "Cook4Me-Gerät"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Ungültige KRUPS-Zugangsdaten",
+      "cannot_connect": "Could not connect to the KRUPS/Cook4Me cloud",
+      "no_appliances": "In diesem KRUPS-Konto wurde kein kompatibles Cook4Me-Gerät gefunden",
+      "cloud_unavailable": "Die KRUPS/Cook4Me-Cloud ist vorübergehend nicht erreichbar",
+      "discovery_failed": "Anmeldung erfolgreich, aber das Cook4Me-Gerät konnte nicht aus dem KRUPS-Konto ermittelt werden",
+      "internal_error": "Fehler in der Cook4Me-Integration. Prüfe das Home-Assistant-Protokoll auf die bereinigte Diagnose"
+    },
+    "abort": {
+      "discovery_expired": "Cook4Me-Erkennung abgelaufen; starte die Einrichtung erneut",
+      "already_configured": "Dieses Cook4Me ist bereits eingerichtet"
+    }
+  }
+}

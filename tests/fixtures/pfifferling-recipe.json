@@ -1,0 +1,225 @@
+{
+  "fid": {
+    "functionalId": "270859",
+    "sourceSystem": "PRO",
+    "version": "1"
+  },
+  "groupingId": {
+    "functionalId": "257575",
+    "sourceSystem": "PRO"
+  },
+  "title": "Pfifferling-Risotto",
+  "ingredients": [
+    {
+      "fid": {
+        "functionalId": "556571",
+        "sourceSystem": "PRO"
+      },
+      "applicationDescription": "200 g Arborio-Reis für Risotto",
+      "applianceDescription": "Arborio-Reis für Risotto",
+      "quantity": 200.0,
+      "unit": {
+        "key": "UNIT_27",
+        "name": "Gramm",
+        "abbreviation": "g",
+        "pluralName": "Gramm"
+      },
+      "food": {
+        "key": "M_FOOD_422",
+        "name": "Arborio-Reis"
+      }
+    },
+    {
+      "fid": {
+        "functionalId": "556572",
+        "sourceSystem": "PRO"
+      },
+      "applicationDescription": "60 g Schalotten, fein gehackt",
+      "applianceDescription": "Schalotten, fein gehackt",
+      "quantity": 60.0,
+      "unit": {
+        "key": "UNIT_27",
+        "name": "Gramm",
+        "abbreviation": "g",
+        "pluralName": "Gramm"
+      },
+      "food": {
+        "key": "M_FOOD_166",
+        "name": "Schalotte"
+      }
+    },
+    {
+      "fid": {
+        "functionalId": "556573",
+        "sourceSystem": "PRO"
+      },
+      "applicationDescription": "4 EL Olivenöl",
+      "applianceDescription": "Olivenöl",
+      "quantity": 4.0,
+      "unit": {
+        "key": "UNIT_12",
+        "name": "Esslöffel",
+        "abbreviation": "EL",
+        "pluralName": "Esslöffel"
+      },
+      "food": {
+        "key": "M_FOOD_246",
+        "name": "Olivenöl"
+      }
+    },
+    {
+      "fid": {
+        "functionalId": "556574",
+        "sourceSystem": "PRO"
+      },
+      "applicationDescription": "400 ml Wasser",
+      "applianceDescription": "Wasser",
+      "quantity": 400.0,
+      "unit": {
+        "key": "UNIT_35",
+        "name": "Milliliter",
+        "abbreviation": "ml",
+        "pluralName": "Milliliter"
+      },
+      "food": {
+        "key": "M_FOOD_165",
+        "name": "Wasser"
+      }
+    },
+    {
+      "fid": {
+        "functionalId": "556575",
+        "sourceSystem": "PRO"
+      },
+      "applicationDescription": "100 ml Weißwein",
+      "applianceDescription": "Weißwein",
+      "quantity": 100.0,
+      "unit": {
+        "key": "UNIT_35",
+        "name": "Milliliter",
+        "abbreviation": "ml",
+        "pluralName": "Milliliter"
+      },
+      "food": {
+        "key": "M_FOOD_489",
+        "name": "Weißwein"
+      }
+    },
+    {
+      "fid": {
+        "functionalId": "556576",
+        "sourceSystem": "PRO"
+      },
+      "applicationDescription": "200 g Pfifferlinge (halbiert)",
+      "applianceDescription": "Pfifferlinge (halbiert)",
+      "quantity": 200.0,
+      "unit": {
+        "key": "UNIT_27",
+        "name": "Gramm",
+        "abbreviation": "g",
+        "pluralName": "Gramm"
+      },
+      "food": {
+        "key": "M_FOOD_91",
+        "name": "Pfifferlinge"
+      }
+    },
+    {
+      "fid": {
+        "functionalId": "556577",
+        "sourceSystem": "PRO"
+      },
+      "applicationDescription": "2 EL Mascarpone",
+      "applianceDescription": "Mascarpone",
+      "quantity": 2.0,
+      "unit": {
+        "key": "UNIT_12",
+        "name": "Esslöffel",
+        "abbreviation": "EL",
+        "pluralName": "Esslöffel"
+      },
+      "food": {
+        "key": "M_FOOD_305",
+        "name": "Mascarpone"
+      }
+    },
+    {
+      "fid": {
+        "functionalId": "556578",
+        "sourceSystem": "PRO"
+      },
+      "applicationDescription": "2 EL geriebener Parmesankäse",
+      "applianceDescription": "Geriebener Parmesankäse",
+      "quantity": 2.0,
+      "unit": {
+        "key": "UNIT_12",
+        "name": "Esslöffel",
+        "abbreviation": "EL",
+        "pluralName": "Esslöffel"
+      },
+      "food": {
+        "key": "M_FOOD_359",
+        "name": "Parmesan"
+      }
+    },
+    {
+      "fid": {
+        "functionalId": "556579",
+        "sourceSystem": "PRO"
+      },
+      "applicationDescription": "Salz und Pfeffer",
+      "applianceDescription": "Salz und Pfeffer",
+      "food": {
+        "key": "M_FOOD_457",
+        "name": "Salz"
+      }
+    },
+    {
+      "fid": {
+        "functionalId": "556580",
+        "sourceSystem": "PRO"
+      },
+      "applicationDescription": "1 EL Petersilie, gehackt",
+      "applianceDescription": "Petersilie, gehackt",
+      "quantity": 1.0,
+      "unit": {
+        "key": "UNIT_12",
+        "name": "Esslöffel",
+        "abbreviation": "EL",
+        "pluralName": "Esslöffel"
+      },
+      "food": {
+        "key": "M_FOOD_369",
+        "name": "Petersilie"
+      }
+    }
+  ],
+  "excludedFoods": [
+    {
+      "key": "LIQUOR",
+      "name": "Alkohol"
+    },
+    {
+      "key": "CHEESE",
+      "name": "Käse"
+    },
+    {
+      "key": "DAIRY",
+      "name": "Milchprodukte"
+    }
+  ],
+  "detectedExcludedFoods": [
+    {
+      "key": "LIQUOR",
+      "name": "Alkohol"
+    },
+    {
+      "key": "CHEESE",
+      "name": "Käse"
+    },
+    {
+      "key": "DAIRY",
+      "name": "Milchprodukte"
+    }
+  ]
+}

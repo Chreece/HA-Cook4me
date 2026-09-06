@@ -1,0 +1,46 @@
+{
+  "title": "Cook4Me",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Σύνδεση Cook4Me",
+        "description": "Συνδεθείτε με τον λογαριασμό KRUPS. Οι συσκευές Cook4Me που ανήκουν στον λογαριασμό εντοπίζονται αυτόματα· δεν απαιτείται UUID συσκευής.",
+        "data": {
+          "email": "Email KRUPS",
+          "password": "Κωδικός KRUPS",
+          "country": "Χώρα",
+          "language": "Γλώσσα"
+        }
+      },
+      "bluetooth_confirm": {
+        "title": "Εντοπίστηκε Cook4Me",
+        "description": "Το Home Assistant εντόπισε το {device} τοπικά μέσω του πρωτοκόλλου Bluetooth του Cook4Me. Συνδεθείτε στον λογαριασμό KRUPS για ασφαλή αντιστοίχιση με συσκευή που ανήκει στον λογαριασμό.",
+        "data": {
+          "email": "Email KRUPS",
+          "password": "Κωδικός KRUPS",
+          "country": "Χώρα",
+          "language": "Γλώσσα"
+        }
+      },
+      "appliance": {
+        "title": "Επιλογή Cook4Me",
+        "description": "Σε αυτόν τον λογαριασμό KRUPS ανήκουν περισσότερες από μία συμβατές συσκευές Cook4Me.",
+        "data": {
+          "device_uuid": "Συσκευή Cook4Me"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Μη έγκυρα στοιχεία σύνδεσης KRUPS",
+      "cannot_connect": "Could not connect to the KRUPS/Cook4Me cloud",
+      "no_appliances": "Δεν βρέθηκε συμβατή συσκευή Cook4Me σε αυτόν τον λογαριασμό KRUPS",
+      "cloud_unavailable": "Το cloud KRUPS/Cook4Me δεν είναι προσωρινά διαθέσιμο",
+      "discovery_failed": "Η σύνδεση πέτυχε, αλλά δεν ήταν δυνατή η αντιστοίχιση της συσκευής Cook4Me από τον λογαριασμό KRUPS",
+      "internal_error": "Σφάλμα ενσωμάτωσης Cook4Me. Ελέγξτε το αρχείο καταγραφής του Home Assistant για την ασφαλή διάγνωση"
+    },
+    "abort": {
+      "discovery_expired": "Η ανακάλυψη Cook4Me έληξε· ξεκινήστε ξανά τη ρύθμιση",
+      "already_configured": "Αυτό το Cook4Me έχει ήδη ρυθμιστεί"
+    }
+  }
+}

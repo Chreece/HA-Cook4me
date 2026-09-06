@@ -1,0 +1,104 @@
+send_recipe:
+  name: Send recipe
+  description: >-
+    Send an official SEB recipe to Cook4Me. Recommended: provide only variant_id
+    and let the integration resolve the exact grouping/recipe IDs. Sending is
+    blocked while another recipe/session is loaded.
+  fields:
+    entry_id:
+      name: Config entry
+      required: false
+      selector:
+        text:
+    variant_id:
+      name: Official search/variant ID
+      description: >-
+        Recommended. The integration fetches recipe detail and resolves
+        groupingId.functionalId plus the recipe functional ID automatically.
+      required: false
+      selector:
+        text:
+    grouping_functional_id:
+      name: Grouping functional ID
+      required: false
+      selector:
+        text:
+    recipe_functional_id:
+      name: Recipe functional ID
+      required: false
+      selector:
+        text:
+    functional_id:
+      name: Legacy functional ID
+      description: >-
+        Deprecated alias for grouping_functional_id. Use with legacy variant_id.
+      required: false
+      selector:
+        text:
+
+search_recipes:
+  name: Search official recipes
+  description: >-
+    Search the official Cook4Me/SEB catalog and return enriched recipe details,
+    including ingredients and dietary metadata.
+  fields:
+    entry_id:
+      name: Config entry
+      required: false
+      selector:
+        text:
+    query:
+      name: Query
+      required: false
+      selector:
+        text:
+    page:
+      name: Page
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 1000
+          mode: box
+    size:
+      name: Results
+      default: 20
+      selector:
+        number:
+          min: 1
+          max: 50
+          mode: slider
+    refresh:
+      name: Refresh cache
+      default: false
+      selector:
+        boolean:
+
+recommend_recipes:
+  name: Recommend recipes
+  description: >-
+    Rank official Cook4Me recipes using the saved pantry, explicit diet,
+    allergies, dislikes, preferences, and ranking-only eating-history affinity
+    from the Cook4Me Recipe Hub.
+  fields:
+    entry_id:
+      name: Config entry
+      required: false
+      selector:
+        text:
+    limit:
+      name: Results
+      default: 12
+      selector:
+        number:
+          min: 1
+          max: 30
+          mode: slider
+    catalog_size:
+      name: Catalog candidates
+      default: 18
+      selector:
+        number:
+          min: 1
+          max: 50
+          mode: slider

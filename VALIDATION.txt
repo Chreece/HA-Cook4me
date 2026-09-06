@@ -1,0 +1,40 @@
+HA-Cook4Me v0.3.0 Recipe Hub — Validation
+===========================================
+Build date: 2026-09-06
+Baseline: HA-Cook4Me-v0.2.8-step-instructions.tar.gz
+Baseline SHA256: d1c53bb0e476db9d89e070dc6a88a0467efd608a938bd5be7aa9eeedc184bd25
+Target manifest version: 0.3.0
+
+Protocol scope
+--------------
+- Existing AWS IoT monitoring/auth core retained.
+- Official recipe send resolves SEB recipe detail first and sends verified groupingId.functionalId + recipe fid.functionalId.
+- Send is blocked when offline, when a recipe/session is already loaded, or when the explicit diet/allergy/avoid profile blocks the recipe.
+- Manual/AI recipes remain Home Assistant cook-along recipes; no unproven arbitrary custom-recipe upload to the appliance is claimed.
+
+Validation
+----------
+- Python compileall: PASS
+- JSON parse (manifest, strings, de/el/en translations): PASS
+- services.yaml parse: PASS (Ruby Psych YAML parser; release Python venv intentionally left dependency-clean)
+- Frontend JavaScript syntax (node --check): PASS
+- Focused unit tests: 12/12 PASS
+- Pescatarian regression: PASS
+- Pantry/staple matching regression: PASS
+- Allergy category alias regression: PASS
+- AI deterministic profile revalidation: PASS
+- Vendor concurrent search ordering/fallback tests: PASS
+- Upgrade patch git apply --check: PASS
+- Upgrade patch replay vs exact v0.2.8 baseline: PASS
+- Replayed integration tree byte-compare vs target: PASS
+- User-specific appliance UUID privacy grep: PASS (not present)
+
+Patch
+-----
+File: HA-Cook4Me-v0.2.8-to-v0.3.0-recipe-hub.patch
+SHA256: 4e62ba1787af47e875043a388a07eafe1a08f56d3bbe4b7595557e63d296ed6b
+Changed/new integration files: 14
+
+Live testing still required in Home Assistant
+--------------------------------------------
+See TESTING.md. Static/replay validation does not replace a real Home Assistant restart and live Cook4Me panel/send test.

@@ -1,0 +1,38 @@
+name: Bug report
+description: Report a reproducible HA-Cook4me problem
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Please remove secrets, tokens, passwords and device identifiers from logs before posting."
+  - type: input
+    id: version
+    attributes:
+      label: HA-Cook4me version
+      placeholder: 2026.9.6.1
+    validations:
+      required: true
+  - type: input
+    id: ha
+    attributes:
+      label: Home Assistant version
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized logs
+      render: text

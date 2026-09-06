@@ -1,0 +1,12 @@
+DOMAIN = "cook4me"
+DATA_BRIDGES = "bridges"
+CONF_EMAIL = "email"
+CONF_PASSWORD = "password"
+CONF_COUNTRY = "country"
+CONF_LANGUAGE = "language"
+CONF_DEVICE_UUID = "device_uuid"
+CONF_APP_VERSION = "app_version"
+DEFAULT_COUNTRY = "DE"
+DEFAULT_LANGUAGE = "de"
+DEFAULT_APP_VERSION = "36.0.0-RC3"
+PLATFORMS = ["binary_sensor", "sensor"]

@@ -1,0 +1,27 @@
+HA-Cook4me repository validation
+================================
+Version: 2026.9.6.1
+Version scheme: YYYY.M.D.BUILD
+
+PASS manifest version/tag format validator
+PASS Python compileall: custom_components/cook4me + tests
+PASS focused tests: 12/12
+PASS JSON parse: all tracked JSON files
+PASS YAML parse: services/workflow/issue-template YAML
+PASS frontend JavaScript syntax: cook4me-panel.js
+PASS privacy scan: no known appliance UUID / AWS key / OAuth signature material
+PASS HACS repository structure: one integration under custom_components/cook4me
+PASS HACS root metadata: hacs.json
+PASS custom integration manifest required metadata: domain/name/version/documentation/issue_tracker/codeowners
+PASS local Home Assistant brand assets: icon/logo + 2x + dark variants
+PASS HACS release asset generated: HA-Cook4me-2026.9.6.1-HACS.zip
+
+Remote-only checks still require the GitHub repository to exist and be public:
+- repository description
+- repository topics
+- Issues enabled
+- hacs/action against the live GitHub repository
+- GitHub Release publication
+
+scripts/bootstrap_github_repo.sh configures the public repository description/topics,
+pushes main and pushes tag 2026.9.6.1. The release workflow then publishes HA-Cook4me.zip.

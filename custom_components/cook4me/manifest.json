@@ -1,0 +1,34 @@
+{
+  "domain": "cook4me",
+  "name": "HA-Cook4me",
+  "codeowners": [
+    "@Chreece"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/Chreece/HA-Cook4me",
+  "iot_class": "cloud_push",
+  "dependencies": [
+    "frontend",
+    "panel_custom"
+  ],
+  "after_dependencies": [
+    "conversation"
+  ],
+  "bluetooth": [
+    {
+      "service_uuid": "47656e65-7269-635f-5365-727669636531",
+      "connectable": true
+    },
+    {
+      "service_uuid": "47656e65-7269-635f-5365-727669636532",
+      "connectable": true
+    }
+  ],
+  "requirements": [
+    "websocket-client==1.8.0",
+    "curl-cffi==0.13.0"
+  ],
+  "version": "2026.9.6.1",
+  "issue_tracker": "https://github.com/Chreece/HA-Cook4me/issues",
+  "integration_type": "hub"
+}

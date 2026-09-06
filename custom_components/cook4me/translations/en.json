@@ -1,0 +1,46 @@
+{
+  "title": "Cook4Me",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect Cook4Me",
+        "description": "Sign in with your KRUPS account. Account-owned Cook4Me appliances are resolved automatically; no appliance UUID is required.",
+        "data": {
+          "email": "KRUPS email",
+          "password": "KRUPS password",
+          "country": "Country",
+          "language": "Language"
+        }
+      },
+      "bluetooth_confirm": {
+        "title": "Cook4Me discovered",
+        "description": "Home Assistant discovered {device} locally over the Cook4Me Bluetooth protocol. Sign in to your KRUPS account to securely match it to an appliance owned by your account.",
+        "data": {
+          "email": "KRUPS email",
+          "password": "KRUPS password",
+          "country": "Country",
+          "language": "Language"
+        }
+      },
+      "appliance": {
+        "title": "Choose Cook4Me",
+        "description": "More than one compatible Cook4Me appliance is owned by this KRUPS account.",
+        "data": {
+          "device_uuid": "Cook4Me appliance"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid KRUPS credentials",
+      "cannot_connect": "Could not connect to the KRUPS/Cook4Me cloud",
+      "no_appliances": "No compatible Cook4Me appliance was found on this KRUPS account",
+      "cloud_unavailable": "The KRUPS/Cook4Me cloud is temporarily unavailable",
+      "discovery_failed": "Signed in successfully, but your Cook4Me appliance could not be resolved from the KRUPS account",
+      "internal_error": "Cook4Me integration error. Check the Home Assistant log for the sanitized diagnostic"
+    },
+    "abort": {
+      "discovery_expired": "Cook4Me discovery expired; start setup again",
+      "already_configured": "This Cook4Me is already configured"
+    }
+  }
+}

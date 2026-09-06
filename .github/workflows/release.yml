@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "20*.*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Validate tag and source
+        run: |
+          python scripts/version.py validate --tag "${GITHUB_REF_NAME}"
+          python -m compileall -q custom_components/cook4me
+          python -m unittest discover -s tests -v
+      - name: Build HACS release archive
+        run: |
+          rm -rf release
+          mkdir -p release/custom_components
+          cp -a custom_components/cook4me release/custom_components/
+          cd release
+          zip -qr ../HA-Cook4me.zip custom_components
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" HA-Cook4me.zip \
+            --title "HA-Cook4me ${GITHUB_REF_NAME}" \
+            --generate-notes
