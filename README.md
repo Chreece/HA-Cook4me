@@ -1,9 +1,9 @@
 # HA-Cook4me — Recipe Hub
 
 [![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz/)
-![Version](https://img.shields.io/badge/version-2026.9.6.1-blue.svg)
+![Version](https://img.shields.io/badge/version-2026.9.6.2-blue.svg)
 
-**Current version:** `2026.9.6.1` · version format: `YYYY.M.D.BUILD`
+**Current version:** `2026.9.6.2` · version format: `YYYY.M.D.BUILD`
 
 Home Assistant custom integration for KRUPS/Tefal **Cook4Me / Cookeo** Wi-Fi cookers, with cloud-push state, a Recipe Hub, official recipe delivery, pantry-aware recommendations, diet/allergy filtering, manual cook-along recipes and Home Assistant Conversation-powered AI recipes.
 
@@ -15,6 +15,8 @@ Home Assistant custom integration for KRUPS/Tefal **Cook4Me / Cookeo** Wi-Fi coo
 2. Add `https://github.com/Chreece/HA-Cook4me` as **Integration**.
 3. Install **HA-Cook4me** and restart Home Assistant.
 4. Settings → Devices & services → **Add integration** → HA-Cook4me.
+
+HACS installs directly from the repository source, so installation does not depend on a GitHub Release ZIP being present for every commit. Tagged releases can still provide `HA-Cook4me.zip` as an optional release asset.
 
 Minimum Home Assistant version for bundled local brand assets: **2026.3.0**.
 
@@ -81,3 +83,7 @@ Per-config-entry Recipe Hub data is stored through Home Assistant `Store` under 
 Replace `custom_components/cook4me` with the current release directory and restart Home Assistant. The config-flow version is unchanged because no config-entry schema migration is required.
 
 After restart, open **Cook4Me** from the Home Assistant sidebar.
+
+## License
+
+MIT License. See `LICENSE`.
