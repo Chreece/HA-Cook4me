@@ -42,6 +42,22 @@ def translation_cache_key(recipe: dict[str, Any], target_language: str) -> str:
     return stable_cache_key("translation", str(target_language).lower(), source)
 
 
+def _is_current_search_value(value: Any) -> bool:
+    """Reject search results produced before the standalone-proven v12 contract.
+
+    We intentionally keep the Store schema version unchanged so persistent UI
+    preferences, details and expensive AI translations survive the upgrade.
+    Only the search bucket is selectively invalidated.  New search results carry
+    the proven Cookeo appliance group and branded-recipe type at top level.
+    """
+
+    return bool(
+        isinstance(value, dict)
+        and value.get("applianceGroup") == "APPLIANCE_GROUP_15"
+        and value.get("recipeType") == "BRAND"
+    )
+
+
 class Cook4MeRecipeCache:
     """Persistent bounded cache for normalized recipe catalog and UI data."""
 
@@ -79,6 +95,12 @@ class Cook4MeRecipeCache:
                 for key, row in rows.items()
                 if now - float(row.get("timestamp") or 0) <= ttl
             }
+            if bucket == "search":
+                current = {
+                    key: row
+                    for key, row in current.items()
+                    if _is_current_search_value(row.get("value"))
+                }
             limit = _LIMITS[bucket]
             if len(current) > limit:
                 ordered = sorted(
@@ -99,7 +121,11 @@ class Cook4MeRecipeCache:
         if time.time() - float(row.get("timestamp") or 0) > _TTLS[bucket]:
             rows.pop(str(key), None)
             return None
-        return deepcopy(row.get("value"))
+        value = row.get("value")
+        if bucket == "search" and not _is_current_search_value(value):
+            rows.pop(str(key), None)
+            return None
+        return deepcopy(value)
 
     async def async_set(self, bucket: str, key: str, value: Any) -> None:
         if bucket not in self._data:
