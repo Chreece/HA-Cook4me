@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026.9.6.21
+
+- Use the Home Assistant Android Companion app's native barcode-scanner capability when `hasBarCodeScanner` is advertised, instead of relying on WebView camera / `BarcodeDetector` support.
+- Open the native scanner through the Home Assistant external bus (`bar_code/scan`) and accept physical shopping formats `EAN-13`, `EAN-8`, `UPC-A`, `UPC-E` and `ITF`; unsupported code types are rejected without sending them to product lookup.
+- Keep the existing browser `BarcodeDetector` + rear-camera scanner unchanged as the fallback outside the Companion app.
+- Observe only the native scanner request created by Cook4Me while leaving Home Assistant's normal external-message handler in place to acknowledge and process every command.
+- Keep the native scanner open after known-product scans for rapid multi-product shopping intake. When an unknown product needs its one-time Cook4Me mapping, temporarily close the native overlay, show the editable mapping form, then reopen the native scanner automatically after saving the mapping.
+- Ship and cache-bust Recipe Hub v18 and validate its frontend syntax in CI.
+
 ## 2026.9.6.20
 
 - Add **Scan shopping** to **House ingredients & diet** for physically scanning EAN/UPC product barcodes with the phone/rear camera while keeping the scanner open between products.
@@ -206,6 +215,7 @@
 - Added official SEB recipe catalog search and enriched recipe detail retrieval.
 - Added official recipe ingredient, exclusions, course, duration and yield metadata.
 - Corrected recipe-send ID semantics to grouping functional ID + recipe functional ID.
+- Added state-aware official recipe delivery through the proven Cook4Me AWS IoT shadow route.
 - Added state-aware send guard when another recipe/session is loaded.
 - Added profile hard gate for diet/allergy/avoid restrictions on every official send path.
 - Added pantry/fridge matching and missing-ingredient ranking.
