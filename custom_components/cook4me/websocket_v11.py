@@ -22,7 +22,7 @@ from . import websocket_v9 as v9
 from .vendor import cook4me_phonefree as c4m
 from .vendor import cook4me_recipe_catalog as recipe_catalog
 
-_RECIPE_FALLBACK_SOURCE = "hydrated_official_recipes_fallback:v2_amount_clean"
+_RECIPE_FALLBACK_SOURCE = "hydrated_official_recipes_fallback:v3_food_identity"
 
 
 async def _cache(bridge) -> Cook4MeIngredientCatalogCache:
@@ -62,9 +62,6 @@ def _marketing_food_catalog_sync(bridge, language: str) -> tuple[list[dict[str, 
             pcfg,
         ),
         params={"lang": language, "market": market, "size": 5000},
-        # The endpoint and query parameters are proven from the APK. The exact
-        # th0.d body is not yet recovered, so send only its empty/default shape;
-        # rejection is handled by the bounded recipe-derived fallback below.
         body={},
     )
     items = marketing_food_items(payload, language)
@@ -75,8 +72,6 @@ def _marketing_food_catalog_sync(bridge, language: str) -> tuple[list[dict[str, 
 
 async def _recipe_fallback_catalog(hass: HomeAssistant, bridge, language: str) -> list[dict[str, str]]:
     recipes: list[dict[str, Any]] = []
-    # Sample separate source-page windows to keep the fallback bounded while
-    # avoiding repeatedly walking only the first serving variants.
     for page in (0, 10, 20, 30):
         raw, _cache_hit = await v9._raw_search(
             hass,
