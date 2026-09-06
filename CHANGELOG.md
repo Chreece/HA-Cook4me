@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026.9.6.19
+
+- Turn **What I have in my house** into quantity-aware stock. Each ingredient can store an amount and unit, or be marked **unlimited (∞)** for things such as water.
+- Restocking an ingredient that is already present increases the existing amount instead of creating a duplicate. Safe language-neutral conversions are supported for mass (`mg/g/kg`), volume (`µl/ml/cl/dl/l`) and explicit count units; unknown/localized units are only combined when their unit token actually matches, never guessed.
+- Keep ingredient identity based on the stable SEB `M_FOOD_*` key whenever available, so stock quantities do not break recipe matching even when recipe wording contains quantities/preparation notes or a different localized display label.
+- Replace the home-ingredient chips with a collapsible editable stock list. Stored quantities are shown in parentheses, can be edited later, and depleted finite stock is removed automatically.
+- Keep the ingredient catalog at its current scroll position after **Add to house stock**. The catalog is no longer rerendered on every stock addition, and already-owned ingredients remain selectable so purchases can be added to their existing totals.
+- Detect recipe completion only on the explicit normalized cooker `phase=done` transition; recipe unload/idle alone is not treated as successful completion.
+- After a positively detected completion, create a Home Assistant persistent notification and a pending Cook4Me consumption confirmation. Each tracked recipe ingredient defaults to **Consumed = Yes** and to the exact quantity/unit required by the recipe; every amount remains editable before confirmation.
+- Confirmation deducts each approved ingredient from house stock, converts compatible units safely, removes stock that reaches zero, and never reduces unlimited ingredients. Users can also confirm that nothing was consumed.
+- Persist pending consumption confirmation across Home Assistant restarts and dismiss the associated persistent notification after confirmation/cancellation.
+- Add Recipe Hub v16 plus v14 inventory/consumption WebSocket APIs and regression tests for restocking, stable-key recipe matching, unit conversion, depletion, and unlimited stock.
+
 ## 2026.9.6.18
 
 - Harden the recipe-derived ingredient catalog around **SEB food identity** instead of language-specific text cleanup. Official recipe rows are admitted only when SEB supplies a stable `foodKey` or at least a canonical `foodName`; keyless free-form recipe prose is excluded from the ingredient selector.
@@ -105,7 +118,7 @@
 - Cached translations survive panel reloads and Home Assistant restarts; changing serving quantities or source recipe text creates a different translation key rather than reusing incompatible text.
 - Cache entries are bounded and time-limited, and explicit refresh bypasses cached search/detail data.
 - Add regressions for one-card-per-grouping behavior, 2/4/6 serving preservation, strict German hydrated results, target-language/device-language fallback, and display/send serving-variant pairing.
-- Ship cache-busted Recipe Hub v7 frontend/backend APIs and validate Python, tests, JSON, HACS and frontend syntax in CI.
+- Ship a cache-busted Recipe Hub v7 frontend/backend APIs and validate Python, tests, JSON, HACS and frontend syntax in CI.
 
 ## 2026.9.6.6
 
@@ -164,7 +177,7 @@
 ## 2026.9.6.1
 
 - First HACS-ready `HA-Cook4me` repository release using `YYYY.M.D.BUILD` versioning.
-- Recipe Hub dashboard for official search, fridge/pantry recommendations, manual cook-along recipes and AI-assisted recipes.
+- Recipe Hub dashboard for official search, fridge/pantry recommendations, manual cook-along recipes and AI-assisted cook-along recipes.
 - Deterministic vegetarian/vegan/pescatarian/allergy/avoid safety gates.
 - State-aware official recipe delivery through the proven Cook4Me AWS IoT shadow route.
 - Consolidated State sensor with legacy granular entities retained for compatibility.
