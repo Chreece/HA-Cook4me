@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026.9.6.14
+
+- Put the **What I have in my house** ingredient-catalog editor directly on the recommendation tab, so users can search/select/remove house ingredients where those ingredients are actually used. Changes are saved immediately and invalidate stale recommendation results.
+- Add a dedicated **Shopping list** Recipe Hub tab backed by Home Assistant's native Shopping List / `todo` entity. It shows active/completed items and supports add, complete/uncomplete, remove, refresh, and clear-completed actions without creating a second Cook4Me-specific list.
+- Keep the existing per-recipe and per-ingredient **Add to Shopping List** buttons wired to that same native list.
+- Remove recipe-specific quantities and units from the ingredient-selection catalog. The cleaner prefers SEB canonical food names, otherwise removes structured `quantity` + `unit` prefixes without relying on language-specific words, with Unicode numeric/fraction fallback for partial publications.
+- Cover decimal commas, Unicode vulgar fractions, Arabic-Indic digits, unitless quantities and localized units, with regressions across German, French, Spanish, Arabic and Japanese examples.
+- Version recipe-derived ingredient-cache entries and invalidate the old v11 fallback cache immediately, so amount-polluted rows are rebuilt on first use instead of surviving the 24-hour TTL.
+- Ship Recipe Hub v12 frontend/backend APIs and validate the v12 frontend in CI.
+
 ## 2026.9.6.13
 
 - Restrict the explicit official **Recipe language** selector to the 21 source catalogs proven by the standalone v2 audit: `ar`, `bg`, `cs`, `de`, `en`, `es`, `fr`, `hr`, `hu`, `it`, `ja`, `ko`, `pl`, `pt`, `ro`, `ru`, `sk`, `sl`, `tr`, `uk`, `zh`. Greek and other unsupported source catalogs remain valid Home Assistant UI / AI translation targets but are no longer presented as official SEB source catalogs.
