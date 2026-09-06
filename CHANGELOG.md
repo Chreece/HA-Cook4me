@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026.9.6.8
+
+- Persist Recipe Hub UI preferences in Home Assistant storage: global recipe-language mode, translation toggle, last tab, per-recipe source-language choice, and per-recipe serving choice now survive panel reloads and Home Assistant restarts.
+- Replace the active official-search request body with the current APK `SearchRecipesV2` contract instead of sending an empty JSON object. The v8 request repeats `lang`/`market` as the app's field filters and includes the app-observed privacy/source-system/food-cooking constraints plus its requested field list.
+- Keep the proven `/common-api/v4/search/recipes` endpoint and `q` query parameter; the change is the missing app search context/body, not an invented replacement catalog.
+- Continue hydrating recipe details before render, then group only after exact recipe metadata is available.
+- Merge same-language serving publications with an exact same title + exact same recipe cover fallback even when SEB published their serving variants under different top/grouping IDs. This fixes repeated identical cards such as 2/4/6-serving versions of one recipe.
+- Represent a logical recipe as **language variants → serving variants**. Recipes sharing a proven SEB grouping ID across languages are rendered once and expose a per-card/per-detail language selector; each selected language then exposes only its own available serving variants.
+- Keep appliance delivery identity separate from display language: each displayed serving is paired only with an exact same-serving device-locale send variant. A display variant without a proven device serving variant remains viewable but not sendable.
+- Preserve the existing persistent search/detail/AI-translation cache from v7; v8 search cache keys include the new APK search-contract revision so stale empty-body results are not reused.
+- Add regressions for APK search-body fields, persistent UI preferences, exact 2/4/6 serving collapse, and same-group language menus with independent serving lists.
+- Ship cache-busted Recipe Hub v8 frontend/backend APIs.
+
 ## 2026.9.6.7
 
 - Rework official-search loading so Recipe Hub returns **fully hydrated recipe objects before the first render**. Cards no longer appear first as numeric IDs/no-photo placeholders and then mutate only after opening Steps.
