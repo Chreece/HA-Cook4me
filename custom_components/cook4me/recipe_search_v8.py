@@ -9,9 +9,7 @@ from .vendor import cook4me_recipe_catalog as catalog
 # Standalone-proven against the current KRUPS backend and the user's Cookeo.
 # For de / GS_DE + q=risotto this exact contract returns 29 serving variants,
 # which hydrate and collapse by groupingId to the 11 logical recipes shown by
-# the KRUPS application.  Do not add the old speculative fieldList,
-# FOOD_COOKING, privacy/source or empty-list filters back here without a fresh
-# standalone proof.
+# the KRUPS application. Do not add speculative filters without fresh proof.
 SEARCH_CONTRACT = "standalone-proven-cookeo-brand-v5"
 DEFAULT_APPLIANCE_GROUP = "APPLIANCE_GROUP_15"
 DEFAULT_RECIPE_TYPE = "BRAND"
@@ -25,7 +23,6 @@ def app_search_body(
     recipe_type: str = DEFAULT_RECIPE_TYPE,
 ) -> dict[str, Any]:
     """Return the exact standalone-proven Cookeo branded-recipe search body."""
-
     language = str(language or "").strip().lower()
     market = str(market or "").strip().upper()
     appliance_group = str(appliance_group or DEFAULT_APPLIANCE_GROUP).strip()
@@ -34,10 +31,7 @@ def app_search_body(
         "fieldFilters": [
             {"field": "lang.key", "values": [language]},
             {"field": "market.key", "values": [market]},
-            {
-                "field": "applianceGroups.reference.key",
-                "values": [appliance_group],
-            },
+            {"field": "applianceGroups.reference.key", "values": [appliance_group]},
             {"field": "topRecipe.type.key", "values": [recipe_type]},
         ]
     }
@@ -58,8 +52,15 @@ def search_recipes(
     appliance_group: str = DEFAULT_APPLIANCE_GROUP,
     recipe_type: str = DEFAULT_RECIPE_TYPE,
 ) -> dict[str, Any]:
-    """Search the proven Cookeo/KRUPS catalog contract and hydrate before grouping."""
+    """Search the proven Cookeo catalog and hydrate valid publications first.
 
+    SEB search indexes can contain stale publication IDs whose mobile detail is
+    already 404 (observed live in the Spanish and Portuguese audits). Failed
+    detail IDs must not consume the requested hydration quota or become numeric
+    placeholder cards, so hydration continues through later search rows until
+    ``max_details`` successful details have been obtained or the page is
+    exhausted.
+    """
     if catalog.c4m.curl_requests is None:
         raise catalog.CatalogError("curl-cffi is not available")
 
@@ -113,10 +114,15 @@ def search_recipes(
         if isinstance(raw, dict)
         if (row := catalog._light_search_row(raw))
     ]
-    enriched = [deepcopy(row) for row in lightweight]
 
-    count = min(max_details, len(lightweight))
-    if count:
+    detail_failures: list[dict[str, str]] = []
+    if max_details <= 0:
+        enriched = [deepcopy(row) for row in lightweight]
+    else:
+        hydrated: dict[int, dict[str, Any]] = {}
+        successful = 0
+        cursor = 0
+
         def load(index: int):
             variant = lightweight[index]["searchVariantId"]
             detail = catalog.recipe_detail(
@@ -131,26 +137,46 @@ def search_recipes(
             )
             return index, detail
 
-        with ThreadPoolExecutor(max_workers=min(4, count)) as pool:
-            futures = {pool.submit(load, index): index for index in range(count)}
-            for future in as_completed(futures):
-                index = futures[future]
-                try:
-                    _, detail = future.result()
-                except Exception as exc:  # one broken publication must not kill search
-                    enriched[index]["detailError"] = type(exc).__name__
-                    continue
-                merged = dict(lightweight[index])
-                merged.update(detail)
-                if not merged.get("cover"):
-                    merged["cover"] = lightweight[index].get("cover")
-                if not merged.get("title"):
-                    merged["title"] = lightweight[index].get("title")
-                if not merged.get("groupingFunctionalId"):
-                    merged["groupingFunctionalId"] = lightweight[index].get("groupingFunctionalId")
-                enriched[index] = {
-                    key: value for key, value in merged.items() if value is not None
-                }
+        while cursor < len(lightweight) and successful < max_details:
+            remaining = max_details - successful
+            batch_count = min(4, len(lightweight) - cursor, max(1, remaining))
+            indices = list(range(cursor, cursor + batch_count))
+            cursor += batch_count
+            with ThreadPoolExecutor(max_workers=min(4, len(indices))) as pool:
+                futures = {pool.submit(load, index): index for index in indices}
+                for future in as_completed(futures):
+                    index = futures[future]
+                    variant = lightweight[index]["searchVariantId"]
+                    try:
+                        _, detail = future.result()
+                    except Exception as exc:
+                        detail_failures.append(
+                            {"variantId": str(variant), "error": type(exc).__name__}
+                        )
+                        continue
+                    merged = dict(lightweight[index])
+                    merged.update(detail)
+                    if not merged.get("cover"):
+                        merged["cover"] = lightweight[index].get("cover")
+                    if not merged.get("title"):
+                        merged["title"] = lightweight[index].get("title")
+                    if not merged.get("groupingFunctionalId"):
+                        merged["groupingFunctionalId"] = lightweight[index].get("groupingFunctionalId")
+                    # A successfully hydrated official row must expose its
+                    # recipe identity. Do not count malformed detail as success.
+                    if not merged.get("groupingFunctionalId") or not merged.get("recipeFunctionalId"):
+                        detail_failures.append(
+                            {"variantId": str(variant), "error": "MissingRecipeIdentity"}
+                        )
+                        continue
+                    hydrated[index] = {
+                        key: value for key, value in merged.items() if value is not None
+                    }
+                    successful += 1
+            # A concurrent batch can complete the requested quota exactly or
+            # slightly out of order; sorting below restores server order.
+
+        enriched = [hydrated[index] for index in sorted(hydrated)][:max_details]
 
     collapsed = catalog.collapse_variants(
         enriched,
@@ -172,6 +198,9 @@ def search_recipes(
         "recipeType": recipe_type,
         "page": page_obj,
         "rawVariantCount": len(lightweight),
+        "hydratedVariantCount": len(enriched),
+        "detailFailureCount": len(detail_failures),
+        "detailFailures": detail_failures[:25],
         "groupedRecipeCount": len(collapsed),
         "items": collapsed,
         "authMode": auth_mode,
