@@ -15,20 +15,14 @@ _STORAGE_VERSION = 1
 _TTL = 24 * 60 * 60
 _MAX_LANGUAGES = 8
 _MAX_ITEMS = 5000
+_RECIPE_FALLBACK_SOURCE_V2 = "hydrated_official_recipes_fallback:v2_amount_clean"
 
 # Unicode vulgar fractions used in recipe quantities. Python's \d already
 # matches non-ASCII decimal digits (for example Arabic-Indic numerals).
 _VULGAR_FRACTIONS = "¼½¾⅐⅑⅒⅓⅔⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞"
 _NUMBER = rf"(?:\d+(?:[.,٫]\d+)?|\d+\s*/\s*\d+|[{_VULGAR_FRACTIONS}])"
 _AMOUNT = rf"(?:{_NUMBER})(?:\s*(?:[-–—]\s*|to\s+){_NUMBER})?"
-# This fallback intentionally strips only a leading numeric amount plus a
-# compact unit-like token/phrase. Structured quantity/unit removal below is
-# preferred and exact; this exists for old/partial SEB publications where only
-# free-form applicationDescription is available.
-_GENERIC_AMOUNT_PREFIX = re.compile(
-    rf"^\s*{_AMOUNT}\s+(?:[^\W\d_]+(?:[.·]?\s+)?(?:[^\W\d_]+\s+){{0,2}})?",
-    re.IGNORECASE | re.UNICODE,
-)
+_GENERIC_AMOUNT_PREFIX = re.compile(rf"^\s*{_AMOUNT}\s+", re.IGNORECASE | re.UNICODE)
 
 
 def _text(value: Any) -> str:
@@ -62,33 +56,53 @@ def _quantity_strings(value: Any) -> list[str]:
 
 
 def _strip_structured_amount(name: str, item: dict[str, Any]) -> str:
-    """Strip exact recipe quantity/unit prefix without language assumptions."""
+    """Strip recipe quantity/unit prefix without language assumptions."""
     quantity_forms = _quantity_strings(item.get("quantity"))
     unit = _text(item.get("unit"))
-    if not quantity_forms:
-        return name
+    boundary = r"(?=\s|[-–—,:;]|$)"
+    patterns: list[str] = []
+
+    if unit:
+        escaped_unit = re.escape(unit)
+        # The generic numeric form also catches display fractions such as ½
+        # when the structured quantity is stored as 0.5.
+        patterns.append(
+            rf"^\s*{_AMOUNT}\s*{escaped_unit}{boundary}\s*[-–—,:;]?\s*"
+        )
 
     for quantity in sorted(quantity_forms, key=len, reverse=True):
         escaped_q = re.escape(quantity)
-        patterns: list[str] = []
         if unit:
             escaped_unit = re.escape(unit)
-            patterns.append(rf"^\s*{escaped_q}\s*{escaped_unit}\b\s*[-–—,:;]?\s*")
-        patterns.append(rf"^\s*{escaped_q}\s*[-–—,:;]\s*")
-        for pattern in patterns:
-            cleaned = re.sub(pattern, "", name, count=1, flags=re.IGNORECASE | re.UNICODE).strip()
-            if cleaned != name and cleaned:
-                return cleaned
+            patterns.append(
+                rf"^\s*{escaped_q}\s*{escaped_unit}{boundary}\s*[-–—,:;]?\s*"
+            )
+        # Unitless structured quantities (eggs, onions, cloves...) still need
+        # the amount removed. This is safe because quantity came from SEB's
+        # structured field rather than a guessed language token.
+        patterns.append(rf"^\s*{escaped_q}\s+")
+
+    for pattern in patterns:
+        cleaned = re.sub(
+            pattern,
+            "",
+            name,
+            count=1,
+            flags=re.IGNORECASE | re.UNICODE,
+        ).strip()
+        if cleaned != name and cleaned:
+            return cleaned
     return name
 
 
 def _strip_generic_amount_prefix(name: str) -> str:
-    """Best-effort cleanup for free-form descriptions lacking structured data."""
-    match = _GENERIC_AMOUNT_PREFIX.match(name)
-    if not match:
-        return name
-    cleaned = name[match.end():].lstrip(" -–—,:;")
-    return cleaned.strip() or name
+    """Remove a leading numeric amount when only free-form text exists."""
+    cleaned = _GENERIC_AMOUNT_PREFIX.sub("", name, count=1).strip()
+    return cleaned or name
+
+
+def _starts_with_amount(value: Any) -> bool:
+    return bool(_GENERIC_AMOUNT_PREFIX.match(_text(value)))
 
 
 def catalog_ingredient_name(item: Any) -> str:
@@ -160,7 +174,7 @@ def normalize_house_ingredients(value: Any) -> list[dict[str, str]]:
 
 
 def _clean_catalog_rows(rows: list[Any]) -> list[dict[str, str]]:
-    """Normalize and dedupe catalog rows, including already-cached old rows."""
+    """Normalize and dedupe catalog rows."""
     out: list[dict[str, str]] = []
     seen: set[str] = set()
     for raw in rows:
@@ -373,9 +387,13 @@ class Cook4MeIngredientCatalogCache:
         row = self._data.get(str(language))
         if not row:
             return None
+        # v11 recipe-derived rows may already have lost quantity/unit structure,
+        # so do not guess how to clean them. Force one immediate rebuild under
+        # the v2 amount-clean contract instead of waiting for the 24h TTL.
+        if str(row.get("source") or "") == "hydrated_official_recipes_fallback":
+            self._data.pop(str(language), None)
+            return None
         result = deepcopy(row)
-        # Clean old v11 cache rows on read so users do not have to wait 24h or
-        # force a network rebuild after upgrading.
         result["items"] = _clean_catalog_rows(result.get("items") or [])
         return result
 
