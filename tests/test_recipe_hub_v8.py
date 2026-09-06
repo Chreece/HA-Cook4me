@@ -72,22 +72,29 @@ def load_recipe_hub_module():
 
 
 class RecipeHubV8Tests(unittest.TestCase):
-    def test_apk_search_body_repeats_language_market_constraints(self):
+    def test_search_body_is_exact_standalone_proven_cookeo_contract(self):
         module = load_search_module()
-        body = module.app_search_body("de", "GS_DE")
-        filters = {row["field"]: row for row in body["fieldFilters"]}
-        self.assertEqual(filters["lang.key"]["values"], ["de"])
-        self.assertEqual(filters["market.key"]["values"], ["GS_DE"])
-        self.assertEqual(filters["id.sourceSystem.key"]["values"], ["PRO"])
-        self.assertEqual(filters["privacyLevel.key"]["values"], ["COMMUNITY", "PUBLIC"])
+        body = module.app_search_body("DE-de", "gs_de")
+        self.assertEqual(module.SEARCH_CONTRACT, "standalone-proven-cookeo-brand-v5")
         self.assertEqual(
-            filters["classifications.key_FOOD_COOKING"]["values"],
-            ["IS_FOOD_COOKING"],
+            body,
+            {
+                "fieldFilters": [
+                    {"field": "lang.key", "values": ["de-de"]},
+                    {"field": "market.key", "values": ["GS_DE"]},
+                    {
+                        "field": "applianceGroups.reference.key",
+                        "values": ["APPLIANCE_GROUP_15"],
+                    },
+                    {"field": "topRecipe.type.key", "values": ["BRAND"]},
+                ]
+            },
         )
-        self.assertEqual(filters["classifications.key_FOOD_COOKING"]["type"], "inclusion")
-        self.assertIn("resourceMedias", body["fieldList"])
-        self.assertIn("title", body["fieldList"])
-        self.assertIn("yield.quantity", body["fieldList"])
+        serialized = str(body)
+        self.assertNotIn("fieldList", serialized)
+        self.assertNotIn("FOOD_COOKING", serialized)
+        self.assertNotIn("privacyLevel", serialized)
+        self.assertNotIn("id.sourceSystem", serialized)
 
     def test_ui_preferences_remember_global_and_per_recipe_selections(self):
         module = load_recipe_hub_module()
