@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026.9.7.2
+
+- Add a consolidated Home Assistant persistent notification for house-stock ingredients whose **best-before date is today, within the next 3 days, or already past**. The notification is created immediately on startup or stock changes and refreshed every day at 09:00 Home Assistant local time.
+- Refresh/dismiss the best-before notification immediately after manual inventory changes, barcode stock additions and confirmed recipe consumption so it never waits for the next daily check when stock changes.
+- Keep expired/past-best-before items visible in the notification, but deliberately do **not** promote them as cooking suggestions; recipe priority applies only from today through the 3-day warning horizon.
+- Give **For what I have in my house** recipes an expiry-aware ranking bonus when they use soon-expiring stock, while retaining pantry coverage/diet/allergy safety as the main suitability score. One urgent ingredient can move a similarly suitable recipe upward; poor pantry matches do not automatically beat recipes the user can actually make.
+- Attach `expiryPriority`, `expiryBonus`, `expiringIngredients` and the pre-expiry `baseScore` to recommendation match metadata for transparent/debuggable ranking.
+- When the recommendation query is empty, augment the normal vendor top-result set with small searches for up to the three most urgent ingredients before ranking. This prevents expiring ingredients from receiving no benefit merely because no matching recipe happened to be present in the generic top-50 catalog page.
+- Apply the same expiry bonus in the reusable Recipe Hub ranking path used by Home Assistant services, not only the sidebar WebSocket UI.
+- Add deterministic tests for the 3-day warning window, past-date handling, unlimited stock with dates, and stable `M_FOOD_*` expiry matching.
+
+## 2026.9.7.1
+
+- Add an optional **Best before** date to every house-stock ingredient, including unlimited (`∞`) stock.
+- Preserve and normalize the date as ISO `YYYY-MM-DD`, allow it to be edited or cleared later, and show it alongside the stored amount in the house inventory.
+- When the same ingredient is restocked, keep the **earliest known best-before date** while combining compatible quantities so the inventory remains conservative about what should be used first.
+- Add Best-before input to manual catalog additions and one-time barcode-to-Cook4Me mapping without persisting package-specific dates in the barcode mapping itself, because two packages with the same EAN can have different dates.
+- Carry the stock best-before date into post-recipe consumption confirmation metadata and preserve it while quantities are deducted.
+- Ship/cache-bust Recipe Hub v20 and add inventory regressions for finite/unlimited dates, restocking, editing/clearing, invalid date rejection and consumption metadata.
+
 ## 2026.9.6.22
 
 - Replace the barcode mapping form's WebView-dependent `datalist` text field with a real searchable Cook4Me ingredient picker. Likely matches are shown first and the user can search/select from the cached full ingredient catalog on mobile and desktop.
@@ -33,7 +53,7 @@
 ## 2026.9.6.19
 
 - Turn **What I have in my house** into quantity-aware stock. Each ingredient can store an amount and unit, or be marked **unlimited (∞)** for things such as water.
-- Restocking an ingredient that is already present increases the existing amount instead of creating a duplicate. Safe language-neutral conversions are supported for mass (`mg/g/kg`), volume (`µl/ml/cl/dl/l`) and explicit count units; unknown/localized units are only combined when their unit token actually matches, never guessed.
+- Restocking an ingredient that is already present increases its existing amount instead of creating a duplicate. Safe language-neutral conversions are supported for mass (`mg/g/kg`), volume (`µl/ml/cl/dl/l`) and explicit count units; unknown/localized units are only combined when their unit token actually matches, never guessed.
 - Keep ingredient identity based on the stable SEB `M_FOOD_*` key whenever available, so stock quantities do not break recipe matching even when recipe wording contains quantities/preparation notes or a different localized display label.
 - Replace the home-ingredient chips with a collapsible editable stock list. Stored quantities are shown in parentheses, can be edited later, and depleted finite stock is removed automatically.
 - Keep the ingredient catalog at its current scroll position after **Add to house stock**. The catalog is no longer rerendered on every stock addition, and already-owned ingredients remain selectable so purchases can be added to their existing totals.
