@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime
 import importlib.util
 from pathlib import Path
 import sys
@@ -35,7 +36,11 @@ def load_recipe_hub_module():
     ha_core = types.ModuleType("homeassistant.core")
     ha_helpers = types.ModuleType("homeassistant.helpers")
     ha_storage = types.ModuleType("homeassistant.helpers.storage")
+    ha_util = types.ModuleType("homeassistant.util")
+    ha_dt = types.ModuleType("homeassistant.util.dt")
     ha_core.HomeAssistant = object
+    ha_dt.now = datetime.now
+    ha_util.dt = ha_dt
 
     class Store:
         def __class_getitem__(cls, _item):
@@ -46,6 +51,8 @@ def load_recipe_hub_module():
     sys.modules["homeassistant.core"] = ha_core
     sys.modules["homeassistant.helpers"] = ha_helpers
     sys.modules["homeassistant.helpers.storage"] = ha_storage
+    sys.modules["homeassistant.util"] = ha_util
+    sys.modules["homeassistant.util.dt"] = ha_dt
 
     package = types.ModuleType("cook4me_hub_test")
     package.__path__ = []
