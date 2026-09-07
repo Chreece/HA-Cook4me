@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 from copy import deepcopy
+from datetime import date
 import math
 import re
 import unicodedata
 from typing import Any
 
 _MAX_ITEMS = 500
+_UNSET = object()
 
 
 def _text(value: Any) -> str:
@@ -61,6 +63,27 @@ def _unit_token(value: Any) -> str:
     return re.sub(r"[\s._-]+", "", text)
 
 
+def _best_before(value: Any, *, strict: bool = False) -> str:
+    text = _text(value)
+    if not text:
+        return ""
+    try:
+        return date.fromisoformat(text).isoformat()
+    except ValueError:
+        if strict:
+            raise ValueError("Best-before date must use YYYY-MM-DD") from None
+        return ""
+
+
+def _merge_best_before(current: Any, incoming: Any) -> str:
+    """Keep the earliest known date when multiple stock additions are merged."""
+    left = _best_before(current)
+    right = _best_before(incoming)
+    if left and right:
+        return min(left, right)
+    return left or right
+
+
 # Only language-neutral symbols are converted. Unknown/localized units are still
 # supported when both sides use the exact same token; we never guess meanings.
 _UNIT_SCALE: dict[str, tuple[str, float]] = {
@@ -112,6 +135,7 @@ def _normalized_row(raw: Any) -> dict[str, Any] | None:
     unlimited = bool(raw.get("unlimited"))
     quantity = None if unlimited else _quantity(raw.get("quantity"))
     unit = _text(raw.get("unit"))
+    best_before = _best_before(raw.get("bestBefore") or raw.get("best_before"))
     row: dict[str, Any] = {"name": name}
     if key:
         row["key"] = key
@@ -121,6 +145,8 @@ def _normalized_row(raw: Any) -> dict[str, Any] | None:
         row["quantity"] = quantity
     if unit:
         row["unit"] = unit
+    if best_before:
+        row["bestBefore"] = best_before
     return row
 
 
@@ -162,6 +188,9 @@ def normalize_inventory(value: Any) -> list[dict[str, Any]]:
                     )
                     if converted is not None:
                         current["quantity"] = float(current["quantity"]) + converted
+            merged_date = _merge_best_before(current.get("bestBefore"), row.get("bestBefore"))
+            if merged_date:
+                current["bestBefore"] = merged_date
         if len(out) >= _MAX_ITEMS:
             break
     return out
@@ -174,8 +203,12 @@ def add_inventory_item(
     quantity: Any = None,
     unit: str = "",
     unlimited: bool = False,
+    best_before: Any = "",
 ) -> list[dict[str, Any]]:
     rows = normalize_inventory(inventory)
+    normalized_best_before = _best_before(
+        best_before, strict=bool(_text(best_before))
+    )
     addition = _normalized_row(
         {
             "key": ingredient.get("key") or ingredient.get("foodKey"),
@@ -183,6 +216,7 @@ def add_inventory_item(
             "quantity": quantity,
             "unit": unit,
             "unlimited": unlimited,
+            "bestBefore": normalized_best_before,
         }
     )
     if not addition:
@@ -191,6 +225,10 @@ def add_inventory_item(
     for current in rows:
         if inventory_identity(current) != ident:
             continue
+        if normalized_best_before:
+            current["bestBefore"] = _merge_best_before(
+                current.get("bestBefore"), normalized_best_before
+            )
         if unlimited:
             current.pop("quantity", None)
             current["unlimited"] = True
@@ -225,6 +263,7 @@ def update_inventory_item(
     quantity: Any = None,
     unit: str = "",
     unlimited: bool = False,
+    best_before: Any = _UNSET,
 ) -> list[dict[str, Any]]:
     rows = normalize_inventory(inventory)
     for current in rows:
@@ -243,6 +282,11 @@ def update_inventory_item(
                 current.pop("quantity", None)
             else:
                 current["quantity"] = amount
+        if best_before is not _UNSET:
+            if _text(best_before):
+                current["bestBefore"] = _best_before(best_before, strict=True)
+            else:
+                current.pop("bestBefore", None)
         return rows
     raise ValueError("House ingredient was not found")
 
@@ -299,6 +343,7 @@ def recipe_consumption_items(recipe: dict[str, Any], inventory: Any) -> list[dic
             "stockQuantity": current.get("quantity"),
             "stockUnit": current.get("unit", ""),
             "stockUnlimited": bool(current.get("unlimited")),
+            "stockBestBefore": current.get("bestBefore", ""),
         }
         if ident not in by_identity:
             by_identity[ident] = len(out)
