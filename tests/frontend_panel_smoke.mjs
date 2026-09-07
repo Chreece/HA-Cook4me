@@ -23,9 +23,12 @@ globalThis.localStorage={
   clear:()=>store.clear(),
 };
 
-await import("../custom_components/cook4me/frontend/cook4me-panel-v40.js");
+const lastSectionKey="cook4me.ui.lastSection.v1.smoke-user";
+store.set(lastSectionKey,"shopping");
 
-const tag="cook4me-recipe-hub-panel-v40";
+await import("../custom_components/cook4me/frontend/cook4me-panel-v41.js");
+
+const tag="cook4me-recipe-hub-panel-v41";
 if(!customElements.get(tag))throw new Error(`${tag} was not registered`);
 const panel=document.createElement(tag);
 document.body.appendChild(panel);
@@ -47,6 +50,12 @@ if(refresh.children.length!==1){
   throw new Error(`Refresh control leaked ${refresh.children.length} children [${tags}] html=${refresh.innerHTML}`);
 }
 if(String(refresh.firstElementChild?.tagName||"").toUpperCase()!=="HA-ICON")throw new Error("Refresh control direct child is not HA-ICON");
+
+if(panel._tab!=="shopping")throw new Error(`Last section was not restored; got ${panel._tab}`);
+const officialTab=panel.shadowRoot.querySelector('[data-tab="official"]');
+if(!officialTab)throw new Error("Official tab missing from section-memory smoke");
+officialTab.dispatchEvent(new Event("click",{bubbles:true,composed:true}));
+if(store.get(lastSectionKey)!=="official")throw new Error(`Section click was not remembered; got ${store.get(lastSectionKey)}`);
 
 // Render the real Today planner and let every queued v30/v32 modernization pass
 // finish. This catches the exact regression where v34's literal <ha-icon> and
@@ -83,4 +92,28 @@ for(const [id,expected] of [["todaySuggest","mdi:chef-hat"],["todayReset","mdi:b
 }
 if(panel.shadowRoot.querySelector("#todayReset").children.length!==1)throw new Error("Today Reset must remain icon-only");
 
-console.log("Recipe Hub v40 runtime smoke OK");
+const picker=panel.shadowRoot.querySelector("details.rx-today-picker");
+const advanced=panel.shadowRoot.querySelector("details.rx-advanced");
+if(!picker||!advanced)throw new Error("Today popup controls missing from outside-click smoke");
+picker.setAttribute("open","");
+advanced.setAttribute("open","");
+panel._dismissOpenMenusFromPointer({composedPath:()=>[picker]});
+if(!picker.hasAttribute("open"))throw new Error("Click inside a menu incorrectly closed that menu");
+if(advanced.hasAttribute("open"))throw new Error("Click in another menu did not close the previously open menu");
+advanced.setAttribute("open","");
+document.body.dispatchEvent(new Event("pointerdown",{bubbles:true,composed:true}));
+if(picker.hasAttribute("open")||advanced.hasAttribute("open"))throw new Error("Outside pointer did not close all Cook4Me menus");
+
+panel.remove();
+const restored=document.createElement(tag);
+document.body.appendChild(restored);
+restored.hass={
+  language:"en",
+  user:{id:"smoke-user"},
+  connection:{sendMessagePromise:async()=>({entries:[]})},
+};
+await new Promise(resolve=>setTimeout(resolve,0));
+if(restored._tab!=="official")throw new Error(`New panel did not reopen remembered section; got ${restored._tab}`);
+restored.remove();
+
+console.log("Recipe Hub v41 runtime smoke OK");
