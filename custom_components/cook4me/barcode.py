@@ -15,15 +15,17 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
 
 from .const import DOMAIN
+from .nutrition import normalize_nutrition, nutrition_from_open_food_facts
 
 _STORAGE_VERSION = 1
 _MAX_MAPPINGS = 1000
 _OFF_BASE = "https://world.openfoodfacts.org/api/v3/product"
 _OFF_FIELDS = (
     "code,product_name,generic_name,quantity,product_quantity,"
-    "product_quantity_unit,brands,categories,categories_tags"
+    "product_quantity_unit,brands,categories,categories_tags,"
+    "nutrition_data_per,nutriments"
 )
-_USER_AGENT = "HA-Cook4me/2026.9.6.22 (https://github.com/Chreece/HA-Cook4me)"
+_USER_AGENT = "HA-Cook4me/2026.9.7.5 (https://github.com/Chreece/HA-Cook4me)"
 
 
 def _text(value: Any) -> str:
@@ -117,7 +119,7 @@ def normalize_openfoodfacts_payload(code: str, payload: Any) -> dict[str, Any]:
     if category_text:
         categories.extend(part.strip() for part in category_text.split(",") if part.strip())
 
-    return {
+    result = {
         "barcode": code,
         "found": True,
         "name": generic_name or product_name or code,
@@ -130,6 +132,10 @@ def normalize_openfoodfacts_payload(code: str, payload: Any) -> dict[str, Any]:
         "categories": list(dict.fromkeys(categories))[:80],
         "source": "open_food_facts",
     }
+    nutrition = nutrition_from_open_food_facts(product, barcode=code, product_unit=unit)
+    if nutrition is not None:
+        result["nutrition"] = nutrition
+    return result
 
 
 def lookup_open_food_facts(code: str, timeout: int = 20) -> dict[str, Any]:
@@ -281,6 +287,9 @@ class Cook4MeBarcodeMappingStore:
             "brand": _text(mapping.get("brand")),
             "updatedAt": time.time(),
         }
+        nutrition = normalize_nutrition(mapping.get("nutrition"))
+        if nutrition is not None:
+            row["nutrition"] = nutrition
         self._data[code] = row
         if len(self._data) > _MAX_MAPPINGS:
             oldest = sorted(
