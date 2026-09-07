@@ -5,6 +5,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 V41 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v41.js"
 V42 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v42.js"
+V43 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v43.js"
 PANEL = ROOT / "custom_components" / "cook4me" / "panel.py"
 MANIFEST = ROOT / "custom_components" / "cook4me" / "manifest.json"
 
@@ -26,13 +27,13 @@ class V41UIContractTests(unittest.TestCase):
         self.assertIn('details.rx-advanced[open]', text)
         self.assertIn('if(!path.includes(menu))menu.removeAttribute("open")', text)
 
-    def test_v42_is_active_and_cache_busted(self):
+    def test_v43_is_active_and_cache_busted(self):
         panel = PANEL.read_text(encoding="utf-8")
         manifest = MANIFEST.read_text(encoding="utf-8")
-        self.assertIn('cook4me-recipe-hub-panel-v42', panel)
-        self.assertIn('cook4me-panel-v42.js', panel)
-        self.assertIn('?v=2026.9.7.21', panel)
-        self.assertIn('"version": "2026.9.7.21"', manifest)
+        self.assertIn('cook4me-recipe-hub-panel-v43', panel)
+        self.assertIn('cook4me-panel-v43.js', panel)
+        self.assertIn('?v=2026.9.7.22', panel)
+        self.assertIn('"version": "2026.9.7.22"', manifest)
 
     def test_v42_autofills_catalog_and_keeps_official_values_separate(self):
         text = V42.read_text(encoding="utf-8")
@@ -42,6 +43,15 @@ class V41UIContractTests(unittest.TestCase):
         self.assertIn('hierarchicalNutrients', text)
         self.assertIn('valuePer100g', text)
         self.assertIn('data-cook4me-official-nutrition', text)
+
+    def test_v43_surfaces_energy_and_resolution_cache_status(self):
+        text = V43.read_text(encoding="utf-8")
+        self.assertIn('energyPer100gValue', text)
+        self.assertIn('officialEnergyUnknownUnit', text)
+        self.assertIn('blockedFailures', text)
+        self.assertIn('actionableRemaining', text)
+        self.assertIn('Number(settings?.remaining)===0', text)
+        self.assertIn('this._nutritionAutoFillEntry=""', text)
 
 
 if __name__ == "__main__":
