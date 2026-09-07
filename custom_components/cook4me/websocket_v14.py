@@ -63,6 +63,7 @@ def ws_inventory_state(
         vol.Optional("quantity"): vol.Any(int, float, str),
         vol.Optional("unit", default=""): str,
         vol.Optional("unlimited", default=False): bool,
+        vol.Optional("best_before", default=""): str,
     }
 )
 @websocket_api.async_response
@@ -78,6 +79,7 @@ async def ws_inventory_add(
             quantity=msg.get("quantity"),
             unit=str(msg.get("unit") or ""),
             unlimited=bool(msg.get("unlimited")),
+            best_before=str(msg.get("best_before") or ""),
         )
         result = _state(bridge)
     except Exception as exc:
@@ -94,6 +96,7 @@ async def ws_inventory_add(
         vol.Optional("quantity"): vol.Any(int, float, str),
         vol.Optional("unit", default=""): str,
         vol.Optional("unlimited", default=False): bool,
+        vol.Optional("best_before"): str,
     }
 )
 @websocket_api.async_response
@@ -104,11 +107,15 @@ async def ws_inventory_update(
 ) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
+        kwargs: dict[str, Any] = {}
+        if "best_before" in msg:
+            kwargs["best_before"] = str(msg.get("best_before") or "")
         await bridge.recipe_hub.async_inventory_update(
             str(msg["identity"]),
             quantity=msg.get("quantity"),
             unit=str(msg.get("unit") or ""),
             unlimited=bool(msg.get("unlimited")),
+            **kwargs,
         )
         result = _state(bridge)
     except Exception as exc:
