@@ -26,9 +26,9 @@ globalThis.localStorage={
 const lastSectionKey="cook4me.ui.lastSection.v1.smoke-user";
 store.set(lastSectionKey,"official");
 
-await import("../custom_components/cook4me/frontend/cook4me-panel-v41.js");
+await import("../custom_components/cook4me/frontend/cook4me-panel-v42.js");
 
-const tag="cook4me-recipe-hub-panel-v41";
+const tag="cook4me-recipe-hub-panel-v42";
 if(!customElements.get(tag))throw new Error(`${tag} was not registered`);
 const panel=document.createElement(tag);
 document.body.appendChild(panel);
@@ -105,6 +105,17 @@ advanced.setAttribute("open","");
 panel._dismissOpenMenusFromPointer({composedPath:()=>[]});
 if(picker.hasAttribute("open")||advanced.hasAttribute("open"))throw new Error("Outside pointer did not close all Cook4Me menus");
 
+// v42 should surface only explicit SEB valuePer100g evidence.
+const official={
+  officialNutrition:{
+    hierarchicalNutrients:[{
+      name:"Protein",valuePer100g:8.25,basisQuantity:100,basisUnit:"g",unit:{abbreviation:"g"},
+    }],
+  },
+};
+const officialBlock=panel._officialNutritionBlock(official);
+if(!officialBlock.includes("Protein")||!officialBlock.includes("8.25 g"))throw new Error("v42 official SEB per-100-g block missing proven value");
+
 panel._rememberSection("official");
 panel.remove();
 const restored=document.createElement(tag);
@@ -118,4 +129,4 @@ await new Promise(resolve=>setTimeout(resolve,0));
 if(restored._tab!=="official")throw new Error(`New panel did not reopen remembered section; got ${restored._tab}`);
 restored.remove();
 
-console.log("Recipe Hub v41 runtime smoke OK");
+console.log("Recipe Hub v42 runtime smoke OK");
