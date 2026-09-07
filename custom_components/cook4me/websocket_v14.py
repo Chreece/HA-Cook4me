@@ -8,6 +8,7 @@ from homeassistant.core import HomeAssistant, callback
 
 from . import websocket as legacy
 from .expiry import update_expiry_notification
+from .meal_history import meal_history_store_for_bridge
 from .nutrition import nutrition_store_for_bridge
 
 
@@ -73,6 +74,7 @@ def ws_inventory_state(
         vol.Optional("unit", default=""): str,
         vol.Optional("unlimited", default=False): bool,
         vol.Optional("best_before", default=""): str,
+        vol.Optional("lot_metadata"): dict,
     }
 )
 @websocket_api.async_response
@@ -89,6 +91,7 @@ async def ws_inventory_add(
             unit=str(msg.get("unit") or ""),
             unlimited=bool(msg.get("unlimited")),
             best_before=str(msg.get("best_before") or ""),
+            lot_metadata=dict(msg.get("lot_metadata") or {}),
         )
         await _reconcile_nutrition(bridge)
         update_expiry_notification(bridge)
@@ -171,6 +174,7 @@ async def ws_inventory_remove(
         vol.Optional("entry_id"): str,
         vol.Required("pending_id"): str,
         vol.Required("ingredients"): [dict],
+        vol.Optional("allocations"): [dict],
     }
 )
 @websocket_api.async_response
@@ -191,8 +195,18 @@ async def ws_consumption_confirm(
         await nutrition_store.async_reconcile_inventory(
             bridge.recipe_hub.profile.get("houseIngredients") or []
         )
+        result["mealNutrition"] = consumed_nutrition
         if consumed_nutrition.get("totals"):
             result["nutrition"] = consumed_nutrition
+
+        completed = result.get("completedRecipe") if isinstance(result.get("completedRecipe"), dict) else {}
+        history = await meal_history_store_for_bridge(bridge)
+        result["mealHistoryRecord"] = await history.async_record(
+            recipe=completed,
+            nutrition=consumed_nutrition,
+            allocations=list(msg.get("allocations") or []),
+        )
+
         persistent_notification.async_dismiss(
             hass, _notification_id(bridge.entry.entry_id)
         )
