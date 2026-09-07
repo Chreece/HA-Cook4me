@@ -79,5 +79,6 @@ jobs:
           node --check custom_components/cook4me/frontend/cook4me-panel-v34.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v35.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v36.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v37.js
       - name: Run focused tests
         run: python -m unittest discover -s tests -v
