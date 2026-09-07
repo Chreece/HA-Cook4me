@@ -16,6 +16,7 @@ from .barcode import (
     normalize_barcode,
     suggest_catalog_matches,
 )
+from .expiry import update_expiry_notification
 
 
 async def _store(bridge) -> Cook4MeBarcodeMappingStore:
@@ -42,6 +43,7 @@ async def _add_mapping_stock(
         unlimited=False,
         best_before=best_before,
     )
+    update_expiry_notification(bridge)
     return v14._state(bridge)
 
 
