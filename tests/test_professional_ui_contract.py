@@ -3,6 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v32.js"
+HOTFIX_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v33.js"
 PANEL = ROOT / "custom_components" / "cook4me" / "panel.py"
 MANIFEST = ROOT / "custom_components" / "cook4me" / "manifest.json"
 
@@ -46,10 +47,21 @@ def test_background_job_cards_and_cancellation_contract():
         assert name in text
 
 
-def test_v32_is_active_and_versioned():
+def test_v33_disables_self_triggering_subtree_observer():
+    text = _text(HOTFIX_JS)
+    assert '_installModernObserver()' in text
+    assert 'this._modernObserver?.disconnect()' in text
+    assert 'this._modernObserver=null' in text
+    assert 'new MutationObserver' not in text
+    # The two v32 writers that replace child nodes are explicitly idempotent.
+    assert 'if(option.textContent!==next)option.textContent=next' in text
+    assert 'if(target.innerHTML!==next)' in text
+
+
+def test_v33_is_active_and_versioned():
     panel = _text(PANEL)
     manifest = _text(MANIFEST)
-    assert 'cook4me-recipe-hub-panel-v32' in panel
-    assert 'cook4me-panel-v32.js' in panel
-    assert '?v=2026.9.7.11' in panel
-    assert '"version": "2026.9.7.11"' in manifest
+    assert 'cook4me-recipe-hub-panel-v33' in panel
+    assert 'cook4me-panel-v33.js' in panel
+    assert '?v=2026.9.7.12' in panel
+    assert '"version": "2026.9.7.12"' in manifest
