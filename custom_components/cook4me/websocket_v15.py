@@ -17,6 +17,7 @@ from .barcode import (
     suggest_catalog_matches,
 )
 from .expiry import update_expiry_notification
+from .nutrition import nutrition_store_for_bridge
 
 
 async def _store(bridge) -> Cook4MeBarcodeMappingStore:
@@ -42,6 +43,20 @@ async def _add_mapping_stock(
         unit=unit,
         unlimited=False,
         best_before=best_before,
+    )
+    nutrition_store = await nutrition_store_for_bridge(bridge)
+    await nutrition_store.async_add_stock_lot(
+        dict(ingredient),
+        quantity=quantity,
+        unit=unit,
+        best_before=best_before,
+        nutrition=mapping.get("nutrition"),
+        barcode=str(mapping.get("barcode") or ""),
+        product_name=str(mapping.get("productName") or ""),
+        brand=str(mapping.get("brand") or ""),
+    )
+    await nutrition_store.async_reconcile_inventory(
+        bridge.recipe_hub.profile.get("houseIngredients") or []
     )
     update_expiry_notification(bridge)
     return v14._state(bridge)
@@ -112,6 +127,7 @@ async def ws_barcode_scan(
                     "unit": package_unit,
                     "productName": product.get("productName") or product.get("name"),
                     "brand": product.get("brand"),
+                    "nutrition": product.get("nutrition"),
                 },
             )
             state = await _add_mapping_stock(bridge, mapping)
@@ -169,14 +185,20 @@ async def ws_barcode_map_add(
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         code = normalize_barcode(msg["barcode"])
         store = await _store(bridge)
+        product: dict[str, Any] = {}
+        try:
+            product = await hass.async_add_executor_job(lookup_open_food_facts, code)
+        except Exception:
+            product = {}
         mapping = await store.async_set(
             code,
             {
                 "ingredient": dict(msg["ingredient"]),
                 "quantity": msg.get("quantity"),
                 "unit": str(msg.get("unit") or ""),
-                "productName": str(msg.get("product_name") or ""),
-                "brand": str(msg.get("brand") or ""),
+                "productName": str(msg.get("product_name") or product.get("productName") or ""),
+                "brand": str(msg.get("brand") or product.get("brand") or ""),
+                "nutrition": product.get("nutrition"),
             },
         )
         state = await _add_mapping_stock(
@@ -189,6 +211,7 @@ async def ws_barcode_map_add(
                 "barcode": code,
                 "knownMapping": False,
                 "mapping": mapping,
+                "nutritionCaptured": bool(mapping.get("nutrition")),
                 **state,
             },
         )
