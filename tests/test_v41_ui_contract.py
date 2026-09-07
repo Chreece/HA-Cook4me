@@ -4,6 +4,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 V41 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v41.js"
+V42 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v42.js"
 PANEL = ROOT / "custom_components" / "cook4me" / "panel.py"
 MANIFEST = ROOT / "custom_components" / "cook4me" / "manifest.json"
 
@@ -25,13 +26,22 @@ class V41UIContractTests(unittest.TestCase):
         self.assertIn('details.rx-advanced[open]', text)
         self.assertIn('if(!path.includes(menu))menu.removeAttribute("open")', text)
 
-    def test_v41_is_active_and_cache_busted(self):
+    def test_v42_is_active_and_cache_busted(self):
         panel = PANEL.read_text(encoding="utf-8")
         manifest = MANIFEST.read_text(encoding="utf-8")
-        self.assertIn('cook4me-recipe-hub-panel-v41', panel)
-        self.assertIn('cook4me-panel-v41.js', panel)
-        self.assertIn('?v=2026.9.7.20', panel)
-        self.assertIn('"version": "2026.9.7.20"', manifest)
+        self.assertIn('cook4me-recipe-hub-panel-v42', panel)
+        self.assertIn('cook4me-panel-v42.js', panel)
+        self.assertIn('?v=2026.9.7.21', panel)
+        self.assertIn('"version": "2026.9.7.21"', manifest)
+
+    def test_v42_autofills_catalog_and_keeps_official_values_separate(self):
+        text = V42.read_text(encoding="utf-8")
+        self.assertIn('cook4me/v16/nutrition_catalog_fill', text)
+        self.assertIn('limit:custom?25:3', text)
+        self.assertIn('officialNutrition', text)
+        self.assertIn('hierarchicalNutrients', text)
+        self.assertIn('valuePer100g', text)
+        self.assertIn('data-cook4me-official-nutrition', text)
 
 
 if __name__ == "__main__":
