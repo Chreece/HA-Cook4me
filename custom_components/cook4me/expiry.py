@@ -18,30 +18,36 @@ _NOTIFICATION_PREFIX = "cook4me_best_before_"
 
 _TEXT = {
     "en": {
-        "title": "Cook4Me · Best-before dates approaching",
-        "intro": "These ingredients should be used soon. Cook4Me gives recipes using them extra priority in **For what I have in my house**.",
-        "past": "best before passed {days} day(s) ago",
-        "today": "best before today",
-        "tomorrow": "best before tomorrow",
-        "days": "best before in {days} days",
+        "title": "Cook4Me · Food should be used soon",
+        "intro": "These stock batches should be used soon. Cook4Me gives recipes using them extra priority in **For what I have in my house**.",
+        "past": "use date passed {days} day(s) ago",
+        "today": "use today",
+        "tomorrow": "use by tomorrow",
+        "days": "use within {days} days",
+        "opened": "opened-package limit",
+        "storage": "stored in {storage}",
         "open": "Open Cook4Me",
     },
     "de": {
-        "title": "Cook4Me · Mindesthaltbarkeit rückt näher",
-        "intro": "Diese Zutaten sollten bald verwendet werden. Cook4Me priorisiert passende Rezepte unter **Für das, was ich zu Hause habe** stärker.",
-        "past": "MHD seit {days} Tag(en) überschritten",
-        "today": "MHD heute",
-        "tomorrow": "MHD morgen",
-        "days": "MHD in {days} Tagen",
+        "title": "Cook4Me · Lebensmittel bald verwenden",
+        "intro": "Diese Vorratschargen sollten bald verwendet werden. Cook4Me priorisiert passende Rezepte unter **Für das, was ich zu Hause habe** stärker.",
+        "past": "Verbrauchsdatum seit {days} Tag(en) überschritten",
+        "today": "heute verwenden",
+        "tomorrow": "bis morgen verwenden",
+        "days": "innerhalb von {days} Tagen verwenden",
+        "opened": "Frist nach dem Öffnen",
+        "storage": "Lagerort: {storage}",
         "open": "Cook4Me öffnen",
     },
     "el": {
-        "title": "Cook4Me · Πλησιάζει η ανάλωση κατά προτίμηση",
-        "intro": "Αυτά τα υλικά πρέπει να χρησιμοποιηθούν σύντομα. Το Cook4Me δίνει μεγαλύτερη προτεραιότητα σε συνταγές που τα χρησιμοποιούν στο **Για όσα έχω στο σπίτι**.",
-        "past": "η ημερομηνία πέρασε πριν από {days} ημέρα/ημέρες",
-        "today": "η ημερομηνία είναι σήμερα",
-        "tomorrow": "η ημερομηνία είναι αύριο",
-        "days": "η ημερομηνία είναι σε {days} ημέρες",
+        "title": "Cook4Me · Τρόφιμα για σύντομη κατανάλωση",
+        "intro": "Αυτές οι παρτίδες πρέπει να χρησιμοποιηθούν σύντομα. Το Cook4Me δίνει μεγαλύτερη προτεραιότητα σε συνταγές που τις χρησιμοποιούν στο **Για όσα έχω στο σπίτι**.",
+        "past": "η ημερομηνία χρήσης πέρασε πριν από {days} ημέρα/ημέρες",
+        "today": "χρήση σήμερα",
+        "tomorrow": "χρήση έως αύριο",
+        "days": "χρήση μέσα σε {days} ημέρες",
+        "opened": "όριο μετά το άνοιγμα",
+        "storage": "αποθήκευση: {storage}",
         "open": "Άνοιγμα Cook4Me",
     },
 }
@@ -73,7 +79,6 @@ def update_expiry_notification(
     today: date | None = None,
     warning_days: int = DEFAULT_EXPIRY_WARNING_DAYS,
 ) -> None:
-    """Create/update one consolidated persistent notification for dated stock."""
     reference = today or dt_util.now().date()
     items = expiring_inventory_items(
         bridge.recipe_hub.profile.get("houseIngredients") or [],
@@ -93,17 +98,19 @@ def update_expiry_notification(
         days_remaining = int(row.get("daysRemaining") or 0)
         stock = format_stock(row)
         amount = f" · {stock}" if stock else ""
+        effective = row.get("effectiveBestBefore") or row.get("bestBefore") or ""
+        extras: list[str] = []
+        if row.get("openedDrivenExpiry"):
+            extras.append(text["opened"])
+        if row.get("storage"):
+            extras.append(text["storage"].format(storage=row.get("storage")))
+        suffix = f" · {' · '.join(extras)}" if extras else ""
         lines.append(
             f"- **{row.get('name') or 'Ingredient'}**{amount} · "
-            f"{row.get('bestBefore')} · {_relative_text(days_remaining, text)}"
+            f"{effective} · {_relative_text(days_remaining, text)}{suffix}"
         )
 
-    message = (
-        text["intro"]
-        + "\n\n"
-        + "\n".join(lines)
-        + f"\n\n[{text['open']}](/cook4me)"
-    )
+    message = text["intro"] + "\n\n" + "\n".join(lines) + f"\n\n[{text['open']}](/cook4me)"
     persistent_notification.async_create(
         bridge.hass,
         message,
@@ -120,8 +127,6 @@ def dismiss_expiry_notification(bridge: Any) -> None:
 
 
 def register_daily_expiry_check(bridge: Any):
-    """Refresh best-before state once a day in Home Assistant local time."""
-
     @callback
     def _daily_check(_now: datetime) -> None:
         update_expiry_notification(bridge)
