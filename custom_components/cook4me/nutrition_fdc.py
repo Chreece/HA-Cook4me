@@ -17,6 +17,15 @@ from .nutrition import (
 _FDC_BASE = "https://api.nal.usda.gov/fdc/v1/foods/search"
 _MIN_SCORE = 0.86
 _MIN_MARGIN = 0.05
+_TYPE_RANK = {
+    "foundation": 3,
+    "sr legacy": 2,
+    "survey (fndds)": 1,
+}
+
+
+def _data_type_rank(food: dict[str, Any]) -> int:
+    return _TYPE_RANK.get(_text(food.get("dataType")).casefold(), 0)
 
 
 def ranked_fdc_candidates(query: str, foods: Any) -> list[tuple[float, dict[str, Any]]]:
@@ -34,9 +43,20 @@ def ranked_fdc_candidates(query: str, foods: Any) -> list[tuple[float, dict[str,
         if score <= 0:
             continue
         previous = best_by_description.get(description)
-        if previous is None or score > previous[0]:
+        if previous is None:
             best_by_description[description] = (score, food)
-    return sorted(best_by_description.values(), key=lambda item: item[0], reverse=True)
+            continue
+        previous_score, previous_food = previous
+        if score > previous_score or (
+            score == previous_score
+            and _data_type_rank(food) > _data_type_rank(previous_food)
+        ):
+            best_by_description[description] = (score, food)
+    return sorted(
+        best_by_description.values(),
+        key=lambda item: (item[0], _data_type_rank(item[1])),
+        reverse=True,
+    )
 
 
 def select_fdc_candidate_strict(
