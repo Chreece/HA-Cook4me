@@ -8,6 +8,7 @@ from homeassistant.core import HomeAssistant, callback
 
 from . import websocket as legacy
 from .expiry import update_expiry_notification
+from .nutrition import nutrition_store_for_bridge
 
 
 def _notification_id(entry_id: str) -> str:
@@ -20,6 +21,13 @@ def _state(bridge) -> dict[str, Any]:
         "houseIngredients": profile.get("houseIngredients") or [],
         "pendingConsumption": bridge.recipe_hub.pending_consumption,
     }
+
+
+async def _reconcile_nutrition(bridge) -> None:
+    store = await nutrition_store_for_bridge(bridge)
+    await store.async_reconcile_inventory(
+        bridge.recipe_hub.profile.get("houseIngredients") or []
+    )
 
 
 @callback
@@ -82,6 +90,7 @@ async def ws_inventory_add(
             unlimited=bool(msg.get("unlimited")),
             best_before=str(msg.get("best_before") or ""),
         )
+        await _reconcile_nutrition(bridge)
         update_expiry_notification(bridge)
         result = _state(bridge)
     except Exception as exc:
@@ -122,6 +131,7 @@ async def ws_inventory_update(
             unlimited=bool(msg.get("unlimited")),
             **kwargs,
         )
+        await _reconcile_nutrition(bridge)
         update_expiry_notification(bridge)
         result = _state(bridge)
     except Exception as exc:
@@ -146,6 +156,7 @@ async def ws_inventory_remove(
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         await bridge.recipe_hub.async_inventory_remove(str(msg["identity"]))
+        await _reconcile_nutrition(bridge)
         update_expiry_notification(bridge)
         result = _state(bridge)
     except Exception as exc:
@@ -173,6 +184,15 @@ async def ws_consumption_confirm(
         result = await bridge.recipe_hub.async_confirm_consumption(
             str(msg["pending_id"]), list(msg.get("ingredients") or [])
         )
+        nutrition_store = await nutrition_store_for_bridge(bridge)
+        consumed_nutrition = await nutrition_store.async_consume_report(
+            result.get("report") or {}
+        )
+        await nutrition_store.async_reconcile_inventory(
+            bridge.recipe_hub.profile.get("houseIngredients") or []
+        )
+        if consumed_nutrition.get("totals"):
+            result["nutrition"] = consumed_nutrition
         persistent_notification.async_dismiss(
             hass, _notification_id(bridge.entry.entry_id)
         )
