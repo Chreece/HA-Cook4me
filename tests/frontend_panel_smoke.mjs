@@ -8,7 +8,9 @@ for(const key of [
   if(window[key])globalThis[key]=window[key];
 }
 globalThis.window=window;
-globalThis.navigator=window.navigator||{language:"en"};
+if(!globalThis.navigator){
+  Object.defineProperty(globalThis,"navigator",{value:window.navigator||{language:"en"},configurable:true});
+}
 globalThis.requestAnimationFrame=(callback)=>setTimeout(()=>callback(Date.now()),0);
 globalThis.cancelAnimationFrame=(id)=>clearTimeout(id);
 globalThis.ResizeObserver=class{observe(){} unobserve(){} disconnect(){}};
