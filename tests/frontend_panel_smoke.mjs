@@ -42,6 +42,9 @@ for(const selector of ["#status","#tabs","#content","#refresh","#cook4meUiLangua
 }
 if(!panel.shadowRoot.querySelector(".top.rx-v38-top"))throw new Error("Unified top bar was not applied");
 const refresh=panel.shadowRoot.querySelector("#refresh");
-if(refresh.children.length!==1)throw new Error(`Refresh control leaked ${refresh.children.length} children`);
+if(refresh.children.length!==1){
+  const tags=[...refresh.children].map(node=>`${node.tagName}:${node.getAttribute?.("icon")||""}`).join(",");
+  throw new Error(`Refresh control leaked ${refresh.children.length} children [${tags}] html=${refresh.innerHTML}`);
+}
 if(String(refresh.firstElementChild?.tagName||"").toUpperCase()!=="HA-ICON")throw new Error("Refresh control direct child is not HA-ICON");
 console.log("Recipe Hub v39 runtime smoke OK");
