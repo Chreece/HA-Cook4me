@@ -10,8 +10,8 @@ from homeassistant.core import HomeAssistant
 from .const import DOMAIN
 
 _URL_BASE = "/cook4me_static"
-_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v29"
-_PANEL_MODULE = "cook4me-panel-v29.js"
+_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v31"
+_PANEL_MODULE = "cook4me-panel-v31.js"
 
 
 async def async_register_panel(hass: HomeAssistant) -> None:
@@ -25,7 +25,7 @@ async def async_register_panel(hass: HomeAssistant) -> None:
         hass=hass,
         frontend_url_path=DOMAIN,
         webcomponent_name=_PANEL_ELEMENT,
-        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.7.9",
+        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.7.10",
         sidebar_title="Cook4Me",
         sidebar_icon="mdi:pot-steam",
         embed_iframe=False,
