@@ -193,12 +193,12 @@ class Cook4MeRecipeHubPanelV38 extends BasePanel{
 
   _applyV38TopBar(){
     const top=this.shadowRoot?.querySelector(".top");
-    const toolbar=top?.querySelector(":scope > .toolbar");
+    const refresh=this.shadowRoot?.getElementById("refresh");
+    const toolbar=refresh?.closest(".toolbar");
     if(!top||!toolbar)return;
     top.classList.add("rx-v38-top");
 
     const control=this.shadowRoot?.getElementById("cook4meUiLanguageControl");
-    const refresh=this.shadowRoot?.getElementById("refresh");
     if(control){
       control.classList.add("rx-v38-globe");
       const field=control.querySelector(".field");
@@ -211,17 +211,15 @@ class Cook4MeRecipeHubPanelV38 extends BasePanel{
       }
       select?.setAttribute("aria-label",this._t("interfaceLanguage"));
       select?.setAttribute("title",this._t("interfaceLanguage"));
-      if(control.parentElement!==toolbar)toolbar.insertBefore(control,refresh||toolbar.firstChild);
+      if(control.parentElement!==toolbar)toolbar.insertBefore(control,refresh);
     }
-    if(refresh){
-      refresh.classList.add("rx-v38-refresh");
-      refresh.title=this._t("refresh");
-      refresh.setAttribute("aria-label",this._t("refresh"));
-      if(!refresh.querySelector("ha-icon")){
-        const icon=document.createElement("ha-icon");
-        icon.setAttribute("icon","mdi:refresh");
-        refresh.replaceChildren(icon);
-      }
+    refresh.classList.add("rx-v38-refresh");
+    refresh.title=this._t("refresh");
+    refresh.setAttribute("aria-label",this._t("refresh"));
+    if(!refresh.querySelector("ha-icon")){
+      const icon=document.createElement("ha-icon");
+      icon.setAttribute("icon","mdi:refresh");
+      refresh.replaceChildren(icon);
     }
   }
 
