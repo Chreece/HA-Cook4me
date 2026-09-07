@@ -99,6 +99,7 @@ async def ws_inventory_add(
         vol.Optional("unit", default=""): str,
         vol.Optional("unlimited", default=False): bool,
         vol.Optional("best_before"): str,
+        vol.Optional("lots"): [dict],
     }
 )
 @websocket_api.async_response
@@ -112,6 +113,8 @@ async def ws_inventory_update(
         kwargs: dict[str, Any] = {}
         if "best_before" in msg:
             kwargs["best_before"] = str(msg.get("best_before") or "")
+        if "lots" in msg:
+            kwargs["lots"] = list(msg.get("lots") or [])
         await bridge.recipe_hub.async_inventory_update(
             str(msg["identity"]),
             quantity=msg.get("quantity"),
