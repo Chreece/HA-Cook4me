@@ -9,14 +9,17 @@ from uuid import uuid4
 
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
+from homeassistant.util import dt as dt_util
 
 from .const import DOMAIN
 from .ingredient_catalog import enrich_match_with_house_keys
 from .inventory import (
+    DEFAULT_EXPIRY_WARNING_DAYS,
     add_inventory_item,
     apply_consumption,
     normalize_inventory,
     recipe_consumption_items,
+    recipe_expiry_priority,
     remove_inventory_item,
     update_inventory_item,
 )
@@ -377,10 +380,25 @@ class Cook4MeRecipeHub:
 
     def annotate(self, recipe: dict[str, Any]) -> dict[str, Any]:
         result = deepcopy(recipe)
+        house = self._data["profile"].get("houseIngredients")
         base_match = score_recipe(result, self._scoring_profile())
-        result["match"] = enrich_match_with_house_keys(
-            result, base_match, self._data["profile"].get("houseIngredients")
-        )
+        match = enrich_match_with_house_keys(result, base_match, house)
+        if match.get("safe"):
+            expiry = recipe_expiry_priority(
+                result,
+                house,
+                today=dt_util.now().date(),
+                within_days=DEFAULT_EXPIRY_WARNING_DAYS,
+            )
+            base_score = float(match.get("score") or 0.0)
+            expiry_priority = float(expiry.get("priority") or 0.0)
+            expiry_bonus = min(40.0, expiry_priority * 20.0)
+            match["baseScore"] = round(base_score, 1)
+            match["expiryPriority"] = round(expiry_priority, 3)
+            match["expiryBonus"] = round(expiry_bonus, 1)
+            match["expiringIngredients"] = expiry.get("ingredients") or []
+            match["score"] = round(base_score + expiry_bonus, 1)
+        result["match"] = match
         return result
 
     def rank(self, recipes: list[dict[str, Any]], limit: int = 12) -> list[dict[str, Any]]:
