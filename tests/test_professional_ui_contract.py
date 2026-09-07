@@ -178,7 +178,8 @@ def test_v38_today_wraps_inside_page_without_horizontal_strip():
 def test_v38_top_controls_are_unified_and_icon_only_without_replacing_language_select():
     text = _text(RESTORE_JS)
     assert 'rx-v38-top' in text
-    assert 'toolbar.insertBefore(control,refresh||toolbar.firstChild)' in text
+    assert 'const toolbar=refresh?.closest(".toolbar")' in text
+    assert 'toolbar.insertBefore(control,refresh)' in text
     assert 'control.classList.add("rx-v38-globe")' in text
     assert 'icon.setAttribute("icon","mdi:web")' in text
     assert 'refresh.classList.add("rx-v38-refresh")' in text
