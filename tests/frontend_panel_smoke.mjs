@@ -23,9 +23,9 @@ globalThis.localStorage={
   clear:()=>store.clear(),
 };
 
-await import("../custom_components/cook4me/frontend/cook4me-panel-v39.js");
+await import("../custom_components/cook4me/frontend/cook4me-panel-v40.js");
 
-const tag="cook4me-recipe-hub-panel-v39";
+const tag="cook4me-recipe-hub-panel-v40";
 if(!customElements.get(tag))throw new Error(`${tag} was not registered`);
 const panel=document.createElement(tag);
 document.body.appendChild(panel);
@@ -47,4 +47,40 @@ if(refresh.children.length!==1){
   throw new Error(`Refresh control leaked ${refresh.children.length} children [${tags}] html=${refresh.innerHTML}`);
 }
 if(String(refresh.firstElementChild?.tagName||"").toUpperCase()!=="HA-ICON")throw new Error("Refresh control direct child is not HA-ICON");
-console.log("Recipe Hub v39 runtime smoke OK");
+
+// Render the real Today planner and let every queued v30/v32 modernization pass
+// finish. This catches the exact regression where v34's literal <ha-icon> and
+// the global modernizer both decorated Suggest/Reset.
+panel._entries=[{
+  entry_id:"smoke-entry",
+  title:"Cook4Me",
+  connected:true,
+  canAcceptRecipe:true,
+  state:{phase:"idle"},
+  profile:{diet:"vegetarian",houseIngredients:[]},
+  recipes:[],
+}];
+panel._entryId="smoke-entry";
+panel._todayOptions={};
+panel._ingredientCatalog=[{key:"M_FOOD_SMOKE",name:"Tomato"}];
+panel._ingredientCatalogLoading=false;
+panel._todaySettings=panel._todayDefaults();
+panel._todayResults=[];
+panel._todayMeta=null;
+panel._tab="today";
+panel._renderTabs();
+panel._renderTab();
+await new Promise(resolve=>setTimeout(resolve,0));
+await new Promise(resolve=>setTimeout(resolve,0));
+
+for(const [id,expected] of [["todaySuggest","mdi:chef-hat"],["todayReset","mdi:backup-restore"]]){
+  const button=panel.shadowRoot.querySelector(`#${id}`);
+  if(!button)throw new Error(`Today smoke missing #${id}`);
+  const icons=[...button.children].filter(node=>String(node.tagName||"").toUpperCase()==="HA-ICON");
+  if(icons.length!==1)throw new Error(`${id} leaked ${icons.length} direct icons html=${button.innerHTML}`);
+  if(icons[0].getAttribute("icon")!==expected)throw new Error(`${id} has ${icons[0].getAttribute("icon")} instead of ${expected}`);
+  if(!icons[0].classList.contains("rx-leading-icon"))throw new Error(`${id} icon is not marked for the inherited modernizer`);
+}
+if(panel.shadowRoot.querySelector("#todayReset").children.length!==1)throw new Error("Today Reset must remain icon-only");
+
+console.log("Recipe Hub v40 runtime smoke OK");
