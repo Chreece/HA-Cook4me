@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from copy import deepcopy
 from typing import Any
 
 import voluptuous as vol
@@ -19,7 +18,8 @@ from .food_intelligence import (
 )
 from .inventory import DEFAULT_EXPIRY_WARNING_DAYS, expiring_inventory_items
 from .meal_history import meal_history_store_for_bridge
-from .nutrition import calculate_recipe_nutrition, nutrition_store_for_bridge
+from .nutrition import nutrition_store_for_bridge
+from .nutrition_fefo import calculate_recipe_nutrition_fefo
 
 _DIET_FILTERS = ("profile", "omnivore", "pescatarian", "vegetarian", "vegan")
 
@@ -45,11 +45,7 @@ def async_register(hass: HomeAssistant) -> None:
     }
 )
 @websocket_api.async_response
-async def ws_recommend(
-    hass: HomeAssistant,
-    connection: websocket_api.ActiveConnection,
-    msg: dict[str, Any],
-) -> None:
+async def ws_recommend(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         query = str(msg.get("query", "")).strip()
@@ -59,27 +55,18 @@ async def ws_recommend(
         strict_language = bool(msg.get("strict_language"))
         refresh = bool(msg.get("refresh"))
         goal = normalize_nutrition_goal(msg.get("nutrition_goal"))
-
         search = await v10._search_with_diagnostic(
-            hass,
-            bridge,
-            query=query,
-            page=0,
-            size=catalog_size,
-            language=language,
-            strict_language=strict_language,
-            refresh=refresh,
+            hass, bridge, query=query, page=0, size=catalog_size,
+            language=language, strict_language=strict_language, refresh=refresh,
         )
         if not search.get("ok", True):
             connection.send_result(msg["id"], search)
             return
-
         profile = bridge.recipe_hub.profile
+        house = profile.get("houseIngredients") or []
         expiring = expiring_inventory_items(
-            profile.get("houseIngredients") or [],
-            today=dt_util.now().date(),
-            within_days=DEFAULT_EXPIRY_WARNING_DAYS,
-            include_past=False,
+            house, today=dt_util.now().date(),
+            within_days=DEFAULT_EXPIRY_WARNING_DAYS, include_past=False,
         )
         candidates = list(search.get("items") or [])
         expiry_candidate_searches = 0
@@ -90,14 +77,8 @@ async def ws_recommend(
                     continue
                 try:
                     extra = await v10._search_with_diagnostic(
-                        hass,
-                        bridge,
-                        query=name,
-                        page=0,
-                        size=min(20, catalog_size),
-                        language=language,
-                        strict_language=strict_language,
-                        refresh=refresh,
+                        hass, bridge, query=name, page=0, size=min(20, catalog_size),
+                        language=language, strict_language=strict_language, refresh=refresh,
                     )
                 except Exception:
                     continue
@@ -105,20 +86,11 @@ async def ws_recommend(
                     candidates.extend(extra.get("items") or [])
                     expiry_candidate_searches += 1
             candidates = v13._dedupe_recipes(candidates)
-
-        # First apply all hard diet/allergy rules plus stock/expiry ranking.
-        ranked = v13._rank_filtered(
-            bridge,
-            candidates,
-            diet=diet,
-            limit=30,
-        )
+        ranked = v13._rank_filtered(bridge, candidates, diet=diet, limit=30)
         nutrition_store = await nutrition_store_for_bridge(bridge)
-        house = profile.get("houseIngredients") or []
         for item in ranked:
-            nutrition = calculate_recipe_nutrition(
-                item,
-                house,
+            nutrition = calculate_recipe_nutrition_fefo(
+                item, house,
                 generic=nutrition_store.generic,
                 stock_lots=nutrition_store.stock_lots,
             )
@@ -132,73 +104,53 @@ async def ws_recommend(
             match["score"] = round(base_score + float(hint.get("bonus") or 0.0), 1)
             item["nutrition"] = nutrition
             item["deviceCanAccept"] = bridge.can_accept_recipe
-
         ranked.sort(key=lambda row: row.get("match", {}).get("score", -1000), reverse=True)
         ranked = ranked[: max(1, min(int(msg.get("limit", 24)), 30))]
-        result = {
+        connection.send_result(msg["id"], {
             **{key: value for key, value in search.items() if key != "items"},
             "items": ranked,
             "profile": profile,
             "filters": {
-                "query": query,
-                "diet": diet,
-                "nutritionGoal": goal,
+                "query": query, "diet": diet, "nutritionGoal": goal,
                 "houseIngredientCount": len(house),
                 "expiringIngredientCount": len(expiring),
                 "expiryWarningDays": DEFAULT_EXPIRY_WARNING_DAYS,
                 "expiryCandidateSearches": expiry_candidate_searches,
             },
-        }
+        })
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
-        return
-    connection.send_result(msg["id"], result)
 
 
-@websocket_api.websocket_command(
-    {
-        vol.Required("type"): "cook4me/v17/food_state",
-        vol.Optional("entry_id"): str,
-        vol.Optional("history_limit", default=30): vol.All(vol.Coerce(int), vol.Range(min=1, max=200)),
-    }
-)
+@websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/v17/food_state",
+    vol.Optional("entry_id"): str,
+    vol.Optional("history_limit", default=30): vol.All(vol.Coerce(int), vol.Range(min=1, max=200)),
+})
 @websocket_api.async_response
-async def ws_food_state(
-    hass: HomeAssistant,
-    connection: websocket_api.ActiveConnection,
-    msg: dict[str, Any],
-) -> None:
+async def ws_food_state(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         history = await meal_history_store_for_bridge(bridge)
         profile = bridge.recipe_hub.profile
-        connection.send_result(
-            msg["id"],
-            {
-                "profile": profile,
-                "householdMembers": profile.get("householdMembers") or [],
-                "nutritionGoal": bridge.recipe_hub.ui_preferences.get("nutritionGoal") or "balanced",
-                "history": history.recent(int(msg.get("history_limit", 30))),
-                "summary": history.summary(),
-            },
-        )
+        connection.send_result(msg["id"], {
+            "profile": profile,
+            "householdMembers": profile.get("householdMembers") or [],
+            "nutritionGoal": bridge.recipe_hub.ui_preferences.get("nutritionGoal") or "balanced",
+            "history": history.recent(int(msg.get("history_limit", 30))),
+            "summary": history.summary(),
+        })
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
 
 
-@websocket_api.websocket_command(
-    {
-        vol.Required("type"): "cook4me/v17/feasibility",
-        vol.Optional("entry_id"): str,
-        vol.Required("recipe"): dict,
-    }
-)
+@websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/v17/feasibility",
+    vol.Optional("entry_id"): str,
+    vol.Required("recipe"): dict,
+})
 @callback
-def ws_feasibility(
-    hass: HomeAssistant,
-    connection: websocket_api.ActiveConnection,
-    msg: dict[str, Any],
-) -> None:
+def ws_feasibility(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         annotated = bridge.recipe_hub.annotate(dict(msg["recipe"]))
@@ -207,12 +159,9 @@ def ws_feasibility(
             bridge.recipe_hub.profile.get("houseIngredients") or [],
             availability=annotated.get("match", {}).get("ingredientAvailability"),
         )
-        connection.send_result(
-            msg["id"],
-            {
-                "feasibility": feasibility,
-                "shoppingShortages": shortage_shopping_items(feasibility),
-            },
-        )
+        connection.send_result(msg["id"], {
+            "feasibility": feasibility,
+            "shoppingShortages": shortage_shopping_items(feasibility),
+        })
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
