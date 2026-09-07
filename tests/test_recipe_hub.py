@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+from datetime import datetime
 import importlib.util
 import sys
 import types
@@ -15,6 +16,8 @@ ha = types.ModuleType("homeassistant")
 ha_core = types.ModuleType("homeassistant.core")
 ha_helpers = types.ModuleType("homeassistant.helpers")
 ha_storage = types.ModuleType("homeassistant.helpers.storage")
+ha_util = types.ModuleType("homeassistant.util")
+ha_dt = types.ModuleType("homeassistant.util.dt")
 class HomeAssistant: pass
 class Store:
     def __init__(self, *args, **kwargs): self.saved = None
@@ -22,10 +25,14 @@ class Store:
     async def async_save(self, data): self.saved = data
 ha_core.HomeAssistant = HomeAssistant
 ha_storage.Store = Store
+ha_dt.now = datetime.now
+ha_util.dt = ha_dt
 sys.modules.setdefault("homeassistant", ha)
 sys.modules["homeassistant.core"] = ha_core
 sys.modules["homeassistant.helpers"] = ha_helpers
 sys.modules["homeassistant.helpers.storage"] = ha_storage
+sys.modules["homeassistant.util"] = ha_util
+sys.modules["homeassistant.util.dt"] = ha_dt
 
 # Load cook4me package modules without importing integration __init__.py.
 pkg = types.ModuleType("cook4me_testpkg")
