@@ -24,6 +24,7 @@ _REASON_TTL = {
     "JSONDecodeError": timedelta(hours=1),
 }
 _TRANSIENT_REASONS = {"URLError", "TimeoutError", "JSONDecodeError"}
+_SEMANTIC_REASONS = {"ambiguous", "no_nutrition", "no_english_name"}
 
 
 def _text(value: Any) -> str:
@@ -59,6 +60,16 @@ def retry_ttl(reason: Any) -> timedelta:
 def is_transient_reason(reason: Any) -> bool:
     token = _text(reason)
     return token.startswith("http_") or token in _TRANSIENT_REASONS
+
+
+def _mode_matches(row: dict[str, Any], mode: str | None) -> bool:
+    if mode is None:
+        return True
+    if _text(row.get("mode")) == _text(mode):
+        return True
+    # A different API key cannot make a semantically ambiguous FDC result
+    # become unambiguous. Keep those failures cached across key-mode changes.
+    return _text(row.get("reason")) in _SEMANTIC_REASONS
 
 
 class Cook4MeNutritionResolutionStore:
@@ -107,7 +118,7 @@ class Cook4MeNutritionResolutionStore:
             return None
         if _text(row.get("query")) != _text(query):
             return None
-        if _text(row.get("mode")) != _text(mode):
+        if not _mode_matches(row, mode):
             return None
         retry_at = _parse_utc(row.get("retryAt"))
         current = (now or _utcnow()).astimezone(timezone.utc)
@@ -128,9 +139,9 @@ class Cook4MeNutritionResolutionStore:
         for identity, row in (self._data.get("failures") or {}).items():
             if wanted and identity not in wanted:
                 continue
-            if mode is not None and _text(row.get("mode")) != _text(mode):
+            if not isinstance(row, dict) or not _mode_matches(row, mode):
                 continue
-            retry_at = _parse_utc(row.get("retryAt")) if isinstance(row, dict) else None
+            retry_at = _parse_utc(row.get("retryAt"))
             if retry_at is not None and retry_at > current:
                 count += 1
         return count
