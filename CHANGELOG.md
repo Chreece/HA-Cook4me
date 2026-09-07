@@ -1,5 +1,30 @@
 # Changelog
 
+## 2026.9.7.5
+
+- Capture normalized nutrition facts from Open Food Facts whenever a scanned barcode exposes them, including energy, protein, carbohydrates, sugars, fat, saturated fat, fibre, salt and sodium. Product nutrition is remembered with the barcode mapping and tracked separately for the exact scanned stock amount rather than overwriting generic ingredient nutrition.
+- Add a persistent nutrition store per Cook4Me config entry with two distinct layers: exact scanned-product nutrition for real stock and a generic ingredient nutrition catalog keyed by the stable Cook4Me `M_FOOD_*` identity.
+- Add conservative USDA FoodData Central generic lookup. Stable Cook4Me keys are first resolved through the English ingredient catalog, then matched only to sufficiently close Foundation / SR Legacy / FNDDS candidates. Ambiguous matches remain unresolved rather than being guessed.
+- Use USDA `DEMO_KEY` as the zero-configuration fallback and allow users to store their own FoodData Central API key from Recipe Hub for higher-rate catalog building. The API key is stored in config-entry options and is never returned to the frontend.
+- Add **Build next nutrition catalog batch** under **House ingredients & diet**. Generic nutrition is also resolved automatically on demand when a recipe is opened; low-rate demo mode is deliberately capped more aggressively than a user-provided key.
+- Calculate recipe nutrition using exact scanned stock first and generic references only for the uncovered remainder. Calculations support mass and volume units when they are dimensionally compatible and explicitly refuse to invent conversions for units such as pieces when no mass/volume basis is known.
+- Show whole-meal and per-serving calories/macros in recipe detail, show cached nutrition on recipe cards when available, and expose a nutrition coverage percentage so partial estimates are clearly distinguishable from complete calculations.
+- Keep AI/display translation separate from nutrition identity by preserving the structured pre-translation ingredient rows for nutrition calculations even when the visible recipe text is translated.
+- Return nutrition for confirmed actual consumption as well, based on the stock lots that were really deducted; exact scanned-product references are consumed together with their stock and generic references fill only the remaining known amount.
+- Ship/cache-bust Recipe Hub v23, add v16 nutrition WebSocket APIs, and add regressions for scanned-product normalization, unit scaling, exact-vs-generic precedence, partial-coverage behavior and USDA candidate normalization.
+
+## 2026.9.7.4
+
+- Change finite house stock from one aggregate quantity/date into separate **stock batches/lots**, each carrying its own amount and optional best-before date.
+- Migrate existing single-quantity stock automatically into one batch without losing the previous amount or date.
+- Consume finite stock using **FEFO (first-expiring, first-out)**: dated batches are consumed in best-before order and undated stock last. When the oldest batch is depleted, the ingredient's derived next-best-before date automatically advances to the next remaining batch.
+- Make expiry notifications batch-aware so only the quantity actually approaching/past best-before is reported instead of treating the ingredient's entire total as expiring.
+- Make expiry-aware recipe priority batch-aware as well, using the nearest qualifying batch while retaining the existing 3-day horizon and refusing to promote already-past dates.
+- Replace the aggregate stock editor with an editable batch list where users can add/remove/change each amount/date independently while keeping one canonical unit per ingredient.
+- Preserve total stock and next-best-before as derived compatibility fields so existing recipe matching and older consumers keep working while the canonical model becomes lot-based.
+- Add deterministic FEFO regressions covering multiple dates, partial cross-batch consumption, automatic next-date advancement and legacy migration.
+- Ship/cache-bust Recipe Hub v22.
+
 ## 2026.9.7.3
 
 - Add an always-accessible **Interface language** selector to Recipe Hub with **Automatic (Home Assistant)**, English, German and Greek — the three UI translations currently shipped by the panel.
