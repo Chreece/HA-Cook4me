@@ -178,6 +178,18 @@ class NutritionHardeningTests(unittest.TestCase):
             self.resolution.retry_ttl("http_429"),
         )
 
+    def test_websocket_uses_strict_lookup_cache_and_exact_catalog_stats(self):
+        source = (
+            ROOT / "custom_components/cook4me/websocket_v16.py"
+        ).read_text(encoding="utf-8")
+        self.assertIn("lookup_food_data_central_strict", source)
+        self.assertIn("nutrition_resolution_store_for_bridge", source)
+        self.assertIn("resolution_store.get_blocked", source)
+        self.assertIn('"blockedFailures"', source)
+        self.assertIn('"actionableRemaining"', source)
+        self.assertIn("_catalog_identity_rows", source)
+        self.assertNotIn("lookup_food_data_central,", source)
+
 
 if __name__ == "__main__":
     unittest.main()
