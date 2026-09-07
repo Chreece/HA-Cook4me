@@ -110,3 +110,12 @@ class Cook4MeRecipeBookStore:
         if previous is not None:
             await self._save()
         return previous
+
+
+async def recipe_book_store_for_bridge(bridge: Any) -> Cook4MeRecipeBookStore:
+    store = getattr(bridge, "_recipe_book_store", None)
+    if store is None:
+        store = Cook4MeRecipeBookStore(bridge.hass, bridge.entry.entry_id)
+        await store.async_load()
+        bridge._recipe_book_store = store
+    return store
