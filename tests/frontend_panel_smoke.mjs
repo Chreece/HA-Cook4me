@@ -23,9 +23,9 @@ globalThis.localStorage={
   clear:()=>store.clear(),
 };
 
-await import("../custom_components/cook4me/frontend/cook4me-panel-v38.js");
+await import("../custom_components/cook4me/frontend/cook4me-panel-v39.js");
 
-const tag="cook4me-recipe-hub-panel-v38";
+const tag="cook4me-recipe-hub-panel-v39";
 if(!customElements.get(tag))throw new Error(`${tag} was not registered`);
 const panel=document.createElement(tag);
 document.body.appendChild(panel);
@@ -37,9 +37,11 @@ panel.hass={
 await new Promise(resolve=>setTimeout(resolve,0));
 
 if(!panel.shadowRoot)throw new Error("Recipe Hub did not create a shadow root");
-for(const selector of ["#status","#tabs","#content","#refresh","#cook4meUiLanguage","#cook4meV38Styles"]){
+for(const selector of ["#status","#tabs","#content","#refresh","#cook4meUiLanguage","#cook4meV38Styles","#cook4meV39Styles"]){
   if(!panel.shadowRoot.querySelector(selector))throw new Error(`Recipe Hub runtime smoke missing ${selector}`);
 }
 if(!panel.shadowRoot.querySelector(".top.rx-v38-top"))throw new Error("Unified top bar was not applied");
-if(!panel.shadowRoot.querySelector("#refresh ha-icon"))throw new Error("Refresh icon was not rendered");
-console.log("Recipe Hub v38 runtime smoke OK");
+const refresh=panel.shadowRoot.querySelector("#refresh");
+if(refresh.querySelectorAll(":scope > ha-icon").length!==1)throw new Error("Refresh control must contain exactly one direct icon");
+if(refresh.children.length!==1)throw new Error("Refresh control leaked duplicate children");
+console.log("Recipe Hub v39 runtime smoke OK");
