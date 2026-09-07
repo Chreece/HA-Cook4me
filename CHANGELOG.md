@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026.9.7.3
+
+- Add an always-accessible **Interface language** selector to Recipe Hub with **Automatic (Home Assistant)**, English, German and Greek — the three UI translations currently shipped by the panel.
+- Store the selected interface language per Home Assistant user in the client, so different HA users using the same Cook4Me panel can choose different UI languages without changing Home Assistant globally or the Cook4Me device/catalog locale.
+- Changing the interface language immediately rerenders the Recipe Hub tabs, header and active view.
+- Keep the new UI language completely separate from recipe-catalog language, ingredient-catalog language and AI Task recipe translation. **Translate results to Home Assistant language** continues to target the real Home Assistant user language even when the Cook4Me UI is displayed in another language.
+- Ship/cache-bust Recipe Hub v21 and add a regression contract covering the language choices, per-user persistence key and HA-language translation isolation.
+
 ## 2026.9.7.2
 
 - Add a consolidated Home Assistant persistent notification for house-stock ingredients whose **best-before date is today, within the next 3 days, or already past**. The notification is created immediately on startup or stock changes and refreshed every day at 09:00 Home Assistant local time.
