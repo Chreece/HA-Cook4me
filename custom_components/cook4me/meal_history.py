@@ -27,11 +27,7 @@ def _nutrition_totals(row: Any) -> dict[str, float]:
     if not isinstance(row, dict):
         return {}
     values = row.get("totals") if isinstance(row.get("totals"), dict) else row
-    return {
-        str(key): float(value)
-        for key, value in values.items()
-        if isinstance(value, (int, float))
-    }
+    return {str(key): float(value) for key, value in values.items() if isinstance(value, (int, float))}
 
 
 def _add(target: dict[str, float], values: dict[str, float]) -> None:
@@ -60,13 +56,7 @@ class Cook4MeMealHistoryStore:
     async def _save(self) -> None:
         await self._store.async_save(self._data)
 
-    async def async_record(
-        self,
-        *,
-        recipe: dict[str, Any],
-        nutrition: dict[str, Any],
-        allocations: Any = None,
-    ) -> dict[str, Any]:
+    async def async_record(self, *, recipe: dict[str, Any], nutrition: dict[str, Any], allocations: Any = None) -> dict[str, Any]:
         totals = _nutrition_totals(nutrition)
         servings = recipe.get("servings")
         allocation = allocate_meal_nutrition(totals, servings, allocations)
@@ -90,12 +80,18 @@ class Cook4MeMealHistoryStore:
         return deepcopy(list(reversed(self._data.get("meals", [])[-max(1, min(int(limit), 200)):])) )
 
     def summary(self, *, now: datetime | None = None) -> dict[str, Any]:
+        """Return local-calendar today plus rolling 7/30-day nutrition totals."""
         reference = now or datetime.now(timezone.utc)
-        windows = {"today": timedelta(days=1), "week": timedelta(days=7), "month": timedelta(days=30)}
+        if reference.tzinfo is None:
+            reference = reference.replace(tzinfo=timezone.utc)
+        cutoffs = {
+            "today": reference.replace(hour=0, minute=0, second=0, microsecond=0),
+            "week": reference - timedelta(days=7),
+            "month": reference - timedelta(days=30),
+        }
         result: dict[str, Any] = {}
         meals = self._data.get("meals", [])
-        for name, delta in windows.items():
-            cutoff = reference - delta
+        for name, cutoff in cutoffs.items():
             totals: dict[str, float] = {}
             people: dict[str, dict[str, float]] = {}
             count = 0
