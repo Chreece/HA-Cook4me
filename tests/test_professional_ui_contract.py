@@ -6,6 +6,8 @@ JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v32.js
 HOTFIX_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v33.js"
 TODAY_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v34.js"
 INLINE_FIX_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v35.js"
+COMPACT_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v36.js"
+WS12 = ROOT / "custom_components" / "cook4me" / "websocket_v12.py"
 PANEL = ROOT / "custom_components" / "cook4me" / "panel.py"
 MANIFEST = ROOT / "custom_components" / "cook4me" / "manifest.json"
 
@@ -108,10 +110,54 @@ def test_v35_uses_original_seb_cover_instead_of_thumbnail():
     assert '_detailHtml(recipe)' in text
 
 
-def test_v35_is_active_and_versioned():
+def test_v36_steps_button_uses_split_inline_panel():
+    text = _text(COMPACT_JS)
+    assert 'const open=inheritedOpen.cloneNode(true)' in text
+    assert 'inheritedOpen.replaceWith(open)' in text
+    assert 'this._toggleInlineRecipe(card,recipe,custom)' in text
+    assert 'rx-category-result-expanded' in text
+    assert 'grid-column:span 2!important' in text
+
+
+def test_v36_today_and_upper_navigation_are_single_row_compact_controls():
+    text = _text(COMPACT_JS)
+    assert 'rx-today-compact' in text
+    assert 'rx-today-row' in text
+    assert 'flex-wrap:nowrap' in text
+    assert 'rx-today-picker' in text
+    assert '_compactTodayPlanner(c)' in text
+    assert '_moveUiLanguageControl()' in text
+    assert '.tabs{' in text
+    assert 'overflow-x:auto!important' in text
+
+
+def test_v36_shopping_list_has_select_and_deselect_all():
+    frontend = _text(COMPACT_JS)
+    backend = _text(WS12)
+    assert 'id="shoppingToggleAll"' not in frontend  # generated through DOM id assignment
+    assert 'button.id="shoppingToggleAll"' in frontend
+    assert 'allCompleted?"incomplete_all":"complete_all"' in frontend
+    assert '"complete_all"' in backend
+    assert '"incomplete_all"' in backend
+    assert 'target_status = "completed" if action == "complete_all" else "needs_action"' in backend
+
+
+def test_v36_loaded_recipe_replacement_is_precook_only_and_verified():
+    frontend = _text(COMPACT_JS)
+    backend = _text(WS12)
+    assert 'REPLACEABLE_PHASES=new Set(["idle","stopped","preparation","add_ingredient","done"])' in frontend
+    assert 'cook4me/v12/send_recipe_replaceable' in frontend
+    assert '_REPLACEABLE_RECIPE_PHASES = {"idle", "stopped", "preparation", "add_ingredient", "done"}' in backend
+    assert 'phase not in _REPLACEABLE_RECIPE_PHASES' in backend
+    assert '_wait_for_loaded_variant' in backend
+    assert 'kept the previously loaded recipe' in backend
+    assert 'bridge._run_client_json("state", timeout=35)' in backend
+
+
+def test_v36_is_active_and_versioned():
     panel = _text(PANEL)
     manifest = _text(MANIFEST)
-    assert 'cook4me-recipe-hub-panel-v35' in panel
-    assert 'cook4me-panel-v35.js' in panel
-    assert '?v=2026.9.7.14' in panel
-    assert '"version": "2026.9.7.14"' in manifest
+    assert 'cook4me-recipe-hub-panel-v36' in panel
+    assert 'cook4me-panel-v36.js' in panel
+    assert '?v=2026.9.7.15' in panel
+    assert '"version": "2026.9.7.15"' in manifest
