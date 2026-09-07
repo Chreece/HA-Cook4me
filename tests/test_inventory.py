@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import date
 import importlib.util
 from pathlib import Path
 import unittest
@@ -117,6 +118,57 @@ class InventoryTests(unittest.TestCase):
                 unit="pcs",
                 best_before="31-12-2026",
             )
+
+    def test_expiry_window_includes_past_and_next_three_days(self):
+        stock = [
+            {"key": "M_FOOD_PAST", "name": "Past", "unlimited": True, "bestBefore": "2026-09-06"},
+            {"key": "M_FOOD_TODAY", "name": "Today", "quantity": 1, "unit": "pcs", "bestBefore": "2026-09-07"},
+            {"key": "M_FOOD_SOON", "name": "Soon", "quantity": 1, "unit": "pcs", "bestBefore": "2026-09-10"},
+            {"key": "M_FOOD_LATER", "name": "Later", "quantity": 1, "unit": "pcs", "bestBefore": "2026-09-11"},
+        ]
+        rows = self.module.expiring_inventory_items(
+            stock,
+            today=date(2026, 9, 7),
+            within_days=3,
+            include_past=True,
+        )
+        self.assertEqual([row["name"] for row in rows], ["Past", "Today", "Soon"])
+        self.assertEqual([row["daysRemaining"] for row in rows], [-1, 0, 3])
+        self.assertTrue(rows[0]["pastBestBefore"])
+
+    def test_recipe_expiry_priority_uses_food_key_and_skips_past_dates(self):
+        stock = [
+            {
+                "key": "M_FOOD_DATES",
+                "name": "Dattel",
+                "quantity": 200,
+                "unit": "g",
+                "bestBefore": "2026-09-08",
+            },
+            {
+                "key": "M_FOOD_OLD",
+                "name": "Old",
+                "quantity": 100,
+                "unit": "g",
+                "bestBefore": "2026-09-06",
+            },
+        ]
+        recipe = {
+            "ingredients": [
+                {"foodKey": "M_FOOD_DATES", "foodName": "Datteln"},
+                {"foodKey": "M_FOOD_OLD", "foodName": "Old wording"},
+            ]
+        }
+        priority = self.module.recipe_expiry_priority(
+            recipe,
+            stock,
+            today=date(2026, 9, 7),
+            within_days=3,
+        )
+        self.assertEqual(len(priority["ingredients"]), 1)
+        self.assertEqual(priority["ingredients"][0]["identity"], "k:M_FOOD_DATES")
+        self.assertEqual(priority["ingredients"][0]["daysRemaining"], 1)
+        self.assertGreater(priority["priority"], 0)
 
     def test_recipe_consumption_matches_food_key_not_recipe_wording(self):
         stock = [
