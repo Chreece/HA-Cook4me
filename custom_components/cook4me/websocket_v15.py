@@ -20,6 +20,10 @@ from .barcode import (
 )
 from .expiry import update_expiry_notification
 from .nutrition import nutrition_store_for_bridge
+from .nutrition_inventory import (
+    async_link_latest_stock_nutrition,
+    async_reconcile_nutrition_inventory,
+)
 
 
 async def _store(bridge) -> Cook4MeBarcodeMappingStore:
@@ -58,37 +62,27 @@ async def _add_mapping_stock(
         raise ValueError("This barcode mapping has no package amount; remap it with an amount")
     metadata = _purchase_metadata(mapping, lot_metadata)
     await bridge.recipe_hub.async_inventory_add(
-        dict(ingredient),
-        quantity=quantity,
-        unit=unit,
-        unlimited=False,
-        best_before=best_before,
-        lot_metadata=metadata,
+        dict(ingredient), quantity=quantity, unit=unit, unlimited=False,
+        best_before=best_before, lot_metadata=metadata,
     )
     nutrition_store = await nutrition_store_for_bridge(bridge)
-    await nutrition_store.async_add_stock_lot(
-        dict(ingredient),
-        quantity=quantity,
-        unit=unit,
-        best_before=best_before,
-        nutrition=mapping.get("nutrition"),
-        barcode=str(mapping.get("barcode") or ""),
-        product_name=str(mapping.get("productName") or ""),
-        brand=str(mapping.get("brand") or ""),
+    exact = await nutrition_store.async_add_stock_lot(
+        dict(ingredient), quantity=quantity, unit=unit, best_before=best_before,
+        nutrition=mapping.get("nutrition"), barcode=str(mapping.get("barcode") or ""),
+        product_name=str(mapping.get("productName") or ""), brand=str(mapping.get("brand") or ""),
     )
-    await nutrition_store.async_reconcile_inventory(
-        bridge.recipe_hub.profile.get("houseIngredients") or []
+    if exact is not None:
+        await async_link_latest_stock_nutrition(
+            nutrition_store, dict(ingredient), inventory_lot_id=str(metadata["id"])
+        )
+    await async_reconcile_nutrition_inventory(
+        nutrition_store, bridge.recipe_hub.profile.get("houseIngredients") or []
     )
     update_expiry_notification(bridge)
     return v14._state(bridge)
 
 
-async def _upgrade_known_nutrition(
-    hass: HomeAssistant,
-    store: Cook4MeBarcodeMappingStore,
-    code: str,
-    known: dict[str, Any],
-) -> dict[str, Any]:
+async def _upgrade_known_nutrition(hass, store, code, known):
     if known.get("nutrition"):
         return known
     try:
@@ -97,17 +91,12 @@ async def _upgrade_known_nutrition(
         return known
     if not product.get("nutrition"):
         return known
-    return await store.async_set(
-        code,
-        {
-            "ingredient": dict(known.get("ingredient") or {}),
-            "quantity": known.get("quantity"),
-            "unit": str(known.get("unit") or ""),
-            "productName": known.get("productName") or product.get("productName") or product.get("name"),
-            "brand": known.get("brand") or product.get("brand"),
-            "nutrition": product.get("nutrition"),
-        },
-    )
+    return await store.async_set(code, {
+        "ingredient": dict(known.get("ingredient") or {}),
+        "quantity": known.get("quantity"), "unit": str(known.get("unit") or ""),
+        "productName": known.get("productName") or product.get("productName") or product.get("name"),
+        "brand": known.get("brand") or product.get("brand"), "nutrition": product.get("nutrition"),
+    })
 
 
 @callback
@@ -116,22 +105,16 @@ def async_register(hass: HomeAssistant) -> None:
         websocket_api.async_register_command(hass, command)
 
 
-@websocket_api.websocket_command(
-    {
-        vol.Required("type"): "cook4me/v15/barcode_scan",
-        vol.Optional("entry_id"): str,
-        vol.Required("barcode"): str,
-        vol.Optional("language"): str,
-        vol.Optional("best_before", default=""): str,
-        vol.Optional("lot_metadata"): dict,
-    }
-)
+@websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/v15/barcode_scan",
+    vol.Optional("entry_id"): str,
+    vol.Required("barcode"): str,
+    vol.Optional("language"): str,
+    vol.Optional("best_before", default=""): str,
+    vol.Optional("lot_metadata"): dict,
+})
 @websocket_api.async_response
-async def ws_barcode_scan(
-    hass: HomeAssistant,
-    connection: websocket_api.ActiveConnection,
-    msg: dict[str, Any],
-) -> None:
+async def ws_barcode_scan(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         code = normalize_barcode(msg["barcode"])
@@ -140,111 +123,62 @@ async def ws_barcode_scan(
         if known is not None and known.get("quantity") is not None:
             known = await _upgrade_known_nutrition(hass, store, code, known)
             state = await _add_mapping_stock(
-                bridge,
-                known,
-                best_before=str(msg.get("best_before") or ""),
+                bridge, known, best_before=str(msg.get("best_before") or ""),
                 lot_metadata=msg.get("lot_metadata"),
             )
-            connection.send_result(
-                msg["id"],
-                {
-                    "status": "added",
-                    "barcode": code,
-                    "knownMapping": True,
-                    "mapping": known,
-                    "nutritionCaptured": bool(known.get("nutrition")),
-                    **state,
-                },
-            )
+            connection.send_result(msg["id"], {
+                "status": "added", "barcode": code, "knownMapping": True,
+                "mapping": known, "nutritionCaptured": bool(known.get("nutrition")), **state,
+            })
             return
-
         try:
             product = await hass.async_add_executor_job(lookup_open_food_facts, code)
         except Exception as exc:
-            product = {
-                "barcode": code,
-                "found": False,
-                "source": "open_food_facts",
-                "lookupError": f"{type(exc).__name__}: {exc}",
-            }
-
+            product = {"barcode": code, "found": False, "source": "open_food_facts", "lookupError": f"{type(exc).__name__}: {exc}"}
         language = str(msg.get("language") or v11._device_language(bridge))
         catalog = await v11._ingredient_catalog(hass, bridge, language, refresh=False)
         suggestions = suggest_catalog_matches(product, catalog.get("items") or [])
         confident = confident_match(suggestions)
         package_quantity = product.get("quantity")
         package_unit = str(product.get("unit") or "")
-
         if confident is not None and package_quantity is not None and package_unit:
-            mapping = await store.async_set(
-                code,
-                {
-                    "ingredient": confident["ingredient"],
-                    "quantity": package_quantity,
-                    "unit": package_unit,
-                    "productName": product.get("productName") or product.get("name"),
-                    "brand": product.get("brand"),
-                    "nutrition": product.get("nutrition"),
-                },
-            )
+            mapping = await store.async_set(code, {
+                "ingredient": confident["ingredient"], "quantity": package_quantity, "unit": package_unit,
+                "productName": product.get("productName") or product.get("name"), "brand": product.get("brand"),
+                "nutrition": product.get("nutrition"),
+            })
             state = await _add_mapping_stock(
-                bridge,
-                mapping,
-                best_before=str(msg.get("best_before") or ""),
+                bridge, mapping, best_before=str(msg.get("best_before") or ""),
                 lot_metadata=msg.get("lot_metadata"),
             )
-            connection.send_result(
-                msg["id"],
-                {
-                    "status": "added",
-                    "barcode": code,
-                    "knownMapping": False,
-                    "autoMapped": True,
-                    "mapping": mapping,
-                    "product": product,
-                    "suggestions": suggestions,
-                    "nutritionCaptured": bool(mapping.get("nutrition")),
-                    **state,
-                },
-            )
+            connection.send_result(msg["id"], {
+                "status": "added", "barcode": code, "knownMapping": False, "autoMapped": True,
+                "mapping": mapping, "product": product, "suggestions": suggestions,
+                "nutritionCaptured": bool(mapping.get("nutrition")), **state,
+            })
             return
-
-        connection.send_result(
-            msg["id"],
-            {
-                "status": "needs_mapping",
-                "barcode": code,
-                "knownMapping": known is not None,
-                "mapping": known,
-                "product": product,
-                "suggestions": suggestions,
-                **v14._state(bridge),
-            },
-        )
+        connection.send_result(msg["id"], {
+            "status": "needs_mapping", "barcode": code, "knownMapping": known is not None,
+            "mapping": known, "product": product, "suggestions": suggestions, **v14._state(bridge),
+        })
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
 
 
-@websocket_api.websocket_command(
-    {
-        vol.Required("type"): "cook4me/v15/barcode_map_add",
-        vol.Optional("entry_id"): str,
-        vol.Required("barcode"): str,
-        vol.Required("ingredient"): dict,
-        vol.Required("quantity"): vol.Any(int, float, str),
-        vol.Optional("unit", default=""): str,
-        vol.Optional("best_before", default=""): str,
-        vol.Optional("product_name", default=""): str,
-        vol.Optional("brand", default=""): str,
-        vol.Optional("lot_metadata"): dict,
-    }
-)
+@websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/v15/barcode_map_add",
+    vol.Optional("entry_id"): str,
+    vol.Required("barcode"): str,
+    vol.Required("ingredient"): dict,
+    vol.Required("quantity"): vol.Any(int, float, str),
+    vol.Optional("unit", default=""): str,
+    vol.Optional("best_before", default=""): str,
+    vol.Optional("product_name", default=""): str,
+    vol.Optional("brand", default=""): str,
+    vol.Optional("lot_metadata"): dict,
+})
 @websocket_api.async_response
-async def ws_barcode_map_add(
-    hass: HomeAssistant,
-    connection: websocket_api.ActiveConnection,
-    msg: dict[str, Any],
-) -> None:
+async def ws_barcode_map_add(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         code = normalize_barcode(msg["barcode"])
@@ -254,33 +188,20 @@ async def ws_barcode_map_add(
             product = await hass.async_add_executor_job(lookup_open_food_facts, code)
         except Exception:
             product = {}
-        mapping = await store.async_set(
-            code,
-            {
-                "ingredient": dict(msg["ingredient"]),
-                "quantity": msg.get("quantity"),
-                "unit": str(msg.get("unit") or ""),
-                "productName": str(msg.get("product_name") or product.get("productName") or ""),
-                "brand": str(msg.get("brand") or product.get("brand") or ""),
-                "nutrition": product.get("nutrition"),
-            },
-        )
+        mapping = await store.async_set(code, {
+            "ingredient": dict(msg["ingredient"]), "quantity": msg.get("quantity"),
+            "unit": str(msg.get("unit") or ""),
+            "productName": str(msg.get("product_name") or product.get("productName") or ""),
+            "brand": str(msg.get("brand") or product.get("brand") or ""),
+            "nutrition": product.get("nutrition"),
+        })
         state = await _add_mapping_stock(
-            bridge,
-            mapping,
-            best_before=str(msg.get("best_before") or ""),
+            bridge, mapping, best_before=str(msg.get("best_before") or ""),
             lot_metadata=msg.get("lot_metadata"),
         )
-        connection.send_result(
-            msg["id"],
-            {
-                "status": "added",
-                "barcode": code,
-                "knownMapping": False,
-                "mapping": mapping,
-                "nutritionCaptured": bool(mapping.get("nutrition")),
-                **state,
-            },
-        )
+        connection.send_result(msg["id"], {
+            "status": "added", "barcode": code, "knownMapping": False,
+            "mapping": mapping, "nutritionCaptured": bool(mapping.get("nutrition")), **state,
+        })
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
