@@ -215,12 +215,15 @@ class Cook4MeRecipeHub:
         unit: str = "",
         unlimited: bool = False,
         best_before: Any = None,
+        lots: Any = None,
     ) -> dict[str, Any]:
         async with self._lock:
             profile = deepcopy(self._data["profile"])
             kwargs: dict[str, Any] = {}
             if best_before is not None:
                 kwargs["best_before"] = best_before
+            if lots is not None:
+                kwargs["lots"] = lots
             house = update_inventory_item(
                 profile.get("houseIngredients"),
                 identity,
