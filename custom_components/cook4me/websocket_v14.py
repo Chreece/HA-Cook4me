@@ -161,6 +161,7 @@ async def ws_consumption_confirm(hass, connection, msg) -> None:
         result["mealHistoryRecord"] = await history.async_record(
             recipe=completed, nutrition=consumed_nutrition,
             allocations=list(msg.get("allocations") or []),
+            consumption=result.get("report") or {},
         )
         persistent_notification.async_dismiss(hass, _notification_id(bridge.entry.entry_id))
         update_expiry_notification(bridge)
