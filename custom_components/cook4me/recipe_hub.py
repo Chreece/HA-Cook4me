@@ -186,6 +186,7 @@ class Cook4MeRecipeHub:
         quantity: Any = None,
         unit: str = "",
         unlimited: bool = False,
+        best_before: str = "",
     ) -> dict[str, Any]:
         async with self._lock:
             profile = deepcopy(self._data["profile"])
@@ -195,6 +196,7 @@ class Cook4MeRecipeHub:
                 quantity=quantity,
                 unit=unit,
                 unlimited=unlimited,
+                best_before=best_before,
             )
             profile["houseIngredients"] = house
             profile["pantry"] = [row["name"] for row in house]
@@ -209,15 +211,20 @@ class Cook4MeRecipeHub:
         quantity: Any = None,
         unit: str = "",
         unlimited: bool = False,
+        best_before: Any = None,
     ) -> dict[str, Any]:
         async with self._lock:
             profile = deepcopy(self._data["profile"])
+            kwargs: dict[str, Any] = {}
+            if best_before is not None:
+                kwargs["best_before"] = best_before
             house = update_inventory_item(
                 profile.get("houseIngredients"),
                 identity,
                 quantity=quantity,
                 unit=unit,
                 unlimited=unlimited,
+                **kwargs,
             )
             profile["houseIngredients"] = house
             profile["pantry"] = [row["name"] for row in house]
