@@ -11,6 +11,11 @@ from homeassistant.exceptions import HomeAssistantError
 
 from .bridge import Cook4MeBridge
 from .const import DATA_BRIDGES, DOMAIN, PLATFORMS
+from .expiry import (
+    dismiss_expiry_notification,
+    register_daily_expiry_check,
+    update_expiry_notification,
+)
 from .panel import async_register_panel
 from .websocket import async_register as async_register_websocket
 from .websocket_v5 import async_register as async_register_websocket_v5
@@ -242,6 +247,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     entry.runtime_data = bridge
     hass.data.setdefault(DOMAIN, {}).setdefault(DATA_BRIDGES, {})[entry.entry_id] = bridge
     _register_completion_listener(bridge)
+    update_expiry_notification(bridge)
+    bridge._expiry_listener_unsub = register_daily_expiry_check(bridge)
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
 
@@ -249,9 +256,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     if ok:
-        unsub = getattr(entry.runtime_data, "_completion_listener_unsub", None)
-        if callable(unsub):
-            unsub()
+        completion_unsub = getattr(entry.runtime_data, "_completion_listener_unsub", None)
+        if callable(completion_unsub):
+            completion_unsub()
+        expiry_unsub = getattr(entry.runtime_data, "_expiry_listener_unsub", None)
+        if callable(expiry_unsub):
+            expiry_unsub()
+        dismiss_expiry_notification(entry.runtime_data)
         await entry.runtime_data.async_stop()
         hass.data.get(DOMAIN, {}).get(DATA_BRIDGES, {}).pop(entry.entry_id, None)
     return ok
