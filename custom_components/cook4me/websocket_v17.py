@@ -30,20 +30,18 @@ def async_register(hass: HomeAssistant) -> None:
         websocket_api.async_register_command(hass, command)
 
 
-@websocket_api.websocket_command(
-    {
-        vol.Required("type"): "cook4me/v17/recommend",
-        vol.Optional("entry_id"): str,
-        vol.Optional("limit", default=24): vol.All(vol.Coerce(int), vol.Range(min=1, max=30)),
-        vol.Optional("catalog_size", default=50): vol.All(vol.Coerce(int), vol.Range(min=1, max=50)),
-        vol.Optional("query", default=""): str,
-        vol.Optional("diet", default="profile"): vol.In(_DIET_FILTERS),
-        vol.Optional("nutrition_goal", default="balanced"): str,
-        vol.Required("language"): str,
-        vol.Optional("strict_language", default=False): bool,
-        vol.Optional("refresh", default=False): bool,
-    }
-)
+@websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/v17/recommend",
+    vol.Optional("entry_id"): str,
+    vol.Optional("limit", default=24): vol.All(vol.Coerce(int), vol.Range(min=1, max=30)),
+    vol.Optional("catalog_size", default=50): vol.All(vol.Coerce(int), vol.Range(min=1, max=50)),
+    vol.Optional("query", default=""): str,
+    vol.Optional("diet", default="profile"): vol.In(_DIET_FILTERS),
+    vol.Optional("nutrition_goal", default="balanced"): str,
+    vol.Required("language"): str,
+    vol.Optional("strict_language", default=False): bool,
+    vol.Optional("refresh", default=False): bool,
+})
 @websocket_api.async_response
 async def ws_recommend(hass, connection, msg) -> None:
     try:
@@ -90,9 +88,7 @@ async def ws_recommend(hass, connection, msg) -> None:
         nutrition_store = await nutrition_store_for_bridge(bridge)
         for item in ranked:
             nutrition = calculate_recipe_nutrition_fefo(
-                item, house,
-                generic=nutrition_store.generic,
-                stock_lots=nutrition_store.stock_lots,
+                item, house, generic=nutrition_store.generic, stock_lots=nutrition_store.stock_lots,
             )
             hint = nutrition_goal_bonus(nutrition, goal)
             match = item.setdefault("match", {})
@@ -112,8 +108,7 @@ async def ws_recommend(hass, connection, msg) -> None:
             "profile": profile,
             "filters": {
                 "query": query, "diet": diet, "nutritionGoal": goal,
-                "houseIngredientCount": len(house),
-                "expiringIngredientCount": len(expiring),
+                "houseIngredientCount": len(house), "expiringIngredientCount": len(expiring),
                 "expiryWarningDays": DEFAULT_EXPIRY_WARNING_DAYS,
                 "expiryCandidateSearches": expiry_candidate_searches,
             },
@@ -138,7 +133,7 @@ async def ws_food_state(hass, connection, msg) -> None:
             "householdMembers": profile.get("householdMembers") or [],
             "nutritionGoal": bridge.recipe_hub.ui_preferences.get("nutritionGoal") or "balanced",
             "history": history.recent(int(msg.get("history_limit", 30))),
-            "summary": history.summary(),
+            "summary": history.summary(now=dt_util.now()),
         })
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
@@ -155,8 +150,7 @@ def ws_feasibility(hass, connection, msg) -> None:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         annotated = bridge.recipe_hub.annotate(dict(msg["recipe"]))
         feasibility = recipe_quantity_feasibility(
-            annotated,
-            bridge.recipe_hub.profile.get("houseIngredients") or [],
+            annotated, bridge.recipe_hub.profile.get("houseIngredients") or [],
             availability=annotated.get("match", {}).get("ingredientAvailability"),
         )
         connection.send_result(msg["id"], {
