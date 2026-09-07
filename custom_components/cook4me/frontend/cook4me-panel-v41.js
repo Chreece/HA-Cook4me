@@ -60,6 +60,11 @@ class Cook4MeRecipeHubPanelV41 extends BasePanel{
     },true);
   }
 
+  _renderTab(){
+    this._rememberSection(this._tab);
+    return super._renderTab();
+  }
+
   _dismissOpenMenusFromPointer(event){
     const root=this.shadowRoot;
     if(!root)return;
