@@ -10,6 +10,7 @@ from homeassistant.util import dt as dt_util
 
 from . import websocket as legacy
 from . import websocket_v10 as v10
+from .food_intelligence import recipe_quantity_feasibility
 from .ingredient_catalog import enrich_match_with_house_keys
 from .inventory import (
     DEFAULT_EXPIRY_WARNING_DAYS,
@@ -60,7 +61,7 @@ def _rank_filtered(
     diet: str,
     limit: int,
 ) -> list[dict[str, Any]]:
-    """Rank recipes against house inventory and soon-expiring stock."""
+    """Rank recipes against exact stock quantities and soon-expiring batches."""
     profile = bridge.recipe_hub.profile
     profile["habitTerms"] = bridge.recipe_hub.habit_terms
     if diet != "profile":
@@ -74,13 +75,21 @@ def _rank_filtered(
             continue
         result = deepcopy(recipe)
         base_match = score_recipe(result, profile)
-        result["match"] = enrich_match_with_house_keys(
-            result,
-            base_match,
-            house,
-        )
+        result["match"] = enrich_match_with_house_keys(result, base_match, house)
         if not result["match"].get("safe"):
             continue
+
+        quantity = recipe_quantity_feasibility(
+            result,
+            house,
+            availability=result["match"].get("ingredientAvailability"),
+        )
+        result["match"]["quantityCoverage"] = quantity["quantityCoverage"]
+        result["match"]["quantityConfidence"] = quantity["confidence"]
+        result["match"]["quantityAvailability"] = quantity["items"]
+        result["match"]["quantityShortages"] = quantity["shortages"]
+        result["match"]["quantityUnknown"] = quantity["unknown"]
+        result["match"]["fullyAvailableByQuantity"] = quantity["fullyAvailable"]
 
         expiry = recipe_expiry_priority(
             result,
@@ -90,14 +99,16 @@ def _rank_filtered(
         )
         base_score = float(result["match"].get("score") or 0.0)
         expiry_priority = float(expiry.get("priority") or 0.0)
-        # Strong enough to move a similarly suitable recipe upward, but not so
-        # strong that a poor pantry match beats a recipe the user can actually make.
         expiry_bonus = min(40.0, expiry_priority * 20.0)
+        quantity_adjustment = -25.0 * max(
+            0.0, 1.0 - float(quantity.get("quantityCoverage") or 0.0)
+        )
         result["match"]["baseScore"] = round(base_score, 1)
         result["match"]["expiryPriority"] = round(expiry_priority, 3)
         result["match"]["expiryBonus"] = round(expiry_bonus, 1)
         result["match"]["expiringIngredients"] = expiry.get("ingredients") or []
-        result["match"]["score"] = round(base_score + expiry_bonus, 1)
+        result["match"]["quantityScoreAdjustment"] = round(quantity_adjustment, 1)
+        result["match"]["score"] = round(base_score + expiry_bonus + quantity_adjustment, 1)
         scored.append(result)
 
     scored.sort(
@@ -163,9 +174,6 @@ async def ws_recommend(
         candidates = list(search.get("items") or [])
         expiry_candidate_searches = 0
 
-        # An empty recommendation query should not rely only on the vendor's
-        # generic top-50 list: explicitly pull a small set of recipes for the
-        # most urgent dated ingredients so they have a chance to be ranked.
         if not query and expiring:
             for stock in expiring[:3]:
                 name = str(stock.get("name") or "").strip()
