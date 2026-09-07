@@ -10,8 +10,8 @@ from homeassistant.core import HomeAssistant
 from .const import DOMAIN
 
 _URL_BASE = "/cook4me_static"
-_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v28"
-_PANEL_MODULE = "cook4me-panel-v28.js"
+_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v29"
+_PANEL_MODULE = "cook4me-panel-v29.js"
 
 
 async def async_register_panel(hass: HomeAssistant) -> None:
