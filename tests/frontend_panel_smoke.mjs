@@ -26,9 +26,9 @@ globalThis.localStorage={
 const lastSectionKey="cook4me.ui.lastSection.v1.smoke-user";
 store.set(lastSectionKey,"official");
 
-await import("../custom_components/cook4me/frontend/cook4me-panel-v42.js");
+await import("../custom_components/cook4me/frontend/cook4me-panel-v43.js");
 
-const tag="cook4me-recipe-hub-panel-v42";
+const tag="cook4me-recipe-hub-panel-v43";
 if(!customElements.get(tag))throw new Error(`${tag} was not registered`);
 const panel=document.createElement(tag);
 document.body.appendChild(panel);
@@ -105,16 +105,24 @@ advanced.setAttribute("open","");
 panel._dismissOpenMenusFromPointer({composedPath:()=>[]});
 if(picker.hasAttribute("open")||advanced.hasAttribute("open"))throw new Error("Outside pointer did not close all Cook4Me menus");
 
-// v42 should surface only explicit SEB valuePer100g evidence.
+// v43 surfaces every proven per-100-g SEB value while keeping energy's unknown
+// unit explicit rather than guessing kcal/kJ.
 const official={
   officialNutrition:{
+    energyPer100gValue:321,
     hierarchicalNutrients:[{
       name:"Protein",valuePer100g:8.25,basisQuantity:100,basisUnit:"g",unit:{abbreviation:"g"},
     }],
   },
 };
 const officialBlock=panel._officialNutritionBlock(official);
-if(!officialBlock.includes("Protein")||!officialBlock.includes("8.25 g"))throw new Error("v42 official SEB per-100-g block missing proven value");
+if(!officialBlock.includes("Protein")||!officialBlock.includes("8.25 g"))throw new Error("v43 official SEB per-100-g block missing proven nutrient value");
+if(!officialBlock.includes("Energy")||!officialBlock.includes("321"))throw new Error("v43 official SEB energy-per-100-g value missing");
+if(!officialBlock.includes("does not expose the energy unit"))throw new Error("v43 did not disclose unknown SEB energy unit");
+
+panel._nutritionSettings={catalogCount:10,catalogTotal:30,remaining:20,blockedFailures:7,actionableRemaining:13};
+const nutritionSettings=panel._nutritionSettingsHtml();
+if(!nutritionSettings.includes("7 temporarily cached unresolved")||!nutritionSettings.includes("13 ready to try"))throw new Error("v43 nutrition resolution status missing");
 
 panel._rememberSection("official");
 panel.remove();
@@ -129,4 +137,4 @@ await new Promise(resolve=>setTimeout(resolve,0));
 if(restored._tab!=="official")throw new Error(`New panel did not reopen remembered section; got ${restored._tab}`);
 restored.remove();
 
-console.log("Recipe Hub v42 runtime smoke OK");
+console.log("Recipe Hub v43 runtime smoke OK");
