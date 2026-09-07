@@ -7,6 +7,7 @@ from homeassistant.components import persistent_notification, websocket_api
 from homeassistant.core import HomeAssistant, callback
 
 from . import websocket as legacy
+from .expiry import update_expiry_notification
 
 
 def _notification_id(entry_id: str) -> str:
@@ -81,6 +82,7 @@ async def ws_inventory_add(
             unlimited=bool(msg.get("unlimited")),
             best_before=str(msg.get("best_before") or ""),
         )
+        update_expiry_notification(bridge)
         result = _state(bridge)
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
@@ -117,6 +119,7 @@ async def ws_inventory_update(
             unlimited=bool(msg.get("unlimited")),
             **kwargs,
         )
+        update_expiry_notification(bridge)
         result = _state(bridge)
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
@@ -140,6 +143,7 @@ async def ws_inventory_remove(
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         await bridge.recipe_hub.async_inventory_remove(str(msg["identity"]))
+        update_expiry_notification(bridge)
         result = _state(bridge)
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
@@ -169,6 +173,7 @@ async def ws_consumption_confirm(
         persistent_notification.async_dismiss(
             hass, _notification_id(bridge.entry.entry_id)
         )
+        update_expiry_notification(bridge)
         result.update(_state(bridge))
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
