@@ -4,6 +4,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v32.js"
 HOTFIX_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v33.js"
+TODAY_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v34.js"
 PANEL = ROOT / "custom_components" / "cook4me" / "panel.py"
 MANIFEST = ROOT / "custom_components" / "cook4me" / "manifest.json"
 
@@ -53,15 +54,45 @@ def test_v33_disables_self_triggering_subtree_observer():
     assert 'this._modernObserver?.disconnect()' in text
     assert 'this._modernObserver=null' in text
     assert 'new MutationObserver' not in text
-    # The two v32 writers that replace child nodes are explicitly idempotent.
     assert 'if(option.textContent!==next)option.textContent=next' in text
     assert 'if(target.innerHTML!==next)' in text
 
 
-def test_v33_is_active_and_versioned():
+def test_v34_today_is_one_recipe_per_selected_category():
+    text = _text(TODAY_JS)
+    assert 'TODAY_MEAL_TYPES=["breakfast","starter","salad","soup","main","side","dessert","snack"]' in text
+    assert 'mealTypes:[...TODAY_MEAL_TYPES]' in text
+    assert 'meal_count:8' in text
+    assert 'for(const category of s.mealTypes)' in text
+    assert 'picked.todayMealType=category' in text
+    assert 'id="todayQuery"' not in text
+    assert 'id="todayMealCount"' not in text
+
+
+def test_v34_today_uses_catalog_ingredient_multiselect_and_bulk_controls():
+    text = _text(TODAY_JS)
+    assert 'id="todayIngredients" multiple' in text
+    assert 'data-today-bulk="${group}"' in text
+    assert '_toggleTodayBulk(c,group)' in text
+    assert 'group==="ingredients"' in text
+    assert 'group==="meals"' in text
+    assert '[data-today-language]' in text
+    assert '_recipeHasTodayIngredients' in text
+
+
+def test_v34_recipe_cards_expand_steps_inline_and_toggle_closed():
+    text = _text(TODAY_JS)
+    assert 'rx-inline-expansion' in text
+    assert '_toggleInlineRecipe(card,recipe,custom)' in text
+    assert 'this._inlineRecipeKey===key&&card.classList.contains("rx-inline-expanded")' in text
+    assert 'event.stopImmediatePropagation()' in text
+    assert 'data-inline-ingredient' in text
+
+
+def test_v34_is_active_and_versioned():
     panel = _text(PANEL)
     manifest = _text(MANIFEST)
-    assert 'cook4me-recipe-hub-panel-v33' in panel
-    assert 'cook4me-panel-v33.js' in panel
-    assert '?v=2026.9.7.12' in panel
-    assert '"version": "2026.9.7.12"' in manifest
+    assert 'cook4me-recipe-hub-panel-v34' in panel
+    assert 'cook4me-panel-v34.js' in panel
+    assert '?v=2026.9.7.13' in panel
+    assert '"version": "2026.9.7.13"' in manifest
