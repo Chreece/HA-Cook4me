@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+from datetime import datetime, timezone
 from typing import Any
+from uuid import uuid4
 
 import voluptuous as vol
 from homeassistant.components import websocket_api
@@ -29,20 +31,39 @@ async def _store(bridge) -> Cook4MeBarcodeMappingStore:
     return store
 
 
+def _purchase_metadata(mapping: dict[str, Any], extra: Any = None) -> dict[str, Any]:
+    supplied = dict(extra) if isinstance(extra, dict) else {}
+    supplied.setdefault("id", str(uuid4()))
+    supplied.setdefault("source", "barcode_scan")
+    supplied.setdefault("purchaseDate", datetime.now(timezone.utc).date().isoformat())
+    supplied.setdefault("barcode", str(mapping.get("barcode") or ""))
+    supplied.setdefault("productName", str(mapping.get("productName") or ""))
+    supplied.setdefault("brand", str(mapping.get("brand") or ""))
+    if mapping.get("nutrition"):
+        supplied.setdefault("nutritionSource", "open_food_facts")
+    return supplied
+
+
 async def _add_mapping_stock(
-    bridge, mapping: dict[str, Any], *, best_before: str = ""
+    bridge,
+    mapping: dict[str, Any],
+    *,
+    best_before: str = "",
+    lot_metadata: Any = None,
 ) -> dict[str, Any]:
     ingredient = mapping.get("ingredient") if isinstance(mapping.get("ingredient"), dict) else {}
     quantity = mapping.get("quantity")
     unit = str(mapping.get("unit") or "")
     if quantity is None:
         raise ValueError("This barcode mapping has no package amount; remap it with an amount")
+    metadata = _purchase_metadata(mapping, lot_metadata)
     await bridge.recipe_hub.async_inventory_add(
         dict(ingredient),
         quantity=quantity,
         unit=unit,
         unlimited=False,
         best_before=best_before,
+        lot_metadata=metadata,
     )
     nutrition_store = await nutrition_store_for_bridge(bridge)
     await nutrition_store.async_add_stock_lot(
@@ -68,7 +89,6 @@ async def _upgrade_known_nutrition(
     code: str,
     known: dict[str, Any],
 ) -> dict[str, Any]:
-    """Backfill nutrition once for mappings created before nutrition support."""
     if known.get("nutrition"):
         return known
     try:
@@ -102,6 +122,8 @@ def async_register(hass: HomeAssistant) -> None:
         vol.Optional("entry_id"): str,
         vol.Required("barcode"): str,
         vol.Optional("language"): str,
+        vol.Optional("best_before", default=""): str,
+        vol.Optional("lot_metadata"): dict,
     }
 )
 @websocket_api.async_response
@@ -117,7 +139,12 @@ async def ws_barcode_scan(
         known = store.get(code)
         if known is not None and known.get("quantity") is not None:
             known = await _upgrade_known_nutrition(hass, store, code, known)
-            state = await _add_mapping_stock(bridge, known)
+            state = await _add_mapping_stock(
+                bridge,
+                known,
+                best_before=str(msg.get("best_before") or ""),
+                lot_metadata=msg.get("lot_metadata"),
+            )
             connection.send_result(
                 msg["id"],
                 {
@@ -160,7 +187,12 @@ async def ws_barcode_scan(
                     "nutrition": product.get("nutrition"),
                 },
             )
-            state = await _add_mapping_stock(bridge, mapping)
+            state = await _add_mapping_stock(
+                bridge,
+                mapping,
+                best_before=str(msg.get("best_before") or ""),
+                lot_metadata=msg.get("lot_metadata"),
+            )
             connection.send_result(
                 msg["id"],
                 {
@@ -204,6 +236,7 @@ async def ws_barcode_scan(
         vol.Optional("best_before", default=""): str,
         vol.Optional("product_name", default=""): str,
         vol.Optional("brand", default=""): str,
+        vol.Optional("lot_metadata"): dict,
     }
 )
 @websocket_api.async_response
@@ -233,7 +266,10 @@ async def ws_barcode_map_add(
             },
         )
         state = await _add_mapping_stock(
-            bridge, mapping, best_before=str(msg.get("best_before") or "")
+            bridge,
+            mapping,
+            best_before=str(msg.get("best_before") or ""),
+            lot_metadata=msg.get("lot_metadata"),
         )
         connection.send_result(
             msg["id"],
