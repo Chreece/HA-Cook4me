@@ -10,11 +10,11 @@ from . import websocket as legacy
 from . import websocket_v11 as v11
 from .nutrition import (
     DEMO_KEY,
-    calculate_recipe_nutrition,
     ingredient_identity,
     lookup_food_data_central,
     nutrition_store_for_bridge,
 )
+from .nutrition_fefo import calculate_recipe_nutrition_fefo
 
 _FDC_OPTION = "fdc_api_key"
 
@@ -153,7 +153,7 @@ async def ws_nutrition_recipe(
                 _recipe_ingredients(recipe),
                 requested_limit=int(msg.get("max_resolve", 8)),
             )
-        nutrition = calculate_recipe_nutrition(
+        nutrition = calculate_recipe_nutrition_fefo(
             recipe,
             bridge.recipe_hub.profile.get("houseIngredients") or [],
             generic=store.generic,

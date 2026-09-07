@@ -29,6 +29,7 @@ from .websocket_v13 import async_register as async_register_websocket_v13
 from .websocket_v14 import async_register as async_register_websocket_v14
 from .websocket_v15 import async_register as async_register_websocket_v15
 from .websocket_v16 import async_register as async_register_websocket_v16
+from .websocket_v17 import async_register as async_register_websocket_v17
 
 SERVICE_SEND_RECIPE = "send_recipe"
 SERVICE_SEARCH_RECIPES = "search_recipes"
@@ -239,6 +240,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     async_register_websocket_v14(hass)
     async_register_websocket_v15(hass)
     async_register_websocket_v16(hass)
+    async_register_websocket_v17(hass)
     await async_register_panel(hass)
     return True
 

@@ -12,6 +12,7 @@ from homeassistant.helpers.storage import Store
 from homeassistant.util import dt as dt_util
 
 from .const import DOMAIN
+from .food_intelligence import recipe_quantity_feasibility
 from .ingredient_catalog import enrich_match_with_house_keys
 from .inventory import (
     DEFAULT_EXPIRY_WARNING_DAYS,
@@ -32,6 +33,7 @@ _DEFAULT_PROFILE: dict[str, Any] = {
     "allergies": [],
     "avoid": [],
     "preferences": [],
+    "householdMembers": [],
     # pantry is retained for storage/backwards compatibility. New UI writes the
     # structured houseIngredients stock list; pantry mirrors display names for
     # older ranking/AI code.
@@ -43,11 +45,19 @@ _DEFAULT_UI_PREFERENCES: dict[str, Any] = {
     "catalogLanguage": "auto",
     "translateResults": True,
     "lastTab": "official",
+    "nutritionGoal": "balanced",
     "recipeLanguageSelections": {},
     "recipeServingSelections": {},
 }
 
 _ALLOWED_TABS = {"official", "recommend", "mine", "profile", "shopping", "ai"}
+_ALLOWED_NUTRITION_GOALS = {
+    "balanced",
+    "high_protein",
+    "lower_calorie",
+    "high_fiber",
+    "lower_saturated_fat",
+}
 
 
 class Cook4MeRecipeHub:
@@ -104,6 +114,13 @@ class Cook4MeRecipeHub:
                 values = [x.strip() for x in values.replace(",", "\n").splitlines()]
             out[key] = list(dict.fromkeys(str(x).strip() for x in values if str(x).strip()))[:250]
 
+        members = profile.get("householdMembers") or []
+        if isinstance(members, str):
+            members = [x.strip() for x in members.replace(",", "\n").splitlines()]
+        out["householdMembers"] = list(
+            dict.fromkeys(str(x).strip() for x in members if str(x).strip())
+        )[:20]
+
         house = normalize_inventory(profile.get("houseIngredients"))
         if not house:
             # Seamless migration from the old free-text pantry list.
@@ -123,6 +140,9 @@ class Cook4MeRecipeHub:
         tab = str(preferences.get("lastTab") or "official").strip().lower()
         if tab not in _ALLOWED_TABS:
             tab = "official"
+        nutrition_goal = str(preferences.get("nutritionGoal") or "balanced").strip().lower()
+        if nutrition_goal not in _ALLOWED_NUTRITION_GOALS:
+            nutrition_goal = "balanced"
 
         def selection_map(value: Any, *, max_value_length: int) -> dict[str, str]:
             if not isinstance(value, dict):
@@ -139,6 +159,7 @@ class Cook4MeRecipeHub:
             "catalogLanguage": language,
             "translateResults": bool(preferences.get("translateResults", True)),
             "lastTab": tab,
+            "nutritionGoal": nutrition_goal,
             "recipeLanguageSelections": selection_map(
                 preferences.get("recipeLanguageSelections"), max_value_length=12
             ),
@@ -190,6 +211,7 @@ class Cook4MeRecipeHub:
         unit: str = "",
         unlimited: bool = False,
         best_before: str = "",
+        lot_metadata: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         async with self._lock:
             profile = deepcopy(self._data["profile"])
@@ -200,6 +222,7 @@ class Cook4MeRecipeHub:
                 unit=unit,
                 unlimited=unlimited,
                 best_before=best_before,
+                lot_metadata=lot_metadata,
             )
             profile["houseIngredients"] = house
             profile["pantry"] = [row["name"] for row in house]
@@ -254,12 +277,17 @@ class Cook4MeRecipeHub:
         )
         if not ingredients:
             return None
+        servings = recipe.get("servings") or recipe.get("groupSize")
+        yield_data = recipe.get("yield") if isinstance(recipe.get("yield"), dict) else {}
+        servings = servings or yield_data.get("quantity") or yield_data.get("quantityDisplay")
         pending = {
             "id": str(uuid4()),
             "createdAt": datetime.now(timezone.utc).isoformat(),
             "recipeTitle": str(recipe.get("title") or "Cook4Me recipe"),
             "groupingFunctionalId": recipe.get("groupingFunctionalId"),
             "variantFunctionalId": recipe.get("variantFunctionalId") or recipe.get("recipeFunctionalId"),
+            "servings": servings,
+            "recipeIngredients": deepcopy(recipe.get("ingredients") or []),
             "ingredients": ingredients,
         }
         async with self._lock:
@@ -274,6 +302,7 @@ class Cook4MeRecipeHub:
             pending = self._data.get("pendingConsumption")
             if not isinstance(pending, dict) or str(pending.get("id")) != str(pending_id):
                 raise ValueError("Consumption confirmation is no longer pending")
+            completed = deepcopy(pending)
             profile = deepcopy(self._data["profile"])
             house, report = apply_consumption(
                 profile.get("houseIngredients"), consumptions
@@ -283,7 +312,7 @@ class Cook4MeRecipeHub:
             self._data["profile"] = self._normalize_profile(profile)
             self._data["pendingConsumption"] = None
             await self._save()
-            return {"profile": self.profile, "report": report}
+            return {"profile": self.profile, "report": report, "completedRecipe": completed}
 
     async def async_clear_pending_consumption(self, pending_id: str) -> bool:
         async with self._lock:
@@ -387,6 +416,18 @@ class Cook4MeRecipeHub:
         base_match = score_recipe(result, self._scoring_profile())
         match = enrich_match_with_house_keys(result, base_match, house)
         if match.get("safe"):
+            quantity = recipe_quantity_feasibility(
+                result,
+                house,
+                availability=match.get("ingredientAvailability"),
+            )
+            match["quantityCoverage"] = quantity["quantityCoverage"]
+            match["quantityConfidence"] = quantity["confidence"]
+            match["quantityAvailability"] = quantity["items"]
+            match["quantityShortages"] = quantity["shortages"]
+            match["quantityUnknown"] = quantity["unknown"]
+            match["fullyAvailableByQuantity"] = quantity["fullyAvailable"]
+
             expiry = recipe_expiry_priority(
                 result,
                 house,
@@ -396,11 +437,13 @@ class Cook4MeRecipeHub:
             base_score = float(match.get("score") or 0.0)
             expiry_priority = float(expiry.get("priority") or 0.0)
             expiry_bonus = min(40.0, expiry_priority * 20.0)
+            quantity_adjustment = -25.0 * max(0.0, 1.0 - float(quantity["quantityCoverage"]))
             match["baseScore"] = round(base_score, 1)
             match["expiryPriority"] = round(expiry_priority, 3)
             match["expiryBonus"] = round(expiry_bonus, 1)
             match["expiringIngredients"] = expiry.get("ingredients") or []
-            match["score"] = round(base_score + expiry_bonus, 1)
+            match["quantityScoreAdjustment"] = round(quantity_adjustment, 1)
+            match["score"] = round(base_score + expiry_bonus + quantity_adjustment, 1)
         result["match"] = match
         return result
 
