@@ -33,6 +33,15 @@ def load_module():
     sys.modules["cook4me_barcode_test"] = package
     sys.modules["cook4me_barcode_test.const"] = const
 
+    nutrition_spec = importlib.util.spec_from_file_location(
+        "cook4me_barcode_test.nutrition",
+        ROOT / "custom_components/cook4me/nutrition.py",
+    )
+    nutrition_module = importlib.util.module_from_spec(nutrition_spec)
+    sys.modules[nutrition_spec.name] = nutrition_module
+    assert nutrition_spec.loader is not None
+    nutrition_spec.loader.exec_module(nutrition_module)
+
     spec = importlib.util.spec_from_file_location(
         "cook4me_barcode_test.barcode",
         ROOT / "custom_components/cook4me/barcode.py",
@@ -77,6 +86,36 @@ class BarcodeTests(unittest.TestCase):
         self.assertEqual(product["name"], "Butter")
         self.assertEqual(product["quantity"], 250)
         self.assertEqual(product["unit"], "g")
+
+    def test_open_food_facts_nutrition_is_normalized_per_100g(self):
+        product = self.module.normalize_openfoodfacts_payload(
+            "4006381333931",
+            {
+                "product": {
+                    "product_name": "Protein Yogurt",
+                    "generic_name": "Yogurt",
+                    "product_quantity": 500,
+                    "product_quantity_unit": "g",
+                    "nutriments": {
+                        "energy-kcal_100g": 72,
+                        "energy-kj_100g": 301,
+                        "proteins_100g": 8.5,
+                        "carbohydrates_100g": 5.2,
+                        "sugars_100g": 4.8,
+                        "fat_100g": 1.2,
+                        "saturated-fat_100g": 0.8,
+                        "fiber_100g": 0.3,
+                        "salt_100g": 0.12,
+                    },
+                }
+            },
+        )
+        nutrition = product["nutrition"]
+        self.assertEqual(nutrition["basisQuantity"], 100)
+        self.assertEqual(nutrition["basisUnit"], "g")
+        self.assertEqual(nutrition["values"]["energyKcal"], 72)
+        self.assertEqual(nutrition["values"]["protein"], 8.5)
+        self.assertAlmostEqual(nutrition["values"]["sodium"], 0.048)
 
     def test_generic_name_exact_match_is_confident(self):
         product = {"genericName": "Butter", "productName": "Example Bio Butter", "categories": []}
