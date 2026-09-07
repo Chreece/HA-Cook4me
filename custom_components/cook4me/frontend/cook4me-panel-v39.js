@@ -215,15 +215,21 @@ class Cook4MeRecipeHubPanelV39 extends BasePanel{
     this.shadowRoot.appendChild(style);
   }
 
+  _normalizeRefreshControl(){
+    const refresh=this.shadowRoot?.getElementById("refresh");
+    if(!refresh)return;
+    const icon=this._newIcon("refresh","rx-leading-icon");
+    refresh.replaceChildren(icon);
+    refresh.dataset.rxIcon="refresh";
+    refresh.classList.add("rx-icon-only","rx-v38-refresh");
+    refresh.title=this._t("refresh");
+    refresh.setAttribute("aria-label",this._t("refresh"));
+  }
+
   _applyV38TopBar(){
     super._applyV38TopBar();
     this._ensureV39Styles();
-    const refresh=this.shadowRoot?.getElementById("refresh");
-    if(refresh){
-      const icon=document.createElement("ha-icon");
-      icon.setAttribute("icon","mdi:refresh");
-      refresh.replaceChildren(icon);
-    }
+    this._normalizeRefreshControl();
   }
 
   _renderToday(c){
@@ -234,6 +240,7 @@ class Cook4MeRecipeHubPanelV39 extends BasePanel{
   _renderShell(){
     super._renderShell();
     this._ensureV39Styles();
+    this._normalizeRefreshControl();
   }
 }
 
