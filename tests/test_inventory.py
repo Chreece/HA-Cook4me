@@ -44,8 +44,90 @@ class InventoryTests(unittest.TestCase):
         self.assertEqual(after, stock)
         self.assertEqual(report["skipped"][0]["reason"], "unlimited")
 
+    def test_best_before_is_stored_for_finite_and_unlimited_stock(self):
+        finite = self.module.add_inventory_item(
+            [],
+            {"key": "M_FOOD_YOGURT", "name": "Yogurt"},
+            quantity=500,
+            unit="g",
+            best_before="2026-09-20",
+        )
+        unlimited = self.module.add_inventory_item(
+            [],
+            {"key": "M_FOOD_WATER", "name": "Water"},
+            unlimited=True,
+            best_before="2027-01-01",
+        )
+        self.assertEqual(finite[0]["bestBefore"], "2026-09-20")
+        self.assertEqual(unlimited[0]["bestBefore"], "2027-01-01")
+
+    def test_restock_keeps_earliest_known_best_before(self):
+        stock = [
+            {
+                "key": "M_FOOD_BUTTER",
+                "name": "Butter",
+                "quantity": 250,
+                "unit": "g",
+                "bestBefore": "2026-10-15",
+            }
+        ]
+        updated = self.module.add_inventory_item(
+            stock,
+            {"key": "M_FOOD_BUTTER", "name": "Butter"},
+            quantity=250,
+            unit="g",
+            best_before="2026-09-30",
+        )
+        self.assertEqual(updated[0]["quantity"], 500)
+        self.assertEqual(updated[0]["bestBefore"], "2026-09-30")
+
+    def test_best_before_can_be_edited_and_cleared(self):
+        stock = [
+            {
+                "key": "M_FOOD_MILK",
+                "name": "Milk",
+                "quantity": 1,
+                "unit": "l",
+                "bestBefore": "2026-09-10",
+            }
+        ]
+        updated = self.module.update_inventory_item(
+            stock,
+            "k:M_FOOD_MILK",
+            quantity=1,
+            unit="l",
+            best_before="2026-09-12",
+        )
+        self.assertEqual(updated[0]["bestBefore"], "2026-09-12")
+        cleared = self.module.update_inventory_item(
+            updated,
+            "k:M_FOOD_MILK",
+            quantity=1,
+            unit="l",
+            best_before="",
+        )
+        self.assertNotIn("bestBefore", cleared[0])
+
+    def test_invalid_best_before_is_rejected_on_user_write(self):
+        with self.assertRaises(ValueError):
+            self.module.add_inventory_item(
+                [],
+                {"key": "M_FOOD_EGG", "name": "Egg"},
+                quantity=6,
+                unit="pcs",
+                best_before="31-12-2026",
+            )
+
     def test_recipe_consumption_matches_food_key_not_recipe_wording(self):
-        stock = [{"key": "M_FOOD_SALMON", "name": "Lachsfilet", "quantity": 1, "unit": "kg"}]
+        stock = [
+            {
+                "key": "M_FOOD_SALMON",
+                "name": "Lachsfilet",
+                "quantity": 1,
+                "unit": "kg",
+                "bestBefore": "2026-09-09",
+            }
+        ]
         recipe = {
             "title": "Test",
             "ingredients": [
@@ -63,6 +145,7 @@ class InventoryTests(unittest.TestCase):
         self.assertEqual(rows[0]["identity"], "k:M_FOOD_SALMON")
         self.assertEqual(rows[0]["quantity"], 200)
         self.assertEqual(rows[0]["unit"], "g")
+        self.assertEqual(rows[0]["stockBestBefore"], "2026-09-09")
         self.assertTrue(rows[0]["consume"])
 
     def test_confirmation_deducts_recipe_amount_from_stock_unit(self):
