@@ -180,8 +180,8 @@ async def ws_nutrition_recipe(
         vol.Optional("entry_id"): str,
     }
 )
-@callback
-def ws_nutrition_settings(
+@websocket_api.async_response
+async def ws_nutrition_settings(
     hass: HomeAssistant,
     connection: websocket_api.ActiveConnection,
     msg: dict[str, Any],
@@ -189,11 +189,11 @@ def ws_nutrition_settings(
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         _key, custom = _api_key(bridge)
-        store = getattr(bridge, "_nutrition_store", None)
+        store = await nutrition_store_for_bridge(bridge)
         result = {
             "fdcApiKeyConfigured": custom,
             "fdcMode": "custom" if custom else "demo",
-            "catalogCount": store.generic_count if store is not None else 0,
+            "catalogCount": store.generic_count,
         }
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
