@@ -14,8 +14,10 @@ from typing import Any
 
 try:
     from . import cook4me_recipe_catalog as catalog
+    from . import cook4me_recipe_detail_enriched as enriched_detail
 except ImportError:  # direct script/import from the vendor directory
     import cook4me_recipe_catalog as catalog
+    import cook4me_recipe_detail_enriched as enriched_detail
 
 SEARCH_CONTRACT = "standalone-proven-cookeo-brand-v5"
 DEFAULT_APPLIANCE_GROUP = "APPLIANCE_GROUP_15"
@@ -117,7 +119,7 @@ def search_recipes(
     if count:
         def load(index: int):
             variant = lightweight[index]["searchVariantId"]
-            detail = catalog.recipe_detail(
+            detail = enriched_detail.recipe_detail(
                 cfg,
                 tokens,
                 variant,
