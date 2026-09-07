@@ -9,6 +9,7 @@ from typing import Any
 
 _MAX_ITEMS = 500
 _UNSET = object()
+DEFAULT_EXPIRY_WARNING_DAYS = 3
 
 
 def _text(value: Any) -> str:
@@ -295,6 +296,35 @@ def remove_inventory_item(inventory: Any, identity: str) -> list[dict[str, Any]]
     return [row for row in normalize_inventory(inventory) if inventory_identity(row) != identity]
 
 
+def expiring_inventory_items(
+    inventory: Any,
+    *,
+    today: date | None = None,
+    within_days: int = DEFAULT_EXPIRY_WARNING_DAYS,
+    include_past: bool = True,
+) -> list[dict[str, Any]]:
+    """Return dated stock that is past best-before or enters the warning window."""
+    reference = today or date.today()
+    horizon = max(0, int(within_days))
+    out: list[dict[str, Any]] = []
+    for row in normalize_inventory(inventory):
+        stamp = _best_before(row.get("bestBefore"))
+        if not stamp:
+            continue
+        days_remaining = (date.fromisoformat(stamp) - reference).days
+        if days_remaining > horizon:
+            continue
+        if days_remaining < 0 and not include_past:
+            continue
+        item = deepcopy(row)
+        item["identity"] = inventory_identity(row)
+        item["daysRemaining"] = days_remaining
+        item["pastBestBefore"] = days_remaining < 0
+        out.append(item)
+    out.sort(key=lambda row: (int(row["daysRemaining"]), _norm_name(row.get("name"))))
+    return out
+
+
 def _recipe_amount(item: dict[str, Any]) -> tuple[float | None, str]:
     amount = _quantity(item.get("quantity"))
     unit = _text(item.get("unit"))
@@ -318,6 +348,54 @@ def _find_stock(inventory: list[dict[str, Any]], ingredient: dict[str, Any]) -> 
             if inventory_identity(row) == wanted:
                 return row
     return None
+
+
+def recipe_expiry_priority(
+    recipe: dict[str, Any],
+    inventory: Any,
+    *,
+    today: date | None = None,
+    within_days: int = DEFAULT_EXPIRY_WARNING_DAYS,
+) -> dict[str, Any]:
+    """Describe soon-expiring stock used by one recipe for ranking purposes."""
+    reference = today or date.today()
+    horizon = max(0, int(within_days))
+    stock = normalize_inventory(inventory)
+    seen: set[str] = set()
+    matches: list[dict[str, Any]] = []
+    priority = 0.0
+    for ingredient in recipe.get("ingredients") or []:
+        if not isinstance(ingredient, dict):
+            continue
+        current = _find_stock(stock, ingredient)
+        if not current:
+            continue
+        ident = inventory_identity(current)
+        if not ident or ident in seen:
+            continue
+        stamp = _best_before(current.get("bestBefore"))
+        if not stamp:
+            continue
+        days_remaining = (date.fromisoformat(stamp) - reference).days
+        # Past best-before items are notified separately but are deliberately not
+        # promoted as cooking suggestions. Only dates from today through the
+        # active warning horizon receive recipe-ranking priority.
+        if days_remaining < 0 or days_remaining > horizon:
+            continue
+        seen.add(ident)
+        urgency = (horizon + 1 - days_remaining) / (horizon + 1)
+        priority += urgency
+        matches.append(
+            {
+                "identity": ident,
+                "name": current.get("name"),
+                "bestBefore": stamp,
+                "daysRemaining": days_remaining,
+                "urgency": round(urgency, 3),
+            }
+        )
+    matches.sort(key=lambda row: (int(row["daysRemaining"]), _norm_name(row.get("name"))))
+    return {"priority": round(priority, 3), "ingredients": matches}
 
 
 def recipe_consumption_items(recipe: dict[str, Any], inventory: Any) -> list[dict[str, Any]]:
