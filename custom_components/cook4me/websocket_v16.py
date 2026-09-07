@@ -11,18 +11,24 @@ from . import websocket_v11 as v11
 from .nutrition import (
     DEMO_KEY,
     ingredient_identity,
-    lookup_food_data_central,
     nutrition_store_for_bridge,
 )
+from .nutrition_fdc import lookup_food_data_central_strict
 from .nutrition_fefo import calculate_recipe_nutrition_fefo
+from .nutrition_resolution import nutrition_resolution_store_for_bridge
 
 _FDC_OPTION = "fdc_api_key"
+_MAX_UNRESOLVED_DETAILS = 80
 
 
 def _api_key(bridge) -> tuple[str, bool]:
     options = dict(bridge.entry.options or {})
     value = str(options.get(_FDC_OPTION) or "").strip()
     return (value or DEMO_KEY, bool(value))
+
+
+def _mode(custom: bool) -> str:
+    return "custom" if custom else "demo"
 
 
 async def _english_catalog(hass: HomeAssistant, bridge) -> list[dict[str, Any]]:
@@ -58,6 +64,60 @@ def _recipe_ingredients(recipe: dict[str, Any]) -> list[dict[str, Any]]:
     return out
 
 
+def _catalog_identity_rows(catalog: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for row in catalog:
+        if not isinstance(row, dict):
+            continue
+        ident = ingredient_identity(row)
+        if not ident or ident in seen:
+            continue
+        seen.add(ident)
+        rows.append(row)
+    return rows
+
+
+def _append_detail(details: list[dict[str, Any]], detail: dict[str, Any]) -> None:
+    if len(details) < _MAX_UNRESOLVED_DETAILS:
+        details.append(detail)
+
+
+async def _catalog_status(hass: HomeAssistant, bridge) -> dict[str, Any]:
+    nutrition_store = await nutrition_store_for_bridge(bridge)
+    resolution_store = await nutrition_resolution_store_for_bridge(bridge)
+    _key, custom = _api_key(bridge)
+    mode = _mode(custom)
+    result: dict[str, Any] = {
+        "fdcApiKeyConfigured": custom,
+        "fdcMode": mode,
+        "cachedGenericCount": nutrition_store.generic_count,
+        "resolutionFailureCount": resolution_store.failure_count,
+    }
+    try:
+        catalog = _catalog_identity_rows(await _english_catalog(hass, bridge))
+    except Exception:
+        # Settings must remain usable even when the SEB ingredient catalog is
+        # temporarily unavailable. Exact catalog progress is added when known.
+        result["catalogCount"] = nutrition_store.generic_count
+        return result
+
+    identities = {ingredient_identity(row) for row in catalog}
+    mapped = sum(1 for ident in identities if nutrition_store.get_generic(ident) is not None)
+    blocked = resolution_store.active_count(identities, mode=mode)
+    remaining = max(0, len(identities) - mapped)
+    result.update(
+        {
+            "catalogCount": mapped,
+            "catalogTotal": len(identities),
+            "remaining": remaining,
+            "blockedFailures": min(remaining, blocked),
+            "actionableRemaining": max(0, remaining - blocked),
+        }
+    )
+    return result
+
+
 async def _resolve_missing(
     hass: HomeAssistant,
     bridge,
@@ -66,38 +126,99 @@ async def _resolve_missing(
     requested_limit: int,
 ) -> dict[str, Any]:
     store = await nutrition_store_for_bridge(bridge)
+    resolution_store = await nutrition_resolution_store_for_bridge(bridge)
     api_key, custom = _api_key(bridge)
+    mode = _mode(custom)
     limit = max(0, min(int(requested_limit), 25 if custom else 3))
     resolved = 0
     attempted = 0
+    failed = 0
+    cached_failures = 0
+    deferred = 0
+    unresolved_count = 0
     unresolved: list[dict[str, Any]] = []
+
     for ingredient in ingredients:
         ident = ingredient_identity(ingredient)
         if not ident or store.get_generic(ident) is not None:
             continue
-        if attempted >= limit:
-            unresolved.append({"identity": ident, "reason": "resolution_limit"})
-            continue
+
         query = await _english_name(hass, bridge, ingredient)
-        if not query:
-            unresolved.append({"identity": ident, "reason": "no_english_name"})
+        cached = resolution_store.get_blocked(
+            ident,
+            query=query,
+            mode=mode,
+        )
+        if cached is not None:
+            cached_failures += 1
+            unresolved_count += 1
+            _append_detail(
+                unresolved,
+                {
+                    "identity": ident,
+                    "query": query,
+                    "reason": "cached_failure",
+                    "cachedReason": cached.get("reason"),
+                    "confidence": cached.get("confidence"),
+                    "retryAfter": cached.get("retryAt"),
+                },
+            )
             continue
+
+        if not query:
+            failed += 1
+            unresolved_count += 1
+            cached = await resolution_store.async_record_failure(
+                ident,
+                query="",
+                mode=mode,
+                reason="no_english_name",
+            )
+            _append_detail(
+                unresolved,
+                {
+                    "identity": ident,
+                    "reason": "no_english_name",
+                    "retryAfter": cached.get("retryAt"),
+                },
+            )
+            continue
+
+        if attempted >= limit:
+            deferred += 1
+            continue
+
         attempted += 1
         result = await hass.async_add_executor_job(
-            lookup_food_data_central,
+            lookup_food_data_central_strict,
             query,
             api_key,
         )
         if not result.get("ok"):
-            unresolved.append(
+            failed += 1
+            unresolved_count += 1
+            reason = str(result.get("reason") or "not_resolved")
+            cached = await resolution_store.async_record_failure(
+                ident,
+                query=query,
+                mode=mode,
+                reason=reason,
+                confidence=result.get("confidence"),
+            )
+            _append_detail(
+                unresolved,
                 {
                     "identity": ident,
                     "query": query,
-                    "reason": result.get("reason") or "not_resolved",
+                    "reason": reason,
                     "confidence": result.get("confidence"),
-                }
+                    "runnerUpConfidence": result.get("runnerUpConfidence"),
+                    "confidenceMargin": result.get("confidenceMargin"),
+                    "retryAfter": cached.get("retryAt"),
+                },
             )
             continue
+
         await store.async_set_generic(
             ident,
             ingredient,
@@ -105,13 +226,20 @@ async def _resolve_missing(
             query=query,
             confidence=result.get("confidence"),
         )
+        await resolution_store.async_clear(ident)
         resolved += 1
+
     return {
         "resolved": resolved,
         "attempted": attempted,
+        "failed": failed,
+        "cachedFailures": cached_failures,
+        "deferred": deferred,
         "unresolved": unresolved,
+        "unresolvedCount": unresolved_count,
+        "unresolvedTruncated": max(0, unresolved_count - len(unresolved)),
         "customApiKey": custom,
-        "mode": "custom" if custom else "demo",
+        "mode": mode,
     }
 
 
@@ -163,10 +291,11 @@ async def ws_nutrition_recipe(
         result = {
             "nutrition": nutrition,
             "catalogCount": store.generic_count,
+            "cachedGenericCount": store.generic_count,
             "resolvedNow": int(resolution.get("resolved") or 0),
             "resolution": resolution,
             "fdcApiKeyConfigured": custom,
-            "fdcMode": "custom" if custom else "demo",
+            "fdcMode": _mode(custom),
         }
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
@@ -188,13 +317,7 @@ async def ws_nutrition_settings(
 ) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
-        _key, custom = _api_key(bridge)
-        store = await nutrition_store_for_bridge(bridge)
-        result = {
-            "fdcApiKeyConfigured": custom,
-            "fdcMode": "custom" if custom else "demo",
-            "catalogCount": store.generic_count,
-        }
+        result = await _catalog_status(hass, bridge)
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
         return
@@ -223,17 +346,14 @@ async def ws_nutrition_settings_set(
         else:
             options.pop(_FDC_OPTION, None)
         hass.config_entries.async_update_entry(bridge.entry, options=options)
-        store = await nutrition_store_for_bridge(bridge)
-        connection.send_result(
-            msg["id"],
-            {
-                "fdcApiKeyConfigured": bool(api_key),
-                "fdcMode": "custom" if api_key else "demo",
-                "catalogCount": store.generic_count,
-            },
-        )
+        resolution_store = await nutrition_resolution_store_for_bridge(bridge)
+        cleared = await resolution_store.async_clear_transient()
+        result = await _catalog_status(hass, bridge)
+        result["clearedTransientFailures"] = cleared
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
+        return
+    connection.send_result(msg["id"], result)
 
 
 @websocket_api.websocket_command(
@@ -251,12 +371,12 @@ async def ws_nutrition_catalog_fill(
 ) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
-        catalog = await _english_catalog(hass, bridge)
+        catalog = _catalog_identity_rows(await _english_catalog(hass, bridge))
         store = await nutrition_store_for_bridge(bridge)
         missing = [
             row
             for row in catalog
-            if ingredient_identity(row) and store.get_generic(ingredient_identity(row)) is None
+            if store.get_generic(ingredient_identity(row)) is None
         ]
         resolution = await _resolve_missing(
             hass,
@@ -264,13 +384,8 @@ async def ws_nutrition_catalog_fill(
             missing,
             requested_limit=int(msg.get("limit", 12)),
         )
-        remaining = max(0, len(catalog) - store.generic_count)
-        result = {
-            **resolution,
-            "catalogCount": store.generic_count,
-            "catalogTotal": len(catalog),
-            "remaining": remaining,
-        }
+        status = await _catalog_status(hass, bridge)
+        result = {**resolution, **status}
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
         return
