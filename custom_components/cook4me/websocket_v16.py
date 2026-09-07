@@ -20,7 +20,7 @@ _FDC_OPTION = "fdc_api_key"
 
 
 def _api_key(bridge) -> tuple[str, bool]:
-    options = bridge.entry.options if isinstance(bridge.entry.options, dict) else {}
+    options = dict(bridge.entry.options or {})
     value = str(options.get(_FDC_OPTION) or "").strip()
     return (value or DEMO_KEY, bool(value))
 
