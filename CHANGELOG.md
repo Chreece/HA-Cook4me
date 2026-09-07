@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026.9.7.6
+
+- Make recipe feasibility quantity-aware. Cook4Me now compares recipe requirements with real house-stock totals using safe unit conversions and reports exact partial shortages such as `500 g required / 180 g at home / 320 g missing`; incompatible or unknown quantities remain explicitly uncertain instead of being guessed.
+- Feed known shortage amounts into the Home Assistant Shopping List, so partially stocked ingredients request only the missing quantity while still retaining unknown-amount missing ingredients.
+- Use the same quantity coverage in **For what I have in my house** ranking, with diet/allergy rules remaining hard safety gates and quantity shortfalls acting as a bounded ranking penalty rather than a hidden presence-only assumption.
+- Make predicted nutrition follow the exact FEFO batch order used by stock consumption. Exact scanned-product nutrition is selected by stable lot identity/barcode first and generic ingredient nutrition fills only the uncovered amount.
+- Link new scanned-product nutrition records to persistent stock-lot UUIDs, so editing a batch best-before date, storage location or opened-package metadata does not discard or detach its exact nutrition.
+- Persist confirmed post-cook meal nutrition history, including whole-meal totals, nutrition coverage/source kinds, recipe identity, serving count and recent Today/7-day/30-day summaries.
+- Add optional household members and per-person serving allocation on consumption confirmation. Confirmed meal nutrition is split by the actual serving share and retained in meal history; unassigned servings remain explicit.
+- Add optional nutrition-aware recommendation goals: Balanced, High protein, Lower calories, High fibre and Lower saturated fat. Nutrition contributes only a bounded evidence-weighted ranking hint and never overrides stock feasibility, diet or allergy safety.
+- Add richer stock-lot provenance: storage location (fridge/freezer/pantry/other), purchase date, opened date, use-within-days after opening, barcode, product name, brand, source and nutrition source.
+- Derive an effective use date for opened packages from `opened date + use within days`; when that date is earlier than the printed best-before date it drives FEFO consumption, expiry notifications and expiry-priority recommendations. Freezer storage is recorded but never invents an expiry extension.
+- Add best-before photo scanning where the browser exposes on-device `TextDetector`; ISO and common European numeric dates are validated locally. Unsupported browsers or ambiguous photos fall back to manual date entry rather than guessing.
+- Show quantity coverage/shortages on recipe cards and details, storage/provenance/effective expiry in stock batches, household controls and confirmed nutrition history in Recipe Hub. Ship/cache-bust Recipe Hub v24/v25 and add v17 food-intelligence WebSocket APIs.
+- Harden CI delivery: push validation now runs only for `main`, PR validation remains enabled, and workflow concurrency cancels superseded runs. Multi-file development is performed on a feature branch and validated as one PR instead of triggering failing `main` workflows for incomplete intermediate commits.
+- Add regressions for quantity shortages, unit conversion, nutrition-goal bounds, person allocations, opened-package FEFO, lot provenance, exact FEFO nutrition, stable nutrition-lot linking, meal history and the v24/v25 frontend contract.
+
 ## 2026.9.7.5
 
 - Capture normalized nutrition facts from Open Food Facts whenever a scanned barcode exposes them, including energy, protein, carbohydrates, sugars, fat, saturated fat, fibre, salt and sodium. Product nutrition is remembered with the barcode mapping and tracked separately for the exact scanned stock amount rather than overwriting generic ingredient nutrition.

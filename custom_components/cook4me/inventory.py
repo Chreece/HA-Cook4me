@@ -1,15 +1,17 @@
 from __future__ import annotations
 
 from copy import deepcopy
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
 import math
 import re
 import unicodedata
 from typing import Any
+from uuid import uuid4
 
 _MAX_ITEMS = 500
 _UNSET = object()
 DEFAULT_EXPIRY_WARNING_DAYS = 3
+_STORAGE_VALUES = {"", "fridge", "freezer", "pantry", "other"}
 
 
 def _text(value: Any) -> str:
@@ -76,6 +78,18 @@ def _best_before(value: Any, *, strict: bool = False) -> str:
         return ""
 
 
+def _positive_int(value: Any, *, maximum: int = 3650) -> int | None:
+    if value in (None, ""):
+        return None
+    try:
+        number = int(value)
+    except (TypeError, ValueError):
+        return None
+    if number <= 0 or number > maximum:
+        return None
+    return number
+
+
 # Only language-neutral symbols are converted. Unknown/localized units are still
 # supported when both sides use the exact same token; we never guess meanings.
 _UNIT_SCALE: dict[str, tuple[str, float]] = {
@@ -101,8 +115,6 @@ def convert_amount(value: Any, from_unit: Any, to_unit: Any) -> float | None:
     target = _unit_token(to_unit)
     if source == target:
         return amount
-    # Recipe count quantities frequently have no explicit unit. Treat an empty
-    # unit as count only when the other side is an explicit count symbol.
     if not source and target in {"pc", "pcs", "x"}:
         source = "pcs"
     if not target and source in {"pc", "pcs", "x"}:
@@ -114,10 +126,55 @@ def convert_amount(value: Any, from_unit: Any, to_unit: Any) -> float | None:
     return amount * left[1] / right[1]
 
 
-def _lot_sort_key(lot: dict[str, Any]) -> tuple[bool, str]:
-    stamp = _best_before(lot.get("bestBefore"))
-    # Dated stock is consumed before undated stock; dated lots use FEFO.
-    return (not bool(stamp), stamp or "9999-12-31")
+def _effective_best_before(lot: dict[str, Any]) -> str:
+    printed = _best_before(lot.get("bestBefore"))
+    opened = _best_before(lot.get("openedAt"))
+    use_days = _positive_int(lot.get("useWithinDays"))
+    opened_limit = ""
+    if opened and use_days:
+        opened_limit = (date.fromisoformat(opened) + timedelta(days=use_days)).isoformat()
+    if printed and opened_limit:
+        return min(printed, opened_limit)
+    return printed or opened_limit
+
+
+def _lot_sort_key(lot: dict[str, Any]) -> tuple[bool, str, str]:
+    stamp = _effective_best_before(lot)
+    return (not bool(stamp), stamp or "9999-12-31", _text(lot.get("addedAt")))
+
+
+def _lot_metadata(raw: Any, *, strict: bool = False) -> dict[str, Any]:
+    if not isinstance(raw, dict):
+        return {}
+    out: dict[str, Any] = {}
+    lot_id = _text(raw.get("id") or raw.get("lotId"))
+    if lot_id:
+        out["id"] = lot_id[:160]
+    storage = _text(raw.get("storage")).lower()
+    if storage:
+        if storage not in _STORAGE_VALUES:
+            if strict:
+                raise ValueError("Storage must be fridge, freezer, pantry, or other")
+        else:
+            out["storage"] = storage
+    for key in ("purchaseDate", "openedAt"):
+        if raw.get(key) not in (None, ""):
+            stamp = _best_before(raw.get(key), strict=strict)
+            if stamp:
+                out[key] = stamp
+    use_days = _positive_int(raw.get("useWithinDays"))
+    if raw.get("useWithinDays") not in (None, "") and use_days is None and strict:
+        raise ValueError("Use-within days must be between 1 and 3650")
+    if use_days:
+        out["useWithinDays"] = use_days
+    for key in ("barcode", "productName", "brand", "source", "nutritionSource"):
+        value = _text(raw.get(key))
+        if value:
+            out[key] = value[:300]
+    added = _text(raw.get("addedAt"))
+    if added:
+        out["addedAt"] = added[:80]
+    return out
 
 
 def _normalize_lot(
@@ -141,31 +198,38 @@ def _normalize_lot(
         converted = convert_amount(amount, lot_unit, target_unit)
         if converted is None:
             if strict:
-                raise ValueError(
-                    f"Cannot convert inventory batch from {lot_unit} to {target_unit}"
-                )
+                raise ValueError(f"Cannot convert inventory batch from {lot_unit} to {target_unit}")
             return None
         amount = converted
     elif target_unit and not lot_unit:
-        # Canonical stored lots omit their unit and inherit the ingredient unit.
         lot_unit = target_unit
     stamp = _best_before(raw.get("bestBefore") or raw.get("best_before"), strict=strict)
-    lot: dict[str, Any] = {"quantity": amount}
+    lot: dict[str, Any] = {"quantity": amount, **_lot_metadata(raw, strict=strict)}
     if stamp:
         lot["bestBefore"] = stamp
+    if not lot.get("id"):
+        lot["id"] = str(uuid4())
+    if not lot.get("addedAt"):
+        lot["addedAt"] = datetime.now(timezone.utc).isoformat()
+    effective = _effective_best_before(lot)
+    if effective:
+        lot["effectiveBestBefore"] = effective
+    else:
+        lot.pop("effectiveBestBefore", None)
     return lot
 
 
 def _refresh_row_totals(row: dict[str, Any]) -> dict[str, Any]:
-    """Keep legacy total/next-expiry fields derived from canonical finite lots."""
     if row.get("unlimited"):
         row.pop("quantity", None)
         row.pop("lots", None)
         stamp = _best_before(row.get("bestBefore"))
         if stamp:
             row["bestBefore"] = stamp
+            row["effectiveBestBefore"] = stamp
         else:
             row.pop("bestBefore", None)
+            row.pop("effectiveBestBefore", None)
         return row
 
     unit = _text(row.get("unit"))
@@ -177,34 +241,40 @@ def _refresh_row_totals(row: dict[str, Any]) -> dict[str, Any]:
             if lot:
                 lots.append(lot)
     else:
-        # Seamless migration from the v20 single quantity + bestBefore model.
         amount = _quantity(row.get("quantity"))
         if amount is not None and amount > 0:
             lot: dict[str, Any] = {"quantity": amount}
             stamp = _best_before(row.get("bestBefore"))
             if stamp:
                 lot["bestBefore"] = stamp
-            lots.append(lot)
+            normalized = _normalize_lot(lot, target_unit=unit)
+            if normalized:
+                lots.append(normalized)
 
     if lots:
         lots.sort(key=_lot_sort_key)
         row["lots"] = lots
         row["quantity"] = round(sum(float(lot["quantity"]) for lot in lots), 9)
-        dated = [str(lot["bestBefore"]) for lot in lots if lot.get("bestBefore")]
-        if dated:
-            row["bestBefore"] = min(dated)
+        printed = [str(lot["bestBefore"]) for lot in lots if lot.get("bestBefore")]
+        effective = [_effective_best_before(lot) for lot in lots if _effective_best_before(lot)]
+        if printed:
+            row["bestBefore"] = min(printed)
         else:
             row.pop("bestBefore", None)
+        if effective:
+            row["effectiveBestBefore"] = min(effective)
+        else:
+            row.pop("effectiveBestBefore", None)
     else:
         row.pop("lots", None)
         row.pop("quantity", None)
-        # A legacy/unknown-amount ingredient may still carry a date. Preserve it
-        # for compatibility, although all new finite dated additions require an amount.
         stamp = _best_before(row.get("bestBefore"))
         if stamp:
             row["bestBefore"] = stamp
+            row["effectiveBestBefore"] = stamp
         else:
             row.pop("bestBefore", None)
+            row.pop("effectiveBestBefore", None)
     return row
 
 
@@ -230,7 +300,6 @@ def _normalized_row(raw: Any) -> dict[str, Any] | None:
         if stamp:
             row["bestBefore"] = stamp
         return _refresh_row_totals(row)
-
     if isinstance(raw.get("lots"), list):
         row["lots"] = deepcopy(raw["lots"])
     else:
@@ -244,11 +313,7 @@ def _normalized_row(raw: Any) -> dict[str, Any] | None:
 
 
 def _append_lot_converted(
-    current: dict[str, Any],
-    lot: dict[str, Any],
-    *,
-    from_unit: str,
-    strict: bool,
+    current: dict[str, Any], lot: dict[str, Any], *, from_unit: str, strict: bool
 ) -> bool:
     target_unit = _text(current.get("unit"))
     source_unit = _text(from_unit)
@@ -265,10 +330,10 @@ def _append_lot_converted(
                 )
             return False
         amount = converted
-    normalized: dict[str, Any] = {"quantity": amount}
-    stamp = _best_before(lot.get("bestBefore"))
-    if stamp:
-        normalized["bestBefore"] = stamp
+    candidate = {**deepcopy(lot), "quantity": amount}
+    normalized = _normalize_lot(candidate, target_unit=target_unit, strict=strict)
+    if not normalized:
+        return False
     current.setdefault("lots", []).append(normalized)
     return True
 
@@ -293,7 +358,6 @@ def normalize_inventory(value: Any) -> list[dict[str, Any]]:
         else:
             current = out[index[ident]]
             if row.get("unlimited"):
-                # Preserve previous behavior: unlimited wins over finite stock.
                 previous_date = _best_before(current.get("bestBefore"))
                 incoming_date = _best_before(row.get("bestBefore"))
                 current.pop("quantity", None)
@@ -308,18 +372,11 @@ def normalize_inventory(value: Any) -> list[dict[str, Any]]:
             elif not current.get("unlimited"):
                 if not current.get("unit") and row.get("unit") and not current.get("quantity"):
                     current["unit"] = row["unit"]
-                row_lots = row.get("lots") or []
-                if row_lots:
-                    for lot in row_lots:
-                        _append_lot_converted(
-                            current,
-                            lot,
-                            from_unit=str(row.get("unit") or ""),
-                            strict=False,
-                        )
-                    _refresh_row_totals(current)
-                elif not current.get("quantity") and row.get("bestBefore"):
-                    current["bestBefore"] = row["bestBefore"]
+                for lot in row.get("lots") or []:
+                    _append_lot_converted(
+                        current, lot, from_unit=str(row.get("unit") or ""), strict=False
+                    )
+                _refresh_row_totals(current)
         if len(out) >= _MAX_ITEMS:
             break
     return out
@@ -333,6 +390,7 @@ def add_inventory_item(
     unit: str = "",
     unlimited: bool = False,
     best_before: Any = "",
+    lot_metadata: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     rows = normalize_inventory(inventory)
     normalized_best_before = _best_before(best_before, strict=bool(_text(best_before)))
@@ -355,10 +413,11 @@ def add_inventory_item(
         if normalized_best_before:
             incoming["bestBefore"] = normalized_best_before
     elif amount is not None and amount > 0:
-        lot: dict[str, Any] = {"quantity": amount}
+        lot: dict[str, Any] = {"quantity": amount, **(lot_metadata or {})}
         if normalized_best_before:
             lot["bestBefore"] = normalized_best_before
-        incoming["lots"] = [lot]
+        normalized_lot = _normalize_lot(lot, target_unit=incoming_unit, strict=True)
+        incoming["lots"] = [normalized_lot] if normalized_lot else []
     elif amount == 0:
         raise ValueError("Inventory amount must be greater than zero")
 
@@ -376,22 +435,18 @@ def add_inventory_item(
             dates = [x for x in (previous_date, normalized_best_before) if x]
             if dates:
                 current["bestBefore"] = min(dates)
-            return _refresh_row_totals(current) and rows
+            _refresh_row_totals(current)
+            return rows
         if current.get("unlimited"):
             return rows
         if amount is None:
             return rows
         if not current.get("unit") and incoming_unit and not current.get("quantity"):
             current["unit"] = incoming_unit
-        lot = {"quantity": amount}
+        lot = {"quantity": amount, **(lot_metadata or {})}
         if normalized_best_before:
             lot["bestBefore"] = normalized_best_before
-        _append_lot_converted(
-            current,
-            lot,
-            from_unit=incoming_unit,
-            strict=True,
-        )
+        _append_lot_converted(current, lot, from_unit=incoming_unit, strict=True)
         _refresh_row_totals(current)
         return rows
 
@@ -413,6 +468,7 @@ def update_inventory_item(
     for current in rows:
         if inventory_identity(current) != identity:
             continue
+        old_unit = _text(current.get("unit"))
         new_unit = _text(unit)
         if new_unit:
             current["unit"] = new_unit
@@ -428,7 +484,8 @@ def update_inventory_item(
                     current["bestBefore"] = _best_before(best_before, strict=True)
                 else:
                     current.pop("bestBefore", None)
-            return _refresh_row_totals(current) and rows
+            _refresh_row_totals(current)
+            return rows
 
         current.pop("unlimited", None)
         if lots is not _UNSET:
@@ -438,7 +495,10 @@ def update_inventory_item(
                 raise ValueError("Inventory batches must be a list")
             normalized_lots: list[dict[str, Any]] = []
             for raw_lot in lots:
-                lot = _normalize_lot(raw_lot, target_unit=new_unit, strict=True)
+                candidate = dict(raw_lot) if isinstance(raw_lot, dict) else raw_lot
+                if isinstance(candidate, dict) and "unit" not in candidate:
+                    candidate["unit"] = old_unit or new_unit
+                lot = _normalize_lot(candidate, target_unit=new_unit, strict=True)
                 if lot:
                     normalized_lots.append(lot)
             if normalized_lots:
@@ -450,8 +510,6 @@ def update_inventory_item(
             _refresh_row_totals(current)
             return rows
 
-        # Compatibility for older clients: aggregate edits intentionally become
-        # one finite batch because they cannot represent multiple dates.
         amount = _quantity(quantity)
         if amount is not None and amount > 0:
             lot: dict[str, Any] = {"quantity": amount}
@@ -462,7 +520,8 @@ def update_inventory_item(
                 stamp = _best_before(current.get("bestBefore"))
             if stamp:
                 lot["bestBefore"] = stamp
-            current["lots"] = [lot]
+            normalized = _normalize_lot(lot, target_unit=new_unit, strict=True)
+            current["lots"] = [normalized] if normalized else []
         elif amount == 0:
             current.pop("lots", None)
             current.pop("quantity", None)
@@ -474,7 +533,8 @@ def update_inventory_item(
                 if _text(best_before):
                     raise ValueError("A finite best-before date must be attached to an amount")
                 current.pop("bestBefore", None)
-        return _refresh_row_totals(current) and rows
+        _refresh_row_totals(current)
+        return rows
     raise ValueError("House ingredient was not found")
 
 
@@ -489,7 +549,7 @@ def expiring_inventory_items(
     within_days: int = DEFAULT_EXPIRY_WARNING_DAYS,
     include_past: bool = True,
 ) -> list[dict[str, Any]]:
-    """Return individual dated batches that are past or enter the warning window."""
+    """Return individual batches whose effective expiry enters the warning window."""
     reference = today or date.today()
     horizon = max(0, int(within_days))
     out: list[dict[str, Any]] = []
@@ -501,27 +561,21 @@ def expiring_inventory_items(
             "identity": inventory_identity(row),
         }
         if row.get("unlimited") or not row.get("lots"):
-            candidates = [
-                {
-                    **base,
-                    **({"unlimited": True} if row.get("unlimited") else {}),
-                    **({"quantity": row["quantity"]} if row.get("quantity") is not None else {}),
-                    "bestBefore": row.get("bestBefore"),
-                    "lotIndex": None,
-                }
-            ]
+            candidates = [{
+                **base,
+                **({"unlimited": True} if row.get("unlimited") else {}),
+                **({"quantity": row["quantity"]} if row.get("quantity") is not None else {}),
+                "bestBefore": row.get("bestBefore"),
+                "effectiveBestBefore": row.get("effectiveBestBefore") or row.get("bestBefore"),
+                "lotIndex": None,
+            }]
         else:
             candidates = [
-                {
-                    **base,
-                    "quantity": lot.get("quantity"),
-                    "bestBefore": lot.get("bestBefore"),
-                    "lotIndex": index,
-                }
+                {**base, **deepcopy(lot), "lotIndex": index}
                 for index, lot in enumerate(row.get("lots") or [])
             ]
         for item in candidates:
-            stamp = _best_before(item.get("bestBefore"))
+            stamp = _effective_best_before(item)
             if not stamp:
                 continue
             days_remaining = (date.fromisoformat(stamp) - reference).days
@@ -529,17 +583,14 @@ def expiring_inventory_items(
                 continue
             if days_remaining < 0 and not include_past:
                 continue
-            item["bestBefore"] = stamp
+            item["effectiveBestBefore"] = stamp
             item["daysRemaining"] = days_remaining
             item["pastBestBefore"] = days_remaining < 0
+            item["openedDrivenExpiry"] = bool(
+                item.get("openedAt") and item.get("useWithinDays") and stamp != _best_before(item.get("bestBefore"))
+            )
             out.append(item)
-    out.sort(
-        key=lambda row: (
-            int(row["daysRemaining"]),
-            _norm_name(row.get("name")),
-            int(row.get("lotIndex") or 0),
-        )
-    )
+    out.sort(key=lambda row: (int(row["daysRemaining"]), _norm_name(row.get("name")), int(row.get("lotIndex") or 0)))
     return out
 
 
@@ -575,7 +626,6 @@ def recipe_expiry_priority(
     today: date | None = None,
     within_days: int = DEFAULT_EXPIRY_WARNING_DAYS,
 ) -> dict[str, Any]:
-    """Describe soon-expiring stock batches used by one recipe for ranking."""
     reference = today or date.today()
     horizon = max(0, int(within_days))
     stock = normalize_inventory(inventory)
@@ -591,40 +641,34 @@ def recipe_expiry_priority(
         ident = inventory_identity(current)
         if not ident or ident in seen:
             continue
-
         candidates: list[dict[str, Any]] = []
         if current.get("unlimited") or not current.get("lots"):
             if current.get("bestBefore"):
-                candidates.append(
-                    {
-                        "bestBefore": current.get("bestBefore"),
-                        "quantity": current.get("quantity"),
-                    }
-                )
+                candidates.append({"bestBefore": current.get("bestBefore"), "quantity": current.get("quantity")})
         else:
             candidates.extend(current.get("lots") or [])
-
-        qualifying: list[tuple[int, dict[str, Any]]] = []
+        qualifying: list[tuple[int, dict[str, Any], str]] = []
         for lot in candidates:
-            stamp = _best_before(lot.get("bestBefore"))
+            stamp = _effective_best_before(lot)
             if not stamp:
                 continue
             days_remaining = (date.fromisoformat(stamp) - reference).days
             if 0 <= days_remaining <= horizon:
-                qualifying.append((days_remaining, lot))
+                qualifying.append((days_remaining, lot, stamp))
         if not qualifying:
             continue
-        days_remaining, lot = min(qualifying, key=lambda item: item[0])
-        stamp = _best_before(lot.get("bestBefore"))
+        days_remaining, lot, stamp = min(qualifying, key=lambda item: item[0])
         seen.add(ident)
         urgency = (horizon + 1 - days_remaining) / (horizon + 1)
         priority += urgency
         match = {
             "identity": ident,
             "name": current.get("name"),
-            "bestBefore": stamp,
+            "bestBefore": lot.get("bestBefore"),
+            "effectiveBestBefore": stamp,
             "daysRemaining": days_remaining,
             "urgency": round(urgency, 3),
+            "storage": lot.get("storage"),
         }
         if lot.get("quantity") is not None:
             match["quantity"] = lot.get("quantity")
@@ -658,7 +702,7 @@ def recipe_consumption_items(recipe: dict[str, Any], inventory: Any) -> list[dic
             "stockQuantity": current.get("quantity"),
             "stockUnit": current.get("unit", ""),
             "stockUnlimited": bool(current.get("unlimited")),
-            "stockBestBefore": current.get("bestBefore", ""),
+            "stockBestBefore": current.get("effectiveBestBefore") or current.get("bestBefore", ""),
             "stockLots": deepcopy(current.get("lots") or []),
         }
         if ident not in by_identity:
@@ -681,13 +725,10 @@ def recipe_consumption_items(recipe: dict[str, Any], inventory: Any) -> list[dic
 def apply_consumption(
     inventory: Any, consumptions: list[dict[str, Any]]
 ) -> tuple[list[dict[str, Any]], dict[str, list[dict[str, Any]]]]:
-    """Deduct finite stock FEFO: earliest best-before batch first, undated last."""
+    """Deduct finite stock FEFO using effective expiry, then undated batches."""
     rows = normalize_inventory(inventory)
     report: dict[str, list[dict[str, Any]]] = {
-        "deducted": [],
-        "deductedLots": [],
-        "skipped": [],
-        "depleted": [],
+        "deducted": [], "deductedLots": [], "skipped": [], "depleted": []
     }
     for request in consumptions:
         if not isinstance(request, dict) or not bool(request.get("consume", True)):
@@ -709,7 +750,6 @@ def apply_consumption(
         if converted is None:
             report["skipped"].append({"identity": ident, "reason": "unit_mismatch"})
             continue
-
         requested_in_stock_unit = max(0.0, float(converted))
         to_deduct = min(stock_quantity, requested_in_stock_unit)
         remaining_request = to_deduct
@@ -728,26 +768,28 @@ def apply_consumption(
                     "name": current.get("name"),
                     "quantity": round(take, 9),
                     "unit": current.get("unit", ""),
+                    "lotId": lot.get("id"),
+                    "bestBefore": lot.get("bestBefore"),
+                    "effectiveBestBefore": _effective_best_before(lot),
+                    "storage": lot.get("storage"),
+                    "barcode": lot.get("barcode"),
+                    "productName": lot.get("productName"),
+                    "brand": lot.get("brand"),
+                    "source": lot.get("source"),
                 }
-                if lot.get("bestBefore"):
-                    lot_report["bestBefore"] = lot.get("bestBefore")
-                report["deductedLots"].append(lot_report)
+                report["deductedLots"].append({k: v for k, v in lot_report.items() if v not in (None, "")})
                 remaining_request -= take
             if left > 1e-9:
-                kept_lot: dict[str, Any] = {"quantity": round(left, 9)}
-                if lot.get("bestBefore"):
-                    kept_lot["bestBefore"] = lot.get("bestBefore")
+                kept_lot = deepcopy(lot)
+                kept_lot["quantity"] = round(left, 9)
                 kept.append(kept_lot)
-
         actual = to_deduct - max(0.0, remaining_request)
-        report["deducted"].append(
-            {
-                "identity": ident,
-                "name": current.get("name"),
-                "quantity": round(actual, 9),
-                "unit": current.get("unit", ""),
-            }
-        )
+        report["deducted"].append({
+            "identity": ident,
+            "name": current.get("name"),
+            "quantity": round(actual, 9),
+            "unit": current.get("unit", ""),
+        })
         if kept:
             current["lots"] = kept
             _refresh_row_totals(current)

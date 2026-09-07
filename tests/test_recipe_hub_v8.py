@@ -8,6 +8,7 @@ import types
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
+PACKAGE_DIR = ROOT / "custom_components/cook4me"
 
 
 def load_search_module():
@@ -31,7 +32,6 @@ def load_search_module():
 
 
 def load_recipe_hub_module():
-    # recipe_hub's normalization functions do not need a real HA runtime.
     ha = types.ModuleType("homeassistant")
     ha_core = types.ModuleType("homeassistant.core")
     ha_helpers = types.ModuleType("homeassistant.helpers")
@@ -55,7 +55,7 @@ def load_recipe_hub_module():
     sys.modules["homeassistant.util.dt"] = ha_dt
 
     package = types.ModuleType("cook4me_hub_test")
-    package.__path__ = []
+    package.__path__ = [str(PACKAGE_DIR)]
     const = types.ModuleType("cook4me_hub_test.const")
     const.DOMAIN = "cook4me"
     logic = types.ModuleType("cook4me_hub_test.recipe_logic")
@@ -128,6 +128,7 @@ class RecipeHubV8Tests(unittest.TestCase):
                 "catalogLanguage": "DE-de",
                 "translateResults": False,
                 "lastTab": "recommend",
+                "nutritionGoal": "high_protein",
                 "recipeLanguageSelections": {"g:500": "it"},
                 "recipeServingSelections": {"g:500": "6"},
             }
@@ -135,6 +136,7 @@ class RecipeHubV8Tests(unittest.TestCase):
         self.assertEqual(normalized["catalogLanguage"], "de")
         self.assertFalse(normalized["translateResults"])
         self.assertEqual(normalized["lastTab"], "recommend")
+        self.assertEqual(normalized["nutritionGoal"], "high_protein")
         self.assertEqual(normalized["recipeLanguageSelections"], {"g:500": "it"})
         self.assertEqual(normalized["recipeServingSelections"], {"g:500": "6"})
 
@@ -184,6 +186,13 @@ class RecipeHubV8Tests(unittest.TestCase):
         self.assertEqual(normalized["houseIngredients"][0]["quantity"], 750)
         self.assertEqual(normalized["houseIngredients"][0]["unit"], "g")
         self.assertTrue(normalized["houseIngredients"][1]["unlimited"])
+
+    def test_household_members_are_normalized_and_deduped(self):
+        module = load_recipe_hub_module()
+        normalized = module.Cook4MeRecipeHub._normalize_profile(
+            {"householdMembers": ["Chris", "Alex", "Chris"]}
+        )
+        self.assertEqual(normalized["householdMembers"], ["Chris", "Alex"])
 
 
 if __name__ == "__main__":
