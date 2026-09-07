@@ -66,7 +66,7 @@ class Cook4MeRecipeHubPanelV41 extends BasePanel{
     const path=typeof event?.composedPath==="function"?event.composedPath():[];
     const selector="details.rx-today-picker[open],details.rx-advanced[open],details[data-menu][open],details[data-selector][open]";
     root.querySelectorAll(selector).forEach(menu=>{
-      if(!path.includes(menu))menu.open=false;
+      if(!path.includes(menu))menu.removeAttribute("open");
     });
 
     const active=root.activeElement;
