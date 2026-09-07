@@ -73,9 +73,6 @@ class Cook4MeRecipeHubPanelV41 extends BasePanel{
     root.querySelectorAll(selector).forEach(menu=>{
       if(!path.includes(menu))menu.removeAttribute("open");
     });
-
-    const active=root.activeElement;
-    if(active&&String(active.tagName||"").toUpperCase()==="SELECT"&&!path.includes(active))active.blur?.();
   }
 }
 
