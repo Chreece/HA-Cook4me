@@ -82,7 +82,7 @@ class Cook4MeRecipeHubPanelV34 extends BasePanel{
     const date=new Intl.DateTimeFormat(this._langCode(),{dateStyle:"full"}).format(new Date());
     const selectedMeals=new Set(s.mealTypes||[]),languageRows=this._todayLanguageRows(),selectedLanguages=new Set((s.languages||[]).map(x=>String(x).toLowerCase()));
     const ingredientRows=this._todayIngredientRows(),selectedIngredients=new Set((s.ingredients||[]).map(String));
-    const results=this._todayResults.length?`<section class="card" style="margin-top:14px"><div class="detail-head"><div><h2 style="margin:0">${this._escape(this._t("todayResults"))}</h2><div class="muted">${this._escape(date)} · ${this._escape(this._t("onePerCategory"))}</div></div></div></section><div id="todayGrid" class="rx-category-results">${this._todayResults.map(recipe=>{const type=String(recipe.todayMealType||"");const visual=globalThis.COOK4ME_MEAL_VISUALS?.[type];return `<section class="rx-category-result"><h3><ha-icon icon="mdi:${this._mealIcon(type)}"></ha-icon>${this._escape(this._t(type)||type)}</h3>${this._recipeCard(recipe,false)}</section>`;}).join("")}</div>`:(this._todayMeta&&!this._todayBusy?`<section class="card" style="margin-top:14px"><div class="empty">${this._escape(this._t("noTodayResults"))}</div></section>`:"");
+    const results=this._todayResults.length?`<section class="card" style="margin-top:14px"><div class="detail-head"><div><h2 style="margin:0">${this._escape(this._t("todayResults"))}</h2><div class="muted">${this._escape(date)} · ${this._escape(this._t("onePerCategory"))}</div></div></div></section><div id="todayGrid" class="rx-category-results">${this._todayResults.map(recipe=>{const type=String(recipe.todayMealType||"");return `<section class="rx-category-result"><h3><ha-icon icon="mdi:${this._mealIcon(type)}"></ha-icon>${this._escape(this._t(type)||type)}</h3>${this._recipeCard(recipe,false)}</section>`;}).join("")}</div>`:(this._todayMeta&&!this._todayBusy?`<section class="card" style="margin-top:14px"><div class="empty">${this._escape(this._t("noTodayResults"))}</div></section>`:"");
 
     c.innerHTML=`<section class="card rx-today-planner">
       <div class="detail-head"><div><h2 style="margin:0">${this._escape(this._t("todayMeal"))}</h2><div class="muted">${this._escape(date)}</div></div></div>
@@ -117,7 +117,7 @@ class Cook4MeRecipeHubPanelV34 extends BasePanel{
   _collectTodayV34(c){
     const mealTypes=[...c.querySelectorAll("[data-today-meal-type]:checked")].map(x=>String(x.dataset.todayMealType||""));
     const languages=[...c.querySelectorAll("[data-today-language]:checked")].map(x=>String(x.dataset.todayLanguage||""));
-    const ingredients=[...c.querySelector("#todayIngredients")?.selectedOptions||[]].map(option=>String(option.value||""));
+    const ingredients=[...(c.querySelector("#todayIngredients")?.selectedOptions||[])].map(option=>String(option.value||""));
     return {diet:String(c.querySelector("#todayDiet")?.value||"profile"),nutritionGoal:String(c.querySelector("#todayNutritionGoal")?.value||"balanced"),calorieTarget:String(c.querySelector("#todayCalories")?.value||""),calorieTolerance:Number(c.querySelector("#todayCalTolerance")?.value||25),maxMissing:String(c.querySelector("#todayMaxMissing")?.value||""),mealTypes,languages,ingredients,onlyHome:Boolean(c.querySelector("#todayOnlyHome")?.checked),preferExpiring:Boolean(c.querySelector("#todayPreferExpiring")?.checked),avoidRecentDays:Number(c.querySelector("#todayRecent")?.value||0),variety:true,mealCount:mealTypes.length,query:""};
   }
 
@@ -138,8 +138,19 @@ class Cook4MeRecipeHubPanelV34 extends BasePanel{
     c.querySelector("#todaySuggest")?.addEventListener("click",()=>void this._suggestTodayV34(c));
     c.querySelector("#todayReset")?.addEventListener("click",()=>{this._todaySettings=this._todayDefaults();this._todayResults=[];this._todayMeta=null;this._saveTodaySettings();this._renderToday(c);});
     c.querySelectorAll("[data-today-bulk]").forEach(button=>button.addEventListener("click",()=>this._toggleTodayBulk(c,String(button.dataset.todayBulk||""))));
-    c.addEventListener("change",event=>{if(event.target.closest(".rx-today-planner"))this._rememberTodayFromUi(c);});
+    if(!c.dataset.todayV34ChangeBound){c.dataset.todayV34ChangeBound="1";c.addEventListener("change",event=>{if(event.target.closest(".rx-today-planner"))this._rememberTodayFromUi(c);});}
     this._upgradeChoiceStates?.(c);
+  }
+
+  _updateTodaySummary(planner){
+    if(!planner)return;const target=planner.querySelector(".rx-plan-summary");if(!target)return;
+    const parts=[];const diet=planner.querySelector("#todayDiet");if(diet)parts.push(`<span class="chip"><ha-icon icon="mdi:account-heart-outline"></ha-icon>${this._escape(diet.options[diet.selectedIndex]?.textContent||diet.value)}</span>`);
+    const goal=planner.querySelector("#todayNutritionGoal");if(goal)parts.push(`<span class="chip"><ha-icon icon="mdi:target"></ha-icon>${this._escape(goal.options[goal.selectedIndex]?.textContent||goal.value)}</span>`);
+    const categories=planner.querySelectorAll("[data-today-meal-type]:checked").length;parts.push(`<span class="chip"><ha-icon icon="mdi:silverware-fork-knife"></ha-icon>${categories}</span>`);
+    const calories=String(planner.querySelector("#todayCalories")?.value||"").trim();if(calories)parts.push(`<span class="chip"><ha-icon icon="mdi:fire"></ha-icon>${this._escape(calories)} kcal</span>`);
+    const languages=[...planner.querySelectorAll("[data-today-language]:checked")].map(x=>this._flagForLanguage(x.dataset.todayLanguage)).join("");if(languages)parts.push(`<span class="chip"><ha-icon icon="mdi:translate"></ha-icon>${languages}</span>`);
+    if(planner.querySelector("#todayOnlyHome")?.checked)parts.push(`<span class="chip"><ha-icon icon="mdi:home-check-outline"></ha-icon>${this._escape(this._t("onlyHome"))}</span>`);
+    const next=`<span class="rx-plan-title"><ha-icon icon="mdi:tune-variant"></ha-icon>${this._escape(this._t("quickPlan"))}</span>${parts.join("")}`;if(target.innerHTML!==next){target.innerHTML=next;target.querySelectorAll("ha-icon").forEach(icon=>icon.style.setProperty("--mdc-icon-size","15px"));}
   }
 
   _todayRecipeIdentity(recipe){
@@ -157,13 +168,13 @@ class Cook4MeRecipeHubPanelV34 extends BasePanel{
     });
   }
 
-  _todayRotationKey(){const user=String(this._hass?.user?.id||"anonymous"),entry=String(this._entryId||"default");return `cook4me.today.rotation.v2.${user}.${entry}`;}
+  _todayRotationKey(category){const user=String(this._hass?.user?.id||"anonymous"),entry=String(this._entryId||"default");return `cook4me.today.rotation.v2.${user}.${entry}.${category}`;}
   _pickTodayForCategory(category,pool,settings){
     if(!pool.length)return null;
-    const date=new Date().toLocaleDateString("sv-SE"),fingerprint=JSON.stringify({category,diet:settings.diet,languages:[...settings.languages].sort(),ingredients:[...settings.ingredients].sort(),nutritionGoal:settings.nutritionGoal,onlyHome:settings.onlyHome,calorieTarget:settings.calorieTarget,maxMissing:settings.maxMissing});
-    let state={date,fingerprint,seen:[]};try{const saved=JSON.parse(localStorage.getItem(this._todayRotationKey())||"null");if(saved?.date===date&&saved?.fingerprint===fingerprint&&Array.isArray(saved.seen))state=saved;}catch(_e){}
+    const date=new Date().toLocaleDateString("sv-SE"),fingerprint=JSON.stringify({diet:settings.diet,languages:[...settings.languages].sort(),ingredients:[...settings.ingredients].sort(),nutritionGoal:settings.nutritionGoal,onlyHome:settings.onlyHome,calorieTarget:settings.calorieTarget,maxMissing:settings.maxMissing});
+    let state={date,fingerprint,seen:[]};try{const saved=JSON.parse(localStorage.getItem(this._todayRotationKey(category))||"null");if(saved?.date===date&&saved?.fingerprint===fingerprint&&Array.isArray(saved.seen))state=saved;}catch(_e){}
     let candidates=pool.filter(row=>!state.seen.includes(this._todayRecipeIdentity(row)));if(!candidates.length){state.seen=[];candidates=[...pool];}
-    const chosen=candidates[0];const id=this._todayRecipeIdentity(chosen);if(id)state.seen.push(id);try{localStorage.setItem(this._todayRotationKey(),JSON.stringify(state));}catch(_e){}return chosen;
+    const chosen=candidates[0];const id=this._todayRecipeIdentity(chosen);if(id)state.seen.push(id);try{localStorage.setItem(this._todayRotationKey(category),JSON.stringify(state));}catch(_e){}return chosen;
   }
 
   async _suggestTodayV34(c){
