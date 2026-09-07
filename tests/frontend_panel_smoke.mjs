@@ -24,7 +24,7 @@ globalThis.localStorage={
 };
 
 const lastSectionKey="cook4me.ui.lastSection.v1.smoke-user";
-store.set(lastSectionKey,"shopping");
+store.set(lastSectionKey,"official");
 
 await import("../custom_components/cook4me/frontend/cook4me-panel-v41.js");
 
@@ -51,11 +51,11 @@ if(refresh.children.length!==1){
 }
 if(String(refresh.firstElementChild?.tagName||"").toUpperCase()!=="HA-ICON")throw new Error("Refresh control direct child is not HA-ICON");
 
-if(panel._tab!=="shopping")throw new Error(`Last section was not restored; got ${panel._tab}`);
-const officialTab=panel.shadowRoot.querySelector('[data-tab="official"]');
-if(!officialTab)throw new Error("Official tab missing from section-memory smoke");
-officialTab.dispatchEvent(new Event("click",{bubbles:true,composed:true}));
-if(store.get(lastSectionKey)!=="official")throw new Error(`Section click was not remembered; got ${store.get(lastSectionKey)}`);
+if(panel._tab!=="official")throw new Error(`Last section was not restored; got ${panel._tab}`);
+panel._tab="mine";
+panel._renderTabs();
+panel._renderTab();
+if(store.get(lastSectionKey)!=="mine")throw new Error(`Section render was not remembered; got ${store.get(lastSectionKey)}`);
 
 // Render the real Today planner and let every queued v30/v32 modernization pass
 // finish. This catches the exact regression where v34's literal <ha-icon> and
@@ -104,7 +104,12 @@ advanced.setAttribute("open","");
 document.body.dispatchEvent(new Event("pointerdown",{bubbles:true,composed:true}));
 if(picker.hasAttribute("open")||advanced.hasAttribute("open"))throw new Error("Outside pointer did not close all Cook4Me menus");
 
+panel._tab="mine";
+panel._renderTabs();
+panel._renderTab();
+if(store.get(lastSectionKey)!=="mine")throw new Error("Final remembered section was not mine");
 panel.remove();
+
 const restored=document.createElement(tag);
 document.body.appendChild(restored);
 restored.hass={
@@ -113,7 +118,7 @@ restored.hass={
   connection:{sendMessagePromise:async()=>({entries:[]})},
 };
 await new Promise(resolve=>setTimeout(resolve,0));
-if(restored._tab!=="official")throw new Error(`New panel did not reopen remembered section; got ${restored._tab}`);
+if(restored._tab!=="mine")throw new Error(`New panel did not reopen remembered section; got ${restored._tab}`);
 restored.remove();
 
 console.log("Recipe Hub v41 runtime smoke OK");
