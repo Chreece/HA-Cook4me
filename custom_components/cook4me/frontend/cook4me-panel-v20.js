@@ -135,6 +135,7 @@ class Cook4MeRecipeHubPanelV20 extends BasePanel {
       if(!ingredient?.name){this._scannerStatus=this._t("invalidIngredient");this._renderScannerResult(c);return;}
       const quantity=String(c.querySelector("#scanPackageAmount")?.value||"").trim();
       const unit=String(c.querySelector("#scanPackageUnit")?.value||"").trim();
+      const bestBefore=String(c.querySelector("#scanBestBefore")?.value||"");
       if(!quantity)return;
       this._scannerBusy=true;
       this._scannerStatus=this._t("lookingUp");
@@ -146,7 +147,7 @@ class Cook4MeRecipeHubPanelV20 extends BasePanel {
           ingredient,
           quantity,
           unit,
-          best_before:String(c.querySelector("#scanBestBefore")?.value||""),
+          best_before:bestBefore,
           product_name:String(result.product?.productName||result.product?.name||""),
           brand:String(result.product?.brand||""),
         });
