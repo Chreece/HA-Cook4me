@@ -8,6 +8,7 @@ TODAY_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-
 INLINE_FIX_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v35.js"
 COMPACT_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v36.js"
 RESPONSIVE_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v37.js"
+RESTORE_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v38.js"
 WS12 = ROOT / "custom_components" / "cook4me" / "websocket_v12.py"
 WS19 = ROOT / "custom_components" / "cook4me" / "websocket_v19.py"
 PANEL = ROOT / "custom_components" / "cook4me" / "panel.py"
@@ -143,40 +144,6 @@ def test_v36_loaded_recipe_replacement_is_precook_only_and_verified():
     assert 'bridge._run_client_json("state", timeout=35)' in backend
 
 
-def test_v37_today_wraps_without_horizontal_scrolling():
-    text = _text(RESPONSIVE_JS)
-    assert 'grid-template-columns:repeat(auto-fit,minmax(145px,1fr))!important' in text
-    assert '.rx-today-row{' in text
-    assert 'overflow:visible!important' in text
-    assert '@media(max-width:900px)' in text
-    assert 'grid-template-columns:repeat(4,minmax(0,1fr))!important' in text
-    assert '@media(max-width:680px)' in text
-    assert 'grid-template-columns:repeat(2,minmax(0,1fr))!important' in text
-    assert '_positionTodayPopup(details)' in text
-    assert '.rx-today-planner .rx-plan-summary{display:none!important}' in text
-
-
-def test_v37_top_status_language_and_refresh_share_one_bar():
-    text = _text(RESPONSIVE_JS)
-    assert 'rx-unified-top' in text
-    assert 'toolbar.insertBefore(control,refresh||toolbar.firstChild)' in text
-    assert 'trigger.className="rx-icon-select"' in text
-    assert 'icon.setAttribute("icon","mdi:web")' in text
-    assert 'refresh.classList.add("rx-icon-button")' in text
-    assert 'icon.setAttribute("icon","mdi:refresh")' in text
-    assert 'refresh.replaceChildren(icon)' in text
-
-
-def test_v37_routes_today_to_expanded_candidate_backend():
-    frontend = _text(RESPONSIVE_JS)
-    backend = _text(WS19)
-    registration = _text(WS12)
-    assert 'type==="cook4me/v18/today_suggest"?"cook4me/v19/today_suggest":type' in frontend
-    assert 'vol.Required("type"): "cook4me/v19/today_suggest"' in backend
-    assert 'from . import websocket_v19 as v19' in registration
-    assert 'v19.async_register(hass)' in registration
-
-
 def test_v19_broadens_restricted_diet_catalog_before_rotation():
     text = _text(WS19)
     assert '_RESTRICTED_DIETS = {"vegetarian", "vegan", "pescatarian"}' in text
@@ -189,10 +156,41 @@ def test_v19_broadens_restricted_diet_catalog_before_rotation():
     assert 'select_diverse(' in text
 
 
-def test_v37_is_active_and_versioned():
+def test_v38_uses_stable_v36_runtime_path_but_keeps_v19_today_backend():
+    text = _text(RESTORE_JS)
+    assert 'import "./cook4me-panel-v36.js"' in text
+    assert 'customElements.get("cook4me-recipe-hub-panel-v36")' in text
+    assert 'type==="cook4me/v18/today_suggest"?"cook4me/v19/today_suggest":type' in text
+    assert 'cook4me-panel-v37.js' not in text
+
+
+def test_v38_today_wraps_inside_page_without_horizontal_strip():
+    text = _text(RESTORE_JS)
+    assert 'grid-template-columns:repeat(auto-fit,minmax(145px,1fr))!important' in text
+    assert '.rx-today-row{' in text
+    assert 'overflow:visible!important' in text
+    assert '@media(max-width:680px)' in text
+    assert 'grid-template-columns:repeat(2,minmax(0,1fr))!important' in text
+    assert '.rx-today-planner .rx-plan-summary{display:none!important}' in text
+    assert 'queueMicrotask(cleanup)' in text
+
+
+def test_v38_top_controls_are_unified_and_icon_only_without_replacing_language_select():
+    text = _text(RESTORE_JS)
+    assert 'rx-v38-top' in text
+    assert 'toolbar.insertBefore(control,refresh||toolbar.firstChild)' in text
+    assert 'control.classList.add("rx-v38-globe")' in text
+    assert 'icon.setAttribute("icon","mdi:web")' in text
+    assert 'refresh.classList.add("rx-v38-refresh")' in text
+    assert 'icon.setAttribute("icon","mdi:refresh")' in text
+    assert 'refresh.replaceChildren(icon)' in text
+    assert 'control.replaceChildren' not in text
+
+
+def test_v38_is_active_and_versioned():
     panel = _text(PANEL)
     manifest = _text(MANIFEST)
-    assert 'cook4me-recipe-hub-panel-v37' in panel
-    assert 'cook4me-panel-v37.js' in panel
-    assert '?v=2026.9.7.16' in panel
-    assert '"version": "2026.9.7.16"' in manifest
+    assert 'cook4me-recipe-hub-panel-v38' in panel
+    assert 'cook4me-panel-v38.js' in panel
+    assert '?v=2026.9.7.17' in panel
+    assert '"version": "2026.9.7.17"' in manifest
