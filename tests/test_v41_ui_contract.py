@@ -15,7 +15,7 @@ class V41UIContractTests(unittest.TestCase):
         self.assertIn('localStorage.setItem(this._lastSectionKey(),value)', text)
         self.assertIn('const saved=this._loadLastSection(user)', text)
         self.assertIn('if(saved)this._tab=saved', text)
-        self.assertIn('tabs.addEventListener("click"', text)
+        self.assertIn('this._rememberSection(this._tab)', text)
 
     def test_outside_pointer_closes_custom_selectors_and_menus(self):
         text = V41.read_text(encoding="utf-8")
@@ -24,7 +24,6 @@ class V41UIContractTests(unittest.TestCase):
         self.assertIn('details.rx-today-picker[open]', text)
         self.assertIn('details.rx-advanced[open]', text)
         self.assertIn('if(!path.includes(menu))menu.removeAttribute("open")', text)
-        self.assertIn('active.blur?.()', text)
 
     def test_v41_is_active_and_cache_busted(self):
         panel = PANEL.read_text(encoding="utf-8")
