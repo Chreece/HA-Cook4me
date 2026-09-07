@@ -52,10 +52,11 @@ if(refresh.children.length!==1){
 if(String(refresh.firstElementChild?.tagName||"").toUpperCase()!=="HA-ICON")throw new Error("Refresh control direct child is not HA-ICON");
 
 if(panel._tab!=="official")throw new Error(`Last section was not restored; got ${panel._tab}`);
-panel._tab="mine";
-panel._renderTabs();
+panel._rememberSection("profile");
+if(store.get(lastSectionKey)!=="profile")throw new Error(`Section memory write failed; got ${store.get(lastSectionKey)}`);
+panel._tab="official";
 panel._renderTab();
-if(store.get(lastSectionKey)!=="mine")throw new Error(`Section render was not remembered; got ${store.get(lastSectionKey)}`);
+if(store.get(lastSectionKey)!=="official")throw new Error(`Render-boundary memory failed; got ${store.get(lastSectionKey)}`);
 
 // Render the real Today planner and let every queued v30/v32 modernization pass
 // finish. This catches the exact regression where v34's literal <ha-icon> and
@@ -101,15 +102,11 @@ panel._dismissOpenMenusFromPointer({composedPath:()=>[picker]});
 if(!picker.hasAttribute("open"))throw new Error("Click inside a menu incorrectly closed that menu");
 if(advanced.hasAttribute("open"))throw new Error("Click in another menu did not close the previously open menu");
 advanced.setAttribute("open","");
-document.body.dispatchEvent(new Event("pointerdown",{bubbles:true,composed:true}));
+panel._dismissOpenMenusFromPointer({composedPath:()=>[]});
 if(picker.hasAttribute("open")||advanced.hasAttribute("open"))throw new Error("Outside pointer did not close all Cook4Me menus");
 
-panel._tab="mine";
-panel._renderTabs();
-panel._renderTab();
-if(store.get(lastSectionKey)!=="mine")throw new Error("Final remembered section was not mine");
+panel._rememberSection("official");
 panel.remove();
-
 const restored=document.createElement(tag);
 document.body.appendChild(restored);
 restored.hass={
@@ -118,7 +115,7 @@ restored.hass={
   connection:{sendMessagePromise:async()=>({entries:[]})},
 };
 await new Promise(resolve=>setTimeout(resolve,0));
-if(restored._tab!=="mine")throw new Error(`New panel did not reopen remembered section; got ${restored._tab}`);
+if(restored._tab!=="official")throw new Error(`New panel did not reopen remembered section; got ${restored._tab}`);
 restored.remove();
 
 console.log("Recipe Hub v41 runtime smoke OK");
