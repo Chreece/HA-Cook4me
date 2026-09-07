@@ -80,5 +80,10 @@ jobs:
           node --check custom_components/cook4me/frontend/cook4me-panel-v35.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v36.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v37.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v38.js
+      - name: Instantiate Recipe Hub in a DOM runtime
+        run: |
+          npm install --no-save --package-lock=false linkedom@0.18.12
+          node --experimental-default-type=module tests/frontend_panel_smoke.mjs
       - name: Run focused tests
         run: python -m unittest discover -s tests -v
