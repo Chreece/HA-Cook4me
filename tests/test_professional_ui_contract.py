@@ -7,7 +7,9 @@ HOTFIX_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel
 TODAY_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v34.js"
 INLINE_FIX_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v35.js"
 COMPACT_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v36.js"
+RESPONSIVE_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v37.js"
 WS12 = ROOT / "custom_components" / "cook4me" / "websocket_v12.py"
+WS19 = ROOT / "custom_components" / "cook4me" / "websocket_v19.py"
 PANEL = ROOT / "custom_components" / "cook4me" / "panel.py"
 MANIFEST = ROOT / "custom_components" / "cook4me" / "manifest.json"
 
@@ -119,22 +121,9 @@ def test_v36_steps_button_uses_split_inline_panel():
     assert 'grid-column:span 2!important' in text
 
 
-def test_v36_today_and_upper_navigation_are_single_row_compact_controls():
-    text = _text(COMPACT_JS)
-    assert 'rx-today-compact' in text
-    assert 'rx-today-row' in text
-    assert 'flex-wrap:nowrap' in text
-    assert 'rx-today-picker' in text
-    assert '_compactTodayPlanner(c)' in text
-    assert '_moveUiLanguageControl()' in text
-    assert '.tabs{' in text
-    assert 'overflow-x:auto!important' in text
-
-
 def test_v36_shopping_list_has_select_and_deselect_all():
     frontend = _text(COMPACT_JS)
     backend = _text(WS12)
-    assert 'id="shoppingToggleAll"' not in frontend  # generated through DOM id assignment
     assert 'button.id="shoppingToggleAll"' in frontend
     assert 'allCompleted?"incomplete_all":"complete_all"' in frontend
     assert '"complete_all"' in backend
@@ -154,10 +143,56 @@ def test_v36_loaded_recipe_replacement_is_precook_only_and_verified():
     assert 'bridge._run_client_json("state", timeout=35)' in backend
 
 
-def test_v36_is_active_and_versioned():
+def test_v37_today_wraps_without_horizontal_scrolling():
+    text = _text(RESPONSIVE_JS)
+    assert 'grid-template-columns:repeat(auto-fit,minmax(145px,1fr))!important' in text
+    assert '.rx-today-row{' in text
+    assert 'overflow:visible!important' in text
+    assert '@media(max-width:900px)' in text
+    assert 'grid-template-columns:repeat(4,minmax(0,1fr))!important' in text
+    assert '@media(max-width:680px)' in text
+    assert 'grid-template-columns:repeat(2,minmax(0,1fr))!important' in text
+    assert '_positionTodayPopup(details)' in text
+    assert '.rx-today-planner .rx-plan-summary{display:none!important}' in text
+
+
+def test_v37_top_status_language_and_refresh_share_one_bar():
+    text = _text(RESPONSIVE_JS)
+    assert 'rx-unified-top' in text
+    assert 'toolbar.insertBefore(control,refresh||toolbar.firstChild)' in text
+    assert 'trigger.className="rx-icon-select"' in text
+    assert 'icon.setAttribute("icon","mdi:web")' in text
+    assert 'refresh.classList.add("rx-icon-button")' in text
+    assert 'icon.setAttribute("icon","mdi:refresh")' in text
+    assert 'refresh.replaceChildren(icon)' in text
+
+
+def test_v37_routes_today_to_expanded_candidate_backend():
+    frontend = _text(RESPONSIVE_JS)
+    backend = _text(WS19)
+    registration = _text(WS12)
+    assert 'type==="cook4me/v18/today_suggest"?"cook4me/v19/today_suggest":type' in frontend
+    assert 'vol.Required("type"): "cook4me/v19/today_suggest"' in backend
+    assert 'from . import websocket_v19 as v19' in registration
+    assert 'v19.async_register(hass)' in registration
+
+
+def test_v19_broadens_restricted_diet_catalog_before_rotation():
+    text = _text(WS19)
+    assert '_RESTRICTED_DIETS = {"vegetarian", "vegan", "pescatarian"}' in text
+    assert 'return 8 if restricted else 4' in text
+    assert 'return 5 if restricted else 3' in text
+    assert 'for page in range(max(1, int(page_count)))' in text
+    assert 'page=page' in text
+    assert 'v13._dedupe_recipes(candidates)' in text
+    assert 'catalogPagesRequested' in text
+    assert 'select_diverse(' in text
+
+
+def test_v37_is_active_and_versioned():
     panel = _text(PANEL)
     manifest = _text(MANIFEST)
-    assert 'cook4me-recipe-hub-panel-v36' in panel
-    assert 'cook4me-panel-v36.js' in panel
-    assert '?v=2026.9.7.15' in panel
-    assert '"version": "2026.9.7.15"' in manifest
+    assert 'cook4me-recipe-hub-panel-v37' in panel
+    assert 'cook4me-panel-v37.js' in panel
+    assert '?v=2026.9.7.16' in panel
+    assert '"version": "2026.9.7.16"' in manifest

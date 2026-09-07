@@ -10,6 +10,7 @@ from homeassistant.exceptions import HomeAssistantError
 
 from . import websocket as legacy
 from . import websocket_v11 as v11
+from . import websocket_v19 as v19
 
 
 _REPLACEABLE_RECIPE_PHASES = {"idle", "stopped", "preparation", "add_ingredient", "done"}
@@ -228,6 +229,7 @@ async def _send_recipe_replaceable(bridge, variant_id: str) -> dict[str, Any]:
 def async_register(hass: HomeAssistant) -> None:
     for command in (ws_shopping_list, ws_shopping_action, ws_send_recipe_replaceable):
         websocket_api.async_register_command(hass, command)
+    v19.async_register(hass)
 
 
 @websocket_api.websocket_command(
