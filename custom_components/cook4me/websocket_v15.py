@@ -62,6 +62,34 @@ async def _add_mapping_stock(
     return v14._state(bridge)
 
 
+async def _upgrade_known_nutrition(
+    hass: HomeAssistant,
+    store: Cook4MeBarcodeMappingStore,
+    code: str,
+    known: dict[str, Any],
+) -> dict[str, Any]:
+    """Backfill nutrition once for mappings created before nutrition support."""
+    if known.get("nutrition"):
+        return known
+    try:
+        product = await hass.async_add_executor_job(lookup_open_food_facts, code)
+    except Exception:
+        return known
+    if not product.get("nutrition"):
+        return known
+    return await store.async_set(
+        code,
+        {
+            "ingredient": dict(known.get("ingredient") or {}),
+            "quantity": known.get("quantity"),
+            "unit": str(known.get("unit") or ""),
+            "productName": known.get("productName") or product.get("productName") or product.get("name"),
+            "brand": known.get("brand") or product.get("brand"),
+            "nutrition": product.get("nutrition"),
+        },
+    )
+
+
 @callback
 def async_register(hass: HomeAssistant) -> None:
     for command in (ws_barcode_scan, ws_barcode_map_add):
@@ -88,6 +116,7 @@ async def ws_barcode_scan(
         store = await _store(bridge)
         known = store.get(code)
         if known is not None and known.get("quantity") is not None:
+            known = await _upgrade_known_nutrition(hass, store, code, known)
             state = await _add_mapping_stock(bridge, known)
             connection.send_result(
                 msg["id"],
@@ -96,6 +125,7 @@ async def ws_barcode_scan(
                     "barcode": code,
                     "knownMapping": True,
                     "mapping": known,
+                    "nutritionCaptured": bool(known.get("nutrition")),
                     **state,
                 },
             )
@@ -141,6 +171,7 @@ async def ws_barcode_scan(
                     "mapping": mapping,
                     "product": product,
                     "suggestions": suggestions,
+                    "nutritionCaptured": bool(mapping.get("nutrition")),
                     **state,
                 },
             )
