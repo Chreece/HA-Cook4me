@@ -5,6 +5,7 @@ ROOT = Path(__file__).resolve().parents[1]
 JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v32.js"
 HOTFIX_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v33.js"
 TODAY_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v34.js"
+INLINE_FIX_JS = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v35.js"
 PANEL = ROOT / "custom_components" / "cook4me" / "panel.py"
 MANIFEST = ROOT / "custom_components" / "cook4me" / "manifest.json"
 
@@ -89,10 +90,28 @@ def test_v34_recipe_cards_expand_steps_inline_and_toggle_closed():
     assert 'data-inline-ingredient' in text
 
 
-def test_v34_is_active_and_versioned():
+def test_v35_expands_card_as_left_recipe_plus_right_steps_column():
+    text = _text(INLINE_FIX_JS)
+    assert 'grid-column:span 2!important' in text
+    assert 'grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important' in text
+    assert 'rx-inline-left' in text
+    assert 'grid-column:2!important' in text
+    assert '_wrapInlineLeft(card)' in text
+    assert 'card.querySelector(":scope > .rx-inline-expansion")?.remove()' in text
+
+
+def test_v35_uses_original_seb_cover_instead_of_thumbnail():
+    text = _text(INLINE_FIX_JS)
+    assert '"/statics/thumb/","/statics/original/"' in text
+    assert '_highResCover(value)' in text
+    assert '_mediaHtml(recipe)' in text
+    assert '_detailHtml(recipe)' in text
+
+
+def test_v35_is_active_and_versioned():
     panel = _text(PANEL)
     manifest = _text(MANIFEST)
-    assert 'cook4me-recipe-hub-panel-v34' in panel
-    assert 'cook4me-panel-v34.js' in panel
-    assert '?v=2026.9.7.13' in panel
-    assert '"version": "2026.9.7.13"' in manifest
+    assert 'cook4me-recipe-hub-panel-v35' in panel
+    assert 'cook4me-panel-v35.js' in panel
+    assert '?v=2026.9.7.14' in panel
+    assert '"version": "2026.9.7.14"' in manifest
