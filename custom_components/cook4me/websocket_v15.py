@@ -27,14 +27,20 @@ async def _store(bridge) -> Cook4MeBarcodeMappingStore:
     return store
 
 
-async def _add_mapping_stock(bridge, mapping: dict[str, Any]) -> dict[str, Any]:
+async def _add_mapping_stock(
+    bridge, mapping: dict[str, Any], *, best_before: str = ""
+) -> dict[str, Any]:
     ingredient = mapping.get("ingredient") if isinstance(mapping.get("ingredient"), dict) else {}
     quantity = mapping.get("quantity")
     unit = str(mapping.get("unit") or "")
     if quantity is None:
         raise ValueError("This barcode mapping has no package amount; remap it with an amount")
     await bridge.recipe_hub.async_inventory_add(
-        dict(ingredient), quantity=quantity, unit=unit, unlimited=False
+        dict(ingredient),
+        quantity=quantity,
+        unit=unit,
+        unlimited=False,
+        best_before=best_before,
     )
     return v14._state(bridge)
 
@@ -146,6 +152,7 @@ async def ws_barcode_scan(
         vol.Required("ingredient"): dict,
         vol.Required("quantity"): vol.Any(int, float, str),
         vol.Optional("unit", default=""): str,
+        vol.Optional("best_before", default=""): str,
         vol.Optional("product_name", default=""): str,
         vol.Optional("brand", default=""): str,
     }
@@ -170,7 +177,9 @@ async def ws_barcode_map_add(
                 "brand": str(msg.get("brand") or ""),
             },
         )
-        state = await _add_mapping_stock(bridge, mapping)
+        state = await _add_mapping_stock(
+            bridge, mapping, best_before=str(msg.get("best_before") or "")
+        )
         connection.send_result(
             msg["id"],
             {
