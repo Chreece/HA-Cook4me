@@ -4,6 +4,7 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent; sys.path.insert(0,str(HERE))
 import cook4me_phonefree as c4m
 import cook4me_recipe_search_proven as proven_search
+import cook4me_recipe_detail_enriched as enriched_detail
 TOKENS=Path.home()/'.config/cook4me/tokens.json'; AWS=Path.home()/'.config/cook4me/aws.json'
 def token_valid(skew=300):
     try:
@@ -47,7 +48,7 @@ def main():
     if a.device_uuid: c4m.set_device_uuid(a.device_uuid)
     if a.auth_only:print('READY                : KRUPS authentication available');return
     if a.command=='discover': dump({'appliances':c4m.discover_appliances(cfg,creds,c4m.load_json(TOKENS),a.country,a.language,a.app_version)}); return
-    if a.command=='recipe-metadata': dump(c4m.recipe_metadata(cfg,c4m.load_json(TOKENS),a.recipe_id,a.variant_id,a.country,a.language,a.app_version)); return
+    if a.command=='recipe-metadata': dump(enriched_detail.recipe_detail(cfg,c4m.load_json(TOKENS),a.variant_id,country=a.country,language=a.language,configured_language=a.language,app_version=a.app_version)); return
     if a.command=='search-recipes': dump(proven_search.search_recipes(cfg,c4m.load_json(TOKENS),a.query,a.page,a.size,not a.no_details,a.max_details,a.country,a.language,a.app_version)); return
     if a.command=='test':
         print('AWS IoT MQTT         : connecting'); rc=c4m.mqtt_test(cfg,creds)

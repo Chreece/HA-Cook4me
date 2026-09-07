@@ -14,8 +14,11 @@ def load_module():
     package.__path__ = []
     catalog = types.ModuleType("cook4me_vendor_proven_test.cook4me_recipe_catalog")
     catalog.c4m = types.SimpleNamespace(curl_requests=object())
+    enriched = types.ModuleType("cook4me_vendor_proven_test.cook4me_recipe_detail_enriched")
+    enriched.recipe_detail = lambda *args, **kwargs: {}
     sys.modules["cook4me_vendor_proven_test"] = package
     sys.modules["cook4me_vendor_proven_test.cook4me_recipe_catalog"] = catalog
+    sys.modules["cook4me_vendor_proven_test.cook4me_recipe_detail_enriched"] = enriched
     spec = importlib.util.spec_from_file_location(
         "cook4me_vendor_proven_test.cook4me_recipe_search_proven",
         ROOT / "custom_components/cook4me/vendor/cook4me_recipe_search_proven.py",
@@ -54,6 +57,15 @@ class VendorProvenSearchPathTests(unittest.TestCase):
         self.assertIn("proven_search.search_recipes", source)
         search_branch = source.split("if a.command=='search-recipes':", 1)[1].split("; return", 1)[0]
         self.assertNotIn("c4m.search_recipes", search_branch)
+
+    def test_vendor_cli_routes_recipe_metadata_to_enriched_detail(self):
+        source = (
+            ROOT / "custom_components/cook4me/vendor/cook4me_auto.py"
+        ).read_text(encoding="utf-8")
+        self.assertIn("import cook4me_recipe_detail_enriched as enriched_detail", source)
+        metadata_branch = source.split("if a.command=='recipe-metadata':", 1)[1].split("; return", 1)[0]
+        self.assertIn("enriched_detail.recipe_detail", metadata_branch)
+        self.assertNotIn("c4m.recipe_metadata", metadata_branch)
 
 
 if __name__ == "__main__":
