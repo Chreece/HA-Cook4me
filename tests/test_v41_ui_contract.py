@@ -6,6 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 V41 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v41.js"
 V42 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v42.js"
 V43 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v43.js"
+V44 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v44.js"
 PANEL = ROOT / "custom_components" / "cook4me" / "panel.py"
 MANIFEST = ROOT / "custom_components" / "cook4me" / "manifest.json"
 
@@ -27,13 +28,14 @@ class V41UIContractTests(unittest.TestCase):
         self.assertIn('details.rx-advanced[open]', text)
         self.assertIn('if(!path.includes(menu))menu.removeAttribute("open")', text)
 
-    def test_v43_is_active_and_cache_busted(self):
+    def test_v44_is_active_and_cache_busted(self):
         panel = PANEL.read_text(encoding="utf-8")
         manifest = MANIFEST.read_text(encoding="utf-8")
-        self.assertIn('cook4me-recipe-hub-panel-v43', panel)
-        self.assertIn('cook4me-panel-v43.js', panel)
-        self.assertIn('?v=2026.9.7.22', panel)
-        self.assertIn('"version": "2026.9.7.22"', manifest)
+        self.assertIn('cook4me-recipe-hub-panel-v44', panel)
+        self.assertIn('cook4me-panel-v44.js', panel)
+        self.assertIn('?v=2026.9.8.1', panel)
+        self.assertIn('"version": "2026.9.8.1"', manifest)
+        self.assertIn('async_register_websocket_v20', panel)
 
     def test_v42_autofills_catalog_and_keeps_official_values_separate(self):
         text = V42.read_text(encoding="utf-8")
@@ -52,6 +54,21 @@ class V41UIContractTests(unittest.TestCase):
         self.assertIn('actionableRemaining', text)
         self.assertIn('Number(settings?.remaining)===0', text)
         self.assertIn('this._nutritionAutoFillEntry=""', text)
+
+    def test_v44_exposes_full_meal_lifecycle(self):
+        text = V44.read_text(encoding="utf-8")
+        for token in (
+            'cook4me/v20/week_generate',
+            'cook4me/v20/week_add_shopping',
+            'cook4me/v20/lot_cost_set',
+            'cook4me/v20/global_price_lookup',
+            'cook4me/v20/shopping_reconcile_preview',
+            'cook4me/v20/feedback_set',
+            'cook4me/v20/substitution_suggest',
+            'cook4me/v20/leftover_consume',
+        ):
+            self.assertIn(token, text)
+        self.assertIn('currencyConversionApplied', (ROOT / "custom_components/cook4me/costing.py").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":
