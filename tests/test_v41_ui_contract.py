@@ -7,6 +7,7 @@ V41 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v41.j
 V42 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v42.js"
 V43 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v43.js"
 V44 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v44.js"
+V45 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v45.js"
 PANEL = ROOT / "custom_components" / "cook4me" / "panel.py"
 MANIFEST = ROOT / "custom_components" / "cook4me" / "manifest.json"
 
@@ -28,14 +29,15 @@ class V41UIContractTests(unittest.TestCase):
         self.assertIn('details.rx-advanced[open]', text)
         self.assertIn('if(!path.includes(menu))menu.removeAttribute("open")', text)
 
-    def test_v44_is_active_and_cache_busted(self):
+    def test_v45_is_active_and_cache_busted(self):
         panel = PANEL.read_text(encoding="utf-8")
         manifest = MANIFEST.read_text(encoding="utf-8")
-        self.assertIn('cook4me-recipe-hub-panel-v44', panel)
-        self.assertIn('cook4me-panel-v44.js', panel)
-        self.assertIn('?v=2026.9.8.1', panel)
-        self.assertIn('"version": "2026.9.8.1"', manifest)
+        self.assertIn('cook4me-recipe-hub-panel-v45', panel)
+        self.assertIn('cook4me-panel-v45.js', panel)
+        self.assertIn('?v=2026.9.8.2', panel)
+        self.assertIn('"version": "2026.9.8.2"', manifest)
         self.assertIn('async_register_websocket_v20', panel)
+        self.assertIn('async_register_websocket_v21', panel)
 
     def test_v42_autofills_catalog_and_keeps_official_values_separate(self):
         text = V42.read_text(encoding="utf-8")
@@ -69,6 +71,19 @@ class V41UIContractTests(unittest.TestCase):
         ):
             self.assertIn(token, text)
         self.assertIn('currencyConversionApplied', (ROOT / "custom_components/cook4me/costing.py").read_text(encoding="utf-8"))
+
+    def test_v45_currency_control_and_fx_contract(self):
+        text = V45.read_text(encoding="utf-8")
+        backend = (ROOT / "custom_components/cook4me/websocket_v21.py").read_text(encoding="utf-8")
+        fx = (ROOT / "custom_components/cook4me/currency_fx.py").read_text(encoding="utf-8")
+        self.assertIn('cook4meCurrencyControl', text)
+        self.assertIn('cook4me/v21/currency_state', text)
+        self.assertIn('cook4me/v21/currency_set', text)
+        self.assertIn('source==="EUR"?1:Number(rates[source])', text)
+        self.assertIn('default_currency_for_language', backend)
+        self.assertIn('convert_currency_map', backend)
+        self.assertIn('eurofxref-daily.xml', fx)
+        self.assertIn('"bg": "EUR"', fx)
 
 
 if __name__ == "__main__":
