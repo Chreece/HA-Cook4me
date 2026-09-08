@@ -28,6 +28,29 @@ class Cook4MeRecipeHubPanelV52 extends BasePanel{
     }
   }
 
+  _bindV51TabIntent(){
+    const tabs=this.shadowRoot?.getElementById("tabs");
+    if(!tabs||tabs.dataset.cook4meV52Intent==="1")return;
+    // Mark both generations so v51 never adds its lighter activation-only
+    // listener on top of the authoritative v52 navigation contract.
+    tabs.dataset.cook4meV51Intent="1";
+    tabs.dataset.cook4meV52Intent="1";
+    tabs.addEventListener("click",event=>{
+      const target=event.target instanceof Element?event.target.closest("[data-tab]"):null;
+      if(!target||!tabs.contains(target))return;
+      const tab=String(target.dataset.tab||"");
+      if(!tab)return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      this._activateSection(tab);
+      this._tab=tab;
+      this._opened=null;
+      this._rememberSection?.(tab);
+      this._renderTabs();
+      this._renderTab();
+    },true);
+  }
+
   async _prepareSection(tab){
     // Keep one section-level status token alive across every serialized
     // dependency. Individual API calls add their own detail tokens, but the
