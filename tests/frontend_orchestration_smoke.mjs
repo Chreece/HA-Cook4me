@@ -88,7 +88,8 @@ const targetControl=panel.shadowRoot.getElementById("cook4meTargetDevicesControl
 if(!targetControl)throw new Error("v50 multi-device target control missing");
 const targetRows=[...targetControl.querySelectorAll("[data-target-entry]")];
 if(targetRows.length!==2)throw new Error(`Expected 2 target devices, got ${targetRows.length}`);
-targetRows.forEach(row=>{row.checked=true;row.dispatchEvent(new Event("change",{bubbles:true}));});
+// LinkeDOM does not fully synchronize CSS :checked from the checked property.
+targetRows.forEach(row=>{row.checked=true;row.setAttribute("checked","");row.dispatchEvent(new Event("change",{bubbles:true}));});
 if(panel._targetEntryIds().length!==2)throw new Error("Target-device multi-selection was not persisted");
 
 panel._tab="official";panel._renderTabs();panel._renderTab();
@@ -97,7 +98,7 @@ const officialPicker=content.querySelector("#officialCatalogLanguages");
 if(!officialPicker)throw new Error("Official catalog-language multi-select missing");
 const officialRows=[...officialPicker.querySelectorAll("[data-official-language]")];
 if(officialRows.length!==3)throw new Error(`Expected 3 official catalog languages, got ${officialRows.length}`);
-officialRows.forEach(row=>{row.checked=["de","en"].includes(String(row.dataset.officialLanguage));row.dispatchEvent(new Event("change",{bubbles:true}));});
+officialRows.forEach(row=>{const checked=["de","en"].includes(String(row.dataset.officialLanguage));row.checked=checked;if(checked)row.setAttribute("checked","");else row.removeAttribute("checked");row.dispatchEvent(new Event("change",{bubbles:true}));});
 await panel._search("soup");
 if(!officialPayload)throw new Error("Official search did not use the v22 multi-language API");
 if(JSON.stringify(officialPayload.languages)!==JSON.stringify(["de","en"]))throw new Error(`Official search languages mismatch: ${JSON.stringify(officialPayload.languages)}`);
@@ -113,10 +114,10 @@ content.querySelector("#aiDiet").value="vegetarian";
 content.querySelector("#aiNutritionGoal").value="high_protein";
 content.querySelector("#aiCalories").value="600";
 content.querySelector("#aiMaxMissing").value="2";
-aiLanguageRows.forEach(row=>{row.checked=["de","en"].includes(String(row.dataset.aiLanguage));});
-aiMealRows.forEach(row=>{row.checked=String(row.dataset.aiMealType)==="main";});
+aiLanguageRows.forEach(row=>{const checked=["de","en"].includes(String(row.dataset.aiLanguage));row.checked=checked;if(checked)row.setAttribute("checked","");else row.removeAttribute("checked");});
+aiMealRows.forEach(row=>{const checked=String(row.dataset.aiMealType)==="main";row.checked=checked;if(checked)row.setAttribute("checked","");else row.removeAttribute("checked");});
 const ingredientOptions=[...content.querySelector("#aiIngredients").options];
-ingredientOptions.forEach(option=>{option.selected=String(option.textContent).includes("Tomato");});
+ingredientOptions.forEach(option=>{const selected=String(option.textContent).includes("Tomato");option.selected=selected;if(selected)option.setAttribute("selected","");else option.removeAttribute("selected");});
 await panel._createAiRecipe(content);
 await delay(30);
 if(!aiPayload)throw new Error("AI Create did not use the hardened serialized API");
