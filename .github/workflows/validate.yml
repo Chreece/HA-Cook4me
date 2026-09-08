@@ -96,6 +96,9 @@ jobs:
           node --check custom_components/cook4me/frontend/cook4me-panel-v51.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v52.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v53.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v54.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v55.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v56.js
       - name: Instantiate Recipe Hub in a DOM runtime
         run: |
           npm install --no-save --package-lock=false linkedom@0.18.12
@@ -104,5 +107,6 @@ jobs:
           timeout 15s node --experimental-default-type=module tests/frontend_startup_stability_smoke.mjs
           timeout 15s node --experimental-default-type=module tests/frontend_orchestration_smoke.mjs
           timeout 15s node --experimental-default-type=module tests/frontend_lazy_startup_contract_smoke.mjs
+          timeout 20s node --experimental-default-type=module tests/frontend_cache_first_ui_smoke.mjs
       - name: Run focused tests
         run: python -m unittest discover -s tests -v
