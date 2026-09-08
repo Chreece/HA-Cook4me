@@ -3,16 +3,14 @@ import "./cook4me-panel-v54.js";
 const BasePanel=customElements.get("cook4me-recipe-hub-panel-v54");
 
 class Cook4MeRecipeHubPanelV55 extends BasePanel{
-  constructor(){
-    super();
-    this._v55EntryRefreshBound=false;
-  }
-
   get hass(){return this._hass;}
   set hass(value){
     const nextUser=String(value?.user?.id||value?.user?.name||"anonymous");
     if(this._v54CacheHydrated&&this._v54CacheUser&&nextUser!==this._v54CacheUser){
       this._resetUserScopedUiState();
+      // Never leave the previous user's cached DOM visible while the next
+      // user's snapshot/bootstrap is being selected.
+      this.shadowRoot?.replaceChildren();
     }
     super.hass=value;
   }
@@ -37,6 +35,17 @@ class Cook4MeRecipeHubPanelV55 extends BasePanel{
     this._v51ActivatedSections.clear();this._v51PreparedSections.clear();this._v51PreparingSections.clear();
     this._v51OverviewStarted=false;this._v51OverviewDone=true;
     this._v53BootstrapDone=false;this._v53FullOverviewDone=false;this._v53FullOverviewLoading=false;
+  }
+
+  _resetEntryScopedUiState(){
+    this._results=[];this._recommendations=[];this._opened=null;this._searchQuery="";
+    this._capabilities={languages:[],defaultAiTaskAvailable:false,defaultAiTaskEntityId:null,persistentCache:true};
+    this._preferencesLoaded=false;this._translationPreferenceInitialized=false;
+    this._bookState=null;this._todayOptions=null;this._todayResults=[];this._todayMeta=null;this._todaySettings=null;
+    this._ingredientCatalog=[];this._ingredientCatalogLanguage="";this._houseIngredients=[];this._houseEntryId="";this._houseFilter="";
+    this._shoppingItems=[];this._shoppingEntityId="";this._shoppingAvailable=null;
+    this._inventoryLoadedEntry="";this._pendingConsumption=null;this._nutritionSettings=null;
+    this._weekState=null;this._weekStateEntry="";this._currencyState=null;this._currencyStateEntry="";
   }
 
   _selectV52Tab(tab){
@@ -64,10 +73,27 @@ class Cook4MeRecipeHubPanelV55 extends BasePanel{
 
   _renderEntrySelect(){
     super._renderEntrySelect();
-    const select=this.shadowRoot?.getElementById("entrySelect");if(!select||select.dataset.cook4meV55Entry)return;
-    select.dataset.cook4meV55Entry="1";
+    const original=this.shadowRoot?.getElementById("entrySelect");if(!original)return;
+    if(original.dataset.cook4meV55Authoritative==="1")return;
+
+    // Remove every inherited entry-change listener. Several historical layers
+    // independently react to this selector and can otherwise wipe a restored
+    // cache or start duplicate loaders before v55 gets control.
+    const select=original.cloneNode(true);
+    select.dataset.cook4meV55Authoritative="1";
+    original.replaceWith(select);
     select.addEventListener("change",()=>{
+      const previous=String(this._entryId||"");
+      this._captureEntrySnapshot(previous);
+      const next=String(select.value||"");
+      if(!next||next===previous)return;
+      this._entryId=next;
+      this._resetEntryScopedUiState();
+      this._applyEntrySnapshot(next);
+      this._v53FullOverviewDone=false;
       this._v54InitialVisibleRequested=true;
+      this._renderTabs();this._renderTab();this._updateHeader();
+      this._scheduleSnapshotPersist();
       queueMicrotask(()=>void this._requestSection(String(this._tab||"official"),{missingOnly:true,force:false}));
     });
   }
