@@ -151,7 +151,8 @@ class V49OrchestrationContractTests(unittest.TestCase):
         self.assertIn('data-v54-element-loading', v56)
         self.assertIn('Decorate the already-painted tab immediately', v56)
         enrichment = v54.split('async _maybeAutoFillNutritionCatalog(){', 1)[1].split('_renderShopping(c){', 1)[0]
-        self.assertNotIn('nutrition_catalog_fill', enrichment)
+        self.assertNotIn('_api("cook4me/v16/nutrition_catalog_fill"', enrichment)
+        self.assertIn('return;', enrichment)
 
 
 if __name__ == "__main__":
