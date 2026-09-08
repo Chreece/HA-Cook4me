@@ -9,6 +9,7 @@ V43 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v43.j
 V44 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v44.js"
 V45 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v45.js"
 V46 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v46.js"
+V47 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v47.js"
 PANEL = ROOT / "custom_components" / "cook4me" / "panel.py"
 MANIFEST = ROOT / "custom_components" / "cook4me" / "manifest.json"
 
@@ -30,13 +31,13 @@ class V41UIContractTests(unittest.TestCase):
         self.assertIn('details.rx-advanced[open]', text)
         self.assertIn('if(!path.includes(menu))menu.removeAttribute("open")', text)
 
-    def test_v46_is_active_and_cache_busted(self):
+    def test_v47_is_active_and_cache_busted(self):
         panel = PANEL.read_text(encoding="utf-8")
         manifest = MANIFEST.read_text(encoding="utf-8")
-        self.assertIn('cook4me-recipe-hub-panel-v46', panel)
-        self.assertIn('cook4me-panel-v46.js', panel)
-        self.assertIn('?v=2026.9.8.2', panel)
-        self.assertIn('"version": "2026.9.8.2"', manifest)
+        self.assertIn('cook4me-recipe-hub-panel-v47', panel)
+        self.assertIn('cook4me-panel-v47.js', panel)
+        self.assertIn('?v=2026.9.8.3', panel)
+        self.assertIn('"version": "2026.9.8.3"', manifest)
         self.assertIn('async_register_websocket_v20', panel)
         self.assertIn('async_register_websocket_v21', panel)
 
@@ -94,6 +95,16 @@ class V41UIContractTests(unittest.TestCase):
         self.assertIn('details.setAttribute("open","")', text)
         self.assertIn('summary.setAttribute("aria-expanded"', text)
         self.assertIn('details.rx-today-picker,details.rx-advanced', text)
+
+    def test_v47_prevents_mutation_and_render_storms(self):
+        text = V47.read_text(encoding="utf-8")
+        self.assertIn('MAX_DOM_PASSES=80', text)
+        self.assertIn('MAX_RENDER_PASSES=60', text)
+        self.assertIn('this._modernObserver?.disconnect?.()', text)
+        self.assertIn('this.dataset.cook4meUiGuard="tripped"', text)
+        self.assertIn('if(option.textContent!==next)option.textContent=next', text)
+        self.assertIn('return super._modernizeSoon()', text)
+        self.assertIn('return super._renderTab()', text)
 
 
 if __name__ == "__main__":
