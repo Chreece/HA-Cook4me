@@ -8,11 +8,13 @@ V49 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v49.j
 V50 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v50.js"
 V51 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v51.js"
 V52 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v52.js"
+V53 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v53.js"
 V22 = ROOT / "custom_components" / "cook4me" / "websocket_v22.py"
 V23 = ROOT / "custom_components" / "cook4me" / "websocket_v23.py"
 V24 = ROOT / "custom_components" / "cook4me" / "websocket_v24.py"
 V25 = ROOT / "custom_components" / "cook4me" / "websocket_v25.py"
 V26 = ROOT / "custom_components" / "cook4me" / "websocket_v26.py"
+V27 = ROOT / "custom_components" / "cook4me" / "websocket_v27.py"
 CACHE = ROOT / "custom_components" / "cook4me" / "online_cache.py"
 RECIPE_CACHE = ROOT / "custom_components" / "cook4me" / "recipe_cache.py"
 V9 = ROOT / "custom_components" / "cook4me" / "websocket_v9.py"
@@ -20,17 +22,18 @@ COORD = ROOT / "custom_components" / "cook4me" / "request_coordinator.py"
 
 
 class V49OrchestrationContractTests(unittest.TestCase):
-    def test_v52_is_active_and_all_new_backends_are_registered(self):
+    def test_v53_is_active_and_all_new_backends_are_registered(self):
         panel = PANEL.read_text(encoding="utf-8")
         manifest = MANIFEST.read_text(encoding="utf-8")
-        self.assertIn('cook4me-recipe-hub-panel-v52', panel)
-        self.assertIn('cook4me-panel-v52.js', panel)
-        self.assertIn('?v=2026.9.8.6', panel)
-        self.assertIn('"version": "2026.9.8.6"', manifest)
-        for version in (22, 23, 24, 25, 26):
+        self.assertIn('cook4me-recipe-hub-panel-v53', panel)
+        self.assertIn('cook4me-panel-v53.js', panel)
+        self.assertIn('?v=2026.9.8.7', panel)
+        self.assertIn('"version": "2026.9.8.7"', manifest)
+        for version in (22, 23, 24, 25, 26, 27):
             self.assertIn(f'async_register_websocket_v{version}', panel)
         self.assertIn('import "./cook4me-panel-v50.js"', V51.read_text(encoding="utf-8"))
         self.assertIn('import "./cook4me-panel-v51.js"', V52.read_text(encoding="utf-8"))
+        self.assertIn('import "./cook4me-panel-v52.js"', V53.read_text(encoding="utf-8"))
 
     def test_online_cache_keeps_content_and_requires_daily_recheck(self):
         text = CACHE.read_text(encoding="utf-8")
@@ -129,6 +132,18 @@ class V49OrchestrationContractTests(unittest.TestCase):
         self.assertIn('const token=this._beginLoad(this._sectionTitle(tab))', ui)
         self.assertIn('return await super._prepareSection(tab)', ui)
         self.assertIn('this._endLoad(token)', ui)
+
+    def test_v53_bootstrap_is_minimal_and_full_overview_is_deferred(self):
+        ui = V53.read_text(encoding="utf-8")
+        backend = V27.read_text(encoding="utf-8")
+        self.assertIn('cook4me/v27/bootstrap', ui)
+        self.assertIn('if(this._resourceAllowed("fullOverview"))', ui)
+        self.assertIn('FULL_OVERVIEW_SECTIONS', ui)
+        self.assertIn('await this._loadFullOverview(true,false,false)', ui)
+        self.assertIn('"bootstrapContract": "minimal-device-header-v1"', backend)
+        self.assertIn('_BOOTSTRAP_STATE_KEYS', backend)
+        for forbidden in ('"profile"', '"recipes"', '"history"', '"habitTerms"', '"houseIngredients"', '"nutrition"'):
+            self.assertNotIn(forbidden, backend)
 
 
 if __name__ == "__main__":
