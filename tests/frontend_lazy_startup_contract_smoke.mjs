@@ -24,8 +24,8 @@ globalThis.localStorage={
 const userId="lazy-startup-user";
 storage.set(`cook4me.ui.lastSection.v1.${userId}`,"week");
 
-await import("../custom_components/cook4me/frontend/cook4me-panel-v51.js");
-const tag="cook4me-recipe-hub-panel-v51";
+await import("../custom_components/cook4me/frontend/cook4me-panel-v52.js");
+const tag="cook4me-recipe-hub-panel-v52";
 if(!customElements.get(tag))throw new Error(`${tag} was not registered`);
 
 const entry={
@@ -72,6 +72,7 @@ const beforeUpdates=calls.length;
 for(let index=0;index<80;index++)panel.hass={...hass,states:{[`sensor.tick_${index}`]:{state:String(index)}}};
 await delay(40);
 if(calls.length!==beforeUpdates)throw new Error(`Repeated hass updates triggered API traffic: ${JSON.stringify(calls.slice(beforeUpdates))}`);
+if(panel._cook4meUiGuardTripped)throw new Error(`Repeated hass updates still caused DOM churn: ${panel._cook4meUiGuardReason}`);
 
 const loadWeek=panel.shadowRoot.getElementById("cook4meLoadSection");
 loadWeek.dispatchEvent(new Event("click",{bubbles:true,cancelable:true}));
@@ -94,6 +95,7 @@ if(!calls.some(type=>type.includes("capabilities")))throw new Error("Today activ
 if(!calls.includes("cook4me/v18/today_options"))throw new Error("Today activation did not load Today choices");
 if(!calls.some(type=>type.includes("ingredient_catalog")))throw new Error("Today activation did not load ingredient catalog");
 if(!panel.shadowRoot.getElementById("content")?.querySelector(".rx-today-planner"))throw new Error("Today section did not render after its explicit loads finished");
+if(panel._cook4meUiGuardTripped)throw new Error(`Normal lazy section loads tripped DOM guard: ${panel._cook4meUiGuardReason}`);
 
 panel.remove();
-console.log("Recipe Hub v51 strict lazy startup contract smoke OK");
+console.log("Recipe Hub v52 strict lazy startup contract smoke OK");
