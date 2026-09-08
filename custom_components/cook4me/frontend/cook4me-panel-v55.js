@@ -12,7 +12,13 @@ class Cook4MeRecipeHubPanelV55 extends BasePanel{
       // user's snapshot/bootstrap is being selected.
       this.shadowRoot?.replaceChildren();
     }
+    const firstPaint=!this.shadowRoot?.innerHTML;
     super.hass=value;
+    if(firstPaint&&this._v54HadUiCache){
+      // Cached device/header/content are useful immediately. Bootstrap is only
+      // the small live correction that follows this paint.
+      this._renderEntrySelect();this._updateHeader();this._renderTab();
+    }
   }
 
   _resetUserScopedUiState(){
