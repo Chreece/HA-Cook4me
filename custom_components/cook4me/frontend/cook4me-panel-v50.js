@@ -10,11 +10,10 @@ class Cook4MeRecipeHubPanelV50 extends BasePanel{
       "cook4me/recipe_detail":"cook4me/v24/recipe_detail",
       "cook4me/v7/recipe_detail":"cook4me/v24/recipe_detail",
       "cook4me/v9/recipe_detail":"cook4me/v24/recipe_detail",
+      "cook4me/v22/ai_create":"cook4me/v25/ai_create",
+      "cook4me/v22/send_multi":"cook4me/v25/send_multi",
     }[type]||type;
     const payload={...(data||{})};
-    // Only v24 endpoints own the fixed >=24h revalidation policy and therefore
-    // intentionally ignore caller refresh requests. Preserve refresh for every
-    // unrelated Cook4Me operation.
     if(String(mapped).startsWith("cook4me/v24/"))delete payload.refresh;
     return super._api(mapped,payload);
   }
