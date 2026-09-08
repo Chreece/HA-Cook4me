@@ -27,8 +27,8 @@ globalThis.localStorage={
 const userId="startup-stability-user";
 storage.set(`cook4me.ui.lastSection.v1.${userId}`,"week");
 
-await import("../custom_components/cook4me/frontend/cook4me-panel-v47.js");
-const tag="cook4me-recipe-hub-panel-v47";
+await import("../custom_components/cook4me/frontend/cook4me-panel-v48.js");
+const tag="cook4me-recipe-hub-panel-v48";
 if(!customElements.get(tag))throw new Error(`${tag} was not registered`);
 
 const entry={
@@ -58,6 +58,10 @@ const sendMessagePromise=async message=>{
   const type=String(message?.type||"");count(type);
   if(type==="cook4me/overview")return {entries:[entry]};
   if(type==="cook4me/v20/week_state")return structuredClone(weekState);
+  if(type==="cook4me/v18/today_options")return {
+    languages:[{code:"de",country:"DE"},{code:"en",country:"GB"},{code:"fr",country:"FR"}],
+    defaultLanguage:"de",maxLanguages:8,mealTypes:["breakfast","main"],nutritionGoals:["balanced"],dietOptions:["profile","vegetarian"],
+  };
   if(type==="cook4me/v21/currency_state"||type==="cook4me/v21/currency_set"){
     return {currency:"EUR",mode:"auto",defaultCurrency:"GBP",currencies:["EUR","GBP","USD"],rates:{EUR:1,GBP:.86,USD:1.17},rateDate:"2026-09-07",source:"ecb_reference_rates",stale:false};
   }
@@ -102,14 +106,53 @@ const decoratedTextNode=option.firstChild;
 panel._decorateLanguages(panel.shadowRoot);
 if(option.firstChild!==decoratedTextNode)throw new Error("Language decoration is not idempotent; repeated pass replaced the same text node");
 
-// Prove the runtime circuit breaker exists: an artificial storm must be cut
-// off instead of being allowed to monopolize the browser indefinitely.
+// Core navigation must remain functional even after the safety guard disables
+// optional DOM decoration. This protects against a visually live but inert UI.
+panel._tripUiGuard("test-navigation-guard");
+if(!panel._cook4meUiGuardTripped)throw new Error("Test guard did not trip");
+panel._todayOptions=null;
+panel._todayOptionsLoading=true;
+panel._ingredientCatalog=[{key:"M_FOOD_SMOKE",name:"Tomato"}];
+panel._ingredientCatalogLoading=false;
+const todayTab=panel.shadowRoot.querySelector('[data-tab="today"]');
+if(!todayTab)throw new Error("Today tab missing after guard trip");
+todayTab.dispatchEvent(new Event("click",{bubbles:true,cancelable:true}));
+if(panel._tab!=="today")throw new Error(`Guard blocked Today navigation; tab=${panel._tab}`);
+let content=panel.shadowRoot.getElementById("content");
+if(!content?.querySelector(".rx-today-planner"))throw new Error("Guard blocked Today content render");
+const loadingLanguagePicker=content.querySelector('details[data-rx-picker="languages"]');
+if(!loadingLanguagePicker)throw new Error("Catalog languages picker disappeared while options were loading");
+if(!loadingLanguagePicker.querySelector("[data-cook4me-catalog-language-state]"))throw new Error("Catalog languages loading state missing");
+
+// Once today_options arrives, the same control must populate with the official
+// catalog language choices rather than disappearing or requiring a reload.
+panel._todayOptions={
+  languages:[{code:"de",country:"DE"},{code:"en",country:"GB"},{code:"fr",country:"FR"}],
+  defaultLanguage:"de",maxLanguages:8,
+};
+panel._todayOptionsLoading=false;
+panel._renderTab();
+content=panel.shadowRoot.getElementById("content");
+const populatedLanguagePicker=content.querySelector('details[data-rx-picker="languages"]');
+if(!populatedLanguagePicker)throw new Error("Catalog languages picker missing after options loaded");
+const catalogLanguages=[...populatedLanguagePicker.querySelectorAll("[data-today-language]")];
+if(catalogLanguages.length!==3)throw new Error(`Expected 3 catalog languages, got ${catalogLanguages.length}`);
+
+const officialTab=panel.shadowRoot.querySelector('[data-tab="official"]');
+if(!officialTab)throw new Error("Official tab missing after guard trip");
+officialTab.dispatchEvent(new Event("click",{bubbles:true,cancelable:true}));
+if(panel._tab!=="official")throw new Error(`Guard blocked Official navigation; tab=${panel._tab}`);
+if(panel.shadowRoot.getElementById("content")?.querySelector(".rx-today-planner"))throw new Error("Official tab click did not replace Today content");
+
+// Prove the optional DOM-decoration circuit breaker still exists: an artificial
+// storm must be cut off, but v48 no longer allows it to disable core rendering.
 const protectedPanel=document.createElement(tag);
 let allowed=true;
 for(let index=0;index<200&&allowed;index++)allowed=protectedPanel._guardPulse("dom");
-if(!protectedPanel._cook4meUiGuardTripped)throw new Error("UI loop circuit breaker did not trip under an artificial DOM storm");
-if(protectedPanel.dataset.cook4meUiGuard!=="tripped")throw new Error("UI loop circuit breaker did not expose diagnostic state");
+if(!protectedPanel._cook4meUiGuardTripped)throw new Error("UI decoration circuit breaker did not trip under an artificial DOM storm");
+if(protectedPanel.dataset.cook4meUiGuard!=="tripped")throw new Error("UI decoration circuit breaker did not expose diagnostic state");
+if(protectedPanel._guardPulse("render")!==true)throw new Error("Tripped decoration guard incorrectly blocked core rendering");
 
 panel.remove();
 protectedPanel.remove();
-console.log("Recipe Hub v47 startup stability smoke OK");
+console.log("Recipe Hub v48 startup/navigation stability smoke OK");
