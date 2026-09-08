@@ -7,8 +7,11 @@ from homeassistant.components import persistent_notification, websocket_api
 from homeassistant.core import HomeAssistant, callback
 
 from . import websocket as legacy
+from .costs import cost_store_for_bridge
+from .costing import calculate_consumption_cost
 from .expiry import update_expiry_notification
 from .meal_history import meal_history_store_for_bridge
+from .meal_lifecycle import meal_lifecycle_store_for_bridge
 from .nutrition import nutrition_store_for_bridge
 from .nutrition_inventory import (
     async_consume_nutrition_report,
@@ -156,13 +159,28 @@ async def ws_consumption_confirm(hass, connection, msg) -> None:
         )
         result["mealNutrition"] = consumed_nutrition
         if consumed_nutrition.get("totals"): result["nutrition"] = consumed_nutrition
+
+        cost_store = await cost_store_for_bridge(bridge)
+        meal_cost = calculate_consumption_cost(
+            result.get("report") or {}, cost_store
+        )
+        result["mealCost"] = meal_cost
+
         completed = result.get("completedRecipe") if isinstance(result.get("completedRecipe"), dict) else {}
         history = await meal_history_store_for_bridge(bridge)
-        result["mealHistoryRecord"] = await history.async_record(
+        meal_record = await history.async_record(
             recipe=completed, nutrition=consumed_nutrition,
             allocations=list(msg.get("allocations") or []),
             consumption=result.get("report") or {},
         )
+        result["mealHistoryRecord"] = meal_record
+
+        lifecycle = await meal_lifecycle_store_for_bridge(bridge)
+        await lifecycle.async_record_meal_cost(str(meal_record.get("id") or ""), meal_cost)
+        result["leftover"] = await lifecycle.async_add_leftover_from_meal(
+            meal_record, cost=meal_cost
+        )
+
         persistent_notification.async_dismiss(hass, _notification_id(bridge.entry.entry_id))
         update_expiry_notification(bridge)
         result.update(_state(bridge))
