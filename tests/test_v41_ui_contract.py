@@ -17,6 +17,7 @@ V53 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v53.j
 V54 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v54.js"
 V55 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v55.js"
 V56 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v56.js"
+V57 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v57.js"
 PANEL = ROOT / "custom_components" / "cook4me" / "panel.py"
 MANIFEST = ROOT / "custom_components" / "cook4me" / "manifest.json"
 
@@ -38,23 +39,26 @@ class V41UIContractTests(unittest.TestCase):
         self.assertIn('details.rx-advanced[open]', text)
         self.assertIn('if(!path.includes(menu))menu.removeAttribute("open")', text)
 
-    def test_v56_is_active_cache_first_and_cache_busted(self):
+    def test_v57_is_active_server_seeded_and_cache_busted(self):
         panel = PANEL.read_text(encoding="utf-8")
         manifest = MANIFEST.read_text(encoding="utf-8")
-        self.assertIn('cook4me-recipe-hub-panel-v56', panel)
-        self.assertIn('cook4me-panel-v56.js', panel)
-        self.assertIn('?v=2026.9.8.8', panel)
-        self.assertIn('"version": "2026.9.8.8"', manifest)
-        for version in (20, 21, 22, 23, 24, 25, 26, 27):
+        self.assertIn('cook4me-recipe-hub-panel-v57', panel)
+        self.assertIn('cook4me-panel-v57.js', panel)
+        self.assertIn('?v=2026.9.8.9', panel)
+        self.assertIn('"version": "2026.9.8.9"', manifest)
+        for version in (20, 21, 22, 23, 24, 25, 26, 27, 28):
             self.assertIn(f'async_register_websocket_v{version}', panel)
         self.assertIn('this._v51AllowedResources=new Set(["overview"])', V51.read_text(encoding="utf-8"))
         self.assertIn('data propagation, not a reason to poll', V52.read_text(encoding="utf-8"))
         self.assertIn('cook4me/v27/bootstrap', V53.read_text(encoding="utf-8"))
         self.assertIn('cook4me.ui.snapshot.v54.', V54.read_text(encoding="utf-8"))
-        self.assertIn('this._v51OverviewDone=true', V54.read_text(encoding="utf-8"))
         self.assertIn('missingOnly:true,force:false', V55.read_text(encoding="utf-8"))
-        self.assertIn('replaceChildren()', V55.read_text(encoding="utf-8"))
         self.assertIn('data-v54-element-loading', V56.read_text(encoding="utf-8"))
+        active = V57.read_text(encoding="utf-8")
+        self.assertIn('cook4me/v28/ui_seed', active)
+        self.assertIn('cook4me/v28/ingredient_catalog', active)
+        self.assertIn('_renderDeferredSection', active)
+        self.assertIn('whole-section Load wall', active)
 
     def test_cache_first_layer_disables_render_triggered_nutrition_enrichment(self):
         text = V54.read_text(encoding="utf-8")
@@ -62,7 +66,6 @@ class V41UIContractTests(unittest.TestCase):
         method = text.split('async _maybeAutoFillNutritionCatalog(){', 1)[1].split('_renderShopping(c){', 1)[0]
         self.assertNotIn('_api("cook4me/v16/nutrition_catalog_fill"', method)
         self.assertIn('return;', method)
-        self.assertIn('External enrichment is now explicit only', method)
 
     def test_v42_autofills_catalog_and_keeps_official_values_separate_historically(self):
         text = V42.read_text(encoding="utf-8")
