@@ -15,8 +15,8 @@ from .websocket_v23 import async_register as async_register_websocket_v23
 from .websocket_v24 import async_register as async_register_websocket_v24
 
 _URL_BASE = "/cook4me_static"
-_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v49"
-_PANEL_MODULE = "cook4me-panel-v49.js"
+_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v50"
+_PANEL_MODULE = "cook4me-panel-v50.js"
 _V20_REGISTERED = "websocket_v20_registered"
 _V21_REGISTERED = "websocket_v21_registered"
 _V22_REGISTERED = "websocket_v22_registered"
