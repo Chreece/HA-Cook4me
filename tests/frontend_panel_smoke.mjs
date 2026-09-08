@@ -26,16 +26,22 @@ globalThis.localStorage={
 const lastSectionKey="cook4me.ui.lastSection.v1.smoke-user";
 store.set(lastSectionKey,"official");
 
-await import("../custom_components/cook4me/frontend/cook4me-panel-v44.js");
+await import("../custom_components/cook4me/frontend/cook4me-panel-v45.js");
 
-const tag="cook4me-recipe-hub-panel-v44";
+const tag="cook4me-recipe-hub-panel-v45";
 if(!customElements.get(tag))throw new Error(`${tag} was not registered`);
 const panel=document.createElement(tag);
 document.body.appendChild(panel);
+const sendMessagePromise=async message=>{
+  if(message?.type==="cook4me/v21/currency_state"||message?.type==="cook4me/v21/currency_set"){
+    return {currency:"GBP",mode:"auto",defaultCurrency:"GBP",currencies:["EUR","GBP","USD"],rates:{EUR:1,GBP:0.8,USD:1.2},rateDate:"2026-09-07",source:"ecb_reference_rates",stale:false};
+  }
+  return {entries:[]};
+};
 panel.hass={
   language:"en",
   user:{id:"smoke-user"},
-  connection:{sendMessagePromise:async()=>({entries:[]})},
+  connection:{sendMessagePromise},
 };
 await new Promise(resolve=>setTimeout(resolve,0));
 
@@ -119,7 +125,12 @@ panel._nutritionSettings={catalogCount:10,catalogTotal:30,remaining:20,blockedFa
 const nutritionSettings=panel._nutritionSettingsHtml();
 if(!nutritionSettings.includes("7 temporarily cached unresolved")||!nutritionSettings.includes("13 ready to try"))throw new Error("v43 nutrition resolution status missing");
 
-// v44: render a real weekly lifecycle snapshot without making network calls.
+if(!panel.shadowRoot.querySelector("#cook4meCurrencyControl"))throw new Error("v45 top-bar currency control missing");
+if(panel._currencyState?.currency!=="GBP")throw new Error(`v45 automatic language currency expected GBP, got ${panel._currencyState?.currency}`);
+const currencySelect=panel.shadowRoot.querySelector("#cook4meCurrency");
+if(!currencySelect||!currencySelect.textContent.includes("Auto")||!currencySelect.textContent.includes("GBP"))throw new Error("v45 currency Auto/default option missing");
+
+// v44 lifecycle rendered through v45: mixed source currencies should collapse to GBP.
 panel._weekStateEntry="smoke-entry";
 panel._weekState={
   weekStart:"2026-09-07",
@@ -127,29 +138,29 @@ panel._weekState={
     id:"2026-09-07:dinner",date:"2026-09-07",mealType:"dinner",
     recipe:{title:"Tomato stew",ingredients:[{foodKey:"M_FOOD_SMOKE",foodName:"Tomato",quantity:300,unit:"g"}]},
     nutrition:{perServing:{energyKcal:420}},
-    cost:{totalsByCurrency:{EUR:3.5},coverage:1,exactPurchaseCoverage:1},
+    cost:{totalsByCurrency:{EUR:3.5,USD:1.2},coverage:1,exactPurchaseCoverage:1},
   }],
   leftovers:[{id:"left-1",title:"Yesterday's soup",servings:2,costByCurrency:{EUR:1.4}}],
   reservations:{items:[{identity:"k:M_FOOD_SMOKE",name:"Tomato",quantity:300,unit:"g",available:200,shortage:100}]},
   shoppingDelta:[{identity:"k:M_FOOD_SMOKE",name:"Tomato",quantity:100,unit:"g"}],
-  weeklyCostByCurrency:{EUR:3.5},
-  costSettings:{currency:"EUR",country:"DE",autoGlobalPrices:true},
+  weeklyCostByCurrency:{EUR:3.5,USD:1.2},
+  costSettings:{currency:"GBP",country:"DE",autoGlobalPrices:true},
   settings:{mealTypes:["breakfast","lunch","dinner"],leftoversFirst:true,avoidRecentDays:7,nutritionTargets:{energyKcal:2000,protein:80}},
-  nutritionDashboard:{todayTargetProgress:{energyKcal:{value:420,target:2000,fraction:0.21}},series:[{date:"2026-09-07",mealCount:1,nutrition:{energyKcal:420,protein:25},costByCurrency:{EUR:3.5}}]},
+  nutritionDashboard:{todayTargetProgress:{energyKcal:{value:420,target:2000,fraction:0.21}},series:[{date:"2026-09-07",mealCount:1,nutrition:{energyKcal:420,protein:25},costByCurrency:{EUR:3.5,USD:1.2}}]},
   feedback:{},substitutions:{},suggestedCountry:"DE",
 };
 panel._tab="week";
 panel._renderTabs();
 panel._renderTab();
-if(!panel.shadowRoot.querySelector('[data-tab="week"]'))throw new Error("v44 Week tab missing");
-if(!panel.shadowRoot.querySelector("#generateWeek"))throw new Error("v44 weekly planner controls missing");
-if(!panel.shadowRoot.querySelector("#addPlanShopping"))throw new Error("v44 consolidated shopping control missing");
+if(!panel.shadowRoot.querySelector('[data-tab="week"]'))throw new Error("v45 inherited Week tab missing");
+if(!panel.shadowRoot.querySelector("#generateWeek"))throw new Error("v45 weekly planner controls missing");
+if(!panel.shadowRoot.querySelector("#addPlanShopping"))throw new Error("v45 consolidated shopping control missing");
 const weekText=panel.shadowRoot.getElementById("content").textContent;
-for(const required of ["Tomato stew","100 g","3.50 EUR","Yesterday's soup","Nutrition dashboard"]){
-  if(!weekText.includes(required))throw new Error(`v44 lifecycle UI missing ${required}`);
+for(const required of ["Tomato stew","100 g","3.60 GBP","Yesterday's soup","Nutrition dashboard","ECB reference rates"]){
+  if(!weekText.includes(required))throw new Error(`v45 lifecycle/currency UI missing ${required}`);
 }
 panel._rememberSection("week");
-if(store.get(lastSectionKey)!=="week")throw new Error("v44 Week section was not remembered");
+if(store.get(lastSectionKey)!=="week")throw new Error("v45 Week section was not remembered");
 
 panel.remove();
 const restored=document.createElement(tag);
@@ -157,10 +168,10 @@ document.body.appendChild(restored);
 restored.hass={
   language:"en",
   user:{id:"smoke-user"},
-  connection:{sendMessagePromise:async()=>({entries:[]})},
+  connection:{sendMessagePromise},
 };
 await new Promise(resolve=>setTimeout(resolve,0));
-if(restored._tab!=="week")throw new Error(`New v44 panel did not reopen remembered Week section; got ${restored._tab}`);
+if(restored._tab!=="week")throw new Error(`New v45 panel did not reopen remembered Week section; got ${restored._tab}`);
 restored.remove();
 
-console.log("Recipe Hub v44 runtime smoke OK");
+console.log("Recipe Hub v45 runtime smoke OK");
