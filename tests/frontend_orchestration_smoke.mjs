@@ -39,6 +39,14 @@ let active=0,maxActive=0;
 const calls=[];
 let officialPayload=null,aiPayload=null,sendPayload=null;
 const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+const chooseOption=(select,value)=>{
+  for(const option of select?.options||[]){
+    const selected=String(option.value)===String(value);
+    option.selected=selected;
+    if(selected)option.setAttribute("selected","");else option.removeAttribute("selected");
+  }
+};
+const setInput=(input,value)=>input?.setAttribute("value",String(value));
 const sendMessagePromise=async message=>{
   active++;maxActive=Math.max(maxActive,active);calls.push(structuredClone(message));
   try{
@@ -88,7 +96,6 @@ const targetControl=panel.shadowRoot.getElementById("cook4meTargetDevicesControl
 if(!targetControl)throw new Error("v50 multi-device target control missing");
 const targetRows=[...targetControl.querySelectorAll("[data-target-entry]")];
 if(targetRows.length!==2)throw new Error(`Expected 2 target devices, got ${targetRows.length}`);
-// LinkeDOM does not fully synchronize CSS :checked from the checked property.
 targetRows.forEach(row=>{row.checked=true;row.setAttribute("checked","");row.dispatchEvent(new Event("change",{bubbles:true}));});
 if(panel._targetEntryIds().length!==2)throw new Error("Target-device multi-selection was not persisted");
 
@@ -109,11 +116,11 @@ for(const required of ["aiRequest","aiDiet","aiNutritionGoal","aiCalories","aiIn
 const aiLanguageRows=[...content.querySelectorAll("[data-ai-language]")];
 const aiMealRows=[...content.querySelectorAll("[data-ai-meal-type]")];
 if(aiLanguageRows.length!==3||aiMealRows.length<2)throw new Error("AI multi-select preferences were not rendered");
-content.querySelector("#aiRequest").value="tomato dinner";
-content.querySelector("#aiDiet").value="vegetarian";
-content.querySelector("#aiNutritionGoal").value="high_protein";
-content.querySelector("#aiCalories").value="600";
-content.querySelector("#aiMaxMissing").value="2";
+content.querySelector("#aiRequest").textContent="tomato dinner";
+chooseOption(content.querySelector("#aiDiet"),"vegetarian");
+chooseOption(content.querySelector("#aiNutritionGoal"),"high_protein");
+setInput(content.querySelector("#aiCalories"),600);
+setInput(content.querySelector("#aiMaxMissing"),2);
 aiLanguageRows.forEach(row=>{const checked=["de","en"].includes(String(row.dataset.aiLanguage));row.checked=checked;if(checked)row.setAttribute("checked","");else row.removeAttribute("checked");});
 aiMealRows.forEach(row=>{const checked=String(row.dataset.aiMealType)==="main";row.checked=checked;if(checked)row.setAttribute("checked","");else row.removeAttribute("checked");});
 const ingredientOptions=[...content.querySelector("#aiIngredients").options];
