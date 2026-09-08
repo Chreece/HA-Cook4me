@@ -39,14 +39,6 @@ let active=0,maxActive=0;
 const calls=[];
 let officialPayload=null,aiPayload=null,sendPayload=null;
 const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
-const chooseOption=(select,value)=>{
-  for(const option of select?.options||[]){
-    const selected=String(option.value)===String(value);
-    option.selected=selected;
-    if(selected)option.setAttribute("selected","");else option.removeAttribute("selected");
-  }
-};
-const setInput=(input,value)=>input?.setAttribute("value",String(value));
 const sendMessagePromise=async message=>{
   active++;maxActive=Math.max(maxActive,active);calls.push(structuredClone(message));
   try{
@@ -110,25 +102,23 @@ await panel._search("soup");
 if(!officialPayload)throw new Error("Official search did not use the v22 multi-language API");
 if(JSON.stringify(officialPayload.languages)!==JSON.stringify(["de","en"]))throw new Error(`Official search languages mismatch: ${JSON.stringify(officialPayload.languages)}`);
 
-panel._tab="ai";panel._opened=null;panel._aiSettings=null;panel._renderTabs();panel._renderTab();
+panel._aiSettings={
+  ...panel._aiDefaults(),request:"tomato dinner",diet:"vegetarian",nutritionGoal:"high_protein",
+  calorieTarget:"600",maxMissing:"2",mealTypes:["main"],languages:["de","en"],
+  ingredients:["k:M_FOOD_TOMATO"],onlyHome:false,preferExpiring:true,avoidRecentDays:7,
+};
+panel._tab="ai";panel._opened=null;panel._renderTabs();panel._renderTab();
 for(const oldId of ["aiBatchPrompt","aiAddQueue","aiRunQueue","aiStopQueue"]){if(content.querySelector(`#${oldId}`))throw new Error(`Legacy AI queue control still rendered: ${oldId}`);}
 for(const required of ["aiRequest","aiDiet","aiNutritionGoal","aiCalories","aiIngredients","aiCalTolerance","aiMaxMissing","aiRecent","aiPreferExpiring","aiOnlyHome","aiCreate"]){if(!content.querySelector(`#${required}`))throw new Error(`Direct AI Create missing #${required}`);}
 const aiLanguageRows=[...content.querySelectorAll("[data-ai-language]")];
 const aiMealRows=[...content.querySelectorAll("[data-ai-meal-type]")];
 if(aiLanguageRows.length!==3||aiMealRows.length<2)throw new Error("AI multi-select preferences were not rendered");
-content.querySelector("#aiRequest").textContent="tomato dinner";
-chooseOption(content.querySelector("#aiDiet"),"vegetarian");
-chooseOption(content.querySelector("#aiNutritionGoal"),"high_protein");
-setInput(content.querySelector("#aiCalories"),600);
-setInput(content.querySelector("#aiMaxMissing"),2);
-aiLanguageRows.forEach(row=>{const checked=["de","en"].includes(String(row.dataset.aiLanguage));row.checked=checked;if(checked)row.setAttribute("checked","");else row.removeAttribute("checked");});
-aiMealRows.forEach(row=>{const checked=String(row.dataset.aiMealType)==="main";row.checked=checked;if(checked)row.setAttribute("checked","");else row.removeAttribute("checked");});
-const ingredientOptions=[...content.querySelector("#aiIngredients").options];
-ingredientOptions.forEach(option=>{const selected=String(option.textContent).includes("Tomato");option.selected=selected;if(selected)option.setAttribute("selected","");else option.removeAttribute("selected");});
+if(!content.querySelector('[data-ai-language="de"]').hasAttribute("checked")||!content.querySelector('[data-ai-language="en"]').hasAttribute("checked"))throw new Error("AI catalog-language preferences did not render as selected");
+if(!content.querySelector('[data-ai-meal-type="main"]').hasAttribute("checked"))throw new Error("AI meal preference did not render as selected");
 await panel._createAiRecipe(content);
 await delay(30);
 if(!aiPayload)throw new Error("AI Create did not use the hardened serialized API");
-if(aiPayload.diet!=="vegetarian"||aiPayload.nutrition_goal!=="high_protein")throw new Error("AI Create lost Today-style diet/nutrition preferences");
+if(aiPayload.diet!=="vegetarian"||aiPayload.nutrition_goal!=="high_protein")throw new Error(`AI Create lost Today-style diet/nutrition preferences: ${JSON.stringify({diet:aiPayload.diet,nutrition_goal:aiPayload.nutrition_goal})}`);
 if(JSON.stringify(aiPayload.catalog_languages)!==JSON.stringify(["de","en"]))throw new Error(`AI catalog languages mismatch: ${JSON.stringify(aiPayload.catalog_languages)}`);
 if(JSON.stringify(aiPayload.meal_types)!==JSON.stringify(["main"]))throw new Error(`AI meal types mismatch: ${JSON.stringify(aiPayload.meal_types)}`);
 if(Number(aiPayload.calorie_target)!==600||Number(aiPayload.max_missing)!==2)throw new Error("AI calorie/missing preferences were not forwarded");
