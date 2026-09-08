@@ -29,26 +29,37 @@ class Cook4MeRecipeHubPanelV52 extends BasePanel{
   }
 
   _bindV51TabIntent(){
+    // v52 binds directly to the buttons after the inherited tab renderer has
+    // finished. Mark the parent as handled so v51 does not add a second
+    // activation-only delegated listener.
     const tabs=this.shadowRoot?.getElementById("tabs");
-    if(!tabs||tabs.dataset.cook4meV52Intent==="1")return;
-    // Mark both generations so v51 never adds its lighter activation-only
-    // listener on top of the authoritative v52 navigation contract.
-    tabs.dataset.cook4meV51Intent="1";
-    tabs.dataset.cook4meV52Intent="1";
-    tabs.addEventListener("click",event=>{
-      const target=event.target instanceof Element?event.target.closest("[data-tab]"):null;
-      if(!target||!tabs.contains(target))return;
-      const tab=String(target.dataset.tab||"");
-      if(!tab)return;
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      this._activateSection(tab);
-      this._tab=tab;
-      this._opened=null;
-      this._rememberSection?.(tab);
-      this._renderTabs();
-      this._renderTab();
-    },true);
+    if(tabs)tabs.dataset.cook4meV51Intent="1";
+  }
+
+  _selectV52Tab(tab){
+    const value=String(tab||"");
+    if(!value)return;
+    this._activateSection(value);
+    this._tab=value;
+    this._opened=null;
+    this._rememberSection?.(value);
+    this._renderTabs();
+    this._renderTab();
+  }
+
+  _renderTabs(){
+    super._renderTabs();
+    const tabs=this.shadowRoot?.getElementById("tabs");
+    if(!tabs)return;
+    tabs.querySelectorAll("[data-tab]").forEach(button=>{
+      if(button.dataset.cook4meV52Bound==="1")return;
+      button.dataset.cook4meV52Bound="1";
+      button.addEventListener("click",event=>{
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        this._selectV52Tab(button.dataset.tab);
+      },true);
+    });
   }
 
   async _prepareSection(tab){
