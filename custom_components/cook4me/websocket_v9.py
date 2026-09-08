@@ -45,16 +45,6 @@ def _friendly_process_error(raw: bytes | str, fallback: str) -> str:
 
 
 async def _refresh_catalog_auth(hass: HomeAssistant, bridge) -> None:
-    """Refresh only the KRUPS HTTP login used by recipe APIs.
-
-    Older Recipe Hub code refreshed a catalog token by running the `status`
-    command.  `status` performs an AWS IoT MQTT round-trip, so an unrelated
-    WebSocket receive timeout could abort a perfectly ordinary recipe search and
-    leak a Python traceback into the panel.  Recipe catalog auth needs only the
-    KRUPS token, therefore v9 performs the proven browserless HTTP login without
-    touching MQTT or AWS IoT.
-    """
-
     vendor = pathlib.Path(__file__).parent / "vendor"
     cmd = [
         sys.executable,
@@ -143,28 +133,37 @@ async def _raw_search(
         int(size),
         bool(strict_language),
     )
-    if not refresh:
-        cached = cache.get("search", key)
-        if isinstance(cached, dict):
-            return cached, True
+    cached = cache.get("search", key)
+    # Cache content survives indefinitely. Once a result exists, the normal
+    # shared catalog path may revalidate it only after >=24h. Explicit refresh
+    # remains supported for internal callers whose own outer cache already
+    # enforces the same daily rule.
+    if isinstance(cached, dict) and not refresh and not cache.should_revalidate("search", key):
+        return cached, True
 
-    result = await _async_catalog_call(
-        hass,
-        bridge,
-        v8._catalog_search_full_sync,
-        storage_home,
-        device_country,
-        display_country,
-        configured_language,
-        requested_language,
-        app_version,
-        query,
-        int(page),
-        int(size),
-        bool(strict_language),
-    )
+    try:
+        result = await _async_catalog_call(
+            hass,
+            bridge,
+            v8._catalog_search_full_sync,
+            storage_home,
+            device_country,
+            display_country,
+            configured_language,
+            requested_language,
+            app_version,
+            query,
+            int(page),
+            int(size),
+            bool(strict_language),
+        )
+    except Exception as exc:
+        if isinstance(cached, dict) and not refresh:
+            await cache.async_mark_checked("search", key, error=exc)
+            return cached, True
+        raise
     await cache.async_set("search", key, result)
-    return result, False
+    return result, isinstance(cached, dict)
 
 
 async def _raw_detail(
@@ -187,23 +186,28 @@ async def _raw_detail(
     key = stable_cache_key(
         "detail-v9", display_country, requested_language, str(variant_id)
     )
-    if not refresh:
-        cached = cache.get("detail", key)
-        if isinstance(cached, dict):
-            return cached, True
+    cached = cache.get("detail", key)
+    if isinstance(cached, dict) and not refresh and not cache.should_revalidate("detail", key):
+        return cached, True
 
-    result = await _async_catalog_call(
-        hass,
-        bridge,
-        legacy._catalog_detail_sync,
-        storage_home,
-        display_country,
-        requested_language,
-        app_version,
-        str(variant_id),
-    )
+    try:
+        result = await _async_catalog_call(
+            hass,
+            bridge,
+            legacy._catalog_detail_sync,
+            storage_home,
+            display_country,
+            requested_language,
+            app_version,
+            str(variant_id),
+        )
+    except Exception as exc:
+        if isinstance(cached, dict) and not refresh:
+            await cache.async_mark_checked("detail", key, error=exc)
+            return cached, True
+        raise
     await cache.async_set("detail", key, result)
-    return result, False
+    return result, isinstance(cached, dict)
 
 
 async def _preferences(hass: HomeAssistant, bridge) -> dict[str, Any]:
