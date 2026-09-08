@@ -8,6 +8,7 @@ V42 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v42.j
 V43 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v43.js"
 V44 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v44.js"
 V45 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v45.js"
+V46 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v46.js"
 PANEL = ROOT / "custom_components" / "cook4me" / "panel.py"
 MANIFEST = ROOT / "custom_components" / "cook4me" / "manifest.json"
 
@@ -29,11 +30,11 @@ class V41UIContractTests(unittest.TestCase):
         self.assertIn('details.rx-advanced[open]', text)
         self.assertIn('if(!path.includes(menu))menu.removeAttribute("open")', text)
 
-    def test_v45_is_active_and_cache_busted(self):
+    def test_v46_is_active_and_cache_busted(self):
         panel = PANEL.read_text(encoding="utf-8")
         manifest = MANIFEST.read_text(encoding="utf-8")
-        self.assertIn('cook4me-recipe-hub-panel-v45', panel)
-        self.assertIn('cook4me-panel-v45.js', panel)
+        self.assertIn('cook4me-recipe-hub-panel-v46', panel)
+        self.assertIn('cook4me-panel-v46.js', panel)
         self.assertIn('?v=2026.9.8.2', panel)
         self.assertIn('"version": "2026.9.8.2"', manifest)
         self.assertIn('async_register_websocket_v20', panel)
@@ -84,6 +85,15 @@ class V41UIContractTests(unittest.TestCase):
         self.assertIn('convert_currency_map', backend)
         self.assertIn('eurofxref-daily.xml', fx)
         self.assertIn('"bg": "EUR"', fx)
+
+    def test_v46_keeps_bulk_menu_open_and_explicitly_toggles_filters(self):
+        text = V46.read_text(encoding="utf-8")
+        self.assertIn('this._rememberTodayFromUi(c)', text)
+        self.assertNotIn('this._renderToday(c);', text.split('_toggleTodayBulk(c,group){', 1)[1].split('_bindExplicitDetails', 1)[0])
+        self.assertIn('event.preventDefault()', text)
+        self.assertIn('details.setAttribute("open","")', text)
+        self.assertIn('summary.setAttribute("aria-expanded"', text)
+        self.assertIn('details.rx-today-picker,details.rx-advanced', text)
 
 
 if __name__ == "__main__":
