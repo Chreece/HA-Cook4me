@@ -21,6 +21,16 @@ class Cook4MeRecipeHubPanelV50 extends BasePanel{
     if(String(mapped).startsWith("cook4me/v24/"))delete payload.refresh;
     return super._api(mapped,payload);
   }
+
+  _collectAiSettings(c){
+    const settings=super._collectAiSettings(c);
+    const select=c.querySelector("#aiIngredients");
+    settings.ingredients=[...(select?.options||[])]
+      .filter(option=>Boolean(option.selected)||option.hasAttribute("selected"))
+      .map(option=>String(option.value||""))
+      .filter(Boolean);
+    return settings;
+  }
 }
 
 customElements.define("cook4me-recipe-hub-panel-v50",Cook4MeRecipeHubPanelV50);
