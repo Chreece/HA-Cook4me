@@ -134,11 +134,10 @@ async def _raw_search(
         bool(strict_language),
     )
     cached = cache.get("search", key)
-    # Cache content survives indefinitely. Once a result exists, the normal
-    # shared catalog path may revalidate it only after >=24h. Explicit refresh
-    # remains supported for internal callers whose own outer cache already
-    # enforces the same daily rule.
-    if isinstance(cached, dict) and not refresh and not cache.should_revalidate("search", key):
+    # A refresh request may ask for the newest permitted value, but it may not
+    # bypass the one-day minimum. Once cached, SEB catalog data is eligible for
+    # another online check only after >=24h since the previous check attempt.
+    if isinstance(cached, dict) and not cache.should_revalidate("search", key):
         return cached, True
 
     try:
@@ -158,7 +157,7 @@ async def _raw_search(
             bool(strict_language),
         )
     except Exception as exc:
-        if isinstance(cached, dict) and not refresh:
+        if isinstance(cached, dict):
             await cache.async_mark_checked("search", key, error=exc)
             return cached, True
         raise
@@ -187,7 +186,7 @@ async def _raw_detail(
         "detail-v9", display_country, requested_language, str(variant_id)
     )
     cached = cache.get("detail", key)
-    if isinstance(cached, dict) and not refresh and not cache.should_revalidate("detail", key):
+    if isinstance(cached, dict) and not cache.should_revalidate("detail", key):
         return cached, True
 
     try:
@@ -202,7 +201,7 @@ async def _raw_detail(
             str(variant_id),
         )
     except Exception as exc:
-        if isinstance(cached, dict) and not refresh:
+        if isinstance(cached, dict):
             await cache.async_mark_checked("detail", key, error=exc)
             return cached, True
         raise
