@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
+import voluptuous as vol
 from homeassistant.components import websocket_api
 from homeassistant.core import HomeAssistant, callback
 
@@ -42,7 +43,7 @@ def async_register(hass: HomeAssistant) -> None:
 
 
 @websocket_api.websocket_command(
-    {websocket_api.vol.Required("type"): "cook4me/v27/bootstrap"}
+    {vol.Required("type"): "cook4me/v27/bootstrap"}
 )
 @callback
 def ws_bootstrap(
