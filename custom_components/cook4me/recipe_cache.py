@@ -13,21 +13,17 @@ from homeassistant.helpers.storage import Store
 from .const import DOMAIN
 
 _STORAGE_VERSION = 1
-_SEARCH_TTL = 7 * 24 * 60 * 60
-_DETAIL_TTL = 30 * 24 * 60 * 60
-_TRANSLATION_TTL = 90 * 24 * 60 * 60
-_UI_TTL = 10 * 365 * 24 * 60 * 60
+_MIN_ONLINE_CHECK_AGE = 24 * 60 * 60
 _LIMITS = {"search": 120, "detail": 500, "translation": 1000, "ui": 20}
-_TTLS = {
-    "search": _SEARCH_TTL,
-    "detail": _DETAIL_TTL,
-    "translation": _TRANSLATION_TTL,
-    "ui": _UI_TTL,
-}
 
 
 def stable_cache_key(*parts: Any) -> str:
     payload = json.dumps(parts, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def _value_fingerprint(value: Any) -> str:
+    payload = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
@@ -43,13 +39,7 @@ def translation_cache_key(recipe: dict[str, Any], target_language: str) -> str:
 
 
 def _is_current_search_value(value: Any) -> bool:
-    """Reject search results produced before the standalone-proven v12 contract.
-
-    We intentionally keep the Store schema version unchanged so persistent UI
-    preferences, details and expensive AI translations survive the upgrade.
-    Only the search bucket is selectively invalidated.  New search results carry
-    the proven Cookeo appliance group and branded-recipe type at top level.
-    """
+    """Reject search results produced before the standalone-proven v12 contract."""
 
     return bool(
         isinstance(value, dict)
@@ -59,7 +49,14 @@ def _is_current_search_value(value: Any) -> bool:
 
 
 class Cook4MeRecipeCache:
-    """Persistent bounded cache for normalized recipe catalog and UI data."""
+    """Persistent bounded recipe cache with daily upstream revalidation.
+
+    Online values are retained until a newer upstream check proves that their
+    content changed. Age alone never deletes a valid cached result. `checkedAt`
+    records the last online check attempt while `updatedAt` changes only when the
+    cached value itself changes. This lets callers revalidate no more than once
+    per day without repeatedly downloading unchanged recipe data.
+    """
 
     def __init__(self, hass: HomeAssistant, entry_id: str) -> None:
         self._store: Store[dict[str, Any]] = Store(
@@ -79,22 +76,24 @@ class Cook4MeRecipeCache:
             for bucket in self._data:
                 value = saved.get(bucket)
                 if isinstance(value, dict):
-                    self._data[bucket] = {
-                        str(key): row
-                        for key, row in value.items()
-                        if isinstance(row, dict) and "value" in row
-                    }
+                    normalized: dict[str, dict[str, Any]] = {}
+                    for key, row in value.items():
+                        if not isinstance(row, dict) or "value" not in row:
+                            continue
+                        stamp = float(row.get("timestamp") or 0)
+                        current = deepcopy(row)
+                        current.setdefault("checkedAt", stamp)
+                        current.setdefault("updatedAt", stamp)
+                        current.setdefault("accessedAt", stamp)
+                        current.setdefault("fingerprint", _value_fingerprint(current.get("value")))
+                        current.setdefault("lastError", "")
+                        normalized[str(key)] = current
+                    self._data[bucket] = normalized
         self._prune()
 
     def _prune(self) -> None:
-        now = time.time()
         for bucket, rows in self._data.items():
-            ttl = _TTLS[bucket]
-            current = {
-                key: row
-                for key, row in rows.items()
-                if now - float(row.get("timestamp") or 0) <= ttl
-            }
+            current = dict(rows)
             if bucket == "search":
                 current = {
                     key: row
@@ -105,53 +104,97 @@ class Cook4MeRecipeCache:
             if len(current) > limit:
                 ordered = sorted(
                     current.items(),
-                    key=lambda pair: float(pair[1].get("timestamp") or 0),
+                    key=lambda pair: float(
+                        pair[1].get("accessedAt")
+                        or pair[1].get("checkedAt")
+                        or pair[1].get("updatedAt")
+                        or pair[1].get("timestamp")
+                        or 0
+                    ),
                     reverse=True,
                 )[:limit]
                 current = dict(ordered)
             self._data[bucket] = current
 
-    def get(self, bucket: str, key: str) -> Any | None:
+    def row(self, bucket: str, key: str) -> dict[str, Any] | None:
         rows = self._data.get(bucket)
         if rows is None:
             return None
         row = rows.get(str(key))
         if not isinstance(row, dict):
             return None
-        if time.time() - float(row.get("timestamp") or 0) > _TTLS[bucket]:
-            rows.pop(str(key), None)
-            return None
         value = row.get("value")
         if bucket == "search" and not _is_current_search_value(value):
             rows.pop(str(key), None)
             return None
-        return deepcopy(value)
+        row["accessedAt"] = time.time()
+        return deepcopy(row)
 
-    async def async_set(self, bucket: str, key: str, value: Any) -> None:
+    def get(self, bucket: str, key: str) -> Any | None:
+        row = self.row(bucket, key)
+        return deepcopy(row.get("value")) if row is not None else None
+
+    def should_revalidate(
+        self,
+        bucket: str,
+        key: str,
+        *,
+        min_age: float = _MIN_ONLINE_CHECK_AGE,
+    ) -> bool:
+        row = self._data.get(bucket, {}).get(str(key))
+        if not isinstance(row, dict):
+            return True
+        checked = float(row.get("checkedAt") or row.get("updatedAt") or row.get("timestamp") or 0)
+        if not checked:
+            return True
+        return time.time() - checked >= max(_MIN_ONLINE_CHECK_AGE, float(min_age))
+
+    async def async_mark_checked(
+        self,
+        bucket: str,
+        key: str,
+        *,
+        error: Any = "",
+    ) -> None:
+        async with self._lock:
+            row = self._data.get(bucket, {}).get(str(key))
+            if not isinstance(row, dict):
+                return
+            now = time.time()
+            row["checkedAt"] = now
+            row["accessedAt"] = now
+            row["lastError"] = str(error or "")[:300]
+            self._store.async_delay_save(lambda: deepcopy(self._data), 5)
+
+    async def async_set(self, bucket: str, key: str, value: Any) -> dict[str, Any]:
         if bucket not in self._data:
             raise ValueError(f"Unknown Cook4Me cache bucket: {bucket}")
         async with self._lock:
+            now = time.time()
+            existing = self._data[bucket].get(str(key))
+            digest = _value_fingerprint(value)
+            changed = not isinstance(existing, dict) or existing.get("fingerprint") != digest
+            updated_at = now if changed else float(existing.get("updatedAt") or existing.get("timestamp") or now)
             self._data[bucket][str(key)] = {
-                "timestamp": time.time(),
+                "timestamp": now,
+                "checkedAt": now,
+                "updatedAt": updated_at,
+                "accessedAt": now,
+                "fingerprint": digest,
+                "lastError": "",
                 "value": deepcopy(value),
             }
             self._prune()
             self._store.async_delay_save(lambda: deepcopy(self._data), 5)
+            return {"changed": changed, "checkedAt": now, "updatedAt": updated_at}
 
     async def async_set_many(self, bucket: str, values: dict[str, Any]) -> None:
         if not values:
             return
         if bucket not in self._data:
             raise ValueError(f"Unknown Cook4Me cache bucket: {bucket}")
-        async with self._lock:
-            stamp = time.time()
-            for key, value in values.items():
-                self._data[bucket][str(key)] = {
-                    "timestamp": stamp,
-                    "value": deepcopy(value),
-                }
-            self._prune()
-            self._store.async_delay_save(lambda: deepcopy(self._data), 5)
+        for key, value in values.items():
+            await self.async_set(bucket, key, value)
 
     async def async_clear(self, bucket: str | None = None) -> None:
         async with self._lock:
