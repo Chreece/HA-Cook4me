@@ -60,7 +60,8 @@ class V41UIContractTests(unittest.TestCase):
         text = V54.read_text(encoding="utf-8")
         self.assertIn('async _maybeAutoFillNutritionCatalog()', text)
         method = text.split('async _maybeAutoFillNutritionCatalog(){', 1)[1].split('_renderShopping(c){', 1)[0]
-        self.assertNotIn('nutrition_catalog_fill', method)
+        self.assertNotIn('_api("cook4me/v16/nutrition_catalog_fill"', method)
+        self.assertIn('return;', method)
         self.assertIn('External enrichment is now explicit only', method)
 
     def test_v42_autofills_catalog_and_keeps_official_values_separate_historically(self):
