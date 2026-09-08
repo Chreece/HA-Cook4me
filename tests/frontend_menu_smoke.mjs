@@ -23,8 +23,8 @@ globalThis.localStorage={
   clear:()=>store.clear(),
 };
 
-await import("../custom_components/cook4me/frontend/cook4me-panel-v46.js");
-const tag="cook4me-recipe-hub-panel-v46";
+await import("../custom_components/cook4me/frontend/cook4me-panel-v48.js");
+const tag="cook4me-recipe-hub-panel-v48";
 if(!customElements.get(tag))throw new Error(`${tag} was not registered`);
 
 const panel=document.createElement(tag);
@@ -56,6 +56,9 @@ await new Promise(resolve=>setTimeout(resolve,0));
 await new Promise(resolve=>setTimeout(resolve,0));
 
 const content=panel.shadowRoot.getElementById("content");
+const languageMenu=content.querySelector('details[data-rx-picker="languages"]');
+if(!languageMenu)throw new Error("Catalog languages menu missing when language rows are empty");
+
 const advanced=content.querySelector("details.rx-advanced");
 const advancedSummary=advanced?.querySelector(":scope > summary");
 if(!advanced||!advancedSummary)throw new Error("More filters control missing");
@@ -102,4 +105,4 @@ advancedSummary.dispatchEvent(new Event("click",{bubbles:true,cancelable:true}))
 if(advanced.hasAttribute("open"))throw new Error("More filters did not close on second click");
 
 panel.remove();
-console.log("Recipe Hub v46 Today menu interaction smoke OK");
+console.log("Recipe Hub v48 Today menu interaction smoke OK");
