@@ -21,6 +21,21 @@ class Cook4MeRecipeHubPanelV55 extends BasePanel{
     }
   }
 
+  _renderShell(){
+    super._renderShell();
+    const original=this.shadowRoot?.getElementById("refresh");if(!original)return;
+    if(original.dataset.cook4meV55RefreshAuthoritative==="1")return;
+    // Base v3 and v54 both attached refresh handlers. Replace the node so one
+    // user click has exactly one owner and cannot issue duplicate overviews.
+    const refresh=original.cloneNode(true);
+    refresh.dataset.cook4meV55RefreshAuthoritative="1";
+    original.replaceWith(refresh);
+    refresh.addEventListener("click",event=>{
+      event.preventDefault();event.stopPropagation();
+      void this._explicitRefresh();
+    });
+  }
+
   _resetUserScopedUiState(){
     if(this._v54PersistTimer){clearTimeout(this._v54PersistTimer);this._v54PersistTimer=null;}
     this._entries=[];this._entryId=null;
