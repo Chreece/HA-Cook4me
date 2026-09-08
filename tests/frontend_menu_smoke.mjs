@@ -75,18 +75,25 @@ mealSummary.dispatchEvent(new Event("click",{bubbles:true,cancelable:true}));
 if(!mealMenu.hasAttribute("open"))throw new Error("Meal picker did not open");
 if(advanced.hasAttribute("open"))throw new Error("Opening another picker did not close More filters");
 
+// LinkeDOM does not initialize the .checked property from the HTML checked
+// attribute exactly like browsers do. Normalize the runtime state explicitly
+// so this smoke tests the real Deselect-all -> Select-all interaction.
+const mealRows=[...content.querySelectorAll("[data-today-meal-type]")];
+mealRows.forEach(row=>{row.checked=true;row.closest(".rx-choice-card")?.classList.add("selected");});
+panel._refreshBulkButton(content,"meals");
+
 const beforeNode=mealMenu;
 mealBulk.dispatchEvent(new Event("click",{bubbles:true,cancelable:true}));
 if(beforeNode!==mealBulk.closest("details.rx-today-picker")||!beforeNode.isConnected){
   throw new Error("Bulk selection rebuilt the Today picker DOM");
 }
 if(!mealMenu.hasAttribute("open"))throw new Error("Deselect all closed the open meal picker");
-if([...content.querySelectorAll("[data-today-meal-type]")].some(row=>row.checked))throw new Error("Deselect all did not clear meal selections");
+if(mealRows.some(row=>row.checked))throw new Error("Deselect all did not clear meal selections");
 if(!mealBulk.textContent.includes("Select all"))throw new Error("Bulk button label did not update after Deselect all");
 
 mealBulk.dispatchEvent(new Event("click",{bubbles:true,cancelable:true}));
 if(!mealMenu.hasAttribute("open"))throw new Error("Select all closed the open meal picker");
-if(![...content.querySelectorAll("[data-today-meal-type]")].every(row=>row.checked))throw new Error("Select all did not restore meal selections");
+if(!mealRows.every(row=>row.checked))throw new Error("Select all did not restore meal selections");
 if(!mealBulk.textContent.includes("Deselect all"))throw new Error("Bulk button label did not update after Select all");
 
 advancedSummary.dispatchEvent(new Event("click",{bubbles:true,cancelable:true}));
