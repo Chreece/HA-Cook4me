@@ -14,6 +14,7 @@ from .websocket_v22 import async_register as async_register_websocket_v22
 from .websocket_v23 import async_register as async_register_websocket_v23
 from .websocket_v24 import async_register as async_register_websocket_v24
 from .websocket_v25 import async_register as async_register_websocket_v25
+from .websocket_v26 import async_register as async_register_websocket_v26
 
 _URL_BASE = "/cook4me_static"
 _PANEL_ELEMENT = "cook4me-recipe-hub-panel-v50"
@@ -24,6 +25,7 @@ _V22_REGISTERED = "websocket_v22_registered"
 _V23_REGISTERED = "websocket_v23_registered"
 _V24_REGISTERED = "websocket_v24_registered"
 _V25_REGISTERED = "websocket_v25_registered"
+_V26_REGISTERED = "websocket_v26_registered"
 
 
 async def async_register_panel(hass: HomeAssistant) -> None:
@@ -46,6 +48,9 @@ async def async_register_panel(hass: HomeAssistant) -> None:
     if not domain_data.get(_V25_REGISTERED):
         async_register_websocket_v25(hass)
         domain_data[_V25_REGISTERED] = True
+    if not domain_data.get(_V26_REGISTERED):
+        async_register_websocket_v26(hass)
+        domain_data[_V26_REGISTERED] = True
     if async_panel_exists(hass, DOMAIN):
         return
     frontend_dir = Path(__file__).parent / "frontend"
