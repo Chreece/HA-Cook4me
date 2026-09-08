@@ -148,8 +148,6 @@ class Cook4MeRecipeHubPanelV45 extends BasePanel{
     super._renderWeek(c);
     const input=c.querySelector("#costCurrency");
     if(input&&this._currencyState?.currency){input.value=this._currencyState.currency;input.readOnly=true;input.title=this._t("currencyHelp");}
-    const help=[...c.querySelectorAll(".muted")].find(node=>node.textContent?.includes(super._t?.("costHelp")||"__never__"));
-    if(help)help.textContent=this._t("costHelp");
     if(this._currencyState?.rateDate){
       const costSettings=c.querySelector("#saveCostSettings")?.closest("section.card")||c.querySelector("#saveCostSettings")?.parentElement;
       costSettings?.insertAdjacentHTML("beforeend",`<div data-fx-status class="muted" style="margin-top:7px">${this._escape(this._t("fxRates"))}: ${this._escape(this._currencyState.rateDate)}${this._currencyState.stale?` · ${this._escape(this._t("fxStale"))}`:""}</div>`);
