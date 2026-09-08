@@ -58,7 +58,9 @@ def _lot_reference(
 ) -> tuple[dict[str, Any] | None, str]:
     lot_id = _text(lot.get("id") or lot.get("lotId"))
     if lot_id:
-        exact = store.best_reference(f"lot:{lot_id}", currency=currency, country=country)
+        # The exact paid currency is evidence and must not disappear merely
+        # because the UI prefers a different currency for external estimates.
+        exact = store.best_reference(f"lot:{lot_id}")
         if exact is not None:
             return exact, "exact_purchase"
     barcode = _text(lot.get("barcode"))
