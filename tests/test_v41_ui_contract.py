@@ -11,6 +11,8 @@ V45 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v45.j
 V46 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v46.js"
 V47 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v47.js"
 V48 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v48.js"
+V51 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v51.js"
+V52 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v52.js"
 PANEL = ROOT / "custom_components" / "cook4me" / "panel.py"
 MANIFEST = ROOT / "custom_components" / "cook4me" / "manifest.json"
 
@@ -32,15 +34,17 @@ class V41UIContractTests(unittest.TestCase):
         self.assertIn('details.rx-advanced[open]', text)
         self.assertIn('if(!path.includes(menu))menu.removeAttribute("open")', text)
 
-    def test_v50_is_active_and_cache_busted(self):
+    def test_v52_is_active_and_cache_busted(self):
         panel = PANEL.read_text(encoding="utf-8")
         manifest = MANIFEST.read_text(encoding="utf-8")
-        self.assertIn('cook4me-recipe-hub-panel-v50', panel)
-        self.assertIn('cook4me-panel-v50.js', panel)
-        self.assertIn('?v=2026.9.8.5', panel)
-        self.assertIn('"version": "2026.9.8.5"', manifest)
+        self.assertIn('cook4me-recipe-hub-panel-v52', panel)
+        self.assertIn('cook4me-panel-v52.js', panel)
+        self.assertIn('?v=2026.9.8.6', panel)
+        self.assertIn('"version": "2026.9.8.6"', manifest)
         for version in (20, 21, 22, 23, 24, 25, 26):
             self.assertIn(f'async_register_websocket_v{version}', panel)
+        self.assertIn('this._v51AllowedResources=new Set(["overview"])', V51.read_text(encoding="utf-8"))
+        self.assertIn('data propagation, not a reason to poll', V52.read_text(encoding="utf-8"))
 
     def test_v42_autofills_catalog_and_keeps_official_values_separate(self):
         text = V42.read_text(encoding="utf-8")

@@ -6,6 +6,8 @@ PANEL = ROOT / "custom_components" / "cook4me" / "panel.py"
 MANIFEST = ROOT / "custom_components" / "cook4me" / "manifest.json"
 V49 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v49.js"
 V50 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v50.js"
+V51 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v51.js"
+V52 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v52.js"
 V22 = ROOT / "custom_components" / "cook4me" / "websocket_v22.py"
 V23 = ROOT / "custom_components" / "cook4me" / "websocket_v23.py"
 V24 = ROOT / "custom_components" / "cook4me" / "websocket_v24.py"
@@ -18,15 +20,17 @@ COORD = ROOT / "custom_components" / "cook4me" / "request_coordinator.py"
 
 
 class V49OrchestrationContractTests(unittest.TestCase):
-    def test_v50_is_active_and_all_new_backends_are_registered(self):
+    def test_v52_is_active_and_all_new_backends_are_registered(self):
         panel = PANEL.read_text(encoding="utf-8")
         manifest = MANIFEST.read_text(encoding="utf-8")
-        self.assertIn('cook4me-recipe-hub-panel-v50', panel)
-        self.assertIn('cook4me-panel-v50.js', panel)
-        self.assertIn('?v=2026.9.8.5', panel)
-        self.assertIn('"version": "2026.9.8.5"', manifest)
+        self.assertIn('cook4me-recipe-hub-panel-v52', panel)
+        self.assertIn('cook4me-panel-v52.js', panel)
+        self.assertIn('?v=2026.9.8.6', panel)
+        self.assertIn('"version": "2026.9.8.6"', manifest)
         for version in (22, 23, 24, 25, 26):
             self.assertIn(f'async_register_websocket_v{version}', panel)
+        self.assertIn('import "./cook4me-panel-v50.js"', V51.read_text(encoding="utf-8"))
+        self.assertIn('import "./cook4me-panel-v51.js"', V52.read_text(encoding="utf-8"))
 
     def test_online_cache_keeps_content_and_requires_daily_recheck(self):
         text = CACHE.read_text(encoding="utf-8")
@@ -103,6 +107,28 @@ class V49OrchestrationContractTests(unittest.TestCase):
         self.assertIn('async_get_or_revalidate', v23)
         self.assertIn('async_get_or_revalidate', v24)
         self.assertIn('await v23._cached_product', v26)
+
+    def test_v51_startup_contract_blocks_inherited_auto_loaders(self):
+        ui = V51.read_text(encoding="utf-8")
+        self.assertIn('this._v51AllowedResources=new Set(["overview"])', ui)
+        self.assertIn('HA state propagation must never become a polling trigger', ui)
+        self.assertIn('async _loadOverview(silent=false,rerender=true)', ui)
+        self.assertIn('if(!this._resourceAllowed("book"))return', ui)
+        self.assertIn('if(!this._resourceAllowed("today"))return', ui)
+        self.assertIn('if(!this._resourceAllowed("catalog"))return', ui)
+        self.assertIn('if(!this._resourceAllowed("week"))return', ui)
+        self.assertIn('if(!this._resourceAllowed("currency"))', ui)
+        self.assertIn('id="cook4meLoadSection"', ui)
+        self.assertIn('aria-live","polite"', ui)
+
+    def test_v52_hass_updates_do_zero_render_work_and_loading_is_continuous(self):
+        ui = V52.read_text(encoding="utf-8")
+        self.assertIn('data propagation, not a reason to poll', ui)
+        self.assertIn('if(!this.shadowRoot.innerHTML)this._renderShell()', ui)
+        self.assertNotIn('this._updateHeader()', ui)
+        self.assertIn('const token=this._beginLoad(this._sectionTitle(tab))', ui)
+        self.assertIn('return await super._prepareSection(tab)', ui)
+        self.assertIn('this._endLoad(token)', ui)
 
 
 if __name__ == "__main__":
