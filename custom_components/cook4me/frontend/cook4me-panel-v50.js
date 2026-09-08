@@ -12,6 +12,10 @@ class Cook4MeRecipeHubPanelV50 extends BasePanel{
       "cook4me/v9/recipe_detail":"cook4me/v24/recipe_detail",
       "cook4me/v22/ai_create":"cook4me/v25/ai_create",
       "cook4me/v22/send_multi":"cook4me/v25/send_multi",
+      "cook4me/v15/barcode_scan":"cook4me/v26/barcode_scan",
+      "cook4me/v15/barcode_map_add":"cook4me/v26/barcode_map_add",
+      "cook4me/v23/barcode_scan":"cook4me/v26/barcode_scan",
+      "cook4me/v23/barcode_map_add":"cook4me/v26/barcode_map_add",
     }[type]||type;
     const payload={...(data||{})};
     if(String(mapped).startsWith("cook4me/v24/"))delete payload.refresh;
