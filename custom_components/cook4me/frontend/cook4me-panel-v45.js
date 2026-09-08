@@ -30,6 +30,15 @@ class Cook4MeRecipeHubPanelV45 extends BasePanel{
       #cook4meCurrencyControl ha-icon{position:absolute;left:8px;--mdc-icon-size:18px;color:var(--primary-color);pointer-events:none;z-index:1}
       #cook4meCurrencyControl select{width:100%;height:40px;min-height:40px;border:0!important;background:transparent!important;padding:6px 7px 6px 29px!important;font-weight:650;cursor:pointer}
       #cook4meCurrencyControl select:focus{outline:1px solid var(--primary-color);outline-offset:-1px}
+
+      /* v32 originally clipped rx-advanced. v36 later moves it into a popup row,
+         so clipping makes More filters appear to do nothing even though <details>
+         has opened. The popup parent must be allowed to paint outside itself. */
+      .rx-today-row>details.rx-advanced{overflow:visible!important;position:relative!important}
+      .rx-today-row>details.rx-advanced[open]{z-index:65!important}
+      .rx-today-row>details.rx-advanced[open]>.rx-advanced-content{display:grid!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+      .rx-today-row>details.rx-today-picker[open]{z-index:65!important}
+
       @media(max-width:520px){#cook4meCurrencyControl .rx-currency-field{min-width:66px}#cook4meCurrencyControl select{padding-right:2px!important;font-size:12px}}
     `;
     this.shadowRoot.appendChild(style);
@@ -135,6 +144,41 @@ class Cook4MeRecipeHubPanelV45 extends BasePanel{
     return rest?`${primary} + ${rest}`:primary;
   }
 
+  _updateTodayBulkButton(c,group){
+    const button=c.querySelector(`[data-today-bulk="${group}"]`);if(!button)return;
+    let all=false;
+    if(group==="ingredients"){
+      const options=[...(c.querySelector("#todayIngredients")?.options||[])];
+      all=options.length>0&&options.every(option=>option.selected);
+    }else{
+      const selector=group==="meals"?"[data-today-meal-type]":"[data-today-language]";
+      const rows=[...c.querySelectorAll(selector)];
+      all=rows.length>0&&rows.every(row=>row.checked);
+    }
+    button.innerHTML=`<ha-icon icon="mdi:${all?"checkbox-multiple-blank-outline":"checkbox-multiple-marked-outline"}"></ha-icon><span>${this._escape(this._t(all?"deselectAll":"selectAll"))}</span>`;
+  }
+
+  _toggleTodayBulk(c,group){
+    /* Do not call _renderToday here. Replacing the planner DOM destroys the
+       currently-open <details> popup, which made Select/Deselect all close it. */
+    if(group==="ingredients"){
+      const select=c.querySelector("#todayIngredients");if(!select)return;
+      const options=[...select.options],all=options.length>0&&options.every(option=>option.selected);
+      options.forEach(option=>{option.selected=!all;});
+    }else{
+      const selector=group==="meals"?"[data-today-meal-type]":"[data-today-language]";
+      const rows=[...c.querySelectorAll(selector)],all=rows.length>0&&rows.every(row=>row.checked);
+      rows.forEach(row=>{
+        row.checked=!all;
+        row.closest(".rx-choice-card")?.classList.toggle("selected",!all);
+      });
+    }
+    this._rememberTodayFromUi(c);
+    this._updateTodayPickerCounts?.(c);
+    this._updateTodayBulkButton(c,group);
+    this._updateTodaySummary?.(c.querySelector(".rx-today-planner"));
+  }
+
   _renderShell(){
     super._renderShell();this._ensureCurrencyControl();queueMicrotask(()=>void this._loadCurrencyState(false));
   }
@@ -142,6 +186,11 @@ class Cook4MeRecipeHubPanelV45 extends BasePanel{
   _renderTabs(){
     super._renderTabs();this._ensureCurrencyControl();
     if(this._entryId&&this._currencyStateEntry!==String(this._entryId||""))queueMicrotask(()=>void this._loadCurrencyState(false));
+  }
+
+  _renderToday(c){
+    super._renderToday(c);
+    this._ensureCurrencyStyles();
   }
 
   _renderWeek(c){
