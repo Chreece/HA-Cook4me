@@ -207,8 +207,27 @@ async def _forced_recipe_cost(
     )
 
 
+async def _v30_recipe_cost_compat(
+    hass: HomeAssistant,
+    bridge: Any,
+    recipe: dict[str, Any],
+    *,
+    refresh_global: bool,
+    operation_id: str,
+) -> dict[str, Any]:
+    """Back v30's public cost command with the corrected v31 implementation."""
+    if refresh_global:
+        return await _forced_recipe_cost(hass, bridge, recipe, operation_id)
+    return await _recipe_cost_cached(hass, bridge, recipe, operation_id)
+
+
 @callback
 def async_register(hass: HomeAssistant) -> None:
+    # v30 is already registered by panel.py. Patch only its implementation so
+    # direct v30 callers get the same corrected behavior as the active v31 API.
+    from . import websocket_v30 as v30
+
+    v30._recipe_cost = _v30_recipe_cost_compat
     websocket_api.async_register_command(hass, ws_recipe_cost)
 
 
