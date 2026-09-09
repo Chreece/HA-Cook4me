@@ -17,6 +17,7 @@ from .expiry import (
     update_expiry_notification,
 )
 from .panel import async_register_panel
+from .release_catalog import async_warm_release_catalog
 from .websocket import async_register as async_register_websocket
 from .websocket_v5 import async_register as async_register_websocket_v5
 from .websocket_v7 import async_register as async_register_websocket_v7
@@ -152,6 +153,12 @@ def _register_completion_listener(bridge: Cook4MeBridge) -> None:
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     data = hass.data.setdefault(DOMAIN, {})
     data.setdefault(DATA_BRIDGES, {})
+
+    # A complete release catalog can contain thousands of recipes and nutrient
+    # profiles. Parse it once in HA's executor during integration setup so the
+    # first panel/search request never pays a synchronous JSON parse on the
+    # event loop. load_release_catalog() is LRU-cached after this warm-up.
+    await async_warm_release_catalog(hass)
 
     async def handle_send_recipe(call: ServiceCall) -> dict[str, Any] | None:
         bridge = _get_bridge(hass, call.data.get("entry_id"))
