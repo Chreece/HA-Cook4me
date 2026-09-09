@@ -43,6 +43,7 @@ jobs:
           bash -n tools/run_release_catalog_identity_probe.sh
           bash -n tools/run_release_catalog_family_identity_probe.sh
           bash -n tools/run_release_catalog_v2_capture.sh
+          bash -n tools/run_release_catalog_marketing_food_capture.sh
           python - <<'PY'
           import json
           from pathlib import Path
