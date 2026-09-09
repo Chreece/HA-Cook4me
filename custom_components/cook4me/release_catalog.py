@@ -49,6 +49,25 @@ def _variant_for_language(recipe: dict[str, Any], language: str) -> dict[str, An
     return english or variants[0]
 
 
+def _release_audit_complete(release: dict[str, Any]) -> bool:
+    """Return true only for an explicitly complete, non-partial release audit."""
+    if not bool(release.get("complete")):
+        return False
+    if release.get("failedLanguages"):
+        return False
+    try:
+        if int(release.get("failedDetailCount") or 0) > 0:
+            return False
+    except (TypeError, ValueError):
+        return False
+    audits = release.get("languageAudit")
+    if isinstance(audits, list) and any(
+        bool(row.get("truncated")) for row in audits if isinstance(row, dict)
+    ):
+        return False
+    return True
+
+
 def _recipe_card(recipe: dict[str, Any], language: str) -> dict[str, Any]:
     variant = _variant_for_language(recipe, language)
     titles = recipe.get("titles") if isinstance(recipe.get("titles"), dict) else {}
@@ -111,7 +130,7 @@ class Cook4MeReleaseCatalog:
 
     Runtime code never mutates this file. Detailed recipes, translations and
     prices remain local/persistent runtime caches. A release snapshot is used
-    only when it is explicitly marked complete, so a bootstrap or interrupted
+    only when the release audit is explicitly complete, so an interrupted
     catalog build cannot hide the proven live SEB fallback.
     """
 
@@ -130,7 +149,7 @@ class Cook4MeReleaseCatalog:
 
     @property
     def complete(self) -> bool:
-        return bool(self.release.get("complete"))
+        return _release_audit_complete(self.release)
 
     @property
     def usable(self) -> bool:
@@ -142,6 +161,7 @@ class Cook4MeReleaseCatalog:
             "schemaVersion": _SCHEMA_VERSION,
             "ingredientCount": len(self.ingredients),
             "recipeCount": len(self.recipes),
+            "auditComplete": self.complete,
             "usable": self.usable,
         }
 
