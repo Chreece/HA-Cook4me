@@ -25,7 +25,60 @@ class ReleaseCatalogTests(unittest.TestCase):
         mod.load_release_catalog.cache_clear()
         self.tmp.cleanup()
 
-    def _write(self, complete=True):
+    def _write(self, complete=True, *, include_de=True):
+        variants = [
+            {
+                "variantId": "VAR_EN",
+                "recipeFunctionalId": "REC_EN",
+                "groupingFunctionalId": "GROUP_1",
+                "title": "Tomato soup",
+                "language": "en",
+                "market": "GS_GB",
+                "servings": 4,
+                "ingredients": [
+                    {
+                        "key": "M_FOOD_TOMATO",
+                        "canonicalName": "Tomato",
+                        "translations": {"en": "Tomato", "de": "Tomate"},
+                        "quantity": 400,
+                        "unit": "g",
+                    }
+                ],
+                "nutrition": {
+                    "totals": {"energyKcal": 72},
+                    "perServing": {"energyKcal": 18},
+                    "coverage": 1,
+                    "estimated": True,
+                },
+            }
+        ]
+        if include_de:
+            variants.append(
+                {
+                    "variantId": "VAR_DE",
+                    "recipeFunctionalId": "REC_DE",
+                    "groupingFunctionalId": "GROUP_1",
+                    "title": "Tomatensuppe",
+                    "language": "de",
+                    "market": "GS_DE",
+                    "servings": 4,
+                    "ingredients": [
+                        {
+                            "key": "M_FOOD_TOMATO",
+                            "canonicalName": "Tomato",
+                            "translations": {"en": "Tomato", "de": "Tomate"},
+                            "quantity": 400,
+                            "unit": "g",
+                        }
+                    ],
+                    "nutrition": {
+                        "totals": {"energyKcal": 72},
+                        "perServing": {"energyKcal": 18},
+                        "coverage": 1,
+                        "estimated": True,
+                    },
+                }
+            )
         self.path.write_text(
             json.dumps(
                 {
@@ -38,8 +91,7 @@ class ReleaseCatalogTests(unittest.TestCase):
                             "canonicalName": "Tomato",
                             "translations": {"en": "Tomato", "de": "Tomate"},
                             "nutrition": {
-                                "basisQuantity": 100,
-                                "basisUnit": "g",
+                                "basis": "per100g",
                                 "values": {"energyKcal": 18, "protein": 0.9},
                                 "source": "usda_fdc",
                             },
@@ -49,56 +101,7 @@ class ReleaseCatalogTests(unittest.TestCase):
                         {
                             "groupingFunctionalId": "GROUP_1",
                             "canonicalName": "Tomato soup",
-                            "variants": [
-                                {
-                                    "variantId": "VAR_EN",
-                                    "recipeFunctionalId": "REC_EN",
-                                    "groupingFunctionalId": "GROUP_1",
-                                    "title": "Tomato soup",
-                                    "language": "en",
-                                    "market": "GS_GB",
-                                    "servings": 4,
-                                    "ingredients": [
-                                        {
-                                            "key": "M_FOOD_TOMATO",
-                                            "canonicalName": "Tomato",
-                                            "translations": {"en": "Tomato", "de": "Tomate"},
-                                            "quantity": 400,
-                                            "unit": "g",
-                                        }
-                                    ],
-                                    "nutrition": {
-                                        "totals": {"energyKcal": 72},
-                                        "perServing": {"energyKcal": 18},
-                                        "coverage": 1,
-                                        "estimated": True,
-                                    },
-                                },
-                                {
-                                    "variantId": "VAR_DE",
-                                    "recipeFunctionalId": "REC_DE",
-                                    "groupingFunctionalId": "GROUP_1",
-                                    "title": "Tomatensuppe",
-                                    "language": "de",
-                                    "market": "GS_DE",
-                                    "servings": 4,
-                                    "ingredients": [
-                                        {
-                                            "key": "M_FOOD_TOMATO",
-                                            "canonicalName": "Tomato",
-                                            "translations": {"en": "Tomato", "de": "Tomate"},
-                                            "quantity": 400,
-                                            "unit": "g",
-                                        }
-                                    ],
-                                    "nutrition": {
-                                        "totals": {"energyKcal": 72},
-                                        "perServing": {"energyKcal": 18},
-                                        "coverage": 1,
-                                        "estimated": True,
-                                    },
-                                },
-                            ],
+                            "variants": variants,
                         }
                     ],
                     "source": {"sourceCatalogCount": 21},
@@ -113,13 +116,16 @@ class ReleaseCatalogTests(unittest.TestCase):
         self.assertFalse(mod.release_catalog_ready())
         self.assertFalse(mod.release_catalog_summary()["offlineSearchReady"])
 
-    def test_ingredient_picker_uses_localized_name_but_keeps_canonical_identity(self):
+    def test_ingredient_picker_is_compact_localized_and_keeps_canonical_identity(self):
         self._write()
         rows = mod.ingredient_rows("de")
         self.assertEqual(rows[0]["key"], "M_FOOD_TOMATO")
         self.assertEqual(rows[0]["name"], "Tomate")
         self.assertEqual(rows[0]["canonicalName"], "Tomato")
-        self.assertEqual(rows[0]["nutrition"]["values"]["energyKcal"], 18)
+        self.assertNotIn("nutrition", rows[0])
+
+        enriched = mod.ingredient_rows("de", include_nutrition=True)
+        self.assertEqual(enriched[0]["nutrition"]["values"]["energyKcal"], 18)
 
     def test_offline_search_selects_display_language_and_device_send_variant(self):
         self._write()
@@ -135,7 +141,36 @@ class ReleaseCatalogTests(unittest.TestCase):
         self.assertEqual(result["items"][0]["title"], "Tomato soup")
         self.assertEqual(result["items"][0]["displayVariantId"], "VAR_EN")
         self.assertEqual(result["items"][0]["sendVariantId"], "VAR_DE")
+        self.assertTrue(result["items"][0]["sendable"])
         self.assertEqual(result["items"][0]["nutrition"]["perServing"]["energyKcal"], 18)
+
+    def test_foreign_only_recipe_remains_visible_but_not_sendable(self):
+        self._write(include_de=False)
+        result = mod.search_release_recipes(
+            "tomato",
+            language="en",
+            configured_language="de",
+            country="DE",
+            strict_language=True,
+        )
+        self.assertEqual(len(result["items"]), 1)
+        item = result["items"][0]
+        self.assertEqual(item["displayVariantId"], "VAR_EN")
+        self.assertFalse(item["sendable"])
+        self.assertNotIn("sendVariantId", item)
+        self.assertNotIn("sendRecipeFunctionalId", item)
+
+    def test_search_matches_variant_ingredient_translations(self):
+        self._write()
+        result = mod.search_release_recipes(
+            "tomate",
+            language="de",
+            configured_language="de",
+            country="DE",
+            strict_language=True,
+        )
+        self.assertEqual(len(result["items"]), 1)
+        self.assertEqual(result["items"][0]["displayVariantId"], "VAR_DE")
 
     def test_strict_language_does_not_mislabel_fallback_variant_as_source_catalog(self):
         self._write()
