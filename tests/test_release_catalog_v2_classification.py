@@ -25,9 +25,12 @@ class ReleaseCatalogV2ClassificationTests(unittest.TestCase):
         }
         self.localized = {}
 
-    def diet(self, ingredients):
+    def diet(self, ingredients, *, language="en", extra=None):
+        detail = {"language": language, "ingredients": ingredients}
+        if extra:
+            detail.update(extra)
         return classify.classify_variant_diet(
-            {"language": "en", "ingredients": ingredients},
+            detail,
             self.english,
             self.localized,
         )
@@ -68,6 +71,112 @@ class ReleaseCatalogV2ClassificationTests(unittest.TestCase):
         self.assertIsNone(row["primaryDiet"])
         self.assertIsNone(row["vegan"])
         self.assertTrue(row["evidence"]["unresolved"])
+
+    def test_structured_amount_and_unit_are_removed_before_label_matching(self):
+        name, changed = classify.semantic_ingredient_name(
+            {
+                "applicationDescription": "250 millilitres d'eau",
+                "quantity": 250,
+                "unit": {"name": "millilitre", "pluralName": "millilitres", "abbreviation": "ml"},
+            }
+        )
+        self.assertTrue(changed)
+        self.assertEqual("eau", name)
+
+    def test_unicode_exact_label_matching_keeps_non_latin_scripts(self):
+        self.english["WATER"] = "Water"
+        key = classify._label_norm("水")
+        localized = {
+            "ja": {key: {"WATER"}},
+            classify._GLOBAL_LABELS: {key: {"WATER"}},
+        }
+        row = classify.classify_variant_diet(
+            {"language": "ja", "ingredients": [{"cleanName": "水"}]},
+            self.english,
+            localized,
+        )
+        self.assertEqual("vegan", row["primaryDiet"])
+
+    def test_global_exact_label_match_is_semantic_only_and_can_cross_recipe_language(self):
+        self.english["WATER"] = "Water"
+        key = classify._label_norm("eau")
+        localized = {
+            classify._GLOBAL_LABELS: {key: {"WATER"}},
+        }
+        name, source, resolved = classify._ingredient_english(
+            {"cleanName": "eau"}, "uk", self.english, localized
+        )
+        self.assertTrue(resolved)
+        self.assertEqual("Water", name)
+        self.assertTrue(source.startswith("keyless:global-exact-label-semantic:"))
+
+    def test_multiple_exact_candidates_are_safe_when_english_semantics_are_identical(self):
+        self.english.update({"WATER1": "Water", "WATER2": "Water"})
+        key = classify._label_norm("víz")
+        localized = {
+            "hu": {key: {"WATER1", "WATER2"}},
+            classify._GLOBAL_LABELS: {key: {"WATER1", "WATER2"}},
+        }
+        name, _source, resolved = classify._ingredient_english(
+            {"cleanName": "víz"}, "hu", self.english, localized
+        )
+        self.assertTrue(resolved)
+        self.assertEqual("Water", name)
+
+    def test_coconut_and_almond_milk_do_not_trigger_dairy(self):
+        for name in ("Coconut milk", "Almond milk", "Soy milk", "Hazelnut milk"):
+            self.english["PLANT"] = name
+            row = self.diet([{"foodKey": "PLANT"}])
+            self.assertEqual("vegan", row["primaryDiet"], name)
+
+    def test_peanut_butter_is_not_dairy(self):
+        self.english["PB"] = "Peanut butter"
+        row = self.diet([{"foodKey": "PB"}])
+        self.assertEqual("vegan", row["primaryDiet"])
+
+    def test_kidney_beans_are_not_meat(self):
+        for name in ("Kidney bean", "Red Kidney beans"):
+            self.english["BEAN"] = name
+            row = self.diet([{"foodKey": "BEAN"}])
+            self.assertEqual("vegan", row["primaryDiet"], name)
+
+    def test_oyster_mushrooms_are_not_seafood(self):
+        self.english["MUSH"] = "Oyster mushrooms"
+        row = self.diet([{"foodKey": "MUSH"}])
+        self.assertEqual("vegan", row["primaryDiet"])
+
+    def test_vegetable_stock_is_plant_safe_but_generic_stock_is_reviewed(self):
+        self.english["STOCK"] = "Vegetable stock"
+        self.assertEqual("vegan", self.diet([{"foodKey": "STOCK"}])["primaryDiet"])
+        self.english["STOCK"] = "Stock"
+        row = self.diet([{"foodKey": "STOCK"}])
+        self.assertEqual("review_required", row["status"])
+        self.assertIn("ambiguous:stock", row["evidence"]["unresolved"])
+
+    def test_chicken_stock_is_meat_not_ambiguous_generic_stock(self):
+        self.english["STOCK"] = "Chicken stock"
+        row = self.diet([{"foodKey": "STOCK"}])
+        self.assertEqual("omnivore", row["primaryDiet"])
+
+    def test_parmesan_and_gruyere_are_nonvegan_even_without_word_cheese(self):
+        for name in ("Parmesan", "Gruyère", "Mimolette", "Emmental"):
+            self.english["DAIRY"] = name
+            row = self.diet([{"foodKey": "DAIRY"}])
+            self.assertEqual("vegetarian", row["primaryDiet"], name)
+
+    def test_vegetarian_sausage_does_not_become_omnivore_or_vegan(self):
+        self.english["VS"] = "Vegetarian sausage"
+        row = self.diet([{"foodKey": "VS"}])
+        self.assertEqual("review_required", row["status"])
+        self.assertIsNone(row["primaryDiet"])
+
+    def test_noisy_provider_categories_are_audit_only(self):
+        row = self.diet(
+            [{"foodKey": "VEG"}],
+            extra={"excludedFoods": [{"key": "FISH"}, {"key": "DAIRY"}]},
+        )
+        self.assertEqual("vegan", row["primaryDiet"])
+        self.assertEqual(["DAIRY", "FISH"], row["evidence"]["providerCategoryHints"])
 
     def test_provider_main_course_is_resolved_main(self):
         row = classify.classify_variant_meal(
