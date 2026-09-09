@@ -128,10 +128,9 @@ def _recipe_card(recipe: dict[str, Any], language: str) -> dict[str, Any]:
 class Cook4MeReleaseCatalog:
     """Immutable compact catalog shipped with an integration release.
 
-    Runtime code never mutates this file. Detailed recipes, translations and
-    prices remain local/persistent runtime caches. A release snapshot is used
-    only when the release audit is explicitly complete, so an interrupted
-    catalog build cannot hide the proven live SEB fallback.
+    Runtime code never mutates this file. Detailed recipes and prices remain
+    local/persistent runtime caches. A release snapshot is used only when both
+    its scan audit and every compact row satisfy the offline catalog contract.
     """
 
     def __init__(self, payload: dict[str, Any]) -> None:
@@ -148,12 +147,34 @@ class Cook4MeReleaseCatalog:
         }
 
     @property
+    def row_contract_complete(self) -> bool:
+        if not self.ingredients or not self.recipes:
+            return False
+        if any(
+            not _text(row.get("id"))
+            or not _text(row.get("canonicalName"))
+            or not isinstance(row.get("nutrition"), dict)
+            or not row.get("nutrition")
+            for row in self.ingredients
+        ):
+            return False
+        if any(
+            not _text(row.get("id"))
+            or not _text(row.get("canonicalTitle"))
+            or not isinstance(row.get("nutrition"), dict)
+            or not row.get("nutrition")
+            for row in self.recipes
+        ):
+            return False
+        return True
+
+    @property
     def complete(self) -> bool:
-        return _release_audit_complete(self.release)
+        return _release_audit_complete(self.release) and self.row_contract_complete
 
     @property
     def usable(self) -> bool:
-        return self.complete and bool(self.recipes) and bool(self.ingredients)
+        return self.complete
 
     def metadata(self) -> dict[str, Any]:
         return {
@@ -161,7 +182,8 @@ class Cook4MeReleaseCatalog:
             "schemaVersion": _SCHEMA_VERSION,
             "ingredientCount": len(self.ingredients),
             "recipeCount": len(self.recipes),
-            "auditComplete": self.complete,
+            "rowContractComplete": self.row_contract_complete,
+            "auditComplete": _release_audit_complete(self.release),
             "usable": self.usable,
         }
 
