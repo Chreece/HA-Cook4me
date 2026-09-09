@@ -58,22 +58,49 @@ def _tokens(storage_home: Path) -> dict[str, Any]:
     return value if isinstance(value, dict) else {}
 
 
+def _name_entries(value: Any, *, depth: int = 0) -> list[dict[str, Any]]:
+    """Find APK-proven DcpMarketingFoodName objects below ``name``.
+
+    The APK model proves these objects contain ``lang``, ``market`` and
+    ``value``. Backend transport wrappers around the Realm-list representation
+    are not semantically meaningful, so descend containers while only accepting
+    leaf dictionaries that expose a scalar ``value`` plus language/market
+    metadata.
+    """
+    if depth > 5:
+        return []
+    found: list[dict[str, Any]] = []
+    if isinstance(value, dict):
+        raw_value = value.get("value")
+        if isinstance(raw_value, (str, int, float)) and (
+            value.get("lang") not in (None, "") or value.get("market") not in (None, "")
+        ):
+            found.append(value)
+        for nested in value.values():
+            if isinstance(nested, (dict, list)):
+                found.extend(_name_entries(nested, depth=depth + 1))
+    elif isinstance(value, list):
+        for nested in value:
+            if isinstance(nested, (dict, list)):
+                found.extend(_name_entries(nested, depth=depth + 1))
+    return found
+
+
 def _localized_name(value: Any, language: str) -> str:
     if isinstance(value, str):
         return _text(value)
     if isinstance(value, dict):
-        return _text(value.get("value") or value.get("name") or value.get("label"))
-    if not isinstance(value, list):
+        direct = value.get("value") or value.get("name") or value.get("label")
+        if isinstance(direct, (str, int, float)):
+            return _text(direct)
+    if not isinstance(value, (list, dict)):
         return ""
+
     language = _text(language).lower().replace("_", "-").split("-", 1)[0]
+    entries = _name_entries(value)
     fallback = ""
-    for row in value:
-        if isinstance(row, str):
-            fallback = fallback or _text(row)
-            continue
-        if not isinstance(row, dict):
-            continue
-        name = _text(row.get("value") or row.get("name") or row.get("label"))
+    for row in entries:
+        name = _text(row.get("value"))
         if not name:
             continue
         fallback = fallback or name
@@ -103,12 +130,7 @@ def _candidates(payload: Any) -> list[dict[str, Any]]:
 
 
 def _marketing_food_candidates(value: Any, *, depth: int = 0) -> list[dict[str, Any]]:
-    """Find APK-shaped DcpMarketingFood objects inside one response row.
-
-    The APK model proves a marketing food carries ``key`` plus ``name``. Live
-    backend responses may wrap that model in transport metadata, so detect the
-    model structurally instead of guessing the wrapper property's name.
-    """
+    """Find APK-shaped DcpMarketingFood objects inside one response row."""
     if depth > 4:
         return []
     found: list[dict[str, Any]] = []
@@ -130,7 +152,6 @@ def _marketing_food_object(raw: dict[str, Any]) -> dict[str, Any] | None:
     candidates = _marketing_food_candidates(raw)
     if not candidates:
         return None
-    # Prefer the exact provider identity family observed in recipe details.
     foods = [row for row in candidates if _text(row.get("key")).startswith("M_FOOD_")]
     if len(foods) == 1:
         return foods[0]
@@ -149,9 +170,7 @@ def _shape(value: Any, *, depth: int = 0) -> Any:
             for key, nested in list(value.items())[:20]
         }
     if isinstance(value, list):
-        return [
-            _shape(value[0], depth=depth + 1)
-        ] if value else []
+        return [_shape(value[0], depth=depth + 1)] if value else []
     return type(value).__name__
 
 
@@ -183,10 +202,12 @@ def normalize_marketing_foods(payload: Any, language: str) -> tuple[list[dict[st
     candidates = _candidates(payload)
     by_key: "OrderedDict[str, dict[str, Any]]" = OrderedDict()
     missing_key = 0
+    missing_name = 0
     duplicate_rows = 0
     conflicting_labels = 0
     unparsed_rows = 0
     unparsed_shapes: list[Any] = []
+    missing_name_shapes: list[Any] = []
     for raw in candidates:
         food = _marketing_food_object(raw)
         if food is None:
@@ -195,13 +216,16 @@ def normalize_marketing_foods(payload: Any, language: str) -> tuple[list[dict[st
                 unparsed_shapes.append(_shape(raw))
             continue
         key = _text(food.get("key"))
+        if not key:
+            missing_key += 1
+            continue
         name = _localized_name(food.get("name"), language)
         if not name:
             name = _text(food.get("label") or food.get("title"))
         if not name:
-            continue
-        if not key:
-            missing_key += 1
+            missing_name += 1
+            if len(missing_name_shapes) < 3:
+                missing_name_shapes.append(_shape(food.get("name")))
             continue
         existing = by_key.get(key)
         if existing is None:
@@ -226,6 +250,8 @@ def normalize_marketing_foods(payload: Any, language: str) -> tuple[list[dict[st
         "truncated": truncated,
         "uniqueKeys": len(rows),
         "missingKeyRows": missing_key,
+        "missingNameRows": missing_name,
+        "missingNameShapeSamples": missing_name_shapes,
         "unparsedRows": unparsed_rows,
         "unparsedShapeSamples": unparsed_shapes,
         "duplicateRows": duplicate_rows,
@@ -249,9 +275,6 @@ def capture(args: argparse.Namespace) -> dict[str, Any]:
         market = f"GS_{country}"
         print(f"[marketing-foods] {language}/{market}", flush=True)
         try:
-            # Match the proven Home Assistant runtime path exactly: RCU and
-            # request-header country follow the target catalog's market, while
-            # the account/device language remains the configured language.
             pcfg = catalog._platform_context(
                 cfg, country, args.configured_language, APP_VERSION
             )
@@ -304,13 +327,16 @@ def capture(args: argparse.Namespace) -> dict[str, Any]:
                     ),
                 }
             )
-        elif stats.get("unparsedRows"):
+        elif stats.get("unparsedRows") or stats.get("missingNameRows"):
             state = "PARTIAL"
             errors.append(
                 {
                     "language": language,
                     "country": country,
-                    "error": f"Could not structurally parse {stats['unparsedRows']} marketing-food rows",
+                    "error": (
+                        f"Could not normalize {stats.get('unparsedRows', 0)} structurally unparsed "
+                        f"and {stats.get('missingNameRows', 0)} unnamed marketing-food rows"
+                    ),
                 }
             )
         catalogs.append(
