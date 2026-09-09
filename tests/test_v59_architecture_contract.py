@@ -9,6 +9,8 @@ WS = ROOT / "custom_components/cook4me/websocket_v30.py"
 COORD = ROOT / "custom_components/cook4me/request_coordinator.py"
 BUILDER = ROOT / "tools/build_release_catalog.py"
 CATALOG = ROOT / "custom_components/cook4me/catalog/merged_catalog.v1.json"
+RELEASE = ROOT / "custom_components/cook4me/release_catalog.py"
+INIT = ROOT / "custom_components/cook4me/__init__.py"
 COST_CACHE = ROOT / "custom_components/cook4me/recipe_cost_cache.py"
 TODAY = ROOT / "custom_components/cook4me/today_plan_store.py"
 V10 = ROOT / "custom_components/cook4me/websocket_v10.py"
@@ -53,6 +55,20 @@ class V59ArchitectureContractTests(unittest.TestCase):
         self.assertIn("canonicalEnglishNeedsReview", builder)
         self.assertIn("nutritionRequiredForComplete", builder)
         self.assertIn("secretsPersisted", builder)
+
+    def test_large_release_catalog_is_warmed_outside_home_assistant_event_loop(self):
+        release = RELEASE.read_text(encoding="utf-8")
+        setup = INIT.read_text(encoding="utf-8")
+        self.assertIn("async def async_warm_release_catalog", release)
+        self.assertIn("await hass.async_add_executor_job(load_release_catalog)", release)
+        self.assertIn("from .release_catalog import async_warm_release_catalog", setup)
+        self.assertIn("await async_warm_release_catalog(hass)", setup)
+
+    def test_ingredient_picker_payload_omits_nutrient_blobs_by_default(self):
+        release = RELEASE.read_text(encoding="utf-8")
+        self.assertIn("include_nutrition: bool = False", release)
+        self.assertIn("if include_nutrition and isinstance(raw.get(\"nutrition\"), dict):", release)
+        self.assertIn("limit: int | None = None", release)
 
     def test_runtime_paths_are_offline_first_with_safe_live_fallback(self):
         source = WS.read_text(encoding="utf-8")
