@@ -97,6 +97,15 @@ class V59ArchitectureContractTests(unittest.TestCase):
         self.assertIn("release_index.ingredient_rows(language)", ingredients)
         self.assertIn('"source": "cook4me_release_catalog"', ingredients)
 
+    def test_public_home_assistant_recipe_services_use_same_offline_first_search(self):
+        setup = INIT.read_text(encoding="utf-8")
+        service_section = setup[setup.index("async def handle_search"):setup.index("hass.services.async_register(")]
+        self.assertIn("recipe_search_api._search_with_diagnostic", service_section)
+        self.assertIn("strict_language=True", service_section)
+        self.assertIn('refresh=bool(call.data.get("refresh", False))', service_section)
+        self.assertNotIn("bridge.async_search_recipes", service_section)
+        self.assertNotIn("bridge.async_recommend_recipes", service_section)
+
     def test_cost_cache_invalidates_from_price_evidence_fingerprint(self):
         source = COST_CACHE.read_text(encoding="utf-8")
         self.assertIn("pricing_fingerprint", source)
