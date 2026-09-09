@@ -34,42 +34,83 @@ def _norm(value: Any) -> str:
     return "".join(out).strip()
 
 
+def _language(value: Any) -> str:
+    return _text(value).lower().replace("_", "-").split("-", 1)[0]
+
+
+def _empty_catalog(version: str) -> dict[str, Any]:
+    return {
+        "schemaVersion": _SCHEMA_VERSION,
+        "catalogVersion": version,
+        "complete": False,
+        "ingredients": [],
+        "recipes": [],
+        "_runtimeIngredientById": {},
+        "_runtimeRecipeByLanguage": {},
+        "_runtimeRawVariantCount": 0,
+    }
+
+
+def _prepare_runtime_indexes(payload: dict[str, Any]) -> None:
+    """Build small derived lookup indexes once after parsing the release file."""
+    ingredient_by_id: dict[str, dict[str, Any]] = {}
+    for raw in payload.get("ingredients") or []:
+        if not isinstance(raw, dict):
+            continue
+        ident = _text(raw.get("id") or raw.get("ingredientId") or raw.get("key") or raw.get("foodKey"))
+        key = _text(raw.get("key") or raw.get("foodKey"))
+        if ident:
+            ingredient_by_id[ident] = raw
+        if key:
+            ingredient_by_id.setdefault(key, raw)
+
+    by_language: dict[str, list[int]] = {}
+    raw_variant_count = 0
+    for index, recipe in enumerate(payload.get("recipes") or []):
+        if not isinstance(recipe, dict):
+            continue
+        languages: set[str] = set()
+        for variant in recipe.get("variants") or []:
+            if not isinstance(variant, dict):
+                continue
+            raw_variant_count += 1
+            if lang := _language(variant.get("language")):
+                languages.add(lang)
+        for lang in languages:
+            by_language.setdefault(lang, []).append(index)
+
+    payload["_runtimeIngredientById"] = ingredient_by_id
+    payload["_runtimeRecipeByLanguage"] = {
+        lang: tuple(indices) for lang, indices in by_language.items()
+    }
+    payload["_runtimeRawVariantCount"] = raw_variant_count
+
+
 @lru_cache(maxsize=1)
 def load_release_catalog() -> dict[str, Any]:
-    """Load the immutable release catalog shipped with the integration.
+    """Load and index the immutable release catalog shipped with the integration.
 
-    Runtime code must never mutate this object. Callers receive deep copies from
-    the public lookup helpers below. The integration warms this cache in an
-    executor during setup so a large release file is never first-parsed on the
-    Home Assistant event loop.
+    Runtime code must never mutate the persisted catalog. Derived keys prefixed
+    with ``_runtime`` exist only in this cached in-memory object. The integration
+    warms the cache in an executor during setup so a large release file is never
+    first-parsed on the Home Assistant event loop.
     """
     try:
         payload = json.loads(_CATALOG_PATH.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
-        return {
-            "schemaVersion": _SCHEMA_VERSION,
-            "catalogVersion": "missing",
-            "complete": False,
-            "ingredients": [],
-            "recipes": [],
-        }
+        return _empty_catalog("missing")
     if not isinstance(payload, dict) or int(payload.get("schemaVersion") or 0) != _SCHEMA_VERSION:
-        return {
-            "schemaVersion": _SCHEMA_VERSION,
-            "catalogVersion": "invalid",
-            "complete": False,
-            "ingredients": [],
-            "recipes": [],
-        }
+        return _empty_catalog("invalid")
     if not isinstance(payload.get("ingredients"), list):
         payload["ingredients"] = []
     if not isinstance(payload.get("recipes"), list):
         payload["recipes"] = []
+    _prepare_runtime_indexes(payload)
     return payload
 
 
 async def async_warm_release_catalog(hass: Any) -> dict[str, Any]:
-    """Parse the immutable catalog once without blocking Home Assistant's loop."""
+    """Parse and index the immutable catalog once without blocking HA's loop."""
     return await hass.async_add_executor_job(load_release_catalog)
 
 
@@ -84,6 +125,7 @@ def release_catalog_summary() -> dict[str, Any]:
         "ingredientCount": len(payload.get("ingredients") or []),
         "recipeCount": len(payload.get("recipes") or []),
         "sourceCatalogCount": int(source.get("sourceCatalogCount") or 0),
+        "auditedCatalogCount": int(source.get("auditedCatalogCount") or source.get("sourceCatalogCount") or 0),
         "offlineSearchReady": release_catalog_ready(),
     }
 
@@ -101,12 +143,28 @@ def release_catalog_ready() -> bool:
 
 def _translated_name(row: dict[str, Any], language: str) -> str:
     translations = row.get("translations") if isinstance(row.get("translations"), dict) else {}
-    language = _text(language).lower().replace("_", "-").split("-", 1)[0]
+    language = _language(language)
     return (
         _text(translations.get(language))
         or _text(row.get("canonicalName"))
         or _text(row.get("name"))
     )
+
+
+def _ingredient_reference(raw: Any) -> dict[str, Any] | None:
+    if not isinstance(raw, dict):
+        return None
+    payload = load_release_catalog()
+    lookup = payload.get("_runtimeIngredientById")
+    if not isinstance(lookup, dict):
+        return None
+    for value in (
+        raw.get("ingredientId"), raw.get("id"), raw.get("key"), raw.get("foodKey")
+    ):
+        ident = _text(value)
+        if ident and isinstance(lookup.get(ident), dict):
+            return lookup[ident]
+    return None
 
 
 def ingredient_rows(
@@ -147,7 +205,10 @@ def ingredient_rows(
         if wanted and wanted not in _norm(haystack):
             continue
         row: dict[str, Any] = {"name": name}
+        ident = _text(raw.get("id") or raw.get("ingredientId") or raw.get("key") or raw.get("foodKey"))
         key = _text(raw.get("key") or raw.get("foodKey"))
+        if ident:
+            row["id"] = ident
         if key:
             row["key"] = key
         if _text(raw.get("canonicalName")):
@@ -161,7 +222,7 @@ def ingredient_rows(
 
 
 def _variant_language(row: dict[str, Any]) -> str:
-    return _text(row.get("language")).lower().replace("_", "-").split("-", 1)[0]
+    return _language(row.get("language"))
 
 
 def _variant_market(row: dict[str, Any]) -> str:
@@ -184,8 +245,8 @@ def _choose_variant(
     variants = [row for row in recipe.get("variants") or [] if isinstance(row, dict)]
     if not variants:
         return None, None
-    requested = _text(language).lower().replace("_", "-").split("-", 1)[0]
-    configured = _text(configured_language).lower().replace("_", "-").split("-", 1)[0]
+    requested = _language(language)
+    configured = _language(configured_language)
     market = f"GS_{_text(country).upper()}"
 
     def display_score(row: dict[str, Any]) -> tuple[int, int, int, int]:
@@ -214,8 +275,9 @@ def _choose_variant(
 def _ingredient_search_values(raw: Any) -> list[str]:
     if not isinstance(raw, dict):
         return []
-    values = [_text(raw.get("canonicalName") or raw.get("name") or raw.get("foodName"))]
-    translations = raw.get("translations")
+    source = _ingredient_reference(raw) or raw
+    values = [_text(source.get("canonicalName") or source.get("name") or source.get("foodName"))]
+    translations = source.get("translations")
     if isinstance(translations, dict):
         values.extend(_text(value) for value in translations.values())
     return [value for value in values if value]
@@ -237,15 +299,32 @@ def _recipe_search_text(recipe: dict[str, Any]) -> str:
 def _display_ingredient(raw: Any, language: str) -> Any:
     if not isinstance(raw, dict):
         return deepcopy(raw)
-    row = deepcopy(raw)
-    name = _translated_name(row, language)
-    if name:
-        row["name"] = name
-        row.setdefault("foodName", name)
-    key = _text(row.get("key") or row.get("foodKey"))
+    source = _ingredient_reference(raw) or raw
+    name = _translated_name(source, language) or _translated_name(raw, language)
+    ident = _text(
+        raw.get("ingredientId")
+        or raw.get("id")
+        or source.get("id")
+        or source.get("ingredientId")
+        or raw.get("key")
+        or source.get("key")
+    )
+    key = _text(raw.get("key") or raw.get("foodKey") or source.get("key") or source.get("foodKey"))
+    row: dict[str, Any] = {}
+    if ident:
+        row["ingredientId"] = ident
     if key:
         row["key"] = key
         row["foodKey"] = key
+    if name:
+        row["name"] = name
+        row["foodName"] = name
+    canonical = _text(source.get("canonicalName") or raw.get("canonicalName"))
+    if canonical:
+        row["canonicalName"] = canonical
+    for field in ("quantity", "unit", "unitKey", "functionalId"):
+        if raw.get(field) not in (None, ""):
+            row[field] = deepcopy(raw[field])
     return row
 
 
@@ -293,14 +372,28 @@ def _recipe_row(
             for raw in (display.get("ingredients") or recipe.get("ingredients") or [])
         ],
         "nutrition": deepcopy(display.get("nutrition") or recipe.get("nutrition")),
-        "officialNutrition": deepcopy(
-            display.get("officialNutrition") or recipe.get("officialNutrition")
-        ),
         "catalogNutrition": deepcopy(display.get("nutrition") or recipe.get("nutrition")),
         "source": "cook4me_release_catalog",
         "releaseCatalogVersion": _text(load_release_catalog().get("catalogVersion")),
         "sendable": bool(send and send_grouping and send_variant and send_recipe),
-        "variants": deepcopy(recipe.get("variants") or []),
+        "variants": [
+            {
+                key: deepcopy(value)
+                for key, value in {
+                    "variantId": variant.get("variantId") or variant.get("searchVariantId"),
+                    "recipeFunctionalId": variant.get("recipeFunctionalId"),
+                    "groupingFunctionalId": variant.get("groupingFunctionalId"),
+                    "language": variant.get("language"),
+                    "market": variant.get("market"),
+                    "servings": variant.get("servings"),
+                    "yield": variant.get("yield"),
+                    "cover": variant.get("cover"),
+                }.items()
+                if value not in (None, "", {}, [])
+            }
+            for variant in recipe.get("variants") or []
+            if isinstance(variant, dict)
+        ],
     }
     servings = sorted(
         {
@@ -326,34 +419,43 @@ def search_release_recipes(
     size: int = 20,
     strict_language: bool = False,
 ) -> dict[str, Any]:
-    """Search the immutable merged catalog without network or persistent I/O."""
+    """Search the immutable merged catalog without network or full-row materialization."""
     page = max(0, int(page))
     size = max(1, min(_MAX_PAGE_SIZE, int(size)))
     wanted = _norm(query)
-    matches: list[dict[str, Any]] = []
-    for raw in load_release_catalog().get("recipes") or []:
+    payload = load_release_catalog()
+    recipes = payload.get("recipes") or []
+    requested = _language(language)
+    by_language = payload.get("_runtimeRecipeByLanguage")
+    if strict_language and isinstance(by_language, dict):
+        candidate_indices = by_language.get(requested, ())
+    else:
+        candidate_indices = range(len(recipes))
+
+    start = page * size
+    end = start + size
+    total = 0
+    items: list[dict[str, Any]] = []
+    for index in candidate_indices:
+        try:
+            raw = recipes[index]
+        except (IndexError, TypeError):
+            continue
         if not isinstance(raw, dict):
             continue
         if wanted and wanted not in _recipe_search_text(raw):
             continue
-        if strict_language:
-            requested = _text(language).lower().replace("_", "-").split("-", 1)[0]
-            if not any(
-                isinstance(variant, dict) and _variant_language(variant) == requested
-                for variant in (raw.get("variants") or [])
-            ):
-                continue
-        row = _recipe_row(
-            raw,
-            language=language,
-            configured_language=configured_language,
-            country=country,
-        )
-        if row:
-            matches.append(row)
-    start = page * size
-    items = matches[start : start + size]
-    total = len(matches)
+        if start <= total < end:
+            row = _recipe_row(
+                raw,
+                language=language,
+                configured_language=configured_language,
+                country=country,
+            )
+            if row:
+                items.append(row)
+        total += 1
+
     total_pages = (total + size - 1) // size if total else 0
     return {
         "ok": True,
@@ -367,7 +469,7 @@ def search_release_recipes(
             "totalElements": total,
             "totalPages": total_pages,
         },
-        "rawVariantCount": sum(len(row.get("variants") or []) for row in load_release_catalog().get("recipes") or []),
+        "rawVariantCount": int(payload.get("_runtimeRawVariantCount") or 0),
         "groupedRecipeCount": len(items),
         "items": items,
         "cacheHit": True,
@@ -375,7 +477,7 @@ def search_release_recipes(
         "offline": True,
         "strictLanguage": bool(strict_language),
         "searchContract": "repo-release-merged-catalog-v1",
-        "catalogVersion": _text(load_release_catalog().get("catalogVersion")),
+        "catalogVersion": _text(payload.get("catalogVersion")),
     }
 
 
