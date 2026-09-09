@@ -15,19 +15,24 @@ from . import websocket as legacy
 from . import websocket_v8 as v8
 from . import websocket_v9 as v9
 from . import websocket_v10 as v10
+from . import websocket_v11 as v11
 from . import websocket_v13 as v13
 from . import websocket_v18 as v18
+from . import websocket_v20 as v20
 from . import websocket_v22 as v22
+from . import websocket_v23 as v23
+from . import websocket_v27 as v27
 from . import websocket_v28 as v28
 from .const import CONF_COUNTRY, CONF_LANGUAGE, DATA_BRIDGES, DEFAULT_COUNTRY, DEFAULT_LANGUAGE, DOMAIN
+from .costs import cost_store_for_bridge
 from .food_intelligence import nutrition_goal_bonus, normalize_nutrition_goal
 from .meal_history import meal_history_store_for_bridge
 from .nutrition import nutrition_store_for_bridge
 from .nutrition_fefo import calculate_recipe_nutrition_fefo
 from .online_cache import online_cache_for_bridge
 from .operation_progress import publish_operation_progress
-from .recipe_book import recipe_book_store_for_bridge
 from .recipe_cache import stable_cache_key
+from .recipe_cost_cache import recipe_cost_cache_for_bridge
 from .release_catalog import release_catalog
 from .request_coordinator import request_coordinator
 from .today_logic import (
@@ -64,15 +69,14 @@ def _minimal_entry(entry_id: str, bridge) -> dict[str, Any]:
         "title": bridge.entry.title,
         "connected": bool(bridge.available),
         "canAcceptRecipe": bool(bridge.can_accept_recipe),
-        "loadedRecipe": v28.v27._loaded_recipe_summary(bridge.loaded_recipe),
-        "state": v28.v27._state_summary(getattr(bridge, "data", None)),
+        "loadedRecipe": v27._loaded_recipe_summary(bridge.loaded_recipe),
+        "state": v27._state_summary(getattr(bridge, "data", None)),
         "configuredLanguage": str(bridge.entry.data.get(CONF_LANGUAGE, DEFAULT_LANGUAGE)),
         "country": str(bridge.entry.data.get(CONF_COUNTRY, DEFAULT_COUNTRY)),
     }
 
 
 async def _minimal_seed_entry(hass: HomeAssistant, entry_id: str, bridge) -> tuple[dict[str, Any], dict[str, Any]]:
-    book = await recipe_book_store_for_bridge(bridge)
     catalog = release_catalog()
     return _minimal_entry(entry_id, bridge), {
         "capabilities": {
@@ -80,12 +84,10 @@ async def _minimal_seed_entry(hass: HomeAssistant, entry_id: str, bridge) -> tup
             "releaseCatalog": catalog.metadata(),
         },
         "uiPreferences": deepcopy(bridge.recipe_hub.ui_preferences),
-        "bookState": {
-            **book.snapshot(),
-            "deviceConnected": bool(bridge.available),
-            "deviceCanAccept": bool(bridge.can_accept_recipe),
-            "loadedRecipe": v28.v27._loaded_recipe_summary(bridge.loaded_recipe),
-        },
+        # Rich favourites/recipe-list snapshots can be hundreds of recipes.
+        # Null deliberately means "not loaded yet" so the existing section
+        # resource loader fetches Book only if/when the user opens that tab.
+        "bookState": None,
         "todayOptions": v28._today_options(bridge),
         "ingredientCatalog": [],
         "ingredientCatalogLanguage": "",
@@ -298,6 +300,56 @@ async def _recipe_detail(
     return annotated
 
 
+async def _recipe_cost(
+    hass: HomeAssistant,
+    bridge,
+    recipe: dict[str, Any],
+    *,
+    refresh_global: bool,
+    operation_id: str,
+) -> dict[str, Any]:
+    cost_store = await cost_store_for_bridge(bridge)
+    cost_cache = await recipe_cost_cache_for_bridge(bridge)
+    inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
+
+    if not refresh_global:
+        cached = cost_cache.get(recipe, inventory, cost_store)
+        if cached is not None:
+            cached["globalReferencesAdded"] = 0
+            return cached
+
+    coordinator = await request_coordinator(hass)
+    async with coordinator.operation(
+        "price_lookup",
+        "Recipe cost references",
+        entry_ids=[bridge.entry.entry_id],
+    ):
+        publish_operation_progress(
+            hass,
+            operation_id,
+            phase="pricing",
+            message="Checking relevant ingredient prices",
+        )
+        global_added = 0
+        if refresh_global or cost_store.settings.get("autoGlobalPrices"):
+            global_added = await v23._hydrate_global_prices_cached(
+                hass, bridge, cost_store, recipe
+            )
+
+        # Newly imported observations can change the relevant fingerprint. Check
+        # once more before recalculating so a known identical cost stays cheap.
+        if not refresh_global:
+            cached = cost_cache.get(recipe, inventory, cost_store)
+            if cached is not None:
+                cached["globalReferencesAdded"] = global_added
+                return cached
+
+        value = v20._recipe_cost_with_store(bridge, recipe, cost_store)
+        result = await cost_cache.async_set(recipe, inventory, cost_store, value)
+        result["globalReferencesAdded"] = global_added
+        return result
+
+
 async def _today_candidates(
     hass: HomeAssistant,
     bridge,
@@ -411,7 +463,8 @@ async def _build_today(hass: HomeAssistant, bridge, msg: dict[str, Any]) -> dict
     house = bridge.recipe_hub.profile.get("houseIngredients") or []
     scored: list[dict[str, Any]] = []
     total_ranked = max(1, len(ranked))
-    for index, item in enumerate(ranked, start=1):
+    processed = 0
+    for item in ranked:
         match = item.setdefault("match", {})
         if only_home and not bool(match.get("fullyAvailableByQuantity")):
             continue
@@ -454,12 +507,13 @@ async def _build_today(hass: HomeAssistant, bridge, msg: dict[str, Any]) -> dict
         )
         item["deviceCanAccept"] = bridge.can_accept_recipe
         scored.append(item)
+        processed += 1
         publish_operation_progress(
             hass,
             operation_id,
             phase="nutrition",
             message="Calculating nutrition",
-            completed=index,
+            completed=processed,
             total=total_ranked,
         )
 
@@ -523,6 +577,7 @@ def async_register(hass: HomeAssistant) -> None:
         ws_ingredient_catalog,
         ws_official_search,
         ws_recipe_detail,
+        ws_recipe_cost,
         ws_today_state,
         ws_today_suggest,
     ):
@@ -575,7 +630,7 @@ async def ws_ingredient_catalog(hass: HomeAssistant, connection, msg: dict[str, 
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         language = recipe_languages.normalize_catalog_language(
             _text(msg.get("language")),
-            v28.v11._device_language(bridge),
+            v11._device_language(bridge),
         )
         result = await _ingredient_catalog(hass, bridge, language, refresh=bool(msg.get("refresh")))
     except Exception as exc:
@@ -640,6 +695,32 @@ async def ws_recipe_detail(hass: HomeAssistant, connection, msg: dict[str, Any])
         publish_operation_progress(hass, operation_id, phase="done", message="Recipe ready", completed=1, total=1, done=True)
     except Exception as exc:
         publish_operation_progress(hass, operation_id, phase="error", message="Recipe failed", done=True, error=str(exc))
+        legacy._send_error(connection, msg, exc); return
+    connection.send_result(msg["id"], result)
+
+
+@websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/v30/recipe_cost",
+    vol.Optional("entry_id"): str,
+    vol.Required("recipe"): dict,
+    vol.Optional("refresh_global", default=False): bool,
+    vol.Optional("client_operation_id", default=""): str,
+})
+@websocket_api.async_response
+async def ws_recipe_cost(hass: HomeAssistant, connection, msg: dict[str, Any]) -> None:
+    operation_id = _op(msg)
+    try:
+        bridge = legacy._bridge(hass, msg.get("entry_id"))
+        result = await _recipe_cost(
+            hass,
+            bridge,
+            dict(msg["recipe"]),
+            refresh_global=bool(msg.get("refresh_global")),
+            operation_id=operation_id,
+        )
+        publish_operation_progress(hass, operation_id, phase="done", message="Recipe cost ready", completed=1, total=1, done=True)
+    except Exception as exc:
+        publish_operation_progress(hass, operation_id, phase="error", message="Recipe cost failed", done=True, error=str(exc))
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)
 
