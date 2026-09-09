@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "2026.9.9.2-bootstrap",
+  "generatedAt": "",
+  "source": "manual-release-audit",
+  "populationComplete": false,
+  "languages": [
+    {"code": "ar", "country": "AE"},
+    {"code": "bg", "country": "BG"},
+    {"code": "cs", "country": "CZ"},
+    {"code": "de", "country": "DE"},
+    {"code": "en", "country": "GB"},
+    {"code": "es", "country": "ES"},
+    {"code": "fr", "country": "FR"},
+    {"code": "hr", "country": "HR"},
+    {"code": "hu", "country": "HU"},
+    {"code": "it", "country": "IT"},
+    {"code": "ja", "country": "JP"},
+    {"code": "ko", "country": "KR"},
+    {"code": "pl", "country": "PL"},
+    {"code": "pt", "country": "PT"},
+    {"code": "ro", "country": "RO"},
+    {"code": "ru", "country": "RU"},
+    {"code": "sk", "country": "SK"},
+    {"code": "sl", "country": "SI"},
+    {"code": "tr", "country": "TR"},
+    {"code": "uk", "country": "UA"},
+    {"code": "zh", "country": "TW"}
+  ],
+  "ingredients": [],
+  "recipes": [],
+  "notes": "Reference catalog structure is active; populate only from sanitized proven catalog audits. No credentials or user data belong in this file."
+}
