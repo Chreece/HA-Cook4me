@@ -5,11 +5,16 @@
   "generatedAt": null,
   "source": {
     "contract": "standalone-proven-cookeo-brand-v5",
+    "format": "normalized-ingredient-references-v1",
     "applianceGroup": "APPLIANCE_GROUP_15",
     "recipeType": "BRAND",
+    "auditedCatalogCount": 28,
     "sourceCatalogCount": 21,
-    "auditedLanguageMarketMappings": 28,
-    "knownEmptyMappings": 7,
+    "emptyCatalogCount": 7,
+    "fullRecipeDetailStored": false,
+    "officialSebDetailStored": false,
+    "pricesStored": false,
+    "secretsPersisted": false,
     "note": "Runtime activates offline merged search only after a reviewed exhaustive release build sets complete=true."
   },
   "ingredients": [],
