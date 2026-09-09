@@ -1,28 +1,34 @@
 #!/usr/bin/env python3
 """Classify Cook4Me release recipes by diet suitability and meal/dish type.
 
-This stage is deliberately conservative. It consumes the reviewed provider v2
-capture plus the APK-exact marketing-food v3 dictionaries and writes derived
-classification metadata for the immutable release catalog. Provider recipe and
-ingredient IDs are never changed by classification.
+This stage is deliberately conservative. Provider recipe/ingredient IDs are
+never changed by classification. Positive diet claims (especially ``vegan``)
+require every food line to have usable semantic evidence; one unresolved or
+ambiguous ingredient blocks that claim. Proven meat is sufficient to resolve a
+recipe as omnivore even when an unrelated line is still unresolved.
 
-Diet suitability is derived from normalized/canonical ingredient evidence. A
-negative claim such as ``vegan`` is emitted only when every ingredient line is
-accounted for and no ambiguous animal-origin composite remains. Known meat is
-enough to resolve ``omnivore`` immediately. Keyless/untranslated ingredients
-remain explicit blockers rather than being guessed.
+Ingredient semantics prefer stable provider food IDs. Keyless lines may borrow
+only a *semantic English label* from the SEB marketing-food dictionary when an
+exact localized label match is unambiguous, or when every exact candidate has
+the same canonical English meaning. This never promotes a missing provider ID.
 
-Meal type prefers SEB's provider taxonomy (``courses`` / ``occasions``) when it
-is present. The older reviewed provider v2 capture predates retention of those
-fields, so title-based matches are provisional/review-required for that capture.
-Future crawls should retain provider taxonomy and then classify it as resolved.
+SEB category/exclusion metadata is retained as audit evidence only. Live catalog
+evidence proves those categories can be overbroad, so they do not establish a
+diet class by themselves. Likewise, SEB VEGAN/VEGETARIAN occasion tags are
+handled later as non-authoritative hints.
+
+Meal type prefers SEB ``courses`` / ``occasions`` when present. A later v3
+refinement distinguishes normal recipes from SEB ``IS_FOOD_COOKING`` ingredient
+preparation entries and applies the small reviewed taxonomy-gap table.
 """
 from __future__ import annotations
 
 import argparse
 from collections import defaultdict
+import functools
 import gzip
 import json
+import math
 from pathlib import Path
 import re
 import unicodedata
@@ -33,18 +39,11 @@ ROOT = Path(__file__).resolve().parents[1]
 REVIEWED_FOOD_ENGLISH = ROOT / "tools" / "release_catalog_reviewed_provider_food_english.v2.json"
 PROVIDER_KIND = "cook4me-provider-capture"
 MARKETING_KIND = "cook4me-marketing-food-capture-v3"
+_GLOBAL_LABELS = "__global__"
 
 MEAL_TYPES = (
-    "breakfast",
-    "starter",
-    "salad",
-    "soup",
-    "main",
-    "side",
-    "dessert",
-    "snack",
+    "breakfast", "starter", "salad", "soup", "main", "side", "dessert", "snack",
 )
-
 _MEAL_ALIASES: dict[str, tuple[str, ...]] = {
     "breakfast": (
         "BREAKFAST", "BRUNCH", "FRUHSTUCK", "FRUEHSTUECK", "FRÜHSTÜCK",
@@ -52,16 +51,11 @@ _MEAL_ALIASES: dict[str, tuple[str, ...]] = {
         "CAFE DA MANHA", "CAFÉ DA MANHÃ", "PROINO", "ΠΡΩΙΝΟ",
     ),
     "starter": (
-        "STARTER", "APPETIZER", "APPETISER", "ENTREE", "ENTRÉE",
-        "VORSPEISE", "ENTRADA", "ANTIPASTO", "OREKTIKO", "ΟΡΕΚΤΙΚΟ",
+        "STARTER", "APPETIZER", "APPETISER", "ENTREE", "ENTRÉE", "VORSPEISE",
+        "ENTRADA", "ANTIPASTO", "OREKTIKO", "ΟΡΕΚΤΙΚΟ",
     ),
-    "salad": (
-        "SALAD", "SALAT", "SALADE", "ENSALADA", "INSALATA", "SALATA",
-        "ΣΑΛΑΤΑ",
-    ),
-    "soup": (
-        "SOUP", "SUPPE", "SOUPE", "SOPA", "ZUPPA", "SOUPA", "ΣΟΥΠΑ",
-    ),
+    "salad": ("SALAD", "SALAT", "SALADE", "ENSALADA", "INSALATA", "SALATA", "ΣΑΛΑΤΑ"),
+    "soup": ("SOUP", "SUPPE", "SOUPE", "SOPA", "ZUPPA", "SOUPA", "ΣΟΥΠΑ"),
     "main": (
         "MAIN", "MAIN COURSE", "MAIN_COURSE", "MAIN DISH", "MAIN_DISH",
         "HAUPTGERICHT", "PLAT PRINCIPAL", "PLATO PRINCIPAL", "SECONDO",
@@ -69,67 +63,89 @@ _MEAL_ALIASES: dict[str, tuple[str, ...]] = {
     ),
     "side": (
         "SIDE", "SIDE DISH", "SIDE_DISH", "BEILAGE", "ACCOMPANIMENT",
-        "GUARNICION", "GUARNICIÓN", "CONTORNO", "SYNODEFTIKO",
-        "ΣΥΝΟΔΕΥΤΙΚΟ",
+        "GUARNICION", "GUARNICIÓN", "CONTORNO", "SYNODEFTIKO", "ΣΥΝΟΔΕΥΤΙΚΟ",
     ),
-    "dessert": (
-        "DESSERT", "NACHSPEISE", "POSTRE", "DOLCE", "EPIDORPIO",
-        "ΓΛΥΚΟ", "ΕΠΙΔΟΡΠΙΟ",
-    ),
-    "snack": (
-        "SNACK", "COLLATION", "MERIENDA", "SPUNTINO", "SNAK", "ΣΝΑΚ",
-    ),
+    "dessert": ("DESSERT", "NACHSPEISE", "POSTRE", "DOLCE", "EPIDORPIO", "ΓΛΥΚΟ", "ΕΠΙΔΟΡΠΙΟ"),
+    "snack": ("SNACK", "COLLATION", "MERIENDA", "SPUNTINO", "SNAK", "ΣΝΑΚ"),
 }
 
+# Flesh/animal ingredients that are neither vegetarian nor pescatarian.
 _MEAT_TERMS = {
-    "meat", "beef", "veal", "pork", "ham", "bacon", "pancetta",
-    "prosciutto", "sausage", "chorizo", "salami", "chicken", "turkey",
-    "duck", "goose", "lamb", "mutton", "rabbit", "venison", "liver",
-    "kidney", "offal", "lard", "gelatin", "gelatine",
+    "meat", "beef", "veal", "pork", "ham", "bacon", "pancetta", "prosciutto",
+    "sausage", "chorizo", "salami", "chicken", "poultry", "turkey", "duck",
+    "goose", "lamb", "mutton", "rabbit", "venison", "liver", "kidney", "offal",
+    "lard", "gelatin", "gelatine", "poussin", "cockerel", "capon", "quail",
+    "guinea fowl", "foie gras", "tripe", "black pudding", "white pudding",
+    "bresaola", "mortadella", "merguez", "andouille", "andouillette", "chipolata",
+    "frankfurt sausage", "coppa", "bone marrow", "demi glace", "demi-glace",
+    "snail", "snails",
 }
 _FISH_TERMS = {
-    "fish", "salmon", "tuna", "cod", "haddock", "trout", "mackerel",
-    "sardine", "anchovy", "bonito", "roe", "tarako", "shrimp", "prawn",
-    "crab", "lobster", "mussel", "clam", "oyster", "scallop", "squid",
-    "octopus", "seafood", "eel", "halibut", "plaice", "pollock", "hake",
-    "sole", "bream", "mullet", "monkfish", "flatfish",
+    "fish", "salmon", "tuna", "cod", "haddock", "trout", "mackerel", "sardine",
+    "anchovy", "bonito", "roe", "tarako", "shrimp", "prawn", "crab", "lobster",
+    "mussel", "clam", "oyster", "scallop", "squid", "octopus", "seafood", "eel",
+    "halibut", "plaice", "pollock", "hake", "sole", "bream", "mullet", "monkfish",
+    "flatfish", "swordfish", "cuttlefish", "skate", "pike", "ling", "yellowtail",
+    "perch", "crayfish", "cockle", "calamari", "milkfish", "barramundi", "flounder",
+    "fish sauce", "oyster sauce", "seafood stick", "worcester sauce", "worcestershire",
 }
-_VEGETARIAN_ANIMAL_TERMS = {
-    "milk", "cream", "butter", "cheese", "yogurt", "yoghurt", "egg",
-    "eggs", "honey", "whey", "casein", "ghee",
+# Animal products allowed by vegetarian but not vegan diets. Include provider
+# names that omit the literal word "cheese" (Parmesan, Gruyère, etc.).
+_NONVEGAN_TERMS = {
+    "milk", "cream", "butter", "cheese", "yogurt", "yoghurt", "egg", "eggs",
+    "honey", "whey", "casein", "ghee", "parmesan", "emmental", "mozzarella",
+    "feta", "mascarpone", "ricotta", "cheddar", "gruyere", "gorgonzola",
+    "mimolette", "camembert", "roquefort", "morbier", "raclette", "comte",
+    "reblochon", "beaufort", "tomme", "fromage frais", "goat s cheese",
+    "goat s milk", "creme fraiche", "bechamel", "mayonnaise", "dulce de leche",
+    "ice cream",
 }
+# Composite/prepared ingredients whose animal content cannot be safely inferred
+# from the generic label. These block positive diet claims until reviewed.
 _AMBIGUOUS_ANIMAL_ORIGIN_TERMS = {
-    "stock", "broth", "bouillon", "consomme", "dashi", "dashida",
-    "dressing", "gravy", "worcestershire", "pesto", "kimchi",
+    "stock", "stock cube", "broth", "bouillon", "consomme", "dashi", "dashida",
+    "dressing", "gravy", "pesto", "kimchi", "quenelle", "ravioli", "spring roll",
+    "dehydrated soup", "jelly", "curry paste", "barbecue sauce", "satay sauce",
+    "spicy sauce", "chocolate", "praline", "margarine", "brioche", "biscuit",
+    "shortbread", "madeleine", "puff pastry", "shortcrust pastry", "filo dough",
+    "bread", "crouton", "tortilla", "tacos", "hot cake mix",
 }
 _EQUIPMENT_TERMS = {
-    "mold", "mould", "ramekin", "foil", "aluminium", "aluminum",
-    "parchment", "baking paper", "skewer", "toothpick", "twine",
-    "kitchen string", "jar", "container",
+    "mold", "mould", "ramekin", "foil", "aluminium", "aluminum", "parchment",
+    "baking paper", "skewer", "toothpick", "twine", "kitchen string", "jar",
+    "container",
 }
-
-_MEAT_EXCLUSION_KEYS = {
-    "MEAT", "BEEF", "PORK", "POULTRY", "CHICKEN", "TURKEY", "LAMB",
+_PLANT_QUALIFIERS = {
+    "coconut", "coco", "almond", "soy", "soya", "hazelnut", "oat", "rice",
+    "cashew", "peanut", "cocoa", "cacao", "chestnut", "vegetable", "vegan", "plant",
 }
-_FISH_EXCLUSION_KEYS = {"FISH", "SEAFOOD", "SHELLFISH"}
-_NONVEGAN_EXCLUSION_KEYS = {
-    "DAIRY", "CHEESE", "MILK", "EGG", "EGGS", "HONEY",
-}
+_AMOUNT_PREPOSITIONS = (
+    "d'", "de ", "du ", "des ", "di ", "da ", "do ", "dos ", "das ",
+    "del ", "della ", "of ",
+)
 
 
 def _text(value: Any) -> str:
     return re.sub(r"\s+", " ", str(value or "").strip())
 
 
-def _norm(value: Any) -> str:
+@functools.lru_cache(maxsize=32768)
+def _label_norm(value: str) -> str:
+    """Unicode-safe exact-label normalization; never discard non-Latin scripts."""
+    return re.sub(r"\s+", " ", unicodedata.normalize("NFKC", _text(value))).casefold()
+
+
+@functools.lru_cache(maxsize=32768)
+def _english_norm(value: str) -> str:
+    """ASCII-ish normalization used only after text is known to be English."""
     text = unicodedata.normalize("NFKD", _text(value).casefold())
     text = "".join(ch for ch in text if not unicodedata.combining(ch))
     return " ".join(re.sub(r"[^a-z0-9]+", " ", text).split())
 
 
-def _contains(text: str, term: str) -> bool:
-    haystack = _norm(text).split()
-    needle = _norm(term).split()
+def _contains_english(text: str, term: str) -> bool:
+    haystack = _english_norm(text).split()
+    needle = _english_norm(term).split()
     if not haystack or not needle:
         return False
     if len(needle) == 1:
@@ -139,7 +155,7 @@ def _contains(text: str, term: str) -> bool:
 
 
 def _hits(text: str, terms: set[str]) -> list[str]:
-    return sorted(term for term in terms if _contains(text, term))
+    return sorted(term for term in terms if _contains_english(text, term))
 
 
 def _load_payload(path: Path, expected_kind: str) -> dict[str, Any]:
@@ -180,9 +196,12 @@ def _reviewed_food_english() -> tuple[dict[str, str], set[str]]:
     return names, medium
 
 
-def _marketing_maps(marketing: dict[str, Any]) -> tuple[dict[str, str], dict[str, dict[str, set[str]]]]:
+def _marketing_maps(
+    marketing: dict[str, Any],
+) -> tuple[dict[str, str], dict[str, dict[str, set[str]]]]:
     english: dict[str, str] = {}
     localized: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
+    global_labels: dict[str, set[str]] = defaultdict(set)
     for catalog in marketing.get("catalogs") or []:
         language = _text(catalog.get("language")).lower()
         for item in catalog.get("items") or []:
@@ -192,21 +211,75 @@ def _marketing_maps(marketing: dict[str, Any]) -> tuple[dict[str, str], dict[str
             name = _text(item.get("name"))
             if not key or not name:
                 continue
-            localized[language][_norm(name)].add(key)
+            normalized = _label_norm(name)
+            localized[language][normalized].add(key)
+            global_labels[normalized].add(key)
             if language == "en":
                 english[key] = name
     reviewed, _medium = _reviewed_food_english()
     for key, name in reviewed.items():
         english.setdefault(key, name)
+    localized[_GLOBAL_LABELS] = global_labels
     return english, localized
 
 
-def _semantic_name(item: dict[str, Any]) -> str:
+def _quantity_forms(value: Any) -> list[str]:
+    if value in (None, ""):
+        return []
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return []
+    if not math.isfinite(number):
+        return []
+    if number.is_integer():
+        return list(dict.fromkeys((str(int(number)), f"{number:.1f}", f"{number:.1f}".replace(".", ","))))
+    compact = f"{number:g}"
+    return list(dict.fromkeys((compact, compact.replace(".", ","))))
+
+
+def semantic_ingredient_name(item: dict[str, Any]) -> tuple[str, bool]:
+    """Recover a semantic keyless label using only preserved structured evidence."""
+    source = ""
     for field in ("foodName", "applianceDescription", "applicationDescription", "cleanName"):
-        value = _text(item.get(field))
-        if value:
-            return value
-    return ""
+        source = _text(item.get(field))
+        if source:
+            break
+    if not source:
+        return "", False
+    unit = item.get("unit") if isinstance(item.get("unit"), dict) else {}
+    units = list(
+        dict.fromkeys(
+            _text(unit.get(field))
+            for field in ("name", "pluralName", "abbreviation")
+            if _text(unit.get(field))
+        )
+    )
+    for quantity in sorted(_quantity_forms(item.get("quantity")), key=len, reverse=True):
+        for unit_name in sorted(units, key=len, reverse=True):
+            pattern = (
+                rf"^\s*{re.escape(quantity)}\s*{re.escape(unit_name)}"
+                rf"(?=\s|[-–—,:;]|$)\s*[-–—,:;]?\s*"
+            )
+            cleaned = re.sub(pattern, "", source, count=1, flags=re.IGNORECASE | re.UNICODE)
+            if cleaned != source and _text(cleaned):
+                cleaned = _text(cleaned)
+                lowered = cleaned.casefold()
+                for prefix in _AMOUNT_PREPOSITIONS:
+                    if lowered.startswith(prefix):
+                        cleaned = cleaned[len(prefix) :].strip(" '\t")
+                        break
+                return _text(cleaned), True
+        pattern = rf"^\s*{re.escape(quantity)}(?=\s)\s+"
+        cleaned = re.sub(pattern, "", source, count=1, flags=re.IGNORECASE | re.UNICODE)
+        if cleaned != source and _text(cleaned):
+            return _text(cleaned), True
+    return source, False
+
+
+def _single_semantic_name(keys: set[str], english: dict[str, str]) -> str:
+    names = {_text(english.get(key)) for key in keys if _text(english.get(key))}
+    return next(iter(names)) if len(names) == 1 else ""
 
 
 def _ingredient_english(
@@ -217,25 +290,95 @@ def _ingredient_english(
 ) -> tuple[str, str, bool]:
     key = _text(item.get("foodKey"))
     if key:
-        name = english.get(key, "")
+        name = _text(english.get(key))
         return name, f"provider:{key}", bool(name)
 
-    source = _semantic_name(item)
+    source, _cleaned = semantic_ingredient_name(item)
     if not source:
         return "", "empty-keyless", False
+    normalized = _label_norm(source)
+    candidates = set((localized.get(language) or {}).get(normalized, set()))
+    name = _single_semantic_name(candidates, english)
+    if name:
+        return name, "keyless:exact-label-semantic:" + "|".join(sorted(candidates)), True
+
+    # A recipe line can contain a foreign-language label. Cross-language exact
+    # matching is safe only when every provider candidate has the same English
+    # semantic name. Identity remains keyless.
+    global_candidates = set((localized.get(_GLOBAL_LABELS) or {}).get(normalized, set()))
+    name = _single_semantic_name(global_candidates, english)
+    if name:
+        return name, "keyless:global-exact-label-semantic:" + "|".join(sorted(global_candidates)), True
+
     if language == "en":
         return source, "keyless:english", True
-    candidates = localized.get(language, {}).get(_norm(source), set())
-    if len(candidates) == 1:
-        candidate = next(iter(candidates))
-        name = english.get(candidate, "")
-        if name:
-            return name, f"keyless:exact-label-candidate:{candidate}", True
     return "", f"keyless:unresolved:{source}", False
 
 
-def _excluded_keys(detail: dict[str, Any]) -> set[str]:
-    out: set[str] = set()
+def _plant_qualified(tokens: list[str], index: int) -> bool:
+    return index > 0 and tokens[index - 1] in _PLANT_QUALIFIERS
+
+
+def _semantic_food_flags(name: str) -> tuple[list[str], list[str], list[str], list[str]]:
+    """Return meat, fish, non-vegan and ambiguous evidence for one English food."""
+    normalized = _english_norm(name)
+    meat_hits = _hits(normalized, _MEAT_TERMS)
+    fish_hits = _hits(normalized, _FISH_TERMS)
+    nonvegan_hits = _hits(normalized, _NONVEGAN_TERMS)
+    ambiguous_hits = _hits(normalized, _AMBIGUOUS_ANIMAL_ORIGIN_TERMS)
+
+    if "kidney bean" in normalized or "kidney beans" in normalized:
+        meat_hits = [value for value in meat_hits if value != "kidney"]
+    if "oyster mushroom" in normalized or "oyster mushrooms" in normalized:
+        fish_hits = [value for value in fish_hits if value != "oyster"]
+    if any(
+        phrase in normalized
+        for phrase in ("vegetarian sausage", "vegan sausage", "plant based sausage")
+    ):
+        meat_hits = [value for value in meat_hits if value != "sausage"]
+        if "vegan sausage" not in normalized:
+            ambiguous_hits.append("vegetarian sausage composition")
+
+    tokens = normalized.split()
+    for term in ("milk", "cream", "butter"):
+        if term not in nonvegan_hits:
+            continue
+        indices = [index for index, token in enumerate(tokens) if token == term]
+        # peanut/coconut/etc milk/cream/butter are plant ingredients; "butter
+        # bean" is handled separately below.
+        if indices and all(_plant_qualified(tokens, index) for index in indices):
+            nonvegan_hits = [value for value in nonvegan_hits if value != term]
+    if "butter bean" in normalized or "butter beans" in normalized:
+        nonvegan_hits = [value for value in nonvegan_hits if value != "butter"]
+
+    for generic in ("stock", "stock cube", "broth", "bouillon"):
+        if generic not in ambiguous_hits:
+            continue
+        if any(
+            phrase in normalized
+            for phrase in (
+                f"vegetable {generic}", f"vegetarian {generic}", f"vegan {generic}"
+            )
+        ):
+            ambiguous_hits = [value for value in ambiguous_hits if value != generic]
+
+    # Explicit animal stock already has stronger meat/fish evidence; the generic
+    # stock ambiguity adds nothing and would otherwise prevent resolution.
+    if meat_hits or fish_hits:
+        ambiguous_hits = [
+            value for value in ambiguous_hits
+            if value not in {"stock", "stock cube", "broth", "bouillon"}
+        ]
+
+    return (
+        sorted(set(meat_hits)), sorted(set(fish_hits)),
+        sorted(set(nonvegan_hits)), sorted(set(ambiguous_hits)),
+    )
+
+
+def _provider_category_hints(detail: dict[str, Any]) -> list[str]:
+    """Expose noisy provider exclusion/categories for audit, never as diet truth."""
+    values: set[str] = set()
     for field in ("excludedFoods", "detectedExcludedFoods"):
         for raw in detail.get(field) or []:
             if isinstance(raw, dict):
@@ -243,8 +386,8 @@ def _excluded_keys(detail: dict[str, Any]) -> set[str]:
             else:
                 value = raw
             if value:
-                out.add(_text(value).upper())
-    return out
+                values.add(_text(value).upper())
+    return sorted(values)
 
 
 def classify_variant_diet(
@@ -253,43 +396,44 @@ def classify_variant_diet(
     localized: dict[str, dict[str, set[str]]],
 ) -> dict[str, Any]:
     language = _text(detail.get("language")).lower()
-    ingredient_names: list[str] = []
     unresolved: list[str] = []
     equipment: list[str] = []
-    for item in detail.get("ingredients") or []:
-        if not isinstance(item, dict):
-            continue
+    meat_hits: list[str] = []
+    fish_hits: list[str] = []
+    nonvegan_hits: list[str] = []
+    ambiguous_hits: list[str] = []
+
+    ingredients = [item for item in detail.get("ingredients") or [] if isinstance(item, dict)]
+    if not ingredients:
+        unresolved.append("no-classifiable-food-ingredients")
+    for item in ingredients:
         name, source, resolved = _ingredient_english(item, language, english, localized)
         if not resolved:
             unresolved.append(source)
             continue
-        if any(_contains(name, term) for term in _EQUIPMENT_TERMS):
+        # Equipment is only ignored on keyless lines. A provider marketing-food
+        # identity is always treated as a food ingredient.
+        if not _text(item.get("foodKey")) and any(
+            _contains_english(name, term) for term in _EQUIPMENT_TERMS
+        ):
             equipment.append(name)
             continue
-        ingredient_names.append(name)
-        # English text can prove animal content, but without provider identity it
-        # must not prove the absence of animal content for a permanent diet tag.
+        meat, fish, nonvegan, ambiguous = _semantic_food_flags(name)
+        meat_hits.extend(meat)
+        fish_hits.extend(fish)
+        nonvegan_hits.extend(nonvegan)
+        ambiguous_hits.extend(ambiguous)
+        # Free English prose can prove animal presence but cannot prove absence
+        # for a permanent positive vegan/vegetarian claim.
         if source == "keyless:english":
             unresolved.append(f"keyless:english:{name}")
 
-    if not ingredient_names and not unresolved:
-        unresolved.append("no-classifiable-food-ingredients")
-
-    joined = " | ".join(ingredient_names)
-    meat_hits = _hits(joined, _MEAT_TERMS)
-    fish_hits = _hits(joined, _FISH_TERMS)
-    vegetarian_animal_hits = _hits(joined, _VEGETARIAN_ANIMAL_TERMS)
-    ambiguous_hits = _hits(joined, _AMBIGUOUS_ANIMAL_ORIGIN_TERMS)
-    exclusion_keys = _excluded_keys(detail)
-    meat_key_hits = sorted(exclusion_keys & _MEAT_EXCLUSION_KEYS)
-    fish_key_hits = sorted(exclusion_keys & _FISH_EXCLUSION_KEYS)
-    nonvegan_key_hits = sorted(exclusion_keys & _NONVEGAN_EXCLUSION_KEYS)
-
-    has_meat = bool(meat_hits or meat_key_hits)
-    has_fish = bool(fish_hits or fish_key_hits)
-    has_nonvegan = bool(vegetarian_animal_hits or nonvegan_key_hits)
-    blockers = list(unresolved)
-    blockers.extend(f"ambiguous:{value}" for value in ambiguous_hits)
+    has_meat = bool(meat_hits)
+    has_fish = bool(fish_hits)
+    has_nonvegan = bool(nonvegan_hits)
+    blockers = sorted(
+        set(unresolved + [f"ambiguous:{value}" for value in ambiguous_hits])
+    )
 
     vegan: bool | None = False if (has_meat or has_fish or has_nonvegan) else None
     vegetarian: bool | None = False if (has_meat or has_fish) else None
@@ -298,21 +442,17 @@ def classify_variant_diet(
 
     if has_meat:
         primary = "omnivore"
-        vegan = False
-        vegetarian = False
-        pescatarian = False
+        vegan = vegetarian = pescatarian = False
         status = "resolved"
     elif not blockers:
         if has_fish:
             primary = "pescatarian"
-            vegan = False
-            vegetarian = False
+            vegan = vegetarian = False
             pescatarian = True
         elif has_nonvegan:
             primary = "vegetarian"
             vegan = False
-            vegetarian = True
-            pescatarian = True
+            vegetarian = pescatarian = True
         else:
             primary = "vegan"
             vegan = vegetarian = pescatarian = True
@@ -320,12 +460,16 @@ def classify_variant_diet(
     else:
         status = "review_required"
 
-    tags: list[str] = []
-    for key, value in (("vegan", vegan), ("vegetarian", vegetarian), ("pescatarian", pescatarian)):
-        if value is True:
-            tags.append(key)
-    if primary == "omnivore":
+    if primary == "vegan":
+        tags = ["vegan", "vegetarian", "pescatarian"]
+    elif primary == "vegetarian":
+        tags = ["vegetarian", "pescatarian"]
+    elif primary == "pescatarian":
+        tags = ["pescatarian"]
+    elif primary == "omnivore":
         tags = ["omnivore"]
+    else:
+        tags = []
 
     return {
         "primaryDiet": primary,
@@ -336,11 +480,12 @@ def classify_variant_diet(
         "status": status,
         "source": "normalized_provider_ingredients",
         "evidence": {
-            "meat": sorted(set(meat_hits + meat_key_hits)),
-            "fishSeafood": sorted(set(fish_hits + fish_key_hits)),
-            "vegetarianAnimalProducts": sorted(set(vegetarian_animal_hits + nonvegan_key_hits)),
+            "meat": sorted(set(meat_hits)),
+            "fishSeafood": sorted(set(fish_hits)),
+            "vegetarianAnimalProducts": sorted(set(nonvegan_hits)),
             "equipmentIgnored": sorted(set(equipment)),
-            "unresolved": sorted(set(blockers)),
+            "unresolved": blockers,
+            "providerCategoryHints": _provider_category_hints(detail),
         },
     }
 
@@ -363,7 +508,7 @@ def _meal_matches(values: list[str]) -> list[str]:
     text = " | ".join(values)
     matched: list[str] = []
     for meal_type in MEAL_TYPES:
-        if any(_contains(text, alias) for alias in _MEAL_ALIASES[meal_type]):
+        if any(_contains_english(text, alias) for alias in _MEAL_ALIASES[meal_type]):
             matched.append(meal_type)
     return matched
 
@@ -379,7 +524,6 @@ def classify_variant_meal(detail: dict[str, Any]) -> dict[str, Any]:
             "source": "seb_courses_occasions",
             "providerTaxonomy": provider_values,
         }
-
     title = _text(detail.get("title") or detail.get("normalizedTitle"))
     title_matches = _meal_matches([title]) if title else []
     return {
@@ -413,7 +557,7 @@ def _aggregate_group(grouping_id: str, rows: list[dict[str, Any]]) -> dict[str, 
     meal_types = (
         list(next(iter(meal_sets)))
         if all_meal_resolved and len(meal_sets) == 1
-        else sorted({x for row in meals for x in row.get("mealTypes") or []})
+        else sorted({value for row in meals for value in row.get("mealTypes") or []})
     )
     primary_meal = meal_types[0] if all_meal_resolved and len(meal_types) == 1 else None
 
@@ -428,6 +572,7 @@ def _aggregate_group(grouping_id: str, rows: list[dict[str, Any]]) -> dict[str, 
         "dietClassification": {
             "status": "resolved" if primary_diet else "review_required",
             "variantConsistent": bool(all_diet_resolved and len(diet_values) == 1),
+            "source": "normalized_provider_ingredients",
         },
         "mealTypes": meal_types,
         "primaryMealType": primary_meal,
@@ -441,7 +586,12 @@ def _aggregate_group(grouping_id: str, rows: list[dict[str, Any]]) -> dict[str, 
         {item for row in diets for item in (row.get("evidence") or {}).get("unresolved") or []}
     )
     if unresolved_diet:
-        result["dietClassification"]["blockers"] = unresolved_diet[:40]
+        result["dietClassification"]["blockers"] = unresolved_diet[:80]
+    category_hints = sorted(
+        {item for row in diets for item in (row.get("evidence") or {}).get("providerCategoryHints") or []}
+    )
+    if category_hints:
+        result["dietClassification"]["providerCategoryHints"] = category_hints
     provider_taxonomy = sorted({item for row in meals for item in row.get("providerTaxonomy") or []})
     if provider_taxonomy:
         result["providerCoursesOccasions"] = provider_taxonomy
@@ -464,10 +614,8 @@ def classify(provider: dict[str, Any], marketing: dict[str, Any]) -> tuple[dict[
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for detail in provider.get("details") or []:
         grouping_id = _text(
-            detail.get("groupingFunctionalId")
-            or detail.get("topRecipeId")
-            or detail.get("recipeFunctionalId")
-            or detail.get("variantId")
+            detail.get("groupingFunctionalId") or detail.get("topRecipeId")
+            or detail.get("recipeFunctionalId") or detail.get("variantId")
         )
         if not grouping_id:
             continue
@@ -511,25 +659,23 @@ def classify(provider: dict[str, Any], marketing: dict[str, Any]) -> tuple[dict[
         "vegetarian": counts["diet:vegetarian"],
         "pescatarian": counts["diet:pescatarian"],
         "omnivore": counts["diet:omnivore"],
-        "mealTypeResolvedFromProvider": sum(
-            row["mealTypeClassification"]["status"] == "resolved" for row in recipes
-        ),
-        "mealTypeReviewRequired": sum(
-            row["mealTypeClassification"]["status"] != "resolved" for row in recipes
-        ),
+        "mealTypeResolvedFromProvider": sum(row["mealTypeClassification"]["status"] == "resolved" for row in recipes),
+        "mealTypeReviewRequired": sum(row["mealTypeClassification"]["status"] != "resolved" for row in recipes),
         "reviewQueue": len(review),
     }
     for meal in MEAL_TYPES:
         summary[f"mealType_{meal}"] = counts[f"mealType:{meal}"]
 
     payload = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "kind": "cook4me-release-recipe-classification-v2",
         "policy": {
             "providerIdentityUnchanged": True,
-            "dietNegativeClaimsRequireCompleteEvidence": True,
+            "dietPositiveClaimsRequireCompleteEvidence": True,
+            "providerCategoryHintsAreAuditOnly": True,
             "providerCoursesOccasionsPreferred": True,
             "titleMealTypeInferenceRequiresReview": True,
+            "keylessExactSemanticMatchDoesNotAssignProviderIdentity": True,
             "allowedPrimaryDiets": ["vegan", "vegetarian", "pescatarian", "omnivore"],
             "allowedMealTypes": list(MEAL_TYPES),
         },
@@ -537,7 +683,7 @@ def classify(provider: dict[str, Any], marketing: dict[str, Any]) -> tuple[dict[
         "recipes": recipes,
     }
     review_payload = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "kind": "cook4me-release-recipe-classification-review-v2",
         "summary": {"items": len(review)},
         "items": review,
