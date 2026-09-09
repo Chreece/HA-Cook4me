@@ -40,6 +40,7 @@ jobs:
           python -m compileall -q custom_components/cook4me tests tools
           bash -n tools/run_release_catalog_capture.sh
           bash -n tools/run_release_catalog_failure_probe.sh
+          bash -n tools/run_release_catalog_identity_probe.sh
           python - <<'PY'
           import json
           from pathlib import Path
