@@ -69,6 +69,7 @@ cs=p['catalogs']
 print(f"CAPTURED_CATALOGS={len(cs)}")
 print(f"POPULATED_CATALOGS={sum(r['state']=='POPULATED' for r in cs)}")
 print(f"EMPTY_CATALOGS={sum(r['state']=='EMPTY' for r in cs)}")
+print(f"TRUNCATED_CATALOGS={sum(r['state']=='TRUNCATED' for r in cs)}")
 print(f"ERROR_CATALOGS={sum(r['state']=='ERROR' for r in cs)}")
 print(f"LOCALIZED_FOOD_ROWS={sum(len(r.get('items') or []) for r in cs)}")
 print(f"UNIQUE_FOOD_KEYS={len({i['key'] for r in cs for i in (r.get('items') or []) if i.get('key')})}")
