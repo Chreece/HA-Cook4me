@@ -403,21 +403,68 @@ def _iso_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _dedupe_search_rows(rows: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], int]:
+    """Collapse repeated search occurrences by exact provider variant ID.
+
+    SEB search pagination can return the same publication more than once within
+    one language/market crawl. The SQLite identity is intentionally one row per
+    exact variant. Preserve the first occurrence, let later duplicates fill only
+    fields that were missing from it, and annotate the representative row with
+    the number of extra occurrences so the provider anomaly remains auditable.
+    """
+    unique: dict[str, dict[str, Any]] = {}
+    occurrences: dict[str, int] = {}
+    order: list[str] = []
+    for raw in rows:
+        if not isinstance(raw, dict):
+            continue
+        variant_id = _text(raw.get("variantId"))
+        if not variant_id:
+            continue
+        occurrences[variant_id] = occurrences.get(variant_id, 0) + 1
+        if variant_id not in unique:
+            unique[variant_id] = deepcopy(raw)
+            order.append(variant_id)
+            continue
+        current = unique[variant_id]
+        for key, value in raw.items():
+            if current.get(key) in (None, "", {}, []) and value not in (None, "", {}, []):
+                current[key] = deepcopy(value)
+
+    duplicate_count = 0
+    output: list[dict[str, Any]] = []
+    for variant_id in order:
+        row = unique[variant_id]
+        extra = occurrences.get(variant_id, 1) - 1
+        if extra > 0:
+            row["duplicateSearchOccurrences"] = extra
+            duplicate_count += extra
+        output.append(row)
+    return output, duplicate_count
+
+
 def _replace_catalog(conn: sqlite3.Connection, language: str, country: str, rows: list[dict[str, Any]]) -> None:
     market = f"GS_{country}"
+    unique_rows, duplicate_count = _dedupe_search_rows(rows)
+    if duplicate_count:
+        print(
+            f"[search] {language}/{market} collapsed_duplicates={duplicate_count} "
+            f"raw={len(rows)} unique={len(unique_rows)}",
+            flush=True,
+        )
     with conn:
         conn.execute("DELETE FROM catalog_variants WHERE language=? AND country=?", (language, country))
         conn.executemany(
             "INSERT INTO catalog_variants(language,country,variant_id,search_json) VALUES(?,?,?,?)",
             [
                 (language, country, row["variantId"], json.dumps(row, ensure_ascii=False, separators=(",", ":")))
-                for row in rows
+                for row in unique_rows
             ],
         )
         conn.execute(
             "INSERT INTO catalog_runs(language,country,market,crawled_at,row_count) VALUES(?,?,?,?,?) "
             "ON CONFLICT(language,country) DO UPDATE SET market=excluded.market,crawled_at=excluded.crawled_at,row_count=excluded.row_count",
-            (language, country, market, _iso_now(), len(rows)),
+            (language, country, market, _iso_now(), len(unique_rows)),
         )
 
 
