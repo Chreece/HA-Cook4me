@@ -9,6 +9,7 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.exceptions import HomeAssistantError
 
 from . import recipe_catalog_diagnostics as catalog_diag
+from . import release_catalog as release_index
 from . import websocket as legacy
 from . import websocket_v5 as v5
 from . import websocket_v7 as v7
@@ -26,15 +27,9 @@ async def _diagnose(hass: HomeAssistant, bridge, *, query: str, language: str) -
         requested_language,
         app_version,
     ) = v8._catalog_context(bridge, language)
-    # The current failing German case is same-locale (de/DE). For a future
-    # display-locale failure, diagnose the locale that the search actually
-    # requested rather than leaking any credentials into the UI.
     country = device_country
     probe_language = configured_language
     if requested_language != configured_language:
-        # The device pass is always performed first. If it is healthy but the
-        # display pass fails, a later revision can add a second locale probe.
-        # Keep v10 bounded to one read-only A/B matrix per failed search.
         probe_language = configured_language
     return await hass.async_add_executor_job(
         lambda: catalog_diag.diagnose_search(
@@ -97,17 +92,46 @@ def _decorate_result(bridge, raw: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
+def _release_search(
+    bridge,
+    *,
+    query: str,
+    page: int,
+    size: int,
+    language: str,
+    strict_language: bool,
+) -> dict[str, Any]:
+    (
+        _storage_home,
+        device_country,
+        _display_country,
+        configured_language,
+        requested_language,
+        _app_version,
+    ) = v8._catalog_context(bridge, language)
+    raw = release_index.search_release_recipes(
+        query,
+        language=requested_language,
+        configured_language=configured_language,
+        country=device_country,
+        page=page,
+        size=size,
+        strict_language=strict_language,
+    )
+    result = _decorate_result(bridge, raw)
+    result.update({
+        "cacheHit": True,
+        "checkedOnline": False,
+        "offline": True,
+        "searchContract": raw.get("searchContract") or "repo-release-merged-catalog-v1",
+        "catalogVersion": raw.get("catalogVersion") or "",
+        "catalogAuthRefresh": "not-required-offline-release-catalog",
+    })
+    return result
+
+
 def _is_catalog_rejection(exc: Exception) -> bool:
-    """Return True only for a recipe-catalog rejection worth diagnosing.
-
-    v9 owns the HTTP-only KRUPS refresh. If that refresh succeeds but the
-    catalog still rejects the refreshed token, v9 intentionally converts the
-    second CatalogAuthError into a short HomeAssistantError. Treat that one
-    exact condition as a catalog rejection so v10 can run its read-only A/B
-    diagnostic. Other Home Assistant errors (including auth refresh network
-    failures) must keep their real meaning and must not be mislabeled.
-    """
-
+    """Return True only for a recipe-catalog rejection worth diagnosing."""
     if isinstance(exc, (recipe_catalog.CatalogAuthError, recipe_catalog.CatalogError)):
         return True
     return isinstance(exc, HomeAssistantError) and str(exc) == (
@@ -126,13 +150,19 @@ async def _search_with_diagnostic(
     strict_language: bool,
     refresh: bool,
 ) -> dict[str, Any]:
+    # Common offline-first layer: Today, Week, AI mapping, recommendations and
+    # older internal callers all inherit the reviewed release catalog.
+    if release_index.release_catalog_ready() and not refresh:
+        return _release_search(
+            bridge,
+            query=query,
+            page=page,
+            size=size,
+            language=language,
+            strict_language=strict_language,
+        )
+
     try:
-        # v9 is intentionally used here rather than v8. v9 performs a
-        # browserless KRUPS HTTP-only token refresh on CatalogAuthError. The old
-        # v8/legacy path refreshed by running the `status` command, which starts
-        # an unrelated AWS IoT MQTT round-trip and can time out whenever the
-        # cooker is offline. That regression produced raw websocket-client
-        # tracebacks in the Recipe Hub instead of reaching this diagnostic.
         raw, cache_hit = await v9._raw_search(
             hass,
             bridge,
@@ -149,12 +179,8 @@ async def _search_with_diagnostic(
         result["catalogAuthRefresh"] = "krups-http-only"
         return result
     except Exception as exc:
-        # Only run the network A/B diagnostic for an actual catalog rejection.
-        # In particular, do not turn unrelated cloud/MQTT/network failures into
-        # a fake catalog-auth diagnosis.
         if not _is_catalog_rejection(exc):
             raise
-
         diagnostic = await _diagnose(hass, bridge, query=query, language=language)
         if diagnostic.get("bodyMismatchProven"):
             try:
@@ -171,19 +197,16 @@ async def _search_with_diagnostic(
                 diagnostic["fallbackError"] = type(fallback_exc).__name__
             else:
                 result = _decorate_result(bridge, raw)
-                result.update(
-                    {
-                        "cacheHit": False,
-                        "fallbackUsed": True,
-                        "fallbackReason": "v8_app_body_rejected_legacy_body_accepted",
-                        "searchContract": "legacy-empty-body-compatibility-fallback",
-                        "catalogAuthRefresh": "krups-http-only",
-                        "catalogDiagnostic": diagnostic,
-                        "catalogDiagnosticSummary": catalog_diag.diagnostic_summary(diagnostic),
-                    }
-                )
+                result.update({
+                    "cacheHit": False,
+                    "fallbackUsed": True,
+                    "fallbackReason": "v8_app_body_rejected_legacy_body_accepted",
+                    "searchContract": "legacy-empty-body-compatibility-fallback",
+                    "catalogAuthRefresh": "krups-http-only",
+                    "catalogDiagnostic": diagnostic,
+                    "catalogDiagnosticSummary": catalog_diag.diagnostic_summary(diagnostic),
+                })
                 return result
-
         return {
             "ok": False,
             "items": [],
@@ -202,24 +225,18 @@ def async_register(hass: HomeAssistant) -> None:
         websocket_api.async_register_command(hass, command)
 
 
-@websocket_api.websocket_command(
-    {
-        vol.Required("type"): "cook4me/v10/search",
-        vol.Optional("entry_id"): str,
-        vol.Optional("query", default=""): str,
-        vol.Optional("page", default=0): vol.Coerce(int),
-        vol.Optional("size", default=20): vol.All(vol.Coerce(int), vol.Range(min=1, max=50)),
-        vol.Required("language"): str,
-        vol.Optional("strict_language", default=False): bool,
-        vol.Optional("refresh", default=False): bool,
-    }
-)
+@websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/v10/search",
+    vol.Optional("entry_id"): str,
+    vol.Optional("query", default=""): str,
+    vol.Optional("page", default=0): vol.Coerce(int),
+    vol.Optional("size", default=20): vol.All(vol.Coerce(int), vol.Range(min=1, max=50)),
+    vol.Required("language"): str,
+    vol.Optional("strict_language", default=False): bool,
+    vol.Optional("refresh", default=False): bool,
+})
 @websocket_api.async_response
-async def ws_search(
-    hass: HomeAssistant,
-    connection: websocket_api.ActiveConnection,
-    msg: dict[str, Any],
-) -> None:
+async def ws_search(hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: dict[str, Any]) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         result = await _search_with_diagnostic(
@@ -238,23 +255,17 @@ async def ws_search(
     connection.send_result(msg["id"], result)
 
 
-@websocket_api.websocket_command(
-    {
-        vol.Required("type"): "cook4me/v10/recommend",
-        vol.Optional("entry_id"): str,
-        vol.Optional("limit", default=12): vol.All(vol.Coerce(int), vol.Range(min=1, max=30)),
-        vol.Optional("catalog_size", default=24): vol.All(vol.Coerce(int), vol.Range(min=1, max=50)),
-        vol.Required("language"): str,
-        vol.Optional("strict_language", default=False): bool,
-        vol.Optional("refresh", default=False): bool,
-    }
-)
+@websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/v10/recommend",
+    vol.Optional("entry_id"): str,
+    vol.Optional("limit", default=12): vol.All(vol.Coerce(int), vol.Range(min=1, max=30)),
+    vol.Optional("catalog_size", default=24): vol.All(vol.Coerce(int), vol.Range(min=1, max=50)),
+    vol.Required("language"): str,
+    vol.Optional("strict_language", default=False): bool,
+    vol.Optional("refresh", default=False): bool,
+})
 @websocket_api.async_response
-async def ws_recommend(
-    hass: HomeAssistant,
-    connection: websocket_api.ActiveConnection,
-    msg: dict[str, Any],
-) -> None:
+async def ws_recommend(hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: dict[str, Any]) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         search = await _search_with_diagnostic(
@@ -270,9 +281,7 @@ async def ws_recommend(
         if not search.get("ok", True):
             connection.send_result(msg["id"], search)
             return
-        ranked = bridge.recipe_hub.rank(
-            search.get("items") or [], limit=int(msg.get("limit", 12))
-        )
+        ranked = bridge.recipe_hub.rank(search.get("items") or [], limit=int(msg.get("limit", 12)))
         for item in ranked:
             item["deviceCanAccept"] = bridge.can_accept_recipe
         result = {
@@ -286,20 +295,14 @@ async def ws_recommend(
     connection.send_result(msg["id"], result)
 
 
-@websocket_api.websocket_command(
-    {
-        vol.Required("type"): "cook4me/v10/catalog_diagnostic",
-        vol.Optional("entry_id"): str,
-        vol.Optional("query", default=""): str,
-        vol.Required("language"): str,
-    }
-)
+@websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/v10/catalog_diagnostic",
+    vol.Optional("entry_id"): str,
+    vol.Optional("query", default=""): str,
+    vol.Required("language"): str,
+})
 @websocket_api.async_response
-async def ws_catalog_diagnostic(
-    hass: HomeAssistant,
-    connection: websocket_api.ActiveConnection,
-    msg: dict[str, Any],
-) -> None:
+async def ws_catalog_diagnostic(hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: dict[str, Any]) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         diagnostic = await _diagnose(
@@ -308,10 +311,7 @@ async def ws_catalog_diagnostic(
             query=str(msg.get("query", "")).strip(),
             language=str(msg["language"]),
         )
-        result = {
-            "diagnostic": diagnostic,
-            "summary": catalog_diag.diagnostic_summary(diagnostic),
-        }
+        result = {"diagnostic": diagnostic, "summary": catalog_diag.diagnostic_summary(diagnostic)}
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
         return
