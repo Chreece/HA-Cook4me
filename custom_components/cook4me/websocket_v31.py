@@ -7,9 +7,8 @@ from homeassistant.components import websocket_api
 from homeassistant.core import HomeAssistant, callback
 
 from . import websocket as legacy
-from . import websocket_v20 as v20
-from . import websocket_v30 as v30
-from .costing import lookup_open_prices_safe, store_best_open_price
+from . import websocket_v23 as v23
+from .costing import calculate_recipe_cost, lookup_open_prices_safe, store_best_open_price
 from .costs import cost_store_for_bridge
 from .inventory import inventory_identity
 from .online_cache import online_cache_for_bridge
@@ -116,6 +115,75 @@ async def _force_global_prices(
     return stored
 
 
+async def _calculate_and_cache(
+    bridge: Any,
+    recipe: dict[str, Any],
+    cost_store: Any,
+    *,
+    global_added: int = 0,
+    forced: bool = False,
+) -> dict[str, Any]:
+    inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
+    cost_cache = await recipe_cost_cache_for_bridge(bridge)
+    value = calculate_recipe_cost(recipe, inventory, cost_store)
+    result = await cost_cache.async_set(recipe, inventory, cost_store, value)
+    result["globalReferencesAdded"] = int(global_added)
+    result["forcedGlobalRefresh"] = bool(forced)
+    return result
+
+
+async def _recipe_cost_cached(
+    hass: HomeAssistant,
+    bridge: Any,
+    recipe: dict[str, Any],
+    operation_id: str,
+) -> dict[str, Any]:
+    cost_store = await cost_store_for_bridge(bridge)
+    inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
+    cost_cache = await recipe_cost_cache_for_bridge(bridge)
+    cached = cost_cache.get(recipe, inventory, cost_store)
+    if cached is not None:
+        cached["globalReferencesAdded"] = 0
+        cached["forcedGlobalRefresh"] = False
+        return cached
+
+    global_added = 0
+    if cost_store.settings.get("autoGlobalPrices"):
+        publish_operation_progress(
+            hass,
+            operation_id,
+            phase="pricing",
+            message="Checking cached product prices",
+        )
+        coordinator = await request_coordinator(hass)
+        async with coordinator.operation(
+            "price_lookup",
+            "Recipe cost references",
+            entry_ids=[bridge.entry.entry_id],
+        ):
+            global_added = await v23._hydrate_global_prices_cached(
+                hass,
+                bridge,
+                cost_store,
+                recipe,
+            )
+        # A relevant price observation may have changed the fingerprint. If the
+        # previously calculated cost now matches the updated evidence, reuse it.
+        cached = cost_cache.get(recipe, inventory, cost_store)
+        if cached is not None:
+            cached["globalReferencesAdded"] = global_added
+            cached["forcedGlobalRefresh"] = False
+            return cached
+
+    return await _calculate_and_cache(
+        bridge,
+        recipe,
+        cost_store,
+        global_added=global_added,
+        forced=False,
+    )
+
+
 async def _forced_recipe_cost(
     hass: HomeAssistant,
     bridge: Any,
@@ -130,13 +198,13 @@ async def _forced_recipe_cost(
         recipe,
         operation_id,
     )
-    inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
-    cost_cache = await recipe_cost_cache_for_bridge(bridge)
-    value = v20._recipe_cost_with_store(bridge, recipe, cost_store)
-    result = await cost_cache.async_set(recipe, inventory, cost_store, value)
-    result["globalReferencesAdded"] = global_added
-    result["forcedGlobalRefresh"] = True
-    return result
+    return await _calculate_and_cache(
+        bridge,
+        recipe,
+        cost_store,
+        global_added=global_added,
+        forced=True,
+    )
 
 
 @callback
@@ -165,12 +233,11 @@ async def ws_recipe_cost(hass: HomeAssistant, connection, msg: dict[str, Any]) -
                 operation_id,
             )
         else:
-            result = await v30._recipe_cost(
+            result = await _recipe_cost_cached(
                 hass,
                 bridge,
                 recipe,
-                refresh_global=False,
-                operation_id=operation_id,
+                operation_id,
             )
         publish_operation_progress(
             hass,
