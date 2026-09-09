@@ -13,6 +13,13 @@ capture = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = capture
 spec.loader.exec_module(capture)
 
+SCRIPT_V3 = ROOT / "tools" / "capture_marketing_food_catalogs_v3.py"
+spec_v3 = importlib.util.spec_from_file_location("capture_marketing_food_catalogs_v3", SCRIPT_V3)
+assert spec_v3 and spec_v3.loader
+capture_v3 = importlib.util.module_from_spec(spec_v3)
+sys.modules[spec_v3.name] = capture_v3
+spec_v3.loader.exec_module(capture_v3)
+
 
 class MarketingFoodCaptureTests(unittest.TestCase):
     def test_all_28_catalog_mappings_are_reaudited(self):
@@ -20,6 +27,23 @@ class MarketingFoodCaptureTests(unittest.TestCase):
         self.assertIn(("en", "GB"), capture.AUDITED_CATALOGS)
         self.assertIn(("el", "GR"), capture.AUDITED_CATALOGS)
         self.assertIn(("sv", "SE"), capture.AUDITED_CATALOGS)
+
+    def test_apk_exact_unfiltered_request_contract(self):
+        self.assertEqual(100000, capture_v3.SIZE)
+        self.assertEqual(
+            {
+                "fieldFilters": [
+                    {"field": "market.key", "values": ["GS_DE"]},
+                    {"field": "name.lang", "values": ["de"]},
+                ],
+                "fieldList": ["key", "name", "mixMedias"],
+                "facetList": [],
+                "sort": {"name": "name", "direction": "ASC"},
+            },
+            capture_v3.marketing_food_search_body("de", "GS_DE"),
+        )
+        body_text = repr(capture_v3.marketing_food_search_body("de", "GS_DE"))
+        self.assertNotIn("isMixMain", body_text)
 
     def test_localized_name_prefers_requested_language(self):
         value = [
