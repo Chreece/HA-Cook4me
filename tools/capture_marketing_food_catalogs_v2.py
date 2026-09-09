@@ -102,6 +102,59 @@ def _candidates(payload: Any) -> list[dict[str, Any]]:
     return [row for row in values if isinstance(row, dict)]
 
 
+def _marketing_food_candidates(value: Any, *, depth: int = 0) -> list[dict[str, Any]]:
+    """Find APK-shaped DcpMarketingFood objects inside one response row.
+
+    The APK model proves a marketing food carries ``key`` plus ``name``. Live
+    backend responses may wrap that model in transport metadata, so detect the
+    model structurally instead of guessing the wrapper property's name.
+    """
+    if depth > 4:
+        return []
+    found: list[dict[str, Any]] = []
+    if isinstance(value, dict):
+        key = _text(value.get("key"))
+        if key and "name" in value:
+            found.append(value)
+        for nested in value.values():
+            if isinstance(nested, (dict, list)):
+                found.extend(_marketing_food_candidates(nested, depth=depth + 1))
+    elif isinstance(value, list):
+        for nested in value:
+            if isinstance(nested, (dict, list)):
+                found.extend(_marketing_food_candidates(nested, depth=depth + 1))
+    return found
+
+
+def _marketing_food_object(raw: dict[str, Any]) -> dict[str, Any] | None:
+    candidates = _marketing_food_candidates(raw)
+    if not candidates:
+        return None
+    # Prefer the exact provider identity family observed in recipe details.
+    foods = [row for row in candidates if _text(row.get("key")).startswith("M_FOOD_")]
+    if len(foods) == 1:
+        return foods[0]
+    if len(foods) > 1:
+        return None
+    return candidates[0] if len(candidates) == 1 else None
+
+
+def _shape(value: Any, *, depth: int = 0) -> Any:
+    """Return field names/types only; never persist arbitrary response values."""
+    if depth > 3:
+        return type(value).__name__
+    if isinstance(value, dict):
+        return {
+            str(key): _shape(nested, depth=depth + 1)
+            for key, nested in list(value.items())[:20]
+        }
+    if isinstance(value, list):
+        return [
+            _shape(value[0], depth=depth + 1)
+        ] if value else []
+    return type(value).__name__
+
+
 def _reported_total(payload: Any) -> int | None:
     if not isinstance(payload, dict):
         return None
@@ -126,17 +179,25 @@ def _reported_total(payload: Any) -> int | None:
 
 
 def normalize_marketing_foods(payload: Any, language: str) -> tuple[list[dict[str, Any]], dict[str, Any]]:
-    """Normalize one localized provider dictionary without hiding duplicates."""
+    """Normalize one localized provider dictionary without hiding parse gaps."""
     candidates = _candidates(payload)
     by_key: "OrderedDict[str, dict[str, Any]]" = OrderedDict()
     missing_key = 0
     duplicate_rows = 0
     conflicting_labels = 0
+    unparsed_rows = 0
+    unparsed_shapes: list[Any] = []
     for raw in candidates:
-        key = _text(raw.get("key") or raw.get("id") or raw.get("reference"))
-        name = _localized_name(raw.get("name"), language)
+        food = _marketing_food_object(raw)
+        if food is None:
+            unparsed_rows += 1
+            if len(unparsed_shapes) < 3:
+                unparsed_shapes.append(_shape(raw))
+            continue
+        key = _text(food.get("key"))
+        name = _localized_name(food.get("name"), language)
         if not name:
-            name = _text(raw.get("label") or raw.get("title"))
+            name = _text(food.get("label") or food.get("title"))
         if not name:
             continue
         if not key:
@@ -165,6 +226,8 @@ def normalize_marketing_foods(payload: Any, language: str) -> tuple[list[dict[st
         "truncated": truncated,
         "uniqueKeys": len(rows),
         "missingKeyRows": missing_key,
+        "unparsedRows": unparsed_rows,
+        "unparsedShapeSamples": unparsed_shapes,
         "duplicateRows": duplicate_rows,
         "conflictingLabels": conflicting_labels,
     }
@@ -241,6 +304,15 @@ def capture(args: argparse.Namespace) -> dict[str, Any]:
                     ),
                 }
             )
+        elif stats.get("unparsedRows"):
+            state = "PARTIAL"
+            errors.append(
+                {
+                    "language": language,
+                    "country": country,
+                    "error": f"Could not structurally parse {stats['unparsedRows']} marketing-food rows",
+                }
+            )
         catalogs.append(
             {
                 "language": language,
@@ -290,6 +362,7 @@ def main() -> int:
                 "capturedCatalogs": len(result["catalogs"]),
                 "populatedCatalogs": sum(row["state"] == "POPULATED" for row in result["catalogs"]),
                 "emptyCatalogs": sum(row["state"] == "EMPTY" for row in result["catalogs"]),
+                "partialCatalogs": sum(row["state"] == "PARTIAL" for row in result["catalogs"]),
                 "truncatedCatalogs": sum(row["state"] == "TRUNCATED" for row in result["catalogs"]),
                 "errors": len(result["errors"]),
                 "uniqueLocalizedFoodRows": sum(len(row["items"]) for row in result["catalogs"]),
