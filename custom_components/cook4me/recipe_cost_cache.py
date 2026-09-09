@@ -89,7 +89,7 @@ def pricing_fingerprint(recipe: dict[str, Any], inventory: Any, cost_store: Any)
     """Hash only cost evidence that can affect this recipe.
 
     Changing an unrelated ingredient price leaves the fingerprint stable. A
-    matching ingredient, stock lot, exact purchase price, barcode reference,
+    matching ingredient, stock lot, exact lot reference, barcode reference,
     quantity or generic price change produces a new fingerprint and therefore
     invalidates only affected recipes.
     """
@@ -124,14 +124,18 @@ def pricing_fingerprint(recipe: dict[str, Any], inventory: Any, cost_store: Any)
             for lot in stock_row.get("lots") or []:
                 if not isinstance(lot, dict):
                     continue
+                lot_id = _text(lot.get("id") or lot.get("lotId"))
                 barcode = _text(lot.get("barcode"))
                 ingredient["lots"].append(
                     {
-                        "id": _text(lot.get("id") or lot.get("lotId")),
+                        "id": lot_id,
                         "quantity": lot.get("quantity"),
                         "unit": stock_row.get("unit") or lot.get("unit"),
                         "barcode": barcode,
                         "directPrice": _direct_price_view(lot),
+                        "lotReference": _reference_view(
+                            cost_store.best_reference(f"lot:{lot_id}") if lot_id else None
+                        ),
                         "barcodeReference": _reference_view(
                             cost_store.best_reference(
                                 f"barcode:{barcode}",
