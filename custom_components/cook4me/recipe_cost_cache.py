@@ -14,6 +14,28 @@ from .today_logic import recipe_identity
 
 _STORAGE_VERSION = 1
 _MAX_ROWS = 500
+_DIRECT_PRICE_FIELDS = (
+    "purchasePrice",
+    "price",
+    "currency",
+    "purchaseCurrency",
+    "purchaseQuantity",
+    "basisQuantity",
+    "purchaseUnit",
+    "basisUnit",
+    "priceSource",
+    "source",
+    "priceConfidence",
+    "confidence",
+    "priceDate",
+    "purchaseDate",
+    "date",
+    "priceCountry",
+    "country",
+    "priceLocation",
+    "merchant",
+    "location",
+)
 
 
 def _text(value: Any) -> str:
@@ -43,6 +65,14 @@ def _reference_view(value: Any) -> dict[str, Any] | None:
     }
 
 
+def _direct_price_view(lot: dict[str, Any]) -> dict[str, Any]:
+    return {
+        key: deepcopy(lot.get(key))
+        for key in _DIRECT_PRICE_FIELDS
+        if key in lot and lot.get(key) not in (None, "")
+    }
+
+
 def _recipe_key(recipe: dict[str, Any]) -> str:
     identity = recipe_identity(recipe)
     if identity:
@@ -59,8 +89,9 @@ def pricing_fingerprint(recipe: dict[str, Any], inventory: Any, cost_store: Any)
     """Hash only cost evidence that can affect this recipe.
 
     Changing an unrelated ingredient price leaves the fingerprint stable. A
-    matching ingredient, stock lot, barcode reference, quantity or price change
-    produces a new fingerprint and therefore invalidates only affected recipes.
+    matching ingredient, stock lot, exact purchase price, barcode reference,
+    quantity or generic price change produces a new fingerprint and therefore
+    invalidates only affected recipes.
     """
     settings = cost_store.settings
     currency = _text(settings.get("currency"))
@@ -93,17 +124,14 @@ def pricing_fingerprint(recipe: dict[str, Any], inventory: Any, cost_store: Any)
             for lot in stock_row.get("lots") or []:
                 if not isinstance(lot, dict):
                     continue
-                lot_id = _text(lot.get("id") or lot.get("lotId"))
                 barcode = _text(lot.get("barcode"))
                 ingredient["lots"].append(
                     {
-                        "id": lot_id,
+                        "id": _text(lot.get("id") or lot.get("lotId")),
                         "quantity": lot.get("quantity"),
                         "unit": stock_row.get("unit") or lot.get("unit"),
                         "barcode": barcode,
-                        "lotReference": _reference_view(
-                            cost_store.best_reference(f"lot:{lot_id}") if lot_id else None
-                        ),
+                        "directPrice": _direct_price_view(lot),
                         "barcodeReference": _reference_view(
                             cost_store.best_reference(
                                 f"barcode:{barcode}",
