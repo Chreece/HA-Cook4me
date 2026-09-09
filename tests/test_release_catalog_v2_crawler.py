@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -76,6 +78,55 @@ class ReleaseCatalogV2CrawlerTests(unittest.TestCase):
         self.assertEqual([404, 404], crawler._status_codes(exc))
         mixed = RuntimeError("app=HTTP404 | dcp=HTTP500")
         self.assertEqual([404, 500], crawler._status_codes(mixed))
+
+    def test_duplicate_search_variants_are_collapsed_before_sqlite_write(self):
+        rows = [
+            {
+                "variantId": "100",
+                "title": "First title",
+                "language": "ar",
+                "market": "GS_AE",
+                "cover": "",
+            },
+            {
+                "variantId": "100",
+                "title": "Different duplicate title",
+                "language": "ar",
+                "market": "GS_AE",
+                "cover": "https://example.invalid/cover.jpg",
+            },
+            {
+                "variantId": "200",
+                "title": "Second recipe",
+                "language": "ar",
+                "market": "GS_AE",
+            },
+        ]
+        unique, duplicate_count = crawler._dedupe_search_rows(rows)
+        self.assertEqual(2, len(unique))
+        self.assertEqual(1, duplicate_count)
+        first = next(row for row in unique if row["variantId"] == "100")
+        self.assertEqual("First title", first["title"])
+        self.assertEqual("https://example.invalid/cover.jpg", first["cover"])
+        self.assertEqual(1, first["duplicateSearchOccurrences"])
+
+        with tempfile.TemporaryDirectory() as tmp:
+            conn = crawler._open_db(Path(tmp) / "cache.sqlite3")
+            try:
+                crawler._replace_catalog(conn, "ar", "AE", rows)
+                stored = conn.execute(
+                    "SELECT variant_id, search_json FROM catalog_variants "
+                    "WHERE language='ar' AND country='AE' ORDER BY variant_id"
+                ).fetchall()
+                self.assertEqual(["100", "200"], [row[0] for row in stored])
+                payload = json.loads(stored[0][1])
+                self.assertEqual(1, payload["duplicateSearchOccurrences"])
+                row_count = conn.execute(
+                    "SELECT row_count FROM catalog_runs WHERE language='ar' AND country='AE'"
+                ).fetchone()[0]
+                self.assertEqual(2, row_count)
+            finally:
+                conn.close()
 
 
 if __name__ == "__main__":
