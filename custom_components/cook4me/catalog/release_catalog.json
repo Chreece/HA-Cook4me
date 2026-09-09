@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "release": {
+    "id": "bootstrap-2026.9.9.2",
+    "generatedAt": null,
+    "complete": false,
+    "sourceLanguages": [
+      "ar", "bg", "cs", "de", "en", "es", "fr", "hr", "hu", "it", "ja", "ko", "pl", "pt", "ro", "ru", "sk", "sl", "tr", "uk", "zh"
+    ],
+    "notes": "Bootstrap schema only. Generate the authenticated full snapshot with scripts/build_release_catalog.py before marking complete."
+  },
+  "ingredients": [],
+  "recipes": []
+}
