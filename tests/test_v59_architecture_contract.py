@@ -46,21 +46,29 @@ class V59ArchitectureContractTests(unittest.TestCase):
         import json
         payload = json.loads(CATALOG.read_text(encoding="utf-8"))
         self.assertFalse(payload["complete"])
+        self.assertEqual(payload["source"]["auditedCatalogCount"], 28)
         self.assertEqual(payload["source"]["sourceCatalogCount"], 21)
         builder = BUILDER.read_text(encoding="utf-8")
-        self.assertIn("SUPPORTED_RECIPE_LANGUAGES", builder)
-        self.assertNotIn("from custom_components.cook4me", builder)
+        self.assertIn("AUDITED_CATALOGS", builder)
+        self.assertIn('(\"da\", \"DK\")', builder)
+        self.assertIn('(\"el\", \"GR\")', builder)
+        self.assertIn('(\"sv\", \"SE\")', builder)
         self.assertIn("while total_pages is None or page < total_pages", builder)
         self.assertIn("hydratedVariants", builder)
         self.assertIn("canonicalEnglishNeedsReview", builder)
         self.assertIn("nutritionRequiredForComplete", builder)
+        self.assertIn("normalized-ingredient-references-v1", builder)
+        self.assertIn("officialSebDetailStored", builder)
         self.assertIn("secretsPersisted", builder)
+        self.assertNotIn("extract_official_nutrition", builder)
 
     def test_large_release_catalog_is_warmed_outside_home_assistant_event_loop(self):
         release = RELEASE.read_text(encoding="utf-8")
         setup = INIT.read_text(encoding="utf-8")
         self.assertIn("async def async_warm_release_catalog", release)
         self.assertIn("await hass.async_add_executor_job(load_release_catalog)", release)
+        self.assertIn("_prepare_runtime_indexes(payload)", release)
+        self.assertIn("_runtimeRecipeByLanguage", release)
         self.assertIn("from .release_catalog import async_warm_release_catalog", setup)
         self.assertIn("await async_warm_release_catalog(hass)", setup)
 
@@ -69,6 +77,7 @@ class V59ArchitectureContractTests(unittest.TestCase):
         self.assertIn("include_nutrition: bool = False", release)
         self.assertIn("if include_nutrition and isinstance(raw.get(\"nutrition\"), dict):", release)
         self.assertIn("limit: int | None = None", release)
+        self.assertIn("_runtimeIngredientById", release)
 
     def test_runtime_paths_are_offline_first_with_safe_live_fallback(self):
         source = WS.read_text(encoding="utf-8")
