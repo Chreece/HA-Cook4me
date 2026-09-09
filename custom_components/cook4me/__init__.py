@@ -9,8 +9,15 @@ from homeassistant.core import HomeAssistant, ServiceCall, SupportsResponse
 from homeassistant.helpers.typing import ConfigType
 from homeassistant.exceptions import HomeAssistantError
 
+from . import websocket_v10 as recipe_search_api
 from .bridge import Cook4MeBridge
-from .const import DATA_BRIDGES, DOMAIN, PLATFORMS
+from .const import (
+    CONF_LANGUAGE,
+    DATA_BRIDGES,
+    DEFAULT_LANGUAGE,
+    DOMAIN,
+    PLATFORMS,
+)
 from .expiry import (
     dismiss_expiry_notification,
     register_daily_expiry_check,
@@ -178,19 +185,54 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
 
     async def handle_search(call: ServiceCall) -> dict[str, Any]:
         bridge = _get_bridge(hass, call.data.get("entry_id"))
-        return await bridge.async_search_recipes(
-            call.data.get("query", ""),
-            page=call.data.get("page", 0),
-            size=call.data.get("size", 20),
-            max_details=call.data.get("size", 20),
-            refresh=call.data.get("refresh", False),
+        language = str(
+            bridge.entry.data.get(CONF_LANGUAGE, DEFAULT_LANGUAGE) or DEFAULT_LANGUAGE
+        ).lower()
+        # Public HA services use the same release-catalog-first contract as the
+        # dashboard and planners. `refresh` remains the explicit live-SEB path.
+        return await recipe_search_api._search_with_diagnostic(
+            hass,
+            bridge,
+            query=str(call.data.get("query", "") or "").strip(),
+            page=int(call.data.get("page", 0)),
+            size=int(call.data.get("size", 20)),
+            language=language,
+            strict_language=True,
+            refresh=bool(call.data.get("refresh", False)),
         )
 
     async def handle_recommend(call: ServiceCall) -> dict[str, Any]:
         bridge = _get_bridge(hass, call.data.get("entry_id"))
-        return await bridge.async_recommend_recipes(
-            limit=call.data.get("limit", 12), catalog_size=call.data.get("catalog_size", 18)
+        language = str(
+            bridge.entry.data.get(CONF_LANGUAGE, DEFAULT_LANGUAGE) or DEFAULT_LANGUAGE
+        ).lower()
+        catalog_size = max(
+            int(call.data.get("limit", 12)),
+            min(int(call.data.get("catalog_size", 18)), 50),
         )
+        search = await recipe_search_api._search_with_diagnostic(
+            hass,
+            bridge,
+            query="",
+            page=0,
+            size=catalog_size,
+            language=language,
+            strict_language=True,
+            refresh=False,
+        )
+        if not search.get("ok", True):
+            return search
+        limit = max(1, min(int(call.data.get("limit", 12)), 30))
+        ranked = bridge.recipe_hub.rank(search.get("items") or [], limit=limit)
+        for item in ranked:
+            item["deviceCanAccept"] = bridge.can_accept_recipe
+        return {
+            **{key: value for key, value in search.items() if key != "items"},
+            "items": ranked,
+            "profile": bridge.recipe_hub.profile,
+            "deviceCanAccept": bridge.can_accept_recipe,
+            "loadedRecipe": bridge.loaded_recipe,
+        }
 
     hass.services.async_register(
         DOMAIN,
