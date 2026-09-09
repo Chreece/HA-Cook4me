@@ -29,16 +29,30 @@ class MarketingFoodCaptureTests(unittest.TestCase):
         self.assertEqual("Potato", capture._localized_name(value, "en"))
         self.assertEqual("Kartoffel", capture._localized_name(value, "de"))
 
+    def test_localized_name_unwraps_realm_list_transport_container(self):
+        value = {
+            "values": {
+                "items": [
+                    {"lang": "de", "market": "GS_DE", "value": "Kartoffel"},
+                    {"lang": "en", "market": "GS_GB", "value": "Potato"},
+                ]
+            }
+        }
+        self.assertEqual("Potato", capture._localized_name(value, "en"))
+        self.assertEqual("Kartoffel", capture._localized_name(value, "de"))
+
     def test_nested_transport_wrapper_is_unwrapped_by_apk_food_shape(self):
         raw = {
             "score": 1.0,
             "source": {
                 "document": {
                     "key": "M_FOOD_305",
-                    "name": [
-                        {"lang": "de", "market": "GS_DE", "value": "Mascarpone"},
-                        {"lang": "en", "market": "GS_GB", "value": "Mascarpone"},
-                    ],
+                    "name": {
+                        "realmList": [
+                            {"lang": "de", "market": "GS_DE", "value": "Mascarpone"},
+                            {"lang": "en", "market": "GS_GB", "value": "Mascarpone"},
+                        ]
+                    },
                     "mixMedias": [],
                 }
             },
@@ -46,6 +60,7 @@ class MarketingFoodCaptureTests(unittest.TestCase):
         food = capture._marketing_food_object(raw)
         self.assertIsNotNone(food)
         self.assertEqual("M_FOOD_305", food["key"])
+        self.assertEqual("Mascarpone", capture._localized_name(food["name"], "en"))
 
     def test_normalization_keeps_provider_key_and_audits_conflicting_duplicates(self):
         payload = {
@@ -63,11 +78,29 @@ class MarketingFoodCaptureTests(unittest.TestCase):
         self.assertEqual(["Potatoes"], rows[0]["aliases"])
         self.assertEqual(2, stats["uniqueKeys"])
         self.assertEqual(1, stats["unparsedRows"])
+        self.assertEqual(0, stats["missingNameRows"])
         self.assertEqual(1, stats["duplicateRows"])
         self.assertEqual(1, stats["conflictingLabels"])
         self.assertEqual(4, stats["reportedTotalElements"])
         self.assertFalse(stats["truncated"])
         self.assertTrue(stats["unparsedShapeSamples"])
+
+    def test_named_food_without_resolvable_apk_name_is_explicit_gap(self):
+        payload = {
+            "page": {"totalElements": 1},
+            "content": [
+                {
+                    "wrapper": {
+                        "key": "M_FOOD_1",
+                        "name": {"realmList": [{"lang": "en", "market": "GS_GB"}]},
+                    }
+                }
+            ],
+        }
+        rows, stats = capture.normalize_marketing_foods(payload, "en")
+        self.assertEqual([], rows)
+        self.assertEqual(1, stats["missingNameRows"])
+        self.assertTrue(stats["missingNameShapeSamples"])
 
     def test_reported_total_detects_an_incomplete_size_limited_response(self):
         payload = {
