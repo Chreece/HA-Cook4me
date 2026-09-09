@@ -25,6 +25,15 @@ class ReleaseCatalogTests(unittest.TestCase):
         mod.load_release_catalog.cache_clear()
         self.tmp.cleanup()
 
+    @staticmethod
+    def _recipe_ingredient() -> dict:
+        return {
+            "ingredientId": "M_FOOD_TOMATO",
+            "key": "M_FOOD_TOMATO",
+            "quantity": 400,
+            "unit": "g",
+        }
+
     def _write(self, complete=True, *, include_de=True):
         variants = [
             {
@@ -35,15 +44,7 @@ class ReleaseCatalogTests(unittest.TestCase):
                 "language": "en",
                 "market": "GS_GB",
                 "servings": 4,
-                "ingredients": [
-                    {
-                        "key": "M_FOOD_TOMATO",
-                        "canonicalName": "Tomato",
-                        "translations": {"en": "Tomato", "de": "Tomate"},
-                        "quantity": 400,
-                        "unit": "g",
-                    }
-                ],
+                "ingredients": [self._recipe_ingredient()],
                 "nutrition": {
                     "totals": {"energyKcal": 72},
                     "perServing": {"energyKcal": 18},
@@ -62,15 +63,7 @@ class ReleaseCatalogTests(unittest.TestCase):
                     "language": "de",
                     "market": "GS_DE",
                     "servings": 4,
-                    "ingredients": [
-                        {
-                            "key": "M_FOOD_TOMATO",
-                            "canonicalName": "Tomato",
-                            "translations": {"en": "Tomato", "de": "Tomate"},
-                            "quantity": 400,
-                            "unit": "g",
-                        }
-                    ],
+                    "ingredients": [self._recipe_ingredient()],
                     "nutrition": {
                         "totals": {"energyKcal": 72},
                         "perServing": {"energyKcal": 18},
@@ -87,6 +80,7 @@ class ReleaseCatalogTests(unittest.TestCase):
                     "complete": complete,
                     "ingredients": [
                         {
+                            "id": "M_FOOD_TOMATO",
                             "key": "M_FOOD_TOMATO",
                             "canonicalName": "Tomato",
                             "translations": {"en": "Tomato", "de": "Tomate"},
@@ -104,7 +98,10 @@ class ReleaseCatalogTests(unittest.TestCase):
                             "variants": variants,
                         }
                     ],
-                    "source": {"sourceCatalogCount": 21},
+                    "source": {
+                        "auditedCatalogCount": 28,
+                        "sourceCatalogCount": 21,
+                    },
                 }
             ),
             encoding="utf-8",
@@ -119,6 +116,7 @@ class ReleaseCatalogTests(unittest.TestCase):
     def test_ingredient_picker_is_compact_localized_and_keeps_canonical_identity(self):
         self._write()
         rows = mod.ingredient_rows("de")
+        self.assertEqual(rows[0]["id"], "M_FOOD_TOMATO")
         self.assertEqual(rows[0]["key"], "M_FOOD_TOMATO")
         self.assertEqual(rows[0]["name"], "Tomate")
         self.assertEqual(rows[0]["canonicalName"], "Tomato")
@@ -126,6 +124,23 @@ class ReleaseCatalogTests(unittest.TestCase):
 
         enriched = mod.ingredient_rows("de", include_nutrition=True)
         self.assertEqual(enriched[0]["nutrition"]["values"]["energyKcal"], 18)
+
+    def test_offline_search_resolves_normalized_ingredient_reference(self):
+        self._write()
+        result = mod.search_release_recipes(
+            "tomate",
+            language="de",
+            configured_language="de",
+            country="DE",
+            strict_language=True,
+        )
+        self.assertEqual(len(result["items"]), 1)
+        ingredient = result["items"][0]["ingredients"][0]
+        self.assertEqual(ingredient["ingredientId"], "M_FOOD_TOMATO")
+        self.assertEqual(ingredient["name"], "Tomate")
+        self.assertEqual(ingredient["canonicalName"], "Tomato")
+        self.assertNotIn("translations", ingredient)
+        self.assertNotIn("nutrition", ingredient)
 
     def test_offline_search_selects_display_language_and_device_send_variant(self):
         self._write()
@@ -160,17 +175,12 @@ class ReleaseCatalogTests(unittest.TestCase):
         self.assertNotIn("sendVariantId", item)
         self.assertNotIn("sendRecipeFunctionalId", item)
 
-    def test_search_matches_variant_ingredient_translations(self):
+    def test_strict_language_uses_prebuilt_language_index(self):
         self._write()
-        result = mod.search_release_recipes(
-            "tomate",
-            language="de",
-            configured_language="de",
-            country="DE",
-            strict_language=True,
-        )
-        self.assertEqual(len(result["items"]), 1)
-        self.assertEqual(result["items"][0]["displayVariantId"], "VAR_DE")
+        payload = mod.load_release_catalog()
+        self.assertEqual(payload["_runtimeRecipeByLanguage"]["de"], (0,))
+        self.assertEqual(payload["_runtimeRecipeByLanguage"]["en"], (0,))
+        self.assertEqual(payload["_runtimeRawVariantCount"], 2)
 
     def test_strict_language_does_not_mislabel_fallback_variant_as_source_catalog(self):
         self._write()
