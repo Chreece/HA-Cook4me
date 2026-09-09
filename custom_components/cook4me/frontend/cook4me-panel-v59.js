@@ -5,6 +5,7 @@ const SHELL_VERSION=2;
 const SHELL_LIMIT=80*1024;
 const PROGRESS_EVENT="cook4me_operation_progress";
 const VALID_TABS=new Set(["today","official","recommend","book","mine","profile","shopping","ai"]);
+const PROGRESS_CAPABLE=new Set(["cook4me/v30/ingredient_catalog","cook4me/v30/official_search","cook4me/v30/recipe_detail","cook4me/v30/recipe_cost","cook4me/v30/today_suggest"]);
 
 const TEXT={
   en:{nutritionCoverage:"Nutrition coverage",estimatedNutrition:"estimated",calculatedNutrition:"Calculated meal nutrition",wholeRecipe:"Whole recipe",perServing:"Per serving",officialNutrition:"Official SEB nutrition",per100g:"per 100 g",basisUnknown:"basis not specified by SEB",nutritionalScore:"Nutritional score",ecologicalScore:"Ecological score",partWeight:"Part weight"},
@@ -202,7 +203,7 @@ class Cook4MeRecipeHubPanelV59 extends BasePanel{
     return result;
   }
 
-  _v59ProgressCapable(type){return new Set(["cook4me/v30/ingredient_catalog","cook4me/v30/official_search","cook4me/v30/recipe_detail","cook4me/v30/today_suggest"]).has(type);}
+  _v59ProgressCapable(type){return PROGRESS_CAPABLE.has(type);}
 
   async _api(type,data={}){
     const mapped={
@@ -212,6 +213,8 @@ class Cook4MeRecipeHubPanelV59 extends BasePanel{
       "cook4me/v22/official_search":"cook4me/v30/official_search",
       "cook4me/recipe_detail":"cook4me/v30/recipe_detail",
       "cook4me/v24/recipe_detail":"cook4me/v30/recipe_detail",
+      "cook4me/v20/recipe_cost":"cook4me/v30/recipe_cost",
+      "cook4me/v23/recipe_cost":"cook4me/v30/recipe_cost",
       "cook4me/v18/today_suggest":"cook4me/v30/today_suggest",
       "cook4me/v29/today_suggest":"cook4me/v30/today_suggest",
     }[String(type)]||String(type);
@@ -241,7 +244,7 @@ class Cook4MeRecipeHubPanelV59 extends BasePanel{
   }
 
   _processStart(title,detail=""){
-    const token={cancelled:false,operationId:`ui-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,9)}`,overlay:null,card:null};
+    const token={cancelled:false,finished:false,operationId:`ui-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,9)}`,overlay:null,card:null};
     const stack=this._v59ProgressStack();
     if(stack){
       const card=document.createElement("div");card.className="rx-v59-progress-card";card.dataset.operationId=token.operationId;card.innerHTML=`<div class="rx-v59-progress-title">${this._escape(title||"Cook4Me")}</div><div class="rx-v59-progress-detail">${this._escape(detail||"")}</div><div class="rx-v59-progress-line"><div></div></div><div class="rx-v59-progress-meta"><span data-progress-count></span><span data-progress-percent></span></div>`;stack.appendChild(card);token.card=card;
@@ -252,7 +255,7 @@ class Cook4MeRecipeHubPanelV59 extends BasePanel{
   }
 
   _processUpdate(token,detail,done=null,total=null){
-    if(!token||token.cancelled||!token.card?.isConnected)return;
+    if(!token||token.cancelled||token.finished||!token.card?.isConnected)return;
     const d=token.card.querySelector(".rx-v59-progress-detail");if(d)d.textContent=String(detail||"");
     const determinate=Number.isFinite(Number(done))&&Number.isFinite(Number(total))&&Number(total)>0;
     const line=token.card.querySelector(".rx-v59-progress-line"),bar=line?.querySelector("div"),count=token.card.querySelector("[data-progress-count]"),percent=token.card.querySelector("[data-progress-percent]");
@@ -260,9 +263,10 @@ class Cook4MeRecipeHubPanelV59 extends BasePanel{
   }
 
   _v59FinishToken(token,{error="",delay=1500}={}){
-    if(!token)return;
+    if(!token||token.finished)return;
+    token.finished=true;
     const card=token.card;
-    if(card?.isConnected){card.classList.add(error?"error":"done");const line=card.querySelector(".rx-v59-progress-line"),bar=line?.querySelector("div"),percent=card.querySelector("[data-progress-percent]");line?.classList.add("determinate");if(bar)bar.style.width=error?"100%":"100%";if(!error&&percent&&!percent.textContent)percent.textContent="100%";setTimeout(()=>card.remove(),delay);}
+    if(card?.isConnected){card.classList.add(error?"error":"done");const line=card.querySelector(".rx-v59-progress-line"),bar=line?.querySelector("div"),percent=card.querySelector("[data-progress-percent]");line?.classList.add("determinate");if(bar)bar.style.width="100%";if(!error&&percent&&!percent.textContent)percent.textContent="100%";setTimeout(()=>card.remove(),delay);}
     this._v59Operations.delete(token.operationId);
     if(this._process===token)this._process=null;
   }
@@ -271,8 +275,15 @@ class Cook4MeRecipeHubPanelV59 extends BasePanel{
 
   _v59ApplyProgress(data){
     if(!data||!data.operationId)return;
-    let token=this._v59Operations.get(String(data.operationId));
-    if(!token){token=this._processStart("Cook4Me",String(data.message||data.phase||""));token.operationId=String(data.operationId);if(token.card)token.card.dataset.operationId=token.operationId;this._v59Operations.set(token.operationId,token);}
+    const operationId=String(data.operationId);
+    let token=this._v59Operations.get(operationId);
+    if(!token){
+      token=this._processStart("Cook4Me",String(data.message||data.phase||""));
+      this._v59Operations.delete(token.operationId);
+      token.operationId=operationId;
+      if(token.card)token.card.dataset.operationId=operationId;
+      this._v59Operations.set(operationId,token);
+    }
     if(data.message)this._processUpdate(token,String(data.message),data.completed,data.total);
     else this._processUpdate(token,String(data.phase||""),data.completed,data.total);
     if(data.error){const d=token.card?.querySelector(".rx-v59-progress-detail");if(d)d.textContent=String(data.error);this._v59FinishToken(token,{error:String(data.error),delay:3500});}
