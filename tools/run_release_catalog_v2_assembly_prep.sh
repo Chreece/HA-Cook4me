@@ -10,8 +10,11 @@ PREP="$RUN_DIR/assembly-prep-v2.json.gz"
 QUEUE="$RUN_DIR/translation-queue-v2.json"
 SUMMARY="$RUN_DIR/summary.json"
 AUGMENTED_PROVIDER="$RUN_DIR/provider-with-taxonomy-v2.json.gz"
-CLASSIFICATION="$RUN_DIR/recipe-classification-v2.json.gz"
-CLASSIFICATION_REVIEW="$RUN_DIR/recipe-classification-review-v2.json"
+CLASSIFICATION_V2="$RUN_DIR/recipe-classification-v2.json.gz"
+CLASSIFICATION_V2_REVIEW="$RUN_DIR/recipe-classification-review-v2.json"
+CLASSIFICATION_V2_SUMMARY="$RUN_DIR/classification-v2-summary.json"
+CLASSIFICATION="$RUN_DIR/recipe-classification-v3.json.gz"
+CLASSIFICATION_REVIEW="$RUN_DIR/recipe-classification-review-v3.json"
 CLASSIFICATION_SUMMARY="$RUN_DIR/classification-summary.json"
 META="$RUN_DIR/run-meta.txt"
 BUNDLE="$RESULT_DIR/cook4me-release-assembly-prep-v2-$STAMP.zip"
@@ -62,6 +65,7 @@ fi
 if [[ -z "$TAXONOMY" ]]; then
   TAXONOMY="$(latest_file 'cook4me-release-taxonomy-v2-*.zip' "$RESULT_DIR" || true)"
 fi
+[[ -n "$TAXONOMY" && -f "$TAXONOMY" ]] || fail "No complete provider taxonomy capture was found. Run tools/run_release_catalog_taxonomy_capture.sh first."
 
 printf 'Cook4Me offline release assembly preparation\n'
 printf 'No provider/network calls are made in this stage.\n'
@@ -77,67 +81,61 @@ python3 "$ROOT/tools/prepare_release_catalog_v2_assembly.py" \
     fail "Offline assembly preparation failed."
   }
 
-CLASS_PROVIDER="$PROVIDER"
-TAXONOMY_AVAILABLE=false
-if [[ -n "$TAXONOMY" && -f "$TAXONOMY" ]]; then
-  python3 "$ROOT/tools/augment_provider_capture_taxonomy_v2.py" \
-    --provider-capture "$PROVIDER" \
-    --taxonomy "$TAXONOMY" \
-    --output "$AUGMENTED_PROVIDER" \
-    >"$RUN_DIR/augment-taxonomy.log" 2>&1 || {
-      tail -n 80 "$RUN_DIR/augment-taxonomy.log" >&2 || true
-      fail "Reviewed taxonomy could not be overlaid onto the provider capture."
-    }
-  CLASS_PROVIDER="$AUGMENTED_PROVIDER"
-  TAXONOMY_AVAILABLE=true
-else
-  printf 'No complete taxonomy capture found; meal types will remain review-required where provider taxonomy is unavailable.\n'
-  : >"$RUN_DIR/augment-taxonomy.log"
-fi
+python3 "$ROOT/tools/augment_provider_capture_taxonomy_v2.py" \
+  --provider-capture "$PROVIDER" \
+  --taxonomy "$TAXONOMY" \
+  --output "$AUGMENTED_PROVIDER" \
+  >"$RUN_DIR/augment-taxonomy.log" 2>&1 || {
+    tail -n 80 "$RUN_DIR/augment-taxonomy.log" >&2 || true
+    fail "Reviewed taxonomy could not be overlaid onto the provider capture."
+  }
 
 python3 "$ROOT/tools/classify_release_catalog_v2.py" \
-  --provider-capture "$CLASS_PROVIDER" \
+  --provider-capture "$AUGMENTED_PROVIDER" \
   --marketing-foods "$MARKETING" \
-  --output "$CLASSIFICATION" \
-  --review "$CLASSIFICATION_REVIEW" \
-  --summary "$CLASSIFICATION_SUMMARY" \
-  >"$RUN_DIR/classify.log" 2>&1 || {
-    tail -n 80 "$RUN_DIR/classify.log" >&2 || true
+  --output "$CLASSIFICATION_V2" \
+  --review "$CLASSIFICATION_V2_REVIEW" \
+  --summary "$CLASSIFICATION_V2_SUMMARY" \
+  >"$RUN_DIR/classify-v2.log" 2>&1 || {
+    tail -n 80 "$RUN_DIR/classify-v2.log" >&2 || true
     fail "Offline diet/meal classification failed."
   }
 
-python3 - "$SUMMARY" "$CLASSIFICATION_SUMMARY" "$TAXONOMY_AVAILABLE" <<'PY'
+python3 "$ROOT/tools/refine_release_catalog_classification_v3.py" \
+  --classification "$CLASSIFICATION_V2" \
+  --provider-capture "$AUGMENTED_PROVIDER" \
+  --output "$CLASSIFICATION" \
+  --review "$CLASSIFICATION_REVIEW" \
+  --summary "$CLASSIFICATION_SUMMARY" \
+  >"$RUN_DIR/classify-v3.log" 2>&1 || {
+    tail -n 80 "$RUN_DIR/classify-v3.log" >&2 || true
+    fail "Entry/meal classification refinement failed."
+  }
+
+python3 - "$SUMMARY" "$CLASSIFICATION_SUMMARY" <<'PY'
 import json, sys
 s=json.load(open(sys.argv[1], encoding='utf-8'))
 c=json.load(open(sys.argv[2], encoding='utf-8'))
-print(f'TAXONOMY_AVAILABLE={sys.argv[3]}')
+print('TAXONOMY_AVAILABLE=true')
 for key in (
-    'providerDetails',
-    'staleSearchOnly',
-    'providerRecipeGroups',
-    'providerFoodCatalogKeys',
-    'recipeUsedProviderFoodKeys',
-    'recipeUsedProviderFoodKeysCoveredByDictionary',
-    'providerFoodsWithSebEnglish',
-    'usedProviderFoodsWithSebEnglish',
-    'providerFoodsMissingSebEnglish',
-    'usedProviderFoodsMissingSebEnglish',
-    'unkeyedUniqueLabels',
-    'unkeyedRowsWithStructuredPrefixCleaned',
-    'unkeyedExactProviderFoodCandidates',
-    'uniqueRecipeTitleTranslationTasks',
-    'unkeyedIngredientTranslationClassificationTasks',
+    'providerDetails', 'staleSearchOnly', 'providerRecipeGroups',
+    'providerFoodCatalogKeys', 'recipeUsedProviderFoodKeys',
+    'recipeUsedProviderFoodKeysCoveredByDictionary', 'providerFoodsWithSebEnglish',
+    'usedProviderFoodsWithSebEnglish', 'providerFoodsMissingSebEnglish',
+    'usedProviderFoodsMissingSebEnglish', 'unkeyedUniqueLabels',
+    'unkeyedRowsWithStructuredPrefixCleaned', 'unkeyedExactProviderFoodCandidates',
+    'uniqueRecipeTitleTranslationTasks', 'unkeyedIngredientTranslationClassificationTasks',
     'translationTasks',
 ):
     print(f'{key.upper()}={s[key]}')
 for key in (
-    'dietResolved', 'dietReviewRequired', 'vegan', 'vegetarian',
-    'pescatarian', 'omnivore', 'mealTypeResolvedFromProvider',
-    'mealTypeReviewRequired', 'reviewQueue',
+    'dietResolved', 'dietReviewRequired', 'vegan', 'vegetarian', 'pescatarian',
+    'omnivore', 'mealTypeResolved', 'mealTypeNotApplicable',
+    'mealTypeReviewRequired', 'entryType_recipe', 'entryType_ingredient_preparation',
+    'entryType_beverage', 'entryType_non_food', 'providerDietHintConflicts',
+    'reviewQueue',
 ):
-    print(f'{key.upper()}={c[key]}')
-for meal in ('breakfast','starter','salad','soup','main','side','dessert','snack'):
-    print(f'MEALTYPE_{meal.upper()}={c.get("mealType_"+meal, 0)}')
+    print(f'{key.upper()}={c.get(key, 0)}')
 PY
 
 {
@@ -147,10 +145,12 @@ PY
   printf 'provider_capture=%s\n' "$PROVIDER"
   printf 'marketing_foods=%s\n' "$MARKETING"
   printf 'provider_taxonomy=%s\n' "$TAXONOMY"
-  printf 'taxonomy_available=%s\n' "$TAXONOMY_AVAILABLE"
+  printf 'taxonomy_available=true\n'
+  printf 'entry_classification=yes\n'
   printf 'diet_classification=yes\n'
   printf 'meal_type_classification=yes\n'
   printf 'provider_taxonomy_preferred=yes\n'
+  printf 'provider_diet_hints_authoritative=no\n'
   printf 'network_used=no\n'
   printf 'read_only=yes\n'
   printf 'secrets_persisted=no\n'
@@ -162,10 +162,10 @@ PY
     assembly-prep-v2.json.gz \
     translation-queue-v2.json \
     summary.json \
-    recipe-classification-v2.json.gz \
-    recipe-classification-review-v2.json \
+    recipe-classification-v3.json.gz \
+    recipe-classification-review-v3.json \
     classification-summary.json \
-    prepare.log classify.log augment-taxonomy.log run-meta.txt
+    prepare.log augment-taxonomy.log classify-v2.log classify-v3.log run-meta.txt
 )
 
 printf 'RESULT_BUNDLE=%s\n' "$BUNDLE"
