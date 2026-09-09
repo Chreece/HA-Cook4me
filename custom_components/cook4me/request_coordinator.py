@@ -22,11 +22,10 @@ def _utcnow() -> str:
 class Cook4MeRequestCoordinator:
     """One FIFO work lane for Cook4Me external/device operations.
 
-    The lock is deliberately global to the integration, not per config entry.
-    This prevents AI, recipe catalog, price/reference and appliance work from
-    competing for provider/device resources. Nested work from the same task is
-    re-entrant so a high-level operation may call lower-level coordinated code
-    without deadlocking itself.
+    The lock is global to the integration so provider/device operations do not
+    compete. Progress is descriptive state for the currently running operation;
+    it never changes scheduling and never invents percentages when the work
+    cannot report a real completed/total count.
     """
 
     def __init__(self, hass: HomeAssistant) -> None:
@@ -44,6 +43,54 @@ class Cook4MeRequestCoordinator:
             "running": deepcopy(self._running),
         }
 
+    def update_progress(
+        self,
+        *,
+        phase: str = "",
+        completed: int | float | None = None,
+        total: int | float | None = None,
+        message: str = "",
+    ) -> None:
+        """Update observable progress for the running operation.
+
+        ``percent`` is emitted only when both completed and total are genuine
+        finite values and total is > 0. Provider calls that expose no progress
+        remain explicitly indeterminate instead of displaying a fake percent.
+        """
+        if self._running is None:
+            return
+        progress: dict[str, Any] = {
+            "phase": str(phase or ""),
+            "message": str(message or ""),
+            "updatedAt": _utcnow(),
+            "determinate": False,
+        }
+        try:
+            done = float(completed) if completed is not None else None
+            maximum = float(total) if total is not None else None
+        except (TypeError, ValueError):
+            done = maximum = None
+        if (
+            done is not None
+            and maximum is not None
+            and maximum > 0
+            and done >= 0
+        ):
+            done = min(done, maximum)
+            progress.update(
+                {
+                    "completed": done,
+                    "total": maximum,
+                    "percent": round(done / maximum * 100),
+                    "determinate": True,
+                }
+            )
+        self._running["progress"] = progress
+
+    def clear_progress(self) -> None:
+        if self._running is not None:
+            self._running.pop("progress", None)
+
     @asynccontextmanager
     async def operation(
         self,
@@ -54,8 +101,6 @@ class Cook4MeRequestCoordinator:
     ) -> AsyncIterator[dict[str, Any]]:
         owner = _OWNER.get()
         if owner == id(self):
-            # Re-entrant nested operation: the outer operation already owns
-            # the single global work lane.
             yield self._running or {
                 "id": 0,
                 "kind": str(kind),
