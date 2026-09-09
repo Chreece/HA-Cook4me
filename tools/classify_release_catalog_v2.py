@@ -21,7 +21,6 @@ from __future__ import annotations
 
 import argparse
 from collections import defaultdict
-from copy import deepcopy
 import gzip
 import json
 from pathlib import Path
@@ -99,8 +98,6 @@ _VEGETARIAN_ANIMAL_TERMS = {
     "milk", "cream", "butter", "cheese", "yogurt", "yoghurt", "egg",
     "eggs", "honey", "whey", "casein", "ghee",
 }
-# Composite ingredients that can materially change diet suitability and cannot
-# safely be treated as plant-only from a generic label.
 _AMBIGUOUS_ANIMAL_ORIGIN_TERMS = {
     "stock", "broth", "bouillon", "consomme", "dashi", "dashida",
     "dressing", "gravy", "worcestershire", "pesto", "kimchi",
@@ -258,7 +255,6 @@ def classify_variant_diet(
     language = _text(detail.get("language")).lower()
     ingredient_names: list[str] = []
     unresolved: list[str] = []
-    evidence_sources: list[str] = []
     equipment: list[str] = []
     for item in detail.get("ingredients") or []:
         if not isinstance(item, dict):
@@ -271,7 +267,13 @@ def classify_variant_diet(
             equipment.append(name)
             continue
         ingredient_names.append(name)
-        evidence_sources.append(source)
+        # English text can prove animal content, but without provider identity it
+        # must not prove the absence of animal content for a permanent diet tag.
+        if source == "keyless:english":
+            unresolved.append(f"keyless:english:{name}")
+
+    if not ingredient_names and not unresolved:
+        unresolved.append("no-classifiable-food-ingredients")
 
     joined = " | ".join(ingredient_names)
     meat_hits = _hits(joined, _MEAT_TERMS)
@@ -289,8 +291,6 @@ def classify_variant_diet(
     blockers = list(unresolved)
     blockers.extend(f"ambiguous:{value}" for value in ambiguous_hits)
 
-    # Positive animal evidence makes the corresponding negative suitability
-    # false even when some other ingredient remains unresolved.
     vegan: bool | None = False if (has_meat or has_fish or has_nonvegan) else None
     vegetarian: bool | None = False if (has_meat or has_fish) else None
     pescatarian: bool | None = False if has_meat else None
@@ -410,7 +410,11 @@ def _aggregate_group(grouping_id: str, rows: list[dict[str, Any]]) -> dict[str, 
 
     meal_sets = {tuple(row.get("mealTypes") or []) for row in meals}
     all_meal_resolved = all(row.get("status") == "resolved" for row in meals)
-    meal_types = list(next(iter(meal_sets))) if all_meal_resolved and len(meal_sets) == 1 else sorted({x for row in meals for x in row.get("mealTypes") or []})
+    meal_types = (
+        list(next(iter(meal_sets)))
+        if all_meal_resolved and len(meal_sets) == 1
+        else sorted({x for row in meals for x in row.get("mealTypes") or []})
+    )
     primary_meal = meal_types[0] if all_meal_resolved and len(meal_types) == 1 else None
 
     sample = rows[0]["detail"]
@@ -433,7 +437,9 @@ def _aggregate_group(grouping_id: str, rows: list[dict[str, Any]]) -> dict[str, 
             "sources": sorted({row.get("source") for row in meals if row.get("source")}),
         },
     }
-    unresolved_diet = sorted({item for row in diets for item in (row.get("evidence") or {}).get("unresolved") or []})
+    unresolved_diet = sorted(
+        {item for row in diets for item in (row.get("evidence") or {}).get("unresolved") or []}
+    )
     if unresolved_diet:
         result["dietClassification"]["blockers"] = unresolved_diet[:40]
     provider_taxonomy = sorted({item for row in meals for item in row.get("providerTaxonomy") or []})
