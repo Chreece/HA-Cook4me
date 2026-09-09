@@ -131,7 +131,12 @@ class ReleaseAssemblyPrepTests(unittest.TestCase):
         self.assertEqual(3, summary["providerDetails"])
         self.assertEqual(3, summary["providerRecipeGroups"])
         self.assertEqual(2, summary["providerFoodCatalogKeys"])
-        self.assertEqual(2, summary["recipeUsedProviderFoodKeys"])
+        # Only M_FOOD_2 is explicitly identified by the provider on a recipe
+        # line. The keyless Wasser line has an exact same-language dictionary
+        # candidate for M_FOOD_1, but candidates must not become provider
+        # identity merely because the label matches.
+        self.assertEqual(1, summary["recipeUsedProviderFoodKeys"])
+        self.assertEqual(1, summary["recipeUsedProviderFoodKeysCoveredByDictionary"])
         self.assertEqual(1, summary["providerFoodsMissingSebEnglish"])
         self.assertEqual(1, summary["usedProviderFoodsMissingSebEnglish"])
 
