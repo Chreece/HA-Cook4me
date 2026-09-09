@@ -31,12 +31,13 @@ class MarketingFoodCaptureTests(unittest.TestCase):
 
     def test_normalization_keeps_provider_key_and_audits_conflicting_duplicates(self):
         payload = {
+            "page": {"totalElements": 4},
             "content": [
                 {"key": "M_FOOD_1", "name": "Potato"},
                 {"key": "M_FOOD_1", "name": "Potatoes"},
                 {"key": "M_FOOD_2", "name": "Carrot"},
                 {"name": "No provider key"},
-            ]
+            ],
         }
         rows, stats = capture.normalize_marketing_foods(payload, "en")
         self.assertEqual(["M_FOOD_1", "M_FOOD_2"], [row["key"] for row in rows])
@@ -46,6 +47,18 @@ class MarketingFoodCaptureTests(unittest.TestCase):
         self.assertEqual(1, stats["missingKeyRows"])
         self.assertEqual(1, stats["duplicateRows"])
         self.assertEqual(1, stats["conflictingLabels"])
+        self.assertEqual(4, stats["reportedTotalElements"])
+        self.assertFalse(stats["truncated"])
+
+    def test_reported_total_detects_an_incomplete_size_limited_response(self):
+        payload = {
+            "page": {"totalElements": 6000},
+            "content": [{"key": f"M_FOOD_{i}", "name": f"Food {i}"} for i in range(5000)],
+        }
+        rows, stats = capture.normalize_marketing_foods(payload, "en")
+        self.assertEqual(5000, len(rows))
+        self.assertEqual(6000, stats["reportedTotalElements"])
+        self.assertTrue(stats["truncated"])
 
 
 if __name__ == "__main__":
