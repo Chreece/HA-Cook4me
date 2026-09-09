@@ -9,6 +9,9 @@ RESULT_DIR="$STATE_DIR/results"
 PREP="$RUN_DIR/assembly-prep-v2.json.gz"
 QUEUE="$RUN_DIR/translation-queue-v2.json"
 SUMMARY="$RUN_DIR/summary.json"
+CLASSIFICATION="$RUN_DIR/recipe-classification-v2.json.gz"
+CLASSIFICATION_REVIEW="$RUN_DIR/recipe-classification-review-v2.json"
+CLASSIFICATION_SUMMARY="$RUN_DIR/classification-summary.json"
 META="$RUN_DIR/run-meta.txt"
 BUNDLE="$RESULT_DIR/cook4me-release-assembly-prep-v2-$STAMP.zip"
 mkdir -p "$RUN_DIR" "$RESULT_DIR"
@@ -65,9 +68,21 @@ python3 "$ROOT/tools/prepare_release_catalog_v2_assembly.py" \
     fail "Offline assembly preparation failed."
   }
 
-python3 - "$SUMMARY" <<'PY'
+python3 "$ROOT/tools/classify_release_catalog_v2.py" \
+  --provider-capture "$PROVIDER" \
+  --marketing-foods "$MARKETING" \
+  --output "$CLASSIFICATION" \
+  --review "$CLASSIFICATION_REVIEW" \
+  --summary "$CLASSIFICATION_SUMMARY" \
+  >"$RUN_DIR/classify.log" 2>&1 || {
+    tail -n 80 "$RUN_DIR/classify.log" >&2 || true
+    fail "Offline diet/meal classification failed."
+  }
+
+python3 - "$SUMMARY" "$CLASSIFICATION_SUMMARY" <<'PY'
 import json, sys
 s=json.load(open(sys.argv[1], encoding='utf-8'))
+c=json.load(open(sys.argv[2], encoding='utf-8'))
 for key in (
     'providerDetails',
     'staleSearchOnly',
@@ -87,6 +102,14 @@ for key in (
     'translationTasks',
 ):
     print(f'{key.upper()}={s[key]}')
+for key in (
+    'dietResolved', 'dietReviewRequired', 'vegan', 'vegetarian',
+    'pescatarian', 'omnivore', 'mealTypeResolvedFromProvider',
+    'mealTypeReviewRequired', 'reviewQueue',
+):
+    print(f'{key.upper()}={c[key]}')
+for meal in ('breakfast','starter','salad','soup','main','side','dessert','snack'):
+    print(f'MEALTYPE_{meal.upper()}={c.get("mealType_"+meal, 0)}')
 PY
 
 {
@@ -95,6 +118,9 @@ PY
   printf 'commit=%s\n' "$(git -C "$ROOT" rev-parse HEAD 2>/dev/null || true)"
   printf 'provider_capture=%s\n' "$PROVIDER"
   printf 'marketing_foods=%s\n' "$MARKETING"
+  printf 'diet_classification=yes\n'
+  printf 'meal_type_classification=yes\n'
+  printf 'provider_taxonomy_preferred=yes\n'
   printf 'network_used=no\n'
   printf 'read_only=yes\n'
   printf 'secrets_persisted=no\n'
@@ -102,7 +128,14 @@ PY
 
 (
   cd "$RUN_DIR"
-  zip -q "$BUNDLE" assembly-prep-v2.json.gz translation-queue-v2.json summary.json prepare.log run-meta.txt
+  zip -q "$BUNDLE" \
+    assembly-prep-v2.json.gz \
+    translation-queue-v2.json \
+    summary.json \
+    recipe-classification-v2.json.gz \
+    recipe-classification-review-v2.json \
+    classification-summary.json \
+    prepare.log classify.log run-meta.txt
 )
 
 printf 'RESULT_BUNDLE=%s\n' "$BUNDLE"
