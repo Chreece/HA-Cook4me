@@ -17,10 +17,11 @@ from .websocket_v25 import async_register as async_register_websocket_v25
 from .websocket_v26 import async_register as async_register_websocket_v26
 from .websocket_v27 import async_register as async_register_websocket_v27
 from .websocket_v28 import async_register as async_register_websocket_v28
+from .websocket_v29 import async_register as async_register_websocket_v29
 
 _URL_BASE = "/cook4me_static"
-_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v57"
-_PANEL_MODULE = "cook4me-panel-v57.js"
+_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v58"
+_PANEL_MODULE = "cook4me-panel-v58.js"
 _V20_REGISTERED = "websocket_v20_registered"
 _V21_REGISTERED = "websocket_v21_registered"
 _V22_REGISTERED = "websocket_v22_registered"
@@ -30,6 +31,7 @@ _V25_REGISTERED = "websocket_v25_registered"
 _V26_REGISTERED = "websocket_v26_registered"
 _V27_REGISTERED = "websocket_v27_registered"
 _V28_REGISTERED = "websocket_v28_registered"
+_V29_REGISTERED = "websocket_v29_registered"
 
 
 async def async_register_panel(hass: HomeAssistant) -> None:
@@ -61,6 +63,9 @@ async def async_register_panel(hass: HomeAssistant) -> None:
     if not domain_data.get(_V28_REGISTERED):
         async_register_websocket_v28(hass)
         domain_data[_V28_REGISTERED] = True
+    if not domain_data.get(_V29_REGISTERED):
+        async_register_websocket_v29(hass)
+        domain_data[_V29_REGISTERED] = True
     if async_panel_exists(hass, DOMAIN):
         return
     frontend_dir = Path(__file__).parent / "frontend"
@@ -71,7 +76,7 @@ async def async_register_panel(hass: HomeAssistant) -> None:
         hass=hass,
         frontend_url_path=DOMAIN,
         webcomponent_name=_PANEL_ELEMENT,
-        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.8.9",
+        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.9.1",
         sidebar_title="Cook4Me",
         sidebar_icon="mdi:pot-steam",
         embed_iframe=False,

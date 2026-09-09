@@ -13,6 +13,7 @@ V54 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v54.j
 V55 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v55.js"
 V56 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v56.js"
 V57 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v57.js"
+V58 = ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v58.js"
 V22 = ROOT / "custom_components" / "cook4me" / "websocket_v22.py"
 V23 = ROOT / "custom_components" / "cook4me" / "websocket_v23.py"
 V24 = ROOT / "custom_components" / "cook4me" / "websocket_v24.py"
@@ -20,6 +21,7 @@ V25 = ROOT / "custom_components" / "cook4me" / "websocket_v25.py"
 V26 = ROOT / "custom_components" / "cook4me" / "websocket_v26.py"
 V27 = ROOT / "custom_components" / "cook4me" / "websocket_v27.py"
 V28 = ROOT / "custom_components" / "cook4me" / "websocket_v28.py"
+V29 = ROOT / "custom_components" / "cook4me" / "websocket_v29.py"
 CACHE = ROOT / "custom_components" / "cook4me" / "online_cache.py"
 RECIPE_CACHE = ROOT / "custom_components" / "cook4me" / "recipe_cache.py"
 V9 = ROOT / "custom_components" / "cook4me" / "websocket_v9.py"
@@ -27,14 +29,14 @@ COORD = ROOT / "custom_components" / "cook4me" / "request_coordinator.py"
 
 
 class V49OrchestrationContractTests(unittest.TestCase):
-    def test_v57_is_active_and_all_new_backends_are_registered(self):
+    def test_v58_is_active_and_all_new_backends_are_registered(self):
         panel = PANEL.read_text(encoding="utf-8")
         manifest = MANIFEST.read_text(encoding="utf-8")
-        self.assertIn('cook4me-recipe-hub-panel-v57', panel)
-        self.assertIn('cook4me-panel-v57.js', panel)
-        self.assertIn('?v=2026.9.8.9', panel)
-        self.assertIn('"version": "2026.9.8.9"', manifest)
-        for version in (22, 23, 24, 25, 26, 27, 28):
+        self.assertIn('cook4me-recipe-hub-panel-v58', panel)
+        self.assertIn('cook4me-panel-v58.js', panel)
+        self.assertIn('?v=2026.9.9.1', panel)
+        self.assertIn('"version": "2026.9.9.1"', manifest)
+        for version in (22, 23, 24, 25, 26, 27, 28, 29):
             self.assertIn(f'async_register_websocket_v{version}', panel)
         self.assertIn('import "./cook4me-panel-v50.js"', V51.read_text(encoding="utf-8"))
         self.assertIn('import "./cook4me-panel-v51.js"', V52.read_text(encoding="utf-8"))
@@ -43,6 +45,7 @@ class V49OrchestrationContractTests(unittest.TestCase):
         self.assertIn('import "./cook4me-panel-v54.js"', V55.read_text(encoding="utf-8"))
         self.assertIn('import "./cook4me-panel-v55.js"', V56.read_text(encoding="utf-8"))
         self.assertIn('import "./cook4me-panel-v56.js"', V57.read_text(encoding="utf-8"))
+        self.assertIn('import "./cook4me-panel-v57.js"', V58.read_text(encoding="utf-8"))
 
     def test_online_cache_keeps_content_and_requires_daily_recheck(self):
         text = CACHE.read_text(encoding="utf-8")
@@ -73,6 +76,27 @@ class V49OrchestrationContractTests(unittest.TestCase):
         self.assertIn('languages:this._loadOfficialLanguages()', ui)
         self.assertIn('for language in languages:', backend)
         self.assertNotIn('asyncio.gather', backend.split('async def _official_search', 1)[1].split('def _recent_titles', 1)[0])
+
+    def test_today_multilanguage_path_preserves_and_balances_catalogs_serially(self):
+        backend = V29.read_text(encoding="utf-8")
+        ui = V58.read_text(encoding="utf-8")
+        self.assertIn('cook4me/v29/today_suggest', backend)
+        self.assertIn('for language in languages:', backend)
+        self.assertNotIn('asyncio.gather', backend)
+        self.assertIn('todayCatalogLanguage', backend)
+        self.assertIn('select_catalog_balanced', backend)
+        self.assertIn('catalogSelectedCounts', backend)
+        self.assertIn('"cook4me/v18/today_suggest"', ui)
+        self.assertIn('"cook4me/v29/today_suggest"', ui)
+        self.assertIn('data-today-catalog-chip', ui)
+
+    def test_v58_reuses_loaded_recipe_image_nodes(self):
+        ui = V58.read_text(encoding="utf-8")
+        self.assertIn('_v58StashImages()', ui)
+        self.assertIn('_v58RestoreImages()', ui)
+        self.assertIn('cook4meV58Ready', ui)
+        self.assertIn('image.replaceWith(cached)', ui)
+        self.assertIn('MAX_IMAGE_CACHE=96', ui)
 
     def test_ai_queue_is_replaced_by_direct_today_style_create(self):
         ui = V49.read_text(encoding="utf-8")
