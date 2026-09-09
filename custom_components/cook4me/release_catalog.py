@@ -39,7 +39,9 @@ def load_release_catalog() -> dict[str, Any]:
     """Load the immutable release catalog shipped with the integration.
 
     Runtime code must never mutate this object. Callers receive deep copies from
-    the public lookup helpers below.
+    the public lookup helpers below. The integration warms this cache in an
+    executor during setup so a large release file is never first-parsed on the
+    Home Assistant event loop.
     """
     try:
         payload = json.loads(_CATALOG_PATH.read_text(encoding="utf-8"))
@@ -64,6 +66,11 @@ def load_release_catalog() -> dict[str, Any]:
     if not isinstance(payload.get("recipes"), list):
         payload["recipes"] = []
     return payload
+
+
+async def async_warm_release_catalog(hass: Any) -> dict[str, Any]:
+    """Parse the immutable catalog once without blocking Home Assistant's loop."""
+    return await hass.async_add_executor_job(load_release_catalog)
 
 
 def release_catalog_summary() -> dict[str, Any]:
@@ -102,9 +109,23 @@ def _translated_name(row: dict[str, Any], language: str) -> str:
     )
 
 
-def ingredient_rows(language: str, query: str = "", *, limit: int = 5000) -> list[dict[str, Any]]:
-    """Return offline ingredient choices in the requested UI/catalog language."""
+def ingredient_rows(
+    language: str,
+    query: str = "",
+    *,
+    limit: int | None = None,
+    include_nutrition: bool = False,
+) -> list[dict[str, Any]]:
+    """Return localized offline ingredient choices.
+
+    The normal UI/AI identity path deliberately omits nutrient payloads. Generic
+    nutrient evidence remains in the immutable release catalog and callers that
+    actually calculate nutrition can request it explicitly. This keeps a full
+    ingredient picker small even when the release catalog contains thousands of
+    nutrient profiles.
+    """
     wanted = _norm(query)
+    maximum = None if limit is None else max(1, int(limit))
     out: list[dict[str, Any]] = []
     for raw in load_release_catalog().get("ingredients") or []:
         if not isinstance(raw, dict):
@@ -131,10 +152,10 @@ def ingredient_rows(language: str, query: str = "", *, limit: int = 5000) -> lis
             row["key"] = key
         if _text(raw.get("canonicalName")):
             row["canonicalName"] = _text(raw.get("canonicalName"))
-        if isinstance(raw.get("nutrition"), dict):
+        if include_nutrition and isinstance(raw.get("nutrition"), dict):
             row["nutrition"] = deepcopy(raw["nutrition"])
         out.append(row)
-        if len(out) >= max(1, int(limit)):
+        if maximum is not None and len(out) >= maximum:
             break
     return out
 
@@ -154,6 +175,12 @@ def _choose_variant(
     configured_language: str,
     country: str,
 ) -> tuple[dict[str, Any] | None, dict[str, Any] | None]:
+    """Choose a display variant and a *proven device-language* send variant.
+
+    A foreign-language publication may be shown even when the configured Cookeo
+    language has no sibling publication. It must then remain non-sendable rather
+    than silently reusing the foreign variant as if it were device-compatible.
+    """
     variants = [row for row in recipe.get("variants") or [] if isinstance(row, dict)]
     if not variants:
         return None, None
@@ -161,32 +188,49 @@ def _choose_variant(
     configured = _text(configured_language).lower().replace("_", "-").split("-", 1)[0]
     market = f"GS_{_text(country).upper()}"
 
-    def score(row: dict[str, Any], preferred: str) -> tuple[int, int, int, int]:
+    def display_score(row: dict[str, Any]) -> tuple[int, int, int, int]:
         lang = _variant_language(row)
         row_market = _variant_market(row)
         return (
-            2 if lang == preferred else 1 if lang == configured else 0,
+            2 if lang == requested else 1 if lang == configured else 0,
             1 if row_market == market else 0,
             1 if row.get("cover") else 0,
             1 if _text(row.get("recipeFunctionalId") or row.get("variantId")) else 0,
         )
 
-    display = max(variants, key=lambda row: score(row, requested))
-    send = max(variants, key=lambda row: score(row, configured))
+    def send_score(row: dict[str, Any]) -> tuple[int, int, int]:
+        return (
+            1 if _variant_market(row) == market else 0,
+            1 if _text(row.get("recipeFunctionalId") or row.get("variantId")) else 0,
+            1 if row.get("cover") else 0,
+        )
+
+    display = max(variants, key=display_score)
+    send_candidates = [row for row in variants if _variant_language(row) == configured]
+    send = max(send_candidates, key=send_score) if send_candidates else None
     return display, send
+
+
+def _ingredient_search_values(raw: Any) -> list[str]:
+    if not isinstance(raw, dict):
+        return []
+    values = [_text(raw.get("canonicalName") or raw.get("name") or raw.get("foodName"))]
+    translations = raw.get("translations")
+    if isinstance(translations, dict):
+        values.extend(_text(value) for value in translations.values())
+    return [value for value in values if value]
 
 
 def _recipe_search_text(recipe: dict[str, Any]) -> str:
     values = [_text(recipe.get("canonicalName"))]
-    for variant in recipe.get("variants") or []:
-        if isinstance(variant, dict):
-            values.append(_text(variant.get("title")))
     for ingredient in recipe.get("ingredients") or []:
-        if isinstance(ingredient, dict):
-            values.append(_text(ingredient.get("canonicalName") or ingredient.get("name")))
-            translations = ingredient.get("translations")
-            if isinstance(translations, dict):
-                values.extend(_text(value) for value in translations.values())
+        values.extend(_ingredient_search_values(ingredient))
+    for variant in recipe.get("variants") or []:
+        if not isinstance(variant, dict):
+            continue
+        values.append(_text(variant.get("title")))
+        for ingredient in variant.get("ingredients") or []:
+            values.extend(_ingredient_search_values(ingredient))
     return _norm(" ".join(value for value in values if value))
 
 
@@ -218,12 +262,13 @@ def _recipe_row(
         configured_language=configured_language,
         country=country,
     )
-    if not display or not send:
+    if not display:
         return None
     grouping = _text(recipe.get("groupingFunctionalId") or display.get("groupingFunctionalId"))
     display_variant = _text(display.get("variantId") or display.get("searchVariantId"))
-    send_variant = _text(send.get("variantId") or send.get("searchVariantId"))
-    send_recipe = _text(send.get("recipeFunctionalId") or send_variant)
+    send_grouping = _text(send.get("groupingFunctionalId") or grouping) if send else ""
+    send_variant = _text(send.get("variantId") or send.get("searchVariantId")) if send else ""
+    send_recipe = _text(send.get("recipeFunctionalId") or send_variant) if send else ""
     title = _text(display.get("title")) or _text(recipe.get("canonicalName"))
     row: dict[str, Any] = {
         "groupingFunctionalId": grouping or None,
@@ -232,7 +277,7 @@ def _recipe_row(
         "searchVariantId": display_variant or None,
         "displayVariantId": display_variant or None,
         "sendVariantId": send_variant or None,
-        "sendGroupingFunctionalId": grouping or None,
+        "sendGroupingFunctionalId": send_grouping or None,
         "sendRecipeFunctionalId": send_recipe or None,
         "title": title or None,
         "canonicalName": _text(recipe.get("canonicalName")) or title or None,
@@ -254,7 +299,7 @@ def _recipe_row(
         "catalogNutrition": deepcopy(display.get("nutrition") or recipe.get("nutrition")),
         "source": "cook4me_release_catalog",
         "releaseCatalogVersion": _text(load_release_catalog().get("catalogVersion")),
-        "sendable": bool(grouping and send_variant and send_recipe),
+        "sendable": bool(send and send_grouping and send_variant and send_recipe),
         "variants": deepcopy(recipe.get("variants") or []),
     }
     servings = sorted(
