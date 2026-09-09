@@ -25,6 +25,7 @@ def compact_recipe_card(recipe: Any) -> dict[str, Any]:
         return {}
     match = recipe.get("match") if isinstance(recipe.get("match"), dict) else {}
     nutrition = recipe.get("nutrition") if isinstance(recipe.get("nutrition"), dict) else {}
+    cost = recipe.get("cost") if isinstance(recipe.get("cost"), dict) else {}
     per_serving = nutrition.get("perServing") if isinstance(nutrition.get("perServing"), dict) else {}
     totals = nutrition.get("totals") if isinstance(nutrition.get("totals"), dict) else {}
     ingredients: list[dict[str, Any]] = []
@@ -32,7 +33,14 @@ def compact_recipe_card(recipe: Any) -> dict[str, Any]:
         if not isinstance(raw, dict):
             continue
         row: dict[str, Any] = {}
-        for source, target in (("foodKey", "foodKey"),("key", "key"),("foodName", "foodName"),("name", "name"),("quantity", "quantity"),("unit", "unit")):
+        for source, target in (
+            ("foodKey", "foodKey"),
+            ("key", "key"),
+            ("foodName", "foodName"),
+            ("name", "name"),
+            ("quantity", "quantity"),
+            ("unit", "unit"),
+        ):
             if raw.get(source) not in (None, ""):
                 row[target] = raw.get(source)
         if row:
@@ -41,14 +49,46 @@ def compact_recipe_card(recipe: Any) -> dict[str, Any]:
             break
 
     out: dict[str, Any] = {}
-    for key in ("id","groupingFunctionalId","recipeFunctionalId","variantFunctionalId","searchVariantId","sendVariantId","sendGroupingFunctionalId","sendRecipeFunctionalId","referenceRecipeId","title","cover","language","market","todayCatalogLanguage","officialCatalogLanguage","groupSize","yield","source","sendable","deviceCanAccept"):
+    for key in (
+        "id",
+        "groupingFunctionalId",
+        "recipeFunctionalId",
+        "variantFunctionalId",
+        "searchVariantId",
+        "sendVariantId",
+        "sendGroupingFunctionalId",
+        "sendRecipeFunctionalId",
+        "referenceRecipeId",
+        "title",
+        "cover",
+        "language",
+        "market",
+        "todayCatalogLanguage",
+        "officialCatalogLanguage",
+        "groupSize",
+        "yield",
+        "source",
+        "sendable",
+        "deviceCanAccept",
+    ):
         if recipe.get(key) not in (None, ""):
             out[key] = deepcopy(recipe.get(key))
     if ingredients:
         out["ingredients"] = ingredients
 
     compact_match: dict[str, Any] = {}
-    for key in ("score","pantryCoverage","safe","dietary","missingIngredients","calorieTarget","caloriePerServing","calorieDelta","nutritionGoal","nutritionGoalCoverage"):
+    for key in (
+        "score",
+        "pantryCoverage",
+        "safe",
+        "dietary",
+        "missingIngredients",
+        "calorieTarget",
+        "caloriePerServing",
+        "calorieDelta",
+        "nutritionGoal",
+        "nutritionGoalCoverage",
+    ):
         if match.get(key) not in (None, ""):
             value = deepcopy(match.get(key))
             if key == "missingIngredients" and isinstance(value, list):
@@ -67,6 +107,17 @@ def compact_recipe_card(recipe: Any) -> dict[str, Any]:
             "estimated": nutrition.get("estimated"),
             "sourceKinds": deepcopy(nutrition.get("sourceKinds") or []),
         }
+    if cost:
+        out["cost"] = {
+            "totalsByCurrency": deepcopy(cost.get("totalsByCurrency") or {}),
+            "perServingByCurrency": deepcopy(cost.get("perServingByCurrency") or {}),
+            "servings": cost.get("servings"),
+            "coverage": cost.get("coverage"),
+            "exactPurchaseCoverage": cost.get("exactPurchaseCoverage"),
+            "estimated": cost.get("estimated"),
+            "priceRevision": cost.get("priceRevision"),
+            "cacheHit": cost.get("cacheHit"),
+        }
     return out
 
 
@@ -74,7 +125,9 @@ class Cook4MeUiStateStore:
     """Small server-side UI state that is safe to hydrate on first paint."""
 
     def __init__(self, hass, entry_id: str) -> None:
-        self._store: Store[dict[str, Any]] = Store(hass, _STORAGE_VERSION, f"{DOMAIN}.{entry_id}.ui_state")
+        self._store: Store[dict[str, Any]] = Store(
+            hass, _STORAGE_VERSION, f"{DOMAIN}.{entry_id}.ui_state"
+        )
         self._loaded = False
         self._data: dict[str, Any] = {"todayPlan": None}
 
@@ -92,11 +145,22 @@ class Cook4MeUiStateStore:
         value = self._data.get("todayPlan")
         return deepcopy(value) if isinstance(value, dict) else None
 
-    async def async_set_today_plan(self, *, date: str, items: list[dict[str, Any]], filters: dict[str, Any], meta: dict[str, Any] | None = None) -> dict[str, Any]:
+    async def async_set_today_plan(
+        self,
+        *,
+        date: str,
+        items: list[dict[str, Any]],
+        filters: dict[str, Any],
+        meta: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
         plan = {
             "date": _text(date),
             "savedAt": _utcnow(),
-            "items": [compact_recipe_card(row) for row in items[:_MAX_TODAY_ITEMS] if isinstance(row, dict)],
+            "items": [
+                compact_recipe_card(row)
+                for row in items[:_MAX_TODAY_ITEMS]
+                if isinstance(row, dict)
+            ],
             "filters": deepcopy(filters) if isinstance(filters, dict) else {},
             "meta": deepcopy(meta) if isinstance(meta, dict) else {},
             "compact": True,
