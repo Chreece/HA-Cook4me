@@ -188,10 +188,10 @@ def test_v38_top_controls_are_unified_and_icon_only_without_replacing_language_s
     assert 'control.replaceChildren' not in text
 
 
-def test_v38_is_active_and_versioned():
+def test_v60_is_active_and_versioned():
     panel = _text(PANEL)
     manifest = _text(MANIFEST)
-    assert 'cook4me-recipe-hub-panel-v38' in panel
-    assert 'cook4me-panel-v38.js' in panel
-    assert '?v=2026.9.7.17' in panel
-    assert '"version": "2026.9.7.17"' in manifest
+    assert 'cook4me-recipe-hub-panel-v60' in panel
+    assert 'cook4me-panel-v60.js' in panel
+    assert '?v=2026.9.9.3' in panel
+    assert '"version": "2026.9.9.3"' in manifest
