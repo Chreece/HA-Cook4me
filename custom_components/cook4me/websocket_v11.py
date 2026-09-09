@@ -24,6 +24,7 @@ from .vendor import cook4me_phonefree as c4m
 from .vendor import cook4me_recipe_catalog as recipe_catalog
 
 _RECIPE_FALLBACK_SOURCE = "hydrated_official_recipes_fallback:v3_food_identity"
+_MARKETING_FOOD_SIZE = 100000
 
 
 async def _cache(bridge) -> Cook4MeIngredientCatalogCache:
@@ -38,6 +39,19 @@ async def _cache(bridge) -> Cook4MeIngredientCatalogCache:
 def _device_language(bridge) -> str:
     configured = str(bridge.entry.data.get(CONF_LANGUAGE, DEFAULT_LANGUAGE)).lower()
     return recipe_languages.normalize_catalog_language(configured, "de")
+
+
+def _marketing_food_search_body(language: str, market: str) -> dict[str, Any]:
+    """Serialize APK th0.d(language, market, false) exactly in semantics."""
+    return {
+        "fieldFilters": [
+            {"field": "market.key", "values": [market]},
+            {"field": "name.lang", "values": [language]},
+        ],
+        "fieldList": ["key", "name", "mixMedias"],
+        "facetList": [],
+        "sort": {"name": "name", "direction": "ASC"},
+    }
 
 
 def _marketing_food_catalog_sync(bridge, language: str) -> tuple[list[dict[str, str]], str]:
@@ -56,8 +70,8 @@ def _marketing_food_catalog_sync(bridge, language: str) -> tuple[list[dict[str, 
         headers_iter=recipe_catalog._request_headers(
             cfg, tokens, country, configured_language, app_version, url, pcfg
         ),
-        params={"lang": language, "market": market, "size": 5000},
-        body={},
+        params={"lang": language, "market": market, "size": _MARKETING_FOOD_SIZE},
+        body=_marketing_food_search_body(language, market),
     )
     items = marketing_food_items(payload, language)
     if not items:
