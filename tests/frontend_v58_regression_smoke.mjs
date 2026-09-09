@@ -67,8 +67,10 @@ if(!first)throw new Error("Initial recipe image was not rendered");
 first.dispatchEvent(new Event("load"));
 if(first.dataset.cook4meV58Ready!=="1")throw new Error("Loaded recipe image was not marked reusable");
 
-// Rendering a different section stashes the already-loaded image node.
-panel._tab="profile";
+// Rendering a different section stashes the already-loaded image node. Recipe
+// Book deliberately avoids LinkeDOM's incomplete writable <select>.value model
+// while exercising the same inherited innerHTML section replacement path.
+panel._tab="book";
 panel._renderTabs();
 panel._renderTab();
 if(!panel._v58ImagePool.has(recipe.cover))throw new Error("Loaded image was not stashed before section replacement");
