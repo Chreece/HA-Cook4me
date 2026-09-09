@@ -34,10 +34,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Validate version, JSON, Python, and frontend syntax
+      - name: Validate version, JSON, Python, shell, and frontend syntax
         run: |
           python scripts/version.py validate
           python -m compileall -q custom_components/cook4me tests tools
+          bash -n tools/run_release_catalog_capture.sh
           python - <<'PY'
           import json
           from pathlib import Path
