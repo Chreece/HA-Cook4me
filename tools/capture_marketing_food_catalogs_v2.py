@@ -102,7 +102,30 @@ def _candidates(payload: Any) -> list[dict[str, Any]]:
     return [row for row in values if isinstance(row, dict)]
 
 
-def normalize_marketing_foods(payload: Any, language: str) -> tuple[list[dict[str, Any]], dict[str, int]]:
+def _reported_total(payload: Any) -> int | None:
+    if not isinstance(payload, dict):
+        return None
+    candidates: list[Any] = [payload.get("totalElements"), payload.get("total")]
+    page = payload.get("page")
+    if isinstance(page, dict):
+        candidates.extend((page.get("totalElements"), page.get("total")))
+    data = payload.get("data")
+    if isinstance(data, dict):
+        candidates.extend((data.get("totalElements"), data.get("total")))
+        data_page = data.get("page")
+        if isinstance(data_page, dict):
+            candidates.extend((data_page.get("totalElements"), data_page.get("total")))
+    for value in candidates:
+        try:
+            total = int(value)
+        except (TypeError, ValueError):
+            continue
+        if total >= 0:
+            return total
+    return None
+
+
+def normalize_marketing_foods(payload: Any, language: str) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     """Normalize one localized provider dictionary without hiding duplicates."""
     candidates = _candidates(payload)
     by_key: "OrderedDict[str, dict[str, Any]]" = OrderedDict()
@@ -134,8 +157,12 @@ def normalize_marketing_foods(payload: Any, language: str) -> tuple[list[dict[st
         if row.get("aliases"):
             row["aliases"] = sorted(row["aliases"], key=lambda value: value.casefold())
     rows.sort(key=lambda row: row["key"])
+    reported_total = _reported_total(payload)
+    truncated = bool(reported_total is not None and reported_total > len(candidates))
     return rows, {
         "candidateRows": len(candidates),
+        "reportedTotalElements": reported_total,
+        "truncated": truncated,
         "uniqueKeys": len(rows),
         "missingKeyRows": missing_key,
         "duplicateRows": duplicate_rows,
@@ -200,12 +227,26 @@ def capture(args: argparse.Namespace) -> dict[str, Any]:
                 }
             )
             continue
+
+        state = "POPULATED" if items else "EMPTY"
+        if stats.get("truncated"):
+            state = "TRUNCATED"
+            errors.append(
+                {
+                    "language": language,
+                    "country": country,
+                    "error": (
+                        "Provider reported more marketing-food rows than the "
+                        f"APK-supported size={SIZE} response returned"
+                    ),
+                }
+            )
         catalogs.append(
             {
                 "language": language,
                 "country": country,
                 "market": market,
-                "state": "POPULATED" if items else "EMPTY",
+                "state": state,
                 "authMode": auth_mode,
                 **stats,
                 "items": items,
@@ -219,6 +260,7 @@ def capture(args: argparse.Namespace) -> dict[str, Any]:
         "readOnly": True,
         "secretsPersisted": False,
         "endpoint": "/common-api/datarefs/marketingFoods/search",
+        "requestSize": SIZE,
         "auditedCatalogCount": len(AUDITED_CATALOGS),
         "capturedCatalogCount": len(catalogs),
         "errors": errors,
@@ -248,6 +290,7 @@ def main() -> int:
                 "capturedCatalogs": len(result["catalogs"]),
                 "populatedCatalogs": sum(row["state"] == "POPULATED" for row in result["catalogs"]),
                 "emptyCatalogs": sum(row["state"] == "EMPTY" for row in result["catalogs"]),
+                "truncatedCatalogs": sum(row["state"] == "TRUNCATED" for row in result["catalogs"]),
                 "errors": len(result["errors"]),
                 "uniqueLocalizedFoodRows": sum(len(row["items"]) for row in result["catalogs"]),
             },
