@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "bootstrap-2026.9.9",
+  "complete": false,
+  "generatedAt": null,
+  "source": {
+    "contract": "standalone-proven-cookeo-brand-v5",
+    "applianceGroup": "APPLIANCE_GROUP_15",
+    "recipeType": "BRAND",
+    "sourceCatalogCount": 21,
+    "auditedLanguageMarketMappings": 28,
+    "knownEmptyMappings": 7,
+    "note": "Runtime activates offline merged search only after a reviewed exhaustive release build sets complete=true."
+  },
+  "ingredients": [],
+  "recipes": []
+}
