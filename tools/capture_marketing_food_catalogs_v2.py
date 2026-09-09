@@ -104,11 +104,12 @@ def _candidates(payload: Any) -> list[dict[str, Any]]:
 
 def normalize_marketing_foods(payload: Any, language: str) -> tuple[list[dict[str, Any]], dict[str, int]]:
     """Normalize one localized provider dictionary without hiding duplicates."""
+    candidates = _candidates(payload)
     by_key: "OrderedDict[str, dict[str, Any]]" = OrderedDict()
     missing_key = 0
     duplicate_rows = 0
     conflicting_labels = 0
-    for raw in _candidates(payload):
+    for raw in candidates:
         key = _text(raw.get("key") or raw.get("id") or raw.get("reference"))
         name = _localized_name(raw.get("name"), language)
         if not name:
@@ -134,7 +135,7 @@ def normalize_marketing_foods(payload: Any, language: str) -> tuple[list[dict[st
             row["aliases"] = sorted(row["aliases"], key=lambda value: value.casefold())
     rows.sort(key=lambda row: row["key"])
     return rows, {
-        "candidateRows": len(_candidates(payload)),
+        "candidateRows": len(candidates),
         "uniqueKeys": len(rows),
         "missingKeyRows": missing_key,
         "duplicateRows": duplicate_rows,
@@ -145,9 +146,6 @@ def normalize_marketing_foods(payload: Any, language: str) -> tuple[list[dict[st
 def capture(args: argparse.Namespace) -> dict[str, Any]:
     cfg = c4m.read_apk_config(None)
     tokens = _tokens(Path(args.storage_home).expanduser())
-    pcfg = catalog._platform_context(
-        cfg, args.configured_country, args.configured_language, APP_VERSION
-    )
     base = cfg["platform_base_url"].rstrip("/")
     url = base + "/common-api/datarefs/marketingFoods/search"
 
@@ -161,13 +159,19 @@ def capture(args: argparse.Namespace) -> dict[str, Any]:
         market = f"GS_{country}"
         print(f"[marketing-foods] {language}/{market}", flush=True)
         try:
+            # Match the proven Home Assistant runtime path exactly: RCU and
+            # request-header country follow the target catalog's market, while
+            # the account/device language remains the configured language.
+            pcfg = catalog._platform_context(
+                cfg, country, args.configured_language, APP_VERSION
+            )
             payload, auth_mode = catalog._http_json(
                 "POST",
                 url,
                 headers_iter=catalog._request_headers(
                     cfg,
                     tokens,
-                    args.configured_country,
+                    country,
                     args.configured_language,
                     APP_VERSION,
                     url,
