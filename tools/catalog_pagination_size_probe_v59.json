@@ -1,0 +1,415 @@
+{
+  "schema": 1,
+  "kind": "cook4me-recipe-search-page-size-probe-v59",
+  "credentialsUsed": false,
+  "catalogs": [
+    {
+      "language": "ar",
+      "market": "GS_AE",
+      "requests": [
+        {
+          "requestedSize": 50,
+          "repeats": [
+            {
+              "repeat": 1,
+              "authMode": "app",
+              "contentRows": 50,
+              "uniqueFunctionalIds": 50,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 50,
+                "totalElements": 1092,
+                "totalPages": 22
+              },
+              "idSetSha256": "eabbe210eadcbe1da937ee0b6b8992ed308a08fc2a9628b50fab69dd51fd2355"
+            },
+            {
+              "repeat": 2,
+              "authMode": "app",
+              "contentRows": 50,
+              "uniqueFunctionalIds": 50,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 50,
+                "totalElements": 1092,
+                "totalPages": 22
+              },
+              "idSetSha256": "a2100b002dcdcbf0a6aae5ea8655591a9a76c16e4179a2aa1b4e4085545513f2"
+            }
+          ]
+        },
+        {
+          "requestedSize": 100,
+          "repeats": [
+            {
+              "repeat": 1,
+              "authMode": "app",
+              "contentRows": 100,
+              "uniqueFunctionalIds": 100,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 100,
+                "totalElements": 1092,
+                "totalPages": 11
+              },
+              "idSetSha256": "524f8b307f04d0dd4cc36a2a9fa1f170db3952d34588a91bc2450afee8ec83db"
+            },
+            {
+              "repeat": 2,
+              "authMode": "app",
+              "contentRows": 100,
+              "uniqueFunctionalIds": 100,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 100,
+                "totalElements": 1092,
+                "totalPages": 11
+              },
+              "idSetSha256": "daf2134c4436fb554f599202b367165cc28df92e5ff55b6482022aea071300d8"
+            }
+          ]
+        },
+        {
+          "requestedSize": 250,
+          "repeats": [
+            {
+              "repeat": 1,
+              "authMode": "app",
+              "contentRows": 250,
+              "uniqueFunctionalIds": 250,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 250,
+                "totalElements": 1092,
+                "totalPages": 5
+              },
+              "idSetSha256": "1698fffacc8c8215247472a0333ed3e43e3addfe73c0a9660689dbd9f3c9e18c"
+            },
+            {
+              "repeat": 2,
+              "authMode": "app",
+              "contentRows": 250,
+              "uniqueFunctionalIds": 250,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 250,
+                "totalElements": 1092,
+                "totalPages": 5
+              },
+              "idSetSha256": "56cf6d65c1da9d25cdfa6036f45962bb7bde25c86f786b89f5974609a72e49da"
+            }
+          ]
+        },
+        {
+          "requestedSize": 500,
+          "repeats": [
+            {
+              "repeat": 1,
+              "authMode": "app",
+              "contentRows": 500,
+              "uniqueFunctionalIds": 500,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 500,
+                "totalElements": 1092,
+                "totalPages": 3
+              },
+              "idSetSha256": "1a0603e84e5b7322272f591e2b06fd53958fff7d4046440145d240198ed610f3"
+            },
+            {
+              "repeat": 2,
+              "authMode": "app",
+              "contentRows": 500,
+              "uniqueFunctionalIds": 500,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 500,
+                "totalElements": 1092,
+                "totalPages": 3
+              },
+              "idSetSha256": "afc89264a0a416df02e189edf58f9187b0269de61ce76ae7afd249f399494955"
+            }
+          ]
+        },
+        {
+          "requestedSize": 1000,
+          "repeats": [
+            {
+              "repeat": 1,
+              "authMode": "app",
+              "contentRows": 1000,
+              "uniqueFunctionalIds": 1000,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 1000,
+                "totalElements": 1092,
+                "totalPages": 2
+              },
+              "idSetSha256": "f81d36ea19c6f451cc6b52468da2af2608dd5d35b617558ad1e288935bea97f2"
+            },
+            {
+              "repeat": 2,
+              "authMode": "app",
+              "contentRows": 1000,
+              "uniqueFunctionalIds": 1000,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 1000,
+                "totalElements": 1092,
+                "totalPages": 2
+              },
+              "idSetSha256": "a4e158f021e5cf881191ddfe54aa089719bb0f639256d230ca17c706afa07d8d"
+            }
+          ]
+        },
+        {
+          "requestedSize": 5000,
+          "repeats": [
+            {
+              "repeat": 1,
+              "authMode": "app",
+              "contentRows": 1092,
+              "uniqueFunctionalIds": 1092,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 5000,
+                "totalElements": 1092,
+                "totalPages": 1
+              },
+              "idSetSha256": "e349377c2859b3b629ad30e48318d8dae1dc8960b023afd114dfb9b9b7116bf6"
+            },
+            {
+              "repeat": 2,
+              "authMode": "app",
+              "contentRows": 1092,
+              "uniqueFunctionalIds": 1092,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 5000,
+                "totalElements": 1092,
+                "totalPages": 1
+              },
+              "idSetSha256": "e349377c2859b3b629ad30e48318d8dae1dc8960b023afd114dfb9b9b7116bf6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "market": "GS_FR",
+      "requests": [
+        {
+          "requestedSize": 50,
+          "repeats": [
+            {
+              "repeat": 1,
+              "authMode": "app",
+              "contentRows": 50,
+              "uniqueFunctionalIds": 50,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 50,
+                "totalElements": 3688,
+                "totalPages": 74
+              },
+              "idSetSha256": "c3797d80796206f0a4a8f125c2ab32f651038ff404e85871ad6e507dcd48a0d8"
+            },
+            {
+              "repeat": 2,
+              "authMode": "app",
+              "contentRows": 50,
+              "uniqueFunctionalIds": 50,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 50,
+                "totalElements": 3688,
+                "totalPages": 74
+              },
+              "idSetSha256": "3b6913f5983ea0b0f9a704538cfc840eb21ad26439996c4fe5ccd162df3b77bd"
+            }
+          ]
+        },
+        {
+          "requestedSize": 100,
+          "repeats": [
+            {
+              "repeat": 1,
+              "authMode": "app",
+              "contentRows": 100,
+              "uniqueFunctionalIds": 100,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 100,
+                "totalElements": 3688,
+                "totalPages": 37
+              },
+              "idSetSha256": "134f4b0099f085e39910f4f77f7abc8d464f80f0731dc64653d2a4e954678c46"
+            },
+            {
+              "repeat": 2,
+              "authMode": "app",
+              "contentRows": 100,
+              "uniqueFunctionalIds": 100,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 100,
+                "totalElements": 3688,
+                "totalPages": 37
+              },
+              "idSetSha256": "fbb8736d204e6f54e71afe2caa55cdec6b7ca7b3479e21c7187968d80f0c5e24"
+            }
+          ]
+        },
+        {
+          "requestedSize": 250,
+          "repeats": [
+            {
+              "repeat": 1,
+              "authMode": "app",
+              "contentRows": 250,
+              "uniqueFunctionalIds": 250,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 250,
+                "totalElements": 3688,
+                "totalPages": 15
+              },
+              "idSetSha256": "f3fe705e81301b6448cc0726ab42103e08434d4e826d415e4467a2d08fe55009"
+            },
+            {
+              "repeat": 2,
+              "authMode": "app",
+              "contentRows": 250,
+              "uniqueFunctionalIds": 250,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 250,
+                "totalElements": 3688,
+                "totalPages": 15
+              },
+              "idSetSha256": "f3fe705e81301b6448cc0726ab42103e08434d4e826d415e4467a2d08fe55009"
+            }
+          ]
+        },
+        {
+          "requestedSize": 500,
+          "repeats": [
+            {
+              "repeat": 1,
+              "authMode": "app",
+              "contentRows": 500,
+              "uniqueFunctionalIds": 500,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 500,
+                "totalElements": 3688,
+                "totalPages": 8
+              },
+              "idSetSha256": "e7dc270eec087dd31bdc3d7baf573bb7ee5fb4710be69cfe0697110eedebc81a"
+            },
+            {
+              "repeat": 2,
+              "authMode": "app",
+              "contentRows": 500,
+              "uniqueFunctionalIds": 500,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 500,
+                "totalElements": 3688,
+                "totalPages": 8
+              },
+              "idSetSha256": "e7dc270eec087dd31bdc3d7baf573bb7ee5fb4710be69cfe0697110eedebc81a"
+            }
+          ]
+        },
+        {
+          "requestedSize": 1000,
+          "repeats": [
+            {
+              "repeat": 1,
+              "authMode": "app",
+              "contentRows": 1000,
+              "uniqueFunctionalIds": 1000,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 1000,
+                "totalElements": 3688,
+                "totalPages": 4
+              },
+              "idSetSha256": "b964e4e6df2a625b13c9cd5ab902469612053f94d2cc2e4265fc083c9f9cd654"
+            },
+            {
+              "repeat": 2,
+              "authMode": "app",
+              "contentRows": 1000,
+              "uniqueFunctionalIds": 1000,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 1000,
+                "totalElements": 3688,
+                "totalPages": 4
+              },
+              "idSetSha256": "3a4db4cbadecce5316c7d6c8c8f5614eae6d985387c3e01f24f0ddcd75210ed7"
+            }
+          ]
+        },
+        {
+          "requestedSize": 5000,
+          "repeats": [
+            {
+              "repeat": 1,
+              "authMode": "app",
+              "contentRows": 3688,
+              "uniqueFunctionalIds": 3688,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 5000,
+                "totalElements": 3688,
+                "totalPages": 1
+              },
+              "idSetSha256": "9590a75a6bc0055a5d911b00a53bb8ad3c2b8ff710e46457d6ebb297c1c9c6e0"
+            },
+            {
+              "repeat": 2,
+              "authMode": "app",
+              "contentRows": 3688,
+              "uniqueFunctionalIds": 3688,
+              "duplicateFunctionalIds": 0,
+              "page": {
+                "number": 0,
+                "size": 5000,
+                "totalElements": 3688,
+                "totalPages": 1
+              },
+              "idSetSha256": "9590a75a6bc0055a5d911b00a53bb8ad3c2b8ff710e46457d6ebb297c1c9c6e0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
