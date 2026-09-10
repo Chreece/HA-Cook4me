@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "kind": "cook4me-release-catalog-pending-recipe-title-batch-v59",
+  "sourceSnapshot": "release_catalog_pending_recipe_titles_v59.json",
+  "language": "bg",
+  "part": 1,
+  "taskCount": 6,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:e4ce5b6893f1886666c91b2d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "bg",
+      "sourceText": "Патладжан с киноа",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:74cadaaf7d91704b86a060d4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "bg",
+      "sourceText": "Пукани чушки халапеньо",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:98675c63b2e0b9b8d06a861c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "bg",
+      "sourceText": "Пържени вегетариански пролетни рулца",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f3fad9d6da65771a8ea73c0f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "bg",
+      "sourceText": "Салата с пилешко и боб",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3aabf370821fc7183d4795ff",
+      "type": "recipe_title_english",
+      "sourceLanguage": "bg",
+      "sourceText": "Супа от сушени плодове и ябълков чай",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:88cf9ad432a90f77638d2734",
+      "type": "recipe_title_english",
+      "sourceLanguage": "bg",
+      "sourceText": "Ябълкови розички",
+      "groupCount": 1
+    }
+  ]
+}

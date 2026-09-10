@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "kind": "cook4me-release-catalog-pending-recipe-title-batch-v59",
+  "sourceSnapshot": "release_catalog_pending_recipe_titles_v59.json",
+  "language": "sk",
+  "part": 1,
+  "taskCount": 3,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:642b89714d2cca3a8aba20d4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "sk",
+      "sourceText": "Gnocchi so špenátom a kuracím mäsom",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b7b55a608d7d1a8988b9db47",
+      "type": "recipe_title_english",
+      "sourceLanguage": "sk",
+      "sourceText": "Lasagnová polievka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:31f566b0fff7aa0b0781bfef",
+      "type": "recipe_title_english",
+      "sourceLanguage": "sk",
+      "sourceText": "Lečo",
+      "groupCount": 1
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "kind": "cook4me-release-catalog-pending-recipe-title-batch-v59",
+  "sourceSnapshot": "release_catalog_pending_recipe_titles_v59.json",
+  "language": "cs",
+  "part": 1,
+  "taskCount": 4,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:8b73d028d0bfe35e4b3c8043",
+      "type": "recipe_title_english",
+      "sourceLanguage": "cs",
+      "sourceText": "Hermelín v listovém těstě",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f20f29aaf060f9626af8f55b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "cs",
+      "sourceText": "Rizoto s pohankou a liškami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4cb1de3bedc3715caf9efa0c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "cs",
+      "sourceText": "Sekaná",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cbe4c2ff9c7373f060f81f14",
+      "type": "recipe_title_english",
+      "sourceLanguage": "cs",
+      "sourceText": "Těstoviny v jednom hrnci s cuketou a citronem",
+      "groupCount": 1
+    }
+  ]
+}
