@@ -1,18 +1,7 @@
 {
-  "generatedAt": "2026-09-10T16:05:36.097150+00:00",
-  "recipeTitleTasksRemaining": 92,
-  "remainingByLanguage": {
-    "bg": 1,
-    "de": 1,
-    "fr": 7,
-    "hu": 4,
-    "it": 2,
-    "ja": 1,
-    "pl": 59,
-    "pt": 1,
-    "ro": 7,
-    "sk": 9
-  },
+  "generatedAt": "2026-09-10T16:41:50.930930+00:00",
+  "recipeTitleTasksRemaining": 0,
+  "remainingByLanguage": {},
   "assemblySummary": {
     "providerDetails": 32163,
     "staleSearchOnly": 1485,
@@ -39,7 +28,7 @@
     "unkeyedIngredientTranslationClassificationTasks": 9818,
     "reviewedProviderFoodEnglishApplied": 109,
     "reviewedKeylessIngredientSemanticsApplied": 123,
-    "reviewedRecipeTitleEnglishApplied": 15702,
+    "reviewedRecipeTitleEnglishApplied": 15807,
     "reviewedEntryMealEnglishApplied": 28,
     "reviewedRecipeTitleEnglishFiles": [
       "release_catalog_reviewed_recipe_titles.v1.json",
@@ -118,9 +107,12 @@
       "release_catalog_reviewed_recipe_titles_pl_15.v1.json",
       "release_catalog_reviewed_recipe_titles_pl_16.v1.json",
       "release_catalog_reviewed_recipe_titles_pl_17.v1.json",
+      "release_catalog_reviewed_recipe_titles_pl_18.v1.json",
+      "release_catalog_reviewed_recipe_titles_pl_19.v1.json",
       "release_catalog_reviewed_recipe_titles_pt.v1.json",
       "release_catalog_reviewed_recipe_titles_pt_01.v1.json",
       "release_catalog_reviewed_recipe_titles_residual_fr_hr_01.v1.json",
+      "release_catalog_reviewed_recipe_titles_residual_single_page_small_01.v1.json",
       "release_catalog_reviewed_recipe_titles_residual_small_01.v1.json",
       "release_catalog_reviewed_recipe_titles_ro_01.v1.json",
       "release_catalog_reviewed_recipe_titles_ro_02.v1.json",
@@ -147,10 +139,10 @@
     ],
     "providerFoodsCanonicalEnglishResolved": 888,
     "usedProviderFoodsCanonicalEnglishResolved": 754,
-    "recipeGroupsCanonicalEnglishResolved": 16847,
-    "translationTasksRemaining": 9787,
+    "recipeGroupsCanonicalEnglishResolved": 16952,
+    "translationTasksRemaining": 9695,
     "providerFoodTranslationTasksRemaining": 0,
-    "recipeTitleTranslationTasksRemaining": 92,
+    "recipeTitleTranslationTasksRemaining": 0,
     "unkeyedIngredientTasksRemaining": 9695
   }
 }
