@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 44,
+  "batchSize": 100,
+  "rankStart": 4301,
+  "rankEnd": 4400,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:ef94ff3ea56b0dd85ad6358e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Salsicce piccanti (o ancora alla cipolla), tagliate in tre",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:61faaab7eb1102af854a557c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Salsicce vegetariane",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ffa104055fb86755e4c71ecc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Salsicce vegetariane, tagliate a cubetti",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b9f38f7893f644813d3caee6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Salsiccia all'aglio, pelata e affettata",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:71dabe0b63b051d42139081c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Salsiccia di pollo",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:67836746ef58f8f0e4b97649",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Satteri disidratati",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6f3fa56a2aa2de4c4f046b52",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Scaglie di mandorle tostate per decorare",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1375b3590c95ffe5367ac336",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Scamorza a fettine",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9b928b8b29ed32c9c4391078",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Sciroppo di ananas (dalla latta)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f3ea20aa3bd82e844c52ece9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Semi di melograno (o mirtilli rossi essiccati)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a2aa25e180a0a509df313a6e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Semi misti (zucca, lino, chia, girasole, ecc.)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:78fc496c2f2f29be5859320d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Semola per cuscus a grana media",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3e4764e20f9c59e6bf6c9adf",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Sfoglie per lasagne",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:29f1f8af9c8fc6491d9edae7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Soffritto",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3ed1ea75b7e4432ae0e5e967",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Soffritto di sedano, carote, cipolla",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:77d51640b41c7b8cb3d5f35d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Sott'aceti (peperoni, mais, carote, funghi, piselli...)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a12e3cde27614f9d03576e68",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Sottaceto grandi a fette",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9edc86bf5527ef01edd31b49",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Sottilette tagliate a listarelle",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5ab2a0fa2ac136901f041bfb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Spago da cucina",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:142522c1ed9379d7afcde512",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Spalla di maiale affumicata",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e8bfd4130b7058a637d0b751",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Speck",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a1d42d7391b7b91114d5ee40",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Speck tagliato a listarelle",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1eb1ccedec72b55cf61a3235",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Spezie per couscous",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:700dbc9e52723d909cc81cd7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Spezie per kofta",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:34551db738d9d412698c499c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Spezie per panpepato",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0697b6d059f7d9b04699792b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Spiedini di carne mista",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:310713f1bd56bb2161686df2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Spiedini di merluzzo e salmone",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:223f568404412cb947e0d7f2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Spiedini piccoli (o stuzzicadenti)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c46e8731bf7db52c486521a8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Spruzzo di liquore all'arancia",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c6d0e6572886eca8a099a9b6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Spumante secco",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:87bef7bfb7715ed7fda97c3d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Stampini di allumino",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cce4a98a8ff61c496ae2bea1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Stampini in alluminio",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:643acd60cf4193dac73f60d8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Stampini termoresistenti da 7cm",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c32ba218fba94771f3a7cd64",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Stampo per dolci foderato con carta da forno",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c041a332c03a715c6f831cc6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Stampo per dolci foderato con carta forno",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:80beaefb2cbe287b9ea1babd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Stampo tondo imburrato del diametro di 10 cm",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bd62f7a4abf4afd6aa3fbcbd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Stecchini",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:559313e6a093f2806d324664",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Strutto (o olio)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:635d8a373e34ad9f0b581481",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Succo di fragole",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4f7d12d0467e920c36ff4bad",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Sugo al pomodoro",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6385c488960b0e51056a2bf0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Sugo al pomodoro con basilico",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:aebccdbd4b22d77f3621d2ec",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Tagliatelle fresche",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:36b5d9167d9eeb816ad5e17a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Tagliolini",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a5dda9e80df62ac4b4cd6057",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Tahina (salsa a base di semi di sesamo)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ef2ed36866f4b5107c046e57",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Tahini (crema a base di semi di sesamo)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b95cc36c47692589de90d602",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Taina",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4245c805d964cc2590bbaabe",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Tartufo nero",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8ed6e970846c2b4febd6d25a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Tavolette di cioccolato",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:56e21015dd305c3f4bd97a9f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Tazza(e) di Riso bianco, grani lunghi",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1cadfdc7c66c5acd8f5b5836",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Tomini",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c5173ea88e4c2fe1f2e97cde",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Torta al cioccolato o brownie a cubetti",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:902a3bed48f53c085a240a4e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Tortelli di carne e verdure",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f19a906e9436b94693d73e6d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Tortellini al prosciutto",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3426fb9a9e0b9de5b5fb7538",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Tortellini ricotta e spinaci (o altri a piacimento)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:071405765337b2c00b517f96",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Tortillas",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cd242408b94ca74784325ffe",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Tortillas per tacos",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dea1b190a7e112cb46bea68e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Totani puliti",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:36c53f04d5da08e5a9a56780",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Totani puliti e tagliati a listarelle",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cef094517f7eea3f22c1c3c5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Triglia",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6a884df37143a837cbdc69c2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Un cerchio di carta forno dello stesso diametro della pentola",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5d7d411197467a2a652eca59",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Uva bianca",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:91a4069388474ae75da63126",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Vasetti, bicchieri o pirottini",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6168ed45276583448ae0e404",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Verdure a pezzetti (sedano, legumi, carote, verza,..)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:207aa9ae0dedf30878c31f2a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Vino bianco secco",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d7a823fc28ef0eb46576e29d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Vitello macinato",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b32f5e3bfe57ac9cb1c003c3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Vongole",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d05f275494d4ba8434d0ce7c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Wurstel, tagliati a pezzi di circa 2 cm",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b292c9c2a632b7a30f861354",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Yogurt greco bianco naturale",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e4240fde785833b46ee21fc8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Yougurt alla vaniglia",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:854a588c17e351b11677838a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Zabaione",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b56f35ec3786b2eff81c8c3d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Zabajione",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:80c01bf0b111b551813de882",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Zenzero candito tagliato a cubetti",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3e1ddcd3adb6af4e0b62b7b3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Zucca gialla pelata e tagliata a cubetti di 5 mm",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:116f0fe17fa8751e35231def",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Zucchine",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:078a9e647ccb5cf6a9dae861",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Zucchine tonde",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e67c3067e77b0950ead2a5ef",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Zuppa cinese (o brodo) in busta",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:01b9d90d2dc0a12766553f07",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-うずら卵(水煮)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0747b78dcd8677588671bc71",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-おろししょうが",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c646224184bb5955c137a834",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-かにかま(細かく裂く)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0a8dc6c993f31cc9e7b2ff0d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-かぼちゃ(1cm幅 3等分)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d707d967b198b0a0f8b7d42e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-ごぼう(5cmを縦四つ切り 水にさらす)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e3c95d28241a693e134c02ac",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-ごぼう(ささがき 水にさらし水気を切る)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ad50dd38c5c15fea23e9c016",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-しいたけ(1cm幅薄切り)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:585d7c61f735e9cba734f975",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-しょうが(薄切り)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:38822ea78e2bb14a52c1589f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-ちくわ(8mm幅輪切り)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:097d14e5ced0feadc3d9c17a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-にんじん(短冊切り)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0f477b3d4ce3841db9798e3d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-にんにく(みじん切り)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:88c4d265d0ee1200b0314bd5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-はんぺん",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0da0d1f016e2fb171e1da9cc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-れんこん(5mm幅半月切り)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:574b23b1619a1e9c9680d8fd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-カニカマ(白い部分のみ 粗みじん切りにする)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c5260cd9c2215e063d4bfff0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-グリーンカレーペースト",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:baffb9f190bc86ab064b42db",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-ココナッツミルク",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3839c9b5c0ac66f5f07db0c1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-コンソメ(顆粒) 少々",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1c13625fc1bee0ed3cd6ba24",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-サラダ油 少々",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:172a862770de65c9b4a8d585",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-サラダ油(肉とえび 炒め用)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:17c3e5d78ac9a596de06ca33",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-チリパウダー",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5eb06408c6c57cf347e9e25f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-パプリカパウダー",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:72f643585e427f66ecbf7dee",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-ピーナッツバター(粒あり)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5089484fef2848f5ce661052",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-ポン酢",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:52b2f8c0afc20896a0996619",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-マカロニ(ゆで時間4分 のもの)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    }
+  ]
+}

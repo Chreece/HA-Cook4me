@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 35,
+  "batchSize": 100,
+  "rankStart": 3401,
+  "rankEnd": 3500,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:fcd8705b4347d8acb8e53d40",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Mango ice cream",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d5d6742242b7885ac93ecba5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Melon, diced",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:426dc1f5367c806bcd9014af",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Meringues",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:98f06c3f14f183f23644c595",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Mixed spice",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d4fc71902bfc02c887612021",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Mixed spice or cinnamon/ginger/nutmeg",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d46074c5570482d0184024bf",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Mixed spice or ground cinnamon (optional)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fa327169e5857d8489fe5ff6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Monkfish cut into cubes dusted with flour",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:94d906af7a9d1c426cd2bb46",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Moroccan seasoning",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7416724ec5d5b9adbc946d53",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Mung beans, soaked for 12 hours",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2b2b465619d47a4da483bc8e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Mustard seeds",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c20bd176002f430cea6fb8ac",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Noodle",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fc55e33ebf9e64fe68c1ec8a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Organic Granny Smith apple(s), washed and cut into cubes",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f472aa88691878ae8de3518d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Organic new potato(es), unpeeled",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a8e9a6c02724306322d14de7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Orzo pasta",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dee68cf0512a62d82020f803",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Oyster mushrooms, coarsely chopped",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a7ba12076c9de4059ad7574e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Pasta (farfalle or mini shells)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f43a5f9ce71040bb5bd93f2e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Peanuts",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:163ad1c96d5e1bd02cb04d4d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Peanuts, chopped (optional)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:af3b12c78079f302469ca0ee",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Peas (fresh or frozen)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:50c51bf2e3654f4ea410034a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Pectin",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fbe9f6c4d403f9609799a15d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Peeled and chopped Aubergine",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dcdd5dd6b6b198fb7b17e249",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Peppercorns",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:18b61dbdd764ef59e6c68b30",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Pineapple cut into quarters of 1 cm thick",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9eac40306dd5accac6a3e090",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Pizza seasoning",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b93c9d039d6b6363146309cb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Pork shoulder cut into 50 g cubes, dusted with flour",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a3a5a637caf8cff892081fd9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Pork shoulder, cut into chunks",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:db265446f02666cb3830acc5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Praline (optional) added to the crumb-butter mixture",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:01e58c2dd8c1637d6f51580c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Pretty small bowls or small dishes.",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0d8adc7a19eac0f361b79d42",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Prosecco",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:07f53df0413945669452b3cb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Raita sauce",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3444f14fc7d4a3a414d1b886",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Ramekins (14 cl)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:43ebe270f2945d3e3572e502",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Ramekins 12 to 14 cl (aluminium or silicone)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:355f08661b44a02445dde696",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Ramekins in aluminium lined or silicone (140 ml)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:80f0d7cea10b6490219bb413",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Ramekins, 150 ml",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9c53e79395a24bc1c7e41b52",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Ramekins/ heatproof pudding basins (150ml), greased",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c96173a533cd31f3006c2de4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Ramekins/ oven proof dish (150ml), greased",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ade9ccb2fcf1bbb9efd5f595",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Ramekins/ oven-proof dish (150ml), greased",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:877a668d6c16688ff6dae456",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Ramekins/pudding basins (150ml), greased",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3f340de64bdac60f0a17d5e2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Rapeseed or sunflower oil",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7b0e8245ba054abd4930b2c7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Ready-made Bolognese sauce",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7284392562b34dc99f8a5f6d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Rendang paste",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:96a05e11c00580f326c8b8c1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Rice milk",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:138abe8c98b2d0981f1e79cc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Roasted flaked almonds",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5e971f50d5934d1d154ffce4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Salmon fillet",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:676e110a8535f106ae4b1ec4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Salmon fillet, chopped into chunks of approx. 30 g",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e497626b5a1b18a177a7b1aa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Salt & pepper",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cdaa0afe859506d841d2b475",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Salt and pepper, to season",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applicationDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0972aee41e8fb76b76b7e069",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Sauce:",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b434e8e7dcf15989d6f51081",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Sausages cut into chunks",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:62681a35e9db56bc9e4fe6ec",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Seasoning mix",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1ed811b551d0a5ff354e7281",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Shelled peas (fresh or frozen)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:46f65a247164d3ed14bd06cc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Skinless black pudding",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3fa1f74126f49f193d6487fe",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Slices of ham, chopped",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2627c10ecce4154097085a10",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Small pasta",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:88dc83689b8644181fb56839",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Small ramekins 120 ml",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8b5601232ee4ab59b2da9e9c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Smoked paprika",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2884feba418be0e53231e207",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Smoked tofu, in large cubes",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f2a555f740ff23a113cdb843",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Smoked trout",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:48149595c963d3e5d49b11b5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Softened butter",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d2524b9ee0a886a3bc625c9a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Spring green",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cd5d23c0ee9b0df1696f9469",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Spring greens",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ac6a742faa74ce5e8cb9d8fd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Spring rolls",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e65bf1022b8f1d288a9ec871",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Squash, peeled, deseeded and diced",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9af58b876ec641cd1195d581",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Stock (or water)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:14e2ab3786f72cb7f487ace6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Straight to wok noodles",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:20b09a5dbc18c7e61384f9cd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Sweet onions, peeled and finely chopped (or shallots)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bbff1770cb93c3d245ae66ee",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Sweet onions, peeled and thinly sliced",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e5b03612f1e0575f1d32fc34",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Sweetcorn, drained",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:276c33af879ed0da08c805f2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Tapioca",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:80e064c6f49acdaddfa9495c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Tender sliced fillet",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:737db016bda32ed8d6d0f49f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Thinly sliced Nori seaweed",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dae296940219886a892206da",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Tinned sweetcorn, drained",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:189aae732a8b82aa95739f02",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Tomato purée (can)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:76b37266ae53d8ca845ed568",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Tortillas, 20 cm diameter",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:07cca467ec120d24afb00c0e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Turkey breast pieces",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1134b0f48ae7f620544bd619",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Turkey breast strips",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0592f867defb9f060b5c6076",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Turkey breasts",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ad332282de9658a3750e3830",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Vanilla powder",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:72628ac53d1c5753cc49776d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Venere black rice",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a6009fb1d38c6ad31431cb77",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Vine tomatoes, cut into eight",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e8188910c07556af732a0374",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Wasabi peas, crushed",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d75d1f78f191398bee4894a4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Washed and roughly chopped kale",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c1dd1787975f63bac743b7d2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Washed and sliced green cabbage leaves",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:404e6a71178a2c53c20a9adc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Washed red grapes",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0da49d76f86645e71c8c086d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Watercress, roughly torn",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4c992b5506376af6b1a95c64",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Watercress, washed 2 or 3 times, very roughly chopped",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:71651316f4c6ffd2b638030b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Watercress, washed twice (large stems removed)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:802461bafc1e5f9b4237c0b9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "White balsamic vinegar (or normal balsamic vinegar)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:15688e9ded73b96f500c285d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "White bread",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:70a7d7218c3b105fc1d0e66a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "White breadcrumbs",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2a8a6bccb7a9d983d9c2cbce",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "White mushrooms, cut in half",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ccb36cf596854e78de2cc25e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "White pudding, peeled and cut into slices (or lardons)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c873ddafeabe12516f5d44d0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "White sauce",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d8c68b38bac206a3f80e9f02",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "White tea (or green tea with jasmine)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d3013511bc408182b3876ee9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Whole albacore tuna drained, broken into pieces",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8e9f0147a55a555a54cbf3bb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Wholewheat pasta",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:558b0159f77a8ac359089332",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Wraps",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0449293eacecf2b16da45687",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Yellow (or black) pollock fillets",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:765389e84e3b6007d80090aa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "“Bird tongue” pasta",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f863fb906d6a4c56480772df",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "es",
+      "sourceText": "*Ail dégermé et haché",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    }
+  ]
+}

@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 54,
+  "batchSize": 100,
+  "rankStart": 5301,
+  "rankEnd": 5400,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:8b287aa12727e7296173c0a1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Escalopes de vitela (65/75 g cada)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a6e9534f022e7b683d6fb9b7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Espargos (os primeiros 15 cm) lavados e picados",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d6e8632dd86fbb3d9cb6fb71",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Especiarias para cuscuz",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3d125c9da3758e4cea2d7a1c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Farinha (medida copo 125g)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9adeee1acfd8db7ec5af2c68",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Farinha para massa 00",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9942544cc1038732b035230e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Farinha peneirada",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dda3d5279f24fc75fd0f1ef9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Fatias de bacon cortadas em quatro",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:25f5e3bd050ac70ead855ee1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Fatias de barriga de porco",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5005059ef4231be57973107d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Fatias de presunto",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5fd5d24a183f05d85b1b98e0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Fatias de queijo Emmental",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:17755a60abd20bfd20d0c48b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Fatias grandes de pão de Mafra, torrado",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4cd8c41c6463836573eaed1b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Fatias pão branco, sem côdea",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e2e488daff28d6f754baec02",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Feijão branco cozido",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d95806d2a25cdf5c47960907",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Feijão verde, lavado e cortado em três partes",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:61a564beb1c23d30e64ae997",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Fiambre, cortado em cubos pequenos",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:763dcf5f7b7b800cad3c76e7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Filete de bacalhau sem espinhas e cortado em cubos",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8e9e5657f9536a683d7fcf0f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Filetes de bacalhau (ou perca), com 150 g cada",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:49ff1cbbf1ee8ed0fd53d1e8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Fio de culinária",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:db629e9ee510e30c33320870",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Flor de sal, pimenta",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:df11a0afbb396dc6d57ae7e5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Folhas de espinafres",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c70d58e4a2aee195ed373881",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Folhas de gelatina",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:654eda413ea85989f3abfb4e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Folhas de hortelã, cortadas",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b8d702ae61d73589c8d0b297",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Folhas de hortelã, picadas",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:92311565cceb5a9405e8a372",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Folhas de manjericão fresco",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b5384ef910d6aac4f29f1293",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Folhas de sálvia",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0212262428351e8a3d26cb4d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Folhas de urtiga lavadas com luvas",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cebed737dc709406b74ae6fc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Folhas frescas de hortelã lavadas e picadas",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:140f14ee6b7a2897f9c60757",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Folhas frescas de hortelã picadas",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9ae523a03df59f9683cca1bf",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Forma para Charlotte forrada com papel vegetal",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c2ce739bb190f47ad7725331",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Forma redonda (diâmetro 16cm) revestida com papel vegetal",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5db50146d41ae0573d19a095",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Forma redonda forrada com papel vegetal",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1dab3bf6d5f10039d121730e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Forma revestida com papel vegetal",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:646862a02487538336538796",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Formas para muffins",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e5e77fb476b6db311e39efaa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Funcho cortado em cubos pequenos",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6317349b438653d08e49ddf0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Funcho, lavado e picado finamente",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c1f6656aa293475671148900",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Gambas descascadas",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d14a1660504435de6a134a33",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Gambas sem a cabeça (tam 12/16)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:601ca5b2decae21fdeb030db",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Gemas de ovo médio",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8ddb778a60eb589c86d8ebc4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Gemas de ovo para o molho",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7fea2c81a17caba424bdf0b5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Gengibre fresco, descascado e esmagado",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:347f6568a1704b7867f52cf7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Gengibre recém cortado",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c8e5449dcfe9777184454ed3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Gengibre recém ralado",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:664ec4718f9ce86dc137f3e2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Gengibre, descascado e picado",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3569331062d64f3deac5c132",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Grão de bico cozido",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:830da6d08b542988406c795f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Grão de bico seco, embebido por 12 horas",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b79160324c75c6e69f524fdb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Grão-de-bico cozido",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cff7cf5a479857de580bcab2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Hortelã fresca cortada",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:80865b20b804b0de3694a0e2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Iogurte (medida copo 125g)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:068bcb3871ab8d698a469272",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Ketchup (ou mostarda ou molho de hambúrguer)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5ea0ab64ecef81e832110cb4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Laranjas (gomos e raspa)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7ad72bea0d542a731308b69a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Leite evaporado",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0e7785e588cbf1525231493e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Leite frio",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a03eab0c415a8bc15490c187",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Leite vegetal",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6af9c50c8cb1b609cec9d28b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Lentilhas verdes secas",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fccc90594caeed15d6786729",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Limas (metade para o molho, metade em fatias para servir)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:03d3b6232ae07373583782c8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Limas (sumo e raspa)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8c5f197005a4e3965360f31c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Limas (sumo)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f0603c41798b1eaa2cb2734c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Limão (sumo)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:76a2f3dfbe0dc1dc17d164de",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Limões (raspa)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fc7a0af0dc3fed892679ad51",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Limões (sumo e raspa)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fc20a2f4f0d60fa796e15ed1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Limões (sumo)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:27ab908018dc8a812d3df9cf",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Limões, cortados",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5eb54641dfcaa2b9038ff300",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Lombo de porco cortado, em fatias finas",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c149341bce0e8a659ffd250f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Lombo de porco, cortado em cubos pequenos",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e6028f83b4f9aed8f483a7a4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Lombo de vitela, com corte para rechear",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f88be2f01b422a98b483c136",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Malagueta em pó",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:da796d3601cf55701615bc28",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Mangas, descascadas e finamente cortadas",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fa323b5e45e78cec2a8acb1c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Manjericão picado",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:00e1aad350b904670563eadf",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Manjericão Thai lavado, picado (ou coentros)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b1a2d7f8a887a412cc093981",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Manteiga amolecida",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4fb9feb4ef643913f41d85ec",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Manteiga c sal (medida copo 125g)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c46b9cece9d106938e403f73",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Manteiga derretida com o chocolate gianduja",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:14935072dd29d2b8d2544b60",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Manteiga para untar as tacinhas",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:42ee7fd715abc2ebae205cc7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Massa (conchas)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:62016a584a181179ade55271",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Massa de pimentão (opcional)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:acb292a5fcea597f687e34a6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Massa fusilli",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ac14188ab3f61bd3accc7a2a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Massa penne",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b91c1a56519a424057ce0774",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Massa pimentão",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c5acb52f43c10d3ff28ba94c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Melaço de romã",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0d1fac473de201cbaa7f224a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Mexilhões",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b68346ec361c4c0b867b974d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Milho baby inteiro, cortado em 2 (ou milho doce)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:10ab12a1c1fc5b175dd19113",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Mini cakes desfeitos",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f2f7b90b58eb49adf4d079ba",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Mirtilos lavados",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cd0841cfec17ae3565cd3c3e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Mistura de especiarias indianas",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6a1258288dd6208256ae9b7a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Miúdos de frango",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e240966a241bdfe7ec6f353d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Molho de chocolate",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:17d882624eb9c329a1270c58",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Molho de tomate para massa",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:925607f31f443eb19d8b4f98",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Mostarda e natas frescas para servir",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0c9452ba5bfab1603374ee15",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Nabo, descascado e cortado em pedaços pequenos",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1437a76b351e9486d39bae70",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Nabos, descascados e cortados em quatro",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dbe1c91ab61457724d4d6676",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Natas (30% de gordura)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:30f332183717d0fb8d04f710",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Natas com 15% de gordura",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f4777e97210ce3eb71e15bbe",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Noodles pré-cozidos",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:867554b88bf03a05ee8ab09c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Nozes sem casca, cortadas",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:00c0fe5dc59ee2b660741987",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Nozes sem casca, trituradas muito finamente",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:02501a6e5da3efddb4bffdf4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Orégãos secos",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b82ac7848a8a4b5f9c316854",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Ovos batidos, temperados com sal",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e3cea5b39db198fa48ede639",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Ovos cozidos, lavados",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8a10a0297f39c81c7e6387a4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Ovos médios (50/55 g)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5071d922b9e9dd6c6d9a22af",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Ovos separados, com as claras batidas em castelo",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    }
+  ]
+}

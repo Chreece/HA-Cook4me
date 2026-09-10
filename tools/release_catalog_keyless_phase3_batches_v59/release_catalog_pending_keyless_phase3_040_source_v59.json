@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 40,
+  "batchSize": 100,
+  "rankStart": 3901,
+  "rankEnd": 4000,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:c81c4ed8f58dfe42dedcdb6e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Víz vagy csirkealaplé",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a69d23ffad780f50e984399b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Vörös pesztó",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d43938a5d75c22b7e35d2e02",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Vörösborecet",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fc7785fc1dda4bf5ebe0a804",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "vöröslencse",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0dbaccc98336209765770353",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Wrapek",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ff466c8ac46f81cf5d479dfc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Zeller szár",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6fc3ee6d3472afe4bbe1aeea",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Zellerszár, apróra vágva",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4710c5a6e89a0b4389615fb9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Zselatin",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ec468fd1f62f0c211d4b732a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Zsíros crème fraîche",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e8d3671e51996b3e87965fe5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Zöld puy lencse",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e39575ea6e0760a824bf330c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Zöld ételszínezék",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9972e18604fd37e2d9b369f5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Zöld-citrom lé",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dd0e93c390e9be05fb261cc0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Zöldfűszeres (vagy natúr) fromage frais",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3a409155d78171c2f3dbf5c1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Zöldspárga",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9fd461849fb89f40c25e7496",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Zöldség alaplé (vagy fűszeres víz)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4704e6f1941f29c17ab76732",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Ábécé tészta",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fd359e2db0e0008613630cf0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Áfonyalekvár",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8f9aeabc05288a70e417092b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Édes Cévennes hagyma",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8299161a0b8e42698fa2612e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Édes hagyma, vékonyra szeletelve",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0f56121a25ea84f0dd904c4a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Édespetrezselyem, megmosva és apróra vágva",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:69ae6e6e737e69d13bb16d97",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Édesítetlen kakaópor",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:aeb6051a87130e4afc1db9dc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Étcsokoládé, 50/55 % kakaó, apróra vágva",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0f66b15aeb29737c9c0f5b30",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Őrölt Cayenne bors",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1aa421a3bf4ffa34ecfdf156",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Őrölt szecsuáni bors",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9f9375bf8c1d04d579e5b5b9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "(verde e bianco)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:beb1be5ca55021d99e7d0fe5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Aceto di ciliegie",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bac481d113035e6b503a1f13",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Aceto di lamponi",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:91434177ca260c4788fbea11",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Aceto di vino bianco (o aceto di mele)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:339128517fd3dcee4d12d537",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Aceto rosso",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a81cca627c15b7ce75c61e12",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Albicocche secche",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e16a06fd9747198e1d8daacf",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Alici",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:95911dda4260e2bd3802476c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Aromi",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ddf7641b50060a23bdc8d968",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Aromi naturali qb",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:53b5f10bde1df382b89278b3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Asparagi bianchi",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e677c6de2e2ec6815f7f790c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Asparagi verdi",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:42bd9e55bce536b3c6af6b3f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Baccalà ammollato",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a4f2a64528d6f087530dcfe2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Baccalà dissalato",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a79c7b54d15f1c271191706a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Barretta di cioccolato, tagliata in due o tre pezzi",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:09824e82798f0e25c956666b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Bicchierini",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:00706740fdda9615a8eaba09",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Birra ale scura",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:68730574bc766d8eb266f239",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Biscotti al burro sbriciolati",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a0f076dd12926765d451fbc6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Biscotti al cioccolato (cookie) sbriciolati",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:baf5d86df3376399b2706125",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Biscotti al cioccolato frantumati",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:73fc82ee963cf5944200ce11",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Biscotti al cioccolato sbriciolati",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dd43854ccbf10dd6fa2fd997",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Biscotti bretoni al burro sbriciolati",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e2b564d3ca6868e942fa2561",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Biscotti digestive",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e5652bf1cdef4c7080019ed1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Biscotti secchi",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:af11eb2eec9ad1efaaf0c071",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Bistecche di seitan (100/125 g)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f23619ed8e2301132c1d6a31",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Bistecche di seitan (100/125 g) (dal negozio di prodotti biologici)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fb47e2a06a62f32f8456ea82",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Branzini",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9ff6d98ef6fee03a86587137",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Brie",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4749b682669d7b1b55b64370",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Broccoli",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fa17cef80ea440e540a932fa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Brodo di carne",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2bb6dfeb6e1636600f7e6ec1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Bulgur grosso",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3795bb3f0d5e9a2a2362e94e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Bulgur integrale",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a2049d291029075366f0f65f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Burgul",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cad9139d56a634d51b736de6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Busiate",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b8979d91333efa39f1909b00",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Busta Tè nero",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:63bc24e905f455b453d25655",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Caffè liofilizzato",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8404a2b8cca0e56b201405b8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Canditi misti",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e3bba89e6a91190b0ae32890",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Canederli",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2a1b90f4a815401d72e3e223",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cannella e sale",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2d5d3edefda9e2d8dbefd275",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Caramello salato (o caramello liquido)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:febc5f9349b45fcbcdabdc11",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Carcassa di pollo",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f43545d4881c486028c58468",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Carne di manzo legata",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:202b4792df244ae1855fd508",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Carne trita di vitello",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8c044029fd69762a899739a4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Carpaccio di vitello",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5ade188de9faf9d2b9d598d4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Carta da forno",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9b0a6bc6c4b234e40e32158e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Casarecce",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ab3e9bda769b6f72a9f461b9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Castagne bianche ammollate2",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e4c8b45ff57761df4f6cb6db",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Castagne candite per decorare",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1c08248dbfcb6effc37b714e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cavatelli",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4645cb07ace735e4c3ea9df8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cavolo cappuccio viola",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:77cea02607d4c8b7c9f9721e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cavolo nero",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7418e91c3889537109621eed",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cerchio di carta forno del diametro di 20 cm",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e38fb4816ce5158e08f221a6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cerchio di carta forno per foderare il cestello vapore",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bbb3b0cc52d3e736912c1d45",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cerchio di carta forno per foderare lo stampo",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:994070805c86c692f44a29b1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cerchio di carta forno per la pentola",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9d20457e395e8a9f3a648207",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Chablis (o altro vino bianco)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ff68562f6aeb6accc2032972",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Chili in purea",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8f501bb302d8d1a2436cebb1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "ciascuno",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1bde2e0ab95d8670b65612db",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Ciliegie sciroppate",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:15f0cbfc02e2bced1dde0489",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cime di rapa",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b65856028feb64cb6a593906",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cimette di broccoli lavate",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b600de0125b23224146fe140",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cioccolato da pasticceria a pezzetti",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7c940305a14b5849f7cddc39",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cioccolato da pasticceria con il 50/55% di cacao, fuso",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:79412428adcecc65b01d1b83",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cioccolato da pasticceria con il 50/55% di cacao, tritato",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3a638458a31dfef5ff9529f6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cioccolato gianduia",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8058cd16a39172ff81a670e0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cioccolato gianduia fuso (o cioccolato al latte)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dbec6b48289431402efd440d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cioccolato gianduia sciolto (o cioccolato al latte)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:511d678d3b724f3a3cb1e52d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cipolla bionda",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8cbec95f60ff89e618f0b074",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cipolla dolce",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4b5c23f9852258c5a9348a2c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cipolla dolce delle Cévennes, sbucciata e tritata",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c02532959f331eb5f4430639",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cipolla rossa, pelata e tagliata a fette sottili",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:03e5f65179866d6410f213a6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cipolla rossa, tagliata finemente",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a75b4c53eb9c347abe101678",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cipollotti rossi",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:14932b06a60390b0cc27e35c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Ciuffo piccolo finocchietto selvatico",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8513a911ed2fdebe6880deb2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Cocotte da 14 cl in porcellana",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1a7b5c352ae1f2b0c3edc8d4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Coda di rospo",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b3f2d5b7cd4e2ad5ef0ec2b3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Coda di rospo tagliata a cubetti",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    }
+  ]
+}

@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 90,
+  "batchSize": 100,
+  "rankStart": 8901,
+  "rankEnd": 9000,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:aad7b207e95bdb1fd914c1f2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Wiśni",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:48cffa2ffeab763b82a84cec",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Wodorosty wakame (szczypta)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c7ed350787b3205e4ea6400d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Wodorostów wakame",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:95b5cc402ee62c245a01a671",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "WYWAR:",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4a70f1bf63692e6d29301e80",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Wędzonego halibuta",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d75e2e4f74751f5585e788d6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Włoskie zioła",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c8f68e75489654b837a52ae7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Z połowy cytryny",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:24c33dbef6acb600f5c9c6ba",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Zakwasu na żurek",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:da9864c1f3bc509675ad939c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Ziarenek owoców jałowca",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:760ec15b1956ca93ada72a77",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Zioła",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fd63052f76979d8253872900",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Zrazowej górnej (8 plastrów)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8c68c465880d402f28d26db7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Łazanki (do podania)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:967ab3e758cb657b603f76d2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Łopatki baraniej",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:177ce15ace14d21ae2b69499",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Łopatki wieprzowej",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4214ccc2a34ba37464bb7e22",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Łuski babki jajowatej",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c18b997c4dfb563e8fdf3229",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Łyżek soku z limonki",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:24e667ae628392d61525cfa3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Śliwkowe chutney",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:788f9d4c7297cd3d63b52cf0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Śmietanka",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a006e218f538ef3cdf49ddf9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Śmietanki kremówki 30%",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2704ac075171de25afcea614",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Śmietanki kremówki bez karagenu",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:956cfb429c14e7b399cdf088",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Świeża papryczka jalapeño, drobno pokrojona",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:162b4437b61241a7228be48a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Świeże zioła do podania (koper, szałwia, natka pietruszki)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:aebd900e40078474386a3335",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Świeżego tymianku i rozmarynu",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:92a79efdabd9e76f8a4fdd74",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Świeżej kolendry",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d69d2ce8f70853c31c0aa23b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Świeżych boczniaków",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f498715ce14970929aa06ad8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Świeżych papryczek jalapeño",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:42e05579aab8a40993864672",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Żeberek",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:36dfeaf86b9259edae90ac44",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Żeberek wieprzowych",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9d48381f8155e2854e2162b2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Żeberka",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7112af0c4676c70833dd3a36",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Żelatyny",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2452cd5e483aeb9e2bbd5497",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Żołądki drobiowe",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a29286f9c8dbf344646720d6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Żołądków gęsich",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8630bc0a35a14e7af51d36f3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "*Small lamb knuckle-ends",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:da9b3396571b36e784f6393f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Algo",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a4ce75de2b560fbf3a9350e6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Amêndoas laminadas",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:99df93d519b276be6c94c96e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Atum em lata",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1e0f79116262d7b12a6bac63",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Bacon",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1b2c542e76ce93dc4b06fae6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Beringelas",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1a7664b455000a52f284e56d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Bifes de frango",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bb578de4b62b7385bff523f7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "bolas de chocolate Maltesers",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d230589b53e77dec3babe86c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Cenouras",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bafd93e9444a22f97fdce7c3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Chocolate de culinária derretido",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4b615da89abc730c9eaaafba",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Cogumelos",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8b966e1a5fd85921112edfc4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Compota de morango",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8f5d547c7e0dae52fdbb21ea",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Costeletas de borrego",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:44c906ff14953f4ae1cf2c4a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Couve flor",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5d14c688b730cb1b27d3c1ef",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Crème fraîche",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:17ca516e38f3998208f3c024",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Curgetes",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e8a7bfab3794bd5ea4854d5c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Entrecosto de porco",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b40733ee8f1d0527cc9d5614",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Extrato de baunilha",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0716e1b2e1e81e0f6a868abd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Figos",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a1844a5aac61a47b940d8f53",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Folhas de massa brick",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cd74abb4412cd0f83b40ece5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Grão de bico",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:59b36456dac67f753e14eec8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Iogurte grego",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:15e659301a3c92f5f0866a15",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Lasanha",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1611aa841461686fc814331e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Lombos de bacalhau",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2598efce53ea92672337173f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Lombos de salmão",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6c260cfb1b971b891a11f9e3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Manteiga e farinha (para untar)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9edfb0ae3afaffc2ea8beab5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Maçãs",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5c8a81ff8df849dab7044307",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Mistura de ervas",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c63fb52e1e11b939b7906c07",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Molho béchamel",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2ad20a85f7fef01f1cb2ec76",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Molho de peixe (nuoc-mâm)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:11f4d5ef2f6aca0672797324",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Mostarda de Dijon",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fb9366101a0d2d79a798aa0f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Nectarinas",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bf8ac7400ed84d0cd0c71cee",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Noodles com ovo, cozidos",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:aaab26ddabb2990d1b5882c9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Parmesão ralado ou queijo Cheddar",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:37de47a4adfba8b63978a7f1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Pasta de tomate",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:72edcbb8f972216929a3e343",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Pó de carvão ativado",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3998ffd96144b8195d4c7504",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Queijo Mozzarela ralado",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:41ead04766cb0b9e5528a8ab",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Queijo parmesão",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ec09975cda373209cd396fcd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Raminhos de couve flor",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f25dd01cc89cd79d5889efb7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Ras-el-hanout",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a29eec1818919d6b7cb3f450",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Recheio",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:905d7c9cf26903f25a25f98e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Tempero para todos os fins",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e849a2fd1bcfaced2d6d268c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "tomates",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:188fa22a75c0f6fd064beeee",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Biscuiți de ciocolată",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c945ba515570e081cc688a12",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Borș",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dad2231f0094f07c26980fa9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "chifle de burger, taiate pe jumate si prajite",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9b123ce48f333489a49c4a03",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Condimente Cajun",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c5852d3b5ab5457430650df7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Condimente italiene",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f75fd1056cf37e0971b1308d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Condimente mexicane",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3cf5f98ccd66f36a4b54e36e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Condimente în stil indian",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:efb89611d264a3d3c60bc45a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "de borş",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:91ea764522717316cd7049a8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Feliie de pancetta, tăiată cubulețe",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e75f09db9745099393e90e2b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Foi de gelatină",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:aae04a7c2d0ae2499a273767",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Foi de orez",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:440f14857be10ad58911ed19",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Mirin",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bd1f8ff0e11d503616facd58",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Mix de condimente indiene, pudră",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1b7d63e33b10bd5e96b6da99",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Nectarine, tăiate pe jumătate, cu sâmburele îndepărtat",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9a0c091d6f3051b18b16868e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Ou mediu (50/55 g)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b1686587b63e9e16e6a8cedb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Pak choi",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d1fcd4b32ab3e7894f3322b0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Pentru ciorbă :",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ac611592f2d7e83de2e8c84b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Pentru găluşte :",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:14805fdeecb79cb4aff91296",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Pentru perişoare :",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:44daaaab6e0bff5bc2e5ba95",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Pentru supă :",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6599a38bdfe865e70d6b853a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Piure de roșii",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0778a5f841a59440aa27df1f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Pudră de condimente italienești",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:434918b90c49aa757e5ccf76",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Ras-el-hanout",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:28903f4e3f026db6d1b7492a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Teriyaki sauce",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:179d7fd969c40f751a364bb5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "tije de apio",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    }
+  ]
+}

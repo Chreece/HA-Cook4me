@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 94,
+  "batchSize": 100,
+  "rankStart": 9301,
+  "rankEnd": 9400,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:f4d94b8684eea9a098412de8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "змішаних сухофруктів (родзинки, журавлина, вишня та т. і.)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ccc1e35cd7f044e587b0423f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Змішані трави",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:77b10b4f00a0c826b973dcb8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "зубчика часнику, очищеного та подрібненого",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3765296c1e980c90acb72f2a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "зубчиків часнику, очищені",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:27f06b1bf6a72260180d963c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "зірочки аніса",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5c9465eddbd72ce0c55ba549",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "йогурту",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9d296cfd583178df0c9f7a48",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "кабачка, вимитого та нарізаного кубиками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ad857361eb9da4daf875b19f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Кабачки, дрібно нарізані кубиками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e8fcce64499394abd8cbb9c4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Кабачки, нарізані кубиками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:339648e6165a66046d260166",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "кабачок, вимитий та нарізаний кубиками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:973cc92134cda22e941ceec7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "картоплин, очищених та розрізаних навпіл",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8a5869a4b9260473d7a3af5d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "картоплини, очищені та розрізані навпіл",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7e1c60cb83f9cb88ffa899bb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Картопля, очищена та розрізана навпіл",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4efb032a5399254b8417022e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "картоплі, нарізаного кубиками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9997f6ef32e16cc8be6d81f8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Качк, окіст",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:de41738f070fe51bf6d01af9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "кедрових горішків",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ecd7caa09aaf6a5e6367b261",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "клементини (приготувати цедру та дольки)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a181fae805217e349f7be113",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "клементинів",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9a4770a0808da48b7a454ed9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "клементинів (приготувати цедру та часточки)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fd9281862d154b2fd1fdc161",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Кмин",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3c9946d0dca345c87213fd73",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Ковбаса чорізо",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:30224b43a096b7515d2e92a9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "ковбаски, нарізані скибочками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9a9c29eba48136331d0c10e5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Козяче молоко (або коров'яче)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:96bf871d689ca5f5120d8383",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Консервована цукрова кукурудза",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5997397bc026f03946d99102",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Консервований тунець",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:09e3499037d2c89094cbe7be",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "консервованих паростків бамбука, осушених",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8ee065e81a4978fc8d9754eb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Копчений лосось, нарізаний соломкою",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a321adce7a46b129d2dfb058",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Копчений тофу",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:31d72a920df2625018722fdb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "копченої або свіжої підчеревини",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3a01ef313dca3ce17f0da9fb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Коричневий (або білий) рис басматі, добре промитий",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0c8992d787e16e94f0212939",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Королівські креветки",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2eaa509601cb13bbcb0c1eba",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "крапель соусу Табаско",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9704d65f54261804d381894e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "кристалізований лимон (без м'якоті, тонко нарізаний)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:10d6c2877a7973aa5f714e5c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "кристалізованих лимони (без м'якоті, тонко нарізаних)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b5cb3a924b06840601cad661",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "кролячих стегон розрізати навпіл та посипати борошном",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d00705db95caa275577c67cf",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Круглий рис",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:26e5fb8d406c0937eca3abc0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "круглих великих помідора без серцевини під фарширування, томатів (м'якоть зберегти)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:46d238f2363548d97672db4e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "круглих помідорів, томат, 175 р без серцевини під фарширування (м'якоть та сік зберегти)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:35a306cb703eca7b1740e6b8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "круглі великі помідори, томат, без серцевини під фарширування (м'якоть зберегти)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1c4c91a6aada7661f6d53f3a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Кукурудзяне борошно (або альтернатива)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4eabc59b1c834c3e19b36557",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Кунжутне масло",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:28fcdaff724ff50b8c29160e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Кунжутня олія та насіння для прикраси",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1446e712e086a96038a59d9e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "куряча грудка",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b7e2a2b040a117754a1b845b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Куряче філе, нарізане кубиками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0513a16811a286baea436990",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Куряче філе, нарізане тонкими смужками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4f94cce66d27e23e9811c073",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "курячих окоста (стегно та гомілка розділені)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:82d45b9d3a5c0946e8878a42",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Курячі ескалопи",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:aa4834d4e8935583e3fc3043",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "лаврових листа",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applicationDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:701d7196898f20b44edcbb6a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "лаврових листів",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f17342a64b613ac54138a437",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Лазанья",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d27bcb555d42f4a92e81177d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "лайм (сік)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8e4e1e2f4c6707bbfebaa96c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "латук або салат айсберг, дрібно нарізаний",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:23a0835098743e4ebe54af0d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "лемограсса",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6a90ca06e7834fa59162de81",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "лемонграсу",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f6531a3ba3fcc5009cfcbea4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "лимон (цедра)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bb562fa1544861deb56a61aa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "лимон (четвертинками)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b123a54bbf369c49a5ba0b24",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "лимона та трохи подрібненої цедри",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b8ac68f5a6441db3cc3577d4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Листи тіста брік",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:54bb7f58267d294bc915a1bc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "листків свіжої м'яти подрібнених",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3784e3a75d4db5e9dfe3d660",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "листків шавлії, вимиті та дрібно нарізані",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:40c42d2fd63e89de2e392ed5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "листків шпинату, вимитих",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:aa00a9fc75250d20afe5a4b2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Листова петрушка, подрібнена",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6c1b4cdca7968bc3aae0a428",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "листя м'яти",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dbb1c6666427dc31469d2d81",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "листя салату",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:eb7d15fe6b2f6e4afb7057ae",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Листя свіже базиліку",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bbaaf37ae682d12318597c6c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "листя шпинату, вимитих",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6804f3c33b8e344a1205ee72",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "листя шпинату, помитого",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7939b36ca837c180b432c669",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "листів свіжого базиліка, вимитих та дрібно нарізаних",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:36fd87eafbd7dfa8f7d6b4df",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Лук, очищений та розрізаний на 4 частини",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:659e0d733f1f42cbbeabcf42",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "лущених стручки кардамону",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4649fdfd1c8959e253087b84",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "лущених стручків кардамону",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2002c759b719de73b0aaf008",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Лущені стручки кардамону",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:115abfbf96eecedb8acc4eca",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "маленький баклажан, вимитий та нарізаний кубиками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:481b5f5ed0b984ff391618ae",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "маленьких баклажана, вимитих та нарізаних кубиками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:60acd22f5c0615c92a10a047",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "манної крупи",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:43861ed9fe4eefb0467d8b09",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "манної крупи (змішаної з борошном)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ffe56984e6aef48ca8d44b58",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Масло і борошно (для форми)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:26eced07fc1b65ed57d8e481",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Мелений мускатний горіх",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:471b54a4e0b9c5957783e010",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "меленого перцю",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2ad2c8219ec82aca9715865b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Мигдальні пластівці",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d1baf50f6554ce6097eb9866",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "молодого шпинату, промитого двічі (великі стебла видалені)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bb27d6cd3dfe67d244965dad",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "молодої картоплі",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:68004824165e263f233bf54d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Морква, очищена та нарізана шматочками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e48948a4a2fec1ca8bb1e6c5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "моркви, очищених та розрізаних вздовж, потім дрібно нарізаних",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3a6da9b3400be6bd9f69786d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "моркви, очищеної та нарізаної шматочками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:67b404e63d5373651330cb3c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "моркви, очищеної та тонко нарізаної",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:04eaf18ece520853d002b1d2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "морквин, очищені та нарізані шматочками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c33d8dbd0ae7bfb441436dc1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Морські гребінці в раковині (відкриті)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9199edbcd257586e62d596fa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Місо паста",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bd223a4263fb3108633d66e2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "нарізаний зелений перець",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4bb20482b55788af8243b279",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "нарізаних зелених перців",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:53b61e28a95d2d1ff54d7a21",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Начинка",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cac7d90333aed07869d3aca7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Негостра ковбаска чорізо, дрібно нарізана",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:612177b19802e6a7c125ca72",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Неочищений лимон",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2a1a746ae27ef4a0ddff4a38",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "неочищеного лимона",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:19d8308f5b82c5e052023fa6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "несолоних горіхів кеш'ю",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:68bd8d70ac9322ff3b23a9a5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Овочевий бульйон (або рибний бульйон)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:830bb87cac808c464a3a07bf",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "овочевого або курячого бульйону",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9e26c4881ca3b8f9f61e4204",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "овочевого бульйону (або приправленою води)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d8a1c4735f173153541df07b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "овочевого бульйону (або солена вода)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 34,
+  "batchSize": 100,
+  "rankStart": 3301,
+  "rankEnd": 3400,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:d1b2a2162c86dd2966901a3f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Ash goat's cheese, crumbled",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:be5815d808d66fbe520abf3d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Baking dish to bake in the oven",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fb7e0c2c4a3ae29d8dabd662",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Baking paper, to line the steaming basket",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:998f6d8c2098a5a9801c26e7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Ball Mozzarella ball,cut into chunks",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4ee83147136b1df2323536a1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Balti paste",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:38a34c6ca7c378e0906c720d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Bananas, peeled and cut in half lengthwise",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5a8438bd8740332f7ece01c2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Beansprouts",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6bef46d1bad3322a2e59dbb6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Beansprouts (or sliced pak choi)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ff53f4215987826134bd4c22",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Beansprouts, washed",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bbeb39aac451b44f61427e39",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Black dried mushrooms",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d3020e372922eb6a9fa85748",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Black rice",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0b39b37d034938cff1d6590c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Black tea bags",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:24972294066370b0e6348030",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Black treacle",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:388a9f849ec73d21fdbf2f10",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Blackberries",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5a86446c33b056cbe0eaaeea",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Blackberry jam (or raspberry-strawberry jam)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:312be26bce629d7bb5101644",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Blanched white (or green) cabbage",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1db0a68bb339ecbb97c04d84",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Blinis",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:963cccf31aff6b635913c0c6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Blueberries",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c34ae7ba8aba777869d8edd0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Blueberries and blackberries, washed",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6f6993f4054ed101cc5c070c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Blueberries or redcurrants washed",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3b0d0ac29538f52671e143d6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Boneless trout fillet",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:281bb6f172a36d3980058626",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Broccoli florets",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:003254a6577643a4c343f1c3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Broccoli florets, washed",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6f24279b2285295234c51588",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Burger buns",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e604484c976cfd957dd5e7a7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Burger patties",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a2c6d1ef83d1a21ecce6794a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Calvo nero (or kale), sliced",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:11948a6a93bc72f63959012f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Calvo nero or kale, sliced",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0304cdd900690447931febe1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Canned butter beans (canned weight), drained",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f271983e64e96386e47db283",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Capers in vinegar",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7555df6470dab0d13fd5c525",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Capers, chopped (optional)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:36759c4a13bf9e7a034539e8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Carnaroli rice",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:57ebd5c16a9021535f46497f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Celery stalk, chopped",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ac91ab2e8df44db3dbdc1fce",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Chestnut mushrooms, sliced",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f626e7bcdc63eafb44ff257d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Chicken carcass",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d9f9f135518695b6c6446d62",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Chicken Stock & White Wine - Each",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:64fb75a50f42547e7cb5adc6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Chicken stock (or other stock)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4d629defc0e3aa96e619555e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Chicken stock cube, crumbled",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c5391ba4434298723e560edd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Chilled cottage cheese portions drained an hour before",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0132776529252bb666038af8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Chinese noodles (raw weight)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0e6129f75c95df2787b00081",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Chipotle paste",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b220a13a019517264891e5ec",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Chipotle/smoked chilli paste (adjust to taste)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3052896b3f89cef79f543cae",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Chocolate chips",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:77d066b289136abab09198f8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Christmas tea infused into 80 ml water",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:691fb5a1ea9971c7ad8408b7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Circle of baking paper to fit the bowl",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4e68eae308776eb9bc072ca6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Circle of baking paper to line the steaming basket",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:aeb5176df010cce1e2a3d7f7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Conchiglie pasta",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:342d313fedf97f5eed04d6d5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Cooked sweetcorn",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f6e365ebd6cd82c633a3c548",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Corn flour diluted in a little water",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:009a459829457e2153a76d4f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Cornflour mixed into a little stock",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e2176ec483ed1f0075833c6b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Crab meat",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:24430ddeaf90b22a892af4e7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Cranberry and raisin mix",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e2f24d48dc7460e92e9ebf0c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Dark miso paste",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:df89deb57a17c9546ccb0a93",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Double cream (optional)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:65767d24bc18ea33d2b65bcc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Double cream, whipped",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:191217c0e1e7bddd46494113",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Dried mushrooms",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9647ba9dbac7f4e1f423f74a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Finely chopped basil",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3828f7740b28468901336a0b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Finely chopped parsley",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:292cfb510dd9b6a0c356da76",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Fish fillets cut into large cubes (5 cm thick)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c7cecfb553b7a4c116e3c0a6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Fish stock pot",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1c566fc0e9e5ea4e7ef65d0a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Fleur de sel, freshly ground pepper",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e97fe26c06516e9a1e2fb66d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "FOR THE SAUCE:",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1f8b7dbeafd7be409ab96919",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Fresh Chinese noodles",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:387e0f16136ce51efb38871a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Fresh chopped basil",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:02587044c5dc61fd9cd840c2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Fresh coconut chips",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a29b2df043a2f61e5c0d9aea",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Fresh fettuccine pasta",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:aea314c74135ea629b604393",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Fresh fettuccini",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:179aab7fd21b8c0105a5a7f7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Fresh goat's cheese",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:80084ad7f43aad617e0be7e6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Fresh tagliatelle pasta",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6d466c7497f16c525c9d683c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Fresh, chopped tarragon",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d7a220f00ac6fb30dd8b00ad",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Frozen or fresh peas",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8064f6a3a311d84bb87c45e6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Full fat soft cheese",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:96dbcdc817a8c3be5915c133",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Gelatine leaf (soaked in cold water)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5d43025bb7b486d3ca43abc4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Goats cheese",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b8b376650f4f7940ae704785",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Grape juice",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:823f5ff4525172402b6d04b1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Grape seed oil",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d983517ae691239b9b84ce7b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Grapeseed oil",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f33bd0c008d9390a4b5e5a7e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Grated pecorino, to serve",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a5014266d6a7130373a127bb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Green cabbage leaves, washed and thinly sliced",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:70b8355bb48cf1d5d1f90eea",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Ground flaxseed",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:29fb374730241f79be9a8f05",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Haddock fillet",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a03cdd22923f81109d03c878",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Hazelnut paste",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:81288a49138f6e9756a90a96",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Heatproof pudding basins (150ml), greased",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:401477bcc60af6a3a946fd6b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Hempseed",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c428553a0fd90094cc2990f1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Herring or smoked salmon, cut into pieces",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cc146200e15e85265eb076e2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Hubbard squash, peeled and diced into 5 mm cubes",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d6b689090ab04fecfb364d52",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Ice cubes",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e769cc6bd11fd6a2eb6b76db",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Italian ham",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d8b71a3365a5a0312d69219d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Italian ham cut into small squares",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:57e8e6155b5e0446fe04572f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Italian ham, cut into strips",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:78251b9551ef5ca739d80c4c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Italian ham, slices",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:94cb147187a2b24936b10988",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Japanese noodles, pre-cooked",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:169d269d0cc6ef9b4faa468d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Japanese tea (Sencha, Genmaicha)",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:93c3af151afd52b28359f532",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Jerk seasoning",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b652efa1633f81558e2803f3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Juniper berries",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a0a5e5a1841252fa160a70a6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Kumquats, cut into rounds",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b637baef3f029c4bb5852963",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Lightly salted soft butter",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:37be7eff7d94ddac960b9346",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Lychees in syrup",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d550210fd9dcc54da566f047",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Madeleines",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:72294e8cb5c125adbbc11c9e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Madeleines to serve",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:645e19d42f92490b6a3eda2f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Mangetout, washed and cut in two",
+      "occurrenceCount": 3,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    }
+  ]
+}

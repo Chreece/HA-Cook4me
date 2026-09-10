@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 20,
+  "batchSize": 100,
+  "rankStart": 1901,
+  "rankEnd": 2000,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:0391cb4a8bdf1cfdc6288dca",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "شبت، مغسول ومقطع",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c222e3867d09892c9f19ceb1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "شبت، مفروم",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3f4e2d8c6c133a510cbfd349",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "شرائح خبز مقطع (وزن كل منها 25 جم)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4078e929f10d14cfdd3b0fcb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "شرائح لحم بقر وزن كل منها 130 جم",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:22f234e2cac41ab7a4dc63c1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "شرائح لحم سلطعون",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2f359bdc273ffe71a1830082",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "شرائح من سمك القد وزن كل منها 150 جم",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1346a0841943f4140ba47140",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "شرائح من كعك الزنجبيل",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bd9cab50f9906107dc93069d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "شمندر أحمر نيئ، مقشر ومقطع إلى شرائح طويلة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:289b1510060573f16b0e82be",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "شوكولاتة 50%، مقطّعة تقطيعًا ناعمًا في وعاء كبير",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:79a183dcce059dd60a09f535",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "شوكولاتة خام",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1322c67827f0e583c1dfd276",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "شوكولاتة خام، 50/55% كاكاو، مقطّعة تقطيعًا ناعمًا",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b9e433ac07b6d6cf98b8de7b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "صدور أو أفخاذ دجاج مخلية من العظم ومقطعة إلى مكعبات",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:acdace9bbfd67e5133e683c4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "صدور دجاج",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:380903caf3648d5cfb00e15e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "صدور دجاج مقطعة إلى شرائح",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b377330c0069e136f0a960dd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "صدور دجاج مقطعة إلى شرائح رقيقة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:25edc8955ac704bf8c876b7b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "صلصة بيستو آلا جينوفيزي أو بيستو روسو",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:09ccaacad07b8804713f3649",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "صلصة بيستو بالريحان",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:37222aa1676333a54e48507b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "صلصة تاباسكو©",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cba33bdbe9182206325a4936",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "صلصة تاباسكو® (أو الفلفل الأحمر)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:93d227281fcffa5901d23319",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "صلصة تتبيلة الترياكي",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b2269645bff4d51627a05946",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "صلصة ترياكي",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0636817a113869769be489b7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "صلصة طماطم",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:46bb4187858238ef3dce4eac",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "صلصة فلفل حار",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f969edc5b8f0b5fec6dad73e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "صنوبر للزينة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4c68d424daa0e31a79cfc63b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "صينية خبز للخبز في الفرن",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6fbbc8d59162a8e690673f50",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "طبق تيرين زجاجي أو خزفي",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0c5cfa59c97cee195a1dec72",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "طرخون مغسول ومقطع",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:540fe1cf3b8fa9fc879380e3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "طماطم طازجة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:64d2c759a1c2609531154081",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "طماطم طازجة، مكعبات",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bfb53e3ee58181da530114bd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "طماطم عنبية، مقطعة إلى أنصاف",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2b9e70304a23f40b88362a20",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "طماطم كرزية",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:12acdcf5a71e8b040074e2ce",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "طماطم كرزية مقطّعة (للتقديم)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2eb1456c2bb3c34672ab4b8e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "طماطم كرزية، مغسولة ومقطعة إلى 8 قطع",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a0a3ee26e427cde9cd5a07bc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "طماطم كرزيّة، مقطعّة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d0cf0b60511eec8dffb32eba",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "طماطم مُقطعة إلى أرباع",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c16e87915e389be0e927f959",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "طماطم، مقطعة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:79df3a23934616898e3f72e9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "طماطم، مقطّعة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c3874fdbcb3f5de9c38846e5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عجينة المطازيز",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c581fbed2e2e82ebc49c2174",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عدس أخضر (مغسول ومنقوع لمدة ساعة)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a5f645b8f4326a3ca753319a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عدس أخضر، منقوع",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:435af215a54d9d16616fb776",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عدس أصفر مجفف",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:78225039afb196c968853ed9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عدس مجروش، مغسول",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bf3561174a9ec155d4a3d2d4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عدس مطبوخ (معلب أو في محضر الطعام كوكيو)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c91d676bbb0143a6f8d7f819",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عدس معلب",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:98ae0c1bc087fbe286739523",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عسل سائل",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ad56e81c0980d4cf30940e56",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عسل، مقسم للاستخدام على مراحل",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5ac54201681a7de70b39ba77",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عصارة برتقال",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a66d3f833fd40825dacb99e4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عصارة ليمون (اختياري)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ab9d8e8f22291fa4e416c742",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عصارة ليمون حامض",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:32715fe9bdd6405093b4f65b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عصير برتقال (حلو)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8dbb40e7d083d94622e49cbc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عصير تفاح",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:28ec6731bbb92e06cbb3db5a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عصير قمر الدين",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3d680ec857d3a36e19689512",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عود فانيليا مفتوح ومبشور",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f0a3df04c80fddea5f2f2a7d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عود فانيليا مقطع إلى جزأين ومكشوط",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d7b3b1f55dc9079bbc1ab359",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "غصن لويزة طازجة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3a1623ec1c29559a283cae01",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "غم بازلاء مقشرة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4dc9f0266a026e99e569ced7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فاصولياء بيضاء مجففة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2ca01c2ccfc245e9e84c7a62",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فاصولياء بيضاء مطبوخة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f2be2dfdb2df238b62cefca0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فاصولياء جافة، منقوعة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0e043363584cdba7aee81c60",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فاصولياء حمراء مجففة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:24952b13f99568912ed53599",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فاصولياء خضراء",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a3db3d57478fc78a18b6f5c8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فاصولياء خضراء مجمدة، مغسولة ومزالة السويقات",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:99bb5cb1af3830cdc04295f1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فاصولياء خضراء مقطعة مجمدة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ad513f408316fe402cc2c757",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فاصولياء خضراء، مقلمة ومقطعة إلى نصفين",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:20f91adb8edf7bc3337e699b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فاصولياء قرمزية",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0e95e8e2828e8d8a2e7fa4d6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فتات خبز",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5c8b6ae4f8528e8c319f1456",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فخذ ضأن صغير مشوي",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8c9e482da79417ffcda2fa2d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فراخ دجاج",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b45f0143f9a287d630ba6024",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فريك",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:17f9e44c8d55e2a7d97f28c7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فريكة منقوعة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f4611089b28577670cce70d3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فستق حلبي، مطحون",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8b8b00b8b2cbad2e728f210e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فستق محمص، مجفف ومقطع",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:54bcb19aca101edbbb293220",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فستق مقشر",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:62c95ada95728c97bfc488af",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فص ثوم، مفروم فرمًا ناعمًا",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3233e7356a33829a6d41e2a9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فصوص ثوم مهروسة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:eb326138e89c9bbfc2a49bba",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فصوص ثوم، مقشر ومنزوع اللب",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:763725f73af0607fac376ff0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فطر أبيض، مغسول ومقطع إلى شرائح رقيقة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:18ceed391cd66fe34a177e7f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فطر شيتاكي، مشذب ومقطع إلى أرباع",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f7e1710fffab7ebd23291ab0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فطر، مقطع إلى شرائح",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b5f89f140af383f7c2a5e690",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فطر، مقطّع",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9c7a733342734e6042903033",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فلفل (أحمر، أخضر، أصفر) مقشر، مقطع إلى شرائح طويلة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1d698f03a9a9445f1c5df048",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فلفل أبيض مطحون",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c09ed81f74467b5988a8ef43",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فلفل أحمر حار صغير",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:667c779da88ffe4fb0c456af",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فلفل أحمر حلو، مقطع إلى قطع كبيرة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4d16c5a314202af5df2f69c3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فلفل أحمر طويل، منزوع البذور ومفروم",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:63338a4b2b089d000e749da1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فلفل حار طازج، شرائح",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a935eb8c170ce5ab1fd57e82",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فلفل، منزوع البذور ومقطع إلى شرائح طويلة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0b27ace1b91e2c99bc84fcb4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فليفلة، مقطعة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:12e74eaadf851caef5d74112",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فليفلة، مكعّبات",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7be749a4bcfd0fb84f64e559",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فوزيلي",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c8550118601414414ea3d4c7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فول أخضر",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:503dad8b45e3a9e0fea34493",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فول، منقوع",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:10ee0d0676bfe80f3df2b9d4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فيليه أفخاذ دجاج مقطع إلى مكعبات",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f7d141b2c37c66c759364137",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فيليه الدجاج، مقطع إلى مكعبات صغيرة",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5ef5ca8c6b6d10201ae13237",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فيليه دجاج مقطع إلى مكعبات",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:21e4ec02c11705eaa5579a1c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فيليه سلمون منزوع الأشواك والجلد",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d2813222c2aa927b6e9241da",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "فيليه صدور الدجاج مقطع إلى مكعبات",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6cb21d494b79f9071cb5e8ce",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "قالب خبز دائري",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c73442a30f962d704f58d28a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "قبار مفروم",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a6a1df8fdc8c9b77080739ab",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "قرع جوزي، مقشر ومقطع إلى مكعبات",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    }
+  ]
+}
