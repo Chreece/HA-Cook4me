@@ -81,5 +81,45 @@ class ReleaseCatalogReviewOverlayTests(unittest.TestCase):
         self.assertNotIn("providerFoodKey", row)
 
 
+    def test_numbered_keyless_review_file_is_loaded_with_provenance(self):
+        review_path = ROOT / "tools" / "release_catalog_reviewed_keyless_ingredients_zz_01.v1.json"
+        review_path.write_text(
+            '{"schemaVersion":1,"kind":"cook4me-reviewed-keyless-ingredient-semantics",'
+            '"items":[{"language":"zz","source":"Proof food","english":"Proof food",'
+            '"classification":"food","confidence":"high"}]}\n',
+            encoding="utf-8",
+        )
+        try:
+            reviews = overlay._keyless_reviews()
+            row = reviews[("zz", overlay._norm("Proof food"))]
+            self.assertEqual("Proof food", row["english"])
+            self.assertEqual("food", row["classification"])
+            self.assertEqual(review_path.name, row["reviewFile"])
+        finally:
+            review_path.unlink(missing_ok=True)
+
+    def test_conflicting_numbered_keyless_reviews_fail_closed(self):
+        first = ROOT / "tools" / "release_catalog_reviewed_keyless_ingredients_zz_01.v1.json"
+        second = ROOT / "tools" / "release_catalog_reviewed_keyless_ingredients_zz_02.v1.json"
+        first.write_text(
+            '{"schemaVersion":1,"kind":"cook4me-reviewed-keyless-ingredient-semantics",'
+            '"items":[{"language":"zz","source":"Ambiguous","english":"Cream",'
+            '"classification":"food","confidence":"high"}]}\n',
+            encoding="utf-8",
+        )
+        second.write_text(
+            '{"schemaVersion":1,"kind":"cook4me-reviewed-keyless-ingredient-semantics",'
+            '"items":[{"language":"zz","source":"Ambiguous","english":"Cream",'
+            '"classification":"equipment","confidence":"high"}]}\n',
+            encoding="utf-8",
+        )
+        try:
+            with self.assertRaisesRegex(RuntimeError, "conflicting keyless review"):
+                overlay._keyless_reviews()
+        finally:
+            first.unlink(missing_ok=True)
+            second.unlink(missing_ok=True)
+
+
 if __name__ == "__main__":
     unittest.main()
