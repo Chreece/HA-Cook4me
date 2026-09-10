@@ -1,0 +1,85 @@
+name: Catalog global variant-ID proof v59
+
+on:
+  push:
+    branches:
+      - cook4me-catalog-global-id-proof-v59
+    paths:
+      - .github/workflows/catalog-global-variant-id-proof-v59.yml
+
+permissions:
+  contents: write
+
+jobs:
+  prove:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install --disable-pip-version-check 'curl-cffi==0.13.0' 'websocket-client==1.8.0'
+      - name: Measure cross-catalog provider variant-ID reuse
+        run: |
+          set -Eeuo pipefail
+          python - <<'PY'
+          import json
+          from collections import defaultdict
+          from pathlib import Path
+          import sys
+
+          root = Path('.').resolve()
+          for path in (root / 'tools', root / 'custom_components' / 'cook4me', root / 'custom_components' / 'cook4me' / 'vendor'):
+              sys.path.insert(0, str(path))
+          import crawl_release_catalog_v2 as cr
+          import cook4me_phonefree as c4m
+          import cook4me_recipe_catalog as catalog
+
+          cfg = c4m.read_apk_config(None)
+          pcfg = catalog._platform_context(cfg, 'DE', 'de', cr.APP_VERSION)
+          memberships = defaultdict(list)
+          counts = []
+          for language, country in cr.AUDITED_CATALOGS:
+              rows = cr._search_catalog(
+                  cfg, {}, pcfg,
+                  language=language,
+                  country=country,
+                  configured_language='de',
+                  configured_country='DE',
+              )
+              label = f'{language}/GS_{country}'
+              counts.append({'catalog': label, 'rows': len(rows)})
+              for row in rows:
+                  memberships[str(row['variantId'])].append(label)
+          duplicates = [
+              {'variantId': variant, 'catalogs': sorted(labels)}
+              for variant, labels in memberships.items()
+              if len(labels) > 1
+          ]
+          duplicates.sort(key=lambda r: (-len(r['catalogs']), r['variantId']))
+          payload = {
+              'schema': 1,
+              'kind': 'cook4me-global-variant-id-proof-v59',
+              'credentialsUsed': False,
+              'singlePageSize': cr.PAGE_SIZE,
+              'catalogCount': len(counts),
+              'catalogOccurrenceCount': sum(row['rows'] for row in counts),
+              'globalUniqueVariantCount': len(memberships),
+              'crossCatalogDuplicateVariantCount': len(duplicates),
+              'crossCatalogDuplicateOccurrenceExcess': sum(len(row['catalogs']) - 1 for row in duplicates),
+              'catalogs': counts,
+              'duplicates': duplicates[:250],
+              'duplicateExamplesTruncated': len(duplicates) > 250,
+          }
+          Path('tools/catalog_global_variant_id_proof_v59.json').write_text(json.dumps(payload, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps({k:payload[k] for k in ('catalogOccurrenceCount','globalUniqueVariantCount','crossCatalogDuplicateVariantCount','crossCatalogDuplicateOccurrenceExcess')}, ensure_ascii=False))
+          PY
+      - name: Commit identity evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/catalog_global_variant_id_proof_v59.json
+          git diff --cached --check
+          git commit -m "Measure global recipe variant identity reuse v59"
+          git push origin HEAD:cook4me-catalog-global-id-proof-v59
