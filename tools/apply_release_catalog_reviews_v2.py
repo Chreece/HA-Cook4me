@@ -197,6 +197,11 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
     recipe_groups = [
         row for row in prep.get("recipeGroups") or [] if isinstance(row, dict)
     ]
+    original_recipe_title_tasks = {
+        _text(row.get("translationTaskId"))
+        for row in recipe_groups
+        if _text(row.get("translationTaskId"))
+    }
 
     # Exact provider-group reviews from the taxonomy-gap audit are reusable
     # canonical-English evidence. They are applied by grouping ID only.
@@ -244,12 +249,10 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
         for row in recipe_groups
         if _text(row.get("translationTaskId"))
     }
-    for task in queue.get("tasks") or []:
-        if not isinstance(task, dict) or task.get("type") != "recipe_title_english":
-            continue
-        task_id = _text(task.get("taskId"))
-        if task_id and task_id not in pending_recipe_title_tasks:
-            remove_tasks.add(task_id)
+    # Only remove title tasks that were actually referenced by this prep input
+    # before review and are no longer referenced afterwards. Unknown/partial
+    # queue rows are preserved fail-safe.
+    remove_tasks.update(original_recipe_title_tasks - pending_recipe_title_tasks)
 
     for row in prep.get("unkeyedIngredients") or []:
         if not isinstance(row, dict):
