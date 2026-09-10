@@ -22,10 +22,13 @@ jobs:
             tools/prepare_release_catalog_v2_assembly.py \
             tools/apply_release_catalog_reviews_v2.py \
             tools/snapshot_release_catalog_keyless_queue_v59.py \
+            tools/probe_keyless_english_line_siblings_v59.py \
             tests/test_release_catalog_v2_assembly_prep.py \
             tests/test_release_catalog_review_overlay.py \
-            tests/test_release_catalog_keyless_queue_snapshot_v59.py
+            tests/test_release_catalog_keyless_queue_snapshot_v59.py \
+            tests/test_keyless_english_line_siblings_v59.py
           python tests/test_release_catalog_v2_assembly_prep.py
           python tests/test_release_catalog_review_overlay.py
           python tests/test_release_catalog_keyless_queue_snapshot_v59.py
+          python tests/test_keyless_english_line_siblings_v59.py
           git diff --check
