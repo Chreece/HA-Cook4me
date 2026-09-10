@@ -39,7 +39,7 @@ import cook4me_phonefree as c4m  # type: ignore  # noqa: E402
 import cook4me_recipe_catalog as catalog  # type: ignore  # noqa: E402
 
 APP_VERSION = "36.0.0-RC3"
-PAGE_SIZE = 50
+PAGE_SIZE = 5000
 FDC_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
 _MASS_TO_G = {"mg": 0.001, "g": 1.0, "kg": 1000.0}
 
@@ -146,53 +146,78 @@ def _all_search_rows(
     configured_language: str,
     configured_country: str,
 ) -> list[dict[str, Any]]:
+    """Return one complete stable provider manifest page or fail closed.
+
+    A credential-free all-28 probe on 2026-09-10 proved that page=0,size=5000
+    returns every current Cookeo BRAND publication in each audited mapping with
+    stable repeated provider-ID sets. Smaller paged walks drifted between
+    identical requests. Never silently fall back to unstable pagination here.
+    """
     market = f"GS_{country}"
     url = cfg["platform_base_url"].rstrip("/") + "/common-api/v4/search/recipes"
-    rows: list[dict[str, Any]] = []
-    page = 0
-    total_pages: int | None = None
-    while total_pages is None or page < total_pages:
-        payload, _auth = catalog._http_json(
-            "POST",
+    payload, _auth = catalog._http_json(
+        "POST",
+        url,
+        headers_iter=_headers(
+            cfg,
+            tokens,
+            configured_country,
+            configured_language,
             url,
-            headers_iter=_headers(
-                cfg,
-                tokens,
-                configured_country,
-                configured_language,
-                url,
-                pcfg,
-            ),
-            params={
-                "lang": language,
-                "market": market,
-                "page": page,
-                "size": PAGE_SIZE,
-                "q": "",
-                "groupBy": "",
-                "myUniverse": "false",
-                "myOwnRecipe": "false",
-                "withAutomaticSpellcheck": "true",
-            },
-            body=app_search_body(language, market),
-            timeout=30,
+            pcfg,
+        ),
+        params={
+            "lang": language,
+            "market": market,
+            "page": 0,
+            "size": PAGE_SIZE,
+            "q": "",
+            "groupBy": "",
+            "myUniverse": "false",
+            "myOwnRecipe": "false",
+            "withAutomaticSpellcheck": "true",
+        },
+        body=app_search_body(language, market),
+        timeout=30,
+    )
+    if not isinstance(payload, dict):
+        raise RuntimeError(f"{language}/{market}: invalid search response")
+    page_info = payload.get("page")
+    if not isinstance(page_info, dict):
+        raise RuntimeError(f"{language}/{market}: search response is missing page metadata")
+    try:
+        total_elements = int(page_info["totalElements"])
+        total_pages = int(page_info["totalPages"])
+    except (KeyError, TypeError, ValueError):
+        raise RuntimeError(f"{language}/{market}: invalid search page metadata") from None
+    if total_pages not in {0, 1}:
+        raise RuntimeError(
+            f"{language}/{market}: provider catalog exceeds proven single-page "
+            f"capture size={PAGE_SIZE} (totalPages={total_pages}, totalElements={total_elements})"
         )
-        if not isinstance(payload, dict):
-            raise RuntimeError(f"{language}/{market}: invalid search response")
-        content = payload.get("content") if isinstance(payload.get("content"), list) else []
-        for raw in content:
-            if isinstance(raw, dict) and (row := catalog._light_search_row(raw)):
-                rows.append(row)
-        page_info = payload.get("page") if isinstance(payload.get("page"), dict) else {}
-        try:
-            total_pages = int(page_info.get("totalPages"))
-        except (TypeError, ValueError):
-            total_pages = page + (1 if content else 0)
-        page += 1
-        if not content:
-            break
+    content = payload.get("content") if isinstance(payload.get("content"), list) else []
+    if len(content) != total_elements:
+        raise RuntimeError(
+            f"{language}/{market}: single-page response row count does not match provider total "
+            f"(content={len(content)}, totalElements={total_elements})"
+        )
+    rows: list[dict[str, Any]] = []
+    for raw in content:
+        if not isinstance(raw, dict):
+            raise RuntimeError(f"{language}/{market}: non-object recipe search row")
+        row = catalog._light_search_row(raw)
+        if not row:
+            raise RuntimeError(f"{language}/{market}: recipe search row could not be normalized")
+        variant_id = _text(row.get("searchVariantId"))
+        if not variant_id:
+            raise RuntimeError(f"{language}/{market}: recipe search row is missing provider identity")
+        rows.append(row)
+    ids = [_text(row.get("searchVariantId")) for row in rows]
+    if len(ids) != len(set(ids)):
+        raise RuntimeError(
+            f"{language}/{market}: duplicate provider functional IDs in proven single-page response"
+        )
     return rows
-
 
 def _detail(
     cfg,
