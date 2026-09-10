@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "tools" / "crawl_release_catalog_v2.py"
@@ -127,6 +128,148 @@ class ReleaseCatalogV2CrawlerTests(unittest.TestCase):
                 self.assertEqual(2, row_count)
             finally:
                 conn.close()
+
+
+    def test_export_projects_historical_cache_onto_current_search_manifest(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            conn = crawler._open_db(root / "cache.sqlite3")
+            try:
+                # First attempt cached two variants. Variant 100 disappears from
+                # the provider search on the retry; its successful detail must
+                # remain reusable in SQLite but must not leak into retry output.
+                crawler._replace_catalog(
+                    conn,
+                    "de",
+                    "DE",
+                    [
+                        {"variantId": "100", "title": "Historical", "language": "de", "market": "GS_DE"},
+                        {"variantId": "200", "title": "Current detail", "language": "de", "market": "GS_DE"},
+                    ],
+                )
+                crawler._store_result(
+                    conn,
+                    "detail",
+                    "100",
+                    {"variantId": "100", "title": "Historical", "language": "de", "market": "GS_DE"},
+                )
+                crawler._store_result(
+                    conn,
+                    "detail",
+                    "200",
+                    {"variantId": "200", "title": "Current detail", "language": "de", "market": "GS_DE"},
+                )
+                crawler._store_result(
+                    conn,
+                    "stale404",
+                    "999",
+                    {"variantId": "999", "standardStatus": 404, "applianceGroupStatus": 404},
+                )
+
+                # Retry search changes: 100 vanished; 300 appeared and is a
+                # provider-search-only stale row. Historical 100 and 999 stay in
+                # cache but are outside the current manifest.
+                crawler._replace_catalog(
+                    conn,
+                    "de",
+                    "DE",
+                    [
+                        {"variantId": "200", "title": "Current detail", "language": "de", "market": "GS_DE"},
+                        {"variantId": "300", "title": "Current stale", "language": "de", "market": "GS_DE"},
+                    ],
+                )
+                crawler._store_result(
+                    conn,
+                    "stale404",
+                    "300",
+                    {"variantId": "300", "standardStatus": 404, "applianceGroupStatus": 404},
+                )
+
+                output = root / "capture.json.gz"
+                capture = crawler._export(conn, output)
+                self.assertEqual(["200"], [row["variantId"] for row in capture["details"]])
+                self.assertEqual(["300"], [row["variantId"] for row in capture["staleSearchOnly"]])
+                catalog = capture["source"]["catalogs"][0]
+                self.assertEqual(2, catalog["searchRows"])
+                self.assertEqual(1, catalog["hydratedVariants"])
+                self.assertEqual(1, catalog["staleSearchOnlyVariants"])
+                self.assertEqual(0, catalog["unresolvedVariants"])
+                self.assertEqual(
+                    catalog["searchRows"],
+                    len(capture["details"]) + len(capture["staleSearchOnly"]),
+                )
+
+                # The cache itself remains resumable: history is retained but
+                # the capture is a projection, not a dump of all cache history.
+                self.assertIsNotNone(
+                    conn.execute("SELECT 1 FROM variant_details WHERE variant_id='100'").fetchone()
+                )
+                self.assertIsNotNone(
+                    conn.execute("SELECT 1 FROM stale_variants WHERE variant_id='999'").fetchone()
+                )
+            finally:
+                conn.close()
+
+
+    def test_release_crawl_uses_proven_single_page_size(self):
+        self.assertEqual(5000, crawler.PAGE_SIZE)
+        payload = {
+            "content": [
+                {"identifier": {"functionalId": "100"}, "title": "One", "lang": "de", "market": "GS_DE"},
+                {"identifier": {"functionalId": "200"}, "title": "Two", "lang": "de", "market": "GS_DE"},
+            ],
+            "page": {"number": 0, "size": 5000, "totalElements": 2, "totalPages": 1},
+        }
+        with patch.object(crawler, "_headers", return_value=[]), patch.object(
+            crawler.catalog, "_http_json", return_value=(payload, "app")
+        ) as request:
+            rows = crawler._search_catalog(
+                {"platform_base_url": "https://example.invalid"}, {}, {},
+                language="de", country="DE", configured_language="de", configured_country="DE"
+            )
+        self.assertEqual(["100", "200"], [row["variantId"] for row in rows])
+        self.assertEqual(5000, request.call_args.kwargs["params"]["size"])
+        self.assertEqual(0, request.call_args.kwargs["params"]["page"])
+
+    def test_release_crawl_fails_if_single_page_contract_is_exceeded(self):
+        payload = {"content": [], "page": {"number": 0, "size": 5000, "totalElements": 5001, "totalPages": 2}}
+        with patch.object(crawler, "_headers", return_value=[]), patch.object(
+            crawler.catalog, "_http_json", return_value=(payload, "app")
+        ):
+            with self.assertRaisesRegex(RuntimeError, "exceeds proven single-page"):
+                crawler._search_catalog(
+                    {"platform_base_url": "https://example.invalid"}, {}, {},
+                    language="de", country="DE", configured_language="de", configured_country="DE"
+                )
+
+    def test_release_crawl_fails_on_total_or_identity_drift(self):
+        mismatch = {
+            "content": [{"identifier": {"functionalId": "100"}}],
+            "page": {"number": 0, "size": 5000, "totalElements": 2, "totalPages": 1},
+        }
+        with patch.object(crawler, "_headers", return_value=[]), patch.object(
+            crawler.catalog, "_http_json", return_value=(mismatch, "app")
+        ):
+            with self.assertRaisesRegex(RuntimeError, "row count does not match"):
+                crawler._search_catalog(
+                    {"platform_base_url": "https://example.invalid"}, {}, {},
+                    language="de", country="DE", configured_language="de", configured_country="DE"
+                )
+        duplicate = {
+            "content": [
+                {"identifier": {"functionalId": "100"}},
+                {"identifier": {"functionalId": "100"}},
+            ],
+            "page": {"number": 0, "size": 5000, "totalElements": 2, "totalPages": 1},
+        }
+        with patch.object(crawler, "_headers", return_value=[]), patch.object(
+            crawler.catalog, "_http_json", return_value=(duplicate, "app")
+        ):
+            with self.assertRaisesRegex(RuntimeError, "duplicate provider functional IDs"):
+                crawler._search_catalog(
+                    {"platform_base_url": "https://example.invalid"}, {}, {},
+                    language="de", country="DE", configured_language="de", configured_country="DE"
+                )
 
 
 if __name__ == "__main__":
