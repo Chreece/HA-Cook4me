@@ -524,9 +524,28 @@ def _export(conn: sqlite3.Connection, output: Path) -> dict[str, Any]:
             }
         )
 
-    details = [json.loads(row[0]) for row in conn.execute("SELECT detail_json FROM variant_details ORDER BY variant_id")]
+    # The detail/stale tables are a resumable cache and can contain provider
+    # variants from an earlier retry whose search manifest has since changed.
+    # Export only cache rows that are members of the CURRENT catalog_variants
+    # manifest. Keeping historical rows in SQLite preserves retry efficiency;
+    # excluding them from the capture preserves the invariant that one capture
+    # is a self-consistent snapshot of one search manifest.
+    details = [
+        json.loads(row[0])
+        for row in conn.execute(
+            "SELECT vd.detail_json FROM variant_details vd "
+            "WHERE EXISTS ("
+            "SELECT 1 FROM catalog_variants cv WHERE cv.variant_id=vd.variant_id"
+            ") ORDER BY vd.variant_id"
+        )
+    ]
     stale = []
-    for variant_id, evidence_json in conn.execute("SELECT variant_id,evidence_json FROM stale_variants ORDER BY variant_id"):
+    for variant_id, evidence_json in conn.execute(
+        "SELECT sv.variant_id,sv.evidence_json FROM stale_variants sv "
+        "WHERE EXISTS ("
+        "SELECT 1 FROM catalog_variants cv WHERE cv.variant_id=sv.variant_id"
+        ") ORDER BY sv.variant_id"
+    ):
         search_rows = [
             json.loads(row[0])
             for row in conn.execute(
@@ -623,6 +642,14 @@ def crawl(args: argparse.Namespace) -> dict[str, Any]:
 
         capture = _export(conn, Path(args.output).expanduser())
         unresolved = sum(int(row["unresolvedVariants"]) for row in capture["source"]["catalogs"])
+        search_rows_total = sum(int(row["searchRows"]) for row in capture["source"]["catalogs"])
+        projected_total = len(capture["details"]) + len(capture["staleSearchOnly"]) + unresolved
+        if search_rows_total != projected_total:
+            raise RuntimeError(
+                "current provider manifest does not balance after cache projection: "
+                f"search={search_rows_total} details={len(capture['details'])} "
+                f"stale={len(capture['staleSearchOnly'])} unresolved={unresolved}"
+            )
         summary = {
             "auditedCatalogs": len(capture["source"]["catalogs"]),
             "populatedCatalogs": sum(row["state"] == "POPULATED" for row in capture["source"]["catalogs"]),
