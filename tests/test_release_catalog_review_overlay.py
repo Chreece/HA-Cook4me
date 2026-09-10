@@ -121,5 +121,128 @@ class ReleaseCatalogReviewOverlayTests(unittest.TestCase):
             second.unlink(missing_ok=True)
 
 
+    def test_same_language_ambiguous_provider_keys_resolve_only_on_full_consensus(self):
+        prep = {
+            "kind": "cook4me-release-assembly-prep",
+            "summary": {},
+            "providerFoods": [
+                {"key": "M_FOOD_A", "canonicalEnglishName": "Cream", "translations": []},
+                {"key": "M_FOOD_B", "canonicalEnglishName": "Cream", "translations": []},
+            ],
+            "unkeyedIngredients": [
+                {
+                    "sourceLanguage": "pl",
+                    "sourceName": "Śmietana",
+                    "ambiguousProviderFoodKeyCandidates": ["M_FOOD_A", "M_FOOD_B"],
+                    "translationTaskId": "keyless-task",
+                    "localSyntheticIngredientId": "local:pl:cream",
+                }
+            ],
+        }
+        queue = {
+            "kind": "cook4me-local-translation-queue",
+            "tasks": [{"taskId": "keyless-task", "type": "unkeyed_ingredient"}],
+        }
+        reviewed, remaining = overlay.apply_reviews(prep, queue)
+        row = reviewed["unkeyedIngredients"][0]
+        self.assertEqual("Cream", row["canonicalEnglishName"])
+        self.assertEqual("food", row["classification"])
+        self.assertEqual(["M_FOOD_A", "M_FOOD_B"], row["semanticProviderFoodKeyCandidates"])
+        self.assertNotIn("providerFoodKey", row)
+        self.assertEqual([], remaining["tasks"])
+        self.assertEqual(1, reviewed["summary"]["providerFoodConsensusKeylessSemanticsApplied"])
+
+    def test_same_language_consensus_fails_closed_when_any_candidate_is_unresolved(self):
+        prep = {
+            "kind": "cook4me-release-assembly-prep",
+            "summary": {},
+            "providerFoods": [
+                {"key": "M_FOOD_A", "canonicalEnglishName": "Cream", "translations": []},
+                {"key": "M_FOOD_B", "translations": []},
+            ],
+            "unkeyedIngredients": [
+                {
+                    "sourceLanguage": "pl",
+                    "sourceName": "Śmietana",
+                    "ambiguousProviderFoodKeyCandidates": ["M_FOOD_A", "M_FOOD_B"],
+                    "translationTaskId": "keyless-task",
+                }
+            ],
+        }
+        queue = {
+            "kind": "cook4me-local-translation-queue",
+            "tasks": [{"taskId": "keyless-task", "type": "unkeyed_ingredient"}],
+        }
+        reviewed, remaining = overlay.apply_reviews(prep, queue)
+        row = reviewed["unkeyedIngredients"][0]
+        self.assertNotIn("canonicalEnglishName", row)
+        self.assertEqual(["keyless-task"], [item["taskId"] for item in remaining["tasks"]])
+        self.assertEqual(0, reviewed["summary"]["providerFoodConsensusKeylessSemanticsApplied"])
+
+    def test_same_language_consensus_fails_closed_on_conflicting_meanings(self):
+        prep = {
+            "kind": "cook4me-release-assembly-prep",
+            "summary": {},
+            "providerFoods": [
+                {"key": "M_FOOD_A", "canonicalEnglishName": "Cream", "translations": []},
+                {"key": "M_FOOD_B", "canonicalEnglishName": "Sour cream", "translations": []},
+            ],
+            "unkeyedIngredients": [
+                {
+                    "sourceLanguage": "pl",
+                    "sourceName": "Śmietana",
+                    "ambiguousProviderFoodKeyCandidates": ["M_FOOD_A", "M_FOOD_B"],
+                    "translationTaskId": "keyless-task",
+                }
+            ],
+        }
+        queue = {
+            "kind": "cook4me-local-translation-queue",
+            "tasks": [{"taskId": "keyless-task", "type": "unkeyed_ingredient"}],
+        }
+        reviewed, remaining = overlay.apply_reviews(prep, queue)
+        row = reviewed["unkeyedIngredients"][0]
+        self.assertNotIn("canonicalEnglishName", row)
+        self.assertEqual(["keyless-task"], [item["taskId"] for item in remaining["tasks"]])
+        self.assertEqual(0, reviewed["summary"]["providerFoodConsensusKeylessSemanticsApplied"])
+
+    def test_english_global_exact_provider_label_can_resolve_semantics_without_identity(self):
+        prep = {
+            "kind": "cook4me-release-assembly-prep",
+            "summary": {},
+            "providerFoods": [
+                {
+                    "key": "M_FOOD_A",
+                    "canonicalEnglishName": "Cream",
+                    "translations": [{"language": "fr", "name": "cream"}],
+                },
+                {
+                    "key": "M_FOOD_B",
+                    "canonicalEnglishName": "Cream",
+                    "translations": [{"language": "de", "name": "cream"}],
+                },
+            ],
+            "unkeyedIngredients": [
+                {
+                    "sourceLanguage": "en",
+                    "sourceName": "cream",
+                    "translationTaskId": "keyless-task",
+                    "localSyntheticIngredientId": "local:en:cream",
+                }
+            ],
+        }
+        queue = {
+            "kind": "cook4me-local-translation-queue",
+            "tasks": [{"taskId": "keyless-task", "type": "unkeyed_ingredient"}],
+        }
+        reviewed, remaining = overlay.apply_reviews(prep, queue)
+        row = reviewed["unkeyedIngredients"][0]
+        self.assertEqual("Cream", row["canonicalEnglishName"])
+        self.assertEqual("food", row["classification"])
+        self.assertEqual("local:en:cream", row["localSyntheticIngredientId"])
+        self.assertNotIn("providerFoodKey", row)
+        self.assertEqual([], remaining["tasks"])
+
+
 if __name__ == "__main__":
     unittest.main()
