@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "kind": "cook4me-global-variant-id-proof-v59",
+  "credentialsUsed": false,
+  "singlePageSize": 5000,
+  "catalogCount": 28,
+  "catalogOccurrenceCount": 33648,
+  "globalUniqueVariantCount": 33648,
+  "crossCatalogDuplicateVariantCount": 0,
+  "crossCatalogDuplicateOccurrenceExcess": 0,
+  "catalogs": [
+    {
+      "catalog": "ar/GS_AE",
+      "rows": 1092
+    },
+    {
+      "catalog": "bg/GS_BG",
+      "rows": 1533
+    },
+    {
+      "catalog": "cs/GS_CZ",
+      "rows": 2020
+    },
+    {
+      "catalog": "da/GS_DK",
+      "rows": 0
+    },
+    {
+      "catalog": "de/GS_DE",
+      "rows": 2414
+    },
+    {
+      "catalog": "el/GS_GR",
+      "rows": 0
+    },
+    {
+      "catalog": "en/GS_GB",
+      "rows": 2192
+    },
+    {
+      "catalog": "es/GS_ES",
+      "rows": 1769
+    },
+    {
+      "catalog": "fa/GS_AE",
+      "rows": 0
+    },
+    {
+      "catalog": "fi/GS_FI",
+      "rows": 0
+    },
+    {
+      "catalog": "fr/GS_FR",
+      "rows": 3688
+    },
+    {
+      "catalog": "hr/GS_HR",
+      "rows": 145
+    },
+    {
+      "catalog": "hu/GS_HU",
+      "rows": 2021
+    },
+    {
+      "catalog": "it/GS_IT",
+      "rows": 2616
+    },
+    {
+      "catalog": "ja/GS_JP",
+      "rows": 1379
+    },
+    {
+      "catalog": "ko/GS_KR",
+      "rows": 552
+    },
+    {
+      "catalog": "nl/GS_NL",
+      "rows": 0
+    },
+    {
+      "catalog": "no/GS_NO",
+      "rows": 0
+    },
+    {
+      "catalog": "pl/GS_PL",
+      "rows": 3408
+    },
+    {
+      "catalog": "pt/GS_PT",
+      "rows": 1369
+    },
+    {
+      "catalog": "ro/GS_RO",
+      "rows": 1605
+    },
+    {
+      "catalog": "ru/GS_RU",
+      "rows": 848
+    },
+    {
+      "catalog": "sk/GS_SK",
+      "rows": 2050
+    },
+    {
+      "catalog": "sl/GS_SI",
+      "rows": 10
+    },
+    {
+      "catalog": "sv/GS_SE",
+      "rows": 0
+    },
+    {
+      "catalog": "tr/GS_TR",
+      "rows": 450
+    },
+    {
+      "catalog": "uk/GS_UA",
+      "rows": 1677
+    },
+    {
+      "catalog": "zh/GS_TW",
+      "rows": 810
+    }
+  ],
+  "duplicates": [],
+  "duplicateExamplesTruncated": false
+}
