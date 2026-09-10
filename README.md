@@ -119,7 +119,7 @@ Normalized catalog data is cached through Home Assistant `Store` per Cook4Me con
 - **detail cache** — keyed by display locale and variant ID;
 - **translation cache** — keyed by a hash of the source recipe text plus target language.
 
-Repeated searches and translations survive panel reloads and Home Assistant restarts instead of repeatedly calling SEB or the AI Task provider. The v12 upgrade selectively invalidates only pre-proof search entries; saved UI preferences, recipe details and expensive AI translations are preserved.
+Repeated searches and translations survive panel reloads and Home Assistant restarts instead of repeatedly calling SEB or the AI Task provider.
 
 Caches are bounded and time-limited. Search entries currently live up to 7 days, detail entries up to 30 days, and translations up to 90 days. Explicit refresh bypasses cached catalog results.
 
@@ -179,3 +179,11 @@ After restart, open **Cook4Me** from the Home Assistant sidebar. The panel modul
 ## License
 
 MIT License. See `LICENSE`.
+
+## ❤️ Voluntary support
+
+This is a private hobby project maintained in my free time and provided independently of contributions.
+
+If you enjoy the project and would like to send me a voluntary personal thank-you, you can use **[Ko-fi](https://ko-fi.com/chreece)**.
+
+Contributions are completely optional and do **not** buy or guarantee features, support, development work, early access, access, priority, or any other service. This is not a charitable donation and no donation receipt is issued.
