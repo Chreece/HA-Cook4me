@@ -1,0 +1,713 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "pl",
+  "part": 11,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 1213,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:14645baebfd505e78d661cc7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tażin z oliwkami i kurczakiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:51b8ca3ba2c5aaedacdd8f90",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Terrina z marchewką i kminkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6086135e3e846128da027cfd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Terrina z ricottą i papryką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7ee37e4b6c54b47cfc7a1f14",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tiramisu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:55500d493ed0d9abea0418d8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tofu z ryżem i curry",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fd321ea51f57ad640854e1ad",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tom kha gai",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a8b7d6eabc3638d0d56c6565",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Topinambur w miso z dymką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7f8b0c2ae5c96edfccf8fe81",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Torta caprese, włoskie ciasto z migdałami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0ae0b2bbcc6a5c2f8561cd07",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tortellini w sosie z gorgonzoli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c8931b46111f6715954bbb30",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tortellini z boczkiem i szpinakiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9a23a2cafa25c192e8559f15",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tortellini z szynką i parmezanem",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:09e3b9da5e519dd11dd429b0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tortellini ze szpinakiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f933d989bca458e1c6fbbb27",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tortilla z kurczakiem i warzywami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:70c9167cd3756a94c7a63a68",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tortille z wołowiną",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:76ce8d41bab56290091a6713",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tosty francuskie",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:007e271c498127e26f61cd5a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tosty francuskie z cukinią i parmezanem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ea0ea888185fa51e20558767",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tradycyjna pannacotta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ae052dce2a1bf8c68bc02cb0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tradycyjny gulasz z kapusty",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:01658340f9c52394ee76590b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Truskawki i rabarbar pod kruszonką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ec4a0125ab6829be6b02e11a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tuńczyk",
+      "groupCount": 7
+    },
+    {
+      "taskId": "recipe_title_english:fc961312138afcd038a4829c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Twarożek z czerwonymi jagodami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9f7c614c5c7756a238398986",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tęczowy ryż z harissą na grilla",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4e43be8176cc4558617c4463",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Udka z kurczaka w pomarańczach z goździkami i imbirem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3e29c6d2a68268f186685d9d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Udka z kurczaka w sosie barbecue",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4ee865e1eecd084850f15cdb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Udon po azjatycku z kurczakiem, papryką i marchewką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:36040cbcd1fac8fa18ad12bf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Vege burgery burczane",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f2635bb2a26789b7e4c02226",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Warkocz z kurkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a09b752c572c87808db6139b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Warzywna carbonara",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1b3fcde28bd24615f574f7fe",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Warzywna zapiekanka pasterska",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c459bb2320a94283edcf57e0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Warzywne curry",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4671cc1ec5632934ab650c7e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Warzywne czerwone curry",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b19872052f75c62231ffcf45",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Warzywne frytki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f07431dbabeea410d40ab93a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Warzywny cheesburger",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:15900f987ce59d7f796c43a9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Warzywny ramen",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:049043a97db6aae4c602b798",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Warzywny stir-fry",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0dc56b3d6b83fe6000715b1b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wegańska moussaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5bcc6613d4d1416d0faf6bce",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wegańskie spaghetti po bolońsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0ed936269363adad7822b05c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wegetariańskie enchiladas",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:226ff5e669e682c20292f871",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wegetariańskie gołąbki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7acc8340a4dfe6ac9a97fb97",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Werynki z dorszem i bobem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6021b552db1eca4025d56028",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wiejski kociołek z mięsem, warzywami i ostrą papryką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4236d65b870c2a60b35ccbe3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wielkanocna jagnięcina",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:17b33d49718523a5bd48722f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wieprzowe golonki w miodzie",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3a2acdaad134547f93e07d1f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wieprzowina",
+      "groupCount": 36
+    },
+    {
+      "taskId": "recipe_title_english:c11f770e5181b7a6af53070a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wieprzowina po chińsku z ryżem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5b18863a49539d783482aa3c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wieprzowina w sosie karmelowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ec2859afd24f0f5ca4a0e21a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wieprzowina w stylu BBQ",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:827cff18d8f90278d425f37b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wieprzowina z chili i orzechami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1be501426b9498c9d51a40b2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wieprzowina z curry po wietnamsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d368e5b37f6c4cdde60daeb9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wigilijna fasola jaś z duszoną cebulką i olejem lnianym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d47bb2abadd008a6b8911f50",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wigilijna kapusta z grochem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:33662004700ce5a6c7eca303",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wigilijna kapusta z grochem i grzybami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:195052637dc62c757e25df29",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wigilijne pierogi z kapustą i grzybami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:719db67175f087ff3f3aec27",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wigilijny karp po żydowsku z chutneyem korzennym z rodzynek",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ef4fe3056c17e7194be6912d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wigilijny kompot z suszu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c3c49f957ad46eeee5edb0d5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wilgotne ciasto cytrynowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7143dd9083cefe4ece10138d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wiosenna sałatka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f8417af684471418687e9ac8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wiosenna sałatka z indykiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ba7e69458c5ca51da6426c5f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wiosenna zupa jarzynowa z chrzanem i kiełbaską",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f86432dcddcd82b9dc18ee89",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wiosenne risotto wg Bartka Boratyna",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0ce1299448765a94d1d17ac8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wiosenny krem koperkowy z rzodkiewką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6cf212d3c99b5a9557f70cd7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wołowina",
+      "groupCount": 27
+    },
+    {
+      "taskId": "recipe_title_english:393a466d91ae02b22a7c11c4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wołowina po burgundzku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:615b1eba9ffaf70873e9d47a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wołowina po katalońsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7fee89bae22fe00495702e10",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wołowina w stylu koreańskim",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:caf266d97fe12f57ad367031",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wołowina z borówkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:80d365dc8231c8e93bf849e5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wołowina z soczewicą i cytryną",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f5647530dda5a4edff2fcb8d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wołowina z ziemniakami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7702c6b5cfef1d22d2c05845",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wołowina z ziołami po persku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3487875def6b8400bb6d7a02",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wrapy w stylu boliwijskim",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3cddea09fc7d4d09c9e7cc89",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wrapy z pastą z ciecierzycy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0f13da41edf51fad4398660a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wypasiony bajgel z jajkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6c9bed85d7bbce41fb4e6072",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wątróbka z jabłkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2bff8142fd616ecda037c7cc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wędzona wołowina z fasolą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:733021f793bae8f3f16e52ac",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Włoski pasztet cielęcy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3036488b285afefbb20e9dff",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zapiekana lasagne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f07e9b74c725e56d43db8230",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zapiekana musaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1308665e34ba7dcb4b0e48bd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zapiekana pierś z kurczaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5016745c812a48a62d483c3b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zapiekane figi wg Kiszki Ziemniaczanej",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:87be395854cd4357cbb44423",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zapiekane jajka z serem mimolette",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:168e8810717962117f130c70",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zapiekanka Batmana",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e017374bafbe21af91d3e948",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zapiekanka z batatów",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6131fbf67bc319d91c3a4e4b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zapiekanka z cukinii",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:66777d87b4af4f5d8be9c459",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zapiekanka z dorsza i pasternaku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:80d2b4d10d67408208926b1e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zapiekanka z kaszy i grzybów",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:913afd9e2b5ffa15f10d8035",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zapiekanka ziemniaczana",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2a97d49974b526c23840a095",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zapiekanka ziemniaczana z boczkiem i cebulą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ae74f472e112ec0737819a5a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zapiekanka ziemniaczana z łososiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:19039e85507fcbbc610a6be8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zapiekany bakłażan z mozzarellą i parmezanem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fc0fb668d3c1604f33058910",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zapiekany czekoladowy krem brulee",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8d9501a6c072d7b1804c76ab",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zapiekany kalafior z labneh paprykowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ffa23ef48abdb44fb8c5c887",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zielenina w tajskim bulionie",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c1ab6fa45b70acad9979015e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zielona fasolka szparagowa z zielonym majonezem kolendrowo-cytrynowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:25086eb07c8e95ef2d29a6bc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zielona fasolka według Babci Eli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8411921d818a2d83322415bc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zielona miska z jajkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:25108d06062d972e1fd1140f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zielone curry z kurczakiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a21090627830fccddfa38bd5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zielone curry z kurczakiem i ananasem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5c13cbd8c351945024eb56bf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zielone curry z rybą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:65f17d76307665fde7b1aedb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zielone gazpacho (na zimno)",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e7044ab8b5e45a9639fb2fe7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zielone risotto z indykiem",
+      "groupCount": 1
+    }
+  ]
+}

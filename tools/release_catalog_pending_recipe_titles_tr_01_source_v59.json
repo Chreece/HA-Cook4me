@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "tr",
+  "part": 1,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 7,
+  "batchSize": 7,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:5c6e089fd6e9997b216de01d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "tr",
+      "sourceText": "Dana Kıymalı Taco",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3fc4258908ee615c315a3c9c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "tr",
+      "sourceText": "Fındıklı Havuç Püresi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:826b3f6a8824bf23442e472a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "tr",
+      "sourceText": "Krem Karamel",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1f56e9ae84a79b1e52e887a4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "tr",
+      "sourceText": "Kremalı Brokoli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b754a7f279409a8d1af08fd5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "tr",
+      "sourceText": "Patlıcan Yemeği",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:be43267ab384389b58b30dc5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "tr",
+      "sourceText": "Süt Helvası",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:114d44b53e68aaec9fb8ff57",
+      "type": "recipe_title_english",
+      "sourceLanguage": "tr",
+      "sourceText": "Üç Kinoalı Portakallı Kısır",
+      "groupCount": 1
+    }
+  ]
+}

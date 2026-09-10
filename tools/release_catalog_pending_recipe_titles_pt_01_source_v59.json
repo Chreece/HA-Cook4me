@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "pt",
+  "part": 1,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 20,
+  "batchSize": 20,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:4cf5fe38f60d96f21835430f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Batatas fritas",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:85a965ab58bd0479ba8b3924",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Bolo de iogurte",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:74d4e05adec7d44ea67963c7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Bolo de limão e framboesa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e2444b084afe4d09d7759b48",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Bolo Monstro",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:314ad136861ec152a75551a9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Chamuças de legumes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:596518bde3c866adaa7d8906",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Chili de peru fácil",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:469b3dd174adf5230cbb3da3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Crumble de pêssego",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:edaa8a5e121b74a402760f40",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Cubos de bacalhau panados",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ea6a1ecb512429342439abae",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Doce de melão picante",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6b665e01f039154deba84b8e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Entrecosto agridoce de alperce",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a7c95ed3975d62dc8f0f81d3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Gnocchi cremosos",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8c443afe385ecdd030579a9e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Mini Bolo Pirata",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:86c91c24ab119bdbd70616ff",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Mini curgete cordon bleu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e26542520593918701ac59e1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Muffins de mirtilo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:dd9ea3f941086b60870dbc8c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Palitos de feta fritos",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0a86c2e7c758eb278fc5adff",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Peixe e Batatas Fritas",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:283bcaaad6599472efa10fa8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Pudim de arroz com caramelo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:60248a0377e33db7ecadd2ca",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Pudim de chocolate branco",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f0d0d45272ddb0846125e0c8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Shots de peixe com wasabi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:11e0c49313b18a5acd84b95f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Vieiras assadas com Chablis",
+      "groupCount": 1
+    }
+  ]
+}

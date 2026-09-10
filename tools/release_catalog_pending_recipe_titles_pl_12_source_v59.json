@@ -1,0 +1,713 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "pl",
+  "part": 12,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 1213,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:173083d1e0f727a02d3724e4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ziemniaczki pieczone z parmezanem i przyprawami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a79b12281cdb4da301d2f6a0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ziemniaczki z miso i sezamem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:31e8baf50d5b670a694324cf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ziemniak",
+      "groupCount": 19
+    },
+    {
+      "taskId": "recipe_title_english:45da87eb0c4495a56267b99c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ziemniaki po indyjsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2dbd38a53f716248cd7f2d1f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ziemniaki pod kremem serowo-paprykowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5f86cc79a31d0e7f1e95667c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ziemniaki z soczewicą i warzywami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d5b9fa9f60ef35f6a6d6b70a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ziemniaki z wołowiną i serem cheddar",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:11ccf6fbc6abb33c3fa92d38",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zimowa jaglanka z karmelizowaną gruszką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:39d026cd42d92586a075ed69",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zimowa zupa warzywna",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:191dd366697ee47e6662b5e0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa batatowa z wołowiną",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f21f5b4527d0e554359a49cb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa boczniakowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6e80a2476f32a447eeee710a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa brukselkowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:018c6833bbed023229bc7905",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa buraczkowa z warzywami i zacierką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bf07db40f79c9d3344230a74",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa carbonara",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f5ce9455f837b778716a2e92",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa cebulowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:dc4cd0bbe3a17ad476afab79",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa cebulowa z brokułami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:db56c032edf019cb9d31b8d3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa chorba",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8762490f4641026020dce491",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa chrzanowa wg Kiszki Ziemniaczanej",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:01e4a07bcf175145828b1100",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa czosnkowa według Kiszki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:72c1a005e572f28bab6de569",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa dyniowa wg Kiszki Ziemniaczanej",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0447399151e66354c045ca70",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa dyniowa z soczewicą i boczniakami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:30dd8ac03263174b01e5e26a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa fasolowa ze skwarkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b13798015f9cf5bdb938055e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa gołąbkowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4d80886916df72cb2a92116d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa grochowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:434f0c5d1a9fd6e691d84fad",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa groszkowo-szparagowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f79624ac877a03aa7a7f9b56",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa grzybowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:742072c9a8acf19ddddc72f4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa jarzynowa z nowalijek",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8ff8e53bc214f84181ea542f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa kalafiorowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:283196fe2967e1ac85f171ad",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa kalafiorowa z imbirem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:29604640651d53e765bdc6e0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa koperkowa wg Pati Sołtysik",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:20a775379b07b5fadea00780",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa koperkowa z pulpecikami wg Kiszki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e22dd023eaa866721f3e3d10",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa krem z buraka z pastą pieczarkowo-grzybową",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b20af7d3635dbe572e794e3d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa krem z pora z borowikami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:edccddd947b6d3b073909911",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa marchewkowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bc86e09c6783ab2ce588c191",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa Minestrone",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:95c3ae19eb679e60c45bcfcd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa miso",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f68a3769ddf351bc453f5d59",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa ogórkowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3d3a47254fe4a88d5afe0f8d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa pieczarkowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:92b416f337e4d6cc66b1e4c1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa po chińsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:103cbbedc7e20d4fc055bf9d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa pomidorowa po turecku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:90cd114c6d1729f5a26461c8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa pomidorowa z cukinią wg Pati",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f019fb982d258a12aa9c1f39",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa porowa z wołowiną",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8e61614547de07e57d2081c5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa rosolnik",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3d4e262a2cdb68b2b798d0bc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa rybna",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3cdd9948c6ce5f88d6d8592f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa szczawiowa wg Kiszki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8bd37b6384930573720825eb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa szparagowa z mascarpone",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fb0baa6357ffcf5dcba11f63",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa szparagowa z serem feta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0702e89fc3ddac6c36f1dfa7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa tajska według Kiszki Ziemniaczanej",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2122d8bea536dc6c92846bbe",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa tex-mex",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a388ba23f9fd50208734937d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa tortellini z kurczakiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4e64118373379ffe0567b013",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa truskawkowo-cytrusowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:39b52a4e2b2c60133c48886b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa wietnamska z kurczakiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ca9814d1b77ed732b68bb392",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z ciecierzycy z batatami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:91bfa9a0ac3aa7ab5f53889a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z cukinii i szpinaku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:02b99819cb688d0306a2a073",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z czerwonej soczewicy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:68ae6cb0aeb9596505f3d1c6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z grochu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:461f56ec0be2b078ccfb98a9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z kapusty i miso",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2eb20567464e1568aa0da5d0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z kurczakiem i suszonymi pomidorami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:782a785c31ac53bd460169eb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z marchewki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2ed6ca42bfbd1f71927a6a2f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z marchewki i królewskiej krewetki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0677fed1a1aae5af55cec127",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z mleczkiem kokosowym i owocami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:49e8650a0bb1b0d81d388114",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z orzeszkami ziemnymi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:00d64150bac495c241d54048",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z owoców i herbaty jaśminowej",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:024442ecce43bce3183472e4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z owoców letnich",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7b44a60f450ca56f698561d2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z pesto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2cd38b6dc202c7ca777060a9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z pieczonej cebuli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5dc7178c0a68db8205019e08",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z ricottą i rzeżuchą wodną",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6f6c3610a52b394ca1737298",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z soczewicy i wędzonego boczku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:80a18c37d01f08dfeff5bb9a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z soczewicą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:dd3d3fb36dfee3dfd929beb1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z soczewicą i ziołami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3630a5a4abe7e38247c2ea91",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z suszonych warzyw z makaronem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8e16d26ed4cce011a180304b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z Vichy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7d8033786239eb6fdb243a1b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z zielonego groszku z kozim serem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b246db2d1645927a6d620c49",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa ze szparagami i mascarpone",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:50dd828196c0deccae260f19",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa ze słodkich ziemniaków",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7fad95f991ff5ca6970e0736",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa ziemniaczana wg Pati Sołtysik",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:dc332d504adf68e0f7a7db68",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa ziemniaczana z czarnym pieprzem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e9bbd863be134be02a3e237e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Łopatka wołowa w piwie",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7a2b732d2655c072f2318505",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Łosoś",
+      "groupCount": 6
+    },
+    {
+      "taskId": "recipe_title_english:b1d2d43297aa060cc3b2dfd8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Łosoś na parze z korzennymi gruszkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:452901a7ef7ea169fc6a44d5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Łosoś pieczony z pomidorkami i fetą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1ef2572cf48a00857b697be3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Łosoś pod pistacjową pierzynką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:38f8d7d0cb68ff12411b39ca",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Łosoś tikka masala",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e74b69339169598f88c8f7cc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Łosoś w sosie cytrynowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2c9618ffb6fd095347e4a323",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Łosoś w sosie pieprzowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e5f4c904d241a1874cecc033",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Łosoś w sosie z białymi szparagami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a22041230de1630f6f77da80",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Łosoś w ziołach z pistacjami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1fd492b75359e5f1307ca198",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Łosoś z imbirem i bobem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3d4d9db43ac53a5c88f8eda9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Łosoś z kukurydzą i zielonym groszkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4883a3ffa610ff5262f4b144",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Łosoś z makaronem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bbd045757b40cba1144fe63b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Łosoś ze szparagami i frytkami z selera",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:efd65666782f80b0e138b504",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Łosoś ze szpinakiem i fetą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a332ca19fa7cd1b1af87353b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Śliwki pod kruszonką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1511cc82f4de12de6b936d48",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Śliwki pod kruszonką wg Pati Sołtysik",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:48488e7c0c06d77720a5e394",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Śliwki w cieście kruchym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e5cf97ab9b954c13b010fb31",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Śmietankowo-czekoladowe pucharki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2a644159c5c7f6e081d828b1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Śmietankowy szpinak z hot-dogami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e2280356d7b326348a87ba4a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Świąteczna ryba po grecku wg Pati",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:09ec8674f1933a334c087e04",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Świąteczna sałatka w wersji keto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9731c0f978fbf128e628de1a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Świąteczne muffinki z jajkiem",
+      "groupCount": 1
+    }
+  ]
+}
