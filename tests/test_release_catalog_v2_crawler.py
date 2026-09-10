@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "tools" / "crawl_release_catalog_v2.py"
@@ -208,6 +209,67 @@ class ReleaseCatalogV2CrawlerTests(unittest.TestCase):
                 )
             finally:
                 conn.close()
+
+
+    def test_release_crawl_uses_proven_single_page_size(self):
+        self.assertEqual(5000, crawler.PAGE_SIZE)
+        payload = {
+            "content": [
+                {"identifier": {"functionalId": "100"}, "title": "One", "lang": "de", "market": "GS_DE"},
+                {"identifier": {"functionalId": "200"}, "title": "Two", "lang": "de", "market": "GS_DE"},
+            ],
+            "page": {"number": 0, "size": 5000, "totalElements": 2, "totalPages": 1},
+        }
+        with patch.object(crawler, "_headers", return_value=[]), patch.object(
+            crawler.catalog, "_http_json", return_value=(payload, "app")
+        ) as request:
+            rows = crawler._search_catalog(
+                {"platform_base_url": "https://example.invalid"}, {}, {},
+                language="de", country="DE", configured_language="de", configured_country="DE"
+            )
+        self.assertEqual(["100", "200"], [row["variantId"] for row in rows])
+        self.assertEqual(5000, request.call_args.kwargs["params"]["size"])
+        self.assertEqual(0, request.call_args.kwargs["params"]["page"])
+
+    def test_release_crawl_fails_if_single_page_contract_is_exceeded(self):
+        payload = {"content": [], "page": {"number": 0, "size": 5000, "totalElements": 5001, "totalPages": 2}}
+        with patch.object(crawler, "_headers", return_value=[]), patch.object(
+            crawler.catalog, "_http_json", return_value=(payload, "app")
+        ):
+            with self.assertRaisesRegex(RuntimeError, "exceeds proven single-page"):
+                crawler._search_catalog(
+                    {"platform_base_url": "https://example.invalid"}, {}, {},
+                    language="de", country="DE", configured_language="de", configured_country="DE"
+                )
+
+    def test_release_crawl_fails_on_total_or_identity_drift(self):
+        mismatch = {
+            "content": [{"identifier": {"functionalId": "100"}}],
+            "page": {"number": 0, "size": 5000, "totalElements": 2, "totalPages": 1},
+        }
+        with patch.object(crawler, "_headers", return_value=[]), patch.object(
+            crawler.catalog, "_http_json", return_value=(mismatch, "app")
+        ):
+            with self.assertRaisesRegex(RuntimeError, "row count does not match"):
+                crawler._search_catalog(
+                    {"platform_base_url": "https://example.invalid"}, {}, {},
+                    language="de", country="DE", configured_language="de", configured_country="DE"
+                )
+        duplicate = {
+            "content": [
+                {"identifier": {"functionalId": "100"}},
+                {"identifier": {"functionalId": "100"}},
+            ],
+            "page": {"number": 0, "size": 5000, "totalElements": 2, "totalPages": 1},
+        }
+        with patch.object(crawler, "_headers", return_value=[]), patch.object(
+            crawler.catalog, "_http_json", return_value=(duplicate, "app")
+        ):
+            with self.assertRaisesRegex(RuntimeError, "duplicate provider functional IDs"):
+                crawler._search_catalog(
+                    {"platform_base_url": "https://example.invalid"}, {}, {},
+                    language="de", country="DE", configured_language="de", configured_country="DE"
+                )
 
 
 if __name__ == "__main__":
