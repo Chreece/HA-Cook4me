@@ -129,5 +129,86 @@ class ReleaseCatalogV2CrawlerTests(unittest.TestCase):
                 conn.close()
 
 
+    def test_export_projects_historical_cache_onto_current_search_manifest(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            conn = crawler._open_db(root / "cache.sqlite3")
+            try:
+                # First attempt cached two variants. Variant 100 disappears from
+                # the provider search on the retry; its successful detail must
+                # remain reusable in SQLite but must not leak into retry output.
+                crawler._replace_catalog(
+                    conn,
+                    "de",
+                    "DE",
+                    [
+                        {"variantId": "100", "title": "Historical", "language": "de", "market": "GS_DE"},
+                        {"variantId": "200", "title": "Current detail", "language": "de", "market": "GS_DE"},
+                    ],
+                )
+                crawler._store_result(
+                    conn,
+                    "detail",
+                    "100",
+                    {"variantId": "100", "title": "Historical", "language": "de", "market": "GS_DE"},
+                )
+                crawler._store_result(
+                    conn,
+                    "detail",
+                    "200",
+                    {"variantId": "200", "title": "Current detail", "language": "de", "market": "GS_DE"},
+                )
+                crawler._store_result(
+                    conn,
+                    "stale404",
+                    "999",
+                    {"variantId": "999", "standardStatus": 404, "applianceGroupStatus": 404},
+                )
+
+                # Retry search changes: 100 vanished; 300 appeared and is a
+                # provider-search-only stale row. Historical 100 and 999 stay in
+                # cache but are outside the current manifest.
+                crawler._replace_catalog(
+                    conn,
+                    "de",
+                    "DE",
+                    [
+                        {"variantId": "200", "title": "Current detail", "language": "de", "market": "GS_DE"},
+                        {"variantId": "300", "title": "Current stale", "language": "de", "market": "GS_DE"},
+                    ],
+                )
+                crawler._store_result(
+                    conn,
+                    "stale404",
+                    "300",
+                    {"variantId": "300", "standardStatus": 404, "applianceGroupStatus": 404},
+                )
+
+                output = root / "capture.json.gz"
+                capture = crawler._export(conn, output)
+                self.assertEqual(["200"], [row["variantId"] for row in capture["details"]])
+                self.assertEqual(["300"], [row["variantId"] for row in capture["staleSearchOnly"]])
+                catalog = capture["source"]["catalogs"][0]
+                self.assertEqual(2, catalog["searchRows"])
+                self.assertEqual(1, catalog["hydratedVariants"])
+                self.assertEqual(1, catalog["staleSearchOnlyVariants"])
+                self.assertEqual(0, catalog["unresolvedVariants"])
+                self.assertEqual(
+                    catalog["searchRows"],
+                    len(capture["details"]) + len(capture["staleSearchOnly"]),
+                )
+
+                # The cache itself remains resumable: history is retained but
+                # the capture is a projection, not a dump of all cache history.
+                self.assertIsNotNone(
+                    conn.execute("SELECT 1 FROM variant_details WHERE variant_id='100'").fetchone()
+                )
+                self.assertIsNotNone(
+                    conn.execute("SELECT 1 FROM stale_variants WHERE variant_id='999'").fetchone()
+                )
+            finally:
+                conn.close()
+
+
 if __name__ == "__main__":
     unittest.main()
