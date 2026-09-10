@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "kind": "cook4me-release-catalog-pending-recipe-title-batch-v59",
+  "sourceSnapshot": "release_catalog_pending_recipe_titles_v59.json",
+  "language": "pt",
+  "part": 1,
+  "taskCount": 2,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:3574794cbaf124e80a4785b6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Falafels",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0dbc0c339349f02de4a18185",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Lasanha",
+      "groupCount": 1
+    }
+  ]
+}
