@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "ru",
+  "part": 1,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 21,
+  "batchSize": 21,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:4a8c6ca8e4067c823be99b10",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Бараньи ребрышки с лимоном",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:605e0119980cc34c5874248f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Бисквитный кекс",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4f9c09b9fd38366ae809a3a6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Запеченные кабачки",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2d51499ac3d1ce9ec8c29b6e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Крамбл с инжиром",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ba33cad46f44da8aa29b4bbd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Крамбл с треской и чоризо",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:db3149e1cca48ef353023db3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Креветки в панировке",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a1fd7dcad07dc293cffa8c1d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Курица с лимоном и тимьяном",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e6c955b48d608ad4653e80bb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Кусочки трески в панировке",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ae51ae8917dc31ef636b8acc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Лазанья",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:65834cb78e9d7feeb56ff4c3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Лосось тикка масала",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:64ad2a6ad04a0320814e75f0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Макэндчиз",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:996d5758da72122f4083d0b8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Мусака",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e4e3bc28db0fd50f32e34b2b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Овощные самосы",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bcd7e7ca7ad980f21df4bd22",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Панна-котта",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:544c38f35cbbebee2400eaae",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Свиные ребрышки",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8041ea7fd13f28b00afbf7d7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Спринг-роллы с креветками",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c27bc0301a472188a1704001",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Треска с травами",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:484c4941486c034f1bfea3be",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Фалафель из фасоли",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1df458cc05a8e78cf469731d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Фаршированные кабачки",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:70a47d05587dc8299ae39523",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Хрустящая треска с киноа",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ac6a536615d8d38e80b0b9ad",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ru",
+      "sourceText": "Чесночные куриные крылышки",
+      "groupCount": 1
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "uk",
+  "part": 1,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 13,
+  "batchSize": 13,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:09ded5ddfa63fd3e76e9e329",
+      "type": "recipe_title_english",
+      "sourceLanguage": "uk",
+      "sourceText": "Кисло-солодкі овочі",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a86ea84319e792ba45331f59",
+      "type": "recipe_title_english",
+      "sourceLanguage": "uk",
+      "sourceText": "Курка в кокосовому соусі з горошком",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:83ff87bb6c2eb3647b51168b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "uk",
+      "sourceText": "Курка з лимоном і чебрецем",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0542ce42999b4f23a3bce164",
+      "type": "recipe_title_english",
+      "sourceLanguage": "uk",
+      "sourceText": "Лосось тікка масала",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6f1fb06ef90221b000b042d0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "uk",
+      "sourceText": "Ніжний суп зі солодкої картоплі",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2dc260f1c8480974a80d4aec",
+      "type": "recipe_title_english",
+      "sourceLanguage": "uk",
+      "sourceText": "Пряні дольки",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f01f169edff5b195359a0e86",
+      "type": "recipe_title_english",
+      "sourceLanguage": "uk",
+      "sourceText": "Рагу з кроликом та чорізо",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8a772ae72efb5ee261115ee7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "uk",
+      "sourceText": "Різдвяний пудинг",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c3bf727b6f553e1c8f9a52ed",
+      "type": "recipe_title_english",
+      "sourceLanguage": "uk",
+      "sourceText": "Смажена курка",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e0b4dac59833f7c0fb24773d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "uk",
+      "sourceText": "Томатний суп по-турецьки",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:311422328670f1b15d8a915e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "uk",
+      "sourceText": "Форель на парі з імбирем",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bfe42d2d82c034c1f8b80236",
+      "type": "recipe_title_english",
+      "sourceLanguage": "uk",
+      "sourceText": "Фрикадельки у соусі з естрагоном",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0bb327154b09acc71b820a4f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "uk",
+      "sourceText": "Шоколадно-апельсиновий чізкейк",
+      "groupCount": 1
+    }
+  ]
+}

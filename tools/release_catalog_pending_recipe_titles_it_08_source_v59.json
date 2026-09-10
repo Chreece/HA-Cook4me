@@ -1,0 +1,713 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "it",
+  "part": 8,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 226,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:8ff2f5efcae737dea5a6268b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Spaghetti aglio olio",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bbf0a273d78a9e5dd2092679",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Speck e lenticchie",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ddb97b1f5e42bada94c59b6e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Spezzatino birra e funghi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c50961412a3f17886be13352",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Spezzatino coi funghetti",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e350a749c0304b4336c81f28",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Spezzatino e patate",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d19fa2a2be4637a13109ddbf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Spicchi di patate speziati",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4a30721193e1143e79834b6a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Spiedini",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5df5e504dbe75f4843feb595",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Spiedini di pesce",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5320d72ea56a20fc5daf6567",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Spinaci al peperoncino",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3f4de1323c5f78793e21ea31",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Spinaci con panna e wurstel",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9e945d7a1ed5929dc21371f1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Spinacio",
+      "groupCount": 4
+    },
+    {
+      "taskId": "recipe_title_english:528fdd1224314c32755454fe",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Straccetti di maiale",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e79dac3c420cd3329866a22d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Straccetti di vitello",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cc89669c9e61276523c00f9c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Stracotto di manzo e funghi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:76cc536dcd46cebc05ba1425",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Stufato di cavolfiore tradizionale",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:290054d97a7a562ad5f8b76e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Stufato di salmone e finocchio",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:346369c1ee6a19e5155723e5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Stufato di tofu (sundubu jjigae vegano)",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fcf88c7839c0342b9226490f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Stufato d’anatra",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2489bdc1c542bd8196a3f3a3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Succo di mele e fragole",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:73f569d5a313531d28d603b4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tabbouleh di quinoa all'arancia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:44421462643d61e6cde7f7c0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tacos di manzo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b15420e4f15177cf7c5a71c6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tagliolini al crudo di gamberi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1e60b1e459d611def147e45b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tagliolini all'acqua pazza",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f1a978643c619a0994ead1e0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tajine di agnello con prugne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c247ce52919acc5afd691e03",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tajine di coniglio con olive",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:eab1e49bd523fe12d9c2ede8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tartiflette",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0c42e44387df900e9d596837",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Terrina di maiale con prugne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:26c4e0a30ff97cf07d69c003",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tian di verdure con mozzarella",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7c9a96d0cddc094f61b9d533",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Toast con zucchine e parmigiano",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8bd7a7af3bb3b3d1eafce1bd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tomini fondenti e pesto di fave",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:25b8de3a237c166699cccc00",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tonno alle olive rivierasche",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:42c1b875deea10341e8b0147",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Torta al miele e mirtilli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:92b08b271cba3daffe3cb190",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Torta al testo speck e brie",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:07cf7d0a81a76d4aca176241",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Torta allo yogurt",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:45b2139eee0f1a076c24d1dc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Torta all’ananas rovesciata",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f2f59915843372bdf54d00cf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Torta bretone con prugne secche",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0d0bc69c78a1edc3fc690032",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Torta bretone prugne secche",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:567fc1d2d15a1c79adaafbee",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Torta Caprese",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2b550838a3356f868e2becc8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Torta con bucce di banana",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:055273afb1e5114316472bc1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Torta di mele caramellata alla rovescia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2da9973f6737c8a51fc25a33",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Torta foresta nera",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:43040d2f19fb2155af224180",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Torta rovesciata alle fragole",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cef97a78e1047919360538b2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Torta salata alle zucchine",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0830b819948ca336c785fe73",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Torta salata di patate",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f1fe9589975146be40ddb10a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortelli in brodo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a9bc6c06997c5b9d6e8e6011",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortellini agli spinaci",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e2e5fefb9dadad1a931fbd86",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortellini con panna",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:742727d773d6e2a71abaf6d0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortilla al crudo e salvia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e24625416e5d8a890a3965fa",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortillas con manzo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7a90fee3bd17902681290478",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortini ai datteri e vaniglia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b2185842653ceadefe63cf80",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortini al cioccolato con il centro fuso",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:309b9d655825058d0d2063a8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortini di peperoni",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b7452090b74123251abaa1bd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortini di zucca e groviera",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fd7945f47fab5036dcd4f5ed",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortini di zucchine",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e4c5d9d37d91434f80614fb6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortino al cacao",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:36c0815c8f6f8cc4268d4b3e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortino al caffè",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f9618c21a2a0749403c145f2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortino al cioccolato",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:02615352e05bdab2f2b0d66c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortino al cioccolato da viaggio",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:17e81c8bca27c97617e61147",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortino cioccolato e castagna",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9e6000d32806f6a07dacddbd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortino con cuore fondente",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:7164f675af447e125cdab668",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortino di bietole",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a1fe34e4d316b169e7019454",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortino di nocciole",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c11409443ae738d8fe60b558",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortino di peperoni",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:68aefcffb6f137f8365fb800",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortino di salmone affumicato",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9c27c99ae7d576800e118572",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortino di Topinambur",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6a43e21cbe911022108c4c78",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortino morbido al cioccolato",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b31613e39989cc2944e53d6f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortino patate e mandorle",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:75b11b41ae617379b879f56c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortino ricotta e salsa di pesche",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d731cec75cb3eb6d40d3b0e7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tortino vaniglia e cioccolato",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:aeb30d24c5a1da34912160cc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tostate con pomodori secchi e uovo alla coque",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6232d388bd70d55a1c500f2c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Totani al vino bianco e zenzero",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d0499c08e340bf3ec7ad9a6b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Totani coi fagiolini",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b19e641bfeb2cbb48a1e420c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Triglie con verdure e couscous",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:dc82aa8d7aa9393954c8333f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Trippa in umido",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:af1396c53157c32fcbdf81ea",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Trota con soffritto alle erbe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8c93e6e3940b88644a834891",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Trota impanata",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:dd9b96863b24765c61fcd193",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Tè freddo alla pesca",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:78ca5c9250a67ef6e20b76bf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Uova al forno con porri",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0bfd4d9377ae6107d3a08391",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Uova al pomodoro",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:98461df026952b71220f5478",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Uova alla fiorentina",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a24955eefb4f3a7d36b52853",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Uova con pomodoro e mozzarella",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:aaadb79423b32fb375a5c6ff",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Uova cotte con verdure",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:190a30fa2bd53f9e6c649983",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Uova in cocotte",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:50fabe5f08ad23f983fb27f8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Uova in cocotte alla mimolette",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fb3b6139c41f16532cacd23f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Uova in cocotte di pomodori",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1af4e4b9983f2bf49c96bed9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Uovo in vaso",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0d95e7d1cd44dd64677d8de7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Vasetti al cioccolato",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f1c55942e6f979b7665a71e0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Vasetti con banane e cacao",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f6f14368ed84f38ab9516bf1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Vellutata di cavolfiore",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f831fcccd165069cd71d6f05",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Vellutata di patate dolci",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e45dbc62de51c6f5f1fd559c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Vellutata di piselli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7fab4500fdfbde61b7723b01",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Vellutata di zucca e porcini",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:779d48aae14b3d5e61ce0287",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Vellutata di zucchine",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0d659d8bc7a16004a729b21b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Verrine di gamberi e avocado",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ef180bd77a94f555ce7f88fb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Vitello",
+      "groupCount": 12
+    },
+    {
+      "taskId": "recipe_title_english:086223472501f583554737da",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Vitello aromi e pepe verde",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:56e2a053b981bc9b0c2c8c81",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Vitello senapato",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0019008ead6d4a95a3922cea",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Vitello tonnato",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:e7aea7040b188763e082efbb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Zucca",
+      "groupCount": 8
+    },
+    {
+      "taskId": "recipe_title_english:7d828d877dffecb99ae5e611",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Zucca Butternut",
+      "groupCount": 7
+    }
+  ]
+}

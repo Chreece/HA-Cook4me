@@ -1,0 +1,713 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "pl",
+  "part": 7,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 1213,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:1f41a21832ca4012c9735203",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Marchewkowa owsianka z cynamonem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bf41f65552fc1beaf4a04ee1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Marchewkowa owsianka z orzechami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5c6559edf77c4f32228fe902",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Marmolada z pomarańczy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bc334b4371a88bce9d54861e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Marokańska zupa harira",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0ce8718c349e37e8ad828eb8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Marokański tadżin z kurczakiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0b30c2c10648babdb8f314f4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Masło daktylowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:213c5119458a542fa8a1f5f3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mazowiecka zalewajka z suszonymi grzybami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e3d54c49d8ec4fa56c8b5169",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Małże z kiełbaską chorizo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1e82c86e63438d3889f12f3c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Medaliony z łososia z cytrynowym ranchem z kiszonego ogórka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a3defdd55dba5b4000778288",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Miecznik z muszlami świętego Jakuba",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:109996444d4070890f1c3abe",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mini cynamonki z ciasta francuskiego",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:267febaf955eb0e2bc2df984",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mini dutch baby",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0e1468644d8af8b28e8ad2c3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mini keto serniczki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c20ef3737128c7f52888c25e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mini marchewki w śmietanowym sosie",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7f68ba5ab9f844b920e7dbbc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mini paszteciki z mieloną wołowiną",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6d9c67c16fb8914bb45a25c4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mini pizzerinki z kiełbasą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:966f5cb0a7bfea46ac7c17f5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mini pizzerki z kalafiora",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8f813cd43f6bb2c24dfa74d1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mini serniczki cytrynowo-pistacjowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7f3d91039fa95ce0618ef301",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mini serniczki jogurtowe z porzeczką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fc5c53246366f4ab87ca1f77",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mini serniczki z borówkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3b4a1a97c23ae6cde3e68bab",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mini serniczki z czekoladą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:34ff66073ec9b0b14e015d54",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Miodowa szynka gotowana",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b2d9376cde50a3dffa3aeb35",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Miód jalapeno-chili",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:35c9c4a7f5dd31a389bf2d9c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mięso faszerowane serem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ff2c4b03582544807f1a2ed4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Miętowy sernik czekoladowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:86a9f20709b737196c2d4bc9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mleczny ryż z karmelizowanym bananem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:738d72806390485ac955e240",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mocno pomidorowy makaron wg Pati",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:538ab561cd6b980fd3431b16",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Morszczuk w sosie curry",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7fb79dbf148f24a3e9d8fd09",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mostek wołowy Montreal",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a895e1624cd33cee0852d975",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Moudardara",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:18a90a85db5f27248fc1bc8f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mrożona herbata brzoskwiniowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8f1edf3d7ea3925d18a381fe",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mrożona herbata Mohito",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9ecb3fca40440811bd76a785",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Muffinki z jajka warzyw i fety",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:60e204c55bda739c77f377eb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Muffinki z szynką i suszonymi pomidorami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:95044cdc23a41777e060c2bb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Muffiny borówkowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f7e50d0e7c79dd8243007abd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Muffiny jajeczno-warzywne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f28c1ba711e2b7e74f71b5bd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Muffiny marchewkowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4f4987cb4d3afa633e29dfdc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Muhlama (owsianka kukurydziana)",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5c0017e7fad17b582d559ec0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mule",
+      "groupCount": 6
+    },
+    {
+      "taskId": "recipe_title_english:7209397193fa07c20cf3820a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mule po marynarsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a33e65c0b4fb9c10490fce5f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mus czekoladowy z malinami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c56169e43053c5f99bb10391",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Musaka z wołowiną",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5edb50914b9846b5c3d65a67",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Młoda kapusta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:836b44527d1ba934dc9ad33b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Młoda kapustka z kiełbasą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:63bb443f6031aec82770b39f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Młoda kapustka zasmażana Pati Sołtysik",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9a662047ccfebfdf4aab755d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Młode ziemniaczki po cesarsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f918d1b621e578b287c8c161",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Nachos",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cb9569bac111d81af5009302",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Najlepsza grochówka w mieście",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:520eeb56bf29050ed56cd962",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Naleśniki orkiszowe z boczniakami i szpinakiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:04ec4780aee2554b071fd4fc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Nektarynki z miodem i ricottą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:24dbf5949a5489501a4fbecf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Nuggetsy z boczniaków",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ccbd68cb142ed21808c3ede4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Nuggetsy z kurczaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8a85a77cc799cee0e5a210e0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Nuggetsy z łososia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c5826ecb70634a1976c810f3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ogórkowa z sezonowych małosolnych z pieczonym indykiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2782aff4c1eea00b8f1ac61f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Okonomiyaki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fc935b3fef2c0069773b5a94",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Omlet brzoskwiniowy z owocami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:141ab350d2d62dbfca91384d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Omlet dyniowy z brzoskwinią",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8db3af3176cb036b0492231a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Omlet hiszpański (Tortilla de Patatas) z warzywami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3b1b2b00954badaf1e32ff92",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Omlet jabłkowo-kokosowy bez mąki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fe610149d06d17443edf5343",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Omlet jabłkowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f6021cc3c0eabd5dd66c0359",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Omlet orkiszowy z pomarańczą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:424b456a9f8c0197135c260e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Omlet z pieczarkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8a02f358b5b8cf7a7ba5d38f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Omlet z serka wiejskiego",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f4ba784ac0f1ce298eeb937d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Orientalne pikle z ogórka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5bcdddf9fc61228dcd8118ef",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Orzechowy makaron z kurczakiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a9137b73e002cb3261119923",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "ORZO Z KURCZAKIEM",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f72a0e12a841590819dbded7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Orzo z pesto, pieczarkami, szpinakiem i suszonymi pomidorami wg Elżbiety Bogusz",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f2f923144021aa9e8f8c57dc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ostry kurczak z kalafiorem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1e6e9648bb16b354b8e93b54",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Owsianka szarlotkowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:25bfdda2252dd2d2bd66055c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Owsianka truskawkowo-kokosowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d7a0b5fa346283d3936d9e7f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Owsianka z bananami i kakao",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:68ebe2593b7107626b1b8c4d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ośmiornica po cypryjsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f01dffe1a223aa3e33fde167",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ośmiornica po galicyjsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:33181f0c5ed4b02df635cce8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Pad Thai",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c866e34bf01e9d8c18ccfe35",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Paella kalafiorowa z szafranem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:53262bbe7b683c6364a466a0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Paella z kurczakiem i krewetkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:15290c55f97993feedf2102d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Paluszki z sera feta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:07d6df99d1df3e43784a0e73",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Panierowane krewetki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:808b6be2e68d880f8e3631ea",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Panierowany dorsz z komosą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0ad0c2d08c9bd3e487e74d4f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Panna cotta eyeballs",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3be16b83164073cdf58ecfe8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Panna cotta z grejpfrutem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d7302e8989138275f83aae19",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Panna cotta z morelami i marakują",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9ee7bebb2f5b902cb644c47b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Panna cotta z truskawkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6407f16f4f57e2ef965f1b88",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Pannacotta z koziego sera",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5ef3065d6caffa9a22785d8d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Papryka",
+      "groupCount": 8
+    },
+    {
+      "taskId": "recipe_title_english:dad6fdbce8fcd1aa7821d4d0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Papryka faszerowana ryżem z kalafiora",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5f6fd15c45e5f6c6c1fa14ab",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Papryka nadziewana komosą ryżową",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9156201b48c23849a9247884",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Parówki w cieście",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7374d2b55319c054b4dd0dac",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Pasta jajeczna z kurkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:577bb8dfa7fae6231f8699fa",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Pasta jajeczna z tuńczykiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:435dd078bf0b4d7927c9e383",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Pasta rybna",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ee2b3c21a6ee2d30812f58bf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Pasta z szynką i musztardą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:80f6ec4df871ad479ae3c54d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Pasztet wieprzowy z suszonymi śliwkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a0cb346437d56304df7c918a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Pasztet z ricotty i papryki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:add7386c410aa084cbc3e9b4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Pasztet ze świeżego tuńczyka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:069238aa0d4f3438c84d51bc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Pavlova z kandyzowaną pigwą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bf1245abdc7418b73009dc3f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Peklowana wołowina",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1ae352edece21f3a5ae572c3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Penne z cukinią i boczkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:79564b8b337d78d7263a7365",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Peperonata",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:c81b39c0aa5479f5aa70cef8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Perski gulasz z jagnięciny",
+      "groupCount": 1
+    }
+  ]
+}

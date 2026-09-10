@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "ja",
+  "part": 6,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 14,
+  "batchSize": 14,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:f64bf7c851c9be18128a15a0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ja",
+      "sourceText": "(無水)ラタトゥイユ",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:027b4ad755dee2221974b11e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ja",
+      "sourceText": "(無水)桜鯛の蒸し煮",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b1ff94433156f0b25c9afbe5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ja",
+      "sourceText": "(無水)牛肉のクリーム煮",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:08b256d059050c30a8f088d0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ja",
+      "sourceText": "なめらかマロンプリン",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:738087ab6f8036d61796c35b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ja",
+      "sourceText": "はさみれんこんバーグ",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:74f61acc02a97ad32705f16f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ja",
+      "sourceText": "サラダチキン",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0ad3dfcbc13c39c86b37fe3b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ja",
+      "sourceText": "シュラスコ風煮豚",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fa156fb545809e96be611907",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ja",
+      "sourceText": "ナシゴレン風炊き込みご飯",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:41fe254ef30f0d25780dd820",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ja",
+      "sourceText": "山菜おこわ",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:900cdb3352d06a5382b8e6c2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ja",
+      "sourceText": "彩りやわらかロールチキン",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ec0622736c3f7a3f770ab6c0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ja",
+      "sourceText": "桜のお花見おにぎり",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a00503d82a52042e80777917",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ja",
+      "sourceText": "沖縄風豚の角煮",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4dc22760f321cb6e7a7720e2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ja",
+      "sourceText": "親子丼とかぼちゃの煮物",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f8b48cdb44ea73e37a84f8e6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ja",
+      "sourceText": "魚のミルク煮とごま和え",
+      "groupCount": 1
+    }
+  ]
+}

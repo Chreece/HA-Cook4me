@@ -1,0 +1,713 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "it",
+  "part": 7,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 226,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:342b2559917fa0d68e13b9d7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Rillettes di merluzzo con olive",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:7df4d89cdbc1b76bf09c6a6e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso",
+      "groupCount": 3
+    },
+    {
+      "taskId": "recipe_title_english:1f5531f2f8dbb0248671fd74",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso a grani lunghi",
+      "groupCount": 4
+    },
+    {
+      "taskId": "recipe_title_english:7a846c411e5a843c54912b23",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso al curry, ceci e tofu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c4aa5bb91e96bd7a52a55da9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso al latte",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:b834718bb4ad78b9375d9445",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso alla cantonese",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:72d96d8f06a102d63a3d6292",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso alla salamella",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9f1431f8347d5f834c36b7e7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso cantonese all'italiana",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7444f25d2e35276d53116087",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso con salmone al sesamo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:57194119fe41b3b1819c4792",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso integrale",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:2c218aaaeaf1dc463fd07b55",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso integrale al limone",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:36aaf3a883a011abfb231c29",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso latte",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4cbcf878074c0cc5084e5af9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso nero alla puttanesca",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7a20ce9acc274642a5eb0d44",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso nero e verdure",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2b14bc556b3893ea5f421cc3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso nero mediterraneo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1120a58d4a91042e6b4c04ec",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso pilaf alle zucchine e limone",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:69c46dd5ebca16b700d0b756",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso rosso erbe aromatiche",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:998e264171a809a10c6cd67e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso venere alle seppie e piselli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:26e22a6d8eb8cfc661caf227",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Riso venere menta e fragole",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c8d40ed780207573b761898f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risolatte al caramello veloce",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4bd8dbc15ccbbc717e798ed5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risolatte alle castagne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:21e5558ee89ab593fad5e997",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto agli asparagi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8dbaecfaa507b961c3166d05",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto agrumi e burrata",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3fe17eab031aa9d51c6078be",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto ai carciofi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6b705ad4bf4257062342e235",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto ai finferli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7d0dfc8319f556048b5e466e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto ai frutti di mare",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:3471b36b3ff35e9371fa86e8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto ai piselli con menta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2af496293a036db8cdc06ad3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto al cacio, pepe e asparagi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:86d58f9e2ff02c77b99f3cac",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto al limone e salvia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e52f223ad770b55193a5791c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto al nero di seppia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:894979232c87935235de4876",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto al radicchio",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fbc49fe122d622e914f5ffae",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto al tartufo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:356c5dccb8d28b10494ca15a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto alla burrata e gamberi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:82970b5fa2a2a5254ba99062",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto alla milanese",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:231e2f7e55c87dd5f0b65def",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto alla parmigiana",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:90a72456a281c2cd5778b8de",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto alla salsiccia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1b0ca01ed6158c0c08b3820b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto alla zucca",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8bee5484a62370d2f4b92ad6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto alla zucca e pinoli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9f8c02553093793cc06d5d0a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto alle erbe aromatiche",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2f64f629f81984839afac7e4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto alle melanzane",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:884e827ba1ef8f6fc7255165",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto alle ortiche",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a58f677ac65e3a57b444d396",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto carciofi e pesto rosso",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e81eca6fd890224aab71acb4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto coi funghi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f372d3a5519f7e6483a6bfb3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto coi peperoni",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c717df0a494e8513c0c760ed",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto col salmone",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e9f73c51551a88c58a11364e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto con carciofi e zucca",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:10081883f3f7388a031da082",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto con olive nere",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:69507f30af6fbc627f12ce03",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto di grano saraceno",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:556e22e1e24cc7037a660934",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto di grano saraceno e finferli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c44dd3d5f93a06375d86c093",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto gamberi e zucchine",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:10258f61cfff135461471882",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto gorgonzola e fichi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1caec6b36c8ac6d7a5ead7a4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto in viola",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:316774b44023d8d91f2b41bb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto integrale",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7174a7b54d52fd559bd78ccf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto melagrana e spumante",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:33bc1ca07d55349ab01bd6f4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto pere e taleggio",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:170fb1f3cb387babadd4bd09",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto primavera",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:49c9f3e3c6e474867aaf456f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto zucca e burrata",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e31dd30a2efa5dec3f7283c3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Risotto zucchine e funghi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b075689cc176de1496a0f787",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Roast beef",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7463b8a60313901ebb2b02c6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Roast beef alla senape",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:3c64b4b8efb0780aecb7d080",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Roast beef autunnale",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a193035b7ed3dd121c1fb6b3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Rollata di vitello al prosciutto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:839d920d6f2e6da426d7c773",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Rollé di faraona in porchetta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b168b71fb650e9b16dd89177",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Rose di branzino con lattughino",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f1936c57805f42434662b268",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Rosti di patate e funghi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f1007454bd55198d69c6bd1a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Rotolini tricolore",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:83f9dbcee0401708864fc7ba",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Rotolo di spinaci",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:df717442e6f9b6a7d43b708b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Saccotti di vitello e pecorino",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:113f88b9f309e43fa7446efd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Salmone al pepe rosa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d4c1bbab2598c1dae246cf80",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Salmone al pomodoro",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3126580e4facacd295636124",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Salmone allo yogurt e rafano",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:494f773f822af5783d578072",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Salmone allo zafferano",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:131bb15a1e7165450bb56316",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Salmone con zenzero e fave",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d8a78b1b1e81161d2ecb975a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Salmone pistacchi e erbe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9f2d63fa8619467fee932f58",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Salmone Tikka Masala",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:db01ea95c1ac5358253e4d18",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Salsa di fragole",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:03e3456d09cdb825b7e73e5b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Salsa di melanzana e semi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:901d5fd28d1659e9793f3b2f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Salsa di peperoni e feta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9ef05b3f6d40aebf9fa253d4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Salsicce con patate",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:66c917fdf680d8f8acaa6a41",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Salsicce e fagioli in umido",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a5e1e9e513f8e4e1d02f3764",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Salsicciotti e cipolle",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:50479064194f839da13f6afc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Samosa con tonno e uova",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:08b0409aafd80f5274d06a6f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Samosa di verdure",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:aa8a85a5b379e163a91353b4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Sautè di riso stracchino e limone",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:402e2ea8ddcd139b2736f729",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Sauté di gamberi tandoori",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:310e940750e0513a474c74a3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Sauté di vitello alle melanzane",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:dd2ef0ff474273cde670c914",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Scaloppine ai funghi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2c3838d68bb1317b19f75a44",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Scaloppine di vitello",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:58671695175b36348483db8d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Sedano rapa",
+      "groupCount": 8
+    },
+    {
+      "taskId": "recipe_title_english:bd2a94324458695e5920d156",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Seppia alla catalana",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cfa2774579ced463215ed76c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Seppie con piselli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:51d64546d407f8dd35e6fc2b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Seppioline in pesto alla siciliana",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:055887a6fb26829feb4e964e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Sformato di cioccolato e zucca",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:659f1becebb04cdbbc60fb9b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Sformato di limone e pinoli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6a2843612e3b007ba2ac90b8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Sformato di panettone",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ae8d431d8d801908fc591131",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Sformato di verdure e groviera",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7e76082aceb8b23d081307ce",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Sorbetto ai frutti rossi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:70802a4241962945381ed031",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Sorprese di ananas e mandarini",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1a071b6443f92936bdcae2a4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Sovracosce pinoli pesto di salvia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d11bcdf80e13e4d1e7772576",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Spadellata di verdure",
+      "groupCount": 1
+    }
+  ]
+}
