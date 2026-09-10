@@ -20,18 +20,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Apply conservative keyless consensus patch
-        run: python tools/patch_phase3_keyless_consensus_v59.py
-      - name: Validate keyless consensus resolver
+      - name: Add keyless source-field provenance
+        run: python tools/patch_phase3_keyless_source_provenance_v59.py
+      - name: Validate keyless provenance and review pipeline
         run: |
-          python -m py_compile tools/apply_release_catalog_reviews_v2.py tests/test_release_catalog_review_overlay.py
+          python -m py_compile tools/prepare_release_catalog_v2_assembly.py tools/apply_release_catalog_reviews_v2.py tests/test_release_catalog_v2_assembly_prep.py tests/test_release_catalog_review_overlay.py
+          python tests/test_release_catalog_v2_assembly_prep.py
           python tests/test_release_catalog_review_overlay.py
           git diff --check
-      - name: Commit tested Phase 3 consensus resolver
+      - name: Commit tested Phase 3 provenance
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/apply_release_catalog_reviews_v2.py tests/test_release_catalog_review_overlay.py
+          git add tools/prepare_release_catalog_v2_assembly.py tests/test_release_catalog_v2_assembly_prep.py
           git diff --cached --check
-          git commit -m "Resolve unanimous keyless provider semantics"
+          git commit -m "Preserve keyless ingredient source provenance"
           git push origin HEAD:cook4me-catalog-phase3-staging-v59
