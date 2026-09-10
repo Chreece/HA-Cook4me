@@ -1,0 +1,111 @@
+name: Extract all remaining recipe-title review batches v59
+
+on:
+  push:
+    branches:
+      - cook4me-release-catalog-cache-progress-v59
+    paths:
+      - .github/workflows/extract-all-remaining-title-review-batches-v59.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Snapshot all unresolved recipe-title batches
+        run: |
+          python - <<'PY'
+          import json
+          import re
+          import unicodedata
+          from collections import defaultdict
+          from pathlib import Path
+
+          source = Path('tools/release_catalog_pending_recipe_titles_v59.json')
+          data = json.loads(source.read_text(encoding='utf-8'))
+
+          def text(value):
+              return re.sub(r'\s+', ' ', str(value or '').strip())
+
+          def norm(value):
+              return re.sub(r'\s+', ' ', unicodedata.normalize('NFKC', text(value))).casefold()
+
+          reviewed = defaultdict(set)
+          next_part = defaultdict(int)
+          numeric_name = re.compile(r'release_catalog_reviewed_recipe_titles_([a-z]{2})_(\d+)\.v1\.json$')
+
+          for path in sorted(Path('tools').glob('release_catalog_reviewed_recipe_titles*.v1.json')):
+              value = json.loads(path.read_text(encoding='utf-8'))
+              if value.get('kind') != 'cook4me-reviewed-recipe-title-english':
+                  continue
+              match = numeric_name.search(path.name)
+              if match:
+                  next_part[match.group(1)] = max(next_part[match.group(1)], int(match.group(2)))
+              for row in value.get('items') or []:
+                  if not isinstance(row, dict):
+                      continue
+                  language = text(row.get('language')).lower()
+                  title = text(row.get('source'))
+                  if language and title:
+                      reviewed[language].add(norm(title))
+
+          pending = defaultdict(list)
+          for row in data.get('tasks') or []:
+              if not isinstance(row, dict) or row.get('type') != 'recipe_title_english':
+                  continue
+              language = text(row.get('sourceLanguage')).lower()
+              title = text(row.get('sourceText'))
+              if not language or not title or norm(title) in reviewed[language]:
+                  continue
+              pending[language].append(row)
+
+          written = []
+          for language in sorted(pending):
+              rows = pending[language]
+              rows.sort(key=lambda r: (text(r.get('sourceText')).casefold(), text(r.get('taskId'))))
+              base_part = next_part[language]
+              for index in range(0, len(rows), 100):
+                  part = base_part + index // 100 + 1
+                  batch = rows[index:index + 100]
+                  out = {
+                      'schemaVersion': 1,
+                      'kind': 'cook4me-recipe-title-review-source-batch-v59',
+                      'language': language,
+                      'part': part,
+                      'source': 'authoritative-reviewed-hydrated-queue',
+                      'queueGeneratedAt': data.get('generatedAt'),
+                      'existingReviewsExcluded': True,
+                      'tasksBeforeLanguageBatches': len(rows),
+                      'batchSize': len(batch),
+                      'tasks': batch,
+                  }
+                  output = Path(f'tools/release_catalog_pending_recipe_titles_{language}_{part:02d}_source_v59.json')
+                  output.write_text(json.dumps(out, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+                  written.append(str(output))
+
+          Path('tools/release_catalog_pending_recipe_titles_all_batches_v59_summary.json').write_text(
+              json.dumps({
+                  'schemaVersion': 1,
+                  'queueGeneratedAt': data.get('generatedAt'),
+                  'pendingByLanguage': {language: len(rows) for language, rows in sorted(pending.items())},
+                  'batchFilesWritten': written,
+                  'batchFileCount': len(written),
+              }, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(json.dumps({'pendingByLanguage': {k: len(v) for k, v in sorted(pending.items())}, 'batchFileCount': len(written)}, ensure_ascii=False))
+          PY
+      - name: Commit source batches
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/release_catalog_pending_recipe_titles_*_source_v59.json tools/release_catalog_pending_recipe_titles_all_batches_v59_summary.json
+          git diff --cached --check
+          git diff --cached --quiet && exit 0
+          git commit -m "Snapshot all remaining release catalog title review batches"
+          git push origin HEAD:cook4me-release-catalog-cache-progress-v59
