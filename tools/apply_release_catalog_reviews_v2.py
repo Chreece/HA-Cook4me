@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FOOD_REVIEW = ROOT / "tools" / "release_catalog_reviewed_provider_food_english.v2.json"
 KEYLESS_REVIEW = ROOT / "tools" / "release_catalog_reviewed_keyless_ingredients.v1.json"
 RECIPE_TITLE_REVIEW = ROOT / "tools" / "release_catalog_reviewed_recipe_titles.v1.json"
+ENTRY_MEAL_REVIEW = ROOT / "tools" / "release_catalog_reviewed_entry_meal_overrides.v1.json"
 
 
 def _text(value: Any) -> str:
@@ -71,6 +72,17 @@ def _keyless_reviews() -> dict[tuple[str, str], dict[str, Any]]:
     return out
 
 
+def _entry_meal_reviews() -> dict[str, dict[str, Any]]:
+    value = json.loads(ENTRY_MEAL_REVIEW.read_text(encoding="utf-8"))
+    if value.get("kind") != "cook4me-reviewed-entry-meal-overrides":
+        raise RuntimeError("invalid reviewed entry/meal override file")
+    return {
+        _text(key): row
+        for key, row in (value.get("items") or {}).items()
+        if isinstance(row, dict) and _text(key) and _text(row.get("englishTitle"))
+    }
+
+
 def _recipe_title_review_paths() -> list[Path]:
     extras = sorted(
         path
@@ -114,6 +126,31 @@ def _recipe_title_reviews() -> dict[tuple[str, str], dict[str, Any]]:
     return out
 
 
+def _set_group_english(
+    row: dict[str, Any],
+    *,
+    reviewed: str,
+    source: str,
+    confidence: Any,
+    notes: Any = None,
+    review_file: str = "",
+) -> None:
+    existing = _text(row.get("canonicalEnglishTitle"))
+    if existing and _norm(existing) != _norm(reviewed):
+        raise RuntimeError(
+            f"reviewed recipe English conflicts for "
+            f"{row.get('groupingFunctionalId')}: {existing!r} vs {reviewed!r}"
+        )
+    row["canonicalEnglishTitle"] = reviewed
+    row["canonicalEnglishSource"] = source
+    row["canonicalEnglishConfidence"] = confidence or "reviewed"
+    if review_file:
+        row["canonicalEnglishReviewFile"] = review_file
+    if notes:
+        row["canonicalEnglishNotes"] = notes
+    row.pop("translationTaskId", None)
+
+
 def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
     if prep.get("kind") != "cook4me-release-assembly-prep":
         raise RuntimeError("expected cook4me-release-assembly-prep")
@@ -123,10 +160,12 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
     food_reviews = _food_reviews()
     keyless_reviews = _keyless_reviews()
     recipe_title_reviews = _recipe_title_reviews()
+    entry_meal_reviews = _entry_meal_reviews()
     remove_tasks: set[str] = set()
     provider_review_applied = 0
     keyless_review_applied = 0
     recipe_title_review_applied = 0
+    entry_title_review_applied = 0
 
     provider_foods = prep.get("providerFoods") or []
     provider_by_key = {
@@ -155,11 +194,30 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
         if task_id:
             remove_tasks.add(task_id)
 
-    # Recipe-title reviews change labels only. Grouping/variant IDs and every
-    # provider-native title remain untouched.
-    for row in prep.get("recipeGroups") or []:
-        if not isinstance(row, dict):
+    recipe_groups = [
+        row for row in prep.get("recipeGroups") or [] if isinstance(row, dict)
+    ]
+
+    # Exact provider-group reviews from the taxonomy-gap audit are reusable
+    # canonical-English evidence. They are applied by grouping ID only.
+    for row in recipe_groups:
+        grouping = _text(row.get("groupingFunctionalId"))
+        review = entry_meal_reviews.get(grouping)
+        if not review or not _text(review.get("englishTitle")):
             continue
+        _set_group_english(
+            row,
+            reviewed=_text(review.get("englishTitle")),
+            source="reviewed:entry-meal-v1",
+            confidence=review.get("confidence"),
+            notes=review.get("notes"),
+            review_file=ENTRY_MEAL_REVIEW.name,
+        )
+        entry_title_review_applied += 1
+
+    # Language/title reviews change labels only. Grouping/variant IDs and every
+    # provider-native title remain untouched.
+    for row in recipe_groups:
         task_id = _text(row.get("translationTaskId"))
         if not task_id:
             continue
@@ -168,22 +226,30 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
         review = recipe_title_reviews.get((language, _norm(source)))
         if not review:
             continue
-        reviewed = _text(review.get("english"))
-        existing = _text(row.get("canonicalEnglishTitle"))
-        if existing and _norm(existing) != _norm(reviewed):
-            raise RuntimeError(
-                f"recipe-title review conflicts with existing English for "
-                f"{language}/{source}: {existing!r} vs {reviewed!r}"
-            )
-        row["canonicalEnglishTitle"] = reviewed
-        row["canonicalEnglishSource"] = "reviewed:recipe-title-v1"
-        row["canonicalEnglishConfidence"] = review.get("confidence") or "reviewed"
-        row["canonicalEnglishReviewFile"] = review.get("reviewFile")
-        if review.get("notes"):
-            row["canonicalEnglishNotes"] = review["notes"]
-        row.pop("translationTaskId", None)
-        remove_tasks.add(task_id)
+        _set_group_english(
+            row,
+            reviewed=_text(review.get("english")),
+            source="reviewed:recipe-title-v1",
+            confidence=review.get("confidence"),
+            notes=review.get("notes"),
+            review_file=_text(review.get("reviewFile")),
+        )
         recipe_title_review_applied += 1
+
+    # A title task can be shared by several provider groups. Remove it only when
+    # no group still depends on it; this prevents a group-specific review from
+    # accidentally hiding an unresolved sibling task user.
+    pending_recipe_title_tasks = {
+        _text(row.get("translationTaskId"))
+        for row in recipe_groups
+        if _text(row.get("translationTaskId"))
+    }
+    for task in queue.get("tasks") or []:
+        if not isinstance(task, dict) or task.get("type") != "recipe_title_english":
+            continue
+        task_id = _text(task.get("taskId"))
+        if task_id and task_id not in pending_recipe_title_tasks:
+            remove_tasks.add(task_id)
 
     for row in prep.get("unkeyedIngredients") or []:
         if not isinstance(row, dict):
@@ -209,8 +275,6 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
             keyless_review_applied += 1
             continue
 
-        # An exact SEB-name candidate may depend on a provider food whose English
-        # label was supplied by the reviewed provider-food table rather than GB.
         candidate = _text(row.get("exactProviderFoodKeyCandidate"))
         provider_food = provider_by_key.get(candidate)
         if candidate and provider_food and not _text(row.get("canonicalEnglishName")):
@@ -228,9 +292,10 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
     queue["schemaVersion"] = max(4, int(queue.get("schemaVersion") or 0))
     recipe_review_files = [path.name for path in _recipe_title_review_paths()]
     queue["reviewOverlay"] = {
-        "providerFoodEnglish": "release_catalog_reviewed_provider_food_english.v2.json",
-        "keylessIngredientSemantics": "release_catalog_reviewed_keyless_ingredients.v1.json",
-        "recipeTitleEnglish": "release_catalog_reviewed_recipe_titles.v1.json",
+        "providerFoodEnglish": FOOD_REVIEW.name,
+        "keylessIngredientSemantics": KEYLESS_REVIEW.name,
+        "entryMealEnglish": ENTRY_MEAL_REVIEW.name,
+        "recipeTitleEnglish": RECIPE_TITLE_REVIEW.name,
         "recipeTitleEnglishFiles": recipe_review_files,
         "removedTaskCount": len(remove_tasks),
     }
@@ -245,18 +310,17 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
     summary["reviewedProviderFoodEnglishApplied"] = provider_review_applied
     summary["reviewedKeylessIngredientSemanticsApplied"] = keyless_review_applied
     summary["reviewedRecipeTitleEnglishApplied"] = recipe_title_review_applied
+    summary["reviewedEntryMealEnglishApplied"] = entry_title_review_applied
     summary["reviewedRecipeTitleEnglishFiles"] = recipe_review_files
     summary["providerFoodsCanonicalEnglishResolved"] = sum(
-        bool(_text(row.get("canonicalEnglishName"))) for row in provider_foods if isinstance(row, dict)
+        bool(_text(row.get("canonicalEnglishName"))) for row in provider_foods
     )
     summary["usedProviderFoodsCanonicalEnglishResolved"] = sum(
         bool(row.get("usedByRecipe")) and bool(_text(row.get("canonicalEnglishName")))
-        for row in provider_foods if isinstance(row, dict)
+        for row in provider_foods
     )
     summary["recipeGroupsCanonicalEnglishResolved"] = sum(
-        bool(_text(row.get("canonicalEnglishTitle")))
-        for row in prep.get("recipeGroups") or []
-        if isinstance(row, dict)
+        bool(_text(row.get("canonicalEnglishTitle"))) for row in recipe_groups
     )
     summary["translationTasksRemaining"] = len(remaining)
     summary["providerFoodTranslationTasksRemaining"] = queue["summary"]["providerFoodEnglish"]
