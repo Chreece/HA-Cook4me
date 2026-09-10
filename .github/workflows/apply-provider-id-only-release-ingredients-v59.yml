@@ -1,0 +1,40 @@
+name: Apply provider-ID-only release ingredients v59
+
+on:
+  push:
+    branches:
+      - cook4me-release-catalog-cache-progress-v59
+
+permissions:
+  contents: write
+
+jobs:
+  apply-provider-id-only:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Apply provider-ID-only patch
+        run: python tools/apply_provider_id_only_release_ingredients_v59.py
+
+      - name: Validate provider identity contract
+        run: |
+          python -m py_compile tools/build_release_catalog.py
+          python -m unittest discover -s tests -p 'test_release_catalog_provider_id_identity_v59.py' -v
+          python -m unittest discover -s tests -p 'test_release_catalog.py' -v
+          python -m unittest discover -s tests -p 'test_release_catalog_native_names_v59.py' -v
+
+      - name: Commit tested change
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/build_release_catalog.py tests/test_release_catalog_provider_id_identity_v59.py
+          git diff --cached --check
+          git commit -m "Use provider IDs only for release ingredients"
+          git push origin HEAD:cook4me-release-catalog-cache-progress-v59
