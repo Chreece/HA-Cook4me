@@ -38,7 +38,7 @@ import cook4me_phonefree as c4m  # type: ignore  # noqa: E402
 import cook4me_recipe_catalog as catalog  # type: ignore  # noqa: E402
 
 APP_VERSION = "36.0.0-RC3"
-PAGE_SIZE = 50
+PAGE_SIZE = 5000
 APPLIANCE_GROUP = "APPLIANCE_GROUP_15"
 
 AUDITED_CATALOGS: tuple[tuple[str, str], ...] = (
@@ -221,64 +221,84 @@ def _search_catalog(
     configured_language: str,
     configured_country: str,
 ) -> list[dict[str, Any]]:
+    """Capture one complete provider catalog in the proven stable single page.
+
+    A 2026-09-10 read-only all-28 probe proved size=5000 returns every current
+    row in one response with stable repeated ID sets. Smaller paged requests
+    showed page drift. Fail closed if the provider ever outgrows or violates
+    this contract instead of silently assembling an incomplete release catalog.
+    """
     market = f"GS_{country}"
     url = cfg["platform_base_url"].rstrip("/") + "/common-api/v4/search/recipes"
-    rows: list[dict[str, Any]] = []
-    page = 0
-    total_pages: int | None = None
-    while total_pages is None or page < total_pages:
-        payload, _auth = catalog._http_json(
-            "POST",
-            url,
-            headers_iter=_headers(cfg, tokens, configured_country, configured_language, url, pcfg),
-            params={
-                "lang": language,
-                "market": market,
-                "page": page,
-                "size": PAGE_SIZE,
-                "q": "",
-                "groupBy": "",
-                "myUniverse": "false",
-                "myOwnRecipe": "false",
-                "withAutomaticSpellcheck": "true",
-            },
-            body=_search_body(language, market),
-            timeout=30,
+    payload, _auth = catalog._http_json(
+        "POST",
+        url,
+        headers_iter=_headers(cfg, tokens, configured_country, configured_language, url, pcfg),
+        params={
+            "lang": language,
+            "market": market,
+            "page": 0,
+            "size": PAGE_SIZE,
+            "q": "",
+            "groupBy": "",
+            "myUniverse": "false",
+            "myOwnRecipe": "false",
+            "withAutomaticSpellcheck": "true",
+        },
+        body=_search_body(language, market),
+        timeout=30,
+    )
+    if not isinstance(payload, dict):
+        raise RuntimeError(f"{language}/{market}: invalid search response")
+    page_info = payload.get("page")
+    if not isinstance(page_info, dict):
+        raise RuntimeError(f"{language}/{market}: search response is missing page metadata")
+    try:
+        total_elements = int(page_info["totalElements"])
+        total_pages = int(page_info["totalPages"])
+    except (KeyError, TypeError, ValueError):
+        raise RuntimeError(f"{language}/{market}: invalid search page metadata") from None
+    if total_pages not in {0, 1}:
+        raise RuntimeError(
+            f"{language}/{market}: provider catalog exceeds proven single-page "
+            f"capture size={PAGE_SIZE} (totalPages={total_pages}, totalElements={total_elements})"
         )
-        if not isinstance(payload, dict):
-            raise RuntimeError(f"{language}/{market}: invalid search response")
-        content = payload.get("content") if isinstance(payload.get("content"), list) else []
-        for raw in content:
-            if not isinstance(raw, dict):
-                continue
-            ident = raw.get("identifier") if isinstance(raw.get("identifier"), dict) else {}
-            variant = _fid(ident) or _fid(raw.get("fid")) or _fid(raw.get("functionalId"))
-            if not variant:
-                continue
-            cover_url = _text(catalog._search_cover(raw))
-            rows.append(
-                {
-                    "variantId": variant,
-                    "sourceSystem": _text(ident.get("sourceSystem")),
-                    "version": _text(ident.get("version")),
-                    "groupingFunctionalId": _fid(raw.get("groupingId")),
-                    "title": _text(raw.get("title") or raw.get("shortTitle") or raw.get("normalizedTitle")),
-                    "language": _text(raw.get("lang")).lower() or language.lower(),
-                    "market": _text(raw.get("market")).upper() or market,
-                    "cover": cover_url,
-                    "servings": (catalog._yield(raw) or {}).get("quantity") or raw.get("groupSize"),
-                }
-            )
-        page_info = payload.get("page") if isinstance(payload.get("page"), dict) else {}
-        try:
-            total_pages = int(page_info.get("totalPages"))
-        except (TypeError, ValueError):
-            total_pages = page + (1 if content else 0)
-        page += 1
-        if not content:
-            break
-    return rows
 
+    content = payload.get("content") if isinstance(payload.get("content"), list) else []
+    if len(content) != total_elements:
+        raise RuntimeError(
+            f"{language}/{market}: single-page response row count does not match provider total "
+            f"(content={len(content)}, totalElements={total_elements})"
+        )
+
+    rows: list[dict[str, Any]] = []
+    for raw in content:
+        if not isinstance(raw, dict):
+            raise RuntimeError(f"{language}/{market}: non-object recipe search row")
+        ident = raw.get("identifier") if isinstance(raw.get("identifier"), dict) else {}
+        variant = _fid(ident) or _fid(raw.get("fid")) or _fid(raw.get("functionalId"))
+        if not variant:
+            raise RuntimeError(f"{language}/{market}: recipe search row is missing provider identity")
+        cover_url = _text(catalog._search_cover(raw))
+        rows.append(
+            {
+                "variantId": variant,
+                "sourceSystem": _text(ident.get("sourceSystem")),
+                "version": _text(ident.get("version")),
+                "groupingFunctionalId": _fid(raw.get("groupingId")),
+                "title": _text(raw.get("title") or raw.get("shortTitle") or raw.get("normalizedTitle")),
+                "language": _text(raw.get("lang")).lower() or language.lower(),
+                "market": _text(raw.get("market")).upper() or market,
+                "cover": cover_url,
+                "servings": (catalog._yield(raw) or {}).get("quantity") or raw.get("groupSize"),
+            }
+        )
+    ids = [row["variantId"] for row in rows]
+    if len(ids) != len(set(ids)):
+        raise RuntimeError(
+            f"{language}/{market}: duplicate provider functional IDs in proven single-page response"
+        )
+    return rows
 
 def _status_codes(exc: Exception) -> list[int]:
     return [int(value) for value in re.findall(r"HTTP(\d{3})", str(exc))]
@@ -524,9 +544,28 @@ def _export(conn: sqlite3.Connection, output: Path) -> dict[str, Any]:
             }
         )
 
-    details = [json.loads(row[0]) for row in conn.execute("SELECT detail_json FROM variant_details ORDER BY variant_id")]
+    # The detail/stale tables are a resumable cache and can contain provider
+    # variants from an earlier retry whose search manifest has since changed.
+    # Export only cache rows that are members of the CURRENT catalog_variants
+    # manifest. Keeping historical rows in SQLite preserves retry efficiency;
+    # excluding them from the capture preserves the invariant that one capture
+    # is a self-consistent snapshot of one search manifest.
+    details = [
+        json.loads(row[0])
+        for row in conn.execute(
+            "SELECT vd.detail_json FROM variant_details vd "
+            "WHERE EXISTS ("
+            "SELECT 1 FROM catalog_variants cv WHERE cv.variant_id=vd.variant_id"
+            ") ORDER BY vd.variant_id"
+        )
+    ]
     stale = []
-    for variant_id, evidence_json in conn.execute("SELECT variant_id,evidence_json FROM stale_variants ORDER BY variant_id"):
+    for variant_id, evidence_json in conn.execute(
+        "SELECT sv.variant_id,sv.evidence_json FROM stale_variants sv "
+        "WHERE EXISTS ("
+        "SELECT 1 FROM catalog_variants cv WHERE cv.variant_id=sv.variant_id"
+        ") ORDER BY sv.variant_id"
+    ):
         search_rows = [
             json.loads(row[0])
             for row in conn.execute(
@@ -623,6 +662,14 @@ def crawl(args: argparse.Namespace) -> dict[str, Any]:
 
         capture = _export(conn, Path(args.output).expanduser())
         unresolved = sum(int(row["unresolvedVariants"]) for row in capture["source"]["catalogs"])
+        search_rows_total = sum(int(row["searchRows"]) for row in capture["source"]["catalogs"])
+        projected_total = len(capture["details"]) + len(capture["staleSearchOnly"]) + unresolved
+        if search_rows_total != projected_total:
+            raise RuntimeError(
+                "current provider manifest does not balance after cache projection: "
+                f"search={search_rows_total} details={len(capture['details'])} "
+                f"stale={len(capture['staleSearchOnly'])} unresolved={unresolved}"
+            )
         summary = {
             "auditedCatalogs": len(capture["source"]["catalogs"]),
             "populatedCatalogs": sum(row["state"] == "POPULATED" for row in capture["source"]["catalogs"]),
