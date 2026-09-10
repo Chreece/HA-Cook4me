@@ -1,0 +1,91 @@
+name: Catalog pagination size probe v59
+
+on:
+  push:
+    branches:
+      - cook4me-catalog-pagination-probe-v59
+    paths:
+      - .github/workflows/catalog-pagination-size-probe-v59.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install --disable-pip-version-check 'curl-cffi==0.13.0' 'websocket-client==1.8.0'
+      - name: Probe single-page recipe-search sizes without credentials
+        run: |
+          set -Eeuo pipefail
+          mkdir -p "$RUNNER_TEMP/cook4me-empty-home"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import sys
+
+          root = Path('.').resolve()
+          for path in (root / 'tools', root / 'custom_components' / 'cook4me', root / 'custom_components' / 'cook4me' / 'vendor'):
+              sys.path.insert(0, str(path))
+          import crawl_release_catalog_v2 as cr
+          import cook4me_phonefree as c4m
+          import cook4me_recipe_catalog as catalog
+
+          cfg = c4m.read_apk_config(None)
+          pcfg = catalog._platform_context(cfg, 'DE', 'de', cr.APP_VERSION)
+          url = cfg['platform_base_url'].rstrip('/') + '/common-api/v4/search/recipes'
+          output = {'schema': 1, 'kind': 'cook4me-recipe-search-page-size-probe-v59', 'credentialsUsed': False, 'catalogs': []}
+          for language, country in [('ar','AE'), ('fr','FR')]:
+              market = f'GS_{country}'
+              catalog_rows = {'language': language, 'market': market, 'requests': []}
+              for size in (50, 100, 250, 500, 1000, 5000):
+                  repeats = []
+                  for repeat in range(2):
+                      payload, auth = catalog._http_json(
+                          'POST', url,
+                          headers_iter=cr._headers(cfg, {}, 'DE', 'de', url, pcfg),
+                          params={
+                              'lang': language, 'market': market, 'page': 0, 'size': size,
+                              'q': '', 'groupBy': '', 'myUniverse': 'false',
+                              'myOwnRecipe': 'false', 'withAutomaticSpellcheck': 'true',
+                          },
+                          body=cr._search_body(language, market), timeout=30,
+                      )
+                      content = payload.get('content') if isinstance(payload, dict) and isinstance(payload.get('content'), list) else []
+                      ids = []
+                      for raw in content:
+                          if not isinstance(raw, dict):
+                              continue
+                          ident = raw.get('identifier') if isinstance(raw.get('identifier'), dict) else {}
+                          fid = cr._fid(ident) or cr._fid(raw.get('fid')) or cr._fid(raw.get('functionalId'))
+                          if fid:
+                              ids.append(fid)
+                      page = payload.get('page') if isinstance(payload, dict) and isinstance(payload.get('page'), dict) else {}
+                      repeats.append({
+                          'repeat': repeat + 1,
+                          'authMode': auth,
+                          'contentRows': len(content),
+                          'uniqueFunctionalIds': len(set(ids)),
+                          'duplicateFunctionalIds': len(ids) - len(set(ids)),
+                          'page': {k: page.get(k) for k in ('number','size','totalElements','totalPages')},
+                          'idSetSha256': __import__('hashlib').sha256('\n'.join(sorted(set(ids))).encode()).hexdigest(),
+                      })
+                  catalog_rows['requests'].append({'requestedSize': size, 'repeats': repeats})
+              output['catalogs'].append(catalog_rows)
+          Path('tools/catalog_pagination_size_probe_v59.json').write_text(json.dumps(output, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(output, ensure_ascii=False))
+          PY
+      - name: Commit probe evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/catalog_pagination_size_probe_v59.json
+          git diff --cached --check
+          git commit -m "Capture recipe search pagination size evidence v59"
+          git push origin HEAD:cook4me-catalog-pagination-probe-v59
