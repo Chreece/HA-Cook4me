@@ -1,0 +1,58 @@
+name: Extract Italian review batch v59
+
+on:
+  push:
+    branches:
+      - cook4me-release-catalog-cache-progress-v59
+    paths:
+      - .github/workflows/extract-italian-review-batch-v59.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract first 100 unresolved Italian titles
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          source = Path('tools/release_catalog_pending_recipe_titles_v59.json')
+          data = json.loads(source.read_text(encoding='utf-8'))
+          rows = [
+              r for r in data.get('tasks', [])
+              if isinstance(r, dict)
+              and r.get('type') == 'recipe_title_english'
+              and str(r.get('sourceLanguage') or '').lower() == 'it'
+          ]
+          rows.sort(key=lambda r: (str(r.get('sourceText') or '').casefold(), str(r.get('taskId') or '')))
+          batch = rows[:100]
+          out = {
+              'schemaVersion': 1,
+              'kind': 'cook4me-recipe-title-review-source-batch-v59',
+              'language': 'it',
+              'part': 3,
+              'source': 'authoritative-reviewed-hydrated-queue',
+              'queueGeneratedAt': data.get('generatedAt'),
+              'tasksBeforeBatch': len(rows),
+              'batchSize': len(batch),
+              'tasks': batch,
+          }
+          Path('tools/release_catalog_pending_recipe_titles_it_03_source_v59.json').write_text(
+              json.dumps(out, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps({'italianRemaining': len(rows), 'batchSize': len(batch)}, ensure_ascii=False))
+          PY
+      - name: Commit source batch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/release_catalog_pending_recipe_titles_it_03_source_v59.json
+          git diff --cached --check
+          git commit -m "Snapshot Italian release catalog title source part 3"
+          git push origin HEAD:cook4me-release-catalog-cache-progress-v59
