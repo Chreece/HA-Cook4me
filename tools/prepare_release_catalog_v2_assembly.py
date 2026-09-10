@@ -318,24 +318,44 @@ def prepare(
         )
         if not grouping_id:
             continue
+        language = _text(detail.get("language")).lower()
+        market = _text(detail.get("market"))
+        title = _text(detail.get("title") or detail.get("normalizedTitle"))
+        variant_id = _text(detail.get("variantId"))
         row = groups.get(grouping_id)
         if row is None:
-            language = _text(detail.get("language")).lower()
-            title = _text(detail.get("title") or detail.get("normalizedTitle"))
             row = {
                 "groupingFunctionalId": grouping_id,
+                # Legacy representative fields remain for review-tool compatibility.
                 "language": language,
-                "market": _text(detail.get("market")),
+                "market": market,
                 "title": title,
                 "variantIds": [],
+                "originalTitles": [],
             }
-            if language == "en" and title:
-                row["canonicalEnglishTitle"] = title
-                row["canonicalEnglishSource"] = "seb:en"
-            elif title:
-                title_task_users[(language, _norm(title))].append(grouping_id)
             groups[grouping_id] = row
-        row["variantIds"].append(_text(detail.get("variantId")))
+        row["variantIds"].append(variant_id)
+        if title:
+            row["originalTitles"].append(
+                {
+                    "variantId": variant_id,
+                    "language": language,
+                    "market": market,
+                    "name": title,
+                }
+            )
+            if language == "en" and not row.get("canonicalEnglishTitle"):
+                row["canonicalEnglishTitle"] = title
+                row["canonicalEnglishSource"] = "seb:en-sibling"
+
+    # Only groups without an official English sibling need semantic review.
+    for grouping_id, row in groups.items():
+        if row.get("canonicalEnglishTitle"):
+            continue
+        language = _text(row.get("language")).lower()
+        title = _text(row.get("title"))
+        if title:
+            title_task_users[(language, _norm(title))].append(grouping_id)
 
     title_tasks: dict[str, dict[str, Any]] = {}
     for (language, _normalized_title), grouping_ids in title_task_users.items():
@@ -427,12 +447,35 @@ def prepare(
     )
     for group in group_rows:
         group["variantIds"] = sorted(set(group["variantIds"]))
+        unique_originals = {}
+        for original in group.get("originalTitles") or []:
+            if not isinstance(original, dict):
+                continue
+            identity = (
+                _text(original.get("variantId")),
+                _text(original.get("language")).lower(),
+                _text(original.get("market")),
+                _text(original.get("name")),
+            )
+            unique_originals.setdefault(identity, original)
+        group["originalTitles"] = sorted(
+            unique_originals.values(),
+            key=lambda value: (
+                _text(value.get("language")),
+                _text(value.get("market")),
+                _text(value.get("variantId")),
+                _text(value.get("name")).casefold(),
+            ),
+        )
         group["variantCount"] = len(group["variantIds"])
 
     summary = {
         "providerDetails": len(provider.get("details") or []),
         "staleSearchOnly": len(provider.get("staleSearchOnly") or []),
         "providerRecipeGroups": len(group_rows),
+        "recipeGroupsWithMultipleOriginalTitles": sum(
+            len(row.get("originalTitles") or []) > 1 for row in group_rows
+        ),
         "providerFoodCatalogKeys": len(provider_food_rows),
         "recipeUsedProviderFoodKeys": len(used_keys),
         "recipeUsedProviderFoodKeysCoveredByDictionary": sum(
@@ -484,6 +527,7 @@ def prepare(
         "identityPolicy": {
             "recipeProviderIdentityAuthoritative": True,
             "translationNeverMergesRecipeGroups": True,
+            "providerNativeTitlesPreserved": True,
             "unkeyedCrossLanguageMergeFromTranslation": False,
             "exactProviderFoodNameMatchesRemainCandidates": True,
         },
