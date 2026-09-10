@@ -1,0 +1,150 @@
+name: Probe Italian catalog title candidates v59
+
+on:
+  push:
+    branches:
+      - cook4me/catalog-it-title-probe-v59
+    paths:
+      - .github/workflows/catalog-it-title-probe-v59.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  italian-title-probe:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install standalone catalog requirements
+        run: python -m pip install --disable-pip-version-check 'curl-cffi==0.13.0' 'websocket-client==1.8.0'
+      - name: Capture next Italian provider-title candidates
+        run: |
+          set -Eeuo pipefail
+          mkdir -p "$RUNNER_TEMP/cook4me-empty-home"
+          python - <<'PY'
+          import json
+          import re
+          import unicodedata
+          from collections import defaultdict
+          from pathlib import Path
+          import tools.crawl_release_catalog_v2 as crawler
+
+          def text(value):
+              return re.sub(r'\s+', ' ', str(value or '').strip())
+
+          def norm(value):
+              return re.sub(r'\s+', ' ', unicodedata.normalize('NFKC', text(value))).casefold()
+
+          cfg = crawler.c4m.read_apk_config(None)
+          tokens = {}
+          pcfg = crawler.catalog._platform_context(cfg, 'DE', 'de', crawler.APP_VERSION)
+
+          def search(language, country):
+              last = None
+              for attempt in range(1, 4):
+                  try:
+                      rows = crawler._search_catalog(
+                          cfg, tokens, pcfg,
+                          language=language,
+                          country=country,
+                          configured_language='de',
+                          configured_country='DE',
+                      )
+                      return crawler._dedupe_search_rows(rows)[0]
+                  except Exception as exc:
+                      last = exc
+                      print(f'{language}/{country} attempt {attempt}/3 failed: {type(exc).__name__}: {exc}')
+              raise last
+
+          english_rows = search('en', 'GB')
+          italian_rows = search('it', 'IT')
+          english_groups = {
+              text(row.get('groupingFunctionalId'))
+              for row in english_rows
+              if text(row.get('groupingFunctionalId'))
+          }
+
+          reviewed = set()
+          for path in sorted(Path('tools').glob('release_catalog_reviewed_recipe_titles*.v1.json')):
+              value = json.loads(path.read_text(encoding='utf-8'))
+              if value.get('kind') != 'cook4me-reviewed-recipe-title-english':
+                  continue
+              for row in value.get('items') or []:
+                  if not isinstance(row, dict) or text(row.get('language')).lower() != 'it':
+                      continue
+                  source = text(row.get('source'))
+                  if source:
+                      reviewed.add(norm(source))
+
+          by_title = defaultdict(lambda: {'variantIds': set(), 'groupingFunctionalIds': set(), 'groupsWithoutEnglishSibling': set()})
+          exact = {}
+          for row in italian_rows:
+              title = text(row.get('title'))
+              if not title:
+                  continue
+              key = norm(title)
+              if key in reviewed:
+                  continue
+              exact.setdefault(key, title)
+              variant = text(row.get('variantId'))
+              grouping = text(row.get('groupingFunctionalId'))
+              if variant:
+                  by_title[key]['variantIds'].add(variant)
+              if grouping:
+                  by_title[key]['groupingFunctionalIds'].add(grouping)
+                  if grouping not in english_groups:
+                      by_title[key]['groupsWithoutEnglishSibling'].add(grouping)
+              else:
+                  by_title[key]['groupsWithoutEnglishSibling'].add('')
+
+          candidates = []
+          for key in sorted(by_title, key=lambda item: exact[item].casefold()):
+              evidence = by_title[key]
+              if not evidence['groupsWithoutEnglishSibling']:
+                  continue
+              candidates.append({
+                  'source': exact[key],
+                  'variantIds': sorted(evidence['variantIds']),
+                  'groupingFunctionalIds': sorted(evidence['groupingFunctionalIds']),
+                  'groupsWithoutEnglishSibling': sorted(evidence['groupsWithoutEnglishSibling']),
+              })
+
+          payload = {
+              'schemaVersion': 1,
+              'kind': 'cook4me-italian-search-title-candidates-v59',
+              'language': 'it',
+              'providerSecretsUsed': False,
+              'searchOnlyEvidence': True,
+              'mustMatchAuthoritativeQueueBeforeMerge': True,
+              'italianUniqueSearchVariants': len(italian_rows),
+              'englishUniqueSearchVariants': len(english_rows),
+              'reviewedItalianSourceTitles': len(reviewed),
+              'candidateTitlesTotal': len(candidates),
+              'candidateBatchSize': min(100, len(candidates)),
+              'items': candidates[:100],
+          }
+          Path('tools/release_catalog_pending_it_search_titles_v59.json').write_text(
+              json.dumps(payload, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps({k: payload[k] for k in (
+              'italianUniqueSearchVariants', 'englishUniqueSearchVariants',
+              'reviewedItalianSourceTitles', 'candidateTitlesTotal', 'candidateBatchSize'
+          )}, ensure_ascii=False))
+          PY
+      - name: Commit evidence-only Italian candidate batch
+        run: |
+          set -Eeuo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/release_catalog_pending_it_search_titles_v59.json
+          git diff --cached --check
+          git commit -m "Snapshot next Italian catalog title candidates v59"
+          git push origin HEAD:cook4me/catalog-it-title-probe-v59
