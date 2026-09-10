@@ -29,22 +29,48 @@ jobs:
         run: |
           set -Eeuo pipefail
           mkdir -p "$RUNNER_TEMP/cook4me-empty-home" "$RUNNER_TEMP/catalog-v59"
-          python tools/crawl_release_catalog_v2.py \
-            --storage-home "$RUNNER_TEMP/cook4me-empty-home" \
-            --cache-db "$RUNNER_TEMP/catalog-v59/provider.sqlite3" \
-            --output "$RUNNER_TEMP/catalog-v59/provider-capture-v2.json.gz" \
-            --failures "$RUNNER_TEMP/catalog-v59/provider-failures.json" \
-            --configured-language de \
-            --configured-country DE \
-            --workers 8
+          status=1
+          for attempt in 1 2 3; do
+            echo "Official catalog crawl attempt ${attempt}/3"
+            if python tools/crawl_release_catalog_v2.py \
+              --storage-home "$RUNNER_TEMP/cook4me-empty-home" \
+              --cache-db "$RUNNER_TEMP/catalog-v59/provider.sqlite3" \
+              --output "$RUNNER_TEMP/catalog-v59/provider-capture-v2.json.gz" \
+              --failures "$RUNNER_TEMP/catalog-v59/provider-failures.json" \
+              --configured-language de \
+              --configured-country DE \
+              --workers 8; then
+              status=0
+              break
+            else
+              status=$?
+            fi
+            if [[ "$attempt" -lt 3 ]]; then
+              sleep $((attempt * 20))
+            fi
+          done
+          exit "$status"
       - name: Capture all audited marketing-food dictionaries without credentials
         run: |
           set -Eeuo pipefail
-          python tools/capture_marketing_food_catalogs_v3.py \
-            --storage-home "$RUNNER_TEMP/cook4me-empty-home" \
-            --output "$RUNNER_TEMP/catalog-v59/marketing-foods-v3.json" \
-            --configured-language de \
-            --configured-country DE
+          status=1
+          for attempt in 1 2 3; do
+            echo "Marketing-food catalog capture attempt ${attempt}/3"
+            if python tools/capture_marketing_food_catalogs_v3.py \
+              --storage-home "$RUNNER_TEMP/cook4me-empty-home" \
+              --output "$RUNNER_TEMP/catalog-v59/marketing-foods-v3.json" \
+              --configured-language de \
+              --configured-country DE; then
+              status=0
+              break
+            else
+              status=$?
+            fi
+            if [[ "$attempt" -lt 3 ]]; then
+              sleep $((attempt * 20))
+            fi
+          done
+          exit "$status"
       - name: Build reviewed unresolved queue
         run: |
           set -Eeuo pipefail
