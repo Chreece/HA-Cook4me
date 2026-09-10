@@ -6,6 +6,7 @@ on:
       - cook4me-catalog-phase2c-single-page-title-proof-v59
     paths:
       - .github/workflows/catalog-phase2c-single-page-title-proof-v59.yml
+  workflow_dispatch:
 
 permissions:
   contents: write
