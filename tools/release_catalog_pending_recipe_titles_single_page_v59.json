@@ -1,0 +1,669 @@
+{
+  "schema": 1,
+  "kind": "cook4me-release-catalog-single-page-pending-recipe-title-review-v59",
+  "generatedAt": "2026-09-10T16:05:36.097150+00:00",
+  "sourceBranch": "cook4me-catalog-phase2c-single-page-title-proof-v59",
+  "auditedCatalogs": 28,
+  "providerSecretsUsed": false,
+  "singlePageSize": 5000,
+  "existingReviewsApplied": true,
+  "recipeTitleTasksRemaining": 92,
+  "remainingByLanguage": {
+    "bg": 1,
+    "de": 1,
+    "fr": 7,
+    "hu": 4,
+    "it": 2,
+    "ja": 1,
+    "pl": 59,
+    "pt": 1,
+    "ro": 7,
+    "sk": 9
+  },
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:00c4ed6e1e8e88930aabb5f0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "bg",
+      "sourceText": "Фалафели от зрял боб",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:01ab8c147e942972fb71f2aa",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Czekoladowo-orzechowy krem z batatów",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:074697c45030ad40e3a9af95",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Coniglio in porchetta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:07c43d2e42040f1593645384",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ekspresowe ciasto truskawkowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:089e03b613fc7493182a6abb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "sk",
+      "sourceText": "Expresné provensálske mäsové guličky",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0afb2fd3a9e6ded181c08a1f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Czekoladowy fondant z niespodzianką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0c46c2a7170d0efa8724265c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "sk",
+      "sourceText": "Minestróne so strukovinami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0edddf437e9fed0b3090a858",
+      "type": "recipe_title_english",
+      "sourceLanguage": "hu",
+      "sourceText": "Csirke- és babsaláta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0f08f301f8e33f67ca2d1984",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ro",
+      "sourceText": "Mini plăcinte cu carne de vită tocată",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0fd05913569df3eb4c01f128",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Biała kiełbasa w sosie chrzanowo-musztardowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:10ddc22e005aacf94068def2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Boczek koreański na grilla",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:11ee1a31d2a017b2bd6fd7d0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Pieczeń wołowa z sosem chimichurri",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:15438ec770e4d35efee4a4d2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Jogurtowe ciasto małego pirata",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:15ef1fbfaf7f4291401c2900",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Stufato di maiale all’italiana",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:19443ea29e21249b88abf53d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Fasolka po nicejsku z tuńczykiem, jajkiem i parmezanem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1c244d6642b9d48777684c3c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Suflet grzybowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1caf920e3ab7f78b2bcb2ceb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kapusta duszona z orzechami w sosie klonowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1e3a048094d2ccd62f99e5bf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Gnocchi z zielonymi szparagami i ricottą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:26c2f1e073b3a8042da04424",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Plats mijotés",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:29654282b87f4d6d4693bc27",
+      "type": "recipe_title_english",
+      "sourceLanguage": "sk",
+      "sourceText": "Zeleninové kari",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2bfdf2eb08800f96ce3576af",
+      "type": "recipe_title_english",
+      "sourceLanguage": "sk",
+      "sourceText": "Rybacia pochúťka z údenej tresky",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2f4627f541b64eca2ce67338",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa ze świeżych ogórków",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3164650b5713bcbd0ae6151c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Pieczona młoda kapusta na ostro z sosem miętowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:353bf8972a499db7c29a3df8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "hu",
+      "sourceText": "Tőkehal spárgával",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3931238021a673fb581bb616",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Konfitura morelowa z pistacjami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3bdc1a39ab8b293e543b0367",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chłodnik botwinowy z wędzonym łososiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3d992d3f82442bdc6dd4751e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dorsz ze szparagami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:41aad9c30bf37fe3cdbcfdf8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "sk",
+      "sourceText": "Curry s cícerom a batátmi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:41f0bd953463cb75d205c3b5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ro",
+      "sourceText": "Bol de somon Teriyaki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:43e1ef98c55a19878052329d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ro",
+      "sourceText": "Empanadas de vită",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:43fd331d12b5e07f4ccaa74c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Łosoś cajun",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:45a6ebcb22629659ac88a1bf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Pikle z dyni hokkaido",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:497201d7cd258c4b74372445",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sajgonki z krewetkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4982dcd9ca7deeca9564d770",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Gołąbki z kaszą pęczak i grzybami, sos borowikowy z estragonem, chipsy z boczniaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4a452c225632e8cb478f2f76",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ro",
+      "sourceText": "Ardei Jalapeño umpluți",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4b4e92655df293f9e0487db3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Compote pomme coing",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4bc0858edff5f1ff8f13e69e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Gulasz z kurczaka z orzeszkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4cbe704f6817e7ab174b2b49",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Pomarańczowy pudding z brioszki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:541c4b321ddb0b938330af3f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Śliwki hoisin, czyli orientalne powidła do mięsa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:55fcd87861b6df790d9e2bec",
+      "type": "recipe_title_english",
+      "sourceLanguage": "sk",
+      "sourceText": "Kuracie s sójovou omáčkou a cukrovým hráškom",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:58a78d1b18fd582e866fc681",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Makaron z pancettą i groszkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5ff30d5a285769df34de8ef0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z buraków i melona",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6039fba835d159fd585fc5e6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pt",
+      "sourceText": "Costeletas de borrego com limão",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6232b6e21402120571aeaf6d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chou de Bruxelles",
+      "groupCount": 9
+    },
+    {
+      "taskId": "recipe_title_english:6594a1d8b96227a1d74ada68",
+      "type": "recipe_title_english",
+      "sourceLanguage": "sk",
+      "sourceText": "Kari s tofu a brokolicou",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6b95ad828c84bc19d648566e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z zieloną soczewicą i fetą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6e8018f213c3b507d93bdb27",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Scones z czekoladowymi kropelkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7089811d1c47a8b16d00802c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Orientalny kurczak z warzywami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:76f2a4708c609caa17c4e2f6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kotlety po szwajcarsku keto z batatami i marchewką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7775517cd7f8afdbbdf041fd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Keto bolognese z makaronem konjac",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7a3200f53ad82620702b4332",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Małże z czarnym ryżem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7e62d183ba88a4d0bfb6fbdc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kokosowa zupa z soczewicy i mango",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7f379efe644057c279412394",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ro",
+      "sourceText": "Mini rulouri cu scorțișoară",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:845856e25a1e26635fb52b73",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ro",
+      "sourceText": "Peşte şi chipsuri de cartofi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:84c50a9ba0b02f5e750846e0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "hu",
+      "sourceText": "Teriyaki lazacos rizstál",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8ac8068160fe12c23f3a5600",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chińszczyzna low carb",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8ce431296959328bc2476faf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "sk",
+      "sourceText": "Špargľové rizoto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9889945042246ba2f1c71593",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Świąteczne makówki wg Jurka Sobieniaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9a25024c7d0e6832151d7b8e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ekspresowy pasztet bez pieczenia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a4a4d1fc7214239f2da73ab2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chilaquiles w sosie pomidorowo-cytrynowym z kurczakiem i kwaśną śmietaną",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a4ebd8d724dac70ba2831220",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Smażone warzywne sajgonki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a5635544a43069d2c5b15820",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kotleciki serowo-brokułowe z sałatką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a65163ff896f29174d24e429",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Suflet z cukinii",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ac2a8819561c26d842df101a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Courgettes farcies",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ae4b989fe257e142a948365c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z bobem i młodymi ziemniaczkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b3dee8abfcf32fb350b507a0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kulebiak grzybowy wg Jurka Sobieniaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bafe9764e701ae073ad305f8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z halloumi lowcarb",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bbfff2892a8db60c835c8aad",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ro",
+      "sourceText": "Cod cu sparanghel",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bc9d74c235b55ac2a5923610",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Mini kotleciki cordon bleu z cukinii",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:be61d240c5c7e7ab95e070a7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "hu",
+      "sourceText": "Almarózsa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:be9d59a4f18974cf5a913cd2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Biała kiełbasa w cytrynach",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cb09e823dfc749212af650c9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa z młodej kapusty z kaszą pęczak",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cefaec567a9ddb29d7bf3c7b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Zupa ze szpinaku z młodymi ziemniakami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cfee381d51eaf69370dfd943",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ja",
+      "sourceText": "ポークカレー(スロークッキング)",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d28bace3a69d334c15301c64",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kremowa zupa kasztanowo-gruszkowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d401d9699e9b0c56a96e8cd8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Pomidorowe risotto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d86faed402ec72c016a84b42",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Brocoli",
+      "groupCount": 6
+    },
+    {
+      "taskId": "recipe_title_english:d9ca0b39516b2595f94908ef",
+      "type": "recipe_title_english",
+      "sourceLanguage": "de",
+      "sourceText": "Sushi-Lachs-Küchlein",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:de16b104f3f9e3d4fc9ef615",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Wege łazanki z młodą kapustą i wędzonym tofu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e085eacdee29fa6c25db8974",
+      "type": "recipe_title_english",
+      "sourceLanguage": "sk",
+      "sourceText": "Japonský štýl ryže",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e44cc4fcaec8058f0f9220fb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Nadziewane jalapeño",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e5724450e3a59ec6defd3030",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Burrito bowl",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e896c60ca9eccbb653511ea6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pain à l'ail",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ead5e343cf3fad1e7a1f8265",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krewetki z domowym sosem koktajlowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ebbd3da6da8829d86694a226",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Klopsiki Kofta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ec2c5dbce57f0a027041660d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chilli sin carne z guacamole i nachos",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f21d4f7dfb011525a93c1e97",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Świąteczne grzane wino ze śliwkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f5176023faa7d6e26f6a6848",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ekspresowa tarta z młodymi ziemniakami, dymką i sosem łososiowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f5b77858ee116ffa65284041",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Rolada warzywna",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f6b15dd9c3263b709dafaa22",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Giczki jagnięce duszone w piwie",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fd939b62d3fdd91abbedd9eb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Studzienina z policzków wieprzowych wg Jurka Sobieniaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fec7018ed4662c40d262ec0e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Focaccia",
+      "groupCount": 1
+    }
+  ]
+}
