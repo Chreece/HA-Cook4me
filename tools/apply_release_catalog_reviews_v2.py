@@ -71,35 +71,46 @@ def _keyless_reviews() -> dict[tuple[str, str], dict[str, Any]]:
     return out
 
 
+def _recipe_title_review_paths() -> list[Path]:
+    extras = sorted(
+        path
+        for path in (ROOT / "tools").glob("release_catalog_reviewed_recipe_titles_*.v1.json")
+        if path != RECIPE_TITLE_REVIEW
+    )
+    return [RECIPE_TITLE_REVIEW, *extras]
+
+
 def _recipe_title_reviews() -> dict[tuple[str, str], dict[str, Any]]:
-    value = json.loads(RECIPE_TITLE_REVIEW.read_text(encoding="utf-8"))
-    if value.get("kind") != "cook4me-reviewed-recipe-title-english":
-        raise RuntimeError("invalid reviewed recipe-title English file")
     out: dict[tuple[str, str], dict[str, Any]] = {}
-    for row in value.get("items") or []:
-        if not isinstance(row, dict):
-            continue
-        language = _text(row.get("language")).lower()
-        source = _text(row.get("source"))
-        english = _text(row.get("english"))
-        confidence = _text(row.get("confidence")).lower() or "reviewed"
-        if not language or not source or not english:
-            continue
-        key = (language, _norm(source))
-        if key in out:
-            existing = out[key]
-            if _norm(existing.get("english")) != _norm(english):
-                raise RuntimeError(
-                    f"conflicting recipe-title review for {language}/{source}: "
-                    f"{existing.get('english')!r} vs {english!r}"
-                )
-            continue
-        normalized = dict(row)
-        normalized["language"] = language
-        normalized["source"] = source
-        normalized["english"] = english
-        normalized["confidence"] = confidence
-        out[key] = normalized
+    for path in _recipe_title_review_paths():
+        value = json.loads(path.read_text(encoding="utf-8"))
+        if value.get("kind") != "cook4me-reviewed-recipe-title-english":
+            raise RuntimeError(f"invalid reviewed recipe-title English file: {path.name}")
+        for row in value.get("items") or []:
+            if not isinstance(row, dict):
+                continue
+            language = _text(row.get("language")).lower()
+            source = _text(row.get("source"))
+            english = _text(row.get("english"))
+            confidence = _text(row.get("confidence")).lower() or "reviewed"
+            if not language or not source or not english:
+                continue
+            key = (language, _norm(source))
+            existing = out.get(key)
+            if existing:
+                if _norm(existing.get("english")) != _norm(english):
+                    raise RuntimeError(
+                        f"conflicting recipe-title review for {language}/{source}: "
+                        f"{existing.get('english')!r} vs {english!r}"
+                    )
+                continue
+            normalized = dict(row)
+            normalized["language"] = language
+            normalized["source"] = source
+            normalized["english"] = english
+            normalized["confidence"] = confidence
+            normalized["reviewFile"] = path.name
+            out[key] = normalized
     return out
 
 
@@ -167,6 +178,7 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
         row["canonicalEnglishTitle"] = reviewed
         row["canonicalEnglishSource"] = "reviewed:recipe-title-v1"
         row["canonicalEnglishConfidence"] = review.get("confidence") or "reviewed"
+        row["canonicalEnglishReviewFile"] = review.get("reviewFile")
         if review.get("notes"):
             row["canonicalEnglishNotes"] = review["notes"]
         row.pop("translationTaskId", None)
@@ -214,10 +226,12 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
     ]
     queue["tasks"] = remaining
     queue["schemaVersion"] = max(4, int(queue.get("schemaVersion") or 0))
+    recipe_review_files = [path.name for path in _recipe_title_review_paths()]
     queue["reviewOverlay"] = {
         "providerFoodEnglish": "release_catalog_reviewed_provider_food_english.v2.json",
         "keylessIngredientSemantics": "release_catalog_reviewed_keyless_ingredients.v1.json",
         "recipeTitleEnglish": "release_catalog_reviewed_recipe_titles.v1.json",
+        "recipeTitleEnglishFiles": recipe_review_files,
         "removedTaskCount": len(remove_tasks),
     }
     queue["summary"] = {
@@ -231,6 +245,7 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
     summary["reviewedProviderFoodEnglishApplied"] = provider_review_applied
     summary["reviewedKeylessIngredientSemanticsApplied"] = keyless_review_applied
     summary["reviewedRecipeTitleEnglishApplied"] = recipe_title_review_applied
+    summary["reviewedRecipeTitleEnglishFiles"] = recipe_review_files
     summary["providerFoodsCanonicalEnglishResolved"] = sum(
         bool(_text(row.get("canonicalEnglishName"))) for row in provider_foods if isinstance(row, dict)
     )
