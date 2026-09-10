@@ -244,5 +244,72 @@ class ReleaseCatalogReviewOverlayTests(unittest.TestCase):
         self.assertEqual([], remaining["tasks"])
 
 
+    def test_unique_exact_provider_food_candidate_proves_food_not_identity(self):
+        prep = {
+            "kind": "cook4me-release-assembly-prep",
+            "summary": {},
+            "providerFoods": [
+                {
+                    "key": "M_FOOD_WATER",
+                    "canonicalEnglishName": "Water",
+                    "translations": [{"language": "de", "name": "Wasser"}],
+                }
+            ],
+            "unkeyedIngredients": [
+                {
+                    "sourceLanguage": "de",
+                    "sourceName": "Wasser",
+                    "exactProviderFoodKeyCandidate": "M_FOOD_WATER",
+                    "localSyntheticIngredientId": "local:de:water",
+                    "translationTaskId": "keyless-task",
+                }
+            ],
+            "recipeGroups": [],
+        }
+        queue = {
+            "kind": "cook4me-local-translation-queue",
+            "tasks": [{"taskId": "keyless-task", "type": "unkeyed_ingredient"}],
+        }
+        reviewed, remaining = overlay.apply_reviews(prep, queue)
+        row = reviewed["unkeyedIngredients"][0]
+        self.assertEqual("Water", row["canonicalEnglishName"])
+        self.assertEqual("food", row["classification"])
+        self.assertEqual("local:de:water", row["localSyntheticIngredientId"])
+        self.assertNotIn("providerFoodKey", row)
+        self.assertTrue(row["semanticIdentityPreserved"])
+        self.assertEqual([], remaining["tasks"])
+
+    def test_unique_exact_candidate_stays_open_until_provider_english_is_resolved(self):
+        prep = {
+            "kind": "cook4me-release-assembly-prep",
+            "summary": {},
+            "providerFoods": [
+                {
+                    "key": "M_FOOD_UNKNOWN",
+                    "translations": [{"language": "de", "name": "Unbekannt"}],
+                }
+            ],
+            "unkeyedIngredients": [
+                {
+                    "sourceLanguage": "de",
+                    "sourceName": "Unbekannt",
+                    "exactProviderFoodKeyCandidate": "M_FOOD_UNKNOWN",
+                    "localSyntheticIngredientId": "local:de:unknown",
+                    "translationTaskId": "keyless-task",
+                }
+            ],
+            "recipeGroups": [],
+        }
+        queue = {
+            "kind": "cook4me-local-translation-queue",
+            "tasks": [{"taskId": "keyless-task", "type": "unkeyed_ingredient"}],
+        }
+        reviewed, remaining = overlay.apply_reviews(prep, queue)
+        row = reviewed["unkeyedIngredients"][0]
+        self.assertNotIn("classification", row)
+        self.assertNotIn("providerFoodKey", row)
+        self.assertEqual(["keyless-task"], [task["taskId"] for task in remaining["tasks"]])
+
+
 if __name__ == "__main__":
     unittest.main()
