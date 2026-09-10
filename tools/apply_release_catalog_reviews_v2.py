@@ -51,24 +51,50 @@ def _food_reviews() -> dict[str, dict[str, Any]]:
     }
 
 
+def _keyless_review_paths() -> list[Path]:
+    extras = sorted(
+        path
+        for path in (ROOT / "tools").glob("release_catalog_reviewed_keyless_ingredients_*.v1.json")
+        if path != KEYLESS_REVIEW
+    )
+    return [KEYLESS_REVIEW, *extras]
+
+
 def _keyless_reviews() -> dict[tuple[str, str], dict[str, Any]]:
-    value = json.loads(KEYLESS_REVIEW.read_text(encoding="utf-8"))
-    if value.get("kind") != "cook4me-reviewed-keyless-ingredient-semantics":
-        raise RuntimeError("invalid keyless ingredient review file")
     out: dict[tuple[str, str], dict[str, Any]] = {}
-    for row in value.get("items") or []:
-        if not isinstance(row, dict):
-            continue
-        language = _text(row.get("language")).lower()
-        source = _text(row.get("source"))
-        english = _text(row.get("english"))
-        classification = _text(row.get("classification")).lower()
-        if not language or not source or not english or classification not in {"food", "equipment", "other"}:
-            continue
-        key = (language, _norm(source))
-        if key in out and out[key] != row:
-            raise RuntimeError(f"conflicting keyless review for {language}/{source}")
-        out[key] = row
+    for path in _keyless_review_paths():
+        value = json.loads(path.read_text(encoding="utf-8"))
+        if value.get("kind") != "cook4me-reviewed-keyless-ingredient-semantics":
+            raise RuntimeError(f"invalid keyless ingredient review file: {path.name}")
+        for row in value.get("items") or []:
+            if not isinstance(row, dict):
+                continue
+            language = _text(row.get("language")).lower()
+            source = _text(row.get("source"))
+            english = _text(row.get("english"))
+            classification = _text(row.get("classification")).lower()
+            if not language or not source or not english or classification not in {"food", "equipment", "other"}:
+                continue
+            key = (language, _norm(source))
+            existing = out.get(key)
+            if existing:
+                if (
+                    _norm(existing.get("english")) != _norm(english)
+                    or _text(existing.get("classification")).lower() != classification
+                ):
+                    raise RuntimeError(
+                        f"conflicting keyless review for {language}/{source}: "
+                        f"{existing.get('english')!r}/{existing.get('classification')!r} vs "
+                        f"{english!r}/{classification!r}"
+                    )
+                continue
+            normalized = dict(row)
+            normalized["language"] = language
+            normalized["source"] = source
+            normalized["english"] = english
+            normalized["classification"] = classification
+            normalized["reviewFile"] = path.name
+            out[key] = normalized
     return out
 
 
@@ -126,6 +152,50 @@ def _recipe_title_reviews() -> dict[tuple[str, str], dict[str, Any]]:
     return out
 
 
+def _provider_label_candidates(
+    provider_foods: list[dict[str, Any]],
+) -> dict[str, set[str]]:
+    """Index exact provider-food labels across all captured dictionaries."""
+    out: dict[str, set[str]] = {}
+    for row in provider_foods:
+        if not isinstance(row, dict):
+            continue
+        key = _text(row.get("key"))
+        if not key:
+            continue
+        for translation in row.get("translations") or []:
+            if not isinstance(translation, dict):
+                continue
+            name = _text(translation.get("name"))
+            if not name:
+                continue
+            out.setdefault(_norm(name), set()).add(key)
+    return out
+
+
+def _strict_provider_semantic_consensus(
+    candidate_keys: set[str],
+    provider_by_key: dict[str, dict[str, Any]],
+) -> tuple[str, list[str]]:
+    """Return English only when every candidate is resolved and meanings agree."""
+    keys = sorted(key for key in candidate_keys if key)
+    if not keys:
+        return "", []
+    names: list[str] = []
+    for key in keys:
+        row = provider_by_key.get(key)
+        if not row:
+            return "", keys
+        english = _text(row.get("canonicalEnglishName"))
+        if not english:
+            return "", keys
+        names.append(english)
+    normalized = {_norm(name) for name in names}
+    if len(normalized) != 1:
+        return "", keys
+    return names[0], keys
+
+
 def _set_group_english(
     row: dict[str, Any],
     *,
@@ -164,6 +234,7 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
     remove_tasks: set[str] = set()
     provider_review_applied = 0
     keyless_review_applied = 0
+    keyless_provider_consensus_applied = 0
     recipe_title_review_applied = 0
     entry_title_review_applied = 0
 
@@ -173,6 +244,9 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
         for row in provider_foods
         if isinstance(row, dict) and _text(row.get("key"))
     }
+    provider_label_candidates = _provider_label_candidates(
+        [row for row in provider_foods if isinstance(row, dict)]
+    )
     for key, review in food_reviews.items():
         row = provider_by_key.get(key)
         if not row:
@@ -271,6 +345,7 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
             row["canonicalEnglishSource"] = "reviewed:keyless-ingredient-v1"
             row["classification"] = review["classification"]
             row["reviewConfidence"] = review.get("confidence") or "reviewed"
+            row["keylessSemanticReviewFile"] = _text(review.get("reviewFile")) or KEYLESS_REVIEW.name
             row["reviewed"] = True
             task_id = _text(row.pop("translationTaskId", ""))
             if task_id:
@@ -280,11 +355,66 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
 
         candidate = _text(row.get("exactProviderFoodKeyCandidate"))
         provider_food = provider_by_key.get(candidate)
-        if candidate and provider_food and not _text(row.get("canonicalEnglishName")):
-            english = _text(provider_food.get("canonicalEnglishName"))
+        if candidate and provider_food:
+            english = _text(
+                row.get("canonicalEnglishName")
+                or provider_food.get("canonicalEnglishName")
+            )
             if english:
                 row["canonicalEnglishName"] = english
-                row["canonicalEnglishSource"] = "reviewed:provider-food-exact-label-candidate"
+                row.setdefault(
+                    "canonicalEnglishSource",
+                    "reviewed:provider-food-exact-label-candidate",
+                )
+                # A unique exact same-language label in SEB's own marketing-food
+                # dictionary proves the source label is food. It does NOT prove
+                # that a keyless recipe line carries that provider identity, so
+                # providerFoodKey remains deliberately absent and the local
+                # synthetic ingredient identity is preserved.
+                row["classification"] = "food"
+                row["semanticCandidateEvidence"] = (
+                    "unique exact same-language SEB marketing-food label"
+                )
+                row["semanticIdentityPreserved"] = True
+                task_id = _text(row.pop("translationTaskId", ""))
+                if task_id:
+                    remove_tasks.add(task_id)
+                keyless_provider_consensus_applied += 1
+                continue
+
+        # Resolve semantics without inventing identity when exact provider-food
+        # labels are ambiguous only by provider key but unanimous in meaning.
+        # Same-language ambiguity is safe to consider directly. Global exact
+        # labels are used only for English keyless source text, where translation
+        # is not inferred across languages and provider evidence is classification
+        # evidence only. Every candidate must already have canonical English and
+        # every canonical meaning must agree, otherwise the task stays unresolved.
+        if candidate or _text(row.get("canonicalEnglishName")):
+            continue
+        candidates = {
+            _text(value)
+            for value in row.get("ambiguousProviderFoodKeyCandidates") or []
+            if _text(value)
+        }
+        evidence = "exact same-language SEB marketing-food label consensus"
+        if not candidates and language == "en":
+            candidates = set(provider_label_candidates.get(_norm(source), set()))
+            evidence = "exact global SEB marketing-food label consensus for English source"
+        english, consensus_keys = _strict_provider_semantic_consensus(
+            candidates, provider_by_key
+        )
+        if not english:
+            continue
+        row["semanticProviderFoodKeyCandidates"] = consensus_keys
+        row["semanticCandidateEvidence"] = evidence
+        row["canonicalEnglishName"] = english
+        row["canonicalEnglishSource"] = "reviewed:provider-food-exact-label-consensus"
+        row["classification"] = "food"
+        row["semanticIdentityPreserved"] = True
+        task_id = _text(row.pop("translationTaskId", ""))
+        if task_id:
+            remove_tasks.add(task_id)
+        keyless_provider_consensus_applied += 1
 
     remaining = [
         row
@@ -294,9 +424,11 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
     queue["tasks"] = remaining
     queue["schemaVersion"] = max(4, int(queue.get("schemaVersion") or 0))
     recipe_review_files = [path.name for path in _recipe_title_review_paths()]
+    keyless_review_files = [path.name for path in _keyless_review_paths()]
     queue["reviewOverlay"] = {
         "providerFoodEnglish": FOOD_REVIEW.name,
         "keylessIngredientSemantics": KEYLESS_REVIEW.name,
+        "keylessIngredientSemanticFiles": keyless_review_files,
         "entryMealEnglish": ENTRY_MEAL_REVIEW.name,
         "recipeTitleEnglish": RECIPE_TITLE_REVIEW.name,
         "recipeTitleEnglishFiles": recipe_review_files,
@@ -312,6 +444,8 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
     summary = prep.setdefault("summary", {})
     summary["reviewedProviderFoodEnglishApplied"] = provider_review_applied
     summary["reviewedKeylessIngredientSemanticsApplied"] = keyless_review_applied
+    summary["reviewedKeylessIngredientSemanticFiles"] = keyless_review_files
+    summary["providerFoodConsensusKeylessSemanticsApplied"] = keyless_provider_consensus_applied
     summary["reviewedRecipeTitleEnglishApplied"] = recipe_title_review_applied
     summary["reviewedEntryMealEnglishApplied"] = entry_title_review_applied
     summary["reviewedRecipeTitleEnglishFiles"] = recipe_review_files

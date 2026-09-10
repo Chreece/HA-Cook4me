@@ -144,21 +144,19 @@ def _quantity_forms(value: Any) -> list[str]:
     return list(dict.fromkeys((compact, compact.replace(".", ","))))
 
 
-def semantic_ingredient_name(item: dict[str, Any]) -> tuple[str, bool]:
-    """Recover the semantic keyless label from preserved structured evidence.
-
-    Prefer provider food/appliance wording. If only a quantity-bearing label is
-    available, remove a leading quantity and provider unit only when the same
-    quantity/unit are explicitly preserved on that ingredient row. This repairs
-    the old amount-in-identity capture without guessing densities or piece sizes.
-    """
+def _semantic_ingredient_name_with_source(
+    item: dict[str, Any],
+) -> tuple[str, bool, str]:
+    """Recover semantic keyless label plus the provider field that supplied it."""
     source = ""
+    source_field = ""
     for field in ("foodName", "applianceDescription", "applicationDescription", "cleanName"):
         source = _text(item.get(field))
         if source:
+            source_field = field
             break
     if not source:
-        return "", False
+        return "", False, ""
 
     unit = item.get("unit") if isinstance(item.get("unit"), dict) else {}
     units: list[str] = []
@@ -175,12 +173,18 @@ def semantic_ingredient_name(item: dict[str, Any]) -> tuple[str, bool]:
             )
             cleaned = re.sub(pattern, "", source, count=1, flags=re.IGNORECASE | re.UNICODE)
             if cleaned != source and _text(cleaned):
-                return _text(cleaned), True
+                return _text(cleaned), True, source_field
         pattern = rf"^\s*{re.escape(quantity)}(?=\s)\s+"
         cleaned = re.sub(pattern, "", source, count=1, flags=re.IGNORECASE | re.UNICODE)
         if cleaned != source and _text(cleaned):
-            return _text(cleaned), True
-    return source, False
+            return _text(cleaned), True, source_field
+    return source, False, source_field
+
+
+def semantic_ingredient_name(item: dict[str, Any]) -> tuple[str, bool]:
+    """Recover semantic keyless label while preserving the public helper API."""
+    name, changed, _source_field = _semantic_ingredient_name_with_source(item)
+    return name, changed
 
 
 def _task_id(kind: str, language: str, text: str) -> str:
@@ -255,7 +259,7 @@ def prepare(
                 continue
 
             unkeyed_lines += 1
-            name, changed = semantic_ingredient_name(ingredient)
+            name, changed, source_field = _semantic_ingredient_name_with_source(ingredient)
             if changed:
                 prefix_cleaned += 1
             if not name:
@@ -267,10 +271,14 @@ def prepare(
                     "sourceLanguage": language,
                     "sourceName": name,
                     "occurrenceCount": 0,
+                    "sourceFieldCounts": {},
                     "samples": [],
                 },
             )
             row["occurrenceCount"] += 1
+            if source_field:
+                counts = row["sourceFieldCounts"]
+                counts[source_field] = int(counts.get(source_field) or 0) + 1
             if len(row["samples"]) < 3:
                 sample = {
                     "variantId": variant_id,
@@ -404,26 +412,39 @@ def prepare(
         else:
             if len(candidates) > 1:
                 row["ambiguousProviderFoodKeyCandidates"] = candidates
-            task_id = _task_id(
-                "unkeyed_ingredient", language, row["sourceName"]
-            )
-            row["translationTaskId"] = task_id
-            tasks.append(
-                {
-                    "taskId": task_id,
-                    "type": "unkeyed_ingredient",
-                    "sourceLanguage": language,
-                    "sourceText": row["sourceName"],
-                    "occurrenceCount": row["occurrenceCount"],
-                    "needsTranslation": language != "en",
-                    "requestedClassification": [
-                        "food",
-                        "equipment",
-                        "other",
-                        "ambiguous",
-                    ],
-                }
-            )
+            source_fields = {
+                field
+                for field, count in (row.get("sourceFieldCounts") or {}).items()
+                if int(count or 0) > 0
+            }
+            provider_food_name_only = source_fields == {"foodName"}
+            if provider_food_name_only:
+                row["classification"] = "food"
+                row["classificationEvidence"] = "provider:foodName on every occurrence"
+            if provider_food_name_only and language == "en":
+                row["canonicalEnglishName"] = row["sourceName"]
+                row["canonicalEnglishSource"] = "provider:english-foodName"
+            else:
+                task_id = _task_id(
+                    "unkeyed_ingredient", language, row["sourceName"]
+                )
+                row["translationTaskId"] = task_id
+                tasks.append(
+                    {
+                        "taskId": task_id,
+                        "type": "unkeyed_ingredient",
+                        "sourceLanguage": language,
+                        "sourceText": row["sourceName"],
+                        "occurrenceCount": row["occurrenceCount"],
+                        "needsTranslation": language != "en",
+                        "requestedClassification": (
+                            ["food"]
+                            if provider_food_name_only
+                            else ["food", "equipment", "other", "ambiguous"]
+                        ),
+                        "sourceFieldCounts": dict(sorted((row.get("sourceFieldCounts") or {}).items())),
+                    }
+                )
 
         # Never merge keyless ingredients across languages from translation
         # alone. A later reviewed exact-provider association may replace this.
@@ -469,6 +490,18 @@ def prepare(
         )
         group["variantCount"] = len(group["variantIds"])
 
+    provider_food_name_only_rows = sum(
+        {
+            field
+            for field, count in (row.get("sourceFieldCounts") or {}).items()
+            if int(count or 0) > 0
+        } == {"foodName"}
+        for row in unkeyed_rows
+    )
+    provider_food_name_english_resolved = sum(
+        row.get("canonicalEnglishSource") == "provider:english-foodName"
+        for row in unkeyed_rows
+    )
     summary = {
         "providerDetails": len(provider.get("details") or []),
         "staleSearchOnly": len(provider.get("staleSearchOnly") or []),
@@ -504,6 +537,8 @@ def prepare(
         "unkeyedRowsWithStructuredPrefixCleaned": prefix_cleaned,
         "unkeyedExactProviderFoodCandidates": exact_candidates,
         "unkeyedExactProviderCandidatesWithSebEnglish": exact_candidates_with_english,
+        "unkeyedProviderFoodNameOnly": provider_food_name_only_rows,
+        "unkeyedProviderFoodNameEnglishResolved": provider_food_name_english_resolved,
         "recipeGroupsNeedingEnglishTranslation": sum(
             1 for row in group_rows if row.get("translationTaskId")
         ),
