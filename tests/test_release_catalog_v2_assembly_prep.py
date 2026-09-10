@@ -161,6 +161,57 @@ class ReleaseAssemblyPrepTests(unittest.TestCase):
         self.assertFalse(task["needsTranslation"])
         self.assertEqual("unkeyed_ingredient", task["type"])
 
+
+    def test_english_foodname_proves_food_semantics_without_provider_identity(self):
+        provider = provider_capture()
+        provider["source"]["catalogs"][0]["searchRows"] = 4
+        provider["source"]["catalogs"][0]["hydratedVariants"] = 4
+        provider["details"].append(
+            {
+                "variantId": "v4",
+                "groupingFunctionalId": "g4",
+                "language": "en",
+                "market": "GS_GB",
+                "title": "Salt test",
+                "ingredients": [{"foodName": "sea salt", "cleanName": "ignored fallback"}],
+            }
+        )
+        result, queue = prep.prepare(provider, marketing_capture())
+        row = next(item for item in result["unkeyedIngredients"] if item["sourceName"] == "sea salt")
+        self.assertEqual({"foodName": 1}, row["sourceFieldCounts"])
+        self.assertEqual("food", row["classification"])
+        self.assertEqual("provider:foodName on every occurrence", row["classificationEvidence"])
+        self.assertEqual("sea salt", row["canonicalEnglishName"])
+        self.assertEqual("provider:english-foodName", row["canonicalEnglishSource"])
+        self.assertNotIn("providerFoodKey", row)
+        self.assertFalse(any(task.get("sourceText") == "sea salt" for task in queue["tasks"]))
+        self.assertEqual(1, result["summary"]["unkeyedProviderFoodNameOnly"])
+        self.assertEqual(1, result["summary"]["unkeyedProviderFoodNameEnglishResolved"])
+
+    def test_nonenglish_foodname_narrows_review_to_translation_only(self):
+        provider = provider_capture()
+        provider["source"]["catalogs"][0]["searchRows"] = 4
+        provider["source"]["catalogs"][0]["hydratedVariants"] = 4
+        provider["details"].append(
+            {
+                "variantId": "v4",
+                "groupingFunctionalId": "g4",
+                "language": "de",
+                "market": "GS_DE",
+                "title": "Salztest",
+                "ingredients": [{"foodName": "Meersalz", "cleanName": "ignored fallback"}],
+            }
+        )
+        result, queue = prep.prepare(provider, marketing_capture())
+        row = next(item for item in result["unkeyedIngredients"] if item["sourceName"] == "Meersalz")
+        self.assertEqual("food", row["classification"])
+        task = next(task for task in queue["tasks"] if task.get("sourceText") == "Meersalz")
+        self.assertTrue(task["needsTranslation"])
+        self.assertEqual(["food"], task["requestedClassification"])
+        self.assertEqual({"foodName": 1}, task["sourceFieldCounts"])
+        self.assertNotIn("providerFoodKey", row)
+
+
     def test_wrong_marketing_food_contract_is_rejected(self):
         marketing = marketing_capture()
         marketing["requestSize"] = 5000
