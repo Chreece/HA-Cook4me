@@ -3,8 +3,9 @@
 
 This is a deterministic local maintenance transform. It consumes the output of
 ``prepare_release_catalog_v2_assembly.py`` and removes translation/classification
-tasks that have already been manually reviewed in versioned repo evidence files.
-It never changes provider IDs and never promotes a keyless label to M_FOOD.
+tasks that have already been reviewed in versioned repo evidence files.
+Provider recipe/ingredient identities are never changed, and a keyless label is
+never promoted to an M_FOOD provider identity.
 """
 from __future__ import annotations
 
@@ -19,6 +20,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 FOOD_REVIEW = ROOT / "tools" / "release_catalog_reviewed_provider_food_english.v2.json"
 KEYLESS_REVIEW = ROOT / "tools" / "release_catalog_reviewed_keyless_ingredients.v1.json"
+RECIPE_TITLE_REVIEW = ROOT / "tools" / "release_catalog_reviewed_recipe_titles.v1.json"
 
 
 def _text(value: Any) -> str:
@@ -69,6 +71,38 @@ def _keyless_reviews() -> dict[tuple[str, str], dict[str, Any]]:
     return out
 
 
+def _recipe_title_reviews() -> dict[tuple[str, str], dict[str, Any]]:
+    value = json.loads(RECIPE_TITLE_REVIEW.read_text(encoding="utf-8"))
+    if value.get("kind") != "cook4me-reviewed-recipe-title-english":
+        raise RuntimeError("invalid reviewed recipe-title English file")
+    out: dict[tuple[str, str], dict[str, Any]] = {}
+    for row in value.get("items") or []:
+        if not isinstance(row, dict):
+            continue
+        language = _text(row.get("language")).lower()
+        source = _text(row.get("source"))
+        english = _text(row.get("english"))
+        confidence = _text(row.get("confidence")).lower() or "reviewed"
+        if not language or not source or not english:
+            continue
+        key = (language, _norm(source))
+        if key in out:
+            existing = out[key]
+            if _norm(existing.get("english")) != _norm(english):
+                raise RuntimeError(
+                    f"conflicting recipe-title review for {language}/{source}: "
+                    f"{existing.get('english')!r} vs {english!r}"
+                )
+            continue
+        normalized = dict(row)
+        normalized["language"] = language
+        normalized["source"] = source
+        normalized["english"] = english
+        normalized["confidence"] = confidence
+        out[key] = normalized
+    return out
+
+
 def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
     if prep.get("kind") != "cook4me-release-assembly-prep":
         raise RuntimeError("expected cook4me-release-assembly-prep")
@@ -77,9 +111,11 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
 
     food_reviews = _food_reviews()
     keyless_reviews = _keyless_reviews()
+    recipe_title_reviews = _recipe_title_reviews()
     remove_tasks: set[str] = set()
     provider_review_applied = 0
     keyless_review_applied = 0
+    recipe_title_review_applied = 0
 
     provider_foods = prep.get("providerFoods") or []
     provider_by_key = {
@@ -107,6 +143,35 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
         task_id = _text(row.pop("translationTaskId", ""))
         if task_id:
             remove_tasks.add(task_id)
+
+    # Recipe-title reviews change labels only. Grouping/variant IDs and every
+    # provider-native title remain untouched.
+    for row in prep.get("recipeGroups") or []:
+        if not isinstance(row, dict):
+            continue
+        task_id = _text(row.get("translationTaskId"))
+        if not task_id:
+            continue
+        language = _text(row.get("language")).lower()
+        source = _text(row.get("title"))
+        review = recipe_title_reviews.get((language, _norm(source)))
+        if not review:
+            continue
+        reviewed = _text(review.get("english"))
+        existing = _text(row.get("canonicalEnglishTitle"))
+        if existing and _norm(existing) != _norm(reviewed):
+            raise RuntimeError(
+                f"recipe-title review conflicts with existing English for "
+                f"{language}/{source}: {existing!r} vs {reviewed!r}"
+            )
+        row["canonicalEnglishTitle"] = reviewed
+        row["canonicalEnglishSource"] = "reviewed:recipe-title-v1"
+        row["canonicalEnglishConfidence"] = review.get("confidence") or "reviewed"
+        if review.get("notes"):
+            row["canonicalEnglishNotes"] = review["notes"]
+        row.pop("translationTaskId", None)
+        remove_tasks.add(task_id)
+        recipe_title_review_applied += 1
 
     for row in prep.get("unkeyedIngredients") or []:
         if not isinstance(row, dict):
@@ -148,10 +213,11 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
         if isinstance(row, dict) and _text(row.get("taskId")) not in remove_tasks
     ]
     queue["tasks"] = remaining
-    queue["schemaVersion"] = max(3, int(queue.get("schemaVersion") or 0))
+    queue["schemaVersion"] = max(4, int(queue.get("schemaVersion") or 0))
     queue["reviewOverlay"] = {
         "providerFoodEnglish": "release_catalog_reviewed_provider_food_english.v2.json",
         "keylessIngredientSemantics": "release_catalog_reviewed_keyless_ingredients.v1.json",
+        "recipeTitleEnglish": "release_catalog_reviewed_recipe_titles.v1.json",
         "removedTaskCount": len(remove_tasks),
     }
     queue["summary"] = {
@@ -164,6 +230,7 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
     summary = prep.setdefault("summary", {})
     summary["reviewedProviderFoodEnglishApplied"] = provider_review_applied
     summary["reviewedKeylessIngredientSemanticsApplied"] = keyless_review_applied
+    summary["reviewedRecipeTitleEnglishApplied"] = recipe_title_review_applied
     summary["providerFoodsCanonicalEnglishResolved"] = sum(
         bool(_text(row.get("canonicalEnglishName"))) for row in provider_foods if isinstance(row, dict)
     )
@@ -171,12 +238,17 @@ def apply_reviews(prep: dict[str, Any], queue: dict[str, Any]) -> tuple[dict[str
         bool(row.get("usedByRecipe")) and bool(_text(row.get("canonicalEnglishName")))
         for row in provider_foods if isinstance(row, dict)
     )
+    summary["recipeGroupsCanonicalEnglishResolved"] = sum(
+        bool(_text(row.get("canonicalEnglishTitle")))
+        for row in prep.get("recipeGroups") or []
+        if isinstance(row, dict)
+    )
     summary["translationTasksRemaining"] = len(remaining)
     summary["providerFoodTranslationTasksRemaining"] = queue["summary"]["providerFoodEnglish"]
     summary["recipeTitleTranslationTasksRemaining"] = queue["summary"]["recipeTitleEnglish"]
     summary["unkeyedIngredientTasksRemaining"] = queue["summary"]["unkeyedIngredient"]
     prep["reviewOverlay"] = queue["reviewOverlay"]
-    prep["schemaVersion"] = max(3, int(prep.get("schemaVersion") or 0))
+    prep["schemaVersion"] = max(4, int(prep.get("schemaVersion") or 0))
     return prep, queue
 
 
@@ -191,14 +263,17 @@ def main() -> int:
     prep = _load_gzip(Path(args.prep).expanduser())
     queue = json.loads(Path(args.queue).expanduser().read_text(encoding="utf-8"))
     prep, queue = apply_reviews(prep, queue)
-    output = Path(args.output_prep).expanduser(); output.parent.mkdir(parents=True, exist_ok=True)
+    output = Path(args.output_prep).expanduser()
+    output.parent.mkdir(parents=True, exist_ok=True)
     with gzip.open(output, "wt", encoding="utf-8", compresslevel=9) as handle:
         json.dump(prep, handle, ensure_ascii=False, separators=(",", ":"))
     Path(args.output_queue).expanduser().write_text(
-        json.dumps(queue, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8"
+        json.dumps(queue, ensure_ascii=False, separators=(",", ":")) + "\n",
+        encoding="utf-8",
     )
     Path(args.summary).expanduser().write_text(
-        json.dumps(prep["summary"], indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+        json.dumps(prep["summary"], indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
     )
     print(json.dumps(prep["summary"], ensure_ascii=False))
     return 0
