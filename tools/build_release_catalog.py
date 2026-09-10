@@ -247,18 +247,15 @@ def _detail(
 
 
 def _ingredient_id(item: dict[str, Any]) -> str:
+    """Return only provider-backed ingredient identity.
+
+    Keyless recipe lines are useful source evidence, but a translated or
+    normalized label is never promoted into a synthetic global ingredient ID.
+    """
     explicit = _text(item.get("ingredientId") or item.get("id"))
     if explicit:
         return explicit
-    key = _text(item.get("foodKey") or item.get("key"))
-    if key:
-        return key
-    name = _text(
-        item.get("canonicalName")
-        or item.get("foodName")
-        or item.get("name")
-    ).casefold()
-    return "name:" + name if name else ""
+    return _text(item.get("foodKey") or item.get("key"))
 
 
 def _fdc_nutrient(
@@ -402,10 +399,13 @@ def _compact_variant_ingredient(
         "unit": item.get("unit"),
         "unitKey": item.get("unitKey"),
     }
-    # Canonical identity lives globally. Exact provider wording lives on the
-    # recipe-line reference so native users see what SEB actually published.
-    if not key:
-        row["canonicalName"] = _text(global_row.get("canonicalName")) or original_name
+    # Canonical identity lives only on a provider-backed global row. Keyless
+    # recipe lines retain originalName/originalLanguage as source evidence and do
+    # not invent an English canonical label or a synthetic ingredient identity.
+    if ident and not key:
+        canonical = _text(global_row.get("canonicalName"))
+        if canonical:
+            row["canonicalName"] = canonical
     return {
         name: value
         for name, value in row.items()
@@ -675,6 +675,8 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
             "contract": "standalone-proven-cookeo-brand-v5",
             "format": "normalized-ingredient-references-v1",
             "providerNativeNamesStored": True,
+            "providerIngredientIdentityOnly": True,
+            "keylessRecipeLinesStoredAsEvidence": True,
             "applianceGroup": "APPLIANCE_GROUP_15",
             "recipeType": "BRAND",
             "auditedCatalogCount": len(AUDITED_CATALOGS),
