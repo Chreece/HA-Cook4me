@@ -1,0 +1,998 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 97,
+  "batchSize": 58,
+  "rankStart": 9601,
+  "rankEnd": 9658,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:e389bbe2936f30c39bea9289",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "ч.л. сушеного подрібненого чилі (за смаком)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:13d5c98793e0d8045a8bc595",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Часникові грінки",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:44fa7d7b215ff3a1af8ea2aa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "часнику, очищених",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2d21a448785507e5fd7ae190",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "часнику, очищені, дрібно нарізані без зародка",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6a35219f7d918e8c894d3f20",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "червона цибуля, очищена та тонко нарізана",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3e35105479201f9a15cc6ffe",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Червоний перець нарізаний маленькими кубиками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:87fbf37e15623bdeec0bd01e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "червоний перець нарізати маленькими кубиками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c22ef8142c464fb85ba06a0e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "червоний перець чилі, очищений та дрібно нарізаний",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8ad3d7c77a4eb7f6ad8e5b9c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Червоний перець, очищений та нарізаний кубиками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ab5f02b7c2faed21743aff5f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "червоний перець, очищений та нарізаний соломкою",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5b3195718e49355df68b2ac3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "червоних перцю, очищених та нарізаних соломкою",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b478c289a23a1f8dc0969944",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "червоних перця нарізати маленькими кубиками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8b7eb8502e6a6532af13b789",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "червоного перцю, без насіння",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:23ebc3efcf494186a1c73d3a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "червоної цибулі, очищена та тонко нарізана",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0d75d76adeaca4167c5a11cc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Шалот нарізаний",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:73c8402cca821bfdb12ed5cf",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "шалот, очищеного та дрібно нарізаного",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c51a490531db2ad6a74f2388",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "шинки, рубленої",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1f93d39648aa247b0e91f7ff",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "шматочки бекону, розрізаного на 4 частини",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:da0083e59e8a67c8f93c24e3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "шматочки білого хліба без скоринки",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e39d2691a2ddd7b914728e5c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "шматочки в'ялених помідорів, нарізаних смужками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5207eef2c987bfbe4c0a6a1b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "шматочки вершкового масла вагою 30 гр",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7e40740befcf3cd2d36e50b6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "шматочки масла",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2ce278e2c193d9447ea98076",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "шматочки сиру Ементаль",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9ced54f73359ccdb73a1a429",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "шматочки шинки пармської",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8930cece42f4356be5f46f13",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "шматочків в'ялених помідорів, нарізаних смужками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2301215fb7d4704937d49beb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "шматочків пармської шинки",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:58a33038fd5602295891a288",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "шматочків сиру Ементаль",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2d34d8a07b2e27421548d0c4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "шматочок білого хліба без скоринки",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:666f750ac039398a5fcb0271",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Шоколад, 50% какао",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9ed6c8fe11f1e44cda958558",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Шоколад, 50/55% какао, розтоплений",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6863926854080c8c75df45b3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Шоколад, 64% какао, подрібнений",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:114ad6d2b546686fd241b30d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Шпинат, промитий та подрібнений",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:69cfd548590c895cabf9fe1f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "щіпка перцю чилі",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b3dd16b9acfe0f4650a374d9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "щіпка свіжого листя чебрецю",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:114737569112dbc0c359a7f0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "щіпка тим'яну",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ddbee73b3f84a25a0dc0f54e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "щіпки чебрецю",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:79770540b7ffecb34d805725",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "щіпок суміші спецій за смаком",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d848f50df7c0da465ce16648",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "яблочного уксуса",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:08e27151e70b3fb809a0b76c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Яблуко Гренні Сміт, вимите та нарізане кубиками",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:811993d9ff782fdb41771931",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Яйце середнього розміру (50/55 г)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:60890965ccbd74cd84295a87",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "яйця, дуже свіжих, великих",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c897528cccb2811116bdf2c1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Яловичина, нарізана кубиками по 30 г та присипана борошном",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:aa4d87ce9237d166e93c76cc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Японський рис (рис для суші)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d2707e3b7121ef1840683933",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "яєць, дуже свіжих, великих",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:98af75546b77bfccf0a869af",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "яєчний білок (середнього розміру)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dcd5c69f6d73082a513ac886",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "яєчних білки (середнього розміру)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ff9670ac9fea830f51df9f4b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Яєчні білки",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:17910733b43dcf1382ff6c94",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Імбирний пряник",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:602a6a7f74122fcae10ae79d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "B-厚豆皮(切小塊)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c0bb418026746e818541aa99",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "B-法式牛肉高湯 (高湯塊)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8df23c64576bbfb2f7848f73",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "B-黑胡椒 少許",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:97d400725826595b85af29ac",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "中濃醬料",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:75bb3dbe9f734a399965fadd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "孜然粉",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8227d9f26cc462548fe8f2b0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "牛豬混合絞肉(裹上低筋麵粉)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a813c304bfcda4fb9b03fb36",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "義大利洋香菜 (調味用) 少許",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:937c34ae1b73a8e6df28ff27",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "肉豆蔻 少許",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cd38e899d9098eb8685227db",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "辣椒粉",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:41ee68f40d63332b02922e86",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "黑胡椒 少許",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    }
+  ]
+}

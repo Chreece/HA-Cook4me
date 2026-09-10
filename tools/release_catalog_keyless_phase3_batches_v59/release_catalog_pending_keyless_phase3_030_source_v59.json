@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 30,
+  "batchSize": 100,
+  "rankStart": 2901,
+  "rankEnd": 3000,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:8c1727ac816c387e76d3c14d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Kvásek",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:98435f9896daa8afa5b3d3f9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Lasagne vařené al dente",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9377a688d2047b888cdb6834",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Libeček",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:627f24a44eaf3a5ca0c496cd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Liči v sirupu",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2a3e22f32b87519a292d0ab1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Lák z okurek",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:336df4d0b8ecfce414c44c2e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Lískooříšková pomazánka",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d6a70bb67261aaa5bf809e0d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Lískooříškové mléko (v bio obchodech)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dafd0884e3c2bf1644ba85a8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Lískooříškový krém (v bio obchodech)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e292591e10fb88d939bb4ba5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Lístky máty",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8eb10f035ab4fb8770227534",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Lístky máty, nasekané",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a756e135ff51d746ff75e365",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Lístky čerstvé máty",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:af34b8506c5a9cf341c54091",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Lístky čerstvé máty, nakrájené",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:125397367d623e7dc98731a6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Lístky čerstvé máty, omyté a nasekané",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a391e63f1d59976ee211e217",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "majoránky",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0b2da65343f82f09edec8d18",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Malé šalotky, oloupané a jemně nasekané",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d3d3ae2cb05ad844e8e854d9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Mandlové pyré",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0579601bd571f8185e74f62b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Mandlový krém (bio obchod)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:02e230c59517ab7dbb5be750",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Mexická směs koření",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ada9675f704b12d330dff5ec",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Mini špejle (nebo párátka)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d6d23d17ace658bde84f0673",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Miska (140 ml)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ca791838daa9a3915ad353b7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Misky (140 ml) + pečicí papír, stejný průměr jako miska",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3b669fd1f161619ccf66519e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Mleté krůtí maso",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:82b741d6b0c9b969c2e7a641",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Mleté mandle",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c1c091e2169f980052d00803",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Mleté telecí maso",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7e0793c1030fea03c812247e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Mletý sečuánský pepř",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8a85fc6370fae472d737b485",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Munster sýr",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6b16ed9346c7010128a71bd5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Muškátový květ",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6ae8674c9236fb4bbfa7763e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Mušle",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2ac437808eb9c57e774a23a9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Máta, omytá a jemně nasekaná",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1c47fa2bbc8a63c09c846a21",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Máta, umytá a nakrájená na kousky",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3d37517a428426c43951aa90",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Nakrájený chléb (25 g každý)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fe226feac7c5c6d41ab6d8d3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Nasekaná čerstvá máta",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c8b12b50eb5c05c9ec7f965e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Olej z dýňových semínek",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1ba6d1307fb4c163ef9250ee",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Olej z hroznových jader",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:15e96e315da99e1bb12bf189",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Oloupané vlašské ořechy",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ca1e487cf224abe8c4b25306",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Omytá máta",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9fff1ecf5928f2b2d31523d6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Omáčka Nems",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7079d1574afa1b035edb0161",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Osolený a opepřený rybí vývar",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:30d66eab6364ed3a586a22d5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Pasta z červené papriky",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a15ea21dbd3d4d051d756b2e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Pektin",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:60258fcca3020318b921a62c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Perlový cukr",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a06c39df264a94326673d544",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Petržel, omytá a nasekaná",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:578cbc7291f07980bdebbc26",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Petrželka",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:da3ae76a9a577eb1371da477",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Plnotučná smetana (30% tuku)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9e96f7b09d27caf27c030def",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Plocholistá petržel",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f8cc93fac787c1ca7cd21e4d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Polohrubá mouka",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8d18bff2e8767c74df1bcb90",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Polévkové bylinky",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:545f135ed209b3dc20d23b6f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Pomerančová šťáva",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cc90be7548094d29649bb5dc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Porcelánové misky, 150 ml",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4e73db771746139615d4ea33",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Potravinová fólie",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3843ae3a6667c76deb8ad3e9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Potravinářská fólie",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:23e7b47bb56c1453b65e2e5a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Prášek do pečiva",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a4cc2b787e812abf8a143f94",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Přepuštěné máslo",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b8d8143f4c04d196ae844cbf",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Rajčata",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b691675a21bee912d5964069",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Rajčatová pasta",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1f080fdf09578f2ad13938dd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Ramekiny vymazané, nebo silikonové (140 ml)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d954d4277fce2a0337431a57",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Ramekiny, 140 ml",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:091f61bbc7129d32bbc42fca",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Raw vegetable mix",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d855954ae92a2ab77256b01c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Rump steak, nakrájený na 2 cm kostky",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e94851735084974e0a150b93",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Rybí vývar",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1d88985de86194610b1049c8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Semínka granátového jablka",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:388e058cd3d938d7f1627882",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Shiitake nebo jiné houby",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2fccbce58f2fae1c923e3d12",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Sklenice",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:610ad729d6aab1ebff1dc907",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Sklenice vymazané máslem",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:27352134633a3c27ff997eef",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Skleničky, zapékací sklenice nebo misky",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fa93df1495b8e1bb49115527",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Sladká paprika",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ab3792f8dcc6fd079920db20",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Směs indického koření",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7a70eec07aff23b87a3ef9e5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Sriracha omáčka",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7b025be3205ff8cbe275bdb3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Stonek celeru",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f440960c042a66cd0b22d9c4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Strouhaný sýr kašar",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:671c15685c388464664d8161",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Střední červená cibule",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:51e109247a3268ac83f06bf8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Středně velká červená řepa",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bc0089091306b934810e5174",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Sušenky vyrobené z nízkokalorického čokoládového prášku + ozdoby z fondánové polevy",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f4a3616108dd0182ad1503d3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Sušené černé houby",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f57e721e3c9d8ede3b8b30d1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Sweet and sour sauce",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:befa9945203ba9d88459698a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Syrová červená řepa, oloupaná a nakrájená na proužky",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bee09100c69848163144a7cb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Sójová smetana",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:81f97a6e514f82ac3eca97e5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Sůl, Muškátový květ",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0d7b8858bdad2874e1d7a2fa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Taštičky wonton",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3dc3b19a947ede71fc1145d3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Textured soya protein soaked for 30 minutes",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:49aff2fec611d7ecc3c74138",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Topinambury, oloupané a nakrájené na kostičky",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b3c4463278f7481e951f3f8c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Tortellini plněné špenátem a ricottou (nebo jiné dle volby)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c0bdfb6734ddb07048eaae10",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Těstovinová rýže",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:84a69279938b920553fdcdf3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Těstovinové mušle",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5b7330647de34ed3472382c3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Těstoviny abeceda",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:312020f4fcdf7fe4aa24d84f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Vaječné bílky",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3e6350e0f0b389737c26df9e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Vanilkový extrakt",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:245ed83c90000ac1ee9a549f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Vařené dršťky, nakrájené",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d46165ce8186cf3e932acca0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Vařené ramen nudle",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7528f56ca31ebefcc77fbe22",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Vepřové uzené ramínko",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f355986f967e0944d87acb1b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Vin jaune",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f38879e4d455b850c8b55aed",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Vlašské ořechy",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ead80aad852164c89bfc557e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Zapékací misky",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d6843e16efdbd55562e66e1a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Zapékací misky, vymazané máslem",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:eba72b370783e93a8234b7df",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Zapékací mísa do trouby",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:aacc07e7f5e34a20d50e163d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Zelené fazolky, stopkaté",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:80df30d0c57309b13b404005",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Černý pepř",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c89ffe743be5f42ac420dfd0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Čerstvá máta, omytá a jemně nasekaná",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:39b1ec4987e45b4e24d62d58",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Čerstvá, nasekaná máta",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8d6afa23feb6e1277ba9b669",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Čerstvé fazolové klíčky",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    }
+  ]
+}

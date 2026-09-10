@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 81,
+  "batchSize": 100,
+  "rankStart": 8001,
+  "rankEnd": 8100,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:f390f993463b9c43ae11edeb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "es",
+      "sourceText": "Pan cortado en cubitos",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f4d4a7a4cfc6fa6bdd9dbbc1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "es",
+      "sourceText": "Papel sulfurizado",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e4a457927314484563c92501",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "es",
+      "sourceText": "pimiento pequeño(s), sin semillas y troceado",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0bf094210ee339f533dee48c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "es",
+      "sourceText": "pimiento pequeño, sin semillas y troceado",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2f57c3061e4bf5ba2d9760e4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "es",
+      "sourceText": "pimientos pequeños, sin semillas y troceados",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f688d599983a4b0e28108a85",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "es",
+      "sourceText": "Remolacha de tamaño mediano",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2e86dca5e77007e6d702db8d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "es",
+      "sourceText": "salchicha picante, cortada por la mitad o en tres",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2737f4a82c639a16e13bf259",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "es",
+      "sourceText": "salchicha picante, cortadas por la mitad o en tres",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6e01595d7cd70662e418cfa1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "es",
+      "sourceText": "salchichas picantes, cortadas por la mitad o en tres",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d5ea0945832eb81454c230f2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "es",
+      "sourceText": "Zanahora",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1015b112275ce75c20d5d2f5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "es",
+      "sourceText": "zanahoria, pelado y cortado a trozos",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c5c84b17b23c826780929dd7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "es",
+      "sourceText": "Zanahorias",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7072acb1164feca86552eee8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Colombo",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:eae4eca6adc1ac65a222afc8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "D'orzo",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:50f8ffff2a49427a5e6711d9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "de combava séchées",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:64c7154e7a686ee831c960b7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "de copeaux de chocolat noir",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3be31e0e7b38670604fc6a62",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "de konjac",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f20215f3e7ee54b107bf8b12",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Disques de pâte à Gyoza",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6779231e40b95248caefcff7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Farce",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:91aa65992c4d92713410f612",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Farine complète T130",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ffcab95c744147f572f12a28",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Farine de châtaigne",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:62f9e451a1f073821b27e568",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Farine de seigle T130",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:71c3e5df35cb4c75a8b61437",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Farine T45",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a8365916ad32b2423de146ec",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Feuilles de filo",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d62428d2498c4d960f1de4da",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Graines de fenouil",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2e09a32364333be2413cc5f9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Jus de citron vert",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:957987ded9238dca9dde909f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Kéfir de lait",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:04bd938e9394dc8880a0dda6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Lasagnes sèches",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4b26dabcc47d5cd07c107429",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Nectarines coupées en 2, sans le noyau",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a01c60d8d33581e9519551f9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Orzo",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5abf62b45613354240ad0a95",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Orzo (pâtes en forme de riz)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5a0c2ef287292ef40bde25ff",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Pecorino",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:26a926b1b2c7dbf6064cf4e3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Pepperoni",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:39239d0deb9bb1ab5916593b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Quatre-épices",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d3a77d6a96d7eda9dfa9d980",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Sauce salade au miel",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2b86820f6a2e0f8a0242bcec",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Sauce salade à l'orange",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8f2db42d0d19e8993e35ce38",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Sauce siracha",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:47b0c9c437e4b95a68922008",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "fr",
+      "sourceText": "Sel fin",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c119f8bf5fea4451c64a58f7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Abeceda tjestenina",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1aac5da4a8c3e4e39b4a0e37",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Alkoholni ocat",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ebf957aec036152e8d1b852c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Aluminijska posuda za pečenje",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:76ad7ee09701c4c5d232e5b2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Amaretto (ili rum)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fb4d1a46131b935df370c2f2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Arborio riža za rižoto",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:748af02b6b0e9464d6f1ebcb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Baby kukuruz",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1e1ada61ceb238d2464fdc2d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Bademov pire",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7b38b192ed01c99031032070",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Banane",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0b6c23edfe3ebec2577e15b3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Bešamel (tetrapak)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:87974536aaf8ca99534ff79b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Bijeli balzamični ocat",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:81ce21b1ea34608d1678d248",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Biljno mlijeko",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6a58f9e4ba4a1064ef1f7652",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Bjelanjci",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2c1eec6c23573a34ccf99ff4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Blaga chorizo kobasica",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:49d7b316ea334a06fde50629",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Bonbon okusa jagode",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4a49aa868bf81c11094e74e4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Borovnice",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f4d20472005cb9cba967803b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Brašno za tjesteninu",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3c74e47cea8e5746fcbfbe19",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Breskva/breskve",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9ddc3b57c7db6072c6115dfc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Confit od oguljenih rajčica",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fa63c0a93602ab95f8cc4482",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Crne masline",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f17643bd237be7e9b7f2277e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Crni ribiz (svjež ili smrznut, ili brusnice)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:98e852f59e9bc33146e87d32",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Crni čaj u vrećicama",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a34311ef0ec1bcb52f6d17ed",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Crnilo sipe",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1ac4c455e1750786e5cc3e2a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Crno vino+Prošek",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3b3bb372d75eb7b160018c64",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Crvena, zelena i žuta paprika",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:80b6e30bd823cb6c149c5c0b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Cvijet soli, svježe mljeveni papar",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:729fb04f8b963523c54a9023",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Dagnja",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7e7892b2b3c55c9e632ddf32",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Datulja bez koštica",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:13dcabf46d1747d88ebaf6c7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Datulje",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:31f862a4bb75fae8b8e5dcbd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Dimljena dagnja",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:593dccd0d16d19d05ead654c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Dimljena ili nedimljena slanina narezana na kockice",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:be08445107dad0946c0dc4b9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Dimljena patka",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c17459f684aaf537847b87dc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Dimljeni tofu",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4132ac865a502bf5245ac85a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Ekstrakt kave",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:63eda39a2bd4b82510612660",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Engleski senf",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a5e199816a9a66c1bd9eded7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "File divljači, narezan na komade od 180 g",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7f15be38faa81b11f6622d4f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Filet lososa",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1c5142cc7e225a344392de6d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Fileti inćuna u ulju",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:61794efffb124ed89e87b47c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Francuska zelena leća",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0633993a836a05c5cec72d4f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Glatko brašno",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9cf5cf24b4b980c5537c7383",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Gljive (šampinjoni, vrganji, lisičarke)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1b6634c68f541faffc06bc91",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Gljive (šampinjoni, vrganji, trubače itd.)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5a7a7d11051f67c4d221e281",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Gorgonzola (ili roquefort ili drugi plavi sir)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0bf8903bbbcc5ee4ff870de4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Gusti punomasni crème fraîche",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a4c1783b222a60026cc61718",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Integralna tjestenina",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:89c715652c0f21685fe823c9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Integralni makaroni",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:16c3c29ff18ebf2de88eb738",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Jabuka zlatni delišes",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e192b644cb90e86f9c3ae1bd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Jabuke zlatni delišes",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:025ea3572c1698d96636c8a1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Jagode",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6b49f954b1922547e3ef2788",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Jagode, narezane na četvrtine",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7f61b6f24c25ba94d4037a93",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Jaki espresso",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a7065a062115577e1ffadb06",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Janjeća plečka",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:da87ec8ab71ef94d217e22cf",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Japanska riža (riža za suši)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:eb550fe855fd9536fe759f3d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Jelen (divljač)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ff471cbb4c44f837a86a53af",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Jelenov but",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:af94804b561b61afd892a30f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Junetina za gulaš (lopatica, koljenica, potrbušina, vratina)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:615f7c0f3b2538e9d797b464",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Juneća vratina",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a76150a472ec9d3a6117b221",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Juneće okruglice",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fc34695f23bc8169e76e9e8d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Juneći lažni file",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:131208af87e3a680313a1771",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Kakao u prahu",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a349b4760eeedc8d3f1da55f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Kalup za muffine",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:08cd19458496d9da791007e2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Kečap (ili pasirana rajčica)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:84de208fad126f709c5b45cb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Kečap (ili senf ili umak za burger)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    }
+  ]
+}

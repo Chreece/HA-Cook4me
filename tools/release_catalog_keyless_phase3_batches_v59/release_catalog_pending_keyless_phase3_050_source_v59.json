@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 50,
+  "batchSize": 100,
+  "rankStart": 4901,
+  "rankEnd": 5000,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:f5c8529affa6cc384646304c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "돼지갈비 (핏물 제거)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2fc4bbe8b8dc51e94de8318b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "돼지고기",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:39b7033b8c4664d0ada3a1af",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "돼지고기 앞다리살",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2c2fb4082b8d3b323ac9972c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "드라이 화이트와인",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6cce08ab9470eed1e919e2f9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "등갈비 (핏물 제거)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d8fa595c29fe0c373d1b0179",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "등갈비 (핏물제거)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c763da74ae5fb1e8eff0e560",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "디종 머스터드",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cde9562f226eaa73618b7e78",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "떡국떡",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a0b0fff5ae4eff06f034c454",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "떡볶이 떡",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f151e01792579e83679e41aa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "라임 슬라이스",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fe3fcc17bfbc316331aa9584",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "레몬 슬라이스 (고명)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0bd8f97686acd6a258750ca3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "마른 고추",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7b921597a91b8f466ef1bbd1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "마시는 요거트",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d3f670a951dec981dcb26c1a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "만두",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4aef3509371beb1e25fe18a7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "멸치액젓",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9584ca144b1215fbcf5efd82",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "무 (3cm)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c9b6dbb798abae198dbe9d0d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "무 (5cm)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9209ad8eb633c36cba9c4730",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "묵은지",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6b450dc47357f0c449906bd6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "물 (반죽용)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9b7281b5203dcb5688bbaf5f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "물엿",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2cff5a66f8f47c84c4382414",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "미역",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3280f09b2021e8e18e10b191",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "민트잎",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:803bd8c131791d619d22c365",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "바지락살",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1e4473c1df56ab18f010d0f7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "박력분",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8dbc193e7b5182510262a226",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "반으로 자른 스파게티면",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:66d623210746720fc11e9650",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "밥",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:aef4dfaacf34306da74338bd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "배 (4등분)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a0f04bdf15106803eae2286b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "백태",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:99a0cef44ce13d8dc8382b52",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "베이컨",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:89bb0838072fd9c58496cefc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "베이크드 빈",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:708735730a9a6d3f05012b7b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "베이킹용 유산지컵",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:43bda12bb2cc10fcc7e0db78",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "베이킹파우더",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:789571edaecc3d4b24ad5632",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "북어채",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b0f8ac9e11a7c7c775e9741c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "불고기용 소고기",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:51e00df865237af803cad629",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "비엔나소시지",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:28f28a4d1347a019692c5733",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "사과 (4등분)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1bbeefb537464d7ca3607d41",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "새송이버섯",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b86a34850549e4e986eb9a4a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "새우살",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:27efec846bced9ac19c2bea2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "설탕 (토핑)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5e2ac6168dce2d1ae3e034dd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "소갈비 (핏물제거)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:52470ab525c3523172cae7e3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "소고기 (4cm크기)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6fb22142554761c2ea014054",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "소고기 (안심 혹은 등심)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b033aa304309dd301cd0fb71",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "소고기 홍두깨살",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a1eef19c3621d73d144339ed",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "소꼬리 (핏물 제거)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c75b1405d2e28b46725add23",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "수삼",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4df9020509ae02c4b5675589",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "순두부",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1b6b4fd8b62349233a1ae5e6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "스파게티면",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5c70dfe78e9ded07c89be251",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "시금치 잎",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:77ad681fbfa8b4b53f8ea09a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "시나몬 가루",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:807ba28acb4f32f45461f70c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "시나몬가루",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:84d09d25a343165cb78418bf",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "시나몬스틱",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fff9751d6a610b429c283a3e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "시치미 (고명)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:de2308efbe39c72a0dc1e573",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "신김치",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:aa3551849d3b606c77dd923d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "얇게 채 썬 당근",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3300701f5513b0f9932f7249",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "양송이버섯",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0699e06789fef2670e5b4250",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "엿기름팩",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:aa955e5c4bfb1893cc0c2712",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "오일 바른 내열용기",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3419e78fc7ba79869e68a999",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "완숙 토마토",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2ffbbcc40dfc8a0d63bc7461",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "우엉 (20cm)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cd1760d485c373096edb9ff1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "자스민녹차 티백",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5239257e37eee50bc187761c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "잡곡",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:87468240d2241846dbcbd0c8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "적색 초생강 (고명)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:802ae20f14c19791ba2765b9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "절단 꽃게",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:481e6499903691f75a7866fe",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "정과용 도라지",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:edc452b51f3e2b543eed75c2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "조개",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:243f6d399be7dac1c845131b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "조기",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3acc76d65318e8b5a6938295",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "진간장 (쯔유)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f3ba3199d28098a6db5dc97f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "짜장가루",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2d12943305ca9805646b6b6d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "차돌박이",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ea562c6b430488cbee6d5424",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "참기름 (밑간용)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:32ceb35fefd870b1b7fd22ca",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "청국장",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a4faed5b4cf5b73d8d32f1ae",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "체에 내린 쌀가루",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:890852f4531a18211335479d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "초코칩",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dc182cee8705d9b83bfa304d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "카레가루",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c20add74922c27c3943174f0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "코다리",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e752c49aea6c16cc9c4c7e3c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "코코넛 밀크",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:afee88350ab9db0696c36c25",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "코코아 파우더",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ea0bb3ade4d87285a1a8aa37",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "토란대",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:96cb9629b0ee5d93294d7c15",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "토마토소스",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:13e033f653ab3155ef06300c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "토마토케첩",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f1d824cb63dac92be77a1926",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "토마토퓌레",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a4ec992fb0cef909431da159",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "통 삼겹살",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c346fc9dd0dd2e84f3d548b7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "통깨",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:233d727555641eda97e90a15",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "통삼겹살",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6685c55352bb866cb43637b7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "튀긴 찹쌀누룽지 (5x5cm)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a06315b3282faa8bb7e6f79c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "파마산치즈",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2c634d38981895ed684acd96",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "파인애플",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6b2998c7b072eaaa3ae8c8f4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "파프리카",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:89609bdf70d32d4369948fa6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "팥",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b32c4d3bc887c9c4a027788b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "표고버섯",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:811a84a18693c510a6b58d70",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "피망",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:602acd0523cd1bb502cf09d6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "피시 소스",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0bdb952151862495b87588e3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "핫케이크 믹스",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:468085a682a90d72a327dd2e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "해바라기씨유",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:181ef35f4da616965e0abd1d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "호박씨",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1f10063ca45c6a882c88817f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "화이트와인",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:75f7face5fd34b00d0878b89",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "18 cm naczynie",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f095394a06515c94130489a2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Aluminiowe werynki",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b2efe8b551628093ca56f126",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Anchois",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:de853668df353dc1358e7531",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Arkusze papieru pergaminowego 30 cm",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    }
+  ]
+}

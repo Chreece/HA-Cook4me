@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 25,
+  "batchSize": 100,
+  "rankStart": 2401,
+  "rankEnd": 2500,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:88aa9519d09dc02e8f0b4dea",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Лукче шалот, нарязано на тънко",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f171ef2e06ebdecc484e3460",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Лукчета арпаджик",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:43bf097fcee9e638550c606f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Лучена супа на прах",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1bdeb19ae85d648298efc94d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Лют зелен пипер на люспи",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a7a1196764b963fd0686cf27",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Люти чушки „Птиче око“",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1813015514050827b41c6e99",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Малини за декориране",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9489c76e003fe7a1d985ee34",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Малка ряпа, разрязана на 2",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5b761760403945aaa59d4fb9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Малко яйце",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9b7a60d80ed98209b42089ec",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Малък алабаш с листа",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b18c26f3bbb62da1b536d11c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Малък домат, на кубчета",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:76ca690a7115c4666cfa994f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Малък картоф, нарязан",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:000517cd297860ea7e0d5b47",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Манго на кубчета от 5 мм",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:95ba9fe390381e361e4ba6e7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Манго, нарязано",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7a537d949abc316617fd91e1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Маринован артишок, нарязан",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2e622f5db138262433219a91",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Масло, на малки парченца",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2af27414c1ee55f26a0fd38c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Масло, разтопено",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:67aeaa4053a4fe18aa4a0a09",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Масло, разтопено с шоколада",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:39b1e744e4e5c30a96851074",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Меко или пикантно чоризо, нарязано",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cf6621e900a7bf36f70fdbee",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Меко чоризо, ситно нарязано",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:67a1ec854f008409aad555dd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Меласа от нар",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:826d04881fabe8157e431860",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Мента, нарязана",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0cc245adc43e7fbf11958ccb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Млади картофи",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:349b1e573f13bfe74934aba3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Мляко (краве или мляко без млечни продукти)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8cbe657dce31ca22d41acd99",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Мляко за мариноване",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b3c5f6bf31b2501d1f658967",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Млян лют червен пипер",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0fee75751688cf6ab30a399a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Млян съчуански пипер",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b1a91b5faf2b7befa96875a7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Мляно ленено семе",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c536d6d5a21ac47a5c1e40ac",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Мляно месо смес",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:70b6530a7376e9e09dac68d6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Морков на кубчета",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:df247d62c11af6ac6c36fc9c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Морков, едро нарязан",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:78740682797aef5f096333a9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Морков, на кубчета",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fe8069acd76630d5a47215de",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Морков, нарязан",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ae86b8afee24131a4df3c74c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Морков, нарязан на ситно",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c90d118a6d0c626d9d076fe0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Моркови, на малки кубчета",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9abc800bba818b3ac4f48514",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Моркови, на пръчици",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d65168a2901e0fbfed27a91c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Моркови, на шайби",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e9bbbf5b1d5191a97b78474d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Мюнстер",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2a48d2213f1a8b2ef1372f5c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Наденички",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:618afed92974f237514b42fe",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Наденички, нарязани",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b7419868b2a1c3c931188f6f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Наденички, нарязани на шайби",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1596a29564049731cf442250",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Накълцан пресен джинджифил",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4c661a8fc41104748b62013b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нар (сушени червени боровинки)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:04694c981ef3019179557b3b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязан бекон",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6e1227c49447c0c60786bfba",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязан босилек",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c976afcb446c4153885f7651",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязан градински чай",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f2c60c72cdf94da1b7bc2213",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязан джинджифил",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e3fc09fd3826c9173999ae40",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязан магданоз",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d5d4229bea20169b9e95788e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязана зелена чушка",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8ab43ea06945b77f09f61407",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязана кора от био банан",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:23af5c3a8a352aab8f117091",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязана люта чушка",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3293a23ff937a9f58900ef34",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязана червена чушка",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fd84b32ac366210af8c3d7c6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязани бадеми",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6403a29ca14ef494592c83f8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязани гъби",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cf314a23d423bd3c9894fef5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязани домати и доматен кулис",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cc98a7523de449527ec01453",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязани зелени маслини",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:975ae7e6a1601386f8fb1d1c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязани кедрови ядки",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8f9532377009ad272ce4a3b8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязани моркови",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:acded7a33e0be25ab3e359a2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязани пекани",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0bcc3f066984b3797f2072fc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязани сушени домати",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cd9701fdeb8dd0cb53f3d568",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нарязано крема сирене",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9ba2a24a63ca78dc62df7bcf",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Наситнен пресен джинджифил",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dceb15b0b9edccfcc8d883b4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Настъргани моркови",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:22c0420370db626b807367ba",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Настъргано пекорино или пармезан",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c3671cea1eced02c7c677ec8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Настъргано сирене пармезан",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0485a3fcfbab6acdbb38ddfa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Натриев бикарбонат",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d4c53d6943eed94735b88853",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Натрошен бриош",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5b1cdd19adcb7ab74af3e58b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Натрошени филии хляб (25 г всяка)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:10814940b8784c43c3ce535d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Натрошени ядки кашу",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b9c2f779cf8237a513bf7583",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Натурален йогурт",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7c0ce93a04f01710d757a48c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нахут, киснат 12ч, варен в Cook4me",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b1f4bdb985e66cd4e1779e2c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "НЕОТВОРЕНА кутия кондензирано мляко",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d6f3081da399eb505d6921a5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Неутрално олио",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:40842cdac212190a5afac156",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нискомаслена сметана (или мляко)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9b9784819919f0bd3b7f1969",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Нори за суши",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:66044dbbb7846048b9db1384",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Обелен и готвен на пара патладжан",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4f7d2c603b207bbfa47777b3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Обелен и нарязан лук",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:df4fd58a8b20864fb9f6cd26",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Обелен картоф, нарязан на парчета",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fc5bf69abe795658babaed21",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Обелен шам фъстък",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:198a0c92a4dc7138a0c56452",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Обелени варени кестени",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2269d3be79256d9044e2b2e2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Обелени домати, без семе, нарязани",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6b9d5f59b6f10c6bcbb866ab",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Обелени опашки от скариди",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4a27bd58349efc134fa75b2e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Обелени патладжани, на кубчета",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:af505268ad47bb9d562cf888",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Обелени скариди",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ae5e59edc549d54565c5928d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Обелени сурови скариди",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fe2e556db5f8bb95289bdcbb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Обелени чушки, на кубчета",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e5f0368da836fcf9b491c45e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Обикновена фета",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c21ff58f3a8140f425f5167b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Обикновено брашно",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e68787449f918201f0aa9611",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Обикновено кисело мляко",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0a560315ad937dabfead0bd2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Олио за пържене",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6c618f94ae6bf681852bc59e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Олио от тиквени семки",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f26cfea74d93cbf7aa3891ce",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Олио, сол, пипер",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9209a444bba369334402d089",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Органичен грах в шушулките",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2ea6b11099026ead70034b63",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Органична зелена чушка",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:188df0b323c2a3e61748c72e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Органична краставица",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e1e38b1c9239d4d0c1e2f862",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Органични яйца",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0866d796237a550663e8b163",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Орехи",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7a551df492063561ce05e797",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Орехи, ситно нарязани",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:875305f915b26d08b50db6ef",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Ориз Арборио за ризото",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:34c27d879ab48f8460d466fa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Ориз за суши",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2262e15c0b4c6f5fbbd00ab7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Ориз за суши, изплакнат",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    }
+  ]
+}

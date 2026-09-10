@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 84,
+  "batchSize": 100,
+  "rankStart": 8301,
+  "rankEnd": 8400,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:884927b4dc167db1ba0178ea",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Tjestenina conchiglie",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:469b2fb4e2b61a2f1adda967",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Tortellini sa špinatom i ricottom (ili drugi po želji)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:16ce0a4dbe9fe3027aef3c3a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Tortilja promjera 20 cm",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8c3d96cf29393e9d376aa76d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Tostirana heljda „kasha“",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1d0e118a2fc1d3374fa43c72",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Tostirani badem",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d11a85fd4262a33ca952973b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Tradicionalni domaći kruh",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:696168c25e9b1eb70d4c08e0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Tradicionalni domaći kruh, tostirani",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3fd484decabe4c76f56daccc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Tradicionalni senf i crème fraîche",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2d91f6bfd994eee5b23fed03",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Tučci od šafrana",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:348b36261a2915572452eb32",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Tvrde kruške oguljene i narezane na kockice",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2bce7ad8b8a016f8bb5c4b73",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Tvrdo kuhana jaja",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dd35e10acf6b106e4c6eec4f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Ulje, sol, papar",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:981dbf51941ca0a6519759d8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Usoljena svinjska lopatica",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a5ebb3019135a139d1aa31b9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Velike jabuke",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d4b2475693ff04c8d911894f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Velike kriške kruha, tostirane",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:156b5f03074427515c70acbf",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Visokokvalitetno maslinovo ulje",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e84484958327f461c0080c93",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Voda ili temeljac",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f5f27767fafc9b5484669af2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Voda s okusom Earl Grey čaja (1 vrećica za 2 osobe)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f40f442e85bdc45d3140441d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Vodica narančinog cvijeta",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b55a9d667d04365d771a117b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Vrhovi bijelih šparoga",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6e78e15ec02d9cac7a422ef1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Vrhovi zelenih šparoga",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:851b02852441f1328acd12f2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Vrhovi šparoga",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:75d061998feafb6e2cf71339",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Vrlo mekani maslac",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:58b8f16d63586a0bc74c4e02",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Vrtna krasuljica ili peršin",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:07d087e1a70c0b257959b5fe",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Wasabi pasta",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9e4fb7ae996429fd80f90b4c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Zaslađena crna kava",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cdd9ac377f62d6479c9e3d45",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Začini za kus-kus",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:457b791352efbca5a53ddb5b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Zdrobljeni indijski orasi",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6f2ef01a8f28ff40343091e9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Zečji zabatci prerezani na pola i uvaljani u brašno",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9af72d06b39bd695f67703b9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Zrnca ružičastog papra",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:83728e1b74f61f038bda0507",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Čili paprika espelette (ili slatka paprika)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ca1673bae4cdf5aa0aaece29",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Čokolada za kuhanje, 50% kakaa",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:07ca4cff035b83f8688b7247",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Čokolada za kuhanje, 50/55% kakaa, sitno nasjeckana",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:29b6d9b24c5654878455c1b3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Čokolada za kuhanje, 55% kakaa",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:040136712c7901123b1c5c71",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Šafran u prahu",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:459305665331e1f6230b7273",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Šaran",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:03bb50aeb095e3f8ba365419",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Šećer za karamel",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:14e6aec06cef92bd86304058",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Šećer za kremu",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:91469f7f28caebfe304c45a0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Škampi",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:80407a0f520849c9412c2447",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Škarpina",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:380fc34022d7db61d14d006d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Šparoga",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7c39896ae38688a83c9b2a14",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Štapić cimeta",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f36df885a2062e81ea9ca87d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "40-50 g-os gombócok",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2b43ae933e49f14b197347f1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Allspice",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6aed772d4906a1bba1c455e0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Alma kompót",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dc5b228a3fa3017720484c5b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Aprított fehércsokoládé",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0f2061e8c6adb7c6f9e834df",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Bok choy bordáskel, 6 darabra vágva",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:71f321177a5fb82f83ce9531",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Borsos pecorino sajt, kockázva",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5c9433a9ea834c794ecab06d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Cajun fűszerkeverék",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1bd081539f59d1b075e2a141",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Citrom (finomra reszelt héj)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:be7a6153bffd567ecac7cea6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Citrom (finomra reszelt héja)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:460bd9fe4449056cb2bd8063",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Citrom (héja finomra reszelve)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:087636933dcdf7a53687cda0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Citrom (reszelt citromhéj)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1b84535ecca6b98790ddfc90",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Colombo fűszerek",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:35f3f40f2646734e084252bf",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Csirkeleves",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:05353f2d8aea68905254fb44",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Csokoládé karika",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bdaedaaeb6895ed48516bae5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Csokoládé reszelék",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a0d61a24827437a34dccb032",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Csokoládé vagy mogyorókrém",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:22ac52303e8b77269ee8b1e1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Csokoládéforgács",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:99db04121ef54689d7c14065",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Csokoládés keksz",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f3a19137086bfa9ea1bd6c51",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Csokoládés keksz, morzsává zúzva",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c51a4dda50ab202f61d909ec",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Csokoládés keksz, összetörve morzsákra",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4e3db425a7adf02c923c6ac8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Csokoládés keksz, összetörve morzsára",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a86578074d8377ad8ccc6e0b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Csokoládéöntet",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a296769af348f84f94916206",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Csomag francia hagymaleves mix",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:669f0b50eb15f396e75a21ee",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Darált cookies keksz",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b498fa471fe1bc9bdfacdb4b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Darált sertésszelet (vagy szalonnakocka)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fca9e8a8346ffc926a8627b4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Evőkanál mirin",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b51889756dc896dbe1ec482a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Fehércsokoládé, apróra darabolva",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0ab7c3316428533df5b59164",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Fokhagyma, hámozva, csírátlanítva és finomra aprítva",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:86ae6388a04a9d38a6648f52",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Fokhagymagerezd, meghámozva, kicsírázva és finomra aprítva",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:46c23ff7abfff6e4e482ff8f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Fokhagymagerezdek, hámozva, csírázva és finomra vágva",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b85b747edc1bebe4c6863ec6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Fokhagymagerezdek, meghámozva, kicsírázva és finomra vágva",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:da0959a2d15ec8f0ba6481fe",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Folyékony méz",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:164349d83eb1efc4d51265b8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Féldurva liszt",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:666555ecdbada84ecd746bb9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Főtt tésztavíz",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:44fc7ca6df04425753179615",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Főzőcsokoládé, 50/55% kakaótartalommal, aprítva",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e1e3518ce799e4c4d627d2a2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Főzőcsokoládé, 50/55% kakaótartalommal, apróra vágva",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:accf14c0af3685b018f1296c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Főzőtejszín vagy zabtejszín",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d6712d87e3afeb615527c7bc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Fűszerek (kurkuma, paprika, ras-el-hanout, gyömbér)",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:490fe0a487aeba67ed46b2ee",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Garni csokort",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:275d21bbd20f219422d6788c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Garnicsokrok",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d61a552facd2b8faa3492b7b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Gochujang szósz",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b62f8fe73f65b11227aea75f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Habarás:",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applicationDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dc9f6de34a56d2b03a845e82",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Hagymaleves por",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:50181254460d0b857b6458ec",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Indiai fűszerek",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3d66ae4be669c8903476e189",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Indiai fűszerpor",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:550001c431058e635f79ceaa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Kandírozott citrom",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e3a688900c1bfc2b204eb6a6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Kanál fahéjas vagy vaníliás fagylalt",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:89e30f66b1948a012eda8ce9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Karamelles popcorn vagy kemény karamell cukorka, darabokban",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:db1a546f08ba3e12ea355d32",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Karamellás pattogatott kukorica vagy darabolt karamell cukorka",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8a234be9350f7590776f50f6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Karamellás pattogatott kukorica vagy kemény karamellcukorka, darabokban",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c545d2a8c06dd474784f65e1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Karamellás popcorn vagy kemény karamell széttörve",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ea540a1b42e19cdf53e02f4d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Keleti fűszerek",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b9e82eab2fdf0f10292fe12a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Kicsi salottahagyma(k), meghámozva és finomra vágva",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:19b278d5b687c7b5debce5c2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Kis salottahagyma, meghámozva és finomra vágva",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cc5fa15655f1230f2ddbea3e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Kis salottahagyma, megpucolva és apróra vágva",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:62a1c614113d61baab3bdf34",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Kis salottahagyma, megtisztítva, finomra vágva",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b0c9e397c153a195b0556283",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Kockázott, borsos pecorino sajt",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:193752a1286a44cbb628b7fe",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Krutonok",
+      "occurrenceCount": 1,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 1
+      }
+    }
+  ]
+}
