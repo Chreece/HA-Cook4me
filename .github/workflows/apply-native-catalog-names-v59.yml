@@ -1,0 +1,396 @@
+name: Apply provider-native catalog names v59
+
+on:
+  push:
+    branches:
+      - cook4me-release-catalog-cache-progress-v59
+
+permissions:
+  contents: write
+
+jobs:
+  apply-native-names:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Patch native-name contract
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          def read(path):
+              return Path(path).read_text(encoding="utf-8")
+
+          def write(path, text):
+              Path(path).write_text(text, encoding="utf-8")
+
+          def replace_once(text, old, new, label):
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f"{label}: expected exactly one match, got {count}")
+              return text.replace(old, new, 1)
+
+          def regex_once(text, pattern, replacement, label):
+              out, count = re.subn(pattern, replacement, text, count=1, flags=re.S)
+              if count != 1:
+                  raise SystemExit(f"{label}: expected exactly one regex match, got {count}")
+              return out
+
+          # ------------------------------------------------------------------
+          # Final immutable-catalog builder: retain exact provider-native
+          # title/name beside canonical English and global translations.
+          # ------------------------------------------------------------------
+          path = "tools/build_release_catalog.py"
+          text = read(path)
+          native_ingredient_function = '''def _compact_variant_ingredient(
+              item: dict[str, Any],
+              ingredients: dict[str, dict[str, Any]],
+              *,
+              source_language: str = "",
+          ) -> dict[str, Any]:
+              ident = _ingredient_id(item)
+              global_row = ingredients.get(ident) or {}
+              key = _text(item.get("foodKey") or item.get("key") or global_row.get("key"))
+              original_name = _text(
+                  item.get("originalName")
+                  or item.get("foodName")
+                  or item.get("name")
+                  or item.get("cleanName")
+              )
+              original_language = _text(
+                  item.get("originalLanguage") or source_language
+              ).lower()
+              row = {
+                  "ingredientId": ident,
+                  "key": key,
+                  "originalName": original_name,
+                  "originalLanguage": original_language,
+                  "quantity": item.get("quantity"),
+                  "unit": item.get("unit"),
+                  "unitKey": item.get("unitKey"),
+              }
+              # The global ingredient row carries canonical English plus all known
+              # translations. The variant reference deliberately retains the exact
+              # SEB wording used on this recipe line, even when it differs slightly
+              # from the marketing-food dictionary label for the same provider ID.
+              if not key:
+                  row["canonicalName"] = _text(global_row.get("canonicalName")) or original_name
+              return {
+                  name: value
+                  for name, value in row.items()
+                  if value not in ("", None, {}, [])
+              }
+          '''
+          text = regex_once(
+              text,
+              r'def _compact_variant_ingredient\(.*?\n\ndef _compact_variant_row',
+              native_ingredient_function + '\n\ndef _compact_variant_row',
+              "build compact ingredient function",
+          )
+          text = replace_once(
+              text,
+              '''        "title",\n        "language",''',
+              '''        "title",\n        "originalTitle",\n        "language",\n        "originalLanguage",''',
+              "build compact variant native fields",
+          )
+          text = replace_once(
+              text,
+              '''    for variant in variants:\n        compact = [\n            _compact_variant_ingredient(item, ingredients)\n            for item in variant.get("ingredients") or []\n            if isinstance(item, dict)\n        ]''',
+              '''    for variant in variants:\n        variant["originalTitle"] = _text(\n            variant.get("originalTitle") or variant.get("title")\n        )\n        variant["originalLanguage"] = _text(\n            variant.get("originalLanguage")\n            or variant.get("language")\n            or variant.get("sourceCatalogLanguage")\n        ).lower()\n        compact = [\n            _compact_variant_ingredient(\n                item,\n                ingredients,\n                source_language=variant["originalLanguage"],\n            )\n            for item in variant.get("ingredients") or []\n            if isinstance(item, dict)\n        ]''',
+              "build variant native capture",
+          )
+          text = replace_once(
+              text,
+              '''            "format": "normalized-ingredient-references-v1",\n            "applianceGroup":''',
+              '''            "format": "normalized-ingredient-references-v1",\n            "providerNativeNamesStored": True,\n            "applianceGroup":''',
+              "build source native-name flag",
+          )
+          write(path, text)
+
+          # ------------------------------------------------------------------
+          # Runtime: exact native wording wins only when the selected variant's
+          # original language matches the requested UI language. Otherwise use
+          # the global requested-language translation/canonical fallback.
+          # ------------------------------------------------------------------
+          path = "custom_components/cook4me/release_catalog.py"
+          text = read(path)
+          text = replace_once(
+              text,
+              '''    source = _ingredient_reference(raw) or raw\n    values = [_text(source.get("canonicalName") or source.get("name") or source.get("foodName"))]''',
+              '''    source = _ingredient_reference(raw) or raw\n    values = [\n        _text(raw.get("originalName")),\n        _text(source.get("canonicalName") or source.get("name") or source.get("foodName")),\n    ]''',
+              "runtime ingredient search includes original",
+          )
+          text = replace_once(
+              text,
+              '''        values.append(_text(variant.get("title")))''',
+              '''        values.append(_text(variant.get("originalTitle")))\n        values.append(_text(variant.get("title")))''',
+              "runtime recipe search includes original",
+          )
+          native_display_function = '''def _display_ingredient(raw: Any, language: str) -> Any:
+              if not isinstance(raw, dict):
+                  return deepcopy(raw)
+              source = _ingredient_reference(raw) or raw
+              requested_language = _language(language)
+              original_name = _text(raw.get("originalName"))
+              original_language = _language(raw.get("originalLanguage"))
+              translated_name = _translated_name(source, language) or _translated_name(raw, language)
+              name = (
+                  original_name
+                  if original_name and original_language == requested_language
+                  else translated_name or original_name
+              )
+              ident = _text(
+                  raw.get("ingredientId")
+                  or raw.get("id")
+                  or source.get("id")
+                  or source.get("ingredientId")
+                  or raw.get("key")
+                  or source.get("key")
+              )
+              key = _text(
+                  raw.get("key")
+                  or raw.get("foodKey")
+                  or source.get("key")
+                  or source.get("foodKey")
+              )
+              row: dict[str, Any] = {}
+              if ident:
+                  row["ingredientId"] = ident
+              if key:
+                  row["key"] = key
+                  row["foodKey"] = key
+              if name:
+                  row["name"] = name
+                  row["foodName"] = name
+              if original_name:
+                  row["originalName"] = original_name
+              if original_language:
+                  row["originalLanguage"] = original_language
+              canonical = _text(source.get("canonicalName") or raw.get("canonicalName"))
+              if canonical:
+                  row["canonicalName"] = canonical
+              for field in ("quantity", "unit", "unitKey", "functionalId"):
+                  if raw.get(field) not in (None, ""):
+                      row[field] = deepcopy(raw[field])
+              return row
+          '''
+          text = regex_once(
+              text,
+              r'def _display_ingredient\(.*?\n\ndef _recipe_row',
+              native_display_function + '\n\ndef _recipe_row',
+              "runtime display ingredient function",
+          )
+          text = replace_once(
+              text,
+              '''    title = _text(display.get("title")) or _text(recipe.get("canonicalName"))\n    row: dict[str, Any] = {''',
+              '''    original_title = _text(display.get("originalTitle") or display.get("title"))\n    original_language = _language(\n        display.get("originalLanguage") or display.get("language")\n    )\n    requested_language = _language(language)\n    fallback_title = _text(display.get("title")) or _text(recipe.get("canonicalName"))\n    title = (\n        original_title\n        if original_title and original_language == requested_language\n        else fallback_title or original_title\n    )\n    row: dict[str, Any] = {''',
+              "runtime recipe original title selection",
+          )
+          text = replace_once(
+              text,
+              '''        "title": title or None,\n        "canonicalName":''',
+              '''        "title": title or None,\n        "originalTitle": original_title or None,\n        "originalLanguage": original_language or None,\n        "canonicalName":''',
+              "runtime exposes recipe original fields",
+          )
+          text = replace_once(
+              text,
+              '''                    "groupingFunctionalId": variant.get("groupingFunctionalId"),\n                    "language": variant.get("language"),''',
+              '''                    "groupingFunctionalId": variant.get("groupingFunctionalId"),\n                    "title": variant.get("title"),\n                    "originalTitle": variant.get("originalTitle") or variant.get("title"),\n                    "language": variant.get("language"),\n                    "originalLanguage": variant.get("originalLanguage") or variant.get("language"),''',
+              "runtime variant summaries retain native title",
+          )
+          write(path, text)
+
+          # ------------------------------------------------------------------
+          # Offline v2 preparation: preserve every provider-native sibling title
+          # and use an actual SEB English sibling before creating a translation
+          # task. This fixes the old first-variant-language accident.
+          # ------------------------------------------------------------------
+          path = "tools/prepare_release_catalog_v2_assembly.py"
+          text = read(path)
+          group_block = '''    groups: dict[str, dict[str, Any]] = {}
+              title_task_users: dict[tuple[str, str], list[str]] = defaultdict(list)
+              for detail in provider.get("details") or []:
+                  grouping_id = _text(
+                      detail.get("groupingFunctionalId")
+                      or detail.get("topRecipeId")
+                      or detail.get("recipeFunctionalId")
+                      or detail.get("variantId")
+                  )
+                  if not grouping_id:
+                      continue
+                  language = _text(detail.get("language")).lower()
+                  market = _text(detail.get("market"))
+                  title = _text(detail.get("title") or detail.get("normalizedTitle"))
+                  variant_id = _text(detail.get("variantId"))
+                  row = groups.get(grouping_id)
+                  if row is None:
+                      row = {
+                          "groupingFunctionalId": grouping_id,
+                          # Legacy representative fields remain for existing review
+                          # tooling, while originalTitles below keeps every sibling.
+                          "language": language,
+                          "market": market,
+                          "title": title,
+                          "variantIds": [],
+                          "originalTitles": [],
+                      }
+                      groups[grouping_id] = row
+                  row["variantIds"].append(variant_id)
+                  if title:
+                      row["originalTitles"].append(
+                          {
+                              "variantId": variant_id,
+                              "language": language,
+                              "market": market,
+                              "name": title,
+                          }
+                      )
+                      if language == "en" and not row.get("canonicalEnglishTitle"):
+                          row["canonicalEnglishTitle"] = title
+                          row["canonicalEnglishSource"] = "seb:en-sibling"
+
+              # Only groups with no provider English sibling need semantic title
+              # review. Translation changes labels only; it never changes grouping.
+              for grouping_id, row in groups.items():
+                  if row.get("canonicalEnglishTitle"):
+                      continue
+                  language = _text(row.get("language")).lower()
+                  title = _text(row.get("title"))
+                  if title:
+                      title_task_users[(language, _norm(title))].append(grouping_id)
+
+              title_tasks: dict[str, dict[str, Any]] = {}
+          '''
+          text = regex_once(
+              text,
+              r'    groups: dict\[str, dict\[str, Any\]\] = \{\}.*?    title_tasks: dict\[str, dict\[str, Any\]\] = \{\}\n',
+              group_block,
+              "prep preserve all native recipe titles",
+          )
+          text = replace_once(
+              text,
+              '''    for group in group_rows:\n        group["variantIds"] = sorted(set(group["variantIds"]))\n        group["variantCount"] = len(group["variantIds"])''',
+              '''    for group in group_rows:\n        group["variantIds"] = sorted(set(group["variantIds"]))\n        original_titles = {}\n        for original in group.get("originalTitles") or []:\n            if not isinstance(original, dict):\n                continue\n            identity = (\n                _text(original.get("variantId")),\n                _text(original.get("language")).lower(),\n                _text(original.get("market")),\n                _text(original.get("name")),\n            )\n            original_titles.setdefault(identity, original)\n        group["originalTitles"] = sorted(\n            original_titles.values(),\n            key=lambda value: (\n                _text(value.get("language")),\n                _text(value.get("market")),\n                _text(value.get("variantId")),\n                _text(value.get("name")).casefold(),\n            ),\n        )\n        group["variantCount"] = len(group["variantIds"])''',
+              "prep dedupe native titles",
+          )
+          text = replace_once(
+              text,
+              '''        "providerRecipeGroups": len(group_rows),\n        "providerFoodCatalogKeys":''',
+              '''        "providerRecipeGroups": len(group_rows),\n        "recipeGroupsWithMultipleOriginalTitles": sum(\n            len(row.get("originalTitles") or []) > 1 for row in group_rows\n        ),\n        "providerFoodCatalogKeys":''',
+              "prep native-title summary",
+          )
+          text = replace_once(
+              text,
+              '''            "translationNeverMergesRecipeGroups": True,\n            "unkeyedCrossLanguageMergeFromTranslation": False,''',
+              '''            "translationNeverMergesRecipeGroups": True,\n            "providerNativeTitlesPreserved": True,\n            "unkeyedCrossLanguageMergeFromTranslation": False,''',
+              "prep native-title identity policy",
+          )
+          write(path, text)
+
+          # ------------------------------------------------------------------
+          # Runtime regression tests: exact recipe-line wording must beat the
+          # generic dictionary translation for a matching native UI language.
+          # ------------------------------------------------------------------
+          path = "tests/test_release_catalog.py"
+          text = read(path)
+          text = replace_once(
+              text,
+              '''    @staticmethod\n    def _recipe_ingredient() -> dict:\n        return {\n            "ingredientId": "M_FOOD_TOMATO",\n            "key": "M_FOOD_TOMATO",\n            "quantity": 400,\n            "unit": "g",\n        }''',
+              '''    @staticmethod\n    def _recipe_ingredient(language: str = "en") -> dict:\n        original = "Frische Tomate" if language == "de" else "Tomato"\n        return {\n            "ingredientId": "M_FOOD_TOMATO",\n            "key": "M_FOOD_TOMATO",\n            "originalName": original,\n            "originalLanguage": language,\n            "quantity": 400,\n            "unit": "g",\n        }''',
+              "test fixture native ingredient",
+          )
+          text = replace_once(
+              text,
+              '''                "title": "Tomato soup",\n                "language": "en",''',
+              '''                "title": "Tomato soup",\n                "originalTitle": "Tomato soup",\n                "language": "en",\n                "originalLanguage": "en",''',
+              "test fixture English original title",
+          )
+          text = replace_once(
+              text,
+              '''                    "title": "Tomatensuppe",\n                    "language": "de",''',
+              '''                    "title": "Tomatensuppe",\n                    "originalTitle": "Tomatensuppe",\n                    "language": "de",\n                    "originalLanguage": "de",''',
+              "test fixture German original title",
+          )
+          text = replace_once(
+              text,
+              '''"ingredients": [self._recipe_ingredient()],''',
+              '''"ingredients": [self._recipe_ingredient("en")],''',
+              "test fixture English original ingredient call",
+          )
+          text = replace_once(
+              text,
+              '''"ingredients": [self._recipe_ingredient()],''',
+              '''"ingredients": [self._recipe_ingredient("de")],''',
+              "test fixture German original ingredient call",
+          )
+          text = replace_once(
+              text,
+              '''        self.assertEqual(ingredient["name"], "Tomate")\n        self.assertEqual(ingredient["canonicalName"], "Tomato")''',
+              '''        self.assertEqual(ingredient["name"], "Frische Tomate")\n        self.assertEqual(ingredient["originalName"], "Frische Tomate")\n        self.assertEqual(ingredient["originalLanguage"], "de")\n        self.assertEqual(ingredient["canonicalName"], "Tomato")''',
+              "runtime exact native ingredient assertion",
+          )
+          text = replace_once(
+              text,
+              '''        self.assertEqual(result["items"][0]["title"], "Tomato soup")\n        self.assertEqual(result["items"][0]["displayVariantId"], "VAR_EN")''',
+              '''        self.assertEqual(result["items"][0]["title"], "Tomato soup")\n        self.assertEqual(result["items"][0]["originalTitle"], "Tomato soup")\n        self.assertEqual(result["items"][0]["originalLanguage"], "en")\n        self.assertEqual(result["items"][0]["displayVariantId"], "VAR_EN")''',
+              "runtime original recipe title assertion",
+          )
+          write(path, text)
+
+          # ------------------------------------------------------------------
+          # Prep regression: a later English sibling is authoritative English;
+          # first-seen native title is still retained exactly.
+          # ------------------------------------------------------------------
+          path = "tests/test_release_catalog_v2_assembly_prep.py"
+          text = read(path)
+          text = replace_once(
+              text,
+              '''        self.assertEqual(groups["g1"]["translationTaskId"], groups["g2"]["translationTaskId"])\n        self.assertEqual("Test soup", groups["g3"]["canonicalEnglishTitle"])''',
+              '''        self.assertEqual(groups["g1"]["translationTaskId"], groups["g2"]["translationTaskId"])\n        self.assertEqual(\n            [{"variantId": "v1", "language": "de", "market": "GS_DE", "name": "Kartoffelsuppe"}],\n            groups["g1"]["originalTitles"],\n        )\n        self.assertEqual("Test soup", groups["g3"]["canonicalEnglishTitle"])''',
+              "prep original title assertion",
+          )
+          anchor = '''    def test_wrong_marketing_food_contract_is_rejected(self):\n'''
+          native_sibling_test = '''    def test_english_sibling_sets_canonical_but_keeps_all_original_titles(self):\n        provider = provider_capture()\n        provider["source"]["catalogs"][0]["searchRows"] = 4\n        provider["source"]["catalogs"][0]["hydratedVariants"] = 4\n        provider["details"].append(\n            {\n                "variantId": "v4",\n                "groupingFunctionalId": "g1",\n                "language": "en",\n                "market": "GS_GB",\n                "title": "Potato soup",\n                "ingredients": [\n                    {"foodKey": "M_FOOD_2", "cleanName": "Potato"}\n                ],\n            }\n        )\n        result, _queue = prep.prepare(provider, marketing_capture())\n        group = next(\n            row for row in result["recipeGroups"]\n            if row["groupingFunctionalId"] == "g1"\n        )\n        self.assertEqual("Potato soup", group["canonicalEnglishTitle"])\n        self.assertEqual("seb:en-sibling", group["canonicalEnglishSource"])\n        self.assertNotIn("translationTaskId", group)\n        self.assertEqual(\n            {("de", "Kartoffelsuppe"), ("en", "Potato soup")},\n            {(row["language"], row["name"]) for row in group["originalTitles"]},\n        )\n        self.assertTrue(result["identityPolicy"]["providerNativeTitlesPreserved"])\n\n'''
+          text = replace_once(text, anchor, native_sibling_test + anchor, "prep English sibling regression")
+          write(path, text)
+
+          # Keep the native-title metadata in the lightweight browser shell too.
+          path = "custom_components/cook4me/frontend/cook4me-panel-v59.js"
+          text = read(path)
+          text = replace_once(
+              text,
+              '''"title","canonicalName","cover","language","market"''',
+              '''"title","originalTitle","originalLanguage","canonicalName","cover","language","market"''',
+              "frontend compact shell native recipe metadata",
+          )
+          write(path, text)
+          PY
+
+      - name: Run native-name regression tests
+        run: |
+          python -m unittest discover -s tests -p 'test_release_catalog.py' -v
+          python -m unittest discover -s tests -p 'test_release_catalog_v2_assembly_prep.py' -v
+          node tests/frontend_v59_regression_smoke.mjs
+
+      - name: Commit tested changes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/build_release_catalog.py \
+                  tools/prepare_release_catalog_v2_assembly.py \
+                  custom_components/cook4me/release_catalog.py \
+                  custom_components/cook4me/frontend/cook4me-panel-v59.js \
+                  tests/test_release_catalog.py \
+                  tests/test_release_catalog_v2_assembly_prep.py
+          git diff --cached --check
+          git commit -m "Preserve provider-native recipe and ingredient names"
+          git push origin HEAD:cook4me-release-catalog-cache-progress-v59
