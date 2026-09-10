@@ -1,0 +1,712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "it",
+  "part": 3,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "tasksBeforeBatch": 626,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:c73947924835a62e174d4159",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Bietola ai formaggi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e360804a131653521622df90",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Bocconcini di merluzzo impanato",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ecb9a3ac1dff5585f502a8ae",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cavolo con prosciutto e uova",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e9c28dd5508f9a2ba9426cc5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cavolo navone",
+      "groupCount": 7
+    },
+    {
+      "taskId": "recipe_title_english:ad84b9bc8a72b77700deecf7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cavolo rosso",
+      "groupCount": 4
+    },
+    {
+      "taskId": "recipe_title_english:5720cc0c81618f26476471d8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cavolo verde",
+      "groupCount": 3
+    },
+    {
+      "taskId": "recipe_title_english:9b8305c5328e81b4e2528d61",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ceci alla greca",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:346370fe2af2931091f9c97e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Chantilly fragole e mele",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:71b3e87f6d8a63a39a40c412",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cheese cake ai lamponi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7c54058cb0e189691733b2d6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cheesecake ai mirtilli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fabe7d766e166b8fe3521864",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cheesecake al limone e ricotta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d834b97142e42b31e7789290",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cheesecake al tiramisù",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cbf9ba7e673a39e72ec21d61",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cheesecake arancia cioccolato",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9c92499fc27a2051355bb355",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cheesecake classica",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d918c5c25f6189a38458d4e5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cheesecake di castagne candite",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6e752ace8494bf11a32a918d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cheesecake di semolino",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d2607b996456c8c399d83d96",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Chili con carne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:31f39103cdbd1de6f3231d77",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Chorizo in salsa di vino",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:415e65f7366c1b07367fb0bc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ciambelle alla mela",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2f5c4388a2d731f7e2644d8a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ciliegie alla vaniglia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9e0fd872b760367777d3a673",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ciliegie dolci",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:254ec199f51a21857e89cf52",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cime di rapa alla mozzarella",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c4ef360c2d3f4db6d430bfb9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cime di rapa e salsiccia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:57f745fd5167d8de2dea7b69",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cioccolato e pere",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6a8a95b7828b3150febb0b8b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cipollotti in agrodolce",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a0da41d86107edb8f108a366",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Clafouti con pesche e mandorle",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e90f3b7a883dc1de36ce6081",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cocotte con uovo e carciofi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4c4974de7cfaabaecc6ffd71",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cocottine di riso ai lamponi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:423417ffa66c090ad3778133",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Coda di rospo ai capperi fritti",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:23d4074bdf5089d2b9d0e9a4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Coda di rospo alla basca",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:96578cf92add51f794f1c631",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Composta di frutti rossi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:452a6a5061ab2b334ecbd00a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Composta di mela e kiwi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:eff68e2547629bb445bbda97",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Composta di mele",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c1d399fa015afe5c744fa2b9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Composta di mele cotogne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:20e7c8c70778449521a7b278",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Composta di mele e banane",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:539349cf6e4abd33b6bf3421",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Composta di pera e castagne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e949931b917bf2c772c5b172",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Composta di zucca",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:70282a09fc5e9d7fa381dec9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Composta frutta e vaniglia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4ebcd4954adda569e82655a8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Conchiglie al prosciutto crudo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7580f805171b8c9834093cfc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Conchiglioni alle cozze e latte",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1a1e20b4f9d0291e374ef8db",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Coniglio alle erbe aromatiche",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4baf415615acc12898df9f70",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Coniglio brasato alla birra",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ce799cc14f1e53e659100679",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Coniglio olive e capperi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6eb52100ba1ba773e302d249",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Costine di agnello",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ba6c998bfdd433f65dcc4099",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Costine di maiale in agrodolce",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1aa09ea5ea17b769b6f59506",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Costolette al miele",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c4950b34678aaf6ff9f312c1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Costolette di agnello al limone",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b218feea5d1774dc29009b42",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Costolette di maiale",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a68398256ed5b2cb0ef818b7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cotechino e lenticchie",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e28509a2bc8beab5b24b0e04",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cous cous di mare",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4ced675ac7682283e87a2471",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Couscous con uova sode",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:577e49ec95759fadc86e2ba0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Couscous di mare",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e7d9338b106e0e9eda15a605",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Couscous di pesce",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2a27079ea9eb46a0ebb8ce10",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cozze",
+      "groupCount": 9
+    },
+    {
+      "taskId": "recipe_title_english:85ea800d7178f7045de08efa",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cozze alla caprese",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:eec580e987e9e163489c4fd2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cozze alla diavola",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:050dc5f68610ad020c9b3128",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cozze alla marinara",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:dc40019f46b9094997c2ccb1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cozze in rosso d'arancia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:21bd81d59803c3abb02ec749",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cozze in vino bianco",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:19fd54ac5dbcf3539e3055a8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crauti",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b9231efc769b5e6913f06275",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema al cappuccino",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:545ecf2703b3af081a793150",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema al cioccolato bianco",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ca4b17e0c0813472114b793a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema al cocco e cioccolato",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:63fdf92e99160010ec65a024",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema all’uovo e fragole",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:987c5fe89f495116b8e3f5c1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema banana e cioccolato",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8a4bfe1c537cf46ccfdabd52",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema di baccalà",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:593ed24f76d4431e07abdce5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema di banana spalmabile",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:e92da5eb3ab8741019f6febd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema di broccoli",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:92a512fccfe0d45e38d015ef",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema di cannellini e gamberi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f8473ccb20b55243aa7bfe1d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema di carciofi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c75237d9a90f7464f59f210b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema di carote con gamberoni",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ddc17d030983c0263ad2a022",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema di carote e nocciole",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:643cd1b23ae5e12b690f3d7b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema di limone con fragole",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d7d63b9765f56899b6f06615",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema di melanzane",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d5fa7bb754e0070e9a607ddd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema di patate",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1924583ccee829a9e239a6b0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema di patate dolci",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:21d33fd87013d1eea98ac8c2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema di sgombro",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bbee03c1bf55e70cdedef542",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema inglese",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1be318c27839828680cea94b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crema spalmabile cocco e mela",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:511659ddc45fe57c3b5e5207",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Creme brulée",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:eed22996e3f0704013a5cbda",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Creme caramel",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0b9d7f520885d0284f097582",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crepes agli asparagi",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:c323d6546a01366923bd2b03",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crocchette di pesce",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d4bfe1156a8218346b739b23",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crocchette di pollo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3ab1a4efb7989b2add92671b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crocchette impanate",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d7f2c45606f8fdde0adcb524",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crostini ai funghi e speck",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4b08b05668eaac8fe57c51dc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crumble di cavolfiore al curry",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2670839032c234dbc0b0b11a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crumble di fichi arrosto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:16c23e44d97f91ae076e4e33",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crumble di gamberi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f8b63cc99e795cf38823dfe7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crumble di merluzzo e chorizo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:450c3b38fc07dc0e0ab53d90",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crème brûlée al cioccolato",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6f3c2ab274fa3b38c6f99c58",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crème caramel",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:c349d8fe20538a1cbec38284",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Crème caramel all'arancia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:daee265c17b34e9be51f82e7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cubismo di vitello con uva",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1fba6ba24189f3e0f90a0542",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cupcake allo zenzero",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f5c440d0b6eeadc7e319effc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Curry di ceci",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0a0684478dcf38a20a07c4ae",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Curry di ceci e melanzane",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:43e240af7f32783f05c75ce1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Curry di lenticchie vegano",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d7e749029f46a91953974cde",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Curry di pollo e melanzane",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d679cd88f228de87fe3c4d0a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cuscus ai frutti di mare",
+      "groupCount": 1
+    }
+  ]
+}
