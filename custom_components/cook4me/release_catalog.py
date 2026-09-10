@@ -276,7 +276,10 @@ def _ingredient_search_values(raw: Any) -> list[str]:
     if not isinstance(raw, dict):
         return []
     source = _ingredient_reference(raw) or raw
-    values = [_text(source.get("canonicalName") or source.get("name") or source.get("foodName"))]
+    values = [
+        _text(raw.get("originalName")),
+        _text(source.get("canonicalName") or source.get("name") or source.get("foodName")),
+    ]
     translations = source.get("translations")
     if isinstance(translations, dict):
         values.extend(_text(value) for value in translations.values())
@@ -290,6 +293,7 @@ def _recipe_search_text(recipe: dict[str, Any]) -> str:
     for variant in recipe.get("variants") or []:
         if not isinstance(variant, dict):
             continue
+        values.append(_text(variant.get("originalTitle")))
         values.append(_text(variant.get("title")))
         for ingredient in variant.get("ingredients") or []:
             values.extend(_ingredient_search_values(ingredient))
@@ -300,7 +304,15 @@ def _display_ingredient(raw: Any, language: str) -> Any:
     if not isinstance(raw, dict):
         return deepcopy(raw)
     source = _ingredient_reference(raw) or raw
-    name = _translated_name(source, language) or _translated_name(raw, language)
+    requested_language = _language(language)
+    original_name = _text(raw.get("originalName"))
+    original_language = _language(raw.get("originalLanguage"))
+    translated_name = _translated_name(source, language) or _translated_name(raw, language)
+    name = (
+        original_name
+        if original_name and original_language == requested_language
+        else translated_name or original_name
+    )
     ident = _text(
         raw.get("ingredientId")
         or raw.get("id")
@@ -309,7 +321,12 @@ def _display_ingredient(raw: Any, language: str) -> Any:
         or raw.get("key")
         or source.get("key")
     )
-    key = _text(raw.get("key") or raw.get("foodKey") or source.get("key") or source.get("foodKey"))
+    key = _text(
+        raw.get("key")
+        or raw.get("foodKey")
+        or source.get("key")
+        or source.get("foodKey")
+    )
     row: dict[str, Any] = {}
     if ident:
         row["ingredientId"] = ident
@@ -319,6 +336,10 @@ def _display_ingredient(raw: Any, language: str) -> Any:
     if name:
         row["name"] = name
         row["foodName"] = name
+    if original_name:
+        row["originalName"] = original_name
+    if original_language:
+        row["originalLanguage"] = original_language
     canonical = _text(source.get("canonicalName") or raw.get("canonicalName"))
     if canonical:
         row["canonicalName"] = canonical
@@ -326,7 +347,6 @@ def _display_ingredient(raw: Any, language: str) -> Any:
         if raw.get(field) not in (None, ""):
             row[field] = deepcopy(raw[field])
     return row
-
 
 def _recipe_row(
     recipe: dict[str, Any],
@@ -348,7 +368,17 @@ def _recipe_row(
     send_grouping = _text(send.get("groupingFunctionalId") or grouping) if send else ""
     send_variant = _text(send.get("variantId") or send.get("searchVariantId")) if send else ""
     send_recipe = _text(send.get("recipeFunctionalId") or send_variant) if send else ""
-    title = _text(display.get("title")) or _text(recipe.get("canonicalName"))
+    original_title = _text(display.get("originalTitle") or display.get("title"))
+    original_language = _language(
+        display.get("originalLanguage") or display.get("language")
+    )
+    requested_language = _language(language)
+    fallback_title = _text(display.get("title")) or _text(recipe.get("canonicalName"))
+    title = (
+        original_title
+        if original_title and original_language == requested_language
+        else fallback_title or original_title
+    )
     row: dict[str, Any] = {
         "groupingFunctionalId": grouping or None,
         "recipeFunctionalId": _text(display.get("recipeFunctionalId") or display_variant) or None,
@@ -359,6 +389,8 @@ def _recipe_row(
         "sendGroupingFunctionalId": send_grouping or None,
         "sendRecipeFunctionalId": send_recipe or None,
         "title": title or None,
+        "originalTitle": original_title or None,
+        "originalLanguage": original_language or None,
         "canonicalName": _text(recipe.get("canonicalName")) or title or None,
         "cover": display.get("cover") or recipe.get("cover"),
         "language": _variant_language(display) or language,
@@ -383,7 +415,10 @@ def _recipe_row(
                     "variantId": variant.get("variantId") or variant.get("searchVariantId"),
                     "recipeFunctionalId": variant.get("recipeFunctionalId"),
                     "groupingFunctionalId": variant.get("groupingFunctionalId"),
+                    "title": variant.get("title"),
+                    "originalTitle": variant.get("originalTitle") or variant.get("title"),
                     "language": variant.get("language"),
+                    "originalLanguage": variant.get("originalLanguage") or variant.get("language"),
                     "market": variant.get("market"),
                     "servings": variant.get("servings"),
                     "yield": variant.get("yield"),

@@ -112,7 +112,7 @@ class Cook4MeRecipeHubPanelV59 extends BasePanel{
   _v59CompactTodayRecipe(recipe){
     if(!recipe||typeof recipe!=="object")return null;
     const out={};
-    for(const key of ["groupingFunctionalId","recipeFunctionalId","variantFunctionalId","searchVariantId","displayVariantId","sendVariantId","sendGroupingFunctionalId","sendRecipeFunctionalId","title","canonicalName","cover","language","market","groupSize","todayCatalogLanguage","source","releaseCatalogVersion","deviceCanAccept","sendable"]){if(recipe[key]!==undefined&&recipe[key]!==null&&recipe[key]!=="")out[key]=recipe[key];}
+    for(const key of ["groupingFunctionalId","recipeFunctionalId","variantFunctionalId","searchVariantId","displayVariantId","sendVariantId","sendGroupingFunctionalId","sendRecipeFunctionalId","title","originalTitle","originalLanguage","canonicalName","cover","language","market","groupSize","todayCatalogLanguage","source","releaseCatalogVersion","deviceCanAccept","sendable"]){if(recipe[key]!==undefined&&recipe[key]!==null&&recipe[key]!=="")out[key]=recipe[key];}
     if(recipe.yield&&typeof recipe.yield==="object")out.yield=Object.fromEntries(Object.entries(recipe.yield).filter(([key,value])=>["quantity","quantityDisplay","unit","unitKey"].includes(key)&&value!==null&&value!==""));
     const nutrition=this._v59CompactNutrition(recipe.nutrition);if(nutrition)out.nutrition=nutrition;
     const match=this._v59CompactMatch(recipe.match);if(match)out.match=match;

@@ -376,31 +376,41 @@ def _recipe_nutrition(
 
 
 def _compact_variant_ingredient(
-    item: dict[str, Any], ingredients: dict[str, dict[str, Any]]
+    item: dict[str, Any],
+    ingredients: dict[str, dict[str, Any]],
+    *,
+    source_language: str = "",
 ) -> dict[str, Any]:
     ident = _ingredient_id(item)
     global_row = ingredients.get(ident) or {}
     key = _text(item.get("foodKey") or item.get("key") or global_row.get("key"))
+    original_name = _text(
+        item.get("originalName")
+        or item.get("foodName")
+        or item.get("name")
+        or item.get("cleanName")
+    )
+    original_language = _text(
+        item.get("originalLanguage") or source_language
+    ).lower()
     row = {
         "ingredientId": ident,
         "key": key,
+        "originalName": original_name,
+        "originalLanguage": original_language,
         "quantity": item.get("quantity"),
         "unit": item.get("unit"),
         "unitKey": item.get("unitKey"),
     }
-    # A name-only fallback has no provider key, so retain one canonical label to
-    # keep the reference understandable/recoverable without duplicating all
-    # translations into every recipe.
+    # Canonical identity lives globally. Exact provider wording lives on the
+    # recipe-line reference so native users see what SEB actually published.
     if not key:
-        row["canonicalName"] = _text(global_row.get("canonicalName")) or _text(
-            item.get("foodName") or item.get("name")
-        )
+        row["canonicalName"] = _text(global_row.get("canonicalName")) or original_name
     return {
         name: value
         for name, value in row.items()
         if value not in ("", None, {}, [])
     }
-
 
 def _compact_variant_row(variant: dict[str, Any]) -> dict[str, Any]:
     fields = (
@@ -408,7 +418,9 @@ def _compact_variant_row(variant: dict[str, Any]) -> dict[str, Any]:
         "recipeFunctionalId",
         "groupingFunctionalId",
         "title",
+        "originalTitle",
         "language",
+        "originalLanguage",
         "market",
         "cover",
         "servings",
@@ -570,8 +582,20 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
             row["nutrition"] = deepcopy(nutrition[ident])
 
     for variant in variants:
+        variant["originalTitle"] = _text(
+            variant.get("originalTitle") or variant.get("title")
+        )
+        variant["originalLanguage"] = _text(
+            variant.get("originalLanguage")
+            or variant.get("language")
+            or variant.get("sourceCatalogLanguage")
+        ).lower()
         compact = [
-            _compact_variant_ingredient(item, ingredients)
+            _compact_variant_ingredient(
+                item,
+                ingredients,
+                source_language=variant["originalLanguage"],
+            )
             for item in variant.get("ingredients") or []
             if isinstance(item, dict)
         ]
@@ -650,6 +674,7 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
         "source": {
             "contract": "standalone-proven-cookeo-brand-v5",
             "format": "normalized-ingredient-references-v1",
+            "providerNativeNamesStored": True,
             "applianceGroup": "APPLIANCE_GROUP_15",
             "recipeType": "BRAND",
             "auditedCatalogCount": len(AUDITED_CATALOGS),
