@@ -75,9 +75,9 @@ jobs:
           summary = json.loads((root / 'summary-reviewed.json').read_text(encoding='utf-8'))
           tasks = [
               row for row in queue.get('tasks', [])
-              if isinstance(row, dict) and row.get('translation_kind') == 'recipe_title'
+              if isinstance(row, dict) and row.get('type') == 'recipe_title_english'
           ]
-          counts = Counter(str(row.get('source_language') or '').lower() for row in tasks)
+          counts = Counter(str(row.get('sourceLanguage') or '').lower() for row in tasks)
           payload = {
               'schema': 1,
               'kind': 'cook4me-release-catalog-pending-recipe-title-review-v59',
@@ -86,10 +86,16 @@ jobs:
               'auditedCatalogs': 28,
               'providerSecretsUsed': False,
               'existingReviewsApplied': True,
+              'queueContract': {'type': 'recipe_title_english', 'sourceLanguage': 'current-v59'},
               'recipeTitleTasksRemaining': len(tasks),
               'remainingByLanguage': dict(sorted(counts.items())),
               'tasks': tasks,
           }
+          if len(tasks) != int(summary.get('recipeTitleTranslationTasksRemaining', len(tasks))):
+              raise SystemExit(
+                  'recipe-title snapshot count disagrees with reviewed assembly summary: '
+                  f"snapshot={len(tasks)} summary={summary.get('recipeTitleTranslationTasksRemaining')}"
+              )
           Path('tools/release_catalog_pending_recipe_titles_v59.json').write_text(
               json.dumps(payload, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
           )
