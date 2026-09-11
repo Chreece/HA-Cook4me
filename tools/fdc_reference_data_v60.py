@@ -3,7 +3,7 @@
 
 The reference corpus is evidence only until a separate reviewed target -> exact
 FDC ID binding exists. This module never selects a nutrition identity and never
-uses candidate rank as proof.
+uses candidate rank, token order, or discovery aliases as identity proof.
 """
 from __future__ import annotations
 
@@ -19,13 +19,45 @@ from typing import Any
 REFERENCE_KIND = "cook4me-fdc-reference-data-v60"
 _ALLOWED_DATA_TYPES = {"Foundation", "SR Legacy", "Survey (FNDDS)"}
 
+# Candidate-discovery aliases only. They are intentionally conservative spelling
+# or culinary-name equivalents. They are consulted only when the literal query
+# produces zero candidates, and every alias-derived candidate is marked so a
+# reviewer can see that the result did not come from the original wording.
+_DISCOVERY_ALIASES: dict[str, tuple[str, ...]] = {
+    "aubergine": ("eggplant",),
+    "beetroot": ("beet", "beets"),
+    "beansprouts": ("bean sprouts",),
+    "blackcurrant": ("black currant",),
+    "breadcrumbs": ("bread crumbs",),
+    "chilli": ("chili",),
+    "cornflakes": ("corn flakes",),
+    # Cornflour is locale-sensitive. Surface both starch and flour candidates;
+    # review must decide the intended identity from Cook4Me evidence.
+    "cornflour": ("cornstarch", "corn starch", "corn flour"),
+    "courgette": ("zucchini",),
+    "courgettes": ("zucchini",),
+    "linseeds": ("flax seeds",),
+    "panko breadcrumbs": ("panko bread crumbs", "bread crumbs"),
+    "pomelo": ("pummelo",),
+    "prawn": ("shrimp",),
+    "prawns": ("shrimp",),
+    "rocket": ("arugula",),
+    "swede": ("rutabaga",),
+    "sweetcorn": ("sweet corn",),
+    "whisky": ("whiskey",),
+    "yoghurt": ("yogurt",),
+}
+
 
 def text(value: Any) -> str:
     return re.sub(r"\s+", " ", str(value or "").strip())
 
 
 def norm(value: Any) -> str:
-    value = unicodedata.normalize("NFKC", text(value)).casefold()
+    """Normalize text for evidence discovery without changing stored wording."""
+    value = text(value).casefold().replace("œ", "oe").replace("æ", "ae")
+    value = unicodedata.normalize("NFKD", value)
+    value = "".join(char for char in value if unicodedata.category(char) != "Mn")
     return re.sub(r"[^0-9a-z]+", " ", value).strip()
 
 
@@ -205,6 +237,8 @@ class ReferenceIndex:
         d = norm(row.get("description"))
         if not q or not d:
             return 0.0
+        q_raw_tokens = set(tokens(q))
+        d_raw_tokens = set(tokens(d))
         q_tokens = set(lexical_tokens(q))
         d_tokens = set(lexical_tokens(d))
         overlap = len(q_tokens & d_tokens)
@@ -224,6 +258,10 @@ class ReferenceIndex:
         score = coverage * 400.0 + precision * 80.0 + sequence * 120.0
         if q == d:
             score += 1000.0
+        elif q_raw_tokens and q_raw_tokens == d_raw_tokens:
+            # Punctuation/word order must not hide an otherwise exact phrase:
+            # e.g. "Brown sugar" vs USDA "Sugar, brown".
+            score += 900.0
         elif d.startswith(q) or q.startswith(d):
             score += 300.0
         elif q in d:
@@ -235,7 +273,7 @@ class ReferenceIndex:
             score += 2.0
         return score
 
-    def search(self, query: str, *, max_candidates: int = 8) -> list[dict[str, Any]]:
+    def _rank(self, query: str, *, max_candidates: int) -> list[tuple[float, int, dict[str, Any]]]:
         query_tokens = lexical_tokens(query)
         candidate_indices: set[int] = set()
         for token in query_tokens:
@@ -250,10 +288,50 @@ class ReferenceIndex:
                 continue
             ranked.append((score, int(row["fdcId"]), row))
         ranked.sort(key=lambda item: (-item[0], item[1]))
+        return ranked[: max(1, int(max_candidates))]
+
+    @staticmethod
+    def _render(
+        ranked: list[tuple[float, int, dict[str, Any]]],
+        *,
+        matched_queries: dict[int, str] | None = None,
+    ) -> list[dict[str, Any]]:
         out: list[dict[str, Any]] = []
-        for rank, (score, _fdc_id, raw) in enumerate(ranked[: max(1, int(max_candidates))], 1):
+        for rank, (score, fdc_id, raw) in enumerate(ranked, 1):
             row = dict(raw)
             row["localEvidenceRank"] = rank
             row["localEvidenceScore"] = round(score, 6)
+            if matched_queries is not None:
+                row["localEvidenceQueryAlias"] = True
+                row["localEvidenceMatchedQuery"] = matched_queries[fdc_id]
             out.append(row)
         return out
+
+    def search(self, query: str, *, max_candidates: int = 8) -> list[dict[str, Any]]:
+        # Always prefer literal/accent-folded search. Aliases are a zero-result
+        # fallback only, so they cannot displace evidence already found from the
+        # source wording.
+        ranked = self._rank(query, max_candidates=max_candidates)
+        if ranked:
+            return self._render(ranked)
+
+        aliases = _DISCOVERY_ALIASES.get(norm(query), ())
+        if not aliases:
+            return []
+
+        best_by_id: dict[int, tuple[float, int, dict[str, Any]]] = {}
+        matched_queries: dict[int, str] = {}
+        # Ask each conservative alias for a larger local pool, then merge and
+        # rerank. This is still offline discovery evidence only.
+        per_alias_limit = max(8, int(max_candidates) * 2)
+        for alias in aliases:
+            for score, fdc_id, row in self._rank(alias, max_candidates=per_alias_limit):
+                current = best_by_id.get(fdc_id)
+                if current is None or score > current[0]:
+                    best_by_id[fdc_id] = (score, fdc_id, row)
+                    matched_queries[fdc_id] = alias
+
+        merged = sorted(best_by_id.values(), key=lambda item: (-item[0], item[1]))[
+            : max(1, int(max_candidates))
+        ]
+        return self._render(merged, matched_queries=matched_queries)
