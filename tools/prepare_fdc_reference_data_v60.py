@@ -2,8 +2,8 @@
 """Download and pin the USDA FDC reference datasets used by v60 review.
 
 This downloads public USDA archives only. It needs no FDC/data.gov API key and
-persists no credential. The pinned releases match the current allowed review
-corpus: Foundation Foods April 2026 and final SR Legacy April 2018.
+persists no credential. The pinned releases are Foundation Foods April 2026,
+final SR Legacy April 2018, and FNDDS 2021-2023 published October 2024.
 """
 from __future__ import annotations
 
@@ -25,6 +25,10 @@ SR_LEGACY_URL = (
     "https://fdc.nal.usda.gov/fdc-datasets/"
     "FoodData_Central_sr_legacy_food_json_2018-04.zip"
 )
+FNDDS_URL = (
+    "https://fdc.nal.usda.gov/fdc-datasets/"
+    "FoodData_Central_survey_food_json_2024-10-31.zip"
+)
 REFERENCE_KIND = "cook4me-fdc-reference-data-v60"
 
 _DATASETS = (
@@ -43,6 +47,14 @@ _DATASETS = (
         "archiveName": "sr-legacy-2018-04.zip",
         "jsonName": "sr-legacy-2018-04.json",
         "zipHint": "sr_legacy",
+    },
+    {
+        "dataType": "Survey (FNDDS)",
+        "releaseDate": "2024-10-31",
+        "url": FNDDS_URL,
+        "archiveName": "fndds-2021-2023-2024-10-31.zip",
+        "jsonName": "fndds-2021-2023-2024-10-31.json",
+        "zipHint": "survey",
     },
 )
 
@@ -149,7 +161,7 @@ def prepare(output_dir: Path, *, refresh: bool = False) -> tuple[dict[str, Any],
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "source": "USDA FoodData Central",
         "policy": {
-            "allowedDataTypes": ["Foundation", "SR Legacy"],
+            "allowedDataTypes": ["Foundation", "SR Legacy", "Survey (FNDDS)"],
             "candidateDiscoveryOnlyUntilReviewed": True,
             "exactFdcBindingRequired": True,
             "searchResultAutoAccepted": False,
