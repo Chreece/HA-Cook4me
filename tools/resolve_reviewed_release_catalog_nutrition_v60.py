@@ -4,6 +4,7 @@
 This tool never accepts a USDA search result. A versioned review must bind one
 Cook4Me ingredient identity to one exact FDC ID. Only that exact detail record is
 fetched, its returned identity is verified, and API credentials are never saved.
+Legacy structural nutrition cache entries are not grandfathered into v60.
 """
 from __future__ import annotations
 
@@ -14,6 +15,7 @@ import math
 import os
 from pathlib import Path
 import re
+import sys
 import unicodedata
 import urllib.parse
 import urllib.request
@@ -21,6 +23,11 @@ from typing import Any, Callable
 
 ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT / "tools"
+if str(TOOLS) not in sys.path:
+    sys.path.insert(0, str(TOOLS))
+
+import reviewed_nutrition_v60 as reviewed_nutrition  # type: ignore  # noqa: E402
+
 FDC_DETAIL_URL = "https://api.nal.usda.gov/fdc/v1/food/"
 
 
@@ -61,7 +68,7 @@ def load_reviews(root: Path = TOOLS) -> dict[str, dict[str, Any]]:
         ):
             raise RuntimeError(f"invalid nutrition review file: {path.name}")
         policy = value.get("policy") if isinstance(value.get("policy"), dict) else {}
-        if policy and policy.get("searchResultAutoAccepted") is not False:
+        if policy.get("searchResultAutoAccepted") is not False:
             raise RuntimeError(
                 f"nutrition review file must explicitly forbid auto acceptance: {path.name}"
             )
@@ -184,17 +191,26 @@ def resolve(
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     if queue.get("kind") != "cook4me-release-catalog-nutrition-queue-v60":
         raise RuntimeError("expected cook4me-release-catalog-nutrition-queue-v60")
-    policy = queue.get("identityPolicy") if isinstance(queue.get("identityPolicy"), dict) else {}
+    policy = (
+        queue.get("identityPolicy")
+        if isinstance(queue.get("identityPolicy"), dict)
+        else {}
+    )
     if policy.get("providerIdentityInference") is not False:
         raise RuntimeError("nutrition queue must forbid provider identity inference")
     if policy.get("ambiguousExcluded") is not True:
         raise RuntimeError("nutrition queue must exclude ambiguous ingredients")
+    if policy.get("reviewedExactFdcProvenanceRequired") is not True:
+        raise RuntimeError("nutrition queue must require reviewed exact-FDC provenance")
+    if policy.get("searchResultAutoAccepted") is not False:
+        raise RuntimeError("nutrition queue must forbid search-result auto acceptance")
 
     output = dict(cache)
     pending: list[dict[str, Any]] = []
     resolved_now = 0
     already_resolved = 0
     missing_review = 0
+    rejected_unreviewed_cache = 0
 
     for raw in queue.get("tasks") or []:
         if not isinstance(raw, dict):
@@ -207,14 +223,16 @@ def resolve(
             raise RuntimeError(f"unsupported nutrition identity kind for {ingredient_id}")
 
         existing = output.get(ingredient_id)
-        if (
-            isinstance(existing, dict)
-            and existing.get("basis") == "per100g"
-            and isinstance(existing.get("values"), dict)
-            and bool(existing["values"])
+        if reviewed_nutrition.is_reviewed_profile(
+            existing,
+            ingredient_id=ingredient_id,
+            canonical_name=canonical,
         ):
             already_resolved += 1
             continue
+        if isinstance(existing, dict) and existing:
+            rejected_unreviewed_cache += 1
+            output.pop(ingredient_id, None)
 
         review = reviews.get(ingredient_id)
         if not review:
@@ -247,9 +265,21 @@ def resolve(
         profile["reviewFile"] = _text(review.get("reviewFile"))
         if review.get("notes"):
             profile["reviewNotes"] = _text(review.get("notes"))
+        if not reviewed_nutrition.is_reviewed_profile(
+            profile,
+            ingredient_id=ingredient_id,
+            canonical_name=canonical,
+        ):
+            raise RuntimeError(
+                f"reviewed resolver produced invalid provenance for {ingredient_id}"
+            )
         output[ingredient_id] = profile
         resolved_now += 1
 
+    reviewed_profile_count = sum(
+        reviewed_nutrition.is_reviewed_profile(value, ingredient_id=ident)
+        for ident, value in output.items()
+    )
     summary = {
         "queueTaskCount": len(
             [row for row in queue.get("tasks") or [] if isinstance(row, dict)]
@@ -258,13 +288,8 @@ def resolve(
         "resolvedNow": resolved_now,
         "missingReview": missing_review,
         "pendingCount": len(pending),
-        "cacheProfileCount": sum(
-            isinstance(value, dict)
-            and value.get("basis") == "per100g"
-            and isinstance(value.get("values"), dict)
-            and bool(value["values"])
-            for value in output.values()
-        ),
+        "reviewedCacheProfileCount": reviewed_profile_count,
+        "rejectedUnreviewedCacheCount": rejected_unreviewed_cache,
         "searchResultsAutoAccepted": False,
         "secretsPersisted": False,
     }
