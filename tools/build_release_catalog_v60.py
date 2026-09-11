@@ -24,6 +24,18 @@ import build_release_catalog_v60_core as _core
 import recipe_safety_index_v60 as safety
 
 
+def _reject_unreviewed_nutrition_search(args: Any) -> None:
+    """Never let v60 turn a fuzzy FDC search result into release evidence."""
+    if bool(getattr(args, "resolve_nutrition", False)):
+        raise RuntimeError(
+            "v60 automatic USDA/FDC search resolution is disabled; build with "
+            "--allow-missing-nutrition, create the reviewed v60 nutrition queue, "
+            "bind exact FDC IDs in release_catalog_reviewed_nutrition_sources*.v1.json, "
+            "resolve them with resolve_reviewed_release_catalog_nutrition_v60.py, "
+            "then rebuild from that reviewed cache"
+        )
+
+
 def _safety_completeness(index: dict[str, Any]) -> bool:
     recipe_count = max(0, int(index.get("recipeCount") or 0))
     if not recipe_count:
@@ -80,6 +92,7 @@ def enrich_payload(
 
 
 def build(args: Any) -> dict[str, Any]:
+    _reject_unreviewed_nutrition_search(args)
     payload = _core.v59.build(args)
     semantic_payload = _core.semantics.compile_from_paths(
         _core.semantics._review_paths(_core.TOOLS)
