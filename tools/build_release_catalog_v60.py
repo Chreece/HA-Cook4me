@@ -10,7 +10,15 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import sys
 from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
+TOOLS = ROOT / "tools"
+COMPONENT = ROOT / "custom_components" / "cook4me"
+for path in (TOOLS, COMPONENT):
+    if str(path) not in sys.path:
+        sys.path.insert(0, str(path))
 
 import build_release_catalog_v60_core as _core
 import recipe_safety_index_v60 as safety
