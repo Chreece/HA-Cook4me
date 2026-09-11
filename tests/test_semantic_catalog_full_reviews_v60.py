@@ -25,20 +25,24 @@ class SemanticCatalogFullCorpusV60Tests(unittest.TestCase):
             for path, payload in zip(cls.paths, cls.review_payloads)
         )
 
-    def test_all_base_plus_phase3_review_files_are_consumed(self):
-        # One base review file plus Phase 3 batches 001..097.
-        self.assertEqual(len(self.paths), 98)
+    def test_all_committed_review_files_are_consumed(self):
+        # One base review file, Capture 3 native-English batch, and Phase 3 batches 001..097.
+        self.assertEqual(len(self.paths), 99)
         self.assertTrue(self.paths[0].name.endswith("keyless_ingredients.v1.json"))
+        self.assertIn(
+            "release_catalog_reviewed_keyless_ingredients_capture3_en_001.v1.json",
+            {path.name for path in self.paths},
+        )
         self.assertTrue(self.paths[-1].name.endswith("phase3_097.v1.json"))
 
     def test_full_review_corpus_has_one_identity_per_exact_source_label(self):
-        # The review files contain 123 earlier review rows + 9,658 Phase-3 rows.
-        # After preserving the exact captured provider spellings, every
-        # (language, exact-source) review row is unique across the full corpus.
-        self.assertEqual(self.raw_review_items, 123 + 9658)
-        self.assertEqual(self.payload["summary"]["reviewedSourceLabels"], 9781)
-        self.assertEqual(len(self.payload["sourceIdentityToConcept"]), 9781)
-        self.assertEqual(self.raw_review_items - 9781, 0)
+        # The review files contain 123 earlier rows + 9,658 Phase-3 rows +
+        # 26 exact native-English Capture-3 rows. Reconciliation proved the
+        # Capture-3 rows were absent from the committed exact review corpus.
+        self.assertEqual(self.raw_review_items, 123 + 9658 + 26)
+        self.assertEqual(self.payload["summary"]["reviewedSourceLabels"], 9807)
+        self.assertEqual(len(self.payload["sourceIdentityToConcept"]), 9807)
+        self.assertEqual(self.raw_review_items - 9807, 0)
 
     def test_semantic_compilation_never_assigns_provider_identity(self):
         self.assertFalse(self.payload["identityPolicy"]["providerIdentityAssigned"])
