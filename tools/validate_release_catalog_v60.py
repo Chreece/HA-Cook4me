@@ -84,6 +84,34 @@ def _index_is_exact(payload: dict[str, Any], field: str, expected: dict[str, Any
     return isinstance(value, dict) and value == expected
 
 
+def _safety_complete(index: dict[str, Any]) -> bool:
+    recipe_count = max(0, int(index.get("recipeCount") or 0))
+    if not recipe_count:
+        return False
+    diet_compatible = index.get("dietCompatible") or {}
+    diet_incompatible = index.get("dietIncompatible") or {}
+    allergen_absent = index.get("allergenAbsent") or {}
+    allergen_present = index.get("allergenPresent") or {}
+    return bool(
+        all(
+            len(
+                set(diet_compatible.get(key) or ())
+                | set(diet_incompatible.get(key) or ())
+            )
+            == recipe_count
+            for key in index.get("dietKeys") or ()
+        )
+        and all(
+            len(
+                set(allergen_absent.get(key) or ())
+                | set(allergen_present.get(key) or ())
+            )
+            == recipe_count
+            for key in index.get("allergenKeys") or ()
+        )
+    )
+
+
 def validate(
     payload: dict[str, Any],
     *,
@@ -161,7 +189,8 @@ def validate(
     provider_ids: set[str] = set()
     source_local_ids: set[str] = set()
     ambiguous_ids: set[str] = set()
-    ingredient_by_id: dict[str, dict[str, Any]] = {}
+    food_intelligence_count = 0
+    food_nutrition_resolved = 0
 
     for index, row in enumerate(ingredients):
         if not isinstance(row, dict):
@@ -172,9 +201,9 @@ def validate(
             errors.append(f"ingredients[{index}] has no identity")
             continue
         ingredient_ids.append(ident)
-        ingredient_by_id.setdefault(ident, row)
         provider_key = _provider_key(row)
         source_local = bool(row.get("sourceLocalIdentity")) or ident.startswith("local:")
+        food_for_intelligence = False
 
         if source_local:
             source_local_ids.add(ident)
@@ -189,6 +218,7 @@ def validate(
             classification = _text(row.get("classification")).lower()
             if classification not in _ALLOWED_SOURCE_LOCAL_CLASSIFICATIONS:
                 errors.append(f"source-local ingredient {ident} has invalid classification {classification!r}")
+            food_for_intelligence = classification == "food"
             if classification == "ambiguous":
                 ambiguous_ids.add(ident)
                 if row.get("needsSemanticConfirmation") is not True:
@@ -205,6 +235,7 @@ def validate(
                 errors.append(f"global ingredient {ident} has neither provider nor source-local identity")
             else:
                 provider_ids.add(ident)
+                food_for_intelligence = True
                 if ident != provider_key:
                     errors.append(f"provider ingredient {ident} must preserve matching provider key")
                 if not ident.startswith("M_FOOD_"):
@@ -212,8 +243,13 @@ def validate(
 
         if not _text(row.get("canonicalName")):
             errors.append(f"ingredient {ident} has no canonicalName")
-        if row.get("nutrition") and not _nutrition_valid(row.get("nutrition")):
+        nutrition_ok = _nutrition_valid(row.get("nutrition"))
+        if row.get("nutrition") and not nutrition_ok:
             errors.append(f"ingredient {ident} has invalid nutrition profile")
+        if food_for_intelligence:
+            food_intelligence_count += 1
+            if nutrition_ok:
+                food_nutrition_resolved += 1
 
     duplicates = sorted(key for key, count in Counter(ingredient_ids).items() if count > 1)
     if duplicates:
@@ -305,6 +341,37 @@ def validate(
     if not _index_is_exact(payload, "recipeSafetyIndex", expected_safety):
         errors.append("precompiled strict recipe safety index does not match catalog content")
 
+    derived_food_complete = bool(
+        food_intelligence_count
+        and food_nutrition_resolved == food_intelligence_count
+    )
+    declared_food_complete = source.get("foodIntelligenceNutritionComplete") is True
+    if declared_food_complete != derived_food_complete:
+        errors.append(
+            "foodIntelligenceNutritionComplete does not match ingredient nutrition evidence"
+        )
+    if int(source.get("foodIntelligenceIngredientCount") or 0) != food_intelligence_count:
+        errors.append("foodIntelligenceIngredientCount does not match ingredient table")
+    if int(source.get("foodIntelligenceNutritionResolvedCount") or 0) != food_nutrition_resolved:
+        errors.append("foodIntelligenceNutritionResolvedCount does not match ingredient table")
+
+    derived_safety_complete = _safety_complete(expected_safety)
+    if (source.get("dietAllergyIntelligenceComplete") is True) != derived_safety_complete:
+        errors.append(
+            "dietAllergyIntelligenceComplete does not match strict safety evidence"
+        )
+    derived_intelligence_complete = bool(
+        source.get("semanticCoverageComplete") is True
+        and derived_food_complete
+        and derived_safety_complete
+    )
+    if (
+        source.get("ingredientIntelligenceComplete") is True
+    ) != derived_intelligence_complete:
+        errors.append(
+            "ingredientIntelligenceComplete does not match semantic, nutrition, and safety evidence"
+        )
+
     secret_paths = _secret_paths(payload)
     if secret_paths:
         errors.append(f"secret-like keys present: {secret_paths[:10]}")
@@ -320,7 +387,11 @@ def validate(
             "ambiguousReviewedIngredientCount": len(ambiguous_ids),
             "recipeGroupCount": len(recipes),
             "variantCount": len(variant_ids),
-            "ingredientIntelligenceComplete": bool(source.get("ingredientIntelligenceComplete")),
+            "foodIntelligenceIngredientCount": food_intelligence_count,
+            "foodIntelligenceNutritionResolvedCount": food_nutrition_resolved,
+            "foodIntelligenceNutritionComplete": derived_food_complete,
+            "dietAllergyIntelligenceComplete": derived_safety_complete,
+            "ingredientIntelligenceComplete": derived_intelligence_complete,
         },
     }
 
