@@ -28,6 +28,7 @@ EXPECTED_MEDIUM = {
     "M_FOOD_582",
     "M_FOOD_631",
 }
+BASE_PROVIDER_REVIEW_COUNT = 109
 
 
 class Capture3ProviderEnglishBatch1V60Tests(unittest.TestCase):
@@ -57,9 +58,16 @@ class Capture3ProviderEnglishBatch1V60Tests(unittest.TestCase):
             self.assertTrue(row.get("english"), ident)
             self.assertIn(row.get("confidence"), {"high", "medium"})
 
-    def test_loader_consumes_base_plus_capture3_batch(self):
+    def test_loader_consumes_base_plus_all_capture3_batches(self):
         loaded = reviews._provider_food_reviews(TOOLS)
-        self.assertEqual(len(loaded), 169)
+        batch_paths = sorted(
+            TOOLS.glob("release_catalog_reviewed_provider_food_english_capture3_*.v2.json")
+        )
+        batch_count = sum(
+            len(json.loads(path.read_text(encoding="utf-8")).get("items") or {})
+            for path in batch_paths
+        )
+        self.assertEqual(len(loaded), BASE_PROVIDER_REVIEW_COUNT + batch_count)
         for ident in json.loads(BATCH.read_text(encoding="utf-8"))["items"]:
             self.assertEqual(
                 loaded[ident]["reviewFile"],
