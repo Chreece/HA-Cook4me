@@ -31,15 +31,14 @@ class SemanticCatalogFullCorpusV60Tests(unittest.TestCase):
         self.assertTrue(self.paths[0].name.endswith("keyless_ingredients.v1.json"))
         self.assertTrue(self.paths[-1].name.endswith("phase3_097.v1.json"))
 
-    def test_full_review_corpus_exposes_raw_items_and_two_consistent_duplicates(self):
+    def test_full_review_corpus_has_one_identity_per_exact_source_label(self):
         # The review files contain 123 earlier review rows + 9,658 Phase-3 rows.
-        # Two (language, exact-source) labels occur in both review generations.
-        # The compiler accepts them only because their reviewed semantics agree,
-        # then emits one deterministic source identity for each unique label.
+        # After preserving the exact captured provider spellings, every
+        # (language, exact-source) review row is unique across the full corpus.
         self.assertEqual(self.raw_review_items, 123 + 9658)
-        self.assertEqual(self.payload["summary"]["reviewedSourceLabels"], 9779)
-        self.assertEqual(len(self.payload["sourceIdentityToConcept"]), 9779)
-        self.assertEqual(self.raw_review_items - 9779, 2)
+        self.assertEqual(self.payload["summary"]["reviewedSourceLabels"], 9781)
+        self.assertEqual(len(self.payload["sourceIdentityToConcept"]), 9781)
+        self.assertEqual(self.raw_review_items - 9781, 0)
 
     def test_semantic_compilation_never_assigns_provider_identity(self):
         self.assertFalse(self.payload["identityPolicy"]["providerIdentityAssigned"])
