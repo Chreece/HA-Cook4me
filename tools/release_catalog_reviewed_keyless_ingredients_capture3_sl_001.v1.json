@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-keyless-ingredient-semantics",
+  "policy": {
+    "providerIdentityAssigned": false,
+    "exactSourceLabelOnly": true,
+    "manualReview": true,
+    "phase": "capture3",
+    "batch": "sl-001",
+    "catalogVersion": "2026-09-11-v60-capture3",
+    "notes": "Manual semantic review for the one exact Capture 3 Slovenian source-local label. English semantics are reviewed from the exact Slovenian source label; no provider identity is assigned or inferred."
+  },
+  "items": [
+    {"language":"sl","source":"Jušna osnova","english":"Stock","classification":"food","confidence":"high"}
+  ]
+}
