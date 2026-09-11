@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "referenceManifestSha256": "6ec7b2207b149cce662136ea64b6c92ae73d6f7983efe12d18ecbc3b86388bd4",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "policy": {
+    "searchResultAutoAccepted": false,
+    "exactFdcBindingRequired": true,
+    "semanticConceptGroupingReviewed": true,
+    "providerIdentityInference": false,
+    "candidateSearchIsIdentityProof": false
+  },
+  "selectionMethod": "explicit-semantic-review",
+  "items": [
+    {
+      "reviewTargetId": "concept:food:22fc2cc54cf728252cb5",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Oyster mushrooms",
+      "fdcId": 168580,
+      "confidence": "high",
+      "fdcDescription": "Mushrooms, oyster, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 65
+    },
+    {
+      "reviewTargetId": "M_FOOD_631",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Leek",
+      "fdcId": 2727584,
+      "confidence": "high",
+      "fdcDescription": "Leeks, bulb and greens, root removed, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 64
+    },
+    {
+      "reviewTargetId": "M_FOOD_291",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Monkfish",
+      "fdcId": 173676,
+      "confidence": "high",
+      "fdcDescription": "Fish, monkfish, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 64
+    },
+    {
+      "reviewTargetId": "M_FOOD_380",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Pistachio",
+      "fdcId": 2515379,
+      "confidence": "high",
+      "fdcDescription": "Nuts, pistachio nuts, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 64
+    },
+    {
+      "reviewTargetId": "concept:food:e02378b878364c9e9ab2",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Almond flour",
+      "fdcId": 2261420,
+      "confidence": "high",
+      "fdcDescription": "Flour, almond",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 64
+    },
+    {
+      "reviewTargetId": "concept:food:10a98621d44d911bb802",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Peanut oil",
+      "fdcId": 1750348,
+      "confidence": "high",
+      "fdcDescription": "Oil, peanut",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 64
+    },
+    {
+      "reviewTargetId": "concept:food:3ce9d8c47a34321c4493",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Rice noodles",
+      "fdcId": 169742,
+      "confidence": "high",
+      "fdcDescription": "Rice noodles, dry",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 64
+    },
+    {
+      "reviewTargetId": "concept:food:955940034a3a862c741d",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Enoki mushrooms",
+      "fdcId": 169382,
+      "confidence": "high",
+      "fdcDescription": "Mushrooms, enoki, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 63
+    },
+    {
+      "reviewTargetId": "concept:food:8889b334f6520664d42f",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Poppy seeds",
+      "fdcId": 171330,
+      "confidence": "high",
+      "fdcDescription": "Spices, poppy seed",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 63
+    },
+    {
+      "reviewTargetId": "M_FOOD_225",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Pumpkin seeds",
+      "fdcId": 2515380,
+      "confidence": "high",
+      "fdcDescription": "Seeds, pumpkin seeds (pepitas), raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 61
+    },
+    {
+      "reviewTargetId": "M_FOOD_412",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Radish",
+      "fdcId": 169276,
+      "confidence": "high",
+      "fdcDescription": "Radishes, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 61
+    },
+    {
+      "reviewTargetId": "concept:food:5f2d2a0203ff7b9e645b",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Chopped garlic",
+      "fdcId": 1104647,
+      "confidence": "high",
+      "fdcDescription": "Garlic, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 60
+    },
+    {
+      "reviewTargetId": "concept:food:2d631a165e4325fd5cda",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Cocoa",
+      "fdcId": 169593,
+      "confidence": "high",
+      "fdcDescription": "Cocoa, dry powder, unsweetened",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 60
+    },
+    {
+      "reviewTargetId": "concept:food:d605387960774b275e94",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Crushed tomatoes",
+      "fdcId": 2685581,
+      "confidence": "high",
+      "fdcDescription": "Tomatoes, crushed, canned",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 60
+    },
+    {
+      "reviewTargetId": "concept:food:7c27bdb4b935aec653ea",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Espresso",
+      "fdcId": 171891,
+      "confidence": "high",
+      "fdcDescription": "Beverages, coffee, brewed, espresso, restaurant-prepared",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 60
+    },
+    {
+      "reviewTargetId": "concept:food:36145f0730310c876de2",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Grated carrot",
+      "fdcId": 170393,
+      "confidence": "high",
+      "fdcDescription": "Carrots, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 2,
+      "usageCountAtReview": 60,
+      "notes": "Grated-carrot target: selected raw carrots; grating changes physical form, not the ingredient identity used for per-100-g reference nutrition."
+    },
+    {
+      "reviewTargetId": "concept:food:f02290b8d03b8bb46064",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Grated ginger",
+      "fdcId": 169231,
+      "confidence": "high",
+      "fdcDescription": "Ginger root, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 2,
+      "usageCountAtReview": 60,
+      "notes": "Grated-ginger target: selected raw ginger root; grating changes physical form, not the ingredient identity used for per-100-g reference nutrition."
+    },
+    {
+      "reviewTargetId": "concept:food:7f4b3e91f094477ed869",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Lemon (finely grated zest)",
+      "fdcId": 167749,
+      "confidence": "high",
+      "fdcDescription": "Lemon peel, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 60
+    },
+    {
+      "reviewTargetId": "concept:food:c4d4baba9ddebd787ad6",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Lentils",
+      "fdcId": 2644283,
+      "confidence": "high",
+      "fdcDescription": "Lentils, dry",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 60
+    },
+    {
+      "reviewTargetId": "concept:food:b7833708d72d5dd0a220",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Pitted green olives",
+      "fdcId": 169096,
+      "confidence": "high",
+      "fdcDescription": "Olives, pickled, canned or bottled, green",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 60
+    }
+  ]
+}
