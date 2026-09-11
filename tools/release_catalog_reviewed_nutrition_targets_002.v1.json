@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "referenceManifestSha256": "6ec7b2207b149cce662136ea64b6c92ae73d6f7983efe12d18ecbc3b86388bd4",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "policy": {
+    "searchResultAutoAccepted": false,
+    "exactFdcBindingRequired": true,
+    "semanticConceptGroupingReviewed": true,
+    "providerIdentityInference": false,
+    "candidateSearchIsIdentityProof": false
+  },
+  "selectionMethod": "explicit-semantic-review",
+  "items": [
+    {
+      "reviewTargetId": "concept:food:fce5ce5385ab00eb41a4",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Chili powder",
+      "fdcId": 171319,
+      "confidence": "high",
+      "fdcDescription": "Spices, chili powder",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 240
+    },
+    {
+      "reviewTargetId": "M_FOOD_105",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Cabbage",
+      "fdcId": 169975,
+      "confidence": "high",
+      "fdcDescription": "Cabbage, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 239
+    },
+    {
+      "reviewTargetId": "concept:food:d9384f3f8ec77c4c60fa",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Red onion",
+      "fdcId": 790577,
+      "confidence": "high",
+      "fdcDescription": "Onions, red, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 232
+    },
+    {
+      "reviewTargetId": "M_FOOD_63",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Broccoli",
+      "fdcId": 747447,
+      "confidence": "high",
+      "fdcDescription": "Broccoli, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 231
+    },
+    {
+      "reviewTargetId": "M_FOOD_252",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Egg yolk",
+      "fdcId": 172184,
+      "confidence": "high",
+      "fdcDescription": "Egg, yolk, raw, fresh",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 3,
+      "usageCountAtReview": 226,
+      "notes": "Egg-yolk target: selected raw fresh yolk rather than dried or frozen yolk."
+    },
+    {
+      "reviewTargetId": "M_FOOD_82",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Celery",
+      "fdcId": 2346405,
+      "confidence": "high",
+      "fdcDescription": "Celery, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 217
+    },
+    {
+      "reviewTargetId": "M_FOOD_328",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Turnip",
+      "fdcId": 2747674,
+      "confidence": "high",
+      "fdcDescription": "Turnips, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 217
+    },
+    {
+      "reviewTargetId": "concept:food:cae4b3fc012f8d596036",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Mango",
+      "fdcId": 169910,
+      "confidence": "high",
+      "fdcDescription": "Mangos, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 212
+    },
+    {
+      "reviewTargetId": "M_FOOD_115",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Chives",
+      "fdcId": 169994,
+      "confidence": "high",
+      "fdcDescription": "Chives, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 211
+    },
+    {
+      "reviewTargetId": "M_FOOD_437",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Sake",
+      "fdcId": 167723,
+      "confidence": "high",
+      "fdcDescription": "Alcoholic beverage, rice (sake)",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 200
+    },
+    {
+      "reviewTargetId": "concept:food:fcf16d1009cab328b7e9",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Red wine",
+      "fdcId": 173190,
+      "confidence": "high",
+      "fdcDescription": "Alcoholic beverage, wine, table, red",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 2,
+      "usageCountAtReview": 200,
+      "notes": "Generic red-wine target: selected table red wine rather than red-wine vinegar or named varietals."
+    },
+    {
+      "reviewTargetId": "concept:food:ec1ccab3eb083899e20c",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "*Lemon juice",
+      "fdcId": 167747,
+      "confidence": "high",
+      "fdcDescription": "Lemon juice, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 194,
+      "notes": "Leading source marker retained in canonical target; selected raw lemon juice."
+    },
+    {
+      "reviewTargetId": "concept:food:bfccb881db38f51d6126",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Cauliflower",
+      "fdcId": 2685573,
+      "confidence": "high",
+      "fdcDescription": "Cauliflower, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 192
+    },
+    {
+      "reviewTargetId": "concept:food:469954a040cfa41ed60c",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Cream cheese",
+      "fdcId": 2346385,
+      "confidence": "high",
+      "fdcDescription": "Cream cheese, full fat, block",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 192
+    },
+    {
+      "reviewTargetId": "concept:food:d0752b0572048560f695",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Grated Parmesan",
+      "fdcId": 325036,
+      "confidence": "high",
+      "fdcDescription": "Cheese, parmesan, grated",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 190
+    },
+    {
+      "reviewTargetId": "concept:food:00b9d9b0a50b2d7bf7dd",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Chorizo",
+      "fdcId": 173859,
+      "confidence": "high",
+      "fdcDescription": "Sausage, pork, chorizo, link or ground, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 186
+    },
+    {
+      "reviewTargetId": "M_FOOD_490",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Red wine",
+      "fdcId": 173190,
+      "confidence": "high",
+      "fdcDescription": "Alcoholic beverage, wine, table, red",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 2,
+      "usageCountAtReview": 179,
+      "notes": "Generic red-wine target: selected table red wine rather than red-wine vinegar or named varietals."
+    },
+    {
+      "reviewTargetId": "M_FOOD_209",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Chicken stock",
+      "fdcId": 172884,
+      "confidence": "high",
+      "fdcDescription": "Soup, stock, chicken, home-prepared",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 178
+    },
+    {
+      "reviewTargetId": "M_FOOD_399",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Pumpkin",
+      "fdcId": 168448,
+      "confidence": "high",
+      "fdcDescription": "Pumpkin, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 177
+    },
+    {
+      "reviewTargetId": "concept:food:8b1c67afbf62cd981bea",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Leek",
+      "fdcId": 2727584,
+      "confidence": "high",
+      "fdcDescription": "Leeks, bulb and greens, root removed, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 175
+    }
+  ]
+}
