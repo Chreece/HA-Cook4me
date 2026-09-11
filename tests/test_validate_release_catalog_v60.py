@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from copy import deepcopy
 import importlib.util
 from pathlib import Path
 import sys
@@ -48,6 +47,7 @@ def base_catalog() -> dict:
             "semanticCoverageComplete": True,
             "unresolvedKeylessRecipeLineCount": 0,
             "compiledMultilingualSearchIndex": True,
+            "compiledRecipeDependencyIndex": True,
             "compiledRecipeSafetyIndex": True,
             "strictDietAllergyUnknownIsSafe": False,
             "strictAllergyRequiresExplicitAbsence": True,
@@ -141,12 +141,14 @@ def base_catalog() -> dict:
                 ],
             }
         ],
-        "recipeDependencyIndex": {
-            "M_FOOD_TOMATO": [0],
-            "local:de:sea-salt": [0],
-            "local:pt:palitos": [0],
-        },
     }
+    dependencies = validator.recipe_metrics_v60.compile_recipe_dependency_index(
+        payload["recipes"]
+    )
+    payload["recipeDependencyIndex"] = {
+        ident: list(indices) for ident, indices in dependencies.items()
+    }
+    payload["source"]["recipeDependencyIdentityCount"] = len(dependencies)
     payload["searchIndex"] = validator.catalog_search_index.compile_search_index(payload)
     payload["recipeSafetyIndex"] = (
         validator.recipe_safety_index_v60.compile_recipe_safety_index(payload)
@@ -200,6 +202,13 @@ class ValidateReleaseCatalogV60Tests(unittest.TestCase):
         self.assertFalse(result["valid"])
         self.assertTrue(any("carries provider identity" in error for error in result["errors"]))
 
+    def test_tampered_dependency_index_is_rejected(self):
+        payload = base_catalog()
+        payload["recipeDependencyIndex"]["k:M_FOOD_TOMATO"] = []
+        result = validator.validate(payload)
+        self.assertFalse(result["valid"])
+        self.assertTrue(any("dependency index" in error for error in result["errors"]))
+
     def test_tampered_search_index_is_rejected(self):
         payload = base_catalog()
         payload["searchIndex"]["recipeCount"] = 99
@@ -227,13 +236,11 @@ class ValidateReleaseCatalogV60Tests(unittest.TestCase):
             any("ingredientIntelligenceComplete does not match" in error for error in result["errors"])
         )
 
-    def test_dangling_dependency_and_secret_like_key_are_rejected(self):
+    def test_secret_like_key_is_rejected(self):
         payload = base_catalog()
-        payload["recipeDependencyIndex"]["M_FOOD_UNKNOWN"] = [0]
         payload["source"]["access_token"] = "must-never-ship"
         result = validator.validate(payload)
         self.assertFalse(result["valid"])
-        self.assertTrue(any("unknown ingredient" in error for error in result["errors"]))
         self.assertTrue(any("secret-like keys" in error for error in result["errors"]))
 
     def test_runtime_only_prepared_keys_must_not_be_persisted(self):
