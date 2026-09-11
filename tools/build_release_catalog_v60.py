@@ -26,6 +26,7 @@ for path in (TOOLS, COMPONENT):
 
 import build_release_catalog_v60_core as _core
 import recipe_safety_index_v60 as safety
+import release_catalog_phase3_identity_v60 as phase3_identity
 import reviewed_nutrition_v60 as reviewed_nutrition
 
 
@@ -94,8 +95,25 @@ def _refresh_safety(result: dict[str, Any]) -> dict[str, Any]:
 def enrich_payload(
     payload: dict[str, Any], semantic_payload: dict[str, Any]
 ) -> dict[str, Any]:
-    """Run the proven v60 core then append strict precompiled safety sets."""
-    return _refresh_safety(_core.enrich_payload(payload, semantic_payload))
+    """Run the proven v60 core then append strict precompiled safety sets.
+
+    Source-local identity must be computed from the exact semantic label that
+    Phase 3 reviewed.  During live capture that label is retained explicitly as
+    ``semanticSourceName`` before the v59 compactor discards raw descriptions.
+    """
+    original_source_name = _core._source_name
+
+    def reviewed_source_name(item: dict[str, Any]) -> str:
+        return (
+            phase3_identity.compact_semantic_source_name(item)
+            or original_source_name(item)
+        )
+
+    _core._source_name = reviewed_source_name
+    try:
+        return _refresh_safety(_core.enrich_payload(payload, semantic_payload))
+    finally:
+        _core._source_name = original_source_name
 
 
 def _identity(row: dict[str, Any]) -> str:
@@ -221,7 +239,7 @@ def apply_reviewed_nutrition(
 
 def build(args: Any) -> dict[str, Any]:
     _reject_unreviewed_nutrition_search(args)
-    payload = _core.v59.build(args)
+    payload = phase3_identity.build_with_phase3_identity(_core.v59, args)
     semantic_payload = _core.semantics.compile_from_paths(
         _core.semantics._review_paths(_core.TOOLS)
     )
