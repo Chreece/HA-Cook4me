@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "policy": {"searchResultAutoAccepted":false,"exactFdcBindingRequired":true,"semanticConceptGroupingReviewed":true,"providerIdentityInference":false,"candidateSearchIsIdentityProof":false},
+  "selectionMethod":"explicit-semantic-review",
+  "items":[
+    {"reviewTargetId":"concept:food:723fa67406566c0c25b2","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Peach","fdcId":2709249,"confidence":"high","fdcDescription":"Peach, raw","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":5},
+    {"reviewTargetId":"concept:food:245b7d88322e2dd7cc28","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Artichoke","fdcId":2709766,"confidence":"high","fdcDescription":"Artichoke","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":5},
+    {"reviewTargetId":"M_FOOD_526","reviewTargetKind":"provider-identity","canonicalEnglishName":"Ratatouille","fdcId":2710028,"confidence":"high","fdcDescription":"Ratatouille","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":5},
+    {"reviewTargetId":"M_FOOD_424","reviewTargetKind":"provider-identity","canonicalEnglishName":"Romaine lettuce","fdcId":2709590,"confidence":"high","fdcDescription":"Romaine lettuce, raw","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":5},
+    {"reviewTargetId":"M_FOOD_320","reviewTargetKind":"provider-identity","canonicalEnglishName":"Mortadella","fdcId":2706182,"confidence":"high","fdcDescription":"Mortadella","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":5},
+    {"reviewTargetId":"concept:food:f527f6cd4a8b240dc8b1","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Kefir","fdcId":2705394,"confidence":"high","fdcDescription":"Kefir","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":4},
+    {"reviewTargetId":"concept:food:c62ff61232ddc66602b4","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Corn syrup","fdcId":2710274,"confidence":"high","fdcDescription":"Corn syrup","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":4},
+    {"reviewTargetId":"concept:food:c4a796fd0592ac39006b","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Raspberries","fdcId":2346410,"confidence":"high","fdcDescription":"Raspberries, raw","fdcDataType":"Foundation","candidateEvidenceRank":1,"usageCountAtReview":4},
+    {"reviewTargetId":"concept:food:bfa43d0c90182acf9c4a","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Chia seeds","fdcId":2707590,"confidence":"high","fdcDescription":"Chia seeds","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":4},
+    {"reviewTargetId":"concept:food:b89d5bf98ff126661cf3","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Yeast","fdcId":2710005,"confidence":"high","fdcDescription":"Yeast","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":4},
+    {"reviewTargetId":"concept:food:9836adb240d7fd573898","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Blueberries","fdcId":2346411,"confidence":"high","fdcDescription":"Blueberries, raw","fdcDataType":"Foundation","candidateEvidenceRank":1,"usageCountAtReview":4},
+    {"reviewTargetId":"concept:food:50c2aea483aa0d1afa1b","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Almond oil","fdcId":2710181,"confidence":"high","fdcDescription":"Almond oil","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":4},
+    {"reviewTargetId":"concept:food:4b607e9ec7cf3c452cd6","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Pork tenderloin","fdcId":2705877,"confidence":"high","fdcDescription":"Pork, tenderloin","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":4},
+    {"reviewTargetId":"concept:food:422702c035705fc9a606","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Ice cream","fdcId":2705629,"confidence":"high","fdcDescription":"Ice cream, NFS","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":4,"notes":"Canonical target is generic at the same semantic specificity; selected USDA's not-further-specified record rather than inventing a subtype."},
+    {"reviewTargetId":"concept:food:05fd2572fa800c86f753","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Wheat germ","fdcId":2708477,"confidence":"high","fdcDescription":"Wheat germ","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":4},
+    {"reviewTargetId":"M_FOOD_735","reviewTargetKind":"provider-identity","canonicalEnglishName":"Bamboo shoots","fdcId":169210,"confidence":"high","fdcDescription":"Bamboo shoots, raw","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":4},
+    {"reviewTargetId":"M_FOOD_545","reviewTargetKind":"provider-identity","canonicalEnglishName":"Tripe","fdcId":2706162,"confidence":"high","fdcDescription":"Tripe","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":4},
+    {"reviewTargetId":"M_FOOD_139","reviewTargetKind":"provider-identity","canonicalEnglishName":"Lamb chop","fdcId":2705906,"confidence":"high","fdcDescription":"Lamb, chop","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":4},
+    {"reviewTargetId":"M_FOOD_124","reviewTargetKind":"provider-identity","canonicalEnglishName":"Hearts of palm","fdcId":167714,"confidence":"high","fdcDescription":"Hearts of palm, raw","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":4},
+    {"reviewTargetId":"M_FOOD_134","reviewTargetKind":"provider-identity","canonicalEnglishName":"Dulce de leche","fdcId":173461,"confidence":"high","fdcDescription":"Dulce de Leche","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":3}
+  ]
+}
