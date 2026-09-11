@@ -50,23 +50,41 @@ class ReviewBundle:
     entry_titles: dict[str, dict[str, Any]]
 
 
+def _provider_food_paths(root: Path) -> list[Path]:
+    base = root / FOOD_REVIEW.name
+    extras = sorted(
+        path
+        for path in root.glob("release_catalog_reviewed_provider_food_english_*.v2.json")
+        if path != base
+    )
+    return [base, *extras]
+
+
 def _provider_food_reviews(root: Path) -> dict[str, dict[str, Any]]:
-    path = root / FOOD_REVIEW.name
-    value = _load_object(path)
-    if value.get("kind") != "cook4me-reviewed-provider-food-english":
-        raise RuntimeError(f"invalid provider-food English review file: {path.name}")
     out: dict[str, dict[str, Any]] = {}
-    for key, raw in (value.get("items") or {}).items():
-        if not isinstance(raw, dict):
-            continue
-        ident = _text(key)
-        english = _text(raw.get("english"))
-        if not ident or not english:
-            continue
-        row = dict(raw)
-        row["english"] = english
-        row["reviewFile"] = path.name
-        out[ident] = row
+    for path in _provider_food_paths(root):
+        value = _load_object(path)
+        if value.get("kind") != "cook4me-reviewed-provider-food-english":
+            raise RuntimeError(
+                f"invalid provider-food English review file: {path.name}"
+            )
+        for key, raw in (value.get("items") or {}).items():
+            if not isinstance(raw, dict):
+                continue
+            ident = _text(key)
+            english = _text(raw.get("english"))
+            if not ident or not english:
+                continue
+            existing = out.get(ident)
+            if existing is not None:
+                raise RuntimeError(
+                    f"duplicate provider-food English review identity {ident}: "
+                    f"{existing.get('reviewFile')} and {path.name}"
+                )
+            row = dict(raw)
+            row["english"] = english
+            row["reviewFile"] = path.name
+            out[ident] = row
     return out
 
 
