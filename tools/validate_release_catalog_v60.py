@@ -11,11 +11,14 @@ import sys
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+TOOLS = ROOT / "tools"
 COMPONENT = ROOT / "custom_components" / "cook4me"
-if str(COMPONENT) not in sys.path:
-    sys.path.insert(0, str(COMPONENT))
+for path in (TOOLS, COMPONENT):
+    if str(path) not in sys.path:
+        sys.path.insert(0, str(path))
 
 import catalog_search_index  # type: ignore  # noqa: E402
+import provider_identity_v60  # type: ignore  # noqa: E402
 import recipe_metrics_v60  # type: ignore  # noqa: E402
 import recipe_safety_index_v60  # type: ignore  # noqa: E402
 
@@ -64,7 +67,7 @@ def _identity(row: dict[str, Any]) -> str:
 
 
 def _provider_key(row: dict[str, Any]) -> str:
-    return _text(row.get("key") or row.get("foodKey") or row.get("providerIngredientId"))
+    return provider_identity_v60.provider_key(row)
 
 
 def _nutrition_valid(value: Any) -> bool:
@@ -239,10 +242,10 @@ def validate(
             else:
                 provider_ids.add(ident)
                 food_for_intelligence = True
-                if ident != provider_key:
-                    errors.append(f"provider ingredient {ident} must preserve matching provider key")
-                if not ident.startswith("M_FOOD_"):
-                    errors.append(f"provider ingredient {ident} is not an M_FOOD identity")
+                if not provider_identity_v60.preserved_provider_identity(row, ident):
+                    errors.append(
+                        f"provider ingredient {ident} must preserve matching provider key"
+                    )
 
         if not _text(row.get("canonicalName")):
             errors.append(f"ingredient {ident} has no canonicalName")
@@ -306,7 +309,9 @@ def validate(
                     dangling.append(f"{variant_id}:{ident}")
                 if ident.startswith("local:") and provider_key:
                     identity_leaks.append(f"{variant_id}:{ident}:{provider_key}")
-                if provider_key and (ident != provider_key or not provider_key.startswith("M_FOOD_")):
+                elif provider_key and not provider_identity_v60.preserved_provider_identity(
+                    line, ident
+                ):
                     identity_leaks.append(f"{variant_id}:{ident}:{provider_key}")
 
     duplicate_groups = sorted(key for key, count in Counter(group_ids).items() if count > 1)
