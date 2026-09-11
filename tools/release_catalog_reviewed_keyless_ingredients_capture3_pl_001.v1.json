@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-keyless-ingredient-semantics",
+  "policy": {
+    "providerIdentityAssigned": false,
+    "exactSourceLabelOnly": true,
+    "manualReview": true,
+    "phase": "capture3",
+    "batch": "pl-001",
+    "catalogVersion": "2026-09-11-v60-capture3",
+    "notes": "Manual semantic review for the 13 exact Capture 3 Polish source-local labels. English semantics are reviewed from the exact Polish source label; no provider identity is assigned or inferred."
+  },
+  "items": [
+    {"language":"pl","source":"Tahini","english":"Tahini","classification":"food","confidence":"high"},
+    {"language":"pl","source":"Pieprz","english":"Pepper","classification":"food","confidence":"high"},
+    {"language":"pl","source":"Przecier pomidorowy","english":"Tomato purée","classification":"food","confidence":"high"},
+    {"language":"pl","source":"Bagietka","english":"Baguette","classification":"food","confidence":"high"},
+    {"language":"pl","source":"Makaron","english":"Pasta","classification":"food","confidence":"high"},
+    {"language":"pl","source":"Skrobia kukurydziana","english":"Cornstarch","classification":"food","confidence":"high"},
+    {"language":"pl","source":"Kolendra","english":"Coriander","classification":"food","confidence":"high"},
+    {"language":"pl","source":"Mieszanka nasion","english":"Seed mix","classification":"food","confidence":"high"},
+    {"language":"pl","source":"Papryka chili","english":"Chili pepper","classification":"food","confidence":"high"},
+    {"language":"pl","source":"Surimi","english":"Surimi","classification":"food","confidence":"high"},
+    {"language":"pl","source":"Garam masala","english":"Garam masala","classification":"food","confidence":"high"},
+    {"language":"pl","source":"Mieszanka ziół","english":"Mixed herbs","classification":"food","confidence":"high"},
+    {"language":"pl","source":"Makaron ryżowy","english":"Rice noodles","classification":"food","confidence":"high"}
+  ]
+}
