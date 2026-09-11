@@ -5,9 +5,13 @@ The proven semantic/nutrition/search implementation lives in
 ``build_release_catalog_v60_core``. This facade adds the immutable diet/allergy
 safety index without changing provider identity, semantic review, nutrition, or
 search assembly behavior.
+
+Provider capture happens once. Reviewed exact-FDC nutrition can then be attached
+offline and every derived v60 vector/index is deterministically regenerated.
 """
 from __future__ import annotations
 
+from copy import deepcopy
 import json
 from pathlib import Path
 import sys
@@ -22,6 +26,7 @@ for path in (TOOLS, COMPONENT):
 
 import build_release_catalog_v60_core as _core
 import recipe_safety_index_v60 as safety
+import reviewed_nutrition_v60 as reviewed_nutrition
 
 
 def _reject_unreviewed_nutrition_search(args: Any) -> None:
@@ -32,7 +37,7 @@ def _reject_unreviewed_nutrition_search(args: Any) -> None:
             "--allow-missing-nutrition, create the reviewed v60 nutrition queue, "
             "bind exact FDC IDs in release_catalog_reviewed_nutrition_sources*.v1.json, "
             "resolve them with resolve_reviewed_release_catalog_nutrition_v60.py, "
-            "then rebuild from that reviewed cache"
+            "then finalize that captured artifact offline"
         )
 
 
@@ -57,14 +62,9 @@ def _safety_completeness(index: dict[str, Any]) -> bool:
     return bool(diet_complete and allergen_complete)
 
 
-def enrich_payload(
-    payload: dict[str, Any], semantic_payload: dict[str, Any]
-) -> dict[str, Any]:
-    """Run the proven v60 core then append strict precompiled safety sets."""
-    result = _core.enrich_payload(payload, semantic_payload)
+def _refresh_safety(result: dict[str, Any]) -> dict[str, Any]:
     safety_index = safety.compile_recipe_safety_index(result)
     result["recipeSafetyIndex"] = safety_index
-
     source = result.setdefault("source", {})
     if not isinstance(source, dict):
         source = {}
@@ -89,6 +89,134 @@ def enrich_payload(
         }
     )
     return result
+
+
+def enrich_payload(
+    payload: dict[str, Any], semantic_payload: dict[str, Any]
+) -> dict[str, Any]:
+    """Run the proven v60 core then append strict precompiled safety sets."""
+    return _refresh_safety(_core.enrich_payload(payload, semantic_payload))
+
+
+def _identity(row: dict[str, Any]) -> str:
+    return _core._text(
+        row.get("id")
+        or row.get("ingredientId")
+        or row.get("key")
+        or row.get("foodKey")
+    )
+
+
+def _reviewed_nutrition_eligible(row: dict[str, Any], ident: str) -> bool:
+    source_local = bool(row.get("sourceLocalIdentity")) or ident.startswith("local:")
+    if not source_local:
+        provider_key = _core._text(row.get("key") or row.get("foodKey"))
+        return bool(provider_key and provider_key == ident and ident.startswith("M_FOOD_"))
+    return bool(
+        _core._text(row.get("classification")).lower() == "food"
+        and row.get("nutritionEligible") is True
+        and row.get("needsSemanticConfirmation") is not True
+        and _core._text(row.get("conceptId"))
+    )
+
+
+def apply_reviewed_nutrition(
+    payload: dict[str, Any],
+    nutrition_cache: dict[str, Any],
+) -> dict[str, Any]:
+    """Attach only reviewed exact-FDC profiles and rebuild every derived index.
+
+    This function is deliberately network-free. It never performs provider or
+    USDA requests and never changes recipe/provider identity. Legacy fuzzy cache
+    entries are ignored and any pre-existing unreviewed nutrition is stripped.
+    """
+    result = deepcopy(payload)
+    ingredients = [
+        row for row in result.get("ingredients") or [] if isinstance(row, dict)
+    ]
+    required = 0
+    resolved = 0
+    rejected_unreviewed_cache = 0
+    rejected_unreviewed_embedded = 0
+
+    for row in ingredients:
+        ident = _identity(row)
+        canonical = _core._text(row.get("canonicalName"))
+        embedded = row.pop("nutrition", None)
+        eligible = bool(ident and canonical and _reviewed_nutrition_eligible(row, ident))
+        if not eligible:
+            continue
+        required += 1
+
+        cached = nutrition_cache.get(ident)
+        if reviewed_nutrition.is_reviewed_profile(
+            cached,
+            ingredient_id=ident,
+            canonical_name=canonical,
+        ):
+            row["nutrition"] = deepcopy(cached)
+            resolved += 1
+            continue
+        if isinstance(cached, dict) and cached:
+            rejected_unreviewed_cache += 1
+
+        if reviewed_nutrition.is_reviewed_profile(
+            embedded,
+            ingredient_id=ident,
+            canonical_name=canonical,
+        ):
+            row["nutrition"] = deepcopy(embedded)
+            resolved += 1
+            continue
+        if isinstance(embedded, dict) and embedded:
+            rejected_unreviewed_embedded += 1
+
+    # The v59 capture layer may have emitted a generic recipe nutrition summary.
+    # It is not v60 reviewed evidence and must never survive finalization.
+    for recipe in result.get("recipes") or []:
+        if not isinstance(recipe, dict):
+            continue
+        recipe.pop("nutrition", None)
+        for variant in recipe.get("variants") or []:
+            if isinstance(variant, dict):
+                variant.pop("nutrition", None)
+                variant.pop("calculatedNutritionV60", None)
+
+    metric_stats = _core._compile_recipe_vectors(result, ingredients)
+    result["searchIndex"] = _core.search_index.compile_search_index(result)
+
+    source = result.setdefault("source", {})
+    if not isinstance(source, dict):
+        source = {}
+        result["source"] = source
+    complete = bool(required and resolved == required)
+    source.update(
+        {
+            **metric_stats,
+            "compiledMultilingualSearchIndex": True,
+            "compiledMultilingualSearchIndexSchemaVersion": int(
+                (result.get("searchIndex") or {}).get("schemaVersion") or 0
+            ),
+            "compiledRecipeDependencyIndex": True,
+            "precomputedRecipeNutritionVectors": True,
+            "nutritionResolvedCount": resolved,
+            "reviewedNutritionIdentityOnly": True,
+            "reviewedNutritionRequiredForActivation": True,
+            "reviewedNutritionRequiredCount": required,
+            "reviewedNutritionResolvedCount": resolved,
+            "reviewedNutritionComplete": complete,
+            "legacyFuzzyNutritionAccepted": False,
+            "reviewedNutritionRejectedLegacyCacheCount": rejected_unreviewed_cache,
+            "reviewedNutritionRejectedEmbeddedCount": rejected_unreviewed_embedded,
+            "foodIntelligenceIngredientCount": required,
+            "foodIntelligenceNutritionResolvedCount": resolved,
+            "foodIntelligenceNutritionComplete": complete,
+            "ingredientIntelligenceComplete": bool(
+                source.get("semanticCoverageComplete") and complete
+            ),
+        }
+    )
+    return _refresh_safety(result)
 
 
 def build(args: Any) -> dict[str, Any]:

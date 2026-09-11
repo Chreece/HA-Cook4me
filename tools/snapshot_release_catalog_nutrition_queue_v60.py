@@ -6,6 +6,9 @@ M_FOOD identities remain authoritative. Reviewed source-local concepts are
 eligible only when the semantic compiler explicitly marks them nutrition-safe.
 Equipment, other, ambiguous, and semantically-unconfirmed source-local rows are
 never turned into nutrition tasks.
+
+A structurally valid legacy per-100-g cache entry is not enough to satisfy v60:
+resolved nutrition must carry exact-FDC manual-review provenance.
 """
 from __future__ import annotations
 
@@ -14,8 +17,19 @@ from collections import Counter
 import json
 from pathlib import Path
 import re
+import sys
 import unicodedata
 from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
+TOOLS = ROOT / "tools"
+COMPONENT = ROOT / "custom_components" / "cook4me"
+for path in (TOOLS, COMPONENT):
+    if str(path) not in sys.path:
+        sys.path.insert(0, str(path))
+
+import ingredient_identity  # type: ignore  # noqa: E402
+import reviewed_nutrition_v60 as reviewed_nutrition  # type: ignore  # noqa: E402
 
 
 _NON_FOOD = {"equipment", "other", "ambiguous"}
@@ -34,15 +48,6 @@ def _load(path: Path, default: Any = None) -> Any:
         return json.loads(path.read_text(encoding="utf-8"))
     except FileNotFoundError:
         return default
-
-
-def _resolved_profile(value: Any) -> bool:
-    return bool(
-        isinstance(value, dict)
-        and value.get("basis") == "per100g"
-        and isinstance(value.get("values"), dict)
-        and value["values"]
-    )
 
 
 def _identity(row: dict[str, Any]) -> str:
@@ -75,7 +80,19 @@ def _nutrition_eligible(row: dict[str, Any], kind: str) -> bool:
         and classification not in _NON_FOOD
         and row.get("nutritionEligible") is True
         and row.get("needsSemanticConfirmation") is not True
+        and _text(row.get("conceptId"))
     )
+
+
+def _usage_count(row: dict[str, Any], dependencies: dict[str, Any]) -> int:
+    """Count affected logical recipes across all canonical v60 identity aliases."""
+    affected: set[int] = set()
+    for candidate in ingredient_identity.identity_candidates(row):
+        indices = dependencies.get(candidate)
+        if not isinstance(indices, (list, tuple, set)):
+            continue
+        affected.update(index for index in indices if isinstance(index, int) and index >= 0)
+    return len(affected)
 
 
 def snapshot(
@@ -100,6 +117,8 @@ def snapshot(
     food_identities = 0
     excluded_by_classification = Counter()
     invalid_food_rows: list[str] = []
+    rejected_unreviewed_cache = 0
+    rejected_unreviewed_embedded = 0
 
     for raw in catalog.get("ingredients") or []:
         if not isinstance(raw, dict):
@@ -122,12 +141,25 @@ def snapshot(
 
         cached = nutrition_cache.get(ident)
         embedded = raw.get("nutrition")
-        if _resolved_profile(cached) or _resolved_profile(embedded):
+        cached_reviewed = reviewed_nutrition.is_reviewed_profile(
+            cached,
+            ingredient_id=ident,
+            canonical_name=canonical,
+        )
+        embedded_reviewed = reviewed_nutrition.is_reviewed_profile(
+            embedded,
+            ingredient_id=ident,
+            canonical_name=canonical,
+        )
+        if cached_reviewed or embedded_reviewed:
             resolved += 1
             continue
+        if isinstance(cached, dict) and cached:
+            rejected_unreviewed_cache += 1
+        if isinstance(embedded, dict) and embedded:
+            rejected_unreviewed_embedded += 1
 
-        dep = dependencies.get(ident)
-        usage_count = len(dep) if isinstance(dep, (list, tuple, set)) else 0
+        usage_count = _usage_count(raw, dependencies)
         task: dict[str, Any] = {
             "ingredientId": ident,
             "canonicalEnglishName": canonical,
@@ -146,7 +178,9 @@ def snapshot(
                     "semanticReviewFile": _text(raw.get("semanticReviewFile")),
                 }
             )
-        tasks.append({key: value for key, value in task.items() if value not in ("", None)})
+        tasks.append(
+            {key: value for key, value in task.items() if value not in ("", None)}
+        )
 
     if invalid_food_rows:
         raise RuntimeError(
@@ -171,8 +205,11 @@ def snapshot(
             "providerIngredientIdsPreserved": True,
             "providerIdentityInference": False,
             "sourceLocalFoodRequiresReviewedNutritionEligibility": True,
+            "reviewedExactFdcProvenanceRequired": True,
+            "legacyStructuralNutritionAccepted": False,
             "ambiguousExcluded": True,
             "equipmentAndOtherExcluded": True,
+            "searchResultAutoAccepted": False,
         },
         "catalogVersion": _text(catalog.get("catalogVersion")),
         "taskCount": len(tasks),
@@ -184,7 +221,11 @@ def snapshot(
         "pendingNutritionCount": len(tasks),
         "pendingByIdentityKind": dict(sorted(kinds.items())),
         "usedPendingCount": sum(bool(row.get("usedByRecipe")) for row in tasks),
-        "excludedSourceLocalByClassification": dict(sorted(excluded_by_classification.items())),
+        "excludedSourceLocalByClassification": dict(
+            sorted(excluded_by_classification.items())
+        ),
+        "rejectedUnreviewedCacheCount": rejected_unreviewed_cache,
+        "rejectedUnreviewedEmbeddedCount": rejected_unreviewed_embedded,
         "semanticCoverageComplete": True,
     }
     return payload, summary
