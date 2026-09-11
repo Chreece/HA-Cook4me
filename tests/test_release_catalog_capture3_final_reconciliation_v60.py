@@ -21,6 +21,7 @@ CATALOG_VERSION = "2026-09-11-v60-capture3"
 SOURCE_QUEUE_SHA256 = "326d9bc76a27220e1c60653b96689cc9fa414af9ab0a746d4090c6425ac4fd6c"
 SOURCE_ID_SET_SHA256 = "f656f4dc8fc6655bbeedeaa9a506efd2df1b5f7fba86f30f586263b72ff36ed8"
 PROVIDER_ID_SET_SHA256 = "229273ade7ca2eb7e8c1cf54cb2c87755945965c5a136ad6790486ac8c689d1e"
+BASE_PROVIDER_REVIEW_COUNT = 109
 EXPECTED_LANGUAGE_COUNTS = {
     "ar": 74,
     "bg": 144,
@@ -114,14 +115,16 @@ class Capture3FinalReviewReconciliationV60Tests(unittest.TestCase):
         self.assertEqual(counts, EXPECTED_LANGUAGE_COUNTS)
         self.assertEqual(_digest(ids), SOURCE_ID_SET_SHA256)
 
-    def test_original_provider_queue_identity_set_is_still_exact_and_untouched(self):
+    def test_original_provider_queue_identity_set_and_review_subset_are_exact(self):
         self.assertEqual(len(PROVIDER_QUEUE_IDS), 311)
         self.assertEqual(_digest(PROVIDER_QUEUE_IDS), PROVIDER_ID_SET_SHA256)
         committed = canonical_reviews._provider_food_reviews(TOOLS)
-        self.assertEqual(len(committed), 109)
-        self.assertTrue(PROVIDER_QUEUE_IDS.isdisjoint(committed))
+        queued_committed = PROVIDER_QUEUE_IDS & set(committed)
+        baseline_committed = set(committed) - PROVIDER_QUEUE_IDS
+        self.assertEqual(len(baseline_committed), BASE_PROVIDER_REVIEW_COUNT)
+        self.assertEqual(len(committed), BASE_PROVIDER_REVIEW_COUNT + len(queued_committed))
 
-    def test_exact_reconciliation_is_1213_complete_and_311_provider_pending(self):
+    def test_exact_reconciliation_keeps_semantics_complete_and_tracks_provider_progress(self):
         semantic_rows, counts = _capture3_review_rows()
         provider_rows = [
             {
@@ -153,16 +156,18 @@ class Capture3FinalReviewReconciliationV60Tests(unittest.TestCase):
             "sourceLocalSemanticReview": semantic_rows,
             "providerCanonicalEnglishReview": provider_rows,
         }
+        committed = canonical_reviews._provider_food_reviews(TOOLS)
+        queued_reviewed = len(PROVIDER_QUEUE_IDS & set(committed))
         value = reconcile.reconcile(queue, tools_dir=TOOLS)
         self.assertEqual(value["summary"]["queuedSourceLocalSemanticReviewCount"], 1213)
         self.assertEqual(value["summary"]["alreadyReviewedSourceLocalExactCount"], 1213)
         self.assertEqual(value["summary"]["needsSourceLocalSemanticReviewCount"], 0)
         self.assertEqual(value["summary"]["needsSourceLocalByLanguage"], {})
         self.assertEqual(value["summary"]["queuedProviderCanonicalEnglishReviewCount"], 311)
-        self.assertEqual(value["summary"]["alreadyReviewedProviderCanonicalExactCount"], 0)
-        self.assertEqual(value["summary"]["needsProviderCanonicalEnglishReviewCount"], 311)
+        self.assertEqual(value["summary"]["alreadyReviewedProviderCanonicalExactCount"], queued_reviewed)
+        self.assertEqual(value["summary"]["needsProviderCanonicalEnglishReviewCount"], 311 - queued_reviewed)
         self.assertEqual(value["reviewCorpus"]["reviewedSourceLabelCount"], 10994)
-        self.assertEqual(value["reviewCorpus"]["providerCanonicalEnglishReviewCount"], 109)
+        self.assertEqual(value["reviewCorpus"]["providerCanonicalEnglishReviewCount"], len(committed))
 
     def test_original_queue_provenance_is_locked(self):
         self.assertEqual(
