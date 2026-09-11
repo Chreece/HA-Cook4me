@@ -212,7 +212,7 @@ class ReviewedNutritionV60Tests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "forbid auto acceptance"):
                 resolver.load_reviews(root)
 
-    def test_v60_builder_rejects_legacy_fuzzy_nutrition_resolution_before_capture(self):
+    def _assert_fuzzy_resolution_stops_before_v59_capture(self, build_call):
         args = SimpleNamespace(resolve_nutrition=True)
         original = builder._core.v59.build
         called = False
@@ -225,10 +225,16 @@ class ReviewedNutritionV60Tests(unittest.TestCase):
         builder._core.v59.build = should_not_run
         try:
             with self.assertRaisesRegex(RuntimeError, "automatic USDA/FDC search"):
-                builder.build(args)
+                build_call(args)
         finally:
             builder._core.v59.build = original
         self.assertFalse(called)
+
+    def test_v60_facade_rejects_legacy_fuzzy_nutrition_resolution_before_capture(self):
+        self._assert_fuzzy_resolution_stops_before_v59_capture(builder.build)
+
+    def test_v60_core_rejects_legacy_fuzzy_nutrition_resolution_before_capture(self):
+        self._assert_fuzzy_resolution_stops_before_v59_capture(builder._core.build)
 
 
 if __name__ == "__main__":
