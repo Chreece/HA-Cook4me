@@ -8,7 +8,9 @@ This module reuses only already-reviewed repository evidence:
 
 It never creates or changes provider identity and never merges recipe groups from
 translated text. Authoritative/native English and explicit operator overrides are
-never silently replaced: conflicting reviewed evidence fails closed.
+never silently replaced: conflicting reviewed evidence fails closed. A row marked
+``canonicalEnglishNeedsReview`` contains only a fallback display label, so exact
+reviewed evidence may replace that fallback.
 """
 from __future__ import annotations
 
@@ -152,7 +154,8 @@ def _set_reviewed_name(
     conflict_label: str,
 ) -> bool:
     existing = _text(row.get("canonicalName"))
-    if existing:
+    fallback_only = row.get("canonicalEnglishNeedsReview") is True
+    if existing and not fallback_only:
         if _norm(existing) != _norm(reviewed):
             raise RuntimeError(
                 f"{conflict_label}: authoritative English {existing!r} conflicts "
@@ -160,12 +163,16 @@ def _set_reviewed_name(
             )
         row.pop("canonicalEnglishNeedsReview", None)
         return False
+
     row["canonicalName"] = reviewed
-    row.setdefault("translations", {}).setdefault("en", reviewed)
+    translations = row.setdefault("translations", {})
+    if isinstance(translations, dict):
+        translations["en"] = reviewed
     row["canonicalEnglishSource"] = source
     row["canonicalEnglishConfidence"] = _text(confidence) or "reviewed"
     row["canonicalEnglishReviewFile"] = review_file
     row.pop("canonicalEnglishNeedsReview", None)
+    row.pop("canonicalNameSourceLanguage", None)
     return True
 
 
@@ -173,7 +180,7 @@ def apply_provider_food_reviews(
     ingredients: dict[str, dict[str, Any]],
     reviews: dict[str, dict[str, Any]],
 ) -> int:
-    """Fill missing canonical English only by exact provider ingredient ID."""
+    """Fill fallback canonical English only by exact provider ingredient ID."""
     applied = 0
     for ident, row in ingredients.items():
         review = reviews.get(_text(ident))
@@ -237,7 +244,7 @@ def apply_recipe_group_reviews(
     # Exact language/native-title reviews are label evidence only. They can fill
     # an unresolved group but never choose/merge a grouping identity.
     for key, group in groups.items():
-        if _text(group.get("canonicalName")):
+        if _text(group.get("canonicalName")) and group.get("canonicalEnglishNeedsReview") is not True:
             continue
         matches: list[dict[str, Any]] = []
         for variant in group.get("variants") or []:
