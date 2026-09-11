@@ -3,7 +3,7 @@
 
 The reference corpus is evidence only until a separate reviewed target -> exact
 FDC ID binding exists. This module never selects a nutrition identity and never
-uses provider search rank as proof.
+uses candidate rank as proof.
 """
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ import unicodedata
 from typing import Any
 
 REFERENCE_KIND = "cook4me-fdc-reference-data-v60"
-_ALLOWED_DATA_TYPES = {"Foundation", "SR Legacy"}
+_ALLOWED_DATA_TYPES = {"Foundation", "SR Legacy", "Survey (FNDDS)"}
 
 
 def text(value: Any) -> str:
@@ -70,6 +70,7 @@ def _food_rows(payload: Any, data_type: str) -> list[dict[str, Any]]:
     preferred = {
         "Foundation": ("FoundationFoods", "foundationFoods"),
         "SR Legacy": ("SRLegacyFoods", "srLegacyFoods"),
+        "Survey (FNDDS)": ("SurveyFoods", "surveyFoods"),
     }[data_type]
     for key in (*preferred, "foods"):
         rows = payload.get(key)
@@ -102,8 +103,10 @@ def _candidate_fields(raw: dict[str, Any], data_type: str) -> dict[str, Any] | N
         "description": description,
         "dataType": data_type,
     }
+    category = _nested_text(raw.get("foodCategory") or raw.get("wweiaFoodCategory"))
+    if category:
+        row["foodCategory"] = category
     for source, target in (
-        ("foodCategory", "foodCategory"),
         ("scientificName", "scientificName"),
         ("commonNames", "commonNames"),
         ("additionalDescriptions", "additionalDescriptions"),
@@ -122,8 +125,13 @@ class ReferenceIndex:
         if not isinstance(manifest, dict) or manifest.get("kind") != REFERENCE_KIND:
             raise RuntimeError("invalid FDC reference manifest")
         datasets = manifest.get("datasets") if isinstance(manifest.get("datasets"), list) else []
-        if {text(row.get("dataType")) for row in datasets if isinstance(row, dict)} != _ALLOWED_DATA_TYPES:
-            raise RuntimeError("FDC reference manifest must contain Foundation and SR Legacy")
+        present_types = {
+            text(row.get("dataType")) for row in datasets if isinstance(row, dict)
+        }
+        if present_types != _ALLOWED_DATA_TYPES:
+            raise RuntimeError(
+                "FDC reference manifest must contain Foundation, SR Legacy, and Survey (FNDDS)"
+            )
 
         self.manifest = manifest
         self.manifest_sha256 = sha256(self.manifest_path)
@@ -220,6 +228,9 @@ class ReferenceIndex:
             score += 300.0
         elif q in d:
             score += 200.0
+        # Foundation wins only true score ties by a tiny amount. FNDDS remains
+        # neutral: it broadens evidence for prepared/composite foods but never
+        # receives a ranking bonus merely because of its data type.
         if row.get("dataType") == "Foundation":
             score += 2.0
         return score
