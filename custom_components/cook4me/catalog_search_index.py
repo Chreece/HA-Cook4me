@@ -343,10 +343,11 @@ def search_index(
     *,
     language: str = "",
     strict_language: bool = False,
+    allowed_indices: Iterable[int] | None = None,
     page: int = 0,
     size: int = 20,
 ) -> dict[str, Any]:
-    """Search only compiled postings; no recipe/catalog scan occurs here."""
+    """Search compiled postings and apply precomputed filters before pagination."""
     if not prepared.get("_prepared"):
         prepared = prepare_search_index(prepared)
 
@@ -355,9 +356,20 @@ def search_index(
     recipe_count = max(0, int(prepared.get("recipeCount") or 0))
     language_key = _language(language)
     allowed: frozenset[int] | None = None
+    if allowed_indices is not None:
+        allowed = frozenset(
+            index
+            for index in allowed_indices
+            if isinstance(index, int) and 0 <= index < recipe_count
+        )
     if strict_language:
-        allowed = (prepared.get("recipeLanguages") or {}).get(
+        language_allowed = (prepared.get("recipeLanguages") or {}).get(
             language_key, frozenset()
+        )
+        allowed = (
+            language_allowed
+            if allowed is None
+            else frozenset(allowed & language_allowed)
         )
 
     normalized = normalize_search_text(query)
