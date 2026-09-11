@@ -33,11 +33,10 @@ offline_resolver = _load(
 
 
 def _food(fdc_id: int, description: str, *, data_type: str) -> dict:
-    return {
+    row = {
         "fdcId": fdc_id,
         "description": description,
         "dataType": data_type,
-        "foodCategory": {"description": "Vegetables"},
         "foodNutrients": [
             {
                 "nutrient": {"name": "Energy", "unitName": "kcal"},
@@ -49,6 +48,11 @@ def _food(fdc_id: int, description: str, *, data_type: str) -> dict:
             },
         ],
     }
+    if data_type == "Survey (FNDDS)":
+        row["wweiaFoodCategory"] = {"description": "Condiments and sauces"}
+    else:
+        row["foodCategory"] = {"description": "Vegetables"}
+    return row
 
 
 def _targets() -> dict:
@@ -93,16 +97,40 @@ def _targets() -> dict:
     }
 
 
+def _fndds_target() -> dict:
+    value = _targets()
+    value["identityCount"] = 1
+    value["reviewTargetCount"] = 1
+    value["targets"] = [
+        {
+            "reviewTargetId": "concept:food:mirin",
+            "reviewTargetKind": "semantic-concept",
+            "semanticConceptId": "concept:food:mirin",
+            "canonicalEnglishName": "Mirin",
+            "memberIngredientIds": ["local:ja:mirin"],
+            "memberCount": 1,
+            "usageCountSum": 1,
+            "usedByRecipe": True,
+        }
+    ]
+    return value
+
+
 class FdcReferenceDataV60Tests(unittest.TestCase):
     def _reference(self, root: Path):
         foundation = root / "foundation.json"
         sr = root / "sr.json"
+        fndds = root / "fndds.json"
         foundation.write_text(
             json.dumps({"FoundationFoods": [_food(123, "Tomatoes, red, ripe, raw", data_type="Foundation")]}),
             encoding="utf-8",
         )
         sr.write_text(
             json.dumps({"SRLegacyFoods": [_food(456, "Salt, table", data_type="SR Legacy")]}),
+            encoding="utf-8",
+        )
+        fndds.write_text(
+            json.dumps({"SurveyFoods": [_food(789, "Mirin", data_type="Survey (FNDDS)")]}),
             encoding="utf-8",
         )
         manifest = {
@@ -128,6 +156,12 @@ class FdcReferenceDataV60Tests(unittest.TestCase):
                     "jsonPath": sr.name,
                     "jsonSha256": reference.sha256(sr),
                 },
+                {
+                    "dataType": "Survey (FNDDS)",
+                    "releaseDate": "2024-10-31",
+                    "jsonPath": fndds.name,
+                    "jsonSha256": reference.sha256(fndds),
+                },
             ],
         }
         manifest_path = root / "reference-manifest.v60.json"
@@ -142,6 +176,18 @@ class FdcReferenceDataV60Tests(unittest.TestCase):
             self.assertEqual(candidates[0]["dataType"], "Foundation")
             self.assertIn("localEvidenceScore", candidates[0])
             self.assertEqual(index.search("Completely unrelated phrase"), [])
+
+    def test_fndds_is_searchable_evidence_without_auto_selection(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            index = self._reference(Path(tmp))
+            candidates = index.search("Mirin", max_candidates=8)
+            self.assertEqual(candidates[0]["fdcId"], 789)
+            self.assertEqual(candidates[0]["dataType"], "Survey (FNDDS)")
+            self.assertEqual(candidates[0]["foodCategory"], "Condiments and sauces")
+            payload, summary = offline_candidates.snapshot(_fndds_target(), index)
+            self.assertEqual(payload["items"][0]["candidates"][0]["fdcId"], 789)
+            self.assertFalse(payload["items"][0]["selectionPerformed"])
+            self.assertEqual(summary["selectionCount"], 0)
 
     def test_offline_candidate_snapshot_never_selects(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -182,6 +228,29 @@ class FdcReferenceDataV60Tests(unittest.TestCase):
             self.assertEqual(cache["M_FOOD_TOMATO"]["sourceReferenceDataset"], "Foundation")
             self.assertEqual(cache["local:de:salt"]["sourceId"], 456)
             self.assertEqual(cache["local:de:salt"]["sourceReferenceDataset"], "SR Legacy")
+
+    def test_reviewed_fndds_exact_id_resolves_offline_with_reference_provenance(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            index = self._reference(Path(tmp))
+            reviews = {
+                "concept:food:mirin": {
+                    "reviewTargetId": "concept:food:mirin",
+                    "reviewTargetKind": "semantic-concept",
+                    "canonicalEnglishName": "Mirin",
+                    "fdcId": 789,
+                    "confidence": "high",
+                    "reviewFile": "targets-fndds.v1.json",
+                }
+            }
+            cache, pending = offline_resolver.resolve_offline(
+                _fndds_target(), {}, reviews, index
+            )
+            self.assertEqual(pending["summary"]["pendingReviewTargetCount"], 0)
+            profile = cache["local:ja:mirin"]
+            self.assertEqual(profile["sourceId"], 789)
+            self.assertEqual(profile["sourceReferenceDataset"], "Survey (FNDDS)")
+            self.assertEqual(profile["sourceReferenceReleaseDate"], "2024-10-31")
+            self.assertFalse(pending["summary"]["networkRequestsPerformed"])
 
     def test_unreviewed_target_stays_pending_even_when_candidate_exists(self):
         with tempfile.TemporaryDirectory() as tmp:
