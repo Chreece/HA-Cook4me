@@ -25,6 +25,7 @@ for path in (TOOLS, COMPONENT):
         sys.path.insert(0, str(path))
 
 import build_release_catalog_v60_core as _core
+import provider_identity_v60
 import recipe_safety_index_v60 as safety
 import release_catalog_phase3_identity_v60 as phase3_identity
 import reviewed_nutrition_v60 as reviewed_nutrition
@@ -128,8 +129,7 @@ def _identity(row: dict[str, Any]) -> str:
 def _reviewed_nutrition_eligible(row: dict[str, Any], ident: str) -> bool:
     source_local = bool(row.get("sourceLocalIdentity")) or ident.startswith("local:")
     if not source_local:
-        provider_key = _core._text(row.get("key") or row.get("foodKey"))
-        return bool(provider_key and provider_key == ident and ident.startswith("M_FOOD_"))
+        return provider_identity_v60.preserved_provider_identity(row, ident)
     return bool(
         _core._text(row.get("classification")).lower() == "food"
         and row.get("nutritionEligible") is True

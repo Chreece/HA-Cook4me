@@ -2,10 +2,11 @@
 """Create the v60 nutrition-review queue from an immutable release catalog.
 
 Only identities that are already proven food identities are eligible. Provider
-M_FOOD identities remain authoritative. Reviewed source-local concepts are
-eligible only when the semantic compiler explicitly marks them nutrition-safe.
-Equipment, other, ambiguous, and semantically-unconfirmed source-local rows are
-never turned into nutrition tasks.
+identities remain authoritative only when the explicit provider key is preserved
+exactly as the ingredient ID. Reviewed source-local concepts are eligible only
+when the semantic compiler explicitly marks them nutrition-safe. Equipment,
+other, ambiguous, and semantically-unconfirmed source-local rows are never
+turned into nutrition tasks.
 
 A structurally valid legacy per-100-g cache entry is not enough to satisfy v60:
 resolved nutrition must carry exact-FDC manual-review provenance.
@@ -29,6 +30,7 @@ for path in (TOOLS, COMPONENT):
         sys.path.insert(0, str(path))
 
 import ingredient_identity  # type: ignore  # noqa: E402
+import provider_identity_v60  # type: ignore  # noqa: E402
 import reviewed_nutrition_v60 as reviewed_nutrition  # type: ignore  # noqa: E402
 
 
@@ -60,17 +62,19 @@ def _identity(row: dict[str, Any]) -> str:
 
 
 def _identity_kind(row: dict[str, Any], ident: str) -> str:
-    if _text(row.get("key") or row.get("foodKey")) or ident.startswith("M_FOOD_"):
+    provider_key = provider_identity_v60.provider_key(row)
+    source_local = bool(row.get("sourceLocalIdentity")) or ident.startswith("local:")
+    if source_local:
+        return "unknown" if provider_key else "source-local"
+    if provider_identity_v60.preserved_provider_identity(row, ident):
         return "provider"
-    if row.get("sourceLocalIdentity") or ident.startswith("local:"):
-        return "source-local"
     return "unknown"
 
 
 def _nutrition_eligible(row: dict[str, Any], kind: str) -> bool:
     if kind == "provider":
-        # Provider-backed rows are M_FOOD identities by construction. The v60
-        # semantic layer never manufactures one from a label.
+        # The provider key itself is authoritative; no namespace prefix is
+        # inferred or required by the v60 release contract.
         return True
     if kind != "source-local":
         return False
@@ -203,6 +207,7 @@ def snapshot(
         "nutritionBasisRequired": "per100g",
         "identityPolicy": {
             "providerIngredientIdsPreserved": True,
+            "providerKeyMustMatchIngredientId": True,
             "providerIdentityInference": False,
             "sourceLocalFoodRequiresReviewedNutritionEligibility": True,
             "reviewedExactFdcProvenanceRequired": True,
