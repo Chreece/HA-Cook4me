@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-keyless-ingredient-semantics",
+  "policy": {
+    "providerIdentityAssigned": false,
+    "exactSourceLabelOnly": true,
+    "manualReview": true,
+    "phase": "capture3",
+    "batch": "de-001",
+    "catalogVersion": "2026-09-11-v60-capture3",
+    "notes": "Manual semantic review for the 19 exact Capture 3 German source-local labels. English semantics are reviewed from the exact German source label; no provider identity is assigned or inferred."
+  },
+  "items": [
+    {"language":"de","source":"Maisstärke","english":"Cornstarch","classification":"food","confidence":"high"},
+    {"language":"de","source":"Hühnerbrühe","english":"Chicken stock","classification":"food","confidence":"high"},
+    {"language":"de","source":"Tomatenmark","english":"Tomato paste","classification":"food","confidence":"high"},
+    {"language":"de","source":"Maismehl","english":"Corn flour","classification":"food","confidence":"high"},
+    {"language":"de","source":"Orangenmarmelade","english":"Orange marmalade","classification":"food","confidence":"high"},
+    {"language":"de","source":"Semmelbrösel","english":"Breadcrumbs","classification":"food","confidence":"high"},
+    {"language":"de","source":"Wasabi","english":"Wasabi","classification":"food","confidence":"high"},
+    {"language":"de","source":"Edamame","english":"Edamame","classification":"food","confidence":"high"},
+    {"language":"de","source":"Eisenkraut","english":"Verbena","classification":"food","confidence":"high"},
+    {"language":"de","source":"Erdnüsse","english":"Peanuts","classification":"food","confidence":"high"},
+    {"language":"de","source":"Lorbeer","english":"Bay leaf","classification":"food","confidence":"high"},
+    {"language":"de","source":"Rinderfilet","english":"Beef fillet","classification":"food","confidence":"high"},
+    {"language":"de","source":"Schokolade","english":"Chocolate","classification":"food","confidence":"high"},
+    {"language":"de","source":"Sesamsaat","english":"Sesame seeds","classification":"food","confidence":"high"},
+    {"language":"de","source":"Speisestärke","english":"Starch","classification":"food","confidence":"high"},
+    {"language":"de","source":"Vollkornmehl","english":"Wholemeal flour","classification":"food","confidence":"high"},
+    {"language":"de","source":"Wurstbrät","english":"Sausage meat","classification":"food","confidence":"high"},
+    {"language":"de","source":"Gemüsebrühe","english":"Vegetable stock","classification":"food","confidence":"high"},
+    {"language":"de","source":"Salz","english":"Salt","classification":"food","confidence":"high"}
+  ]
+}
