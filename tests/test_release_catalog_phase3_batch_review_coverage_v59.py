@@ -8,6 +8,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT / "tools"
 BATCH_DIR = TOOLS / "release_catalog_keyless_phase3_batches_v59"
+BATCH_GLOB = "release_catalog_pending_keyless_phase3_*_source_v59.json"
 
 
 def _load_apply_module():
@@ -25,47 +26,53 @@ apply_reviews = _load_apply_module()
 
 
 class Phase3BatchReviewCoverageV59Tests(unittest.TestCase):
-    def _source_batch(self, part: int) -> dict:
-        path = BATCH_DIR / (
-            f"release_catalog_pending_keyless_phase3_{part:03d}_source_v59.json"
+    @classmethod
+    def setUpClass(cls):
+        cls.paths = sorted(BATCH_DIR.glob(BATCH_GLOB))
+        cls.batches = [json.loads(path.read_text(encoding="utf-8")) for path in cls.paths]
+        cls.reviews = apply_reviews._keyless_reviews()
+
+    def test_all_97_baseline_batches_are_present(self):
+        self.assertEqual(len(self.paths), 97)
+        self.assertEqual([batch.get("part") for batch in self.batches], list(range(1, 98)))
+        self.assertTrue(
+            all(
+                batch.get("kind") == "cook4me-keyless-ingredient-review-source-batch-v59"
+                for batch in self.batches
+            )
         )
-        return json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(sum(len(batch.get("tasks") or []) for batch in self.batches), 9658)
 
-    def test_batch_001_has_exact_review_for_every_queued_source_label(self):
-        batch = self._source_batch(1)
-        self.assertEqual(batch["kind"], "cook4me-keyless-ingredient-review-source-batch-v59")
-        self.assertEqual(batch["part"], 1)
-        self.assertEqual(batch["batchSize"], 100)
-
-        reviews = apply_reviews._keyless_reviews()
-        missing: list[tuple[str, str, str]] = []
-        for task in batch.get("tasks") or []:
-            language = apply_reviews._text(task.get("sourceLanguage")).lower()
-            source = apply_reviews._text(task.get("sourceText"))
-            key = (language, apply_reviews._norm(source))
-            if key not in reviews:
-                missing.append((str(task.get("taskId") or ""), language, source))
+    def test_all_9658_baseline_tasks_have_exact_review_keys(self):
+        missing: list[tuple[str, str, str, int]] = []
+        for batch in self.batches:
+            part = int(batch.get("part") or 0)
+            for task in batch.get("tasks") or []:
+                language = apply_reviews._text(task.get("sourceLanguage")).lower()
+                source = apply_reviews._text(task.get("sourceText"))
+                key = (language, apply_reviews._norm(source))
+                if key not in self.reviews:
+                    missing.append(
+                        (str(task.get("taskId") or ""), language, source, part)
+                    )
 
         self.assertEqual(
             missing,
             [],
-            "Phase 3 batch 001 contains queued labels without an exact review; "
-            f"first missing rows: {missing[:10]!r}",
+            "Phase 3 baseline contains queued labels without an exact review; "
+            f"first missing rows: {missing[:20]!r}",
         )
 
-    def test_batch_001_reviews_do_not_assign_provider_identity(self):
-        # The review overlay may translate/classify source-local labels, but it must
-        # never promote one into an inferred SEB M_FOOD/provider identity.
-        batch = self._source_batch(1)
-        reviews = apply_reviews._keyless_reviews()
-        for task in batch.get("tasks") or []:
-            language = apply_reviews._text(task.get("sourceLanguage")).lower()
-            source = apply_reviews._text(task.get("sourceText"))
-            review = reviews[(language, apply_reviews._norm(source))]
-            self.assertNotIn("foodKey", review)
-            self.assertNotIn("providerIngredientId", review)
-            self.assertNotIn("ingredientId", review)
-            self.assertIn(review["classification"], {"food", "equipment", "other"})
+    def test_reviewed_phase3_tasks_never_assign_provider_identity(self):
+        for batch in self.batches:
+            for task in batch.get("tasks") or []:
+                language = apply_reviews._text(task.get("sourceLanguage")).lower()
+                source = apply_reviews._text(task.get("sourceText"))
+                review = self.reviews[(language, apply_reviews._norm(source))]
+                self.assertNotIn("foodKey", review)
+                self.assertNotIn("providerIngredientId", review)
+                self.assertNotIn("ingredientId", review)
+                self.assertIn(review["classification"], {"food", "equipment", "other"})
 
 
 if __name__ == "__main__":
