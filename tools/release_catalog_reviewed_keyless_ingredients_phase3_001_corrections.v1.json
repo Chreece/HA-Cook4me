@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-keyless-ingredient-semantics",
+  "policy": {
+    "providerIdentityAssigned": false,
+    "exactSourceLabelOnly": true,
+    "manualReview": true,
+    "phase": 3,
+    "batch": 1,
+    "notes": "Exact-provider-label correction for Phase 3 batch 001. The source spelling is deliberately preserved exactly as captured from SEB; no provider identity is inferred."
+  },
+  "items": [
+    {
+      "language": "de",
+      "source": "Bund Suppengenüse",
+      "english": "Bunch of soup vegetables",
+      "classification": "food",
+      "confidence": "high",
+      "notes": "Provider source typo preserved exactly so the review overlay resolves the queued row."
+    }
+  ]
+}
