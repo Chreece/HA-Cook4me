@@ -6,6 +6,11 @@ only replaces fallback labels that were explicitly marked as needing canonical
 English review, using versioned repository evidence bound to provider identities
 or exact native title labels. It then recomputes capture completeness and search
 /safety indexes. Provider/group/variant identities are never changed.
+
+The release capture additionally tolerates a bounded transient network timeout on
+the proven single-page catalog manifest request. It retries only the identical
+request and never falls back to pagination, partial-market capture, or relaxed
+validation.
 """
 from __future__ import annotations
 
@@ -13,7 +18,8 @@ from copy import deepcopy
 import json
 from pathlib import Path
 import sys
-from typing import Any
+import time
+from typing import Any, Callable
 
 ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT / "tools"
@@ -25,9 +31,67 @@ for path in (TOOLS, COMPONENT):
 import build_release_catalog_v60 as base
 import release_catalog_canonical_reviews_v60 as canonical_reviews
 
+_SEARCH_TIMEOUT_ATTEMPTS = 3
+_SEARCH_TIMEOUT_DELAY_SECONDS = 1.0
+
 
 def _text(value: Any) -> str:
     return " ".join(str(value or "").strip().split())
+
+
+def _network_timeout_only(exc: BaseException) -> bool:
+    """Return True only for the exact all-network-timeout catalog failure shape."""
+    catalog_module = base._core.v59.catalog
+    if isinstance(exc, catalog_module.CatalogAuthError):
+        return False
+    if not isinstance(exc, catalog_module.CatalogError):
+        return False
+    marker = "SEB recipe request failed:"
+    message = str(exc)
+    if marker not in message:
+        return False
+    details = message.split(marker, 1)[1].strip()
+    parts = [part.strip() for part in details.split("|") if part.strip()]
+    return bool(parts) and all(part.endswith("=network:Timeout") for part in parts)
+
+
+def _retry_search_rows(
+    search_func: Callable[..., list[dict[str, Any]]],
+    *args: Any,
+    sleep_func: Callable[[float], None] = time.sleep,
+    **kwargs: Any,
+) -> list[dict[str, Any]]:
+    """Retry only an identical proven manifest request after pure timeouts."""
+    for attempt in range(1, _SEARCH_TIMEOUT_ATTEMPTS + 1):
+        try:
+            return search_func(*args, **kwargs)
+        except Exception as exc:
+            if not _network_timeout_only(exc) or attempt >= _SEARCH_TIMEOUT_ATTEMPTS:
+                raise
+            language = _text(kwargs.get("language")) or "?"
+            country = _text(kwargs.get("country")) or "?"
+            print(
+                f"[catalog] {language}/GS_{country} network timeout; "
+                f"retry {attempt + 1}/{_SEARCH_TIMEOUT_ATTEMPTS}",
+                flush=True,
+            )
+            sleep_func(_SEARCH_TIMEOUT_DELAY_SECONDS)
+    raise AssertionError("unreachable")
+
+
+def _build_with_search_timeout_retry(args: Any) -> dict[str, Any]:
+    """Run the normal v60 build with a temporary timeout-only search wrapper."""
+    v59 = base._core.v59
+    original = v59._all_search_rows
+
+    def retried(*call_args: Any, **call_kwargs: Any) -> list[dict[str, Any]]:
+        return _retry_search_rows(original, *call_args, **call_kwargs)
+
+    v59._all_search_rows = retried
+    try:
+        return base.build(args)
+    finally:
+        v59._all_search_rows = original
 
 
 def _capture_complete(payload: dict[str, Any]) -> bool:
@@ -132,7 +196,7 @@ def apply_capture_canonical_reviews(
 
 
 def build(args: Any) -> dict[str, Any]:
-    payload = base.build(args)
+    payload = _build_with_search_timeout_retry(args)
     payload = apply_capture_canonical_reviews(payload)
     base._core._save_compact(Path(args.output), payload)
     return payload
