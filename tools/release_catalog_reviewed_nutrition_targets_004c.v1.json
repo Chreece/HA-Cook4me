@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "policy": {"searchResultAutoAccepted":false,"exactFdcBindingRequired":true,"semanticConceptGroupingReviewed":true,"providerIdentityInference":false,"candidateSearchIsIdentityProof":false},
+  "selectionMethod":"explicit-semantic-review",
+  "items":[
+    {"reviewTargetId":"M_FOOD_523","reviewTargetKind":"provider-identity","canonicalEnglishName":"Octopus","fdcId":2706331,"confidence":"high","fdcDescription":"Octopus","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":29},
+    {"reviewTargetId":"concept:food:025ec1a997f30e8ea3c8","reviewTargetKind":"semantic-concept","canonicalEnglishName":"*Vanilla extract","fdcId":173471,"confidence":"high","fdcDescription":"Vanilla extract","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":28,"notes":"Leading source marker retained in canonical target; exact food identity is vanilla extract."},
+    {"reviewTargetId":"M_FOOD_133","reviewTargetKind":"provider-identity","canonicalEnglishName":"Jam","fdcId":2710301,"confidence":"high","fdcDescription":"Jam","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":28},
+    {"reviewTargetId":"concept:food:33ccc31cf721b9a69b57","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Sweet and sour sauce","fdcId":2710296,"confidence":"high","fdcDescription":"Sweet and sour sauce","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":22},
+    {"reviewTargetId":"M_FOOD_482","reviewTargetKind":"provider-identity","canonicalEnglishName":"Pork ribs","fdcId":2705894,"confidence":"high","fdcDescription":"Pork, ribs","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":21},
+    {"reviewTargetId":"M_FOOD_266","reviewTargetKind":"provider-identity","canonicalEnglishName":"Goat milk","fdcId":2705395,"confidence":"high","fdcDescription":"Goat milk","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":19},
+    {"reviewTargetId":"M_FOOD_527","reviewTargetKind":"provider-identity","canonicalEnglishName":"Rhubarb","fdcId":2709268,"confidence":"high","fdcDescription":"Rhubarb","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":18},
+    {"reviewTargetId":"M_FOOD_61","reviewTargetKind":"provider-identity","canonicalEnglishName":"Brioche","fdcId":2707682,"confidence":"high","fdcDescription":"Brioche","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":17},
+    {"reviewTargetId":"M_FOOD_595","reviewTargetKind":"provider-identity","canonicalEnglishName":"Kimchi","fdcId":2710077,"confidence":"high","fdcDescription":"Kimchi","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":17},
+    {"reviewTargetId":"concept:food:e53f17b826039e49dab7","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Rice milk","fdcId":2705411,"confidence":"high","fdcDescription":"Rice milk","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":16},
+    {"reviewTargetId":"concept:food:bd5b4b8a41c92f1d435f","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Meringues","fdcId":2707297,"confidence":"high","fdcDescription":"Meringues","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":16},
+    {"reviewTargetId":"concept:food:9d8568be0434a1951ef0","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Millet flour","fdcId":172023,"confidence":"high","fdcDescription":"Millet flour","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":16},
+    {"reviewTargetId":"concept:food:925461813c7a48d05b28","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Rice paper","fdcId":2708166,"confidence":"high","fdcDescription":"Rice paper","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":16},
+    {"reviewTargetId":"concept:food:3b226e514e0428691992","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Croutons","fdcId":2707697,"confidence":"high","fdcDescription":"Croutons","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":15},
+    {"reviewTargetId":"M_FOOD_420","reviewTargetKind":"provider-identity","canonicalEnglishName":"Pork belly","fdcId":2705901,"confidence":"high","fdcDescription":"Pork, belly","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":15},
+    {"reviewTargetId":"M_FOOD_696","reviewTargetKind":"provider-identity","canonicalEnglishName":"Horseradish","fdcId":2710083,"confidence":"high","fdcDescription":"Horseradish","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":13},
+    {"reviewTargetId":"concept:food:c6be9a29360161224df4","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Almond butter","fdcId":2707533,"confidence":"high","fdcDescription":"Almond butter","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":12},
+    {"reviewTargetId":"concept:food:34a9913be1f40b99c084","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Wasabi paste","fdcId":2710103,"confidence":"high","fdcDescription":"Wasabi paste","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":12},
+    {"reviewTargetId":"M_FOOD_807","reviewTargetKind":"provider-identity","canonicalEnglishName":"Pork belly","fdcId":2705901,"confidence":"high","fdcDescription":"Pork, belly","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":12},
+    {"reviewTargetId":"M_FOOD_532","reviewTargetKind":"provider-identity","canonicalEnglishName":"Barbecue sauce","fdcId":2709750,"confidence":"high","fdcDescription":"Barbecue sauce","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":12}
+  ]
+}
