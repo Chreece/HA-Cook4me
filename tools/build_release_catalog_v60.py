@@ -3,7 +3,8 @@
 
 The v59 builder remains the provider-capture authority. This layer enriches its
 compact output with reviewed source-local keyless identity, conservative semantic
-concepts and a precompiled multilingual search index.
+concepts, precomputed nutrient/dependency vectors and a compiled multilingual
+search index.
 
 Provider M_FOOD identity is never inferred from labels or translations.
 """
@@ -26,6 +27,7 @@ for path in (TOOLS, COMPONENT):
 import build_release_catalog as v59  # type: ignore  # noqa: E402
 import catalog_search_index as search_index  # type: ignore  # noqa: E402
 import compile_release_catalog_semantics_v60 as semantics  # type: ignore  # noqa: E402
+import recipe_metrics_v60 as metrics  # type: ignore  # noqa: E402
 
 
 def _text(value: Any) -> str:
@@ -198,10 +200,45 @@ def _annotate_keyless_ingredient(
     return row, concept is not None
 
 
+def _compile_recipe_vectors(
+    result: dict[str, Any], ingredient_rows: list[dict[str, Any]]
+) -> dict[str, Any]:
+    """Precompute immutable nutrition and dependency data for cheap runtime use."""
+    nutrition_index = metrics.build_nutrition_index(ingredient_rows)
+    variant_count = 0
+    fully_covered = 0
+    for recipe in result.get("recipes") or []:
+        if not isinstance(recipe, dict):
+            continue
+        for variant in recipe.get("variants") or []:
+            if not isinstance(variant, dict):
+                continue
+            calculated = metrics.calculate_recipe_nutrition_fast(
+                variant, nutrition_index
+            )
+            variant["calculatedNutritionV60"] = calculated
+            variant_count += 1
+            if calculated.get("fullyCovered"):
+                fully_covered += 1
+
+    dependencies = metrics.compile_recipe_dependency_index(
+        result.get("recipes") or []
+    )
+    result["recipeDependencyIndex"] = {
+        ident: list(indices) for ident, indices in dependencies.items()
+    }
+    return {
+        "nutritionProfileIdentityCount": len(nutrition_index),
+        "recipeVariantNutritionVectorCount": variant_count,
+        "recipeVariantNutritionFullyCoveredCount": fully_covered,
+        "recipeDependencyIdentityCount": len(dependencies),
+    }
+
+
 def enrich_payload(
     payload: dict[str, Any], semantic_payload: dict[str, Any]
 ) -> dict[str, Any]:
-    """Attach safe semantic keyless identity and compiled multilingual search."""
+    """Attach safe semantic identity and build all immutable fast indexes."""
     result = deepcopy(payload)
     source_to_concept, concepts = _semantic_maps(semantic_payload)
     globals_by_id: dict[str, dict[str, Any]] = {
@@ -258,6 +295,7 @@ def enrich_payload(
     )
     result["ingredients"] = ingredient_rows
 
+    metric_stats = _compile_recipe_vectors(result, ingredient_rows)
     search = search_index.compile_search_index(result)
     result["searchIndex"] = search
 
@@ -277,12 +315,16 @@ def enrich_payload(
             "compiledMultilingualSearchIndexSchemaVersion": int(
                 search.get("schemaVersion") or 0
             ),
+            "compiledRecipeDependencyIndex": True,
+            "precomputedRecipeNutritionVectors": True,
+            "recipeMetricContract": "identity-indexed-v60",
             "reviewedSemanticConceptCount": len(concepts),
             "semanticConceptsUsedByRecipes": len(semantic_concepts_used),
             "sourceLocalIngredientCount": len(source_local_ids),
             "reviewedKeylessRecipeLineCount": reviewed_keyless_lines,
             "unresolvedKeylessRecipeLineCount": unresolved_keyless_lines,
             "semanticCoverageComplete": unresolved_keyless_lines == 0,
+            **metric_stats,
         }
     )
 
@@ -293,8 +335,7 @@ def enrich_payload(
         or row.get("classification") == "food"
     ]
     food_with_nutrition = sum(
-        isinstance(row.get("nutrition"), dict)
-        and isinstance((row.get("nutrition") or {}).get("values"), dict)
+        metrics.normalize_nutrition_profile(row.get("nutrition")) is not None
         for row in food_rows
     )
     source["foodIntelligenceIngredientCount"] = len(food_rows)
@@ -369,6 +410,12 @@ def main() -> int:
                 "ingredients": len(payload.get("ingredients") or []),
                 "sourceLocalIngredients": int(
                     source.get("sourceLocalIngredientCount") or 0
+                ),
+                "nutritionVectors": int(
+                    source.get("recipeVariantNutritionVectorCount") or 0
+                ),
+                "dependencyIdentities": int(
+                    source.get("recipeDependencyIdentityCount") or 0
                 ),
                 "searchIndexStats": (payload.get("searchIndex") or {}).get(
                     "stats", {}
