@@ -34,6 +34,15 @@ def _text(value: Any) -> str:
     return " ".join(str(value or "").strip().split())
 
 
+def _reject_unreviewed_nutrition_search(args: Any) -> None:
+    """Never let the v60 core accept a fuzzy USDA/FDC search result."""
+    if bool(getattr(args, "resolve_nutrition", False)):
+        raise RuntimeError(
+            "v60 automatic USDA/FDC search resolution is disabled; use the "
+            "reviewed v60 nutrition queue and exact-FDC resolver"
+        )
+
+
 def _language(value: Any) -> str:
     return _text(value).lower().replace("_", "-").split("-", 1)[0]
 
@@ -359,6 +368,7 @@ def _save_compact(path: Path, payload: dict[str, Any]) -> None:
 
 
 def build(args: argparse.Namespace) -> dict[str, Any]:
+    _reject_unreviewed_nutrition_search(args)
     payload = v59.build(args)
     semantic_payload = semantics.compile_from_paths(semantics._review_paths(TOOLS))
     payload = enrich_payload(payload, semantic_payload)
