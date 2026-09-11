@@ -26,6 +26,8 @@ apply_reviews = _load_apply_module()
 
 
 class Phase3BatchReviewCoverageV59Tests(unittest.TestCase):
+    maxDiff = None
+
     @classmethod
     def setUpClass(cls):
         cls.paths = sorted(BATCH_DIR.glob(BATCH_GLOB))
@@ -59,8 +61,7 @@ class Phase3BatchReviewCoverageV59Tests(unittest.TestCase):
         self.assertEqual(
             missing,
             [],
-            "Phase 3 baseline contains queued labels without an exact review; "
-            f"first missing rows: {missing[:20]!r}",
+            "Phase 3 baseline contains queued labels without an exact review",
         )
 
     def test_reviewed_phase3_tasks_never_assign_provider_identity(self):
@@ -68,7 +69,11 @@ class Phase3BatchReviewCoverageV59Tests(unittest.TestCase):
             for task in batch.get("tasks") or []:
                 language = apply_reviews._text(task.get("sourceLanguage")).lower()
                 source = apply_reviews._text(task.get("sourceText"))
-                review = self.reviews[(language, apply_reviews._norm(source))]
+                review = self.reviews.get((language, apply_reviews._norm(source)))
+                if review is None:
+                    # Exact coverage is asserted independently above so this test
+                    # remains focused on identity safety for reviews that do load.
+                    continue
                 self.assertNotIn("foodKey", review)
                 self.assertNotIn("providerIngredientId", review)
                 self.assertNotIn("ingredientId", review)
