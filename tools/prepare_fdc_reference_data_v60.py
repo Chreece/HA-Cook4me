@@ -133,8 +133,41 @@ def _existing_valid(output_dir: Path, dataset: dict[str, str]) -> dict[str, Any]
     }
 
 
+def _manifest_without_generated_at(value: Any) -> dict[str, Any] | None:
+    if not isinstance(value, dict) or value.get("kind") != REFERENCE_KIND:
+        return None
+    return {key: child for key, child in value.items() if key != "generatedAt"}
+
+
+def _manifest_body(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    return {
+        "schemaVersion": 1,
+        "kind": REFERENCE_KIND,
+        "source": "USDA FoodData Central",
+        "policy": {
+            "allowedDataTypes": ["Foundation", "SR Legacy", "Survey (FNDDS)"],
+            "candidateDiscoveryOnlyUntilReviewed": True,
+            "exactFdcBindingRequired": True,
+            "searchResultAutoAccepted": False,
+            "apiKeyRequired": False,
+            "secretsPersisted": False,
+        },
+        "datasets": rows,
+    }
+
+
 def prepare(output_dir: Path, *, refresh: bool = False) -> tuple[dict[str, Any], dict[str, Any]]:
     output_dir.mkdir(parents=True, exist_ok=True)
+    manifest_path = output_dir / "reference-manifest.v60.json"
+    prior_manifest: dict[str, Any] | None = None
+    if not refresh and manifest_path.is_file():
+        try:
+            loaded = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            loaded = None
+        if isinstance(loaded, dict):
+            prior_manifest = loaded
+
     rows: list[dict[str, Any]] = []
     downloaded = 0
     reused = 0
@@ -155,29 +188,38 @@ def prepare(output_dir: Path, *, refresh: bool = False) -> tuple[dict[str, Any],
         rows.append(row)
         downloaded += 1
 
-    manifest = {
-        "schemaVersion": 1,
-        "kind": REFERENCE_KIND,
-        "generatedAt": datetime.now(timezone.utc).isoformat(),
-        "source": "USDA FoodData Central",
-        "policy": {
-            "allowedDataTypes": ["Foundation", "SR Legacy", "Survey (FNDDS)"],
-            "candidateDiscoveryOnlyUntilReviewed": True,
-            "exactFdcBindingRequired": True,
-            "searchResultAutoAccepted": False,
-            "apiKeyRequired": False,
-            "secretsPersisted": False,
-        },
-        "datasets": rows,
-    }
-    manifest_path = output_dir / "reference-manifest.v60.json"
-    manifest_path.write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    body = _manifest_body(rows)
+    manifest_reused = bool(
+        not refresh
+        and prior_manifest is not None
+        and _manifest_without_generated_at(prior_manifest) == body
+        and isinstance(prior_manifest.get("generatedAt"), str)
+        and prior_manifest.get("generatedAt")
     )
+    if manifest_reused:
+        # Leave the existing file byte-for-byte untouched. This preserves the
+        # evidence SHA whenever the pinned USDA archives/JSON are unchanged.
+        manifest = prior_manifest
+    else:
+        manifest = {
+            "schemaVersion": 1,
+            "kind": REFERENCE_KIND,
+            "generatedAt": datetime.now(timezone.utc).isoformat(),
+            "source": body["source"],
+            "policy": body["policy"],
+            "datasets": rows,
+        }
+        manifest_path.write_text(
+            json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+
     summary = {
         "datasetCount": len(rows),
         "downloadedDatasetCount": downloaded,
         "reusedDatasetCount": reused,
+        "referenceManifestReused": manifest_reused,
+        "referenceManifestSha256": _sha256(manifest_path),
         "apiKeyRequired": False,
         "secretsPersisted": False,
         "manifest": str(manifest_path),
