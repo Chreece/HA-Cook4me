@@ -16,6 +16,7 @@ if str(COMPONENT) not in sys.path:
     sys.path.insert(0, str(COMPONENT))
 
 import catalog_search_index  # type: ignore  # noqa: E402
+import recipe_metrics_v60  # type: ignore  # noqa: E402
 import recipe_safety_index_v60  # type: ignore  # noqa: E402
 
 
@@ -148,6 +149,8 @@ def validate(
         errors.append("semanticCoverageComplete must be true")
     if source.get("compiledMultilingualSearchIndex") is not True:
         errors.append("compiledMultilingualSearchIndex must be true")
+    if source.get("compiledRecipeDependencyIndex") is not True:
+        errors.append("compiledRecipeDependencyIndex must be true")
     if source.get("compiledRecipeSafetyIndex") is not True:
         errors.append("compiledRecipeSafetyIndex must be true")
     if source.get("strictDietAllergyUnknownIsSafe") is not False:
@@ -318,20 +321,18 @@ def validate(
         errors.append(f"ingredient identity leaks: {identity_leaks[:10]}")
 
     dependencies = payload.get("recipeDependencyIndex")
+    expected_dependencies = {
+        ident: list(indices)
+        for ident, indices in recipe_metrics_v60.compile_recipe_dependency_index(
+            recipes
+        ).items()
+    }
     if not isinstance(dependencies, dict):
         errors.append("recipeDependencyIndex is missing")
-    else:
-        for ident, indices in dependencies.items():
-            if ident not in ingredient_id_set:
-                errors.append(f"recipeDependencyIndex references unknown ingredient {ident}")
-                continue
-            if not isinstance(indices, list) or any(
-                not isinstance(index, int) or index < 0 or index >= len(recipes)
-                for index in indices
-            ):
-                errors.append(f"recipeDependencyIndex has invalid recipe indexes for {ident}")
-            elif len(indices) != len(set(indices)):
-                errors.append(f"recipeDependencyIndex has duplicate recipe indexes for {ident}")
+    elif dependencies != expected_dependencies:
+        errors.append("precompiled recipe dependency index does not match catalog content")
+    if int(source.get("recipeDependencyIdentityCount") or 0) != len(expected_dependencies):
+        errors.append("recipeDependencyIdentityCount does not match compiled dependency index")
 
     expected_search = catalog_search_index.compile_search_index(payload)
     if not _index_is_exact(payload, "searchIndex", expected_search):
@@ -387,6 +388,7 @@ def validate(
             "ambiguousReviewedIngredientCount": len(ambiguous_ids),
             "recipeGroupCount": len(recipes),
             "variantCount": len(variant_ids),
+            "recipeDependencyIdentityCount": len(expected_dependencies),
             "foodIntelligenceIngredientCount": food_intelligence_count,
             "foodIntelligenceNutritionResolvedCount": food_nutrition_resolved,
             "foodIntelligenceNutritionComplete": derived_food_complete,
