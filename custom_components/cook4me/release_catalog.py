@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+from copy import deepcopy
 from functools import lru_cache
 import importlib.util
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 try:
     from . import release_catalog_legacy as _legacy
@@ -37,6 +38,20 @@ except ImportError:  # Standalone unit-test import via spec_from_file_location.
 _SCHEMA_VERSION = _legacy._SCHEMA_VERSION
 _CATALOG_PATH = _legacy._CATALOG_PATH
 _MAX_PAGE_SIZE = _legacy._MAX_PAGE_SIZE
+_NON_FOOD_CLASSIFICATIONS = {"equipment", "other", "ambiguous"}
+_INGREDIENT_METADATA_FIELDS = (
+    "conceptId",
+    "classification",
+    "sourceLocalIdentity",
+    "providerIdentityAssigned",
+    "semanticIdentityState",
+    "semanticMergePolicy",
+    "reviewConfidence",
+    "nutritionEligible",
+    "dietEligible",
+    "allergenEligible",
+    "needsSemanticConfirmation",
+)
 
 
 def _text(value: Any) -> str:
@@ -68,6 +83,14 @@ def _prepare_fast_indexes(payload: dict[str, Any]) -> None:
     payload["_runtimeSearchPrecompiled"] = precompiled
 
     variants: dict[str, int] = {}
+    concepts: dict[str, list[dict[str, Any]]] = {}
+    for raw in payload.get("ingredients") or []:
+        if not isinstance(raw, dict):
+            continue
+        concept_id = _text(raw.get("conceptId"))
+        if concept_id:
+            concepts.setdefault(concept_id, []).append(raw)
+
     for recipe_index, recipe in enumerate(payload.get("recipes") or []):
         if not isinstance(recipe, dict):
             continue
@@ -82,6 +105,69 @@ def _prepare_fast_indexes(payload: dict[str, Any]) -> None:
             if ident:
                 variants.setdefault(ident, recipe_index)
     payload["_runtimeRecipeByVariant"] = variants
+    payload["_runtimeIngredientsByConcept"] = {
+        concept_id: tuple(rows) for concept_id, rows in concepts.items()
+    }
+
+
+def _global_ingredient(payload: dict[str, Any], row: Any) -> dict[str, Any] | None:
+    if not isinstance(row, dict):
+        return None
+    lookup = payload.get("_runtimeIngredientById")
+    if not isinstance(lookup, dict):
+        return None
+    for value in (
+        row.get("ingredientId"),
+        row.get("id"),
+        row.get("key"),
+        row.get("foodKey"),
+    ):
+        ident = _text(value)
+        if ident and isinstance(lookup.get(ident), dict):
+            return lookup[ident]
+    return None
+
+
+def _enrich_display_ingredient(
+    payload: dict[str, Any], row: Any
+) -> Any:
+    if not isinstance(row, dict):
+        return deepcopy(row)
+    out = deepcopy(row)
+    source = _global_ingredient(payload, row)
+    if not isinstance(source, dict):
+        return out
+    for field in _INGREDIENT_METADATA_FIELDS:
+        if source.get(field) not in (None, "", {}, []):
+            out[field] = deepcopy(source[field])
+    return out
+
+
+def _enrich_recipe_row(
+    payload: dict[str, Any], row: dict[str, Any] | None
+) -> dict[str, Any] | None:
+    if not isinstance(row, dict):
+        return row
+    out = deepcopy(row)
+    out["ingredients"] = [
+        _enrich_display_ingredient(payload, ingredient)
+        for ingredient in row.get("ingredients") or []
+    ]
+    return out
+
+
+def _alias_strings(value: Any) -> Iterable[str]:
+    if isinstance(value, str):
+        if text := _text(value):
+            yield text
+        return
+    if isinstance(value, dict):
+        for nested in value.values():
+            yield from _alias_strings(nested)
+        return
+    if isinstance(value, (list, tuple, set)):
+        for nested in value:
+            yield from _alias_strings(nested)
 
 
 @lru_cache(maxsize=1)
@@ -139,6 +225,10 @@ def release_catalog_summary() -> dict[str, Any]:
         "compiledSearchReady": bool(runtime_index.get("_prepared")),
         "compiledSearchPrebuilt": bool(payload.get("_runtimeSearchPrecompiled")),
         "compiledSearchStats": dict(runtime_index.get("stats") or {}),
+        "semanticIngredientConcepts": bool(source.get("semanticIngredientConcepts")),
+        "semanticCoverageComplete": bool(source.get("semanticCoverageComplete")),
+        "ingredientIntelligenceComplete": bool(source.get("ingredientIntelligenceComplete")),
+        "sourceLocalIngredientCount": int(source.get("sourceLocalIngredientCount") or 0),
     }
 
 
@@ -148,15 +238,63 @@ def ingredient_rows(
     *,
     limit: int | None = None,
     include_nutrition: bool = False,
+    food_only: bool = True,
 ) -> list[dict[str, Any]]:
-    # Prime the legacy loader with this wrapper's selected catalog path first.
-    load_release_catalog()
-    return _legacy.ingredient_rows(
-        language,
-        query,
-        limit=limit,
-        include_nutrition=include_nutrition,
-    )
+    """Return compact localized ingredient choices with semantic identity.
+
+    Equipment/other/ambiguous reviewed rows are hidden from the normal food
+    picker by default, but remain in the catalog and multilingual search index.
+    Nutrient blobs remain opt-in so dashboard/picker startup stays lightweight.
+    """
+    payload = load_release_catalog()
+    wanted = _legacy._norm(query)
+    maximum = None if limit is None else max(1, int(limit))
+    out: list[dict[str, Any]] = []
+    for raw in payload.get("ingredients") or []:
+        if not isinstance(raw, dict):
+            continue
+        classification = _text(raw.get("classification")).lower()
+        if food_only and classification in _NON_FOOD_CLASSIFICATIONS:
+            continue
+        name = _legacy._translated_name(raw, language)
+        if not name:
+            continue
+        haystack_values = [name, _text(raw.get("canonicalName"))]
+        haystack_values.extend(
+            _text(value)
+            for value in (raw.get("translations") or {}).values()
+            if _text(value)
+        )
+        haystack_values.extend(_alias_strings(raw.get("aliases")))
+        if wanted and wanted not in _legacy._norm(" ".join(haystack_values)):
+            continue
+
+        row: dict[str, Any] = {"name": name}
+        ident = _text(
+            raw.get("id")
+            or raw.get("ingredientId")
+            or raw.get("key")
+            or raw.get("foodKey")
+        )
+        key = _text(raw.get("key") or raw.get("foodKey"))
+        if ident:
+            row["id"] = ident
+            row["ingredientId"] = ident
+        if key:
+            row["key"] = key
+            row["foodKey"] = key
+        canonical = _text(raw.get("canonicalName"))
+        if canonical:
+            row["canonicalName"] = canonical
+        for field in _INGREDIENT_METADATA_FIELDS:
+            if raw.get(field) not in (None, "", {}, []):
+                row[field] = deepcopy(raw[field])
+        if include_nutrition and isinstance(raw.get("nutrition"), dict):
+            row["nutrition"] = deepcopy(raw["nutrition"])
+        out.append(row)
+        if maximum is not None and len(out) >= maximum:
+            break
+    return out
 
 
 def search_release_recipes(
@@ -193,11 +331,14 @@ def search_release_recipes(
             continue
         if not isinstance(raw, dict):
             continue
-        row = _legacy._recipe_row(
-            raw,
-            language=language,
-            configured_language=configured_language,
-            country=country,
+        row = _enrich_recipe_row(
+            payload,
+            _legacy._recipe_row(
+                raw,
+                language=language,
+                configured_language=configured_language,
+                country=country,
+            ),
         )
         if row:
             if recipe_index in scores:
@@ -255,11 +396,14 @@ def recipe_by_variant(
         return None
     if not isinstance(raw, dict):
         return None
-    return _legacy._recipe_row(
-        raw,
-        language=language,
-        configured_language=configured_language,
-        country=country,
+    return _enrich_recipe_row(
+        payload,
+        _legacy._recipe_row(
+            raw,
+            language=language,
+            configured_language=configured_language,
+            country=country,
+        ),
     )
 
 
