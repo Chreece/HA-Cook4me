@@ -16,7 +16,14 @@ class SemanticCatalogFullCorpusV60Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.paths = mod._review_paths(ROOT / "tools")
-        cls.payload = mod.compile_from_paths(cls.paths)
+        cls.review_payloads = [mod._load_payload(path) for path in cls.paths]
+        cls.raw_review_items = sum(
+            len(payload.get("items") or []) for payload in cls.review_payloads
+        )
+        cls.payload = mod.compile_semantic_concepts(
+            (path.name, payload)
+            for path, payload in zip(cls.paths, cls.review_payloads)
+        )
 
     def test_all_base_plus_phase3_review_files_are_consumed(self):
         # One base review file plus Phase 3 batches 001..097.
@@ -24,12 +31,15 @@ class SemanticCatalogFullCorpusV60Tests(unittest.TestCase):
         self.assertTrue(self.paths[0].name.endswith("keyless_ingredients.v1.json"))
         self.assertTrue(self.paths[-1].name.endswith("phase3_097.v1.json"))
 
-    def test_full_reviewed_keyless_queue_has_one_source_identity_per_reviewed_label(self):
-        # The v59 review overlay resolved 123 keyless labels before Phase 3; the
-        # remaining impact-ranked Phase 3 queue contained 9,658 unique labels.
-        expected = 123 + 9658
-        self.assertEqual(self.payload["summary"]["reviewedSourceLabels"], expected)
-        self.assertEqual(len(self.payload["sourceIdentityToConcept"]), expected)
+    def test_full_review_corpus_exposes_raw_items_and_two_consistent_duplicates(self):
+        # The review files contain 123 earlier review rows + 9,658 Phase-3 rows.
+        # Two (language, exact-source) labels occur in both review generations.
+        # The compiler accepts them only because their reviewed semantics agree,
+        # then emits one deterministic source identity for each unique label.
+        self.assertEqual(self.raw_review_items, 123 + 9658)
+        self.assertEqual(self.payload["summary"]["reviewedSourceLabels"], 9779)
+        self.assertEqual(len(self.payload["sourceIdentityToConcept"]), 9779)
+        self.assertEqual(self.raw_review_items - 9779, 2)
 
     def test_semantic_compilation_never_assigns_provider_identity(self):
         self.assertFalse(self.payload["identityPolicy"]["providerIdentityAssigned"])
