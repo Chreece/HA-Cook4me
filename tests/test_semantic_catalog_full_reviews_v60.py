@@ -26,26 +26,27 @@ class SemanticCatalogFullCorpusV60Tests(unittest.TestCase):
         )
 
     def test_all_committed_review_files_are_consumed(self):
-        # One base review file, three Capture 3 language batches, and Phase 3 batches 001..097.
-        self.assertEqual(len(self.paths), 101)
+        # One base review file, four Capture 3 language batches, and Phase 3 batches 001..097.
+        self.assertEqual(len(self.paths), 102)
         self.assertTrue(self.paths[0].name.endswith("keyless_ingredients.v1.json"))
         names = {path.name for path in self.paths}
         for name in (
             "release_catalog_reviewed_keyless_ingredients_capture3_en_001.v1.json",
             "release_catalog_reviewed_keyless_ingredients_capture3_de_001.v1.json",
             "release_catalog_reviewed_keyless_ingredients_capture3_fr_001.v1.json",
+            "release_catalog_reviewed_keyless_ingredients_capture3_es_001.v1.json",
         ):
             self.assertIn(name, names)
         self.assertTrue(self.paths[-1].name.endswith("phase3_097.v1.json"))
 
     def test_full_review_corpus_has_one_identity_per_exact_source_label(self):
         # The review files contain 123 earlier rows + 9,658 Phase-3 rows +
-        # 26 English + 19 German + 5 French exact Capture-3 rows. Reconciliation
-        # proved these Capture-3 rows were absent from the prior exact corpus.
-        self.assertEqual(self.raw_review_items, 123 + 9658 + 26 + 19 + 5)
-        self.assertEqual(self.payload["summary"]["reviewedSourceLabels"], 9831)
-        self.assertEqual(len(self.payload["sourceIdentityToConcept"]), 9831)
-        self.assertEqual(self.raw_review_items - 9831, 0)
+        # 26 English + 19 German + 5 French + 35 Spanish exact Capture-3 rows.
+        # Reconciliation proved these Capture-3 rows were absent from the prior exact corpus.
+        self.assertEqual(self.raw_review_items, 123 + 9658 + 26 + 19 + 5 + 35)
+        self.assertEqual(self.payload["summary"]["reviewedSourceLabels"], 9866)
+        self.assertEqual(len(self.payload["sourceIdentityToConcept"]), 9866)
+        self.assertEqual(self.raw_review_items - 9866, 0)
 
     def test_semantic_compilation_never_assigns_provider_identity(self):
         self.assertFalse(self.payload["identityPolicy"]["providerIdentityAssigned"])
