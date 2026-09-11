@@ -18,7 +18,6 @@ BATCH = TOOLS / "release_catalog_reviewed_provider_food_english_capture3_003.v2.
 EXPECTED_ID_DIGEST = "5f85eb2ec7139463629f0e68864bacb460bfe5d9569e54c55a69855f39b29584"
 EXPECTED_MEDIUM = {
     "M_FOOD_8",
-    "M_FOOD_17",
     "M_FOOD_37",
     "M_FOOD_218",
     "M_FOOD_281",
