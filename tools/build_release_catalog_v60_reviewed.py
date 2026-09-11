@@ -7,9 +7,10 @@ English review, using versioned repository evidence bound to provider identities
 or exact native title labels. It then recomputes capture completeness and search
 /safety indexes. Provider/group/variant identities are never changed.
 
-The release capture additionally tolerates a bounded transient network timeout on
-the proven single-page catalog manifest request. It retries only the identical
-request and never falls back to pagination, partial-market capture, or relaxed
+The release capture additionally tolerates bounded transient network timeouts on
+both the proven single-page catalog manifest request and individual recipe-detail
+hydration. It retries only the identical request and never falls back to
+pagination, partial-market capture, skipped detail validation, or relaxed
 validation.
 """
 from __future__ import annotations
@@ -33,6 +34,8 @@ import release_catalog_canonical_reviews_v60 as canonical_reviews
 
 _SEARCH_TIMEOUT_ATTEMPTS = 3
 _SEARCH_TIMEOUT_DELAY_SECONDS = 1.0
+_DETAIL_TIMEOUT_ATTEMPTS = 3
+_DETAIL_TIMEOUT_DELAY_SECONDS = 1.0
 
 
 def _text(value: Any) -> str:
@@ -40,7 +43,7 @@ def _text(value: Any) -> str:
 
 
 def _network_timeout_only(exc: BaseException) -> bool:
-    """Return True only for the exact all-network-timeout catalog failure shape."""
+    """Return True only for the exact all-network-timeout provider failure shape."""
     catalog_module = base._core.v59.catalog
     if isinstance(exc, catalog_module.CatalogAuthError):
         return False
@@ -79,19 +82,60 @@ def _retry_search_rows(
     raise AssertionError("unreachable")
 
 
+def _retry_detail(
+    detail_func: Callable[..., dict[str, Any]],
+    *args: Any,
+    sleep_func: Callable[[float], None] = time.sleep,
+    **kwargs: Any,
+) -> dict[str, Any]:
+    """Retry only an identical recipe-detail request after pure timeouts."""
+    for attempt in range(1, _DETAIL_TIMEOUT_ATTEMPTS + 1):
+        try:
+            return detail_func(*args, **kwargs)
+        except Exception as exc:
+            if not _network_timeout_only(exc) or attempt >= _DETAIL_TIMEOUT_ATTEMPTS:
+                raise
+            variant_id = _text(kwargs.get("variant_id")) or "?"
+            print(
+                f"[detail] {variant_id} network timeout; "
+                f"retry {attempt + 1}/{_DETAIL_TIMEOUT_ATTEMPTS}",
+                flush=True,
+            )
+            sleep_func(_DETAIL_TIMEOUT_DELAY_SECONDS)
+    raise AssertionError("unreachable")
+
+
 def _build_with_search_timeout_retry(args: Any) -> dict[str, Any]:
-    """Run the normal v60 build with a temporary timeout-only search wrapper."""
+    """Run v60 with temporary timeout-only manifest and detail wrappers.
+
+    The established function name is retained for compatibility with existing
+    release tooling/tests; it now protects both provider-request stages.
+    """
     v59 = base._core.v59
-    original = v59._all_search_rows
+    original_search = v59._all_search_rows
+    original_detail = v59._detail
 
-    def retried(*call_args: Any, **call_kwargs: Any) -> list[dict[str, Any]]:
-        return _retry_search_rows(original, *call_args, **call_kwargs)
+    def retried_search(*call_args: Any, **call_kwargs: Any) -> list[dict[str, Any]]:
+        return _retry_search_rows(
+            original_search,
+            *call_args,
+            **call_kwargs,
+        )
 
-    v59._all_search_rows = retried
+    def retried_detail(*call_args: Any, **call_kwargs: Any) -> dict[str, Any]:
+        return _retry_detail(
+            original_detail,
+            *call_args,
+            **call_kwargs,
+        )
+
+    v59._all_search_rows = retried_search
+    v59._detail = retried_detail
     try:
         return base.build(args)
     finally:
-        v59._all_search_rows = original
+        v59._all_search_rows = original_search
+        v59._detail = original_detail
 
 
 def _capture_complete(payload: dict[str, Any]) -> bool:
