@@ -83,10 +83,15 @@ def catalog() -> dict:
                 "needsSemanticConfirmation": False,
             },
         ],
+        # v60 dependency keys are canonical identity candidates, never raw IDs.
         "recipeDependencyIndex": {
-            "M_FOOD_TOMATO": [0, 2],
-            "local:de:sea-salt": [1],
-            "local:pt:palitos": [0],
+            "k:M_FOOD_TOMATO": [0, 2],
+            "n:tomato": [0, 2],
+            "c:concept:food:sea-salt": [1],
+            "l:local:de:sea-salt": [1],
+            "n:sea salt": [1],
+            "c:concept:ambiguous:palitos": [0],
+            "l:local:pt:palitos": [0],
         },
         "recipes": [{"groupingFunctionalId": "GROUP_1", "variants": []}],
     }
@@ -114,33 +119,82 @@ def fdc_food(fdc_id: int = 123) -> dict:
     }
 
 
+def reviewed_profile(
+    ingredient_id: str = "M_FOOD_TOMATO",
+    canonical: str = "Tomato",
+    fdc_id: int = 123,
+) -> dict:
+    return {
+        "basis": "per100g",
+        "values": {"energyKcal": 18.0},
+        "source": "usda_fdc",
+        "sourceId": fdc_id,
+        "ingredientId": ingredient_id,
+        "reviewedCanonicalEnglishName": canonical,
+        "reviewConfidence": "high",
+        "reviewFile": "release_catalog_reviewed_nutrition_sources_001.v1.json",
+    }
+
+
 class ReviewedNutritionV60Tests(unittest.TestCase):
     def test_queue_contains_only_proven_nutrition_eligible_food_identities(self):
         payload, summary = queue_mod.snapshot(catalog(), {})
         self.assertEqual(payload["kind"], "cook4me-release-catalog-nutrition-queue-v60")
         self.assertTrue(payload["identityPolicy"]["ambiguousExcluded"])
         self.assertFalse(payload["identityPolicy"]["providerIdentityInference"])
+        self.assertTrue(payload["identityPolicy"]["reviewedExactFdcProvenanceRequired"])
+        self.assertFalse(payload["identityPolicy"]["legacyStructuralNutritionAccepted"])
         self.assertEqual(
             [row["ingredientId"] for row in payload["tasks"]],
             ["M_FOOD_TOMATO", "local:de:sea-salt"],
         )
+        self.assertEqual(
+            [row["usageCount"] for row in payload["tasks"]],
+            [2, 1],
+        )
         self.assertEqual(summary["pendingNutritionCount"], 2)
+        self.assertEqual(summary["usedPendingCount"], 2)
         self.assertEqual(summary["excludedSourceLocalByClassification"]["ambiguous"], 1)
         self.assertEqual(summary["excludedSourceLocalByClassification"]["equipment"], 1)
 
-    def test_existing_reviewed_cache_removes_only_that_identity_from_queue(self):
+    def test_legacy_structural_cache_is_requeued_not_grandfathered(self):
         cache = {
             "M_FOOD_TOMATO": {
                 "basis": "per100g",
                 "values": {"energyKcal": 18.0},
+                "source": "usda_fdc",
+                "sourceId": 123,
             }
         }
+        payload, summary = queue_mod.snapshot(catalog(), cache)
+        self.assertEqual(
+            [row["ingredientId"] for row in payload["tasks"]],
+            ["M_FOOD_TOMATO", "local:de:sea-salt"],
+        )
+        self.assertEqual(summary["resolvedNutritionCount"], 0)
+        self.assertEqual(summary["rejectedUnreviewedCacheCount"], 1)
+
+    def test_existing_reviewed_cache_removes_only_that_identity_from_queue(self):
+        cache = {"M_FOOD_TOMATO": reviewed_profile()}
         payload, summary = queue_mod.snapshot(catalog(), cache)
         self.assertEqual(
             [row["ingredientId"] for row in payload["tasks"]],
             ["local:de:sea-salt"],
         )
         self.assertEqual(summary["resolvedNutritionCount"], 1)
+        self.assertEqual(summary["rejectedUnreviewedCacheCount"], 0)
+
+    def test_embedded_legacy_nutrition_is_not_accepted_as_reviewed(self):
+        value = catalog()
+        value["ingredients"][0]["nutrition"] = {
+            "basis": "per100g",
+            "values": {"energyKcal": 18.0},
+            "source": "usda_fdc",
+            "sourceId": 123,
+        }
+        payload, summary = queue_mod.snapshot(value, {})
+        self.assertIn("M_FOOD_TOMATO", [row["ingredientId"] for row in payload["tasks"]])
+        self.assertEqual(summary["rejectedUnreviewedEmbeddedCount"], 1)
 
     def test_queue_refuses_unreviewed_semantic_catalog(self):
         value = catalog()
@@ -172,8 +226,43 @@ class ReviewedNutritionV60Tests(unittest.TestCase):
         self.assertEqual(pending["summary"]["resolvedNow"], 1)
         self.assertEqual(pending["summary"]["missingReview"], 1)
         self.assertEqual(pending["summary"]["pendingCount"], 1)
+        self.assertEqual(pending["summary"]["reviewedCacheProfileCount"], 1)
         self.assertFalse(pending["summary"]["searchResultsAutoAccepted"])
         self.assertFalse(pending["summary"]["secretsPersisted"])
+
+    def test_resolver_removes_legacy_cache_before_leaving_task_pending(self):
+        queue, _summary = queue_mod.snapshot(catalog(), {})
+        queue["tasks"] = [queue["tasks"][0]]
+        legacy = {
+            "M_FOOD_TOMATO": {
+                "basis": "per100g",
+                "values": {"energyKcal": 18.0},
+                "source": "usda_fdc",
+                "sourceId": 123,
+            }
+        }
+        cache, pending = resolver.resolve(
+            queue,
+            legacy,
+            {},
+            fetcher=lambda _fdc_id: self.fail("no fetch without review"),
+        )
+        self.assertNotIn("M_FOOD_TOMATO", cache)
+        self.assertEqual(pending["summary"]["rejectedUnreviewedCacheCount"], 1)
+        self.assertEqual(pending["summary"]["pendingCount"], 1)
+
+    def test_resolver_keeps_existing_reviewed_cache_without_fetch(self):
+        queue, _summary = queue_mod.snapshot(catalog(), {})
+        queue["tasks"] = [queue["tasks"][0]]
+        cache, pending = resolver.resolve(
+            queue,
+            {"M_FOOD_TOMATO": reviewed_profile()},
+            {},
+            fetcher=lambda _fdc_id: self.fail("reviewed cache must not fetch"),
+        )
+        self.assertIn("M_FOOD_TOMATO", cache)
+        self.assertEqual(pending["summary"]["alreadyResolved"], 1)
+        self.assertEqual(pending["summary"]["pendingCount"], 0)
 
     def test_resolver_rejects_fdc_identity_mismatch(self):
         queue, _summary = queue_mod.snapshot(catalog(), {})
@@ -192,7 +281,28 @@ class ReviewedNutritionV60Tests(unittest.TestCase):
                 fetcher=lambda _fdc_id: fdc_food(999),
             )
 
-    def test_review_loader_requires_explicit_no_auto_accept_policy_when_policy_present(self):
+    def test_review_loader_requires_explicit_no_auto_accept_policy(self):
+        for policy in ({}, {"searchResultAutoAccepted": True}):
+            with self.subTest(policy=policy), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                path = root / "release_catalog_reviewed_nutrition_sources_001.v1.json"
+                path.write_text(
+                    json.dumps(
+                        {
+                            "schemaVersion": 1,
+                            "kind": "cook4me-reviewed-nutrition-source",
+                            "policy": policy,
+                            "items": [
+                                {"ingredientId": "M_FOOD_TOMATO", "fdcId": 123}
+                            ],
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+                with self.assertRaisesRegex(RuntimeError, "forbid auto acceptance"):
+                    resolver.load_reviews(root)
+
+    def test_review_loader_accepts_explicit_manual_exact_id_policy(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             path = root / "release_catalog_reviewed_nutrition_sources_001.v1.json"
@@ -201,16 +311,20 @@ class ReviewedNutritionV60Tests(unittest.TestCase):
                     {
                         "schemaVersion": 1,
                         "kind": "cook4me-reviewed-nutrition-source",
-                        "policy": {"searchResultAutoAccepted": True},
+                        "policy": {"searchResultAutoAccepted": False},
                         "items": [
-                            {"ingredientId": "M_FOOD_TOMATO", "fdcId": 123}
+                            {
+                                "ingredientId": "M_FOOD_TOMATO",
+                                "canonicalEnglishName": "Tomato",
+                                "fdcId": 123,
+                            }
                         ],
                     }
                 ),
                 encoding="utf-8",
             )
-            with self.assertRaisesRegex(RuntimeError, "forbid auto acceptance"):
-                resolver.load_reviews(root)
+            reviews = resolver.load_reviews(root)
+            self.assertEqual(reviews["M_FOOD_TOMATO"]["fdcId"], 123)
 
     def _assert_fuzzy_resolution_stops_before_v59_capture(self, build_call):
         args = SimpleNamespace(resolve_nutrition=True)
