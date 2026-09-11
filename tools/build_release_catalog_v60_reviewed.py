@@ -31,6 +31,7 @@ for path in (TOOLS, COMPONENT):
 
 import build_release_catalog_v60 as base
 import release_catalog_canonical_reviews_v60 as canonical_reviews
+import release_catalog_detail_not_found_v60 as detail_not_found
 
 _SEARCH_TIMEOUT_ATTEMPTS = 3
 _SEARCH_TIMEOUT_DELAY_SECONDS = 1.0
@@ -146,6 +147,8 @@ def _capture_complete(payload: dict[str, Any]) -> bool:
         return False
     if int(source.get("failedDetailCount") or 0):
         return False
+    if not detail_not_found.accounting_complete(payload):
+        return False
 
     catalogs = source.get("catalogs") if isinstance(source.get("catalogs"), list) else []
     if len(catalogs) != int(source.get("auditedCatalogCount") or 0):
@@ -154,8 +157,6 @@ def _capture_complete(payload: dict[str, Any]) -> bool:
         if not isinstance(row, dict):
             return False
         if int(row.get("failedDetails") or 0):
-            return False
-        if int(row.get("hydratedVariants") or 0) != int(row.get("uniqueVariants") or 0):
             return False
 
     if source.get("nutritionRequiredForComplete") is not False:
