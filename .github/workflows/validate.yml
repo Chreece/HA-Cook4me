@@ -48,6 +48,7 @@ jobs:
           bash -n tools/run_release_catalog_v2_assembly_prep.sh
           bash -n tools/run_release_catalog_local_translation.sh
           bash -n tools/run_release_catalog_taxonomy_capture.sh
+          bash -n tools/run_release_catalog_fdc_offline_review_prep_v60.sh
           python - <<'PY'
           import json
           from pathlib import Path
