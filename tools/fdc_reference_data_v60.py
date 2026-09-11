@@ -33,6 +33,25 @@ def tokens(value: Any) -> tuple[str, ...]:
     return tuple(dict.fromkeys(part for part in norm(value).split() if part))
 
 
+def _token_forms(token: str) -> set[str]:
+    """Return conservative English lexical forms for candidate discovery only."""
+    out = {token}
+    if len(token) > 4 and token.endswith("ies"):
+        out.add(token[:-3] + "y")
+    if len(token) > 4 and token.endswith("es"):
+        out.add(token[:-2])
+    if len(token) > 3 and token.endswith("s") and not token.endswith("ss"):
+        out.add(token[:-1])
+    return {value for value in out if len(value) > 1}
+
+
+def lexical_tokens(value: Any) -> tuple[str, ...]:
+    expanded: list[str] = []
+    for token in tokens(value):
+        expanded.extend(sorted(_token_forms(token)))
+    return tuple(dict.fromkeys(expanded))
+
+
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -157,7 +176,7 @@ class ReferenceIndex:
                     )
                     if candidate.get(key)
                 )
-                for token in tokens(searchable):
+                for token in lexical_tokens(searchable):
                     self._token_index[token].add(record_index)
 
     def food(self, fdc_id: int) -> dict[str, Any]:
@@ -178,8 +197,8 @@ class ReferenceIndex:
         d = norm(row.get("description"))
         if not q or not d:
             return 0.0
-        q_tokens = set(tokens(q))
-        d_tokens = set(tokens(d))
+        q_tokens = set(lexical_tokens(q))
+        d_tokens = set(lexical_tokens(d))
         overlap = len(q_tokens & d_tokens)
         if not overlap:
             extras = norm(
@@ -188,7 +207,8 @@ class ReferenceIndex:
                     for key in ("commonNames", "scientificName", "additionalDescriptions")
                 )
             )
-            if not (q in extras or any(token in set(tokens(extras)) for token in q_tokens)):
+            extra_tokens = set(lexical_tokens(extras))
+            if not (q in extras or q_tokens.intersection(extra_tokens)):
                 return 0.0
         coverage = overlap / max(1, len(q_tokens))
         precision = overlap / max(1, len(d_tokens))
@@ -205,7 +225,7 @@ class ReferenceIndex:
         return score
 
     def search(self, query: str, *, max_candidates: int = 8) -> list[dict[str, Any]]:
-        query_tokens = tokens(query)
+        query_tokens = lexical_tokens(query)
         candidate_indices: set[int] = set()
         for token in query_tokens:
             candidate_indices.update(self._token_index.get(token, set()))
