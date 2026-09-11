@@ -21,6 +21,7 @@ import catalog_search_index  # type: ignore  # noqa: E402
 import provider_identity_v60  # type: ignore  # noqa: E402
 import recipe_metrics_v60  # type: ignore  # noqa: E402
 import recipe_safety_index_v60  # type: ignore  # noqa: E402
+import release_catalog_detail_not_found_v60 as detail_not_found  # type: ignore  # noqa: E402
 
 
 _ALLOWED_SOURCE_LOCAL_CLASSIFICATIONS = {"food", "equipment", "other", "ambiguous"}
@@ -140,6 +141,7 @@ def validate(
         errors.append("source.auditedCatalogCount must be 28")
     if int(source.get("failedDetailCount") or 0) != 0:
         errors.append("source.failedDetailCount must be zero")
+    errors.extend(detail_not_found.validation_errors(payload))
     if source.get("providerIngredientIdentityPreserved") is not True:
         errors.append("providerIngredientIdentityPreserved must be true")
     if source.get("providerIngredientIdentityInferred") is not False:
