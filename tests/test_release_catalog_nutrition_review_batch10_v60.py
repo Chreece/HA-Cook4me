@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import re
 import sys
 import unittest
 
@@ -59,6 +60,14 @@ def _digest(items: list[dict]) -> str:
     return digest.hexdigest()
 
 
+def _review_file_sequence(path: Path) -> int | None:
+    match = re.fullmatch(
+        r"release_catalog_reviewed_nutrition_targets_(\d{3})[a-z]*\.v1\.json",
+        path.name,
+    )
+    return int(match.group(1)) if match else None
+
+
 class NutritionTargetReviewBatch10V60Tests(unittest.TestCase):
     def test_review_files_pin_the_three_dataset_fail_closed_contract(self):
         for path in FILES:
@@ -87,12 +96,13 @@ class NutritionTargetReviewBatch10V60Tests(unittest.TestCase):
         self.assertEqual(sum(row["fdcDataType"] == "SR Legacy" for row in combined), 27)
         self.assertEqual(sum(row["fdcDataType"] == "Foundation" for row in combined), 9)
 
-        current_names = {path.name for path in FILES}
-        prior_paths = [
-            path
-            for path in sorted(TOOLS.glob("release_catalog_reviewed_nutrition_targets*.v1.json"))
-            if path.name not in current_names
-        ]
+        # Batch 10 was reviewed against the corpus through sequence 012 only.
+        # Later review artifacts must not retroactively become its "prior" corpus.
+        prior_paths = []
+        for path in sorted(TOOLS.glob("release_catalog_reviewed_nutrition_targets*.v1.json")):
+            sequence = _review_file_sequence(path)
+            if sequence is not None and sequence < 13:
+                prior_paths.append(path)
         prior_rows = [row for path in prior_paths for row in _load(path)["items"]]
         self.assertEqual(len(prior_rows), 583)
         prior_ids = {row["reviewTargetId"] for row in prior_rows}
