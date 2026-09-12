@@ -19,8 +19,12 @@ REVIEW_FILES = [
     TOOLS / "release_catalog_reviewed_nutrition_targets_020b.v1.json",
     TOOLS / "release_catalog_reviewed_nutrition_targets_020c.v1.json",
 ]
-EXPECTED_FILE_DIGESTS = ['9973fb2a3014d213028f138a8afb00802e7dbc1dd2e8e877e2da75c646dd1677', '8990e8b3b00f0df456ebe4d57d23fc90339ed73da9675c3c477e41c2334d5e32', 'cb8a514012260ac57a7933e27512a31cb5893e86ca08b09742aefc55e02fe67a']
-EXPECTED_COMBINED_DIGEST = '939bb44ca8881da3135a8b3dbee795a3bdfd035d64f5e666b4e596327f452cbc'
+EXPECTED_FILE_DIGESTS = [
+    "9973fb2a3014d213028f138a8afb00802e7dbc1dd2e8e877e2da75c646dd1677",
+    "8990e8b3b00f0df456ebe4d57d23fc90339ed73da9675c3c477e41c2334d5e32",
+    "cb8a514012260ac57a7933e27512a31cb5893e86ca08b09742aefc55e02fe67a",
+]
+EXPECTED_COMBINED_DIGEST = "939bb44ca8881da3135a8b3dbee795a3bdfd035d64f5e666b4e596327f452cbc"
 EXPECTED_REFERENCE_MANIFEST_SHA256 = "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d"
 FILE_RE = re.compile(r"release_catalog_reviewed_nutrition_targets_(\d+)[a-z]*\.v1\.json$")
 
@@ -35,14 +39,15 @@ def _digest(items: list[dict]) -> str:
     digest = hashlib.sha256()
     for row in items:
         value = "\0".join(
-            (
-                str(row["reviewTargetId"]),
-                str(row["reviewTargetKind"]),
-                str(row["canonicalEnglishName"]),
-                str(row["fdcId"]),
-                str(row["fdcDescription"]),
-                str(row["fdcDataType"]),
-                str(row["candidateEvidenceRank"]),
+            str(row[key])
+            for key in (
+                "reviewTargetId",
+                "reviewTargetKind",
+                "canonicalEnglishName",
+                "fdcId",
+                "fdcDescription",
+                "fdcDataType",
+                "candidateEvidenceRank",
             )
         )
         digest.update(value.encode("utf-8"))
@@ -89,22 +94,10 @@ class NutritionTargetReviewBatch14V60Tests(unittest.TestCase):
         )
         self.assertEqual(_digest(current), EXPECTED_COMBINED_DIGEST)
         self.assertEqual(sum(int(row["usageCountAtReview"]) for row in current), 1055)
-        self.assertEqual(
-            sum(row["fdcDataType"] == "Survey (FNDDS)" for row in current),
-            25,
-        )
-        self.assertEqual(
-            sum(row["fdcDataType"] == "SR Legacy" for row in current),
-            27,
-        )
-        self.assertEqual(
-            sum(row["fdcDataType"] == "Foundation" for row in current),
-            8,
-        )
-        self.assertEqual(
-            sum(int(row["candidateEvidenceRank"]) == 1 for row in current),
-            42,
-        )
+        self.assertEqual(sum(row["fdcDataType"] == "Survey (FNDDS)" for row in current), 25)
+        self.assertEqual(sum(row["fdcDataType"] == "SR Legacy" for row in current), 27)
+        self.assertEqual(sum(row["fdcDataType"] == "Foundation" for row in current), 8)
+        self.assertEqual(sum(int(row["candidateEvidenceRank"]) == 1 for row in current), 42)
 
         prior_paths = []
         for path in sorted(TOOLS.glob("release_catalog_reviewed_nutrition_targets*.v1.json")):
@@ -123,97 +116,25 @@ class NutritionTargetReviewBatch14V60Tests(unittest.TestCase):
             for row in _load(path)["items"]
         }
         expected = {
-    "concept:food:4417f9f4f541baedb0b9": [
-        170416,
-        4,
-        "Parsley, fresh"
-    ],
-    "M_FOOD_170": [
-        174223,
-        3,
-        "Mollusks, squid, mixed species, raw"
-    ],
-    "concept:food:f92660c91518b337ec11": [
-        1104647,
-        5,
-        "Garlic, raw"
-    ],
-    "concept:food:80e5daa22a0f99ee6531": [
-        2707934,
-        3,
-        "Cookie, ladyfinger"
-    ],
-    "concept:food:47feb8569c20a76ebb7b": [
-        790577,
-        2,
-        "Onions, red, raw"
-    ],
-    "concept:food:77fefe2868847cb34376": [
-        790577,
-        3,
-        "Onions, red, raw"
-    ],
-    "concept:food:bb64f4c301eae9224fc1": [
-        2707152,
-        3,
-        "Egg, whole, raw"
-    ],
-    "concept:food:8154fa3cced1745b9aa3": [
-        169997,
-        3,
-        "Coriander (cilantro) leaves, raw"
-    ],
-    "concept:food:4807a6ee31ad10257e28": [
-        172233,
-        5,
-        "Dill weed, fresh"
-    ],
-    "concept:food:67109d8c97c24cafe412": [
-        169414,
-        3,
-        "Seeds, flaxseed"
-    ],
-    "concept:food:26ca0f139719b4e2eba4": [
-        168410,
-        2,
-        "Edamame, frozen, unprepared"
-    ],
-    "concept:food:db363065856b5100369e": [
-        2708362,
-        3,
-        "Buckwheat groats"
-    ],
-    "concept:food:b7876805a831a97cfa4c": [
-        171165,
-        4,
-        "Soup, onion, dry, mix"
-    ],
-    "concept:food:c6cae823c97c17af479f": [
-        170000,
-        4,
-        "Onions, raw"
-    ],
-    "M_FOOD_502": [
-        174223,
-        3,
-        "Mollusks, squid, mixed species, raw"
-    ],
-    "M_FOOD_224": [
-        170922,
-        3,
-        "Spices, coriander seed"
-    ],
-    "concept:food:d4edd991faafc551302a": [
-        170393,
-        5,
-        "Carrots, raw"
-    ],
-    "concept:food:a10c130ab3cbadac3c04": [
-        170918,
-        3,
-        "Spices, caraway seed"
-    ]
-}
+            "concept:food:4417f9f4f541baedb0b9": (170416, 4, "Parsley, fresh"),
+            "M_FOOD_170": (174223, 3, "Mollusks, squid, mixed species, raw"),
+            "concept:food:f92660c91518b337ec11": (1104647, 5, "Garlic, raw"),
+            "concept:food:80e5daa22a0f99ee6531": (2707934, 3, "Cookie, ladyfinger"),
+            "concept:food:47feb8569c20a76ebb7b": (790577, 2, "Onions, red, raw"),
+            "concept:food:77fefe2868847cb34376": (790577, 3, "Onions, red, raw"),
+            "concept:food:bb64f4c301eae9224fc1": (2707152, 3, "Egg, whole, raw"),
+            "concept:food:8154fa3cced1745b9aa3": (169997, 3, "Coriander (cilantro) leaves, raw"),
+            "concept:food:4807a6ee31ad10257e28": (172233, 5, "Dill weed, fresh"),
+            "concept:food:67109d8c97c24cafe412": (169414, 3, "Seeds, flaxseed"),
+            "concept:food:26ca0f139719b4e2eba4": (168410, 2, "Edamame, frozen, unprepared"),
+            "concept:food:db363065856b5100369e": (2708362, 3, "Buckwheat groats"),
+            "concept:food:b7876805a831a97cfa4c": (171165, 4, "Soup, onion, dry, mix"),
+            "concept:food:c6cae823c97c17af479f": (170000, 4, "Onions, raw"),
+            "M_FOOD_502": (174223, 3, "Mollusks, squid, mixed species, raw"),
+            "M_FOOD_224": (170922, 3, "Spices, coriander seed"),
+            "concept:food:d4edd991faafc551302a": (170393, 5, "Carrots, raw"),
+            "concept:food:a10c130ab3cbadac3c04": (170918, 3, "Spices, caraway seed"),
+        }
         self.assertEqual(
             {
                 target_id
@@ -222,8 +143,7 @@ class NutritionTargetReviewBatch14V60Tests(unittest.TestCase):
             },
             set(expected),
         )
-        for target_id, expected_value in expected.items():
-            fdc_id, rank, description = expected_value
+        for target_id, (fdc_id, rank, description) in expected.items():
             with self.subTest(target_id=target_id):
                 row = current[target_id]
                 self.assertEqual(int(row["fdcId"]), fdc_id)
@@ -241,7 +161,9 @@ class NutritionTargetReviewBatch14V60Tests(unittest.TestCase):
     def test_loader_consumes_all_sixty_bindings_without_identity_rewrite(self):
         current = [row for path in REVIEW_FILES for row in _load(path)["items"]]
         loaded = resolver.load_reviews(TOOLS)
-        self.assertEqual(len(loaded), 911)
+        # The exact creation boundary is locked above as 851 prior + 60 current.
+        # Future immutable batches may add rows to the global loader.
+        self.assertGreaterEqual(len(loaded), 911)
         for row in current:
             target_id = row["reviewTargetId"]
             self.assertIn(target_id, loaded)
