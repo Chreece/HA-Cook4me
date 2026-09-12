@@ -9,15 +9,14 @@ permissions:
   contents: read
 
 jobs:
-  export-reviewed-filter:
+  export-reviewed-ids:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Export reviewed-target Bloom filter
+      - name: Export exact reviewed target IDs
         shell: bash
         run: |
           node <<'NODE'
-          const crypto = require('crypto');
           const fs = require('fs');
           const path = require('path');
 
@@ -32,21 +31,12 @@ jobs:
           if (ids.size !== 2431) {
             throw new Error(`Expected 2431 reviewed target IDs after batch 22, got ${ids.size}`);
           }
-
-          const M = 131072;
-          const K = 7;
-          const bits = Buffer.alloc(M / 8);
-          for (const id of ids) {
-            const digest = crypto.createHash('sha256').update(id, 'utf8').digest();
-            const h1 = digest.readUInt32BE(0);
-            const h2 = digest.readUInt32BE(4) | 1;
-            for (let i = 0; i < K; i++) {
-              const bit = (h1 + i * h2) % M;
-              bits[Math.floor(bit / 8)] |= 1 << (bit % 8);
-            }
-          }
-          console.log(`FILTER_COUNT=${ids.size}`);
-          console.log(`BLOOM_M=${M}`);
-          console.log(`BLOOM_K=${K}`);
-          console.log(`BLOOM_B64=${bits.toString('base64')}`);
+          const sorted = [...ids].sort();
+          fs.writeFileSync('reviewed-target-ids-batch22.json', JSON.stringify({count: sorted.length, ids: sorted}));
+          console.log(`EXACT_REVIEWED_COUNT=${sorted.length}`);
           NODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: batch23-reviewed-target-ids
+          path: reviewed-target-ids-batch22.json
+          if-no-files-found: error
