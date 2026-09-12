@@ -131,7 +131,9 @@ class NutritionTargetReviewBatch13V60Tests(unittest.TestCase):
     def test_loader_consumes_all_sixty_bindings_without_identity_rewrite(self):
         current = [row for path in REVIEW_FILES for row in _load(path)["items"]]
         loaded = resolver.load_reviews(TOOLS)
-        self.assertEqual(len(loaded), 851)
+        # Later immutable batches are additive; this test locks batch 13 itself,
+        # not the eventual size of the global reviewed corpus.
+        self.assertGreaterEqual(len(loaded), 851)
         for row in current:
             target_id = row["reviewTargetId"]
             self.assertIn(target_id, loaded)
