@@ -1,4 +1,4 @@
-name: Temporary Batch 23 Reviewed-ID Export
+name: Temporary Batch 23 Reviewed Corpus Export
 
 on:
   push:
@@ -9,11 +9,11 @@ permissions:
   contents: read
 
 jobs:
-  export-reviewed-ids:
+  export-reviewed-corpus:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Export exact reviewed target IDs
+      - name: Export reviewed nutrition corpus
         shell: bash
         run: |
           node <<'NODE'
@@ -23,20 +23,35 @@ jobs:
           const names = fs.readdirSync('tools')
             .filter((name) => /^release_catalog_reviewed_nutrition_targets_\d+[a-z]*\.v1\.json$/.test(name))
             .sort();
+          const rows = [];
           const ids = new Set();
           for (const name of names) {
             const value = JSON.parse(fs.readFileSync(path.join('tools', name), 'utf8'));
-            for (const row of value.items || []) ids.add(String(row.reviewTargetId));
+            for (const row of value.items || []) {
+              const id = String(row.reviewTargetId);
+              if (ids.has(id)) throw new Error(`Duplicate reviewed target ID: ${id}`);
+              ids.add(id);
+              rows.push({
+                reviewTargetId: id,
+                reviewTargetKind: row.reviewTargetKind,
+                canonicalEnglishName: row.canonicalEnglishName,
+                fdcId: Number(row.fdcId),
+                fdcDescription: row.fdcDescription,
+                fdcDataType: row.fdcDataType,
+                candidateEvidenceRank: Number(row.candidateEvidenceRank),
+                usageCountAtReview: Number(row.usageCountAtReview || 0)
+              });
+            }
           }
-          if (ids.size !== 2431) {
-            throw new Error(`Expected 2431 reviewed target IDs after batch 22, got ${ids.size}`);
+          if (rows.length !== 2431 || ids.size !== 2431) {
+            throw new Error(`Expected 2431 reviewed rows after batch 22, got rows=${rows.length} ids=${ids.size}`);
           }
-          const sorted = [...ids].sort();
-          fs.writeFileSync('reviewed-target-ids-batch22.json', JSON.stringify({count: sorted.length, ids: sorted}));
-          console.log(`EXACT_REVIEWED_COUNT=${sorted.length}`);
+          rows.sort((a,b) => a.reviewTargetId.localeCompare(b.reviewTargetId));
+          fs.writeFileSync('reviewed-nutrition-corpus-batch22.json', JSON.stringify({count: rows.length, rows}));
+          console.log(`EXACT_REVIEWED_COUNT=${rows.length}`);
           NODE
       - uses: actions/upload-artifact@v4
         with:
-          name: batch23-reviewed-target-ids
-          path: reviewed-target-ids-batch22.json
+          name: batch23-reviewed-nutrition-corpus
+          path: reviewed-nutrition-corpus-batch22.json
           if-no-files-found: error
