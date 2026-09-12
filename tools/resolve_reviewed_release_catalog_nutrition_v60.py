@@ -205,11 +205,12 @@ def resolve(
     if policy.get("searchResultAutoAccepted") is not False:
         raise RuntimeError("nutrition queue must forbid search-result auto acceptance")
 
-    output = dict(cache)
+    output, rejected_held_cache = reviewed_nutrition.holds.filter_cache(cache)
     pending: list[dict[str, Any]] = []
     resolved_now = 0
     already_resolved = 0
     missing_review = 0
+    held_identities = 0
     rejected_unreviewed_cache = 0
 
     for raw in queue.get("tasks") or []:
@@ -221,6 +222,15 @@ def resolve(
             raise RuntimeError("nutrition queue task is missing identity or canonical English")
         if _text(raw.get("identityKind")) not in {"provider", "source-local"}:
             raise RuntimeError(f"unsupported nutrition identity kind for {ingredient_id}")
+
+        hold = reviewed_nutrition.holds.find_hold(ingredient_id, raw.get("conceptId"))
+        if hold is not None:
+            held_identities += 1
+            if ingredient_id in output:
+                rejected_held_cache += 1
+                output.pop(ingredient_id)
+            pending.append(reviewed_nutrition.holds.pending_hold(raw, hold))
+            continue
 
         existing = output.get(ingredient_id)
         if reviewed_nutrition.is_reviewed_profile(
@@ -287,6 +297,8 @@ def resolve(
         "alreadyResolved": already_resolved,
         "resolvedNow": resolved_now,
         "missingReview": missing_review,
+        "heldIdentities": held_identities,
+        "rejectedHeldCacheCount": rejected_held_cache,
         "pendingCount": len(pending),
         "reviewedCacheProfileCount": reviewed_profile_count,
         "rejectedUnreviewedCacheCount": rejected_unreviewed_cache,

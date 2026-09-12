@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-nutrition-review-holds-v60",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "evidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "policy": {
+    "replacementBindingsApproved": false,
+    "historicalReviewsModified": false,
+    "candidateRankIsIdentityProof": false,
+    "explicitRereviewRequired": true
+  },
+  "items": [
+    {
+      "reviewTargetId": "M_FOOD_447",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Montbéliard sausage",
+      "fdcId": 2706191,
+      "fdcDescription": "Pork sausage",
+      "fdcDataType": "Survey (FNDDS)",
+      "candidateEvidenceRank": 3,
+      "reviewFile": "release_catalog_reviewed_nutrition_targets_031f.v1.json",
+      "reviewFileSha256": "550fb572e31b38c601359e5f9f40e742f4cc8c7ad97be79388bf1c609cc4dd2e",
+      "status": "hold",
+      "reasonCode": "specific_identity_unproven",
+      "reason": "The named Montbeliard sausage is recorded against generic pork sausage. The retained descriptions do not establish equivalent composition. The recorded candidate rank also differs.",
+      "observedCandidateRank": 4,
+      "memberIngredientIds": [
+        "M_FOOD_447"
+      ]
+    },
+    {
+      "reviewTargetId": "concept:food:0bb2c48c43c227d344f5",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Sesame purée",
+      "fdcId": 2262073,
+      "fdcDescription": "Sesame butter, creamy",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 4,
+      "reviewFile": "release_catalog_reviewed_nutrition_targets_032l.v1.json",
+      "reviewFileSha256": "f532e43f8bde4732d95ad363a6a9107d57a27363a43783c3e10782e3ea5dafd3",
+      "status": "hold",
+      "reasonCode": "historical_snapshot_unresolved",
+      "reason": "The FDC ID, description and data type match the retained target candidate, but its rank differs. This is a provenance hold, not a finding that sesame puree and sesame butter are different foods. Preserve the historical record pending explicit evidence reconciliation.",
+      "observedCandidateRank": 6,
+      "memberIngredientIds": [
+        "local:hu:3370e359802a7be9fd0c"
+      ]
+    },
+    {
+      "reviewTargetId": "concept:food:173e69b9214950b30980",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Consommé stock cube",
+      "fdcId": 171563,
+      "fdcDescription": "Soup, chicken broth cubes, dry",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 5,
+      "reviewFile": "release_catalog_reviewed_nutrition_targets_034b.v1.json",
+      "reviewFileSha256": "a6327c3392cb5a1fb6babc05d82942f151077e2f45173eb253931f1feea5cc16",
+      "status": "hold",
+      "reasonCode": "broth_type_unproven",
+      "reason": "The source says consomme stock cube; the selected description specifies chicken. The source does not establish that broth type. The recorded rank also differs.",
+      "observedCandidateRank": 6,
+      "memberIngredientIds": [
+        "local:ja:09f2f812071126353043",
+        "local:ja:73667cc78e64c398835c"
+      ]
+    },
+    {
+      "reviewTargetId": "concept:food:222a1991f9c8e3bef676",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Traditional mustard and crème fraîche",
+      "fdcId": 2710085,
+      "fdcDescription": "Mustard",
+      "fdcDataType": "Survey (FNDDS)",
+      "candidateEvidenceRank": 1,
+      "reviewFile": "release_catalog_reviewed_nutrition_targets_032n.v1.json",
+      "reviewFileSha256": "5594053e671969727a83746cc72d6fd7afc5e564e880d200aa68cab8d79eb86d",
+      "status": "hold",
+      "reasonCode": "composition_mismatch",
+      "reason": "The source explicitly combines mustard and creme fraiche; the selected record describes mustard only. Component proportions are not established. No replacement is approved.",
+      "observedCandidateRank": 2,
+      "memberIngredientIds": [
+        "local:hr:da102385b2887953f1dd"
+      ]
+    },
+    {
+      "reviewTargetId": "concept:food:4b699a7031f660ff4dc1",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Chicken stock powder",
+      "fdcId": 172884,
+      "fdcDescription": "Soup, stock, chicken, home-prepared",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "reviewFile": "release_catalog_reviewed_nutrition_targets_034.v1.json",
+      "reviewFileSha256": "91559f6ea8823765540230f5ad4f52d045ce9aafeb7518f73588e6374d1e54f7",
+      "status": "hold",
+      "reasonCode": "food_form_mismatch",
+      "reason": "The source explicitly specifies chicken stock powder; the selected record describes home-prepared stock. Dry and prepared forms are not interchangeable per 100 g. No replacement is approved.",
+      "observedCandidateRank": 1,
+      "memberIngredientIds": [
+        "local:ja:cc215899fc7eb23c0072",
+        "local:ja:d4c51f9fff7871e2c9bb"
+      ]
+    },
+    {
+      "reviewTargetId": "concept:food:51b62939bbb0887b2b96",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Almond purée",
+      "fdcId": 2262074,
+      "fdcDescription": "Almond butter, creamy",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 5,
+      "reviewFile": "release_catalog_reviewed_nutrition_targets_032.v1.json",
+      "reviewFileSha256": "a1099f07583bf0a377f1fdd0caa2318eea3b8ee3a7dba6d34b1d9aad25f53526",
+      "status": "hold",
+      "reasonCode": "target_evidence_missing",
+      "reason": "The recorded FDC ID is absent from this target in the retained snapshot. No alternative historical snapshot has been established. No replacement is approved.",
+      "observedCandidateRank": null,
+      "memberIngredientIds": [
+        "local:cs:ff9305c837f75a2506ca",
+        "local:hr:efca65587e04b2ed5b6a",
+        "local:hu:6ec1ae5a219b4ef42f71",
+        "local:pt:07b20ab2633acc2b7e6b",
+        "local:ro:6adece608dab0942c58c",
+        "local:sk:90bc327f0db34dc7b71f",
+        "local:uk:4544f53d40866e7430b3"
+      ]
+    },
+    {
+      "reviewTargetId": "concept:food:5ba728d548d5b048a95c",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Montbéliard sausages",
+      "fdcId": 2706191,
+      "fdcDescription": "Pork sausage",
+      "fdcDataType": "Survey (FNDDS)",
+      "candidateEvidenceRank": 4,
+      "reviewFile": "release_catalog_reviewed_nutrition_targets_033k.v1.json",
+      "reviewFileSha256": "65c8cf20fc8eb2fb3ccd3a5ee19e8746422c9942052a2b4ea37f4fcc8de6bd06",
+      "status": "hold",
+      "reasonCode": "specific_identity_unproven",
+      "reason": "The named Montbeliard sausages are recorded against generic pork sausage. Equivalent composition is not established by the retained descriptions. The recorded rank also differs.",
+      "observedCandidateRank": 5,
+      "memberIngredientIds": [
+        "local:hr:b7365ee791f2d1b91b1b"
+      ]
+    },
+    {
+      "reviewTargetId": "concept:food:98efb0bf0c3ac9050886",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Pumpkin purée",
+      "fdcId": 168448,
+      "fdcDescription": "Pumpkin, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "reviewFile": "release_catalog_reviewed_nutrition_targets_034c.v1.json",
+      "reviewFileSha256": "2f93ec7829efefdbceb17ee3ae2ce0ffea94383e0f9d744d62f248255fb86306",
+      "status": "hold",
+      "reasonCode": "preparation_state_unproven",
+      "reason": "The source says pumpkin puree; the selected record specifies raw pumpkin. Raw preparation is not established. The recorded rank also differs.",
+      "observedCandidateRank": 2,
+      "memberIngredientIds": [
+        "local:cs:03e975bfd3b98aabf7d2",
+        "local:de:5cc1e02e4c53cb1d3946"
+      ]
+    },
+    {
+      "reviewTargetId": "concept:food:cff58781196514624355",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Nestlé dark dessert chocolate",
+      "fdcId": 2710336,
+      "fdcDescription": "Dark chocolate candy",
+      "fdcDataType": "Survey (FNDDS)",
+      "candidateEvidenceRank": 1,
+      "reviewFile": "release_catalog_reviewed_nutrition_targets_029k.v1.json",
+      "reviewFileSha256": "ca619fa8f6d71c23dfd11b8024c6ecbec1acb361f66b47f0268255fbd1c96130",
+      "status": "hold",
+      "reasonCode": "specific_identity_unproven",
+      "reason": "The source names a branded dessert chocolate; the selected description is generic dark chocolate candy. The retained evidence does not establish the product formulation. The recorded rank also differs.",
+      "observedCandidateRank": 2,
+      "memberIngredientIds": [
+        "local:fr:35c8535c177ce8df23a0"
+      ]
+    },
+    {
+      "reviewTargetId": "concept:food:d970bae86d769631735f",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Bouillon cube (consommé cube also acceptable)",
+      "fdcId": 171613,
+      "fdcDescription": "Soup, bouillon cubes and granules, low sodium, dry",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "reviewFile": "release_catalog_reviewed_nutrition_targets_033e.v1.json",
+      "reviewFileSha256": "574cdddb28d0f553d1f3ba0d82871a6b059b3e0d6a9144e37728a409416bff7c",
+      "status": "hold",
+      "reasonCode": "low_sodium_unproven",
+      "reason": "The selected bouillon record specifically describes low sodium. The source does not establish that formulation. The recorded rank also differs.",
+      "observedCandidateRank": 3,
+      "memberIngredientIds": [
+        "local:ja:0cab30c6de6b2da9933a"
+      ]
+    },
+    {
+      "reviewTargetId": "concept:food:dbfce396513b670c6aa7",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Consommé granules, a little",
+      "fdcId": 171613,
+      "fdcDescription": "Soup, bouillon cubes and granules, low sodium, dry",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "reviewFile": "release_catalog_reviewed_nutrition_targets_034f.v1.json",
+      "reviewFileSha256": "9e8f9f5eb96ccba0a8ee1f170cbb260ed0e8d8461f411557148395c778479272",
+      "status": "hold",
+      "reasonCode": "low_sodium_unproven",
+      "reason": "The selected consomme-granule record specifically describes low sodium. The source does not establish that formulation. The recorded rank also differs.",
+      "observedCandidateRank": 3,
+      "memberIngredientIds": [
+        "local:ja:35b1a034e15ddf9717d3"
+      ]
+    },
+    {
+      "reviewTargetId": "concept:food:e92ea6f0c3581d08f7a0",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Coriander purée",
+      "fdcId": 169997,
+      "fdcDescription": "Coriander (cilantro) leaves, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 2,
+      "reviewFile": "release_catalog_reviewed_nutrition_targets_034b.v1.json",
+      "reviewFileSha256": "a6327c3392cb5a1fb6babc05d82942f151077e2f45173eb253931f1feea5cc16",
+      "status": "hold",
+      "reasonCode": "composition_unproven",
+      "reason": "The source says coriander puree; the selected record is raw leaves. The evidence does not establish the puree composition or absence of other ingredients. The recorded rank also differs.",
+      "observedCandidateRank": 4,
+      "memberIngredientIds": [
+        "local:cs:70a0d0d9b441783595ac",
+        "local:hu:1ee1fa386c5772bab60a"
+      ]
+    }
+  ]
+}

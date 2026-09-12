@@ -7,6 +7,8 @@ import re
 import unicodedata
 from typing import Any
 
+import nutrition_review_holds_v60 as holds
+
 
 def text(value: Any) -> str:
     return re.sub(r"\s+", " ", str(value or "").strip())
@@ -49,6 +51,8 @@ def is_reviewed_profile(
     fuzzy USDA search results also used that shape, so v60 requires explicit
     exact-FDC review provenance before a profile may satisfy release nutrition.
     """
+    if holds.profile_hold(value, ingredient_id=ingredient_id) is not None:
+        return False
     if not isinstance(value, dict):
         return False
     if value.get("basis") != "per100g" or not _numeric_values(value.get("values")):

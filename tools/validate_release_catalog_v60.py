@@ -17,6 +17,7 @@ for path in (TOOLS, COMPONENT):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
 
+import nutrition_review_holds_v60 as nutrition_holds  # type: ignore  # noqa: E402
 import catalog_search_index  # type: ignore  # noqa: E402
 import provider_identity_v60  # type: ignore  # noqa: E402
 import recipe_metrics_v60  # type: ignore  # noqa: E402
@@ -252,6 +253,10 @@ def validate(
         if not _text(row.get("canonicalName")):
             errors.append(f"ingredient {ident} has no canonicalName")
         nutrition_ok = _nutrition_valid(row.get("nutrition"))
+        hold = nutrition_holds.find_hold(ident, row.get("conceptId")) or nutrition_holds.profile_hold(row.get("nutrition"), ingredient_id=ident)
+        if row.get("nutrition") and hold is not None:
+            errors.append(f"ingredient {ident} carries held nutrition binding {hold['reviewTargetId']}")
+            nutrition_ok = False
         if row.get("nutrition") and not nutrition_ok:
             errors.append(f"ingredient {ident} has invalid nutrition profile")
         if food_for_intelligence:

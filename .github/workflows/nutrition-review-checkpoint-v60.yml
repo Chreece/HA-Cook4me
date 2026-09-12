@@ -6,6 +6,10 @@ on:
       - 'tools/release_catalog_reviewed_nutrition_targets*.v1.json'
       - 'tools/snapshot_nutrition_review_checkpoint_v60.py'
       - 'tests/test_nutrition_review_checkpoint_v60.py'
+      - 'tools/nutrition_review_holds_v60.py'
+      - 'tools/release_catalog_nutrition_review_holds.v1.json'
+      - 'tests/test_nutrition_review_holds_v60.py'
+      - 'tests/fixtures/nutrition-hold-evidence-subset-v60.json.gz'
       - '.github/workflows/nutrition-review-checkpoint-v60.yml'
 
 permissions:
@@ -23,11 +27,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Test checkpoint and offline reconciliation safeguards
-        run: python -m unittest discover -s tests -p test_nutrition_review_checkpoint_v60.py -v
+      - name: Create maintenance virtual environment
+        run: python -m venv "$RUNNER_TEMP/cook4me-venv"
+      - name: Test checkpoint, reconciliation, and nutrition hold safeguards
+        run: '"$RUNNER_TEMP/cook4me-venv/bin/python" -m unittest discover -s tests -p "test_nutrition_review_*v60.py" -v'
       - name: Snapshot every recorded binding at this exact source commit
         run: |
-          python tools/snapshot_nutrition_review_checkpoint_v60.py \
+          "$RUNNER_TEMP/cook4me-venv/bin/python" tools/snapshot_nutrition_review_checkpoint_v60.py \
             --source-commit "$(git rev-parse HEAD)" \
             --output "$RUNNER_TEMP/nutrition-checkpoint"
           git archive --format=tar.gz --output="$RUNNER_TEMP/nutrition-checkpoint/source.tar.gz" HEAD

@@ -85,7 +85,11 @@ def propose(
 
     reviewed_ids = set(reviews)
     history: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    held_history_excluded = 0
     for row in reviews.values():
+        if resolver.reviewed_nutrition.holds.profile_hold(row) is not None:
+            held_history_excluded += 1
+            continue
         canonical = _norm(row.get("canonicalEnglishName"))
         if canonical:
             history[canonical].append(row)
@@ -211,6 +215,7 @@ def propose(
             "secretsPersisted": False,
         },
         "reviewCorpusCount": len(reviews),
+        "heldHistoricalReviewsExcluded": held_history_excluded,
         "proposalCount": len(proposals),
         "conflictCount": len(conflicts),
         "proposals": proposals,
@@ -220,6 +225,7 @@ def propose(
         "catalogVersion": payload["catalogVersion"],
         "referenceManifestSha256": manifest_sha,
         "reviewCorpusCount": len(reviews),
+        "heldHistoricalReviewsExcluded": held_history_excluded,
         "candidateEvidenceTargetCount": len(candidates.get("items") or []),
         "alreadyReviewedTargetSkipped": already_reviewed_skipped,
         "exactCanonicalHistoryTargetCount": exact_canonical_history_targets,
