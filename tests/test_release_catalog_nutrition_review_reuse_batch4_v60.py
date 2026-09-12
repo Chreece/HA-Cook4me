@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import re
 import sys
 import unicodedata
 import unittest
@@ -17,6 +18,7 @@ import resolve_reviewed_release_catalog_nutrition_targets_v60 as resolver  # noq
 REUSE_FILE = TOOLS / "release_catalog_reviewed_nutrition_targets_014.v1.json"
 EXPECTED_DIGEST = "3af0ca1a7a6ee5c487d6240dc75f96781dfd18e61487084db63e6691ca2a3c4b"
 EXPECTED_REFERENCE_MANIFEST_SHA256 = "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d"
+REVIEW_FILE_RE = re.compile(r"release_catalog_reviewed_nutrition_targets_(\d{3})[a-z]*\.v1\.json\Z")
 
 
 def _load(path: Path) -> dict:
@@ -77,11 +79,11 @@ class NutritionReviewedDecisionReuseBatch4V60Tests(unittest.TestCase):
         self.assertEqual(sum(int(row["candidateEvidenceRank"]) == 2 for row in items), 2)
 
     def test_every_reuse_has_one_unambiguous_prior_exact_canonical_decision(self):
-        prior_paths = [
-            path
-            for path in sorted(TOOLS.glob("release_catalog_reviewed_nutrition_targets*.v1.json"))
-            if path != REUSE_FILE
-        ]
+        prior_paths = []
+        for path in sorted(TOOLS.glob("release_catalog_reviewed_nutrition_targets*.v1.json")):
+            match = REVIEW_FILE_RE.fullmatch(path.name)
+            if match and int(match.group(1)) < 14:
+                prior_paths.append(path)
         prior_rows = [row for path in prior_paths for row in _load(path)["items"]]
         self.assertEqual(len(prior_rows), 643)
         prior_ids = {row["reviewTargetId"] for row in prior_rows}
