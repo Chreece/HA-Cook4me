@@ -151,13 +151,15 @@ def resolve(
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     _validate_queue(queue)
 
-    output = dict(cache)
+    output, rejected_held_cache = reviewed_nutrition.holds.filter_cache(cache)
     pending: list[dict[str, Any]] = []
     already_resolved_identities = 0
     already_resolved_targets = 0
     resolved_now_identities = 0
     resolved_now_targets = 0
     missing_review_targets = 0
+    held_targets = 0
+    held_identities = 0
     rejected_unreviewed_cache = 0
     fetched_fdc_ids: list[int] = []
 
@@ -198,6 +200,17 @@ def resolve(
                 + ", ".join(sorted(duplicate_members)[:20])
             )
         seen_members.update(members)
+
+        hold = reviewed_nutrition.holds.find_hold(target_id, *members)
+        if hold is not None:
+            held_targets += 1
+            held_identities += len(members)
+            for ingredient_id in members:
+                if ingredient_id in output:
+                    rejected_held_cache += 1
+                    output.pop(ingredient_id)
+            pending.append(reviewed_nutrition.holds.pending_hold(raw, hold))
+            continue
 
         unresolved: list[str] = []
         for ingredient_id in members:
@@ -297,6 +310,9 @@ def resolve(
         "resolvedNowReviewTargets": resolved_now_targets,
         "resolvedNowIdentities": resolved_now_identities,
         "missingReviewTargets": missing_review_targets,
+        "heldReviewTargets": held_targets,
+        "heldIdentities": held_identities,
+        "rejectedHeldCacheCount": rejected_held_cache,
         "pendingReviewTargetCount": len(pending),
         "pendingIdentityCount": pending_identity_count,
         "reviewedCacheProfileCount": reviewed_profile_count,
