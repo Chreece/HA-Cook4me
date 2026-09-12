@@ -1,0 +1,52 @@
+name: Temporary Batch 23 Reviewed-ID Export
+
+on:
+  push:
+    branches:
+      - cook4me-batch23-review-prep
+
+permissions:
+  contents: read
+
+jobs:
+  export-reviewed-filter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Export reviewed-target Bloom filter
+        shell: bash
+        run: |
+          node <<'NODE'
+          const crypto = require('crypto');
+          const fs = require('fs');
+          const path = require('path');
+
+          const names = fs.readdirSync('tools')
+            .filter((name) => /^release_catalog_reviewed_nutrition_targets_\d+[a-z]*\.v1\.json$/.test(name))
+            .sort();
+          const ids = new Set();
+          for (const name of names) {
+            const value = JSON.parse(fs.readFileSync(path.join('tools', name), 'utf8'));
+            for (const row of value.items || []) ids.add(String(row.reviewTargetId));
+          }
+          if (ids.size !== 2431) {
+            throw new Error(`Expected 2431 reviewed target IDs after batch 22, got ${ids.size}`);
+          }
+
+          const M = 131072;
+          const K = 7;
+          const bits = Buffer.alloc(M / 8);
+          for (const id of ids) {
+            const digest = crypto.createHash('sha256').update(id, 'utf8').digest();
+            const h1 = digest.readUInt32BE(0);
+            const h2 = digest.readUInt32BE(4) | 1;
+            for (let i = 0; i < K; i++) {
+              const bit = (h1 + i * h2) % M;
+              bits[Math.floor(bit / 8)] |= 1 << (bit % 8);
+            }
+          }
+          console.log(`FILTER_COUNT=${ids.size}`);
+          console.log(`BLOOM_M=${M}`);
+          console.log(`BLOOM_K=${K}`);
+          console.log(`BLOOM_B64=${bits.toString('base64')}`);
+          NODE
