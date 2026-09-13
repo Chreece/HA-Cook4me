@@ -1,0 +1,50 @@
+name: Nutrition review checkpoint
+
+on:
+  pull_request:
+    paths:
+      - 'tools/release_catalog_reviewed_nutrition_targets*.v1.json'
+      - 'tools/snapshot_nutrition_review_checkpoint_v60.py'
+      - 'tests/test_nutrition_review_checkpoint_v60.py'
+      - 'tools/nutrition_review_holds_v60.py'
+      - 'tools/release_catalog_nutrition_review_holds.v1.json'
+      - 'tests/test_nutrition_review_holds_v60.py'
+      - 'tests/test_release_catalog_nutrition_review_batch29_v60.py'
+      - 'tests/fixtures/nutrition-batch29-retained-reference-v60.json.gz'
+      - 'tests/fixtures/nutrition-hold-evidence-subset-v60.json.gz'
+      - '.github/workflows/nutrition-review-checkpoint-v60.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  checkpoint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Create maintenance virtual environment
+        run: python -m venv "$RUNNER_TEMP/cook4me-venv"
+      - name: Test checkpoint, reconciliation, and nutrition hold safeguards
+        run: '"$RUNNER_TEMP/cook4me-venv/bin/python" -m unittest discover -s tests -p "test_nutrition_review_*v60.py" -v'
+      - name: Test explicit retained-reference Batch 29 bindings
+        run: '"$RUNNER_TEMP/cook4me-venv/bin/python" -m unittest discover -s tests -p "test_release_catalog_nutrition_review_batch29_v60.py" -v'
+      - name: Snapshot every recorded binding at this exact source commit
+        run: |
+          "$RUNNER_TEMP/cook4me-venv/bin/python" tools/snapshot_nutrition_review_checkpoint_v60.py \
+            --source-commit "$(git rev-parse HEAD)" \
+            --output "$RUNNER_TEMP/nutrition-checkpoint"
+          git archive --format=tar.gz --output="$RUNNER_TEMP/nutrition-checkpoint/source.tar.gz" HEAD
+      - name: Preserve reproducible review checkpoint and tracked source
+        uses: actions/upload-artifact@v4
+        with:
+          name: nutrition-review-checkpoint-${{ github.event.pull_request.head.sha }}
+          path: ${{ runner.temp }}/nutrition-checkpoint/
+          if-no-files-found: error
+          retention-days: 7

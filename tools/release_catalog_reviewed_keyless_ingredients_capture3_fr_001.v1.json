@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-keyless-ingredient-semantics",
+  "policy": {
+    "providerIdentityAssigned": false,
+    "exactSourceLabelOnly": true,
+    "manualReview": true,
+    "phase": "capture3",
+    "batch": "fr-001",
+    "catalogVersion": "2026-09-11-v60-capture3",
+    "notes": "Manual semantic review for the 5 exact Capture 3 French source-local labels. English semantics are reviewed from the exact French source label; no provider identity is assigned or inferred."
+  },
+  "items": [
+    {"language":"fr","source":"Moelle","english":"Bone marrow","classification":"food","confidence":"high"},
+    {"language":"fr","source":"Wasabi","english":"Wasabi","classification":"food","confidence":"high"},
+    {"language":"fr","source":"Fécule de maïs","english":"Cornstarch","classification":"food","confidence":"high"},
+    {"language":"fr","source":"Riz","english":"Rice","classification":"food","confidence":"high"},
+    {"language":"fr","source":"Épices","english":"Spices","classification":"food","confidence":"high"}
+  ]
+}

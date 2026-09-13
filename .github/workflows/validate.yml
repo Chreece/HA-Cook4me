@@ -34,10 +34,21 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Validate version, JSON, Python, and frontend syntax
+      - name: Validate version, JSON, Python, shell, and frontend syntax
         run: |
           python scripts/version.py validate
-          python -m compileall -q custom_components/cook4me tests
+          python -m compileall -q custom_components/cook4me tests tools
+          bash -n tools/run_release_catalog_capture.sh
+          bash -n tools/run_release_catalog_failure_probe.sh
+          bash -n tools/run_release_catalog_identity_probe.sh
+          bash -n tools/run_release_catalog_family_identity_probe.sh
+          bash -n tools/run_release_catalog_v2_capture.sh
+          bash -n tools/run_release_catalog_marketing_food_capture.sh
+          bash -n tools/run_marketing_food_body_contract_probe.sh
+          bash -n tools/run_release_catalog_v2_assembly_prep.sh
+          bash -n tools/run_release_catalog_local_translation.sh
+          bash -n tools/run_release_catalog_taxonomy_capture.sh
+          bash -n tools/run_release_catalog_fdc_offline_review_prep_v60.sh
           python - <<'PY'
           import json
           from pathlib import Path
@@ -57,5 +68,6 @@ jobs:
           timeout 20s node --experimental-default-type=module tests/frontend_cache_first_ui_smoke.mjs
           timeout 20s node --experimental-default-type=module tests/frontend_server_seed_ui_smoke.mjs
           timeout 20s node --experimental-default-type=module tests/frontend_v58_regression_smoke.mjs
+          timeout 20s node --experimental-default-type=module tests/frontend_v59_regression_smoke.mjs
       - name: Run focused tests
         run: python -m unittest discover -s tests -v

@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 60,
+  "batchSize": 100,
+  "rankStart": 5901,
+  "rankEnd": 6000,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:8f5b485e3799285305f1597e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Havuç,uzunlamasına ikiye kesilmiş ve irice doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:42046234251ac03a0d0a6b4f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Havuç,verev doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0d6924a43cc32d69c9cf0736",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Haşlanmış konserve nohut",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a629b3c5e216ebba4173166f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Hindi göğüs,1 cm şerit doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0f10f68528fce4dc07180ef6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Hindiba,ince dilimlenmiş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a1bb69880620d9e0b09bf970",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Hindistan cevizi rendesi",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:610b781d4b4f981e08412441",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Hindistan cevizi yağı",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0772b52dbde2eb00542d31a2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Horoz mantarı",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5d433708590675f33d7b6cd2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Hurma,çekirdeği çıkartılmış ve küp doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0a9638f1b9863c2974e87720",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Ispanak, doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e97b40a65073c3eab3874aba",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Ispanak,iri doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:212efd1f8ea2c9f2c0cdce40",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Izgara sosis,ikiye ya da üçe kesilmiş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2cee1b92dbb66178277bf767",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "İnce bulgur",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7f87702db4936c3fb000f301",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "İnce doğranmış rezene",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:34e6a0151af1dc763cd1fbe0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "İnce irmik",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f41e5549f410726f1fbea4b9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "İnce irmik, unla karıştırılmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a4f1e6dad36713e074c3b862",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "İnce kıyılmış maydanoz",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:67f5fb3a046caf66bc006d6c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "İnce kıyılmış taze kişniş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:53520745d475cde584ea4923",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "İnci şekeri",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:956ad1ca2ad928c8d33c9506",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kabak çekirdeği",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0f6f2dbe8e396bfc05f5a8e2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kabak, soyulmuş ve küp doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:626d9520bfc5f9221fad9de6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kabak, yıkanmış ve şerit halinde doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5e1183dcae5b511bfbb97683",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kabak,2cm küp şeklinde doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8f29a1b4d58f8cfbd034143d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kabuksuz badem",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9ccbf2587b786ea83b2e4759",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kabuksuz karabuğday",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a455109771d67a932258018f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kaju fıstığı",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:92be6237ab89ad6eabc484a2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kapari, doğranmış (isteğe bağlı)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:64a6ab0c3003ec7df4ff27cd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kapya biber,2 cm doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f4d721ca5b540ff3c622f7b9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kapya biber,şerit doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a4734e267e42b019923a5ae1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Karalahana,ince kıyım",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0d62c7fadf86fa7d5dba3d5a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Karnabahar, yıkanmış, çiçekleri ikiye ya da dörde kesilmiş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2a83966924b5226174f1549d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Karnabahar, çiçeklerine ayrılmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:309cb7facbc68ce95ce40c4a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Karnabahar,ince doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e78e48a346c3f78b1c5c1e02",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Karnabahar,çiçekleri ikiye kesilmiş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6c23db452945e118d5d2a983",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Karışık baharat",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:87c1f283664ef4d57b2d0d6a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Karışık baharat veya tarçın/zencefil/muskat",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:558a70b2c63b3328d9bddcd7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kavrulmuş susam",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5ade174cb76039cd3e84f2ec",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kayısı,soyulmuş ve dörde bölünmüş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4533cbd6d83b7e23181140dd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kekik yaprağı, yıkanmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0069582e33bb23a39da62fdd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kepekli pirinç",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d2a74e0886ff4aa6c37cd733",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kereviz sapı, yıkanmış ve şerit halinde doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1e4b5dc46127255bc768827c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kereviz sapı,ince dilimlenmiş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ac91011bcf72e1c5f70fe59e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kereviz,ince dilimlenmiş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7d5b8833a01350fd765c8afb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kesme şeker",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:741bedf89f1b6c72bcad1607",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Keçi peyniri,küp doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:574d239ce2651b4004787817",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kinoa,yıkanmış ve süzülmüş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4ae71d6d397adb6a19d7d9cf",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kolot peyniri,küçük küp halinde doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f6a5b7d651f936efd262aa28",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Konserve bezelye",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c34111a5059899d540e8791d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Konserve mısır",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1d911692d7c5579823525047",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Konserve mısır, süzülmüş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:69c35114b0a2925ea3eeeca2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Konserve nohut, süzülmüş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:76ae303d84b2416d4b983d9d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Konserve pişmiş mercimek",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f742d3eeeb659b24d959d8e7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kornişon sirkesi",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0bafc9ef6660a960c874408e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kornişon, ince dilimlenmiş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f7fe030e143667fddfd38035",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Krem peyniri",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7e1816ab56cd111940a30148",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kuru bamya",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3983b75a14a7b60709a38c33",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kuru barbunya,1 gece önceden ıslatılmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0b3c1740ca4b90f08da1dc29",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kuru domates,şerit doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2a9c581dc97ee3bf98c9837c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kuru incir,4'e bölünmüş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:10a405d145fa21dc381d0d6f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kuru iç bakla",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fa9758a5dc53176ae0a69e8b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kuru kayısı,4'e bölünmüş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:224d0165ce7d87d81eb92455",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kuru kekik",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:eb9c7388cd665652c46ba2da",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kurutulmuş domates,doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2b22c0d8202fcef066d1402b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kuzu kol, 20/30 g küpler halinde doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e5a6008772f86d2f10adcf15",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kuzu, sotelik",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9b39a9266aae404c359a75ce",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kuzu,sotelik",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a90ba52d5c79ffdb1b226c3a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kuşbaşı dana/kuzu eti",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d028af9cdc0774d0f75e072a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kuşkonmaz ucu, soyulmuş ve buhar sepetinin büyüklüğüne göre kesilmiş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cf8c9cf760406a5ebf482a14",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kuşkonmaz ucu,irice doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c279d233ab99e77ddfb63436",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Köftelik bulgur",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f77f8de762311a0b070aa57f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kök kereviz,2 cm küp doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:159dd75f32f6310bb4088b71",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kültür mantarı",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7ef0ff094c1d9108fdad1b44",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kültür mantarı, soyulmuş veya yıkanmış, dörde kesilmiş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2516aa05ea2bf4fa21a1cdf3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kültür mantarı, temizlenmiş ve ince dilimlenmiş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:986c6aa77f62ec7533994863",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kültür mantarı,soyulmuş ve dörde kesilmiş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:af73dbbf78dce017c356d183",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Küp doğranmış mozzarella",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:71a530c73bd7319cb55e51b1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Küp şeker",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:07795b33019f3a4533f6b874",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Küçük alabaş, yapraklı",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5c9adb24147e330291046eb5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Küçük domates, küp doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8549519248500fba33db922e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Küçük havuç, konserve (süzülmüş)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:05a42339fd4e64b514622b2c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Küçük marul (ya da marul göbeği), doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2f885c7838075e7f01c050ba",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Küçük sufle kasesi",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:11d13e63ba704fbd3944c3a2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Küçük tavuk kanadı",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b0bc9e93a71446b801f67d2b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kırmızı acı biber",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7df046b70bfb97c4cd13aa21",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kırmızı biber, ince şeritler halinde doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9ab7de5e5a40f0c6cd9fabea",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kırmızı biber,küçük küpler halinde doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4b3fe1072e790ddbc71658b8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kırmızı kinoa",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:72ea3a9bf6ae4b57e95df85a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kırmızı soğan,soyulmuş ve ince dilimlenmiş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c2db15c2015b7ef22da50888",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kırmızı toz biber",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4c400649cbf16d0bebe90303",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kıyılmış maydanoz",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d4555b017b1225ba4e652b7c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kıyılmış taze fesleğen",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f7209ccf2dd6963afac91baa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kıyılmış taze frenk soğanı",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c743f33bd9e6c72a7c7267fc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kıyılmış taze nane",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d5753711e0c538cfd4a2a297",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kıyılmış taze tarhun",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b851b5ab950ff3cfbdc522d8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Kızartma yağı",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e61483175eaed558f523a5e9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Lahana,3 cm küp doğranmış",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fe9e4bb4d50df947948213c0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Levrek,derisiz,3 cm kesilmiş",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:022fe86d3657f89acdb976ae",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Limon (yalnızca suyu)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:faea8914d97dc74aa067701d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Limon suyu (isteğe bağlı)",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:04c4512733390d67133dea9f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Limonun kabuğu ve suyu",
+      "occurrenceCount": 3,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 3
+      }
+    }
+  ]
+}

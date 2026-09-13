@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "pl",
+  "part": 13,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 1213,
+  "batchSize": 13,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:9aedb8e79b854735b7676763",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Świąteczne śledzie po kaszubsku (sos)",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0d93fa176984c6a6bacac59e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Świąteczny aromatyczny bigos wg Pati",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5934dd7bb100754840f93a0a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Świąteczny kompot z suszu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:25212a57dcef4b04fea61f18",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Świąteczny pudding",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:eb84aec38bcdf39ea855ae79",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Żabnica",
+      "groupCount": 5
+    },
+    {
+      "taskId": "recipe_title_english:07c0f7119c5bd4e90bebbd3e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Żabnica w sosie amerykańskim",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8eca5212afd6f745e2f220f7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Żeberka po chińsku wg Kiszki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cb6894c5419ddf4c2dba40e3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Żeberka w barbecue z fioletowym ziemniakiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5ed03fcf7d1d62524ce821ef",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Żeberka w miodowej glazurze",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fe1acfe4a68979b6f095e9f1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Żeberka w sosie miodowo-śliwkowym na kapuście kiszonej",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:965fca55bf7261a372907eb0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Żeberka wieprzowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5341fb958ff9273285acaaee",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Żurek",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:46e2889fbb34740e3492d37a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "„Niesamowite” risotto",
+      "groupCount": 1
+    }
+  ]
+}

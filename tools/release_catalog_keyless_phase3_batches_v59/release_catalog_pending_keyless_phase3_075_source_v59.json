@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 75,
+  "batchSize": 100,
+  "rankStart": 7401,
+  "rankEnd": 7500,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:d84451fbd5985ec1d3ebcbb1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Camarões",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2be6602fb6931d5742cfa15d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Chocolate branco, picado",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:122a3a7c8dab42e976ca917f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Entrecosto",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ffd37406a708c831f8d0a1aa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Folhas de gelatina (2 g), diluídas em água fria",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f82bb949ae573310efa7a18d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Paprica",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:baaa20e415d03623df5ec514",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Pimenta preta",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6627b2a84aa52d2ed445f931",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Queijo Cheddar ralado",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d1c89fb195a2f0774984ba74",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Rosmaninho",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f16d2d532d8d334adb333570",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "chifle pentru burger, taiate pe jumate si prajite",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4ca77dedc4dfc16353f87ea7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Cățeii de usturoi, curățați, degerminați și tocați fin",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2f9dcc97943d3c593d0538fa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Cățel de usturoi, curățat, degerminat și tocat fin",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dd4cee29f221455b8f34145f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ru",
+      "sourceText": "*Перец",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:99cfae466e517024057e1e2f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ru",
+      "sourceText": "замороженных бобов",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:00b4f1b0c9e1c131cf84d668",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ru",
+      "sourceText": "измельченных веточек свежей кинзы",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:46f7572fffddef588cde2c7e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ru",
+      "sourceText": "Кабачки",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c81a6e76b126dc8a7dddd8b5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ru",
+      "sourceText": "Порошок карри",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0b5778a07d2d5b69e5036081",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ru",
+      "sourceText": "Смесь трав",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:84995fce2d24997d6d8e4217",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ru",
+      "sourceText": "Тертый сыр Чеддер",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8c710b13ec7def328a9eb259",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ru",
+      "sourceText": "Томатная пассата",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0b6849ed69ac863fccdce9b4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Celé vajce",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:425308f1f0c1bed024ee8411",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Celé vajcia",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7af2d682044e394c4fe86293",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Celé čierne korenie",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:aa98b638e59f9c6802b94738",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Cesnakový prášok",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3ef1b1bde9888c42c5a3649b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Chantilly krém",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:925ebaef0c4e2d815a38baa0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Citrón (jemne nastrúhaná kôra)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9dc5578459b5baeeb80e227e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Enoki",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e09822a3e3545ab374de12b8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Francúzske penové knedličky",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e8136e977b1f008369368ba9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Gonchungaru",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fa64d1d3c48a5842a44b0d9d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Hrubozrnná soľ",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f12f53ef21fc49c63debc013",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Hľuzovkový olej",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:169fc1ff99ca477ce3fb7dea",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Karamelový popcorn alebo tvrdé karamelové cukríky, nakrájané na kúsky",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e30f7493f992fa8567b580fa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Kimchi",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1eee75974da8b64e9038ad1c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Korenie colombo",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d7284cfd4a07f6b20ec781b8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Kukuričný škrob rozmiešaný v malom množstve mandľového mlieka",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5cb71560f999968b48a06976",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Kuracie mäso",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:187337e2823980224501ce7e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Kypriaci prášok zmiešaný s múkou",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:042b2b9433fcdef779816577",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Morteau klobása",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c947cc870e33f70fc4f8e86b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Morčacie prsia",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:41edd8a1259dd80ee20f42e7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Muškátový orech",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:05c9d22fb6691b50150bc616",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Nakrájané mrazené huby",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b89891479fbc034d352318ad",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Papriky piquillos",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dcea89185cf1169ce097f4fd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Prášok do pečiva zmiešaný s múkou",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b5d83723ba155a85bc025c0f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Rajčinový pretlak",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a82c00642029caa06270f9a2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Roztopená kuchynská čokoláda",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3e6a4f71360f30ccbff58bec",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Sherry ocot",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5ba65f8641f2658fbc406cc6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Smotanový syr",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fee8e08b8916e47a32341c37",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Stredná krupica",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f96f56cd64d916fa765d5646",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Sóda bikarbóna zmiešaná s múkou",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:20375033bd03720fba2a1470",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Teriyaki omáčka",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:eeb48bc1217e6d3d30eb18b1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Zmes štyroch korení",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c7d279c20ca2af455ab7e6b0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Čokoláda na varenie, 50/55% kakaa, nasekaná",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e8fffb905a83cd93db41da00",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Čokoládové piškóty, rozdrvené na drobky",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cd991ed7a036c4d613e95484",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Želatínové pláty (2 g) namočené v studenej vode",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7c086f505d244c99abb1b8cb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Žĺtky",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9be64b5de840ea00cb06eefc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sl",
+      "sourceText": "*Praline",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4bed8f99c6c92aa1c9f8b93c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "/2 Лимон",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6143c9e0155c63bbfb047159",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "/2 лимона (сік)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:80b1710598c93596feca71de",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "/2 ст.л. устричного соусу",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1701630dd0031d8e5f2bf070",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "/2 ч.л. кмину",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ac781a012275b5f1465fe3d5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "/2 ч.л. меленого кмину",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3ae9ec9b40849254a9c3535e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "/2 ч.л. меленої кориці",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f6efbfc46093518d20f11ec6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "/3 стручка ванілі",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9beb9664952fe6150d86c3af",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "/3 ч.л. екстракту ванілі",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b9ee3ce147539130167485a5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "/3 ч.л. порошку чилі",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9f03a92368709e10c6f115a5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "/3 ч.л. суміші індійських спецій",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:76d1f412c5f7f9219a5cc411",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "/4 ч.л. кмину",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:004f81d5ff41ad3dea55ca9a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "/4 ч.л. свіжого листя чебрецю",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c298d7b9a8575ecb4ede5f3e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "2 ст.л. червоного винного оцту",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:48cb707ae42e6f9dd92322e2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "4/5 мм)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:84fbc3a8c265144ff378e410",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "абрикоса, очищених та розрізаних на 4 частини",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5105d90f52cbc0660ebe9aa2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "артишоків маринованих",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:111db8ee54b993037f7535e9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "баклажана, нарізаних дрібними кубиками",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:98a1822981a5eec60e64dda2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "баклажанів, нарізаних дрібними кубиками",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2e1b34ea5c284c01799fdfd7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "баклажанів, нарізаних маленькими кубиками",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b61f7dab6e53ffa3eda741be",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "банана, очищених та нарізаних невеликими шматочками",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7dbc8be9e6d9b1b541bc0f9f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "банани, очищених та нарізаних на тонкі смужки",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5ac9ebb498d3d4c1e26dc6d7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Банани, очищені та розрізані навпіл уздовж",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c0a17dad2f4542535be56390",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "батату, очищеного та нарізаного кубиками",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a26ae8ef0447805572dc54e5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "борошна вищого сорту",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c0fa66809cb8ef871a849017",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "булгуру",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4e9b5e3b4128aa4957ece277",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "білої риби, подрібненої або прокрученої на м'ясорубці",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2097e195df34997cc04fdd97",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "білої цибулі, очищеної та нарізаної",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b2b0207dc22001a3036f304c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Варена квасоля",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ad0ccf0228e13ed6ee9aa47a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Варена квасоля (або нарізану кубиками картоплю)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1a1bbc22b2d5c94e4a3ba5dd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Варена червона квасоля",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cd04592da7539cae085f9475",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "варених мідій (свіжих, заморожених або консервованих)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0208d31ddc242fa0a3035f6b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "вершків 15% жирності",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:eb54e3ceeb0018f69932097d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "води (або бульйону)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e3b2d2e0c33c209d8888bc71",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "восьминога (попередньо готувати 10 хвилин в чаші)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fbedc746f38cd11d57ad85e7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "г свинячої лопатки, нарізаної шматочками приблизно по 100 гр",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a1c2cf1871cd4d9fb7ab3e65",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Гарна оливкова олія",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e742579c21ac352831c05ba8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "головки латуку або салату айсберг, дрібно нарізаного",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ad069b2251523ecdb21d585a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "горошин чорного перцю",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a9a7127777df2aab06fa2cda",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Горіхи кеш'ю несолоні",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6608e03bbcf2d65e1d4b8858",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "горіхової пасти",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d4b875e20e3a0fa2cd7fadb3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "гр очищеного та нарізаного часнику",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1095df8d1b43e510e1d9b3fa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Груша з твердою шкіркою, очищена та нарізана маленькими кубиками",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e7297213342bb3f4556bbf68",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "дрібно нарізаних зелених цибулі",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e9d4a1f87ff504fb355e48c4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "дрібно нарізаної",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f380e95cafa0b56c9075e8e0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "дрібно нарізаної м'якоті помідорів",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    }
+  ]
+}

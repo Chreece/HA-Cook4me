@@ -1,0 +1,116 @@
+name: Catalog Phase 2C single-page title proof v59
+
+on:
+  push:
+    branches:
+      - cook4me-catalog-phase2c-single-page-title-proof-v59
+    paths:
+      - .github/workflows/catalog-phase2c-single-page-title-proof-v59.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  prove:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install --disable-pip-version-check 'curl-cffi==0.13.0' 'websocket-client==1.8.0'
+      - name: Crawl all 28 catalogs with proven single-page contract
+        run: |
+          set -Eeuo pipefail
+          mkdir -p "$RUNNER_TEMP/cook4me-empty-home" "$RUNNER_TEMP/catalog-phase2c"
+          status=1
+          for attempt in 1 2 3; do
+            if python tools/crawl_release_catalog_v2.py \
+              --storage-home "$RUNNER_TEMP/cook4me-empty-home" \
+              --cache-db "$RUNNER_TEMP/catalog-phase2c/provider.sqlite3" \
+              --output "$RUNNER_TEMP/catalog-phase2c/provider-capture-v2.json.gz" \
+              --failures "$RUNNER_TEMP/catalog-phase2c/provider-failures.json" \
+              --configured-language de \
+              --configured-country DE \
+              --workers 8; then
+              status=0
+              break
+            else
+              status=$?
+            fi
+            if [[ "$attempt" -lt 3 ]]; then sleep $((attempt * 20)); fi
+          done
+          exit "$status"
+      - name: Capture all marketing-food dictionaries without credentials
+        run: |
+          set -Eeuo pipefail
+          python tools/capture_marketing_food_catalogs_v3.py \
+            --storage-home "$RUNNER_TEMP/cook4me-empty-home" \
+            --output "$RUNNER_TEMP/catalog-phase2c/marketing-foods-v3.json" \
+            --configured-language de \
+            --configured-country DE
+      - name: Build and review complete title queue
+        run: |
+          set -Eeuo pipefail
+          python tools/prepare_release_catalog_v2_assembly.py \
+            --provider-capture "$RUNNER_TEMP/catalog-phase2c/provider-capture-v2.json.gz" \
+            --marketing-foods "$RUNNER_TEMP/catalog-phase2c/marketing-foods-v3.json" \
+            --output "$RUNNER_TEMP/catalog-phase2c/prep-raw-v2.json.gz" \
+            --queue "$RUNNER_TEMP/catalog-phase2c/queue-raw-v2.json" \
+            --summary "$RUNNER_TEMP/catalog-phase2c/summary-raw.json"
+          python tools/apply_release_catalog_reviews_v2.py \
+            --prep "$RUNNER_TEMP/catalog-phase2c/prep-raw-v2.json.gz" \
+            --queue "$RUNNER_TEMP/catalog-phase2c/queue-raw-v2.json" \
+            --output-prep "$RUNNER_TEMP/catalog-phase2c/prep-reviewed-v2.json.gz" \
+            --output-queue "$RUNNER_TEMP/catalog-phase2c/queue-reviewed-v2.json" \
+            --summary "$RUNNER_TEMP/catalog-phase2c/summary-reviewed.json"
+      - name: Snapshot only unresolved recipe-title tasks
+        run: |
+          python - <<'PY'
+          import json, os
+          from collections import Counter
+          from datetime import datetime, timezone
+          from pathlib import Path
+          root = Path(os.environ['RUNNER_TEMP']) / 'catalog-phase2c'
+          queue = json.loads((root / 'queue-reviewed-v2.json').read_text(encoding='utf-8'))
+          summary = json.loads((root / 'summary-reviewed.json').read_text(encoding='utf-8'))
+          tasks = [r for r in queue.get('tasks', []) if isinstance(r, dict) and r.get('type') == 'recipe_title_english']
+          counts = Counter(str(r.get('sourceLanguage') or '').lower() for r in tasks)
+          payload = {
+              'schema':1,
+              'kind':'cook4me-release-catalog-single-page-pending-recipe-title-review-v59',
+              'generatedAt':datetime.now(timezone.utc).isoformat(),
+              'sourceBranch':'cook4me-catalog-phase2c-single-page-title-proof-v59',
+              'auditedCatalogs':28,
+              'providerSecretsUsed':False,
+              'singlePageSize':5000,
+              'existingReviewsApplied':True,
+              'recipeTitleTasksRemaining':len(tasks),
+              'remainingByLanguage':dict(sorted(counts.items())),
+              'tasks':tasks,
+          }
+          expected = int(summary.get('recipeTitleTranslationTasksRemaining', len(tasks)))
+          if expected != len(tasks):
+              raise SystemExit(f'title count mismatch snapshot={len(tasks)} summary={expected}')
+          Path('tools/release_catalog_pending_recipe_titles_single_page_v59.json').write_text(json.dumps(payload, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+          Path('tools/release_catalog_pending_recipe_titles_single_page_v59_summary.json').write_text(json.dumps({'generatedAt':payload['generatedAt'],'recipeTitleTasksRemaining':len(tasks),'remainingByLanguage':payload['remainingByLanguage'],'assemblySummary':summary}, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+          print(json.dumps({'recipeTitleTasksRemaining':len(tasks),'remainingByLanguage':payload['remainingByLanguage']}, ensure_ascii=False))
+          PY
+      - name: Verify output contains no secrets
+        run: |
+          ! grep -Eiq 'access[_-]?token|refresh[_-]?token|authorization|bearer |password|api[_-]?key' \
+            tools/release_catalog_pending_recipe_titles_single_page_v59.json \
+            tools/release_catalog_pending_recipe_titles_single_page_v59_summary.json
+      - name: Commit Phase 2C proof snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/release_catalog_pending_recipe_titles_single_page_v59.json tools/release_catalog_pending_recipe_titles_single_page_v59_summary.json
+          git diff --cached --check
+          git commit -m "Snapshot complete single-page catalog title review queue"
+          git push origin HEAD:cook4me-catalog-phase2c-single-page-title-proof-v59

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "policy": {"searchResultAutoAccepted":false,"exactFdcBindingRequired":true,"semanticConceptGroupingReviewed":true,"providerIdentityInference":false,"candidateSearchIsIdentityProof":false},
+  "selectionMethod":"explicit-semantic-review",
+  "items":[
+    {"reviewTargetId":"M_FOOD_357","reviewTargetKind":"provider-identity","canonicalEnglishName":"Papaya","fdcId":2709246,"confidence":"high","fdcDescription":"Papaya, raw","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":10},
+    {"reviewTargetId":"concept:food:8daa0f318a1f6ccebaaf","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Blackberries","fdcId":2727581,"confidence":"high","fdcDescription":"Blackberries, raw","fdcDataType":"Foundation","candidateEvidenceRank":1,"usageCountAtReview":9},
+    {"reviewTargetId":"concept:food:0ba29c24b626f13592a2","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Almond paste","fdcId":2707535,"confidence":"high","fdcDescription":"Almond paste","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":9},
+    {"reviewTargetId":"M_FOOD_607","reviewTargetKind":"provider-identity","canonicalEnglishName":"Burdock root","fdcId":169974,"confidence":"high","fdcDescription":"Burdock root, raw","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":9},
+    {"reviewTargetId":"M_FOOD_563","reviewTargetKind":"provider-identity","canonicalEnglishName":"Candied fruit","fdcId":167781,"confidence":"high","fdcDescription":"Candied fruit","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":9},
+    {"reviewTargetId":"concept:food:e54aa8d7f0e9b920caba","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Pork belly","fdcId":2705901,"confidence":"high","fdcDescription":"Pork, belly","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":8},
+    {"reviewTargetId":"concept:food:5032da61918788cfd24b","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Beef brisket","fdcId":2705851,"confidence":"high","fdcDescription":"Beef, brisket","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":8},
+    {"reviewTargetId":"M_FOOD_612","reviewTargetKind":"provider-identity","canonicalEnglishName":"Taro","fdcId":169308,"confidence":"high","fdcDescription":"Taro, raw","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":8},
+    {"reviewTargetId":"M_FOOD_148","reviewTargetKind":"provider-identity","canonicalEnglishName":"Crab","fdcId":2706344,"confidence":"high","fdcDescription":"Crab","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":8},
+    {"reviewTargetId":"M_FOOD_64","reviewTargetKind":"provider-identity","canonicalEnglishName":"Nectarine","fdcId":2709245,"confidence":"high","fdcDescription":"Nectarine, raw","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":7},
+    {"reviewTargetId":"concept:food:dca55ab8ad07e881e514","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Brandy","fdcId":2710699,"confidence":"high","fdcDescription":"Brandy","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":6},
+    {"reviewTargetId":"concept:food:c40b0bca57de0a560bec","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Buttermilk","fdcId":2705393,"confidence":"high","fdcDescription":"Buttermilk","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":6},
+    {"reviewTargetId":"concept:food:ae72d60684edaa67dba9","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Ratatouille","fdcId":2710028,"confidence":"high","fdcDescription":"Ratatouille","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":6},
+    {"reviewTargetId":"concept:food:a96654ba78fe565dcbea","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Dried fruit","fdcId":2709195,"confidence":"high","fdcDescription":"Dried, fruit, NFS","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":6,"notes":"Canonical target is generic at the same semantic specificity; selected USDA's not-further-specified record rather than inventing a subtype."},
+    {"reviewTargetId":"concept:food:8631c87e74750661bc68","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Chestnuts","fdcId":2707499,"confidence":"high","fdcDescription":"Chestnuts","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":6},
+    {"reviewTargetId":"M_FOOD_8","reviewTargetKind":"provider-identity","canonicalEnglishName":"Blueberries","fdcId":2346411,"confidence":"high","fdcDescription":"Blueberries, raw","fdcDataType":"Foundation","candidateEvidenceRank":1,"usageCountAtReview":6},
+    {"reviewTargetId":"M_FOOD_290","reviewTargetKind":"provider-identity","canonicalEnglishName":"Lychee","fdcId":2709240,"confidence":"high","fdcDescription":"Lychee","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":6},
+    {"reviewTargetId":"M_FOOD_241","reviewTargetKind":"provider-identity","canonicalEnglishName":"Lobster","fdcId":2706349,"confidence":"high","fdcDescription":"Lobster","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":6},
+    {"reviewTargetId":"concept:food:dceea0131d75156b6a31","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Abalone","fdcId":2706337,"confidence":"high","fdcDescription":"Abalone","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":5},
+    {"reviewTargetId":"concept:food:7c5fa42c767639e247de","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Clementine","fdcId":2709164,"confidence":"high","fdcDescription":"Clementine, raw","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":5}
+  ]
+}

@@ -16,6 +16,7 @@ from .ingredient_catalog import (
     shopping_item_name,
 )
 from . import recipe_languages
+from . import release_catalog as release_index
 from . import websocket as legacy
 from . import websocket_v5 as v5
 from . import websocket_v9 as v9
@@ -23,6 +24,7 @@ from .vendor import cook4me_phonefree as c4m
 from .vendor import cook4me_recipe_catalog as recipe_catalog
 
 _RECIPE_FALLBACK_SOURCE = "hydrated_official_recipes_fallback:v3_food_identity"
+_MARKETING_FOOD_SIZE = 100000
 
 
 async def _cache(bridge) -> Cook4MeIngredientCatalogCache:
@@ -39,6 +41,19 @@ def _device_language(bridge) -> str:
     return recipe_languages.normalize_catalog_language(configured, "de")
 
 
+def _marketing_food_search_body(language: str, market: str) -> dict[str, Any]:
+    """Serialize APK th0.d(language, market, false) exactly in semantics."""
+    return {
+        "fieldFilters": [
+            {"field": "market.key", "values": [market]},
+            {"field": "name.lang", "values": [language]},
+        ],
+        "fieldList": ["key", "name", "mixMedias"],
+        "facetList": [],
+        "sort": {"name": "name", "direction": "ASC"},
+    }
+
+
 def _marketing_food_catalog_sync(bridge, language: str) -> tuple[list[dict[str, str]], str]:
     device_country = str(bridge.entry.data.get(CONF_COUNTRY, DEFAULT_COUNTRY)).upper()
     app_version = str(bridge.entry.data.get(CONF_APP_VERSION, DEFAULT_APP_VERSION))
@@ -53,16 +68,10 @@ def _marketing_food_catalog_sync(bridge, language: str) -> tuple[list[dict[str, 
         "POST",
         url,
         headers_iter=recipe_catalog._request_headers(
-            cfg,
-            tokens,
-            country,
-            configured_language,
-            app_version,
-            url,
-            pcfg,
+            cfg, tokens, country, configured_language, app_version, url, pcfg
         ),
-        params={"lang": language, "market": market, "size": 5000},
-        body={},
+        params={"lang": language, "market": market, "size": _MARKETING_FOOD_SIZE},
+        body=_marketing_food_search_body(language, market),
     )
     items = marketing_food_items(payload, language)
     if not items:
@@ -93,6 +102,23 @@ async def _ingredient_catalog(
     hass: HomeAssistant, bridge, language: str, *, refresh: bool = False
 ) -> dict[str, Any]:
     language = recipe_languages.normalize_catalog_language(language, _device_language(bridge))
+
+    # Common offline-first ingredient source: UI, AI mapping, substitutions,
+    # shopping reconciliation and nutrition identity lookup all inherit it.
+    if release_index.release_catalog_ready() and not refresh:
+        items = release_index.ingredient_rows(language)
+        if items:
+            summary = release_index.release_catalog_summary()
+            return {
+                "language": language,
+                "items": items,
+                "source": "cook4me_release_catalog",
+                "cacheHit": True,
+                "checkedOnline": False,
+                "offline": True,
+                "catalogVersion": summary.get("catalogVersion") or "",
+            }
+
     cache = await _cache(bridge)
     if not refresh and (cached := cache.get(language)) is not None:
         return {
@@ -103,15 +129,11 @@ async def _ingredient_catalog(
         }
 
     try:
-        items, source = await hass.async_add_executor_job(
-            _marketing_food_catalog_sync, bridge, language
-        )
+        items, source = await hass.async_add_executor_job(_marketing_food_catalog_sync, bridge, language)
     except recipe_catalog.CatalogAuthError:
         await v9._refresh_catalog_auth(hass, bridge)
         try:
-            items, source = await hass.async_add_executor_job(
-                _marketing_food_catalog_sync, bridge, language
-            )
+            items, source = await hass.async_add_executor_job(_marketing_food_catalog_sync, bridge, language)
         except Exception:
             items = await _recipe_fallback_catalog(hass, bridge, language)
             source = _RECIPE_FALLBACK_SOURCE
@@ -122,12 +144,7 @@ async def _ingredient_catalog(
     if not items:
         raise HomeAssistantError("Cook4Me ingredient catalog returned no usable ingredients")
     await cache.async_set(language, items, source=source)
-    return {
-        "language": language,
-        "items": items,
-        "source": source,
-        "cacheHit": False,
-    }
+    return {"language": language, "items": items, "source": source, "cacheHit": False}
 
 
 def _shopping_list_entity(hass: HomeAssistant) -> str | None:
@@ -144,11 +161,7 @@ async def _shopping_names(hass: HomeAssistant) -> set[str]:
         return set()
     try:
         response = await hass.services.async_call(
-            "todo",
-            "get_items",
-            {"entity_id": entity_id},
-            blocking=True,
-            return_response=True,
+            "todo", "get_items", {"entity_id": entity_id}, blocking=True, return_response=True
         )
     except Exception:
         return set()
@@ -182,9 +195,7 @@ async def _add_to_shopping_list(hass: HomeAssistant, ingredients: list[Any]) -> 
         if folded in seen:
             skipped.append(name)
             continue
-        await hass.services.async_call(
-            "shopping_list", "add_item", {"name": name}, blocking=True
-        )
+        await hass.services.async_call("shopping_list", "add_item", {"name": name}, blocking=True)
         seen.add(folded)
         added.append(name)
     return {"added": added, "skippedExisting": skipped, "count": len(added)}
@@ -196,18 +207,12 @@ def async_register(hass: HomeAssistant) -> None:
         websocket_api.async_register_command(hass, command)
 
 
-@websocket_api.websocket_command(
-    {
-        vol.Required("type"): "cook4me/v11/capabilities",
-        vol.Optional("entry_id"): str,
-    }
-)
+@websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/v11/capabilities",
+    vol.Optional("entry_id"): str,
+})
 @callback
-def ws_capabilities(
-    hass: HomeAssistant,
-    connection: websocket_api.ActiveConnection,
-    msg: dict[str, Any],
-) -> None:
+def ws_capabilities(hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: dict[str, Any]) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         device_language = _device_language(bridge)
@@ -226,26 +231,18 @@ def ws_capabilities(
     connection.send_result(msg["id"], result)
 
 
-@websocket_api.websocket_command(
-    {
-        vol.Required("type"): "cook4me/v11/ingredient_catalog",
-        vol.Optional("entry_id"): str,
-        vol.Optional("language"): str,
-        vol.Optional("refresh", default=False): bool,
-    }
-)
+@websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/v11/ingredient_catalog",
+    vol.Optional("entry_id"): str,
+    vol.Optional("language"): str,
+    vol.Optional("refresh", default=False): bool,
+})
 @websocket_api.async_response
-async def ws_ingredient_catalog(
-    hass: HomeAssistant,
-    connection: websocket_api.ActiveConnection,
-    msg: dict[str, Any],
-) -> None:
+async def ws_ingredient_catalog(hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: dict[str, Any]) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         language = str(msg.get("language") or _device_language(bridge))
-        result = await _ingredient_catalog(
-            hass, bridge, language, refresh=bool(msg.get("refresh"))
-        )
+        result = await _ingredient_catalog(hass, bridge, language, refresh=bool(msg.get("refresh")))
         result["houseIngredients"] = bridge.recipe_hub.profile.get("houseIngredients") or []
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
@@ -253,19 +250,13 @@ async def ws_ingredient_catalog(
     connection.send_result(msg["id"], result)
 
 
-@websocket_api.websocket_command(
-    {
-        vol.Required("type"): "cook4me/v11/shopping_add",
-        vol.Optional("entry_id"): str,
-        vol.Required("ingredients"): [vol.Any(str, dict)],
-    }
-)
+@websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/v11/shopping_add",
+    vol.Optional("entry_id"): str,
+    vol.Required("ingredients"): [vol.Any(str, dict)],
+})
 @websocket_api.async_response
-async def ws_shopping_add(
-    hass: HomeAssistant,
-    connection: websocket_api.ActiveConnection,
-    msg: dict[str, Any],
-) -> None:
+async def ws_shopping_add(hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: dict[str, Any]) -> None:
     try:
         legacy._bridge(hass, msg.get("entry_id"))
         result = await _add_to_shopping_list(hass, list(msg.get("ingredients") or []))

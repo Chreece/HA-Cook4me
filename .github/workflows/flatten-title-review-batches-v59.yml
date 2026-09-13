@@ -1,0 +1,56 @@
+name: Flatten recipe-title review batches v59
+
+on:
+  push:
+    branches:
+      - cook4me-release-catalog-cache-progress-v59
+    paths:
+      - .github/workflows/flatten-title-review-batches-v59.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  flatten:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Write compact per-language review queues
+        run: |
+          python - <<'PY'
+          import csv
+          import json
+          from collections import defaultdict
+          from pathlib import Path
+
+          summary = json.loads(Path('tools/release_catalog_pending_recipe_titles_all_batches_v59_summary.json').read_text(encoding='utf-8'))
+          rows = defaultdict(list)
+          for name in summary.get('batchFilesWritten') or []:
+              path = Path(name)
+              data = json.loads(path.read_text(encoding='utf-8'))
+              language = str(data.get('language') or '').lower()
+              part = int(data.get('part') or 0)
+              for task in data.get('tasks') or []:
+                  rows[language].append((part, int(task.get('groupCount') or 0), str(task.get('sourceText') or '')))
+
+          outputs = []
+          for language, items in sorted(rows.items()):
+              output = Path(f'tools/release_catalog_pending_recipe_titles_{language}_review_queue_v59.tsv')
+              with output.open('w', encoding='utf-8', newline='') as handle:
+                  writer = csv.writer(handle, delimiter='\t', lineterminator='\n')
+                  writer.writerow(['part', 'groupCount', 'sourceText'])
+                  writer.writerows(items)
+              outputs.append(str(output))
+          print(json.dumps({'languages': {k: len(v) for k, v in sorted(rows.items())}, 'outputs': outputs}, ensure_ascii=False))
+          PY
+      - name: Commit compact queues
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/release_catalog_pending_recipe_titles_*_review_queue_v59.tsv
+          git diff --cached --check
+          git diff --cached --quiet && exit 0
+          git commit -m "Flatten remaining release catalog title review queues"
+          git push origin HEAD:cook4me-release-catalog-cache-progress-v59

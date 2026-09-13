@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "ar",
+  "part": 1,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 9,
+  "batchSize": 9,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:ca090a2b23caa14e3611a2ba",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ar",
+      "sourceText": "دجاج محشو بجبن الموتزاريلا",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:83a07344770df4e75d0ab4c3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ar",
+      "sourceText": "زربيان دجاج",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3904254f0c4c027447fc141b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ar",
+      "sourceText": "سبانخ",
+      "groupCount": 5
+    },
+    {
+      "taskId": "recipe_title_english:bffad8bd778b7f44646fce06",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ar",
+      "sourceText": "سوفريتو سمك التراوت مع الأعشاب",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fc505b3b79434926e6709b7c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ar",
+      "sourceText": "شوربة الهريس باللحم",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:284102828494bfa7ec79b614",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ar",
+      "sourceText": "كبسة الدجاج بالمعكرونة",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a8c2aebffc66450b8442d34d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ar",
+      "sourceText": "مرقة القيمة العراقيّة",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f92fd405ed0c4d57277e045b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ar",
+      "sourceText": "مضروبة لحم بالجريش",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:de9a9d7cb438f057cfd02218",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ar",
+      "sourceText": "يخنة البامية باللحم",
+      "groupCount": 1
+    }
+  ]
+}

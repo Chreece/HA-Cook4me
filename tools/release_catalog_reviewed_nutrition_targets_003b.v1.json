@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "referenceManifestSha256": "6ec7b2207b149cce662136ea64b6c92ae73d6f7983efe12d18ecbc3b86388bd4",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "policy": {
+    "searchResultAutoAccepted": false,
+    "exactFdcBindingRequired": true,
+    "semanticConceptGroupingReviewed": true,
+    "providerIdentityInference": false,
+    "candidateSearchIsIdentityProof": false
+  },
+  "selectionMethod": "explicit-semantic-review",
+  "items": [
+    {
+      "reviewTargetId": "M_FOOD_679",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Dried tomato",
+      "fdcId": 168567,
+      "confidence": "high",
+      "fdcDescription": "Tomatoes, sun-dried",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 72
+    },
+    {
+      "reviewTargetId": "concept:food:f46336c69973fa0de335",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Miso paste",
+      "fdcId": 172442,
+      "confidence": "high",
+      "fdcDescription": "Miso",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 72
+    },
+    {
+      "reviewTargetId": "concept:food:16eb1be2c8979c205dda",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Nuoc mam fish sauce",
+      "fdcId": 174531,
+      "confidence": "high",
+      "fdcDescription": "Sauce, fish, ready-to-serve",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 72
+    },
+    {
+      "reviewTargetId": "concept:food:0b82c1299048e36bd464",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Pear",
+      "fdcId": 169118,
+      "confidence": "high",
+      "fdcDescription": "Pears, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 72
+    },
+    {
+      "reviewTargetId": "M_FOOD_76",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Caper",
+      "fdcId": 172238,
+      "confidence": "high",
+      "fdcDescription": "Capers, canned",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 71
+    },
+    {
+      "reviewTargetId": "M_FOOD_498",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Lemon zest",
+      "fdcId": 167749,
+      "confidence": "high",
+      "fdcDescription": "Lemon peel, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 70
+    },
+    {
+      "reviewTargetId": "M_FOOD_301",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Mango",
+      "fdcId": 169910,
+      "confidence": "high",
+      "fdcDescription": "Mangos, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 70
+    },
+    {
+      "reviewTargetId": "concept:food:72e0d20488b612685a33",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Agave syrup",
+      "fdcId": 170277,
+      "confidence": "high",
+      "fdcDescription": "Sweetener, syrup, agave",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 70
+    },
+    {
+      "reviewTargetId": "concept:food:0bb4e97eb071484bbe59",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Celery stalks",
+      "fdcId": 2346405,
+      "confidence": "high",
+      "fdcDescription": "Celery, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 2,
+      "usageCountAtReview": 70,
+      "notes": "Celery-stalk target: selected raw celery rather than broccoli stalk or celery seed."
+    },
+    {
+      "reviewTargetId": "concept:food:87b7f649cb027da90858",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Egg yolks",
+      "fdcId": 172184,
+      "confidence": "high",
+      "fdcDescription": "Egg, yolk, raw, fresh",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 6,
+      "usageCountAtReview": 70,
+      "notes": "Egg-yolks target: selected raw fresh yolk rather than baby foods, dried yolk, or frozen yolk."
+    },
+    {
+      "reviewTargetId": "concept:food:feef0da2de3e548b1f39",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Kimchi",
+      "fdcId": 170392,
+      "confidence": "high",
+      "fdcDescription": "Cabbage, kimchi",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 70
+    },
+    {
+      "reviewTargetId": "M_FOOD_22",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Green asparagus",
+      "fdcId": 2710823,
+      "confidence": "high",
+      "fdcDescription": "Asparagus, green, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 69
+    },
+    {
+      "reviewTargetId": "concept:food:c028075e45380632844e",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Chives",
+      "fdcId": 169994,
+      "confidence": "high",
+      "fdcDescription": "Chives, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 68
+    },
+    {
+      "reviewTargetId": "concept:food:4882b4354d294569cf65",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Diced onion",
+      "fdcId": 170000,
+      "confidence": "high",
+      "fdcDescription": "Onions, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 3,
+      "usageCountAtReview": 68,
+      "notes": "Diced-onion target: selected raw onion; dicing changes physical form, not the ingredient identity used for per-100-g reference nutrition."
+    },
+    {
+      "reviewTargetId": "M_FOOD_19",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Artichoke",
+      "fdcId": 169205,
+      "confidence": "high",
+      "fdcDescription": "Artichokes, (globe or french), raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 67
+    },
+    {
+      "reviewTargetId": "M_FOOD_460",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Shiitake mushroom",
+      "fdcId": 169242,
+      "confidence": "high",
+      "fdcDescription": "Mushrooms, shiitake, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 2,
+      "usageCountAtReview": 67,
+      "notes": "Shiitake-mushroom target: selected the explicit raw shiitake record rather than the Foundation record with unspecified preparation state."
+    },
+    {
+      "reviewTargetId": "M_FOOD_634",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Spring onion",
+      "fdcId": 170005,
+      "confidence": "high",
+      "fdcDescription": "Onions, spring or scallions (includes tops and bulb), raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 67
+    },
+    {
+      "reviewTargetId": "concept:food:e3835b3477d3abfd78ea",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Sweet-and-sour sauce",
+      "fdcId": 174066,
+      "confidence": "high",
+      "fdcDescription": "Sauce, sweet and sour, ready-to-serve",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 66
+    },
+    {
+      "reviewTargetId": "M_FOOD_332",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Cashew nut",
+      "fdcId": 2515374,
+      "confidence": "high",
+      "fdcDescription": "Nuts, cashew nuts, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 65
+    },
+    {
+      "reviewTargetId": "M_FOOD_316",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Miso",
+      "fdcId": 172442,
+      "confidence": "high",
+      "fdcDescription": "Miso",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 65
+    }
+  ]
+}

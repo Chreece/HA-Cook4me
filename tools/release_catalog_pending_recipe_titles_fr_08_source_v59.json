@@ -1,0 +1,713 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "fr",
+  "part": 8,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 926,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:2f3b868edfc7b6e74a22756e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz façon biryani",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:78c8568406e106d976caaeb2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz fou du Joker",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:94821c14527a45b303e59c9b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz gluant à la mangue",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:69932c6f453d6fa6cc506364",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz indien au poulet",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:549822796ebadeea6e7f983f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz long grain",
+      "groupCount": 4
+    },
+    {
+      "taskId": "recipe_title_english:f2ef75f0ea64f9a6f4b9bfa3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz noir au lait de coco",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1ddfcab04c77e05e65df1adc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz sauté aux légumes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:eb5473310e41e8322fd594aa",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz venere alla putanesca",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:99c3eb105ee167ce298c2208",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz à l'italienne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:229616a21e5f40084cecff8d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz à l'égyptienne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:345f5d5e9432eed7bac3d097",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz à la japonaise",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a7a2c894f5f601f02103541a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz à la tomate et crevettes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6a8204bde8660ae0abbdf1bf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz, lentilles et safran",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e670c906a31a9a92c89c9c72",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz, pois chiches et épices",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2331e4ac481764057e19863d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rolls feta concombre acidulé",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:436489d8cf9b6e4f0cfdcec9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Romanesco à la noisette",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:692682d46dc88dd9c654cde7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Roti de porc pommes pruneaux",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5b3f5b4977ad650b9545268a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Roti de veau fromage bacon",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:68d75a681920d4c77cb1aa1f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Roti porc endives caramélisées",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2e0b531120c65a6b5e8f9dfe",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rougail saucisses aux poivrons",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1b410cc5373e87913b1c1b7f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rouget, semoule et légumes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:884e7daf77086bd0f508fc7e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rougets à la provençale",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9010fe4544d0c6854d87b19c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Roulades de jambon au riz",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1609787ff009d1cdee65e9d1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Roulés végétariens au chou",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:37a2b1cef790f5d04ce9e039",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rutabaga",
+      "groupCount": 4
+    },
+    {
+      "taskId": "recipe_title_english:70109cc0608cc5b3263d2f39",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rôti de bœuf sauce chimichurri",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:171d3ebc48c3e63c1d710ae0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rôti de porc au chou-fleur",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ac45c9ab4caf769623ad5aab",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rôti de porc tomates lardons",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:63236a99346466f15b0899a2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rôti de porc à l'ananas",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f8aba6fd34ad52ad03a2b1e3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rôti de saumon et rattes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0cde77a70bcd2fc0d17d344a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rôti de veau carotte pruneaux",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bf1139378b472f9f5ce01207",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rôti de veau carottes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5ac7e9f42c16f5a85376498d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rôti de veau Mojito",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d842bafaf32abd40a42d4141",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rôtis de poireau paysans",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:34bc96ea8f5ac6737464d8d8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Saint-Jacques",
+      "groupCount": 7
+    },
+    {
+      "taskId": "recipe_title_english:269d322849ae9e2efaddca04",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Saint-Jacques rôties fenouil",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:05b12d21441ca6bd87e94bdd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salad jar à la volaille",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:90c6aa1a1e1adbc6c1e1085a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salad jars féta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:69b63119911963cdef6e9270",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade asperges et fraises",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b71e75b343d97f28819197cb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade aux 3 haricots",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:82df12e5c598dcf415699c26",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade betterave et crabe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:afc697032911d963b982e437",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade betterave et framboises",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c572f12f58330336e13cde3c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "salade composée au poulet pané",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:798e440d4890a9b584df6659",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade de betterave et melon",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fe638a74f821cbb3dbe615e8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade de blé à la libanaise",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0ad2e444e4e3ed6612fafd2e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade de boulgour aux herbes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e58526ee26d9cdc0446972a5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade de cerfeuil tubéreux",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4c0065fe960335cda27a496c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade de chou rave et mangue",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:456013df33643f7f18f28361",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade de chou-fleur aux noix",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c800ad5959fff5e1d621e939",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade de haricots blancs",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ed450f7be5caa914af2fd302",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade de haricots et poulet",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f76874d5e8b7a2b367dba877",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade de lentilles au thon",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0312fe6dac342216d4a1e5b7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade de lentilles et riz",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:99f7e68f22d41b58a9d268dd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade de maïs latino",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:30112c6b1826d61d7a912f9a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade de petits pois et radis",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:292cafefc5c911e226c8a7fd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade de pois chiche sésame",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8bd4aee0cca44c253cd9c533",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade de pommes de terre",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:aee4c299ddf456f3cf3cb61d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade de quinoa à l'orange",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d894b105c3abb2964f84dc1c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade de riz aux crevettes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:10ab0d8bbec53a100d0a1db9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade de riz noir, potimarron et orange",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:816eecd6d3ba93a16db9029c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade en vinaigrette",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1e24d71b48cb130f8fa430a4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade petits pois & abricots",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:770a5741e5d8c7d1cf0ad52d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade pommes de terre endives",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d5867cef768181ad124ffc80",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade printanière",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4e825768bd4aa65803eea463",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade quinoa et pêches",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4f5ada680685f17fe88e83cd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Salade quinoa, petits légumes et sauce au miel",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a23a322cfc751dba2e6d2bad",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Saltimbocca de veau",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:00076c45fe85126fc1a444a5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Samboussek",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d990c057c7e6679e72e05c96",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Samossas aux légumes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:597d1165eaf9e74507163aef",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Sandwich végé Sloppy Joes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a62d94f0bc9476157f00ee43",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Sarrasin",
+      "groupCount": 5
+    },
+    {
+      "taskId": "recipe_title_english:f7f9aca8369d7f133767dfeb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Sauce pimentée pour pizza",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c25b519e25a8b33d891f4d15",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Saumon courgette lait de coco",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c795abc043e42174659a7757",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Saumon façon cajun",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:14a2e3c4a5d299b6b0dc146d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Saumon façon risotto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8b4691f2d62253b865c26b36",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Saumon gingembre et fèves",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:da75b556161bf28035429b7f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Saumon massala",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1435a4e33bee24ce4d621fb6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Saumon one pot courgettes et riz",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:56f6ffb73bc9a55bbb6819bf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Saumon sauce asperge blanche",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d6c66ceb5244d1879cbdf3fa",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Saumon sauce citron",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fbe00aec6a950502b5e71727",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Sauté de veau aux abricots",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:49d8f1feebb59160797eed54",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Sauté de veau aux olives",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3116af33264f53332f356bb6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Scones Irlandais",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:01233788109ed30a9d5333fd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Soufflé de pommes de terre",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3a7e096d02da2a6f1267e0e9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Soupe aux légumes d’hiver",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:752640cfd64aa15f1b413abe",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Soupe Chorba",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1215b6981bd448cf19e833d0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Soupe complète aux céréales",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e77c697f7348472f8fe5dcd2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Soupe complète aux nouilles",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0342b185f756fe17bf6972b8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Soupe d'automne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d84508b0b848547c6f9f721f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Soupe de cerises aux épices",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e92671ef1c436b78fc502049",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Soupe de lentilles corail",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:14bed1ad2e5e3954c72a1c4b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Soupe de lentilles épicée",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d1dbdba1f05085fe029cda9c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Soupe de madeleines au citron",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:34dafaf5e2be4904c27f47cf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Soupe de mani",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fa0ff6e1417571a2822c8fb1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Soupe de pois chiches à la grecque",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1a4077aa42a1ae24476249bb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Soupe de pommes au miel",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:49fac9fac2bccf972d7b4c0d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Soupe de porc au pak choi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8fe3a94ca55178f8dc83b78e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Soupe de riz à l’asiatique",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7dc32c7b38286c0828cc2632",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Soupe de thé pommes et fruits secs",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d1d4c48b2c98294ff7752a8f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Soupe de tomate aux épices",
+      "groupCount": 1
+    }
+  ]
+}

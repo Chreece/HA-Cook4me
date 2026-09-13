@@ -1,0 +1,713 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "it",
+  "part": 4,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingItalianReviewsExcluded": true,
+  "tasksBeforeBatch": 526,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:edbb526df8d54e4dc2371b16",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Cuscus di verdure",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9f838eff80237e748a260d55",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Dal di lenticchie e cipolle",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bbb280aa40ae4c9109e413cb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Dulce de leche",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:058be94176fb4b9daef00b38",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Edamame veloci",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ac166aab80b1029bf184ee88",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Empanadas di manzo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d2696a5c235ad1986a7314f0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Enchiladas vegetariane al gratin",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2f50daaa51ffe502a845e31e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Erbette con scamorza",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f16f2b725ad4ecd07b915a40",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fagioli bianchi all'italiana",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:51cbacaed3150b1ccc4b04e7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fagioli di Lima alle olive",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6b3261a60f27dd313f55de74",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fagiolini veloci",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ba9e5948799e4a8ce7232948",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fagiolo di Spagna",
+      "groupCount": 3
+    },
+    {
+      "taskId": "recipe_title_english:a60fe1a612652ee4b118c248",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fagiolo verde",
+      "groupCount": 6
+    },
+    {
+      "taskId": "recipe_title_english:40c62784be3dbaa6a6ce91cd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fagottini vitella provola ed erbe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2aa8da6935580217869f8995",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fajitas di pollo e avocado",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f9ef0e47f72bd8341bf8c6a6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Falafel di fagioli rossi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4eae91c11218f1f39d0bf32d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Farfalle al sugo con funghi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4dd9bb38c162922d3f0699f3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Farfalle alla trapanese",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:901fd08b6ef42e7d393a28bf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Farro al pesto di basilico",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d78de38fdb38f676a1d8e5b3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Farro pomodorini e tonno",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cb0655c39269a394132eea74",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Farro, olive e pomodorini secchi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0e26a1ea50d65b6c2e0b37ca",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fegatini alla toscana",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:084bce4dab53bbed128a9919",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fegato alla veneziana",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cdb17d5a04f338bebd6425b6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fegato e cipolle",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f8dc2c68862a7a8e4d86b94e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fettuccine con rucola e semi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b7428c779a550176d561e105",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Filetto alla Vernaccia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d464f2b0f4f3dcd4458e2921",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Filetto alle nocciole",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7938cc6c2ecc1fdf36e2e361",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Filetto di maiale con pere e miele",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e897e1c461b85576a24212b4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Filetto di salmone al rosmarino",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a3435cf63bc332b6dc27a341",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Finocchi al prosciutto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cea46132a3d533c44380dab1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Finocchio noci e formaggio",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:79b26ed29902e7725a5728de",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fish and Chips",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:616f0d060b69dd5b135fdd64",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Flan di broccoli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fbaa0e41dfa4486b0d04e30a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fondant al gianduia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d565709f8047fb1b9d9ff7ab",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fondant alla gianduia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:603e7979ae4c6cc58d13c951",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fondente al cioccolato",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:72445e9e7376700b866e030d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fonduta di melanzane",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9677019789e6e99493c6d35d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fonduta di porro e tartufo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:de18561284002a8d8d8901f9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fregola con asparagi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c7600b93e5d25a32732556ad",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fregola di mare",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bd41bc935d1854bd1ff34668",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Frittata alici ricotta fiori zucchina",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a4109929eb9802c5f6a7604e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Frittata di cipolle",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:58aaf7845174ae95d202c10d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Frittata di porcini e fontina",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5e2bba4ab02154e8e6ed19a3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Frittata di zucchine",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b76f19e77f7d7992371b16ce",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Funghi trifolati",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2d6006a7a989f32ead0a53cb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fungo",
+      "groupCount": 7
+    },
+    {
+      "taskId": "recipe_title_english:0498f02d195804467203931f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fusilli al ragu' di verdure",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9cf99895cd75a8c1e21885a6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fusilli al salmone",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4f94b6de59c2ef167492c015",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Fusilli al tonno",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:90abd00313e38a9dc0f86175",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Galantina di pollo campese",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3b75615854fab71474ffa870",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Galletto alle verdure",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ff23aa7353cb9c32deec7d8c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Gamberetti al pomodoro",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:edb23589b5054b72cc584531",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Gamberetti e asparagi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d3cf81b330ab2de2f09797d4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Gamberetto",
+      "groupCount": 6
+    },
+    {
+      "taskId": "recipe_title_english:e95b9b6145d4ab9f890a907a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Gamberi al curry",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:30ff42c6a82b9846877ba012",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Gamberi con pesto di carciofi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:051c4f7231f68eef261d0a66",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Gamberi e piselli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:87bc617ac94dc80da6ab4645",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Gamberi in salsa aioli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8dae3b0d6292939027b98db3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Gazpacho caldo o freddo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:28ae00d9643f3a1b00ed33cd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Gazpacho di cetrioli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1daf1e27bf75ce00f703b10f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Giardiniera sotto vetro",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:eb0535a3680d20f5eaa39330",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Girelle di salmone",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2ab11b5028b9649033315db8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Girelle di sogliola",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:458d8550d1dbd56d5ff2691e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Gnocchetti saraceni",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3088face274018c117043289",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Gnocchetti tirolesi allo speck",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a7db746396338dc38089c50b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Gnocchi al sugo di pomodoro",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e6f2f53fd05e00a75decce64",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Gnocchi alla carbonara",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:46e268b68269aba44a7bfb55",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Gnocchi alla mammarosa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1bc8e5dce4eac33b94ec2884",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Gnocchi con asparagi bianchi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:39ae0f4ed8be779acf934e46",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Gnocchi viola e orata",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ac47203251af5c575deee0d8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Grano",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0ff09d49c5cd51a1a7971c9b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Grano khorasan e radicchio",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:694103ad843087c175d301f7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Grano saraceno",
+      "groupCount": 3
+    },
+    {
+      "taskId": "recipe_title_english:e160c1d339e218de4a46d515",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Gulash",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e42a566055ccc8e2e387fe97",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Hamburger",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0bf16eb3909bfa9471efc97a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Hamburger di salmone",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5150e948ebb31a27d569ad6f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Hamburger di salmone al lime",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f3617ef902e0dcc147e560ae",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Hamburger vegetariano",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:eb649598facf7646d556a33b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Humus di ceci",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ce082f520585bd67d4f19a6b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Humus di melanzane e curcuma",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e328f69907d8c4e90f44c684",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata barbabietola e melone",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6f31fad8e78c80022f982f0d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata bulgur erbe aromatiche",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:52e34f4b054e8ff33dc90bf5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata di fagioli bianchi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ec93d36e58734c56cc1c3905",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata di farro e orzo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c05996e96b99f49b87a2e83b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata di legumi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d3fa11b22a18d0721516c04a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata di mare",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d434f73d6634b2acc3d6b035",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata di pasta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5c78e2e06aa0ab25db918447",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata di patate",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:93ceb17c2e759972cdc30af9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata di pesche e quinoa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:23ff74dd6b76320421b50722",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata di polipo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3eac7e4cb1db491dc87417e0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata di pollo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:33604d187ba1e810156bff2d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata di polpo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:879c419a3d22415d892e2028",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata di riso con gamberi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:dc6b19e12865ea9a034bae9e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata di riso giallo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7cc5747e2ac9605e117765e9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata farro pomodori capperi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:39f13c4c7948bd83f5f446cb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata orzo e barbabietola",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:28e5a18b58adc00c1f75ae8f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata riso e gamberetti",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fb8fb7801522aec1a5e02524",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Insalata russa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2def3dc52422f37b58e6743b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Involtini con cetrioli e feta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fcba2907f5d41b6f974b2401",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Involtini di provola",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b234f4f4b6fb3583831dfb55",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Involtini di prugne",
+      "groupCount": 1
+    }
+  ]
+}

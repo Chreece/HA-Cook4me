@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 73,
+  "batchSize": 100,
+  "rankStart": 7201,
+  "rankEnd": 7300,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:d3f53e458d09aad7c2337a1e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "たけのこ水煮 (食べやすい大きさに切る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f8547291187580b5794bb338",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ちくわ(斜め半分に切る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:58ad2077eec79124abd42984",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "とうがらし(鷹の爪)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d0af1e9b776af248a94b44a4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "とうもろこし(包丁で実を取る",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3de6a71abca6f56595592a7b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "はんぺん(一口大)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:02e692ddceb3c66f8462477f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "みかんSサイズ (外皮、白いすじを取る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5c23af27910fe32636b07dc7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "もち米(米と合わせ研ぎ ざるに上げる)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c6ac50f2376f91912953c19f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ゆずの皮(仕上げ用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:31e6e1771630978f412e54d4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ゆずの皮の細切り 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:64a5f3352f258b238866f178",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "わさび(ソース用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9618f800f05c02ef72c6c98d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "アボカド(縦に5mmスライス)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:362f591bd4b00c5d7f643ecd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "アーモンドドラジェ (仕上げ用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1343e0f5dda2f55f27ae1614",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "イタリアンパセリ 適量",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bfc146da9822c010e6b41d5b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "オクラ(仕上げ用 塩ゆでしてみじん切り)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d257afa43546427ea2a3f4a0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "オクラ(斜め2等分に切る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d28f7271ad794fcccfc7b787",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "オレンジ(3cm角に切る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4a13b054e02df4321db29b15",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "オーブンシート",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c7edb57b58587a7f62f265c8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "カレールー(細かく刻む)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f350d69dbc6a3c446a980f60",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "キウイ(硬めのもの 皮をむき2cmの輪切り)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:71429f44537894a2a3925f9e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "キャラメルソース(市販品) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f6a45e3beef5ca830a321eb6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "クッキングペーパー",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c0f1f9c774707b7da3ca9e83",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "クルトン(仕上げ用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cd03da8d5aad8777830f400f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ケチャップ(仕上げ用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:060f19c67b0b38c061ecadc4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ケーキ型(丸形底取れ)12cm",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f1de54265ffb990bed760d5d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ケーキ型丸形底とれ",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:72a2a9a27eb8263fcd966e77",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "コンソメ(固形)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c1fab2b341eff3019c22d2e2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ゴーヤ(種とわたを取り 1cm幅に切る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a9446ca06ec5e62e520d789f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "スパゲッティ(茹でておく)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b72e520a760ffe92bc22dc1b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "スモークサーモン(飾り用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:728f5d684b0222d6fd2b123b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "タイ米(さっと水ですすぎ ザルにあげる)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:be5af4aca7633bc95a878f68",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "チョコチップ",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2592e39d2fc525b46bcba784",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "チョコペン(飾り用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ec0814b0abe08d9b057e0be1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "チョコレート (細かく刻む)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0df895fdca0c2e25cc0cf240",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "チョコレート(レンジで溶かす",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e9fc1302fce0c6534addf298",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ツナの水煮缶(水気を切る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2fcf9b793185c383eb3127c7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ドライフルーツ(クランベリー オレンジ 飾り用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e24985183f49070a0a86d04f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ナッツMIX(飾り用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:82ffc59cd29e85800f513701",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ナツメグ 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:53d63b41e7443fe9fd5d10af",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ニラ(4cm幅に切る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2cc19f1d51c82bcb13697922",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "バニラビーンズ 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:429c084f5677d4023a3f55e3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "パイナップル(3cm角に切る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9786d42b8e1d344b5bab5ade",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "パクチー 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e4538beb8643e025b53179ae",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ビーツ缶(汁ごと)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1679e1f2446db91128c63721",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ピュアココア",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f0bb3aa35b5f3421b5a97e24",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "フルーツ (飾り用 ベリー、ミントなど)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0f3c149969b581b7ceeb4e2c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ブーケガルニ",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5fad7dbdcc0f547177fe4965",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ホイップクリーム (飾り用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3b48be0453f8debdee303ba3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ホイップクリーム(仕上げ用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:24dc0fad41ccf9cdc157ee0d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ホイップクリーム(市販品 仕上げ用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:44ae73e50061c179016da012",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ホイップクリーム(飾り用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f87fc77451d02f3d3c9f9c1d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ホワイトチョコレート (細かく刻む)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b34c7887a7e00b183b5368c2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ホワイトチョコレート(削る 飾り用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cfe07ad16e17fd2b217071fb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ホールコーン缶(水気をきる)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d60fcb4c31c908526fbb876e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ポン酢(仕上げ用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7c8dc73ed5a47540b7d4c34e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "マジョラム(仕上げ用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b2eea22926e7969e0bf544c7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "マスタード(仕上げ用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:01af79b882979ed5da103330",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ミニトマト(半分に切る 仕上げ用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0a2d503ea52a90f977360959",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ミント 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2bdf11158b057d0a3150d5e9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ミント 適量",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ca11df60a4d21528fe0c5071",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ミントの葉(仕上げ用 なくても可) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ad63cfc61210952a0f17bfa6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ラディッシュ(薄切り 飾り用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:439fe0f0d869e024176663ed",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ラー油またはごま油(仕上げ用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:375aa4f6ebbb5cb853a3c33d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "レタスの葉 (ウインナーの幅に切る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:911cc623b25cf19f446854da",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "レモンスライス(飾り用 1/2カット)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4c189db9416e5ef439a33ecb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ローストアーモンドスライス (仕上げ用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e01bec5b1998a809687095a6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "丸形",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b76792cf71e9018db5658473",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "五穀米",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:741710ef74af41917e783ce5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "冷凍うどん(冷凍のまま使用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a93b400df489d6367b96e181",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "冷凍デミグラスハンバーグ",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fba7c369b448b6c7475d0979",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "刺身用のサーモン(一口大)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:308d8a58e8746e0b68b60821",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "削りチョコ(トッピング用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:95891b9fcff230f6c70e61fe",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "卵(Mサイズ以下)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0f0a2d93b73d6194d4ba471c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "味噌(仕上げ用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d25c7a231d1fb3697c00f66f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "固形スープの素",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e573de9cd1cc0653cd58e8b4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "塩 少々(下味用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0ee7a94a25a9b601451be331",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "塩こしょう",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f457c523bd74c83107a014bb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "塩こしょう 適量",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:15f97f0f6bcef43ffd360c75",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "小ねぎ(斜め切り 仕上げ用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:12b044aae18d241d5acdc470",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "山菜水煮(水気を切る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a2a2827fda34506ce93101d2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "抹茶(飾り用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1bb370b8756af746d02b5010",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "昆布(2.5cm角)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:58f4de71f7ca884a60c54215",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "木綿豆腐(2cm角に切る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f554de4e58aa34fdcb483666",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "木綿豆腐(水切りする)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3ae3d1e6ef625ce796dc49bc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "板チョコレート(削る 仕上げ用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:44973a1be5191ebe4abad063",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "板チョコレート(砕く)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4c927ab1195b5101592e80bb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "桜でんぶ(飾り用)適量",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a8eb665c2b7904565a81ab77",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "桜の塩漬け 水で10分塩抜きほぐす",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3453c4ca3c3b1799f385e376",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "桜の花の塩漬け",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:de0b2548ba58e2cee51e499c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "桜の花の塩漬け(飾り用 水で10分塩抜き)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:060ee92d47238a35232775c0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "桜の葉(水くぐらせ塩抜き)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a51f4219765dbfd0b9911be2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "水(ゼラチンをふやかす)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:16d4452b8992a8fad82d2e80",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "水(タレ用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:aa53882871ccfba6494f4d85",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "油揚げ(湯通し半分に切る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c22ed0e0faf829cf313719af",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "溶き卵(Mサイズ 常温に戻す)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:208d98c910adf9128d2edee8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "牡蠣(塩水で洗い水気をきる)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cfd10f53c46275125a146d53",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "玄米(洗って60分吸水し ザルにあげる)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:59e6e3851fabe969f38ed4c9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "白こしょう(飾り用) 適量",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e98ecf5649cc64dc9ac7f361",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "白すりごま",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:277474889cbb188c8bac47cc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "白すりごま 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c90c45ef065d02985d829cdb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "直径15cmの底取れ丸型",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    }
+  ]
+}

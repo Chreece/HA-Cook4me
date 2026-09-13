@@ -1,0 +1,713 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "pl",
+  "part": 2,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 1213,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:b32c989cfeae2186d366b021",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Carpaccio z mandarynek i imbiru",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:470c929f14c23f3f1363b7b1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Cassoulet wg Andrzeja Andrzejczaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f1cb822db3825914b2595574",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chałwa waniliowo-kardamonowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:dbf1308ce70c27a573e5ff43",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chałwa z semoliny",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:20c36bfa1c97bc58e3c72415",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chili con carne z kukurydzą na makaronie sojowym (bez glutenu)",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3103c70e60bdccc6f554b1fe",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chili sin carne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6a766d5023dd86173afb73b8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chilli con carne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ecb645371c2e350b36090c93",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chilli con carne low carb z brokułem i guacamole",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:347c0a213691a91fd24f19e4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chińskie danie zerowaste",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5a6ce8677ccb208014a0d949",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chińskie jajko (zupa z jajkami faszerowanymi mięsem)",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1f54b029e0d03342418fc25c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chleb",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0dd6b5e908beb485045cbb32",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chleb bezglutenowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:58695cf0a0621ee6d87825d4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chleb kasztanowo-gryczany",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2f0cdbdf96a234d6cd4f3c50",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chleb kukurydziany",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8c8640977c17ffacbce7244a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chleb razowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5d4ba67569496304031701d1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chleb sodowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a631ee94901e214f1dc48e07",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chleb żytni",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e0631c6dc13dbf8885e4a967",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chlebek bananowo-kokosowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c61169ce6c1ee2511330b994",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chlebek bananowy",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:a610103dbe931553fbade599",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chlebek bananowy z czekoladą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:869af866365df3d7fae42ffb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chlebek czosnkowo-serowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ddbc702d9fcd64df34f5f266",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chlebek ziołowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1bb9043c2f49889f5a062fd8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chorizo w sosie z czerwonego wina",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9093f74c9d4b54506d715027",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chowder z kukurydzą wg Kiszki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:946d9804ca24df85285990f8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chrupiące pałki z kurczaka z ziemniakami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4b2d8c43ce94464d541588be",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chrupiący boczek ze słodkim sosem czosnkowo-majerankowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:570603f7faae11721a654b6b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chrupiący pasztet warzywny",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:58119e4c67c59e59cde51169",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chrzanowa zupa krem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:142d43532b6ec7773cfd9803",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chłodnik ananasowy z kolendrą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9f4d4979d7e76b8244c28589",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Chłopski gar",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:051cd16c117532864f0fda5b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasteczka francuskie z jabłkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2cb364a50aa46c0d6d152913",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciastka z jabłkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d7ec0167135fa6697ecca2a5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciastka z wiśniami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5f827ca549e78235b0aacab5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciastko z płynnym środkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0c90e0416301faac98ce5065",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto ananasowe do góry nogami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:58d0e3b90f178b374e7d39e6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto bananowe z borówkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6014c342f4c767e974a5b2e5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto bananowo-daktylowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:952782fce2d114e238693750",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto bretońskie z suszonymi śliwkami",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:84b32a173e37a137e93a8c9b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto brzoskwiniowo-migdałowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:948bb80f60655814c8bdd1d0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto cytrynowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:46b47f82980a83242f8462c3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto cytrynowo-malinowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b123f468cf11c2276edc98f0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto czekoladowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:17f2d0d87082bc406c2f3b32",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto jajeczne z sałatą i serem munster",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8167f7ee98d888d135d36ba0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto jogurtowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8fa30290d61cce642d5edba9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto marchewkowe",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:caf2db72751b8fd569bdd5be",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto na Halloween",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:021c689860de96f6e668298b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto orzechowe na parze",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:af6a3d6e68342445e5faafa5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto pomarańczowe",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:a51422eef93e64348e69ce7f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto truskawkowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3a9576b7cd67c9e49291ec68",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto wiśniowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c225da9f623d25c93a9b3be8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto z oliwkami, szynką i ricottą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a7e0924db68fd7de655c005b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto ze skórek banana wg Bartka Boratyna",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:59a17eb28d9d0e36459e40f7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciasto ze skórki z banana",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:07e0709ae641814554f00565",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciecierzyca po wegetariańsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3d3e5dd4127e214302126601",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciecierzyca z algami kombu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a837f1c377f574ca786ed3e7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciecierzyca z cytrusami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:acd96e787667b95b6a9340e8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciecierzyca z pieczarkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fa20e2a04f896b6131e913fb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ciecierzyca z pikantną kapustą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d4f0cc55f0357731859df9ee",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Cielęcina",
+      "groupCount": 16
+    },
+    {
+      "taskId": "recipe_title_english:720fda61bab2760a9f37e000",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Cielęcina Marengo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1dd069dd455e8cb89263d570",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Cielęcina mojito",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:dea09006dfb38128aba52219",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Cielęcina w jogurtowym sosie z szałwią i kuminem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8c6658382f3fdac5e4b431e5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Compote z owoców leśnych",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:04a168974b6e173e1e12d175",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Coq au vin",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3fd0de5df7293f2afd43c556",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Cukinia",
+      "groupCount": 11
+    },
+    {
+      "taskId": "recipe_title_english:0e29032e0a2472bf673ca4f0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Cukinia z burratą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:62f282747b3023f50907a5ec",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Cukinie nadziewane",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:53d40c020acb78cd59f54f1a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Cukinie po bolońsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f3679ab865709b88a4618e8e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Curry dyniowo-ziemniaczane",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f64afac11ed2c015273c817f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Curry krem z ciecierzycą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:913a294cc43d197890f03c34",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Curry po kreolsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1a0cbee9c3949c43f3dff328",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Curry z dynią i ciecierzycą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a4751d5f18897a45f63e219d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Curry z krewetkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8f150c9562ef8e4d8b6a3525",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Curry z krewetkami i zielonym groszkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:358a9a4cf07d12d2c3e3994a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Curry z kurczaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b66c8d303768ee69be510b37",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Curry z mintajem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:20ad8289b2f839afcb269696",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Curry z ryżem, ciecierzycą i tofu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5df6a8e87dbae1b07d03d4f4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Curry z soczewicą i kalafiorem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:75d4ecfced5ea0728cbcc3e3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Currywurst",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e24f554695a4a501e6d3ff7f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Cykoria",
+      "groupCount": 10
+    },
+    {
+      "taskId": "recipe_title_english:64953c3f0c1b81800b54fc5d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Cynamonowe francuskie tosty-paluszki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f37a31972780423a58452ab7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Cytrynowe deserki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:29d7fe494063c32024933783",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Cytrynowy kurczak z ryżem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9f6a823fd3ccf83b4f4743d7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Cytrynowy ryż z łososiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f0dd1aa7e6dc4dd9889192ab",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Cytrynowy sernik z ricotty",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a39df0f2a8e0984ed75ebf92",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Czarna soczewica beluga z krewetkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6bfe9963894aca4841bad2df",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Czarny las",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f3547398a2028a2b1fb59070",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Czarny ryż z mleczkiem kokosowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:042c0f21dbe739aad8b6a1ea",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Czekoladowa gryczanka z gruszką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:652c5f9653744d1254c53dc6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Czekoladowa owsianka z cukinią",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:250264172ae171af6a57270b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Czekoladowe ciastka podróżne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:98adcf284a2845410b513044",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Czekoladowo-pomarańczowy sernik",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:daf56cd51feebc9d969ae3c8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Czereśnie gotowane w likierze",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7abdde4433d6b9c2b06b33a8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Czerwona kapusta",
+      "groupCount": 8
+    },
+    {
+      "taskId": "recipe_title_english:c19046b896eda1ffffc05357",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Czerwona zasmażana kapusta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:57fee7bfa1f597c1a882dfe4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Czosnkowa maczanka krakowska",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bc3fb5ffa63cec0f8f5094f7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Czosnkowe krewetki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d81278708b2f15c1a6d933fe",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dahl z czerwonej soczewicy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3164c4c1654066ff5552d38a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Danie z kiełbasą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5d109b3cb2ac316f22b00c85",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Delikatna szynka z indyka",
+      "groupCount": 1
+    }
+  ]
+}
