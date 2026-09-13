@@ -31,15 +31,36 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Materialize exact hash-pinned Batch 40 payload
+      - name: Materialize exact Batch 40 payload
         run: |
           python - <<'PY'
           from __future__ import annotations
           import base64, hashlib, io, os, pathlib, tarfile
-
           ROOT = pathlib.Path.cwd()
-          CHUNKS = ROOT / '.batch40-bootstrap' / 'chunks'
           PAYLOAD_SHA = 'b37496856a690426c98e64553a5161998613d1e36aec341d42b07a9c2474bdf8'
+          PARTS = [
+              '.batch40-bootstrap/chunks/chunk-000',
+              '.batch40-bootstrap/chunks/chunk-001',
+              '.batch40-bootstrap/chunks/chunk-002',
+              '.batch40-bootstrap/chunks/chunk-004',
+              '.batch40-bootstrap/chunks/chunk-005',
+              '.batch40-bootstrap/chunks/chunk-006',
+              '.batch40-bootstrap/chunks/chunk-007',
+              '.batch40-bootstrap/chunks/chunk-008',
+              '.batch40-bootstrap/chunks/chunk-009',
+              '.batch40-bootstrap/chunks/chunk-010',
+              '.batch40-bootstrap/chunks/chunk-011',
+              '.batch40-bootstrap/chunks/chunk-012',
+              '.batch40-bootstrap/chunks/chunk-014',
+              '.batch40-bootstrap/chunks/chunk-015',
+              '.batch40-bootstrap/repair/part-0',
+              '.batch40-bootstrap/repair/part-1',
+              '.batch40-bootstrap/repair/part-2',
+              '.batch40-bootstrap/repair/part-3',
+              '.batch40-bootstrap/repair/part-4',
+              '.batch40-bootstrap/repair/part-5',
+              '.batch40-bootstrap/chunks/chunk-019',
+          ]
           FILES = {
               'docs/nutrition-review-batch40-bulk-families-v60.md': ('c227c69267cd8b46e6cdbba5d381ae30442ce944bf20357f1c5c3c02a6c07236', 0o644),
               'tests/fixtures/nutrition-batch40-retained-reference-v60.json.gz': ('4d62f672b126228294a07997c3b3db4bf4234f4a4ebfed24033432a8ec4f1e5a', 0o644),
@@ -54,41 +75,37 @@ jobs:
               'tools/release_catalog_reviewed_nutrition_targets_044e.v1.json': ('e7f0be03b2c003cfc236f8ed2db49e6a1a5b9827a09effa96f6382139e12863a', 0o644),
               'tools/release_catalog_reviewed_nutrition_targets_044f.v1.json': ('316595cd3ff61363db9d4cabaca7b335c4fa5a803926e1ed5e1a7e7bc8ab6654', 0o644),
           }
-
-          chunks = sorted(CHUNKS.glob('chunk-*'))
-          expected = [f'chunk-{i:03d}' for i in range(20)]
-          if [p.name for p in chunks] != expected:
-              raise SystemExit('Batch 40 chunk set mismatch')
-          encoded = ''.join(p.read_text(encoding='ascii') for p in chunks)
+          encoded = ''.join((ROOT / p).read_text(encoding='ascii') for p in PARTS)
+          if len(encoded) != 113756:
+              raise SystemExit(f'Batch 40 encoded length mismatch: {len(encoded)}')
           try:
               payload = base64.b64decode(encoded, validate=True)
           except Exception as exc:
-              raise SystemExit(f'invalid Batch 40 base64 transport: {exc}')
+              raise SystemExit(f'invalid Batch 40 base64: {exc}')
           if hashlib.sha256(payload).hexdigest() != PAYLOAD_SHA:
               raise SystemExit('Batch 40 payload sha256 mismatch')
-
           with tarfile.open(fileobj=io.BytesIO(payload), mode='r:gz') as tf:
               members = tf.getmembers()
               if [m.name for m in members] != list(FILES):
-                  raise SystemExit('Batch 40 payload path set/order mismatch')
-              for member in members:
-                  p = pathlib.PurePosixPath(member.name)
-                  if not member.isfile() or p.is_absolute() or '..' in p.parts:
-                      raise SystemExit(f'unsafe Batch 40 tar member: {member.name}')
-                  want_sha, want_mode = FILES[member.name]
-                  if (member.mode & 0o777) != want_mode:
-                      raise SystemExit(f'Batch 40 mode mismatch: {member.name}')
-                  src = tf.extractfile(member)
+                  raise SystemExit('Batch 40 payload path/order mismatch')
+              for m in members:
+                  p = pathlib.PurePosixPath(m.name)
+                  if not m.isfile() or p.is_absolute() or '..' in p.parts:
+                      raise SystemExit(f'unsafe member: {m.name}')
+                  want_sha, want_mode = FILES[m.name]
+                  if (m.mode & 0o777) != want_mode:
+                      raise SystemExit(f'mode mismatch: {m.name}')
+                  src = tf.extractfile(m)
                   if src is None:
-                      raise SystemExit(f'missing Batch 40 member bytes: {member.name}')
+                      raise SystemExit(f'missing bytes: {m.name}')
                   data = src.read()
                   if hashlib.sha256(data).hexdigest() != want_sha:
-                      raise SystemExit(f'Batch 40 file sha256 mismatch: {member.name}')
-                  dest = ROOT / member.name
+                      raise SystemExit(f'file sha256 mismatch: {m.name}')
+                  dest = ROOT / m.name
                   dest.parent.mkdir(parents=True, exist_ok=True)
                   dest.write_bytes(data)
                   os.chmod(dest, want_mode)
-          print(f'materialized {len(FILES)} Batch 40 files; payload sha256={PAYLOAD_SHA}')
+          print(f'materialized {len(FILES)} files; payload={PAYLOAD_SHA}')
           PY
       - name: Validate exact Batch 40 source
         run: |
@@ -98,12 +115,10 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          count = 0
           for p in Path('.').rglob('*.json'):
               if '.git' not in p.parts:
                   json.loads(p.read_text(encoding='utf-8'))
-                  count += 1
-          print(f'JSON OK: {count}')
+          print('JSON OK')
           PY
           find . -name '*.sh' -not -path './.git/*' -print0 | xargs -0 -r -n1 bash -n
           for f in custom_components/cook4me/frontend/cook4me-panel-v*.js; do node --check "$f"; done
@@ -111,7 +126,7 @@ jobs:
       - name: Push validated Batch 40 source
         run: |
           git fetch origin "$HEAD_BRANCH"
-          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/$HEAD_BRANCH)" || { echo 'Branch advanced; newer run must finalize it'; exit 78; }
+          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/$HEAD_BRANCH)" || { echo 'Branch advanced'; exit 78; }
           rm -rf .batch40-bootstrap
           git add -A
           git config user.name 'github-actions[bot]'
