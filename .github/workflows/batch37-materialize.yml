@@ -1,0 +1,37 @@
+name: Materialize Batch 37 review payload
+
+on:
+  pull_request:
+    paths:
+      - '.batch37-bootstrap/**'
+      - '.github/workflows/batch37-materialize.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Materialize exact locally tested Batch 37 files
+        run: python .batch37-bootstrap/materialize.py
+      - name: Remove one-shot bootstrap and commit materialized source
+        env:
+          HEAD_BRANCH: ${{ github.head_ref }}
+        run: |
+          rm -rf .batch37-bootstrap .github/workflows/batch37-materialize.yml
+          git add -A
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git diff --cached --quiet && { echo 'No materialized changes'; exit 1; }
+          git commit -m 'Materialize tested Batch 37 bulk nutrition review files'
+          git push origin "HEAD:${HEAD_BRANCH}"
