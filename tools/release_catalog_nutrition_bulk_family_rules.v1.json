@@ -1,0 +1,641 @@
+{
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "kind": "cook4me-nutrition-bulk-family-rules-v60",
+  "policy": {
+    "automaticRuleExpansionForbidden": true,
+    "candidateRankIsIdentityProof": false,
+    "heldTargetsExcluded": true,
+    "multipleRuleMatchesRejected": true,
+    "networkRequestsPerformed": false,
+    "providerIdentityInference": false,
+    "recordedTargetsExcludedFromFutureSelection": true,
+    "regexAnchoredRequired": true,
+    "ruleMatchIsApprovalOnlyWhenReviewRowExists": true
+  },
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "rules": [
+    {
+      "contract": "Exact bay-leaf ingredient; singular/plural only.",
+      "fdcDescription": "Spices, bay leaf",
+      "fdcId": 170917,
+      "pattern": "^bay (?:leaf|leaves)$",
+      "ruleId": "bay-leaf",
+      "tier": "A"
+    },
+    {
+      "contract": "Whole/shelled pod wording changes presentation, not the spice identity.",
+      "fdcDescription": "Spices, cardamom",
+      "fdcId": 170919,
+      "pattern": "^(?:shelled )?cardamom pods?$",
+      "ruleId": "cardamom-pod",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit dried mint; retained generic dried spearmint reference.",
+      "fdcDescription": "Spearmint, dried",
+      "fdcId": 172239,
+      "pattern": "^dried mint$",
+      "ruleId": "dried-mint",
+      "tier": "A"
+    },
+    {
+      "contract": "Leaf/presentation wording only; no drying/cooking or mixture.",
+      "fdcDescription": "Spearmint, fresh",
+      "fdcId": 173475,
+      "pattern": "^(?:fresh mint(?: leaves?)?|mint leaves?)(?:,? (?:washed|chopped|finely chopped|sliced|picked))?(?: \\(optional,? for finishing\\))?(?:,? a little(?: for finishing)?)?$",
+      "ruleId": "fresh-mint-leaf",
+      "tier": "A"
+    },
+    {
+      "contract": "Whole-grain mustard mapped to generic mustard; no cream/sauce mixture.",
+      "fdcDescription": "Mustard",
+      "fdcId": 2710085,
+      "pattern": "^whole[- ]?grain mustard$",
+      "ruleId": "wholegrain-mustard",
+      "tier": "A"
+    },
+    {
+      "contract": "Hamburger/burger bun identity; halving/toasting wording does not introduce another food.",
+      "fdcDescription": "Roll, white, hamburger bun",
+      "fdcId": 2707657,
+      "pattern": "^(?:hamburger|burger) buns?(?:,? (?:halved|cut in half)(?: and toasted)?)?$",
+      "ruleId": "hamburger-bun",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit wholewheat pasta with no cooked/fresh qualifier; reviewed as dry recipe input.",
+      "fdcDescription": "Pasta, whole grain, 51% whole wheat, remaining unenriched semolina, dry",
+      "fdcId": 168915,
+      "pattern": "^whole[- ]?wheat (?:pasta|macaroni)$",
+      "ruleId": "wholewheat-dry-pasta",
+      "tier": "A"
+    },
+    {
+      "contract": "Exact generic applesauce identity with no unsweetened/flavored qualifier.",
+      "fdcDescription": "Applesauce, regular",
+      "fdcId": 2709216,
+      "pattern": "^apple ?sauce$",
+      "ruleId": "applesauce",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit canned sweetcorn; reviewed retained drained-solids reference.",
+      "fdcDescription": "Corn, sweet, yellow, canned, whole kernel, drained solids",
+      "fdcId": 169214,
+      "pattern": "^canned sweetcorn(?:, drained)?$",
+      "ruleId": "canned-sweetcorn-drained",
+      "tier": "A"
+    },
+    {
+      "contract": "Pasta flour reviewed as retained type-00 flour; no finished pasta identity.",
+      "fdcDescription": "Flour, 00",
+      "fdcId": 2003586,
+      "pattern": "^(?:00 )?pasta flour$",
+      "ruleId": "pasta-flour-00",
+      "tier": "A"
+    },
+    {
+      "contract": "Exact hemp seed ingredient; retained hulled-seed reference.",
+      "fdcDescription": "Seeds, hemp seed, hulled",
+      "fdcId": 170148,
+      "pattern": "^hemp ?seed$",
+      "ruleId": "hempseed",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit white breadcrumbs; distinct from dry grated breadcrumbs.",
+      "fdcDescription": "Bread, white, commercially prepared (includes soft bread crumbs)",
+      "fdcId": 174924,
+      "pattern": "^white breadcrumbs?$",
+      "ruleId": "soft-white-breadcrumb",
+      "tier": "A"
+    },
+    {
+      "contract": "Prawn/shrimp identity with peeling/size only; no cooked/frozen/brined state inferred.",
+      "fdcDescription": "Shrimp, NFS",
+      "fdcId": 2706360,
+      "pattern": "^(?:peeled |headless |king |peeled king |tails of peeled large )?prawns?(?: \\(size \\d+\\/\\d+\\))?$",
+      "ruleId": "shrimp-nfs",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit raw prawn/shrimp state.",
+      "fdcDescription": "Crustaceans, shrimp, raw",
+      "fdcId": 175179,
+      "pattern": "^raw (?:peeled )?prawns?(?:,.*)?$",
+      "ruleId": "shrimp-raw",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit cooked prawn/shrimp state; frozen wording does not revert to raw.",
+      "fdcDescription": "Crustaceans, shrimp, cooked",
+      "fdcId": 175180,
+      "pattern": "^(?:frozen )?cooked prawns?(?:,.*)?$",
+      "ruleId": "shrimp-cooked",
+      "tier": "A"
+    },
+    {
+      "contract": "Generic white-fish identity; cutting only, no cooked/smoked/salted state.",
+      "fdcDescription": "Fish, white, mixed species, NFS",
+      "fdcId": 2706324,
+      "pattern": "^white fish(?:,? (?:chopped|cut into pieces))?$",
+      "ruleId": "white-fish-nfs",
+      "tier": "A"
+    },
+    {
+      "contract": "Unspecified fish fillet; generic fish reference, cutting only.",
+      "fdcDescription": "Fish, NFS",
+      "fdcId": 2706224,
+      "pattern": "^fish fillets?(?:,? cut into (?:pieces|large cubes.*))?$",
+      "ruleId": "fish-fillet-nfs",
+      "tier": "A"
+    },
+    {
+      "contract": "Beef cheek remains beef; trimming/cutting only. Generic beef avoids unsupported trim composition.",
+      "fdcDescription": "Beef, NFS",
+      "fdcId": 2705822,
+      "pattern": "^(?:trimmed )?beef cheeks?(?:,? (?:finely diced|diced|cut into strips))?$",
+      "ruleId": "beef-cheek-generic",
+      "tier": "A"
+    },
+    {
+      "contract": "Rump steak remains beef; generic beef avoids unsupported lean/fat ratio.",
+      "fdcDescription": "Beef, NFS",
+      "fdcId": 2705822,
+      "pattern": "^rump steak(?:,? (?:sliced|cut into .*cubes))?$",
+      "ruleId": "rump-steak-generic",
+      "tier": "A"
+    },
+    {
+      "contract": "Unqualified pork with cutting only; generic pork avoids cut/fat assumptions.",
+      "fdcDescription": "Pork, NFS",
+      "fdcId": 2705862,
+      "pattern": "^(?:small-cut )?pork pieces$|^shredded pork$|^thinly sliced pork$",
+      "ruleId": "pork-generic-cut",
+      "tier": "A"
+    },
+    {
+      "contract": "Lamb with chopping only; retained cut-unspecified lamb reference.",
+      "fdcDescription": "Lamb, NS as to cut",
+      "fdcId": 2705905,
+      "pattern": "^chopped lamb$",
+      "ruleId": "lamb-generic-cut",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit cured ham; cutting only and kept distinct from cooked ham/prosciutto.",
+      "fdcDescription": "Pork, cured, ham, whole, separable lean only, unheated",
+      "fdcId": 167876,
+      "pattern": "^cured ham(?:,? cut into (?:pieces|strips))?$",
+      "ruleId": "cured-ham-unheated",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit smoked bacon; cutting only; uses retained smoked/cured bacon reference.",
+      "fdcDescription": "Pork bacon, smoked or cured, cooked",
+      "fdcId": 2705889,
+      "pattern": "^smoked bacon(?:,? (?:diced|cut into pieces))?$",
+      "ruleId": "smoked-bacon",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit toasted bread; cutting only.",
+      "fdcDescription": "Bread, white, toasted",
+      "fdcId": 2707599,
+      "pattern": "^(?:diced )?toast bread$|^toasted sandwich bread$",
+      "ruleId": "toasted-white-bread",
+      "tier": "A"
+    },
+    {
+      "contract": "Spring-onion/scallion identity with cutting only.",
+      "fdcDescription": "Onions, spring or scallions (includes tops and bulb), raw",
+      "fdcId": 170005,
+      "pattern": "^spring onion stalks?(?:,? cut into strips)?$",
+      "ruleId": "spring-onion-stalk",
+      "tier": "A"
+    },
+    {
+      "contract": "Bean sprouts with washing only; raw retained reference.",
+      "fdcDescription": "Bean sprouts, raw",
+      "fdcId": 2709768,
+      "pattern": "^beansprouts?(?:,? washed)?$",
+      "ruleId": "bean-sprout-raw",
+      "tier": "A"
+    },
+    {
+      "contract": "Unqualified tuna; generic tuna reference without canning/cooking assumption.",
+      "fdcDescription": "Fish, tuna, NFS",
+      "fdcId": 2706309,
+      "pattern": "^tuna$",
+      "ruleId": "tuna-nfs",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit whole chicken recipe input; size does not alter per-100-g identity.",
+      "fdcDescription": "Chicken, broilers or fryers, meat and skin, raw",
+      "fdcId": 171447,
+      "pattern": "^whole chicken$|^small chicken \\(\\d+ g\\)$",
+      "ruleId": "whole-chicken-raw",
+      "tier": "A"
+    },
+    {
+      "contract": "Fresh/raw basil; washing/cutting only.",
+      "fdcDescription": "Basil, fresh",
+      "fdcId": 172232,
+      "pattern": "^(?:fresh )?basil(?: leaves?)?(?:,? (?:washed|chopped|finely chopped))?$",
+      "ruleId": "fresh-basil",
+      "tier": "A"
+    },
+    {
+      "contract": "Fresh parsley; washing/cutting only.",
+      "fdcDescription": "Parsley, fresh",
+      "fdcId": 170416,
+      "pattern": "^(?:fresh )?parsley(?: leaves?)?(?:,? (?:washed|chopped|finely chopped))?$",
+      "ruleId": "fresh-parsley",
+      "tier": "A"
+    },
+    {
+      "contract": "Fresh dill; washing/cutting only.",
+      "fdcDescription": "Dill weed, fresh",
+      "fdcId": 172233,
+      "pattern": "^(?:fresh )?dill(?: weed)?(?:,? (?:washed|chopped|finely chopped))?$",
+      "ruleId": "fresh-dill",
+      "tier": "A"
+    },
+    {
+      "contract": "Fresh rosemary; washing/cutting only.",
+      "fdcDescription": "Rosemary, fresh",
+      "fdcId": 173473,
+      "pattern": "^(?:fresh )?rosemary(?: leaves?| sprigs?)?(?:,? (?:washed|chopped|finely chopped))?$",
+      "ruleId": "fresh-rosemary",
+      "tier": "A"
+    },
+    {
+      "contract": "Fresh/raw chives; washing/cutting only.",
+      "fdcDescription": "Chives, raw",
+      "fdcId": 169994,
+      "pattern": "^(?:fresh )?chives?(?:,? (?:washed|chopped|finely chopped))?$",
+      "ruleId": "fresh-chives",
+      "tier": "A"
+    },
+    {
+      "contract": "Fresh thyme; washing/cutting only.",
+      "fdcDescription": "Thyme, fresh",
+      "fdcId": 173470,
+      "pattern": "^(?:fresh )?thyme(?: leaves?| sprigs?)?(?:,? (?:washed|chopped|finely chopped))?$",
+      "ruleId": "fresh-thyme",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit dried parsley.",
+      "fdcDescription": "Spices, parsley, dried",
+      "fdcId": 170930,
+      "pattern": "^dried parsley$",
+      "ruleId": "dried-parsley",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit dried dill.",
+      "fdcDescription": "Spices, dill weed, dried",
+      "fdcId": 171322,
+      "pattern": "^dried dill$",
+      "ruleId": "dried-dill",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit dried rosemary.",
+      "fdcDescription": "Spices, rosemary, dried",
+      "fdcId": 171333,
+      "pattern": "^dried rosemary$",
+      "ruleId": "dried-rosemary",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit dried thyme.",
+      "fdcDescription": "Spices, thyme, dried",
+      "fdcId": 170938,
+      "pattern": "^dried thyme$",
+      "ruleId": "dried-thyme",
+      "tier": "A"
+    },
+    {
+      "contract": "Standalone oregano reviewed against retained dried oregano; mixtures excluded by anchoring.",
+      "fdcDescription": "Spices, oregano, dried",
+      "fdcId": 171328,
+      "pattern": "^(?:dried )?oregano$",
+      "ruleId": "oregano-dried",
+      "tier": "A"
+    },
+    {
+      "contract": "Standalone marjoram reviewed against retained dried marjoram; mixtures excluded.",
+      "fdcDescription": "Spices, marjoram, dried",
+      "fdcId": 170928,
+      "pattern": "^(?:dried )?marjoram$",
+      "ruleId": "marjoram-dried",
+      "tier": "A"
+    },
+    {
+      "contract": "Coriander seed; grinding changes presentation only.",
+      "fdcDescription": "Spices, coriander seed",
+      "fdcId": 170922,
+      "pattern": "^(?:ground )?coriander seeds?$",
+      "ruleId": "coriander-seed",
+      "tier": "A"
+    },
+    {
+      "contract": "Standalone cumin seed/powder; grinding changes presentation only.",
+      "fdcDescription": "Spices, cumin seed",
+      "fdcId": 170923,
+      "pattern": "^(?:ground )?cumin(?: seeds?| powder)?$",
+      "ruleId": "cumin-seed",
+      "tier": "A"
+    },
+    {
+      "contract": "Standalone caraway seed; grinding changes presentation only.",
+      "fdcDescription": "Spices, caraway seed",
+      "fdcId": 170918,
+      "pattern": "^(?:ground )?caraway seeds?$",
+      "ruleId": "caraway-seed",
+      "tier": "A"
+    },
+    {
+      "contract": "Standalone allspice; no spice blend.",
+      "fdcDescription": "Spices, allspice, ground",
+      "fdcId": 171315,
+      "pattern": "^(?:ground )?allspice$",
+      "ruleId": "allspice",
+      "tier": "A"
+    },
+    {
+      "contract": "Standalone nutmeg; no blend.",
+      "fdcDescription": "Spices, nutmeg, ground",
+      "fdcId": 171326,
+      "pattern": "^(?:ground )?nutmeg$",
+      "ruleId": "nutmeg",
+      "tier": "A"
+    },
+    {
+      "contract": "Standalone saffron.",
+      "fdcDescription": "Spices, saffron",
+      "fdcId": 170934,
+      "pattern": "^saffron$",
+      "ruleId": "saffron",
+      "tier": "A"
+    },
+    {
+      "contract": "Standalone paprika; no blend.",
+      "fdcDescription": "Spices, paprika",
+      "fdcId": 171329,
+      "pattern": "^(?:ground )?(?:sweet |hot )?paprika$",
+      "ruleId": "paprika",
+      "tier": "A"
+    },
+    {
+      "contract": "Standalone turmeric; no blend.",
+      "fdcDescription": "Spices, turmeric, ground",
+      "fdcId": 172231,
+      "pattern": "^(?:ground )?turmeric(?: powder)?$",
+      "ruleId": "turmeric",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit root/fresh ginger, not paste/powder/pickled ginger.",
+      "fdcDescription": "Ginger root, raw",
+      "fdcId": 169231,
+      "pattern": "^(?:fresh )?ginger root$",
+      "ruleId": "ginger-root-raw",
+      "tier": "A"
+    },
+    {
+      "contract": "Raw/fresh garlic clove, not powder/paste/cooked garlic.",
+      "fdcDescription": "Garlic, raw",
+      "fdcId": 1104647,
+      "pattern": "^(?:fresh |raw )?garlic cloves?$",
+      "ruleId": "garlic-raw",
+      "tier": "A"
+    },
+    {
+      "contract": "Raw/fresh shallot, no cooked/fried qualifier.",
+      "fdcDescription": "Shallots, bulb, peeled, root removed, raw",
+      "fdcId": 2727586,
+      "pattern": "^(?:fresh |raw )?shallots?$",
+      "ruleId": "shallot-raw",
+      "tier": "A"
+    },
+    {
+      "contract": "Raw/fresh leek, no cooked state.",
+      "fdcDescription": "Leeks, bulb and greens, root removed, raw",
+      "fdcId": 2727584,
+      "pattern": "^(?:fresh |raw )?leeks?$",
+      "ruleId": "leek-raw",
+      "tier": "A"
+    },
+    {
+      "contract": "Raw/fresh celery stalk ingredient.",
+      "fdcDescription": "Celery, raw",
+      "fdcId": 2346405,
+      "pattern": "^(?:fresh |raw )?celery(?: stalks?)?$",
+      "ruleId": "celery-raw",
+      "tier": "A"
+    },
+    {
+      "contract": "Raw/fresh carrot ingredient.",
+      "fdcDescription": "Carrots, mature, raw",
+      "fdcId": 2258586,
+      "pattern": "^(?:fresh |raw )?carrots?$",
+      "ruleId": "carrot-raw",
+      "tier": "A"
+    },
+    {
+      "contract": "Raw/fresh zucchini fruit; flowers are deliberately excluded.",
+      "fdcDescription": "Squash, summer, green, zucchini, includes skin, raw",
+      "fdcId": 2685568,
+      "pattern": "^(?:fresh |raw )?zucchini$",
+      "ruleId": "zucchini-raw",
+      "tier": "A"
+    },
+    {
+      "contract": "Raw/fresh eggplant.",
+      "fdcDescription": "Eggplant, raw",
+      "fdcId": 2685577,
+      "pattern": "^(?:fresh |raw )?eggplants?$",
+      "ruleId": "eggplant-raw",
+      "tier": "A"
+    },
+    {
+      "contract": "Raw/fresh spinach leaf.",
+      "fdcDescription": "Spinach, raw",
+      "fdcId": 168462,
+      "pattern": "^(?:fresh |raw )?spinach(?: leaves)?$",
+      "ruleId": "spinach-raw",
+      "tier": "A"
+    },
+    {
+      "contract": "Pistachio with salt/roast status unspecified; NFS retained record preserves that uncertainty.",
+      "fdcDescription": "Pistachio nuts, NFS",
+      "fdcId": 2707527,
+      "pattern": "^pistachios?(?:,? shelled)?$",
+      "ruleId": "pistachio-nfs",
+      "tier": "A"
+    },
+    {
+      "contract": "Almond with roast/salt status unspecified; NFS retained record.",
+      "fdcDescription": "Almonds, NFS",
+      "fdcId": 2707485,
+      "pattern": "^almonds?(?:,? shelled)?$",
+      "ruleId": "almond-nfs",
+      "tier": "A"
+    },
+    {
+      "contract": "Cashew with roast/salt status unspecified; NFS retained record.",
+      "fdcDescription": "Cashews, NFS",
+      "fdcId": 2707493,
+      "pattern": "^cashews?$",
+      "ruleId": "cashew-nfs",
+      "tier": "A"
+    },
+    {
+      "contract": "Generic hazelnut reference; no oil/spread formulation.",
+      "fdcDescription": "Hazelnuts",
+      "fdcId": 2707502,
+      "pattern": "^hazelnuts?$",
+      "ruleId": "hazelnut-nfs",
+      "tier": "A"
+    },
+    {
+      "contract": "Generic walnut reference excluding a specifically sweetened preparation.",
+      "fdcDescription": "Walnuts, excluding honey roasted",
+      "fdcId": 2707531,
+      "pattern": "^walnuts?$",
+      "ruleId": "walnut-nfs",
+      "tier": "A"
+    },
+    {
+      "contract": "Generic sesame seed reference; not tahini/oil.",
+      "fdcDescription": "Sesame seeds",
+      "fdcId": 2707586,
+      "pattern": "^sesame seeds?$",
+      "ruleId": "sesame-seed",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit raw hazelnut.",
+      "fdcDescription": "Nuts, hazelnuts or filberts, raw",
+      "fdcId": 2515375,
+      "pattern": "^raw hazelnuts?$",
+      "ruleId": "hazelnut-raw",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit raw pistachio.",
+      "fdcDescription": "Nuts, pistachio nuts, raw",
+      "fdcId": 2515379,
+      "pattern": "^raw pistachios?$",
+      "ruleId": "pistachio-raw",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit raw almond.",
+      "fdcDescription": "Nuts, almonds, whole, raw",
+      "fdcId": 2346393,
+      "pattern": "^raw almonds?$",
+      "ruleId": "almond-raw",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit raw cashew.",
+      "fdcDescription": "Nuts, cashew nuts, raw",
+      "fdcId": 2515374,
+      "pattern": "^raw cashews?$",
+      "ruleId": "cashew-raw",
+      "tier": "A"
+    },
+    {
+      "contract": "Explicit Pecorino Romano/romano cheese family.",
+      "fdcDescription": "Cheese, romano",
+      "fdcId": 171249,
+      "pattern": "^pecorino romano(?: cheese)?$",
+      "ruleId": "pecorino-romano",
+      "tier": "A"
+    },
+    {
+      "contract": "Emmental reviewed against retained Swiss-cheese reference.",
+      "fdcDescription": "Cheese, swiss",
+      "fdcId": 746767,
+      "pattern": "^emmental(?: cheese)?$",
+      "ruleId": "emmental-swiss",
+      "tier": "A"
+    },
+    {
+      "contract": "Gorgonzola reviewed against retained generic blue-cheese reference.",
+      "fdcDescription": "Cheese, Blue or Roquefort",
+      "fdcId": 2705705,
+      "pattern": "^gorgonzola(?: cheese)?$",
+      "ruleId": "gorgonzola-blue",
+      "tier": "A"
+    },
+    {
+      "contract": "Named cheese with no subtype-specific FDC record retained; generic cheese is an estimated category fallback only.",
+      "fdcDescription": "Cheese, NFS",
+      "fdcId": 2705704,
+      "pattern": "^(?:mascarpone(?: cheese)?|burrata|munster cheese|halloumi(?: cheese)?|hermelín cheese|morbier cheese|reblochon|tome cheese|beaufort cheese|provola cheese|stracchino cheese|mimolette cheese|comt[eé] cheese|tomme de brebis sheep\\'s cheese)$",
+      "ruleId": "named-cheese-generic",
+      "tier": "B"
+    },
+    {
+      "contract": "Named fish with no exact retained species record; generic fish is a category estimate, not species certification.",
+      "fdcDescription": "Fish, NFS",
+      "fdcId": 2706224,
+      "pattern": "^(?:sea bream|hake|skate|plaice|plaice fillets|scorpionfish)$",
+      "ruleId": "named-fish-generic",
+      "tier": "B"
+    },
+    {
+      "contract": "Explicit pollock fillet input; retained raw pollock reference without claiming yellow/black species equivalence.",
+      "fdcDescription": "Fish, pollock, raw",
+      "fdcId": 333476,
+      "pattern": "^yellow \\(or black\\) pollock fillets$",
+      "ruleId": "pollock-raw-generic",
+      "tier": "B"
+    },
+    {
+      "contract": "Named sausage with no exact retained formulation; generic sausage category estimate only.",
+      "fdcDescription": "Sausage, NFS",
+      "fdcId": 2706190,
+      "pattern": "^(?:merguez|chipolata|white sausage|white sausages|boudin blanc|silesian sausage|strasbourg sausage|onion sausages)$",
+      "ruleId": "named-sausage-generic",
+      "tier": "B"
+    },
+    {
+      "contract": "Black pudding reviewed as blood sausage; casing removal does not change filling identity.",
+      "fdcDescription": "Blood sausage",
+      "fdcId": 171618,
+      "pattern": "^(?:black pudding|skinless black pudding)$",
+      "ruleId": "blood-sausage",
+      "tier": "B"
+    },
+    {
+      "contract": "Explicit smoked sausage, retained smoked pork-link category; no brand/formulation claim.",
+      "fdcDescription": "Sausage, smoked link sausage, pork",
+      "fdcId": 174584,
+      "pattern": "^smoked sausages?(?:,? cut into (?:two or three pieces|thirds|pieces))?$",
+      "ruleId": "smoked-pork-sausage",
+      "tier": "B"
+    },
+    {
+      "contract": "Pancetta reviewed against retained unprepared cured pork-bacon category; no smoking/cooking claim.",
+      "fdcDescription": "Pork, cured, bacon, unprepared",
+      "fdcId": 168277,
+      "pattern": "^(?:pancetta|pancetta slices?(?:,? diced)?|pancetta, sliced|slice of pancetta, diced)$",
+      "ruleId": "pancetta-cured-bacon",
+      "tier": "B"
+    }
+  ],
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+  "tiers": {
+    "A": "Direct food/state family or non-compositional presentation variant. Approved per committed exact regex and retained FDC reference.",
+    "B": "Explicitly reviewed generic category fallback. Approved for generic per-100-g estimation but not exact subtype/species/brand/formulation certification.",
+    "C": "No committed approval rule. Remains unresolved and must not be auto-bound."
+  }
+}

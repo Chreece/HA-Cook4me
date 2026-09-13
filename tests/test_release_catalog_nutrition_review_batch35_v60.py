@@ -294,8 +294,22 @@ class Batch35EvidenceRequirementsTests(unittest.TestCase):
             ledger_path.write_bytes(cp._encoded(ledger))
             audit = self._audit_fixture()
             audit["evidenceSha256"] = digest
+            # Reproduce the exact Batch 35 review baseline. Later explicit review
+            # batches may legitimately record IDs from this historical 28-row fixture.
+            previous_files = [r for r in self.checkpoint["reviewFiles"]
+                              if r["path"] < "release_catalog_reviewed_nutrition_targets_041.v1.json"]
+            previous_names = {r["path"] for r in previous_files}
+            previous_bindings = [r for r in self.checkpoint["recordedBindings"]
+                                 if r["reviewFile"] in previous_names]
+            historical = dict(self.checkpoint)
+            historical["reviewFiles"] = previous_files
+            historical["recordedBindings"] = previous_bindings
+            historical["reviewFilesSha256"] = cp._digest(cp._encoded(previous_files))
+            historical["recordedBindingsSha256"] = cp._digest(cp._encoded(previous_bindings))
+            audit["reviewFilesSha256"] = historical["reviewFilesSha256"]
             before = deepcopy(audit)
-            with patch.object(holds, "audit", return_value=audit) as audited:
+            with patch.object(holds, "audit", return_value=audit) as audited, \
+                 patch.object(work.checkpoint, "build_checkpoint", return_value=historical):
                 outputs = work.build_outputs(source, ledger_path=ledger_path, queries=["potato starch"])
                 audited.assert_called_once()
             self.assertEqual(audit, before)
