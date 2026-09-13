@@ -1,0 +1,58 @@
+name: Diagnose Batch 40 transport
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/batch40-diagnose.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    env:
+      HEAD_BRANCH: ${{ github.head_ref }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - name: Record exact transport bytes
+        run: |
+          python - <<'PY'
+          import base64, hashlib, json
+          from pathlib import Path
+          paths = [
+            '.batch40-bootstrap/chunks/chunk-000','.batch40-bootstrap/chunks/chunk-001',
+            '.batch40-bootstrap/chunks/chunk-002','.batch40-bootstrap/chunks/chunk-004',
+            '.batch40-bootstrap/chunks/chunk-005','.batch40-bootstrap/chunks/chunk-006',
+            '.batch40-bootstrap/chunks/chunk-007','.batch40-bootstrap/chunks/chunk-008',
+            '.batch40-bootstrap/chunks/chunk-009','.batch40-bootstrap/chunks/chunk-010',
+            '.batch40-bootstrap/chunks/chunk-011','.batch40-bootstrap/chunks/chunk-012',
+            '.batch40-bootstrap/chunks/chunk-014','.batch40-bootstrap/chunks/chunk-015',
+            '.batch40-bootstrap/repair/part-0','.batch40-bootstrap/repair/part-1',
+            '.batch40-bootstrap/repair/part-2','.batch40-bootstrap/repair/part-3',
+            '.batch40-bootstrap/repair/part-4','.batch40-bootstrap/repair/part-5',
+            '.batch40-bootstrap/chunks/chunk-019']
+          fix={'.batch40-bootstrap/repair/part-2':'J','.batch40-bootstrap/repair/part-5':'P'}
+          rows=[]; pieces=[]
+          for p in paths:
+            b=Path(p).read_bytes(); rows.append({'path':p,'len':len(b),'sha256':hashlib.sha256(b).hexdigest(),'tail':b[-12:].decode('ascii')}); pieces.append(b.decode('ascii')+fix.get(p,''))
+          enc=''.join(pieces)
+          out={'parts':rows,'encoded_len':len(enc),'encoded_sha256':hashlib.sha256(enc.encode()).hexdigest()}
+          try:
+            raw=base64.b64decode(enc,validate=True); out['decoded_len']=len(raw); out['payload_sha256']=hashlib.sha256(raw).hexdigest()
+          except Exception as e: out['decode_error']=str(e)
+          Path('.batch40-diagnostic.json').write_text(json.dumps(out,indent=2,sort_keys=True)+'\n')
+          PY
+      - name: Push diagnostic only
+        run: |
+          git fetch origin "$HEAD_BRANCH"
+          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/$HEAD_BRANCH)" || exit 78
+          git add .batch40-diagnostic.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record Batch 40 transport diagnostic'
+          git push origin "HEAD:$HEAD_BRANCH"
