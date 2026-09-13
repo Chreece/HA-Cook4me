@@ -61,6 +61,10 @@ jobs:
               '.batch40-bootstrap/repair/part-5',
               '.batch40-bootstrap/chunks/chunk-019',
           ]
+          TAIL_FIX = {
+              '.batch40-bootstrap/repair/part-2': 'J',
+              '.batch40-bootstrap/repair/part-5': 'P',
+          }
           FILES = {
               'docs/nutrition-review-batch40-bulk-families-v60.md': ('c227c69267cd8b46e6cdbba5d381ae30442ce944bf20357f1c5c3c02a6c07236', 0o644),
               'tests/fixtures/nutrition-batch40-retained-reference-v60.json.gz': ('4d62f672b126228294a07997c3b3db4bf4234f4a4ebfed24033432a8ec4f1e5a', 0o644),
@@ -75,7 +79,7 @@ jobs:
               'tools/release_catalog_reviewed_nutrition_targets_044e.v1.json': ('e7f0be03b2c003cfc236f8ed2db49e6a1a5b9827a09effa96f6382139e12863a', 0o644),
               'tools/release_catalog_reviewed_nutrition_targets_044f.v1.json': ('316595cd3ff61363db9d4cabaca7b335c4fa5a803926e1ed5e1a7e7bc8ab6654', 0o644),
           }
-          encoded = ''.join((ROOT / p).read_text(encoding='ascii') for p in PARTS)
+          encoded = ''.join((ROOT / p).read_text(encoding='ascii') + TAIL_FIX.get(p, '') for p in PARTS)
           if len(encoded) != 113756:
               raise SystemExit(f'Batch 40 encoded length mismatch: {len(encoded)}')
           try:
