@@ -1,0 +1,554 @@
+{
+  "bulkFamilyRulesFile": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "bulkFamilyRuleId": "b38-shortcrust-pie-crust",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Shortcrust pastry",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Pie crust, deep dish, frozen, unbaked, made with enriched flour",
+      "fdcId": 167523,
+      "notes": "Batch 38 bulk-family Tier B / b38-shortcrust-pie-crust. Shortcrust pastry is represented by a retained unbaked pie-crust reference. Deep-dish/frozen/enrichment and butter/shortening formulation are not claimed exact. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "concept:food:07fd53b8ea10eba4dd4f",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "dce8ccdd5b8a84b33044949d7c42b16888eac8917031093b0f6cf6e38302725d",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:6b1ca105af19f224f493",
+      "usageCountAtReview": 20
+    },
+    {
+      "bulkFamilyRuleId": "b38-white-wine-vinegar-generic",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "White wine vinegar",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Vinegar",
+      "fdcId": 2709351,
+      "notes": "Batch 38 bulk-family Tier B / b38-white-wine-vinegar-generic. White wine vinegar uses the retained generic vinegar category because the exact subtype is absent. Acid concentration and wine-vinegar formulation are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "concept:food:a89d04e0935973c3cd55",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "92223de61093fe89400947c418300c253d99844f9bfafd8ee7bf30621706de41",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:4c981ee3668e24f089d1",
+      "usageCountAtReview": 20
+    },
+    {
+      "bulkFamilyRuleId": "b38-semi-skimmed-milk",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Semi-skimmed milk",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Milk, reduced fat (2%)",
+      "fdcId": 2705386,
+      "notes": "Batch 38 bulk-family Tier B / b38-semi-skimmed-milk. Semi-skimmed milk is represented by the retained reduced-fat 2% milk category. Exact European fat percentage, fortification and brand are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "M_FOOD_269",
+      "reviewTargetKind": "provider-identity",
+      "sourceCandidateSha256": "8a050b38a5922e51bb49a3f4357852ed2400c0efd016c9d07f01c759a6d20ebd",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:0e01e20b5c952242934e",
+      "usageCountAtReview": 19
+    },
+    {
+      "bulkFamilyRuleId": "b38-bacon-unprepared",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Diced bacon",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Pork, cured, bacon, unprepared",
+      "fdcId": 168277,
+      "notes": "Batch 38 bulk-family Tier B / b38-bacon-unprepared. Unqualified bacon is reviewed as the conventional unprepared cured-pork ingredient. This is a generic fallback, not proof that every market label excludes turkey/meatless bacon or has the same cure/salt/fat formulation. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "concept:food:5c0c70b7f0dc2717f4c6",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "d24b26725f5bd7bbea7c286667f08f4d8c401e06502b7463c1a22909734a9906",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "M_FOOD_26",
+      "usageCountAtReview": 18
+    },
+    {
+      "bulkFamilyRuleId": "b38-shortcrust-pie-crust",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Shortcrust pastry",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Pie crust, deep dish, frozen, unbaked, made with enriched flour",
+      "fdcId": 167523,
+      "notes": "Batch 38 bulk-family Tier B / b38-shortcrust-pie-crust. Shortcrust pastry is represented by a retained unbaked pie-crust reference. Deep-dish/frozen/enrichment and butter/shortening formulation are not claimed exact. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "M_FOOD_363",
+      "reviewTargetKind": "provider-identity",
+      "sourceCandidateSha256": "dce8ccdd5b8a84b33044949d7c42b16888eac8917031093b0f6cf6e38302725d",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:6b1ca105af19f224f493",
+      "usageCountAtReview": 15
+    },
+    {
+      "bulkFamilyRuleId": "b38-sweetcorn-generic",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Sweetcorn",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Corn, sweet, yellow and white kernels, fresh, raw",
+      "fdcId": 2710826,
+      "notes": "Batch 38 bulk-family Tier B / b38-sweetcorn-generic. Unqualified sweetcorn is reviewed as fresh raw kernels for generic per-100-g estimation. Frozen/canned/cooked state and cultivar are not inferred. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "concept:food:d2ddfb7913094b5daaa5",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "1a5cbcd9230bfa7533550ce059c3f570041eb2e8a56c61514b576762b7e6b117",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:210fe3081beb1be64875",
+      "usageCountAtReview": 15
+    },
+    {
+      "bulkFamilyRuleId": "b38-grana-parmesan-category",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Grana Padano cheese",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Cheese, Parmesan, hard",
+      "fdcId": 2705730,
+      "notes": "Batch 38 bulk-family Tier B / b38-grana-parmesan-category. Grana/Grana Padano is represented by retained hard Parmesan as a generic hard Italian grating-cheese fallback. Protected-origin recipe and exact aging/salt/moisture remain distinct and unclaimed. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "MARKETINGFOOD_510004",
+      "reviewTargetKind": "provider-identity",
+      "sourceCandidateSha256": "1a495143e50f63459a97b2cfb4d59586bce75398db52be6956b662539120fe37",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:92cf04e1f5e7dc6c48f2",
+      "usageCountAtReview": 14
+    },
+    {
+      "bulkFamilyRuleId": "b38-romanesco-cauliflower",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Romanesco cabbage",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Cauliflower, raw",
+      "fdcId": 2685573,
+      "notes": "Batch 38 bulk-family Tier B / b38-romanesco-cauliflower. Romanesco is a cauliflower cultivar and is represented by retained raw cauliflower. Cultivar-specific composition and cooked state are not inferred. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "M_FOOD_111",
+      "reviewTargetKind": "provider-identity",
+      "sourceCandidateSha256": "4f2bb0f572e809864041165dd2160eed351150ba39d7e75ad8791c92fceb7b6b",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:36fdfb072ff23a3a93d1",
+      "usageCountAtReview": 14
+    },
+    {
+      "bulkFamilyRuleId": "b38-rice-vermicelli-dry",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Rice vermicelli",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Rice noodles, dry",
+      "fdcId": 169742,
+      "notes": "Batch 38 bulk-family Tier B / b38-rice-vermicelli-dry. Rice vermicelli is reviewed against dry rice noodles as the as-purchased recipe input. Soaking/cooking water uptake is not inferred. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "M_FOOD_487",
+      "reviewTargetKind": "provider-identity",
+      "sourceCandidateSha256": "dba161b6be7d384ae36bdcbf2ad41690d2fbf053357a3aa3174b8971e56c2ad4",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "M_FOOD_486",
+      "usageCountAtReview": 12
+    },
+    {
+      "bulkFamilyRuleId": "b38-pecorino-romano-category",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Peppered Pecorino cheese, diced",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Cheese, romano",
+      "fdcId": 171249,
+      "notes": "Batch 38 bulk-family Tier B / b38-pecorino-romano-category. Pecorino-family cheese is reviewed against retained Romano as a generic hard sheep-milk grating-cheese reference. Exact Pecorino variety and added pepper are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "concept:food:3eac634003de493dbb83",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "cc34b42bdf1b6859a4f5b31d1fdb9f32363d79e40b827c3c961c9a38ee40a0ba",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:840b91ee3da50c9e0de2",
+      "usageCountAtReview": 12
+    },
+    {
+      "bulkFamilyRuleId": "b38-coconut-flakes-dried",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Coconut flakes",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Nuts, coconut meat, dried (desiccated), not sweetened",
+      "fdcId": 170170,
+      "notes": "Batch 38 bulk-family Tier B / b38-coconut-flakes-dried. Coconut flakes are reviewed against retained dried/desiccated coconut. Sweetening/toasting is not stated and therefore not claimed; this remains a generic fallback. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "concept:food:dcea1d4a62fa675d1fcd",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "7067bd48d7e2e1cb89e2f6d0af7bcb882c71489c2374070ea301d8cdb5c7f500",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:518e123f0bfb228f46de",
+      "usageCountAtReview": 12
+    },
+    {
+      "bulkFamilyRuleId": "b38-baking-soda-prep-text",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "A",
+      "canonicalEnglishName": "Baking soda mixed with flour",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Leavening agents, baking soda",
+      "fdcId": 175040,
+      "notes": "Batch 38 bulk-family Tier A / b38-baking-soda-prep-text. The ingredient identity is baking soda/bicarbonate; “mixed with flour” is preparation context, not a different leavening agent. This is an explicitly reviewed direct food/state family; presentation wording does not create a new food identity. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "concept:food:e06d07cc4cf816278510",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "0eea078b07c8588554324fd896c9276be77b8eedb64f85377254bd4b643b496b",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:e06d07cc4cf816278510",
+      "usageCountAtReview": 12
+    },
+    {
+      "bulkFamilyRuleId": "b38-panko-dry-breadcrumb",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Panko breadcrumbs",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Bread, crumbs, dry, grated, plain",
+      "fdcId": 174928,
+      "notes": "Batch 38 bulk-family Tier B / b38-panko-dry-breadcrumb. Panko is a dry breadcrumb product; use the retained plain dry breadcrumb reference while keeping coarse Japanese crumb structure/formulation generic. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "concept:food:fde60bb99e9b9ac770df",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "766aaecbf0a3c1c1bd084f0021c229892d43041a401504e598dd0ba3bc0cf4ef",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:60b22c4255ce8686d254",
+      "usageCountAtReview": 12
+    },
+    {
+      "bulkFamilyRuleId": "b38-rice-vermicelli-dry",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Rice vermicelli",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Rice noodles, dry",
+      "fdcId": 169742,
+      "notes": "Batch 38 bulk-family Tier B / b38-rice-vermicelli-dry. Rice vermicelli is reviewed against dry rice noodles as the as-purchased recipe input. Soaking/cooking water uptake is not inferred. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "concept:food:15b99737eb32d5c57e19",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "dba161b6be7d384ae36bdcbf2ad41690d2fbf053357a3aa3174b8971e56c2ad4",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "M_FOOD_486",
+      "usageCountAtReview": 10
+    },
+    {
+      "bulkFamilyRuleId": "b38-nori-dried-seaweed",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Nori seaweed",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Seaweed, dried",
+      "fdcId": 2709988,
+      "notes": "Batch 38 bulk-family Tier B / b38-nori-dried-seaweed. Nori is a dried edible seaweed sheet/flakes ingredient. The retained record is generic dried seaweed, not an exact laver species, seasoning or toasted formulation. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "M_FOOD_632",
+      "reviewTargetKind": "provider-identity",
+      "sourceCandidateSha256": "5a25a4c2752b0abd65981f3bc5bbb44ff9299925b00abbaeb341674ec335f8c6",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:069089e27b740750d60e",
+      "usageCountAtReview": 8
+    },
+    {
+      "bulkFamilyRuleId": "b38-grana-parmesan-category",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Grana Padano cheese",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Cheese, Parmesan, hard",
+      "fdcId": 2705730,
+      "notes": "Batch 38 bulk-family Tier B / b38-grana-parmesan-category. Grana/Grana Padano is represented by retained hard Parmesan as a generic hard Italian grating-cheese fallback. Protected-origin recipe and exact aging/salt/moisture remain distinct and unclaimed. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "concept:food:037e229d5b7e236fedc4",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "1a495143e50f63459a97b2cfb4d59586bce75398db52be6956b662539120fe37",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:92cf04e1f5e7dc6c48f2",
+      "usageCountAtReview": 8
+    },
+    {
+      "bulkFamilyRuleId": "b38-mustard-seed",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "White mustard seeds",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, mustard seed, ground",
+      "fdcId": 170929,
+      "notes": "Batch 38 bulk-family Tier B / b38-mustard-seed. White mustard seed is represented by retained mustard seed; the reference is ground, so seed color/whole-versus-ground presentation is not claimed exact. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "concept:food:1dcbb4d490aaa15e78df",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "d094d623108339a9c853730f6427aa40a3434e1e0b3d38008df20be20ed34d4c",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:022ac364750bb43f52ae",
+      "usageCountAtReview": 8
+    },
+    {
+      "bulkFamilyRuleId": "b38-grana-parmesan-category",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Grana cheese",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Cheese, Parmesan, hard",
+      "fdcId": 2705730,
+      "notes": "Batch 38 bulk-family Tier B / b38-grana-parmesan-category. Grana/Grana Padano is represented by retained hard Parmesan as a generic hard Italian grating-cheese fallback. Protected-origin recipe and exact aging/salt/moisture remain distinct and unclaimed. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "concept:food:294ca3d3b28541528cd7",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "1a495143e50f63459a97b2cfb4d59586bce75398db52be6956b662539120fe37",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:92cf04e1f5e7dc6c48f2",
+      "usageCountAtReview": 8
+    },
+    {
+      "bulkFamilyRuleId": "b38-chicken-generic-raw",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Chicken pieces",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Chicken, broilers or fryers, meat only, raw",
+      "fdcId": 171052,
+      "notes": "Batch 38 bulk-family Tier B / b38-chicken-generic-raw. Unqualified chicken with only cutting/boneless wording is reviewed against generic raw chicken meat. Skin, bone, exact cut and solution treatment are not inferred. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "concept:food:9320922603d16b874ccd",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "43adb798e3a31aa16e1082bc208d979b09e3cd1cc4b0f9037829ca6094ca4acd",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:4564b408fdd3dc447087",
+      "usageCountAtReview": 8
+    },
+    {
+      "bulkFamilyRuleId": "b38-fresh-mint-explicit",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+      "bulkFamilyTier": "A",
+      "canonicalEnglishName": "Chopped fresh mint leaves",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spearmint, fresh",
+      "fdcId": 173475,
+      "notes": "Batch 38 bulk-family Tier A / b38-fresh-mint-explicit. The target explicitly states fresh mint leaves; chopping is presentation only. Spearmint is the retained generic fresh culinary-mint reference. This is an explicitly reviewed direct food/state family; presentation wording does not create a new food identity. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "concept:food:b1f800f537d4d3ebba9a",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "8d55b4874c159dd29d6cc73cae6688aaaeb1618df7ed5957c53369e94085b818",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:415596c5da573241b901",
+      "usageCountAtReview": 8
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "nutritionScope": "Batch 38 bulk-reviewed generic per-100-g ingredient references. Direct Tier A families and explicit Tier B fallbacks do not authorize density, piece/yield, soaking/cooking/draining conversions or exact brand/formulation claims.",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "referenceReceipts": {
+    "167523": {
+      "sourceCandidateSha256": "dce8ccdd5b8a84b33044949d7c42b16888eac8917031093b0f6cf6e38302725d",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "concept:food:6b1ca105af19f224f493"
+    },
+    "168277": {
+      "sourceCandidateSha256": "d24b26725f5bd7bbea7c286667f08f4d8c401e06502b7463c1a22909734a9906",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "M_FOOD_26"
+    },
+    "168927": {
+      "sourceCandidateSha256": "f3fa6630559793da5cfe91c0e49f1930758b691ee6e50d929fd25d38c3c2dfeb",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceTargetId": "concept:food:ed9f4c8662acf7e72cb0"
+    },
+    "169441": {
+      "sourceCandidateSha256": "013c22affbd22f2f4eb0615045d2e40bcf5787ee19c9b0a04538ef12516c592c",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "M_FOOD_600"
+    },
+    "169599": {
+      "sourceCandidateSha256": "72fcb3247fa0d03213fc2872c58b3faf6d3144666b13ee4d0c8076a1f7161f7e",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:94227c1a917c47a3dcdf"
+    },
+    "169742": {
+      "sourceCandidateSha256": "dba161b6be7d384ae36bdcbf2ad41690d2fbf053357a3aa3174b8971e56c2ad4",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "M_FOOD_486"
+    },
+    "170170": {
+      "sourceCandidateSha256": "7067bd48d7e2e1cb89e2f6d0af7bcb882c71489c2374070ea301d8cdb5c7f500",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:518e123f0bfb228f46de"
+    },
+    "170929": {
+      "sourceCandidateSha256": "d094d623108339a9c853730f6427aa40a3434e1e0b3d38008df20be20ed34d4c",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "concept:food:022ac364750bb43f52ae"
+    },
+    "170932": {
+      "sourceCandidateSha256": "3749ec7972eb811b84d7af995e98a8a990c3758b6566283be25dfb096cdfea61",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "M_FOOD_391"
+    },
+    "171052": {
+      "sourceCandidateSha256": "43adb798e3a31aa16e1082bc208d979b09e3cd1cc4b0f9037829ca6094ca4acd",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:4564b408fdd3dc447087"
+    },
+    "171249": {
+      "sourceCandidateSha256": "cc34b42bdf1b6859a4f5b31d1fdb9f32363d79e40b827c3c961c9a38ee40a0ba",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:840b91ee3da50c9e0de2"
+    },
+    "171447": {
+      "sourceCandidateSha256": "f08c7a15409f1443552328a779df6db504c8ff97853ded748c002685d0c03c3e",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceTargetId": "concept:food:cc53a76ea5366250cfe4"
+    },
+    "172449": {
+      "sourceCandidateSha256": "f0c7583f9c4176bfc84d7d8140c25b885d5792ef3dc25988e8d87c576c0d04b1",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceTargetId": "concept:food:9f1a82b4916b20a1b167"
+    },
+    "172475": {
+      "sourceCandidateSha256": "795a33b3cda167ff085f173fb59ceef403cda862368e8cbe5baf769d4b6fa1b5",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "concept:food:83ee780f2d362d1b2663"
+    },
+    "172643": {
+      "sourceCandidateSha256": "fcf97feaca18ba6440f58df765af637d64c4920ff98f490dc9735b7af3f96b69",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:378f48bbcb507865bfc7"
+    },
+    "172876": {
+      "sourceCandidateSha256": "346b9cdb5cfce554be0b38c11abcb4eb2f98ade874f2bfdfb2dad0b4ac44c5d8",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceTargetId": "concept:food:72ed30c4ab5f56df7d7c"
+    },
+    "173475": {
+      "sourceCandidateSha256": "8d55b4874c159dd29d6cc73cae6688aaaeb1618df7ed5957c53369e94085b818",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:415596c5da573241b901"
+    },
+    "174273": {
+      "sourceCandidateSha256": "884c949526d1605dbd3e87c3c99d990bc1bd3cb2bfd7ccceee58309011f83b79",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:6309c668f68dbb3c6523"
+    },
+    "174924": {
+      "sourceCandidateSha256": "5df4e34638757679aa912246dbef8e30a2877e0186f3584763410dfad95f9369",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:60b22c4255ce8686d254"
+    },
+    "174928": {
+      "sourceCandidateSha256": "766aaecbf0a3c1c1bd084f0021c229892d43041a401504e598dd0ba3bc0cf4ef",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:60b22c4255ce8686d254"
+    },
+    "175040": {
+      "sourceCandidateSha256": "0eea078b07c8588554324fd896c9276be77b8eedb64f85377254bd4b643b496b",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceTargetId": "concept:food:e06d07cc4cf816278510"
+    },
+    "2003603": {
+      "sourceCandidateSha256": "cc8eb95667fc37a897e112c3fb32a3e8d5ddacaad8e42a5e31f1bcbbca082f45",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "M_FOOD_88"
+    },
+    "2646170": {
+      "sourceCandidateSha256": "6f0bd3f189c7346c3cd56e9391cdbfd1627b225509a2db745b2e7f004c8630e1",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceTargetId": "M_FOOD_41"
+    },
+    "2685573": {
+      "sourceCandidateSha256": "4f2bb0f572e809864041165dd2160eed351150ba39d7e75ad8791c92fceb7b6b",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:36fdfb072ff23a3a93d1"
+    },
+    "2705386": {
+      "sourceCandidateSha256": "8a050b38a5922e51bb49a3f4357852ed2400c0efd016c9d07f01c759a6d20ebd",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:0e01e20b5c952242934e"
+    },
+    "2705730": {
+      "sourceCandidateSha256": "1a495143e50f63459a97b2cfb4d59586bce75398db52be6956b662539120fe37",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "concept:food:92cf04e1f5e7dc6c48f2"
+    },
+    "2705820": {
+      "sourceCandidateSha256": "ffa3f5a52c893c52fa7a88632d92daa19f559ffba52da9962a21d375a3757b81",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "concept:food:cc38f529eba62e071a2d"
+    },
+    "2705849": {
+      "sourceCandidateSha256": "bcd3cd36af406a60ef731491fca02ffdeca0ad55a225c8fc45085f252d3ed958",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "M_FOOD_57"
+    },
+    "2707500": {
+      "sourceCandidateSha256": "154033da577f6822d8d88c032e7875beff368f35f2c9dd06e2536ba8f64b04c3",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "concept:food:66efca02e726c5a3d212"
+    },
+    "2709216": {
+      "sourceCandidateSha256": "d15d45d85eea4fa8ac7340f337439d4be44e5766fbb76b86804343b6119929cb",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:501797b4a4ac559d40d7"
+    },
+    "2709351": {
+      "sourceCandidateSha256": "92223de61093fe89400947c418300c253d99844f9bfafd8ee7bf30621706de41",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:4c981ee3668e24f089d1"
+    },
+    "2709988": {
+      "sourceCandidateSha256": "5a25a4c2752b0abd65981f3bc5bbb44ff9299925b00abbaeb341674ec335f8c6",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:069089e27b740750d60e"
+    },
+    "2710188": {
+      "sourceCandidateSha256": "be18587a4595027ade38111b434c31e1fe8b97d2512af83ef95c7d3903f57376",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "M_FOOD_705"
+    },
+    "2710826": {
+      "sourceCandidateSha256": "1a5cbcd9230bfa7533550ce059c3f570041eb2e8a56c61514b576762b7e6b117",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:210fe3081beb1be64875"
+    }
+  },
+  "referenceUse": "Source target/rank only locates an existing retained FDC record. Every destination has its own explicit reviewed row; locator identity/rank is never copied as proof.",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac"
+}

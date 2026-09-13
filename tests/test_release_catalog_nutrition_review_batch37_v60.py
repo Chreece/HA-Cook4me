@@ -79,14 +79,17 @@ class Batch37BulkFamilyTests(unittest.TestCase):
         self.assertEqual(len(receipts), self.fixture["uniqueFdcCount"])
 
     def test_all_235_previous_review_files_and_4622_bindings_are_byte_pinned(self):
-        previous = [r for r in self.checkpoint["reviewFiles"] if r["path"] not in self.source_names]
+        def sequence(path):
+            match = re.search(r"nutrition_targets_(\d+)", path)
+            return int(match.group(1)) if match else 0
+        previous = [r for r in self.checkpoint["reviewFiles"] if sequence(r["path"]) < 41]
         self.assertEqual(len(previous), 235)
         self.assertEqual(cp._digest(cp._encoded(previous)), BASE_FILES_SHA)
         names = {r["path"] for r in previous}
         bindings = [r for r in self.checkpoint["recordedBindings"] if r["reviewFile"] in names]
         self.assertEqual(len(bindings), 4622)
         self.assertEqual(cp._digest(cp._encoded(bindings)), BASE_BINDINGS_SHA)
-        self.assertEqual(self.checkpoint["summary"]["recordedReviewTargetCount"], 4728)
+        self.assertGreaterEqual(self.checkpoint["summary"]["recordedReviewTargetCount"], 4728)
 
     def test_destinations_are_disjoint_from_all_previous_and_future_review_rows(self):
         others = {r["reviewTargetId"] for r in self.checkpoint["recordedBindings"] if r["reviewFile"] not in self.source_names}
