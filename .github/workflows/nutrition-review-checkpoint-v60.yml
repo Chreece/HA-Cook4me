@@ -9,6 +9,8 @@ on:
       - 'tools/nutrition_review_holds_v60.py'
       - 'tools/release_catalog_nutrition_review_holds.v1.json'
       - 'tests/test_nutrition_review_holds_v60.py'
+      - 'tests/test_release_catalog_nutrition_review_batch29_v60.py'
+      - 'tests/fixtures/nutrition-batch29-retained-reference-v60.json.gz'
       - 'tests/fixtures/nutrition-hold-evidence-subset-v60.json.gz'
       - '.github/workflows/nutrition-review-checkpoint-v60.yml'
 
@@ -31,6 +33,8 @@ jobs:
         run: python -m venv "$RUNNER_TEMP/cook4me-venv"
       - name: Test checkpoint, reconciliation, and nutrition hold safeguards
         run: '"$RUNNER_TEMP/cook4me-venv/bin/python" -m unittest discover -s tests -p "test_nutrition_review_*v60.py" -v'
+      - name: Test explicit retained-reference Batch 29 bindings
+        run: '"$RUNNER_TEMP/cook4me-venv/bin/python" -m unittest discover -s tests -p "test_release_catalog_nutrition_review_batch29_v60.py" -v'
       - name: Snapshot every recorded binding at this exact source commit
         run: |
           "$RUNNER_TEMP/cook4me-venv/bin/python" tools/snapshot_nutrition_review_checkpoint_v60.py \

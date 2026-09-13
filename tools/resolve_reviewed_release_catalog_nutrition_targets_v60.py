@@ -32,6 +32,7 @@ if str(TOOLS) not in sys.path:
 
 import resolve_reviewed_release_catalog_nutrition_v60 as exact_resolver  # type: ignore  # noqa: E402
 import reviewed_nutrition_v60 as reviewed_nutrition  # type: ignore  # noqa: E402
+import snapshot_nutrition_review_checkpoint_v60 as checkpoint  # noqa: E402
 
 
 def _text(value: Any) -> str:
@@ -93,6 +94,7 @@ def load_reviews(root: Path = TOOLS) -> dict[str, dict[str, Any]]:
             normalized["reviewTargetId"] = target_id
             normalized["fdcId"] = fdc_id
             normalized["reviewFile"] = path.name
+            normalized.update(checkpoint.retained_reference_receipt(value, raw, path.name))
             existing = out.get(target_id)
             if existing and int(existing["fdcId"]) != fdc_id:
                 raise RuntimeError(
@@ -280,6 +282,10 @@ def resolve(
             profile["nutritionReviewTargetKind"] = target_kind
             if target_kind == "semantic-concept":
                 profile["semanticConceptId"] = target_id
+            for key in ("evidenceBindingScope", "sourceEvidenceSha256", "sourceEvidenceTargetId",
+                        "sourceEvidenceCandidateRank", "sourceCandidateSha256"):
+                if key in review:
+                    profile[key] = review[key]
             if review.get("notes"):
                 profile["reviewNotes"] = _text(review.get("notes"))
             if not reviewed_nutrition.is_reviewed_profile(

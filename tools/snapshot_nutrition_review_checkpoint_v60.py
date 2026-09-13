@@ -25,6 +25,71 @@ REQUIRED_POLICY = {
     "providerIdentityInference": False,
 }
 HEX256 = re.compile(r"[0-9a-f]{64}\Z")
+RETAINED_SCOPE = "retained-reference-record"
+
+
+def retained_reference_receipt(value: dict[str, Any], row: dict[str, Any],
+                               context: str) -> dict[str, Any]:
+    """Expand an explicit receipt; do not infer identity from another target.
+
+The referenced candidate is a saved FDC description, not permission to copy the
+source target's nutrition decision. Each destination still needs its own review.
+"""
+    scope = value.get("evidenceBindingScope")
+    if scope is None:
+        return {}
+    if scope != RETAINED_SCOPE:
+        raise ValueError(f"{context}: unsupported evidenceBindingScope")
+    if value.get("selectionMethod") != "explicit-semantic-review":
+        raise ValueError(f"{context}: retained reference requires explicit semantic review")
+    if value.get("policy", {}).get("candidateSearchIsIdentityProof") is not False:
+        raise ValueError(f"{context}: candidate search cannot prove identity")
+    sha = _text(value, "sourceEvidenceSha256", context)
+    if not HEX256.fullmatch(sha):
+        raise ValueError(f"{context}: invalid source evidence SHA-256")
+    receipts = value.get("referenceReceipts")
+    fdc_id = _positive_int(row, "fdcId", context)
+    receipt = receipts.get(str(fdc_id)) if isinstance(receipts, dict) else None
+    if not isinstance(receipt, dict):
+        raise ValueError(f"{context}: missing exact FDC reference receipt")
+    # The rank belongs to the source record, not the destination search result.
+    if "candidateEvidenceRank" in row:
+        raise ValueError(f"{context}: retained-reference source rank is not a target rank")
+    _text(row, "notes", context)
+    _text(row, "fdcDescription", context)
+    _text(row, "fdcDataType", context)
+    digest = _text(receipt, "sourceCandidateSha256", context)
+    if not HEX256.fullmatch(digest):
+        raise ValueError(f"{context}: invalid source candidate SHA-256")
+    return {
+        "evidenceBindingScope": RETAINED_SCOPE,
+        "sourceEvidenceSha256": sha,
+        "sourceEvidenceTargetId": _text(receipt, "sourceEvidenceTargetId", context),
+        "sourceEvidenceCandidateRank": _positive_int(receipt, "sourceEvidenceCandidateRank", context),
+        "sourceCandidateSha256": digest,
+    }
+
+
+def retained_reference_mismatch(review: dict[str, Any], evidence_by_id: dict[str, Any],
+                                evidence_sha256: str) -> str:
+    """Check a manually recorded reference receipt against the actual saved file."""
+    if review.get("sourceEvidenceSha256") != evidence_sha256:
+        return "retained_reference_source_file_differs"
+    source = evidence_by_id.get(review.get("sourceEvidenceTargetId"))
+    if not isinstance(source, dict):
+        return "retained_reference_source_target_absent"
+    selected = next((c for c in source.get("candidates", [])
+                     if isinstance(c, dict) and c.get("fdcId") == review["fdcId"]), None)
+    if selected is None:
+        return "retained_reference_fdc_id_absent"
+    if any(review.get(a) != selected.get(b) for a, b in (
+        ("fdcDescription", "description"), ("fdcDataType", "dataType"),
+        ("sourceEvidenceCandidateRank", "localEvidenceRank"),
+    )):
+        return "retained_reference_candidate_metadata_differs"
+    if review.get("sourceCandidateSha256") != _digest(_encoded(selected)):
+        return "retained_reference_candidate_bytes_differ"
+    return ""
 
 
 def _digest(raw: bytes) -> str:
@@ -130,6 +195,7 @@ def build_checkpoint(review_root: Path, *, source_commit: str = "") -> dict[str,
                 if key in raw:
                     row[key] = (_positive_int(raw, key, context) if key == "candidateEvidenceRank"
                                 else _text(raw, key, context))
+            row.update(retained_reference_receipt(value, raw, context))
             rows[target] = row
         files.append({"path": path.name, "sha256": sha256, "itemCount": len(items)})
     accepted = [rows[target] for target in sorted(rows)]
@@ -162,6 +228,12 @@ def reconcile_evidence(checkpoint: dict[str, Any], evidence_path: Path) -> dict[
     items = evidence.get("items")
     if not isinstance(items, list):
         raise ValueError("evidence items must be a list")
+    evidence_by_id = {}
+    for raw in items:
+        target, _kind, _name = _identity(raw, "evidence")
+        if target in evidence_by_id:
+            raise ValueError(f"duplicate evidence reviewTargetId: {target}")
+        evidence_by_id[target] = raw
     recorded = {r["reviewTargetId"]: r for r in checkpoint["recordedBindings"]}
     seen: set[str] = set()
     remaining: list[dict[str, Any]] = []
@@ -198,6 +270,8 @@ def reconcile_evidence(checkpoint: dict[str, Any], evidence_path: Path) -> dict[
             reason = "recorded_reference_manifest_differs"
         elif review["catalogVersion"] != evidence.get("catalogVersion"):
             reason = "recorded_catalog_version_differs"
+        elif review.get("evidenceBindingScope") == RETAINED_SCOPE:
+            reason = retained_reference_mismatch(review, evidence_by_id, sha256)
         else:
             selected = next((c for c in candidates if c["fdcId"] == review["fdcId"]), None)
             if selected is None:
