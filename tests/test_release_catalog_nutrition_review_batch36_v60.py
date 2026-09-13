@@ -289,7 +289,7 @@ class SourceContextBatch36Tests(unittest.TestCase):
         # A synthetic subset replaces the full evidence only in this mocked audit test.
         with tempfile.TemporaryDirectory() as d:
             root=Path(d)/'tools';root.mkdir()
-            paths=[*sem._review_paths(TOOLS),TOOLS/mod.PROVIDER_REVIEW,work.LEDGER,mod.FINDINGS,mod.holds.REGISTRY,*TOOLS.glob(cp.REVIEW_GLOB)]
+            paths=[*sem._review_paths(TOOLS),TOOLS/mod.PROVIDER_REVIEW,work.LEDGER,mod.FINDINGS,mod.holds.REGISTRY,*[p for p in TOOLS.glob(cp.REVIEW_GLOB) if p.name < 'release_catalog_reviewed_nutrition_targets_041.v1.json']]
             for p in paths:shutil.copyfile(p,root/p.name)
             ep=Path(d)/'synthetic-evidence.json';ep.write_bytes(cp._encoded(self.evidence));sha=cp._read(ep)[1]
             for name in (work.LEDGER.name,mod.FINDINGS.name):

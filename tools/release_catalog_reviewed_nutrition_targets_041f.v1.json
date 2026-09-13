@@ -1,0 +1,156 @@
+{
+  "bulkFamilyRulesFile": "release_catalog_nutrition_bulk_family_rules.v1.json",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "bulkFamilyRuleId": "pollock-raw-generic",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Yellow (or black) pollock fillets",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Fish, pollock, raw",
+      "fdcId": 333476,
+      "notes": "Bulk family review Tier B / pollock-raw-generic. Explicit pollock fillet input; retained raw pollock reference without claiming yellow/black species equivalence. This is an explicitly reviewed generic category fallback, not a claim that the USDA record is the exact named subtype, brand or formulation. The target remains bound to one exact retained FDC ID for generic per-100-g estimation, while subtype-specific composition, species, curing, salt, fat, moisture and manufacturer differences are not inferred. Candidate retrieval order is not identity proof and no mass/yield conversion is introduced.",
+      "reviewTargetId": "concept:food:e41d3868d14a7ec0d7ee",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "7a866863042a2f030bc32be07653b8c1897f91145de5c0fa02c53aacb11e2f53",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "M_FOOD_287",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "smoked-bacon",
+      "bulkFamilyTier": "A",
+      "canonicalEnglishName": "Smoked bacon, cut into pieces",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Pork bacon, smoked or cured, cooked",
+      "fdcId": 2705889,
+      "notes": "Bulk family review Tier A / smoked-bacon. Explicit smoked bacon; cutting only; uses retained smoked/cured bacon reference. This target was matched by a committed anchored family rule after explicit semantic review; the rule does not use candidate rank as identity proof. The selected FDC record is an already-retained reference locator only. Cutting, serving or quantity wording does not authorize unsupported density, piece-weight, yield, cooking, draining or brand/formulation conversions. Generic per-100-g nutrition remains an estimate and does not certify an exact cultivar, trim, manufacturer or laboratory result.",
+      "reviewTargetId": "concept:food:e4d9de75022572782f5f",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "a2f065a2995d2450ffd4591e447a6726236870cff43adcd4e3b374d80755e131",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "M_FOOD_276",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "shrimp-nfs",
+      "bulkFamilyTier": "A",
+      "canonicalEnglishName": "Peeled king prawns",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Shrimp, NFS",
+      "fdcId": 2706360,
+      "notes": "Bulk family review Tier A / shrimp-nfs. Prawn/shrimp identity with peeling/size only; no cooked/frozen/brined state inferred. This target was matched by a committed anchored family rule after explicit semantic review; the rule does not use candidate rank as identity proof. The selected FDC record is an already-retained reference locator only. Cutting, serving or quantity wording does not authorize unsupported density, piece-weight, yield, cooking, draining or brand/formulation conversions. Generic per-100-g nutrition remains an estimate and does not certify an exact cultivar, trim, manufacturer or laboratory result.",
+      "reviewTargetId": "concept:food:edf1caccbfbcfe9f9f55",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "539f668b34d92104f8c29275f77c3f1105f2aaa4d90cb566e3ce570d859e9ff6",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "M_FOOD_154",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "named-sausage-generic",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Strasbourg sausage",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Sausage, NFS",
+      "fdcId": 2706190,
+      "notes": "Bulk family review Tier B / named-sausage-generic. Named sausage with no exact retained formulation; generic sausage category estimate only. This is an explicitly reviewed generic category fallback, not a claim that the USDA record is the exact named subtype, brand or formulation. The target remains bound to one exact retained FDC ID for generic per-100-g estimation, while subtype-specific composition, species, curing, salt, fat, moisture and manufacturer differences are not inferred. Candidate retrieval order is not identity proof and no mass/yield conversion is introduced.",
+      "reviewTargetId": "concept:food:eef728968fce01e25e65",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "2d54d79c363efa1a4d6aa8361a8f360c36dedca4670deb482cb125e5e4db2d31",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:a33522d88db59d3b5878",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "beef-cheek-generic",
+      "bulkFamilyTier": "A",
+      "canonicalEnglishName": "Beef cheek, cut into strips",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Beef, NFS",
+      "fdcId": 2705822,
+      "notes": "Bulk family review Tier A / beef-cheek-generic. Beef cheek remains beef; trimming/cutting only. Generic beef avoids unsupported trim composition. This target was matched by a committed anchored family rule after explicit semantic review; the rule does not use candidate rank as identity proof. The selected FDC record is an already-retained reference locator only. Cutting, serving or quantity wording does not authorize unsupported density, piece-weight, yield, cooking, draining or brand/formulation conversions. Generic per-100-g nutrition remains an estimate and does not certify an exact cultivar, trim, manufacturer or laboratory result.",
+      "reviewTargetId": "concept:food:ef6f73e792f860bf0ccf",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "cce9410ba6201ebe8943a472acbccc7b0f91e4f494df5b02c2b02af86c30c92f",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "M_FOOD_45",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "fresh-mint-leaf",
+      "bulkFamilyTier": "A",
+      "canonicalEnglishName": "Fresh mint, sliced",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spearmint, fresh",
+      "fdcId": 173475,
+      "notes": "Bulk family review Tier A / fresh-mint-leaf. Leaf/presentation wording only; no drying/cooking or mixture. This target was matched by a committed anchored family rule after explicit semantic review; the rule does not use candidate rank as identity proof. The selected FDC record is an already-retained reference locator only. Cutting, serving or quantity wording does not authorize unsupported density, piece-weight, yield, cooking, draining or brand/formulation conversions. Generic per-100-g nutrition remains an estimate and does not certify an exact cultivar, trim, manufacturer or laboratory result.",
+      "reviewTargetId": "concept:food:f4f1a34323bfc81a168f",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "e5110ffb30edffc12cf5ce1bd817c9b4c8a00bc26871ff47defe6989483a66fa",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:75c62de46d222b43855c",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "nutritionScope": "Bulk-reviewed generic per-100-g ingredient references. Tier A preserves explicit food/state families; Tier B is an explicitly reviewed generic category fallback. Neither tier supplies density, piece weight, edible yield, brand formulation or unsupported cooking/draining conversion.",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "referenceReceipts": {
+    "173475": {
+      "sourceCandidateSha256": "e5110ffb30edffc12cf5ce1bd817c9b4c8a00bc26871ff47defe6989483a66fa",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:75c62de46d222b43855c"
+    },
+    "2705822": {
+      "sourceCandidateSha256": "cce9410ba6201ebe8943a472acbccc7b0f91e4f494df5b02c2b02af86c30c92f",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "M_FOOD_45"
+    },
+    "2705889": {
+      "sourceCandidateSha256": "a2f065a2995d2450ffd4591e447a6726236870cff43adcd4e3b374d80755e131",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "M_FOOD_276"
+    },
+    "2706190": {
+      "sourceCandidateSha256": "2d54d79c363efa1a4d6aa8361a8f360c36dedca4670deb482cb125e5e4db2d31",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:a33522d88db59d3b5878"
+    },
+    "2706360": {
+      "sourceCandidateSha256": "539f668b34d92104f8c29275f77c3f1105f2aaa4d90cb566e3ce570d859e9ff6",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "M_FOOD_154"
+    },
+    "333476": {
+      "sourceCandidateSha256": "7a866863042a2f030bc32be07653b8c1897f91145de5c0fa02c53aacb11e2f53",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "M_FOOD_287"
+    }
+  },
+  "referenceUse": "Source target/rank only locates an existing retained FDC record. Approval comes from the committed anchored family rule plus the exact destination review row; source-target identity/rank is never copied.",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac"
+}
