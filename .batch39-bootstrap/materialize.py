@@ -24,20 +24,16 @@ FILES = {
 def die(msg: str) -> None:
     raise SystemExit(msg)
 
-def prefix(path: pathlib.Path, length: int) -> str:
-    text = ''.join(path.read_text(encoding='ascii').split())
-    if len(text) < length:
-        die(f'transport too short: {path.name}')
-    return text[:length]
+def text(path: pathlib.Path) -> str:
+    return ''.join(path.read_text(encoding='ascii').split())
 
-chunks = sorted(CHUNKS.glob('chunk-*'))
-if [p.name for p in chunks] != [f'chunk-{i:03d}' for i in range(21)]:
-    die('expected exact Batch 39 prefix chunk set')
-tail = ROOT / '.batch39-bootstrap' / 'tail-021-023.b64'
-if not tail.is_file():
-    die('missing Batch 39 tail transport')
-parts = [prefix(path, 5800) for path in chunks]
-parts.append(prefix(tail, 13524))
+repair = ROOT / '.batch39-bootstrap' / 'repair'
+parts = [text(CHUNKS / f'chunk-{i:03d}') for i in range(18)]
+parts += [text(repair / f'chunk-018-{i}') for i in range(3)]
+parts += [text(CHUNKS / f'chunk-{i:03d}') for i in range(19, 21)]
+parts += [text(repair / f'chunk-021-{i}') for i in range(3)]
+parts += [text(repair / f'chunk-022-{i}') for i in range(3)]
+parts += [text(repair / 'chunk-023-0')]
 try:
     payload = base64.b64decode(''.join(parts), validate=True)
 except Exception as exc:
