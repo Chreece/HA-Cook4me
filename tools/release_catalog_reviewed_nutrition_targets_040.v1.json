@@ -1,0 +1,264 @@
+{
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Salmon",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Fish, salmon, raw",
+      "fdcId": 2706284,
+      "notes": "Select the retained generic raw salmon reference for this separately named salmon input. No species, wild/farmed origin or species-specific fat content is inferred. Cutting, boning and skin removal are not cooking. This is not a smoked, salted, seasoned or roe profile, and it supplies no bone/skin yield, piece weight, cooking conversion or food-safety certification. The unqualified provider ingredient is reviewed as raw recipe input, not as a claim that every use of salmon is raw.",
+      "reviewTargetId": "M_FOOD_454",
+      "reviewTargetKind": "provider-identity",
+      "usageCountAtReview": 252
+    },
+    {
+      "canonicalEnglishName": "Salmon",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Fish, salmon, raw",
+      "fdcId": 2706284,
+      "notes": "Select the retained generic raw salmon reference for this separately named salmon input. No species, wild/farmed origin or species-specific fat content is inferred. Cutting, boning and skin removal are not cooking. This is not a smoked, salted, seasoned or roe profile, and it supplies no bone/skin yield, piece weight, cooking conversion or food-safety certification. The unqualified semantic ingredient is reviewed as raw recipe input, not as a claim that every use of salmon is raw.",
+      "reviewTargetId": "concept:food:be36dd214831d160065e",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 105
+    },
+    {
+      "canonicalEnglishName": "Cognac",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Brandy",
+      "fdcId": 2710699,
+      "notes": "The target names Cognac or Armagnac as a separate input beverage. Select the retained generic brandy reference, not wine, a sweetened liqueur or a prepared cocktail. This category-level reference does not establish a particular brand, geographical certification, age, exact alcohol strength or sugar content. It supplies no tablespoon-to-mass conversion, evaporation or alcohol-retention factor. The full target name remains Cognac.",
+      "reviewTargetId": "concept:food:e2ba1f1e3af2ea881b60",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 45
+    },
+    {
+      "canonicalEnglishName": "Cognac",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Brandy",
+      "fdcId": 2710699,
+      "notes": "The target names Cognac or Armagnac as a separate input beverage. Select the retained generic brandy reference, not wine, a sweetened liqueur or a prepared cocktail. This category-level reference does not establish a particular brand, geographical certification, age, exact alcohol strength or sugar content. It supplies no tablespoon-to-mass conversion, evaporation or alcohol-retention factor. The exact provider ID remains distinct from similarly named semantic targets.",
+      "reviewTargetId": "M_FOOD_125",
+      "reviewTargetKind": "provider-identity",
+      "usageCountAtReview": 36
+    },
+    {
+      "canonicalEnglishName": "Armagnac",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Brandy",
+      "fdcId": 2710699,
+      "notes": "The target names Cognac or Armagnac as a separate input beverage. Select the retained generic brandy reference, not wine, a sweetened liqueur or a prepared cocktail. This category-level reference does not establish a particular brand, geographical certification, age, exact alcohol strength or sugar content. It supplies no tablespoon-to-mass conversion, evaporation or alcohol-retention factor. The full target name remains Armagnac; it is not rewritten to Cognac.",
+      "reviewTargetId": "M_FOOD_18",
+      "reviewTargetKind": "provider-identity",
+      "usageCountAtReview": 3
+    },
+    {
+      "canonicalEnglishName": "Wax beans",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Beans, snap, yellow, raw",
+      "fdcId": 169320,
+      "notes": "Wax beans name yellow snap beans, whose immature edible pods are distinct from mature dried bean seeds. Select the retained raw yellow snap-bean reference at the unprepared ingredient stage. Do not substitute green beans, canned beans or boiled beans. The mapping supplies no trimming yield, drained weight, added-fat estimate or raw-to-cooked conversion.",
+      "reviewTargetId": "M_FOOD_234",
+      "reviewTargetKind": "provider-identity",
+      "usageCountAtReview": 3
+    },
+    {
+      "canonicalEnglishName": "Pieces of Parma ham",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Ham, prosciutto",
+      "fdcId": 2705879,
+      "notes": "The target names Parma ham or Italian prosciutto. Select the retained prosciutto reference, not the separate generic cooked-ham record, bacon or an unspecified cured meat. Cutting only does not alter the reference state. This is a generic prosciutto estimate, not protected-origin, curing-age, exact salt/fat formulation or brand certification; no slice-to-mass conversion is supplied. Parma is retained in the target name; the FDC record is not mislabeled as a measured Parma product.",
+      "reviewTargetId": "concept:food:2c054106e8368358756b",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 2
+    },
+    {
+      "canonicalEnglishName": "Slices of cooked ham, cut into strips",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Ham",
+      "fdcId": 2705878,
+      "notes": "The target explicitly names cooked ham slices, cut only into strips. Select the retained generic ham reference, separately from the prosciutto reference. No canned, turkey, honey-glazed, lean-percentage or particular brand formulation is inferred. This generic per-100-g input reference supplies no slice weight, added-water estimate or recipe cooking-loss factor. The explicit cooked wording is retained.",
+      "reviewTargetId": "concept:food:cfe1ebd2f4a0fd77dd66",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 2
+    },
+    {
+      "canonicalEnglishName": "Almond dragées (for finishing)",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Candies, sugar-coated almonds",
+      "fdcId": 170656,
+      "notes": "Almond dragees denote sugar-coated almond confectionery. Select the retained sugar-coated-almond record, not plain almonds, almond butter or chocolate-coated nuts. The finishing role adds no other ingredient to this target. This generic confectionery reference does not establish the product's exact coating ratio, coloring, almond size, brand formulation or piece weight.",
+      "reviewTargetId": "concept:food:edbee176972f9fe40abb",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Boiled Savoy cabbage leaves",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Cabbage, savoy, cooked",
+      "fdcId": 2709894,
+      "notes": "The target explicitly says boiled Savoy cabbage leaves. Select the retained cooked Savoy-cabbage reference rather than raw Savoy cabbage or a different cabbage variety. The generic cooked record does not establish exact cooking time, salt concentration, drained moisture or recipe yield. No raw-to-cooked or whole-head-to-leaf mass conversion is supplied.",
+      "reviewTargetId": "concept:food:0f5df2cc9169e2e81e69",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Cooked ham slices, cut into strips",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Ham",
+      "fdcId": 2705878,
+      "notes": "The target explicitly names cooked ham slices, cut only into strips. Select the retained generic ham reference, separately from the prosciutto reference. No canned, turkey, honey-glazed, lean-percentage or particular brand formulation is inferred. This generic per-100-g input reference supplies no slice weight, added-water estimate or recipe cooking-loss factor. The explicit cooked wording is retained.",
+      "reviewTargetId": "concept:food:5615db12b9118b87d6c3",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Drops of Tabasco (optional)",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Sauce, ready-to-serve, pepper, TABASCO",
+      "fdcId": 174528,
+      "notes": "The target names optional Tabasco drops. Select the retained ready-to-serve pepper sauce record explicitly labeled TABASCO, rather than raw peppers, dried chili or an unspecified sauce blend. This is the generic brand-named reference, not confirmation of a particular bottle, sauce variant or current formulation. Optionality does not mean zero consumption and no drop-to-mass or volume conversion is supplied.",
+      "reviewTargetId": "concept:food:1816b2d68bb0f248f00b",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Fine bulgur for meatballs",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Bulgur, dry",
+      "fdcId": 170688,
+      "notes": "The target names fine bulgur for use in meatballs, not a finished meatball or a meat-and-grain mixture. Select the retained dry bulgur reference at the input stage; no soaking, boiling or water addition is stated for this ingredient. Fineness does not establish hydration. No cooked yield, water absorption, spoon weight or conversion from another wheat product is inferred.",
+      "reviewTargetId": "concept:food:fa1cfb4775d59ca2a2b6",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Salmon fillet, boned and skinned",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Fish, salmon, raw",
+      "fdcId": 2706284,
+      "notes": "Select the retained generic raw salmon reference for this separately named salmon input. No species, wild/farmed origin or species-specific fat content is inferred. Cutting, boning and skin removal are not cooking. This is not a smoked, salted, seasoned or roe profile, and it supplies no bone/skin yield, piece weight, cooking conversion or food-safety certification. Only edible fillet mass can use this reference; discarded bones and skin are not included.",
+      "reviewTargetId": "concept:food:3923a9f4a9ea30908f05",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Salmon steaks, 150 g each (skin removed)",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Fish, salmon, raw",
+      "fdcId": 2706284,
+      "notes": "Select the retained generic raw salmon reference for this separately named salmon input. No species, wild/farmed origin or species-specific fat content is inferred. Cutting, boning and skin removal are not cooking. This is not a smoked, salted, seasoned or roe profile, and it supplies no bone/skin yield, piece weight, cooking conversion or food-safety certification. The stated 150 g steak size is not proof of a boneless edible portion; bones must not be counted as edible salmon.",
+      "reviewTargetId": "concept:food:0994ceb889481eb65e10",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Sashimi-grade salmon, cut into bite-size pieces",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Fish, salmon, raw",
+      "fdcId": 2706284,
+      "notes": "Select the retained generic raw salmon reference for this separately named salmon input. No species, wild/farmed origin or species-specific fat content is inferred. Cutting, boning and skin removal are not cooking. This is not a smoked, salted, seasoned or roe profile, and it supplies no bone/skin yield, piece weight, cooking conversion or food-safety certification. The sashimi-grade wording is not verified and this nutrition decision gives no assurance that the fish is safe to eat raw.",
+      "reviewTargetId": "concept:food:16b77d0e88752e1bc1db",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Slices of Italian prosciutto",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Ham, prosciutto",
+      "fdcId": 2705879,
+      "notes": "The target names Parma ham or Italian prosciutto. Select the retained prosciutto reference, not the separate generic cooked-ham record, bacon or an unspecified cured meat. Cutting only does not alter the reference state. This is a generic prosciutto estimate, not protected-origin, curing-age, exact salt/fat formulation or brand certification; no slice-to-mass conversion is supplied. Italian is retained in the target name; the reference does not certify origin.",
+      "reviewTargetId": "concept:food:5381e6bf82f86f45e7b9",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "tbsp cognac",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Brandy",
+      "fdcId": 2710699,
+      "notes": "The target names Cognac or Armagnac as a separate input beverage. Select the retained generic brandy reference, not wine, a sweetened liqueur or a prepared cocktail. This category-level reference does not establish a particular brand, geographical certification, age, exact alcohol strength or sugar content. It supplies no tablespoon-to-mass conversion, evaporation or alcohol-retention factor. The literal tbsp qualifier is preserved in the target name and does not authorize converting it to grams.",
+      "reviewTargetId": "concept:food:43f19f3f05443df3c886",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "referenceReceipts": {
+    "169320": {
+      "sourceCandidateSha256": "f684335cb83f12bde6747fda66e32d65681c774efd0a0819202a9ae7d9934eaf",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "concept:food:e66e3dcfa93b006cbfc9"
+    },
+    "170656": {
+      "sourceCandidateSha256": "976e7705f3f80c80c0fdfbf62f10815f870df9c19a27d6c9048480d9d6ee39de",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "concept:food:1da11821763dffbf01eb"
+    },
+    "170688": {
+      "sourceCandidateSha256": "c08993f2486c55dcb3532a3caf5a74a073762add2c5439856365b3e5714f464d",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:1c0feb78d9f71e6e5e7a"
+    },
+    "174528": {
+      "sourceCandidateSha256": "45231ec460b06df071440fa7fa2ca5146e524171588991471d7984510583bf6a",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:16b2c71f77e55e8fd597"
+    },
+    "2705878": {
+      "sourceCandidateSha256": "b3f93dd6f607bda67182403389016eea4e0418d164e0ed02a5428e6d315a6d1d",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:a64e5bbaad126f37756a"
+    },
+    "2705879": {
+      "sourceCandidateSha256": "fa9bbaea3a19f665f971369e754fdab4789820223128f631ddc63fc21c95758f",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "concept:food:ea833ad9761d7255c8cf"
+    },
+    "2706284": {
+      "sourceCandidateSha256": "8e960bec80242b8dd1d795a33ace27cf716707da51478dd0758d21baeeadb522",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceTargetId": "concept:food:4654d7fd607025b3f596"
+    },
+    "2709894": {
+      "sourceCandidateSha256": "30ac7d5c60e640254c48251eeffef5a8aea36078f3f182d908dd7d5af79959b2",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:d8b0b50e9ff3e9ffaecf"
+    },
+    "2710699": {
+      "sourceCandidateSha256": "209815583754d985f4bea4df359f0ae6af07976b758c5fedf45880a30893cc22",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:d153c5dfffd53673f4af"
+    }
+  },
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac"
+}
