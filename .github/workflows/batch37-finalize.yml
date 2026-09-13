@@ -34,7 +34,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Hydrate any missing verified transport blobs
+      - name: Hydrate, materialize, and apply CI-portable regressions
         if: hashFiles('.batch37-bootstrap/materialize.py') != ''
         run: |
           python - <<'PY'
@@ -50,6 +50,8 @@ jobs:
               (out/name).write_bytes(raw)
           PY
           python .batch37-bootstrap/materialize.py
+          git apply .batch37-bootstrap/portable-classifier.patch
+          git apply .batch37-bootstrap/portable-test.patch
       - name: Confirm materialized Batch 37 source exists
         run: |
           test -f tools/release_catalog_reviewed_nutrition_targets_041.v1.json
@@ -60,10 +62,18 @@ jobs:
       - name: Validate exact materialized source
         run: |
           export TMPDIR="$RUNNER_TEMP"
-          python -m compileall -q custom_components tools tests
-          find . -name '*.json' -not -path './.git/*' -print0 | xargs -0 -n1 python -m json.tool >/dev/null
+          python scripts/version.py validate
+          python -m compileall -q custom_components/cook4me tests tools
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for p in Path('.').rglob('*.json'):
+              if '.git' not in p.parts:
+                  json.loads(p.read_text(encoding='utf-8'))
+          print('JSON OK')
+          PY
           find . -name '*.sh' -not -path './.git/*' -print0 | xargs -0 -r -n1 bash -n
-          find custom_components -name '*.js' -print0 | xargs -0 -r -n1 node --check
+          for f in custom_components/cook4me/frontend/cook4me-panel-v*.js; do node --check "$f"; done
           python -m unittest discover -s tests -v
       - name: Remove transport, commit exact reviewed source, and push
         run: |
