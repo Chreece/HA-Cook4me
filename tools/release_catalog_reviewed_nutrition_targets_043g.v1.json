@@ -1,0 +1,350 @@
+{
+  "bulkFamilyRulesFile": "release_catalog_nutrition_bulk_family_rules_batch39.v1.json",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "bulkFamilyRuleId": "b39-potato-gnocchi",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch39.v1.json",
+      "bulkFamilyTier": "A",
+      "canonicalEnglishName": "Gnocchi (chilled section)",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Gnocchi, potato",
+      "fdcId": 2708722,
+      "notes": "Batch 39 bulk-family Tier A / b39-potato-gnocchi. The ingredient is explicitly gnocchi; chilled retail location does not change food identity, and retained potato gnocchi is the direct category. This is an explicitly reviewed direct food/state family; presentation wording does not create a new food identity. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "concept:food:f45fe233dd911d37b7fc",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "83e3343a00417001231ff3488013095afff6738aecb91260a4c1e275085bca9f",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:b7eabff2f35911f74c6f",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b39-turkey-strips-nfs",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch39.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Turkey strips",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Turkey, NFS",
+      "fdcId": 2706104,
+      "notes": "Batch 39 bulk-family Tier B / b39-turkey-strips-nfs. Turkey strips use retained Turkey NFS. Slicing is presentation only; breast/thigh cut, skin and solution treatment are not inferred. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fat level, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, or hidden ingredient composition is inferred.",
+      "reviewTargetId": "concept:food:f74b9434964547613420",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "88b6cffec73da7a6bc540102401171be0b7df6889d00d9c8b3944edb19493d2c",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "M_FOOD_163",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "nutritionScope": "Batch 39 bulk-reviewed generic per-100-g ingredient references. Named rice families are limited to source concepts without hidden wash/soak/rinse qualifiers; Tier A/B rows do not authorize density, piece/yield, cooking/draining conversions or exact brand/formulation claims.",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "referenceReceipts": {
+    "168277": {
+      "sourceCandidateSha256": "d24b26725f5bd7bbea7c286667f08f4d8c401e06502b7463c1a22909734a9906",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "M_FOOD_26"
+    },
+    "168410": {
+      "sourceCandidateSha256": "fe6b8721bf215d331d90cf798bf8c97e9b4dee5b436bc5d97df7d325035718e3",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:44d6e5016f112073033e"
+    },
+    "168434": {
+      "sourceCandidateSha256": "a222e6bfa4da2999643d540ba7ce369821635d5cddbc38738d26415b7f8bf51e",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:46f4ebedd85fa8605023"
+    },
+    "168448": {
+      "sourceCandidateSha256": "a7223f53e03e8e6c01fd774d6b10b9e069c475df9977190427145037906f4899",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "concept:food:d756a89a7001eb96bb70"
+    },
+    "168893": {
+      "sourceCandidateSha256": "17402ed34955aeafa82c568dfe24bbf884bbf8706b32aeaeaaac989957b3cfb0",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:168d52a027eb16cbc670"
+    },
+    "168931": {
+      "sourceCandidateSha256": "92741d06712149c8c1d6867e2473c47d004eb7b333966a990614a860fb2c3c6f",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:749e9e60b2f2475c7f1e"
+    },
+    "169214": {
+      "sourceCandidateSha256": "21f7d4a2acfb5a3e5e0ad6de4da22eb77f5c1726a07f70433c70115402761fae",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:99637eb54077fb2bf2f3"
+    },
+    "169379": {
+      "sourceCandidateSha256": "ebda5dd8adc2a71577719081f5b8b08436ac965c62a886f4ce3b439e1176c40b",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:608f1d306499a9e63520"
+    },
+    "169760": {
+      "sourceCandidateSha256": "a57cacddfb73f0bf8017eafc845a33baf1f22df6e4c1cc380286921f0365200f",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:749e9e60b2f2475c7f1e"
+    },
+    "170000": {
+      "sourceCandidateSha256": "a8a56229b3b083e4d077e5e287aaf0c53bfd471afc5a3b6199ffe6ddcc4400e1",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:d098e5e45c82f4ad1388"
+    },
+    "170010": {
+      "sourceCandidateSha256": "8dee1068ebd1805e3ee4b18e34a21239e13cb4bf76d424c6de69bb3583539a4d",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "concept:food:0e1b5eb5dbed06df9c8c"
+    },
+    "170170": {
+      "sourceCandidateSha256": "7067bd48d7e2e1cb89e2f6d0af7bcb882c71489c2374070ea301d8cdb5c7f500",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:518e123f0bfb228f46de"
+    },
+    "170271": {
+      "sourceCandidateSha256": "86f75a994b0f662271e7f52d8bae3bee4c32875bad412c035b61bc11c9ad02f1",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "concept:food:cab6d8b92e66a296d148"
+    },
+    "170272": {
+      "sourceCandidateSha256": "4a7d04469de6200942522abd43596e6475e390d0d474837d80f26ad5fc836160",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:cab6d8b92e66a296d148"
+    },
+    "170931": {
+      "sourceCandidateSha256": "0c2e7e0ce194620b73efc1a7e1c131b15d1cb22ee33bd6dac24c6998dbf86ee4",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:e1893ccc5a2ba731a06f"
+    },
+    "170932": {
+      "sourceCandidateSha256": "3749ec7972eb811b84d7af995e98a8a990c3758b6566283be25dfb096cdfea61",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "M_FOOD_391"
+    },
+    "171116": {
+      "sourceCandidateSha256": "d324ca6396e3b72402322c334b001352e830923f51621551f1fdffccd0ab817d",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "M_FOOD_627"
+    },
+    "172791": {
+      "sourceCandidateSha256": "6a51d180d5a5d0cfa32679fbd595711902bed53ea7e37928ec4842040f156e95",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "M_FOOD_678"
+    },
+    "172802": {
+      "sourceCandidateSha256": "63bcb319dd53b809618fc5a059f8dd7398e51294cc2e1d2be142dd482797ed22",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:f578e5f16a12ddd0760f"
+    },
+    "172803": {
+      "sourceCandidateSha256": "073a1cad00949b1147eec16eac72e648ae3a9afe8df3f8b10d3c1e299011a6c5",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:8d4f55dd1fd80c16dd05"
+    },
+    "172934": {
+      "sourceCandidateSha256": "523413ddf95396905a1f892ff557fed377e0aa8678a76ccdd3d5dc07bd8ac82a",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "concept:food:8f64d909b5f284201826"
+    },
+    "172968": {
+      "sourceCandidateSha256": "b4ec97dee29429d56caa22b2de35dfee6fbde5b93e33e0a700f179083b2ae03f",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "M_FOOD_87"
+    },
+    "173468": {
+      "sourceCandidateSha256": "43fd864a90e105ea5b197fe2860ec4b0218b47e9c685e203cc01b76c7e09cd5b",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:6de8c0620c5a99d33180"
+    },
+    "174188": {
+      "sourceCandidateSha256": "ea9af175cd47394e3a46008271c4b554f7dae991350a1dcbfc379f336bd7fad3",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:e1893ccc5a2ba731a06f"
+    },
+    "174956": {
+      "sourceCandidateSha256": "45bb04fd22db91d37ef54993f230e9c4e2e08e9b853a0c2d9f3c528d159fd619",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceTargetId": "concept:food:ad92e4f61597343d6d15"
+    },
+    "175040": {
+      "sourceCandidateSha256": "0eea078b07c8588554324fd896c9276be77b8eedb64f85377254bd4b643b496b",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceTargetId": "concept:food:e06d07cc4cf816278510"
+    },
+    "175179": {
+      "sourceCandidateSha256": "fa3f46ea9301c0a6518e45d706584d41d67ad0fe206f73e20159f93d50f03ac2",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceTargetId": "concept:food:57c678875b41741639c0"
+    },
+    "2512380": {
+      "sourceCandidateSha256": "8b5d71c4d5e9eecdc469df5cd7ad8c018a1292e40614c6f8e80172abd338d9e2",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "M_FOOD_549"
+    },
+    "2512381": {
+      "sourceCandidateSha256": "f0365009cc7b149a5892c4b148e38824bf5f7786b288da7f6fc28b97d16437d1",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "M_FOOD_549"
+    },
+    "2705733": {
+      "sourceCandidateSha256": "ceffe49a94a935abf8fc9b3e5837b838628d5f9fb101d2dc5da5195f405fce1f",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "concept:food:14b7f4689080887a2472"
+    },
+    "2705735": {
+      "sourceCandidateSha256": "f62f0173ec7a0c44db7c39c951b0f0779cdce0953ac29ef40c59af5d10a817c8",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:722487c9bdda29f91c14"
+    },
+    "2705819": {
+      "sourceCandidateSha256": "e5d3cbaf7836b2ebbb40de687255578c0f6a554143cefeea9aefcbf4b3012eb6",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:8378d0091c36fda8fb81"
+    },
+    "2705820": {
+      "sourceCandidateSha256": "ffa3f5a52c893c52fa7a88632d92daa19f559ffba52da9962a21d375a3757b81",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "concept:food:cc38f529eba62e071a2d"
+    },
+    "2705822": {
+      "sourceCandidateSha256": "cce9410ba6201ebe8943a472acbccc7b0f91e4f494df5b02c2b02af86c30c92f",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "M_FOOD_45"
+    },
+    "2705862": {
+      "sourceCandidateSha256": "69fe82e12ebec35d240571573671846f2c64803105b66bd05c0e200721bc464e",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "M_FOOD_396"
+    },
+    "2705879": {
+      "sourceCandidateSha256": "d0bc94d375dc20c590a405a6a19c802392ee6ef886be55ac7127e9ad02312a99",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "M_FOOD_731"
+    },
+    "2706104": {
+      "sourceCandidateSha256": "88b6cffec73da7a6bc540102401171be0b7df6889d00d9c8b3944edb19493d2c",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "M_FOOD_163"
+    },
+    "2706154": {
+      "sourceCandidateSha256": "63a9ee5b887f8e20003e1c9d3e1c3f5a0b14b290bba8dd04b0b28103c6ad731f",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:e541045921a72f162634"
+    },
+    "2706224": {
+      "sourceCandidateSha256": "5bca56c4ae63de51e57261604f25b3ca03d21b90130deceba48e60a99dbb963b",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "M_FOOD_288"
+    },
+    "2706240": {
+      "sourceCandidateSha256": "9c54f822b8e611e84b863aa0166b974c997be50e298c53fe152c5dbf162dfb2f",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:64f9ed409087c53cefd2"
+    },
+    "2707140": {
+      "sourceCandidateSha256": "534bc8499b932a3b88f364e081a22bd7d32f59d9e1b88d566a7b06a413d762b6",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "concept:food:7c67a1326ba87f874f5f"
+    },
+    "2707504": {
+      "sourceCandidateSha256": "921b8abf116e4a5f9fc90782b7c15863d9bc88c9b570b3060f0f7c2400bea46a",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceTargetId": "M_FOOD_59"
+    },
+    "2707900": {
+      "sourceCandidateSha256": "f269cd8737080fa2f6657dbe7188f80e2e455b76075d3cb4e87107728d8de3d9",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceTargetId": "concept:food:897147b1fb71b661cd51"
+    },
+    "2707915": {
+      "sourceCandidateSha256": "2adf53bec354b36288576a25a31d027a4492efb4c049b8f8a6012d20e739beb2",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:d98df28e9b01c033aa01"
+    },
+    "2707964": {
+      "sourceCandidateSha256": "047ac1993e4ead429acf053b3a281346c238428a7084d55ed00c6564e779fad6",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "M_FOOD_529"
+    },
+    "2708133": {
+      "sourceCandidateSha256": "c4bb8eaf259e94213fb23b9cd1f02d990c8987171d6916e3c4d30f41dc5041a8",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:cc15300ff0db3818c459"
+    },
+    "2708373": {
+      "sourceCandidateSha256": "bd2667b86498bb85c26e17261f881157b427a4a8ab0710091a04ada8f7a8be5a",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "concept:food:24b65752e4dc52888c46"
+    },
+    "2708722": {
+      "sourceCandidateSha256": "83e3343a00417001231ff3488013095afff6738aecb91260a4c1e275085bca9f",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:b7eabff2f35911f74c6f"
+    },
+    "2708790": {
+      "sourceCandidateSha256": "d9f4e300c60ca6e0ab87d71a5835c177152d08bc77acdd427cebc52405e041cb",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:b818cfa43e72b924331b"
+    },
+    "2709213": {
+      "sourceCandidateSha256": "05ac3bc6edae95c316057f1d8307fb47181e6981da4c8339bf6ffba4a24bd6fb",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceTargetId": "M_FOOD_128"
+    },
+    "2709271": {
+      "sourceCandidateSha256": "80c8aa6274c0e87b79a33e0ce545dfbb5de2fda1bc28bdd95c70e24f744e6070",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:d639012a952eb30f2bb9"
+    },
+    "2709798": {
+      "sourceCandidateSha256": "524224f457cf26d489305fe45b4eae24b971d7b4d62adfc17cd1a177fa87ce6e",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:752e7ef0a5932d3a3c38"
+    },
+    "2709982": {
+      "sourceCandidateSha256": "a95ec02b2c5047ace51eb6790cdabf644d15590800e1aec209f4a73304ef9b76",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:f63f211a220f3a9910c0"
+    },
+    "2709988": {
+      "sourceCandidateSha256": "5a25a4c2752b0abd65981f3bc5bbb44ff9299925b00abbaeb341674ec335f8c6",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:069089e27b740750d60e"
+    },
+    "2710283": {
+      "sourceCandidateSha256": "e346190a44d7210fc99be7676f9f792c43e4b2711aa48fa3d7a0073038308fbe",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:2208967697d9c32752b7"
+    },
+    "2710284": {
+      "sourceCandidateSha256": "0feb67eb7d8216cb61b650bb45e53d36ca8d74098952c7eb3e30292e4f5b3ffa",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:6b94155bb327372d306b"
+    },
+    "2710289": {
+      "sourceCandidateSha256": "5548c3cdc2901239ad487deb94327a4b0209b19254ad86ed273cb104ac8c9a65",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceTargetId": "M_FOOD_329"
+    },
+    "2710616": {
+      "sourceCandidateSha256": "05ead271cd44c18b7bd07a1c28f444985afab4e483ad2988d58caebac7d3630b",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:e6820b6b536165373a22"
+    }
+  },
+  "referenceUse": "Source target/rank only locates an existing retained FDC record. Every destination has its own explicit reviewed row; locator identity/rank is never copied as proof.",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac"
+}
