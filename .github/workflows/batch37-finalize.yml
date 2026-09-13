@@ -75,11 +75,15 @@ jobs:
           find . -name '*.sh' -not -path './.git/*' -print0 | xargs -0 -r -n1 bash -n
           for f in custom_components/cook4me/frontend/cook4me-panel-v*.js; do node --check "$f"; done
           python -m unittest discover -s tests -v
-      - name: Remove transport, commit exact reviewed source, and push
+      - name: Push validated source without workflow-file mutations
         run: |
           git fetch origin "$HEAD_BRANCH"
           test "$(git rev-parse HEAD)" = "$(git rev-parse origin/$HEAD_BRANCH)" || { echo 'Branch advanced; newer synchronize run will finalize it'; exit 78; }
-          rm -rf .batch37-bootstrap .github/workflows/batch37-materialize.yml .github/workflows/batch37-hydrate.yml .github/workflows/batch37-finalize.yml
+          # The GitHub Actions app cannot push workflow-file changes. Keep permanent
+          # checkpoint workflow and temporary Batch 37 workflows byte-identical to the
+          # remote branch in this commit; they are cleaned separately by the connector.
+          git restore --source="origin/$HEAD_BRANCH" -- .github/workflows/nutrition-review-checkpoint-v60.yml
+          rm -rf .batch37-bootstrap
           git add -A
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -87,14 +91,7 @@ jobs:
           git commit -m 'Materialize and validate Batch 37 bulk nutrition reviews'
           git push origin "HEAD:$HEAD_BRANCH"
           echo "FINAL_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
-      - name: Merge exact validated PR head
+      - name: Record validated source head
         run: |
-          python - <<'PY'
-          import json, os, urllib.request
-          repo=os.environ['GITHUB_REPOSITORY']; pr=os.environ['PR_NUMBER']; sha=os.environ['FINAL_SHA']; token=os.environ['GH_TOKEN']
-          body=json.dumps({'sha':sha,'merge_method':'merge','commit_title':'Merge Batch 37 bulk deterministic nutrition reviews'}).encode()
-          req=urllib.request.Request(f'https://api.github.com/repos/{repo}/pulls/{pr}/merge',data=body,method='PUT',headers={'Authorization':f'Bearer {token}','Accept':'application/vnd.github+json','Content-Type':'application/json'})
-          with urllib.request.urlopen(req) as resp: data=json.load(resp)
-          if not data.get('merged'): raise SystemExit(f'merge failed: {data}')
-          print(f"merged {pr} at validated head {sha}: {data.get('sha')}")
-          PY
+          echo "Validated Batch 37 source pushed at $FINAL_SHA"
+          echo "Temporary workflow cleanup and merge are performed by the authenticated repository connector."
