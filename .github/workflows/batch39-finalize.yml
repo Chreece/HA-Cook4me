@@ -1,0 +1,61 @@
+name: Finalize and validate Batch 39
+
+on:
+  pull_request:
+    paths:
+      - '.batch39-bootstrap/**'
+      - '.github/workflows/batch39-finalize.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: batch39-finalize-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  finalize:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      HEAD_BRANCH: ${{ github.head_ref }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Materialize exact hash-pinned Batch 39 payload
+        run: python .batch39-bootstrap/materialize.py
+      - name: Validate exact Batch 39 source
+        run: |
+          export TMPDIR="$RUNNER_TEMP"
+          python scripts/version.py validate
+          python -m compileall -q custom_components/cook4me tests tools
+          python - <<'PY2'
+          import json
+          from pathlib import Path
+          for p in Path('.').rglob('*.json'):
+              if '.git' not in p.parts:
+                  json.loads(p.read_text(encoding='utf-8'))
+          print('JSON OK')
+          PY2
+          find . -name '*.sh' -not -path './.git/*' -print0 | xargs -0 -r -n1 bash -n
+          for f in custom_components/cook4me/frontend/cook4me-panel-v*.js; do node --check "$f"; done
+          python -m unittest discover -s tests -v
+      - name: Push validated source without workflow mutation
+        run: |
+          git fetch origin "$HEAD_BRANCH"
+          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/$HEAD_BRANCH)" || { echo 'Branch advanced; newer run will finalize it'; exit 78; }
+          rm -rf .batch39-bootstrap
+          git add -A
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Materialize and validate Batch 39 bulk nutrition reviews'
+          git push origin "HEAD:$HEAD_BRANCH"
