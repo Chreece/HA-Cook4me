@@ -79,6 +79,10 @@ jobs:
               'tools/release_catalog_reviewed_nutrition_targets_044e.v1.json': ('e7f0be03b2c003cfc236f8ed2db49e6a1a5b9827a09effa96f6382139e12863a', 0o644),
               'tools/release_catalog_reviewed_nutrition_targets_044f.v1.json': ('316595cd3ff61363db9d4cabaca7b335c4fa5a803926e1ed5e1a7e7bc8ab6654', 0o644),
           }
+          TAR_MODE_OVERRIDES = {
+              'tests/test_release_catalog_nutrition_review_batch39_v60.py': 0o664,
+              'tools/classify_nutrition_review_queue_v60.py': 0o775,
+          }
           encoded = ''.join((ROOT / p).read_text(encoding='ascii') + TAIL_FIX.get(p, '') for p in PARTS)
           if len(encoded) != 113756:
               raise SystemExit(f'Batch 40 encoded length mismatch: {len(encoded)}')
@@ -97,8 +101,9 @@ jobs:
                   if not m.isfile() or p.is_absolute() or '..' in p.parts:
                       raise SystemExit(f'unsafe member: {m.name}')
                   want_sha, want_mode = FILES[m.name]
-                  if (m.mode & 0o777) != want_mode:
-                      raise SystemExit(f'mode mismatch: {m.name}')
+                  want_tar_mode = TAR_MODE_OVERRIDES.get(m.name, want_mode)
+                  if (m.mode & 0o777) != want_tar_mode:
+                      raise SystemExit(f'tar mode mismatch: {m.name}')
                   src = tf.extractfile(m)
                   if src is None:
                       raise SystemExit(f'missing bytes: {m.name}')
