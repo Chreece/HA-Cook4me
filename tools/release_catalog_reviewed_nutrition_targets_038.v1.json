@@ -1,0 +1,323 @@
+{
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Liquid cream",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Cream, NS as to light, heavy, or half and half",
+      "fdcId": 2705592,
+      "notes": "The target specifies liquid dairy cream but no fat percentage. Select the retained cream record explicitly unspecified as to light, heavy or half-and-half, rather than inventing a percentage or using cultured creme fraiche. This generic reference does not establish the product fat content or density.",
+      "reviewTargetId": "M_FOOD_152",
+      "reviewTargetKind": "provider-identity",
+      "usageCountAtReview": 257
+    },
+    {
+      "canonicalEnglishName": "Liquid cream",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Cream, NS as to light, heavy, or half and half",
+      "fdcId": 2705592,
+      "notes": "The target specifies liquid dairy cream but no fat percentage. Select the retained cream record explicitly unspecified as to light, heavy or half-and-half, rather than inventing a percentage or using cultured creme fraiche. This generic reference does not establish the product fat content or density.",
+      "reviewTargetId": "concept:food:2ea01c463615cb5175c0",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 32
+    },
+    {
+      "canonicalEnglishName": "Sponge finger biscuits",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Cookie, ladyfinger",
+      "fdcId": 2707934,
+      "notes": "The named sponge-finger/ladyfinger biscuit is matched to the retained generic ladyfinger cookie record, not a wafer or filled biscuit. Cutting does not change the chosen food category. Exact brand composition, biscuit mass and liquid absorbed during later preparation are not inferred.",
+      "reviewTargetId": "M_FOOD_39",
+      "reviewTargetKind": "provider-identity",
+      "usageCountAtReview": 29
+    },
+    {
+      "canonicalEnglishName": "Ladyfinger biscuits",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Cookie, ladyfinger",
+      "fdcId": 2707934,
+      "notes": "The named sponge-finger/ladyfinger biscuit is matched to the retained generic ladyfinger cookie record, not a wafer or filled biscuit. Cutting does not change the chosen food category. Exact brand composition, biscuit mass and liquid absorbed during later preparation are not inferred.",
+      "reviewTargetId": "concept:food:d7934d4f613f34bb5bcb",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 16
+    },
+    {
+      "canonicalEnglishName": "Wholemeal flour",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Wheat flour, whole-grain (Includes foods for USDA's Food Distribution Program)",
+      "fdcId": 168893,
+      "notes": "The unqualified wholemeal flour label is reviewed as the generic whole-wheat flour category. Select the whole-grain wheat flour record rather than white flour or isolated wheat starch. This does not equate numbered extraction grades, other grain species, fortification or exact protein composition.",
+      "reviewTargetId": "concept:food:8f12d1b5794422801360",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 15
+    },
+    {
+      "canonicalEnglishName": "Red pepper flakes",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, red or cayenne",
+      "fdcId": 170932,
+      "notes": "Red pepper flakes are reviewed as the single dried red-pepper spice, not fresh bell pepper or a multi-spice seasoning. Select the retained red-or-cayenne pepper spice reference as a generic ingredient estimate. Flake shape is not a spoon-weight measure or proof of exact cultivar or heat level.",
+      "reviewTargetId": "concept:food:c68299772b0dd6603db2",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 14
+    },
+    {
+      "canonicalEnglishName": "Wholemeal flour",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Wheat flour, whole-grain (Includes foods for USDA's Food Distribution Program)",
+      "fdcId": 168893,
+      "notes": "The unqualified wholemeal flour label is reviewed as the generic whole-wheat flour category. Select the whole-grain wheat flour record rather than white flour or isolated wheat starch. This does not equate numbered extraction grades, other grain species, fortification or exact protein composition.",
+      "reviewTargetId": "M_FOOD_680",
+      "reviewTargetKind": "provider-identity",
+      "usageCountAtReview": 12
+    },
+    {
+      "canonicalEnglishName": "Dried breadcrumbs",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Bread, crumbs, dry, grated, plain",
+      "fdcId": 174928,
+      "notes": "Dried breadcrumbs need a dry crumb reference, not the soft-white-bread record considered in the earlier deferred example. The retained file contains an explicit plain dry grated-breadcrumb record, selected here for the unseasoned generic ingredient. No seasoning, exact moisture level, bread brand or fresh-to-dry conversion is inferred.",
+      "reviewTargetId": "concept:food:6bcb43fd5bed60dd37af",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 8
+    },
+    {
+      "canonicalEnglishName": "Milk powder",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Milk, dry, not reconstituted",
+      "fdcId": 2705585,
+      "notes": "The ingredient is milk powder, not reconstituted milk. Select the retained dry, not-reconstituted milk record; do not substitute a liquid milk profile or infer a reconstitution ratio. Fat class and fortification are not stated and this is not a product-specific nutrient certificate.",
+      "reviewTargetId": "M_FOOD_270",
+      "reviewTargetKind": "provider-identity",
+      "usageCountAtReview": 4
+    },
+    {
+      "canonicalEnglishName": "Crushed shortbread biscuits",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Cookie, shortbread",
+      "fdcId": 2707964,
+      "notes": "Shortbread biscuits are explicitly named and only mechanically crushed. Select the generic shortbread cookie reference, not reduced-fat shortbread, icing/filling or a different butter biscuit. No exact recipe, brand or piece-weight assumption is supplied.",
+      "reviewTargetId": "concept:food:a6043acb042e4e926f2c",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 4
+    },
+    {
+      "canonicalEnglishName": "Chopped salad onion",
+      "confidence": "high",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Green onion, (scallion), bulb and greens, root removed, raw",
+      "fdcId": 2727585,
+      "notes": "Salad onion is reviewed as green onion/scallion with washing and cutting only. Select the raw bulb-and-greens reference, not a dry storage onion, dehydrated product or stalk-only portion. No root/top discard yield or exact cultivar is inferred; the stalk-only target remains separate.",
+      "reviewTargetId": "concept:food:44a2dc898b80723728d1",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 2
+    },
+    {
+      "canonicalEnglishName": "Full-fat milk",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Milk, whole",
+      "fdcId": 2705385,
+      "notes": "Full-fat milk states the whole-milk category. Select the generic whole liquid milk reference rather than reduced-fat, skimmed or powdered milk. No exact fat percentage, fortification level, evaporation adjustment or volume-to-mass conversion is inferred.",
+      "reviewTargetId": "concept:food:acbbb08d456f34642c09",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 2
+    },
+    {
+      "canonicalEnglishName": "Milk powder",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Milk, dry, not reconstituted",
+      "fdcId": 2705585,
+      "notes": "The ingredient is milk powder, not reconstituted milk. Select the retained dry, not-reconstituted milk record; do not substitute a liquid milk profile or infer a reconstitution ratio. Fat class and fortification are not stated and this is not a product-specific nutrient certificate.",
+      "reviewTargetId": "concept:food:56d169cccc4b5f430bfb",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 2
+    },
+    {
+      "canonicalEnglishName": "B- milk, brought to room temperature",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Milk, NFS",
+      "fdcId": 2705384,
+      "notes": "The target remains plain liquid milk; temperature handling is not a declaration of condensed, evaporated or reconstituted milk. Use the explicitly not-further-specified milk record rather than inventing a fat category. This does not model water loss or establish milk density.",
+      "reviewTargetId": "concept:food:acbb2ec230f219b0462d",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Bitter melon, seeds and pith removed, cut 1 cm wide",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Balsam-pear (bitter gourd), pods, raw",
+      "fdcId": 168393,
+      "notes": "The bitter-melon ingredient specifies the cut edible pod with seeds and pith removed, with no cooking described. Select raw bitter-gourd pods, not leafy tips or cooked pods. No discarded seed/pith yield, exact cultivar or raw-to-cooked conversion is inferred.",
+      "reviewTargetId": "concept:food:f3e7c66fa873ed1e9d78",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "French bread pieces",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Bread, french or vienna (includes sourdough)",
+      "fdcId": 172675,
+      "notes": "French bread is named and only broken into pieces, without toasting or drying. Select the retained French/Vienna bread record rather than toasted bread or dried crumbs. Exact bakery recipe, sourdough use, piece weight and subsequent liquid absorption are not inferred.",
+      "reviewTargetId": "concept:food:61e327993616bf9b8b05",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Frozen edamame beans",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Edamame, frozen, unprepared",
+      "fdcId": 168410,
+      "notes": "Frozen edamame beans are reviewed in their as-supplied frozen state. Select the explicit frozen unprepared edamame record, not the prepared cooked record. Unprepared here does not claim never-blanched raw beans; no pod yield, thawing loss, added seasoning or cooking conversion is inferred.",
+      "reviewTargetId": "concept:food:19958c91a19b934b3708",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Grapefruit segments, cut into two or three pieces",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Grapefruit, raw, pink and red and white, all areas",
+      "fdcId": 173033,
+      "notes": "Grapefruit segments with cutting only are reviewed as raw edible fruit, not juice or canned fruit in syrup. Select the retained combined pink/red/white grapefruit record rather than inventing a flesh color. Peel, pith and seed yield, piece weight and exact variety are not inferred.",
+      "reviewTargetId": "concept:food:f41a1e9c087015726040",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Ground anise",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, anise seed",
+      "fdcId": 171316,
+      "notes": "Ground anise names the anise-seed spice. Select the retained anise-seed record, not star anise, a liqueur or an unspecified spice blend. Grinding supplies no mass conversion and the mapping must not propagate to separately named star-anise targets.",
+      "reviewTargetId": "concept:food:1d1aba7a7b88dcd8522e",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Gummy worm candies",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Candy, gummy",
+      "fdcId": 2710359,
+      "notes": "Select the retained generic gummy-candy record for the stated gummy confectionery. Shape or strawberry flavor does not make this raw fruit, a vitamin supplement or sugar-free candy. The mapping does not certify a brand formulation, fruit percentage, gelatin source or vegetarian status.",
+      "reviewTargetId": "concept:food:b8427d068a9f75ceb96a",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "nutritionScope": "Generic per-100-g edible-ingredient reference estimates; confidence concerns semantic reference selection, not measured nutrition, exact brand/formulation, fat percentage, fortification, moisture or yield. No inferred density, piece weight, edible yield, draining yield or drying/cooking conversion.",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "referenceReceipts": {
+    "168393": {
+      "sourceCandidateSha256": "9ebd6dd4e5998641fc56737fc847efdeda5729894a394f12e75dd7808d3386c2",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "M_FOOD_740"
+    },
+    "168410": {
+      "sourceCandidateSha256": "fe6b8721bf215d331d90cf798bf8c97e9b4dee5b436bc5d97df7d325035718e3",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "M_FOOD_589"
+    },
+    "168893": {
+      "sourceCandidateSha256": "17402ed34955aeafa82c568dfe24bbf884bbf8706b32aeaeaaac989957b3cfb0",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:168d52a027eb16cbc670"
+    },
+    "170932": {
+      "sourceCandidateSha256": "3749ec7972eb811b84d7af995e98a8a990c3758b6566283be25dfb096cdfea61",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "M_FOOD_391"
+    },
+    "171316": {
+      "sourceCandidateSha256": "7e532961795f08ab729713385ee7454c3f8a8cab1fbba5a8bd6bb18224568c28",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "M_FOOD_17"
+    },
+    "172675": {
+      "sourceCandidateSha256": "ac22d16ef807f1896b5eabc8258235313c99e1908be9a092da24fde4912c58ad",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "concept:food:7e9ad73281cc76284936"
+    },
+    "173033": {
+      "sourceCandidateSha256": "83cce69d020f060aa1d73d18a2d8519955ff3e739d023e7e479a7a87a40b5d8e",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "concept:food:1fab9c3987172a48cee2"
+    },
+    "174928": {
+      "sourceCandidateSha256": "bfcf375205f45d0038b5216148af02cf28b70fdecbfe47f636a3eea512c026bb",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "M_FOOD_312"
+    },
+    "2705384": {
+      "sourceCandidateSha256": "50a02f7804ad0ee875c59f7e7017a49969da511f9a33d08b022f7fde36ec6190",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:054415bacd469cc251b1"
+    },
+    "2705385": {
+      "sourceCandidateSha256": "ba29b13397f28f3289262918492ae9fa7402f78e1cd3809ba170dab2d3e04b56",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "M_FOOD_271"
+    },
+    "2705585": {
+      "sourceCandidateSha256": "b125ac4fc99f166762bd4f3734cba5278af6be3b133c93df2bffc60575401aa2",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "concept:food:893dfa946d4f4c0212c2"
+    },
+    "2705592": {
+      "sourceCandidateSha256": "1349592dacb2830211f8e55b4792815b1d2e6b838d3a86c4b0c79d5aad0a2d8d",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceTargetId": "concept:food:4f564aeb3ee5b98cfa02"
+    },
+    "2707934": {
+      "sourceCandidateSha256": "5417c50d446aed21b7d3115963a8ce69f43c757e2d80f1fb245ce96c4aaa1676",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:80e5daa22a0f99ee6531"
+    },
+    "2707964": {
+      "sourceCandidateSha256": "047ac1993e4ead429acf053b3a281346c238428a7084d55ed00c6564e779fad6",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "M_FOOD_529"
+    },
+    "2710359": {
+      "sourceCandidateSha256": "1be472251af58dd4b2d635c2af0606fcbfe78f92eda04e2602182cf1267ec618",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:944f60ab4af32394708f"
+    },
+    "2727585": {
+      "sourceCandidateSha256": "d73df3e85d98c39662bef71d3ccd3154d42d864f981915fa0e45783fbecd3531",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:01a28fb3a1cee0faf3b0"
+    }
+  },
+  "referenceUse": "Source target and source rank locate a retained FDC description only; they do not approve or rewrite the destination identity.",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac"
+}
