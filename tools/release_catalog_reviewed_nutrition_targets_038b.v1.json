@@ -1,0 +1,200 @@
+{
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Hot ground paprika",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, paprika",
+      "fdcId": 171329,
+      "notes": "Hot ground paprika is a paprika spice, not paprika paste or a blended seasoning. Select the retained paprika record without inventing smoked preparation, added oil or salt. This is a generic paprika reference, not a measurement of cultivar, heat level or spoon mass.",
+      "reviewTargetId": "concept:food:c04c0a9ea81cdf972151",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Hot milk",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Milk, NFS",
+      "fdcId": 2705384,
+      "notes": "The target remains plain liquid milk; temperature handling is not a declaration of condensed, evaporated or reconstituted milk. Use the explicitly not-further-specified milk record rather than inventing a fat category. This does not model water loss or establish milk density.",
+      "reviewTargetId": "concept:food:356e507d5230195d27ff",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Ladyfingers, cut into thirds",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Cookie, ladyfinger",
+      "fdcId": 2707934,
+      "notes": "The named sponge-finger/ladyfinger biscuit is matched to the retained generic ladyfinger cookie record, not a wafer or filled biscuit. Cutting does not change the chosen food category. Exact brand composition, biscuit mass and liquid absorbed during later preparation are not inferred.",
+      "reviewTargetId": "concept:food:fe0a9954034a2bd0b211",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Peeled and steamed eggplant",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Eggplant, cooked, no added fat",
+      "fdcId": 2709929,
+      "notes": "The eggplant is explicitly peeled and steamed; select the cooked, no-added-fat eggplant reference rather than raw eggplant or a fat-added cooked dish. The record is a generic cooked edible-portion estimate, not a measured steaming/peeling yield, salt amount or retained-water adjustment.",
+      "reviewTargetId": "concept:food:046c070bdfba09bdbcb6",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Salad onion(s), washed and thinly sliced",
+      "confidence": "high",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Green onion, (scallion), bulb and greens, root removed, raw",
+      "fdcId": 2727585,
+      "notes": "Salad onion is reviewed as green onion/scallion with washing and cutting only. Select the raw bulb-and-greens reference, not a dry storage onion, dehydrated product or stalk-only portion. No root/top discard yield or exact cultivar is inferred; the stalk-only target remains separate.",
+      "reviewTargetId": "concept:food:3ea7f793ca2b2e1d6a30",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Strawberry fruit gummies",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Candy, gummy",
+      "fdcId": 2710359,
+      "notes": "Select the retained generic gummy-candy record for the stated gummy confectionery. Shape or strawberry flavor does not make this raw fruit, a vitamin supplement or sugar-free candy. The mapping does not certify a brand formulation, fruit percentage, gelatin source or vegetarian status.",
+      "reviewTargetId": "concept:food:20f8caae7620d85e89d7",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Veal liver, cut into pieces",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Veal, variety meats and by-products, liver, raw",
+      "fdcId": 172534,
+      "notes": "The target names veal liver with cutting only and no cooked, marinated or composite preparation. Select the raw veal-liver record, not beef, pork or poultry liver or a cooked profile. Exact animal composition, trimming yield and raw-to-cooked conversion remain unmeasured.",
+      "reviewTargetId": "concept:food:1b48d9eb54eda37152ee",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Vegetable oil (for stir-frying noodles)",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Vegetable oil, NFS",
+      "fdcId": 2710180,
+      "notes": "The parenthetical describes the future use of plain vegetable oil, not an already combined noodle dish. Select the explicitly not-further-specified vegetable-oil record rather than inventing soybean, sunflower or olive oil. Frying absorption, oil density and the resulting cooked meal are not inferred.",
+      "reviewTargetId": "concept:food:faa888172aec7a0664d8",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Warm fresh milk",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Milk, NFS",
+      "fdcId": 2705384,
+      "notes": "The target remains plain liquid milk; temperature handling is not a declaration of condensed, evaporated or reconstituted milk. Use the explicitly not-further-specified milk record rather than inventing a fat category. This does not model water loss or establish milk density.",
+      "reviewTargetId": "concept:food:ec26bdbb4e7b129911d4",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "White bread, crust removed and crumbled",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Bread, white, commercially prepared (includes soft bread crumbs)",
+      "fdcId": 174924,
+      "notes": "The target explicitly describes white bread with crust removed and mechanical crumbling/grating, not drying or toasting. Select the white-bread record that explicitly includes soft bread crumbs. It is a generic soft-crumb reference, not a measured crust/crumb composition; no crust-removal yield or dry-crumb conversion is inferred.",
+      "reviewTargetId": "concept:food:7f6366902e60962f5513",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "White bread, crust removed and grated",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Bread, white, commercially prepared (includes soft bread crumbs)",
+      "fdcId": 174924,
+      "notes": "The target explicitly describes white bread with crust removed and mechanical crumbling/grating, not drying or toasting. Select the white-bread record that explicitly includes soft bread crumbs. It is a generic soft-crumb reference, not a measured crust/crumb composition; no crust-removal yield or dry-crumb conversion is inferred.",
+      "reviewTargetId": "concept:food:75473ad7197c68b1c076",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "White bread, crusts removed and crumbled",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Bread, white, commercially prepared (includes soft bread crumbs)",
+      "fdcId": 174924,
+      "notes": "The target explicitly describes white bread with crust removed and mechanical crumbling/grating, not drying or toasting. Select the white-bread record that explicitly includes soft bread crumbs. It is a generic soft-crumb reference, not a measured crust/crumb composition; no crust-removal yield or dry-crumb conversion is inferred.",
+      "reviewTargetId": "concept:food:07da5e41e7c59ea38b66",
+      "reviewTargetKind": "semantic-concept",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "nutritionScope": "Generic per-100-g edible-ingredient reference estimates; confidence concerns semantic reference selection, not measured nutrition, exact brand/formulation, fat percentage, fortification, moisture or yield. No inferred density, piece weight, edible yield, draining yield or drying/cooking conversion.",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "referenceReceipts": {
+    "171329": {
+      "sourceCandidateSha256": "f207f590685159cc4f27aee7997d20d8a5b867c93cef1bef12c6241f27a00edf",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "M_FOOD_176"
+    },
+    "172534": {
+      "sourceCandidateSha256": "ee174949f07a3d559681a8d66e35dd624f2c2fafdf14582fe764bf03b3467842",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:d6b2b73ea7dfc34aa743"
+    },
+    "174924": {
+      "sourceCandidateSha256": "1dc0445185ab645cecf2c837d33cfd1605c72ebba176df542364a3ee0caf1ac0",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "M_FOOD_312"
+    },
+    "2705384": {
+      "sourceCandidateSha256": "50a02f7804ad0ee875c59f7e7017a49969da511f9a33d08b022f7fde36ec6190",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:054415bacd469cc251b1"
+    },
+    "2707934": {
+      "sourceCandidateSha256": "5417c50d446aed21b7d3115963a8ce69f43c757e2d80f1fb245ce96c4aaa1676",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:80e5daa22a0f99ee6531"
+    },
+    "2709929": {
+      "sourceCandidateSha256": "f425215a3fa9a451a91d612114ffd1fde723429fe2f159805ed9a0a82e669ed1",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:aefd87ce0aa021cab94d"
+    },
+    "2710180": {
+      "sourceCandidateSha256": "16d78400d12e6cae3067321bfc528eb65508ae7394d85395cdda62a840e98428",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceTargetId": "concept:food:18715e1c568c06a90b74"
+    },
+    "2710359": {
+      "sourceCandidateSha256": "1be472251af58dd4b2d635c2af0606fcbfe78f92eda04e2602182cf1267ec618",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:944f60ab4af32394708f"
+    },
+    "2727585": {
+      "sourceCandidateSha256": "d73df3e85d98c39662bef71d3ccd3154d42d864f981915fa0e45783fbecd3531",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:01a28fb3a1cee0faf3b0"
+    }
+  },
+  "referenceUse": "Source target and source rank locate a retained FDC description only; they do not approve or rewrite the destination identity.",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac"
+}
