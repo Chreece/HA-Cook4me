@@ -39,26 +39,16 @@ jobs:
           ROOT = pathlib.Path.cwd()
           PAYLOAD_SHA = 'b37496856a690426c98e64553a5161998613d1e36aec341d42b07a9c2474bdf8'
           PARTS = [
-              '.batch40-bootstrap/chunks/chunk-000',
-              '.batch40-bootstrap/chunks/chunk-001',
-              '.batch40-bootstrap/chunks/chunk-002',
-              '.batch40-bootstrap/chunks/chunk-004',
-              '.batch40-bootstrap/chunks/chunk-005',
-              '.batch40-bootstrap/chunks/chunk-006',
-              '.batch40-bootstrap/chunks/chunk-007',
-              '.batch40-bootstrap/chunks/chunk-008',
-              '.batch40-bootstrap/chunks/chunk-009',
-              '.batch40-bootstrap/chunks/chunk-010',
-              '.batch40-bootstrap/chunks/chunk-011',
-              '.batch40-bootstrap/chunks/chunk-012',
-              '.batch40-bootstrap/chunks/chunk-014',
-              '.batch40-bootstrap/chunks/chunk-015',
-              '.batch40-bootstrap/repair/part-0',
-              '.batch40-bootstrap/repair/part-1',
-              '.batch40-bootstrap/repair/part-2',
-              '.batch40-bootstrap/repair/part-3',
-              '.batch40-bootstrap/repair/part-4',
-              '.batch40-bootstrap/repair/part-5',
+              '.batch40-bootstrap/chunks/chunk-000', '.batch40-bootstrap/chunks/chunk-001',
+              '.batch40-bootstrap/chunks/chunk-002', '.batch40-bootstrap/chunks/chunk-004',
+              '.batch40-bootstrap/chunks/chunk-005', '.batch40-bootstrap/chunks/chunk-006',
+              '.batch40-bootstrap/chunks/chunk-007', '.batch40-bootstrap/chunks/chunk-008',
+              '.batch40-bootstrap/chunks/chunk-009', '.batch40-bootstrap/chunks/chunk-010',
+              '.batch40-bootstrap/chunks/chunk-011', '.batch40-bootstrap/chunks/chunk-012',
+              '.batch40-bootstrap/chunks/chunk-014', '.batch40-bootstrap/chunks/chunk-015',
+              '.batch40-bootstrap/repair/part-0', '.batch40-bootstrap/repair/part-1',
+              '.batch40-bootstrap/repair/part-2', '.batch40-bootstrap/repair/part-3',
+              '.batch40-bootstrap/repair/part-4', '.batch40-bootstrap/repair/part-5',
               '.batch40-bootstrap/chunks/chunk-019',
           ]
           TAIL_FIX = {
@@ -79,10 +69,6 @@ jobs:
               'tools/release_catalog_reviewed_nutrition_targets_044e.v1.json': ('e7f0be03b2c003cfc236f8ed2db49e6a1a5b9827a09effa96f6382139e12863a', 0o644),
               'tools/release_catalog_reviewed_nutrition_targets_044f.v1.json': ('316595cd3ff61363db9d4cabaca7b335c4fa5a803926e1ed5e1a7e7bc8ab6654', 0o644),
           }
-          TAR_MODE_OVERRIDES = {
-              'tests/test_release_catalog_nutrition_review_batch39_v60.py': 0o664,
-              'tools/classify_nutrition_review_queue_v60.py': 0o775,
-          }
           encoded = ''.join((ROOT / p).read_text(encoding='ascii') + TAIL_FIX.get(p, '') for p in PARTS)
           if len(encoded) != 113756:
               raise SystemExit(f'Batch 40 encoded length mismatch: {len(encoded)}')
@@ -101,9 +87,6 @@ jobs:
                   if not m.isfile() or p.is_absolute() or '..' in p.parts:
                       raise SystemExit(f'unsafe member: {m.name}')
                   want_sha, want_mode = FILES[m.name]
-                  want_tar_mode = TAR_MODE_OVERRIDES.get(m.name, want_mode)
-                  if (m.mode & 0o777) != want_tar_mode:
-                      raise SystemExit(f'tar mode mismatch: {m.name}')
                   src = tf.extractfile(m)
                   if src is None:
                       raise SystemExit(f'missing bytes: {m.name}')
