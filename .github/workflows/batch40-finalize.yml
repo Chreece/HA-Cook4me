@@ -1,0 +1,209 @@
+name: Finalize and validate Batch 40
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/batch40-finalize.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: batch40-finalize-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  finalize:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      HEAD_BRANCH: ${{ github.head_ref }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Materialize exact hash-pinned Batch 40 payload from Git objects
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+          import base64, hashlib, io, json, os, pathlib, tarfile, urllib.request
+
+          ROOT = pathlib.Path.cwd()
+          REPO = os.environ['GITHUB_REPOSITORY']
+          TOKEN = os.environ['GH_TOKEN']
+          PAYLOAD_SHA = 'b37496856a690426c98e64553a5161998613d1e36aec341d42b07a9c2474bdf8'
+          BLOBS = [
+              '188690a5058847f84363303213464be0415ba0f5',
+              'ad3c84ffc5da2c16cc2e956b807df6fae8e66883',
+              'ec5c57a32fa735d1229142d69550e89e083d2a72',
+              '0171aa5b6443c68410aa387446360ec745a16c07',
+              '5415825ad0d76f4e8a7d7e79b2ed40ac238cea49',
+              '81acc7ad6b4b8d56d70e2dfa7bca5feafe63f10f',
+              'cce49feb412cc8e4de5dd1de03f715ec35f4613e',
+              '4a05b7dfa99b32f944f4a944f58715d4b4be080f',
+              '3e79058a820dceeb9711e71e5bf1a87d441e47dc',
+              '0fc5b31f581538cef56b7c23d79015794bf3476c',
+              'ea6e00fac50933a3f00065fffcb9ae00f4cf303a',
+              '4f72883e24e5f31e37d94a2de36f671504177982',
+              'bbdde359cb43081843d85bff744e42e095bb99de',
+              'eb1ddcf28cf6c942cfbc1ea5e0956df85eaf94a6',
+              'bf36a51831e79ca9ea88eb66cd43c85013d41d05',
+              '9416e18017a84feb54735fc8036fd494967ce64d',
+              '9e3f11dc0035dea9d6f199cc9b233aadc203707d',
+              '1b1a21fa8c57a4a726dc54a2f5726b5cf348e0a3',
+              '1414922b95579ed958abc25430731c159954d52c',
+              '369a63be37e9a489a2b29e5bacec76c34ebdcc4a',
+              'f773c067111e1a3a9481509a45a03c92e8d1a489',
+              '0379ca7674af7dd2f87f45e08deb56cd9b911d2a',
+              '124508ed31198a0e00f67c6ad06f4b1844a2233c',
+              'bc597e8e0a349d0aade7763d11fdfd96f5d3afca',
+              '6264a691e338b82f2f746594fe7197830059cfd9',
+              'fbcce4554de0547cb07b08503c579cfae03a595c',
+              'adb511019d126d0d23eee8d93c8d13eac7e4ec9d',
+              '959467184ebd349d24521dff9ed7eca449077302',
+              '1b0b72aee40820cc12d611c2d07c76b6cb69b057',
+              'bd68c8a6b6d3e6ea9ef625f9757ce49865344e72',
+              '3aba7b8e6cf4423036916943bf31be9b6a93b515',
+              '25d780d2c8851683a3940c5a8ababf893d34fade',
+              '454307b99e22dac38f7201a54f574576374f3d4c',
+              '79796dc3fec3a6168bbd77d22a36c8bc2ac514a7',
+              '48c27257eb0fb48d763d83713326bb694658852e',
+              '3ce8799c46f208667ca1bcb827ea917a323e8b21',
+              'f9299ce5f1c83203c4ae1bf7b92c52a732024fa5',
+              'b04d996c53cd51def853321aaa403d18eed88943',
+              '449cd26bf4aac4c87774c2e4c9360d271444aca0',
+              'b34b2c80c2b938985784279e0165555ff0e17c88',
+              'a31bd5ff0eb5dc15f5d835f1b24cd49df39a15b9',
+              'c314660671161bac1f98dcf85b12a865c2657dde',
+              '9127928962043834045a4fab7a3fc987dd0d8ca3',
+              'eaeb0a4b738f1c163de307a968c0746ad71fbd57',
+              '163771ba2c055c22c314c28e7f5dfa948a4f4d0a',
+              '3e2b65dc7cf588756936bd00fd3a99cfdb95230e',
+              'cd575461987eedfc581ab96bbcd65eeff709d875',
+              '12569a41e341bd035d496717dbcfb7911bf963cd',
+              '9e70c8f335c13cb79f9ce4cd6d4de936498a4d6f',
+              'b5fc1d70f26eea6e26699d496fa4ac48d1345cf5',
+              '182ada1cad1fbc88740ed37dfc60f4dfefafeac4',
+              '91c4123a67ea64a4b081450f2759610ee588e488',
+              '68f1fccca2ed598b80cf5fd0aeaf1975831b6277',
+              'd1e11775d9540f72db77c4956ac68299580eba10',
+              '6ba7f7a4a88ab7c760b5d2ed6098b12e54fc8241',
+              '035a0cddb8ba851ddd5ea9ae7a32f32d3a933d73',
+              'f75a5eb92fa31a7a0ebb35bfde8c2ec56d85fceb',
+              'b557e9d9e37af102212baaab7f7675cc59a2f43f',
+              'a36e86c07a73f4b96e50f46141130c370024eb5f',
+              '72643665697fe178d7e8d1a7c60e29e4d3924696',
+              'fa5fa68487db8583b6f9e8f253877d83ef0fda75',
+              '77f8a4301107adcbf2eff13e667274ccd3b4a624',
+              '4e116311fbaef37edbbbb7d6fdd6d90cae308596',
+              '94f1314a614a76fade6254705035f757acb7284c',
+              '7e25535622a65a82a041df5db7e86f2f7ad7c04f',
+              'd44af75ca7dc438095ccd22a13ffca46bf0d221f',
+              'ff289e37216aa5ee6757c4f953848deacbab21d7',
+              'e58e1da3d46316acace808787c6b2ef7a76acea8',
+              '9d5cbf4aef412580505922296719b180c5ac9c23',
+              '99ced9d663a00b62ae8436e661a330e05faf9f92',
+              'cba55aeb7450d129a2f82e19825119a99ef31b72',
+              '07e535a52d9705ddc5d528f3900b4e95ac3b5c3d',
+          ]
+          FILES = [
+              'docs/nutrition-review-batch40-bulk-families-v60.md',
+              'tests/fixtures/nutrition-batch40-retained-reference-v60.json.gz',
+              'tests/test_release_catalog_nutrition_review_batch39_v60.py',
+              'tests/test_release_catalog_nutrition_review_batch40_v60.py',
+              'tools/classify_nutrition_review_queue_v60.py',
+              'tools/release_catalog_nutrition_bulk_family_rules_batch40.v1.json',
+              'tools/release_catalog_reviewed_nutrition_targets_044.v1.json',
+              'tools/release_catalog_reviewed_nutrition_targets_044b.v1.json',
+              'tools/release_catalog_reviewed_nutrition_targets_044c.v1.json',
+              'tools/release_catalog_reviewed_nutrition_targets_044d.v1.json',
+              'tools/release_catalog_reviewed_nutrition_targets_044e.v1.json',
+              'tools/release_catalog_reviewed_nutrition_targets_044f.v1.json',
+          ]
+
+          encoded_parts = []
+          for i, sha in enumerate(BLOBS):
+              req = urllib.request.Request(
+                  f'https://api.github.com/repos/{REPO}/git/blobs/{sha}',
+                  headers={
+                      'Authorization': f'Bearer {TOKEN}',
+                      'Accept': 'application/vnd.github+json',
+                      'X-GitHub-Api-Version': '2022-11-28',
+                  },
+              )
+              try:
+                  with urllib.request.urlopen(req) as response:
+                      obj = json.load(response)
+              except Exception as exc:
+                  raise SystemExit(f'missing/unreadable Batch 40 blob index={i} sha={sha}: {exc}')
+              data = base64.b64decode(obj['content'])
+              git_sha = hashlib.sha1(f'blob {len(data)}\0'.encode() + data).hexdigest()
+              if git_sha != sha:
+                  raise SystemExit(f'Git blob digest mismatch index={i}: {git_sha} != {sha}')
+              encoded_parts.append(data)
+
+          encoded = b''.join(encoded_parts)
+          try:
+              payload = base64.b64decode(encoded, validate=True)
+          except Exception as exc:
+              raise SystemExit(f'invalid Batch 40 base64 transport: {exc}')
+          if hashlib.sha256(payload).hexdigest() != PAYLOAD_SHA:
+              raise SystemExit('Batch 40 payload sha256 mismatch')
+
+          with tarfile.open(fileobj=io.BytesIO(payload), mode='r:gz') as tf:
+              members = tf.getmembers()
+              if [m.name for m in members] != FILES:
+                  raise SystemExit('Batch 40 payload path set/order mismatch')
+              for member in members:
+                  p = pathlib.PurePosixPath(member.name)
+                  if not member.isfile() or p.is_absolute() or '..' in p.parts:
+                      raise SystemExit(f'unsafe Batch 40 tar member: {member.name}')
+                  want_mode = 0o755 if member.name == 'tools/classify_nutrition_review_queue_v60.py' else 0o644
+                  if (member.mode & 0o777) != want_mode:
+                      raise SystemExit(f'Batch 40 mode mismatch: {member.name}')
+                  src = tf.extractfile(member)
+                  if src is None:
+                      raise SystemExit(f'missing Batch 40 member bytes: {member.name}')
+                  data = src.read()
+                  dest = ROOT / member.name
+                  dest.parent.mkdir(parents=True, exist_ok=True)
+                  dest.write_bytes(data)
+                  os.chmod(dest, want_mode)
+          print(f'materialized {len(FILES)} Batch 40 files; payload sha256={PAYLOAD_SHA}')
+          PY
+      - name: Validate exact Batch 40 source
+        run: |
+          export TMPDIR="$RUNNER_TEMP"
+          python scripts/version.py validate
+          python -m compileall -q custom_components/cook4me tests tools
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          count = 0
+          for p in Path('.').rglob('*.json'):
+              if '.git' not in p.parts:
+                  json.loads(p.read_text(encoding='utf-8'))
+                  count += 1
+          print(f'JSON OK: {count}')
+          PY
+          find . -name '*.sh' -not -path './.git/*' -print0 | xargs -0 -r -n1 bash -n
+          for f in custom_components/cook4me/frontend/cook4me-panel-v*.js; do node --check "$f"; done
+          python -m unittest discover -s tests -v
+      - name: Push validated Batch 40 source
+        run: |
+          git fetch origin "$HEAD_BRANCH"
+          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/$HEAD_BRANCH)" || { echo 'Branch advanced; newer run must finalize it'; exit 78; }
+          git add -A
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Materialize and validate Batch 40 bulk nutrition reviews'
+          git push origin "HEAD:$HEAD_BRANCH"
