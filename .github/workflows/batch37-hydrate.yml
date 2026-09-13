@@ -1,0 +1,86 @@
+name: Hydrate Batch 37 verified payload
+
+on:
+  pull_request:
+    paths:
+      - '.batch37-bootstrap/**'
+      - '.github/workflows/batch37-hydrate.yml'
+      - '.github/workflows/batch37-materialize.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  hydrate:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Fetch remaining verified transport blobs by Git SHA
+        run: |
+          python - <<'PY'
+          import base64, json, os, pathlib, urllib.request
+          blobs = {
+            'chunk-002':'0519daf9bd27efbd2f147eabaf15b56983284a1c',
+            'chunk-003':'c3f8bc89797983f2011a7c6c6cb0f985663a4cb6',
+            'chunk-004':'5c98764d7715643da8d8ea548cf30756b65bdc8a',
+            'chunk-005':'8b7d06679952563ac723ca0536ac518a97927ba1',
+            'chunk-006':'b76f00702331b6fc79749de2c2f473902ee40caf',
+            'chunk-007':'073ff065a22fa1865c1eade4e78f08c00436238a',
+            'chunk-008':'3a84373089ecbd4fc2e3a8755b408db3250e423b',
+            'chunk-009':'47b108dfa308831dbaf975d1ef5b6645611e8375',
+            'chunk-010':'4965d818ff16ff554b4b7fce9e7f87b0d7baa367',
+            'chunk-011':'0251c1e3eabada5147397ccf02d3232b67ecc074',
+            'chunk-012':'d96d19b23da962b06560873d545d0b5144ed5ffa',
+            'chunk-013':'4407570cf7cf8c2cf601dc7c7d1154458727ebb4',
+            'chunk-014':'939b8d44399a8ed4468c0206c2a8dd72670159c2',
+            'chunk-015-0':'60d08fb7a75fdfdd6249bfb8f12dbb3604ae341a',
+            'chunk-015-1':'2bc29ca2e8e91ae19898196ae3d9ef40c451e28c',
+            'chunk-015-2':'b4aee815ae401c8a44cc5c9e0b42cd46c646eba3',
+            'chunk-016-0':'d32f85f9713e3f6472aa088a327a7a5e77a37172',
+            'chunk-016-1':'806c4f7945472977d77c10aceb29a314930c67d1',
+            'chunk-016-2':'f8b0b7f45999bd7623fc4a1d22abe2d7d1250944',
+            'chunk-017-0':'bb1f049fd7b64a9ca91cfb471e2fe9c13a16fc11',
+            'chunk-017-1':'920b63c0b4c7746c81353fffc4c0ab6eaf9d4ab2',
+          }
+          repo = os.environ['GITHUB_REPOSITORY']
+          token = os.environ['GH_TOKEN']
+          out = pathlib.Path('.batch37-bootstrap/chunks')
+          out.mkdir(parents=True, exist_ok=True)
+          for name, sha in blobs.items():
+              req = urllib.request.Request(
+                  f'https://api.github.com/repos/{repo}/git/blobs/{sha}',
+                  headers={'Authorization': f'Bearer {token}', 'Accept': 'application/vnd.github+json'},
+              )
+              with urllib.request.urlopen(req) as resp:
+                  data = json.load(resp)
+              raw = base64.b64decode(data['content'])
+              header = f'blob {len(raw)}\0'.encode()
+              import hashlib
+              actual = hashlib.sha1(header + raw).hexdigest()
+              if actual != sha:
+                  raise SystemExit(f'blob hash mismatch for {name}: {actual} != {sha}')
+              (out / name).write_bytes(raw)
+          PY
+      - name: Materialize exact locally tested Batch 37 files
+        run: python .batch37-bootstrap/materialize.py
+      - name: Remove all transport files and commit materialized source
+        env:
+          HEAD_BRANCH: ${{ github.head_ref }}
+        run: |
+          rm -rf .batch37-bootstrap .github/workflows/batch37-materialize.yml .github/workflows/batch37-hydrate.yml
+          git add -A
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git diff --cached --quiet && { echo 'No materialized changes'; exit 1; }
+          git commit -m 'Materialize tested Batch 37 bulk nutrition review files'
+          git push origin "HEAD:${HEAD_BRANCH}"
