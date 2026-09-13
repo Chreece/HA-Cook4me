@@ -24,14 +24,7 @@ import resolve_reviewed_release_catalog_nutrition_targets_v60 as resolver  # noq
 import snapshot_nutrition_review_checkpoint_v60 as cp  # noqa: E402
 
 RULES = TOOLS / "release_catalog_nutrition_bulk_family_rules.v1.json"
-REVIEW_FILES = tuple(TOOLS / name for name in (
-    "release_catalog_reviewed_nutrition_targets_041.v1.json",
-    "release_catalog_reviewed_nutrition_targets_041b.v1.json",
-    "release_catalog_reviewed_nutrition_targets_041c.v1.json",
-    "release_catalog_reviewed_nutrition_targets_041d.v1.json",
-    "release_catalog_reviewed_nutrition_targets_041e.v1.json",
-    "release_catalog_reviewed_nutrition_targets_041f.v1.json",
-))
+RULE_GLOB = "release_catalog_nutrition_bulk_family_rules*.v1.json"
 COMPLEX = re.compile(
     r"\b(?:and|or|mix|blend|seasoning|spices?|stock|bouillon|broth|sauce|paste|roux|soup|"
     r"brine|soak(?:ed|ing)?|marinat(?:ed|ing)|cured|smoked|cooked|boiled|fried|roasted|"
@@ -42,11 +35,13 @@ COMPLEX = re.compile(
 )
 
 
-def _load_rules(path: Path = RULES) -> tuple[dict[str, Any], list[tuple[dict[str, Any], re.Pattern[str]]]]:
-    doc, _sha = cp._read(path)
-    if doc.get("kind") != "cook4me-nutrition-bulk-family-rules-v60" or doc.get("schemaVersion") != 1:
-        raise ValueError("invalid bulk-family rule registry")
-    policy = doc.get("policy") if isinstance(doc.get("policy"), dict) else {}
+def _load_rules(path: Path | None = None) -> tuple[dict[str, Any], list[tuple[dict[str, Any], re.Pattern[str]]]]:
+    paths = [path] if path is not None else sorted(TOOLS.glob(RULE_GLOB))
+    if not paths:
+        raise ValueError("missing bulk-family rule registry")
+    compiled = []
+    seen = set()
+    aggregate = None
     required = {
         "ruleMatchIsApprovalOnlyWhenReviewRowExists": True,
         "regexAnchoredRequired": True,
@@ -56,27 +51,38 @@ def _load_rules(path: Path = RULES) -> tuple[dict[str, Any], list[tuple[dict[str
         "providerIdentityInference": False,
         "automaticRuleExpansionForbidden": True,
     }
-    if any(policy.get(k) is not v for k, v in required.items()):
-        raise ValueError("unsafe bulk-family policy")
-    compiled = []
-    seen = set()
-    for raw in doc.get("rules") or []:
-        if not isinstance(raw, dict):
-            raise ValueError("bulk-family rule must be an object")
-        ident = cp._text(raw, "ruleId", "bulk rule")
-        pattern = cp._text(raw, "pattern", ident)
-        if ident in seen:
-            raise ValueError(f"duplicate bulk-family rule: {ident}")
-        seen.add(ident)
-        if not pattern.startswith("^") or not pattern.endswith("$"):
-            raise ValueError(f"bulk-family rule must be fully anchored: {ident}")
-        if raw.get("tier") not in {"A", "B"}:
-            raise ValueError(f"invalid approval tier: {ident}")
-        cp._positive_int(raw, "fdcId", ident)
-        cp._text(raw, "fdcDescription", ident)
-        cp._text(raw, "contract", ident)
-        compiled.append((raw, re.compile(pattern, re.IGNORECASE)))
-    return doc, compiled
+    for registry in paths:
+        doc, _sha = cp._read(registry)
+        if doc.get("kind") != "cook4me-nutrition-bulk-family-rules-v60" or doc.get("schemaVersion") != 1:
+            raise ValueError(f"invalid bulk-family rule registry: {registry.name}")
+        policy = doc.get("policy") if isinstance(doc.get("policy"), dict) else {}
+        if any(policy.get(k) is not v for k, v in required.items()):
+            raise ValueError(f"unsafe bulk-family policy: {registry.name}")
+        if aggregate is None:
+            aggregate = {**doc, "rules": [], "registries": []}
+        elif (doc.get("catalogVersion") != aggregate.get("catalogVersion") or
+              doc.get("sourceEvidenceSha256") != aggregate.get("sourceEvidenceSha256") or
+              doc.get("referenceManifestSha256") != aggregate.get("referenceManifestSha256")):
+            raise ValueError(f"bulk-family registry provenance differs: {registry.name}")
+        aggregate["registries"].append(registry.name)
+        for raw in doc.get("rules") or []:
+            if not isinstance(raw, dict):
+                raise ValueError("bulk-family rule must be an object")
+            ident = cp._text(raw, "ruleId", "bulk rule")
+            pattern = cp._text(raw, "pattern", ident)
+            if ident in seen:
+                raise ValueError(f"duplicate bulk-family rule: {ident}")
+            seen.add(ident)
+            if not pattern.startswith("^") or not pattern.endswith("$"):
+                raise ValueError(f"bulk-family rule must be fully anchored: {ident}")
+            if raw.get("tier") not in {"A", "B"}:
+                raise ValueError(f"invalid approval tier: {ident}")
+            cp._positive_int(raw, "fdcId", ident)
+            cp._text(raw, "fdcDescription", ident)
+            cp._text(raw, "contract", ident)
+            aggregate["rules"].append(raw)
+            compiled.append((raw, re.compile(pattern, re.IGNORECASE)))
+    return aggregate, compiled
 
 
 def _matches(name: str, compiled: list[tuple[dict[str, Any], re.Pattern[str]]]) -> list[dict[str, Any]]:
@@ -130,7 +136,16 @@ def _partition_remaining(
 
 
 def classify(evidence_path: Path, *, review_root: Path = TOOLS) -> dict[str, Any]:
-    rules_doc, compiled = _load_rules(review_root / RULES.name)
+    rule_paths = sorted(review_root.glob(RULE_GLOB))
+    if not rule_paths:
+        raise ValueError("missing bulk-family rule registry")
+    # Load from the supplied review root rather than this module's source directory.
+    old_tools = globals()["TOOLS"]
+    try:
+        globals()["TOOLS"] = review_root
+        rules_doc, compiled = _load_rules()
+    finally:
+        globals()["TOOLS"] = old_tools
     audit = holds.audit(evidence_path, review_root=review_root,
                         registry_path=review_root / holds.REGISTRY.name)
     evidence, evidence_sha = cp._read(evidence_path)
@@ -139,28 +154,36 @@ def classify(evidence_path: Path, *, review_root: Path = TOOLS) -> dict[str, Any
     reviews = resolver.load_reviews(review_root)
     held = {r["reviewTargetId"] for r in audit["heldTargets"]}
 
-    # Every explicit row in Batch 37 must match exactly one committed rule.
+    # Validate every explicit bulk-family review row across all batches. A rule match
+    # is never an approval without one of these destination-specific rows.
     reviewed_ids = set()
     coverage = []
-    for configured in REVIEW_FILES:
-        path = review_root / configured.name
+    batch37_ids = set()
+    batch38_ids = set()
+    for path in sorted(review_root.glob("release_catalog_reviewed_nutrition_targets*.v1.json")):
         review_doc, _ = cp._read(path)
         for row in review_doc.get("items") or []:
+            if "bulkFamilyRuleId" not in row:
+                continue
             target_id = cp._text(row, "reviewTargetId", path.name)
             if target_id in reviewed_ids:
-                raise ValueError(f"duplicate Batch 37 target: {target_id}")
+                raise ValueError(f"duplicate bulk-family target: {target_id}")
             matched = _matches(cp._text(row, "canonicalEnglishName", target_id), compiled)
             if len(matched) != 1:
-                raise ValueError(f"Batch 37 target must match exactly one rule: {target_id}")
+                raise ValueError(f"bulk-family target must match exactly one rule: {target_id}")
             rule = matched[0]
             if row.get("bulkFamilyRuleId") != rule["ruleId"] or row.get("bulkFamilyTier") != rule["tier"]:
-                raise ValueError(f"Batch 37 rule receipt differs: {target_id}")
+                raise ValueError(f"bulk-family rule receipt differs: {target_id}")
             if row.get("fdcId") != rule["fdcId"] or row.get("fdcDescription") != rule["fdcDescription"]:
-                raise ValueError(f"Batch 37 rule binding differs: {target_id}")
+                raise ValueError(f"bulk-family rule binding differs: {target_id}")
             if target_id in held:
                 raise ValueError(f"held target cannot be bulk-reviewed: {target_id}")
             reviewed_ids.add(target_id)
-            coverage.append({"reviewTargetId": target_id, "ruleId": rule["ruleId"], "tier": rule["tier"]})
+            if path.name.startswith("release_catalog_reviewed_nutrition_targets_041"):
+                batch37_ids.add(target_id)
+            if path.name.startswith("release_catalog_reviewed_nutrition_targets_042"):
+                batch38_ids.add(target_id)
+            coverage.append({"reviewTargetId": target_id, "ruleId": rule["ruleId"], "tier": rule["tier"], "reviewFile": path.name})
 
     rule_covered_unreviewed, tier_b, tier_c = _partition_remaining(
         audit["remainingUnheldCandidates"], compiled
@@ -170,9 +193,13 @@ def classify(evidence_path: Path, *, review_root: Path = TOOLS) -> dict[str, Any
         "recordedReviewTargetCount": audit["summary"]["recordedReviewTargetCount"],
         "heldReviewTargetCount": audit["summary"]["heldReviewTargetCount"],
         "remainingReviewTargetCount": len(audit["remainingUnheldCandidates"]),
-        "batch37ExplicitReviewCount": len(reviewed_ids),
-        "batch37TierACount": sum(r["tier"] == "A" for r in coverage),
-        "batch37TierBCount": sum(r["tier"] == "B" for r in coverage),
+        "explicitBulkReviewCount": len(reviewed_ids),
+        "batch37ExplicitReviewCount": len(batch37_ids),
+        "batch37TierACount": sum(r["tier"] == "A" and r["reviewTargetId"] in batch37_ids for r in coverage),
+        "batch37TierBCount": sum(r["tier"] == "B" and r["reviewTargetId"] in batch37_ids for r in coverage),
+        "batch38ExplicitReviewCount": len(batch38_ids),
+        "batch38TierACount": sum(r["tier"] == "A" and r["reviewTargetId"] in batch38_ids for r in coverage),
+        "batch38TierBCount": sum(r["tier"] == "B" and r["reviewTargetId"] in batch38_ids for r in coverage),
         "unreviewedRuleMatchCount": len(rule_covered_unreviewed),
         "manualFamilyCandidateCount": len(tier_b),
         "contextHeavyCount": len(tier_c),
@@ -194,7 +221,9 @@ def classify(evidence_path: Path, *, review_root: Path = TOOLS) -> dict[str, Any
             "networkRequestsPerformed": False,
         },
         "summary": summary,
-        "batch37Coverage": coverage,
+        "bulkReviewCoverage": coverage,
+        "batch37Coverage": [r for r in coverage if r["reviewTargetId"] in batch37_ids],
+        "batch38Coverage": [r for r in coverage if r["reviewTargetId"] in batch38_ids],
         "ruleCoveredButUnreviewed": rule_covered_unreviewed,
         "tierBManual": tier_b,
         "tierCContext": tier_c,

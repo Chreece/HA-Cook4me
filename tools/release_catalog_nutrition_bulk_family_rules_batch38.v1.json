@@ -1,0 +1,360 @@
+{
+  "batch": 38,
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "extends": "release_catalog_nutrition_bulk_family_rules.v1.json",
+  "kind": "cook4me-nutrition-bulk-family-rules-v60",
+  "policy": {
+    "automaticRuleExpansionForbidden": true,
+    "candidateRankIsIdentityProof": false,
+    "heldTargetsExcluded": true,
+    "multipleRuleMatchesRejected": true,
+    "networkRequestsPerformed": false,
+    "providerIdentityInference": false,
+    "recordedTargetsExcludedFromFutureSelection": true,
+    "regexAnchoredRequired": true,
+    "ruleMatchIsApprovalOnlyWhenReviewRowExists": true
+  },
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "rules": [
+    {
+      "batch": 38,
+      "contract": "Unqualified bacon is reviewed as the conventional unprepared cured-pork ingredient. This is a generic fallback, not proof that every market label excludes turkey/meatless bacon or has the same cure/salt/fat formulation.",
+      "fdcDescription": "Pork, cured, bacon, unprepared",
+      "fdcId": 168277,
+      "pattern": "^(?:a - )?bacon$|^bacon strips$|^diced bacon$|^chopped bacon$|^thick bacon pieces$|^bacon pieces, cut into quarters$|^bacon slice, cut into 4 pieces$|^bacon slices, cut (?:3 cm wide|into quarters)$|^pieces of bacon, cut into 4$|^a - bacon \\(cut into 2 cm-wide pieces\\)$",
+      "ruleId": "b38-bacon-unprepared",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "The target explicitly states fresh mint leaves; chopping is presentation only. Spearmint is the retained generic fresh culinary-mint reference.",
+      "fdcDescription": "Spearmint, fresh",
+      "fdcId": 173475,
+      "pattern": "^(?:chopped fresh mint leaves|fresh chopped mint|freshly chopped mint leaves)$",
+      "ruleId": "b38-fresh-mint-explicit",
+      "tier": "A"
+    },
+    {
+      "batch": 38,
+      "contract": "Unqualified culinary mint is reviewed against the retained fresh spearmint reference. This does not certify mint species or an essential-oil/peppermint-extract identity.",
+      "fdcDescription": "Spearmint, fresh",
+      "fdcId": 173475,
+      "pattern": "^(?:mint|washed mint|finely chopped mint|mint, a little|mint, a little for finishing|mint, as needed|mint, chopped)$",
+      "ruleId": "b38-mint-generic-fresh",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Leaf/sheet gelatine is the dry unsweetened gelatin ingredient; the retained record is powder form, so bloom strength, sheet mass and exact moisture/form are not inferred.",
+      "fdcDescription": "Gelatins, dry powder, unsweetened",
+      "fdcId": 169599,
+      "pattern": "^(?:leaf gelatine|gelatin sheets)$",
+      "ruleId": "b38-gelatin-dry",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Apple compote is reviewed against generic cooked applesauce as a retained fruit-puree category fallback. Added sugar, chunk size and exact concentration are not certified.",
+      "fdcDescription": "Applesauce, regular",
+      "fdcId": 2709216,
+      "pattern": "^apple compote$",
+      "ruleId": "b38-apple-compote",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Grating does not change coconut identity; because no drying/sweetening qualifier is present, use the generic fresh-coconut reference. This is not proof of moisture or cultivar.",
+      "fdcDescription": "Coconut, fresh",
+      "fdcId": 2707500,
+      "pattern": "^grated coconut$",
+      "ruleId": "b38-grated-coconut-fresh",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Coconut flakes are reviewed against retained dried/desiccated coconut. Sweetening/toasting is not stated and therefore not claimed; this remains a generic fallback.",
+      "fdcDescription": "Nuts, coconut meat, dried (desiccated), not sweetened",
+      "fdcId": 170170,
+      "pattern": "^coconut flakes$",
+      "ruleId": "b38-coconut-flakes-dried",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Unqualified soybean flour uses the retained full-fat raw soy-flour reference. Defatting, roasting and manufacturer formulation are not inferred.",
+      "fdcDescription": "Soy flour, full-fat, raw",
+      "fdcId": 174273,
+      "pattern": "^(?:d- )?soybean flour$",
+      "ruleId": "b38-soy-flour-generic",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Unqualified sweetcorn is reviewed as fresh raw kernels for generic per-100-g estimation. Frozen/canned/cooked state and cultivar are not inferred.",
+      "fdcDescription": "Corn, sweet, yellow and white kernels, fresh, raw",
+      "fdcId": 2710826,
+      "pattern": "^sweetcorn$",
+      "ruleId": "b38-sweetcorn-generic",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Nori is a dried edible seaweed sheet/flakes ingredient. The retained record is generic dried seaweed, not an exact laver species, seasoning or toasted formulation.",
+      "fdcDescription": "Seaweed, dried",
+      "fdcId": 2709988,
+      "pattern": "^(?:nori seaweed|thinly sliced nori seaweed|nori for sushi|sheet of nori seaweed|shredded nori \\(for garnish\\), a little|shredded nori, a little for finishing)$",
+      "ruleId": "b38-nori-dried-seaweed",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Rice vermicelli is reviewed against dry rice noodles as the as-purchased recipe input. Soaking/cooking water uptake is not inferred.",
+      "fdcDescription": "Rice noodles, dry",
+      "fdcId": 169742,
+      "pattern": "^rice vermicelli$",
+      "ruleId": "b38-rice-vermicelli-dry",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Silken tofu is reviewed against the retained soft-tofu category. Coagulant, brand, firmness and water content are not claimed exact.",
+      "fdcDescription": "Tofu, soft, prepared with calcium sulfate and magnesium chloride (nigari)",
+      "fdcId": 172449,
+      "pattern": "^silken tofu, scooped into large pieces with a spoon$",
+      "ruleId": "b38-silken-tofu-soft",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Plain tofu cut into cubes is reviewed against generic raw firm tofu. Cutting is presentation only; coagulant and firmness are generic assumptions.",
+      "fdcDescription": "Tofu, raw, firm, prepared with calcium sulfate",
+      "fdcId": 172475,
+      "pattern": "^tofu, cut into 2 cm cubes$",
+      "ruleId": "b38-tofu-firm-generic",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "The ingredient is an uncooked veal cutlet cut into pieces. The retained cutlet reference is used generically; exact leg cut/trim and fat ratio are not certified.",
+      "fdcDescription": "Veal, leg, top round, cap off, cutlet, boneless, raw",
+      "fdcId": 172643,
+      "pattern": "^veal cutlet, cut into pieces$",
+      "ruleId": "b38-veal-cutlet-raw",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Unqualified chicken with only cutting/boneless wording is reviewed against generic raw chicken meat. Skin, bone, exact cut and solution treatment are not inferred.",
+      "fdcDescription": "Chicken, broilers or fryers, meat only, raw",
+      "fdcId": 171052,
+      "pattern": "^(?:chicken|chicken pieces|boneless chicken, cut into small pieces|chicken \\(500 g\\)|chopped chicken)$",
+      "ruleId": "b38-chicken-generic-raw",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Escalope/cutlet/fillet/tenderloin wording is reviewed against generic boneless skinless raw chicken breast. Breading, cooking and exact sub-cut are not inferred.",
+      "fdcDescription": "Chicken, breast, boneless, skinless, raw",
+      "fdcId": 2646170,
+      "pattern": "^(?:chicken escalope|chicken escalopes|chicken cutlets|chicken fillet \\(in bite-sized pieces\\)|chicken fillet pieces|chicken schnitzels|chicken tenderloin, cut into cubes)$",
+      "ruleId": "b38-chicken-breast-cut",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Young chicken is reviewed as a raw broiler/fryer meat-and-skin reference. Whole-bird bone yield and exact edible portion are not inferred.",
+      "fdcDescription": "Chicken, broilers or fryers, meat and skin, raw",
+      "fdcId": 171447,
+      "pattern": "^young chicken$",
+      "ruleId": "b38-young-chicken-raw",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Generic dried chili flakes use the retained red/cayenne pepper spice reference. Pepper cultivar, heat level and flake-versus-ground form are not exact.",
+      "fdcDescription": "Spices, pepper, red or cayenne",
+      "fdcId": 170932,
+      "pattern": "^chili flakes(?: \\(optional\\))?$",
+      "ruleId": "b38-chili-flakes-generic",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Species-unspecified minced/ground meat maps directly to the retained ground-meat NFS category; no species or fat ratio is invented.",
+      "fdcDescription": "Meat, ground, NFS",
+      "fdcId": 2705820,
+      "pattern": "^minced meat$",
+      "ruleId": "b38-minced-meat-nfs",
+      "tier": "A"
+    },
+    {
+      "batch": 38,
+      "contract": "Stewing beef maps directly to retained beef stew meat; dicing is presentation only.",
+      "fdcDescription": "Beef, stew meat",
+      "fdcId": 2705849,
+      "pattern": "^stewing beef(?:, diced)?$",
+      "ruleId": "b38-beef-stew-meat",
+      "tier": "A"
+    },
+    {
+      "batch": 38,
+      "contract": "Beef shin is represented by retained raw beef shank. Grade, trimming and lean-only composition are not claimed exact.",
+      "fdcDescription": "Beef, shank crosscuts, separable lean only, trimmed to 1/4\" fat, choice, raw",
+      "fdcId": 169441,
+      "pattern": "^boneless beef shin$",
+      "ruleId": "b38-beef-shin-raw",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Turkey breast pieces are reviewed against a raw meat-only turkey-breast reference. Added solution and exact manufacturer treatment are not claimed exact.",
+      "fdcDescription": "Turkey, breast, from whole bird, meat only, with added solution, raw",
+      "fdcId": 172876,
+      "pattern": "^turkey breast pieces$",
+      "ruleId": "b38-turkey-breast-raw",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Shimeji is reviewed as the retained beech-mushroom food identity; no cooked/dried state is stated.",
+      "fdcDescription": "Mushroom, beech",
+      "fdcId": 2003603,
+      "pattern": "^shimeji mushrooms$",
+      "ruleId": "b38-shimeji-beech-mushroom",
+      "tier": "A"
+    },
+    {
+      "batch": 38,
+      "contract": "Panko is a dry breadcrumb product; use the retained plain dry breadcrumb reference while keeping coarse Japanese crumb structure/formulation generic.",
+      "fdcDescription": "Bread, crumbs, dry, grated, plain",
+      "fdcId": 174928,
+      "pattern": "^panko breadcrumbs$",
+      "ruleId": "b38-panko-dry-breadcrumb",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "The ingredient identity is baking soda/bicarbonate; “mixed with flour” is preparation context, not a different leavening agent.",
+      "fdcDescription": "Leavening agents, baking soda",
+      "fdcId": 175040,
+      "pattern": "^(?:baking soda|bicarbonate of soda)(?:,)? mixed with flour$",
+      "ruleId": "b38-baking-soda-prep-text",
+      "tier": "A"
+    },
+    {
+      "batch": 38,
+      "contract": "Rapeseed cooking oil is reviewed against retained canola oil as a generic low-erucic rapeseed-oil reference. Exact cultivar/refining profile is not certified.",
+      "fdcDescription": "Canola oil",
+      "fdcId": 2710188,
+      "pattern": "^rapeseed oil$",
+      "ruleId": "b38-rapeseed-canola-oil",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Semi-skimmed milk is represented by the retained reduced-fat 2% milk category. Exact European fat percentage, fortification and brand are not certified.",
+      "fdcDescription": "Milk, reduced fat (2%)",
+      "fdcId": 2705386,
+      "pattern": "^semi-skimmed milk$",
+      "ruleId": "b38-semi-skimmed-milk",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "White mustard seed is represented by retained mustard seed; the reference is ground, so seed color/whole-versus-ground presentation is not claimed exact.",
+      "fdcDescription": "Spices, mustard seed, ground",
+      "fdcId": 170929,
+      "pattern": "^(?:white mustard seeds|whole white mustard seeds)$",
+      "ruleId": "b38-mustard-seed",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Plain pasta shapes without a cooked/fresh qualifier are reviewed as dry as-purchased pasta. Enrichment, egg content, shape and cooking-time formulation remain generic.",
+      "fdcDescription": "Pasta, dry, unenriched",
+      "fdcId": 168927,
+      "pattern": "^(?:lasagna sheets|spaghetti, broken in half|macaroni \\((?:4|9)-minute cooking type\\)|orzo \\(rice-shaped pasta\\)|rice-shaped pasta|pasta shells)$",
+      "ruleId": "b38-dry-pasta-shapes",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Pecorino-family cheese is reviewed against retained Romano as a generic hard sheep-milk grating-cheese reference. Exact Pecorino variety and added pepper are not certified.",
+      "fdcDescription": "Cheese, romano",
+      "fdcId": 171249,
+      "pattern": "^(?:pecorino cheese|peppered pecorino, diced|peppered pecorino cheese, diced|diced peppered pecorino cheese|grated pecorino, to serve|pecorino cheese with pepper|pecorino with black pepper, diced|pecorino, diced|spicy pecorino, diced)$",
+      "ruleId": "b38-pecorino-romano-category",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Grana/Grana Padano is represented by retained hard Parmesan as a generic hard Italian grating-cheese fallback. Protected-origin recipe and exact aging/salt/moisture remain distinct and unclaimed.",
+      "fdcDescription": "Cheese, Parmesan, hard",
+      "fdcId": 2705730,
+      "pattern": "^(?:grana padano cheese|grana cheese|grana cheese shavings|grams of grana padano|grated grana padano)$",
+      "ruleId": "b38-grana-parmesan-category",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Shortcrust pastry is represented by a retained unbaked pie-crust reference. Deep-dish/frozen/enrichment and butter/shortening formulation are not claimed exact.",
+      "fdcDescription": "Pie crust, deep dish, frozen, unbaked, made with enriched flour",
+      "fdcId": 167523,
+      "pattern": "^shortcrust pastry$",
+      "ruleId": "b38-shortcrust-pie-crust",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Unqualified sandwich bread is represented by generic commercially prepared white bread; crust removal/slicing is presentation only, while grain/formulation is not certified.",
+      "fdcDescription": "Bread, white, commercially prepared (includes soft bread crumbs)",
+      "fdcId": 174924,
+      "pattern": "^(?:crustless sandwich bread|slices of sandwich bread|sliced sandwich bread)$",
+      "ruleId": "b38-sandwich-bread-generic",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Fresh/soft breadcrumbs use the retained white-bread reference that explicitly includes soft bread crumbs; bread formulation remains generic.",
+      "fdcDescription": "Bread, white, commercially prepared (includes soft bread crumbs)",
+      "fdcId": 174924,
+      "pattern": "^fresh breadcrumbs, (?:finely chopped|ground)$",
+      "ruleId": "b38-fresh-soft-breadcrumbs",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Unqualified bread slices are represented by generic commercially prepared white bread. The stated piece mass is not used for any inferred conversion here.",
+      "fdcDescription": "Bread, white, commercially prepared (includes soft bread crumbs)",
+      "fdcId": 174924,
+      "pattern": "^(?:bread slices, cut \\(25 g each\\)|crumbled bread slices \\(25 g each\\))$",
+      "ruleId": "b38-bread-slices-generic",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "Romanesco is a cauliflower cultivar and is represented by retained raw cauliflower. Cultivar-specific composition and cooked state are not inferred.",
+      "fdcDescription": "Cauliflower, raw",
+      "fdcId": 2685573,
+      "pattern": "^romanesco cabbage$",
+      "ruleId": "b38-romanesco-cauliflower",
+      "tier": "B"
+    },
+    {
+      "batch": 38,
+      "contract": "White wine vinegar uses the retained generic vinegar category because the exact subtype is absent. Acid concentration and wine-vinegar formulation are not certified.",
+      "fdcDescription": "Vinegar",
+      "fdcId": 2709351,
+      "pattern": "^(?:a- )?white wine vinegar$",
+      "ruleId": "b38-white-wine-vinegar-generic",
+      "tier": "B"
+    }
+  ],
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+  "tiers": {
+    "A": "Direct food/state family or presentation-only variant.",
+    "B": "Explicit generic category fallback; not exact subtype/species/brand/formulation certification.",
+    "C": "No approval rule; remains unresolved."
+  }
+}
