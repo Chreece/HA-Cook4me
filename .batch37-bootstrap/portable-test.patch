@@ -1,0 +1,97 @@
+diff --git a/tests/test_release_catalog_nutrition_review_batch37_v60.py b/tests/test_release_catalog_nutrition_review_batch37_v60.py
+index e2b3347..dc10e9f 100644
+--- a/tests/test_release_catalog_nutrition_review_batch37_v60.py
++++ b/tests/test_release_catalog_nutrition_review_batch37_v60.py
+@@ -9,6 +9,7 @@ import re
+ import sys
+ import tempfile
+ import unittest
++from unittest.mock import patch
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+ TOOLS = ROOT / "tools"
+@@ -20,7 +21,6 @@ import nutrition_review_holds_v60 as holds  # noqa: E402
+ import resolve_reviewed_release_catalog_nutrition_targets_v60 as resolver  # noqa: E402
+ import snapshot_nutrition_review_checkpoint_v60 as cp  # noqa: E402
+ 
+-EVIDENCE = Path('/mnt/data/cook4me_b37/evidence/fdc-target-candidates-offline.v60.json')
+ EVIDENCE_SHA = "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac"
+ SOURCES = tuple(TOOLS / name for name in (
+     "release_catalog_reviewed_nutrition_targets_041.v1.json",
+@@ -148,26 +148,32 @@ class Batch37BulkFamilyTests(unittest.TestCase):
+                         "sourceEvidenceCandidateRank", "sourceCandidateSha256"):
+                 self.assertEqual(got[key], row[key])
+ 
+-    def test_classifier_is_lossless_and_approves_nothing_itself(self):
+-        result = classifier.classify(EVIDENCE)
+-        summary = result["summary"]
+-        self.assertEqual(summary["recordedReviewTargetCount"], 4728)
+-        self.assertEqual(summary["heldReviewTargetCount"], 12)
+-        self.assertEqual(summary["remainingReviewTargetCount"], 1591)
+-        self.assertEqual(summary["batch37ExplicitReviewCount"], 106)
+-        self.assertEqual(summary["batch37TierACount"], 64)
+-        self.assertEqual(summary["batch37TierBCount"], 42)
+-        self.assertEqual(summary["unreviewedRuleMatchCount"], 0)
+-        self.assertEqual(summary["manualFamilyCandidateCount"], 759)
+-        self.assertEqual(summary["contextHeavyCount"], 832)
+-        self.assertEqual(summary["bindingsApprovedByClassifier"], 0)
+-        self.assertEqual(759 + 832, 1591)
+-
+-    def test_next_queue_is_exact_old_queue_minus_106_ids_in_original_order(self):
+-        old = json.loads(Path('/mnt/data/cook4me_b37/worklist/remaining.json').read_text())['items']
+-        expected = [r["reviewTargetId"] for r in old if r["reviewTargetId"] not in self.ids]
+-        self.assertEqual(expected, self.fixture["remainingAfterTargetIds"])
+-        self.assertEqual(len(expected), 1591)
++    def test_classifier_partition_is_lossless_and_approves_nothing_itself(self):
++        _, compiled = classifier._load_rules()
++        rows = [
++            {"reviewTargetId": "synthetic:rule", "canonicalEnglishName": "Bay leaf", "candidates": [{"fdcId": 1}]},
++            {"reviewTargetId": "synthetic:manual", "canonicalEnglishName": "Plain novel ingredient", "candidates": [{"fdcId": 2}]},
++            {"reviewTargetId": "synthetic:context", "canonicalEnglishName": "Vegetable stock", "candidates": [{"fdcId": 3}]},
++            {"reviewTargetId": "synthetic:none", "canonicalEnglishName": "Novel ingredient", "candidates": []},
++        ]
++        before = deepcopy(rows)
++        rule_matches, tier_b, tier_c = classifier._partition_remaining(rows, compiled)
++        self.assertEqual(rows, before)
++        self.assertEqual([r["reviewTargetId"] for r in rule_matches], ["synthetic:rule"])
++        self.assertEqual([r["reviewTargetId"] for r in tier_b], ["synthetic:manual"])
++        self.assertEqual([r["reviewTargetId"] for r in tier_c], ["synthetic:context", "synthetic:none"])
++        self.assertEqual(len(rule_matches) + len(tier_b) + len(tier_c), len(rows))
++        self.assertTrue(all("classification" in r for r in rule_matches + tier_b + tier_c))
++
++    def test_remaining_queue_receipt_is_pinned_unique_and_disjoint_from_batch37(self):
++        remaining = self.fixture["remainingAfterTargetIds"]
++        self.assertEqual(len(remaining), 1591)
++        self.assertEqual(len(set(remaining)), 1591)
++        self.assertFalse(set(remaining) & self.ids)
++        self.assertEqual(self.fixture["remainingBeforeCount"], 1697)
++        self.assertEqual(self.fixture["selectedTargetCount"], 106)
++        self.assertEqual(self.fixture["remainingAfterCount"], 1591)
++        self.assertEqual(self.fixture["tierCounts"], {"A": 64, "B": 42})
+ 
+     def test_tier_a_does_not_match_known_context_heavy_examples(self):
+         names = ["Salt and pepper", "Vegetable stock", "Rice", "Mirin", "Curry paste",
+@@ -239,12 +245,20 @@ class Batch37BulkFamilyTests(unittest.TestCase):
+                          "retained_reference_candidate_bytes_differ")
+ 
+     def test_cli_refuses_overwrite_and_returns_two_while_queue_remains(self):
+-        with tempfile.TemporaryDirectory() as tmp:
++        result = {
++            "schemaVersion": 1,
++            "kind": "cook4me-nutrition-review-tier-classification-v60",
++            "summary": {"remainingReviewTargetCount": 1591},
++            "tierBManual": [],
++            "tierCContext": [],
++        }
++        with tempfile.TemporaryDirectory() as tmp, patch.object(classifier, "classify", return_value=result) as mocked:
+             out = Path(tmp) / "classification"
+-            self.assertEqual(classifier.main(["--evidence", str(EVIDENCE), "--output", str(out)]), 2)
++            self.assertEqual(classifier.main(["--evidence", "not-read.json", "--output", str(out)]), 2)
+             before = (out / "classification.json").read_bytes()
+-            self.assertEqual(classifier.main(["--evidence", str(EVIDENCE), "--output", str(out)]), 1)
++            self.assertEqual(classifier.main(["--evidence", "not-read.json", "--output", str(out)]), 1)
+             self.assertEqual(before, (out / "classification.json").read_bytes())
++            self.assertEqual(mocked.call_count, 1)
+ 
+ 
+ if __name__ == "__main__":
