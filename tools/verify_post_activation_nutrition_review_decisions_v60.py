@@ -4,12 +4,13 @@
 The verifier is offline and fail-closed.  For every committed post-activation
 decision artifact it recompiles the corresponding reviewed-target source from the
 exact candidate-evidence bytes, then requires the committed review file to be
-byte-identical to the compiler output.  It also builds the global checkpoint so
-duplicate reviewTargetIds anywhere in the historical review corpus fail CI.
+byte-identical to the compiler output.  It also validates the global review
+corpus and reports every duplicate reviewTargetId in one pass.
 """
 from __future__ import annotations
 
 import argparse
+from collections import defaultdict
 import json
 from pathlib import Path
 import re
@@ -26,6 +27,7 @@ import compile_release_catalog_fdc_retained_review_decisions_v60 as retained  # 
 import snapshot_nutrition_review_checkpoint_v60 as checkpoint  # type: ignore  # noqa: E402
 
 DECISION_GLOB = "release_catalog_nutrition_review_decisions_post_activation_*.v1.json"
+REVIEW_GLOB = "release_catalog_reviewed_nutrition_targets*.v1.json"
 DECISION_RE = re.compile(
     r"release_catalog_nutrition_review_decisions_post_activation_(?P<batch>[0-9A-Za-z_-]+)\.v1\.json\Z"
 )
@@ -36,6 +38,28 @@ def _review_path(review_root: Path, decision_path: Path) -> Path:
     if match is None:
         raise ValueError(f"unsupported post-activation decision filename: {decision_path.name}")
     return review_root / f"release_catalog_reviewed_nutrition_targets_{match.group('batch')}.v1.json"
+
+
+def _duplicate_review_targets(review_root: Path) -> list[tuple[str, list[str]]]:
+    origins: dict[str, list[str]] = defaultdict(list)
+    for path in sorted(review_root.glob(REVIEW_GLOB)):
+        if path.is_symlink() or not path.is_file():
+            continue
+        value, _sha = checkpoint._read(path)
+        items = value.get("items")
+        if not isinstance(items, list):
+            continue
+        for raw in items:
+            if not isinstance(raw, dict):
+                continue
+            target = str(raw.get("reviewTargetId") or "").strip()
+            if target:
+                origins[target].append(path.name)
+    return sorted(
+        (target, files)
+        for target, files in origins.items()
+        if len(files) > 1
+    )
 
 
 def verify(
@@ -50,8 +74,14 @@ def verify(
     if not decision_paths:
         raise ValueError("no post-activation nutrition decision files found")
 
-    # Structural validation of the complete review corpus also rejects duplicate
-    # reviewTargetIds across old and new batches before any activation is allowed.
+    duplicates = _duplicate_review_targets(review_root)
+    if duplicates:
+        detail = "; ".join(
+            f"{target}: {', '.join(files)}"
+            for target, files in duplicates
+        )
+        raise ValueError("duplicate reviewTargetIds: " + detail)
+
     global_checkpoint = checkpoint.build_checkpoint(review_root)
     checkpoint_ids = {
         row["reviewTargetId"] for row in global_checkpoint["recordedBindings"]
