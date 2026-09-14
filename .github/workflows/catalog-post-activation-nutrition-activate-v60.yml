@@ -7,6 +7,7 @@ on:
     paths:
       - .github/workflows/catalog-post-activation-nutrition-activate-v60.yml
       - tools/activate_post_activation_reviewed_nutrition_v60.py
+      - tools/release_catalog_reviewed_nutrition_targets_*.v1.json
       - tests/test_activate_post_activation_reviewed_nutrition_v60.py
   workflow_dispatch:
 
@@ -82,6 +83,8 @@ jobs:
           catalog = json.loads(catalog_path.read_text(encoding='utf-8'))
           summary = json.loads((root / 'activation-summary.v60.json').read_text(encoding='utf-8'))
           source = catalog.get('source') if isinstance(catalog.get('source'), dict) else {}
+          baseline = json.loads(Path('custom_components/cook4me/catalog/merged_catalog.v1.json').read_text(encoding='utf-8'))
+          baseline_source = baseline.get('source') if isinstance(baseline.get('source'), dict) else {}
           sys.path.insert(0, str(Path.cwd() / 'custom_components' / 'cook4me'))
           import catalog_search_index as search
           prepared = search.prepare_search_index(catalog.get('searchIndex') or {})
@@ -96,6 +99,8 @@ jobs:
               'ingredients': len(catalog.get('ingredients') or []),
               'failedDetailCount': int(source.get('failedDetailCount') or 0),
               'detailNotFoundCount': int(source.get('detailNotFoundCount') or 0),
+              'expectedResolvedBefore': int(baseline_source.get('reviewedNutritionResolvedCount') or 0),
+              'expectedRequiredBefore': int(baseline_source.get('reviewedNutritionRequiredCount') or 0),
               'resolvedBefore': int(summary.get('reviewedNutritionResolvedCountBefore') or 0),
               'requiredBefore': int(summary.get('reviewedNutritionRequiredCountBefore') or 0),
               'newlyResolvedTargets': int(summary.get('newlyResolvedReviewTargetCount') or 0),
@@ -117,8 +122,10 @@ jobs:
               raise SystemExit(f'activation changed catalog identity counts: {facts}')
           if facts['failedDetailCount'] != 0 or facts['detailNotFoundCount'] != 1485:
               raise SystemExit(f'activation changed detail accounting: {facts}')
-          if facts['resolvedBefore'] != 8925 or facts['requiredBefore'] != 10776:
-              raise SystemExit(f'activation did not start from the expected v60 nutrition baseline: {facts}')
+          if facts['expectedRequiredBefore'] != 10776:
+              raise SystemExit(f'activation baseline changed the v60 nutrition denominator: {facts}')
+          if facts['resolvedBefore'] != facts['expectedResolvedBefore'] or facts['requiredBefore'] != facts['expectedRequiredBefore']:
+              raise SystemExit(f'activation did not start from the checked-out catalog nutrition baseline: {facts}')
           if facts['newlyResolvedTargets'] <= 0 or facts['newlyResolvedIdentities'] <= 0:
               raise SystemExit(f'activation resolved no new reviewed nutrition: {facts}')
           if facts['resolvedAfter'] != facts['resolvedBefore'] + facts['newlyResolvedIdentities']:
