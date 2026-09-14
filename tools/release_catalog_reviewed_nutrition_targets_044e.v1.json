@@ -1,0 +1,609 @@
+{
+  "bulkFamilyRulesFile": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "bulkFamilyRuleId": "b40-sprouts-nfs",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Pea shoots, cut in half",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Sprouts, NFS",
+      "fdcId": 2709764,
+      "notes": "Batch 40 bulk-family Tier B / b40-sprouts-nfs. Edible young shoots/sprouts use Sprouts NFS; plant species and maturity are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:a0978f005cc07c364529",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "177a6d0eb4fb5149b742aca47709455391f1a382a9f3cd172642b2c33356e6db",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:74b413606418cc071970",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-nondairy-milk-nfs",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Plant-based drink",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Non-dairy milk, NFS",
+      "fdcId": 2705403,
+      "notes": "Batch 40 bulk-family Tier B / b40-nondairy-milk-nfs. Plant-based drink is represented by Non-dairy milk NFS; base crop, fortification, sweetening and brand formulation are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:a0d25deaed68284bb966",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "953b31b28dd3721ae13255dba1d01442f02bae9ce83b0a9436560bd6a5190ab3",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:c695a8500556297db6a0",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-chocolate-candy-nfs",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Chocolate decorations",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Chocolate candy, other, NFS",
+      "fdcId": 2710327,
+      "notes": "Batch 40 bulk-family Tier B / b40-chocolate-candy-nfs. Unspecified chocolate confection shapes use Chocolate candy, other, NFS; filling, coating, cereal/malt and brand formulation are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:a4c2b65d8c4de0c3d8b5",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "72f58c9902afd0bbcaa42859643cf9231392848592a403af5a86f8631afb3b33",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:59cbe78b4d2ec3ead005",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-candied-citrus",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Crystallized lemon, thinly sliced",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Candied fruit",
+      "fdcId": 167781,
+      "notes": "Batch 40 bulk-family Tier B / b40-candied-citrus. Candied/crystallized lemon uses retained candied fruit; fruit species is known but sugar uptake and peel/flesh ratio are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:a8d71f803ef266b94ab5",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "fd3fb1b27c58fb6b7058ba9282511ba58e4969d97df0198666772e6a600b2094",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:4e2e5c6bc4d6c6217a5f",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-flatbread",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Piadine flatbreads",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Focaccia, Italian flatbread, plain",
+      "fdcId": 167945,
+      "notes": "Batch 40 bulk-family Tier B / b40-flatbread. Piadina uses retained plain Italian flatbread as a regional-flatbread fallback; exact fat, leavening and flour formulation are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:af0dae8dbab1b8047889",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "893bdb6b35e1a4cb4e63cf1ddbd28fd854be5d05947fdafdcd74bfa82b4c049f",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:65ff552763cc88224d2d",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-baking-chocolate-unsweetened",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Cooking chocolate, cut into small pieces",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Baking chocolate, unsweetened, squares",
+      "fdcId": 167568,
+      "notes": "Batch 40 bulk-family Tier B / b40-baking-chocolate-unsweetened. Unspecified cooking/block chocolate uses retained baking chocolate, unsweetened, squares; melting/cutting is presentation only, while exact cocoa/sugar formulation is not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:af4dba8371c736e46271",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "6c2b361ec56a4f32ad59f6f95b6650f546bdb40197cc9a8ce343765af40c76a9",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:8b3f6561935b778e8e87",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-cheese-nfs",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Aged kaşar cheese, grated",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Cheese, NFS",
+      "fdcId": 2705704,
+      "notes": "Batch 40 bulk-family Tier B / b40-cheese-nfs. Named cheese without a retained exact subtype is represented by Cheese NFS; milk species, aging, moisture, fat level, processing and brand formulation are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:af9ac467b73f68b16a56",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "786a18498c36a853290ad80e5f16d00471e65f3e42ef5665df058702126b5ec8",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:d8e3a03e5255ac051f39",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-spring-roll-generic",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Spring roll",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Restaurant, Chinese, egg rolls, assorted",
+      "fdcId": 167667,
+      "notes": "Batch 40 bulk-family Tier B / b40-spring-roll-generic. Unspecified spring roll uses retained assorted Chinese egg rolls as a generic filled-roll reference; wrapper, filling and frying method are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:b44fa831541d1be2fc8e",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "f27d74df5a0241f4c20b409cf02a36076ced7573aaffda116dcf6484004309ef",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:4753d083d55101f5070b",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-fish-nfs",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Catshark slice, cut into pieces",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Fish, NFS",
+      "fdcId": 2706224,
+      "notes": "Batch 40 bulk-family Tier B / b40-fish-nfs. Named/plain fish without a compatible retained species-state record uses Fish NFS; species-specific fatty-acid profile and cut are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:b6fa1a77cc8d917f7e4e",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "5bca56c4ae63de51e57261604f25b3ca03d21b90130deceba48e60a99dbb963b",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "M_FOOD_288",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-vegetarian-fillet",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "100 g vegetarian steaks",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Vegetarian, fillet",
+      "fdcId": 2707478,
+      "notes": "Batch 40 bulk-family Tier B / b40-vegetarian-fillet. Prepared meat-substitute fillet/steak/cutlet products use Vegetarian fillet; wheat/soy/pea composition, breading and brand formulation are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:b78ed3276e3f46286b63",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "9865f89d87f76ddb7d7bdde5393b36aa337d84b95c2330b8f34a5016dbde2268",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:a4a8f5e3bb1da055eb9c",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-vegetarian-hotdog",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "HERTA vegetarian Knacki sausage",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Hot dog, vegetarian",
+      "fdcId": 2707470,
+      "notes": "Batch 40 bulk-family Tier B / b40-vegetarian-hotdog. Vegetarian Knacki-style sausage uses the retained vegetarian hot-dog category; exact brand protein base and formulation are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:b7ea148f8d9dae16f193",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "c59625a070979f2321e945230697ffa1adb654745d3e1f27146bcc67b0189e18",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:1294c23c7fe104695c44",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-infused-oil-generic",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Garlic-flavoured oil",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Vegetable oil, NFS",
+      "fdcId": 2710180,
+      "notes": "Batch 40 bulk-family Tier B / b40-infused-oil-generic. Named/infused culinary oils use Vegetable oil NFS for the all-fat reference; fatty-acid profile, infusion solids and flavor compounds are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:b879b273209596a97b7f",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "0b9de05d6d9f3ce48c6553cbcab45de36e13be8a382182232f4c66caaf42b307",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:31fd3b70a158bbdbf4c9",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-chocolate-candy-nfs",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Chocolate disc",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Chocolate candy, other, NFS",
+      "fdcId": 2710327,
+      "notes": "Batch 40 bulk-family Tier B / b40-chocolate-candy-nfs. Unspecified chocolate confection shapes use Chocolate candy, other, NFS; filling, coating, cereal/malt and brand formulation are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:bd8c838c50cb451ae9bd",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "72f58c9902afd0bbcaa42859643cf9231392848592a403af5a86f8631afb3b33",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:59cbe78b4d2ec3ead005",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-sausage-nfs",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Mettwurst, sliced",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Sausage, NFS",
+      "fdcId": 2706190,
+      "notes": "Batch 40 bulk-family Tier B / b40-sausage-nfs. Named sausage without an exact retained subtype uses Sausage NFS; species, cure, smoke, fat and seasoning are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:be84d8ea431781f0d7af",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "4a0baca046a3d2cc3b106a3362a690ba76e1f3b4de5b2e29ed731a198f2352c8",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "M_FOOD_87",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-hot-pepper-raw",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Mini pepper",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Peppers, hot, raw",
+      "fdcId": 2709798,
+      "notes": "Batch 40 bulk-family Tier B / b40-hot-pepper-raw. Fresh named chili/sweet-pepper varieties use the retained raw-hot-pepper family as a generic Capsicum fallback; exact cultivar, color and heat are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:bec95f2bf4afb801df61",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "524224f457cf26d489305fe45b4eae24b971d7b4d62adfc17cd1a177fa87ce6e",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:752e7ef0a5932d3a3c38",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-cheese-nfs",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "A- powdered cheese",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Cheese, NFS",
+      "fdcId": 2705704,
+      "notes": "Batch 40 bulk-family Tier B / b40-cheese-nfs. Named cheese without a retained exact subtype is represented by Cheese NFS; milk species, aging, moisture, fat level, processing and brand formulation are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:c337d4d0295f54e5ee33",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "786a18498c36a853290ad80e5f16d00471e65f3e42ef5665df058702126b5ec8",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:d8e3a03e5255ac051f39",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-kombu-dried",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Kombu, cut into 1 cm squares",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Seaweed, dried",
+      "fdcId": 2709988,
+      "notes": "Batch 40 bulk-family Tier B / b40-kombu-dried. Dry kombu pieces use retained dried seaweed; exact kelp species and iodine/mineral profile are not certified, and rehydrated kombu remains excluded. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:c74c68e19d01d2f3e3ae",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "5a25a4c2752b0abd65981f3bc5bbb44ff9299925b00abbaeb341674ec335f8c6",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:069089e27b740750d60e",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-cheese-nfs",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Halloumi, sliced",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Cheese, NFS",
+      "fdcId": 2705704,
+      "notes": "Batch 40 bulk-family Tier B / b40-cheese-nfs. Named cheese without a retained exact subtype is represented by Cheese NFS; milk species, aging, moisture, fat level, processing and brand formulation are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:cc9e6880296b6c4bd011",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "786a18498c36a853290ad80e5f16d00471e65f3e42ef5665df058702126b5ec8",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:d8e3a03e5255ac051f39",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-pasta-dry",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Lasagne sheet",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Pasta, dry, enriched",
+      "fdcId": 169736,
+      "notes": "Batch 40 bulk-family Tier B / b40-pasta-dry. Unfilled lasagne sheets use dry enriched pasta as a generic wheat-pasta reference; exact flour enrichment, egg content and sheet thickness are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:d5a6eb8ce308a48fab89",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "3f07674ce979c5a9a5c165d13aa80b9b5715a8d598b2fea6e6520e4623f15368",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "concept:food:ed9f4c8662acf7e72cb0",
+      "usageCountAtReview": 1
+    },
+    {
+      "bulkFamilyRuleId": "b40-milk-chocolate-generic",
+      "bulkFamilyRuleRegistry": "release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
+      "bulkFamilyTier": "B",
+      "canonicalEnglishName": "Milk chocolate couverture, chopped",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Chocolate candy",
+      "fdcId": 2710328,
+      "notes": "Batch 40 bulk-family Tier B / b40-milk-chocolate-generic. Milk-chocolate wording uses generic chocolate candy as the retained broad confection reference; cocoa/milk/sugar percentages and couverture formulation are not certified. This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.",
+      "reviewTargetId": "concept:food:d6a5774cba81ab4fed48",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "a91420c6d255e261711cba0748cba432e16e2d905c83a460d6a9bf1ba8a0b66c",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+      "sourceEvidenceTargetId": "M_FOOD_100",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "nutritionScope": "Batch 40 bulk-reviewed generic per-100-g ingredient references. Tier A/B rows do not authorize density, piece/yield, cooking/draining, concentration, exact brand/formulation or exact species/cultivar claims beyond each written contract.",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "referenceReceipts": {
+    "167568": {
+      "sourceCandidateSha256": "6c2b361ec56a4f32ad59f6f95b6650f546bdb40197cc9a8ce343765af40c76a9",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:8b3f6561935b778e8e87"
+    },
+    "167667": {
+      "sourceCandidateSha256": "f27d74df5a0241f4c20b409cf02a36076ced7573aaffda116dcf6484004309ef",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "concept:food:4753d083d55101f5070b"
+    },
+    "167781": {
+      "sourceCandidateSha256": "fd3fb1b27c58fb6b7058ba9282511ba58e4969d97df0198666772e6a600b2094",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceTargetId": "concept:food:4e2e5c6bc4d6c6217a5f"
+    },
+    "167945": {
+      "sourceCandidateSha256": "893bdb6b35e1a4cb4e63cf1ddbd28fd854be5d05947fdafdcd74bfa82b4c049f",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:65ff552763cc88224d2d"
+    },
+    "168772": {
+      "sourceCandidateSha256": "455c7cbf3aadb7c31226097ba6eeed80e376ac415f55addda0cf190a3b6f6e3a",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "concept:food:a01faec87d9327d22418"
+    },
+    "168791": {
+      "sourceCandidateSha256": "63682bd93407d46e5aec2404cc5d3407f6eee325b900797b14be534f18c5a19d",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:a7213a9753e052e092c9"
+    },
+    "169736": {
+      "sourceCandidateSha256": "3f07674ce979c5a9a5c165d13aa80b9b5715a8d598b2fea6e6520e4623f15368",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:ed9f4c8662acf7e72cb0"
+    },
+    "172493": {
+      "sourceCandidateSha256": "85e0b08b97ca551baa99604e04d362588ae6561099d58b2398ab9999e7db4721",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceTargetId": "concept:food:5ad258a3a986a27d77a0"
+    },
+    "175118": {
+      "sourceCandidateSha256": "0c66dd60782e3949f6fcc952fcd50ba5ef783e3e82823658ac6a72cd0faeeef1",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceTargetId": "concept:food:b704da37ddbb303c111c"
+    },
+    "175179": {
+      "sourceCandidateSha256": "fa3f46ea9301c0a6518e45d706584d41d67ad0fe206f73e20159f93d50f03ac2",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceTargetId": "concept:food:57c678875b41741639c0"
+    },
+    "2705403": {
+      "sourceCandidateSha256": "953b31b28dd3721ae13255dba1d01442f02bae9ce83b0a9436560bd6a5190ab3",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:c695a8500556297db6a0"
+    },
+    "2705682": {
+      "sourceCandidateSha256": "e07235e0e1a661192a34505ce4cd537f8705af8b96d4d0b375d337c992cfca1b",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:025fe2c67dbdbb826264"
+    },
+    "2705699": {
+      "sourceCandidateSha256": "996e0d3ab970deb4bbc4d36ed7a1e54112229d4959d858ebddd2d9ad1c61d5f8",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "M_FOOD_240"
+    },
+    "2705704": {
+      "sourceCandidateSha256": "786a18498c36a853290ad80e5f16d00471e65f3e42ef5665df058702126b5ec8",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:d8e3a03e5255ac051f39"
+    },
+    "2705819": {
+      "sourceCandidateSha256": "e5d3cbaf7836b2ebbb40de687255578c0f6a554143cefeea9aefcbf4b3012eb6",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:8378d0091c36fda8fb81"
+    },
+    "2705820": {
+      "sourceCandidateSha256": "ffa3f5a52c893c52fa7a88632d92daa19f559ffba52da9962a21d375a3757b81",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "concept:food:cc38f529eba62e071a2d"
+    },
+    "2706165": {
+      "sourceCandidateSha256": "3af40179391b9877dc81cc32c838df3204d04368d9962bb66e892d0fd2d7c3ed",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceTargetId": "concept:food:ff3af50be087ebabfc0d"
+    },
+    "2706190": {
+      "sourceCandidateSha256": "4a0baca046a3d2cc3b106a3362a690ba76e1f3b4de5b2e29ed731a198f2352c8",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "M_FOOD_87"
+    },
+    "2706220": {
+      "sourceCandidateSha256": "59da356c6d3194a81514b864d1d4f689dec3d122e8245f937dcd3be714d100d2",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "concept:food:29f89f635672c86a8072"
+    },
+    "2706224": {
+      "sourceCandidateSha256": "5bca56c4ae63de51e57261604f25b3ca03d21b90130deceba48e60a99dbb963b",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "M_FOOD_288"
+    },
+    "2706247": {
+      "sourceCandidateSha256": "cfe4891d25cab6f1d7d91cc53b7e33195eb3a62679e9c9ba8e883017dcc5f873",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "M_FOOD_288"
+    },
+    "2706336": {
+      "sourceCandidateSha256": "4f9e469d9070b90596577320654332e98f392d93103e2d5824a1ea958fcacd18",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:204a0a8c0119c6a45245"
+    },
+    "2707470": {
+      "sourceCandidateSha256": "c59625a070979f2321e945230697ffa1adb654745d3e1f27146bcc67b0189e18",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:1294c23c7fe104695c44"
+    },
+    "2707478": {
+      "sourceCandidateSha256": "9865f89d87f76ddb7d7bdde5393b36aa337d84b95c2330b8f34a5016dbde2268",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:a4a8f5e3bb1da055eb9c"
+    },
+    "2707535": {
+      "sourceCandidateSha256": "ed5a150eb59c1058c74ff4e490000502eb47622aa6f587921c33b2067231a06d",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:d5459e35bd338b42c74e"
+    },
+    "2707853": {
+      "sourceCandidateSha256": "ece74e031540cf844659fb568f20307ee620738dac921787772ed0eb951b0a5b",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "concept:food:13bd271683d6c83f9066"
+    },
+    "2709213": {
+      "sourceCandidateSha256": "05ac3bc6edae95c316057f1d8307fb47181e6981da4c8339bf6ffba4a24bd6fb",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceTargetId": "M_FOOD_128"
+    },
+    "2709229": {
+      "sourceCandidateSha256": "325e0ae3d84333136fedb537b737e4b5e846428f163af625aad303866f3d1857",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "concept:food:6a3303807ed5450d58a5"
+    },
+    "2709314": {
+      "sourceCandidateSha256": "3db012b0641a458e023c86763bee2ca36ba2ce253e7c3d804776feaaa3e04574",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:7b01bf50bd5f31123660"
+    },
+    "2709764": {
+      "sourceCandidateSha256": "177a6d0eb4fb5149b742aca47709455391f1a382a9f3cd172642b2c33356e6db",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:74b413606418cc071970"
+    },
+    "2709792": {
+      "sourceCandidateSha256": "250d1a96f9af24ff73fecd1bdf8ffb2db0b3ad3199892761427f2fcd2ac53ebb",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "M_FOOD_59"
+    },
+    "2709793": {
+      "sourceCandidateSha256": "c068514b348791ff1a4be5fbdc0abf7fd275936ed8ac7ccbc5d44abf49466c90",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "M_FOOD_88"
+    },
+    "2709798": {
+      "sourceCandidateSha256": "524224f457cf26d489305fe45b4eae24b971d7b4d62adfc17cd1a177fa87ce6e",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:752e7ef0a5932d3a3c38"
+    },
+    "2709988": {
+      "sourceCandidateSha256": "5a25a4c2752b0abd65981f3bc5bbb44ff9299925b00abbaeb341674ec335f8c6",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:069089e27b740750d60e"
+    },
+    "2710180": {
+      "sourceCandidateSha256": "0b9de05d6d9f3ce48c6553cbcab45de36e13be8a382182232f4c66caaf42b307",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:31fd3b70a158bbdbf4c9"
+    },
+    "2710257": {
+      "sourceCandidateSha256": "113a14eecac307278060631375bbfe1116a1faceefed911f8f86ccf69cc9a6bd",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "M_FOOD_469"
+    },
+    "2710283": {
+      "sourceCandidateSha256": "e346190a44d7210fc99be7676f9f792c43e4b2711aa48fa3d7a0073038308fbe",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:2208967697d9c32752b7"
+    },
+    "2710327": {
+      "sourceCandidateSha256": "72f58c9902afd0bbcaa42859643cf9231392848592a403af5a86f8631afb3b33",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceTargetId": "concept:food:59cbe78b4d2ec3ead005"
+    },
+    "2710328": {
+      "sourceCandidateSha256": "a91420c6d255e261711cba0748cba432e16e2d905c83a460d6a9bf1ba8a0b66c",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "M_FOOD_100"
+    },
+    "2710333": {
+      "sourceCandidateSha256": "09649fd54873d1921d5246cb999f4952f37650e589a436df5fbb5be677f53565",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceTargetId": "M_FOOD_100"
+    },
+    "2710334": {
+      "sourceCandidateSha256": "507c269662ac7892e8b625ba7ea8f8e0eb5b79391429e84359fcfe0a177ce9f7",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:e09a20c2744a7d9ac9b9"
+    },
+    "2710623": {
+      "sourceCandidateSha256": "1157003637c0135291a8a78c0c2915c5761cfd948d8c6159f6b53b6cff6c85ce",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:e963de83b9acd58d5871"
+    },
+    "2710688": {
+      "sourceCandidateSha256": "31f4c5690d393fb2ece558d6cefc858ecea5c8f6bdf6f2395375af936c59d9bd",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:8450b715b7b984c4218f"
+    },
+    "2710706": {
+      "sourceCandidateSha256": "8e2258cc011e91bc5ee1948549645b549ebbd3f258ed6a042caa6b0ee583b1d1",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "concept:food:bac8418b188560c6ba21"
+    },
+    "790214": {
+      "sourceCandidateSha256": "48d528e602dabfe37120f2c86c84c61912e9aacd2c4a9928014a03d293b8a11c",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "M_FOOD_792"
+    }
+  },
+  "referenceUse": "Source target/rank only locates an existing retained FDC record. Every destination has its own explicit reviewed row; locator identity/rank is never copied as proof.",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac"
+}
