@@ -7,6 +7,9 @@ on:
     paths:
       - .github/workflows/catalog-post-activation-nutrition-activate-v60.yml
       - tools/release_catalog_reviewed_nutrition_targets_*.v1.json
+      - tools/release_catalog_nutrition_review_holds.v1.json
+      - tools/release_catalog_nutrition_review_hold_releases.v1.json
+      - tools/nutrition_review_holds_v60.py
   workflow_dispatch:
 
 concurrency:
@@ -52,12 +55,17 @@ jobs:
                   changed.extend(str(path) for path in head_commit.get(key) or [])
               changed = sorted(set(changed))
               workflow_path = '.github/workflows/catalog-post-activation-nutrition-activate-v60.yml'
-              review_target_changed = any(
-                  path.startswith('tools/release_catalog_reviewed_nutrition_targets_')
-                  and path.endswith('.v1.json')
+              activation_input_changed = any(
+                  (
+                      path.startswith('tools/release_catalog_reviewed_nutrition_targets_')
+                      and path.endswith('.v1.json')
+                  )
+                  or path == 'tools/release_catalog_nutrition_review_holds.v1.json'
+                  or path == 'tools/release_catalog_nutrition_review_hold_releases.v1.json'
+                  or path == 'tools/nutrition_review_holds_v60.py'
                   for path in changed
               )
-              allow_zero_delta = workflow_path in changed and not review_target_changed
+              allow_zero_delta = workflow_path in changed and not activation_input_changed
 
           with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as handle:
               handle.write(f"allow_zero_delta={'true' if allow_zero_delta else 'false'}\n")
@@ -244,13 +252,20 @@ jobs:
             git fetch origin "$BRANCH"
             REMOTE_SHA="$(git rev-parse "origin/${BRANCH}")"
 
-            # Rebase only across unrelated concurrent work. A newer catalog or
-            # activation-summary edit means this build used a stale nutrition
-            # baseline and must be rerun rather than merged automatically.
-            if git diff --quiet "$BASE_SHA..$REMOTE_SHA" -- "$CATALOG" "$SUMMARY"; then
-              echo "Remote branch advanced only outside activation outputs; rebasing and retrying."
+            # Only unrelated concurrent work may be rebased underneath a
+            # validated activation. Any change to the catalog, activation
+            # summary, review corpus, or hold policy invalidates the build's
+            # nutrition inputs and requires a fresh workflow run.
+            if git diff --quiet "$BASE_SHA..$REMOTE_SHA" -- \
+              "$CATALOG" \
+              "$SUMMARY" \
+              ':(glob)tools/release_catalog_reviewed_nutrition_targets_*.v1.json' \
+              'tools/release_catalog_nutrition_review_holds.v1.json' \
+              'tools/release_catalog_nutrition_review_hold_releases.v1.json' \
+              'tools/nutrition_review_holds_v60.py'; then
+              echo "Remote branch advanced only outside activation inputs; rebasing and retrying."
             else
-              echo "Remote catalog/activation summary changed during validation; refusing stale promotion." >&2
+              echo "Remote activation inputs changed during validation; refusing stale promotion." >&2
               exit 1
             fi
 
