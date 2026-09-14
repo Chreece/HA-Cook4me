@@ -1,4 +1,4 @@
-name: Prove exact Batch 40 remainder contract
+name: Recover exact Batch 40 missing shards
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  analyze:
+  recover:
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     env:
@@ -19,178 +19,185 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
-      - name: Prove remainder ordering and raw JSON layout
+      - name: Rebuild and hash-prove 044d/e/f
         run: |
           python - <<'PY'
           from __future__ import annotations
-          import base64, gzip, hashlib, io, json, re, tarfile
+          import gzip, hashlib, json, re
           from pathlib import Path
 
           root = Path.cwd()
           tools = root / 'tools'
-          names = [
+          known_names = [
               'release_catalog_reviewed_nutrition_targets_044.v1.json',
               'release_catalog_reviewed_nutrition_targets_044b.v1.json',
               'release_catalog_reviewed_nutrition_targets_044c.v1.json',
           ]
-          docs = {n: json.loads((tools / n).read_text(encoding='utf-8')) for n in names}
-          raw = {n: (tools / n).read_bytes() for n in names}
+          known_hashes = {
+              known_names[0]: 'c0f706fd97e750259ba369bcb387074f5e49504fce5e522588c320ddf253b83e',
+              known_names[1]: '9f808c7429547f8c5d89cc95edb215ca814641e2f100a8672ddb4fd4e839f6ea',
+              known_names[2]: '3878be1b8960f6bb95368996e262365afaf500479f74d7da589fa810c8ac8b0f',
+          }
+          missing = {
+              'release_catalog_reviewed_nutrition_targets_044d.v1.json': 'c1c785d35a7fe2e9ec90eb8bc25c7fb4bde242d77706e1771948d3bdfac07f1e',
+              'release_catalog_reviewed_nutrition_targets_044e.v1.json': 'e7f0be03b2c003cfc236f8ed2db49e6a1a5b9827a09effa96f6382139e12863a',
+              'release_catalog_reviewed_nutrition_targets_044f.v1.json': '316595cd3ff61363db9d4cabaca7b335c4fa5a803926e1ed5e1a7e7bc8ab6654',
+          }
+
+          known_docs = {n: json.loads((tools / n).read_text(encoding='utf-8')) for n in known_names}
+
+          def emit(doc):
+              # This must reproduce all surviving original shards byte-for-byte
+              # before it is trusted for the missing shards.
+              return (json.dumps(doc, indent=2, sort_keys=True, ensure_ascii=False) + '\n').encode('utf-8')
+
+          roundtrip = {}
+          for name in known_names:
+              generated = emit(known_docs[name])
+              original = (tools / name).read_bytes()
+              got = hashlib.sha256(generated).hexdigest()
+              roundtrip[name] = {
+                  'expected_sha256': known_hashes[name],
+                  'generated_sha256': got,
+                  'byte_exact': generated == original,
+              }
+              if generated != original or got != known_hashes[name]:
+                  raise SystemExit(f'known-shard serialization calibration failed: {name} {got}')
+
           fixture = json.loads(gzip.decompress(
               (root / 'tests/fixtures/nutrition-batch40-retained-reference-v60.json.gz').read_bytes()
           ))
+          rules_doc = json.loads(
+              (tools / 'release_catalog_nutrition_bulk_family_rules_batch40.v1.json').read_text(encoding='utf-8')
+          )
+          rules = rules_doc['rules']
+          target_map = {r['reviewTargetId']: r for r in fixture['targets']}
+          source_map = {r['reviewTargetId']: r for r in fixture['sources']}
 
-          actual_ids = {n: [r['reviewTargetId'] for r in docs[n]['items']] for n in names}
-          selected_ids = [t['reviewTargetId'] for t in fixture['targets']]
-          first40 = set(actual_ids[names[0]] + actual_ids[names[1]])
-          remainder = sorted(rid for rid in selected_ids if rid not in first40)
-          partitions = [remainder[i:i+20] for i in range(0, len(remainder), 20)]
-          c_exact = partitions[0] == actual_ids[names[2]]
+          # All six shards share exactly the same top-level metadata/receipts.
+          template = known_docs[known_names[2]]
+          top = {k: v for k, v in template.items() if k != 'items'}
+          receipts = top['referenceReceipts']
 
-          # Inspect standard-json serialization and source key order for the
-          # three intact shards. This tells us how missing shards must be emitted.
-          serialization = {}
-          for n in names:
-              doc = docs[n]
-              no_sort = (json.dumps(doc, indent=2) + '\n').encode()
-              sorted_all = (json.dumps(doc, indent=2, sort_keys=True) + '\n').encode()
-              row_key_orders = []
-              for row in doc['items']:
-                  keys = list(row)
-                  if keys not in row_key_orders:
-                      row_key_orders.append(keys)
-              receipt_orders = []
-              for receipt in doc['referenceReceipts'].values():
-                  keys = list(receipt)
-                  if keys not in receipt_orders:
-                      receipt_orders.append(keys)
-              serialization[n] = {
-                  'sha256': hashlib.sha256(raw[n]).hexdigest(),
-                  'no_sort_sha256': hashlib.sha256(no_sort).hexdigest(),
-                  'no_sort_exact': no_sort == raw[n],
-                  'sort_all_sha256': hashlib.sha256(sorted_all).hexdigest(),
-                  'sort_all_exact': sorted_all == raw[n],
-                  'top_key_order': list(doc),
-                  'row_key_orders': row_key_orders,
-                  'reference_receipt_key_order': list(doc['referenceReceipts']),
-                  'receipt_value_key_orders': receipt_orders,
+          suffix = {
+              'A': ' This is an explicitly reviewed direct food/state family; presentation wording does not create a new food identity. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.',
+              'B': ' This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.',
+          }
+
+          def rule_for(target):
+              matches = [r for r in rules if re.match(r['pattern'], target['canonicalEnglishName'], re.I)]
+              if len(matches) != 1:
+                  raise SystemExit(f"{target['reviewTargetId']}: expected 1 rule, got {len(matches)}")
+              return matches[0]
+
+          def build_row(target):
+              rule = rule_for(target)
+              tier = rule['tier']
+              fdc_id = rule['fdcId']
+              receipt = receipts[str(fdc_id)]
+              source = source_map[receipt['sourceEvidenceTargetId']]
+              candidates = [
+                  c for c in source['candidates']
+                  if c['fdcId'] == fdc_id
+                  and c['localEvidenceRank'] == receipt['sourceEvidenceCandidateRank']
+              ]
+              if len(candidates) != 1:
+                  raise SystemExit(
+                      f"{target['reviewTargetId']}: receipt candidate mismatch for FDC {fdc_id}: {len(candidates)}"
+                  )
+              candidate = candidates[0]
+              if candidate['description'] != rule['fdcDescription']:
+                  raise SystemExit(f"{target['reviewTargetId']}: FDC description mismatch")
+              return {
+                  'bulkFamilyRuleId': rule['ruleId'],
+                  'bulkFamilyRuleRegistry': 'release_catalog_nutrition_bulk_family_rules_batch40.v1.json',
+                  'bulkFamilyTier': tier,
+                  'canonicalEnglishName': target['canonicalEnglishName'],
+                  'confidence': 'high' if tier == 'A' else 'medium',
+                  'fdcDataType': candidate['dataType'],
+                  'fdcDescription': candidate['description'],
+                  'fdcId': fdc_id,
+                  'notes': f"Batch 40 bulk-family Tier {tier} / {rule['ruleId']}. {rule['contract']}" + suffix[tier],
+                  'reviewTargetId': target['reviewTargetId'],
+                  'reviewTargetKind': target['reviewTargetKind'],
+                  'sourceCandidateSha256': receipt['sourceCandidateSha256'],
+                  'sourceEvidenceCandidateRank': receipt['sourceEvidenceCandidateRank'],
+                  'sourceEvidenceSha256': top['sourceEvidenceSha256'],
+                  'sourceEvidenceTargetId': receipt['sourceEvidenceTargetId'],
+                  'usageCountAtReview': target['usageCountSum'],
               }
 
-          # Recover the readable prefix of the damaged original 044d and parse
-          # complete item objects one at a time. These complete rows are used
-          # only as an ordering/layout oracle; regenerated rows still come from
-          # the verified fixture/rule/receipt evidence.
-          transport_parts = [
-              '.batch40-bootstrap/chunks/chunk-000','.batch40-bootstrap/chunks/chunk-001',
-              '.batch40-bootstrap/chunks/chunk-002','.batch40-bootstrap/chunks/chunk-004',
-              '.batch40-bootstrap/chunks/chunk-005','.batch40-bootstrap/chunks/chunk-006',
-              '.batch40-bootstrap/chunks/chunk-007','.batch40-bootstrap/chunks/chunk-008',
-              '.batch40-bootstrap/chunks/chunk-009','.batch40-bootstrap/chunks/chunk-010',
-              '.batch40-bootstrap/chunks/chunk-011','.batch40-bootstrap/chunks/chunk-012',
-              '.batch40-bootstrap/chunks/chunk-014','.batch40-bootstrap/chunks/chunk-015',
-              '.batch40-bootstrap/repair/part-0','.batch40-bootstrap/repair/part-1',
-              '.batch40-bootstrap/repair/part-2','.batch40-bootstrap/repair/part-3',
-              '.batch40-bootstrap/repair/part-4','.batch40-bootstrap/repair/part-5',
-              '.batch40-bootstrap/chunks/chunk-019',
-          ]
-          tail_fix = {
-              '.batch40-bootstrap/repair/part-2': 'J',
-              '.batch40-bootstrap/repair/part-5': 'P',
+          # Re-prove the row builder against every one of the 60 intact rows.
+          intact_row_count = 0
+          for doc in known_docs.values():
+              for original in doc['items']:
+                  rebuilt = build_row(target_map[original['reviewTargetId']])
+                  if rebuilt != original:
+                      raise SystemExit(f"row rebuild mismatch: {original['reviewTargetId']}")
+                  intact_row_count += 1
+
+          # 044 and 044b are the two special initial waves. The remaining 70
+          # targets are reviewTargetId-sorted and split c/d/e/f 20/20/20/10.
+          first40 = {
+              r['reviewTargetId']
+              for name in known_names[:2]
+              for r in known_docs[name]['items']
           }
-          encoded = ''.join(
-              (root / p).read_text(encoding='ascii') + tail_fix.get(p, '')
-              for p in transport_parts
+          remainder = sorted(
+              t['reviewTargetId'] for t in fixture['targets']
+              if t['reviewTargetId'] not in first40
           )
-          payload = base64.b64decode(encoded, validate=True)
-          damaged_d = b''
-          with tarfile.open(fileobj=io.BytesIO(payload), mode='r:gz') as tf:
-              for member in tf.getmembers():
-                  if member.name.endswith('release_catalog_reviewed_nutrition_targets_044d.v1.json'):
-                      src = tf.extractfile(member)
-                      damaged_d = src.read() if src is not None else b''
-                      break
-          if not damaged_d:
-              raise SystemExit('damaged 044d oracle not found')
-          damaged_text = damaged_d.decode('utf-8', errors='replace')
+          partitions = [remainder[i:i+20] for i in range(0, len(remainder), 20)]
+          c_ids = [r['reviewTargetId'] for r in known_docs[known_names[2]]['items']]
+          if len(partitions) != 4 or [len(x) for x in partitions] != [20, 20, 20, 10]:
+              raise SystemExit(f'unexpected remainder partition sizes: {[len(x) for x in partitions]}')
+          if partitions[0] != c_ids:
+              raise SystemExit('044c does not equal first sorted remainder partition')
 
-          # Top-level key order before the items array.
-          prefix = damaged_text.split('"items"', 1)[0]
-          damaged_top_keys = re.findall(r'^  "([^"]+)":', prefix, flags=re.M)
-
-          # Decode complete item objects until corruption prevents further JSON.
-          decoder = json.JSONDecoder()
-          marker = '"items": ['
-          cursor = damaged_text.find(marker)
-          complete_rows = []
-          parse_error = None
-          if cursor >= 0:
-              cursor += len(marker)
-              while cursor < len(damaged_text):
-                  while cursor < len(damaged_text) and damaged_text[cursor] in ' \r\n\t,':
-                      cursor += 1
-                  if cursor >= len(damaged_text) or damaged_text[cursor] == ']':
-                      break
-                  try:
-                      obj, end = decoder.raw_decode(damaged_text, cursor)
-                  except json.JSONDecodeError as exc:
-                      parse_error = {'pos': exc.pos, 'msg': exc.msg, 'context': damaged_text[max(0, exc.pos-180):exc.pos+180]}
-                      break
-                  if not isinstance(obj, dict):
-                      parse_error = {'pos': cursor, 'msg': f'non-object item {type(obj).__name__}'}
-                      break
-                  complete_rows.append(obj)
-                  cursor = end
-
-          damaged_ids = [r.get('reviewTargetId') for r in complete_rows]
-          expected_d = partitions[1]
-          expected_e = partitions[2]
-          expected_f = partitions[3]
-          oracle_prefix_match = damaged_ids == expected_d[:len(damaged_ids)]
-
-          # Test whether intact c and complete damaged-d rows share one raw key layout.
-          c_row_orders = [list(r) for r in docs[names[2]]['items']]
-          d_row_orders = [list(r) for r in complete_rows]
-          row_layout_matches_c = bool(d_row_orders) and all(order == c_row_orders[0] for order in d_row_orders)
-
-          out = {
-              'ordering': {
-                  'selected_count': len(selected_ids),
-                  'special_initial_count': len(first40),
-                  'remainder_count': len(remainder),
-                  'partition_sizes': [len(x) for x in partitions],
-                  'c_equals_sorted_remainder_first20': c_exact,
-                  'c_expected': partitions[0],
-                  'c_actual': actual_ids[names[2]],
-                  'd': expected_d,
-                  'e': expected_e,
-                  'f': expected_f,
-                  'damaged_d_complete_ids': damaged_ids,
-                  'damaged_d_is_exact_prefix_of_d': oracle_prefix_match,
-              },
-              'serialization': serialization,
-              'damaged_d_layout': {
-                  'byte_len': len(damaged_d),
-                  'sha256': hashlib.sha256(damaged_d).hexdigest(),
-                  'top_keys_before_items': damaged_top_keys,
-                  'complete_row_count': len(complete_rows),
-                  'complete_row_key_orders': d_row_orders,
-                  'rows_match_c_key_layout': row_layout_matches_c,
-                  'parse_error': parse_error,
-              },
+          result = {
+              'known_serialization_roundtrip': roundtrip,
+              'intact_rows_rebuilt_exactly': intact_row_count,
+              'partition_sizes': [len(x) for x in partitions],
+              'generated': {},
           }
-          Path('.batch40-diagnostic.json').write_text(json.dumps(out, indent=2, sort_keys=True) + '\n')
-          print(json.dumps(out, indent=2, sort_keys=True))
+          for (name, expected_sha), ids in zip(missing.items(), partitions[1:]):
+              doc = dict(top)
+              doc['items'] = [build_row(target_map[rid]) for rid in ids]
+              data = emit(doc)
+              got = hashlib.sha256(data).hexdigest()
+              result['generated'][name] = {
+                  'count': len(ids),
+                  'first': ids[0],
+                  'last': ids[-1],
+                  'expected_sha256': expected_sha,
+                  'generated_sha256': got,
+                  'hash_match': got == expected_sha,
+              }
+              if got != expected_sha:
+                  Path('.batch40-diagnostic.json').write_text(
+                      json.dumps(result, indent=2, sort_keys=True) + '\n', encoding='utf-8'
+                  )
+                  raise SystemExit(f'{name}: reconstructed hash {got} != {expected_sha}')
+              (tools / name).write_bytes(data)
 
-          if not c_exact:
-              raise SystemExit('044c is not the first sorted remainder shard')
-          if not oracle_prefix_match:
-              raise SystemExit('damaged 044d does not continue the sorted remainder')
+          Path('.batch40-diagnostic.json').write_text(
+              json.dumps(result, indent=2, sort_keys=True) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(result, indent=2, sort_keys=True))
           PY
-      - name: Push exact remainder proof
+      - name: Run Batch 40 regression tests
+        run: |
+          python -m unittest tests.test_release_catalog_nutrition_review_batch40_v60 -v
+      - name: Push hash-proven missing shards
         run: |
           git fetch origin "$HEAD_BRANCH"
           test "$(git rev-parse HEAD)" = "$(git rev-parse origin/$HEAD_BRANCH)" || exit 78
-          git add .batch40-diagnostic.json
+          git add \
+            tools/release_catalog_reviewed_nutrition_targets_044d.v1.json \
+            tools/release_catalog_reviewed_nutrition_targets_044e.v1.json \
+            tools/release_catalog_reviewed_nutrition_targets_044f.v1.json \
+            .batch40-diagnostic.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Prove exact Batch 40 remainder contract'
+          git commit -m 'Recover exact Batch 40 reviewed nutrition shards'
           git push origin "HEAD:$HEAD_BRANCH"
