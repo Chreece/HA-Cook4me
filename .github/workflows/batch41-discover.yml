@@ -1,4 +1,4 @@
-name: Discover Batch 41 nutrition candidates
+name: Recover Batch 41 retained evidence
 
 on:
   push:
@@ -9,11 +9,16 @@ on:
 
 permissions:
   contents: write
+  actions: read
 
 jobs:
   discover:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      ARTIFACT_ID: '10309371417'
+      EXPECTED_EVIDENCE_SHA: e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac
+      BRANCH: cook4me-nutrition-batch41-discovery-v60
     steps:
       - uses: actions/checkout@v4
         with:
@@ -21,240 +26,178 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Materialize exact historical candidate evidence
+      - name: Download unexpired Batch 29 checkpoint artifact
         env:
-          HISTORICAL_COMMIT: 0377f485b91694c3da9b51f891c1a420423b40fd
-          HISTORICAL_TREE: d4addcce84b9a51170a831ce5bc39862fcf0ad65
-          HISTORICAL_BRANCH: cook4me-v60-offline-fdc-candidates-2
-          HISTORICAL_PATH: tests/fixtures/nutrition-candidate-evidence-v60.json
+          GH_TOKEN: ${{ github.token }}
         run: |
-          git fetch --no-tags origin "$HISTORICAL_BRANCH"
-          test "$(git rev-parse FETCH_HEAD)" = "$HISTORICAL_COMMIT" || {
-            echo "Historical evidence branch moved; refusing to substitute evidence."
-            exit 1
-          }
-          test "$(git rev-parse "$HISTORICAL_COMMIT^{tree}")" = "$HISTORICAL_TREE" || {
-            echo "Historical evidence tree differs; refusing to substitute evidence."
-            exit 1
-          }
-          git show "$HISTORICAL_COMMIT:$HISTORICAL_PATH" > "$RUNNER_TEMP/nutrition-candidate-evidence-v60.json"
-          test -s "$RUNNER_TEMP/nutrition-candidate-evidence-v60.json"
-      - name: Classify current queue from exact historical evidence
-        env:
-          HISTORICAL_COMMIT: 0377f485b91694c3da9b51f891c1a420423b40fd
-          HISTORICAL_TREE: d4addcce84b9a51170a831ce5bc39862fcf0ad65
-          HISTORICAL_PATH: tests/fixtures/nutrition-candidate-evidence-v60.json
-          EXPECTED_SOURCE_SHA: e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac
+          mkdir -p "$RUNNER_TEMP/batch29-artifact"
+          curl -fL \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/${ARTIFACT_ID}/zip" \
+            -o "$RUNNER_TEMP/batch29-artifact.zip"
+          unzip -q "$RUNNER_TEMP/batch29-artifact.zip" -d "$RUNNER_TEMP/batch29-artifact"
+      - name: SHA-scan artifact and classify exact retained evidence if present
         run: |
           python - <<'PY'
           from __future__ import annotations
           from collections import defaultdict
+          import gzip
           import hashlib
           import json
           import os
           from pathlib import Path
           import re
-          import subprocess
+          import shutil
           import sys
 
-          ROOT = Path.cwd()
-          TOOLS = ROOT / 'tools'
-          EVIDENCE = Path(os.environ['RUNNER_TEMP']) / 'nutrition-candidate-evidence-v60.json'
-          sys.path.insert(0, str(TOOLS))
+          root = Path.cwd()
+          tools = root / 'tools'
+          scan_root = Path(os.environ['RUNNER_TEMP']) / 'batch29-artifact'
+          expected = os.environ['EXPECTED_EVIDENCE_SHA']
+          sys.path.insert(0, str(tools))
 
           import classify_nutrition_review_queue_v60 as classifier
-          import snapshot_nutrition_review_checkpoint_v60 as checkpoint
 
-          expected_source_sha = os.environ['EXPECTED_SOURCE_SHA']
-          _evidence_doc, evidence_source_sha = checkpoint._read(EVIDENCE)
-          raw_sha = hashlib.sha256(EVIDENCE.read_bytes()).hexdigest()
-          if evidence_source_sha != expected_source_sha:
-              raise SystemExit(
-                  f'historical evidence lineage differs: {evidence_source_sha} != {expected_source_sha}'
-              )
-
-          result = classifier.classify(EVIDENCE, review_root=TOOLS)
-          if result['sourceEvidenceSha256'] != expected_source_sha:
-              raise SystemExit('classifier returned a different evidence lineage')
-          summary = result['summary']
-
-          expected_summary = {
-              'recordedReviewTargetCount': 5071,
-              'remainingReviewTargetCount': 1248,
-              'manualFamilyCandidateCount': 416,
-              'contextHeavyCount': 832,
-              'unreviewedRuleMatchCount': 0,
-              'bindingsApprovedByClassifier': 0,
-              'networkRequestsPerformed': False,
-          }
-          mismatches = {
-              key: {'expected': expected, 'actual': summary.get(key)}
-              for key, expected in expected_summary.items()
-              if summary.get(key) != expected
-          }
-          if mismatches:
-              raise SystemExit(f'Batch 40 post-state drifted before Batch 41 discovery: {mismatches}')
-
-          manual = result['tierBManual']
-          context = result['tierCContext']
-          rule_unreviewed = result['ruleCoveredButUnreviewed']
-
-          def text(value):
-              return str(value or '').strip()
-
-          def usage(row):
-              for key in ('usageCountSum', 'usageCount', 'recipeUsageCount'):
-                  value = row.get(key)
-                  if isinstance(value, int):
-                      return value
-              return 0
-
-          def candidate_projection(candidate):
-              return {
-                  'localEvidenceRank': candidate.get('localEvidenceRank'),
-                  'fdcId': candidate.get('fdcId'),
-                  'description': candidate.get('description'),
-                  'dataType': candidate.get('dataType'),
-                  'score': candidate.get('score'),
+          inventory = []
+          exact = []
+          json_docs = []
+          for path in sorted(p for p in scan_root.rglob('*') if p.is_file()):
+              raw = path.read_bytes()
+              rel = str(path.relative_to(scan_root))
+              row = {
+                  'path': rel,
+                  'bytes': len(raw),
+                  'sha256': hashlib.sha256(raw).hexdigest(),
               }
+              payload = None
+              payload_kind = None
+              try:
+                  if path.suffix == '.gz':
+                      payload = gzip.decompress(raw)
+                      payload_kind = 'gzip-json'
+                  elif path.suffix == '.json':
+                      payload = raw
+                      payload_kind = 'json'
+              except Exception as exc:
+                  row['decodeError'] = str(exc)
+              if payload is not None:
+                  row['payloadBytes'] = len(payload)
+                  row['payloadSha256'] = hashlib.sha256(payload).hexdigest()
+                  try:
+                      doc = json.loads(payload.decode('utf-8'))
+                      if isinstance(doc, dict):
+                          row['jsonKind'] = doc.get('kind')
+                          row['jsonSchemaVersion'] = doc.get('schemaVersion')
+                          row['jsonKeys'] = sorted(doc)[:40]
+                          if isinstance(doc.get('items'), list):
+                              row['itemCount'] = len(doc['items'])
+                          json_docs.append((path, payload_kind, doc, payload))
+                  except Exception as exc:
+                      row['jsonError'] = str(exc)
+              inventory.append(row)
+              if row['sha256'] == expected:
+                  exact.append({'path': rel, 'mode': 'raw'})
+                  shutil.copyfile(path, Path(os.environ['RUNNER_TEMP']) / 'exact-evidence.json')
+              if row.get('payloadSha256') == expected:
+                  exact.append({'path': rel, 'mode': payload_kind})
+                  (Path(os.environ['RUNNER_TEMP']) / 'exact-evidence.json').write_bytes(payload)
 
-          manual_rows = []
-          by_top_fdc = defaultdict(list)
-          by_top_description = defaultdict(list)
-          by_first_token = defaultdict(list)
-          for row in manual:
-              candidates = row.get('candidates') or []
-              projected = {
-                  'reviewTargetId': row['reviewTargetId'],
-                  'canonicalEnglishName': row['canonicalEnglishName'],
-                  'reviewTargetKind': row.get('reviewTargetKind'),
-                  'usageCount': usage(row),
-                  'candidateCount': len(candidates),
-                  'topCandidates': [candidate_projection(c) for c in candidates[:5]],
+          evidence_path = Path(os.environ['RUNNER_TEMP']) / 'exact-evidence.json'
+          classification = None
+          discovery = None
+          if evidence_path.exists():
+              result = classifier.classify(evidence_path, review_root=tools)
+              summary = result['summary']
+              expected_summary = {
+                  'recordedReviewTargetCount': 5071,
+                  'remainingReviewTargetCount': 1248,
+                  'manualFamilyCandidateCount': 416,
+                  'contextHeavyCount': 832,
+                  'unreviewedRuleMatchCount': 0,
+                  'bindingsApprovedByClassifier': 0,
+                  'networkRequestsPerformed': False,
               }
-              manual_rows.append(projected)
-              if candidates:
-                  top = candidates[0]
-                  by_top_fdc[str(top.get('fdcId'))].append(projected)
-                  by_top_description[text(top.get('description'))].append(projected)
-              token_match = re.search(r"[A-Za-zÀ-ÖØ-öø-ÿ]+", row['canonicalEnglishName'])
-              if token_match:
-                  by_first_token[token_match.group(0).casefold()].append(projected)
+              drift = {k: {'expected': v, 'actual': summary.get(k)}
+                       for k, v in expected_summary.items() if summary.get(k) != v}
+              if drift:
+                  raise SystemExit(f'post-Batch40 classifier drift: {drift}')
 
-          def summarize_group(key, rows):
-              ordered = sorted(
-                  rows,
-                  key=lambda item: (
-                      -item['usageCount'],
-                      item['canonicalEnglishName'].casefold(),
-                      item['reviewTargetId'],
-                  ),
-              )
-              return {
-                  'key': key,
-                  'targetCount': len(rows),
-                  'usageCount': sum(item['usageCount'] for item in rows),
-                  'targets': [
-                      {
-                          'reviewTargetId': item['reviewTargetId'],
-                          'canonicalEnglishName': item['canonicalEnglishName'],
-                          'usageCount': item['usageCount'],
-                          'topCandidate': item['topCandidates'][0] if item['topCandidates'] else None,
-                      }
-                      for item in ordered
-                  ],
+              manual = result['tierBManual']
+              def usage(row):
+                  value = row.get('usageCountSum')
+                  return value if type(value) is int else 0
+              def cand(c):
+                  return {k: c.get(k) for k in
+                          ('localEvidenceRank','fdcId','description','dataType','score')}
+
+              rows = []
+              by_fdc = defaultdict(list)
+              by_desc = defaultdict(list)
+              for item in manual:
+                  candidates = item.get('candidates') or []
+                  projected = {
+                      'reviewTargetId': item['reviewTargetId'],
+                      'canonicalEnglishName': item['canonicalEnglishName'],
+                      'reviewTargetKind': item['reviewTargetKind'],
+                      'usageCount': usage(item),
+                      'candidateCount': len(candidates),
+                      'topCandidates': [cand(c) for c in candidates[:5]],
+                  }
+                  rows.append(projected)
+                  if candidates:
+                      by_fdc[str(candidates[0].get('fdcId'))].append(projected)
+                      by_desc[str(candidates[0].get('description') or '')].append(projected)
+
+              def group(key, values):
+                  ordered = sorted(values, key=lambda r:(-r['usageCount'], r['canonicalEnglishName'].casefold(), r['reviewTargetId']))
+                  return {
+                      'key': key,
+                      'targetCount': len(ordered),
+                      'usageCount': sum(r['usageCount'] for r in ordered),
+                      'targets': ordered,
+                  }
+              fdc_groups = [group(k,v) for k,v in by_fdc.items() if len(v) >= 2]
+              fdc_groups.sort(key=lambda g:(-g['usageCount'],-g['targetCount'],g['key']))
+              desc_groups = [group(k,v) for k,v in by_desc.items() if k and len(v) >= 2]
+              desc_groups.sort(key=lambda g:(-g['usageCount'],-g['targetCount'],g['key'].casefold()))
+              rows.sort(key=lambda r:(-r['usageCount'],r['canonicalEnglishName'].casefold(),r['reviewTargetId']))
+              classification = summary
+              discovery = {
+                  'manualCandidates': rows,
+                  'repeatedTopFdcGroups': fdc_groups,
+                  'repeatedTopDescriptionGroups': desc_groups,
               }
-
-          repeated_top_fdc = [
-              summarize_group(key, rows)
-              for key, rows in by_top_fdc.items()
-              if len(rows) >= 2
-          ]
-          repeated_top_fdc.sort(
-              key=lambda group: (-group['usageCount'], -group['targetCount'], group['key'])
-          )
-
-          repeated_top_description = [
-              summarize_group(key, rows)
-              for key, rows in by_top_description.items()
-              if len(rows) >= 2
-          ]
-          repeated_top_description.sort(
-              key=lambda group: (-group['usageCount'], -group['targetCount'], group['key'].casefold())
-          )
-
-          first_token_groups = [
-              summarize_group(key, rows)
-              for key, rows in by_first_token.items()
-              if len(rows) >= 2
-          ]
-          first_token_groups.sort(
-              key=lambda group: (-group['usageCount'], -group['targetCount'], group['key'])
-          )
-
-          manual_rows.sort(
-              key=lambda row: (
-                  -row['usageCount'],
-                  row['canonicalEnglishName'].casefold(),
-                  row['reviewTargetId'],
-              )
-          )
 
           out = {
               'schemaVersion': 1,
-              'kind': 'cook4me-batch41-discovery-v60',
-              'baseCommit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
-              'sourceHistoricalCommit': os.environ['HISTORICAL_COMMIT'],
-              'sourceHistoricalTree': os.environ['HISTORICAL_TREE'],
-              'sourceHistoricalPath': os.environ['HISTORICAL_PATH'],
-              'sourceEvidenceRawSha256': raw_sha,
-              'sourceEvidenceSha256': expected_source_sha,
+              'kind': 'cook4me-batch41-artifact-evidence-discovery-v60',
+              'artifactId': int(os.environ['ARTIFACT_ID']),
+              'expectedEvidenceSha256': expected,
+              'exactEvidenceMatches': exact,
+              'artifactInventory': inventory,
+              'classifierSummary': classification,
+              'discovery': discovery,
               'policy': {
                   'discoveryOnly': True,
                   'createsBindings': False,
                   'candidateRankIsIdentityProof': False,
                   'providerIdentityInference': False,
                   'automaticRuleExpansionForbidden': True,
-                  'networkRequestsPerformed': False,
+                  'networkRequestsPerformedToFoodProvider': False,
                   'contextHeavyTargetsRemainUntouched': True,
               },
-              'classifierSummary': summary,
-              'counts': {
-                  'manual': len(manual_rows),
-                  'context': len(context),
-                  'ruleCoveredButUnreviewed': len(rule_unreviewed),
-                  'repeatedTopFdcGroups': len(repeated_top_fdc),
-                  'repeatedTopDescriptionGroups': len(repeated_top_description),
-                  'firstTokenGroups': len(first_token_groups),
-              },
-              'repeatedTopFdcGroups': repeated_top_fdc,
-              'repeatedTopDescriptionGroups': repeated_top_description,
-              'firstTokenGroups': first_token_groups,
-              'manualCandidates': manual_rows,
-              'ruleCoveredButUnreviewed': [
-                  {
-                      'reviewTargetId': row['reviewTargetId'],
-                      'canonicalEnglishName': row['canonicalEnglishName'],
-                      'matchedRuleId': row.get('matchedRuleId'),
-                      'usageCount': usage(row),
-                  }
-                  for row in rule_unreviewed
-              ],
           }
           Path('.batch41-discovery.json').write_text(
-              json.dumps(out, indent=2, sort_keys=True, ensure_ascii=False) + '\n',
-              encoding='utf-8',
-          )
+              json.dumps(out, indent=2, sort_keys=True, ensure_ascii=False) + '\n', encoding='utf-8')
           print(json.dumps({
-              'sourceHistoricalCommit': out['sourceHistoricalCommit'],
-              'sourceHistoricalTree': out['sourceHistoricalTree'],
-              'sourceHistoricalPath': out['sourceHistoricalPath'],
-              'sourceEvidenceRawSha256': raw_sha,
-              'sourceEvidenceSha256': expected_source_sha,
-              'classifierSummary': summary,
-              'counts': out['counts'],
-              'topRepeatedFdcGroups': repeated_top_fdc[:20],
-              'topManualCandidates': manual_rows[:30],
+              'exactEvidenceMatches': exact,
+              'classifierSummary': classification,
+              'artifactFiles': len(inventory),
+              'largestFiles': sorted(inventory, key=lambda r:-r['bytes'])[:20],
+              'topRepeatedFdcGroups': (discovery or {}).get('repeatedTopFdcGroups', [])[:15],
+              'topManualCandidates': (discovery or {}).get('manualCandidates', [])[:25],
           }, indent=2, ensure_ascii=False))
           PY
       - name: Commit discovery artifact
@@ -262,5 +205,5 @@ jobs:
           git add .batch41-discovery.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record Batch 41 nutrition discovery' || exit 0
-          git push origin HEAD:cook4me-nutrition-batch41-discovery-v60
+          git commit -m 'Inspect retained Batch 29 work artifact for Batch 41 evidence' || exit 0
+          git push origin "HEAD:$BRANCH"
