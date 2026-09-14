@@ -10,6 +10,7 @@ on:
       - tools/capture_release_catalog_fdc_candidate_evidence_offline_v60.py
       - tools/classify_release_catalog_fdc_candidate_evidence_v60.py
       - tools/fdc_candidate_reference_data_v60.py
+      - tools/fdc_reference_data_v60.py
       - tools/prepare_fdc_reference_data_v60.py
       - tools/prepare_post_activation_nutrition_review_targets_v60.py
       - tools/release_catalog_reviewed_nutrition_targets_*.v1.json
