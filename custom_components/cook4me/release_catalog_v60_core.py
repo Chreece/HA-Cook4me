@@ -8,6 +8,7 @@ from typing import Any, Iterable
 
 try:
     from . import release_catalog_legacy as _legacy
+    from . import recipe_metrics_v60 as _metrics
     from .catalog_search_index import (
         compile_search_index,
         prepare_search_index,
@@ -26,6 +27,9 @@ except ImportError:  # Standalone unit-test import via spec_from_file_location.
 
     _legacy = _load_sibling(
         "cook4me_release_catalog_legacy_test", "release_catalog_legacy.py"
+    )
+    _metrics = _load_sibling(
+        "cook4me_recipe_metrics_runtime_test", "recipe_metrics_v60.py"
     )
     _search_module = _load_sibling(
         "cook4me_catalog_search_index_runtime_test", "catalog_search_index.py"
@@ -84,9 +88,10 @@ def _prepare_fast_indexes(payload: dict[str, Any]) -> None:
 
     variants: dict[str, int] = {}
     concepts: dict[str, list[dict[str, Any]]] = {}
-    for raw in payload.get("ingredients") or []:
-        if not isinstance(raw, dict):
-            continue
+    ingredient_rows = [
+        row for row in payload.get("ingredients") or [] if isinstance(row, dict)
+    ]
+    for raw in ingredient_rows:
         concept_id = _text(raw.get("conceptId"))
         if concept_id:
             concepts.setdefault(concept_id, []).append(raw)
@@ -108,6 +113,10 @@ def _prepare_fast_indexes(payload: dict[str, Any]) -> None:
     payload["_runtimeIngredientsByConcept"] = {
         concept_id: tuple(rows) for concept_id, rows in concepts.items()
     }
+    # Nutrition profiles are stored only once on the global ingredient table.
+    # Recipe totals are cheap to calculate for the handful of rows materialized
+    # by a page request, avoiding one large duplicated vector per variant.
+    payload["_runtimeNutritionIndex"] = _metrics.build_nutrition_index(ingredient_rows)
 
 
 def _global_ingredient(payload: dict[str, Any], row: Any) -> dict[str, Any] | None:
@@ -153,6 +162,16 @@ def _enrich_recipe_row(
         _enrich_display_ingredient(payload, ingredient)
         for ingredient in row.get("ingredients") or []
     ]
+    nutrition_index = payload.get("_runtimeNutritionIndex")
+    if isinstance(nutrition_index, dict):
+        calculated = _metrics.calculate_recipe_nutrition_fast(out, nutrition_index)
+        calculated["estimated"] = True
+        calculated["sourceKinds"] = ["reviewed_release_per100g"]
+        out["calculatedNutritionV60"] = calculated
+        # Preserve the established recipe-row nutrition surface while making the
+        # reviewed v60 calculation authoritative for the compact release catalog.
+        out["nutrition"] = deepcopy(calculated)
+        out["catalogNutrition"] = deepcopy(calculated)
     return out
 
 
@@ -181,7 +200,7 @@ def load_release_catalog() -> dict[str, Any]:
 
 
 async def async_warm_release_catalog(hass: Any) -> dict[str, Any]:
-    """Parse and prepare the release catalog outside Home Assistant's event loop."""
+    """Parse and index the immutable catalog once without blocking HA's loop."""
     return await hass.async_add_executor_job(load_release_catalog)
 
 
@@ -229,6 +248,7 @@ def release_catalog_summary() -> dict[str, Any]:
         "semanticCoverageComplete": bool(source.get("semanticCoverageComplete")),
         "ingredientIntelligenceComplete": bool(source.get("ingredientIntelligenceComplete")),
         "sourceLocalIngredientCount": int(source.get("sourceLocalIngredientCount") or 0),
+        "runtimeNutritionProfileCount": len(payload.get("_runtimeNutritionIndex") or {}),
     }
 
 
