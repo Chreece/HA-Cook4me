@@ -1,0 +1,29 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 11,
+      "canonicalEnglishName": "Swiss chard, washed and cut into pieces",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Chard, swiss, raw",
+      "fdcId": 169991,
+      "notes": "Explicit semantic review binds this raw-preparation target to USDA Swiss chard, raw. Washing and cutting the leaves into pieces do not change the food identity or imply a cooked state, so the raw SR Legacy record is the direct per-100-g nutrition reference. This binding does not infer cultivar, leaf-to-stem ratio, trimming loss, drained mass, cooking yield, serving size, or any preparation beyond the target's stated washing and cutting; cooked, canned, frozen, mixed-greens, or beetroot-and-chard identities remain separate.",
+      "reviewTargetId": "concept:food:2dfb3c073030638fccb4",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "75f0006fd7d115c65dcc435116c23b412c4d3835e38e8e7e9fd23ea74d5e9a64"
+}
