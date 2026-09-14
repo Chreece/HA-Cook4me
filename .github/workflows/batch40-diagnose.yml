@@ -67,6 +67,7 @@ jobs:
           row_keys = set()
           confidence_by_tier = {}
           field_mismatches = []
+          joins = []
           for doc in docs.values():
             for row in doc['items']:
               row_keys.update(row)
@@ -82,14 +83,17 @@ jobs:
                 field_mismatches.append({'id': row['reviewTargetId'], 'problem': 'contract_missing_from_notes'})
               else:
                 pre, post = notes.split(contract, 1)
-                # Normalize the row-specific rule/tier tokens to expose whether
-                # there is one exact notes template.
                 pre = pre.replace(row['bulkFamilyRuleId'], '<RULE>').replace(row['bulkFamilyTier'], '<TIER>')
                 before_contract.add(pre)
                 after_contract.add(post)
 
               target = target_map[row['reviewTargetId']]
-              source = source_map[row['reviewTargetId']]
+              source = source_map.get(row['sourceEvidenceTargetId'])
+              joins.append({
+                'reviewTargetId': row['reviewTargetId'],
+                'sourceEvidenceTargetId': row['sourceEvidenceTargetId'],
+                'source_found': source is not None,
+              })
               for key, expected in (
                 ('canonicalEnglishName', target.get('canonicalEnglishName')),
                 ('usageCountAtReview', target.get('usageCountSum')),
@@ -100,9 +104,12 @@ jobs:
           sample_existing = docs[shard_names[0]]['items'][0]
           sample_missing_id = remaining_ids[0]
           analysis = {
+            'fixture_keys': sorted(fixture),
             'fixture_target_count': len(targets),
             'fixture_source_count': len(sources),
             'fixture_order_first_20': order[:20],
+            'target_keys': sorted({k for r in targets for k in r}),
+            'source_keys': sorted({k for r in sources for k in r}),
             'shards': shard_summary,
             'existing_count': len(all_existing),
             'existing_unique_count': len(existing_set),
@@ -114,26 +121,34 @@ jobs:
             'normalized_notes_prefixes': sorted(before_contract),
             'notes_suffixes': sorted(after_contract),
             'field_mismatches': field_mismatches,
+            'source_join_failures': [j for j in joins if not j['source_found']],
             'sample_existing_row': sample_existing,
             'sample_existing_target': target_map[sample_existing['reviewTargetId']],
-            'sample_existing_source': source_map[sample_existing['reviewTargetId']],
+            'sample_existing_source': source_map.get(sample_existing['sourceEvidenceTargetId']),
             'sample_missing_target': target_map[sample_missing_id],
-            'sample_missing_source': source_map[sample_missing_id],
+            'source_samples': sources[:3],
           }
           Path('.batch40-diagnostic.json').write_text(json.dumps(analysis, indent=2, sort_keys=True) + '\n')
           print(json.dumps({
+            'fixture_keys': analysis['fixture_keys'],
+            'target_keys': analysis['target_keys'],
+            'source_keys': analysis['source_keys'],
             'shards': shard_summary,
             'existing_count': len(all_existing),
             'remaining_count': len(remaining_ids),
             'remaining_ids': remaining_ids,
             'row_keys': sorted(row_keys),
-            'confidence_by_tier': {k: sorted(v) for k, v in confidence_by_tier.items()},
+            'confidence_by_tier': analysis['confidence_by_tier'],
             'normalized_notes_prefixes': sorted(before_contract),
             'notes_suffixes': sorted(after_contract),
             'field_mismatches': field_mismatches,
+            'source_join_failures': analysis['source_join_failures'],
             'top_level_documents': top_levels,
-            'sample_missing_target': target_map[sample_missing_id],
-            'sample_missing_source': source_map[sample_missing_id],
+            'sample_existing_row': sample_existing,
+            'sample_existing_target': analysis['sample_existing_target'],
+            'sample_existing_source': analysis['sample_existing_source'],
+            'sample_missing_target': analysis['sample_missing_target'],
+            'source_samples': sources[:3],
           }, indent=2, sort_keys=True))
           PY
       - name: Push reconstruction analysis
