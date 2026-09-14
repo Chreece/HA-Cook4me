@@ -1,0 +1,71 @@
+name: Build post-activation nutrition reuse proposals v60
+
+on:
+  push:
+    branches:
+      - cook4me-nutrition-enrichment-post-activation-v60
+    paths:
+      - .github/workflows/catalog-nutrition-review-reuse-post-activation-v60.yml
+      - tools/propose_release_catalog_nutrition_review_reuse_v60.py
+      - tests/test_release_catalog_nutrition_review_reuse_proposal_v60.py
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  build-reuse-proposals:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Run reuse proposal regressions
+        run: |
+          set -Eeuo pipefail
+          python -m unittest tests.test_release_catalog_nutrition_review_reuse_proposal_v60 -v
+
+      - name: Download successful post-activation evidence
+        uses: actions/download-artifact@v4
+        with:
+          name: nutrition-enrichment-evidence-v60-98a0b0e284749622787ff251340d0100b650e2c4
+          path: /tmp/nutrition-evidence
+          repository: Chreece/HA-Cook4me
+          run-id: 34847903376
+          github-token: ${{ github.token }}
+
+      - name: Build exact-canonical historical reuse proposals
+        run: |
+          set -Eeuo pipefail
+          mkdir -p /tmp/nutrition-reuse
+          python tools/propose_release_catalog_nutrition_review_reuse_v60.py \
+            --candidates /tmp/nutrition-evidence/fdc-candidate-evidence.v60.json \
+            --review-root tools \
+            --output /tmp/nutrition-reuse/reuse-proposal.v60.json \
+            --summary-output /tmp/nutrition-reuse/reuse-proposal-summary.v60.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          summary = json.loads(Path('/tmp/nutrition-reuse/reuse-proposal-summary.v60.json').read_text(encoding='utf-8'))
+          if summary.get('selectionCount') != 0:
+              raise SystemExit(f"reuse proposal unexpectedly selected bindings: {summary}")
+          if summary.get('networkRequestsPerformed') is not False or summary.get('secretsPersisted') is not False:
+              raise SystemExit(f"reuse proposal violated offline/privacy contract: {summary}")
+          print(json.dumps(summary, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Upload post-activation reuse proposal
+        uses: actions/upload-artifact@v4
+        with:
+          name: nutrition-review-reuse-proposal-v60-${{ github.sha }}
+          path: /tmp/nutrition-reuse
+          if-no-files-found: error
+          retention-days: 7
