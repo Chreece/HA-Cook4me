@@ -219,6 +219,23 @@ def _all_search_rows(
         )
     return rows
 
+def _claim_global_variant_ids(
+    seen: dict[str, str], variant_ids: list[str], catalog_label: str
+) -> None:
+    """Fail if a provider variant ID is reused by another catalog mapping."""
+    for raw in variant_ids:
+        variant_id = _text(raw)
+        if not variant_id:
+            continue
+        previous = seen.get(variant_id)
+        if previous and previous != catalog_label:
+            raise RuntimeError(
+                "provider variant identity is reused across catalog mappings; "
+                f"{variant_id} appears in {previous} and {catalog_label}"
+            )
+        seen[variant_id] = catalog_label
+
+
 def _detail(
     cfg,
     tokens,
@@ -470,6 +487,7 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
     )
     all_variants: dict[str, dict[str, Any]] = {}
     stats: list[dict[str, Any]] = []
+    variant_catalogs: dict[str, str] = {}
 
     for language, country in AUDITED_CATALOGS:
         print(f"[catalog] {language}/GS_{country}", flush=True)
@@ -487,6 +505,9 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
             for row in search_rows
             if _text(row.get("searchVariantId"))
         }
+        _claim_global_variant_ids(
+            variant_catalogs, list(unique), f"{language}/GS_{country}"
+        )
         hydrated = 0
         failed = 0
         with ThreadPoolExecutor(max_workers=max(1, min(args.workers, 8))) as pool:

@@ -488,6 +488,23 @@ def _replace_catalog(conn: sqlite3.Connection, language: str, country: str, rows
         )
 
 
+def _assert_global_variant_ids_unique(conn: sqlite3.Connection) -> None:
+    """Fail if one provider variant ID is present in multiple catalog mappings."""
+    conflicts = conn.execute(
+        "SELECT variant_id, COUNT(*), GROUP_CONCAT(language || '/GS_' || country, ',') "
+        "FROM catalog_variants GROUP BY variant_id HAVING COUNT(*) > 1 "
+        "ORDER BY variant_id LIMIT 20"
+    ).fetchall()
+    if conflicts:
+        sample = "; ".join(
+            f"{variant_id} [{catalogs}]" for variant_id, _count, catalogs in conflicts
+        )
+        raise RuntimeError(
+            "provider variant identity is reused across catalog mappings; "
+            "global detail identity is no longer safe: " + sample
+        )
+
+
 def _cached_state(conn: sqlite3.Connection, variant_id: str) -> str:
     if conn.execute("SELECT 1 FROM variant_details WHERE variant_id=?", (variant_id,)).fetchone():
         return "detail"
@@ -620,6 +637,8 @@ def crawl(args: argparse.Namespace) -> dict[str, Any]:
             if args.max_variants_per_catalog:
                 rows = rows[: max(1, int(args.max_variants_per_catalog))]
             _replace_catalog(conn, language, country, rows)
+
+        _assert_global_variant_ids_unique(conn)
 
         pending: dict[str, str] = {}
         for variant_id, language in conn.execute(
