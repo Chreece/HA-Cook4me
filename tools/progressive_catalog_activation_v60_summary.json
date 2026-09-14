@@ -1,0 +1,129 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "complete": true,
+  "catalogBytes": 90323647,
+  "recipes": 16952,
+  "variants": 32163,
+  "ingredients": 11748,
+  "auditedCatalogCount": 28,
+  "sourceCatalogCount": 21,
+  "detailNotFoundCount": 1485,
+  "failedDetailCount": 0,
+  "reviewedNutritionResolvedCount": 8925,
+  "reviewedNutritionRequiredCount": 10776,
+  "foodIntelligenceNutritionResolvedCount": 8925,
+  "foodIntelligenceIngredientCount": 11228,
+  "runtimeNutritionProfileCount": 17714,
+  "pendingReviewTargetCount": 1251,
+  "pendingIdentityCount": 1851,
+  "networkRequestsForNutrition": false,
+  "searchIndexStats": {
+    "tokens": 21145,
+    "phrases": 34824,
+    "prefixes": 60488,
+    "prefixPostingsPersisted": false,
+    "languages": 21
+  },
+  "greekRisotto": {
+    "query": "ριζότο",
+    "total": 205,
+    "samples": [
+      {
+        "title": "Risotto",
+        "originalTitle": "Risotto",
+        "originalLanguage": "fr",
+        "sendable": false,
+        "nutritionCoverage": 0.3333,
+        "nutritionFullyCovered": false,
+        "energyKcal": 1928.5
+      },
+      {
+        "title": "Artichoke and red pesto risotto",
+        "originalTitle": "Artichoke and red pesto risotto",
+        "originalLanguage": "en",
+        "sendable": false,
+        "nutritionCoverage": 0.3333,
+        "nutritionFullyCovered": false,
+        "energyKcal": 362.0
+      },
+      {
+        "title": "Articsókás-vörös pesztós rizottó",
+        "originalTitle": "Articsókás-vörös pesztós rizottó",
+        "originalLanguage": "hu",
+        "sendable": false,
+        "nutritionCoverage": 0.4,
+        "nutritionFullyCovered": false,
+        "energyKcal": 533.2
+      },
+      {
+        "title": "Bacon and olive risotto",
+        "originalTitle": "Bacon and olive risotto",
+        "originalLanguage": "en",
+        "sendable": false,
+        "nutritionCoverage": 0.4,
+        "nutritionFullyCovered": false,
+        "energyKcal": 880.75
+      },
+      {
+        "title": "Beetroot risotto",
+        "originalTitle": "Beetroot risotto",
+        "originalLanguage": "en",
+        "sendable": false,
+        "nutritionCoverage": 0.4444,
+        "nutritionFullyCovered": false,
+        "energyKcal": 1448.25
+      }
+    ]
+  },
+  "latinRisotto": {
+    "query": "risotto",
+    "total": 205,
+    "samples": [
+      {
+        "title": "Risotto",
+        "originalTitle": "Risotto",
+        "originalLanguage": "fr",
+        "sendable": false,
+        "nutritionCoverage": 0.3333,
+        "nutritionFullyCovered": false,
+        "energyKcal": 1928.5
+      },
+      {
+        "title": "Artichoke and red pesto risotto",
+        "originalTitle": "Artichoke and red pesto risotto",
+        "originalLanguage": "en",
+        "sendable": false,
+        "nutritionCoverage": 0.3333,
+        "nutritionFullyCovered": false,
+        "energyKcal": 362.0
+      },
+      {
+        "title": "Articsókás-vörös pesztós rizottó",
+        "originalTitle": "Articsókás-vörös pesztós rizottó",
+        "originalLanguage": "hu",
+        "sendable": false,
+        "nutritionCoverage": 0.4,
+        "nutritionFullyCovered": false,
+        "energyKcal": 533.2
+      },
+      {
+        "title": "Bacon and olive risotto",
+        "originalTitle": "Bacon and olive risotto",
+        "originalLanguage": "en",
+        "sendable": false,
+        "nutritionCoverage": 0.4,
+        "nutritionFullyCovered": false,
+        "energyKcal": 880.75
+      },
+      {
+        "title": "Beetroot risotto",
+        "originalTitle": "Beetroot risotto",
+        "originalLanguage": "en",
+        "sendable": false,
+        "nutritionCoverage": 0.4444,
+        "nutritionFullyCovered": false,
+        "energyKcal": 1448.25
+      }
+    ]
+  }
+}

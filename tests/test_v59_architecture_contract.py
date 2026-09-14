@@ -43,12 +43,32 @@ class V59ArchitectureContractTests(unittest.TestCase):
         self.assertNotIn("rx-overlay", frontend)
         self.assertNotIn("processCancel", frontend)
 
-    def test_release_catalog_is_explicitly_inactive_until_exhaustive_build(self):
+    def test_release_catalog_activates_only_after_validated_exhaustive_build(self):
         import json
+
         payload = json.loads(CATALOG.read_text(encoding="utf-8"))
-        self.assertFalse(payload["complete"])
-        self.assertEqual(payload["source"]["auditedCatalogCount"], 28)
-        self.assertEqual(payload["source"]["sourceCatalogCount"], 21)
+        source = payload["source"]
+        catalogs = source["catalogs"]
+
+        self.assertTrue(payload["complete"])
+        self.assertGreater(len(payload.get("recipes") or []), 0)
+        self.assertGreater(len(payload.get("ingredients") or []), 0)
+        self.assertEqual(source["auditedCatalogCount"], 28)
+        self.assertEqual(len(catalogs), 28)
+        self.assertGreater(source["sourceCatalogCount"], 0)
+        self.assertLessEqual(source["sourceCatalogCount"], 28)
+        self.assertEqual(source["failedDetailCount"], 0)
+        self.assertTrue(all(int(row.get("failedDetails") or 0) == 0 for row in catalogs))
+        self.assertEqual(
+            source["detailNotFoundCount"],
+            sum(int(row.get("detailNotFoundCount") or 0) for row in catalogs),
+        )
+        self.assertIs(source["nutritionRequiredForComplete"], False)
+        self.assertTrue(source["runtimeCatalogCompacted"])
+        self.assertTrue(source["compiledMultilingualSearchIndex"])
+        self.assertTrue(source["compiledRecipeSafetyIndex"])
+        self.assertIs(source["secretsPersisted"], False)
+
         builder = BUILDER.read_text(encoding="utf-8")
         self.assertIn("AUDITED_CATALOGS", builder)
         self.assertIn('(\"da\", \"DK\")', builder)

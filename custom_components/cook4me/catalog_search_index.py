@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from bisect import bisect_left
 from collections import defaultdict
 import re
 import unicodedata
@@ -13,6 +14,16 @@ _INGREDIENT_PHRASE_WEIGHT = 15
 _PREFIX_PENALTY = 2
 _MIN_PREFIX = 3
 _MAX_PREFIX = 12
+
+# Query-only equivalences are deliberately tiny and language-scoped. They are
+# not fuzzy transliteration and they never mutate the compiled provider catalog.
+# Add entries only when a user-language spelling is an unambiguous equivalent
+# of a canonical/indexed culinary term.
+_QUERY_TOKEN_EQUIVALENTS_BY_LANGUAGE: dict[str, dict[str, tuple[str, ...]]] = {
+    "el": {
+        "ριζοτο": ("risotto",),
+    },
+}
 
 
 def _text(value: Any) -> str:
@@ -46,6 +57,42 @@ def _tokens(value: Any) -> tuple[str, ...]:
 
 def _language(value: Any) -> str:
     return _text(value).lower().replace("_", "-").split("-", 1)[0]
+
+
+def _query_token_variants(token: str, language: str) -> tuple[str, ...]:
+    """Return exact language-scoped equivalents for one normalized query token."""
+    normalized = normalize_search_text(token)
+    if not normalized:
+        return ()
+    aliases = (_QUERY_TOKEN_EQUIVALENTS_BY_LANGUAGE.get(_language(language)) or {}).get(
+        normalized,
+        (),
+    )
+    return tuple(
+        dict.fromkeys(
+            candidate
+            for candidate in (
+                normalized,
+                *(normalize_search_text(value) for value in aliases),
+            )
+            if candidate
+        )
+    )
+
+
+def _query_phrase_variants(normalized: str, language: str) -> tuple[str, ...]:
+    """Return the original phrase plus one exact canonicalized phrase variant."""
+    original = normalize_search_text(normalized)
+    if not original:
+        return ()
+    mapping = _QUERY_TOKEN_EQUIVALENTS_BY_LANGUAGE.get(_language(language)) or {}
+    parts = original.split(" ")
+    canonical = [
+        normalize_search_text((mapping.get(part) or (part,))[0]) or part
+        for part in parts
+    ]
+    expanded = " ".join(canonical).strip()
+    return tuple(dict.fromkeys(value for value in (original, expanded) if value))
 
 
 def _strings(value: Any) -> Iterable[str]:
@@ -167,7 +214,6 @@ def _recipe_languages(recipe: dict[str, Any]) -> set[str]:
 def _add_alias(
     token_postings: dict[str, dict[int, int]],
     phrase_postings: dict[str, dict[int, int]],
-    prefix_postings: dict[str, dict[int, int]],
     *,
     recipe_index: int,
     alias: str,
@@ -186,15 +232,6 @@ def _add_alias(
         token_scores[recipe_index] = max(
             token_scores.get(recipe_index, 0), token_weight
         )
-        if len(token) < _MIN_PREFIX:
-            continue
-        prefix_weight = max(1, token_weight - _PREFIX_PENALTY)
-        for length in range(_MIN_PREFIX, min(len(token), _MAX_PREFIX) + 1):
-            prefix = token[:length]
-            prefix_scores = prefix_postings[prefix]
-            prefix_scores[recipe_index] = max(
-                prefix_scores.get(recipe_index, 0), prefix_weight
-            )
 
 
 def _serialize_postings(
@@ -207,15 +244,26 @@ def _serialize_postings(
     }
 
 
-def compile_search_index(payload: dict[str, Any]) -> dict[str, Any]:
-    """Compile a JSON-serializable all-language recipe search index.
+def _prefix_count(tokens: Iterable[str]) -> int:
+    prefixes: set[str] = set()
+    for token in tokens:
+        if len(token) < _MIN_PREFIX:
+            continue
+        for length in range(_MIN_PREFIX, min(len(token), _MAX_PREFIX) + 1):
+            prefixes.add(token[:length])
+    return len(prefixes)
 
-    This is maintenance/build work. Runtime search consumes the resulting
-    postings directly and never rebuilds recipe search strings per query.
+
+def compile_search_index(payload: dict[str, Any]) -> dict[str, Any]:
+    """Compile a compact JSON-serializable all-language recipe search index.
+
+    Exact token and phrase postings are persisted. Prefix postings are deliberately
+    not duplicated in the release file; runtime derives prefix matches from the
+    sorted exact-token table with the same score penalty. This preserves typeahead
+    semantics while removing the largest redundant part of the catalog artifact.
     """
     token_postings: dict[str, dict[int, int]] = defaultdict(dict)
     phrase_postings: dict[str, dict[int, int]] = defaultdict(dict)
-    prefix_postings: dict[str, dict[int, int]] = defaultdict(dict)
     recipe_languages: dict[str, set[int]] = defaultdict(set)
     ingredient_by_id = _ingredient_lookup(payload)
 
@@ -230,7 +278,6 @@ def compile_search_index(payload: dict[str, Any]) -> dict[str, Any]:
             _add_alias(
                 token_postings,
                 phrase_postings,
-                prefix_postings,
                 recipe_index=recipe_index,
                 alias=alias,
                 token_weight=_TITLE_TOKEN_WEIGHT,
@@ -240,7 +287,6 @@ def compile_search_index(payload: dict[str, Any]) -> dict[str, Any]:
             _add_alias(
                 token_postings,
                 phrase_postings,
-                prefix_postings,
                 recipe_index=recipe_index,
                 alias=alias,
                 token_weight=_INGREDIENT_TOKEN_WEIGHT,
@@ -253,7 +299,9 @@ def compile_search_index(payload: dict[str, Any]) -> dict[str, Any]:
         "recipeCount": len(recipes),
         "tokenPostings": _serialize_postings(token_postings),
         "phrasePostings": _serialize_postings(phrase_postings),
-        "prefixPostings": _serialize_postings(prefix_postings),
+        # Retain the field as an explicit empty compatibility marker. Older v60
+        # indexes with materialized prefix postings remain readable by prepare().
+        "prefixPostings": {},
         "recipeLanguages": {
             language: sorted(indices)
             for language, indices in sorted(recipe_languages.items())
@@ -261,7 +309,8 @@ def compile_search_index(payload: dict[str, Any]) -> dict[str, Any]:
         "stats": {
             "tokens": len(token_postings),
             "phrases": len(phrase_postings),
-            "prefixes": len(prefix_postings),
+            "prefixes": _prefix_count(token_postings),
+            "prefixPostingsPersisted": False,
             "languages": len(recipe_languages),
         },
     }
@@ -282,6 +331,7 @@ def prepare_search_index(compiled: Any) -> dict[str, Any]:
             "phrasePostings": {},
             "prefixPostings": {},
             "recipeLanguages": {},
+            "_sortedTokens": (),
             "_prepared": True,
         }
 
@@ -320,21 +370,50 @@ def prepare_search_index(compiled: Any) -> dict[str, Any]:
                     if isinstance(index, int) and index >= 0
                 )
 
+    token_postings = postings("tokenPostings")
     return {
         "schemaVersion": SEARCH_INDEX_SCHEMA_VERSION,
         "kind": "cook4me-multilingual-recipe-search-index",
         "recipeCount": max(0, int(compiled.get("recipeCount") or 0)),
-        "tokenPostings": postings("tokenPostings"),
+        "tokenPostings": token_postings,
         "phrasePostings": postings("phrasePostings"),
         "prefixPostings": postings("prefixPostings"),
         "recipeLanguages": languages,
         "stats": dict(compiled.get("stats") or {}),
+        "_sortedTokens": tuple(sorted(token_postings)),
         "_prepared": True,
     }
 
 
 def _posting_map(rows: Iterable[tuple[int, int]]) -> dict[int, int]:
     return {index: score for index, score in rows}
+
+
+def _prefix_rows(
+    prepared: dict[str, Any], prefix: str
+) -> tuple[tuple[int, int], ...]:
+    """Resolve one prefix from legacy postings or the sorted exact-token table."""
+    if len(prefix) < _MIN_PREFIX or len(prefix) > _MAX_PREFIX:
+        return ()
+    legacy = prepared.get("prefixPostings") or {}
+    rows = legacy.get(prefix)
+    if rows:
+        return tuple(rows)
+
+    tokens = prepared.get("_sortedTokens") or ()
+    token_postings = prepared.get("tokenPostings") or {}
+    if not tokens:
+        return ()
+    start = bisect_left(tokens, prefix)
+    merged: dict[int, int] = {}
+    for position in range(start, len(tokens)):
+        token = tokens[position]
+        if not token.startswith(prefix):
+            break
+        for index, score in token_postings.get(token, ()):
+            value = max(1, int(score) - _PREFIX_PENALTY)
+            merged[index] = max(merged.get(index, 0), value)
+    return tuple((index, merged[index]) for index in sorted(merged))
 
 
 def search_index(
@@ -375,7 +454,6 @@ def search_index(
     normalized = normalize_search_text(query)
     query_tokens = _tokens(normalized)
     token_postings = prepared.get("tokenPostings") or {}
-    prefix_postings = prepared.get("prefixPostings") or {}
     phrase_postings = prepared.get("phrasePostings") or {}
 
     if not normalized:
@@ -396,10 +474,14 @@ def search_index(
 
     per_term: list[dict[int, int]] = []
     for token in query_tokens:
-        rows = token_postings.get(token)
-        if not rows and len(token) >= _MIN_PREFIX:
-            rows = prefix_postings.get(token)
-        if not rows:
+        current: dict[int, int] = {}
+        for variant in _query_token_variants(token, language_key):
+            rows = token_postings.get(variant)
+            if not rows:
+                rows = _prefix_rows(prepared, variant)
+            for index, score in rows or ():
+                current[index] = max(current.get(index, 0), score)
+        if not current:
             return {
                 "indices": [],
                 "scores": {},
@@ -407,7 +489,6 @@ def search_index(
                 "page": page,
                 "size": size,
             }
-        current = _posting_map(rows)
         if allowed is not None:
             current = {
                 index: score
@@ -434,9 +515,10 @@ def search_index(
         index: sum(current.get(index, 0) for current in per_term)
         for index in candidates
     }
-    for index, phrase_score in phrase_postings.get(normalized, ()):
-        if index in scores:
-            scores[index] += phrase_score
+    for phrase in _query_phrase_variants(normalized, language_key):
+        for index, phrase_score in phrase_postings.get(phrase, ()):
+            if index in scores:
+                scores[index] += phrase_score
 
     ranked = sorted(scores, key=lambda index: (-scores[index], index))
     total = len(ranked)

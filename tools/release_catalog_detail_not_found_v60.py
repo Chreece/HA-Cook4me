@@ -2,15 +2,17 @@
 """Evidence-gated accounting for Cook4Me search rows with no recipe detail.
 
 Real v60 capture evidence proved that some provider search manifests contain
-stable recipe IDs whose exact v3 PRO detail resource returns HTTP 404 through
-both the app-header and access_rcu request modes, while known-present controls
-from the same catalogs succeed. Other bearer/remote fallbacks return 401.
+stable recipe IDs whose exact v3 PRO detail resource returns HTTP 404. Two
+separate evidence paths are supported and intentionally kept distinct:
 
-This module does not infer that every failed detail is stale. It recognizes only
-that exact, already-redacted provider result shape. During capture such rows are
-accounted separately from genuine failures, their exact provider IDs are kept as
-release audit evidence, and rows with no successful detail anywhere are omitted
-from the recipe table. Any other failure remains fail-closed.
+* capture-time app/access-RCU evidence, where both request modes returned 404;
+* an offline reconciliation path where a preserved capture is compared against a
+  fresh public search manifest and the exact current complement is independently
+  probed with the public app/API-key request mode, with every candidate returning
+  HTTP 404.
+
+Neither path infers that arbitrary failed detail rows are stale. Provider IDs are
+kept as release audit evidence and any unproven failure remains fail-closed.
 """
 from __future__ import annotations
 
@@ -21,6 +23,10 @@ from threading import Lock
 from typing import Any, Callable
 
 _POLICY = "search-manifest-app-access-rcu-404-accounted-v1"
+_CURRENT_PROBE_POLICY = "current-search-manifest-public-app-404-accounted-v1"
+_CURRENT_PROBE_EVIDENCE_KIND = (
+    "current-search-manifest-exact-complement-public-app-404-v1"
+)
 _SENTINEL = "_v60SearchListedDetailNotFound"
 _ALLOWED_PROVIDER_MODES = {
     "app",
@@ -284,10 +290,24 @@ def validation_errors(payload: dict[str, Any]) -> list[str]:
     if int(source.get("failedDetailCount") or 0) != total_failed:
         errors.append("source.failedDetailCount does not match catalog totals")
     if source_not_found:
-        if source.get("detailNotFoundPolicy") != _POLICY:
+        policy = _text(source.get("detailNotFoundPolicy"))
+        if policy not in {_POLICY, _CURRENT_PROBE_POLICY}:
             errors.append("source.detailNotFoundPolicy is invalid")
         if source.get("detailNotFoundVariantIdsStored") is not True:
             errors.append("source.detailNotFoundVariantIdsStored must be true")
+        if policy == _CURRENT_PROBE_POLICY:
+            if source.get("detailNotFoundEvidenceKind") != _CURRENT_PROBE_EVIDENCE_KIND:
+                errors.append("source.detailNotFoundEvidenceKind is invalid")
+            if int(source.get("detailNotFoundEvidenceCount") or 0) != source_not_found:
+                errors.append("source.detailNotFoundEvidenceCount does not match catalog totals")
+            if not _text(source.get("detailNotFoundEvidenceGeneratedAt")):
+                errors.append("source.detailNotFoundEvidenceGeneratedAt is required")
+            if source.get("detailNotFoundSearchManifestStable") is not True:
+                errors.append("source.detailNotFoundSearchManifestStable must be true")
+            if source.get("detailNotFoundCandidateCountMatched") is not True:
+                errors.append("source.detailNotFoundCandidateCountMatched must be true")
+            if source.get("detailNotFoundPublicApp404Only") is not True:
+                errors.append("source.detailNotFoundPublicApp404Only must be true")
     return errors
 
 
