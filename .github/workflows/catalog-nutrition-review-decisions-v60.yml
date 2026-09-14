@@ -7,9 +7,11 @@ on:
     paths:
       - .github/workflows/catalog-nutrition-review-decisions-v60.yml
       - tools/compile_release_catalog_fdc_review_decisions_v60.py
+      - tools/compile_release_catalog_fdc_retained_review_decisions_v60.py
       - tools/snapshot_nutrition_review_checkpoint_v60.py
       - tools/resolve_reviewed_release_catalog_nutrition_targets_v60.py
       - tests/test_compile_release_catalog_fdc_review_decisions_v60.py
+      - tests/test_compile_release_catalog_fdc_retained_review_decisions_v60.py
       - tests/test_nutrition_review_checkpoint_v60.py
   workflow_dispatch:
 
@@ -35,6 +37,7 @@ jobs:
           set -Eeuo pipefail
           python -m py_compile \
             tools/compile_release_catalog_fdc_review_decisions_v60.py \
+            tools/compile_release_catalog_fdc_retained_review_decisions_v60.py \
             tools/snapshot_nutrition_review_checkpoint_v60.py \
             tools/resolve_reviewed_release_catalog_nutrition_targets_v60.py
 
@@ -43,4 +46,5 @@ jobs:
           set -Eeuo pipefail
           python -m unittest \
             tests.test_compile_release_catalog_fdc_review_decisions_v60 \
+            tests.test_compile_release_catalog_fdc_retained_review_decisions_v60 \
             tests.test_nutrition_review_checkpoint_v60 -v
