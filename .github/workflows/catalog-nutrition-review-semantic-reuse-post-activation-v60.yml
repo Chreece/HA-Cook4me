@@ -29,7 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ inputs.evidence_head_sha || github.sha }}
           fetch-depth: 1
           persist-credentials: false
 
@@ -93,10 +93,10 @@ jobs:
                   --commit "$TARGET_SHA" \
                   --limit 20 \
                   --json databaseId,headSha,status,conclusion \
-                  --jq 'if length == 0 then "" else .[0] | "\(.databaseId) \(.headSha) \(.status) \(.conclusion // \"\")" end'
+                  --jq 'if length == 0 then "" else .[0] | [.databaseId, .headSha, .status, (.conclusion // "-")] | @tsv end'
               )"
               if [ -n "$ROW" ]; then
-                read -r RUN_ID HEAD_SHA STATUS CONCLUSION <<< "$ROW"
+                IFS=$'\t' read -r RUN_ID HEAD_SHA STATUS CONCLUSION <<< "$ROW"
                 HEAD_SHA="${HEAD_SHA,,}"
                 if [ "$HEAD_SHA" != "$TARGET_SHA" ]; then
                   echo "Evidence query returned unexpected head $HEAD_SHA for requested $TARGET_SHA" >&2
@@ -130,11 +130,10 @@ jobs:
               --status success \
               --limit 1 \
               --json databaseId,headSha \
-              --jq 'if length == 0 then "" else .[0] | "\(.databaseId) \(.headSha)" end'
+              --jq 'if length == 0 then "" else .[0] | [.databaseId, .headSha] | @tsv end'
           )"
-          RUN_ID="${ROW%% *}"
-          HEAD_SHA="${ROW#* }"
-          if [ -z "$RUN_ID" ] || [ -z "$HEAD_SHA" ] || [ "$RUN_ID" = "$ROW" ]; then
+          IFS=$'\t' read -r RUN_ID HEAD_SHA <<< "$ROW"
+          if [ -z "$RUN_ID" ] || [ -z "$HEAD_SHA" ]; then
             echo "Unable to resolve the latest successful nutrition evidence run: $ROW" >&2
             false
           fi
