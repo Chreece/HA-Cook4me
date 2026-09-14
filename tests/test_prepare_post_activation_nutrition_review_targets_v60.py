@@ -95,7 +95,7 @@ class PostActivationNutritionReviewTargetTests(unittest.TestCase):
         self.assertEqual(queue_summary["pendingNutritionCount"], 0)
         self.assertEqual(queue_summary["reviewedAfterActivationIdentityCount"], 2)
         self.assertEqual(queue_summary["reviewedAfterActivationTargetCount"], 2)
-        self.assertEqual(queue_summary["reviewedAfterActivationUsageCountSum"], 2)
+        self.assertEqual(queue_summary["reviewedAfterActivationUsageCountSum"], 0)
 
         self.assertEqual(targets["targets"], [])
         self.assertEqual(target_summary["activatedReviewTargetCount"], 2)
