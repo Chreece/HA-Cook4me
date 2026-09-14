@@ -1,7 +1,13 @@
 {
-  "decoded_len": 85315,
+  "candidate_pairs_tested": 4096,
+  "current_payload_sha256": "3013ecea88360542a059ea42d695322c3d7984c79d7805bfa89ac6dcc54e946e",
+  "current_tail_fix": {
+    "part2": "J",
+    "part5": "P"
+  },
+  "decoded_candidate_pairs": 4096,
   "encoded_len": 113756,
-  "encoded_sha256": "d4aae6121dd62b005aee7edcb3aee5767ebc99f2bf5a3958d6209d9c59b97640",
+  "full_manifest_matches": [],
   "parts": [
     {
       "len": 5800,
@@ -130,67 +136,6 @@
       "tail": "A56WAHgFAA=="
     }
   ],
-  "payload_sha256": "3013ecea88360542a059ea42d695322c3d7984c79d7805bfa89ac6dcc54e946e",
-  "tar_members": [
-    {
-      "name": "docs/nutrition-review-batch40-bulk-families-v60.md",
-      "sha256": "c227c69267cd8b46e6cdbba5d381ae30442ce944bf20357f1c5c3c02a6c07236",
-      "size": 1718,
-      "type": "0"
-    },
-    {
-      "name": "tests/fixtures/nutrition-batch40-retained-reference-v60.json.gz",
-      "sha256": "4d62f672b126228294a07997c3b3db4bf4234f4a4ebfed24033432a8ec4f1e5a",
-      "size": 43168,
-      "type": "0"
-    },
-    {
-      "name": "tests/test_release_catalog_nutrition_review_batch39_v60.py",
-      "sha256": "73ccf64d67b74a08cc38ddf8ea8b13eec53a7072773c18813898fe83de8c7d9f",
-      "size": 11642,
-      "type": "0"
-    },
-    {
-      "name": "tests/test_release_catalog_nutrition_review_batch40_v60.py",
-      "sha256": "6a0d54cef8f45bacef55dd3c43887141e8ec826cceac485a2d47dc29a3713a47",
-      "size": 10996,
-      "type": "0"
-    },
-    {
-      "name": "tools/classify_nutrition_review_queue_v60.py",
-      "sha256": "5a501c7f34fdcad6a3f7c3b9bc4c59f6e0724f8d0b778a152847f9647b96d78b",
-      "size": 13622,
-      "type": "0"
-    },
-    {
-      "name": "tools/release_catalog_nutrition_bulk_family_rules_batch40.v1.json",
-      "sha256": "1f9cc8b052ae8e06ebe22bc26953ea16e159df739e150deb563fa2623ec76ed1",
-      "size": 18978,
-      "type": "0"
-    },
-    {
-      "name": "tools/release_catalog_reviewed_nutrition_targets_044.v1.json",
-      "sha256": "c0f706fd97e750259ba369bcb387074f5e49504fce5e522588c320ddf253b83e",
-      "size": 42521,
-      "type": "0"
-    },
-    {
-      "name": "tools/release_catalog_reviewed_nutrition_targets_044b.v1.json",
-      "sha256": "9f808c7429547f8c5d89cc95edb215ca814641e2f100a8672ddb4fd4e839f6ea",
-      "size": 42879,
-      "type": "0"
-    },
-    {
-      "name": "tools/release_catalog_reviewed_nutrition_targets_044c.v1.json",
-      "sha256": "3878be1b8960f6bb95368996e262365afaf500479f74d7da589fa810c8ac8b0f",
-      "size": 42307,
-      "type": "0"
-    },
-    {
-      "name": "tools/release_catalog_reviewed_nutrition_targets_044d.v1.json",
-      "sha256": "d5a321f65ebe9c407e3842a4c3b4afa5de045398e541645d4b99913a5f69b33c",
-      "size": 42360,
-      "type": "0"
-    }
-  ]
+  "target_payload_sha256": "b37496856a690426c98e64553a5161998613d1e36aec341d42b07a9c2474bdf8",
+  "target_sha_matches": []
 }
