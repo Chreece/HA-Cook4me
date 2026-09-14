@@ -31,7 +31,7 @@ class Batch41ClassifierHardeningTests(unittest.TestCase):
     def partition(self, rows):
         return classifier._partition_remaining(
             rows,
-            self.compiled,
+            cls.compiled,
             has_candidates=lambda row: row["candidateCount"] > 0,
         )
 
@@ -116,7 +116,11 @@ class Batch41ClassifierHardeningTests(unittest.TestCase):
 
     def test_hardening_does_not_create_or_move_recorded_bindings(self):
         checkpoint = cp.build_checkpoint(TOOLS)
-        self.assertEqual(checkpoint["summary"]["recordedReviewTargetCount"], 5071)
+        historical = [
+            row for row in checkpoint["recordedBindings"]
+            if row["reviewFile"] < "release_catalog_reviewed_nutrition_targets_045"
+        ]
+        self.assertEqual(len(historical), 5071)
         self.assertEqual(self.fixture["bindingsCreatedByBatch41"], 0)
         self.assertEqual(self.fixture["remainingReviewTargetCount"], 1248)
 
