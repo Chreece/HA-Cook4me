@@ -17,6 +17,7 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
+  actions: write
   contents: write
   attestations: write
   id-token: write
@@ -277,3 +278,13 @@ jobs:
           done
           echo "Unable to promote validated activation after bounded retries." >&2
           exit 1
+
+      - name: Refresh nutrition evidence after activation
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: cook4me-nutrition-enrichment-post-activation-v60
+        run: |
+          set -Eeuo pipefail
+          gh workflow run catalog-nutrition-enrichment-evidence-v60.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref "$BRANCH"
