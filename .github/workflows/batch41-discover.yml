@@ -13,7 +13,7 @@ permissions:
 jobs:
   discover:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
@@ -21,49 +21,84 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Locate retained evidence and classify current queue
+      - name: Materialize exact historical candidate evidence
+        env:
+          HISTORICAL_COMMIT: d4addcce84b9a51170a831ce5bc39862fcf0ad65
+          HISTORICAL_BRANCH: cook4me-v60-offline-fdc-candidates-2
+          HISTORICAL_PATH: tests/fixtures/nutrition-candidate-evidence-v60.json
+        run: |
+          git fetch --no-tags origin "$HISTORICAL_BRANCH"
+          git cat-file -e "$HISTORICAL_COMMIT^{commit}"
+          test "$(git rev-parse FETCH_HEAD)" = "$HISTORICAL_COMMIT" || {
+            echo "Historical evidence branch moved; refusing to substitute evidence."
+            exit 1
+          }
+          git show "$HISTORICAL_COMMIT:$HISTORICAL_PATH" > "$RUNNER_TEMP/nutrition-candidate-evidence-v60.json"
+          test -s "$RUNNER_TEMP/nutrition-candidate-evidence-v60.json"
+      - name: Classify current queue from exact historical evidence
+        env:
+          HISTORICAL_COMMIT: d4addcce84b9a51170a831ce5bc39862fcf0ad65
+          HISTORICAL_PATH: tests/fixtures/nutrition-candidate-evidence-v60.json
+          EXPECTED_SOURCE_SHA: e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac
         run: |
           python - <<'PY'
           from __future__ import annotations
           from collections import defaultdict
           import hashlib
           import json
+          import os
           from pathlib import Path
           import re
+          import subprocess
           import sys
 
           ROOT = Path.cwd()
           TOOLS = ROOT / 'tools'
+          EVIDENCE = Path(os.environ['RUNNER_TEMP']) / 'nutrition-candidate-evidence-v60.json'
           sys.path.insert(0, str(TOOLS))
 
           import classify_nutrition_review_queue_v60 as classifier
+          import snapshot_nutrition_review_checkpoint_v60 as checkpoint
 
-          TARGET_SHA = 'e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac'
+          expected_source_sha = os.environ['EXPECTED_SOURCE_SHA']
+          evidence_doc, evidence_source_sha = checkpoint._read(EVIDENCE)
+          raw_sha = hashlib.sha256(EVIDENCE.read_bytes()).hexdigest()
+          if evidence_source_sha != expected_source_sha:
+              raise SystemExit(
+                  f'historical evidence lineage differs: {evidence_source_sha} != {expected_source_sha}'
+              )
 
-          evidence_matches = []
-          evidence_inventory = []
-          for path in sorted((ROOT / 'tests' / 'fixtures').glob('*nutrition*evidence*.json')):
-              raw = path.read_bytes()
-              sha = hashlib.sha256(raw).hexdigest()
-              evidence_inventory.append({'path': str(path.relative_to(ROOT)), 'sha256': sha, 'bytes': len(raw)})
-              if sha == TARGET_SHA:
-                  evidence_matches.append(path)
-
-          if len(evidence_matches) != 1:
-              raise SystemExit(f'expected exactly one evidence file with {TARGET_SHA}, found {[str(p) for p in evidence_matches]}')
-
-          evidence = evidence_matches[0]
-          result = classifier.classify(evidence)
+          # classify() revalidates holds, all explicit review rows, every bulk-family
+          # registry, and the evidence lineage against the current branch. It never
+          # creates or approves a binding.
+          result = classifier.classify(EVIDENCE, review_root=TOOLS)
+          if result['sourceEvidenceSha256'] != expected_source_sha:
+              raise SystemExit('classifier returned a different evidence lineage')
           summary = result['summary']
 
-          # Keep this analysis strictly discovery-only. Candidate rank is a locator,
-          # never identity proof, and this workflow writes no review bindings/rules.
+          expected_summary = {
+              'recordedReviewTargetCount': 5071,
+              'remainingReviewTargetCount': 1248,
+              'manualFamilyCandidateCount': 416,
+              'contextHeavyCount': 832,
+              'unreviewedRuleMatchCount': 0,
+              'bindingsApprovedByClassifier': 0,
+              'networkRequestsPerformed': False,
+          }
+          mismatches = {
+              key: {'expected': expected, 'actual': summary.get(key)}
+              for key, expected in expected_summary.items()
+              if summary.get(key) != expected
+          }
+          if mismatches:
+              raise SystemExit(f'Batch 40 post-state drifted before Batch 41 discovery: {mismatches}')
+
           manual = result['tierBManual']
           context = result['tierCContext']
           rule_unreviewed = result['ruleCoveredButUnreviewed']
 
-          def text(v):
-              return str(v or '').strip()
+          def text(value):
+              return str(value or '').strip()
 
           def usage(row):
               for key in ('usageCountSum', 'usageCount', 'recipeUsageCount'):
@@ -72,13 +107,13 @@ jobs:
                       return value
               return 0
 
-          def candidate_projection(c):
+          def candidate_projection(candidate):
               return {
-                  'localEvidenceRank': c.get('localEvidenceRank'),
-                  'fdcId': c.get('fdcId'),
-                  'description': c.get('description'),
-                  'dataType': c.get('dataType'),
-                  'score': c.get('score'),
+                  'localEvidenceRank': candidate.get('localEvidenceRank'),
+                  'fdcId': candidate.get('fdcId'),
+                  'description': candidate.get('description'),
+                  'dataType': candidate.get('dataType'),
+                  'score': candidate.get('score'),
               }
 
           manual_rows = []
@@ -105,18 +140,26 @@ jobs:
                   by_first_token[token_match.group(0).casefold()].append(projected)
 
           def summarize_group(key, rows):
+              ordered = sorted(
+                  rows,
+                  key=lambda item: (
+                      -item['usageCount'],
+                      item['canonicalEnglishName'].casefold(),
+                      item['reviewTargetId'],
+                  ),
+              )
               return {
                   'key': key,
                   'targetCount': len(rows),
-                  'usageCount': sum(r['usageCount'] for r in rows),
+                  'usageCount': sum(item['usageCount'] for item in rows),
                   'targets': [
                       {
-                          'reviewTargetId': r['reviewTargetId'],
-                          'canonicalEnglishName': r['canonicalEnglishName'],
-                          'usageCount': r['usageCount'],
-                          'topCandidate': r['topCandidates'][0] if r['topCandidates'] else None,
+                          'reviewTargetId': item['reviewTargetId'],
+                          'canonicalEnglishName': item['canonicalEnglishName'],
+                          'usageCount': item['usageCount'],
+                          'topCandidate': item['topCandidates'][0] if item['topCandidates'] else None,
                       }
-                      for r in sorted(rows, key=lambda x: (-x['usageCount'], x['canonicalEnglishName'].casefold(), x['reviewTargetId']))
+                      for item in ordered
                   ],
               }
 
@@ -125,34 +168,50 @@ jobs:
               for key, rows in by_top_fdc.items()
               if len(rows) >= 2
           ]
-          repeated_top_fdc.sort(key=lambda g: (-g['usageCount'], -g['targetCount'], g['key']))
+          repeated_top_fdc.sort(
+              key=lambda group: (-group['usageCount'], -group['targetCount'], group['key'])
+          )
 
           repeated_top_description = [
               summarize_group(key, rows)
               for key, rows in by_top_description.items()
               if len(rows) >= 2
           ]
-          repeated_top_description.sort(key=lambda g: (-g['usageCount'], -g['targetCount'], g['key'].casefold()))
+          repeated_top_description.sort(
+              key=lambda group: (-group['usageCount'], -group['targetCount'], group['key'].casefold())
+          )
 
           first_token_groups = [
               summarize_group(key, rows)
               for key, rows in by_first_token.items()
               if len(rows) >= 2
           ]
-          first_token_groups.sort(key=lambda g: (-g['usageCount'], -g['targetCount'], g['key']))
+          first_token_groups.sort(
+              key=lambda group: (-group['usageCount'], -group['targetCount'], group['key'])
+          )
 
-          manual_rows.sort(key=lambda r: (-r['usageCount'], r['canonicalEnglishName'].casefold(), r['reviewTargetId']))
+          manual_rows.sort(
+              key=lambda row: (
+                  -row['usageCount'],
+                  row['canonicalEnglishName'].casefold(),
+                  row['reviewTargetId'],
+              )
+          )
 
           out = {
               'schemaVersion': 1,
               'kind': 'cook4me-batch41-discovery-v60',
-              'baseCommit': __import__('subprocess').check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
-              'sourceEvidence': str(evidence.relative_to(ROOT)),
-              'sourceEvidenceSha256': TARGET_SHA,
+              'baseCommit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+              'sourceHistoricalCommit': os.environ['HISTORICAL_COMMIT'],
+              'sourceHistoricalPath': os.environ['HISTORICAL_PATH'],
+              'sourceEvidenceRawSha256': raw_sha,
+              'sourceEvidenceSha256': expected_source_sha,
               'policy': {
                   'discoveryOnly': True,
                   'createsBindings': False,
                   'candidateRankIsIdentityProof': False,
+                  'providerIdentityInference': False,
+                  'automaticRuleExpansionForbidden': True,
                   'networkRequestsPerformed': False,
                   'contextHeavyTargetsRemainUntouched': True,
               },
@@ -162,6 +221,8 @@ jobs:
                   'context': len(context),
                   'ruleCoveredButUnreviewed': len(rule_unreviewed),
                   'repeatedTopFdcGroups': len(repeated_top_fdc),
+                  'repeatedTopDescriptionGroups': len(repeated_top_description),
+                  'firstTokenGroups': len(first_token_groups),
               },
               'repeatedTopFdcGroups': repeated_top_fdc,
               'repeatedTopDescriptionGroups': repeated_top_description,
@@ -169,25 +230,27 @@ jobs:
               'manualCandidates': manual_rows,
               'ruleCoveredButUnreviewed': [
                   {
-                      'reviewTargetId': r['reviewTargetId'],
-                      'canonicalEnglishName': r['canonicalEnglishName'],
-                      'matchedRuleId': r.get('matchedRuleId'),
-                      'usageCount': usage(r),
+                      'reviewTargetId': row['reviewTargetId'],
+                      'canonicalEnglishName': row['canonicalEnglishName'],
+                      'matchedRuleId': row.get('matchedRuleId'),
+                      'usageCount': usage(row),
                   }
-                  for r in rule_unreviewed
+                  for row in rule_unreviewed
               ],
-              'evidenceInventory': evidence_inventory,
           }
           Path('.batch41-discovery.json').write_text(
               json.dumps(out, indent=2, sort_keys=True, ensure_ascii=False) + '\n',
               encoding='utf-8',
           )
           print(json.dumps({
-              'sourceEvidence': out['sourceEvidence'],
+              'sourceHistoricalCommit': out['sourceHistoricalCommit'],
+              'sourceHistoricalPath': out['sourceHistoricalPath'],
+              'sourceEvidenceRawSha256': raw_sha,
+              'sourceEvidenceSha256': expected_source_sha,
               'classifierSummary': summary,
               'counts': out['counts'],
-              'topRepeatedFdcGroups': repeated_top_fdc[:15],
-              'topManualCandidates': manual_rows[:25],
+              'topRepeatedFdcGroups': repeated_top_fdc[:20],
+              'topManualCandidates': manual_rows[:30],
           }, indent=2, ensure_ascii=False))
           PY
       - name: Commit discovery artifact
