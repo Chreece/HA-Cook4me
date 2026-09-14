@@ -26,6 +26,13 @@ import snapshot_nutrition_review_checkpoint_v60 as cp  # noqa: E402
 
 RULES = TOOLS / "release_catalog_nutrition_bulk_family_rules.v1.json"
 RULE_GLOB = "release_catalog_nutrition_bulk_family_rules*.v1.json"
+GENERIC_PEPPER = re.compile(
+    r"^(?:\*?pepper|ground pepper|coarsely ground pepper)"
+    r"(?:\s*\((?:a little|for finishing)\))?(?:,\s*a little)?$",
+    re.IGNORECASE,
+)
+
+
 COMPLEX = re.compile(
     r"\b(?:and|or|mix(?:ed|ing|tures?)?|blend(?:ed|ing)?|seasoning|spices?|stock|bouillon|broth|"
     r"sauce|paste|roux|soup|consomm[eé]|brine|soak(?:ed|ing)?|marinat(?:ed|ing)|marinades?|"
@@ -99,6 +106,7 @@ def _partition_remaining(
     *,
     has_candidates=None,
     evidence_requirements: dict[str, dict[str, Any]] | None = None,
+    identity_ambiguities: tuple[tuple[str, re.Pattern[str]], ...] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     """Losslessly partition unresolved rows without selecting or approving anything.
 
@@ -110,6 +118,8 @@ def _partition_remaining(
         has_candidates = lambda row: bool(row.get("candidates"))
     if evidence_requirements is None:
         evidence_requirements = {}
+    if identity_ambiguities is None:
+        identity_ambiguities = ()
     tier_b: list[dict[str, Any]] = []
     tier_c: list[dict[str, Any]] = []
     rule_covered_unreviewed: list[dict[str, Any]] = []
@@ -140,6 +150,17 @@ def _partition_remaining(
             row["matchedRuleId"] = matched[0]["ruleId"]
             row["classification"] = "B-rule-match-requires-explicit-review-row"
             rule_covered_unreviewed.append(row)
+            continue
+        ambiguity_matches = [
+            classification
+            for classification, pattern in identity_ambiguities
+            if pattern.match(name)
+        ]
+        if len(ambiguity_matches) > 1:
+            raise ValueError(f"remaining target matches multiple identity ambiguities: {target_id}")
+        if ambiguity_matches:
+            row["classification"] = ambiguity_matches[0]
+            tier_c.append(row)
             continue
         if COMPLEX.search(name) or not has_candidates(raw):
             row["classification"] = "C-context-or-composition-required"
@@ -216,6 +237,7 @@ def classify(evidence_path: Path, *, review_root: Path = TOOLS) -> dict[str, Any
         audit["remainingUnheldCandidates"],
         compiled,
         evidence_requirements=evidence_requirements,
+        identity_ambiguities=(("C-generic-pepper-identity-ambiguous", GENERIC_PEPPER),),
     )
     remaining_ids = {
         row["reviewTargetId"] for row in audit["remainingUnheldCandidates"]
