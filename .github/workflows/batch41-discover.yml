@@ -1,0 +1,199 @@
+name: Discover Batch 41 nutrition candidates
+
+on:
+  push:
+    branches:
+      - cook4me-nutrition-batch41-discovery-v60
+    paths:
+      - '.github/workflows/batch41-discover.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Locate retained evidence and classify current queue
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+          from collections import defaultdict
+          import hashlib
+          import json
+          from pathlib import Path
+          import re
+          import sys
+
+          ROOT = Path.cwd()
+          TOOLS = ROOT / 'tools'
+          sys.path.insert(0, str(TOOLS))
+
+          import classify_nutrition_review_queue_v60 as classifier
+
+          TARGET_SHA = 'e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac'
+
+          evidence_matches = []
+          evidence_inventory = []
+          for path in sorted((ROOT / 'tests' / 'fixtures').glob('*nutrition*evidence*.json')):
+              raw = path.read_bytes()
+              sha = hashlib.sha256(raw).hexdigest()
+              evidence_inventory.append({'path': str(path.relative_to(ROOT)), 'sha256': sha, 'bytes': len(raw)})
+              if sha == TARGET_SHA:
+                  evidence_matches.append(path)
+
+          if len(evidence_matches) != 1:
+              raise SystemExit(f'expected exactly one evidence file with {TARGET_SHA}, found {[str(p) for p in evidence_matches]}')
+
+          evidence = evidence_matches[0]
+          result = classifier.classify(evidence)
+          summary = result['summary']
+
+          # Keep this analysis strictly discovery-only. Candidate rank is a locator,
+          # never identity proof, and this workflow writes no review bindings/rules.
+          manual = result['tierBManual']
+          context = result['tierCContext']
+          rule_unreviewed = result['ruleCoveredButUnreviewed']
+
+          def text(v):
+              return str(v or '').strip()
+
+          def usage(row):
+              for key in ('usageCountSum', 'usageCount', 'recipeUsageCount'):
+                  value = row.get(key)
+                  if isinstance(value, int):
+                      return value
+              return 0
+
+          def candidate_projection(c):
+              return {
+                  'localEvidenceRank': c.get('localEvidenceRank'),
+                  'fdcId': c.get('fdcId'),
+                  'description': c.get('description'),
+                  'dataType': c.get('dataType'),
+                  'score': c.get('score'),
+              }
+
+          manual_rows = []
+          by_top_fdc = defaultdict(list)
+          by_top_description = defaultdict(list)
+          by_first_token = defaultdict(list)
+          for row in manual:
+              candidates = row.get('candidates') or []
+              projected = {
+                  'reviewTargetId': row['reviewTargetId'],
+                  'canonicalEnglishName': row['canonicalEnglishName'],
+                  'reviewTargetKind': row.get('reviewTargetKind'),
+                  'usageCount': usage(row),
+                  'candidateCount': len(candidates),
+                  'topCandidates': [candidate_projection(c) for c in candidates[:5]],
+              }
+              manual_rows.append(projected)
+              if candidates:
+                  top = candidates[0]
+                  by_top_fdc[str(top.get('fdcId'))].append(projected)
+                  by_top_description[text(top.get('description'))].append(projected)
+              token_match = re.search(r"[A-Za-zÀ-ÖØ-öø-ÿ]+", row['canonicalEnglishName'])
+              if token_match:
+                  by_first_token[token_match.group(0).casefold()].append(projected)
+
+          def summarize_group(key, rows):
+              return {
+                  'key': key,
+                  'targetCount': len(rows),
+                  'usageCount': sum(r['usageCount'] for r in rows),
+                  'targets': [
+                      {
+                          'reviewTargetId': r['reviewTargetId'],
+                          'canonicalEnglishName': r['canonicalEnglishName'],
+                          'usageCount': r['usageCount'],
+                          'topCandidate': r['topCandidates'][0] if r['topCandidates'] else None,
+                      }
+                      for r in sorted(rows, key=lambda x: (-x['usageCount'], x['canonicalEnglishName'].casefold(), x['reviewTargetId']))
+                  ],
+              }
+
+          repeated_top_fdc = [
+              summarize_group(key, rows)
+              for key, rows in by_top_fdc.items()
+              if len(rows) >= 2
+          ]
+          repeated_top_fdc.sort(key=lambda g: (-g['usageCount'], -g['targetCount'], g['key']))
+
+          repeated_top_description = [
+              summarize_group(key, rows)
+              for key, rows in by_top_description.items()
+              if len(rows) >= 2
+          ]
+          repeated_top_description.sort(key=lambda g: (-g['usageCount'], -g['targetCount'], g['key'].casefold()))
+
+          first_token_groups = [
+              summarize_group(key, rows)
+              for key, rows in by_first_token.items()
+              if len(rows) >= 2
+          ]
+          first_token_groups.sort(key=lambda g: (-g['usageCount'], -g['targetCount'], g['key']))
+
+          manual_rows.sort(key=lambda r: (-r['usageCount'], r['canonicalEnglishName'].casefold(), r['reviewTargetId']))
+
+          out = {
+              'schemaVersion': 1,
+              'kind': 'cook4me-batch41-discovery-v60',
+              'baseCommit': __import__('subprocess').check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+              'sourceEvidence': str(evidence.relative_to(ROOT)),
+              'sourceEvidenceSha256': TARGET_SHA,
+              'policy': {
+                  'discoveryOnly': True,
+                  'createsBindings': False,
+                  'candidateRankIsIdentityProof': False,
+                  'networkRequestsPerformed': False,
+                  'contextHeavyTargetsRemainUntouched': True,
+              },
+              'classifierSummary': summary,
+              'counts': {
+                  'manual': len(manual_rows),
+                  'context': len(context),
+                  'ruleCoveredButUnreviewed': len(rule_unreviewed),
+                  'repeatedTopFdcGroups': len(repeated_top_fdc),
+              },
+              'repeatedTopFdcGroups': repeated_top_fdc,
+              'repeatedTopDescriptionGroups': repeated_top_description,
+              'firstTokenGroups': first_token_groups,
+              'manualCandidates': manual_rows,
+              'ruleCoveredButUnreviewed': [
+                  {
+                      'reviewTargetId': r['reviewTargetId'],
+                      'canonicalEnglishName': r['canonicalEnglishName'],
+                      'matchedRuleId': r.get('matchedRuleId'),
+                      'usageCount': usage(r),
+                  }
+                  for r in rule_unreviewed
+              ],
+              'evidenceInventory': evidence_inventory,
+          }
+          Path('.batch41-discovery.json').write_text(
+              json.dumps(out, indent=2, sort_keys=True, ensure_ascii=False) + '\n',
+              encoding='utf-8',
+          )
+          print(json.dumps({
+              'sourceEvidence': out['sourceEvidence'],
+              'classifierSummary': summary,
+              'counts': out['counts'],
+              'topRepeatedFdcGroups': repeated_top_fdc[:15],
+              'topManualCandidates': manual_rows[:25],
+          }, indent=2, ensure_ascii=False))
+          PY
+      - name: Commit discovery artifact
+        run: |
+          git add .batch41-discovery.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record Batch 41 nutrition discovery' || exit 0
+          git push origin HEAD:cook4me-nutrition-batch41-discovery-v60
