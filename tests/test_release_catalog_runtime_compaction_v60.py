@@ -14,6 +14,7 @@ for path in (TOOLS, COMPONENT):
 import catalog_search_index as search  # noqa: E402
 import compact_release_catalog_runtime_v60 as compactor  # noqa: E402
 import release_catalog_v60_core as runtime  # noqa: E402
+import reviewed_nutrition_v60 as reviewed_nutrition  # noqa: E402
 
 
 def payload() -> dict:
@@ -36,6 +37,19 @@ def payload() -> dict:
                     "values": {"energyKcal": 130.0, "protein": 2.7},
                     "source": "usda_fdc",
                     "sourceId": 1,
+                    "dataType": "SR Legacy",
+                    "ingredientId": "M_FOOD_1",
+                    "reviewedCanonicalEnglishName": "Rice",
+                    "reviewFile": "review.json",
+                    "nutritionReviewTargetId": "M_FOOD_1",
+                    "nutritionReviewTargetKind": "provider-identity",
+                    "sourceDescription": "Rice, cooked",
+                    "reviewConfidence": "exact",
+                    "reviewNotes": "maintenance-only audit note",
+                    "sourceReferenceDataset": "SR Legacy",
+                    "sourceReferenceReleaseDate": "2018-04",
+                    "sourceReferenceJsonSha256": "b" * 64,
+                    "sourceReferenceManifestSha256": "a" * 64,
                 },
             },
             {
@@ -77,8 +91,9 @@ def payload() -> dict:
                                 "ingredientId": "M_FOOD_1",
                                 "key": "M_FOOD_1",
                                 "canonicalName": "Rice",
-                                "originalName": "Riso Arborio",
+                                "originalName": "100 g Riso Arborio",
                                 "originalLanguage": "it",
+                                "semanticSourceName": "Riso Arborio",
                                 "semanticIdentityState": "reviewed",
                                 "quantity": 100,
                                 "unit": "g",
@@ -88,8 +103,9 @@ def payload() -> dict:
                                 "ingredientId": "local:el:tomato",
                                 "conceptId": "concept:food:tomato",
                                 "canonicalName": "Tomato",
-                                "originalName": "Pomodoro",
+                                "originalName": "50 g Pomodoro",
                                 "originalLanguage": "it",
+                                "semanticSourceName": "Pomodoro",
                                 "semanticIdentityState": "reviewed",
                                 "classification": "food",
                                 "sourceLocalIdentity": True,
@@ -126,6 +142,7 @@ class RuntimeCatalogCompactionTests(unittest.TestCase):
         self.assertEqual(provider["quantity"], 100)
         self.assertEqual(provider["unit"], "g")
         self.assertNotIn("originalName", provider)
+        self.assertNotIn("semanticSourceName", provider)
         self.assertNotIn("canonicalName", provider)
         self.assertEqual(local["ingredientId"], "local:el:tomato")
         self.assertEqual(local["quantity"], 50)
@@ -134,16 +151,47 @@ class RuntimeCatalogCompactionTests(unittest.TestCase):
         self.assertNotIn("nutrition", variant)
         self.assertNotIn("calculatedNutritionV60", variant)
 
-    def test_unique_recipe_line_wording_is_folded_into_global_aliases(self):
-        self.assertGreaterEqual(self.summary["preservedUniqueRecipeLineAliases"], 2)
+    def test_only_clean_semantic_wording_is_folded_into_global_search_labels(self):
+        self.assertEqual(self.summary["preservedUniqueRecipeLineAliases"], 2)
         rice = next(row for row in self.compact["ingredients"] if row["id"] == "M_FOOD_1")
         tomato = next(
             row for row in self.compact["ingredients"] if row["id"] == "local:el:tomato"
         )
         self.assertIn("Riso Arborio", rice["aliases"]["it"])
-        self.assertIn("Pomodoro", tomato["aliases"]["it"])
+        self.assertEqual(tomato["translations"]["it"], "Pomodoro")
         prepared = search.prepare_search_index(self.compact["searchIndex"])
         self.assertEqual(search.search_index(prepared, "arborio", size=10)["indices"], [0])
+        # Raw provider wording embeds quantity and must not become a search alias.
+        self.assertEqual(search.search_index(prepared, "100", size=10)["indices"], [])
+
+    def test_reviewed_nutrition_keeps_minimum_reusable_proof_and_global_reference_receipt(self):
+        rice = next(row for row in self.compact["ingredients"] if row["id"] == "M_FOOD_1")
+        profile = rice["nutrition"]
+        self.assertTrue(
+            reviewed_nutrition.is_reviewed_profile(
+                profile,
+                ingredient_id="M_FOOD_1",
+                canonical_name="Rice",
+            )
+        )
+        self.assertEqual(profile["sourceId"], 1)
+        self.assertEqual(profile["nutritionReviewTargetId"], "M_FOOD_1")
+        self.assertNotIn("reviewNotes", profile)
+        self.assertNotIn("sourceDescription", profile)
+        self.assertNotIn("sourceReferenceManifestSha256", profile)
+        source = self.compact["source"]
+        self.assertEqual(source["reviewedNutritionReferenceManifestSha256"], "a" * 64)
+        self.assertEqual(
+            source["reviewedNutritionReferenceDatasets"],
+            [
+                {
+                    "dataType": "SR Legacy",
+                    "releaseDate": "2018-04",
+                    "jsonSha256": "b" * 64,
+                }
+            ],
+        )
+        self.assertGreater(self.summary["strippedNutritionMaintenanceFields"], 0)
 
     def test_prefix_typeahead_works_without_persisted_prefix_postings(self):
         compiled = self.compact["searchIndex"]
