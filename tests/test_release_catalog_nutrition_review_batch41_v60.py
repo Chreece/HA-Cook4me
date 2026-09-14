@@ -116,7 +116,9 @@ class Batch41ClassifierHardeningTests(unittest.TestCase):
 
     def test_hardening_does_not_create_or_move_recorded_bindings(self):
         checkpoint = cp.build_checkpoint(TOOLS)
-        self.assertEqual(checkpoint["summary"]["recordedReviewTargetCount"], 5071)
+        # 5,071 is the immutable post-Batch-40 baseline. Later explicit review
+        # batches are allowed to increase the global recorded count.
+        self.assertGreaterEqual(checkpoint["summary"]["recordedReviewTargetCount"], 5071)
         self.assertEqual(self.fixture["bindingsCreatedByBatch41"], 0)
         self.assertEqual(self.fixture["remainingReviewTargetCount"], 1248)
 
