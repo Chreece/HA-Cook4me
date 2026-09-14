@@ -270,6 +270,7 @@ jobs:
         run: |
           set -Eeuo pipefail
           BRANCH="cook4me-nutrition-enrichment-post-activation-v60"
+          echo "Dispatching reviewer workflows for exact evidence head $GITHUB_SHA"
           for WORKFLOW in \
             catalog-nutrition-review-reuse-post-activation-v60.yml \
             catalog-nutrition-review-semantic-reuse-post-activation-v60.yml
