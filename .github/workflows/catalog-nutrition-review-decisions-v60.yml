@@ -19,8 +19,12 @@ on:
       - tests/test_nutrition_review_checkpoint_v60.py
   workflow_dispatch:
 
+concurrency:
+  group: catalog-nutrition-review-decisions-v60-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   validate-review-decisions:
