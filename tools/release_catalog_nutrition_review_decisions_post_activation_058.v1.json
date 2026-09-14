@@ -1,0 +1,83 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "evidenceBindingScope": "retained-reference-record",
+  "items": [
+    {
+      "approved": true,
+      "canonicalEnglishName": "Large potato, peeled and cut into pieces",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Potatoes, flesh and skin, raw",
+      "fdcId": 170026,
+      "notes": "Explicit destination review accepts USDA 'Potatoes, flesh and skin, raw' as a bounded raw-potato family nutrition reference for these uncooked chopped, cubed, or peeled-and-cut potato preparations. Historical Cook4Me reviews independently bound closely matching peeled/cut potato targets to the same FDC record, while the current retained candidate proves the exact USDA row in this pinned evidence generation. The record does not certify cultivar, potato size, skin-removal fraction, trimming loss, soaking, water uptake, cooking yield, or serving mass; peeled targets can differ modestly from the flesh-and-skin reference, so confidence is medium. Nutrition remains the USDA per-100-g raw potato reference. Cooked, baked, fried, frozen-fry, canned, starch, flour, purée, and composite potato identities remain separate.",
+      "reviewTargetId": "concept:food:7e4676c54e6d1bc4cdf3",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:70bf7beee44aac857f60"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Peeled potato, cut into pieces",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Potatoes, flesh and skin, raw",
+      "fdcId": 170026,
+      "notes": "Explicit destination review accepts USDA 'Potatoes, flesh and skin, raw' as a bounded raw-potato family nutrition reference for these uncooked chopped, cubed, or peeled-and-cut potato preparations. Historical Cook4Me reviews independently bound closely matching peeled/cut potato targets to the same FDC record, while the current retained candidate proves the exact USDA row in this pinned evidence generation. The record does not certify cultivar, potato size, skin-removal fraction, trimming loss, soaking, water uptake, cooking yield, or serving mass; peeled targets can differ modestly from the flesh-and-skin reference, so confidence is medium. Nutrition remains the USDA per-100-g raw potato reference. Cooked, baked, fried, frozen-fry, canned, starch, flour, purée, and composite potato identities remain separate.",
+      "reviewTargetId": "concept:food:e68dbf46c3ed8304eb93",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:70bf7beee44aac857f60"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Potato, cut into small cubes",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Potatoes, flesh and skin, raw",
+      "fdcId": 170026,
+      "notes": "Explicit destination review accepts USDA 'Potatoes, flesh and skin, raw' as a bounded raw-potato family nutrition reference for these uncooked chopped, cubed, or peeled-and-cut potato preparations. Historical Cook4Me reviews independently bound closely matching peeled/cut potato targets to the same FDC record, while the current retained candidate proves the exact USDA row in this pinned evidence generation. The record does not certify cultivar, potato size, skin-removal fraction, trimming loss, soaking, water uptake, cooking yield, or serving mass; peeled targets can differ modestly from the flesh-and-skin reference, so confidence is medium. Nutrition remains the USDA per-100-g raw potato reference. Cooked, baked, fried, frozen-fry, canned, starch, flour, purée, and composite potato identities remain separate.",
+      "reviewTargetId": "concept:food:6fd18c40da0aa4efb877",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:70bf7beee44aac857f60"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Potatoes, peeled and cut into wedges",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Potatoes, flesh and skin, raw",
+      "fdcId": 170026,
+      "notes": "Explicit destination review accepts USDA 'Potatoes, flesh and skin, raw' as a bounded raw-potato family nutrition reference for these uncooked chopped, cubed, or peeled-and-cut potato preparations. Historical Cook4Me reviews independently bound closely matching peeled/cut potato targets to the same FDC record, while the current retained candidate proves the exact USDA row in this pinned evidence generation. The record does not certify cultivar, potato size, skin-removal fraction, trimming loss, soaking, water uptake, cooking yield, or serving mass; peeled targets can differ modestly from the flesh-and-skin reference, so confidence is medium. Nutrition remains the USDA per-100-g raw potato reference. Cooked, baked, fried, frozen-fry, canned, starch, flour, purée, and composite potato identities remain separate.",
+      "reviewTargetId": "concept:food:70bf7beee44aac857f60",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:70bf7beee44aac857f60"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Small potato, chopped",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Potatoes, flesh and skin, raw",
+      "fdcId": 170026,
+      "notes": "Explicit destination review accepts USDA 'Potatoes, flesh and skin, raw' as a bounded raw-potato family nutrition reference for these uncooked chopped, cubed, or peeled-and-cut potato preparations. Historical Cook4Me reviews independently bound closely matching peeled/cut potato targets to the same FDC record, while the current retained candidate proves the exact USDA row in this pinned evidence generation. The record does not certify cultivar, potato size, skin-removal fraction, trimming loss, soaking, water uptake, cooking yield, or serving mass; peeled targets can differ modestly from the flesh-and-skin reference, so confidence is medium. Nutrition remains the USDA per-100-g raw potato reference. Cooked, baked, fried, frozen-fry, canned, starch, flour, purée, and composite potato identities remain separate.",
+      "reviewTargetId": "concept:food:8803ec44ec272e592237",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:70bf7beee44aac857f60"
+    }
+  ],
+  "kind": "cook4me-fdc-retained-reference-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "9775db36fdec8ef6ac129ab28b5fe9bbad31ea2cf4b46e212167518762250b71"
+}
