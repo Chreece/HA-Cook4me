@@ -42,6 +42,11 @@ FORMULATED_HERB_BLEND = re.compile(
     re.IGNORECASE,
 )
 
+FORMULATED_PEPPER_SALT = re.compile(
+    r"^(?:(?:a|c)- )?pepper salt(?: \(a little\)|, a little)?$",
+    re.IGNORECASE,
+)
+
 
 COMPLEX = re.compile(
     r"\b(?:and|or|mix(?:ed|ing|tures?)?|blend(?:ed|ing)?|seasoning|spices?|stock|bouillon|broth|"
@@ -251,6 +256,7 @@ def classify(evidence_path: Path, *, review_root: Path = TOOLS) -> dict[str, Any
             ("C-generic-pepper-identity-ambiguous", GENERIC_PEPPER),
             ("C-formulated-spice-blend-ambiguous", FORMULATED_SPICE_BLEND),
             ("C-formulated-herb-blend-ambiguous", FORMULATED_HERB_BLEND),
+            ("C-formulated-pepper-salt-ambiguous", FORMULATED_PEPPER_SALT),
         ),
     )
     remaining_ids = {
