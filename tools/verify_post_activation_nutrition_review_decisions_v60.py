@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Verify committed post-activation nutrition decisions and compiled reviews.
 
-The verifier is offline and fail-closed.  For every committed post-activation
-decision artifact it recompiles the corresponding reviewed-target source from the
-exact candidate-evidence bytes, then requires the committed review file to be
-byte-identical to the compiler output.  It also validates the global review
-corpus and reports every duplicate reviewTargetId in one pass.
+The verifier is offline and fail-closed. For every committed post-activation
+decision artifact it resolves the exact candidate-evidence snapshot named by the
+decision's ``sourceEvidenceSha256``, recompiles the corresponding reviewed-target
+source, and requires the committed review file to be byte-identical to compiler
+output. Multiple immutable evidence generations may coexist; a decision can
+never be silently replayed against a newer snapshot.
 """
 from __future__ import annotations
 
@@ -15,7 +16,7 @@ import json
 from pathlib import Path
 import re
 import sys
-from typing import Any
+from typing import Any, Iterable
 
 ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT / "tools"
@@ -62,13 +63,38 @@ def _duplicate_review_targets(review_root: Path) -> list[tuple[str, list[str]]]:
     )
 
 
+def _load_evidence_snapshots(
+    evidence_paths: Path | Iterable[Path],
+) -> dict[str, dict[str, Any]]:
+    paths = [evidence_paths] if isinstance(evidence_paths, Path) else list(evidence_paths)
+    if not paths:
+        raise ValueError("at least one evidence snapshot is required")
+    snapshots: dict[str, dict[str, Any]] = {}
+    for path in paths:
+        path = Path(path).expanduser()
+        evidence, evidence_sha = checkpoint._read(path)
+        direct._validate_evidence(evidence)
+        existing = snapshots.get(evidence_sha)
+        if existing is not None:
+            continue
+        snapshots[evidence_sha] = {
+            "path": path,
+            "value": evidence,
+            "sourceEvidenceSha256": evidence_sha,
+            "catalogVersion": checkpoint._text(evidence, "catalogVersion", path.name),
+            "referenceManifestSha256": checkpoint._text(
+                evidence, "referenceManifestSha256", path.name
+            ),
+        }
+    return snapshots
+
+
 def verify(
-    evidence_path: Path,
+    evidence_paths: Path | Iterable[Path],
     decision_root: Path,
     review_root: Path,
 ) -> dict[str, Any]:
-    evidence, evidence_sha = checkpoint._read(evidence_path)
-    direct._validate_evidence(evidence)
+    snapshots = _load_evidence_snapshots(evidence_paths)
 
     decision_paths = sorted(decision_root.glob(DECISION_GLOB))
     if not decision_paths:
@@ -90,8 +116,23 @@ def verify(
     batches: list[dict[str, Any]] = []
     target_ids: set[str] = set()
     binding_count = 0
+    used_snapshot_counts: CounterLike = defaultdict(int)
+
     for decision_path in decision_paths:
         decisions, decision_sha = checkpoint._read(decision_path)
+        requested_evidence_sha = checkpoint._text(
+            decisions, "sourceEvidenceSha256", decision_path.name
+        )
+        snapshot = snapshots.get(requested_evidence_sha)
+        if snapshot is None:
+            raise ValueError(
+                f"{decision_path.name}: no supplied evidence snapshot matches "
+                f"sourceEvidenceSha256 {requested_evidence_sha}"
+            )
+        evidence = snapshot["value"]
+        evidence_sha = snapshot["sourceEvidenceSha256"]
+        used_snapshot_counts[evidence_sha] += 1
+
         kind = decisions.get("kind")
         if kind == direct.DECISIONS_KIND:
             payload, summary = direct.compile_review_source(
@@ -137,6 +178,8 @@ def verify(
                 "decisionFile": decision_path.name,
                 "reviewFile": review_path.name,
                 "compilerKind": compiler_kind,
+                "sourceEvidenceSha256": evidence_sha,
+                "referenceManifestSha256": snapshot["referenceManifestSha256"],
                 "decisionSha256": decision_sha,
                 "reviewSha256": checkpoint._digest(committed),
                 "compiledBindingCount": len(batch_ids),
@@ -152,12 +195,32 @@ def verify(
     if any(batch["automaticSelectionCount"] != 0 for batch in batches):
         raise ValueError("a post-activation compiler reported automatic selection")
 
+    snapshot_rows = [
+        {
+            "sourceEvidenceSha256": sha,
+            "catalogVersion": snapshot["catalogVersion"],
+            "referenceManifestSha256": snapshot["referenceManifestSha256"],
+            "fileName": snapshot["path"].name,
+            "decisionBatchCount": int(used_snapshot_counts.get(sha, 0)),
+        }
+        for sha, snapshot in sorted(snapshots.items())
+    ]
+    used_rows = [row for row in snapshot_rows if row["decisionBatchCount"] > 0]
+    catalog_versions = sorted({row["catalogVersion"] for row in used_rows})
+    manifest_shas = sorted({row["referenceManifestSha256"] for row in used_rows})
+    evidence_shas = sorted({row["sourceEvidenceSha256"] for row in used_rows})
+
     return {
         "schemaVersion": 1,
         "kind": "cook4me-post-activation-nutrition-review-verification-v60",
-        "catalogVersion": evidence.get("catalogVersion", ""),
-        "referenceManifestSha256": evidence.get("referenceManifestSha256", ""),
-        "sourceEvidenceSha256": evidence_sha,
+        "catalogVersion": catalog_versions[0] if len(catalog_versions) == 1 else "",
+        "catalogVersions": catalog_versions,
+        "referenceManifestSha256": manifest_shas[0] if len(manifest_shas) == 1 else "",
+        "referenceManifestSha256s": manifest_shas,
+        "sourceEvidenceSha256": evidence_shas[0] if len(evidence_shas) == 1 else "",
+        "sourceEvidenceSha256s": evidence_shas,
+        "suppliedEvidenceSnapshotCount": len(snapshot_rows),
+        "usedEvidenceSnapshotCount": len(used_rows),
         "decisionBatchCount": len(batches),
         "compiledBindingCount": binding_count,
         "usageCountAtReview": sum(batch["usageCountAtReview"] for batch in batches),
@@ -167,20 +230,30 @@ def verify(
         "searchResultsAutoAccepted": False,
         "networkRequestsPerformed": False,
         "sourceFilesModified": False,
+        "evidenceSnapshots": snapshot_rows,
         "batches": batches,
     }
 
 
+CounterLike = dict[str, int]
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--evidence", type=Path, required=True)
+    parser.add_argument(
+        "--evidence",
+        type=Path,
+        required=True,
+        action="append",
+        help="Exact immutable candidate-evidence file; repeat for multiple generations",
+    )
     parser.add_argument("--decision-root", type=Path, default=TOOLS)
     parser.add_argument("--review-root", type=Path, default=TOOLS)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     try:
         summary = verify(
-            args.evidence.expanduser(),
+            [path.expanduser() for path in args.evidence],
             args.decision_root.expanduser(),
             args.review_root.expanduser(),
         )
