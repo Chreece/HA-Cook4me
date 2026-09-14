@@ -23,21 +23,26 @@ jobs:
           python-version: '3.13'
       - name: Materialize exact historical candidate evidence
         env:
-          HISTORICAL_COMMIT: d4addcce84b9a51170a831ce5bc39862fcf0ad65
+          HISTORICAL_COMMIT: 0377f485b91694c3da9b51f891c1a420423b40fd
+          HISTORICAL_TREE: d4addcce84b9a51170a831ce5bc39862fcf0ad65
           HISTORICAL_BRANCH: cook4me-v60-offline-fdc-candidates-2
           HISTORICAL_PATH: tests/fixtures/nutrition-candidate-evidence-v60.json
         run: |
           git fetch --no-tags origin "$HISTORICAL_BRANCH"
-          git cat-file -e "$HISTORICAL_COMMIT^{commit}"
           test "$(git rev-parse FETCH_HEAD)" = "$HISTORICAL_COMMIT" || {
             echo "Historical evidence branch moved; refusing to substitute evidence."
+            exit 1
+          }
+          test "$(git rev-parse "$HISTORICAL_COMMIT^{tree}")" = "$HISTORICAL_TREE" || {
+            echo "Historical evidence tree differs; refusing to substitute evidence."
             exit 1
           }
           git show "$HISTORICAL_COMMIT:$HISTORICAL_PATH" > "$RUNNER_TEMP/nutrition-candidate-evidence-v60.json"
           test -s "$RUNNER_TEMP/nutrition-candidate-evidence-v60.json"
       - name: Classify current queue from exact historical evidence
         env:
-          HISTORICAL_COMMIT: d4addcce84b9a51170a831ce5bc39862fcf0ad65
+          HISTORICAL_COMMIT: 0377f485b91694c3da9b51f891c1a420423b40fd
+          HISTORICAL_TREE: d4addcce84b9a51170a831ce5bc39862fcf0ad65
           HISTORICAL_PATH: tests/fixtures/nutrition-candidate-evidence-v60.json
           EXPECTED_SOURCE_SHA: e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac
         run: |
@@ -61,16 +66,13 @@ jobs:
           import snapshot_nutrition_review_checkpoint_v60 as checkpoint
 
           expected_source_sha = os.environ['EXPECTED_SOURCE_SHA']
-          evidence_doc, evidence_source_sha = checkpoint._read(EVIDENCE)
+          _evidence_doc, evidence_source_sha = checkpoint._read(EVIDENCE)
           raw_sha = hashlib.sha256(EVIDENCE.read_bytes()).hexdigest()
           if evidence_source_sha != expected_source_sha:
               raise SystemExit(
                   f'historical evidence lineage differs: {evidence_source_sha} != {expected_source_sha}'
               )
 
-          # classify() revalidates holds, all explicit review rows, every bulk-family
-          # registry, and the evidence lineage against the current branch. It never
-          # creates or approves a binding.
           result = classifier.classify(EVIDENCE, review_root=TOOLS)
           if result['sourceEvidenceSha256'] != expected_source_sha:
               raise SystemExit('classifier returned a different evidence lineage')
@@ -203,6 +205,7 @@ jobs:
               'kind': 'cook4me-batch41-discovery-v60',
               'baseCommit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
               'sourceHistoricalCommit': os.environ['HISTORICAL_COMMIT'],
+              'sourceHistoricalTree': os.environ['HISTORICAL_TREE'],
               'sourceHistoricalPath': os.environ['HISTORICAL_PATH'],
               'sourceEvidenceRawSha256': raw_sha,
               'sourceEvidenceSha256': expected_source_sha,
@@ -244,6 +247,7 @@ jobs:
           )
           print(json.dumps({
               'sourceHistoricalCommit': out['sourceHistoricalCommit'],
+              'sourceHistoricalTree': out['sourceHistoricalTree'],
               'sourceHistoricalPath': out['sourceHistoricalPath'],
               'sourceEvidenceRawSha256': raw_sha,
               'sourceEvidenceSha256': expected_source_sha,
