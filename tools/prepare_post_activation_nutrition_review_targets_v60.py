@@ -12,14 +12,22 @@ validated runtime-compacted catalog only, it supplies a stable catalog-bound
 semantic review receipt when the old build-time filename is absent, then converts
 that compatibility shim into an explicit ``semanticReviewReceipts`` field in the
 resulting review-target artifact.
+
+Post-activation review work can advance after the activated catalog snapshot. To
+avoid searching USDA again for work that is already explicitly reviewed, this
+adapter may also subtract exact reviewTargetIds present in the trusted review
+corpus. Subtraction is ID-only: canonical names, candidate rank, aliases, FDC IDs,
+and similarity never remove a target. Both the activated pending counts and the
+remaining review counts are retained in the output summaries.
 """
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import json
 from pathlib import Path
 import sys
-from typing import Any
+from typing import Any, Iterable
 
 ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT / "tools"
@@ -28,6 +36,7 @@ if str(TOOLS) not in sys.path:
 
 import snapshot_release_catalog_nutrition_queue_v60 as snapshotter  # type: ignore  # noqa: E402
 import compact_release_catalog_nutrition_review_targets_v60 as compactor  # type: ignore  # noqa: E402
+import snapshot_nutrition_review_checkpoint_v60 as review_checkpoint  # type: ignore  # noqa: E402
 
 _RECEIPT_PREFIX = "runtime-catalog-semantic-review:"
 
@@ -43,7 +52,35 @@ def _load(path: Path) -> dict[str, Any]:
     return value
 
 
-def prepare(catalog: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], dict[str, Any]]:
+def _task_review_target_id(task: dict[str, Any]) -> str:
+    kind = _text(task.get("identityKind"))
+    if kind == "provider":
+        target = _text(task.get("ingredientId"))
+    elif kind == "source-local":
+        target = _text(task.get("conceptId"))
+    else:
+        raise RuntimeError(f"unsupported post-activation identity kind: {kind!r}")
+    if not target:
+        raise RuntimeError("post-activation nutrition task lacks review target identity")
+    return target
+
+
+def _reviewed_ids(review_root: Path) -> set[str]:
+    checkpoint = review_checkpoint.build_checkpoint(review_root)
+    ids = {
+        _text(row.get("reviewTargetId"))
+        for row in checkpoint.get("recordedBindings") or []
+        if isinstance(row, dict) and _text(row.get("reviewTargetId"))
+    }
+    if len(ids) != int(checkpoint.get("summary", {}).get("recordedReviewTargetCount") or 0):
+        raise RuntimeError("review checkpoint target count is not unique")
+    return ids
+
+
+def prepare(
+    catalog: dict[str, Any],
+    reviewed_target_ids: Iterable[str] | None = None,
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], dict[str, Any]]:
     if int(catalog.get("schemaVersion") or 0) != 1:
         raise RuntimeError("expected release catalog schemaVersion=1")
     if catalog.get("complete") is not True:
@@ -59,9 +96,15 @@ def prepare(catalog: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any], di
         raise RuntimeError("activated catalog has no catalogVersion")
 
     queue, queue_summary = snapshotter.snapshot(catalog)
-    receipt_count = 0
-    receipt_concepts: set[str] = set()
+    activated_pending_identity_count = len(queue.get("tasks") or [])
+    activated_used_pending_count = sum(
+        bool(row.get("usedByRecipe"))
+        for row in queue.get("tasks") or []
+        if isinstance(row, dict)
+    )
 
+    activated_receipt_count = 0
+    activated_receipt_concepts: set[str] = set()
     for task in queue.get("tasks") or []:
         if not isinstance(task, dict) or _text(task.get("identityKind")) != "source-local":
             continue
@@ -81,11 +124,86 @@ def prepare(catalog: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any], di
         receipt = f"{_RECEIPT_PREFIX}{catalog_version}:{concept_id}"
         task["semanticReviewFile"] = receipt
         task["semanticReviewReceipt"] = receipt
-        receipt_count += 1
-        receipt_concepts.add(concept_id)
+        activated_receipt_count += 1
+        activated_receipt_concepts.add(concept_id)
 
     queue.setdefault("identityPolicy", {})["runtimeCompactedSemanticReviewReceiptAllowed"] = True
-    queue["postActivationSemanticReviewReceiptCount"] = receipt_count
+    queue["postActivationSemanticReviewReceiptCount"] = activated_receipt_count
+
+    # Compact once before subtraction so the exact activated review-target
+    # baseline remains provable even when newer review files exist.
+    activated_targets, activated_target_summary = compactor.compact(queue)
+    activated_review_target_count = int(activated_target_summary.get("reviewTargetCount") or 0)
+
+    reviewed_ids = {_text(value) for value in (reviewed_target_ids or []) if _text(value)}
+    reviewed_rows = [
+        row
+        for row in activated_targets.get("targets") or []
+        if isinstance(row, dict) and _text(row.get("reviewTargetId")) in reviewed_ids
+    ]
+    reviewed_ids_present = {
+        _text(row.get("reviewTargetId")) for row in reviewed_rows if _text(row.get("reviewTargetId"))
+    }
+
+    original_tasks = [row for row in queue.get("tasks") or [] if isinstance(row, dict)]
+    remaining_tasks: list[dict[str, Any]] = []
+    removed_tasks: list[dict[str, Any]] = []
+    for task in original_tasks:
+        if _task_review_target_id(task) in reviewed_ids_present:
+            removed_tasks.append(task)
+        else:
+            remaining_tasks.append(task)
+
+    queue["tasks"] = remaining_tasks
+    queue["taskCount"] = len(remaining_tasks)
+    queue["activatedPendingIdentityCount"] = activated_pending_identity_count
+    queue["reviewedAfterActivationIdentityCount"] = len(removed_tasks)
+    queue["reviewedAfterActivationTargetCount"] = len(reviewed_rows)
+    queue["reviewedAfterActivationTargetIds"] = sorted(reviewed_ids_present)
+    queue["reviewCorpusTargetCount"] = len(reviewed_ids)
+    queue["identityPolicy"].update(
+        {
+            "reviewedAfterActivationExactTargetIdSubtraction": True,
+            "reviewedAfterActivationCanonicalNameInference": False,
+            "reviewedAfterActivationFdcInference": False,
+        }
+    )
+
+    pending_kinds = Counter(_text(row.get("identityKind")) for row in remaining_tasks)
+    queue_summary = dict(queue_summary)
+    queue_summary.update(
+        {
+            "activatedPendingNutritionCount": activated_pending_identity_count,
+            "activatedUsedPendingCount": activated_used_pending_count,
+            "pendingNutritionCount": len(remaining_tasks),
+            "pendingByIdentityKind": dict(sorted(pending_kinds.items())),
+            "usedPendingCount": sum(bool(row.get("usedByRecipe")) for row in remaining_tasks),
+            "reviewCorpusTargetCount": len(reviewed_ids),
+            "reviewedAfterActivationTargetCount": len(reviewed_rows),
+            "reviewedAfterActivationIdentityCount": len(removed_tasks),
+            "reviewedAfterActivationUsedTargetCount": sum(
+                bool(row.get("usedByRecipe")) for row in reviewed_rows
+            ),
+            "reviewedAfterActivationUsageCountSum": sum(
+                max(0, int(row.get("usageCountSum") or 0)) for row in reviewed_rows
+            ),
+            "runtimeCatalogCompacted": True,
+            "activatedPostActivationSemanticReviewReceiptCount": activated_receipt_count,
+            "activatedPostActivationSemanticReviewReceiptConceptCount": len(activated_receipt_concepts),
+        }
+    )
+
+    remaining_receipt_count = sum(
+        bool(_text(task.get("semanticReviewReceipt"))) for task in remaining_tasks
+    )
+    remaining_receipt_concepts = {
+        _text(task.get("conceptId"))
+        for task in remaining_tasks
+        if _text(task.get("semanticReviewReceipt")) and _text(task.get("conceptId"))
+    }
+    queue["postActivationSemanticReviewReceiptCount"] = remaining_receipt_count
+    queue_summary["postActivationSemanticReviewReceiptCount"] = remaining_receipt_count
+    queue_summary["postActivationSemanticReviewReceiptConceptCount"] = len(remaining_receipt_concepts)
 
     targets, target_summary = compactor.compact(queue)
     receipt_target_count = 0
@@ -107,6 +225,18 @@ def prepare(catalog: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any], di
         else:
             target.pop("semanticReviewFiles", None)
 
+    reviewed_target_summaries = [
+        {
+            "reviewTargetId": _text(row.get("reviewTargetId")),
+            "reviewTargetKind": _text(row.get("reviewTargetKind")),
+            "canonicalEnglishName": _text(row.get("canonicalEnglishName")),
+            "memberCount": max(0, int(row.get("memberCount") or 0)),
+            "usageCountSum": max(0, int(row.get("usageCountSum") or 0)),
+            "usedByRecipe": bool(row.get("usedByRecipe")),
+        }
+        for row in reviewed_rows
+    ]
+
     policy = targets.setdefault("policy", {})
     policy.update(
         {
@@ -114,24 +244,36 @@ def prepare(catalog: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any], di
             "runtimeCompactedSemanticReviewReceiptAllowed": True,
             "runtimeSemanticReviewReceiptIsFdcIdentityProof": False,
             "runtimeSemanticReviewReceiptIsNutritionBinding": False,
+            "reviewedAfterActivationExactTargetIdSubtraction": True,
+            "reviewedAfterActivationCanonicalNameInference": False,
+            "reviewedAfterActivationFdcInference": False,
         }
     )
-    targets["postActivationSemanticReviewReceiptCount"] = receipt_count
+    targets["activatedPendingIdentityCount"] = activated_pending_identity_count
+    targets["activatedReviewTargetCount"] = activated_review_target_count
+    targets["reviewCorpusTargetCount"] = len(reviewed_ids)
+    targets["reviewedAfterActivationTargetCount"] = len(reviewed_rows)
+    targets["reviewedAfterActivationIdentityCount"] = len(removed_tasks)
+    targets["reviewedAfterActivationTargets"] = reviewed_target_summaries
+    targets["postActivationSemanticReviewReceiptCount"] = remaining_receipt_count
     targets["postActivationSemanticReviewReceiptTargetCount"] = receipt_target_count
 
-    queue_summary = dict(queue_summary)
-    queue_summary.update(
-        {
-            "runtimeCatalogCompacted": True,
-            "postActivationSemanticReviewReceiptCount": receipt_count,
-            "postActivationSemanticReviewReceiptConceptCount": len(receipt_concepts),
-        }
-    )
     target_summary = dict(target_summary)
     target_summary.update(
         {
+            "activatedPendingIdentityCount": activated_pending_identity_count,
+            "activatedReviewTargetCount": activated_review_target_count,
+            "reviewCorpusTargetCount": len(reviewed_ids),
+            "reviewedAfterActivationTargetCount": len(reviewed_rows),
+            "reviewedAfterActivationIdentityCount": len(removed_tasks),
+            "reviewedAfterActivationUsedTargetCount": sum(
+                bool(row.get("usedByRecipe")) for row in reviewed_rows
+            ),
+            "reviewedAfterActivationUsageCountSum": sum(
+                max(0, int(row.get("usageCountSum") or 0)) for row in reviewed_rows
+            ),
             "runtimeCatalogCompacted": True,
-            "postActivationSemanticReviewReceiptCount": receipt_count,
+            "postActivationSemanticReviewReceiptCount": remaining_receipt_count,
             "postActivationSemanticReviewReceiptTargetCount": receipt_target_count,
         }
     )
@@ -146,6 +288,7 @@ def _write(path: Path, value: dict[str, Any]) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--catalog", required=True)
+    parser.add_argument("--review-root", default=str(TOOLS))
     parser.add_argument("--queue-output", required=True)
     parser.add_argument("--queue-summary", required=True)
     parser.add_argument("--targets-output", required=True)
@@ -153,7 +296,8 @@ def main() -> int:
     args = parser.parse_args()
 
     catalog = _load(Path(args.catalog).expanduser())
-    queue, queue_summary, targets, target_summary = prepare(catalog)
+    reviewed_ids = _reviewed_ids(Path(args.review_root).expanduser())
+    queue, queue_summary, targets, target_summary = prepare(catalog, reviewed_ids)
     _write(Path(args.queue_output).expanduser(), queue)
     _write(Path(args.queue_summary).expanduser(), queue_summary)
     _write(Path(args.targets_output).expanduser(), targets)
