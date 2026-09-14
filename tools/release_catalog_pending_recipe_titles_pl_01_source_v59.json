@@ -1,0 +1,713 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "pl",
+  "part": 1,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 1213,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:439bc6b7a0abab1cd4c7ebfc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ajurwedyjskie kitchari",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:21745aac01b39e8086c94e37",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Amerykańska kanapka wg Andrzeja Andrzejczaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fa9a6997fa0890c9ca8a485f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Aromatyczna zupa z fasolą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:94edfeb197b9ae4992cd25f1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Aromatyczna zupa ze świeżych pomidorów",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d5eac069015cfa6a4b548820",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Aromatyczne kaszotto z gruszkami Pati",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c7e26c63efef1fd71f70d480",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Aromatyczne pomarańczowe ciasto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d3a0634a0161d5d518a6fd55",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Azjatycki makaron ryżowy z indykiem i warzywami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5337b38e9d256d1d3ab7f0b6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Baba łososiowa z ekspresowym sosem tatarskim",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f4b081f7ee9c04a964ff8a4c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Babeczki cytrynowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:515d583e61309612fcd98e34",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Babeczki z budyniem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7e6bed648b0aa1755f250c8b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Babeczki z musu owocowego",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2dcda7f07be4245be9bc3c90",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Babka drożdżowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:76da3adf2ed97608a65b07f6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Babka ziemniaczana z białą kiełbasą i cebulą cukrową",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bc5f43d76699ae64f193682e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bakłażan",
+      "groupCount": 5
+    },
+    {
+      "taskId": "recipe_title_english:a147a70f7503fa70dd9330c0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bakłażan i curry z ciecierzycy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7ec633d42911ee7b84106888",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bakłażany z komosą ryżową",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d47c7c6a347ee940f861ddf9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Balotyna z mortadelą i pistacjami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e23b09e7118aacaa5c13db69",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bananowe babeczki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cba214ff2beafcfe2c3d1361",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bananowe babeczki z czekoladą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:902d6958cf287fe9d7bbf445",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Banany z sezamem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2ce77149a8d1faed0bc43831",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bao z kurczakiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:87cfed790e5248f7acb7898f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Barszcz biały z pulpetami z białej kiełbasy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d81dcf194b7ec82e77b3e7ba",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Barszcz czerwony",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:677b35eebe4280d8fc59b095",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Barszcz czerwony wg Jurka Sobieniaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4a13dccba74f1aecaa7178df",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Barszcz wigilijny wg Pati Sołtysik",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:50888a1376b60c6b53115693",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Barwena z semoliną i warzywami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f5532972be7e5c8b80d4d154",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Batat",
+      "groupCount": 13
+    },
+    {
+      "taskId": "recipe_title_english:5b02913a1862c75d9821ccba",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bataty pieczone z camembertem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ba30ca7a77b8018a97aff2ff",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bataty z warzywami i sosem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:abe08872c448b64eb57357c6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Beef noodles with Asian barbecue sauce",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ac41e8be97ddf92464cce865",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bezglutenowe pierożki z pora nadziewane wieprzowiną",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:06f0a2a4f778767417bb1b06",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bezglutenowy chleb",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4941188712fa786bf107bdd8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bezglutenowy makaron z kurczakiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:eb8d13b174600c47283c3684",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Biała kapusta z chorizo i krewetkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:525bbe8b534fdba2b47678cd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Biała kiełbasa duszona w maślance",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0921bf6f8c4df4df7236a83f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Biała kiełbasa w sosie cebulowo-piwnym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:92750ecf27a1c53dff475338",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Biała kiełbasa w sosie śmietanowo-chrzanowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:03566095180aab5799a14a99",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Biały grzaniec",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4a21d1b68f2d4b391045f767",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bigos",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8058a02c8cb25bfd8d4a67c8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bigos z baraniną i wędzoną śliwką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:00f7a3643eabcdd9377176bf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Biszkopt borówkowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8a16d5fb2c8380f7973f137e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Biszkopt budyniowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:60c2a94784bdc0cf340fa67c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Biszkopt sączony białą czekoladą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:98f52d43801edcdd6e66243c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bita śmietana z truskawkami i jabłkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:06723f04836ec8d96417f840",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bitki wieprzowe z pieczarkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:922a86f92ab71d28cd1aca2c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bitki wołowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1660ccab4b8feabf577924db",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bitki wołowe w kapuście kiszonej z wędzoną śliwką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6155d2bf2a6998cab87e7343",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bitki wołowe w sosie musztardowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a851f2fe7c3f47f2a44b3285",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Blancmange z marakują",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:43e69375749b6477d9ce2d07",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Boczek po chińsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8f986529d2542274e7865aac",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bolognese w stylu szefa kuchni",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:81a41354e3b45d39f355c5ec",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bolognese warzywne z wołowiną i kurkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:65c26f8d6d3121505540e596",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bonet piemontese, deser z Piemontu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ed3565a638ea600680b8f544",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Botwinka według Pati Sołtysik",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a6d9ee94c4fad17aa3545030",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bowl z dynią i brukselką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:63e7022b146a2489fbfa4352",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bowle z soczewicą i grzybami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:719a0daf76eeb96c0025e32f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Boćwina",
+      "groupCount": 7
+    },
+    {
+      "taskId": "recipe_title_english:a3e897f1a510b73f6a8fc4ff",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Brandade z kalafiorem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c24b45551ff31ea23012d0cb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bretoński przecier jabłkowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:60fbda67c1a44cc4478ac326",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Brioszka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1bf94afef6973690e6abba70",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Brokuł",
+      "groupCount": 8
+    },
+    {
+      "taskId": "recipe_title_english:28f633ca3dabdceca81a357b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Brokuły po hiszpańsku wg Bartka Boratyna",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:dc07938edfd99a3bd9c7b892",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Brokuły z chorizo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7d880996be457b9c2460b7fa",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Brokuły z migdałami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:32fc6d8f56419cd4e9958939",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Brokuły ze słodkim sosem sojowym, smażonym czosnkiem i chili",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a45ce9b0b7e776691b5706b1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Brownie bananowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fc52325831adea005ed922c7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Brownie z 3 składników",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:649934738ad421cf7fc57d17",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Brownie z fasoli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f0f5be9b9d286a3104e5aa64",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Brukiew",
+      "groupCount": 9
+    },
+    {
+      "taskId": "recipe_title_english:9d1dfff2d08c15840209013f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Brukselka",
+      "groupCount": 9
+    },
+    {
+      "taskId": "recipe_title_english:1280552514d98095710bd412",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Brukselka z truflową nutą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:51630c8f1d2131195f2283bd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bruschetta z fasoli i koziego sera",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0b67072c8d66089cbc3dcbb1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bruschetta z kurczakiem i pomidorami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0b8f939fe8f22f26530d67ff",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bruschetta z szynką i szparagami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:55ae4081929a955c3b167e79",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Brzoskwinie faszerowane camembertem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:49928957d1ef861d6a146b54",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Brzoskwinie pod kruszonką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3a34316bc21a984447a2c263",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bubble tea",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d90637299b9d00aee6383a9a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Budyń jaglany z acai",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5a77cb8c586ee57243ff172c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bulgur z kurczakiem i pieczarkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0871fabcf5ba2782d4445036",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bulion drobiowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:eeab970ae450e40323550c73",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bulion pho z grzybami mun i wołowiną",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b22e9c0e840fa216a45d06b1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bulion z krewetek",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1452d7be156782fc2429e9d8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bulion z lanymi kluseczkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b1cb1145c53d2fd6d660a155",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bulion zero waste",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:eb5535f4f3c73b52fa966377",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Buraczane taco z szarpaną wieprzowiną",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3a92f7106074b8221ed3b355",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Burak",
+      "groupCount": 18
+    },
+    {
+      "taskId": "recipe_title_english:8f03f63e52f14229640162e6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Burger wegański",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:32e7dd5b5e8cc49a070b1a90",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Burger wegetariański",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:46c6837e8d25cf37e2a4af7a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Burgery wołowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b873049ec4ce9f2b0761196e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bułeczki bao wg Andrzeja Andrzejczaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:07e853990d22fa6a98211776",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Bób z masłem i koperkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a483a5f4125cfce169dcc982",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Błyskawiczne spaghetti bolognese",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:50c3fe3cfff95a33ed31ed71",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Błyskawiczny bibimbap",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a60abecbf85b6d91f49d4599",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Błyskawiczny hotpot",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:70d3cf36d2c8b503d3a927ef",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Caldillo de congrio (chilijska zupa rybna)",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4d49585c8ae2768b7a034c8c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Cappuccino z batatów",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f56e4b534d7ad356e7d144b4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Carbonara z cukinii",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a90ef6e2128e8dba43e92003",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Carbonara z kaczki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c36c2f3127c0102a6ba8589d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Carbonara z selera",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8cd41cf18bb3eaf64126c345",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Carpaccio z buraka",
+      "groupCount": 1
+    }
+  ]
+}

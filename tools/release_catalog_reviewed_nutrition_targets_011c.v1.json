@@ -1,0 +1,240 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "policy": {
+    "searchResultAutoAccepted": false,
+    "exactFdcBindingRequired": true,
+    "semanticConceptGroupingReviewed": true,
+    "providerIdentityInference": false,
+    "candidateSearchIsIdentityProof": false
+  },
+  "selectionMethod": "explicit-semantic-review",
+  "items": [
+    {
+      "reviewTargetId": "concept:food:01fedf658fbe157b7ae7",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Buckwheat flour",
+      "fdcId": 2512374,
+      "confidence": "high",
+      "fdcDescription": "Flour, buckwheat",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 40
+    },
+    {
+      "reviewTargetId": "concept:food:84ebaf972759712392d2",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Cayenne pepper",
+      "fdcId": 170932,
+      "confidence": "high",
+      "fdcDescription": "Spices, pepper, red or cayenne",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 35
+    },
+    {
+      "reviewTargetId": "concept:food:812da4d46cf679df6e65",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Fresh bean sprouts",
+      "fdcId": 2709768,
+      "confidence": "high",
+      "fdcDescription": "Bean sprouts, raw",
+      "fdcDataType": "Survey (FNDDS)",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 35
+    },
+    {
+      "reviewTargetId": "concept:food:25cc9ad5b77468d391e2",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Green olives",
+      "fdcId": 2710089,
+      "confidence": "high",
+      "fdcDescription": "Olives, green",
+      "fdcDataType": "Survey (FNDDS)",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 35
+    },
+    {
+      "reviewTargetId": "concept:food:0dc9b1e1fa19d53277a5",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Ground ginger",
+      "fdcId": 170926,
+      "confidence": "high",
+      "fdcDescription": "Spices, ginger, ground",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 35
+    },
+    {
+      "reviewTargetId": "concept:food:4f564aeb3ee5b98cfa02",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Heavy cream",
+      "fdcId": 2346386,
+      "confidence": "high",
+      "fdcDescription": "Cream, heavy",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 35
+    },
+    {
+      "reviewTargetId": "concept:food:a7213a9753e052e092c9",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Praline",
+      "fdcId": 168791,
+      "confidence": "high",
+      "fdcDescription": "Candies, praline, prepared-from-recipe",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 35
+    },
+    {
+      "reviewTargetId": "concept:food:ba9a75218faa203dce0f",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Ricotta cheese",
+      "fdcId": 2705750,
+      "confidence": "high",
+      "fdcDescription": "Cheese, Ricotta",
+      "fdcDataType": "Survey (FNDDS)",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 56,
+      "notes": "Explicitly reviewed culinary wording 'Ricotta cheese' -> USDA 'Cheese, Ricotta'."
+    },
+    {
+      "reviewTargetId": "M_FOOD_473",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Tabasco",
+      "fdcId": 174528,
+      "confidence": "high",
+      "fdcDescription": "Sauce, ready-to-serve, pepper, TABASCO",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 45
+    },
+    {
+      "reviewTargetId": "concept:food:4bd0fe1cd99e1d6653c9",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Tabasco sauce",
+      "fdcId": 174528,
+      "confidence": "high",
+      "fdcDescription": "Sauce, ready-to-serve, pepper, TABASCO",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 12
+    },
+    {
+      "reviewTargetId": "M_FOOD_364",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Puff pastry",
+      "fdcId": 2708053,
+      "confidence": "high",
+      "fdcDescription": "Pastry, puff",
+      "fdcDataType": "Survey (FNDDS)",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 42
+    },
+    {
+      "reviewTargetId": "M_FOOD_91",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Chanterelle mushrooms",
+      "fdcId": 168422,
+      "confidence": "high",
+      "fdcDescription": "Mushrooms, Chanterelle, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 29
+    },
+    {
+      "reviewTargetId": "concept:food:b9fcfa05853058fc8407",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Chanterelle mushrooms",
+      "fdcId": 168422,
+      "confidence": "high",
+      "fdcDescription": "Mushrooms, Chanterelle, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 1
+    },
+    {
+      "reviewTargetId": "M_FOOD_13",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Anchovy",
+      "fdcId": 2706232,
+      "confidence": "high",
+      "fdcDescription": "Fish, anchovy",
+      "fdcDataType": "Survey (FNDDS)",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 38
+    },
+    {
+      "reviewTargetId": "M_FOOD_65",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Goat’s cheese",
+      "fdcId": 2705716,
+      "confidence": "high",
+      "fdcDescription": "Cheese, goat",
+      "fdcDataType": "Survey (FNDDS)",
+      "candidateEvidenceRank": 2,
+      "usageCountAtReview": 28,
+      "notes": "Explicitly reviewed 'Goat’s cheese' as goat cheese. Lower-ranked candidate selected because rank 1 is goat meat, not cheese. Lower-ranked candidate selected explicitly because it preserves the target identity better than the higher-ranked alternative."
+    },
+    {
+      "reviewTargetId": "concept:food:8450b715b7b984c4218f",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Cooking wine",
+      "fdcId": 169070,
+      "confidence": "high",
+      "fdcDescription": "Alcoholic beverage, wine, cooking",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 27
+    },
+    {
+      "reviewTargetId": "concept:food:81caa05cffc9f20a4c08",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Dried marjoram",
+      "fdcId": 170928,
+      "confidence": "high",
+      "fdcDescription": "Spices, marjoram, dried",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 27
+    },
+    {
+      "reviewTargetId": "concept:food:601aca6204da0bdff91d",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Grated Parmesan cheese",
+      "fdcId": 325036,
+      "confidence": "high",
+      "fdcDescription": "Cheese, parmesan, grated",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 28
+    },
+    {
+      "reviewTargetId": "concept:food:c7bd045394ac89b46697",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Cocoa and hazelnut spread",
+      "fdcId": 2710289,
+      "confidence": "high",
+      "fdcDescription": "Chocolate hazelnut spread",
+      "fdcDataType": "Survey (FNDDS)",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 1,
+      "notes": "Explicitly reviewed culinary wording 'Cocoa and hazelnut spread' -> USDA chocolate hazelnut spread."
+    },
+    {
+      "reviewTargetId": "concept:food:7860c2dac44b82910627",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Tapioca pearls",
+      "fdcId": 169717,
+      "confidence": "high",
+      "fdcDescription": "Tapioca, pearl, dry",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 1
+    }
+  ]
+}

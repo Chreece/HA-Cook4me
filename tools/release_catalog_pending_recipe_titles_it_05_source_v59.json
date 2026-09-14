@@ -1,0 +1,713 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "it",
+  "part": 5,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingItalianReviewsExcluded": true,
+  "tasksBeforeBatch": 426,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:dafcde238f5f2e6fa7a3ae51",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Involtini di sogliola al pesto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e5f4c0f0f8cd375ddaf1fd1a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Involtini di tacchino",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:84ce829ce6b5ecfb8b246c2f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Involtini di trota",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:81b860dcd3bd04e4adad2f36",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Involtini di verza",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8348d95f8d91f3a6b3c8bfef",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Involtini di vitello e zucchine",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d2e99309388683f8d8208923",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Involtini lonza mozzarella",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d9583a355b5056a9562608c7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Involtini primavera con gamberi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c3a21ca7b5263b9fffcee33b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Lasagne al salmone",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a2e11e8fe21167c3697e03a3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Lasagne alla bolognese",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f85629d53b70d92fccb6f0b1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Lasagne di broccoli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:15ca4a12112ddd61d9c924cb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Lasagne gratinate",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:987cef7a2da9516310b2ec62",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Lasagne melanzane mozzarella",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7b07ceb2d926fdc148d466d8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Lenticchia",
+      "groupCount": 4
+    },
+    {
+      "taskId": "recipe_title_english:f6233ae4abb3da634ea63a9d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Lenticchie in stile riso cantonese",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:53fa849c8960765aa72cefbb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Limoni ripieni pesce sedano",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:707b53dba23ee5efde48897e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Linguine alle vongole",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:7c8b62a6829015bb4e396df0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Lonza all'arancia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cb6889033c2a993c8d5b632f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Lonza di vitello con verdure",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8b98cd495fa6d5b6b9839c6a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Lonze alle castagne e uvetta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:50247877efa755f22043ff0f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Lonzino alla senape",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:642c49aabf7d0278c9d23011",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Maccheroni alla pizzaiola",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5abf7f726f7bbfbe4bc900a8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Maccheroni vegetariani",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ba9eda64fa31f37f1ddbe53c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Maiale",
+      "groupCount": 16
+    },
+    {
+      "taskId": "recipe_title_english:0a0a15f88e5cf6ceb743470b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Maiale caramellato",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b1e9f6c2f66867049a6deb7d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Maltagliati al sugo pesce spada",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:52f5379c1bd21696f231f9cb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Manzo",
+      "groupCount": 19
+    },
+    {
+      "taskId": "recipe_title_english:d53a94ca3426bc4c416f435d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Manzo alla Bourguignon",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:21b6f03102b5960202d2a2c4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Manzo alla Stroganoff",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ad8fab09ea8bd3cd69945855",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Mash di zucca e amaretti",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1c97adce1cab7287178277a8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Mela",
+      "groupCount": 5
+    },
+    {
+      "taskId": "recipe_title_english:a49958634f7b04356d057cda",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Melanzana",
+      "groupCount": 7
+    },
+    {
+      "taskId": "recipe_title_english:5d8254eb4179df460fc47cfe",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Melanzane al prezzemolo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0152e851e59aef319f851c32",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Melanzane sott'olio",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3db88394168b92b55ed8db32",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Mele con uvette",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3b3b96ffa5e1b8969a20f47f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Mele ripiene",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:71d44db66ab7145ebe074310",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Meringa e crema",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1189b5c861e4e4d28dcd0dd6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Merluzzo impanato con quinoa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1202cf5345294f684590299c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Mezzemaniche piccanti ai funghi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:177e437f5a9a5288fb55d211",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Miglio",
+      "groupCount": 4
+    },
+    {
+      "taskId": "recipe_title_english:e77f201a95814dd560bc3ecc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Minestra d'orzo e puntarelle",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:29b599e272b65ef1ef4f0161",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Minestra di castagne e ceci",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8bc75cb5de552ffb220c1f87",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Minestra di lenticchie",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f3212d482aa051fdf618d371",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Minestra orzo zucca bresaola",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:780a0e5908467b988b047f8a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Minestrone di castagne e legumi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d3aba07581a1aa228dc3e026",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Minestrone di verdure",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fede42c59ecb2a19b5eae647",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Minestrone estivo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b58ee00ef51f0d57f53c1e6e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Minestrone freddo al pesto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2c967d5fd43801445731c6c5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Minestrone verde",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5496475a46703595de2669f0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Montebianco",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b8c60acb98a0504d60584b0b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Moscardini in umido",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f0a7ab78b4da7be1c296ff3d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Moussaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:834e0cfbd40ec8b475a46518",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Mousse al cioccolato facile",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:96cc32fd19fc050a063cef52",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Muffin ai mirtilli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ed4e59e448beb20511b08255",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Muffin alle carote",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a9d2a290259ce7a6e7c72271",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Muffin di carota",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3115f40e5f895aadd48471b2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Muffins alle carote",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:aa21e7af9c000b3533aadbe9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Muhlama porridge",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cd00bb466c500b9217995d80",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Noodles con surimi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f7ee6ccf8fbb7dfdc8816748",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Noodles con verdure e tofu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:534d63dd9cba17a6c228cf22",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Omelette di mele",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1bfbd3becefc31f3a958e3f0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Onigiri di tonno facili",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9614b15e3eff0c2e497a1c74",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Orate al cartoccio di sale e erbe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a3508d50632fd8ccb5c4e166",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Orecchiette coste e salsiccie",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d6230d59f05d825c54c4f6e5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Orzo",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:ca924583b80cb81634a88f26",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Orzo e curcuma",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1c8e87f012353e7e1f2f76f2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Orzo fave piselli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f5716e039308520afebd82b6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ossobuchi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8ff8e7a16c26fbb391469767",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ossobuchi ai piselli",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:d10e7e7454b744d8b12fd317",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ossobuco all'uva",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6f7814c907d8758d17abda67",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ovuline al marsala",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a633c81ed177c0cdeedb8b4a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Paccheri ai frutti di mare",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f606cc07b026962650092878",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Paella di pollo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4b9899d1d02a43c79548fbb8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Paella facile facile",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3215164394b68778a08b71e3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pan di Spagna ai mirtilli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bda44e3b34017b7b505b60fa",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pancotto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e6b04486c36fcc398d0cda59",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pandoro al passito",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fe3a929fe418993ca39f2fae",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pane alle olive",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:48d1fb84327ffbd96efca740",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Panna cotta al formaggio",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3c532eb919cd806782654300",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Panna cotta al limone e pere",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f84e9f82d932ee09edd287a5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Panna cotta alle fragole",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:18b079f835c7290db1f2751d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Panna cotta della tradizione",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:751d7797ba7e826d42353c48",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Panna cotta lime e pere",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3843314af8920723113bf459",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pannacotta tradizionale",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c630a2db522989633f56c3e9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pasta col pesce",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7cdd248516bf25bc0402f4c7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pasta con le sarde",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:efc4290c30b205b2cfefe366",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pasta e fagioli con robiola",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:747ab1b38dde8e526d3e1a23",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pasta e patate",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f12df77b4ece83fe38b2afb4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pasta in pentola unica con pomodoro e salsiccia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:84a1a1a71dde30e54f7b6f86",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pasta merluzzo e olive",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6ecd9d114ae6e2de1f02cd79",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pasta prosciutto pomodoro",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2d814fe02bb8addcdcdbec12",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pasta zafferano e gorgonzola",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cef2e02a54d668c4fddb73ab",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pasta zucca e roqueforte",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5aa1c71c39bd8a6e074e8b13",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Patata",
+      "groupCount": 5
+    },
+    {
+      "taskId": "recipe_title_english:a3b75d8e6226cec93b3ea11b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Patata dolce",
+      "groupCount": 7
+    },
+    {
+      "taskId": "recipe_title_english:93875a50fc157320a513e769",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Patate alla greca",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c2ed2a2ca34a91fc1bd03bcd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Patate e funghi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2145e0c165d8829e75876cd1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Patatine fritte",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:18a78495250b25828847cc18",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pennette zucca e formaggio",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3513f603096b4010a87d2f32",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pentola unica con salmone, zucchine e riso",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5855b9feef61524ed88e3507",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Peperonata",
+      "groupCount": 1
+    }
+  ]
+}

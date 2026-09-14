@@ -1,0 +1,713 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "fr",
+  "part": 7,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 926,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:38ec44411e268a0e09aea5d8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pudding anglais",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1709aa2dadf07666ba3de10d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pudding au pain d'épices",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7fa2dbd5a162161e1052fd8a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pudding aux dattes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5b4ac50d1ebed0571f156a78",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pudding aux marrons",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1246c07b580c22de3286c3e8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pudding banane fruit sec",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4ffafda5c6cda7657581e505",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pudding gingembre coco",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:88e9832266020a27f08de154",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pudding pommes au chia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:96415814bbfd5dbcada32137",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pudding rose et framboise",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:644e39859370827239e395eb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pudding à la brioche perdue",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:678c401e2d718f88134ea4d1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Purée chou-fleur jambon œuf",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d7f200a8c5801034eccaea51",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Purée chou-fleur parmesan",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:45c2a1ac9ae604794e01dbfc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Purée de chou-fleur au pain",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d422f8bde9332729a912862d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Purée de chou-fleur saucisson",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1aa7f20cb94ee467c8b89490",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Purée de pois au kale sauté",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:929b1e5f3bb39f8ea571822b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Purée de pois cassés de Mamie",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:af2f4aa20af919ed6eea9dac",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Purée méditerranéenne",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:1acf3165fbd9cc18cd7f42df",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pâte à tartiner banane choco",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:956c257a16ae713bd57e7878",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pâte à tartiner patate douce",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:add7ff0fb155199d9316d881",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pâte à tartiner à la banane",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e1f0d3616097f59d25d1036c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pâtes aux émincés de soja",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0356509af86ba6764fb45893",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pâtes cresson & olives vertes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:927881b93469e5b937127781",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pâtes petits pois et pancetta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c872ce95f2cb8596cab43115",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pêches aux pistaches",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fb4b33fe296f4b4f59628f66",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Pêches et granité au Riesling",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9151e14d0d76a3911cbfe7a1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Quiche au thon sans pâte",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2a8a7f13f2452fd040d3f74f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Quinoa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7fad83b10cdfb4b09a0ab05a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Quinoa au chou à la thaï",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ee4879f1f153c6caecb8c8a9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Quinoa aux légumes épicés",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e8b72ae982fe05d559187b36",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Quinoa aux palourdes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:11be0b864e874f264862074b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Quinoa Bowl chocolate",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0d44b7d0a7cf16a3e3a214bb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Quinoa Bowl mûres basilic",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d1ca216ff09542d2fb1d7af3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Quinoa et boulettes de légumes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2d5b14998f75df208b0137c4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Quinoa féta courgettes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:655c7e0765e9c5688e26072e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Quinoa à la feta et courgette",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:298137426be034d71a9ae76d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Quinotto aux légumes verts",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:23f7a456748384111e55b40e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Radiatori & choux de Bruxelles",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ae130f148caa7b4d6dc0fa76",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ragout de bœuf aux 4 épices",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:231275ee483aca8132dde350",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ragoût au curcuma",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2159bd06c025e9c61e2b8eaf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ragoût d'agneau perse",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fe51ebbb59a15116952b378c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ragoût de bœuf à la bière et légumes racines",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4ccd175e3d438bfd17709d8a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ragoût de porc à l'italienne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f76029a663d701146483a6bb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ragoût de poulet aux légumes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d33b0443cdac80f7e4271900",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ragoût de saucisses haricots",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c1df6ff32b605c85602ec1c7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ramen aux légumes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:20e284fdf5176ce73a119dca",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ramen d'agneau abricots",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0b6a33f92e758ef53dc1668e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ramen froid pour l'été",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:03944f7a0d12dbd43b2d2693",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ratatouille",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3e7132784b17a433e7ad983b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ratatouille Maggi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3af75e583111772ac81b2ed5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ratatouille WW",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e5a4e2ea09833515d78c1d16",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ravioli gorgonzola noix",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:39734b3c7d8b211734f951b7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rfissa express by Fit Claire",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4dcfb0d88692db2683c9706d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ribollita toscane",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ae19d11664486c98a86b98e5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ribs aigre-doux à l’abricot",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:919aaec438fd7d5a21f821b1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ribs de porc",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:34d449ac17fe4b5421cc0fbc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ricottacake au citron",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:07d788b3eacbf44a8d4ad432",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rillettes de cabillaud et olives",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bd473de176031392cfc8809d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rillettes de canard faciles",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:472a32bf613653bcb4021672",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Rillettes lentilles & poireau",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:75594d03825018bb36d9e54a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e1ac6659a82c5db2ee845417",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto artichaut pesto rosso",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d9dd315e361f1c5e3444aa55",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto aux asperges",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:94a2151c076eb155e0c35256",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto aux champignons",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9b9484c19223fa9af4b491c4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto aux poireaux",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:07303a4b919668e88102dc37",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto brésilien",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:01b2231479e850227171611b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto butternut de Victoria",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8d32d1ee9baafc6031e514ea",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto chou-fleur kale cheddar",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ef666efb6aca73dda41aa56a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto coquillettes carottes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9ba7ca5331cca87da0332d14",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto crémeux panais sésame",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f73829e38bbc6ea1c80c4728",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto de lentilles corail",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:502eda05c98ba5c0d3b153d0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto de printemps",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7b1c69835a32869f7cabb5a7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto du placard",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:709e3ef8171ee5b182e5a1ac",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto Italien",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b4a5ee9aa8b25eb6ae7623fd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto myrtilles et chèvre",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:39ef42b2f238ef6405e3ff15",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto poulet champignons",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ef6ab148e88f71d673138678",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto sarrasin & champignons",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2de84f18a7d0316edc41e2ad",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto sarrasin girolles",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3b01a8732615149b016066e1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto saumon asperges",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8451e569c043a9badfae4ef3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Risotto à la milanaise",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b47345ea8908fb6d29e9fdf7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz au chou-fleur & cacahuètes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4888948142190a2a6639ca59",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz au chou-fleur et cacahuètes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:13f645c0243ac5b46db7d83d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz au curry",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:a977757c1c4b09b847f5e370",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz au lait au caramel express",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f8722e50fa26c771b987feac",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz au lait chocolat blanc",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9009b1362bf4d60421c528dc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz au lait chocolat lait",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5aeab4614dc6345e2a6f4ee8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz au lait et coings",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ec57af3aa06e44792d8269a4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz au lait et nectarines",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a68142603fb056a22496f3a7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz au poulet à la syrienne",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:05f13c2295391a3d8d73e33d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz au veau et miel",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f76be4f5d609041400f29b64",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz aux champignons",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:02365f5fd3eb1850204bd3fb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz aux courgettes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fec05ae2eee4c5682cf7ed28",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz aux graines et épices",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:78f5c714e5fc94c2f2e5d02c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz biryani",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d12a6ea6be4adf2fb8fc182d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz cantonais",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1ad523c52ffd5820cd258915",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz cantonnais",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d6c1a503d448f5e2ec3d4b91",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz cantonnais2",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b63916117285ae74442615e2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz complet",
+      "groupCount": 5
+    },
+    {
+      "taskId": "recipe_title_english:0ac9e5b7ac0d4936248a6f16",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz complet au potiron",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:019ac631f07a73a935564195",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz en curry vert aux mungo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7503097a31d63a7cee4a18d8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz en rougail de la mer",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e72cf15ae3364cdbfacd710d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Riz exotique",
+      "groupCount": 1
+    }
+  ]
+}

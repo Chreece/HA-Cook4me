@@ -1,0 +1,48 @@
+{
+  "baseRecordedReviewTargetCount": 5080,
+  "bindingsCreatedByBatch49": 0,
+  "contextBeforeCount": 942,
+  "expectedContextCount": 944,
+  "expectedManualCount": 295,
+  "expectedMovedToContextCount": 2,
+  "expectedMovedUsageCount": 32,
+  "kind": "cook4me-nutrition-batch49-generic-starch-triage-v60",
+  "manualBeforeCount": 297,
+  "manualControls": [
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "A- potato starch (for onion)",
+      "reviewTargetId": "concept:food:dca63913733a9371cca9",
+      "usageCountSum": 1
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "B- potato starch",
+      "reviewTargetId": "concept:food:e5623ab3e4340b4e021a",
+      "usageCountSum": 1
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Wheat starch",
+      "reviewTargetId": "concept:food:851a18531dd59bb05d18",
+      "usageCountSum": 1
+    }
+  ],
+  "remainingReviewTargetCount": 1239,
+  "schemaVersion": 1,
+  "selectedRows": [
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Starch",
+      "reviewTargetId": "concept:food:b8074fcfe8a25b037217",
+      "usageCountSum": 18
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Starch",
+      "reviewTargetId": "M_FOOD_813",
+      "usageCountSum": 14
+    }
+  ],
+  "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac"
+}

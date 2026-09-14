@@ -1,0 +1,48 @@
+{
+  "baseRecordedReviewTargetCount": 5080,
+  "bindingsCreatedByBatch48": 0,
+  "contextBeforeCount": 940,
+  "expectedContextCount": 942,
+  "expectedManualCount": 297,
+  "expectedMovedToContextCount": 2,
+  "expectedMovedUsageCount": 31,
+  "kind": "cook4me-nutrition-batch48-generic-seafood-triage-v60",
+  "manualBeforeCount": 299,
+  "manualControls": [
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Poultry fillet",
+      "reviewTargetId": "M_FOOD_201",
+      "usageCountSum": 16
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Broad bean",
+      "reviewTargetId": "M_FOOD_193",
+      "usageCountSum": 34
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Juniper berries",
+      "reviewTargetId": "concept:food:4eb46fd528faa13cd91e",
+      "usageCountSum": 25
+    }
+  ],
+  "remainingReviewTargetCount": 1239,
+  "schemaVersion": 1,
+  "selectedRows": [
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Seafood",
+      "reviewTargetId": "M_FOOD_510",
+      "usageCountSum": 27
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Seafood",
+      "reviewTargetId": "concept:food:f511e4602cf6623e6c55",
+      "usageCountSum": 4
+    }
+  ],
+  "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac"
+}

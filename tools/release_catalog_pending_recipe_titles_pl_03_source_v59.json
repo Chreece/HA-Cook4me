@@ -1,0 +1,713 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "pl",
+  "part": 3,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 1213,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:a76f0e25e5cc41c732d82ab9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Delikatne pulpeciki z śmietanowym serkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1e3bb0d14c1665fe4fc80e64",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Delikatny drobiowy krupnik",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:32b67e79e427821aab339fe2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Deser piernikowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6aad1b0c92692c70efad8ff8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Deser szarlotkowy na ciepło z lodami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3def46bba426be093fd17e15",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Deser z jabłek i kiwi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9e5bb8d10a32684c217e2b73",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Deser z mango i tapioką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:799ca1a9ec9d79057eced8b8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Devolay z boczniakami i camembertem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c8d14b5e8e84b6afcb4ef84f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dhal z soczewicy z cebulą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6d8a3023262f300411f505d6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dhal z soczewicy z dorszem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a199a18fe11bbc9845f91f95",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dhal z soczewicą, batatami i szpinakiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5550447052dee6453120a715",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dip z bakłażana i sezamu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6c964d520c2352b72d5cc2fb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dip z papryki i sera feta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8ca36e4ca8185c4fe1975091",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Domowa oliwa bazyliowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e094dc4e58006587166ab862",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Domowe sezamki z siemieniem lnianym i słonecznikiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f278d15ee3f86b93ddf42f94",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Domowy ser topiony",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e8c62c0792435c4e74e776ad",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Domowy sos barbecue",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:25d687f109162b4cac7cdd8f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dorada",
+      "groupCount": 8
+    },
+    {
+      "taskId": "recipe_title_english:6ffb76692768b2a91f5d1de0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dorsz",
+      "groupCount": 9
+    },
+    {
+      "taskId": "recipe_title_english:8e17ab2704743fe6df8d619b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dorsz panierowany z komosą ryżową",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e382dc1ba42e0f461ea7041c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dorsz w mleczku kokosowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b1cd0c97a1658a01514dcdb4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dorsz z kruszonką i chorizo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8c71c4cf616c7d25e91d7c51",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Drobiowe curry",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:615ce7f850f26685e871cab2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Drób",
+      "groupCount": 15
+    },
+    {
+      "taskId": "recipe_title_english:a0e0c1c841ba3bcbc04fcf66",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Drób w sosie pissaladière",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f3d1e2737658f6244fa5d550",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Duszona wieprzowina z tofu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7bda29dffdebf88414bb3e96",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Duszona wołowina z cebulą i kasztanami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8fcba9252529e839c874ee7c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Duszone cykorie z szynką i sosem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:88bb59553dee97badcdb05d2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Duszone grzyby w winie z gorgonzolą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:889adab505e727a78fe42e04",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Duszone młode cebulki w boczku w miodowym sosie",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9b10e06d30054b1a2a1464a5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Duszony kurczak z anyżem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6672f4135626859ad1e743df",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Duszony szpinak z czosnkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ca9b9da68e1bffce0bed4736",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dynia faszerowana grzybkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:adfdb2ff8ea94a0589a09f88",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dynia olbrzymia",
+      "groupCount": 8
+    },
+    {
+      "taskId": "recipe_title_english:6b229cdbec4ec3dc4b685315",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dynia piżmowa",
+      "groupCount": 8
+    },
+    {
+      "taskId": "recipe_title_english:25222440deeafcafc5b6d76e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dynia z pomarańczą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:aefac5295c3ff881b74aa58c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dyniowe risotto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:013171a64b0922c76ff5a675",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dyniowy creme brulee z szafranem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e802187097de928bb1fd0cc7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dyniowy dip",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3ef34cf17379c51ed63b7acc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dyniowy makaron z kurczakiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f060f25e5d1f3e4279367316",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dżem truskawkowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:93858d90c764fbee2a008170",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Dżem z pomidorów i chilli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ddf2d9ae5090587c480f96df",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ekspresowa fasolka szparagowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fab56a3d9d992774ac4c383c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ekspresowa świąteczna zupa grzybowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8e7faf44a9773d5ff7e34b2b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ekspresowe edamame",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c87cb787850d4e88ac66c598",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ekspresowe pieczone ziemniaki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e3c8027a3b8a8beeb2db0340",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ekspresowy hotpot",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cd66d0c4d7e2e422e05f7618",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ekspresowy orientalny makaron udon",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3afe2d38bdb372f94c5ca223",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ekspresowy pudding ryżowo-karmelowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1cf97bc285fb94758e6c15e7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Ekspresowy sernik z sosem klonowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0f511511765f15eeb068607c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Empanada wołowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:230ce3c8e51dea37282b947d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Empanady z wołowiną",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b045abb285d96b7486084d59",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Falafele z czerwonej fasoli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e44629619485db3698dbb37c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Farfalle alla trapanese",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3c4d3d5022a7f29f734af4f5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Farsz do ryby po grecku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:088e1c53bca0322ffbbfd5cd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Fasola masłowa z oliwkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:43a65ea8f6917da478eb8ae1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Fasola szparagowa",
+      "groupCount": 8
+    },
+    {
+      "taskId": "recipe_title_english:47ea25cef5026a700226d9aa",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Fasola wielokwiatowa",
+      "groupCount": 3
+    },
+    {
+      "taskId": "recipe_title_english:6fabcd2b319b93ccab9e6862",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Fasolka po bretońsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9afc487febd98ec9d4865f3e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Faszerowana cielęcina z warzywami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3513e56a57171688dde631d1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Faszerowana pierś z indyka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:240a001cbba6806fc7ff5dce",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Faszerowane bataty",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9d06a6598bf56ede3b069bc5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Faszerowane papryki z dorszem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c8ff3ff1ea25a7ed4ccc17f4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Faszerowane pieczarki",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:2d7f1106b7e946c49e13f624",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Feta z pieczoną dynią",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3dcbafe16e80c91e089dc0da",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Fettuccini z przegrzebkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e20169b45fd9d27fc377bce6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Figi zapiekane pod kruszonką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:87aa5a9201f4eb1c2afda23e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Filet z dorsza w sosie bazyliowym z puree ziemniaczanym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e848390e55f932bd641276e3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Filet z kurczaka z pomidorami i mozzarellą wg Elżbiety Bogusz",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9768ecf5bd072579b2ad5259",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Fit leczo z indykiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e7d55b2eca08990d73ac9d0f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Flaczki z boczniaków",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7519f71f7b925d9ab9aec5a9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Flan bananowy z sosem waniliowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fd4117e0bab814a02826d65c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Flan cytrynowy z orzechami piniowymi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b43ac124e9176bf9e1653049",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Flan w stylu quiche lorraine",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5c054da7a9dd482cd5df558d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Flan z białą czekoladą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8d1257ae9797e993dd408ed7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Flan z mleczka kokosowego",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:00d5311e302f8cddd224a532",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Flan z wędzonym halibutem w werynkach",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5c49fbee6fe2fca314b15788",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Focaccia",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f16e595afcf05439df5cfe16",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Fondant czekoladowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:336d39b6873ad8d407488e2c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Fondant z orzechami laskowymi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b82f722e6617c35f55b13ca3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Francuska zupa cebulowa wg Pati",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c594b5e3857f681c532b77d6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Frittata z serkiem wiejskim",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:de4977f36f5b456453dee421",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Frytki z batatów z parmezanem i granatem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:310caf19d41b1c51de6b920d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Frytki z polenty z parmezanem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e614afb8470481fc928d9aa5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Frytki z selera z dipem czosnkowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:46c2852c51e13c98740d0348",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Frytki z ziemniaków",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2f053a390d559705cb7a23a6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Galaretka z melona i imbiru",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9ed98038c319f308124bdb7a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Galaretka z papai i mango",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:940752a70e0e31fe4d05de42",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Gazpacho na ciepło lub na zimno",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:13780d73060383cdaeefdf31",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Gazpacho z ogórkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:48e8714ac72e15f9f71748d0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Glazurowana marchewka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f277519653b80420b7c4abb0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Gnocchi carbonara z groszkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7e76f32d86e8fdaa1c5176be",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Gnocchi carbonara ze śmietaną",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b44e07d9d034f92d2fa0cc61",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Gnocchi w ziołach z pomidorami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:665b17dc6760eb1a0247c3d1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Gnocchi z białymi szparagami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e30f6859acb9ee9e86e5f0cd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Gnocchi z kurczakiem i szpinakiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c847b049840a73d3835a2fdd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Gnocchi z kurczakiem po toskańsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:11100003f79bffa761bb4ebb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Gnocchi z pieczarkami i szynką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cad35db1685853a8df748eb9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Gnocchi z pomidorami i szafranem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3762a6faeeb0e160822040fd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Golonka w kapuście",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2165dad8c5dfcd7e640d97eb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Golonka wieprzowa w sosie jabłkowo-selerowo-imbirowym",
+      "groupCount": 1
+    }
+  ]
+}

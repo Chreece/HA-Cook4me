@@ -1,0 +1,138 @@
+name: Build Phase 3 keyless review queue v59
+
+on:
+  push:
+    branches:
+      - cook4me-release-catalog-cache-progress-v59
+    paths:
+      - .github/workflows/catalog-phase3-keyless-review-queue-v59.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-keyless-queue:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install standalone catalog requirements
+        run: python -m pip install --disable-pip-version-check 'curl-cffi==0.13.0' 'websocket-client==1.8.0'
+      - name: Fresh credential-free crawl of all audited catalogs
+        run: |
+          set -Eeuo pipefail
+          mkdir -p "$RUNNER_TEMP/cook4me-empty-home" "$RUNNER_TEMP/catalog-phase3"
+          status=1
+          for attempt in 1 2 3; do
+            echo "Phase 3 provider crawl attempt ${attempt}/3"
+            if python tools/crawl_release_catalog_v2.py \
+              --storage-home "$RUNNER_TEMP/cook4me-empty-home" \
+              --cache-db "$RUNNER_TEMP/catalog-phase3/provider.sqlite3" \
+              --output "$RUNNER_TEMP/catalog-phase3/provider-capture-v2.json.gz" \
+              --failures "$RUNNER_TEMP/catalog-phase3/provider-failures.json" \
+              --configured-language de \
+              --configured-country DE \
+              --workers 8; then
+              status=0
+              break
+            else
+              status=$?
+            fi
+            if [[ "$attempt" -lt 3 ]]; then sleep $((attempt * 20)); fi
+          done
+          exit "$status"
+      - name: Fresh credential-free marketing-food capture
+        run: |
+          set -Eeuo pipefail
+          status=1
+          for attempt in 1 2 3; do
+            echo "Phase 3 marketing-food capture attempt ${attempt}/3"
+            if python tools/capture_marketing_food_catalogs_v3.py \
+              --storage-home "$RUNNER_TEMP/cook4me-empty-home" \
+              --output "$RUNNER_TEMP/catalog-phase3/marketing-foods-v3.json" \
+              --configured-language de \
+              --configured-country DE; then
+              status=0
+              break
+            else
+              status=$?
+            fi
+            if [[ "$attempt" -lt 3 ]]; then sleep $((attempt * 20)); fi
+          done
+          exit "$status"
+      - name: Prepare and apply all reviewed semantics
+        run: |
+          set -Eeuo pipefail
+          python tools/prepare_release_catalog_v2_assembly.py \
+            --provider-capture "$RUNNER_TEMP/catalog-phase3/provider-capture-v2.json.gz" \
+            --marketing-foods "$RUNNER_TEMP/catalog-phase3/marketing-foods-v3.json" \
+            --output "$RUNNER_TEMP/catalog-phase3/prep-raw-v2.json.gz" \
+            --queue "$RUNNER_TEMP/catalog-phase3/queue-raw-v2.json" \
+            --summary "$RUNNER_TEMP/catalog-phase3/summary-raw.json"
+          python tools/apply_release_catalog_reviews_v2.py \
+            --prep "$RUNNER_TEMP/catalog-phase3/prep-raw-v2.json.gz" \
+            --queue "$RUNNER_TEMP/catalog-phase3/queue-raw-v2.json" \
+            --output-prep "$RUNNER_TEMP/catalog-phase3/prep-reviewed-v2.json.gz" \
+            --output-queue "$RUNNER_TEMP/catalog-phase3/queue-reviewed-v2.json" \
+            --summary "$RUNNER_TEMP/catalog-phase3/summary-reviewed.json"
+      - name: Require Phase 2 title closure
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          root = Path(os.environ['RUNNER_TEMP']) / 'catalog-phase3'
+          summary = json.loads((root / 'summary-reviewed.json').read_text(encoding='utf-8'))
+          remaining = int(summary.get('recipeTitleTranslationTasksRemaining') or 0)
+          if remaining != 0:
+              raise SystemExit(f'Phase 3 refused: {remaining} recipe-title tasks remain')
+          print('recipeTitleTranslationTasksRemaining=0')
+          PY
+      - name: Snapshot impact-ranked keyless review queue
+        run: |
+          set -Eeuo pipefail
+          rm -rf tools/release_catalog_keyless_phase3_batches_v59
+          python tools/snapshot_release_catalog_keyless_queue_v59.py \
+            --queue "$RUNNER_TEMP/catalog-phase3/queue-reviewed-v2.json" \
+            --output tools/release_catalog_pending_keyless_phase3_v59.json \
+            --summary tools/release_catalog_pending_keyless_phase3_v59_summary.json \
+            --batch-dir tools/release_catalog_keyless_phase3_batches_v59 \
+            --batch-size 100
+          cp "$RUNNER_TEMP/catalog-phase3/summary-reviewed.json" \
+            tools/release_catalog_phase3_reviewed_summary_v59.json
+      - name: Measure exact English line-sibling evidence
+        run: |
+          set -Eeuo pipefail
+          python tools/probe_keyless_english_line_siblings_v59.py \
+            --provider-capture "$RUNNER_TEMP/catalog-phase3/provider-capture-v2.json.gz" \
+            --output tools/release_catalog_keyless_english_line_siblings_v59.json
+      - name: Verify Phase 3 snapshots contain no secrets
+        run: |
+          set -Eeuo pipefail
+          ! grep -R -Eiq 'access[_-]?token|refresh[_-]?token|authorization|bearer |password|api[_-]?key' \
+            tools/release_catalog_pending_keyless_phase3_v59.json \
+            tools/release_catalog_pending_keyless_phase3_v59_summary.json \
+            tools/release_catalog_phase3_reviewed_summary_v59.json \
+            tools/release_catalog_keyless_english_line_siblings_v59.json \
+            tools/release_catalog_keyless_phase3_batches_v59
+      - name: Commit Phase 3 evidence and review batches
+        run: |
+          set -Eeuo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            tools/release_catalog_pending_keyless_phase3_v59.json \
+            tools/release_catalog_pending_keyless_phase3_v59_summary.json \
+            tools/release_catalog_phase3_reviewed_summary_v59.json \
+            tools/release_catalog_keyless_english_line_siblings_v59.json \
+            tools/release_catalog_keyless_phase3_batches_v59
+          git diff --cached --check
+          git diff --cached --quiet && exit 0
+          git commit -m "Snapshot Phase 3 keyless catalog review queue"
+          git push origin HEAD:cook4me-release-catalog-cache-progress-v59

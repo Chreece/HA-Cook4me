@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "policy": {
+    "searchResultAutoAccepted": false,
+    "exactFdcBindingRequired": true,
+    "semanticConceptGroupingReviewed": true,
+    "providerIdentityInference": false,
+    "candidateSearchIsIdentityProof": false
+  },
+  "selectionMethod": "explicit-semantic-review",
+  "items": [
+    {"reviewTargetId":"concept:food:43b07a03084545586eb3","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Olive oil","fdcId":2710186,"confidence":"high","fdcDescription":"Olive oil","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":13944},
+    {"reviewTargetId":"concept:food:18c81c4b24cfc58639aa","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Soy sauce","fdcId":2707442,"confidence":"high","fdcDescription":"Soy sauce","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":5548},
+    {"reviewTargetId":"concept:food:8c0ca44ddba604fbc0c1","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Ketchup","fdcId":2709733,"confidence":"high","fdcDescription":"Ketchup","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":1344},
+    {"reviewTargetId":"concept:food:8569ab0a1b0ee6b2b877","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Coconut milk","fdcId":2705413,"confidence":"high","fdcDescription":"Coconut milk","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":1035},
+    {"reviewTargetId":"M_FOOD_444","reviewTargetKind":"provider-identity","canonicalEnglishName":"Soy sauce","fdcId":2707442,"confidence":"high","fdcDescription":"Soy sauce","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":757},
+    {"reviewTargetId":"M_FOOD_267","reviewTargetKind":"provider-identity","canonicalEnglishName":"Coconut milk","fdcId":2705413,"confidence":"high","fdcDescription":"Coconut milk","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":376},
+    {"reviewTargetId":"concept:food:ba539cd025029e046848","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Raisins","fdcId":2709212,"confidence":"high","fdcDescription":"Raisins","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":312},
+    {"reviewTargetId":"concept:food:17d1a9b61e7abee3041d","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Mussels","fdcId":2706350,"confidence":"high","fdcDescription":"Mussels","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":270},
+    {"reviewTargetId":"M_FOOD_323","reviewTargetKind":"provider-identity","canonicalEnglishName":"Mustard","fdcId":2710085,"confidence":"high","fdcDescription":"Mustard","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":238},
+    {"reviewTargetId":"concept:food:2625ef8f4ec52ea97ccb","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Vinegar","fdcId":2709351,"confidence":"high","fdcDescription":"Vinegar","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":232},
+    {"reviewTargetId":"M_FOOD_322","reviewTargetKind":"provider-identity","canonicalEnglishName":"Mussels","fdcId":2706350,"confidence":"high","fdcDescription":"Mussels","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":167},
+    {"reviewTargetId":"concept:food:245dda9f03fac29e59cd","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Mustard","fdcId":2710085,"confidence":"high","fdcDescription":"Mustard","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":156},
+    {"reviewTargetId":"M_FOOD_247","reviewTargetKind":"provider-identity","canonicalEnglishName":"Ham","fdcId":2705878,"confidence":"high","fdcDescription":"Ham","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":149},
+    {"reviewTargetId":"concept:food:70ca77f6bbf6abf2be6e","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Peanut butter","fdcId":2707537,"confidence":"high","fdcDescription":"Peanut butter","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":126},
+    {"reviewTargetId":"concept:food:a7e3fc717befc8b13c15","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Rum","fdcId":2710703,"confidence":"high","fdcDescription":"Rum","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":120},
+    {"reviewTargetId":"M_FOOD_491","reviewTargetKind":"provider-identity","canonicalEnglishName":"Vinegar","fdcId":2709351,"confidence":"high","fdcDescription":"Vinegar","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":111},
+    {"reviewTargetId":"M_FOOD_274","reviewTargetKind":"provider-identity","canonicalEnglishName":"Rabbit","fdcId":2705912,"confidence":"high","fdcDescription":"Rabbit","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":91},
+    {"reviewTargetId":"concept:food:558651a8a20719da2be1","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Chocolate chips","fdcId":2710333,"confidence":"high","fdcDescription":"Chocolate chips","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":72},
+    {"reviewTargetId":"M_FOOD_348","reviewTargetKind":"provider-identity","canonicalEnglishName":"Barley","fdcId":2708361,"confidence":"high","fdcDescription":"Barley","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":71},
+    {"reviewTargetId":"M_FOOD_285","reviewTargetKind":"provider-identity","canonicalEnglishName":"Yeast","fdcId":2710005,"confidence":"high","fdcDescription":"Yeast","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":70}
+  ]
+}

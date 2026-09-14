@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-keyless-ingredient-semantics",
+  "policy": {
+    "providerIdentityAssigned": false,
+    "exactSourceLabelOnly": true,
+    "manualReview": true,
+    "phase": "capture3",
+    "batch": "en-001",
+    "catalogVersion": "2026-09-11-v60-capture3",
+    "notes": "Manual native-English semantic review for the 26 exact Capture 3 source-local English labels. English semantics are copied from the exact provider source label; no translation or provider identity is inferred."
+  },
+  "items": [
+    {"language":"en","source":"Chicken stock","english":"Chicken stock","classification":"food","confidence":"high"},
+    {"language":"en","source":"Cornflour","english":"Cornflour","classification":"food","confidence":"high"},
+    {"language":"en","source":"Tomato purée","english":"Tomato purée","classification":"food","confidence":"high"},
+    {"language":"en","source":"Mixed herbs","english":"Mixed herbs","classification":"food","confidence":"high"},
+    {"language":"en","source":"Baby corn","english":"Baby corn","classification":"food","confidence":"high"},
+    {"language":"en","source":"Fish sauce","english":"Fish sauce","classification":"food","confidence":"high"},
+    {"language":"en","source":"Fish stock","english":"Fish stock","classification":"food","confidence":"high"},
+    {"language":"en","source":"Scallops","english":"Scallops","classification":"food","confidence":"high"},
+    {"language":"en","source":"Bone marrow","english":"Bone marrow","classification":"food","confidence":"high"},
+    {"language":"en","source":"Brandy","english":"Brandy","classification":"food","confidence":"high"},
+    {"language":"en","source":"Brown rice","english":"Brown rice","classification":"food","confidence":"high"},
+    {"language":"en","source":"Chocolate spread","english":"Chocolate spread","classification":"food","confidence":"high"},
+    {"language":"en","source":"Flaxseed","english":"Flaxseed","classification":"food","confidence":"high"},
+    {"language":"en","source":"Garam masala","english":"Garam masala","classification":"food","confidence":"high"},
+    {"language":"en","source":"Lemongrass","english":"Lemongrass","classification":"food","confidence":"high"},
+    {"language":"en","source":"Noodles","english":"Noodles","classification":"food","confidence":"high"},
+    {"language":"en","source":"Parsley","english":"Parsley","classification":"food","confidence":"high"},
+    {"language":"en","source":"Peas","english":"Peas","classification":"food","confidence":"high"},
+    {"language":"en","source":"Rosemary","english":"Rosemary","classification":"food","confidence":"high"},
+    {"language":"en","source":"Sweet corn","english":"Sweet corn","classification":"food","confidence":"high"},
+    {"language":"en","source":"Wasabi","english":"Wasabi","classification":"food","confidence":"high"},
+    {"language":"en","source":"Wine vinegar","english":"Wine vinegar","classification":"food","confidence":"high"},
+    {"language":"en","source":"Yakitori sauce","english":"Yakitori sauce","classification":"food","confidence":"high"},
+    {"language":"en","source":"Cream","english":"Cream","classification":"food","confidence":"high"},
+    {"language":"en","source":"Garlic","english":"Garlic","classification":"food","confidence":"high"},
+    {"language":"en","source":"Salt","english":"Salt","classification":"food","confidence":"high"}
+  ]
+}

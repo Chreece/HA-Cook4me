@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "referenceManifestSha256": "6ec7b2207b149cce662136ea64b6c92ae73d6f7983efe12d18ecbc3b86388bd4",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "policy": {
+    "searchResultAutoAccepted": false,
+    "exactFdcBindingRequired": true,
+    "semanticConceptGroupingReviewed": true,
+    "providerIdentityInference": false,
+    "candidateSearchIsIdentityProof": false
+  },
+  "selectionMethod": "explicit-semantic-review",
+  "items": [
+    {
+      "reviewTargetId": "concept:food:91d5abdcf0f9915c955a",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Shrimp",
+      "fdcId": 175179,
+      "confidence": "high",
+      "fdcDescription": "Crustaceans, shrimp, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 2,
+      "usageCountAtReview": 175,
+      "notes": "Shrimp target: selected raw crustacean shrimp rather than shrimp cracker or prepared shrimp foods."
+    },
+    {
+      "reviewTargetId": "M_FOOD_347",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Orange",
+      "fdcId": 169097,
+      "confidence": "high",
+      "fdcDescription": "Oranges, raw, all commercial varieties",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 8,
+      "usageCountAtReview": 173,
+      "notes": "Generic orange target: selected the all-commercial-varieties raw orange record rather than peel-only, juice-only, or named-variety records."
+    },
+    {
+      "reviewTargetId": "concept:food:6080035ce98c74a317e1",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Green onion",
+      "fdcId": 2727585,
+      "confidence": "high",
+      "fdcDescription": "Green onion, (scallion), bulb and greens, root removed, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 172
+    },
+    {
+      "reviewTargetId": "concept:food:68856853921854e684a9",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Wasabi",
+      "fdcId": 171831,
+      "confidence": "high",
+      "fdcDescription": "Wasabi",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 172
+    },
+    {
+      "reviewTargetId": "concept:food:863b41680dc8a12a85d5",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Peas",
+      "fdcId": 170419,
+      "confidence": "high",
+      "fdcDescription": "Peas, green, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 170
+    },
+    {
+      "reviewTargetId": "concept:food:10d9c78a52dde61275fa",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Spinach",
+      "fdcId": 168462,
+      "confidence": "high",
+      "fdcDescription": "Spinach, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 170
+    },
+    {
+      "reviewTargetId": "concept:food:5a9efaca247c4335ba23",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Egg whites",
+      "fdcId": 172183,
+      "confidence": "high",
+      "fdcDescription": "Egg, white, raw, fresh",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 3,
+      "usageCountAtReview": 168,
+      "notes": "Egg-white target: selected raw fresh white rather than dried or frozen white."
+    },
+    {
+      "reviewTargetId": "concept:food:8840d03e979e76df1dab",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Broccoli",
+      "fdcId": 747447,
+      "confidence": "high",
+      "fdcDescription": "Broccoli, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 165
+    },
+    {
+      "reviewTargetId": "M_FOOD_113",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Green cabbage",
+      "fdcId": 2346407,
+      "confidence": "high",
+      "fdcDescription": "Cabbage, green, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 163
+    },
+    {
+      "reviewTargetId": "M_FOOD_343",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Spring onions",
+      "fdcId": 170005,
+      "confidence": "high",
+      "fdcDescription": "Onions, spring or scallions (includes tops and bulb), raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 157
+    },
+    {
+      "reviewTargetId": "M_FOOD_83",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Celeriac",
+      "fdcId": 170400,
+      "confidence": "high",
+      "fdcDescription": "Celeriac, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 155
+    },
+    {
+      "reviewTargetId": "concept:food:8417b5c4895bce2768f2",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Beef stock",
+      "fdcId": 172883,
+      "confidence": "high",
+      "fdcDescription": "Soup, stock, beef, home-prepared",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 3,
+      "usageCountAtReview": 154,
+      "notes": "Beef-stock target: selected the direct home-prepared beef-stock record rather than foods merely containing beef stock."
+    },
+    {
+      "reviewTargetId": "M_FOOD_338",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Fish sauce",
+      "fdcId": 174531,
+      "confidence": "high",
+      "fdcDescription": "Sauce, fish, ready-to-serve",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 142
+    },
+    {
+      "reviewTargetId": "concept:food:85f7eb5f08599f6436f3",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Apple cider vinegar",
+      "fdcId": 173469,
+      "confidence": "high",
+      "fdcDescription": "Vinegar, cider",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 140
+    },
+    {
+      "reviewTargetId": "concept:food:167138074e91329c9fa4",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Celery",
+      "fdcId": 2346405,
+      "confidence": "high",
+      "fdcDescription": "Celery, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 140
+    },
+    {
+      "reviewTargetId": "M_FOOD_146",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Butternut squash",
+      "fdcId": 2685570,
+      "confidence": "high",
+      "fdcDescription": "Squash, winter, butternut, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 2,
+      "usageCountAtReview": 139,
+      "notes": "Butternut-squash target: selected raw winter butternut squash rather than baby food or frozen variants."
+    },
+    {
+      "reviewTargetId": "M_FOOD_108",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Brussels sprouts",
+      "fdcId": 2685575,
+      "confidence": "high",
+      "fdcDescription": "Brussels sprouts, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 134
+    },
+    {
+      "reviewTargetId": "M_FOOD_112",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Red cabbage",
+      "fdcId": 2346408,
+      "confidence": "high",
+      "fdcDescription": "Cabbage, red, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 134
+    },
+    {
+      "reviewTargetId": "M_FOOD_29",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Banana",
+      "fdcId": 173944,
+      "confidence": "high",
+      "fdcDescription": "Bananas, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 133
+    },
+    {
+      "reviewTargetId": "concept:food:428315776fcc8ddec296",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Banana",
+      "fdcId": 173944,
+      "confidence": "high",
+      "fdcDescription": "Bananas, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 128
+    }
+  ]
+}

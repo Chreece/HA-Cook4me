@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "ko",
+  "part": 1,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 8,
+  "batchSize": 8,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:090b4993266e4c39ca45b2c6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ko",
+      "sourceText": "모히또 아이스티",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c8055df87b9c3f47a27c70de",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ko",
+      "sourceText": "미역국",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0bc688f3b3471a781c02425f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ko",
+      "sourceText": "백설기",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ff632b05730304479a3f2a22",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ko",
+      "sourceText": "양파즙",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:39d311c7cef1b64395a1c78c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ko",
+      "sourceText": "일식 계란찜",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:502f034bfbf778b77f3636ec",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ko",
+      "sourceText": "짜장",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e827eb0d56be6243a52eb5cc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ko",
+      "sourceText": "채소찜",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:31daed0da5727632525742a3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "ko",
+      "sourceText": "해물 누룽지탕",
+      "groupCount": 1
+    }
+  ]
+}

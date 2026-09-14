@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-entry-meal-overrides",
+  "policy": {
+    "providerTaxonomyPreferred": true,
+    "ingredientPreparationFromProviderClassification": true,
+    "manualOverridesOnlyForProviderTaxonomyGaps": true,
+    "notes": "Reviewed only for the 28 provider groupings without a normal SEB course and without IS_FOOD_COOKING. Meal tags describe the dish; entryType prevents beverages/non-food from being forced into meal categories."
+  },
+  "items": {
+    "2774772": {"entryType": "recipe", "primaryMealType": "main", "mealTypes": ["main"], "confidence": "high", "englishTitle": "Beef skewers with teriyaki sauce"},
+    "2774841": {"entryType": "recipe", "primaryMealType": "main", "mealTypes": ["main"], "confidence": "high", "englishTitle": "Fish and chips"},
+    "2774833": {"entryType": "recipe", "primaryMealType": "dessert", "mealTypes": ["dessert", "snack"], "confidence": "high", "englishTitle": "Mini cinnamon rolls"},
+    "2774864": {"entryType": "recipe", "primaryMealType": "dessert", "mealTypes": ["dessert", "snack"], "confidence": "high", "englishTitle": "Chocolate chip cookies"},
+    "2702807": {"entryType": "recipe", "primaryMealType": "main", "mealTypes": ["main"], "confidence": "high", "englishTitle": "Beef teriyaki skewers"},
+    "2978749": {"entryType": "recipe", "primaryMealType": "dessert", "mealTypes": ["dessert"], "confidence": "high", "englishTitle": "Caramelized puff pastry fingers with vanilla custard"},
+    "1441678": {"entryType": "beverage", "primaryMealType": null, "mealTypes": [], "confidence": "high", "englishTitle": "Mulled wine", "notes": "Provider title includes '(not used)'; retained as provider entry but excluded from meal categories."},
+    "2978982": {"entryType": "recipe", "primaryMealType": "main", "mealTypes": ["main"], "confidence": "high", "englishTitle": "Brazilian coconut shrimp"},
+    "2774835": {"entryType": "recipe", "primaryMealType": "main", "mealTypes": ["main"], "confidence": "high", "englishTitle": "Beef teriyaki skewers"},
+    "2979984": {"entryType": "recipe", "primaryMealType": "main", "mealTypes": ["main"], "confidence": "high", "englishTitle": "Traditional Lebanese kibbeh with herb yogurt and harissa-pickled red onions"},
+    "2601812": {"entryType": "recipe", "primaryMealType": "main", "mealTypes": ["main"], "confidence": "high", "englishTitle": "Ossobuco with peas"},
+    "2774820": {"entryType": "recipe", "primaryMealType": "main", "mealTypes": ["main"], "confidence": "high", "englishTitle": "Fish and chips"},
+    "1081008": {"entryType": "non_food", "primaryMealType": null, "mealTypes": [], "confidence": "high", "englishTitle": "Homemade ivy dishwashing liquid", "notes": "Not food; exclude from meal planning and diet classification."},
+    "2012543": {"entryType": "recipe", "primaryMealType": "starter", "mealTypes": ["starter"], "confidence": "high", "englishTitle": "Pork and beef aspic"},
+    "2774856": {"entryType": "recipe", "primaryMealType": "main", "mealTypes": ["main"], "confidence": "high", "englishTitle": "Beef teriyaki skewers"},
+    "2774854": {"entryType": "recipe", "primaryMealType": "dessert", "mealTypes": ["dessert", "snack"], "confidence": "high", "englishTitle": "Mini cinnamon rolls"},
+    "2774778": {"entryType": "recipe", "primaryMealType": "main", "mealTypes": ["main"], "confidence": "high", "englishTitle": "Fish and chips"},
+    "2774793": {"entryType": "recipe", "primaryMealType": "main", "mealTypes": ["main"], "confidence": "high", "englishTitle": "Beef teriyaki skewers"},
+    "2531206": {"entryType": "recipe", "primaryMealType": "soup", "mealTypes": ["soup"], "confidence": "high", "englishTitle": "Spanish garlic soup"},
+    "2012720": {"entryType": "recipe", "primaryMealType": "starter", "mealTypes": ["starter"], "confidence": "high", "englishTitle": "Poultry aspic"},
+    "2703168": {"entryType": "recipe", "primaryMealType": "dessert", "mealTypes": ["dessert", "snack"], "confidence": "high", "englishTitle": "Mini cinnamon rolls"},
+    "2996721": {"entryType": "recipe", "primaryMealType": "main", "mealTypes": ["main"], "confidence": "high", "englishTitle": "Summer lunch: battered chicken with new potatoes and cucumber salad"},
+    "2731766": {"entryType": "recipe", "primaryMealType": "main", "mealTypes": ["main"], "confidence": "high", "englishTitle": "Fish and chips"},
+    "2774862": {"entryType": "recipe", "primaryMealType": "main", "mealTypes": ["main"], "confidence": "high", "englishTitle": "Fish and chips"},
+    "2012570": {"entryType": "recipe", "primaryMealType": "soup", "mealTypes": ["soup"], "confidence": "high", "englishTitle": "Rassolnik soup"},
+    "2774780": {"entryType": "recipe", "primaryMealType": "breakfast", "mealTypes": ["breakfast", "snack"], "confidence": "medium", "englishTitle": "Chocolate chip scones", "notes": "Scones are commonly breakfast/tea-snack food; both tags retained."},
+    "2012742": {"entryType": "recipe", "primaryMealType": "soup", "mealTypes": ["soup"], "confidence": "high", "englishTitle": "Beef kharcho soup"},
+    "2774770": {"entryType": "recipe", "primaryMealType": "dessert", "mealTypes": ["dessert", "snack"], "confidence": "high", "englishTitle": "Mini cinnamon rolls"}
+  }
+}

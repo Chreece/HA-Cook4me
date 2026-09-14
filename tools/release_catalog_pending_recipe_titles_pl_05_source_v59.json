@@ -1,0 +1,713 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "pl",
+  "part": 5,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 1213,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:d43f84792aaada2692d1c990",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kanapki z krewetkami i szparagami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2c41e5d5bad3d492e85a73f5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kapusta",
+      "groupCount": 10
+    },
+    {
+      "taskId": "recipe_title_english:5523ad8dc17fa9a5bc4e1686",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kapusta duszona z grzybami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9a5c90c0bda0377b2c43f407",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kapusta włoska",
+      "groupCount": 8
+    },
+    {
+      "taskId": "recipe_title_english:6a46a58457485c331725bee5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kapusta z grzybami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:052eaadbfabe272698df3686",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kapuśniak",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6d09c5e586e73e00da90bc1e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kapuśniak według Pati Sołtysik",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f09af19c0d00438689b0a4db",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kapuśniak z kremowymi klopsikami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:31b8d1cd7dae233cbe4f224f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Karbonada",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5f07193548d9f3ecbd0d38b7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Karczoch",
+      "groupCount": 4
+    },
+    {
+      "taskId": "recipe_title_english:588dac46259f3d7f3e245a18",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Karkówka po chińsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:53d82423ae968d26869bc00d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Karkówka po cygańsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:21ddf247a376c9305f4a726c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Karkówka według Kiszki Ziemniaczanej",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fe99991f41b8b78bba3f3fee",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Karkówka wg Pati Sołtysik",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e0dc16df6ff6363fa4f740f8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Karmelizowana czerwona cebulka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fffbdac5edd112107b54cb4d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Karmelizowana wieprzowina",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:13413419e141d7c365bc21d9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kasza bulgur",
+      "groupCount": 4
+    },
+    {
+      "taskId": "recipe_title_english:70beb35c005e0766e0f78862",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kasza bulgur z białym sosem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6f9a94b4ee4092f6c2b28970",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kasza bulgur z pomidorami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:356326f2ea8b8c825dd214ff",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kasza gryczana",
+      "groupCount": 5
+    },
+    {
+      "taskId": "recipe_title_english:ca1c456a3b83570a635641ac",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kasza gryczana z parmezanem i suszonym pomidorem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:db9ff5471745fcbf595156c3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kasza jaglana",
+      "groupCount": 5
+    },
+    {
+      "taskId": "recipe_title_english:573a91d02571ba921377b298",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kasza jęczmienna",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:084abd42591affc8c5fd2a1f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kasza kuskus z kurczakiem i cukinią",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cf421e3fac13b631aa4dcad3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kasza z kurkami i sosem koperkowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a7a3a854a2bfdd1ba2fec2bd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kaszanka na jabłkach i cebuli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:86d2d3d00b555b61ff660abc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kaszanka z jabłkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e4d1eb39bdab31fcc70ecfa9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kaszotto z gorgonzolą i szpinakiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:59b05ffb37eeb25ab076e504",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kaszotto z indykiem i burakami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:da4af531d41808031d286113",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kawałki ziemniaków z przyprawami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:434ca16a0ac1a432068a9562",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Keto babka wielkanocna",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d8956b9bb12c4970e1a39815",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Keto brokuły z sadzonym jajkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4d0e6c1d1e95283a9955033d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Keto faszerowane pieczarki z warzywami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bd031930ce5d8bc6ccb64a75",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Keto jajecznica z brukselką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3050c3d7dfa5c8fb0d459fc8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Keto leczo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1c38cb27067686631a829c4f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Keto makaron z krewetkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ad4b8fac60faa314fe13cf71",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Keto muffiny korzenno-marchewkowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b2cfbc27a72b5a2b29bf6eb6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Keto omlet z figą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bed71e09d71e595629443f22",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Keto racuchy z jabłkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:98531832a0ce0562915798b6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Keto zapiekanka z 3 składników",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f77982839186a6199c3cf59e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kiełbaski Montbeliard",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:280cc6f25d61d76664b49466",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kiełbaski z ziemniakami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:73351b278f74fd76f8c22ec3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kisz szparagowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5b91f8778a6157e0e62cd427",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Klarowna zupa grzybowa z łazankami i kwaśną śmietaną",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0017387fb1e18fc1976a9247",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Klopsiki jagnięce",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7662afbc59c6fd92494bacce",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Klopsiki jagnięce wg Andrzeja Andrzejczaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:017a366105e95b626d7bcc2e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Klopsiki w kremowym sosie pieczarkowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4be90cfbbf3502e4fa182863",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Klopsiki w sosie curry",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cea30fe572e8978e6301e120",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Klopsiki w sosie pomidorowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0d9ad8f96f393694fbb2708b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Klopsiki wołowe według Kiszki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1ea6bbd80dcb03fb1efd5a70",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Klopsiki wołowe z makiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:88e91738e67b1973a0d7dd7d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kluski z makiem z domowym makaronem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:43ef93004ad17e2937157c97",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Knedle ze śliwkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:517448907334658b67b0b501",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kokosowa kasza manna z owocami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:031e25af514d077260534768",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Komosa ryżowa",
+      "groupCount": 5
+    },
+    {
+      "taskId": "recipe_title_english:801f84aa1e9fcc07ee8f52b1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Komosa ryżowa z kapustą tajską",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8358fbb539e10dc9c07ae1be",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Komosa ryżowa z małżami japońskimi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:caa11830190a86fcfd3649bb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kompot francuski z rabarbaru",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5b20e5adb0515c3a31c3b2b8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kompot jabłkowo-truskawkowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e96cedfd30db7d572f7500b4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Koncentrat do świątecznej herbaty zimowej",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:969d1afab330bb11d1be26ad",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Konfitura cebulowa z gorącym serem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fc5ab2a1f4c2e180d0356c26",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Konfitura wiśniowa z amaretto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ce6876d606532c2f17e9ae19",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Konfitura z pieczonych polskich śliwek",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:65ad4e08a3057e18e93d0248",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Koper włoski",
+      "groupCount": 13
+    },
+    {
+      "taskId": "recipe_title_english:c139eb2b8b3af654a799e81b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Koperkowa z jajkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2edb3e903db2515fb2b70b23",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Koreańska owsianka ryżowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:dacd527cc76b3e2c488787e1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kotleciki siekane z batatem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c22c4f9638b45f4eb83556b0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kotleciki siekane z kurczakiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bbd25e255813cd36e4f9471c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kotleciki szu szu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0f5af64a0fd2c8a439dd5de9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kotleciki wołowo-warzywne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:63e5d03399399effab9b96e6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kotleciki z łososia z pieczonymi ziemniakami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ab400438650d74af5bc78338",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kotlety jagnięce z cytryną",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c4c0c5ce1cdac235273434bd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kotlety jajeczne (wersja dla IO)",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:37d6522cd9865b7007d4828f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kotlety mielone z pieczarkami i papryką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ec1354dda7b8a74b57fbe8e2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Kotlety rybne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d4deecf0c9dc9be9e03de8de",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem bananowy z białą czekoladą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:41afc039157f78c263dec92b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem cappuccino",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8d4ef1f621a279d2b72fae46",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem karmelowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a3db343de8ce200cc7aa617b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem kokosowo-czekoladowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6e7212a3332746dce55ab40b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem pieczarkowo-serowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:eb52ef7423c2836001d8289b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem porowo-musztardowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cf4f423bceffeea24e1d88e3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z bakłażana i selera",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:832ec5bb0d678743741e8232",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z białych warzyw z karmelizowaną gruszką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5832b75b5f57ea3e7c6c7034",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z brokułów",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a8c7e480abef30400ff1b878",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z buraków",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:536bf97ebe3467befd472f6c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z cukinii z fetą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6cd43df2f6b0e9ce3d20e268",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z dyni",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7506d2345d9589caa9b380a7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z dyni i foie gras",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:19744c8e1abe1e2ae72bcba9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z dyni na mleczku kokosowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6c77538c34dd4ea064737c16",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z dyni z cynamonem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b8546b63a4a5311418a652c7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z grzybów z oliwą truflową",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2f270c5e54523412d9dec132",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z kalafiora",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:9054861fe9748c421e05fac4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z kalafiora z wanilią",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ac5987ad26f08903f5d0e9d0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z kukurydzy i mleka kokosowego",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:530094c465d2974df9f45838",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z migdałów i miodu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6bd8b18d9396d1b693194294",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z miodem i kurkumą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ff9055648142a8a6b5732cab",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z mleczną konfiturą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b0fcd0aa8f27ed6a6df8165a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z pieczarek",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f6bd6e2303ca2a31dee4e0f0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z pieczarek wg Kiszki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fa27c927e9dc308c06f1644a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Krem z pieczonych buraków",
+      "groupCount": 1
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "items": [
+    {
+      "evidenceRequired": "Inspect the existing captured recipe lines for this exact local ingredient ID to establish whether its quantity was measured before or after soaking. Review a source-semantic correction and regenerate affected memberships/queues separately; do not apply a dry-rice profile, invent a water-absorption factor, rewrite the frozen snapshot or silently change historical receipts.",
+      "findingId": "rice-soaking-qualifier-lost-in-reviewed-english",
+      "ingredientId": "local:ja:1439324e0ea7e7f84313",
+      "language": "ja",
+      "observedPreparationEnglish": "Rice, washed, soaked for 30 minutes and drained",
+      "reason": "The exact retained Japanese source label includes washing, 30 minutes of water absorption and draining. Its historical reviewed English is only Rice, so the compiler places this prepared-source identity in the generic Rice concept alongside 13 other source labels. English-name equality is not evidence of an identical hydration state.",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients.v1.json",
+      "reviewFileSha256": "e1503c97ebde54173ef034438933e68da684ceb23796cf0b88dac2350ed4c7e1",
+      "reviewItemIndex": 74,
+      "reviewItemSha256": "7284a5de9ef02151c0c47e4c048039b3b6f7a73261c2f46c16dd227c3ad8030b",
+      "reviewTargetId": "concept:food:d475265f55cce204989d",
+      "reviewedEnglish": "Rice",
+      "source": "米(洗って30分吸水し ザルにあげる)",
+      "status": "unresolved-source-semantics"
+    }
+  ],
+  "kind": "cook4me-nutrition-source-context-findings-v60",
+  "policy": {
+    "bindingsApproved": false,
+    "massBasisInferred": false,
+    "networkRequestsPerformed": false,
+    "providerIdentityInference": false,
+    "sameNameJoinPerformed": false,
+    "sourceCorrectionsApplied": false,
+    "sourceFilesModified": false,
+    "unitConversionPerformed": false
+  },
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac"
+}

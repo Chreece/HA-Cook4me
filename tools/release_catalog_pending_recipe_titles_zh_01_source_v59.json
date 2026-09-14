@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "zh",
+  "part": 1,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 7,
+  "batchSize": 7,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:ce85034552946c94cbcab208",
+      "type": "recipe_title_english",
+      "sourceLanguage": "zh",
+      "sourceText": "叉燒肉",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fdf5e2ad09494ae6c9ed1d72",
+      "type": "recipe_title_english",
+      "sourceLanguage": "zh",
+      "sourceText": "牛丼",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5e4297ffc35c1880c5bfe1a0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "zh",
+      "sourceText": "簡易番茄醬燉飯",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:93da79da472f6399bea6f92e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "zh",
+      "sourceText": "義大利式水煮竹莢魚",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7e2637722e824fbab098b423",
+      "type": "recipe_title_english",
+      "sourceLanguage": "zh",
+      "sourceText": "豬肉白菜千層派",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:12702b1191588805446a9a00",
+      "type": "recipe_title_english",
+      "sourceLanguage": "zh",
+      "sourceText": "韓式馬鈴薯排骨湯",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:53a38309f88c1a4c9546e224",
+      "type": "recipe_title_english",
+      "sourceLanguage": "zh",
+      "sourceText": "馬鈴薯沙拉",
+      "groupCount": 1
+    }
+  ]
+}

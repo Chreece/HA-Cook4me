@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 72,
+  "batchSize": 100,
+  "rankStart": 7101,
+  "rankEnd": 7200,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:04c6ec0c9fe9c362d2c022e9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-おからパウダー",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e1fb2946eea615f518d9eb17",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-かぼちゃ(皮を取り一口大 600Wで4分加熱)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7122838201bfa343d071edb7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-かぼちゃ(種、皮を除き 3cm角に切る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:218bcacf969452d7cc1f9eea",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-かまぼこ(薄切り)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b899a0b04489c61bc0bad2b2",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-にんじん(拍子切り 幅0.5mm長さ3cm)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0bc60f32263adf8754d45afb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-ぬるま湯",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4b3a1e78c965324fc3e89ec0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-アーモンドプードル",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:814c1bac25cb82a3b4996592",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-インゲン(4等分に切る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f68a779c099d8be60a4fd5dd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-クミン(仕上げ用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f170553f00905e10e8945470",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-クリームチーズ (室温に戻す)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a35ab2971554e00085390779",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-コリアンダーパウダー (仕上げ用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:45e5007c2de978124cf64239",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-バター(室温に戻す)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a6b53989da5ffe93febc26fe",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-バター(常温に戻す)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cc7e1e64b7479833cb6942ac",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-ピュアココア",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d473efdbbf4ac56b878b019d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-ホワイトチョコレート (刻む)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:54e5a616f8ace4f7cbd20718",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-マヨネーズ(ソース用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4bf79f6b37a8375bf007a783",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-和風だし(顆粒) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8525a35a8074fb71d06ea63b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-和風だしの素(顆粒)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6c0554a5c94aa45fd625806d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-塩こしょう 適量",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:16e8cf05e54b40b1a4680a61",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-干ししいたけ (湯で15分戻しみじん切り)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4538d3a589dcbf5a3731bdbf",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-抹茶パウダー",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:72dab8de20cf26bde12a68fe",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-湯",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0851bf25bae53e3e48e3f284",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-溶き卵(1個60g)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5088cbea223d0668b9f82082",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-溶き卵（Lサイズ）",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2739f570181222844645b5f1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-無塩バター",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2d2b9fac062e01da733db168",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-焼き鳥缶たれ味(75g たれも使用する)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:68ba2aa1b55268c4adeb0380",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-片栗粉(玉ねぎ用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7c8c3121fe6e8a14253f33b0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-牛乳",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e45b41ea3e402917c2e60405",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-甘酒",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d39ae35b42188585dfce9b96",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-米(30分吸水ザルにあげる)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5df264abe594e2ff24aa5595",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-米酢",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0b9d28fa27e0be471a427916",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-豚バラ薄切り肉(5cm幅)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e9477979f7fbc41bc5e9e2d5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-赤とうがらし (種を取りみじん切り)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e3b23f13facfcf605f08dfb5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-醤油",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:89e6df24ca0c603ee090e8a8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-長ねぎ(小口切り)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d0f89ecb5d811084b29b490c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-鶏がらスープ",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:66122475daeae466920be89f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-鶏ガラスープの素 (顆粒)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a98d7ca4e16658db1fcaf581",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-黄パプリカ(1cm角)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5c2aedd364c7a62df8f97915",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B- トマトペースト",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8b17a7894528d54e48eefcea",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-うどん",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f87da10abaa86df8888337ee",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-きぬさや(筋を取る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f28d85dfd96a658a40020790",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-はちみつ",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:537c37824883f335993888f8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-ウスターソース",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9f2ebc6cf47ce216ec6e4309",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-オリーブ油 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8c742083bacbeb58aee1b1fd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-カットトマト缶",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:291182fd0d3199c55d4a1164",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-ココアパウダー",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a34337f482716c0a8de0027f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-コーンスターチ又は片栗粉 (ふるっておく)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6c6a6b6b78bd22c5f9d66789",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-サラダ油",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b92355faa72f3c2c9bee261c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-ディルハーブ 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:64ec050cb92f943d356b61f9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-ナンプラー(タレ用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f1ee031cb2e21435fc29187b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-バター(チョコと合わせて 湯煎で溶かす)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5acc64e6bb54c832b2439725",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-パプリカパウダー 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2a404cb02d30d1fc827324e6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-ベーキングパウダー",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:73ac29efd9e6b914538010eb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-ラカント甘味料 (顆粒・ソース用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0867e80a5cbc306bf9f3cbff",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-中華だし(顆粒)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a58e796798f9a0daacb32d23",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-冷凍ミックスベリー (解凍する・ソース用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f7f4281d3f2bfdb96cd02bda",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-卵",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1b26d458584bdb1bcc57542c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-味噌(タレ用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c8f3188a1558a346b27633ba",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-抹茶(片栗粉と合わせて ふるっておく)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b8949f6164281fcd95b17dea",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-牛乳",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:94e06ca96bd3fc00cdbad2fe",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-牛乳（常温に戻す）",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:61944c79b87340281dc0b635",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-白玉粉",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ef1763988b30fcbb15d4aa09",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-砂糖(タレ用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e6940cf6b868d4cb222e533e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-粒マスタード 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2eb9163e5c818b58af0ac3fa",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-粗挽き黒こしょう 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0ac102e8cdde1c87ff44b666",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-薄力粉",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7fca1fd64f42b39e6b237f3c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-豆板醬(タレ用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f172571a9eb9dcaee8e54b10",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-赤唐辛子 (種を取り小口切り)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8a4ee350688bddbe73b9beef",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "C-グラハムクラッカー (砕く)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d3abdc7419bbe1782f2446fc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "C-グラハムクラッカー(砕く)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ac0040084710365072dbfe52",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "C-シナモンパウダー 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a08e1613714a41202d396a11",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "C-バター(クラッカーと 混ぜて容器にしく)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:afb85c24b12e7f54aacc6078",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "D-クルミ(砕く)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:72da3825522c053577f644ad",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "D-ビターチョコ(砕く)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cb906f8909f69611be32c42f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "あんこ(こしあん)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ef584ae6c2456ed0f1d430f5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "いくら(飾り用)適量",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a77eace9496bdee2c67b87b3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "うずらの卵",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:90a76a8d0dd6c19cbab092a1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "うずらの卵(水煮)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ae9b210d39fb90076df77932",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "うどん",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5c27aac8e8b2eb4cdc0bba53",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "うどん(水でほぐす)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:351ebd660c471f154a1396b4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "うどんつゆ",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b04480ac985361959f125706",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "おからパウダー",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f6df53d51952a7300d1f2ba8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "かつおぶし 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:02df42bc43ea43f1b593ecc4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "かぼちゃ(1.5cm厚に切り 豚バラ枚数分に切る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:cad35bf8ff7eb37cb6103127",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "かぼちゃ(1cm角)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:273b4c7a4f87369a2cb92bba",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "かぼちゃ(皮を剥き3cm角)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bc3ddc1d040faebe5e4a18e7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "かぼちゃの種(飾り用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7b0c2f2eea78fc0f11c00e46",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "かまぼこ(5mm幅)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c5913fbfc04479db4f206e9a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "からし(仕上げ用) 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:29d9cf7bdca7ea2c03cbd543",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "くるみ(手で割る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2f81e3fc217f3a2a6e2a7150",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ごはん 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:46c8ca8de8c9fceb077d5ad8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ごぼう(ささがき水にさらす)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4fbe98b4332d63509588cf3e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ごぼう(皮をこそぎ洗い 5cm幅に切る)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ff75097aec5f7755320800a9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "ごま油 少々",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f15ae1560ca31fd159ea430e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "さつま揚げ",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1263bc08d2df87508b8cba9d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "さやえんどう(下茹で)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:861d55ffdb22dd610814073e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "しょうが(みじん切り)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:26742d2f4b219b6fd0f80bf3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "しょうが(よく洗い 皮のまま細切り)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0bfec06ad63fc725c0143bc6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "しょうゆ(豚肉下味用)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:12c8cddeb1890829e5efa529",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "たくあん(細切り)",
+      "occurrenceCount": 2,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 2
+      }
+    }
+  ]
+}

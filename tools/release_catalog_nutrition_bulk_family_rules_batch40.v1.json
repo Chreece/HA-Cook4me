@@ -1,0 +1,432 @@
+{
+  "batch": 40,
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "extends": "release_catalog_nutrition_bulk_family_rules_batch39.v1.json",
+  "kind": "cook4me-nutrition-bulk-family-rules-v60",
+  "policy": {
+    "automaticRuleExpansionForbidden": true,
+    "candidateRankIsIdentityProof": false,
+    "heldTargetsExcluded": true,
+    "multipleRuleMatchesRejected": true,
+    "networkRequestsPerformed": false,
+    "providerIdentityInference": false,
+    "recordedTargetsExcludedFromFutureSelection": true,
+    "regexAnchoredRequired": true,
+    "ruleMatchIsApprovalOnlyWhenReviewRowExists": true
+  },
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "rules": [
+    {
+      "batch": 40,
+      "contract": "Direct retained candy-sprinkles category; no coating brand, dye mixture or serving-mass inference.",
+      "fdcDescription": "Candy, sprinkles",
+      "fdcId": 2710334,
+      "pattern": "^Chocolate\\ sprinkles$",
+      "ruleId": "b40-chocolate-sprinkles",
+      "tier": "A"
+    },
+    {
+      "batch": 40,
+      "contract": "Leaf-salad wording is represented by raw mixed salad greens; exact species blend, dressing and portion are not certified.",
+      "fdcDescription": "Mixed salad greens, raw",
+      "fdcId": 2709792,
+      "pattern": "^(?:Mesclun\\ salad|Baby\\ salad\\ leaves\\ \\(for\\ finishing\\)|Salad)$",
+      "ruleId": "b40-salad-greens",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Ground rice is represented by white unenriched rice flour as the same milled-rice ingredient family; grain cultivar and enrichment are not certified.",
+      "fdcDescription": "Flour, rice, white, unenriched",
+      "fdcId": 790214,
+      "pattern": "^Ground\\ rice$",
+      "ruleId": "b40-ground-rice-flour",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Fresh named chili/sweet-pepper varieties use the retained raw-hot-pepper family as a generic Capsicum fallback; exact cultivar, color and heat are not certified.",
+      "fdcDescription": "Peppers, hot, raw",
+      "fdcId": 2709798,
+      "pattern": "^(?:Peperoncino\\ chili|Chopped\\ Çarliston\\ pepper|Kapya\\ red\\ pepper,\\ cut\\ into\\ 2\\ cm\\ pieces|Kapya\\ red\\ pepper,\\ cut\\ into\\ strips|Mini\\ pepper)$",
+      "ruleId": "b40-hot-pepper-raw",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Named cheese without a retained exact subtype is represented by Cheese NFS; milk species, aging, moisture, fat level, processing and brand formulation are not certified.",
+      "fdcDescription": "Cheese, NFS",
+      "fdcId": 2705704,
+      "pattern": "^(?:Fromage\\ blanc|Laughing\\ Cow®\\ cheese|Mold\\-ripened\\ cheese|Taleggio\\ cheese|Aged\\ kaşar\\ cheese,\\ grated|Halloumi,\\ sliced|Kiri©\\ fromage\\ frais\\ cheese|Kiri®\\ cheese|Kolot\\ cheese,\\ cut\\ into\\ small\\ cubes|Manchego\\ cheese|Melting\\ cheese|Petit\\ Suisse\\ cheese|Primosale\\ cheese|Quartirolo\\ cheese|Raclette\\ cheese|A\\-\\ powdered\\ cheese)$",
+      "ruleId": "b40-cheese-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Plant-based drink is represented by Non-dairy milk NFS; base crop, fortification, sweetening and brand formulation are not certified.",
+      "fdcDescription": "Non-dairy milk, NFS",
+      "fdcId": 2705403,
+      "pattern": "^(?:Hazelnut\\ milk|Hazelnut\\ milk\\ \\(from\\ organic\\ food\\ stores\\)|Plant\\-based\\ drink)$",
+      "ruleId": "b40-nondairy-milk-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Edible young shoots/sprouts use Sprouts NFS; plant species and maturity are not certified.",
+      "fdcDescription": "Sprouts, NFS",
+      "fdcId": 2709764,
+      "pattern": "^(?:Sunflower\\ sprouts|Pea\\ shoots,\\ cut\\ in\\ half)$",
+      "ruleId": "b40-sprouts-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Prepared meat-substitute fillet/steak/cutlet products use Vegetarian fillet; wheat/soy/pea composition, breading and brand formulation are not certified.",
+      "fdcDescription": "Vegetarian, fillet",
+      "fdcId": 2707478,
+      "pattern": "^(?:Seitan\\ steaks|Seitan\\ steaks\\ \\(100–125\\ g\\)\\ \\(from\\ a\\ health\\ food\\ store\\)|100\\ g\\ vegetarian\\ steaks|Soy\\ cutlets|HERTA\\ Le\\ Bon\\ Végétal\\ plain\\ strips)$",
+      "ruleId": "b40-vegetarian-fillet",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Species-mixed minced meat uses ground meat NFS; species proportions and fat percentage are not inferred beyond the target wording.",
+      "fdcDescription": "Meat, ground, NFS",
+      "fdcId": 2705820,
+      "pattern": "^(?:Mixed\\ minced\\ meat|Minced\\ meat\\ \\(half\\ lamb,\\ half\\ beef\\))$",
+      "ruleId": "b40-ground-meat-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Explicit mixed-species diced meat uses Meat NFS; species ratio, cut and trim are not inferred.",
+      "fdcDescription": "Meat, NFS",
+      "fdcId": 2705819,
+      "pattern": "^Diced\\ beef/lamb$",
+      "ruleId": "b40-meat-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Named sausage without an exact retained subtype uses Sausage NFS; species, cure, smoke, fat and seasoning are not certified.",
+      "fdcDescription": "Sausage, NFS",
+      "fdcId": 2706190,
+      "pattern": "^(?:Raw\\ white\\ sausage|Mettwurst,\\ sliced)$",
+      "ruleId": "b40-sausage-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Vegetarian Knacki-style sausage uses the retained vegetarian hot-dog category; exact brand protein base and formulation are not certified.",
+      "fdcDescription": "Hot dog, vegetarian",
+      "fdcId": 2707470,
+      "pattern": "^HERTA\\ vegetarian\\ Knacki\\ sausage$",
+      "ruleId": "b40-vegetarian-hotdog",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Named/plain fish without a compatible retained species-state record uses Fish NFS; species-specific fatty-acid profile and cut are not certified.",
+      "fdcDescription": "Fish, NFS",
+      "fdcId": 2706224,
+      "pattern": "^(?:Headless\\ fish|Catshark\\ slice,\\ cut\\ into\\ pieces|Bonito\\ steaks|Pacific\\ saury)$",
+      "ruleId": "b40-fish-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Langoustines use Shellfish NFS as a crustacean-category fallback; exact species and preparation are not certified.",
+      "fdcDescription": "Shellfish, NFS",
+      "fdcId": 2706336,
+      "pattern": "^Langoustines\\ \\(scampi\\)$",
+      "ruleId": "b40-shellfish-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Plain uncooked prawn tails use retained raw shrimp as the direct shrimp/prawn food-state family; exact species and tail yield are not inferred.",
+      "fdcDescription": "Crustaceans, shrimp, raw",
+      "fdcId": 175179,
+      "pattern": "^Large\\ prawn\\ tails$",
+      "ruleId": "b40-shrimp-raw",
+      "tier": "A"
+    },
+    {
+      "batch": 40,
+      "contract": "Goose gizzard uses retained generic gizzard; bird species is not represented by the reference.",
+      "fdcDescription": "Gizzard",
+      "fdcId": 2706165,
+      "pattern": "^Goose\\ gizzards$",
+      "ruleId": "b40-gizzard-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Matjes is represented by retained pickled Atlantic herring; exact young-herring cure, salt and sugar formulation are not certified.",
+      "fdcDescription": "Fish, herring, Atlantic, pickled",
+      "fdcId": 175118,
+      "pattern": "^(?:Matjes\\ herring\\ fillet\\ \\(in\\ pieces\\)|Matjes\\ herring\\ fillets,\\ in\\ pieces)$",
+      "ruleId": "b40-herring-pickled",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Kabayaki eel uses retained Fish, eel; glaze/cooking sauce and cooking yield are not represented.",
+      "fdcDescription": "Fish, eel",
+      "fdcId": 2706247,
+      "pattern": "^Kabayaki\\ eel\\ \\(cut\\ into\\ 2\\ cm\\-wide\\ pieces\\)$",
+      "ruleId": "b40-eel-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Unfilled lasagne sheets use dry enriched pasta as a generic wheat-pasta reference; exact flour enrichment, egg content and sheet thickness are not certified.",
+      "fdcDescription": "Pasta, dry, enriched",
+      "fdcId": 169736,
+      "pattern": "^(?:Lasagne\\ sheet|Lasagne\\ sheets)$",
+      "ruleId": "b40-pasta-dry",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Piadina uses retained plain Italian flatbread as a regional-flatbread fallback; exact fat, leavening and flour formulation are not certified.",
+      "fdcDescription": "Focaccia, Italian flatbread, plain",
+      "fdcId": 167945,
+      "pattern": "^Piadine\\ flatbreads$",
+      "ruleId": "b40-flatbread",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Unspecified spring roll uses retained assorted Chinese egg rolls as a generic filled-roll reference; wrapper, filling and frying method are not certified.",
+      "fdcDescription": "Restaurant, Chinese, egg rolls, assorted",
+      "fdcId": 167667,
+      "pattern": "^(?:Spring\\ rolls|Spring\\ roll)$",
+      "ruleId": "b40-spring-roll-generic",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Reuses the already-reviewed retained red-wine reference for duplicate provider identities of Port/Madeira; fortification, sweetness and exact wine style are not certified.",
+      "fdcDescription": "Wine, red",
+      "fdcId": 2710688,
+      "pattern": "^(?:Port\\ wine|Madeira\\ wine)$",
+      "ruleId": "b40-red-wine-reuse",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Orange liqueur uses retained generic liqueur; exact proof, sugar and brand recipe are not certified.",
+      "fdcDescription": "Liqueur",
+      "fdcId": 2710623,
+      "pattern": "^(?:Cointreau\\ \\(for\\ flavoring\\),\\ a\\ little|Cointreau,\\ a\\ little\\ for\\ finishing)$",
+      "ruleId": "b40-liqueur",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Direct retained sorbet category; lemon flavor does not require a different food form.",
+      "fdcDescription": "Sorbet",
+      "fdcId": 2709314,
+      "pattern": "^Lemon\\ sorbet$",
+      "ruleId": "b40-sorbet",
+      "tier": "A"
+    },
+    {
+      "batch": 40,
+      "contract": "Cocktail cherry uses retained maraschino cherries as the direct preserved-cherry category.",
+      "fdcDescription": "Cherries, maraschino",
+      "fdcId": 2709229,
+      "pattern": "^Cocktail\\ cherry$",
+      "ruleId": "b40-maraschino",
+      "tier": "A"
+    },
+    {
+      "batch": 40,
+      "contract": "Marzipan uses retained almond paste; sugar/almond ratio, coloring and brand formulation are not certified.",
+      "fdcDescription": "Almond paste",
+      "fdcId": 2707535,
+      "pattern": "^Pink\\ marzipan$",
+      "ruleId": "b40-marzipan-almond-paste",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Direct retained prepared-from-recipe praline category; optional placement does not alter food identity.",
+      "fdcDescription": "Candies, praline, prepared-from-recipe",
+      "fdcId": 168791,
+      "pattern": "^Praline\\ \\(optional\\)\\ added\\ to\\ the\\ crumb\\-butter\\ mixture$",
+      "ruleId": "b40-praline",
+      "tier": "A"
+    },
+    {
+      "batch": 40,
+      "contract": "Milk jam uses retained dulce de leche as the direct concentrated sweetened-milk family.",
+      "fdcDescription": "Dulce de leche",
+      "fdcId": 2705699,
+      "pattern": "^Milk\\ jam$",
+      "ruleId": "b40-dulce-de-leche",
+      "tier": "A"
+    },
+    {
+      "batch": 40,
+      "contract": "Custard powder uses retained dry egg-custard mix; exact starch, sugar and flavor formulation are not certified.",
+      "fdcDescription": "Egg custards, dry mix",
+      "fdcId": 168772,
+      "pattern": "^Custard\\ powder$",
+      "ruleId": "b40-custard-dry-mix",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Candied/crystallized lemon uses retained candied fruit; fruit species is known but sugar uptake and peel/flesh ratio are not certified.",
+      "fdcDescription": "Candied fruit",
+      "fdcId": 167781,
+      "pattern": "^(?:Candied\\ lemon|Candied\\ lemon\\ \\(without\\ flesh,\\ thinly\\ sliced\\)|Crystallized\\ lemon,\\ thinly\\ sliced)$",
+      "ruleId": "b40-candied-citrus",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Madeleine/mini-cake products use Cake or cupcake NFS; exact butter, egg, sugar and brand formulation are not certified.",
+      "fdcDescription": "Cake or cupcake, NFS",
+      "fdcId": 2707853,
+      "pattern": "^(?:Crumbled\\ mini\\ cakes|Madeleine\\ biscuits\\ for\\ serving|Madeleine\\ cake\\ for\\ serving|Madeleines\\ to\\ serve)$",
+      "ruleId": "b40-cake-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Unspecified cooking/block chocolate uses retained baking chocolate, unsweetened, squares; melting/cutting is presentation only, while exact cocoa/sugar formulation is not certified.",
+      "fdcDescription": "Baking chocolate, unsweetened, squares",
+      "fdcId": 167568,
+      "pattern": "^(?:Melted\\ cooking\\ chocolate|Block\\ chocolate|Cooking\\ chocolate,\\ cut\\ into\\ small\\ pieces)$",
+      "ruleId": "b40-baking-chocolate-unsweetened",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Unspecified solid chocolate presentation uses retained chocolate chips as a generic solid-chocolate reference; cocoa percentage and milk/sugar formulation are not certified.",
+      "fdcDescription": "Chocolate chips",
+      "fdcId": 2710333,
+      "pattern": "^(?:Chocolate\\ shavings|Chocolate\\ pieces|Melted\\ chocolate)$",
+      "ruleId": "b40-chocolate-chips-generic",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Unspecified chocolate confection shapes use Chocolate candy, other, NFS; filling, coating, cereal/malt and brand formulation are not certified.",
+      "fdcDescription": "Chocolate candy, other, NFS",
+      "fdcId": 2710327,
+      "pattern": "^(?:Chocolate\\ bars|Chocolate\\ bar,\\ broken\\ into\\ pieces|Chocolate\\ decorations|Chocolate\\ disc|Chocolate\\ ring|Maltesers\\ chocolate\\ balls)$",
+      "ruleId": "b40-chocolate-candy-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Milk-chocolate wording uses generic chocolate candy as the retained broad confection reference; cocoa/milk/sugar percentages and couverture formulation are not certified.",
+      "fdcDescription": "Chocolate candy",
+      "fdcId": 2710328,
+      "pattern": "^(?:Milk\\ chocolate|Milk\\ chocolate\\ couverture,\\ chopped)$",
+      "ruleId": "b40-milk-chocolate-generic",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Dry kombu pieces use retained dried seaweed; exact kelp species and iodine/mineral profile are not certified, and rehydrated kombu remains excluded.",
+      "fdcDescription": "Seaweed, dried",
+      "fdcId": 2709988,
+      "pattern": "^(?:Kombu\\ \\(1\\ cm\\ pieces\\)|Kombu\\ \\(5\\ cm\\ square\\)|Kombu,\\ cut\\ into\\ 1\\ cm\\ squares|Kombu,\\ cut\\ into\\ 2\\.5\\ cm\\ squares)$",
+      "ruleId": "b40-kombu-dried",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Presentation size does not change the already-reviewed raw lamb-rib family; exact trim is not inferred beyond the retained reference.",
+      "fdcDescription": "Lamb, rib, separable lean only, trimmed to 1/4\" fat, choice, raw",
+      "fdcId": 172493,
+      "pattern": "^Small\\ lamb\\ ribs$",
+      "ruleId": "b40-lamb-rib-raw",
+      "tier": "A"
+    },
+    {
+      "batch": 40,
+      "contract": "Rillettes use Meat spread or potted meat NFS; species, fat ratio and preservation recipe are not certified.",
+      "fdcDescription": "Meat spread or potted meat, NFS",
+      "fdcId": 2706220,
+      "pattern": "^Good\\-quality\\ rillettes$",
+      "ruleId": "b40-meat-spread",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Pomegranate arils use Fruit NFS because no retained pomegranate-fruit record exists in the snapshot; cultivar and seed/aril ratio are not certified.",
+      "fdcDescription": "Fruit, NFS",
+      "fdcId": 2709213,
+      "pattern": "^Pomegranate\\ seeds$",
+      "ruleId": "b40-pomegranate-fruit-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Pomegranate molasses uses generic molasses as a concentrated-syrup fallback; fruit source, sugar addition and acidity are not certified.",
+      "fdcDescription": "Molasses",
+      "fdcId": 2710283,
+      "pattern": "^Pomegranate\\ molasses$",
+      "ruleId": "b40-pomegranate-molasses",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Lemon curd uses generic custard as an egg/sugar/fat-set spread fallback; lemon, butter and sugar proportions are not certified.",
+      "fdcDescription": "Custard",
+      "fdcId": 2705682,
+      "pattern": "^Lemon\\ curd$",
+      "ruleId": "b40-lemon-curd-custard",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Vanilla sugar uses Sugar NFS; vanilla dose and sugar crystal type are not certified.",
+      "fdcDescription": "Sugar, NFS",
+      "fdcId": 2710257,
+      "pattern": "^Vanilla\\ sugar$",
+      "ruleId": "b40-vanilla-sugar",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Named edible fungi without a compatible retained species record use raw mushrooms as a generic fungi fallback; species composition and dried/rehydrated state are not certified.",
+      "fdcDescription": "Mushrooms, raw",
+      "fdcId": 2709793,
+      "pattern": "^(?:Porcini\\ mushroom|Wood\\ ear\\ mushroom|Black\\ truffle)$",
+      "ruleId": "b40-mushroom-raw-generic",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Named/infused culinary oils use Vegetable oil NFS for the all-fat reference; fatty-acid profile, infusion solids and flavor compounds are not certified.",
+      "fdcDescription": "Vegetable oil, NFS",
+      "fdcId": 2710180,
+      "pattern": "^(?:Truffle\\ oil|Pumpkin\\ seed\\ oil|Garlic\\ oil|Garlic\\-flavoured\\ oil|Chili\\ oil\\ \\(for\\ finishing\\)|Chili\\ oil,\\ a\\ little)$",
+      "ruleId": "b40-infused-oil-generic",
+      "tier": "B"
+    },
+    {
+      "batch": 40,
+      "contract": "Unsweetened culinary rose water uses Water NFS as a hydration reference; aromatic compounds and any brand-specific additives are not certified.",
+      "fdcDescription": "Water, NFS",
+      "fdcId": 2710706,
+      "pattern": "^Rose\\ water$",
+      "ruleId": "b40-rose-water",
+      "tier": "B"
+    }
+  ],
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+  "tiers": {
+    "A": "Direct food/state family or presentation-only variant.",
+    "B": "Explicit generic category fallback; not exact subtype/species/brand/formulation certification.",
+    "C": "No approval rule; remains unresolved."
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "policy": {
+    "searchResultAutoAccepted": false,
+    "exactFdcBindingRequired": true,
+    "semanticConceptGroupingReviewed": true,
+    "providerIdentityInference": false,
+    "candidateSearchIsIdentityProof": false
+  },
+  "selectionMethod": "explicit-semantic-review",
+  "items": [
+    {"reviewTargetId":"concept:food:65f2cfa97945d200fb1d","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Mussel","fdcId":2706350,"confidence":"high","fdcDescription":"Mussels","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":1},
+    {"reviewTargetId":"M_FOOD_584","reviewTargetKind":"provider-identity","canonicalEnglishName":"Clams","fdcId":2706339,"confidence":"high","fdcDescription":"Clams, NFS","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":2,"usageCountAtReview":23,"notes":"Selected rank-2 USDA 'Clams, NFS' because the target is generic 'Clams'; this avoids inventing the raw state from the rank-1 candidate."},
+    {"reviewTargetId":"concept:food:99c0dc2c75fc059a1dff","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Carp","fdcId":2706233,"confidence":"high","fdcDescription":"Fish, carp","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":4},
+    {"reviewTargetId":"concept:food:bc0de1251b6a69a501c1","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Mace","fdcId":170927,"confidence":"high","fdcDescription":"Spices, mace, ground","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":6},
+    {"reviewTargetId":"concept:food:484303784e770a99d615","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Allspice (optional)","fdcId":171315,"confidence":"high","fdcDescription":"Spices, allspice, ground","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":1,"notes":"Explicitly reviewed '(optional)' as recipe-role text; the food identity remains allspice."},
+    {"reviewTargetId":"M_FOOD_17","reviewTargetKind":"provider-identity","canonicalEnglishName":"Anise","fdcId":171316,"confidence":"high","fdcDescription":"Spices, anise seed","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":14},
+    {"reviewTargetId":"concept:food:bc847e60220163a735ff","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Anise","fdcId":171316,"confidence":"high","fdcDescription":"Spices, anise seed","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":4},
+    {"reviewTargetId":"concept:food:f90af95de1320f588457","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Saffron threads","fdcId":170934,"confidence":"high","fdcDescription":"Spices, saffron","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":4,"notes":"Explicitly reviewed form wording 'threads' as saffron; no different ingredient identity is implied."},
+    {"reviewTargetId":"concept:food:57b41bc377365ad40e20","reviewTargetKind":"semantic-concept","canonicalEnglishName":"C- saffron","fdcId":170934,"confidence":"high","fdcDescription":"Spices, saffron","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":1,"notes":"Explicitly reviewed source-local recipe marker 'C-' as non-identity text; the food identity remains saffron."},
+    {"reviewTargetId":"concept:food:35a5a3ad2a59226507aa","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Chanterelles (halved)","fdcId":168422,"confidence":"high","fdcDescription":"Mushrooms, Chanterelle, raw","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":4,"notes":"Explicitly reviewed preparation cue '(halved)' as non-identity text; the food identity remains chanterelle mushroom."},
+    {"reviewTargetId":"concept:food:ab2c2a1051d5e17bd8f2","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Chanterelles","fdcId":168422,"confidence":"high","fdcDescription":"Mushrooms, Chanterelle, raw","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":1},
+    {"reviewTargetId":"concept:food:25590c6499abf15b2fe7","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Quince, about 250 g","fdcId":168163,"confidence":"high","fdcDescription":"Quinces, raw","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":1,"notes":"Explicitly reviewed quantity text 'about 250 g' as non-identity text; the food identity remains quince."},
+    {"reviewTargetId":"concept:food:6709fe92f93601900ee7","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Rusks","fdcId":174981,"confidence":"high","fdcDescription":"Crackers, rusk toast","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":2},
+    {"reviewTargetId":"M_FOOD_329","reviewTargetKind":"provider-identity","canonicalEnglishName":"Hazelnut","fdcId":2707502,"confidence":"high","fdcDescription":"Hazelnuts","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":39},
+    {"reviewTargetId":"concept:food:5e65990fa69b5be1bab9","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Dates","fdcId":2709203,"confidence":"high","fdcDescription":"Date","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":4,"usageCountAtReview":1,"notes":"Selected rank-4 USDA generic 'Date' because the Cook4Me target is generic 'Dates'; higher-ranked candidates are specific cultivars (Medjool and Deglet Noor)."},
+    {"reviewTargetId":"concept:food:d0c87b6b371144fed1cf","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Feta cheese","fdcId":173420,"confidence":"high","fdcDescription":"Cheese, feta","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":20},
+    {"reviewTargetId":"concept:food:7a91db74bbd1c022b185","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Orange marmalade","fdcId":168819,"confidence":"high","fdcDescription":"Marmalade, orange","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":20},
+    {"reviewTargetId":"concept:food:b6e421f2ffbd672f0f10","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Frozen mixed vegetables","fdcId":170471,"confidence":"high","fdcDescription":"Vegetables, mixed, frozen, unprepared","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":28},
+    {"reviewTargetId":"concept:food:a2f853d7dd871001fad0","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Red wine vinegar","fdcId":172240,"confidence":"high","fdcDescription":"Vinegar, red wine","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":25},
+    {"reviewTargetId":"concept:food:37cab1bdb4ee4d4c6273","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Black olives","fdcId":2710090,"confidence":"high","fdcDescription":"Olives, black","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":20,"notes":"Selected the exact black olive record; no other olive color/type was inferred."}
+  ]
+}

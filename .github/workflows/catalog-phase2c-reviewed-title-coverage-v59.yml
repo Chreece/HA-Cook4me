@@ -1,0 +1,59 @@
+name: Catalog Phase 2C reviewed title coverage v59
+
+on:
+  push:
+    branches:
+      - cook4me-catalog-phase2c-single-page-title-proof-v59
+    paths:
+      - .github/workflows/catalog-phase2c-reviewed-title-coverage-v59.yml
+
+permissions: {}
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Verify all complete-catalog residual titles are covered by the real loader
+        run: |
+          python - <<'PY'
+          import importlib.util
+          import json
+          from collections import Counter
+          from pathlib import Path
+          import sys
+
+          root = Path('.').resolve()
+          spec = importlib.util.spec_from_file_location(
+              'phase2c_review_loader', root / 'tools' / 'apply_release_catalog_reviews_v2.py'
+          )
+          module = importlib.util.module_from_spec(spec)
+          assert spec and spec.loader
+          sys.modules[spec.name] = module
+          spec.loader.exec_module(module)
+
+          reviews = module._recipe_title_reviews()
+          snapshot = json.loads(
+              (root / 'tools' / 'release_catalog_pending_recipe_titles_single_page_v59.json').read_text(encoding='utf-8')
+          )
+          tasks = [row for row in snapshot.get('tasks', []) if isinstance(row, dict)]
+          missing = []
+          for row in tasks:
+              language = module._text(row.get('sourceLanguage')).lower()
+              source = module._text(row.get('sourceText'))
+              if not reviews.get((language, module._norm(source))):
+                  missing.append({'language': language, 'source': source})
+          if missing:
+              counts = Counter(row['language'] for row in missing)
+              raise SystemExit(
+                  f'missing complete-catalog title coverage: total={len(missing)} '
+                  f'byLanguage={dict(sorted(counts.items()))} examples={missing[:10]}'
+              )
+          expected = int(snapshot.get('recipeTitleTasksRemaining') or 0)
+          if expected != len(tasks):
+              raise SystemExit(f'snapshot count mismatch expected={expected} tasks={len(tasks)}')
+          print(json.dumps({'completeCatalogResidualTasks': len(tasks), 'covered': len(tasks), 'missing': 0}, ensure_ascii=False))
+          PY

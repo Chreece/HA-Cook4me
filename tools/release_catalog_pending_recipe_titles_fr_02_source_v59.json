@@ -1,0 +1,713 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "fr",
+  "part": 2,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 926,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:7390f9c35732474dca591a73",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Calamars à la basquaise",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:636914653b2eca204f5546d3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Caldillo de congrio",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:738be0e2c00770c063c9ab53",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Canard aux agrumes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a78164b4c251ed4d379fcddd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cappuccino de patate douce",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2d37feb20a99ac282350fc36",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Carbonara de canard",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3c9a7418ff979277cd147697",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Carbonara de céleri",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:427b97079aec4b3fb0e48c08",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Carbonara de légumes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:43c858e86301996f469d1113",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cari aux œufs Kerala",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:021ef1587f38382ab2cc1496",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Carotte",
+      "groupCount": 10
+    },
+    {
+      "taskId": "recipe_title_english:656977d67a49866d11b70eb0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Carpaccio mandarine gingembre",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1d67154f3577d2ce0ac551d0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Casarecce aubergine & anchois",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2c3298999607a2a5d9854c80",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cassoulet végétarien",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:97f5c83e0eb5dc90d6e88910",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Caviar d'artichaut",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0c2fffc30f6486c387263d45",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Caviar d'aubergine au sésame",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c10add1b27b3c5941296e484",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Caviar de poivron à la feta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a3b363d54fa713fb9d285865",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cerises confites à l'orange",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c7ce29ce4e48530934b81fe2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cervelle",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a3f91bfea75c88feaef9211b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chakchouka aux œufs",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:146e5862cd8915b78388e7c6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Champignon",
+      "groupCount": 11
+    },
+    {
+      "taskId": "recipe_title_english:a070551a2a7ca6fc3d6c6a47",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Champignons au fromage",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f19c697849d9fa804e4a493a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Champignons farcis pecorino",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:49215ac8c9f058043137a3c4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Champignons à la grecque",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4e34d46c0b47b00a2d7f1347",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Charlotte aux pommes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f3055813e094b6bbc77d63b7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chaud-froid pomme cannelle",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:420d29f973469a1e1a56941e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cheeseburger légumes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8678385bbb7c2aaec20f0081",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cheesecake aux marrons",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e3832a311075640c324fe94f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cheesecake basque",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:32c4222ccbb01cfedcafdd37",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cheesecake chocolat orange",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:23329dfcadc87703a7f2a8eb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cheesecake clémentine et pistache",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:89d7a52ee873d2a1da457263",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chicken wings",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:f2b84fcfdc61b6559950837c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chili de dinde facile",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8a73ca3a85049feb9e304b3c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chili façon super-héros",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:82422f23d7bb4e57f02617de",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chili végétarien à la coriandre",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a53a3c0cb8fafe82f3cd1acf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chorizo au vin",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:807a725c656e75befbf51481",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chou",
+      "groupCount": 11
+    },
+    {
+      "taskId": "recipe_title_english:b78ffc4b8599332b2f559eac",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chou chinois à l’aigre-doux",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5423ceaadb7f43eb90e5bef6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chou rouge",
+      "groupCount": 5
+    },
+    {
+      "taskId": "recipe_title_english:7ab6a80d606e1772be6959fe",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chou vert",
+      "groupCount": 6
+    },
+    {
+      "taskId": "recipe_title_english:9bf6e3aa909824e05f1498c3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chou-fleur",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e64994e0ac941d4e142cb758",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chou-fleur béchamel bacon",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b34b705282951c448c05f7b4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chou-fleur croquant à l'indienne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cd1ffec317444bc6d34003a7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chou-fleur crousti fondant",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f41dcf91bf5a2d5578990248",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chou-fleur pané au curry",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:0f2555941b3a2b953cc32ed1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chou-fleur sauce soja au miel et butternut",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2d2c589bc9c35ebd3f6efe3b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chou-fleur saumon & herbes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:984a4e9819b9d700e2de60b2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chou-fleur à l'Espagnole",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b8e4909599cdb75219893a11",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chou-fleur à l'indienne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6cd2cf5e2d5b9aa24a14343e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Chou-fleur épicé aux noix de cajou",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6d893d1c05e751a14dd10d20",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Choux de Bruxelles à la truffe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:aa0af42ff2b5eb229a5f517d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Choux fleur à l'ancienne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:01f41282aad7638bab6c25dc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Choux jolis en bouillon thaï",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:194bf5d449d18e5b5db892da",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Churros chorizo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6867e50e5c8cc8f6e2efeac7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Citrouille à l'orange",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:046a511470a69e7e1fa1b4df",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Clafoutis aux cerises",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4bd64c993afeeca6b7f60b22",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Clafoutis aux raisins",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:134e1862f19a95da9cbf4faf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Clafoutis carotte maïs fromage",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4f594e2b3f6e30499e8fe538",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Clafoutis chèvre et figue",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9073f92db2774a43e390d022",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Clafoutis framboises",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3496ad12aba8cf7b6e573b87",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Clafoutis pêche amandes",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:53e666647fb5e11d80d566f1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Club sandwich dinde fromage",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d1eb6d91b5de9f2f3a8c1073",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Clémentines menthe pignons",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:26baaa6efeb0478c9bd93e19",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cocotte de fruits d’hiver",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3200afbc4a71b2d38943ecdc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cocotte de panais à la morue",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e31e5189721a3b78ba88ea34",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cocotte fenouil citron",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:e367fe930acca42e7867f5c5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cocotte légumes racines",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fd2c455bd27e22dbe03a3b34",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cocotte orge champignons",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:eceabdfd37e8315341c4a2fd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cocottes de légumes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cc5154626d1bad02641263a6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Colin sauce curry",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3c8f2dd6351201ad3a7b2134",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Colombo de lotte et légumes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:551479dd4bd723d75e89a308",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Compote abricots verveine",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c206ddb2a9bbacb7c470c9c6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Compote au dulce de leche",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b35d437507abb5f7f4149414",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Compote clémentines aux épices",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0a40a2aea1d2bab475e277a6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Compote de melon épicée",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b8714abdf97503b31309f6f3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Compote poire marron",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e2d19edb39b472906900e372",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Compote pom'fraiz' à boire",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:909c13457f4ed3afd3610723",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Compote pomme-kiwi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:42ea70e6a234f63ad23ab587",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Compote rhubarbe fraise",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f4aedc36e2e15bb92bbf6721",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Compotée de fruits rouges",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:94302e718f09aa11698e0723",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Compotée poire clémentine",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f880892719de4d83ec559bc7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Coquelet en pot au feu anisé",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:19d2f7ae9e08b599841faf1d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Coquelets-au-pot",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:23706559b9126865678778fb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Coques en persillade",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bbf27a6f8a930c1585c009fb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Coques et courgettes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f6140b1d72ac006f5566b937",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Coquillages et riz noir",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5a94a91271e2a23cf76d78ec",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Coquillet'otto jambon italien",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:95644fad9e9f2d47700698d1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Coquillettes volaille fromage",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2e28c3a4887cad50ec2308e5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cordon bleu maison",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:361b35a13dfde6bd1ca74d1b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Courge butternut",
+      "groupCount": 6
+    },
+    {
+      "taskId": "recipe_title_english:889c73f503e41d6661c98e11",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Courgecake au potimarron",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e46475b4520b3618c66f708f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Courgette",
+      "groupCount": 15
+    },
+    {
+      "taskId": "recipe_title_english:9cb9e5c848bf2d45df2540ca",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Courgettes au pesto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2ac202f8398b3063b3ff775e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Courgettes à la bolognaise",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d36727b22d6af9c96b724607",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Couscous au poulet",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0ba0a6cc34bec24824dd375d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Couscous aux œufs durs",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8eac5f899ee94a0a50e84507",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Couscous boulgour facile",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:78cfe0dd0b10b5d08cf1c27f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Couscous de la mer",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:ac6fb22e49fe9f641168f671",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Couscous poulet rutabaga",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:88e61ed8d9229957244e81cf",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Couscous végétal",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:42210c7b1782a8b30da829f5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Crevette",
+      "groupCount": 9
+    },
+    {
+      "taskId": "recipe_title_english:8bcc9a7fdeb486c244f4d224",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Crevettes panées",
+      "groupCount": 2
+    }
+  ]
+}

@@ -1,0 +1,1712 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-keyless-ingredient-review-source-batch-v59",
+  "phase": 3,
+  "part": 2,
+  "batchSize": 100,
+  "rankStart": 101,
+  "rankEnd": 200,
+  "sort": "occurrenceCount-desc,language,sourceText,taskId",
+  "tasks": [
+    {
+      "taskId": "unkeyed_ingredient:48e2fa3218f7dcf585edc8d7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Polpa di pomodoro",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a23f93cc70acd11798860af3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Sale e pepe qb",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:87bda4697fc72c44ccdd2e86",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-パン粉",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5a64ecd34afcab45063c5f4f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "めんつゆ(2倍濃縮)",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ce12683834b0faeb14fca4d7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "グラニュー糖",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b01286c1fe1b335729fcb551",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "サバ水煮缶(190g 汁ごと使用する)",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a9b2b50015b196fb881cc202",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "片栗粉",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:72c27189961425283281650c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "白ごま(仕上げ用) 少々",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:830383328caae2ca36ae0041",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "애호박",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c188b8ccc0fd101660d12bfd",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "양배추",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e2c113982ca8743a4c0f2683",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Natka pietruszki",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dcdebe1b7ae2007e0a797fc6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Sladká paprika",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:16393877b605c3e9b390fe85",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Sarımsak,ezilmiş",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fb78a1330e305537f93a3a4b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Soğan,ince doğranmış",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7f2b633b2a3b2194fe525ca3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Томат, помідор",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:db4dfbfd5bab84cfad9c68b4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "A-味醂",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:391dd0957d22a19f272a295e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "B-味醂",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2fb59f608b8704deaa6f6822",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "B-酒",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:16df26af13170df39fd1f41c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "B-醬油",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e85ba9648581e640f4d9c49d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "的 鹽",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6ec890581f2b7970f454806a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "雞蛋",
+      "occurrenceCount": 18,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 18
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:33fabff4455f1b7234096ebb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Smetana",
+      "occurrenceCount": 17,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 17
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ca1c55b1531f415f961bbf35",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "C-砂糖",
+      "occurrenceCount": 17,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 17
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:c1e3759547a80b6a2908a77d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "очищена та тонко нарізана",
+      "occurrenceCount": 17,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 17
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9fa9e79a6e47cf35686ba1e3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "A-砂糖",
+      "occurrenceCount": 17,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 17
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ff67cbac81c2221f87f20127",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Къри на прах",
+      "occurrenceCount": 16,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 16
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1983678fb19f698c660637b7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-だし汁",
+      "occurrenceCount": 16,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 16
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3c9c66406c2c2f651fd59752",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "C-水",
+      "occurrenceCount": 16,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 16
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b608f344a24a25a18db97af4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "종이 호일",
+      "occurrenceCount": 16,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 16
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:14cfbe564d3c407247875436",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Mąki pszennej",
+      "occurrenceCount": 16,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 16
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:702a5b40afa1b136b9bf1c91",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Hladká múka",
+      "occurrenceCount": 16,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 16
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b238b72e1d6e4e0b73f6f2ea",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Majorán",
+      "occurrenceCount": 16,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 16
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a38cb946cce343f594016112",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "Одинарні вершки",
+      "occurrenceCount": 16,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 16
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3c051ecb37126a80b95a74a9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "أرز أميركي",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:330ffc4d2612a4a7126a4696",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "أرز مصري",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1112cd808e24821a1b440c47",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "الملح والفلفل حسب الرغبة",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d0fc06544b30d30a460acd99",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "جزر، مكعبات",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7e9385ef4a2424b2c5499a22",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "خلطة بهارات الكبسة",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:4b8485c3e0bec5cd430e428c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "عصير الليمون",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9272d5d891df4e84673813c1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ar",
+      "sourceText": "هال مطحون",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:dd264069e5c68d65c48dfab8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Късозърнест ориз",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:e7354dbd334b6dca39b6eaeb",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Магданоз, нарязан",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1a5727688277646392bda268",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "bg",
+      "sourceText": "Настърган пармезан",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d858c755ba72a1a7ac140c3d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Kuřecí vývar",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fae544ea92b6490ac405e5dc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Svazek polévkových bylinek",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:258c2e9ef68a9de4fae5b142",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Ramekins",
+      "occurrenceCount": 15,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a0cc9da09891edf8715623e3",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Salt and pepper, to taste",
+      "occurrenceCount": 15,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:9462f326815cdf8eb27f4f56",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Whipping cream",
+      "occurrenceCount": 15,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:60ee64f0640db6fc45d4ea18",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Biljno ulje",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a7c515eebd0b6ee148907b3a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hr",
+      "sourceText": "Rajčice",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a0782eae4fd68f19f9940715",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Peperone rosso",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a0405a9661ae1bf2414f8ed9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Peperoni",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7fe45d9b9ef1a98962fb94f9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "A-黒こしょう 少々",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7cfcbf11df94d36eab5fb248",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "クミンパウダー",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:fb5e80388d018c56d7c00266",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "米(洗って30-60分吸水し ザルにあげる)",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b6f845c9f1cf407bd9f82c70",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "赤飯",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1ee770995be72a87426662c8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "[양념] 간장",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0baded8cf172af049df8014a",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "[양념] 설탕",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:6836674eb34c08df36191d07",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "된장",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2d99f2ffbc82026e760cfb08",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "두부",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:20c83e32b8200dad8b61a1fc",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "전복",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:172464208ab150b96550d154",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "통후추",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b851fa524eb544693875e09b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Molho nuoc mam",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:667f27c409b0deed4a2d1ef6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Polpa de tomate",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0fcb2ac3bd70688d974d3602",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pt",
+      "sourceText": "Óleo vegetal",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:882524a4520244607a68e84b",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ro",
+      "sourceText": "Sare, piper",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:1726c13c4c013f4ab58105a1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Kurací vývar",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:89a14157d6cd567fbc167210",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Zväzok polievkových byliniek",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:762f540dbfaaf7dd1e2468a7",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Köri baharatı",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:05c277e95c5871ef0b54de3d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Patates,küp doğranmış",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:950832311973d64b8f860299",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Sarımsak,doğranmış",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:2756c0007e82eae5b1a03d9f",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Soğan,piyazlık doğranmış",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:f4fdd7b58416738abc1d2bc6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Tavuk bulyon",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d9206d451a19854ec78c6892",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "tr",
+      "sourceText": "Toz kimyon",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:ebee23f427554d235908ded5",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "бульйону з телятини",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:234b4c5779728f90bea1316d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "ч.л. томатного пюре",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:03d57016ca6446526bbd1d89",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "A-胡椒鹽 少許",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5e1488e7f31a0e11c41e82b0",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "B-水",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0b5479a5f44a9fdc86b1c36e",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "B-砂糖",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:faddc406d02085fe8821d642",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "番茄醬",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:51cdb52e32e3c314646c4758",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "的 糖",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:0acf62cdc030db1fea213f0d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "砂糖(醬料用)",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:bad0122738e22138f28e809d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "zh",
+      "sourceText": "芝麻油",
+      "occurrenceCount": 15,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 15
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a151be437ea700cf277e3c7d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Double cream",
+      "occurrenceCount": 14,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 14
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:54b5feefd26266abe7bb4101",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Majoranna",
+      "occurrenceCount": 14,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 14
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8022f0a61f3f5b1f845c181c",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "hu",
+      "sourceText": "Szegfűbors",
+      "occurrenceCount": 14,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 14
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:07b61dde2442b9726c8b5197",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "it",
+      "sourceText": "Pomodori secchi",
+      "occurrenceCount": 14,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 14
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:78dca74647753c1f2a2a02c9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "B-こしょう 少々",
+      "occurrenceCount": 14,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 14
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b6f32e3a3ecd44fde7d1d7b1",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "C-水(水溶き用)",
+      "occurrenceCount": 14,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 14
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:af87815cc2ee272daf4589e8",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "カレールー(お好みで調整)",
+      "occurrenceCount": 14,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 14
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:8003f11e1dc34e6b14720fe4",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "溶き卵",
+      "occurrenceCount": 14,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 14
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:d01fd76e928126125b1ed638",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ja",
+      "sourceText": "薄口しょうゆ",
+      "occurrenceCount": 14,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 14
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:83d06ce39a9c4211885052e6",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "생표고버섯",
+      "occurrenceCount": 14,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 14
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a0a28814c5bbd47af806aa38",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "ko",
+      "sourceText": "소금 및 후추",
+      "occurrenceCount": 14,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 14
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:a431a74eb3f4090f41e1f35d",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "pl",
+      "sourceText": "Majeranek",
+      "occurrenceCount": 14,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 14
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:3d0047abe0d8dcc4636dc135",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "sk",
+      "sourceText": "Smotana na šľahanie",
+      "occurrenceCount": 14,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 14
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:5800d980ac97ccda71fefaf9",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "uk",
+      "sourceText": "курячого бульйону",
+      "occurrenceCount": 14,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 14
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:b453d2bfc0620f4253769524",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "cs",
+      "sourceText": "Smetana na vaření",
+      "occurrenceCount": 13,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 13
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:91a190ac832acf9ed298f7af",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "de",
+      "sourceText": "Lorbeerblätter",
+      "occurrenceCount": 13,
+      "needsTranslation": true,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 13
+      }
+    },
+    {
+      "taskId": "unkeyed_ingredient:7dbc80e61fac9ab1b1390c91",
+      "type": "unkeyed_ingredient",
+      "sourceLanguage": "en",
+      "sourceText": "Vanilla extract",
+      "occurrenceCount": 13,
+      "needsTranslation": false,
+      "requestedClassification": [
+        "food",
+        "equipment",
+        "other",
+        "ambiguous"
+      ],
+      "sourceFieldCounts": {
+        "applianceDescription": 13
+      }
+    }
+  ]
+}

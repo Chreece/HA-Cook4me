@@ -1,0 +1,713 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "pl",
+  "part": 10,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 1213,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:7413afcfe8279b802e218aa6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z brokułem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:054b0db129cbf347ab832a43",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z brzoskwinią i serem pleśniowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:23bc8a2a862d0093b2372b40",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z brzoskwiń i komosy ryżowej",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:54a409e7f352b23b45300262",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z bulguru z ziołami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:854bf44c6de085964abed8f8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z burakiem, fetą, orzechami i rodzynkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:29a43b8e1fb8ff806c1fc4d0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z buraków i malin",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9032c44662ba4210b3858b58",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z cieciorki i sezamu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:357181dfc5598efcc3e9d2ee",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z figą i boczkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9f6b4d89aa3462f915691e32",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z groszkiem i morelą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0eea630371a1145b70e942d4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z jajkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5b614cfc0d1f30c2d6535bd7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z komosy ryżowej z pomarańczami, szpinakiem i oliwą chilli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:245c49c83397e1071b47952f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z krewetkami i szparagami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0ecb589375e60238e3f8b6a7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z kurczaka w słoiku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:074c9a9055b2f5a04359cff5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z kurczakiem (dla IO)",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7a9bbaf25b32154e38208eb8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z kurczakiem i fasolką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9570c2a61e5525f020e3b314",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka z łososia i fasolki szparagowej",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:54beb96433b02701dd221b3a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka ze smażonym camembertem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5a3cd1272365151940c1f9d0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka ziemniaczana z kiszonym ogórkiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8179c6cac4981b0cab645516",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sałatka ziemniaczana z łososiem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:723addf77a15f38fc3953f77",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Schab czosnkowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ec89f42139b29cbfd7cd0819",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Schab duszony",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:74724848d4fd28962691440e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Schab w sosie własnym wg Kiszki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2cb7a691c77acf074ddeb9c8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Schab w sosie z suszonych pomidorów z marchewką i rozmarynem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8c72aaf3baf58a6abc761663",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Schab wieprzowy w sherry",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b83e1c4eefef6bf4a1052ea3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Schabowy na bogato",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:41f29e6d84ef089bc53ee1fa",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Schabowy w panko z puree i marchewką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:dac65dd4218aaff7390ae4e4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Scotch broth wg Andrzeja Andrzejczaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:772014e5eaf5690a92868df4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Serniczki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cb397d68de502a932def2c42",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sernik baskijski",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:85d4f8feb589274ba547799f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sernik jabłkowo-orzechowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3fb8f0eb4f6aebf6e2624dbb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sernik kasztanowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:de677529df3e96196b3e6306",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sernik nowojorski",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1f5a9b63ec068c1f1527d5fe",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sernik wielkanocny",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:24cc2d504628ee3cafd9a00d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sernik „włoska deska serów”",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:82ecbbcebf7f73b5a7fe0bc2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sernikowe werynki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e40f53f4b2db0143e0cf25d9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Serowe grzybki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:699ad88f5880e17eb9e74eb3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Skorupiaki z drobiem i serem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:eb3b2bbd0d36ba0cac58c012",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Skorupiaki z warzywami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cd666997902b0252385a2a0e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Skrzydełka kurczaka w marynacie z coli",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f622599a6329135eb4525343",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Skrzydełka z kurczaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5d1b44ed470edff601407aab",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sloppy joe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:56f63037c60a9d564c72a790",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Smażona cielęcina z bakłażanem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8a3a7b254e3e98e8ff2a8fc9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Smażona wołowina teriyaki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:49080b54e4b803198986a832",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Smażone krewetki tandoori",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1c864b7f6a168bc54e7e8828",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Soczewica",
+      "groupCount": 6
+    },
+    {
+      "taskId": "recipe_title_english:9c7d76acb697dc4cf6049d99",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Soczewica beluga z krewetkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4cb770d7b0216958b1b51f39",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Soczewica po kantońsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f2475712ff2c4944d6b2c08e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Soczewica z bakłażanem i pomidorami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3f111b316bfac9eccc9a61a3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Soffritto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:00a08a3dd74c3ec15baeae89",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Solanka ukraińska wg Andrzeja Andrzejczaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f9a2aebef9e6efa90efb1b9f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sos boloński a la chef",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f253ce9d8a7a332b1c8656ef",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sos jabłkowo-miodowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0bcba9621672ce5b19e0f9fa",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sos karmelowo-mandarynkowy",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8161adc49c806bd4c256b200",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sos ragu bolognese do makaronu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9e204cdd02c3eddf98d8b9f0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sos serowy z jalapeño",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e8da00b410ad783259ec6d32",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Spaghetti z buraczanym pesto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b414809cfe8f490aa30073e9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Stek bavette z salsą z kukurydzy i zielonej papryki, nachosami i smażonym jalapeño",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1413c9d8f7ec4a86d2b0f131",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Stek wołowy z brokułem",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c0e8c5ac1584a9f3095c27d9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Stek z antrykotu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:730b1cc51802e554efd552dd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Stek z rostbefu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cd9ff44b3343ab95e5243d1d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Steki z kalafiora",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a77349b03da3f88f40ae39ca",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sticky rice z mango",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f936c64c00f2b1212adba4f0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Strogonow",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1160a3e92dd7e28d38f8cba9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Strogonow z kurczaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ca8b5c9ce1ab4549725edaed",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sudański kebab",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:386b7c5f762693df2068dd58",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sundubu Jjigae, wegański gulasz z tofu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:780906247c5d70049deaeae4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Supplì alla Amatriciana",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:149f4fdbb80f116dea768722",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Swojska kiełbasa z sałatką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:308f47059d63e65db678104e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Szakszuka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7aa6c181c36aad7c4de98b5e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Szakszuka na pomidorach cherry",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4a1e9243f97e35bf65612b6b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Szakszuka z awokado",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:33a69c10ab7ab0ed661f7139",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Szarpana wieprzowina",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bd0ee264134a891dfa7d9b21",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Szaszłyki z kiełbasą",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fbcbe79afbe669b962c97b1c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Szaszłyki z kiełbasą i śliwką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1d68a96f2efd417f9f6ddab9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Szaszłyki z kurczaka w stylu greckim",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:697fb8bc16a22aff5c102681",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Sznycelki z indyka z papryką w słodkim sosie",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a60da3bed94f2d10a2a84154",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Szparag",
+      "groupCount": 25
+    },
+    {
+      "taskId": "recipe_title_english:1933c94c16409b2ff281f3ae",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Szpinak",
+      "groupCount": 5
+    },
+    {
+      "taskId": "recipe_title_english:ba7a0c8a074828fb1078b024",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Szybka korma z wołowiną",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f02a29ab21d762b7e69c12dd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Szybka zupa z boczniaków z serkiem topionym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e1e76451fba633d11a303570",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Szybki chleb",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:caadee16c0294b5c54870b32",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Szybkie ciasto makowo-migdałowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d9145c828b385e3f936e3564",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Szynka w sosie musztardowym",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:22cdcaa9fb5e2ad6c3fa02e6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Szynka wieprzowa w sosie po cygańsku",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:71940a96aae2ba8993a41191",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Słodko-kwaśna kapusta pekińska",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1905882398b75a6f9c0cea4f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Słodko-kwaśna wieprzowina",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ca35c02156454b736775df89",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Słodko-kwaśne żeberka wieprzowe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6641d88523aa706ea5d78862",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Słodycze „Dulce de leche”",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0533b6e8e3f0cc5f0e05243d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Słoneczna zupa jarzynowa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:554ca9c1f161a78fdf7fa58c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Słony karmel",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a73161bbb691f6faa63f7c97",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tacos Al Pastor wg Andrzeja Andrzejczaka",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cafc6f2a0c2904a92ed26d22",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tacosy z wołowiną",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:356942829e56a23f8689d447",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tadżin z wołowiny i marchwi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:407e369648f00bfd6ec0a128",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tagina z dorsza z oliwkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9c605f4ff82c839f9d5b48a9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tagliatelle z tuńczykiem i pomidorami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a29bf31e8fe65b3afc17483d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tajska wieprzowina na ostro z fasolką",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6adf5d7f7acb28560b5847cb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tajskie burrito",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3f2cacebdad5e42c2ccf6b4b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tarta na spodzie z twarogu z truskawkami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6eb15db907c4e507bdde1692",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tarta z kozim serem i figami",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7c0ca113f33129dbacd93ef9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "pl",
+      "sourceText": "Tażin z jagnięciną i suszonymi śliwkami",
+      "groupCount": 1
+    }
+  ]
+}

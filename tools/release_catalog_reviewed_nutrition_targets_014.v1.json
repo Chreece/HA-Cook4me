@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "policy": {
+    "searchResultAutoAccepted": false,
+    "exactFdcBindingRequired": true,
+    "semanticConceptGroupingReviewed": true,
+    "providerIdentityInference": false,
+    "candidateSearchIsIdentityProof": false
+  },
+  "selectionMethod": "exact-canonical-reviewed-decision-reuse",
+  "items": [
+    {
+      "reviewTargetId": "concept:food:c1ba7b6566916021bc0e",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Cardamom",
+      "fdcId": 170919,
+      "confidence": "high",
+      "fdcDescription": "Spices, cardamom",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 18,
+      "notes": "Reused a prior explicit nutrition decision for the exact same canonical English; this exact FDC ID is also present in this target's own pinned candidate evidence."
+    },
+    {
+      "reviewTargetId": "M_FOOD_644",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Orange marmalade",
+      "fdcId": 168819,
+      "confidence": "high",
+      "fdcDescription": "Marmalade, orange",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 11,
+      "notes": "Reused a prior explicit nutrition decision for the exact same canonical English; this exact FDC ID is also present in this target's own pinned candidate evidence."
+    },
+    {
+      "reviewTargetId": "M_FOOD_633",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Clams",
+      "fdcId": 2706339,
+      "confidence": "high",
+      "fdcDescription": "Clams, NFS",
+      "fdcDataType": "Survey (FNDDS)",
+      "candidateEvidenceRank": 2,
+      "usageCountAtReview": 5,
+      "notes": "Reused a prior explicit nutrition decision for the exact same canonical English; this exact FDC ID is also present in this target's own pinned candidate evidence. The Cook4Me identity is generic, so the reviewed USDA NFS record is retained rather than inventing a raw/cooked preparation state."
+    },
+    {
+      "reviewTargetId": "concept:food:03e784e68d9a44cf9d6f",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Clams",
+      "fdcId": 2706339,
+      "confidence": "high",
+      "fdcDescription": "Clams, NFS",
+      "fdcDataType": "Survey (FNDDS)",
+      "candidateEvidenceRank": 2,
+      "usageCountAtReview": 2,
+      "notes": "Reused a prior explicit nutrition decision for the exact same canonical English; this exact FDC ID is also present in this target's own pinned candidate evidence. The Cook4Me identity is generic, so the reviewed USDA NFS record is retained rather than inventing a raw/cooked preparation state."
+    }
+  ]
+}

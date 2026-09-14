@@ -1,0 +1,138 @@
+{
+  "baseRecordedReviewTargetCount": 5080,
+  "bindingsCreatedByBatch44": 0,
+  "contextBeforeCount": 918,
+  "expectedContextCount": 929,
+  "expectedManualCount": 310,
+  "expectedMovedToContextCount": 11,
+  "expectedMovedUsageCount": 2478,
+  "kind": "cook4me-nutrition-batch44-generic-pepper-triage-v60",
+  "manualBeforeCount": 321,
+  "manualControls": [
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Pink peppercorn",
+      "reviewTargetId": "M_FOOD_500",
+      "usageCountSum": 14
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Sichuan pepper powder",
+      "reviewTargetId": "M_FOOD_763",
+      "usageCountSum": 1
+    },
+    {
+      "candidateCount": 2,
+      "canonicalEnglishName": "Sichuan peppercorns",
+      "reviewTargetId": "M_FOOD_776",
+      "usageCountSum": 1
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Creole pepper",
+      "reviewTargetId": "concept:food:5096efc8e844af06383e",
+      "usageCountSum": 1
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Pink peppercorns (for finishing)",
+      "reviewTargetId": "concept:food:6fe8e980f0596ba0ec1f",
+      "usageCountSum": 2
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Ground Sichuan pepper",
+      "reviewTargetId": "concept:food:74391ab68f258a7dec9c",
+      "usageCountSum": 16
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Çarliston pepper, cut into strips",
+      "reviewTargetId": "concept:food:75d0f260f6acfeabb315",
+      "usageCountSum": 1
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Sansho pepper (condiment), a little",
+      "reviewTargetId": "concept:food:83563a56f1a1abdfc3c2",
+      "usageCountSum": 1
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Pink peppercorns",
+      "reviewTargetId": "concept:food:d36f643eadce4a75549e",
+      "usageCountSum": 1
+    }
+  ],
+  "remainingReviewTargetCount": 1239,
+  "schemaVersion": 1,
+  "selectedRows": [
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Pepper",
+      "reviewTargetId": "M_FOOD_377",
+      "usageCountSum": 598
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Pepper",
+      "reviewTargetId": "M_FOOD_388",
+      "usageCountSum": 1136
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Pepper",
+      "reviewTargetId": "M_FOOD_389",
+      "usageCountSum": 500
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Coarsely ground pepper (for finishing), a little",
+      "reviewTargetId": "concept:food:2ebe70c30f1ebbbfed60",
+      "usageCountSum": 1
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Ground pepper",
+      "reviewTargetId": "concept:food:426bbdb4814fda1bcdc5",
+      "usageCountSum": 1
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Coarsely ground pepper, a little",
+      "reviewTargetId": "concept:food:68fbbd8b5cb7a024bda7",
+      "usageCountSum": 4
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Pepper (a little)",
+      "reviewTargetId": "concept:food:9340b351be5d4d3374fc",
+      "usageCountSum": 30
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Pepper, a little",
+      "reviewTargetId": "concept:food:964e71e34865a6352799",
+      "usageCountSum": 10
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "*Pepper",
+      "reviewTargetId": "concept:food:af2a8cb53de7c7e9876c",
+      "usageCountSum": 194
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Pepper (for finishing), a little",
+      "reviewTargetId": "concept:food:dec2294958658bee4258",
+      "usageCountSum": 1
+    },
+    {
+      "candidateCount": 8,
+      "canonicalEnglishName": "Pepper (for finishing)",
+      "reviewTargetId": "concept:food:f326d6a95a50f2c5e294",
+      "usageCountSum": 3
+    }
+  ],
+  "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac"
+}

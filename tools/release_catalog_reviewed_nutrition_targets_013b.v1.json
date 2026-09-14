@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "policy": {
+    "searchResultAutoAccepted": false,
+    "exactFdcBindingRequired": true,
+    "semanticConceptGroupingReviewed": true,
+    "providerIdentityInference": false,
+    "candidateSearchIsIdentityProof": false
+  },
+  "selectionMethod": "explicit-semantic-review",
+  "items": [
+    {"reviewTargetId":"concept:food:288c09c53fa91f12284c","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Sprouts","fdcId":2709764,"confidence":"high","fdcDescription":"Sprouts, NFS","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":1,"notes":"Selected the USDA NFS/unspecified record because the Cook4Me canonical target is equally generic; no narrower sprout type was invented."},
+    {"reviewTargetId":"concept:food:a71f535f794a862dac4f","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Dried thyme","fdcId":170938,"confidence":"high","fdcDescription":"Spices, thyme, dried","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":32},
+    {"reviewTargetId":"M_FOOD_78","reviewTargetKind":"provider-identity","canonicalEnglishName":"Cardamom","fdcId":170919,"confidence":"high","fdcDescription":"Spices, cardamom","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":31},
+    {"reviewTargetId":"concept:food:716e61c0aed17286b8df","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Button mushrooms","fdcId":1999629,"confidence":"high","fdcDescription":"Mushrooms, white button","fdcDataType":"Foundation","candidateEvidenceRank":1,"usageCountAtReview":55,"notes":"Selected the exact white button mushroom record; other mushroom species were not used."},
+    {"reviewTargetId":"concept:food:fd2a7edb5df162354401","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Ground pork","fdcId":2705863,"confidence":"high","fdcDescription":"Pork, ground","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":50},
+    {"reviewTargetId":"M_FOOD_640","reviewTargetKind":"provider-identity","canonicalEnglishName":"Ground pork","fdcId":2705863,"confidence":"high","fdcDescription":"Pork, ground","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":37},
+    {"reviewTargetId":"concept:food:90baaed7b24d698beab6","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Salted butter","fdcId":173410,"confidence":"high","fdcDescription":"Butter, salted","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":42},
+    {"reviewTargetId":"M_FOOD_2","reviewTargetKind":"provider-identity","canonicalEnglishName":"Dried apricot","fdcId":2709197,"confidence":"high","fdcDescription":"Apricot, dried","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":20},
+    {"reviewTargetId":"M_FOOD_155","reviewTargetKind":"provider-identity","canonicalEnglishName":"Crouton","fdcId":2707697,"confidence":"high","fdcDescription":"Croutons","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":41},
+    {"reviewTargetId":"M_FOOD_72","reviewTargetKind":"provider-identity","canonicalEnglishName":"Camembert","fdcId":172178,"confidence":"high","fdcDescription":"Cheese, camembert","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":19},
+    {"reviewTargetId":"concept:food:99fa71c3dced874c71ab","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Camembert","fdcId":172178,"confidence":"high","fdcDescription":"Cheese, camembert","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":6},
+    {"reviewTargetId":"M_FOOD_621","reviewTargetKind":"provider-identity","canonicalEnglishName":"Bok choy","fdcId":2685572,"confidence":"high","fdcDescription":"Cabbage, bok choy, raw","fdcDataType":"Foundation","candidateEvidenceRank":1,"usageCountAtReview":2},
+    {"reviewTargetId":"concept:food:986f932403baf8e3000c","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Bok choy","fdcId":2685572,"confidence":"high","fdcDescription":"Cabbage, bok choy, raw","fdcDataType":"Foundation","candidateEvidenceRank":1,"usageCountAtReview":1},
+    {"reviewTargetId":"M_FOOD_228","reviewTargetKind":"provider-identity","canonicalEnglishName":"Grenadine","fdcId":168088,"confidence":"high","fdcDescription":"Syrups, grenadine","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":2},
+    {"reviewTargetId":"M_FOOD_37","reviewTargetKind":"provider-identity","canonicalEnglishName":"Crispbread","fdcId":2708156,"confidence":"high","fdcDescription":"Crackers, crispbread","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":5},
+    {"reviewTargetId":"concept:food:4bf2763877456eaadcae","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Prosciutto crudo","fdcId":2705879,"confidence":"high","fdcDescription":"Ham, prosciutto","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":1,"notes":"Explicitly reviewed Italian culinary wording 'Prosciutto crudo' -> USDA 'Ham, prosciutto'."},
+    {"reviewTargetId":"concept:food:840b91ee3da50c9e0de2","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Pecorino Romano","fdcId":171249,"confidence":"high","fdcDescription":"Cheese, romano","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":1,"notes":"Explicitly reviewed 'Pecorino Romano' -> USDA 'Cheese, romano'."},
+    {"reviewTargetId":"concept:food:abc0a0360b3cda5d8e69","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Cornstarch, dissolved","fdcId":169698,"confidence":"high","fdcDescription":"Cornstarch","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":1,"notes":"Explicitly reviewed preparation cue 'dissolved' as non-identity text; the food identity remains cornstarch."},
+    {"reviewTargetId":"concept:food:8ccc1fe5992a7c6f44aa","reviewTargetKind":"semantic-concept","canonicalEnglishName":"tbsp cornstarch","fdcId":169698,"confidence":"high","fdcDescription":"Cornstarch","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":1,"notes":"Explicitly reviewed quantity/unit prefix 'tbsp' as non-identity text; the food identity remains cornstarch."},
+    {"reviewTargetId":"concept:food:0718fe8c3c4310828143","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Crumbled brioche","fdcId":2707682,"confidence":"high","fdcDescription":"Brioche","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":1,"notes":"Explicitly reviewed preparation cue 'Crumbled' as non-identity text; the food identity remains brioche."}
+  ]
+}

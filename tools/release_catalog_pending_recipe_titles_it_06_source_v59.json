@@ -1,0 +1,713 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "it",
+  "part": 6,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingItalianReviewsExcluded": true,
+  "tasksBeforeBatch": 326,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:f496a3499ea60fa4d32176b7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Peperone",
+      "groupCount": 9
+    },
+    {
+      "taskId": "recipe_title_english:9054b8abeb9dbc20c66bba80",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Peperoni all'aceto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1ce43dee6cf3bfe9bafbe655",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Peperoni ripieni",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:12c9638aeb14a9f6ec3bbfd7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Peperoni ripieni di merluzzo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5d593106b2c04c395539531d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Peperoni ripieni di quinoa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e09e7874aa9e1d1e4f1e792f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pera",
+      "groupCount": 8
+    },
+    {
+      "taskId": "recipe_title_english:5c4f1679e110a6598793cf99",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pere al limone",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:92cce93faa3603c3ff1b6b55",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pere al vino rosso",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b2e076b4f9306cb654189b32",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pere miele e cannella",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b748edba5e1f9270a44a4398",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pere noci e gorgonzola",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3cd7dbcb9422ff687dcab805",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pere speziate",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:49e5d342994d3da2888e2b99",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pesce",
+      "groupCount": 11
+    },
+    {
+      "taskId": "recipe_title_english:23ae1c222a067c829b1b745e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pesce al limone con erbe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a89e1a89473639f57270e842",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pesce spada alle olive",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:033dd9ccff9f8bd6fdafadad",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pesche al cioccolato e mandorle",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8bac408ee9957d9b40bb0e1e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pesche al vino rosso",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:48981bf3239beb0d053ec5f1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pesche all'amaretto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:029a2bec39d6b014528755f3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pesche alla panna",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ec6ff2c1fdf9290f366d5ce4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pesche sciroppate",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d847d0c9a53bfef5d01d9f79",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Petti di pollo all'uva e moscato",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:167c96e67607edee02e1584e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Petto di pollo alle verdure",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:72e3604e6f0652ec74905305",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Petto di pollo limone e pepe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:738069ba9777824b9f6472f4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Piccoli frutti deliziosi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d7b7dd418f2df812bb7235ef",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pici al ragu",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bcc0d09c4a56108ddbaded65",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pici col pesto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ec542bc58089dce98d0ea418",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Piselli con carote e pancetta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:88e157ef5bd34772c40eab37",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Piselli con pancetta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a214f116b68adcf7ceb6aa01",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pisello",
+      "groupCount": 6
+    },
+    {
+      "taskId": "recipe_title_english:b647d7e4c4f97bd76f7c9248",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polenta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3976e54a7793a7ad284b99d7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polenta alla cardinale",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4a3a031acb464b8b7532e392",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polenta dolce",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d9aa687a7faeb3ea4d85febb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polenta taragna con formaggi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0ce80ca84835f81fe96ecac5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polipetti alle olive e pomodorini",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b6780bafdbe738b34d3bf931",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollame",
+      "groupCount": 9
+    },
+    {
+      "taskId": "recipe_title_english:916ed503e8e35cd76d054749",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo al cocco zenzero anacardi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a1d1a9b646cc6f21cb9a0821",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo al curry",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:9b8b6ddef80d20d89efed9a6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo al limone e timo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:41941edac9b31aa8e29fe327",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo al salmoriglio",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:16ae6d37c16ea4d4f33f8dad",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo al vino",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:85af18701bccf2b4679bf5bb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo al vino rosso",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6631feebedafbda7648206eb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo alla basca",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:68f4f9d79b3e097f17bc2259",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo alla birra",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e344264befe8e732003542cb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo alla boscaiola",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9f9fc5f5cd20b93a3ba7aecb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo arrosto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:69afcee14c7816e1b8df590a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo coi peperoni",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f084d93ba1fae0de4ed01f9a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo con patate",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7f5ccb5f7d7f9f06eeef1733",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo e patate a lenta cottura",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:28a15acdcfddadb4eedf80e3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo in agrodolce",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8bd7b0f471a8c39fd26de698",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo in fricassea",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:81417384efc9345cffb719e4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo in salsa verde",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fce5ecf9bb0d90b83e529d3e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo ripieno",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bb35384b2ae66a0e39ec9ac4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo ruspante",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:eb45bfeb6c3ee3fcd7b09d5a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo satay",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:392217421c1dbafdcdfbcda8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo thai con riso",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bbceaeed8e1ced45effd5542",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pollo yakitori",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f051a69fe0b28593a583fa0e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polpette al sugo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4510c33254bcaa07872ced4f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polpette alle olive",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fcc78e3339b2b0ed88ae639b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polpette di maiale al chili",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b543267246db7d5c48622620",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polpette di manzo al sugo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b6a48c08b242c9f8139da76a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polpette di pesce",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0fe2ffdb8d8a17f36471ac47",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polpette di pollo e mortadella",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:09169ce269680f1589523250",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polpette kofta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:671ce7d85445a30763577155",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polpettine di manzo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3fe3e65a42e57d99848a7fea",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polpettine miele e paprika",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:80ac744905777d5e5b510b21",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polpettone",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7dde078285ebf4a7e03c1898",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polpettone di pesce",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:00c496e30a335f6871d8bbd1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polpettone tacchino ed erbe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:aae99a89e2fe881e89f77a71",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polpo al pomodoro",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f230ab205b0f2f390d74ff9c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polpo alla cipriota",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8b954d6ac93b83d04b25b023",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polpo alla gallega",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9f63a5e20464743477bcba9f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polpo alla luciana",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:832ff2540d351e69160409fe",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Polpo in crema di patate e olive",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b0d41829f7b04c9b8a6d5217",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pomodori ripieni al cous cous",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:968323e8ddb83120aa926ade",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Porridge di riso coreano",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9d4a04781352a20a3a7027df",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Porro",
+      "groupCount": 8
+    },
+    {
+      "taskId": "recipe_title_english:2efed08682685a33b9e8a428",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Prosciutto affumicato",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2025a1b0e064ffc7fca5ab0d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Pudding Sticky Date",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4fb57c53396a43a9c123aa42",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Punta di vitello farcita",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:35b4c9c5943e343dc51a88df",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Purea di patate",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7cf89f2d541f479410d8b2a7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Purè di piselli della nonna",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a66edcb484e6f4c7c876a54e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Purè di zucca e patate",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a017c5096a6f2877ac54ab95",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Purè mediterraneo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9a2c03bc97ab4ea93db56986",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Quadretti in brodo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:562a017b0fdcbde821cb25d2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Quinoa",
+      "groupCount": 3
+    },
+    {
+      "taskId": "recipe_title_english:c0ff07c294446bb87a744f6c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Quinoa alle verdure",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:1aa4e03fca4acbf6400f4874",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Quinoa con fagiolini",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:68131ed27ccd255e6c93a538",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Quinoa e gratin di verdure",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:dba3bce40ab847a823b3e5ed",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Quinotto con verdure verdi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c9f2e7eb4302d09c7575680b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ragù",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f3675a63419ca3ef9bf3a343",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ragù alla bolognese",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:314aa56f20be6da95c91429c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ramen di verdure",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:01cd6786657a2d5ac72c7a89",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ramen estivo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1b41a6ab131a511c89405e2c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Rapa",
+      "groupCount": 7
+    },
+    {
+      "taskId": "recipe_title_english:13eb4268ff5a416175d1215e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ratatouille",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c7549b1bd14076d5bfb8ed0f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ratatouille al latte di cocco",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:081657c47b47895b8bdb98ee",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ratatuia ligure",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:1605d6fa12df04db5e2990db",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ravioli ai funghi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f350c7abde2334b2ff5c3b88",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ravioli gorgonzola e noci",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:41a76d64b85ed35f9547e3f8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Ribollita",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:97a406ffe9e243de252a4839",
+      "type": "recipe_title_english",
+      "sourceLanguage": "it",
+      "sourceText": "Rigatoni all'amatriciana",
+      "groupCount": 1
+    }
+  ]
+}

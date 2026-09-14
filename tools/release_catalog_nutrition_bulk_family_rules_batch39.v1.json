@@ -1,0 +1,576 @@
+{
+  "batch": 39,
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "extends": "release_catalog_nutrition_bulk_family_rules_batch38.v1.json",
+  "kind": "cook4me-nutrition-bulk-family-rules-v60",
+  "policy": {
+    "automaticRuleExpansionForbidden": true,
+    "candidateRankIsIdentityProof": false,
+    "heldTargetsExcluded": true,
+    "multipleRuleMatchesRejected": true,
+    "networkRequestsPerformed": false,
+    "providerIdentityInference": false,
+    "recordedTargetsExcludedFromFutureSelection": true,
+    "regexAnchoredRequired": true,
+    "ruleMatchIsApprovalOnlyWhenReviewRowExists": true
+  },
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "rules": [
+    {
+      "batch": 39,
+      "contract": "Plain Basmati rice source labels contain no washing/soaking qualifier and are reviewed as an as-purchased raw long-grain white-rice family. The retained record is generic long-grain white rice, not an exact Basmati cultivar or enrichment certificate.",
+      "fdcDescription": "Rice, white, long grain, unenriched, raw",
+      "fdcId": 2512381,
+      "pattern": "^\\*?Basmati rice$",
+      "ruleId": "b39-basmati-long-grain-raw",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Plain Italian risotto-rice varieties are reviewed against raw unenriched medium-grain white rice. This preserves raw/as-purchased state but does not claim exact Arborio/Carnaroli/Vialone/Baldo cultivar composition or enrichment.",
+      "fdcDescription": "Rice, white, medium-grain, raw, unenriched",
+      "fdcId": 169760,
+      "pattern": "^(?:Carnaroli rice|Arborio rice|Risotto rice|Carnaroli rice for risotto|Carnaroli risotto rice|Vialone Nano rice|Vialone rice|Baldo rice)$",
+      "ruleId": "b39-risotto-medium-grain-raw",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Plain Japanese/sushi rice source labels are reviewed against raw unenriched short-grain white rice. Explicitly washed/rinsed sushi-rice targets remain excluded; no hydration or rinsing conversion is inferred.",
+      "fdcDescription": "Rice, white, short-grain, raw, unenriched",
+      "fdcId": 168931,
+      "pattern": "^(?:Japanese rice \\(sushi rice\\)|Sushi rice)$",
+      "ruleId": "b39-sushi-short-grain-raw",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Plain Jasmine/Thai rice is reviewed against raw long-grain white rice. Aromatic cultivar differences and enrichment are not certified; washed/rinsed variants remain unresolved.",
+      "fdcDescription": "Rice, white, long grain, unenriched, raw",
+      "fdcId": 2512381,
+      "pattern": "^(?:Jasmine rice|Thai rice)$",
+      "ruleId": "b39-jasmine-thai-long-grain-raw",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Plain brown rice is reviewed against retained raw unenriched long-grain brown rice as a generic dry-rice reference. Grain length/cultivar are generic and no washing, soaking or cooked-water uptake is inferred.",
+      "fdcDescription": "Rice, brown, long grain, unenriched, raw",
+      "fdcId": 2512380,
+      "pattern": "^Brown rice$",
+      "ruleId": "b39-brown-rice-raw",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Rice-pudding rice is reviewed as a short-grain raw white-rice category. The exact marketed pudding-rice cultivar and enrichment are not certified, and no cooking-liquid uptake is inferred.",
+      "fdcDescription": "Rice, white, short-grain, raw, unenriched",
+      "fdcId": 168931,
+      "pattern": "^Rice pudding rice$",
+      "ruleId": "b39-rice-pudding-short-grain-raw",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "The stated 50–55% cocoa level falls inside the retained 45–59% dark-chocolate range. Chopping/melting is presentation only; manufacturer sugar/fat formulation and exact cocoa percentage remain generic.",
+      "fdcDescription": "Chocolate, dark, 45- 59% cacao solids",
+      "fdcId": 170271,
+      "pattern": "^(?:Cooking chocolate, 50/55% cocoa, chopped|Cooking chocolate, 50–55% cocoa, chopped|Cooking chocolate, 50/55% cocoa, finely chopped|Cooking chocolate, 50% cocoa|Chocolate, 50% cocoa|Chocolate, 50/55% cocoa, melted|50% chocolate|50% chocolate, broken into pieces|50% chocolate, finely chopped in a large bowl|Block chocolate, 50% cocoa|Chocolate with 50% cocoa|Chopped cooking chocolate, 50/55% cocoa|Cooking chocolate, 55% cocoa|Cooking chocolate, 55% cocoa, melted|Baking chocolate with 50–55% cocoa, chopped|Baking chocolate with 50–55% cocoa, melted)$",
+      "ruleId": "b39-dark-chocolate-45-59",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "The explicitly stated 64% cocoa level falls inside the retained 60–69% dark-chocolate range. Chopping is presentation only; brand formulation and exact cocoa percentage remain generic.",
+      "fdcDescription": "Chocolate, dark, 60-69% cacao solids",
+      "fdcId": 170272,
+      "pattern": "^(?:Chocolate, 64% cocoa, chopped|Chocolate bar, 64% cocoa, chopped)$",
+      "ruleId": "b39-dark-chocolate-60-69",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Salted caramel is represented by retained caramel/butterscotch topping as a generic caramel category. Exact salt level, butter/cream formulation and viscosity are not certified.",
+      "fdcDescription": "Topping, butterscotch or caramel",
+      "fdcId": 2710284,
+      "pattern": "^Salted caramel$",
+      "ruleId": "b39-salted-caramel-generic",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Nutella is reviewed against the retained chocolate-hazelnut-spread category. Brand-specific sugar, oil, cocoa, milk and hazelnut proportions are not certified.",
+      "fdcDescription": "Chocolate hazelnut spread",
+      "fdcId": 2710289,
+      "pattern": "^Nutella$",
+      "ruleId": "b39-nutella-hazelnut-spread",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Black treacle is reviewed against retained molasses as a closely related cane-refining syrup category. Exact invert-sugar formulation and mineral profile are not certified.",
+      "fdcDescription": "Molasses",
+      "fdcId": 2710283,
+      "pattern": "^Black treacle$",
+      "ruleId": "b39-black-treacle-molasses",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Unspecified red berries use the retained Berries NFS category. Species mix, fresh/frozen state and cultivar are not certified.",
+      "fdcDescription": "Berries, NFS",
+      "fdcId": 2709271,
+      "pattern": "^Red berries$",
+      "ruleId": "b39-berries-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Unspecified fruit uses the retained Fruit NFS category. The recipe wording intentionally leaves species open; no particular fruit, ripeness or preparation state is inferred.",
+      "fdcDescription": "Fruit, NFS",
+      "fdcId": 2709213,
+      "pattern": "^(?:Seasonal fruit|Any fruit|Favorite fruit|Optional: fruit)$",
+      "ruleId": "b39-fruit-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Chocolate biscuits are reviewed against the retained chocolate/fudge cookie category. Breaking is presentation only; exact biscuit brand, filling/coating and fat/sugar formulation are not certified.",
+      "fdcDescription": "Cookie, chocolate or fudge",
+      "fdcId": 2707915,
+      "pattern": "^Chocolate biscuits, broken into pieces$",
+      "ruleId": "b39-chocolate-biscuit",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Speculoos is represented by retained gingersnaps as a generic crisp spiced-cookie fallback. Exact spice blend, caramelization, fat and sugar formulation are not certified.",
+      "fdcDescription": "Cookies, gingersnaps",
+      "fdcId": 174956,
+      "pattern": "^(?:Speculoos biscuits?|Speculoos biscuits, broken into pieces)$",
+      "ruleId": "b39-speculoos-gingersnap",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Amaretti are represented by the retained almond-cookie category. Exact almond/apricot-kernel recipe, sugar level and texture are not certified.",
+      "fdcDescription": "Cookie, almond",
+      "fdcId": 2707900,
+      "pattern": "^Amaretti biscuits$",
+      "ruleId": "b39-amaretti-almond-cookie",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Butter/Breton biscuits are represented by retained shortbread as a generic butter-rich plain-cookie category. Crumbling is presentation only; exact regional formulation is not certified.",
+      "fdcDescription": "Cookie, shortbread",
+      "fdcId": 2707964,
+      "pattern": "^(?:Crumbled butter biscuits|Crumbled Breton butter biscuits|Crushed Breton biscuits)$",
+      "ruleId": "b39-butter-biscuit-shortbread",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Digestive biscuits are represented by retained graham crackers as a generic whole-grain sweet-biscuit fallback. Exact flour, fat, sugar and leavening formulation are not certified.",
+      "fdcDescription": "Graham crackers",
+      "fdcId": 2708133,
+      "pattern": "^(?:Digestive biscuits|Crushed digestive biscuits)$",
+      "ruleId": "b39-digestive-graham",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Provola is represented by retained Provolone as the closest named stretched-curd cheese family. Dicing/grating is presentation only; exact Provola subtype, aging, smoke and moisture are not certified.",
+      "fdcDescription": "Cheese, Provolone",
+      "fdcId": 2705733,
+      "pattern": "^(?:Grated Provola cheese|Provola cheese, diced)$",
+      "ruleId": "b39-provola-provolone",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Emmental is represented by retained Swiss cheese. Cutting/grating is presentation only; exact Emmental origin, aging and fat/moisture are not certified.",
+      "fdcDescription": "Cheese, Swiss",
+      "fdcId": 2705735,
+      "pattern": "^(?:Pieces of Emmental cheese|Grated Emmental cheese)$",
+      "ruleId": "b39-emmental-swiss",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Beef with only cutting/tying presentation and no explicit anatomical cut uses retained Beef NFS. Species is fixed; exact cut, grade, trim and fat ratio are not inferred.",
+      "fdcDescription": "Beef, NFS",
+      "fdcId": 2705822,
+      "pattern": "^(?:Diced beef|Beef slices, 130 g each|Beef, cut into 4 cm pieces|Tied beef)$",
+      "ruleId": "b39-beef-nfs-cut-only",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Pork collar is represented by retained Pork NFS because an exact collar/neck cut is absent from the frozen reference pool. Exact cut fat distribution and trim are not certified.",
+      "fdcDescription": "Pork, NFS",
+      "fdcId": 2705862,
+      "pattern": "^Pork collar$",
+      "ruleId": "b39-pork-collar-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Turkey strips use retained Turkey NFS. Slicing is presentation only; breast/thigh cut, skin and solution treatment are not inferred.",
+      "fdcDescription": "Turkey, NFS",
+      "fdcId": 2706104,
+      "pattern": "^Turkey strips$",
+      "ruleId": "b39-turkey-strips-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "The target explicitly leaves meat species unspecified and only adds chopping, so retained Meat NFS is the direct unspecified-meat category without inventing a species.",
+      "fdcDescription": "Meat, NFS",
+      "fdcId": 2705819,
+      "pattern": "^Chopped meat$",
+      "ruleId": "b39-meat-nfs",
+      "tier": "A"
+    },
+    {
+      "batch": 39,
+      "contract": "The target explicitly identifies species-unspecified minced/ground meat; retained Meat, ground, NFS is the direct category and no species or fat percentage is inferred.",
+      "fdcDescription": "Meat, ground, NFS",
+      "fdcId": 2705820,
+      "pattern": "^Portion of minced meat$",
+      "ruleId": "b39-ground-meat-nfs-extension",
+      "tier": "A"
+    },
+    {
+      "batch": 39,
+      "contract": "Italian dry-cured ham wording is reviewed against retained prosciutto. Cutting is presentation only; exact protected-origin ham, cure time, salt and fat are not certified.",
+      "fdcDescription": "Ham, prosciutto",
+      "fdcId": 2705879,
+      "pattern": "^(?:Italian ham, cut into strips|Italian ham cut into small squares)$",
+      "ruleId": "b39-italian-ham-prosciutto",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Speck/pancetta are represented by retained unprepared cured pork bacon as a generic cured-pork-belly family. Exact smoking, spice, cure and regional formulation are not certified.",
+      "fdcDescription": "Pork, cured, bacon, unprepared",
+      "fdcId": 168277,
+      "pattern": "^(?:Diced speck|Sliced speck|Speck slices, cut in half lengthwise|Speck, cut into strips|Pancetta slice\\(s\\), diced|Diced pancetta slices)$",
+      "ruleId": "b39-speck-pancetta-cured-pork",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Unspecified poultry liver is represented by retained chicken liver as a generic poultry-liver fallback. Chicken species is not asserted as source truth; duck/turkey/goose liver would remain a formulation difference.",
+      "fdcDescription": "Liver, chicken",
+      "fdcId": 2706154,
+      "pattern": "^Poultry liver$",
+      "ruleId": "b39-poultry-liver-chicken",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Species-unspecified ground poultry is represented by retained raw ground chicken as a generic poultry-meat fallback. Exact poultry species, skin content and fat ratio are not certified.",
+      "fdcDescription": "Chicken, ground, raw",
+      "fdcId": 171116,
+      "pattern": "^Ground poultry$",
+      "ruleId": "b39-ground-poultry-chicken",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Chipolata sausage is represented by retained unprepared pork link/patty sausage as a generic raw pork-sausage fallback. Exact casing, seasoning and pork/veal mixture are not certified.",
+      "fdcDescription": "Pork sausage, link/patty, unprepared",
+      "fdcId": 172934,
+      "pattern": "^Chipolata sausages$",
+      "ruleId": "b39-chipolata-pork-sausage",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Frankfurter pieces use the retained Frankfurter, meat category. Cutting is presentation only; exact pork/beef/poultry proportions and brand formulation are not certified.",
+      "fdcDescription": "Frankfurter, meat",
+      "fdcId": 172968,
+      "pattern": "^Frankfurter sausages, cut into about 2 cm pieces$",
+      "ruleId": "b39-frankfurter-meat",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "The ingredient is uncooked cod with a later cooking instruction, so retained Fish, cod, NFS is used. Cod species, wild/farmed origin and exact fillet cut remain generic.",
+      "fdcDescription": "Fish, cod, NFS",
+      "fdcId": 2706240,
+      "pattern": "^(?:Cod \\(cook on the day of eating\\)|Cod fillet \\(cook on the day of eating\\))$",
+      "ruleId": "b39-cod-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "The ingredient is explicitly gnocchi; chilled retail location does not change food identity, and retained potato gnocchi is the direct category.",
+      "fdcDescription": "Gnocchi, potato",
+      "fdcId": 2708722,
+      "pattern": "^Gnocchi \\(chilled section\\)$",
+      "ruleId": "b39-potato-gnocchi",
+      "tier": "A"
+    },
+    {
+      "batch": 39,
+      "contract": "Gyoza/shumai wrappers are represented by retained wonton/egg-roll wrappers as a generic wheat-wrapper family. Wrapper thickness, egg content and manufacturer formulation are not certified.",
+      "fdcDescription": "Wonton wrappers (includes egg roll wrappers)",
+      "fdcId": 172802,
+      "pattern": "^(?:Gyoza wrappers|Shumai wrappers, cut into 3 mm strips)$",
+      "ruleId": "b39-wonton-wrapper-family",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Brik/brick pastry sheets are represented by retained phyllo dough as a generic thin unleavened pastry-sheet fallback. Exact thickness, fat content and regional formulation are not certified.",
+      "fdcDescription": "Phyllo dough",
+      "fdcId": 172791,
+      "pattern": "^(?:Brik pastry sheets|Brick pastry sheets)$",
+      "ruleId": "b39-brik-phyllo-family",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Prawn wording is represented by retained raw shrimp as a generic decapod-crustacean fallback. Exact species, farm/wild origin and shell yield are not certified.",
+      "fdcDescription": "Crustaceans, shrimp, raw",
+      "fdcId": 175179,
+      "pattern": "^(?:Giant river prawn|Prawn meat)$",
+      "ruleId": "b39-shrimp-prawn-raw",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "The target intentionally leaves fish species unspecified; cutting into fillet/steak pieces does not establish a species, so retained Fish NFS is the direct unspecified-fish category.",
+      "fdcDescription": "Fish, NFS",
+      "fdcId": 2706224,
+      "pattern": "^(?:Fish fillet, cut into large 5 cm cubes|Fish steaks)$",
+      "ruleId": "b39-fish-nfs",
+      "tier": "A"
+    },
+    {
+      "batch": 39,
+      "contract": "Ham-filled tortellini is represented by retained meat-filled tortellini with no sauce. Exact filling meat ratio, pasta recipe and fresh/chilled moisture are not certified.",
+      "fdcDescription": "Tortellini, meat-filled, no sauce",
+      "fdcId": 2708790,
+      "pattern": "^(?:Ham tortellini|Fresh ham tortellini)$",
+      "ruleId": "b39-ham-tortellini-meat-filled",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Salmon roe is represented by retained granular red/black caviar as a generic salted fish-roe category. Exact salmon species, salt/cure level and garnish quantity are not certified.",
+      "fdcDescription": "Fish, caviar, black and red, granular",
+      "fdcId": 174188,
+      "pattern": "^(?:Salmon roe \\(for garnish\\), as needed|Salmon roe, a little for garnish)$",
+      "ruleId": "b39-salmon-roe-caviar",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Unqualified edamame is represented by retained frozen unprepared edamame as the as-purchased ingredient fallback. Fresh versus frozen sourcing and later cooking are not certified.",
+      "fdcDescription": "Edamame, frozen, unprepared",
+      "fdcId": 168410,
+      "pattern": "^Edamame beans$",
+      "ruleId": "b39-edamame-unprepared",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Gochugaru is represented by retained red/cayenne pepper spice as a generic dried-red-pepper fallback. Korean cultivar, flake size and heat level are not certified.",
+      "fdcDescription": "Spices, pepper, red or cayenne",
+      "fdcId": 170932,
+      "pattern": "^(?:Gochugaru \\(Korean red pepper flakes\\)|Gochugaru chili flakes)$",
+      "ruleId": "b39-gochugaru-red-pepper",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Named fresh hot-chili varieties are represented by retained raw hot pepper. Exact cultivar and heat level are not certified.",
+      "fdcDescription": "Peppers, hot, raw",
+      "fdcId": 2709798,
+      "pattern": "^(?:Bird\\'s eye chilies|Shishito pepper)$",
+      "ruleId": "b39-hot-chili-raw",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Dried chili threads are represented by retained red/cayenne pepper spice. Thread form and specific pepper cultivar/heat are not certified.",
+      "fdcDescription": "Spices, pepper, red or cayenne",
+      "fdcId": 170932,
+      "pattern": "^Chili threads \\(for finishing\\)$",
+      "ruleId": "b39-chili-threads-red-pepper",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Hijiki/aonori/kombu are represented by retained dried seaweed as a generic dried-seaweed category. Exact seaweed species, iodine/mineral profile, seasoning and rehydration are not certified.",
+      "fdcDescription": "Seaweed, dried",
+      "fdcId": 2709988,
+      "pattern": "^(?:Hijiki seaweed|Aonori \\(for finishing\\), a little|Dashi kombu, cut into 1 cm squares)$",
+      "ruleId": "b39-dried-seaweed-family",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Lobster bisque uses retained Soup, bisque as a generic bisque category because an exact lobster-bisque record is absent. Lobster proportion, cream, alcohol and sodium formulation are not certified.",
+      "fdcDescription": "Soup, bisque",
+      "fdcId": 2707140,
+      "pattern": "^Lobster bisque$",
+      "ruleId": "b39-lobster-bisque-generic",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Corn porridge is represented by retained cornmeal mush NFS as the generic cooked cornmeal-porridge category. Added fat, milk and salt are not certified.",
+      "fdcDescription": "Cornmeal mush, NS as to fat",
+      "fdcId": 2708373,
+      "pattern": "^Corn porridge$",
+      "ruleId": "b39-cornmeal-mush",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Dark ale is represented by retained generic beer. Beer style, alcohol percentage, residual carbohydrate and color are not certified.",
+      "fdcDescription": "Beer",
+      "fdcId": 2710616,
+      "pattern": "^Dark ale$",
+      "ruleId": "b39-dark-ale-beer",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Favourite mixed nuts use retained Mixed nuts NFS. Nut species mix, roasting and salt are not certified.",
+      "fdcDescription": "Mixed nuts, NFS",
+      "fdcId": 2707504,
+      "pattern": "^Favourite nuts \\(mixed varieties\\)$",
+      "ruleId": "b39-mixed-nuts-nfs",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Chestnut mushrooms are the brown/crimini Agaricus family; retained raw crimini is the direct food identity and slicing is presentation only.",
+      "fdcDescription": "Mushrooms, brown, italian, or crimini, raw",
+      "fdcId": 168434,
+      "pattern": "^Chestnut mushrooms, sliced$",
+      "ruleId": "b39-crimini-chestnut-mushroom",
+      "tier": "A"
+    },
+    {
+      "batch": 39,
+      "contract": "Unqualified culinary peppercorns are represented by retained black pepper. Whole versus ground is presentation; white/green/pink peppercorn identities remain separate and are not swept into this rule.",
+      "fdcDescription": "Spices, pepper, black",
+      "fdcId": 170931,
+      "pattern": "^(?:Peppercorns|Whole peppercorns)$",
+      "ruleId": "b39-peppercorn-black",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Fleur de sel is represented by retained table salt as a sodium-chloride category fallback. Trace minerals, crystal moisture and iodine are not certified.",
+      "fdcDescription": "Salt, table",
+      "fdcId": 173468,
+      "pattern": "^Fleur de sel$",
+      "ruleId": "b39-fleur-de-sel",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Bicarbonate in baking context is baking soda; mixing it with flour is preparation context and does not change the leavening-agent identity.",
+      "fdcDescription": "Leavening agents, baking soda",
+      "fdcId": 175040,
+      "pattern": "^Bicarbonate mixed with flour$",
+      "ruleId": "b39-bicarbonate",
+      "tier": "A"
+    },
+    {
+      "batch": 39,
+      "contract": "Baking powder mixed into flour uses a retained double-acting baking-powder record. Exact phosphate/aluminum chemistry and sodium formulation are not certified.",
+      "fdcDescription": "Leavening agents, baking powder, double-acting, sodium aluminum sulfate",
+      "fdcId": 172803,
+      "pattern": "^Baking powder mixed with flour$",
+      "ruleId": "b39-baking-powder",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Coconut powder is represented by retained unsweetened dried/desiccated coconut. Exact grind, moisture and sweetening are not certified.",
+      "fdcDescription": "Nuts, coconut meat, dried (desiccated), not sweetened",
+      "fdcId": 170170,
+      "pattern": "^Coconut powder$",
+      "ruleId": "b39-coconut-powder",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "The target explicitly states drained sweetcorn, so retained canned whole-kernel drained solids is the direct preparation-state category; cultivar and added salt remain generic.",
+      "fdcDescription": "Corn, sweet, yellow, canned, whole kernel, drained solids",
+      "fdcId": 169214,
+      "pattern": "^Sweetcorn, drained$",
+      "ruleId": "b39-drained-sweetcorn",
+      "tier": "A"
+    },
+    {
+      "batch": 39,
+      "contract": "Pumpkin with only cutting/skin wording is represented by raw pumpkin. Cutting is presentation; cultivar and edible skin proportion are not certified.",
+      "fdcDescription": "Pumpkin, raw",
+      "fdcId": 168448,
+      "pattern": "^Pumpkin with skin, cut into 3 cm cubes$",
+      "ruleId": "b39-pumpkin-raw",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Plain pea pods are reviewed as raw edible-podded peas; no cooking or freezing state is stated.",
+      "fdcDescription": "Peas, edible-podded, raw",
+      "fdcId": 170010,
+      "pattern": "^Pea pods$",
+      "ruleId": "b39-pea-pods-raw",
+      "tier": "A"
+    },
+    {
+      "batch": 39,
+      "contract": "Chopped sauerkraut with its own juice is represented by retained sauerkraut. Chopping is presentation; brine quantity and sodium formulation are not certified.",
+      "fdcDescription": "Sauerkraut",
+      "fdcId": 2709982,
+      "pattern": "^Chopped sauerkraut with juice$",
+      "ruleId": "b39-sauerkraut",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Gherkins are represented by retained sour cucumber pickles. Slicing is presentation; dill/sweetness/sodium and brand formulation are not certified.",
+      "fdcDescription": "Pickles, cucumber, sour",
+      "fdcId": 169379,
+      "pattern": "^Gherkins, thinly sliced$",
+      "ruleId": "b39-gherkin-sour-pickle",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "Salad-onion stalk is represented by retained raw onion as a generic allium fallback. Exact spring-onion/scallion cultivar and green-to-white stalk ratio are not certified.",
+      "fdcDescription": "Onions, raw",
+      "fdcId": 170000,
+      "pattern": "^Salad onion stalk, chopped$",
+      "ruleId": "b39-salad-onion-raw",
+      "tier": "B"
+    },
+    {
+      "batch": 39,
+      "contract": "French T110 wholemeal/semi-wholemeal wheat flour is represented by retained whole-grain wheat flour. Extraction rate, ash content and wheat hardness are not certified.",
+      "fdcDescription": "Wheat flour, whole-grain (Includes foods for USDA's Food Distribution Program)",
+      "fdcId": 168893,
+      "pattern": "^Wholemeal flour T110$",
+      "ruleId": "b39-wholemeal-t110",
+      "tier": "B"
+    }
+  ],
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+  "tiers": {
+    "A": "Direct food/state family or presentation-only variant.",
+    "B": "Explicit generic category fallback; not exact subtype/species/brand/formulation certification.",
+    "C": "No approval rule; remains unresolved."
+  }
+}

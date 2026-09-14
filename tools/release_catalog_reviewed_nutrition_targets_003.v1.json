@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "referenceManifestSha256": "6ec7b2207b149cce662136ea64b6c92ae73d6f7983efe12d18ecbc3b86388bd4",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "policy": {
+    "searchResultAutoAccepted": false,
+    "exactFdcBindingRequired": true,
+    "semanticConceptGroupingReviewed": true,
+    "providerIdentityInference": false,
+    "candidateSearchIsIdentityProof": false
+  },
+  "selectionMethod": "explicit-semantic-review",
+  "items": [
+    {
+      "reviewTargetId": "M_FOOD_442",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Buckwheat",
+      "fdcId": 170286,
+      "confidence": "high",
+      "fdcDescription": "Buckwheat",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 89
+    },
+    {
+      "reviewTargetId": "M_FOOD_24",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Avocado",
+      "fdcId": 171705,
+      "confidence": "high",
+      "fdcDescription": "Avocados, raw, all commercial varieties",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 4,
+      "usageCountAtReview": 88,
+      "notes": "Generic avocado target: selected raw all-commercial-varieties avocado rather than a regional or named cultivar."
+    },
+    {
+      "reviewTargetId": "concept:food:4295080fe5aa86d43e85",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Baking soda",
+      "fdcId": 175040,
+      "confidence": "high",
+      "fdcDescription": "Leavening agents, baking soda",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 88
+    },
+    {
+      "reviewTargetId": "concept:food:22f990455046e2b6be61",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Gelatin",
+      "fdcId": 169599,
+      "confidence": "high",
+      "fdcDescription": "Gelatins, dry powder, unsweetened",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 2,
+      "usageCountAtReview": 88,
+      "notes": "Generic gelatin target: selected unsweetened dry gelatin powder rather than a prepared gelatin dessert mix."
+    },
+    {
+      "reviewTargetId": "concept:food:ef65c017cbe01995f439",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Lard",
+      "fdcId": 171401,
+      "confidence": "high",
+      "fdcDescription": "Lard",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 88
+    },
+    {
+      "reviewTargetId": "M_FOOD_104",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Chorizo",
+      "fdcId": 173859,
+      "confidence": "high",
+      "fdcDescription": "Sausage, pork, chorizo, link or ground, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 87
+    },
+    {
+      "reviewTargetId": "M_FOOD_400",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Ground almonds",
+      "fdcId": 170567,
+      "confidence": "high",
+      "fdcDescription": "Nuts, almonds",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 87,
+      "notes": "Ground-almond target: selected plain almonds; grinding changes physical form, not the ingredient identity used for per-100-g reference nutrition."
+    },
+    {
+      "reviewTargetId": "M_FOOD_443",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Oyster sauce",
+      "fdcId": 174529,
+      "confidence": "high",
+      "fdcDescription": "Sauce, oyster, ready-to-serve",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 86
+    },
+    {
+      "reviewTargetId": "M_FOOD_54",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Beef stock",
+      "fdcId": 172883,
+      "confidence": "high",
+      "fdcDescription": "Soup, stock, beef, home-prepared",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 3,
+      "usageCountAtReview": 84,
+      "notes": "Beef-stock target: selected the direct home-prepared beef-stock record rather than foods merely containing beef stock."
+    },
+    {
+      "reviewTargetId": "M_FOOD_546",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Millet",
+      "fdcId": 169702,
+      "confidence": "high",
+      "fdcDescription": "Millet, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 84
+    },
+    {
+      "reviewTargetId": "M_FOOD_366",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Peach",
+      "fdcId": 325430,
+      "confidence": "high",
+      "fdcDescription": "Peaches, yellow, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 79
+    },
+    {
+      "reviewTargetId": "M_FOOD_282",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Red lentils",
+      "fdcId": 174284,
+      "confidence": "high",
+      "fdcDescription": "Lentils, pink or red, raw",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 79
+    },
+    {
+      "reviewTargetId": "concept:food:c95e579128ebf97c26e8",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Chopped parsley",
+      "fdcId": 170416,
+      "confidence": "high",
+      "fdcDescription": "Parsley, fresh",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 78
+    },
+    {
+      "reviewTargetId": "M_FOOD_513",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Coconut oil",
+      "fdcId": 330458,
+      "confidence": "high",
+      "fdcDescription": "Oil, coconut",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 77
+    },
+    {
+      "reviewTargetId": "M_FOOD_214",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Fish stock",
+      "fdcId": 172885,
+      "confidence": "high",
+      "fdcDescription": "Soup, stock, fish, home-prepared",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 77
+    },
+    {
+      "reviewTargetId": "M_FOOD_243",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Groundnut oil",
+      "fdcId": 1750348,
+      "confidence": "high",
+      "fdcDescription": "Oil, peanut",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 77
+    },
+    {
+      "reviewTargetId": "concept:food:969d59932cae879ea3ab",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Toasted sesame seeds",
+      "fdcId": 170151,
+      "confidence": "high",
+      "fdcDescription": "Seeds, sesame seeds, whole, roasted and toasted",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 77
+    },
+    {
+      "reviewTargetId": "concept:food:4884282bc7d8ee069de1",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Cake flour",
+      "fdcId": 169723,
+      "confidence": "high",
+      "fdcDescription": "Wheat flour, white, cake, enriched",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 76
+    },
+    {
+      "reviewTargetId": "concept:food:d5ecd53d8c116ad40c9d",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Desiccated coconut",
+      "fdcId": 170170,
+      "confidence": "high",
+      "fdcDescription": "Nuts, coconut meat, dried (desiccated), not sweetened",
+      "fdcDataType": "SR Legacy",
+      "candidateEvidenceRank": 3,
+      "usageCountAtReview": 75,
+      "notes": "Desiccated-coconut target: selected dried unsweetened coconut rather than sweetened or creamed variants."
+    },
+    {
+      "reviewTargetId": "concept:food:de302ca49112d875ed3d",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Red bell pepper",
+      "fdcId": 2258590,
+      "confidence": "high",
+      "fdcDescription": "Peppers, bell, red, raw",
+      "fdcDataType": "Foundation",
+      "candidateEvidenceRank": 1,
+      "usageCountAtReview": 75
+    }
+  ]
+}

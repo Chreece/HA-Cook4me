@@ -16,6 +16,7 @@ V55 = ROOT / "custom_components/cook4me/frontend/cook4me-panel-v55.js"
 V56 = ROOT / "custom_components/cook4me/frontend/cook4me-panel-v56.js"
 V57 = ROOT / "custom_components/cook4me/frontend/cook4me-panel-v57.js"
 V58 = ROOT / "custom_components/cook4me/frontend/cook4me-panel-v58.js"
+V59 = ROOT / "custom_components/cook4me/frontend/cook4me-panel-v59.js"
 PANEL = ROOT / "custom_components/cook4me/panel.py"
 
 
@@ -38,8 +39,9 @@ class CurrencyFxUiContractTests(unittest.TestCase):
         panel = PANEL.read_text(encoding="utf-8")
         self.assertIn('websocket_v21', panel)
         self.assertIn('websocket_v24', panel)
-        self.assertIn('cook4me-recipe-hub-panel-v58', panel)
-        self.assertIn('cook4me-panel-v58.js', panel)
+        self.assertIn('websocket_v30', panel)
+        self.assertIn('cook4me-recipe-hub-panel-v59', panel)
+        self.assertIn('cook4me-panel-v59.js', panel)
         self.assertIn('import "./cook4me-panel-v45.js"', V46.read_text(encoding="utf-8"))
         self.assertIn('import "./cook4me-panel-v46.js"', V47.read_text(encoding="utf-8"))
         self.assertIn('import "./cook4me-panel-v47.js"', V48.read_text(encoding="utf-8"))
@@ -53,6 +55,7 @@ class CurrencyFxUiContractTests(unittest.TestCase):
         self.assertIn('import "./cook4me-panel-v55.js"', V56.read_text(encoding="utf-8"))
         self.assertIn('import "./cook4me-panel-v56.js"', V57.read_text(encoding="utf-8"))
         self.assertIn('import "./cook4me-panel-v57.js"', V58.read_text(encoding="utf-8"))
+        self.assertIn('import "./cook4me-panel-v58.js"', V59.read_text(encoding="utf-8"))
         self.assertIn('cook4me/v24/currency_state', V50.read_text(encoding="utf-8"))
         self.assertIn('if(!this._resourceAllowed("currency"))', V51.read_text(encoding="utf-8"))
         self.assertIn('currencyState', V54.read_text(encoding="utf-8"))

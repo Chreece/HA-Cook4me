@@ -1,0 +1,159 @@
+name: Refresh official catalog review queue v59
+
+on:
+  push:
+    branches:
+      - cook4me-release-catalog-cache-progress-v59
+    paths:
+      - .github/workflows/catalog-review-queue-refresh-v59.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-review-queue:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install standalone catalog requirements
+        run: python -m pip install --disable-pip-version-check 'curl-cffi==0.13.0' 'websocket-client==1.8.0'
+      - name: Crawl all audited official catalogs without credentials
+        run: |
+          set -Eeuo pipefail
+          mkdir -p "$RUNNER_TEMP/cook4me-empty-home" "$RUNNER_TEMP/catalog-v59"
+          status=1
+          for attempt in 1 2 3; do
+            echo "Official catalog crawl attempt ${attempt}/3"
+            if python tools/crawl_release_catalog_v2.py \
+              --storage-home "$RUNNER_TEMP/cook4me-empty-home" \
+              --cache-db "$RUNNER_TEMP/catalog-v59/provider.sqlite3" \
+              --output "$RUNNER_TEMP/catalog-v59/provider-capture-v2.json.gz" \
+              --failures "$RUNNER_TEMP/catalog-v59/provider-failures.json" \
+              --configured-language de \
+              --configured-country DE \
+              --workers 8; then
+              status=0
+              break
+            else
+              status=$?
+            fi
+            if [[ "$attempt" -lt 3 ]]; then
+              sleep $((attempt * 20))
+            fi
+          done
+          exit "$status"
+      - name: Capture all audited marketing-food dictionaries without credentials
+        run: |
+          set -Eeuo pipefail
+          status=1
+          for attempt in 1 2 3; do
+            echo "Marketing-food catalog capture attempt ${attempt}/3"
+            if python tools/capture_marketing_food_catalogs_v3.py \
+              --storage-home "$RUNNER_TEMP/cook4me-empty-home" \
+              --output "$RUNNER_TEMP/catalog-v59/marketing-foods-v3.json" \
+              --configured-language de \
+              --configured-country DE; then
+              status=0
+              break
+            else
+              status=$?
+            fi
+            if [[ "$attempt" -lt 3 ]]; then
+              sleep $((attempt * 20))
+            fi
+          done
+          exit "$status"
+      - name: Build reviewed unresolved queue
+        run: |
+          set -Eeuo pipefail
+          python tools/prepare_release_catalog_v2_assembly.py \
+            --provider-capture "$RUNNER_TEMP/catalog-v59/provider-capture-v2.json.gz" \
+            --marketing-foods "$RUNNER_TEMP/catalog-v59/marketing-foods-v3.json" \
+            --output "$RUNNER_TEMP/catalog-v59/prep-raw-v2.json.gz" \
+            --queue "$RUNNER_TEMP/catalog-v59/queue-raw-v2.json" \
+            --summary "$RUNNER_TEMP/catalog-v59/summary-raw.json"
+          python tools/apply_release_catalog_reviews_v2.py \
+            --prep "$RUNNER_TEMP/catalog-v59/prep-raw-v2.json.gz" \
+            --queue "$RUNNER_TEMP/catalog-v59/queue-raw-v2.json" \
+            --output-prep "$RUNNER_TEMP/catalog-v59/prep-reviewed-v2.json.gz" \
+            --output-queue "$RUNNER_TEMP/catalog-v59/queue-reviewed-v2.json" \
+            --summary "$RUNNER_TEMP/catalog-v59/summary-reviewed.json"
+      - name: Record only unresolved recipe-title review tasks
+        run: |
+          set -Eeuo pipefail
+          python - <<'PY'
+          import json
+          from collections import Counter
+          from datetime import datetime, timezone
+          from pathlib import Path
+          import os
+
+          root = Path(os.environ['RUNNER_TEMP']) / 'catalog-v59'
+          queue = json.loads((root / 'queue-reviewed-v2.json').read_text(encoding='utf-8'))
+          summary = json.loads((root / 'summary-reviewed.json').read_text(encoding='utf-8'))
+          tasks = [
+              row for row in queue.get('tasks', [])
+              if isinstance(row, dict) and row.get('type') == 'recipe_title_english'
+          ]
+          counts = Counter(str(row.get('sourceLanguage') or '').lower() for row in tasks)
+          payload = {
+              'schema': 1,
+              'kind': 'cook4me-release-catalog-pending-recipe-title-review-v59',
+              'generatedAt': datetime.now(timezone.utc).isoformat(),
+              'sourceBranch': 'cook4me-release-catalog-cache-progress-v59',
+              'auditedCatalogs': 28,
+              'providerSecretsUsed': False,
+              'existingReviewsApplied': True,
+              'queueContract': {'type': 'recipe_title_english', 'sourceLanguage': 'current-v59'},
+              'recipeTitleTasksRemaining': len(tasks),
+              'remainingByLanguage': dict(sorted(counts.items())),
+              'tasks': tasks,
+          }
+          if len(tasks) != int(summary.get('recipeTitleTranslationTasksRemaining', len(tasks))):
+              raise SystemExit(
+                  'recipe-title snapshot count disagrees with reviewed assembly summary: '
+                  f"snapshot={len(tasks)} summary={summary.get('recipeTitleTranslationTasksRemaining')}"
+              )
+          Path('tools/release_catalog_pending_recipe_titles_v59.json').write_text(
+              json.dumps(payload, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+          Path('tools/release_catalog_pending_recipe_titles_v59_summary.json').write_text(
+              json.dumps({
+                  'generatedAt': payload['generatedAt'],
+                  'auditedCatalogs': 28,
+                  'providerSecretsUsed': False,
+                  'recipeTitleTasksRemaining': len(tasks),
+                  'remainingByLanguage': payload['remainingByLanguage'],
+                  'assemblySummary': summary,
+              }, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps({
+              'recipeTitleTasksRemaining': len(tasks),
+              'remainingByLanguage': payload['remainingByLanguage'],
+          }, ensure_ascii=False))
+          PY
+      - name: Verify snapshot contains no secrets
+        run: |
+          set -Eeuo pipefail
+          ! grep -Eiq 'access[_-]?token|refresh[_-]?token|authorization|bearer |password|api[_-]?key' \
+            tools/release_catalog_pending_recipe_titles_v59.json \
+            tools/release_catalog_pending_recipe_titles_v59_summary.json
+      - name: Commit temporary review snapshot
+        run: |
+          set -Eeuo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/release_catalog_pending_recipe_titles_v59.json tools/release_catalog_pending_recipe_titles_v59_summary.json
+          git diff --cached --check
+          git commit -m "Snapshot remaining official catalog title reviews v59"
+          git push origin HEAD:cook4me-release-catalog-cache-progress-v59
+
+# Phase 2B final authoritative zero-title proof after reviewing all 271 fresh residual titles: 2026-09-10

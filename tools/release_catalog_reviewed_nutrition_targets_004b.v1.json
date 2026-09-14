@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "policy": {"searchResultAutoAccepted":false,"exactFdcBindingRequired":true,"semanticConceptGroupingReviewed":true,"providerIdentityInference":false,"candidateSearchIsIdentityProof":false},
+  "selectionMethod":"explicit-semantic-review",
+  "items":[
+    {"reviewTargetId":"concept:food:044b11b2aafe2d5f803c","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Prosciutto","fdcId":2705879,"confidence":"high","fdcDescription":"Ham, prosciutto","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":60,"notes":"Direct USDA FNDDS prosciutto record; description is 'Ham, prosciutto'."},
+    {"reviewTargetId":"M_FOOD_34","reviewTargetKind":"provider-identity","canonicalEnglishName":"Peanut butter","fdcId":2707537,"confidence":"high","fdcDescription":"Peanut butter","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":58},
+    {"reviewTargetId":"M_FOOD_36","reviewTargetKind":"provider-identity","canonicalEnglishName":"Beer","fdcId":2710616,"confidence":"high","fdcDescription":"Beer","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":57},
+    {"reviewTargetId":"concept:food:2753f1ae6217046474fb","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Pine nuts","fdcId":2707526,"confidence":"high","fdcDescription":"Pine nuts","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":56},
+    {"reviewTargetId":"concept:food:0c61d2bf9fe0668fe272","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Pork ribs","fdcId":2705894,"confidence":"high","fdcDescription":"Pork, ribs","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":56},
+    {"reviewTargetId":"M_FOOD_162","reviewTargetKind":"provider-identity","canonicalEnglishName":"Date","fdcId":2709203,"confidence":"high","fdcDescription":"Date","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":56},
+    {"reviewTargetId":"concept:food:dc5f8ca97e261cf6dc1e","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Worcestershire sauce","fdcId":2707447,"confidence":"high","fdcDescription":"Worcestershire sauce","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":54},
+    {"reviewTargetId":"M_FOOD_706","reviewTargetKind":"provider-identity","canonicalEnglishName":"Tahini","fdcId":2707587,"confidence":"high","fdcDescription":"Tahini","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":52},
+    {"reviewTargetId":"M_FOOD_459","reviewTargetKind":"provider-identity","canonicalEnglishName":"Sesame seeds","fdcId":2707586,"confidence":"high","fdcDescription":"Sesame seeds","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":50},
+    {"reviewTargetId":"M_FOOD_495","reviewTargetKind":"provider-identity","canonicalEnglishName":"Wasabi","fdcId":171831,"confidence":"high","fdcDescription":"Wasabi","fdcDataType":"SR Legacy","candidateEvidenceRank":1,"usageCountAtReview":47},
+    {"reviewTargetId":"M_FOOD_558","reviewTargetKind":"provider-identity","canonicalEnglishName":"Mussels","fdcId":2706350,"confidence":"high","fdcDescription":"Mussels","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":41},
+    {"reviewTargetId":"concept:food:a5cd012246aef580fefc","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Sun-dried tomatoes","fdcId":2709727,"confidence":"high","fdcDescription":"Sun-dried tomatoes","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":40},
+    {"reviewTargetId":"M_FOOD_198","reviewTargetKind":"provider-identity","canonicalEnglishName":"Pork tenderloin","fdcId":2705877,"confidence":"high","fdcDescription":"Pork, tenderloin","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":38},
+    {"reviewTargetId":"M_FOOD_418","reviewTargetKind":"provider-identity","canonicalEnglishName":"Rum","fdcId":2710703,"confidence":"high","fdcDescription":"Rum","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":37},
+    {"reviewTargetId":"concept:food:ac968f2e00086aa4b3bc","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Coconut oil","fdcId":2710182,"confidence":"high","fdcDescription":"Coconut oil","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":36},
+    {"reviewTargetId":"concept:food:6c67674932822601a761","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Sesame seeds","fdcId":2707586,"confidence":"high","fdcDescription":"Sesame seeds","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":36},
+    {"reviewTargetId":"concept:food:2ec601cbceb6eb74131c","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Ham","fdcId":2705878,"confidence":"high","fdcDescription":"Ham","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":36},
+    {"reviewTargetId":"M_FOOD_387","reviewTargetKind":"provider-identity","canonicalEnglishName":"Pork belly","fdcId":2705901,"confidence":"high","fdcDescription":"Pork, belly","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":36},
+    {"reviewTargetId":"M_FOOD_548","reviewTargetKind":"provider-identity","canonicalEnglishName":"Sauerkraut","fdcId":2709982,"confidence":"high","fdcDescription":"Sauerkraut","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":33},
+    {"reviewTargetId":"concept:food:7bb4078e8d2c11f939a9","reviewTargetKind":"semantic-concept","canonicalEnglishName":"Radish","fdcId":2709803,"confidence":"high","fdcDescription":"Radish","fdcDataType":"Survey (FNDDS)","candidateEvidenceRank":1,"usageCountAtReview":30}
+  ]
+}

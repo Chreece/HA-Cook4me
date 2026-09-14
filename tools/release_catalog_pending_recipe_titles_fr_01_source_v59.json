@@ -1,0 +1,713 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-recipe-title-review-source-batch-v59",
+  "language": "fr",
+  "part": 1,
+  "source": "authoritative-reviewed-hydrated-queue",
+  "queueGeneratedAt": "2026-09-10T10:41:49.867695+00:00",
+  "existingReviewsExcluded": true,
+  "tasksBeforeLanguageBatches": 926,
+  "batchSize": 100,
+  "tasks": [
+    {
+      "taskId": "recipe_title_english:e64710925c2ad381eb71b2ec",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Agneau",
+      "groupCount": 25
+    },
+    {
+      "taskId": "recipe_title_english:b425db68b996f79f6ec9133c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Agneau aux fèves et épinards",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:42a74b0954daf2ab76571586",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Agneau aux haricots verts",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4cfa56afd4c2ba4861bdae60",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Agneau de Pâques",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:09c1b04484f4756b8aef520a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ailes de poulet au cola",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a31ad51b79f6905e2413ef8b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Aloo Palak",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b3d6c1adfa2c99e6414c4bb7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ananas au riz à la cubaine",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:802db0e39d14ab5d36dd5e8f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ananas au sirop",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ce889ee63a4f77290452ea96",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Araignée de porc à la portugaise",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f2988b5deb6374c4733640e2",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Arancini à la mozzarella",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cf651595a7c0ffe9c85ece12",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Artichaut",
+      "groupCount": 4
+    },
+    {
+      "taskId": "recipe_title_english:3e26825ca11f0db8e7422c9d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Artichauts",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cd84bf929c0d3f57e3612f76",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Asperge",
+      "groupCount": 21
+    },
+    {
+      "taskId": "recipe_title_english:da11d566e790b789445a0d4f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Asperges au fromage blanc",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:38a776e4419e79cb68f126cc",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Aubergine",
+      "groupCount": 3
+    },
+    {
+      "taskId": "recipe_title_english:7976f88df188778b0961b0b6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Aubergines au quinoa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:262a4366f6b19dc276917824",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Aubergines à la mozzarella",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:20f9ad68e65fed78a756ffa5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ballotin de foie gras, figues",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:144b924e8ca5cf2df9931ab7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Ballotines volaille mortadelle",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f61a6c84fec65d394984ee42",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Banana bread au chocolat",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ddb69c3c9659dfb7a25f976c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bat' parmentier",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:34242baac6b8695ccc786e64",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Betterave",
+      "groupCount": 15
+    },
+    {
+      "taskId": "recipe_title_english:2c02a7e334cfd3dae6dbc423",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bibimbap express",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:54318432f385e1a6f1604736",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Blanc-manger passion",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:2e14643225f8999efd65857b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Blanquette de poisson coco",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fac4bc6c65700cb70818e76d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Blanquette de saumon coco",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8d94fc6e5e6fd2f87ea3b165",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Blanquette de veau Maggi",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f090eaa4790c8e34863d5a8d",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Blette",
+      "groupCount": 9
+    },
+    {
+      "taskId": "recipe_title_english:297a885c48e4e7678cc79b03",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Blé",
+      "groupCount": 5
+    },
+    {
+      "taskId": "recipe_title_english:e6bdd4faef2b72137f23ba48",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bol de saumon teriyaki",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:27a8d49ce8a2e03adc5f1cbb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bol japonais au bœuf gyudon",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:901d9a9cdf65c2da03edfa37",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bolognaise aux lentilles",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f2d9db4b4bc76e6d68949541",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bolognaise de poulet",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8c63f92cc34cbea8770286de",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bolognaise végétarienne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a69f4fc2f02699cf904e55be",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bolognaise éclair",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d0ab8ed670cb21cab0a81f9c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bols lentilles champignons",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0552f8fabac5c490b1c08b8a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bonet piémontais",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b85bc7d5229bec93e39490de",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bortsch russe",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b7e0e7ee197422f795395932",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bouchées de cabillaud panées",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4003d51190bbdfbf0bd7b08a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Boudin blanc Pommes Poireaux",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3bb8f7fcef03c694ef6b362e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bouillon aux lettres",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bf883ab10dffdff09a9b0b09",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bouillon de poulet au fenouil",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:38772748e621036cbacfc4f7",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bouillon de tortellinis de bœuf aux herbes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:551a595cc41aea9bc8d0e736",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bouillon de volaille rustique",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:00f5f6628b6c90dacece34c3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bouillon zéro déchet",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:fc186c260b395e7b9b505987",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Boulettes Azuki Veggie",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:64dcfb67b3cd11f0acff736f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Boulettes de boeuf à l’Irlandaise",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:91dab9ce8dc012f92689955b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Boulettes de bœuf au pavot",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:779566cdc8002aca900b7a1c",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Boulettes de flétan aux herbes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6e7cfa091d7b8509fee897a3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Boulettes de veau",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:07abec571ee5989cc60ac4cd",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Boulettes de viande à la tomate",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:592188b58b81684f322b2dc1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Boulettes sauce estragon",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:c29ab9a19698b5c6589f9610",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Boulettes à la provençale express",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:aac25ab3887bc2a1bfc34407",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Boulghour à la tomate",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7f2ed0e8be15d691270c5a21",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Boulgour",
+      "groupCount": 3
+    },
+    {
+      "taskId": "recipe_title_english:6107022637ed6ab2e4704066",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Boulgour sauce à la grecque",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a6e29fe4c26ae9898bc8cc77",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bourgui boulettes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:ecc10807742bb778881d6325",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Brandade au chou-fleur",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:608da017ed5123ab669016a8",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Brandade de haddock",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e871f3675eddcd76d718b394",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Breadcake au chocolat",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:aa2856f69083f991e4b1e14f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Breadcake banane-raisins",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:370751a77f9e71326f42e766",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bricks au thon et aux œufs",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0b7a92f5a7561a87bf9211e0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Brioche facile",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:49efe8a2bab86e86d4de6e3a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Brioche perdue au chocolat",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:85e3553965a88c4b51f09e96",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Brioche perdue en pudding",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d6d0ce7d958b8a4d93008d51",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Brioche perdue à la vanille",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a90270979cd00d5d97f8cb2f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Brochettes de poulet satay",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d24855e81ae790c5672d9e08",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Brochettes de poulet à la grecque",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b6411a53e45c8a69ecae208b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Brocoli au chorizo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:93cbd3b65c26a858a7efd7cb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bruschetta asperges prosciutto",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:9f1c96e4547da5c2a39a184a",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bruschetta haricots & chèvre",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:eaaa220db8d1942e908de65f",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bruschetta volaille et tomate",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:bf152927b2ed6b7b2abd7643",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bubble Tea",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3d53994dd3698a901fd1c0e5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bulots mayonnaise",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7db5b352c1da9036e5044b73",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Butternut farcie au chèvre",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:15fa21f9cef0a24a9a99b5ec",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bâtonnets brioche perdue",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:5444c75f846b02b6b9b422d9",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bûche aux légumes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:3d30e593ff87eed07b3264f6",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bœuf",
+      "groupCount": 23
+    },
+    {
+      "taskId": "recipe_title_english:8f05dad436121fec71fa2127",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bœuf aux herbes, mode perse",
+      "groupCount": 2
+    },
+    {
+      "taskId": "recipe_title_english:a36a7e82e8ffbe231f086263",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bœuf aux pommes de terre",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:8200498a1fe68cf166ba6749",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bœuf bourguignon des îles",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:a6d57a087d1b1f155ac819a3",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bœuf bourguignon mexicain",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:89aca02089a3227e015291d5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bœuf bourguignon thaï",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:cff3fbba8ad794f89f5cb4f5",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bœuf bourguignon WW",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b62bfaee18765aaf88eac4a0",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bœuf bourguignon à l'indienne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:79d12659f320d48f95363e46",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bœuf bourguignon à l'italienne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6db52e4f7b62a365c35eb247",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bœuf carottes fondant",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:7efa20c653e74734dc9ece27",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bœuf effiloché",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:e2e4e60f97c118a0aa96d7b4",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bœuf lentilles, citron confit",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:eccf94c65e2386c4680733aa",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bœuf mijoté aux courgettes et poivrons",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:4069e1e68573b4dec462c02e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bœuf oignon et châtaignes",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:f1701edfb67802c34e8e6795",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Bœuf à la coréenne",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:64a25c05b92de7817ab23742",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cabillaud aux asperges",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d324d94aed0052a1c699a4b1",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cabillaud crumble chorizo",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:6e8e9c760c2965861e895b3b",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cabillaud pané et quinoa",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:0eb5ec6c5752a7a9935a9206",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cabillaud papaye patate douce",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:aafc50238e00331b71deeaeb",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cabillaud sauce citronnée",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b7f989266ec2274ad94d6067",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cake framboise banane choco",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:d81e26738ef78637c3c6d13e",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cake olives jambon & ricotta",
+      "groupCount": 1
+    },
+    {
+      "taskId": "recipe_title_english:b28bdc79e4c6c13e8c580582",
+      "type": "recipe_title_english",
+      "sourceLanguage": "fr",
+      "sourceText": "Cake à la peau de banane",
+      "groupCount": 1
+    }
+  ]
+}
