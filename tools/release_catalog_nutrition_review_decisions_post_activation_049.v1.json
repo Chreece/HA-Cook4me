@@ -1,0 +1,70 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "evidenceBindingScope": "retained-reference-record",
+  "items": [
+    {
+      "approved": true,
+      "canonicalEnglishName": "Washed basmati rice",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Rice, white, long grain, unenriched, raw",
+      "fdcId": 2512381,
+      "notes": "Explicit destination review accepts USDA raw unenriched white long-grain rice as a bounded nutrition reference for rinsed/washed basmati rice. Basmati is a long-grain rice, but the retained USDA record does not certify basmati cultivar, aroma, geographic origin, enrichment status of a particular brand, or residual rinse water. This binding is limited to rice that is rinsed/washed and still uncooked; soaked, cooked, brown, mixed-grain, and alternative-rice identities remain separate. Nutrition remains per 100 g raw grain; no cooked-yield or water-absorption conversion is inferred.",
+      "reviewTargetId": "concept:food:c8dbc4e709e1df08ac2b",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:f1fa477f3a54abd65967"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Basmati rice, rinsed",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Rice, white, long grain, unenriched, raw",
+      "fdcId": 2512381,
+      "notes": "Explicit destination review accepts USDA raw unenriched white long-grain rice as a bounded nutrition reference for rinsed/washed basmati rice. Basmati is a long-grain rice, but the retained USDA record does not certify basmati cultivar, aroma, geographic origin, enrichment status of a particular brand, or residual rinse water. This binding is limited to rice that is rinsed/washed and still uncooked; soaked, cooked, brown, mixed-grain, and alternative-rice identities remain separate. Nutrition remains per 100 g raw grain; no cooked-yield or water-absorption conversion is inferred.",
+      "reviewTargetId": "concept:food:2d9b24a759b8de684b44",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:f1fa477f3a54abd65967"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Rinsed basmati rice",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Rice, white, long grain, unenriched, raw",
+      "fdcId": 2512381,
+      "notes": "Explicit destination review accepts USDA raw unenriched white long-grain rice as a bounded nutrition reference for rinsed/washed basmati rice. Basmati is a long-grain rice, but the retained USDA record does not certify basmati cultivar, aroma, geographic origin, enrichment status of a particular brand, or residual rinse water. This binding is limited to rice that is rinsed/washed and still uncooked; soaked, cooked, brown, mixed-grain, and alternative-rice identities remain separate. Nutrition remains per 100 g raw grain; no cooked-yield or water-absorption conversion is inferred.",
+      "reviewTargetId": "concept:food:c7615b6fe397c5dff92e",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:f1fa477f3a54abd65967"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Basmati rice, thoroughly rinsed with cold water",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Rice, white, long grain, unenriched, raw",
+      "fdcId": 2512381,
+      "notes": "Explicit destination review accepts USDA raw unenriched white long-grain rice as a bounded nutrition reference for rinsed/washed basmati rice. Basmati is a long-grain rice, but the retained USDA record does not certify basmati cultivar, aroma, geographic origin, enrichment status of a particular brand, or residual rinse water. This binding is limited to rice that is rinsed/washed and still uncooked; soaked, cooked, brown, mixed-grain, and alternative-rice identities remain separate. Nutrition remains per 100 g raw grain; no cooked-yield or water-absorption conversion is inferred.",
+      "reviewTargetId": "concept:food:9ff0a995803bd2380035",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:f1fa477f3a54abd65967"
+    }
+  ],
+  "kind": "cook4me-fdc-retained-reference-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "056b9631ec63cafbf0302d19b2cccef4d0b50417b3f96ff2124f41709938d82b",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "8beb71a92432c46c6b452f3ce75a92a51e5f15285357ed17898409c8ee597423"
+}
