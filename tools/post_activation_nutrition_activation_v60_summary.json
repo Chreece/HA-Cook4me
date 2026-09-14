@@ -1,0 +1,26 @@
+{
+  "complete": true,
+  "catalogBytes": 84107889,
+  "recipes": 16952,
+  "variants": 32163,
+  "ingredients": 11748,
+  "failedDetailCount": 0,
+  "detailNotFoundCount": 1485,
+  "resolvedBefore": 8925,
+  "requiredBefore": 10776,
+  "newlyResolvedTargets": 39,
+  "newlyResolvedIdentities": 72,
+  "resolvedAfter": 8997,
+  "requiredAfter": 10776,
+  "pendingAfter": 1779,
+  "runtimeCatalogCompacted": true,
+  "runtimeRecipeNutritionOnDemand": true,
+  "prefixPostingsPersisted": false,
+  "networkRequestsPerformed": false,
+  "manifestReceipts": [
+    "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+    "7a6008f6c7bb722ef1e46263b04b0fd474a60625b414f62dcea08ad5964de0f3"
+  ],
+  "latinRisotto": 205,
+  "greekRisotto": 205
+}
