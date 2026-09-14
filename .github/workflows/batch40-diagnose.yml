@@ -1,4 +1,4 @@
-name: Analyze Batch 40 source reconstruction
+name: Recover exact Batch 40 shard order
 
 on:
   pull_request:
@@ -19,10 +19,11 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
-      - name: Infer exact Batch 40 shard construction
+      - name: Recover corrupt d order and calibrate deterministic builder
         run: |
           python - <<'PY'
-          import gzip, json, re
+          from __future__ import annotations
+          import base64, gzip, hashlib, io, json, re, tarfile
           from pathlib import Path
 
           root = Path.cwd()
@@ -32,131 +33,224 @@ jobs:
             'release_catalog_reviewed_nutrition_targets_044b.v1.json',
             'release_catalog_reviewed_nutrition_targets_044c.v1.json',
           ]
+          expected_hashes = {
+            shard_names[0]: 'c0f706fd97e750259ba369bcb387074f5e49504fce5e522588c320ddf253b83e',
+            shard_names[1]: '9f808c7429547f8c5d89cc95edb215ca814641e2f100a8672ddb4fd4e839f6ea',
+            shard_names[2]: '3878be1b8960f6bb95368996e262365afaf500479f74d7da589fa810c8ac8b0f',
+          }
           docs = {name: json.loads((tools / name).read_text()) for name in shard_names}
+          base_doc = docs[shard_names[0]]
+          top = {k: v for k, v in base_doc.items() if k != 'items'}
+          receipts = top['referenceReceipts']
           rules_doc = json.loads((tools / 'release_catalog_nutrition_bulk_family_rules_batch40.v1.json').read_text())
           rules = rules_doc['rules']
+          rule_index = {r['ruleId']: i for i, r in enumerate(rules)}
           fixture = json.loads(gzip.decompress((root / 'tests/fixtures/nutrition-batch40-retained-reference-v60.json.gz').read_bytes()))
           targets = fixture['targets']
-          sources = fixture['sources']
           target_map = {r['reviewTargetId']: r for r in targets}
-          source_map = {r['reviewTargetId']: r for r in sources}
-          order = [r['reviewTargetId'] for r in targets]
-          pos = {rid: i for i, rid in enumerate(order)}
+          source_map = {r['reviewTargetId']: r for r in fixture['sources']}
+          fixture_pos = {r['reviewTargetId']: i for i, r in enumerate(targets)}
 
-          all_existing = []
-          shard_summary = {}
-          top_levels = {}
-          for name, doc in docs.items():
-            ids = [r['reviewTargetId'] for r in doc['items']]
-            all_existing += ids
-            positions = [pos[i] for i in ids]
-            shard_summary[name] = {
-              'count': len(ids),
-              'positions': positions,
-              'contiguous': positions == list(range(min(positions), max(positions) + 1)) if positions else True,
-              'first_id': ids[0] if ids else None,
-              'last_id': ids[-1] if ids else None,
+          suffix = {
+            'A': ' This is an explicitly reviewed direct food/state family; presentation wording does not create a new food identity. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.',
+            'B': ' This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.',
+          }
+
+          def rule_for(target):
+            matches = [r for r in rules if re.match(r['pattern'], target['canonicalEnglishName'], re.I)]
+            if len(matches) != 1:
+              raise RuntimeError(f"{target['reviewTargetId']} rule matches={len(matches)}")
+            return matches[0]
+
+          def build_row(target):
+            rule = rule_for(target)
+            fdc_id = rule['fdcId']
+            receipt = receipts[str(fdc_id)]
+            source = source_map[receipt['sourceEvidenceTargetId']]
+            candidates = [
+              c for c in source['candidates']
+              if c['fdcId'] == fdc_id and c['localEvidenceRank'] == receipt['sourceEvidenceCandidateRank']
+            ]
+            if len(candidates) != 1:
+              raise RuntimeError(f"receipt candidate mismatch {target['reviewTargetId']} fdc={fdc_id}: {len(candidates)}")
+            candidate = candidates[0]
+            if candidate['description'] != rule['fdcDescription']:
+              raise RuntimeError(f"description mismatch {target['reviewTargetId']}")
+            tier = rule['tier']
+            return {
+              'bulkFamilyRuleId': rule['ruleId'],
+              'bulkFamilyRuleRegistry': 'release_catalog_nutrition_bulk_family_rules_batch40.v1.json',
+              'bulkFamilyTier': tier,
+              'canonicalEnglishName': target['canonicalEnglishName'],
+              'confidence': 'high' if tier == 'A' else 'medium',
+              'fdcDataType': candidate['dataType'],
+              'fdcDescription': candidate['description'],
+              'fdcId': fdc_id,
+              'notes': f"Batch 40 bulk-family Tier {tier} / {rule['ruleId']}. {rule['contract']}" + suffix[tier],
+              'reviewTargetId': target['reviewTargetId'],
+              'reviewTargetKind': target['reviewTargetKind'],
+              'sourceCandidateSha256': receipt['sourceCandidateSha256'],
+              'sourceEvidenceCandidateRank': receipt['sourceEvidenceCandidateRank'],
+              'sourceEvidenceSha256': top['sourceEvidenceSha256'],
+              'sourceEvidenceTargetId': receipt['sourceEvidenceTargetId'],
+              'usageCountAtReview': target['usageCountSum'],
             }
-            top_levels[name] = {k: v for k, v in doc.items() if k != 'items'}
 
-          existing_set = set(all_existing)
-          remaining_ids = [rid for rid in order if rid not in existing_set]
+          built = {t['reviewTargetId']: build_row(t) for t in targets}
 
-          before_contract = set()
-          after_contract = set()
-          row_keys = set()
-          confidence_by_tier = {}
-          field_mismatches = []
-          joins = []
-          for doc in docs.values():
-            for row in doc['items']:
-              row_keys.update(row)
-              confidence_by_tier.setdefault(row['bulkFamilyTier'], set()).add(row['confidence'])
-              matched = [r for r in rules if re.match(r['pattern'], row['canonicalEnglishName'], re.I)]
-              if len(matched) != 1:
-                field_mismatches.append({'id': row['reviewTargetId'], 'problem': f'rule_matches={len(matched)}'})
-                continue
-              rule = matched[0]
-              contract = rule['contract']
-              notes = row['notes']
-              if contract not in notes:
-                field_mismatches.append({'id': row['reviewTargetId'], 'problem': 'contract_missing_from_notes'})
-              else:
-                pre, post = notes.split(contract, 1)
-                pre = pre.replace(row['bulkFamilyRuleId'], '<RULE>').replace(row['bulkFamilyTier'], '<TIER>')
-                before_contract.add(pre)
-                after_contract.add(post)
+          # Prove row construction and exact serialization against all three
+          # surviving original shards before using it for missing data.
+          calibration = {}
+          for name, doc in docs.items():
+            row_mismatches = []
+            for i, original in enumerate(doc['items']):
+              candidate = built[original['reviewTargetId']]
+              if candidate != original:
+                row_mismatches.append({'index': i, 'id': original['reviewTargetId']})
+            regenerated = dict(top)
+            regenerated['items'] = [built[r['reviewTargetId']] for r in doc['items']]
+            encoded = (json.dumps(regenerated, indent=2, sort_keys=True) + '\n').encode()
+            calibration[name] = {
+              'row_mismatches': row_mismatches,
+              'regenerated_sha256': hashlib.sha256(encoded).hexdigest(),
+              'expected_sha256': expected_hashes[name],
+              'byte_exact': encoded == (tools / name).read_bytes(),
+            }
 
-              target = target_map[row['reviewTargetId']]
-              source = source_map.get(row['sourceEvidenceTargetId'])
-              joins.append({
-                'reviewTargetId': row['reviewTargetId'],
-                'sourceEvidenceTargetId': row['sourceEvidenceTargetId'],
-                'source_found': source is not None,
-              })
-              for key, expected in (
-                ('canonicalEnglishName', target.get('canonicalEnglishName')),
-                ('usageCountAtReview', target.get('usageCountSum')),
-              ):
-                if row.get(key) != expected:
-                  field_mismatches.append({'id': row['reviewTargetId'], 'field': key, 'row': row.get(key), 'expected': expected})
+          # Recover as much of the damaged original 044d as the still-readable
+          # gzip/tar prefix contains. This is an order oracle, not trusted data.
+          parts = [
+            '.batch40-bootstrap/chunks/chunk-000','.batch40-bootstrap/chunks/chunk-001',
+            '.batch40-bootstrap/chunks/chunk-002','.batch40-bootstrap/chunks/chunk-004',
+            '.batch40-bootstrap/chunks/chunk-005','.batch40-bootstrap/chunks/chunk-006',
+            '.batch40-bootstrap/chunks/chunk-007','.batch40-bootstrap/chunks/chunk-008',
+            '.batch40-bootstrap/chunks/chunk-009','.batch40-bootstrap/chunks/chunk-010',
+            '.batch40-bootstrap/chunks/chunk-011','.batch40-bootstrap/chunks/chunk-012',
+            '.batch40-bootstrap/chunks/chunk-014','.batch40-bootstrap/chunks/chunk-015',
+            '.batch40-bootstrap/repair/part-0','.batch40-bootstrap/repair/part-1',
+            '.batch40-bootstrap/repair/part-2','.batch40-bootstrap/repair/part-3',
+            '.batch40-bootstrap/repair/part-4','.batch40-bootstrap/repair/part-5',
+            '.batch40-bootstrap/chunks/chunk-019',
+          ]
+          tail_fix = {
+            '.batch40-bootstrap/repair/part-2': 'J',
+            '.batch40-bootstrap/repair/part-5': 'P',
+          }
+          encoded_transport = ''.join((root / p).read_text(encoding='ascii') + tail_fix.get(p, '') for p in parts)
+          raw_transport = base64.b64decode(encoded_transport, validate=True)
+          corrupt_d = None
+          tar_members = []
+          with tarfile.open(fileobj=io.BytesIO(raw_transport), mode='r:gz') as tf:
+            for member in tf.getmembers():
+              tar_members.append({'name': member.name, 'size': member.size})
+              if member.name.endswith('release_catalog_reviewed_nutrition_targets_044d.v1.json'):
+                src = tf.extractfile(member)
+                corrupt_d = src.read() if src is not None else b''
+          if corrupt_d is None:
+            raise RuntimeError('corrupt 044d member not found')
+          corrupt_text = corrupt_d.decode('utf-8', errors='replace')
+          corrupt_ids = re.findall(r'"reviewTargetId"\s*:\s*"([^"]+)"', corrupt_text)
+          corrupt_rules = re.findall(r'"bulkFamilyRuleId"\s*:\s*"([^"]+)"', corrupt_text)
+          corrupt_parse = {'valid_json': False}
+          try:
+            corrupt_doc = json.loads(corrupt_text)
+            corrupt_parse = {
+              'valid_json': True,
+              'item_count': len(corrupt_doc.get('items', [])),
+              'ids': [r.get('reviewTargetId') for r in corrupt_doc.get('items', [])],
+            }
+          except json.JSONDecodeError as exc:
+            corrupt_parse = {
+              'valid_json': False,
+              'error': str(exc),
+              'error_pos': exc.pos,
+              'context': corrupt_text[max(0, exc.pos-300):exc.pos+300],
+            }
 
-          sample_existing = docs[shard_names[0]]['items'][0]
-          sample_missing_id = remaining_ids[0]
+          known_a = [r['reviewTargetId'] for r in docs[shard_names[0]]['items']]
+          known_b = [r['reviewTargetId'] for r in docs[shard_names[1]]['items']]
+          known_c = [r['reviewTargetId'] for r in docs[shard_names[2]]['items']]
+          first40 = set(known_a + known_b)
+          cset = set(known_c)
+          universe_after40 = [t for t in targets if t['reviewTargetId'] not in first40]
+
+          def meta(t):
+            rule = rule_for(t)
+            return {
+              'id': t['reviewTargetId'],
+              'name': t['canonicalEnglishName'],
+              'fixture_pos': fixture_pos[t['reviewTargetId']],
+              'queueIndex': t.get('queueIndex'),
+              'usage': t['usageCountSum'],
+              'rule': rule['ruleId'],
+              'rule_index': rule_index[rule['ruleId']],
+              'fdcId': rule['fdcId'],
+              'tier': rule['tier'],
+            }
+
+          c_meta = [meta(target_map[i]) for i in known_c]
+          corrupt_d_meta = [meta(target_map[i]) for i in corrupt_ids if i in target_map]
+
+          # Test deterministic order hypotheses against the exact surviving c
+          # sequence. We compare the first 20 after excluding a/b.
+          hypotheses = {
+            'fixture_pos': lambda t: (fixture_pos[t['reviewTargetId']],),
+            'queueIndex': lambda t: (t.get('queueIndex', 10**12),),
+            'usage_desc_fixture': lambda t: (-t['usageCountSum'], fixture_pos[t['reviewTargetId']]),
+            'canonical': lambda t: (t['canonicalEnglishName'].casefold(), fixture_pos[t['reviewTargetId']]),
+            'rule_index_fixture': lambda t: (rule_index[rule_for(t)['ruleId']], fixture_pos[t['reviewTargetId']]),
+            'rule_index_canonical': lambda t: (rule_index[rule_for(t)['ruleId']], t['canonicalEnglishName'].casefold(), fixture_pos[t['reviewTargetId']]),
+            'fdc_fixture': lambda t: (rule_for(t)['fdcId'], fixture_pos[t['reviewTargetId']]),
+            'tier_rule_fixture': lambda t: (rule_for(t)['tier'], rule_index[rule_for(t)['ruleId']], fixture_pos[t['reviewTargetId']]),
+          }
+          hypothesis_results = {}
+          for name, key in hypotheses.items():
+            seq = [t['reviewTargetId'] for t in sorted(universe_after40, key=key)]
+            prefix = 0
+            for x, y in zip(seq, known_c):
+              if x != y:
+                break
+              prefix += 1
+            hypothesis_results[name] = {
+              'prefix_match': prefix,
+              'first20_exact': seq[:20] == known_c,
+              'first20_ids': seq[:20],
+            }
+
+          all_meta = [meta(t) for t in targets]
+          remaining_after_abc = [m for m in all_meta if m['id'] not in set(known_a + known_b + known_c)]
           analysis = {
-            'fixture_keys': sorted(fixture),
-            'fixture_target_count': len(targets),
-            'fixture_source_count': len(sources),
-            'fixture_order_first_20': order[:20],
-            'target_keys': sorted({k for r in targets for k in r}),
-            'source_keys': sorted({k for r in sources for k in r}),
-            'shards': shard_summary,
-            'existing_count': len(all_existing),
-            'existing_unique_count': len(existing_set),
-            'remaining_count': len(remaining_ids),
-            'remaining_ids': remaining_ids,
-            'top_level_documents': top_levels,
-            'row_keys': sorted(row_keys),
-            'confidence_by_tier': {k: sorted(v) for k, v in confidence_by_tier.items()},
-            'normalized_notes_prefixes': sorted(before_contract),
-            'notes_suffixes': sorted(after_contract),
-            'field_mismatches': field_mismatches,
-            'source_join_failures': [j for j in joins if not j['source_found']],
-            'sample_existing_row': sample_existing,
-            'sample_existing_target': target_map[sample_existing['reviewTargetId']],
-            'sample_existing_source': source_map.get(sample_existing['sourceEvidenceTargetId']),
-            'sample_missing_target': target_map[sample_missing_id],
-            'source_samples': sources[:3],
+            'calibration': calibration,
+            'tar_members': tar_members,
+            'corrupt_044d': {
+              'byte_len': len(corrupt_d),
+              'sha256': hashlib.sha256(corrupt_d).hexdigest(),
+              'regex_reviewTargetIds': corrupt_ids,
+              'regex_ruleIds': corrupt_rules,
+              'parse': corrupt_parse,
+              'tail': corrupt_text[-1500:],
+              'meta': corrupt_d_meta,
+            },
+            'known_c_meta': c_meta,
+            'hypotheses': hypothesis_results,
+            'remaining_after_abc': remaining_after_abc,
+            'all_target_meta': all_meta,
           }
           Path('.batch40-diagnostic.json').write_text(json.dumps(analysis, indent=2, sort_keys=True) + '\n')
           print(json.dumps({
-            'fixture_keys': analysis['fixture_keys'],
-            'target_keys': analysis['target_keys'],
-            'source_keys': analysis['source_keys'],
-            'shards': shard_summary,
-            'existing_count': len(all_existing),
-            'remaining_count': len(remaining_ids),
-            'remaining_ids': remaining_ids,
-            'row_keys': sorted(row_keys),
-            'confidence_by_tier': analysis['confidence_by_tier'],
-            'normalized_notes_prefixes': sorted(before_contract),
-            'notes_suffixes': sorted(after_contract),
-            'field_mismatches': field_mismatches,
-            'source_join_failures': analysis['source_join_failures'],
-            'top_level_documents': top_levels,
-            'sample_existing_row': sample_existing,
-            'sample_existing_target': analysis['sample_existing_target'],
-            'sample_existing_source': analysis['sample_existing_source'],
-            'sample_missing_target': analysis['sample_missing_target'],
-            'source_samples': sources[:3],
+            'calibration': calibration,
+            'corrupt_044d': analysis['corrupt_044d'],
+            'known_c_meta': c_meta,
+            'hypotheses': hypothesis_results,
+            'remaining_after_abc': remaining_after_abc,
           }, indent=2, sort_keys=True))
           PY
-      - name: Push reconstruction analysis
+      - name: Push exact-order diagnostic
         run: |
           git fetch origin "$HEAD_BRANCH"
           test "$(git rev-parse HEAD)" = "$(git rev-parse origin/$HEAD_BRANCH)" || exit 78
           git add .batch40-diagnostic.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Analyze exact Batch 40 shard construction'
+          git commit -m 'Recover Batch 40 shard order oracle'
           git push origin "HEAD:$HEAD_BRANCH"
