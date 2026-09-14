@@ -1,4 +1,4 @@
-name: Snapshot Batch 41 review state
+name: Export Batch 41 recorded IDs
 
 on:
   push:
@@ -11,104 +11,35 @@ permissions:
   contents: write
 
 jobs:
-  snapshot:
+  export:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
       BRANCH: cook4me-nutrition-batch41-discovery-v60
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Emit compact current nutrition-review state
+      - name: Export exact recorded target IDs
         run: |
           python - <<'PY'
-          from __future__ import annotations
-          import json
           from pathlib import Path
           import sys
-
           root = Path.cwd()
           tools = root / 'tools'
           sys.path.insert(0, str(tools))
-
-          import classify_nutrition_review_queue_v60 as classifier
-          import nutrition_review_holds_v60 as holds
           import snapshot_nutrition_review_checkpoint_v60 as checkpoint
-
           cp = checkpoint.build_checkpoint(tools)
-          hold_doc = holds.load_holds()
-          rules_doc, compiled = classifier._load_rules()
-
-          recorded = sorted({row['reviewTargetId'] for row in cp['recordedBindings']})
-          held = sorted(hold_doc['targets'])
-          rules = []
-          for rule, regex in compiled:
-              rules.append({
-                  'ruleId': rule['ruleId'],
-                  'pattern': rule['pattern'],
-                  'tier': rule['tier'],
-                  'fdcId': rule['fdcId'],
-                  'fdcDescription': rule['fdcDescription'],
-                  'contract': rule['contract'],
-              })
-
-          blocker_path = tools / 'release_catalog_nutrition_review_blockers.v1.json'
-          blockers = []
-          if blocker_path.exists():
-              blocker_doc, blocker_sha = checkpoint._read(blocker_path)
-              blockers = [
-                  {
-                      'reviewTargetId': row['reviewTargetId'],
-                      'canonicalEnglishName': row['canonicalEnglishName'],
-                      'reasonCode': row.get('reasonCode'),
-                      'evidenceRequired': row.get('evidenceRequired'),
-                  }
-                  for row in blocker_doc.get('items', [])
-              ]
-          else:
-              blocker_sha = None
-
-          out = {
-              'schemaVersion': 1,
-              'kind': 'cook4me-batch41-current-review-state-v60',
-              'sourceCommit': cp['sourceCommit'],
-              'checkpointSummary': cp['summary'],
-              'reviewFilesSha256': cp['reviewFilesSha256'],
-              'recordedBindingsSha256': cp['recordedBindingsSha256'],
-              'recordedReviewTargetIds': recorded,
-              'heldReviewTargetIds': held,
-              'holdRegistrySha256': hold_doc['registrySha256'],
-              'bulkRuleSourceEvidenceSha256': rules_doc['sourceEvidenceSha256'],
-              'bulkRuleReferenceManifestSha256': rules_doc['referenceManifestSha256'],
-              'bulkRules': rules,
-              'blockerLedgerSha256': blocker_sha,
-              'blockers': blockers,
-              'policy': {
-                  'snapshotOnly': True,
-                  'createsBindings': False,
-                  'candidateRankIsIdentityProof': False,
-                  'automaticRuleExpansionForbidden': True,
-              },
-          }
-          Path('.batch41-state.json').write_text(
-              json.dumps(out, indent=2, sort_keys=True, ensure_ascii=False) + '\n', encoding='utf-8')
-          print(json.dumps({
-              'recordedReviewTargetCount': len(recorded),
-              'heldReviewTargetCount': len(held),
-              'bulkRuleCount': len(rules),
-              'blockerCount': len(blockers),
-              'sourceEvidenceSha256': out['bulkRuleSourceEvidenceSha256'],
-              'checkpointSummary': out['checkpointSummary'],
-          }, indent=2, ensure_ascii=False))
+          ids = sorted({row['reviewTargetId'] for row in cp['recordedBindings']})
+          Path('.batch41-recorded-ids.txt').write_text('\n'.join(ids) + '\n', encoding='utf-8')
+          print(f'recorded_ids={len(ids)}')
+          print(f'recorded_bindings_sha256={cp["recordedBindingsSha256"]}')
           PY
-      - name: Commit state receipt
+      - name: Commit ID receipt
         run: |
-          git add .batch41-state.json
+          git add .batch41-recorded-ids.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Snapshot Batch 41 current nutrition-review state' || exit 0
+          git commit -m 'Export Batch 41 recorded target IDs' || exit 0
           git push origin "HEAD:$BRANCH"
