@@ -1,0 +1,52 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-target-candidate-binding",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Mirin",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Wine, rice",
+      "fdcId": 2710691,
+      "notes": "Manual semantic review binds generic Cook4Me mirin to USDA 'Wine, rice'. The exact same FDC record was previously explicitly reviewed for the near-identical Cook4Me concept 'Sweet rice wine (mirin)', and this target's own pinned evidence independently contains that record at rank 1. The alias query 'rice wine' was used only to surface review evidence and is not identity proof. This binding does not infer brand, sweetness grade, alcohol percentage, seasoning, serving volume, or recipe-use dilution.",
+      "reviewTargetId": "concept:food:c6cb90b0108d4d68cdb3",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "5904c761b2651f0dc5a4e1a4fc77b07462ac14d8d68f2ce065b31d49a6b65660",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "af4d21c55d1df47fac07defdcfc25ba5520efb8a009d64cf0f7cd8cca6eb8676",
+      "sourceEvidenceTargetId": "concept:food:c6cb90b0108d4d68cdb3",
+      "usageCountAtReview": 157
+    },
+    {
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Passata",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Tomato, puree, canned",
+      "fdcId": 2685582,
+      "notes": "Manual semantic review binds generic Cook4Me passata to USDA Foundation 'Tomato, puree, canned'. A previously explicitly reviewed near-identical Cook4Me concept 'Tomato passata' uses the same FDC record, and this target's own pinned evidence independently contains it at rank 1. The alias query 'tomato puree' was used only to surface review evidence and is not identity proof. This binding does not infer brand, added salt, concentration, seasoning, packaging, or water-loss adjustments.",
+      "reviewTargetId": "concept:food:c97a73fa4e9064bd3168",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "595435b2bdf31e9078456e23969d362fa68a26fe224e9485adbcff16f477b864",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "af4d21c55d1df47fac07defdcfc25ba5520efb8a009d64cf0f7cd8cca6eb8676",
+      "sourceEvidenceTargetId": "concept:food:c97a73fa4e9064bd3168",
+      "usageCountAtReview": 3
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "reviewDecisionSha256": "c9067d811b45f6bf9db1c68f957342e35450db19fd80515d9b99582c0b74bc68",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "af4d21c55d1df47fac07defdcfc25ba5520efb8a009d64cf0f7cd8cca6eb8676"
+}
