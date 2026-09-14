@@ -7,6 +7,10 @@ recipe, variant, global ingredient, provider identity, quantity, unit and send
 identity while removing only data that can be recovered deterministically from
 the global ingredient table or calculated on demand.
 
+Before repeated recipe-line labels are removed, unique original wordings are
+folded into the matching global ingredient alias table once. This retains search
+coverage without repeating the same metadata in every recipe occurrence.
+
 All derived search/dependency/safety indexes are rebuilt after compaction. No
 network access is performed.
 """
@@ -71,6 +75,76 @@ def _text(value: Any) -> str:
     return " ".join(str(value or "").strip().split())
 
 
+def _language(value: Any) -> str:
+    return _text(value).lower().replace("_", "-").split("-", 1)[0]
+
+
+def _global_lookup(ingredients: list[Any]) -> dict[str, dict[str, Any]]:
+    lookup: dict[str, dict[str, Any]] = {}
+    for raw in ingredients:
+        if not isinstance(raw, dict):
+            continue
+        for value in (
+            raw.get("id"),
+            raw.get("ingredientId"),
+            raw.get("key"),
+            raw.get("foodKey"),
+            raw.get("conceptId"),
+        ):
+            ident = _text(value)
+            if ident:
+                lookup.setdefault(ident, raw)
+    return lookup
+
+
+def _line_global(
+    line: dict[str, Any], lookup: dict[str, dict[str, Any]]
+) -> dict[str, Any] | None:
+    for value in (
+        line.get("ingredientId"),
+        line.get("id"),
+        line.get("key"),
+        line.get("foodKey"),
+        line.get("conceptId"),
+    ):
+        ident = _text(value)
+        if ident and isinstance(lookup.get(ident), dict):
+            return lookup[ident]
+    return None
+
+
+def _preserve_line_alias(
+    line: dict[str, Any], lookup: dict[str, dict[str, Any]]
+) -> bool:
+    name = _text(line.get("originalName"))
+    language = _language(line.get("originalLanguage"))
+    if not name or not language:
+        return False
+    source = _line_global(line, lookup)
+    if source is None:
+        return False
+
+    translations = source.get("translations")
+    if not isinstance(translations, dict):
+        translations = {}
+        source["translations"] = translations
+    translations.setdefault(language, name)
+
+    aliases = source.get("aliases")
+    if not isinstance(aliases, dict):
+        aliases = {}
+        source["aliases"] = aliases
+    values = aliases.get(language)
+    if not isinstance(values, list):
+        values = []
+        aliases[language] = values
+    normalized = {_text(value).casefold() for value in values if _text(value)}
+    if name.casefold() in normalized:
+        return False
+    values.append(name)
+    return True
+
+
 def compact(payload: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
     recipes = payload.get("recipes") if isinstance(payload.get("recipes"), list) else []
     ingredients = payload.get("ingredients") if isinstance(payload.get("ingredients"), list) else []
@@ -81,10 +155,12 @@ def compact(payload: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
         if isinstance(row, dict)
     )
     before_ingredients = len(ingredients)
+    global_lookup = _global_lookup(ingredients)
 
     stripped_group_fields = 0
     stripped_line_fields = 0
     stripped_variant_vectors = 0
+    preserved_unique_aliases = 0
 
     for group in recipes:
         if not isinstance(group, dict):
@@ -105,6 +181,8 @@ def compact(payload: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
             for line in variant.get("ingredients") or []:
                 if not isinstance(line, dict):
                     continue
+                if _preserve_line_alias(line, global_lookup):
+                    preserved_unique_aliases += 1
                 for field in _LINE_GLOBAL_DUPLICATE_FIELDS:
                     if field in line:
                         line.pop(field, None)
@@ -143,6 +221,7 @@ def compact(payload: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
             "runtimeCatalogCompacted": True,
             "runtimeCatalogCompactionPolicy": _POLICY,
             "runtimeCatalogRecipeLineGlobalMetadataDeduplicated": True,
+            "runtimeCatalogRecipeLineAliasesFoldedToGlobal": True,
             "runtimeCatalogPrefixPostingsPersisted": False,
         }
     )
@@ -162,6 +241,7 @@ def compact(payload: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
         "recipeGroups": before_groups,
         "variants": before_variants,
         "ingredients": before_ingredients,
+        "preservedUniqueRecipeLineAliases": preserved_unique_aliases,
         "strippedGroupFields": stripped_group_fields,
         "strippedRecipeLineDuplicateFields": stripped_line_fields,
         "strippedVariantNutritionVectors": stripped_variant_vectors,
