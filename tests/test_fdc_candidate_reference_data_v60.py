@@ -37,6 +37,11 @@ class CandidateReferenceIndexTests(unittest.TestCase):
                         "description": "Rice, brown",
                         "foodCategory": {"description": "Grains"},
                     },
+                    {
+                        "fdcId": 103,
+                        "description": "Kelp, raw",
+                        "foodCategory": {"description": "Sea vegetables"},
+                    },
                 ],
             ),
             (
@@ -50,6 +55,8 @@ class CandidateReferenceIndexTests(unittest.TestCase):
                         "description": "Sugar, brown",
                         "commonNames": "muscovado sugar",
                     },
+                    {"fdcId": 203, "description": "Wheat gluten, cooked"},
+                    {"fdcId": 204, "description": "Tomato puree, canned"},
                 ],
             ),
             (
@@ -61,7 +68,9 @@ class CandidateReferenceIndexTests(unittest.TestCase):
                         "fdcId": 301,
                         "description": "Rice with vegetables",
                         "wweiaFoodCategory": {"description": "Mixed dishes"},
-                    }
+                    },
+                    {"fdcId": 302, "description": "Rice wine"},
+                    {"fdcId": 303, "description": "Red pepper paste"},
                 ],
             ),
         ]
@@ -104,6 +113,11 @@ class CandidateReferenceIndexTests(unittest.TestCase):
                 "garden tomato",
                 "fresh whole",
                 "muscovado",
+                "mirin",
+                "passata",
+                "kombu",
+                "seitan",
+                "gochujang",
                 "does-not-exist",
             )
             for query in queries:
@@ -118,13 +132,48 @@ class CandidateReferenceIndexTests(unittest.TestCase):
                     )
 
             self.assertTrue(light.candidate_only)
-            self.assertEqual(light.indexed_fdc_id_count, 5)
+            self.assertEqual(light.indexed_fdc_id_count, 10)
             self.assertEqual(len(light._score_rows), len(light.records))
             self.assertFalse(hasattr(light, "_raw_by_id"))
             self.assertFalse(
                 any(key.startswith("_") for row in light.records for key in row),
                 "private precomputed score metadata leaked into candidate rows",
             )
+
+    def test_culinary_aliases_are_zero_result_fallback_and_remain_marked(self):
+        with tempfile.TemporaryDirectory() as directory:
+            manifest = self._manifest(Path(directory))
+            full = full_reference.ReferenceIndex(manifest)
+            light = candidate_reference.CandidateReferenceIndex(manifest)
+            expected = {
+                "mirin": (302, "rice wine"),
+                "passata": (204, "tomato puree"),
+                "kombu": (103, "kelp"),
+                "seitan": (203, "wheat gluten"),
+                "gochujang": (303, "red pepper paste"),
+            }
+            for query, (fdc_id, matched_query) in expected.items():
+                with self.subTest(query=query):
+                    self.assertEqual(light._rank(query, max_candidates=8), [])
+                    rows = light.search(query, max_candidates=8)
+                    self.assertTrue(rows)
+                    self.assertEqual(rows[0]["fdcId"], fdc_id)
+                    self.assertTrue(rows[0]["localEvidenceQueryAlias"])
+                    self.assertEqual(rows[0]["localEvidenceMatchedQuery"], matched_query)
+                    self.assertEqual(rows, full.search(query, max_candidates=8))
+
+            # Even if a discovery alias exists for a name, literal evidence must
+            # win and therefore must not be mislabeled as alias-derived.
+            with patch.dict(
+                full_reference._DISCOVERY_ALIASES,
+                {"tomato": ("rice wine",)},
+                clear=False,
+            ):
+                rows = light.search("Tomato", max_candidates=8)
+            self.assertTrue(rows)
+            self.assertEqual(rows[0]["fdcId"], 101)
+            self.assertNotIn("localEvidenceQueryAlias", rows[0])
+            self.assertNotIn("localEvidenceMatchedQuery", rows[0])
 
     def test_score_upper_bound_prunes_sequence_matching_without_changing_top_n(self):
         with tempfile.TemporaryDirectory() as directory:
