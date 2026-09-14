@@ -18,6 +18,10 @@ on:
       - tests/test_prepare_post_activation_nutrition_review_targets_v60.py
   workflow_dispatch:
 
+concurrency:
+  group: catalog-nutrition-enrichment-evidence-v60-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
   attestations: write
