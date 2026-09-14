@@ -20,13 +20,17 @@ on:
   workflow_dispatch:
 
 permissions:
-  actions: read
   contents: read
 
 jobs:
   validate-review-decisions:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ARCHIVE_TAG: nutrition-evidence-v60-archive
+      OLD_EVIDENCE_SHA: 8beb71a92432c46c6b452f3ce75a92a51e5f15285357ed17898409c8ee597423
+      PINNED_EVIDENCE_SHA: c26ca11a83b592737417181ca5fcbf4b092d2c176e98192334577ac8367bc46b
     steps:
       - uses: actions/checkout@v4
         with:
@@ -56,20 +60,38 @@ jobs:
             tests.test_verify_post_activation_nutrition_review_decisions_v60 \
             tests.test_nutrition_review_checkpoint_v60 -v
 
-      - name: Download successful post-activation evidence
-        uses: actions/download-artifact@v4
-        with:
-          name: nutrition-enrichment-evidence-v60-98a0b0e284749622787ff251340d0100b650e2c4
-          path: /tmp/nutrition-evidence
-          repository: Chreece/HA-Cook4me
-          run-id: 34847903376
-          github-token: ${{ github.token }}
+      - name: Download permanent immutable evidence snapshots
+        run: |
+          set -Eeuo pipefail
+          DEST=/tmp/nutrition-review-evidence
+          mkdir -p "$DEST"
+
+          gh release download "$ARCHIVE_TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --dir "$DEST" \
+            --pattern "fdc-candidate-evidence-v60-${OLD_EVIDENCE_SHA}.json.gz" \
+            --pattern "fdc-candidate-evidence-v60-${PINNED_EVIDENCE_SHA}.json.gz"
+
+          OLD_GZ="$DEST/fdc-candidate-evidence-v60-${OLD_EVIDENCE_SHA}.json.gz"
+          PINNED_GZ="$DEST/fdc-candidate-evidence-v60-${PINNED_EVIDENCE_SHA}.json.gz"
+          OLD_JSON="$DEST/fdc-candidate-evidence-v60-${OLD_EVIDENCE_SHA}.json"
+          PINNED_JSON="$DEST/fdc-candidate-evidence-v60-${PINNED_EVIDENCE_SHA}.json"
+
+          gzip -cd "$OLD_GZ" > "$OLD_JSON"
+          gzip -cd "$PINNED_GZ" > "$PINNED_JSON"
+
+          test "$(sha256sum "$OLD_JSON" | awk '{print $1}')" = "$OLD_EVIDENCE_SHA"
+          test "$(sha256sum "$PINNED_JSON" | awk '{print $1}')" = "$PINNED_EVIDENCE_SHA"
+
+          test "$(gh release view "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq '.isDraft')" = "true"
 
       - name: Recompile and verify committed review batches
         run: |
           set -Eeuo pipefail
+          DEST=/tmp/nutrition-review-evidence
           python tools/verify_post_activation_nutrition_review_decisions_v60.py \
-            --evidence /tmp/nutrition-evidence/fdc-candidate-evidence.v60.json \
+            --evidence "$DEST/fdc-candidate-evidence-v60-${OLD_EVIDENCE_SHA}.json" \
+            --evidence "$DEST/fdc-candidate-evidence-v60-${PINNED_EVIDENCE_SHA}.json" \
             --decision-root tools \
             --review-root tools \
             --output /tmp/post-activation-review-verification.v60.json
