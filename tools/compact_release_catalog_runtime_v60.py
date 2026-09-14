@@ -7,9 +7,15 @@ recipe, variant, global ingredient, provider identity, quantity, unit and send
 identity while removing only data that can be recovered deterministically from
 the global ingredient table or calculated on demand.
 
-Before repeated recipe-line labels are removed, unique original wordings are
-folded into the matching global ingredient alias table once. This retains search
-coverage without repeating the same metadata in every recipe occurrence.
+Before repeated recipe-line metadata is removed, only the reviewed clean
+``semanticSourceName`` is folded into the matching global ingredient translation
+or alias table when it is genuinely missing. Raw ``originalName`` is deliberately
+not retained as an alias because some provider catalogs embed quantities/units in
+that field.
+
+Reviewed nutrition keeps the exact ingredient/FDC/review identity and nutrient
+values required for fail-closed reuse. Large repeated maintenance receipts are
+collapsed into one catalog-level USDA reference receipt.
 
 All derived search/dependency/safety indexes are rebuilt after compaction. No
 network access is performed.
@@ -63,6 +69,23 @@ _LINE_GLOBAL_DUPLICATE_FIELDS = {
     "originalLanguage",
 }
 
+# Runtime/future-finalization still has everything is_reviewed_profile() needs,
+# plus explicit review-target and USDA data-type identity. The omitted fields are
+# maintenance receipts/notes already preserved in versioned review files or in
+# the catalog-level reference receipt assembled below.
+_RUNTIME_NUTRITION_KEEP_FIELDS = (
+    "basis",
+    "values",
+    "source",
+    "sourceId",
+    "dataType",
+    "ingredientId",
+    "reviewedCanonicalEnglishName",
+    "reviewFile",
+    "nutritionReviewTargetId",
+    "nutritionReviewTargetKind",
+)
+
 
 def _load(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
@@ -113,10 +136,11 @@ def _line_global(
     return None
 
 
-def _preserve_line_alias(
+def _preserve_line_semantic_alias(
     line: dict[str, Any], lookup: dict[str, dict[str, Any]]
 ) -> bool:
-    name = _text(line.get("originalName"))
+    """Preserve only clean reviewed semantic wording, never raw quantity text."""
+    name = _text(line.get("semanticSourceName"))
     language = _language(line.get("originalLanguage"))
     if not name or not language:
         return False
@@ -128,7 +152,7 @@ def _preserve_line_alias(
     if not isinstance(translations, dict):
         translations = {}
         source["translations"] = translations
-    translations.setdefault(language, name)
+    translation = _text(translations.get(language))
 
     aliases = source.get("aliases")
     if not isinstance(aliases, dict):
@@ -138,11 +162,73 @@ def _preserve_line_alias(
     if not isinstance(values, list):
         values = []
         aliases[language] = values
+
     normalized = {_text(value).casefold() for value in values if _text(value)}
+    if translation:
+        normalized.add(translation.casefold())
     if name.casefold() in normalized:
         return False
-    values.append(name)
+
+    # Prefer one translation over creating a one-item duplicate alias list.
+    if not translation:
+        translations[language] = name
+    else:
+        values.append(name)
     return True
+
+
+def _compact_nutrition_profiles(
+    ingredients: list[Any],
+) -> dict[str, Any]:
+    """Deduplicate maintenance provenance while keeping reviewed-profile proof."""
+    manifest_shas: set[str] = set()
+    datasets: set[tuple[str, str, str]] = set()
+    profile_count = 0
+    stripped_fields = 0
+
+    for raw in ingredients:
+        if not isinstance(raw, dict):
+            continue
+        profile = raw.get("nutrition")
+        if not isinstance(profile, dict):
+            continue
+        profile_count += 1
+
+        manifest_sha = _text(profile.get("sourceReferenceManifestSha256"))
+        if manifest_sha:
+            manifest_shas.add(manifest_sha)
+        dataset = _text(profile.get("sourceReferenceDataset"))
+        release_date = _text(profile.get("sourceReferenceReleaseDate"))
+        json_sha = _text(profile.get("sourceReferenceJsonSha256"))
+        if dataset or release_date or json_sha:
+            datasets.add((dataset, release_date, json_sha))
+
+        compact = {
+            key: profile[key]
+            for key in _RUNTIME_NUTRITION_KEEP_FIELDS
+            if key in profile and profile[key] not in (None, "", {}, [])
+        }
+        stripped_fields += max(0, len(profile) - len(compact))
+        raw["nutrition"] = compact
+
+    result: dict[str, Any] = {
+        "runtimeNutritionProfileCount": profile_count,
+        "strippedNutritionMaintenanceFields": stripped_fields,
+    }
+    if len(manifest_shas) == 1:
+        result["reviewedNutritionReferenceManifestSha256"] = next(iter(manifest_shas))
+    elif manifest_shas:
+        result["reviewedNutritionReferenceManifestSha256s"] = sorted(manifest_shas)
+    if datasets:
+        result["reviewedNutritionReferenceDatasets"] = [
+            {
+                "dataType": data_type,
+                "releaseDate": release_date,
+                "jsonSha256": json_sha,
+            }
+            for data_type, release_date, json_sha in sorted(datasets)
+        ]
+    return result
 
 
 def compact(payload: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
@@ -181,12 +267,14 @@ def compact(payload: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
             for line in variant.get("ingredients") or []:
                 if not isinstance(line, dict):
                     continue
-                if _preserve_line_alias(line, global_lookup):
+                if _preserve_line_semantic_alias(line, global_lookup):
                     preserved_unique_aliases += 1
                 for field in _LINE_GLOBAL_DUPLICATE_FIELDS:
                     if field in line:
                         line.pop(field, None)
                         stripped_line_fields += 1
+
+    nutrition_compaction = _compact_nutrition_profiles(ingredients)
 
     # Rebuild every derived structure from the compact recipe representation so
     # the independent validator can prove byte-for-structure consistency.
@@ -221,8 +309,11 @@ def compact(payload: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
             "runtimeCatalogCompacted": True,
             "runtimeCatalogCompactionPolicy": _POLICY,
             "runtimeCatalogRecipeLineGlobalMetadataDeduplicated": True,
-            "runtimeCatalogRecipeLineAliasesFoldedToGlobal": True,
+            "runtimeCatalogRecipeLineSemanticAliasesFoldedToGlobal": True,
+            "runtimeCatalogRawRecipeLineNamesNotIndexed": True,
             "runtimeCatalogPrefixPostingsPersisted": False,
+            "runtimeNutritionProfilesCompacted": True,
+            **nutrition_compaction,
         }
     )
 
@@ -245,6 +336,7 @@ def compact(payload: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
         "strippedGroupFields": stripped_group_fields,
         "strippedRecipeLineDuplicateFields": stripped_line_fields,
         "strippedVariantNutritionVectors": stripped_variant_vectors,
+        **nutrition_compaction,
         "searchTokenCount": int((payload.get("searchIndex") or {}).get("stats", {}).get("tokens") or 0),
         "searchPrefixCount": int((payload.get("searchIndex") or {}).get("stats", {}).get("prefixes") or 0),
         "prefixPostingsPersisted": bool((payload.get("searchIndex") or {}).get("prefixPostings")),
