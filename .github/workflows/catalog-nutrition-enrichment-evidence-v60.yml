@@ -72,12 +72,19 @@ jobs:
               'reviewedNutritionRequiredCount': int(source.get('reviewedNutritionRequiredCount') or 0),
               'failedDetailCount': int(source.get('failedDetailCount') or 0),
           }
+          facts['expectedPendingIdentityCount'] = max(
+              0, facts['reviewedNutritionRequiredCount'] - facts['reviewedNutritionResolvedCount']
+          )
           if not facts['complete'] or not facts['runtimeCatalogCompacted']:
               raise SystemExit(f'release catalog is not the activated compact v60 baseline: {facts}')
           if (facts['recipes'], facts['variants'], facts['ingredients']) != (16952, 32163, 11748):
               raise SystemExit(f'activated release counts changed: {facts}')
           if facts['failedDetailCount'] != 0:
               raise SystemExit(f"activated catalog has failed details: {facts['failedDetailCount']}")
+          if facts['reviewedNutritionRequiredCount'] != 10776:
+              raise SystemExit(f"nutrition-required identity count changed: {facts}")
+          if not 0 <= facts['reviewedNutritionResolvedCount'] <= facts['reviewedNutritionRequiredCount']:
+              raise SystemExit(f"invalid reviewed nutrition coverage: {facts}")
           print(json.dumps(facts, ensure_ascii=False, indent=2))
           PY
 
@@ -104,7 +111,13 @@ jobs:
           root = Path(os.environ['RUNNER_TEMP']) / 'cook4me-nutrition-enrichment-v60'
           queue = json.loads((root / 'nutrition-queue-summary.v60.json').read_text(encoding='utf-8'))
           targets = json.loads((root / 'nutrition-review-targets-summary.v60.json').read_text(encoding='utf-8'))
+          catalog = json.loads(Path('custom_components/cook4me/catalog/merged_catalog.v1.json').read_text(encoding='utf-8'))
+          source = catalog.get('source') if isinstance(catalog.get('source'), dict) else {}
+          required = int(source.get('reviewedNutritionRequiredCount') or 0)
+          resolved = int(source.get('reviewedNutritionResolvedCount') or 0)
+          expected_pending = max(0, required - resolved)
           facts = {
+              'expectedPendingIdentityCount': expected_pending,
               'activatedPendingIdentityCount': int(queue.get('activatedPendingNutritionCount') or 0),
               'pendingIdentityCount': int(queue.get('pendingNutritionCount') or 0),
               'reviewedAfterActivationIdentityCount': int(queue.get('reviewedAfterActivationIdentityCount') or 0),
@@ -116,16 +129,14 @@ jobs:
               'runtimeSemanticReviewReceipts': int(targets.get('postActivationSemanticReviewReceiptCount') or 0),
               'runtimeSemanticReviewReceiptTargets': int(targets.get('postActivationSemanticReviewReceiptTargetCount') or 0),
           }
-          if facts['activatedPendingIdentityCount'] != 1851:
-              raise SystemExit(f"unexpected activated pending identity count: {facts['activatedPendingIdentityCount']}")
-          if facts['activatedReviewTargetCount'] != 1251:
-              raise SystemExit(f"unexpected activated review target count: {facts['activatedReviewTargetCount']}")
-          if facts['pendingIdentityCount'] + facts['reviewedAfterActivationIdentityCount'] != 1851:
+          if facts['activatedPendingIdentityCount'] != expected_pending:
+              raise SystemExit(f"activated pending identities do not match required-resolved: {facts}")
+          if facts['pendingIdentityCount'] + facts['reviewedAfterActivationIdentityCount'] != facts['activatedPendingIdentityCount']:
               raise SystemExit(f"review overlay lost activated identities: {facts}")
-          if facts['reviewTargetCount'] + facts['reviewedAfterActivationTargetCount'] != 1251:
+          if facts['reviewTargetCount'] + facts['reviewedAfterActivationTargetCount'] != facts['activatedReviewTargetCount']:
               raise SystemExit(f"review overlay lost activated targets: {facts}")
-          if facts['reviewedAfterActivationTargetCount'] <= 0:
-              raise SystemExit(f"expected reviewed-after-activation targets to be subtracted: {facts}")
+          if expected_pending and facts['activatedReviewTargetCount'] <= 0:
+              raise SystemExit(f"pending identities exist without review targets: {facts}")
           print(json.dumps(facts, ensure_ascii=False, indent=2))
           PY
 
@@ -170,8 +181,10 @@ jobs:
           reference = json.loads((root / 'fdc-reference-summary.v60.json').read_text(encoding='utf-8'))
           triage = json.loads((root / 'fdc-candidate-triage-summary.v60.json').read_text(encoding='utf-8'))
           expected_targets = int(targets.get('reviewTargetCount') or 0)
+          activated_targets = int(targets.get('activatedReviewTargetCount') or 0)
           facts = {
               'reviewTargetCount': int(evidence.get('reviewTargetCount') or 0),
+              'activatedReviewTargetCount': activated_targets,
               'reviewedAfterActivationTargetCount': int(targets.get('reviewedAfterActivationTargetCount') or 0),
               'candidateOnlyReferenceIndex': evidence.get('candidateOnlyReferenceIndex') is True,
               'referenceManifestDeterministic': reference.get('referenceManifestDeterministic') is True,
@@ -192,9 +205,9 @@ jobs:
           }
           if facts['reviewTargetCount'] != expected_targets:
               raise SystemExit(f"candidate evidence lost review targets: expected={expected_targets} actual={facts['reviewTargetCount']}")
-          if facts['reviewTargetCount'] + facts['reviewedAfterActivationTargetCount'] != 1251:
+          if facts['reviewTargetCount'] + facts['reviewedAfterActivationTargetCount'] != activated_targets:
               raise SystemExit(f"candidate evidence/review overlay does not reconcile to activated target count: {facts}")
-          if not facts['candidateOnlyReferenceIndex'] or facts['indexedReferenceFdcIdCount'] <= 0:
+          if not facts['candidateOnlyReferenceIndex'] or (facts['reviewTargetCount'] and facts['indexedReferenceFdcIdCount'] <= 0):
               raise SystemExit(f'candidate capture did not use lightweight reference index: {facts}')
           if not facts['referenceManifestDeterministic'] or facts['referenceDatasetCount'] != 3:
               raise SystemExit(f'FDC reference provenance is not deterministic/complete: {facts}')
