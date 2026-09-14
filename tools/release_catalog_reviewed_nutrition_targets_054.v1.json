@@ -1,0 +1,36 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-target-candidate-binding",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "candidateEvidenceRank": 12,
+      "canonicalEnglishName": "Sweet potato, thickly peeled, cut 1 cm wide and soaked in water for 30 minutes",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Sweet potato, raw, unprepared (Includes foods for USDA's Food Distribution Program)",
+      "fdcId": 168482,
+      "notes": "Explicit semantic review binds this uncooked sweet-potato preparation to USDA sweet potato, raw, unprepared. Thick peeling, cutting, and a 30-minute water soak do not change the underlying food identity or create a cooked product, but they may modestly alter the edible portion or water-soluble nutrients, so confidence is medium rather than high. The USDA record is used only as the per-100-g raw sweet-potato nutrition reference; Cook4Me does not infer skin contribution, soak loss, water uptake, drained yield, serving mass, or any cooking conversion. Cooked, canned, fried, candied, frozen, or paste forms remain separate identities.",
+      "reviewTargetId": "concept:food:25e3f9bd09f4e9502690",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "547238ca3ab4d4c39684d4b69043843ddf6f7217ead89697ea722602ea826326",
+      "sourceEvidenceCandidateRank": 12,
+      "sourceEvidenceSha256": "5b98ea0b699e314989dc3bd05719a78ff33fb66aaa352345a237733616b383d5",
+      "sourceEvidenceTargetId": "concept:food:25e3f9bd09f4e9502690",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "reviewDecisionSha256": "e4b93b26e601963a5f22060f7aee9d8c2e96e88e98d258abb0dff27e357a2b1c",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "5b98ea0b699e314989dc3bd05719a78ff33fb66aaa352345a237733616b383d5"
+}
