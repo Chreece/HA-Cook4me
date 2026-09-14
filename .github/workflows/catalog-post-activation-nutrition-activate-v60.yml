@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       source_sha:
-        description: Exact verified commit SHA to activate; empty is a manual maintenance run
+        description: Exact verified review-batch commit SHA; empty activates the selected branch state manually
         required: false
         type: string
 
@@ -59,7 +59,7 @@ jobs:
               ['git', 'rev-parse', 'HEAD'], text=True
           ).strip()
           changed = []
-          allow_zero_delta = event_name == 'workflow_dispatch'
+          allow_zero_delta = False
 
           if event_name == 'workflow_dispatch' and dispatch_source_sha:
               if not re.fullmatch(r'[0-9a-f]{40}', dispatch_source_sha):
@@ -78,10 +78,10 @@ jobs:
                   and path.endswith('.v1.json')
                   for path in changed
               )
-              # A verifier-dispatched review batch normally must resolve new
-              # identities. Verification/workflow maintenance may legitimately
-              # exercise this path with a clean zero-delta activation.
-              allow_zero_delta = not reviewed_target_changed
+              if not reviewed_target_changed:
+                  raise SystemExit(
+                      'verified activation source contains no reviewed nutrition target batch'
+                  )
           elif event_name == 'push':
               event = json.loads(
                   Path(os.environ['GITHUB_EVENT_PATH']).read_text(encoding='utf-8')
@@ -100,7 +100,8 @@ jobs:
                   or path == 'tools/nutrition_review_holds_v60.py'
                   for path in changed
               )
-              allow_zero_delta = not activation_input_changed
+              if not activation_input_changed:
+                  raise SystemExit('push activation contains no nutrition hold input change')
 
           with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as handle:
               handle.write(f"allow_zero_delta={'true' if allow_zero_delta else 'false'}\n")
