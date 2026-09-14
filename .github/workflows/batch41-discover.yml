@@ -1,4 +1,4 @@
-name: Export Batch 41 recorded IDs
+name: Chunk Batch 41 recorded IDs
 
 on:
   push:
@@ -21,25 +21,38 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Export exact recorded target IDs
+      - name: Export exact recorded IDs in bounded chunks
         run: |
           python - <<'PY'
           from pathlib import Path
+          import shutil
           import sys
+
           root = Path.cwd()
           tools = root / 'tools'
           sys.path.insert(0, str(tools))
           import snapshot_nutrition_review_checkpoint_v60 as checkpoint
+
           cp = checkpoint.build_checkpoint(tools)
           ids = sorted({row['reviewTargetId'] for row in cp['recordedBindings']})
-          Path('.batch41-recorded-ids.txt').write_text('\n'.join(ids) + '\n', encoding='utf-8')
+          out = Path('.batch41-recorded')
+          if out.exists():
+              shutil.rmtree(out)
+          out.mkdir()
+          size = 500
+          for index in range(0, len(ids), size):
+              part = ids[index:index + size]
+              (out / f'part-{index // size:03d}.txt').write_text(
+                  '\n'.join(part) + '\n', encoding='utf-8')
           print(f'recorded_ids={len(ids)}')
+          print(f'parts={(len(ids) + size - 1) // size}')
           print(f'recorded_bindings_sha256={cp["recordedBindingsSha256"]}')
           PY
-      - name: Commit ID receipt
+      - name: Commit bounded receipts
         run: |
-          git add .batch41-recorded-ids.txt
+          rm -f .batch41-recorded-ids.txt
+          git add -A .batch41-recorded .batch41-recorded-ids.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Export Batch 41 recorded target IDs' || exit 0
+          git commit -m 'Chunk Batch 41 recorded target IDs' || exit 0
           git push origin "HEAD:$BRANCH"
