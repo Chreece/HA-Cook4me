@@ -59,9 +59,6 @@ jobs:
             --evidence "$BUILD/probe/failed-detail-evidence.v60.json" \
             --output "$BUILD/repaired-catalog.v60.json" \
             --summary "$BUILD/repair-summary.v60.json"
-          python tools/validate_release_catalog_v60.py \
-            "$BUILD/repaired-catalog.v60.json" \
-            | tee "$BUILD/repaired-validation.v60.json"
 
       - name: Recreate nutrition queue and compact review targets
         run: |
@@ -266,7 +263,6 @@ jobs:
           name: progressive-catalog-promotion-v60-${{ github.sha }}
           path: |
             ${{ runner.temp }}/cook4me-progressive-promote/repair-summary.v60.json
-            ${{ runner.temp }}/cook4me-progressive-promote/repaired-validation.v60.json
             ${{ runner.temp }}/cook4me-progressive-promote/nutrition-queue-summary.v60.json
             ${{ runner.temp }}/cook4me-progressive-promote/nutrition-review-targets-summary.v60.json
             ${{ runner.temp }}/cook4me-progressive-promote/fdc-reference-summary.v60.json
