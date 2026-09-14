@@ -1,4 +1,4 @@
-name: Recover Batch 41 retained evidence
+name: Snapshot Batch 41 review state
 
 on:
   push:
@@ -9,15 +9,12 @@ on:
 
 permissions:
   contents: write
-  actions: read
 
 jobs:
-  discover:
+  snapshot:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     env:
-      ARTIFACT_ID: '10309371417'
-      EXPECTED_EVIDENCE_SHA: e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac
       BRANCH: cook4me-nutrition-batch41-discovery-v60
     steps:
       - uses: actions/checkout@v4
@@ -26,184 +23,92 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Download unexpired Batch 29 checkpoint artifact
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          mkdir -p "$RUNNER_TEMP/batch29-artifact"
-          curl -fL \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/${ARTIFACT_ID}/zip" \
-            -o "$RUNNER_TEMP/batch29-artifact.zip"
-          unzip -q "$RUNNER_TEMP/batch29-artifact.zip" -d "$RUNNER_TEMP/batch29-artifact"
-      - name: SHA-scan artifact and classify exact retained evidence if present
+      - name: Emit compact current nutrition-review state
         run: |
           python - <<'PY'
           from __future__ import annotations
-          from collections import defaultdict
-          import gzip
-          import hashlib
           import json
-          import os
           from pathlib import Path
-          import re
-          import shutil
           import sys
 
           root = Path.cwd()
           tools = root / 'tools'
-          scan_root = Path(os.environ['RUNNER_TEMP']) / 'batch29-artifact'
-          expected = os.environ['EXPECTED_EVIDENCE_SHA']
           sys.path.insert(0, str(tools))
 
           import classify_nutrition_review_queue_v60 as classifier
+          import nutrition_review_holds_v60 as holds
+          import snapshot_nutrition_review_checkpoint_v60 as checkpoint
 
-          inventory = []
-          exact = []
-          json_docs = []
-          for path in sorted(p for p in scan_root.rglob('*') if p.is_file()):
-              raw = path.read_bytes()
-              rel = str(path.relative_to(scan_root))
-              row = {
-                  'path': rel,
-                  'bytes': len(raw),
-                  'sha256': hashlib.sha256(raw).hexdigest(),
-              }
-              payload = None
-              payload_kind = None
-              try:
-                  if path.suffix == '.gz':
-                      payload = gzip.decompress(raw)
-                      payload_kind = 'gzip-json'
-                  elif path.suffix == '.json':
-                      payload = raw
-                      payload_kind = 'json'
-              except Exception as exc:
-                  row['decodeError'] = str(exc)
-              if payload is not None:
-                  row['payloadBytes'] = len(payload)
-                  row['payloadSha256'] = hashlib.sha256(payload).hexdigest()
-                  try:
-                      doc = json.loads(payload.decode('utf-8'))
-                      if isinstance(doc, dict):
-                          row['jsonKind'] = doc.get('kind')
-                          row['jsonSchemaVersion'] = doc.get('schemaVersion')
-                          row['jsonKeys'] = sorted(doc)[:40]
-                          if isinstance(doc.get('items'), list):
-                              row['itemCount'] = len(doc['items'])
-                          json_docs.append((path, payload_kind, doc, payload))
-                  except Exception as exc:
-                      row['jsonError'] = str(exc)
-              inventory.append(row)
-              if row['sha256'] == expected:
-                  exact.append({'path': rel, 'mode': 'raw'})
-                  shutil.copyfile(path, Path(os.environ['RUNNER_TEMP']) / 'exact-evidence.json')
-              if row.get('payloadSha256') == expected:
-                  exact.append({'path': rel, 'mode': payload_kind})
-                  (Path(os.environ['RUNNER_TEMP']) / 'exact-evidence.json').write_bytes(payload)
+          cp = checkpoint.build_checkpoint(tools)
+          hold_doc = holds.load_holds()
+          rules_doc, compiled = classifier._load_rules()
 
-          evidence_path = Path(os.environ['RUNNER_TEMP']) / 'exact-evidence.json'
-          classification = None
-          discovery = None
-          if evidence_path.exists():
-              result = classifier.classify(evidence_path, review_root=tools)
-              summary = result['summary']
-              expected_summary = {
-                  'recordedReviewTargetCount': 5071,
-                  'remainingReviewTargetCount': 1248,
-                  'manualFamilyCandidateCount': 416,
-                  'contextHeavyCount': 832,
-                  'unreviewedRuleMatchCount': 0,
-                  'bindingsApprovedByClassifier': 0,
-                  'networkRequestsPerformed': False,
-              }
-              drift = {k: {'expected': v, 'actual': summary.get(k)}
-                       for k, v in expected_summary.items() if summary.get(k) != v}
-              if drift:
-                  raise SystemExit(f'post-Batch40 classifier drift: {drift}')
+          recorded = sorted({row['reviewTargetId'] for row in cp['recordedBindings']})
+          held = sorted(hold_doc['targets'])
+          rules = []
+          for rule, regex in compiled:
+              rules.append({
+                  'ruleId': rule['ruleId'],
+                  'pattern': rule['pattern'],
+                  'tier': rule['tier'],
+                  'fdcId': rule['fdcId'],
+                  'fdcDescription': rule['fdcDescription'],
+                  'contract': rule['contract'],
+              })
 
-              manual = result['tierBManual']
-              def usage(row):
-                  value = row.get('usageCountSum')
-                  return value if type(value) is int else 0
-              def cand(c):
-                  return {k: c.get(k) for k in
-                          ('localEvidenceRank','fdcId','description','dataType','score')}
-
-              rows = []
-              by_fdc = defaultdict(list)
-              by_desc = defaultdict(list)
-              for item in manual:
-                  candidates = item.get('candidates') or []
-                  projected = {
-                      'reviewTargetId': item['reviewTargetId'],
-                      'canonicalEnglishName': item['canonicalEnglishName'],
-                      'reviewTargetKind': item['reviewTargetKind'],
-                      'usageCount': usage(item),
-                      'candidateCount': len(candidates),
-                      'topCandidates': [cand(c) for c in candidates[:5]],
+          blocker_path = tools / 'release_catalog_nutrition_review_blockers.v1.json'
+          blockers = []
+          if blocker_path.exists():
+              blocker_doc, blocker_sha = checkpoint._read(blocker_path)
+              blockers = [
+                  {
+                      'reviewTargetId': row['reviewTargetId'],
+                      'canonicalEnglishName': row['canonicalEnglishName'],
+                      'reasonCode': row.get('reasonCode'),
+                      'evidenceRequired': row.get('evidenceRequired'),
                   }
-                  rows.append(projected)
-                  if candidates:
-                      by_fdc[str(candidates[0].get('fdcId'))].append(projected)
-                      by_desc[str(candidates[0].get('description') or '')].append(projected)
-
-              def group(key, values):
-                  ordered = sorted(values, key=lambda r:(-r['usageCount'], r['canonicalEnglishName'].casefold(), r['reviewTargetId']))
-                  return {
-                      'key': key,
-                      'targetCount': len(ordered),
-                      'usageCount': sum(r['usageCount'] for r in ordered),
-                      'targets': ordered,
-                  }
-              fdc_groups = [group(k,v) for k,v in by_fdc.items() if len(v) >= 2]
-              fdc_groups.sort(key=lambda g:(-g['usageCount'],-g['targetCount'],g['key']))
-              desc_groups = [group(k,v) for k,v in by_desc.items() if k and len(v) >= 2]
-              desc_groups.sort(key=lambda g:(-g['usageCount'],-g['targetCount'],g['key'].casefold()))
-              rows.sort(key=lambda r:(-r['usageCount'],r['canonicalEnglishName'].casefold(),r['reviewTargetId']))
-              classification = summary
-              discovery = {
-                  'manualCandidates': rows,
-                  'repeatedTopFdcGroups': fdc_groups,
-                  'repeatedTopDescriptionGroups': desc_groups,
-              }
+                  for row in blocker_doc.get('items', [])
+              ]
+          else:
+              blocker_sha = None
 
           out = {
               'schemaVersion': 1,
-              'kind': 'cook4me-batch41-artifact-evidence-discovery-v60',
-              'artifactId': int(os.environ['ARTIFACT_ID']),
-              'expectedEvidenceSha256': expected,
-              'exactEvidenceMatches': exact,
-              'artifactInventory': inventory,
-              'classifierSummary': classification,
-              'discovery': discovery,
+              'kind': 'cook4me-batch41-current-review-state-v60',
+              'sourceCommit': cp['sourceCommit'],
+              'checkpointSummary': cp['summary'],
+              'reviewFilesSha256': cp['reviewFilesSha256'],
+              'recordedBindingsSha256': cp['recordedBindingsSha256'],
+              'recordedReviewTargetIds': recorded,
+              'heldReviewTargetIds': held,
+              'holdRegistrySha256': hold_doc['registrySha256'],
+              'bulkRuleSourceEvidenceSha256': rules_doc['sourceEvidenceSha256'],
+              'bulkRuleReferenceManifestSha256': rules_doc['referenceManifestSha256'],
+              'bulkRules': rules,
+              'blockerLedgerSha256': blocker_sha,
+              'blockers': blockers,
               'policy': {
-                  'discoveryOnly': True,
+                  'snapshotOnly': True,
                   'createsBindings': False,
                   'candidateRankIsIdentityProof': False,
-                  'providerIdentityInference': False,
                   'automaticRuleExpansionForbidden': True,
-                  'networkRequestsPerformedToFoodProvider': False,
-                  'contextHeavyTargetsRemainUntouched': True,
               },
           }
-          Path('.batch41-discovery.json').write_text(
+          Path('.batch41-state.json').write_text(
               json.dumps(out, indent=2, sort_keys=True, ensure_ascii=False) + '\n', encoding='utf-8')
           print(json.dumps({
-              'exactEvidenceMatches': exact,
-              'classifierSummary': classification,
-              'artifactFiles': len(inventory),
-              'largestFiles': sorted(inventory, key=lambda r:-r['bytes'])[:20],
-              'topRepeatedFdcGroups': (discovery or {}).get('repeatedTopFdcGroups', [])[:15],
-              'topManualCandidates': (discovery or {}).get('manualCandidates', [])[:25],
+              'recordedReviewTargetCount': len(recorded),
+              'heldReviewTargetCount': len(held),
+              'bulkRuleCount': len(rules),
+              'blockerCount': len(blockers),
+              'sourceEvidenceSha256': out['bulkRuleSourceEvidenceSha256'],
+              'checkpointSummary': out['checkpointSummary'],
           }, indent=2, ensure_ascii=False))
           PY
-      - name: Commit discovery artifact
+      - name: Commit state receipt
         run: |
-          git add .batch41-discovery.json
+          git add .batch41-state.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Inspect retained Batch 29 work artifact for Batch 41 evidence' || exit 0
+          git commit -m 'Snapshot Batch 41 current nutrition-review state' || exit 0
           git push origin "HEAD:$BRANCH"
