@@ -1,4 +1,4 @@
-name: Build post-activation nutrition reuse proposals v60
+name: Build post-activation nutrition review proposals v60
 
 on:
   push:
@@ -7,7 +7,9 @@ on:
     paths:
       - .github/workflows/catalog-nutrition-review-reuse-post-activation-v60.yml
       - tools/propose_release_catalog_nutrition_review_reuse_v60.py
+      - tools/propose_release_catalog_nutrition_review_similarity_v60.py
       - tests/test_release_catalog_nutrition_review_reuse_proposal_v60.py
+      - tests/test_release_catalog_nutrition_review_similarity_proposal_v60.py
   workflow_dispatch:
 
 permissions:
@@ -15,7 +17,7 @@ permissions:
   contents: read
 
 jobs:
-  build-reuse-proposals:
+  build-review-proposals:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -30,10 +32,13 @@ jobs:
         with:
           python-version: '3.13'
 
-      - name: Run reuse proposal regressions
+      - name: Run review proposal regressions
         run: |
           set -Eeuo pipefail
-          python -m unittest tests.test_release_catalog_nutrition_review_reuse_proposal_v60 -v
+          python -m unittest \
+            tests.test_release_catalog_nutrition_review_reuse_proposal_v60 \
+            tests.test_release_catalog_nutrition_review_similarity_proposal_v60 \
+            -v
 
       - name: Resolve latest successful post-activation evidence
         id: evidence
@@ -62,8 +67,8 @@ jobs:
       - name: Download latest successful post-activation evidence
         run: |
           set -Eeuo pipefail
-          rm -rf /tmp/nutrition-evidence
-          mkdir -p /tmp/nutrition-evidence
+          rm -rf /tmp/nutrition-evidence /tmp/nutrition-review-proposals
+          mkdir -p /tmp/nutrition-evidence /tmp/nutrition-review-proposals
           gh run download "${{ steps.evidence.outputs.run_id }}" \
             --repo "$GITHUB_REPOSITORY" \
             --name "nutrition-enrichment-evidence-v60-${{ steps.evidence.outputs.head_sha }}" \
@@ -73,27 +78,45 @@ jobs:
       - name: Build exact-canonical historical reuse proposals
         run: |
           set -Eeuo pipefail
-          mkdir -p /tmp/nutrition-reuse
           python tools/propose_release_catalog_nutrition_review_reuse_v60.py \
             --candidates /tmp/nutrition-evidence/fdc-candidate-evidence.v60.json \
             --review-root tools \
-            --output /tmp/nutrition-reuse/reuse-proposal.v60.json \
-            --summary-output /tmp/nutrition-reuse/reuse-proposal-summary.v60.json
+            --output /tmp/nutrition-review-proposals/exact-reuse-proposal.v60.json \
+            --summary-output /tmp/nutrition-review-proposals/exact-reuse-summary.v60.json
           python - <<'PY'
           import json
           from pathlib import Path
-          summary = json.loads(Path('/tmp/nutrition-reuse/reuse-proposal-summary.v60.json').read_text(encoding='utf-8'))
+          summary = json.loads(Path('/tmp/nutrition-review-proposals/exact-reuse-summary.v60.json').read_text(encoding='utf-8'))
           if summary.get('selectionCount') != 0:
-              raise SystemExit(f"reuse proposal unexpectedly selected bindings: {summary}")
+              raise SystemExit(f"exact reuse proposal unexpectedly selected bindings: {summary}")
           if summary.get('networkRequestsPerformed') is not False or summary.get('secretsPersisted') is not False:
-              raise SystemExit(f"reuse proposal violated offline/privacy contract: {summary}")
+              raise SystemExit(f"exact reuse proposal violated offline/privacy contract: {summary}")
           print(json.dumps(summary, ensure_ascii=False, indent=2))
           PY
 
-      - name: Upload post-activation reuse proposal
+      - name: Build semantic-history reviewer suggestions
+        run: |
+          set -Eeuo pipefail
+          python tools/propose_release_catalog_nutrition_review_similarity_v60.py \
+            --candidates /tmp/nutrition-evidence/fdc-candidate-evidence.v60.json \
+            --review-root tools \
+            --output /tmp/nutrition-review-proposals/semantic-history-suggestions.v60.json \
+            --summary-output /tmp/nutrition-review-proposals/semantic-history-summary.v60.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          summary = json.loads(Path('/tmp/nutrition-review-proposals/semantic-history-summary.v60.json').read_text(encoding='utf-8'))
+          if summary.get('selectionCount') != 0:
+              raise SystemExit(f"semantic history helper unexpectedly selected bindings: {summary}")
+          if summary.get('networkRequestsPerformed') is not False or summary.get('secretsPersisted') is not False:
+              raise SystemExit(f"semantic history helper violated offline/privacy contract: {summary}")
+          print(json.dumps(summary, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Upload post-activation review proposals
         uses: actions/upload-artifact@v4
         with:
-          name: nutrition-review-reuse-proposal-v60-${{ github.sha }}
-          path: /tmp/nutrition-reuse
+          name: nutrition-review-proposals-v60-${{ github.sha }}
+          path: /tmp/nutrition-review-proposals
           if-no-files-found: error
           retention-days: 7
