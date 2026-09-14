@@ -1,141 +1,1253 @@
 {
-  "candidate_pairs_tested": 4096,
-  "current_payload_sha256": "3013ecea88360542a059ea42d695322c3d7984c79d7805bfa89ac6dcc54e946e",
-  "current_tail_fix": {
-    "part2": "J",
-    "part5": "P"
-  },
-  "decoded_candidate_pairs": 4096,
-  "encoded_len": 113756,
-  "full_manifest_matches": [],
-  "parts": [
-    {
-      "len": 5800,
-      "path": ".batch40-bootstrap/chunks/chunk-000",
-      "sha256": "e59492c333a52d91585b4f82f187d82d9ff6e910e45446213777fc052f9ed694",
-      "tail": "jNqyTk5Sj3Wv"
+  "exact_sources": [],
+  "snapshots": {
+    "anchored_chunks": {
+      "all_twenty_chunks": false,
+      "chunks": [
+        {
+          "head": "H4sIAKPv",
+          "len": 5800,
+          "name": "chunk-000",
+          "sha256": "e59492c333a52d91585b4f82f187d82d9ff6e910e45446213777fc052f9ed694",
+          "tail": "jNqyTk5Sj3Wv"
+        },
+        {
+          "head": "0YFqOS6k",
+          "len": 5800,
+          "name": "chunk-001",
+          "sha256": "e1f8c5d1e6365e00f63e405adf6d903e5cb10c0df651973c3af55c5dbe5c0b3e",
+          "tail": "0Cu/WLP1Y8X+"
+        },
+        {
+          "head": "61h5VUcn",
+          "len": 11600,
+          "name": "chunk-002",
+          "sha256": "a24fda8e55d790ae58ccdacf4571082b08073b8f3cc71b89530dac074908efc3",
+          "tail": "AktHj6HmDgNU"
+        },
+        {
+          "missing": true,
+          "name": "chunk-003"
+        },
+        {
+          "head": "HuxKE1oH",
+          "len": 5800,
+          "name": "chunk-004",
+          "sha256": "122250873506e170760d57e4c4ee22a8390360d519e003fe30d51b17ef68baea",
+          "tail": "wdqzUDh+95e1"
+        },
+        {
+          "head": "bXcicP2U",
+          "len": 5800,
+          "name": "chunk-005",
+          "sha256": "ad02052dc42002420dad1ff5ba29b9a9c7e4848bba52a72c09b81448c1aee067",
+          "tail": "FA1lBiboyWOL"
+        },
+        {
+          "head": "Qfe3F2rp",
+          "len": 5800,
+          "name": "chunk-006",
+          "sha256": "6c775694feb1289b444935538b9787d452d8350c67d56d68c2f7d7b0a3dce07d",
+          "tail": "0pwSTbXGj49+"
+        },
+        {
+          "head": "eerEv3ag",
+          "len": 5800,
+          "name": "chunk-007",
+          "sha256": "9c2e2155e023e8460f7d5b846edaaa6f15a23ad8f2146390a5436553d397f9c9",
+          "tail": "uPkW+8eWgckF"
+        },
+        {
+          "head": "I68xBp4d",
+          "len": 5800,
+          "name": "chunk-008",
+          "sha256": "2f92e7eb36fd58c41f22b0eb9e56e1bf0acf7a8e3e4324e8309b3914e2172d6e",
+          "tail": "VH9McX1BnnTP"
+        },
+        {
+          "head": "SrgmHu8Z",
+          "len": 5800,
+          "name": "chunk-009",
+          "sha256": "8843f42eb16b21c77774cb6c89bd976d2acdfa4c2088da934eed81897154bb38",
+          "tail": "r3gY4jb8jqLW"
+        },
+        {
+          "head": "/YX6I/3p",
+          "len": 5800,
+          "name": "chunk-010",
+          "sha256": "aabb07a9e0fcb30027b646db5bb5b4795967193b8540ee04a571ee88dd165243",
+          "tail": "P0RK/0oikjTq"
+        },
+        {
+          "head": "q1V3BIK0",
+          "len": 5800,
+          "name": "chunk-011",
+          "sha256": "8a95ae7c525df32e281480cdc14d7fdd3b7cc8ef6d7ee554c972101552f0021f",
+          "tail": "ToCzMtbIWCuN"
+        },
+        {
+          "head": "8MG9iK5p",
+          "len": 11600,
+          "name": "chunk-012",
+          "sha256": "ca079fd3ba88bddc2d97cd83b2f89a7d1b3fa2c4603e289721f95ea0a77c2c50",
+          "tail": "DNjjcwrdPb9r"
+        },
+        {
+          "missing": true,
+          "name": "chunk-013"
+        },
+        {
+          "head": "ZYTi95IR",
+          "len": 5800,
+          "name": "chunk-014",
+          "sha256": "e4c30ba534328c79dca26c9d485796a8151a208313142c3f81b55993683a4820",
+          "tail": "P/Fv8SdlXGrd"
+        },
+        {
+          "head": "fdZ8zqgW",
+          "len": 5800,
+          "name": "chunk-015",
+          "sha256": "f892783be2b17ad2b27675868f56fdc5e4f883f320f13c994a9bc1f69ef94abd",
+          "tail": "0NC8NMFsLwvu"
+        },
+        {
+          "missing": true,
+          "name": "chunk-016"
+        },
+        {
+          "missing": true,
+          "name": "chunk-017"
+        },
+        {
+          "head": "Y2fUuF++",
+          "len": 5799,
+          "name": "chunk-018",
+          "sha256": "56e8a125ff6500e8c2177d8739c1d20569290d0c48b304a157adf535f9829106",
+          "tail": "9rJn7BXA+63P"
+        },
+        {
+          "head": "HZlpaL9u",
+          "len": 3556,
+          "name": "chunk-019",
+          "sha256": "98f908a698c6c701a4cb4e77ac730758b8d2ace519ab2668cebc12d7905a4558",
+          "tail": "A56WAHgFAA=="
+        }
+      ],
+      "commit": "7d828e1862b7a1d6908dee2485a649d6684a7dac",
+      "repairs": []
     },
-    {
-      "len": 5800,
-      "path": ".batch40-bootstrap/chunks/chunk-001",
-      "sha256": "e1f8c5d1e6365e00f63e405adf6d903e5cb10c0df651973c3af55c5dbe5c0b3e",
-      "tail": "0Cu/WLP1Y8X+"
+    "appended_tail_bytes": {
+      "all_twenty_chunks": false,
+      "chunks": [
+        {
+          "head": "H4sIAKPv",
+          "len": 5800,
+          "name": "chunk-000",
+          "sha256": "e59492c333a52d91585b4f82f187d82d9ff6e910e45446213777fc052f9ed694",
+          "tail": "jNqyTk5Sj3Wv"
+        },
+        {
+          "head": "0YFqOS6k",
+          "len": 5800,
+          "name": "chunk-001",
+          "sha256": "e1f8c5d1e6365e00f63e405adf6d903e5cb10c0df651973c3af55c5dbe5c0b3e",
+          "tail": "0Cu/WLP1Y8X+"
+        },
+        {
+          "head": "61h5VUcn",
+          "len": 11600,
+          "name": "chunk-002",
+          "sha256": "a24fda8e55d790ae58ccdacf4571082b08073b8f3cc71b89530dac074908efc3",
+          "tail": "AktHj6HmDgNU"
+        },
+        {
+          "missing": true,
+          "name": "chunk-003"
+        },
+        {
+          "head": "HuxKE1oH",
+          "len": 5800,
+          "name": "chunk-004",
+          "sha256": "122250873506e170760d57e4c4ee22a8390360d519e003fe30d51b17ef68baea",
+          "tail": "wdqzUDh+95e1"
+        },
+        {
+          "head": "bXcicP2U",
+          "len": 5800,
+          "name": "chunk-005",
+          "sha256": "ad02052dc42002420dad1ff5ba29b9a9c7e4848bba52a72c09b81448c1aee067",
+          "tail": "FA1lBiboyWOL"
+        },
+        {
+          "head": "Qfe3F2rp",
+          "len": 5800,
+          "name": "chunk-006",
+          "sha256": "6c775694feb1289b444935538b9787d452d8350c67d56d68c2f7d7b0a3dce07d",
+          "tail": "0pwSTbXGj49+"
+        },
+        {
+          "head": "eerEv3ag",
+          "len": 5800,
+          "name": "chunk-007",
+          "sha256": "9c2e2155e023e8460f7d5b846edaaa6f15a23ad8f2146390a5436553d397f9c9",
+          "tail": "uPkW+8eWgckF"
+        },
+        {
+          "head": "I68xBp4d",
+          "len": 5800,
+          "name": "chunk-008",
+          "sha256": "2f92e7eb36fd58c41f22b0eb9e56e1bf0acf7a8e3e4324e8309b3914e2172d6e",
+          "tail": "VH9McX1BnnTP"
+        },
+        {
+          "head": "SrgmHu8Z",
+          "len": 5800,
+          "name": "chunk-009",
+          "sha256": "8843f42eb16b21c77774cb6c89bd976d2acdfa4c2088da934eed81897154bb38",
+          "tail": "r3gY4jb8jqLW"
+        },
+        {
+          "head": "/YX6I/3p",
+          "len": 5800,
+          "name": "chunk-010",
+          "sha256": "aabb07a9e0fcb30027b646db5bb5b4795967193b8540ee04a571ee88dd165243",
+          "tail": "P0RK/0oikjTq"
+        },
+        {
+          "head": "q1V3BIK0",
+          "len": 5800,
+          "name": "chunk-011",
+          "sha256": "8a95ae7c525df32e281480cdc14d7fdd3b7cc8ef6d7ee554c972101552f0021f",
+          "tail": "ToCzMtbIWCuN"
+        },
+        {
+          "head": "8MG9iK5p",
+          "len": 11600,
+          "name": "chunk-012",
+          "sha256": "ca079fd3ba88bddc2d97cd83b2f89a7d1b3fa2c4603e289721f95ea0a77c2c50",
+          "tail": "DNjjcwrdPb9r"
+        },
+        {
+          "missing": true,
+          "name": "chunk-013"
+        },
+        {
+          "head": "ZYTi95IR",
+          "len": 5800,
+          "name": "chunk-014",
+          "sha256": "e4c30ba534328c79dca26c9d485796a8151a208313142c3f81b55993683a4820",
+          "tail": "P/Fv8SdlXGrd"
+        },
+        {
+          "head": "fdZ8zqgW",
+          "len": 5800,
+          "name": "chunk-015",
+          "sha256": "f892783be2b17ad2b27675868f56fdc5e4f883f320f13c994a9bc1f69ef94abd",
+          "tail": "0NC8NMFsLwvu"
+        },
+        {
+          "missing": true,
+          "name": "chunk-016"
+        },
+        {
+          "missing": true,
+          "name": "chunk-017"
+        },
+        {
+          "head": "Y2fUuF++",
+          "len": 5799,
+          "name": "chunk-018",
+          "sha256": "56e8a125ff6500e8c2177d8739c1d20569290d0c48b304a157adf535f9829106",
+          "tail": "9rJn7BXA+63P"
+        },
+        {
+          "head": "HZlpaL9u",
+          "len": 3556,
+          "name": "chunk-019",
+          "sha256": "98f908a698c6c701a4cb4e77ac730758b8d2ace519ab2668cebc12d7905a4558",
+          "tail": "A56WAHgFAA=="
+        }
+      ],
+      "commit": "16c28c5538a0fbb4d80f12f5eddb4c9a7d9a3e42",
+      "repairs": [
+        {
+          "head": "H/MEQ8hp",
+          "len": 2900,
+          "name": "part-0",
+          "sha256": "4bb786a5fa208a374ff97a91c85f871ab8743228e69064faec68ef744602ef22",
+          "tail": "OfZu7Z6XfBLN"
+        },
+        {
+          "head": "WXbOSX07",
+          "len": 2900,
+          "name": "part-1",
+          "sha256": "a094bd4e4bfb67c286950f0152df0c7e6022b3a5710129e107dc8abd0f1492de",
+          "tail": "gjkGwIECFQGs"
+        },
+        {
+          "head": "ezMJtXAC",
+          "len": 2899,
+          "name": "part-2",
+          "sha256": "283802c52cb20aebab4d8dc4894e4e03e8a13df7322a19eb51385abacf59849d",
+          "tail": "jLnmcKr4yFnJ"
+        },
+        {
+          "head": "wC1/n924",
+          "len": 2900,
+          "name": "part-3",
+          "sha256": "c8f80a7a6f5096079815b7914e64ce1aab2462fe05651ab475db8fdb34bec6f4",
+          "tail": "Tt6GYzMl78d4"
+        },
+        {
+          "head": "Y2fUuF++",
+          "len": 2900,
+          "name": "part-4",
+          "sha256": "571776f7eb68fc5cf3e9ebdc48e5c3f3a46bbe2ced40aa722033b4829a333941",
+          "tail": "5fPRR8lR96BV"
+        },
+        {
+          "head": "kq7tu9jj",
+          "len": 2899,
+          "name": "part-5",
+          "sha256": "ec09348549282adfcd78680a6ea752c6e8bad7ccdaadd0eabe4aea8373c04e48",
+          "tail": "9rJn7BXA+63P"
+        }
+      ]
     },
-    {
-      "len": 11600,
-      "path": ".batch40-bootstrap/chunks/chunk-002",
-      "sha256": "a24fda8e55d790ae58ccdacf4571082b08073b8f3cc71b89530dac074908efc3",
-      "tail": "AktHj6HmDgNU"
+    "assembled_repairs": {
+      "all_twenty_chunks": false,
+      "chunks": [
+        {
+          "head": "H4sIAKPv",
+          "len": 5800,
+          "name": "chunk-000",
+          "sha256": "e59492c333a52d91585b4f82f187d82d9ff6e910e45446213777fc052f9ed694",
+          "tail": "jNqyTk5Sj3Wv"
+        },
+        {
+          "head": "0YFqOS6k",
+          "len": 5800,
+          "name": "chunk-001",
+          "sha256": "e1f8c5d1e6365e00f63e405adf6d903e5cb10c0df651973c3af55c5dbe5c0b3e",
+          "tail": "0Cu/WLP1Y8X+"
+        },
+        {
+          "head": "61h5VUcn",
+          "len": 11600,
+          "name": "chunk-002",
+          "sha256": "a24fda8e55d790ae58ccdacf4571082b08073b8f3cc71b89530dac074908efc3",
+          "tail": "AktHj6HmDgNU"
+        },
+        {
+          "missing": true,
+          "name": "chunk-003"
+        },
+        {
+          "head": "HuxKE1oH",
+          "len": 5800,
+          "name": "chunk-004",
+          "sha256": "122250873506e170760d57e4c4ee22a8390360d519e003fe30d51b17ef68baea",
+          "tail": "wdqzUDh+95e1"
+        },
+        {
+          "head": "bXcicP2U",
+          "len": 5800,
+          "name": "chunk-005",
+          "sha256": "ad02052dc42002420dad1ff5ba29b9a9c7e4848bba52a72c09b81448c1aee067",
+          "tail": "FA1lBiboyWOL"
+        },
+        {
+          "head": "Qfe3F2rp",
+          "len": 5800,
+          "name": "chunk-006",
+          "sha256": "6c775694feb1289b444935538b9787d452d8350c67d56d68c2f7d7b0a3dce07d",
+          "tail": "0pwSTbXGj49+"
+        },
+        {
+          "head": "eerEv3ag",
+          "len": 5800,
+          "name": "chunk-007",
+          "sha256": "9c2e2155e023e8460f7d5b846edaaa6f15a23ad8f2146390a5436553d397f9c9",
+          "tail": "uPkW+8eWgckF"
+        },
+        {
+          "head": "I68xBp4d",
+          "len": 5800,
+          "name": "chunk-008",
+          "sha256": "2f92e7eb36fd58c41f22b0eb9e56e1bf0acf7a8e3e4324e8309b3914e2172d6e",
+          "tail": "VH9McX1BnnTP"
+        },
+        {
+          "head": "SrgmHu8Z",
+          "len": 5800,
+          "name": "chunk-009",
+          "sha256": "8843f42eb16b21c77774cb6c89bd976d2acdfa4c2088da934eed81897154bb38",
+          "tail": "r3gY4jb8jqLW"
+        },
+        {
+          "head": "/YX6I/3p",
+          "len": 5800,
+          "name": "chunk-010",
+          "sha256": "aabb07a9e0fcb30027b646db5bb5b4795967193b8540ee04a571ee88dd165243",
+          "tail": "P0RK/0oikjTq"
+        },
+        {
+          "head": "q1V3BIK0",
+          "len": 5800,
+          "name": "chunk-011",
+          "sha256": "8a95ae7c525df32e281480cdc14d7fdd3b7cc8ef6d7ee554c972101552f0021f",
+          "tail": "ToCzMtbIWCuN"
+        },
+        {
+          "head": "8MG9iK5p",
+          "len": 11600,
+          "name": "chunk-012",
+          "sha256": "ca079fd3ba88bddc2d97cd83b2f89a7d1b3fa2c4603e289721f95ea0a77c2c50",
+          "tail": "DNjjcwrdPb9r"
+        },
+        {
+          "missing": true,
+          "name": "chunk-013"
+        },
+        {
+          "head": "ZYTi95IR",
+          "len": 5800,
+          "name": "chunk-014",
+          "sha256": "e4c30ba534328c79dca26c9d485796a8151a208313142c3f81b55993683a4820",
+          "tail": "P/Fv8SdlXGrd"
+        },
+        {
+          "head": "fdZ8zqgW",
+          "len": 5800,
+          "name": "chunk-015",
+          "sha256": "f892783be2b17ad2b27675868f56fdc5e4f883f320f13c994a9bc1f69ef94abd",
+          "tail": "0NC8NMFsLwvu"
+        },
+        {
+          "missing": true,
+          "name": "chunk-016"
+        },
+        {
+          "missing": true,
+          "name": "chunk-017"
+        },
+        {
+          "head": "Y2fUuF++",
+          "len": 5799,
+          "name": "chunk-018",
+          "sha256": "56e8a125ff6500e8c2177d8739c1d20569290d0c48b304a157adf535f9829106",
+          "tail": "9rJn7BXA+63P"
+        },
+        {
+          "head": "HZlpaL9u",
+          "len": 3556,
+          "name": "chunk-019",
+          "sha256": "98f908a698c6c701a4cb4e77ac730758b8d2ace519ab2668cebc12d7905a4558",
+          "tail": "A56WAHgFAA=="
+        }
+      ],
+      "commit": "598dddc71ed25c4d36405c6a30f35c2fce08a02a",
+      "repairs": [
+        {
+          "head": "H/MEQ8hp",
+          "len": 2900,
+          "name": "part-0",
+          "sha256": "4bb786a5fa208a374ff97a91c85f871ab8743228e69064faec68ef744602ef22",
+          "tail": "OfZu7Z6XfBLN"
+        },
+        {
+          "head": "WXbOSX07",
+          "len": 4244,
+          "name": "part-1",
+          "sha256": "41d20b301e6b34d2851d2dbea0839e9b98a1b6ef602158ba19541cc5aa326bb8",
+          "tail": "P/Fv8SdlXGrd"
+        },
+        {
+          "head": "ezMJtXAC",
+          "len": 2899,
+          "name": "part-2",
+          "sha256": "283802c52cb20aebab4d8dc4894e4e03e8a13df7322a19eb51385abacf59849d",
+          "tail": "jLnmcKr4yFnJ"
+        },
+        {
+          "head": "wC1/n924",
+          "len": 2900,
+          "name": "part-3",
+          "sha256": "c8f80a7a6f5096079815b7914e64ce1aab2462fe05651ab475db8fdb34bec6f4",
+          "tail": "Tt6GYzMl78d4"
+        },
+        {
+          "head": "Y2fUuF++",
+          "len": 2900,
+          "name": "part-4",
+          "sha256": "571776f7eb68fc5cf3e9ebdc48e5c3f3a46bbe2ced40aa722033b4829a333941",
+          "tail": "5fPRR8lR96BV"
+        },
+        {
+          "head": "kq7tu9jj",
+          "len": 2899,
+          "name": "part-5",
+          "sha256": "ec09348549282adfcd78680a6ea752c6e8bad7ccdaadd0eabe4aea8373c04e48",
+          "tail": "9rJn7BXA+63P"
+        }
+      ]
     },
-    {
-      "len": 5800,
-      "path": ".batch40-bootstrap/chunks/chunk-004",
-      "sha256": "122250873506e170760d57e4c4ee22a8390360d519e003fe30d51b17ef68baea",
-      "tail": "wdqzUDh+95e1"
+    "fixed_part1": {
+      "all_twenty_chunks": false,
+      "chunks": [
+        {
+          "head": "H4sIAKPv",
+          "len": 5800,
+          "name": "chunk-000",
+          "sha256": "e59492c333a52d91585b4f82f187d82d9ff6e910e45446213777fc052f9ed694",
+          "tail": "jNqyTk5Sj3Wv"
+        },
+        {
+          "head": "0YFqOS6k",
+          "len": 5800,
+          "name": "chunk-001",
+          "sha256": "e1f8c5d1e6365e00f63e405adf6d903e5cb10c0df651973c3af55c5dbe5c0b3e",
+          "tail": "0Cu/WLP1Y8X+"
+        },
+        {
+          "head": "61h5VUcn",
+          "len": 11600,
+          "name": "chunk-002",
+          "sha256": "a24fda8e55d790ae58ccdacf4571082b08073b8f3cc71b89530dac074908efc3",
+          "tail": "AktHj6HmDgNU"
+        },
+        {
+          "missing": true,
+          "name": "chunk-003"
+        },
+        {
+          "head": "HuxKE1oH",
+          "len": 5800,
+          "name": "chunk-004",
+          "sha256": "122250873506e170760d57e4c4ee22a8390360d519e003fe30d51b17ef68baea",
+          "tail": "wdqzUDh+95e1"
+        },
+        {
+          "head": "bXcicP2U",
+          "len": 5800,
+          "name": "chunk-005",
+          "sha256": "ad02052dc42002420dad1ff5ba29b9a9c7e4848bba52a72c09b81448c1aee067",
+          "tail": "FA1lBiboyWOL"
+        },
+        {
+          "head": "Qfe3F2rp",
+          "len": 5800,
+          "name": "chunk-006",
+          "sha256": "6c775694feb1289b444935538b9787d452d8350c67d56d68c2f7d7b0a3dce07d",
+          "tail": "0pwSTbXGj49+"
+        },
+        {
+          "head": "eerEv3ag",
+          "len": 5800,
+          "name": "chunk-007",
+          "sha256": "9c2e2155e023e8460f7d5b846edaaa6f15a23ad8f2146390a5436553d397f9c9",
+          "tail": "uPkW+8eWgckF"
+        },
+        {
+          "head": "I68xBp4d",
+          "len": 5800,
+          "name": "chunk-008",
+          "sha256": "2f92e7eb36fd58c41f22b0eb9e56e1bf0acf7a8e3e4324e8309b3914e2172d6e",
+          "tail": "VH9McX1BnnTP"
+        },
+        {
+          "head": "SrgmHu8Z",
+          "len": 5800,
+          "name": "chunk-009",
+          "sha256": "8843f42eb16b21c77774cb6c89bd976d2acdfa4c2088da934eed81897154bb38",
+          "tail": "r3gY4jb8jqLW"
+        },
+        {
+          "head": "/YX6I/3p",
+          "len": 5800,
+          "name": "chunk-010",
+          "sha256": "aabb07a9e0fcb30027b646db5bb5b4795967193b8540ee04a571ee88dd165243",
+          "tail": "P0RK/0oikjTq"
+        },
+        {
+          "head": "q1V3BIK0",
+          "len": 5800,
+          "name": "chunk-011",
+          "sha256": "8a95ae7c525df32e281480cdc14d7fdd3b7cc8ef6d7ee554c972101552f0021f",
+          "tail": "ToCzMtbIWCuN"
+        },
+        {
+          "head": "8MG9iK5p",
+          "len": 11600,
+          "name": "chunk-012",
+          "sha256": "ca079fd3ba88bddc2d97cd83b2f89a7d1b3fa2c4603e289721f95ea0a77c2c50",
+          "tail": "DNjjcwrdPb9r"
+        },
+        {
+          "missing": true,
+          "name": "chunk-013"
+        },
+        {
+          "head": "ZYTi95IR",
+          "len": 5800,
+          "name": "chunk-014",
+          "sha256": "e4c30ba534328c79dca26c9d485796a8151a208313142c3f81b55993683a4820",
+          "tail": "P/Fv8SdlXGrd"
+        },
+        {
+          "head": "fdZ8zqgW",
+          "len": 5800,
+          "name": "chunk-015",
+          "sha256": "f892783be2b17ad2b27675868f56fdc5e4f883f320f13c994a9bc1f69ef94abd",
+          "tail": "0NC8NMFsLwvu"
+        },
+        {
+          "missing": true,
+          "name": "chunk-016"
+        },
+        {
+          "missing": true,
+          "name": "chunk-017"
+        },
+        {
+          "head": "Y2fUuF++",
+          "len": 5799,
+          "name": "chunk-018",
+          "sha256": "56e8a125ff6500e8c2177d8739c1d20569290d0c48b304a157adf535f9829106",
+          "tail": "9rJn7BXA+63P"
+        },
+        {
+          "head": "HZlpaL9u",
+          "len": 3556,
+          "name": "chunk-019",
+          "sha256": "98f908a698c6c701a4cb4e77ac730758b8d2ace519ab2668cebc12d7905a4558",
+          "tail": "A56WAHgFAA=="
+        }
+      ],
+      "commit": "e3e3775d7cbb526c383099b7158f2f35a2b91e5b",
+      "repairs": [
+        {
+          "head": "H/MEQ8hp",
+          "len": 2900,
+          "name": "part-0",
+          "sha256": "4bb786a5fa208a374ff97a91c85f871ab8743228e69064faec68ef744602ef22",
+          "tail": "OfZu7Z6XfBLN"
+        },
+        {
+          "head": "WXbOSX07",
+          "len": 2900,
+          "name": "part-1",
+          "sha256": "a094bd4e4bfb67c286950f0152df0c7e6022b3a5710129e107dc8abd0f1492de",
+          "tail": "gjkGwIECFQGs"
+        },
+        {
+          "head": "ezMJtXAC",
+          "len": 2899,
+          "name": "part-2",
+          "sha256": "283802c52cb20aebab4d8dc4894e4e03e8a13df7322a19eb51385abacf59849d",
+          "tail": "jLnmcKr4yFnJ"
+        },
+        {
+          "head": "wC1/n924",
+          "len": 2900,
+          "name": "part-3",
+          "sha256": "c8f80a7a6f5096079815b7914e64ce1aab2462fe05651ab475db8fdb34bec6f4",
+          "tail": "Tt6GYzMl78d4"
+        },
+        {
+          "head": "Y2fUuF++",
+          "len": 2900,
+          "name": "part-4",
+          "sha256": "571776f7eb68fc5cf3e9ebdc48e5c3f3a46bbe2ced40aa722033b4829a333941",
+          "tail": "5fPRR8lR96BV"
+        },
+        {
+          "head": "kq7tu9jj",
+          "len": 2899,
+          "name": "part-5",
+          "sha256": "ec09348549282adfcd78680a6ea752c6e8bad7ccdaadd0eabe4aea8373c04e48",
+          "tail": "9rJn7BXA+63P"
+        }
+      ]
     },
-    {
-      "len": 5800,
-      "path": ".batch40-bootstrap/chunks/chunk-005",
-      "sha256": "ad02052dc42002420dad1ff5ba29b9a9c7e4848bba52a72c09b81448c1aee067",
-      "tail": "FA1lBiboyWOL"
+    "fixed_part2": {
+      "all_twenty_chunks": false,
+      "chunks": [
+        {
+          "head": "H4sIAKPv",
+          "len": 5800,
+          "name": "chunk-000",
+          "sha256": "e59492c333a52d91585b4f82f187d82d9ff6e910e45446213777fc052f9ed694",
+          "tail": "jNqyTk5Sj3Wv"
+        },
+        {
+          "head": "0YFqOS6k",
+          "len": 5800,
+          "name": "chunk-001",
+          "sha256": "e1f8c5d1e6365e00f63e405adf6d903e5cb10c0df651973c3af55c5dbe5c0b3e",
+          "tail": "0Cu/WLP1Y8X+"
+        },
+        {
+          "head": "61h5VUcn",
+          "len": 11600,
+          "name": "chunk-002",
+          "sha256": "a24fda8e55d790ae58ccdacf4571082b08073b8f3cc71b89530dac074908efc3",
+          "tail": "AktHj6HmDgNU"
+        },
+        {
+          "missing": true,
+          "name": "chunk-003"
+        },
+        {
+          "head": "HuxKE1oH",
+          "len": 5800,
+          "name": "chunk-004",
+          "sha256": "122250873506e170760d57e4c4ee22a8390360d519e003fe30d51b17ef68baea",
+          "tail": "wdqzUDh+95e1"
+        },
+        {
+          "head": "bXcicP2U",
+          "len": 5800,
+          "name": "chunk-005",
+          "sha256": "ad02052dc42002420dad1ff5ba29b9a9c7e4848bba52a72c09b81448c1aee067",
+          "tail": "FA1lBiboyWOL"
+        },
+        {
+          "head": "Qfe3F2rp",
+          "len": 5800,
+          "name": "chunk-006",
+          "sha256": "6c775694feb1289b444935538b9787d452d8350c67d56d68c2f7d7b0a3dce07d",
+          "tail": "0pwSTbXGj49+"
+        },
+        {
+          "head": "eerEv3ag",
+          "len": 5800,
+          "name": "chunk-007",
+          "sha256": "9c2e2155e023e8460f7d5b846edaaa6f15a23ad8f2146390a5436553d397f9c9",
+          "tail": "uPkW+8eWgckF"
+        },
+        {
+          "head": "I68xBp4d",
+          "len": 5800,
+          "name": "chunk-008",
+          "sha256": "2f92e7eb36fd58c41f22b0eb9e56e1bf0acf7a8e3e4324e8309b3914e2172d6e",
+          "tail": "VH9McX1BnnTP"
+        },
+        {
+          "head": "SrgmHu8Z",
+          "len": 5800,
+          "name": "chunk-009",
+          "sha256": "8843f42eb16b21c77774cb6c89bd976d2acdfa4c2088da934eed81897154bb38",
+          "tail": "r3gY4jb8jqLW"
+        },
+        {
+          "head": "/YX6I/3p",
+          "len": 5800,
+          "name": "chunk-010",
+          "sha256": "aabb07a9e0fcb30027b646db5bb5b4795967193b8540ee04a571ee88dd165243",
+          "tail": "P0RK/0oikjTq"
+        },
+        {
+          "head": "q1V3BIK0",
+          "len": 5800,
+          "name": "chunk-011",
+          "sha256": "8a95ae7c525df32e281480cdc14d7fdd3b7cc8ef6d7ee554c972101552f0021f",
+          "tail": "ToCzMtbIWCuN"
+        },
+        {
+          "head": "8MG9iK5p",
+          "len": 11600,
+          "name": "chunk-012",
+          "sha256": "ca079fd3ba88bddc2d97cd83b2f89a7d1b3fa2c4603e289721f95ea0a77c2c50",
+          "tail": "DNjjcwrdPb9r"
+        },
+        {
+          "missing": true,
+          "name": "chunk-013"
+        },
+        {
+          "head": "ZYTi95IR",
+          "len": 5800,
+          "name": "chunk-014",
+          "sha256": "e4c30ba534328c79dca26c9d485796a8151a208313142c3f81b55993683a4820",
+          "tail": "P/Fv8SdlXGrd"
+        },
+        {
+          "head": "fdZ8zqgW",
+          "len": 5800,
+          "name": "chunk-015",
+          "sha256": "f892783be2b17ad2b27675868f56fdc5e4f883f320f13c994a9bc1f69ef94abd",
+          "tail": "0NC8NMFsLwvu"
+        },
+        {
+          "missing": true,
+          "name": "chunk-016"
+        },
+        {
+          "missing": true,
+          "name": "chunk-017"
+        },
+        {
+          "head": "Y2fUuF++",
+          "len": 5799,
+          "name": "chunk-018",
+          "sha256": "56e8a125ff6500e8c2177d8739c1d20569290d0c48b304a157adf535f9829106",
+          "tail": "9rJn7BXA+63P"
+        },
+        {
+          "head": "HZlpaL9u",
+          "len": 3556,
+          "name": "chunk-019",
+          "sha256": "98f908a698c6c701a4cb4e77ac730758b8d2ace519ab2668cebc12d7905a4558",
+          "tail": "A56WAHgFAA=="
+        }
+      ],
+      "commit": "bbd3dc477ff9e7baea528cf73dca3f733f8091ff",
+      "repairs": [
+        {
+          "head": "H/MEQ8hp",
+          "len": 2900,
+          "name": "part-0",
+          "sha256": "4bb786a5fa208a374ff97a91c85f871ab8743228e69064faec68ef744602ef22",
+          "tail": "OfZu7Z6XfBLN"
+        },
+        {
+          "head": "WXbOSX07",
+          "len": 2900,
+          "name": "part-1",
+          "sha256": "a094bd4e4bfb67c286950f0152df0c7e6022b3a5710129e107dc8abd0f1492de",
+          "tail": "gjkGwIECFQGs"
+        },
+        {
+          "head": "ezMJtXAC",
+          "len": 2899,
+          "name": "part-2",
+          "sha256": "283802c52cb20aebab4d8dc4894e4e03e8a13df7322a19eb51385abacf59849d",
+          "tail": "jLnmcKr4yFnJ"
+        },
+        {
+          "head": "wC1/n924",
+          "len": 2900,
+          "name": "part-3",
+          "sha256": "c8f80a7a6f5096079815b7914e64ce1aab2462fe05651ab475db8fdb34bec6f4",
+          "tail": "Tt6GYzMl78d4"
+        },
+        {
+          "head": "Y2fUuF++",
+          "len": 2900,
+          "name": "part-4",
+          "sha256": "571776f7eb68fc5cf3e9ebdc48e5c3f3a46bbe2ced40aa722033b4829a333941",
+          "tail": "5fPRR8lR96BV"
+        },
+        {
+          "head": "kq7tu9jj",
+          "len": 2899,
+          "name": "part-5",
+          "sha256": "ec09348549282adfcd78680a6ea752c6e8bad7ccdaadd0eabe4aea8373c04e48",
+          "tail": "9rJn7BXA+63P"
+        }
+      ]
     },
-    {
-      "len": 5800,
-      "path": ".batch40-bootstrap/chunks/chunk-006",
-      "sha256": "6c775694feb1289b444935538b9787d452d8350c67d56d68c2f7d7b0a3dce07d",
-      "tail": "0pwSTbXGj49+"
+    "hash_authority": {
+      "all_twenty_chunks": false,
+      "chunks": [
+        {
+          "head": "H4sIAKPv",
+          "len": 5800,
+          "name": "chunk-000",
+          "sha256": "e59492c333a52d91585b4f82f187d82d9ff6e910e45446213777fc052f9ed694",
+          "tail": "jNqyTk5Sj3Wv"
+        },
+        {
+          "head": "0YFqOS6k",
+          "len": 5800,
+          "name": "chunk-001",
+          "sha256": "e1f8c5d1e6365e00f63e405adf6d903e5cb10c0df651973c3af55c5dbe5c0b3e",
+          "tail": "0Cu/WLP1Y8X+"
+        },
+        {
+          "head": "61h5VUcn",
+          "len": 11600,
+          "name": "chunk-002",
+          "sha256": "a24fda8e55d790ae58ccdacf4571082b08073b8f3cc71b89530dac074908efc3",
+          "tail": "AktHj6HmDgNU"
+        },
+        {
+          "missing": true,
+          "name": "chunk-003"
+        },
+        {
+          "head": "HuxKE1oH",
+          "len": 5800,
+          "name": "chunk-004",
+          "sha256": "122250873506e170760d57e4c4ee22a8390360d519e003fe30d51b17ef68baea",
+          "tail": "wdqzUDh+95e1"
+        },
+        {
+          "head": "bXcicP2U",
+          "len": 5800,
+          "name": "chunk-005",
+          "sha256": "ad02052dc42002420dad1ff5ba29b9a9c7e4848bba52a72c09b81448c1aee067",
+          "tail": "FA1lBiboyWOL"
+        },
+        {
+          "head": "Qfe3F2rp",
+          "len": 5800,
+          "name": "chunk-006",
+          "sha256": "6c775694feb1289b444935538b9787d452d8350c67d56d68c2f7d7b0a3dce07d",
+          "tail": "0pwSTbXGj49+"
+        },
+        {
+          "head": "eerEv3ag",
+          "len": 5800,
+          "name": "chunk-007",
+          "sha256": "9c2e2155e023e8460f7d5b846edaaa6f15a23ad8f2146390a5436553d397f9c9",
+          "tail": "uPkW+8eWgckF"
+        },
+        {
+          "head": "I68xBp4d",
+          "len": 5800,
+          "name": "chunk-008",
+          "sha256": "2f92e7eb36fd58c41f22b0eb9e56e1bf0acf7a8e3e4324e8309b3914e2172d6e",
+          "tail": "VH9McX1BnnTP"
+        },
+        {
+          "head": "SrgmHu8Z",
+          "len": 5800,
+          "name": "chunk-009",
+          "sha256": "8843f42eb16b21c77774cb6c89bd976d2acdfa4c2088da934eed81897154bb38",
+          "tail": "r3gY4jb8jqLW"
+        },
+        {
+          "head": "/YX6I/3p",
+          "len": 5800,
+          "name": "chunk-010",
+          "sha256": "aabb07a9e0fcb30027b646db5bb5b4795967193b8540ee04a571ee88dd165243",
+          "tail": "P0RK/0oikjTq"
+        },
+        {
+          "head": "q1V3BIK0",
+          "len": 5800,
+          "name": "chunk-011",
+          "sha256": "8a95ae7c525df32e281480cdc14d7fdd3b7cc8ef6d7ee554c972101552f0021f",
+          "tail": "ToCzMtbIWCuN"
+        },
+        {
+          "head": "8MG9iK5p",
+          "len": 11600,
+          "name": "chunk-012",
+          "sha256": "ca079fd3ba88bddc2d97cd83b2f89a7d1b3fa2c4603e289721f95ea0a77c2c50",
+          "tail": "DNjjcwrdPb9r"
+        },
+        {
+          "missing": true,
+          "name": "chunk-013"
+        },
+        {
+          "head": "ZYTi95IR",
+          "len": 5800,
+          "name": "chunk-014",
+          "sha256": "e4c30ba534328c79dca26c9d485796a8151a208313142c3f81b55993683a4820",
+          "tail": "P/Fv8SdlXGrd"
+        },
+        {
+          "head": "fdZ8zqgW",
+          "len": 5800,
+          "name": "chunk-015",
+          "sha256": "f892783be2b17ad2b27675868f56fdc5e4f883f320f13c994a9bc1f69ef94abd",
+          "tail": "0NC8NMFsLwvu"
+        },
+        {
+          "missing": true,
+          "name": "chunk-016"
+        },
+        {
+          "missing": true,
+          "name": "chunk-017"
+        },
+        {
+          "head": "Y2fUuF++",
+          "len": 5799,
+          "name": "chunk-018",
+          "sha256": "56e8a125ff6500e8c2177d8739c1d20569290d0c48b304a157adf535f9829106",
+          "tail": "9rJn7BXA+63P"
+        },
+        {
+          "head": "HZlpaL9u",
+          "len": 3556,
+          "name": "chunk-019",
+          "sha256": "98f908a698c6c701a4cb4e77ac730758b8d2ace519ab2668cebc12d7905a4558",
+          "tail": "A56WAHgFAA=="
+        }
+      ],
+      "commit": "fbf91fb1502eb364a659c08d7b89692fe5a024cd",
+      "repairs": [
+        {
+          "head": "H/MEQ8hp",
+          "len": 2900,
+          "name": "part-0",
+          "sha256": "4bb786a5fa208a374ff97a91c85f871ab8743228e69064faec68ef744602ef22",
+          "tail": "OfZu7Z6XfBLN"
+        },
+        {
+          "head": "WXbOSX07",
+          "len": 2900,
+          "name": "part-1",
+          "sha256": "a094bd4e4bfb67c286950f0152df0c7e6022b3a5710129e107dc8abd0f1492de",
+          "tail": "gjkGwIECFQGs"
+        },
+        {
+          "head": "ezMJtXAC",
+          "len": 2899,
+          "name": "part-2",
+          "sha256": "283802c52cb20aebab4d8dc4894e4e03e8a13df7322a19eb51385abacf59849d",
+          "tail": "jLnmcKr4yFnJ"
+        },
+        {
+          "head": "wC1/n924",
+          "len": 2900,
+          "name": "part-3",
+          "sha256": "c8f80a7a6f5096079815b7914e64ce1aab2462fe05651ab475db8fdb34bec6f4",
+          "tail": "Tt6GYzMl78d4"
+        },
+        {
+          "head": "Y2fUuF++",
+          "len": 2900,
+          "name": "part-4",
+          "sha256": "571776f7eb68fc5cf3e9ebdc48e5c3f3a46bbe2ced40aa722033b4829a333941",
+          "tail": "5fPRR8lR96BV"
+        },
+        {
+          "head": "kq7tu9jj",
+          "len": 2899,
+          "name": "part-5",
+          "sha256": "ec09348549282adfcd78680a6ea752c6e8bad7ccdaadd0eabe4aea8373c04e48",
+          "tail": "9rJn7BXA+63P"
+        }
+      ]
     },
-    {
-      "len": 5800,
-      "path": ".batch40-bootstrap/chunks/chunk-007",
-      "sha256": "9c2e2155e023e8460f7d5b846edaaa6f15a23ad8f2146390a5436553d397f9c9",
-      "tail": "uPkW+8eWgckF"
+    "initial_materializer": {
+      "all_twenty_chunks": false,
+      "chunks": [
+        {
+          "missing": true,
+          "name": "chunk-000"
+        },
+        {
+          "missing": true,
+          "name": "chunk-001"
+        },
+        {
+          "missing": true,
+          "name": "chunk-002"
+        },
+        {
+          "missing": true,
+          "name": "chunk-003"
+        },
+        {
+          "missing": true,
+          "name": "chunk-004"
+        },
+        {
+          "missing": true,
+          "name": "chunk-005"
+        },
+        {
+          "missing": true,
+          "name": "chunk-006"
+        },
+        {
+          "missing": true,
+          "name": "chunk-007"
+        },
+        {
+          "missing": true,
+          "name": "chunk-008"
+        },
+        {
+          "missing": true,
+          "name": "chunk-009"
+        },
+        {
+          "missing": true,
+          "name": "chunk-010"
+        },
+        {
+          "missing": true,
+          "name": "chunk-011"
+        },
+        {
+          "missing": true,
+          "name": "chunk-012"
+        },
+        {
+          "missing": true,
+          "name": "chunk-013"
+        },
+        {
+          "missing": true,
+          "name": "chunk-014"
+        },
+        {
+          "missing": true,
+          "name": "chunk-015"
+        },
+        {
+          "missing": true,
+          "name": "chunk-016"
+        },
+        {
+          "missing": true,
+          "name": "chunk-017"
+        },
+        {
+          "missing": true,
+          "name": "chunk-018"
+        },
+        {
+          "missing": true,
+          "name": "chunk-019"
+        }
+      ],
+      "commit": "4c54d010f2aa579b91c05f78d0f267f524f03da4",
+      "repairs": []
     },
-    {
-      "len": 5800,
-      "path": ".batch40-bootstrap/chunks/chunk-008",
-      "sha256": "2f92e7eb36fd58c41f22b0eb9e56e1bf0acf7a8e3e4324e8309b3914e2172d6e",
-      "tail": "VH9McX1BnnTP"
-    },
-    {
-      "len": 5800,
-      "path": ".batch40-bootstrap/chunks/chunk-009",
-      "sha256": "8843f42eb16b21c77774cb6c89bd976d2acdfa4c2088da934eed81897154bb38",
-      "tail": "r3gY4jb8jqLW"
-    },
-    {
-      "len": 5800,
-      "path": ".batch40-bootstrap/chunks/chunk-010",
-      "sha256": "aabb07a9e0fcb30027b646db5bb5b4795967193b8540ee04a571ee88dd165243",
-      "tail": "P0RK/0oikjTq"
-    },
-    {
-      "len": 5800,
-      "path": ".batch40-bootstrap/chunks/chunk-011",
-      "sha256": "8a95ae7c525df32e281480cdc14d7fdd3b7cc8ef6d7ee554c972101552f0021f",
-      "tail": "ToCzMtbIWCuN"
-    },
-    {
-      "len": 11600,
-      "path": ".batch40-bootstrap/chunks/chunk-012",
-      "sha256": "ca079fd3ba88bddc2d97cd83b2f89a7d1b3fa2c4603e289721f95ea0a77c2c50",
-      "tail": "DNjjcwrdPb9r"
-    },
-    {
-      "len": 5800,
-      "path": ".batch40-bootstrap/chunks/chunk-014",
-      "sha256": "e4c30ba534328c79dca26c9d485796a8151a208313142c3f81b55993683a4820",
-      "tail": "P/Fv8SdlXGrd"
-    },
-    {
-      "len": 5800,
-      "path": ".batch40-bootstrap/chunks/chunk-015",
-      "sha256": "f892783be2b17ad2b27675868f56fdc5e4f883f320f13c994a9bc1f69ef94abd",
-      "tail": "0NC8NMFsLwvu"
-    },
-    {
-      "len": 2900,
-      "path": ".batch40-bootstrap/repair/part-0",
-      "sha256": "4bb786a5fa208a374ff97a91c85f871ab8743228e69064faec68ef744602ef22",
-      "tail": "OfZu7Z6XfBLN"
-    },
-    {
-      "len": 2900,
-      "path": ".batch40-bootstrap/repair/part-1",
-      "sha256": "a094bd4e4bfb67c286950f0152df0c7e6022b3a5710129e107dc8abd0f1492de",
-      "tail": "gjkGwIECFQGs"
-    },
-    {
-      "len": 2899,
-      "path": ".batch40-bootstrap/repair/part-2",
-      "sha256": "283802c52cb20aebab4d8dc4894e4e03e8a13df7322a19eb51385abacf59849d",
-      "tail": "jLnmcKr4yFnJ"
-    },
-    {
-      "len": 2900,
-      "path": ".batch40-bootstrap/repair/part-3",
-      "sha256": "c8f80a7a6f5096079815b7914e64ce1aab2462fe05651ab475db8fdb34bec6f4",
-      "tail": "Tt6GYzMl78d4"
-    },
-    {
-      "len": 2900,
-      "path": ".batch40-bootstrap/repair/part-4",
-      "sha256": "571776f7eb68fc5cf3e9ebdc48e5c3f3a46bbe2ced40aa722033b4829a333941",
-      "tail": "5fPRR8lR96BV"
-    },
-    {
-      "len": 2899,
-      "path": ".batch40-bootstrap/repair/part-5",
-      "sha256": "ec09348549282adfcd78680a6ea752c6e8bad7ccdaadd0eabe4aea8373c04e48",
-      "tail": "9rJn7BXA+63P"
-    },
-    {
-      "len": 3556,
-      "path": ".batch40-bootstrap/chunks/chunk-019",
-      "sha256": "98f908a698c6c701a4cb4e77ac730758b8d2ace519ab2668cebc12d7905a4558",
-      "tail": "A56WAHgFAA=="
+    "persistent_chunks_reader": {
+      "all_twenty_chunks": false,
+      "chunks": [
+        {
+          "head": "H4sIAKPv",
+          "len": 5800,
+          "name": "chunk-000",
+          "sha256": "e59492c333a52d91585b4f82f187d82d9ff6e910e45446213777fc052f9ed694",
+          "tail": "jNqyTk5Sj3Wv"
+        },
+        {
+          "head": "0YFqOS6k",
+          "len": 5800,
+          "name": "chunk-001",
+          "sha256": "e1f8c5d1e6365e00f63e405adf6d903e5cb10c0df651973c3af55c5dbe5c0b3e",
+          "tail": "0Cu/WLP1Y8X+"
+        },
+        {
+          "head": "61h5VUcn",
+          "len": 11600,
+          "name": "chunk-002",
+          "sha256": "a24fda8e55d790ae58ccdacf4571082b08073b8f3cc71b89530dac074908efc3",
+          "tail": "AktHj6HmDgNU"
+        },
+        {
+          "missing": true,
+          "name": "chunk-003"
+        },
+        {
+          "head": "HuxKE1oH",
+          "len": 5800,
+          "name": "chunk-004",
+          "sha256": "122250873506e170760d57e4c4ee22a8390360d519e003fe30d51b17ef68baea",
+          "tail": "wdqzUDh+95e1"
+        },
+        {
+          "head": "bXcicP2U",
+          "len": 5800,
+          "name": "chunk-005",
+          "sha256": "ad02052dc42002420dad1ff5ba29b9a9c7e4848bba52a72c09b81448c1aee067",
+          "tail": "FA1lBiboyWOL"
+        },
+        {
+          "head": "Qfe3F2rp",
+          "len": 5800,
+          "name": "chunk-006",
+          "sha256": "6c775694feb1289b444935538b9787d452d8350c67d56d68c2f7d7b0a3dce07d",
+          "tail": "0pwSTbXGj49+"
+        },
+        {
+          "head": "eerEv3ag",
+          "len": 5800,
+          "name": "chunk-007",
+          "sha256": "9c2e2155e023e8460f7d5b846edaaa6f15a23ad8f2146390a5436553d397f9c9",
+          "tail": "uPkW+8eWgckF"
+        },
+        {
+          "head": "I68xBp4d",
+          "len": 5800,
+          "name": "chunk-008",
+          "sha256": "2f92e7eb36fd58c41f22b0eb9e56e1bf0acf7a8e3e4324e8309b3914e2172d6e",
+          "tail": "VH9McX1BnnTP"
+        },
+        {
+          "head": "SrgmHu8Z",
+          "len": 5800,
+          "name": "chunk-009",
+          "sha256": "8843f42eb16b21c77774cb6c89bd976d2acdfa4c2088da934eed81897154bb38",
+          "tail": "r3gY4jb8jqLW"
+        },
+        {
+          "head": "/YX6I/3p",
+          "len": 5800,
+          "name": "chunk-010",
+          "sha256": "aabb07a9e0fcb30027b646db5bb5b4795967193b8540ee04a571ee88dd165243",
+          "tail": "P0RK/0oikjTq"
+        },
+        {
+          "head": "q1V3BIK0",
+          "len": 5800,
+          "name": "chunk-011",
+          "sha256": "8a95ae7c525df32e281480cdc14d7fdd3b7cc8ef6d7ee554c972101552f0021f",
+          "tail": "ToCzMtbIWCuN"
+        },
+        {
+          "head": "8MG9iK5p",
+          "len": 11600,
+          "name": "chunk-012",
+          "sha256": "ca079fd3ba88bddc2d97cd83b2f89a7d1b3fa2c4603e289721f95ea0a77c2c50",
+          "tail": "DNjjcwrdPb9r"
+        },
+        {
+          "missing": true,
+          "name": "chunk-013"
+        },
+        {
+          "head": "ZYTi95IR",
+          "len": 5800,
+          "name": "chunk-014",
+          "sha256": "e4c30ba534328c79dca26c9d485796a8151a208313142c3f81b55993683a4820",
+          "tail": "P/Fv8SdlXGrd"
+        },
+        {
+          "head": "fdZ8zqgW",
+          "len": 5800,
+          "name": "chunk-015",
+          "sha256": "f892783be2b17ad2b27675868f56fdc5e4f883f320f13c994a9bc1f69ef94abd",
+          "tail": "0NC8NMFsLwvu"
+        },
+        {
+          "missing": true,
+          "name": "chunk-016"
+        },
+        {
+          "missing": true,
+          "name": "chunk-017"
+        },
+        {
+          "head": "Y2fUuF++",
+          "len": 5799,
+          "name": "chunk-018",
+          "sha256": "56e8a125ff6500e8c2177d8739c1d20569290d0c48b304a157adf535f9829106",
+          "tail": "9rJn7BXA+63P"
+        },
+        {
+          "head": "HZlpaL9u",
+          "len": 3556,
+          "name": "chunk-019",
+          "sha256": "98f908a698c6c701a4cb4e77ac730758b8d2ace519ab2668cebc12d7905a4558",
+          "tail": "A56WAHgFAA=="
+        }
+      ],
+      "commit": "88c58f7ecfd209ff30c3350d3e0a8e690bbb218a",
+      "repairs": []
     }
-  ],
-  "target_payload_sha256": "b37496856a690426c98e64553a5161998613d1e36aec341d42b07a9c2474bdf8",
-  "target_sha_matches": []
+  },
+  "target_payload_sha256": "b37496856a690426c98e64553a5161998613d1e36aec341d42b07a9c2474bdf8"
 }
