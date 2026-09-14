@@ -50,21 +50,6 @@
       "usageCountAtReview": 23
     },
     {
-      "canonicalEnglishName": "Chicken stock powder",
-      "confidence": "medium",
-      "fdcDataType": "SR Legacy",
-      "fdcDescription": "Soup, chicken broth or bouillon, dry",
-      "fdcId": 171562,
-      "notes": "Explicit destination review accepts dry chicken broth/bouillon as the generic chicken-stock-powder reference. Exact sodium level, granule/cube binders, fat, seasoning blend, manufacturer formulation, and reconstitution ratio are not certified. Nutrition remains per 100 g dry product; no hidden water or concentration conversion is inferred.",
-      "reviewTargetId": "concept:food:4b699a7031f660ff4dc1",
-      "reviewTargetKind": "semantic-concept",
-      "sourceCandidateSha256": "73eb4106ac301dba33f086c03015fbd4fe3a752cb2bab9350e0741a98c447841",
-      "sourceEvidenceCandidateRank": 3,
-      "sourceEvidenceSha256": "8beb71a92432c46c6b452f3ce75a92a51e5f15285357ed17898409c8ee597423",
-      "sourceEvidenceTargetId": "concept:food:a4b4dab492fad2c3c4d8",
-      "usageCountAtReview": 8
-    },
-    {
       "canonicalEnglishName": "Beef consommé cube",
       "confidence": "medium",
       "fdcDataType": "SR Legacy",
@@ -125,11 +110,6 @@
       "sourceEvidenceCandidateRank": 11,
       "sourceEvidenceTargetId": "concept:food:d970bae86d769631735f"
     },
-    "171562": {
-      "sourceCandidateSha256": "73eb4106ac301dba33f086c03015fbd4fe3a752cb2bab9350e0741a98c447841",
-      "sourceEvidenceCandidateRank": 3,
-      "sourceEvidenceTargetId": "concept:food:a4b4dab492fad2c3c4d8"
-    },
     "171583": {
       "sourceCandidateSha256": "047311cc617fb9ab1eee13c011a96d80175519a3c7e0eb91b593466057a9b3dc",
       "sourceEvidenceCandidateRank": 7,
@@ -146,7 +126,7 @@
       "sourceEvidenceTargetId": "concept:food:7507a8c5132eb4f58617"
     }
   },
-  "reviewDecisionSha256": "b8e0bfeeee0f32bac7b0a1221abac64a82567a7c35769de97f73ab86f67576b3",
+  "reviewDecisionSha256": "08938914257230898d0365ff6106d8431c20b74d7b75ecb197bf45b2e06b14fa",
   "schemaVersion": 1,
   "selectionMethod": "explicit-semantic-review",
   "sourceEvidenceSha256": "8beb71a92432c46c6b452f3ce75a92a51e5f15285357ed17898409c8ee597423"
