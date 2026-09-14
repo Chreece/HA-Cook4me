@@ -25,6 +25,7 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
+  actions: write
   contents: write
   attestations: write
   id-token: write
@@ -264,3 +265,17 @@ jobs:
           if-no-files-found: error
           compression-level: 9
           retention-days: 7
+
+      - name: Dispatch reviewers for this exact evidence snapshot
+        run: |
+          set -Eeuo pipefail
+          BRANCH="cook4me-nutrition-enrichment-post-activation-v60"
+          for WORKFLOW in \
+            catalog-nutrition-review-reuse-post-activation-v60.yml \
+            catalog-nutrition-review-semantic-reuse-post-activation-v60.yml
+          do
+            gh workflow run "$WORKFLOW" \
+              --repo "$GITHUB_REPOSITORY" \
+              --ref "$BRANCH" \
+              -f evidence_head_sha="$GITHUB_SHA"
+          done
