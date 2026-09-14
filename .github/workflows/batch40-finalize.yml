@@ -37,7 +37,7 @@ jobs:
           from __future__ import annotations
           import base64, hashlib, io, os, pathlib, tarfile
           ROOT = pathlib.Path.cwd()
-          PAYLOAD_SHA = 'b37496856a690426c98e64553a5161998613d1e36aec341d42b07a9c2474bdf8'
+          PAYLOAD_SHA = '3013ecea88360542a059ea42d695322c3d7984c79d7805bfa89ac6dcc54e946e'
           PARTS = [
               '.batch40-bootstrap/chunks/chunk-000', '.batch40-bootstrap/chunks/chunk-001',
               '.batch40-bootstrap/chunks/chunk-002', '.batch40-bootstrap/chunks/chunk-004',
