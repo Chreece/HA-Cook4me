@@ -1,0 +1,237 @@
+name: Build final progressive catalog with offline reviewed nutrition v60
+
+on:
+  push:
+    branches:
+      - cook4me-progressive-catalog-activation-v60
+    paths:
+      - .github/workflows/catalog-final-progressive-hydrate-v60.yml
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+env:
+  REPAIR_RUN_ID: '34837322277'
+  REPAIR_ARTIFACT: 'repaired-progressive-catalog-v60-f0f5185240239e656655b5026627727a7976084d'
+
+jobs:
+  hydrate-and-promote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install standalone catalog requirements
+        run: python -m pip install --disable-pip-version-check 'curl-cffi==0.13.0' 'websocket-client==1.8.0'
+      - name: Download validated repaired catalog
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-final-progressive-v60"
+          mkdir -p "$BUILD/source"
+          gh run download "$REPAIR_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name "$REPAIR_ARTIFACT" --dir "$BUILD/source"
+          test -f "$BUILD/source/repaired-catalog.v60.json"
+      - name: Compact repaired catalog and preserve unique ingredient aliases
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-final-progressive-v60"
+          python tools/compact_release_catalog_runtime_v60.py \
+            --catalog "$BUILD/source/repaired-catalog.v60.json" \
+            --output "$BUILD/base-compact-catalog.v60.json" \
+            --summary "$BUILD/base-compact-summary.v60.json"
+          python tools/validate_release_catalog_v60.py "$BUILD/base-compact-catalog.v60.json" \
+            | tee "$BUILD/base-compact-validation.v60.json"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p = Path(os.environ['RUNNER_TEMP']) / 'cook4me-final-progressive-v60' / 'base-compact-catalog.v60.json'
+          data = json.loads(p.read_text(encoding='utf-8'))
+          counts = (
+              len(data.get('recipes') or []),
+              sum(len(r.get('variants') or []) for r in data.get('recipes') or [] if isinstance(r, dict)),
+              len(data.get('ingredients') or []),
+          )
+          if counts != (16952, 32163, 11748):
+              raise SystemExit(f'base compact counts changed: {counts}')
+          if p.stat().st_size >= 95_000_000:
+              raise SystemExit(f'base compact catalog too large: {p.stat().st_size}')
+          PY
+      - name: Create exact nutrition queue and compact review targets
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-final-progressive-v60"
+          python tools/snapshot_release_catalog_nutrition_queue_v60.py \
+            --catalog "$BUILD/base-compact-catalog.v60.json" \
+            --output "$BUILD/nutrition-queue.v60.json" \
+            --summary "$BUILD/nutrition-queue-summary.v60.json"
+          python tools/compact_release_catalog_nutrition_review_targets_v60.py \
+            --queue "$BUILD/nutrition-queue.v60.json" \
+            --output "$BUILD/nutrition-review-targets.v60.json" \
+            --summary "$BUILD/nutrition-review-targets-summary.v60.json"
+      - name: Download pinned public USDA bulk reference data
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-final-progressive-v60"
+          python tools/prepare_fdc_reference_data_v60.py \
+            --output-dir "$BUILD/fdc-reference-v60" \
+            | tee "$BUILD/fdc-reference-summary.v60.json"
+      - name: Resolve all already-reviewed exact FDC bindings offline
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-final-progressive-v60"
+          set +e
+          python tools/resolve_reviewed_release_catalog_nutrition_targets_offline_v60.py \
+            --targets "$BUILD/nutrition-review-targets.v60.json" \
+            --reference-manifest "$BUILD/fdc-reference-v60/reference-manifest.v60.json" \
+            --cache "$BUILD/fdc-nutrition-reviewed-v60.json" \
+            --review-root tools \
+            --pending-output "$BUILD/nutrition-pending.v60.json" \
+            | tee "$BUILD/offline-nutrition-resolution-summary.v60.json"
+          rc=${PIPESTATUS[0]}
+          set -e
+          if [[ "$rc" -ne 0 && "$rc" -ne 2 ]]; then
+            exit "$rc"
+          fi
+      - name: Attach exact reviewed nutrition without network access
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-final-progressive-v60"
+          python - <<'PY'
+          import json, os, sys
+          from pathlib import Path
+          root = Path(os.environ['RUNNER_TEMP']) / 'cook4me-final-progressive-v60'
+          sys.path.insert(0, str(Path.cwd() / 'tools'))
+          sys.path.insert(0, str(Path.cwd() / 'custom_components' / 'cook4me'))
+          import build_release_catalog_v60_reviewed as builder
+          captured = json.loads((root / 'base-compact-catalog.v60.json').read_text(encoding='utf-8'))
+          cache = json.loads((root / 'fdc-nutrition-reviewed-v60.json').read_text(encoding='utf-8'))
+          result = builder.apply_reviewed_nutrition(captured, cache)
+          (root / 'hydrated-uncompacted-catalog.v60.json').write_text(
+              json.dumps(result, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8'
+          )
+          PY
+      - name: Compact hydrated catalog again and validate exact final bytes
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-final-progressive-v60"
+          python tools/compact_release_catalog_runtime_v60.py \
+            --catalog "$BUILD/hydrated-uncompacted-catalog.v60.json" \
+            --output "$BUILD/final-catalog.v60.json" \
+            --summary "$BUILD/final-compact-summary.v60.json"
+          python tools/validate_release_catalog_v60.py "$BUILD/final-catalog.v60.json" \
+            | tee "$BUILD/final-validation.v60.json"
+      - name: Prove final catalog size, search and nutrition coverage
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-final-progressive-v60"
+          python - <<'PY'
+          import json, os, sys
+          from pathlib import Path
+          root = Path(os.environ['RUNNER_TEMP']) / 'cook4me-final-progressive-v60'
+          component = Path.cwd() / 'custom_components' / 'cook4me'
+          sys.path.insert(0, str(component))
+          import catalog_search_index as search
+
+          catalog = root / 'final-catalog.v60.json'
+          payload = json.loads(catalog.read_text(encoding='utf-8'))
+          prepared = search.prepare_search_index(payload.get('searchIndex') or {})
+          def query(value, language='el'):
+              result = search.search_index(prepared, value, language=language, strict_language=False, page=0, size=20)
+              return {'query': value, 'total': int(result.get('total') or 0), 'indices': list(result.get('indices') or [])}
+
+          source = payload.get('source') if isinstance(payload.get('source'), dict) else {}
+          pending = json.loads((root / 'nutrition-pending.v60.json').read_text(encoding='utf-8'))
+          pending_summary = pending.get('summary') if isinstance(pending.get('summary'), dict) else {}
+          target_summary = json.loads((root / 'nutrition-review-targets-summary.v60.json').read_text(encoding='utf-8'))
+          facts = {
+              'catalogVersion': payload.get('catalogVersion'),
+              'complete': payload.get('complete') is True,
+              'catalogBytes': catalog.stat().st_size,
+              'recipes': len(payload.get('recipes') or []),
+              'variants': sum(len(r.get('variants') or []) for r in payload.get('recipes') or [] if isinstance(r, dict)),
+              'ingredients': len(payload.get('ingredients') or []),
+              'auditedCatalogCount': int(source.get('auditedCatalogCount') or 0),
+              'sourceCatalogCount': int(source.get('sourceCatalogCount') or 0),
+              'failedDetailCount': int(source.get('failedDetailCount') or 0),
+              'detailNotFoundCount': int(source.get('detailNotFoundCount') or 0),
+              'nutritionRequiredForComplete': source.get('nutritionRequiredForComplete'),
+              'reviewedNutritionResolvedCount': int(source.get('reviewedNutritionResolvedCount') or 0),
+              'reviewedNutritionRequiredCount': int(source.get('reviewedNutritionRequiredCount') or 0),
+              'foodIntelligenceNutritionResolvedCount': int(source.get('foodIntelligenceNutritionResolvedCount') or 0),
+              'foodIntelligenceIngredientCount': int(source.get('foodIntelligenceIngredientCount') or 0),
+              'pendingReviewTargetCount': int(pending_summary.get('pendingReviewTargetCount') or pending_summary.get('pendingCount') or 0),
+              'pendingIdentityCount': int(pending_summary.get('pendingIdentityCount') or 0),
+              'reviewTargetCount': int(target_summary.get('reviewTargetCount') or target_summary.get('targetCount') or 0),
+              'networkRequestsForNutrition': False,
+              'runtimeRecipeNutritionOnDemand': source.get('runtimeRecipeNutritionOnDemand') is True,
+              'prefixPostingsPersisted': bool((payload.get('searchIndex') or {}).get('prefixPostings')),
+              'latinRisotto': query('risotto', 'it'),
+              'greekRisotto': query('ριζότο', 'el'),
+              'prefixRiso': query('riso', 'it'),
+          }
+          if not facts['complete']:
+              raise SystemExit('final catalog lost complete=true')
+          if (facts['recipes'], facts['variants'], facts['ingredients']) != (16952, 32163, 11748):
+              raise SystemExit('final catalog changed recipe/variant/ingredient counts')
+          if facts['auditedCatalogCount'] != 28 or facts['failedDetailCount'] != 0 or facts['detailNotFoundCount'] != 1485:
+              raise SystemExit('final catalog source accounting changed')
+          if facts['nutritionRequiredForComplete'] is not False:
+              raise SystemExit('nutrition incorrectly blocks catalog completeness')
+          if facts['catalogBytes'] >= 95_000_000:
+              raise SystemExit(f"final catalog too large for safe repository shipping: {facts['catalogBytes']}")
+          if facts['prefixPostingsPersisted']:
+              raise SystemExit('final catalog still persists prefix postings')
+          if not facts['runtimeRecipeNutritionOnDemand']:
+              raise SystemExit('runtime recipe nutrition is not enabled')
+          if facts['latinRisotto']['total'] <= 0 or facts['greekRisotto']['total'] <= 0 or facts['prefixRiso']['total'] <= 0:
+              raise SystemExit('final multilingual/prefix search regression')
+          if facts['reviewedNutritionResolvedCount'] <= 0:
+              raise SystemExit('offline reviewed nutrition did not attach any profiles')
+          (root / 'final-facts.v60.json').write_text(json.dumps(facts, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(facts, ensure_ascii=False, indent=2))
+          PY
+      - name: Verify final persisted bytes contain no secret-like fields
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-final-progressive-v60"
+          ! grep -Eiq 'access[_-]?token|refresh[_-]?token|authorization|bearer |password|api[_-]?key|client[_-]?secret' \
+            "$BUILD/final-catalog.v60.json" "$BUILD/final-facts.v60.json"
+      - name: Promote exact validated final catalog onto progressive branch
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-final-progressive-v60"
+          cp "$BUILD/final-catalog.v60.json" custom_components/cook4me/catalog/merged_catalog.v1.json
+          cp "$BUILD/final-facts.v60.json" tools/progressive_catalog_activation_v60_summary.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add custom_components/cook4me/catalog/merged_catalog.v1.json tools/progressive_catalog_activation_v60_summary.json
+          git diff --cached --check
+          git diff --cached --quiet && exit 0
+          git commit -m "Activate compact multilingual catalog with reviewed nutrition"
+          git push origin HEAD:cook4me-progressive-catalog-activation-v60
+      - name: Upload final promotion evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-progressive-catalog-v60-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/cook4me-final-progressive-v60/base-compact-summary.v60.json
+            ${{ runner.temp }}/cook4me-final-progressive-v60/nutrition-queue-summary.v60.json
+            ${{ runner.temp }}/cook4me-final-progressive-v60/nutrition-review-targets-summary.v60.json
+            ${{ runner.temp }}/cook4me-final-progressive-v60/fdc-reference-summary.v60.json
+            ${{ runner.temp }}/cook4me-final-progressive-v60/offline-nutrition-resolution-summary.v60.json
+            ${{ runner.temp }}/cook4me-final-progressive-v60/nutrition-pending.v60.json
+            ${{ runner.temp }}/cook4me-final-progressive-v60/final-compact-summary.v60.json
+            ${{ runner.temp }}/cook4me-final-progressive-v60/final-validation.v60.json
+            ${{ runner.temp }}/cook4me-final-progressive-v60/final-facts.v60.json
+          if-no-files-found: warn
+          compression-level: 9
+          retention-days: 7
