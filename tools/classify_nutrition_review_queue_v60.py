@@ -32,6 +32,11 @@ GENERIC_PEPPER = re.compile(
     re.IGNORECASE,
 )
 
+FORMULATED_SPICE_BLEND = re.compile(
+    r"^(?:curry|garam masala(?:,\s*a little)?)$",
+    re.IGNORECASE,
+)
+
 
 COMPLEX = re.compile(
     r"\b(?:and|or|mix(?:ed|ing|tures?)?|blend(?:ed|ing)?|seasoning|spices?|stock|bouillon|broth|"
@@ -237,7 +242,10 @@ def classify(evidence_path: Path, *, review_root: Path = TOOLS) -> dict[str, Any
         audit["remainingUnheldCandidates"],
         compiled,
         evidence_requirements=evidence_requirements,
-        identity_ambiguities=(("C-generic-pepper-identity-ambiguous", GENERIC_PEPPER),),
+        identity_ambiguities=(
+            ("C-generic-pepper-identity-ambiguous", GENERIC_PEPPER),
+            ("C-formulated-spice-blend-ambiguous", FORMULATED_SPICE_BLEND),
+        ),
     )
     remaining_ids = {
         row["reviewTargetId"] for row in audit["remainingUnheldCandidates"]
