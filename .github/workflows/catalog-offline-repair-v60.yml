@@ -1,0 +1,105 @@
+name: Repair preserved progressive catalog v60 offline
+
+on:
+  push:
+    branches:
+      - cook4me-progressive-catalog-activation-v60
+    paths:
+      - .github/workflows/catalog-offline-repair-v60.yml
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+env:
+  CAPTURE_RUN_ID: '34833842515'
+  CAPTURE_ARTIFACT: 'progressive-catalog-capture-diagnostic-v60-11f77b687aea2055e1ef2259e622718f2ec1ffc0'
+  EVIDENCE_RUN_ID: '34836387461'
+  EVIDENCE_ARTIFACT: 'failed-detail-evidence-v60-73a36270d0de9fdbbccbdadb7903dcd93aaaea5c'
+
+jobs:
+  repair-offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Download preserved capture and 404 evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-offline-repair"
+          mkdir -p "$BUILD/capture" "$BUILD/evidence"
+          gh run download "$CAPTURE_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name "$CAPTURE_ARTIFACT" --dir "$BUILD/capture"
+          gh run download "$EVIDENCE_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name "$EVIDENCE_ARTIFACT" --dir "$BUILD/evidence"
+          test -f "$BUILD/capture/captured-semantic-catalog.v60.json"
+          test -f "$BUILD/evidence/failed-detail-evidence.v60.json"
+      - name: Reconcile stale search-manifest detail rows offline
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-offline-repair"
+          python tools/reconcile_release_catalog_failed_detail_evidence_v60.py \
+            --catalog "$BUILD/capture/captured-semantic-catalog.v60.json" \
+            --evidence "$BUILD/evidence/failed-detail-evidence.v60.json" \
+            --output "$BUILD/repaired-catalog.v60.json" \
+            | tee "$BUILD/reconciliation-summary.v60.json"
+      - name: Independently validate repaired catalog
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-offline-repair"
+          python tools/validate_release_catalog_v60.py "$BUILD/repaired-catalog.v60.json" \
+            | tee "$BUILD/repaired-validation.v60.json"
+      - name: Record repaired catalog facts
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-offline-repair"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          root = Path(os.environ['RUNNER_TEMP']) / 'cook4me-offline-repair'
+          path = root / 'repaired-catalog.v60.json'
+          payload = json.loads(path.read_text(encoding='utf-8'))
+          source = payload.get('source') if isinstance(payload.get('source'), dict) else {}
+          summary = {
+              'complete': payload.get('complete') is True,
+              'catalogBytes': path.stat().st_size,
+              'recipes': len(payload.get('recipes') or []),
+              'variants': sum(len(r.get('variants') or []) for r in payload.get('recipes') or [] if isinstance(r, dict)),
+              'ingredients': len(payload.get('ingredients') or []),
+              'failedDetailCount': int(source.get('failedDetailCount') or 0),
+              'detailNotFoundCount': int(source.get('detailNotFoundCount') or 0),
+              'detailNotFoundPolicy': source.get('detailNotFoundPolicy'),
+              'auditedCatalogCount': int(source.get('auditedCatalogCount') or 0),
+              'sourceCatalogCount': int(source.get('sourceCatalogCount') or 0),
+              'nutritionRequiredForComplete': source.get('nutritionRequiredForComplete'),
+          }
+          if not summary['complete']:
+              raise SystemExit('repaired catalog is not complete')
+          if summary['failedDetailCount'] != 0 or summary['detailNotFoundCount'] != 1485:
+              raise SystemExit('repaired detail accounting is unexpected')
+          (root / 'repaired-summary.v60.json').write_text(
+              json.dumps(summary, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(summary, ensure_ascii=False, indent=2))
+          PY
+      - name: Upload repaired catalog
+        uses: actions/upload-artifact@v4
+        with:
+          name: repaired-progressive-catalog-v60-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/cook4me-offline-repair/repaired-catalog.v60.json
+            ${{ runner.temp }}/cook4me-offline-repair/reconciliation-summary.v60.json
+            ${{ runner.temp }}/cook4me-offline-repair/repaired-validation.v60.json
+            ${{ runner.temp }}/cook4me-offline-repair/repaired-summary.v60.json
+          if-no-files-found: error
+          compression-level: 9
+          retention-days: 7
