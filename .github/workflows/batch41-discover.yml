@@ -1,4 +1,4 @@
-name: Export Batch 41 state artifact
+name: Export Batch 41 reviewed corpus
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Build exact current review-state receipt
+      - name: Build exact current reviewed corpus
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -29,47 +29,37 @@ jobs:
           root = Path.cwd()
           tools = root / 'tools'
           sys.path.insert(0, str(tools))
-          import classify_nutrition_review_queue_v60 as classifier
           import nutrition_review_holds_v60 as holds
           import snapshot_nutrition_review_checkpoint_v60 as checkpoint
 
           cp = checkpoint.build_checkpoint(tools)
           hold_doc = holds.load_holds()
-          rules_doc, compiled = classifier._load_rules()
+          blocker_path = tools / 'release_catalog_nutrition_review_blockers.v1.json'
+          blocker_doc, blocker_sha = checkpoint._read(blocker_path)
           out = {
               'schemaVersion': 1,
-              'kind': 'cook4me-batch41-current-review-state-v60',
+              'kind': 'cook4me-batch41-current-reviewed-corpus-v60',
               'sourceCommit': cp['sourceCommit'],
               'checkpointSummary': cp['summary'],
               'reviewFilesSha256': cp['reviewFilesSha256'],
               'recordedBindingsSha256': cp['recordedBindingsSha256'],
-              'recordedReviewTargetIds': sorted({row['reviewTargetId'] for row in cp['recordedBindings']}),
+              'recordedBindings': cp['recordedBindings'],
               'heldReviewTargetIds': sorted(hold_doc['targets']),
-              'bulkRuleSourceEvidenceSha256': rules_doc['sourceEvidenceSha256'],
-              'bulkRuleReferenceManifestSha256': rules_doc['referenceManifestSha256'],
-              'bulkRules': [
-                  {
-                      'ruleId': rule['ruleId'],
-                      'pattern': rule['pattern'],
-                      'tier': rule['tier'],
-                      'fdcId': rule['fdcId'],
-                      'fdcDescription': rule['fdcDescription'],
-                      'contract': rule['contract'],
-                  }
-                  for rule, _regex in compiled
-              ],
+              'blockerLedgerSha256': blocker_sha,
+              'blockers': blocker_doc.get('items', []),
           }
-          Path('batch41-state-export.json').write_text(
+          Path('batch41-reviewed-corpus.json').write_text(
               json.dumps(out, sort_keys=True, ensure_ascii=False, separators=(',', ':')) + '\n',
               encoding='utf-8',
           )
-          print(f"recorded={len(out['recordedReviewTargetIds'])}")
+          print(f"recorded={len(out['recordedBindings'])}")
           print(f"held={len(out['heldReviewTargetIds'])}")
-          print(f"rules={len(out['bulkRules'])}")
+          print(f"blockers={len(out['blockers'])}")
+          print(f"recorded_bindings_sha256={out['recordedBindingsSha256']}")
           PY
       - uses: actions/upload-artifact@v4
         with:
-          name: batch41-current-review-state
-          path: batch41-state-export.json
+          name: batch41-reviewed-corpus
+          path: batch41-reviewed-corpus.json
           if-no-files-found: error
           retention-days: 1
