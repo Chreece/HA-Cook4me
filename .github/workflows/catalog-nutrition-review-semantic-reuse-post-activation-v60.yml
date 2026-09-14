@@ -1,0 +1,109 @@
+name: Build post-activation nutrition semantic reuse proposals v60
+
+on:
+  push:
+    branches:
+      - cook4me-nutrition-enrichment-post-activation-v60
+    paths:
+      - .github/workflows/catalog-nutrition-review-semantic-reuse-post-activation-v60.yml
+      - tools/propose_release_catalog_nutrition_review_semantic_reuse_v60.py
+      - tests/test_release_catalog_nutrition_review_semantic_reuse_proposal_v60.py
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  build-semantic-reuse-proposals:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Run semantic reuse proposal regressions
+        run: |
+          set -Eeuo pipefail
+          python -m unittest tests.test_release_catalog_nutrition_review_semantic_reuse_proposal_v60 -v
+
+      - name: Resolve latest successful post-activation evidence
+        id: evidence
+        run: |
+          set -Eeuo pipefail
+          ROW="$(
+            gh run list \
+              --repo "$GITHUB_REPOSITORY" \
+              --workflow catalog-nutrition-enrichment-evidence-v60.yml \
+              --branch cook4me-nutrition-enrichment-post-activation-v60 \
+              --status success \
+              --limit 1 \
+              --json databaseId,headSha \
+              --jq '.[0] | "\(.databaseId) \(.headSha)"'
+          )"
+          RUN_ID="${ROW%% *}"
+          HEAD_SHA="${ROW#* }"
+          if [ -z "$RUN_ID" ] || [ -z "$HEAD_SHA" ] || [ "$RUN_ID" = "$ROW" ]; then
+            echo "Unable to resolve the latest successful nutrition evidence run: $ROW" >&2
+            false
+          fi
+          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+          echo "head_sha=$HEAD_SHA" >> "$GITHUB_OUTPUT"
+          echo "Using nutrition evidence run $RUN_ID at $HEAD_SHA"
+
+      - name: Download latest successful post-activation evidence
+        run: |
+          set -Eeuo pipefail
+          rm -rf /tmp/nutrition-evidence
+          mkdir -p /tmp/nutrition-evidence
+          gh run download "${{ steps.evidence.outputs.run_id }}" \
+            --repo "$GITHUB_REPOSITORY" \
+            --name "nutrition-enrichment-evidence-v60-${{ steps.evidence.outputs.head_sha }}" \
+            --dir /tmp/nutrition-evidence
+          test -s /tmp/nutrition-evidence/fdc-candidate-evidence.v60.json
+
+      - name: Build bounded semantic history suggestions
+        run: |
+          set -Eeuo pipefail
+          mkdir -p /tmp/nutrition-semantic-reuse
+          python tools/propose_release_catalog_nutrition_review_semantic_reuse_v60.py \
+            --candidates /tmp/nutrition-evidence/fdc-candidate-evidence.v60.json \
+            --review-root tools \
+            --output /tmp/nutrition-semantic-reuse/semantic-reuse-proposal.v60.json \
+            --summary-output /tmp/nutrition-semantic-reuse/semantic-reuse-proposal-summary.v60.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path('/tmp/nutrition-semantic-reuse')
+          payload = json.loads((root / 'semantic-reuse-proposal.v60.json').read_text(encoding='utf-8'))
+          summary = json.loads((root / 'semantic-reuse-proposal-summary.v60.json').read_text(encoding='utf-8'))
+          policy = payload.get('policy') if isinstance(payload.get('policy'), dict) else {}
+          if summary.get('selectionCount') != 0:
+              raise SystemExit(f"semantic proposal unexpectedly selected bindings: {summary}")
+          if summary.get('networkRequestsPerformed') is not False or summary.get('secretsPersisted') is not False:
+              raise SystemExit(f"semantic proposal violated offline/privacy contract: {summary}")
+          if policy.get('selectionPerformed') is not False:
+              raise SystemExit(f"semantic proposal is not non-binding: {policy}")
+          if policy.get('targetOwnCandidateEvidenceRequired') is not True:
+              raise SystemExit(f"semantic proposal lost target-own-candidate guard: {policy}")
+          if policy.get('historicalFdcIdCannotIntroduceNewCandidate') is not True:
+              raise SystemExit(f"semantic proposal can introduce historical IDs: {policy}")
+          print(json.dumps(summary, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Upload post-activation semantic reuse proposal
+        uses: actions/upload-artifact@v4
+        with:
+          name: nutrition-review-semantic-reuse-proposal-v60-${{ github.sha }}
+          path: /tmp/nutrition-semantic-reuse
+          if-no-files-found: error
+          retention-days: 7
