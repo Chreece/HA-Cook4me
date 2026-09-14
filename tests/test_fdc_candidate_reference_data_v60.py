@@ -70,7 +70,9 @@ class CandidateReferenceIndexTests(unittest.TestCase):
                         "wweiaFoodCategory": {"description": "Mixed dishes"},
                     },
                     {"fdcId": 302, "description": "Rice wine"},
-                    {"fdcId": 303, "description": "Red pepper paste"},
+                    {"fdcId": 303, "description": "Bread, Italian"},
+                    {"fdcId": 304, "description": "Wine, sparkling"},
+                    {"fdcId": 305, "description": "Seaweed, dried"},
                 ],
             ),
         ]
@@ -114,10 +116,15 @@ class CandidateReferenceIndexTests(unittest.TestCase):
                 "fresh whole",
                 "muscovado",
                 "mirin",
+                "2 tbsp mirin",
                 "passata",
                 "kombu",
+                "Kombu (3x3)",
                 "seitan",
-                "gochujang",
+                "ciabatta",
+                "prosecco",
+                "Nori sheets",
+                "Nori sheet (optional)",
                 "does-not-exist",
             )
             for query in queries:
@@ -132,7 +139,7 @@ class CandidateReferenceIndexTests(unittest.TestCase):
                     )
 
             self.assertTrue(light.candidate_only)
-            self.assertEqual(light.indexed_fdc_id_count, 10)
+            self.assertEqual(light.indexed_fdc_id_count, 12)
             self.assertEqual(len(light._score_rows), len(light.records))
             self.assertFalse(hasattr(light, "_raw_by_id"))
             self.assertFalse(
@@ -147,10 +154,15 @@ class CandidateReferenceIndexTests(unittest.TestCase):
             light = candidate_reference.CandidateReferenceIndex(manifest)
             expected = {
                 "mirin": (302, "rice wine"),
+                "2 tbsp mirin": (302, "rice wine"),
                 "passata": (204, "tomato puree"),
                 "kombu": (103, "kelp"),
+                "Kombu (3x3)": (103, "kelp"),
                 "seitan": (203, "wheat gluten"),
-                "gochujang": (303, "red pepper paste"),
+                "ciabatta": (303, "italian bread"),
+                "prosecco": (304, "sparkling wine"),
+                "Nori sheets": (305, "dried seaweed"),
+                "Nori sheet (optional)": (305, "dried seaweed"),
             }
             for query, (fdc_id, matched_query) in expected.items():
                 with self.subTest(query=query):
