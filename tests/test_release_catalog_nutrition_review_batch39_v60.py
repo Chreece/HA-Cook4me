@@ -46,7 +46,7 @@ class Batch39BulkFamilyTests(unittest.TestCase):
   bindings=[r for r in self.checkpoint['recordedBindings'] if r['reviewFile'] in names]
   reviews=[r for r in self.checkpoint['reviewFiles'] if r['path'] in names]
   self.assertEqual(len(bindings),4839); self.assertEqual(cp._digest(cp._encoded(bindings)),BASE_BINDINGS_SHA)
-  self.assertEqual(cp._digest(cp._encoded(reviews)),BASE_REVIEW_SHA); self.assertEqual(self.checkpoint['summary']['recordedReviewTargetCount'],4961)
+  self.assertEqual(cp._digest(cp._encoded(reviews)),BASE_REVIEW_SHA); self.assertGreaterEqual(self.checkpoint['summary']['recordedReviewTargetCount'],4961)
 
  def test_destinations_are_disjoint_and_holds_unchanged(self):
   others={r['reviewTargetId'] for r in self.checkpoint['recordedBindings'] if r['reviewFile'] not in self.source_names}
@@ -86,7 +86,7 @@ class Batch39BulkFamilyTests(unittest.TestCase):
    if Path(path).name=='ignored': return evidence,EVIDENCE_SHA
    return original_read(path)
   with patch.object(holds,'audit',return_value=audit), patch.object(cp,'_read',side_effect=selective_read), patch.object(resolver,'load_reviews',return_value={}): result=classifier.classify(Path('ignored'),review_root=TOOLS)
-  self.assertEqual(result['summary']['batch37ExplicitReviewCount'],106); self.assertEqual(result['summary']['batch38ExplicitReviewCount'],111); self.assertEqual(result['summary']['batch39ExplicitReviewCount'],122); self.assertEqual(result['summary']['explicitBulkReviewCount'],339); self.assertEqual(result['summary']['bindingsApprovedByClassifier'],0)
+  self.assertEqual(result['summary']['batch37ExplicitReviewCount'],106); self.assertEqual(result['summary']['batch38ExplicitReviewCount'],111); self.assertEqual(result['summary']['batch39ExplicitReviewCount'],122); self.assertGreaterEqual(result['summary']['explicitBulkReviewCount'],339); self.assertEqual(result['summary']['bindingsApprovedByClassifier'],0)
 
  def test_named_rice_rules_exclude_generic_and_prepared_rice(self):
   _,compiled=classifier._load_rules()

@@ -161,6 +161,7 @@ def classify(evidence_path: Path, *, review_root: Path = TOOLS) -> dict[str, Any
     batch37_ids = set()
     batch38_ids = set()
     batch39_ids = set()
+    batch40_ids = set()
     for path in sorted(review_root.glob("release_catalog_reviewed_nutrition_targets*.v1.json")):
         review_doc, _ = cp._read(path)
         for row in review_doc.get("items") or []:
@@ -186,6 +187,8 @@ def classify(evidence_path: Path, *, review_root: Path = TOOLS) -> dict[str, Any
                 batch38_ids.add(target_id)
             if path.name.startswith("release_catalog_reviewed_nutrition_targets_043"):
                 batch39_ids.add(target_id)
+            if path.name.startswith("release_catalog_reviewed_nutrition_targets_044"):
+                batch40_ids.add(target_id)
             coverage.append({"reviewTargetId": target_id, "ruleId": rule["ruleId"], "tier": rule["tier"], "reviewFile": path.name})
 
     rule_covered_unreviewed, tier_b, tier_c = _partition_remaining(
@@ -206,6 +209,9 @@ def classify(evidence_path: Path, *, review_root: Path = TOOLS) -> dict[str, Any
         "batch39ExplicitReviewCount": len(batch39_ids),
         "batch39TierACount": sum(r["tier"] == "A" and r["reviewTargetId"] in batch39_ids for r in coverage),
         "batch39TierBCount": sum(r["tier"] == "B" and r["reviewTargetId"] in batch39_ids for r in coverage),
+        "batch40ExplicitReviewCount": len(batch40_ids),
+        "batch40TierACount": sum(r["tier"] == "A" and r["reviewTargetId"] in batch40_ids for r in coverage),
+        "batch40TierBCount": sum(r["tier"] == "B" and r["reviewTargetId"] in batch40_ids for r in coverage),
         "unreviewedRuleMatchCount": len(rule_covered_unreviewed),
         "manualFamilyCandidateCount": len(tier_b),
         "contextHeavyCount": len(tier_c),
@@ -231,6 +237,7 @@ def classify(evidence_path: Path, *, review_root: Path = TOOLS) -> dict[str, Any
         "batch37Coverage": [r for r in coverage if r["reviewTargetId"] in batch37_ids],
         "batch38Coverage": [r for r in coverage if r["reviewTargetId"] in batch38_ids],
         "batch39Coverage": [r for r in coverage if r["reviewTargetId"] in batch39_ids],
+        "batch40Coverage": [r for r in coverage if r["reviewTargetId"] in batch40_ids],
         "ruleCoveredButUnreviewed": rule_covered_unreviewed,
         "tierBManual": tier_b,
         "tierCContext": tier_c,
