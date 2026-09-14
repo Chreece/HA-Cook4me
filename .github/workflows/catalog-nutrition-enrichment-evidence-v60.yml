@@ -8,7 +8,9 @@ on:
       - .github/workflows/catalog-nutrition-enrichment-evidence-v60.yml
       - tools/capture_release_catalog_fdc_candidate_evidence_offline_v60.py
       - tools/classify_release_catalog_fdc_candidate_evidence_v60.py
+      - tools/prepare_post_activation_nutrition_review_targets_v60.py
       - tests/test_capture_release_catalog_fdc_candidate_evidence_offline_v60.py
+      - tests/test_prepare_post_activation_nutrition_review_targets_v60.py
   workflow_dispatch:
 
 permissions:
@@ -31,7 +33,9 @@ jobs:
       - name: Run focused evidence regressions
         run: |
           set -Eeuo pipefail
-          python -m unittest tests.test_capture_release_catalog_fdc_candidate_evidence_offline_v60 -v
+          python -m unittest \
+            tests.test_capture_release_catalog_fdc_candidate_evidence_offline_v60 \
+            tests.test_prepare_post_activation_nutrition_review_targets_v60 -v
 
       - name: Prove activated catalog baseline
         run: |
@@ -44,6 +48,7 @@ jobs:
           source = payload.get('source') if isinstance(payload.get('source'), dict) else {}
           facts = {
               'complete': payload.get('complete') is True,
+              'runtimeCatalogCompacted': source.get('runtimeCatalogCompacted') is True,
               'recipes': len(payload.get('recipes') or []),
               'variants': sum(len(r.get('variants') or []) for r in payload.get('recipes') or [] if isinstance(r, dict)),
               'ingredients': len(payload.get('ingredients') or []),
@@ -51,8 +56,8 @@ jobs:
               'reviewedNutritionRequiredCount': int(source.get('reviewedNutritionRequiredCount') or 0),
               'failedDetailCount': int(source.get('failedDetailCount') or 0),
           }
-          if not facts['complete']:
-              raise SystemExit('release catalog is not active/complete')
+          if not facts['complete'] or not facts['runtimeCatalogCompacted']:
+              raise SystemExit(f'release catalog is not the activated compact v60 baseline: {facts}')
           if (facts['recipes'], facts['variants'], facts['ingredients']) != (16952, 32163, 11748):
               raise SystemExit(f'activated release counts changed: {facts}')
           if facts['failedDetailCount'] != 0:
@@ -60,19 +65,17 @@ jobs:
           print(json.dumps(facts, ensure_ascii=False, indent=2))
           PY
 
-      - name: Snapshot unresolved exact nutrition identities
+      - name: Prepare unresolved review targets from activated compact catalog
         run: |
           set -Eeuo pipefail
           BUILD="$RUNNER_TEMP/cook4me-nutrition-enrichment-v60"
           mkdir -p "$BUILD"
-          python tools/snapshot_release_catalog_nutrition_queue_v60.py \
+          python tools/prepare_post_activation_nutrition_review_targets_v60.py \
             --catalog custom_components/cook4me/catalog/merged_catalog.v1.json \
-            --output "$BUILD/nutrition-queue.v60.json" \
-            --summary "$BUILD/nutrition-queue-summary.v60.json"
-          python tools/compact_release_catalog_nutrition_review_targets_v60.py \
-            --queue "$BUILD/nutrition-queue.v60.json" \
-            --output "$BUILD/nutrition-review-targets.v60.json" \
-            --summary "$BUILD/nutrition-review-targets-summary.v60.json"
+            --queue-output "$BUILD/nutrition-queue.v60.json" \
+            --queue-summary "$BUILD/nutrition-queue-summary.v60.json" \
+            --targets-output "$BUILD/nutrition-review-targets.v60.json" \
+            --targets-summary "$BUILD/nutrition-review-targets-summary.v60.json"
 
       - name: Verify expected post-activation unresolved set
         run: |
@@ -88,6 +91,8 @@ jobs:
               'pendingIdentityCount': int(queue.get('pendingNutritionCount') or 0),
               'reviewTargetCount': int(targets.get('reviewTargetCount') or 0),
               'usedReviewTargetCount': int(targets.get('usedReviewTargetCount') or 0),
+              'runtimeSemanticReviewReceipts': int(targets.get('postActivationSemanticReviewReceiptCount') or 0),
+              'runtimeSemanticReviewReceiptTargets': int(targets.get('postActivationSemanticReviewReceiptTargetCount') or 0),
           }
           if facts['pendingIdentityCount'] != 1851:
               raise SystemExit(f"unexpected pending identity count: {facts['pendingIdentityCount']}")
