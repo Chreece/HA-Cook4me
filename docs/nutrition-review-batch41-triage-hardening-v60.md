@@ -11,7 +11,7 @@ Batch 41 does not approve any nutrition binding. It tightens the unresolved-queu
 - Batch-40 classifier split: **416 manual-family / 832 context-heavy**
 - rule-covered-but-unreviewed: **0**
 
-The retained Batch 41 regression fixture is only a compact projection of the 416 pre-Batch-41 manual rows (`reviewTargetId`, canonical name, candidate count and usage count). It deliberately does not copy the multi-megabyte candidate evidence snapshot or approve any candidate.
+The retained Batch 41 regression fixture stores every one of the 77 rows moved by this change plus representative rows for seven canonical names that must remain manual (`reviewTargetId`, canonical name, candidate count and usage count). The 416/832 baseline and 339/909 result were independently reproduced against the exact frozen evidence snapshot before the compact fixture was generated. The fixture deliberately does not copy the multi-megabyte candidate evidence snapshot or approve any candidate.
 
 ## Why the classifier needed hardening
 
@@ -38,7 +38,7 @@ Against the exact frozen evidence and the merged Batch-40 review state, the hard
 - held targets changed: **0**
 - network food-provider requests: **0**
 
-The regression fixture pins the entire 416-row pre-change manual lane so CI proves the exact 77-row movement and also checks representative simple identity controls such as `Guinea fowl`, `Nigella seeds`, `Parsley root`, `Fresh sage leaves`, `Vanilla pod` and `Zucchini flowers` remain manual.
+The regression fixture pins all 77 rows that move so CI proves the exact reclassification set and also checks representative simple identity controls such as `Guinea fowl`, `Nigella seeds`, `Parsley root`, `Fresh sage leaves`, `Vanilla pod` and `Zucchini flowers` remain manual.
 
 ## Safety contract
 

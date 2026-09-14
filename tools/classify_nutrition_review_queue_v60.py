@@ -26,11 +26,14 @@ import snapshot_nutrition_review_checkpoint_v60 as cp  # noqa: E402
 RULES = TOOLS / "release_catalog_nutrition_bulk_family_rules.v1.json"
 RULE_GLOB = "release_catalog_nutrition_bulk_family_rules*.v1.json"
 COMPLEX = re.compile(
-    r"\b(?:and|or|mix|blend|seasoning|spices?|stock|bouillon|broth|sauce|paste|roux|soup|"
-    r"brine|soak(?:ed|ing)?|marinat(?:ed|ing)|cured|smoked|cooked|boiled|fried|roasted|"
-    r"toasted|dehydrated|dried|frozen|canned|pickled|preserve|syrup|extract|flavou?r|"
-    r"concentrat(?:e|ed)|liquid|cream|fat|combined|stuffed|ready-made|store-bought|"
-    r"commercial|unknown|water or|or water)\b",
+    r"\b(?:and|or|mix(?:ed|ing|tures?)?|blend(?:ed|ing)?|seasoning|spices?|stock|bouillon|broth|"
+    r"sauce|paste|roux|soup|consomm[eé]|brine|soak(?:ed|ing)?|marinat(?:ed|ing)|marinades?|"
+    r"cured|smoked|cooked|pre[- ]?cooked|boiled|fried|roasted|toasted|dehydrated|"
+    r"rehydrat(?:ed|ing)?|dried|frozen|canned|pickled|preserv(?:e|ed|es|ing)|ferment(?:ed|ing)?|"
+    r"syrup|extract|flavou?r(?:ed|ing|ings)?|concentrat(?:e|ed)|liquid|cream|fat|combined|stuffed|"
+    r"ready-made|store-bought|commercial|unknown|water or|or water|slurry|pur[eé]e?s?|compotes?|"
+    r"coulis|mousses?|vinaigrettes?|dressings?|starters?|dumplings?|meatballs?|candied|glazed|"
+    r"food colou?r(?:ing)?|bouquet(?: garni)?|spreads?|puddings?|dough|etc)\b|&",
     re.IGNORECASE,
 )
 
