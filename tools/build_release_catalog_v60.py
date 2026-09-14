@@ -139,6 +139,41 @@ def _reviewed_nutrition_eligible(row: dict[str, Any], ident: str) -> bool:
     )
 
 
+def _food_intelligence_stats(
+    ingredients: list[dict[str, Any]],
+) -> tuple[int, int]:
+    """Match validator food accounting, independent of nutrition eligibility.
+
+    All provider-backed ingredient rows are food identities. Source-local rows
+    count as food when their reviewed classification is ``food`` even when a
+    conservative semantic policy marks them nutrition-ineligible. Those rows
+    must remain part of the denominator so partial nutrition cannot accidentally
+    report complete food intelligence.
+    """
+    total = 0
+    resolved = 0
+    for row in ingredients:
+        ident = _identity(row)
+        canonical = _core._text(row.get("canonicalName"))
+        if not ident:
+            continue
+        source_local = bool(row.get("sourceLocalIdentity")) or ident.startswith("local:")
+        if source_local:
+            is_food = _core._text(row.get("classification")).lower() == "food"
+        else:
+            is_food = provider_identity_v60.preserved_provider_identity(row, ident)
+        if not is_food:
+            continue
+        total += 1
+        if reviewed_nutrition.is_reviewed_profile(
+            row.get("nutrition"),
+            ingredient_id=ident,
+            canonical_name=canonical,
+        ):
+            resolved += 1
+    return total, resolved
+
+
 def apply_reviewed_nutrition(
     payload: dict[str, Any],
     nutrition_cache: dict[str, Any],
@@ -208,7 +243,9 @@ def apply_reviewed_nutrition(
     if not isinstance(source, dict):
         source = {}
         result["source"] = source
-    complete = bool(required and resolved == required)
+    reviewed_complete = bool(required and resolved == required)
+    food_count, food_resolved = _food_intelligence_stats(ingredients)
+    food_complete = bool(food_count and food_resolved == food_count)
     source.update(
         {
             **metric_stats,
@@ -223,15 +260,15 @@ def apply_reviewed_nutrition(
             "reviewedNutritionRequiredForActivation": True,
             "reviewedNutritionRequiredCount": required,
             "reviewedNutritionResolvedCount": resolved,
-            "reviewedNutritionComplete": complete,
+            "reviewedNutritionComplete": reviewed_complete,
             "legacyFuzzyNutritionAccepted": False,
             "reviewedNutritionRejectedLegacyCacheCount": rejected_unreviewed_cache,
             "reviewedNutritionRejectedEmbeddedCount": rejected_unreviewed_embedded,
-            "foodIntelligenceIngredientCount": required,
-            "foodIntelligenceNutritionResolvedCount": resolved,
-            "foodIntelligenceNutritionComplete": complete,
+            "foodIntelligenceIngredientCount": food_count,
+            "foodIntelligenceNutritionResolvedCount": food_resolved,
+            "foodIntelligenceNutritionComplete": food_complete,
             "ingredientIntelligenceComplete": bool(
-                source.get("semanticCoverageComplete") and complete
+                source.get("semanticCoverageComplete") and food_complete
             ),
         }
     )
