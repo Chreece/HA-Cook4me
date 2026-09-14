@@ -1,0 +1,53 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Curry roux",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Curry sauce",
+      "fdcId": 2710178,
+      "notes": "Manual semantic review binds Cook4Me 'Curry roux' to USDA FNDDS 'Curry sauce'. The same exact FDC record was already explicitly reviewed for Cook4Me 'Curry roux (coarsely broken up)'; removing the presentation instruction does not change the per-100-g ingredient identity. This target's own pinned evidence independently contains the record at rank 1. Candidate rank and historical reuse are review aids only, not identity proof. This generic curry-sauce reference does not infer brand, roux block formulation, spice blend, fat content, dilution, serving size, or preparation yield.",
+      "reviewTargetId": "concept:food:6d1789bc2fe460a04c45",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Kombu",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Seaweed, kelp, raw",
+      "fdcId": 168457,
+      "notes": "Manual semantic review binds Cook4Me 'Kombu' to USDA SR Legacy 'Seaweed, kelp, raw'. 'Kombu' and the already reviewed Cook4Me label 'Kombu seaweed' name the same culinary seaweed identity, and this target's own pinned evidence independently contains the exact retained record at rank 1 via the conservative discovery alias 'kelp'. The alias, candidate rank, and historical reuse are review aids only, not identity proof. This generic kelp profile does not infer a particular Laminaria species, dried-versus-fresh commercial form, seasoning, brand, sheet size, serving mass, or preparation yield.",
+      "reviewTargetId": "concept:food:49591f88272d454e00fd",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Ketchup, mustard or burger sauce",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Ketchup",
+      "fdcId": 2709733,
+      "notes": "Manual semantic review binds Cook4Me 'Ketchup, mustard or burger sauce' to USDA FNDDS 'Ketchup'. The already reviewed Cook4Me target 'Ketchup (or mustard or burger sauce)' has the same alternative-food wording and the same exact FDC record; this destination differs only in punctuation/parentheses. Its own pinned evidence independently contains Ketchup at rank 1. Candidate rank and historical reuse are review aids only, not identity proof. This continuation preserves the existing reviewed fallback only; it does not claim that mustard or burger-sauce formulations are nutritionally identical to ketchup, nor infer brand, recipe, serving size, or condiment proportions.",
+      "reviewTargetId": "concept:food:cd417d506981fd1f890e",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "ce2deca10a9f769934925ba71d0069507a0eed7cc51807bfb27e37de3c7d80a8"
+}
