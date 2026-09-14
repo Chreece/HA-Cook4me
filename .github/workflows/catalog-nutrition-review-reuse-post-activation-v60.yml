@@ -11,6 +11,11 @@ on:
       - tests/test_release_catalog_nutrition_review_reuse_proposal_v60.py
       - tests/test_release_catalog_nutrition_review_similarity_proposal_v60.py
   workflow_dispatch:
+  workflow_run:
+    workflows:
+      - Build post-activation nutrition evidence v60
+    types:
+      - completed
 
 permissions:
   actions: read
@@ -18,6 +23,7 @@ permissions:
 
 jobs:
   build-review-proposals:
+    if: ${{ github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'cook4me-nutrition-enrichment-post-activation-v60') }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -25,6 +31,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: cook4me-nutrition-enrichment-post-activation-v60
           fetch-depth: 1
           persist-credentials: false
 
@@ -116,7 +123,7 @@ jobs:
       - name: Upload post-activation review proposals
         uses: actions/upload-artifact@v4
         with:
-          name: nutrition-review-proposals-v60-${{ github.sha }}
+          name: nutrition-review-proposals-v60-${{ steps.evidence.outputs.head_sha }}
           path: /tmp/nutrition-review-proposals
           if-no-files-found: error
           retention-days: 7
