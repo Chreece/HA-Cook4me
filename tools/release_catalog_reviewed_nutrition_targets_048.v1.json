@@ -1,0 +1,73 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-retained-reference-binding",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Cooking cream (up to 20% milk fat)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Cream, fluid, light (coffee cream or table cream)",
+      "fdcId": 170857,
+      "notes": "Explicit destination review accepts USDA light fluid cream as the generic nutrition reference for plain dairy cooking cream specified at up to 20% milk fat. Exact fat percentage within that range, UHT treatment, stabilizers, thickeners, brand formulation, and recipe-specific dilution are not certified. Nutrition remains per 100 g of the retained fluid-cream record; Cook4Me does not infer serving mass or hidden concentration conversion.",
+      "reviewTargetId": "concept:food:7c3d4918bf66138f4e34",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "2cfe92b06a624095ccab6ffedc778b67d5a3b51e222a7391bb993b0b91c8ad2e",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "8beb71a92432c46c6b452f3ce75a92a51e5f15285357ed17898409c8ee597423",
+      "sourceEvidenceTargetId": "concept:food:50a2ea01427c74a83604",
+      "usageCountAtReview": 7
+    },
+    {
+      "canonicalEnglishName": "Single cream",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Cream, fluid, light (coffee cream or table cream)",
+      "fdcId": 170857,
+      "notes": "Explicit destination review accepts USDA light fluid cream as the generic nutrition reference for single cream, a pourable lower-fat dairy cream category. Exact jurisdictional milk-fat standard, brand formulation, UHT treatment, stabilizers, and serving size are not certified. Nutrition remains per 100 g of the retained fluid-cream record; Cook4Me does not infer serving mass or hidden concentration conversion.",
+      "reviewTargetId": "concept:food:a4c0df801fc401f9324a",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "2cfe92b06a624095ccab6ffedc778b67d5a3b51e222a7391bb993b0b91c8ad2e",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "8beb71a92432c46c6b452f3ce75a92a51e5f15285357ed17898409c8ee597423",
+      "sourceEvidenceTargetId": "concept:food:50a2ea01427c74a83604",
+      "usageCountAtReview": 4
+    },
+    {
+      "canonicalEnglishName": "Cream (20% fat)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Cream, fluid, light (coffee cream or table cream)",
+      "fdcId": 170857,
+      "notes": "Explicit destination review accepts USDA light fluid cream as the bounded nutrition reference for cream specified at 20% fat. The retained USDA category is a plain fluid light cream; exact brand fat percentage, UHT treatment, stabilizers, thickeners, and serving size are not certified. Nutrition remains per 100 g; Cook4Me does not infer serving mass or hidden concentration conversion.",
+      "reviewTargetId": "concept:food:fbd0b56aafe235760ef5",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "2cfe92b06a624095ccab6ffedc778b67d5a3b51e222a7391bb993b0b91c8ad2e",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "8beb71a92432c46c6b452f3ce75a92a51e5f15285357ed17898409c8ee597423",
+      "sourceEvidenceTargetId": "concept:food:50a2ea01427c74a83604",
+      "usageCountAtReview": 2
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "056b9631ec63cafbf0302d19b2cccef4d0b50417b3f96ff2124f41709938d82b",
+  "referenceReceipts": {
+    "170857": {
+      "sourceCandidateSha256": "2cfe92b06a624095ccab6ffedc778b67d5a3b51e222a7391bb993b0b91c8ad2e",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:50a2ea01427c74a83604"
+    }
+  },
+  "reviewDecisionSha256": "e92d20a829615dde899904d9ac7de0e60618fe8c21f94eaf958f77c34044ca60",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "8beb71a92432c46c6b452f3ce75a92a51e5f15285357ed17898409c8ee597423"
+}
