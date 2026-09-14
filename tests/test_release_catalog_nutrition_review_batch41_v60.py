@@ -31,7 +31,7 @@ class Batch41ClassifierHardeningTests(unittest.TestCase):
     def partition(self, rows):
         return classifier._partition_remaining(
             rows,
-            cls.compiled,
+            self.compiled,
             has_candidates=lambda row: row["candidateCount"] > 0,
         )
 
