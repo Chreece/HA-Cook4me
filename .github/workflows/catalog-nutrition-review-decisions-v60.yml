@@ -8,14 +8,18 @@ on:
       - .github/workflows/catalog-nutrition-review-decisions-v60.yml
       - tools/compile_release_catalog_fdc_review_decisions_v60.py
       - tools/compile_release_catalog_fdc_retained_review_decisions_v60.py
+      - tools/verify_post_activation_nutrition_review_decisions_v60.py
       - tools/snapshot_nutrition_review_checkpoint_v60.py
       - tools/resolve_reviewed_release_catalog_nutrition_targets_v60.py
+      - tools/release_catalog_nutrition_review_decisions_post_activation_*.v1.json
+      - tools/release_catalog_reviewed_nutrition_targets_*.v1.json
       - tests/test_compile_release_catalog_fdc_review_decisions_v60.py
       - tests/test_compile_release_catalog_fdc_retained_review_decisions_v60.py
       - tests/test_nutrition_review_checkpoint_v60.py
   workflow_dispatch:
 
 permissions:
+  actions: read
   contents: read
 
 jobs:
@@ -38,6 +42,7 @@ jobs:
           python -m py_compile \
             tools/compile_release_catalog_fdc_review_decisions_v60.py \
             tools/compile_release_catalog_fdc_retained_review_decisions_v60.py \
+            tools/verify_post_activation_nutrition_review_decisions_v60.py \
             tools/snapshot_nutrition_review_checkpoint_v60.py \
             tools/resolve_reviewed_release_catalog_nutrition_targets_v60.py
 
@@ -48,3 +53,22 @@ jobs:
             tests.test_compile_release_catalog_fdc_review_decisions_v60 \
             tests.test_compile_release_catalog_fdc_retained_review_decisions_v60 \
             tests.test_nutrition_review_checkpoint_v60 -v
+
+      - name: Download successful post-activation evidence
+        uses: actions/download-artifact@v4
+        with:
+          name: nutrition-enrichment-evidence-v60-98a0b0e284749622787ff251340d0100b650e2c4
+          path: /tmp/nutrition-evidence
+          repository: Chreece/HA-Cook4me
+          run-id: 34847903376
+          github-token: ${{ github.token }}
+
+      - name: Recompile and verify committed review batches
+        run: |
+          set -Eeuo pipefail
+          python tools/verify_post_activation_nutrition_review_decisions_v60.py \
+            --evidence /tmp/nutrition-evidence/fdc-candidate-evidence.v60.json \
+            --decision-root tools \
+            --review-root tools \
+            --output /tmp/post-activation-review-verification.v60.json
+          cat /tmp/post-activation-review-verification.v60.json
