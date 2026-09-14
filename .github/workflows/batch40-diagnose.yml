@@ -22,7 +22,7 @@ jobs:
       - name: Record exact transport bytes
         run: |
           python - <<'PY'
-          import base64, hashlib, json
+          import base64, hashlib, io, json, tarfile
           from pathlib import Path
           paths = [
             '.batch40-bootstrap/chunks/chunk-000','.batch40-bootstrap/chunks/chunk-001',
@@ -43,8 +43,21 @@ jobs:
           enc=''.join(pieces)
           out={'parts':rows,'encoded_len':len(enc),'encoded_sha256':hashlib.sha256(enc.encode()).hexdigest()}
           try:
-            raw=base64.b64decode(enc,validate=True); out['decoded_len']=len(raw); out['payload_sha256']=hashlib.sha256(raw).hexdigest()
-          except Exception as e: out['decode_error']=str(e)
+            raw=base64.b64decode(enc,validate=True)
+            out['decoded_len']=len(raw)
+            out['payload_sha256']=hashlib.sha256(raw).hexdigest()
+            with tarfile.open(fileobj=io.BytesIO(raw), mode='r:gz') as tf:
+              members=[]
+              for m in tf.getmembers():
+                row={'name':m.name,'size':m.size,'type':m.type.decode('ascii','replace') if isinstance(m.type,bytes) else str(m.type)}
+                if m.isfile():
+                  src=tf.extractfile(m)
+                  if src is not None:
+                    row['sha256']=hashlib.sha256(src.read()).hexdigest()
+                members.append(row)
+              out['tar_members']=members
+          except Exception as e:
+            out['decode_or_tar_error']=str(e)
           Path('.batch40-diagnostic.json').write_text(json.dumps(out,indent=2,sort_keys=True)+'\n')
           PY
       - name: Push diagnostic only
@@ -54,5 +67,5 @@ jobs:
           git add .batch40-diagnostic.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record Batch 40 transport diagnostic'
+          git commit -m 'Record Batch 40 tar diagnostic'
           git push origin "HEAD:$HEAD_BRANCH"
