@@ -5,12 +5,13 @@ on:
     branches:
       - cook4me-nutrition-enrichment-post-activation-v60
     paths:
+      - .github/workflows/catalog-post-activation-nutrition-activate-v60.yml
       - tools/release_catalog_reviewed_nutrition_targets_*.v1.json
   workflow_dispatch:
 
 concurrency:
   group: catalog-post-activation-nutrition-activate-v60-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -174,12 +175,43 @@ jobs:
         run: |
           set -Eeuo pipefail
           BUILD="$RUNNER_TEMP/cook4me-post-activation-nutrition-v60"
-          cp "$BUILD/activated-catalog.v60.json" custom_components/cook4me/catalog/merged_catalog.v1.json
-          cp "$BUILD/activation-facts.v60.json" tools/post_activation_nutrition_activation_v60_summary.json
+          BRANCH="cook4me-nutrition-enrichment-post-activation-v60"
+          BASE_SHA="$GITHUB_SHA"
+          CATALOG="custom_components/cook4me/catalog/merged_catalog.v1.json"
+          SUMMARY="tools/post_activation_nutrition_activation_v60_summary.json"
+
+          cp "$BUILD/activated-catalog.v60.json" "$CATALOG"
+          cp "$BUILD/activation-facts.v60.json" "$SUMMARY"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add custom_components/cook4me/catalog/merged_catalog.v1.json tools/post_activation_nutrition_activation_v60_summary.json
+          git add "$CATALOG" "$SUMMARY"
           git diff --cached --check
           git diff --cached --quiet && exit 0
           git commit -m "Activate post-activation reviewed nutrition v60"
-          git push origin HEAD:cook4me-nutrition-enrichment-post-activation-v60
+
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:${BRANCH}"; then
+              exit 0
+            fi
+            test "$attempt" -lt 3
+            git fetch origin "$BRANCH"
+            REMOTE_SHA="$(git rev-parse "origin/${BRANCH}")"
+
+            # Rebase only across unrelated concurrent work. A newer catalog or
+            # activation-summary edit means this build used a stale nutrition
+            # baseline and must be rerun rather than merged automatically.
+            if git diff --quiet "$BASE_SHA..$REMOTE_SHA" -- "$CATALOG" "$SUMMARY"; then
+              echo "Remote branch advanced only outside activation outputs; rebasing and retrying."
+            else
+              echo "Remote catalog/activation summary changed during validation; refusing stale promotion." >&2
+              exit 1
+            fi
+
+            if ! git rebase "origin/${BRANCH}"; then
+              git rebase --abort || true
+              echo "Concurrent branch changes conflict with validated activation; refusing promotion." >&2
+              exit 1
+            fi
+          done
+          echo "Unable to promote validated activation after bounded retries." >&2
+          exit 1
