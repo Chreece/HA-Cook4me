@@ -19,12 +19,15 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build-nutrition-evidence:
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ARCHIVE_TAG: nutrition-evidence-v60-archive
     steps:
       - uses: actions/checkout@v4
         with:
@@ -198,6 +201,30 @@ jobs:
           )
           print(json.dumps(facts, ensure_ascii=False, indent=2))
           PY
+
+      - name: Archive immutable candidate evidence
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-nutrition-enrichment-v60"
+          EVIDENCE="$BUILD/fdc-candidate-evidence.v60.json"
+          EVIDENCE_SHA="$(sha256sum "$EVIDENCE" | awk '{print $1}')"
+          ASSET="/tmp/fdc-candidate-evidence-v60-${EVIDENCE_SHA}.json.gz"
+          gzip -n -9 -c "$EVIDENCE" > "$ASSET"
+
+          if ! gh release view "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$ARCHIVE_TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              --draft \
+              --target "$GITHUB_SHA" \
+              --title "Cook4Me v60 nutrition evidence archive" \
+              --notes "Internal immutable candidate-evidence archive. Candidate evidence is non-binding and requires explicit reviewed decisions."
+          fi
+
+          test "$(gh release view "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq '.isDraft')" = "true"
+          gh release upload "$ARCHIVE_TAG" "$ASSET" --repo "$GITHUB_REPOSITORY" --clobber
+          gh release view "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' \
+            | grep -Fx "$(basename "$ASSET")"
+          echo "Archived immutable nutrition evidence: ${EVIDENCE_SHA}"
 
       - name: Upload post-activation nutrition evidence
         uses: actions/upload-artifact@v4

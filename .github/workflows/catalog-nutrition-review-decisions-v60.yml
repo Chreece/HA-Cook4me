@@ -29,8 +29,6 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       ARCHIVE_TAG: nutrition-evidence-v60-archive
-      OLD_EVIDENCE_SHA: 8beb71a92432c46c6b452f3ce75a92a51e5f15285357ed17898409c8ee597423
-      PINNED_EVIDENCE_SHA: c26ca11a83b592737417181ca5fcbf4b092d2c176e98192334577ac8367bc46b
     steps:
       - uses: actions/checkout@v4
         with:
@@ -60,38 +58,59 @@ jobs:
             tests.test_verify_post_activation_nutrition_review_decisions_v60 \
             tests.test_nutrition_review_checkpoint_v60 -v
 
+      - name: Resolve exact evidence snapshots required by committed decisions
+        run: |
+          set -Eeuo pipefail
+          python - <<'PY'
+          import json, re
+          from pathlib import Path
+          pattern = re.compile(r'[0-9a-f]{64}\Z')
+          shas = set()
+          paths = sorted(Path('tools').glob('release_catalog_nutrition_review_decisions_post_activation_*.v1.json'))
+          if not paths:
+              raise SystemExit('no post-activation nutrition decision files found')
+          for path in paths:
+              value = json.loads(path.read_text(encoding='utf-8'))
+              sha = str(value.get('sourceEvidenceSha256') or '').strip()
+              if not pattern.fullmatch(sha):
+                  raise SystemExit(f'{path}: invalid sourceEvidenceSha256 {sha!r}')
+              shas.add(sha)
+          output = Path('/tmp/nutrition-review-evidence-shas.txt')
+          output.write_text(''.join(f'{sha}\n' for sha in sorted(shas)), encoding='utf-8')
+          print(f'required immutable evidence snapshots: {len(shas)}')
+          print(output.read_text(encoding='utf-8'), end='')
+          PY
+
       - name: Download permanent immutable evidence snapshots
         run: |
           set -Eeuo pipefail
           DEST=/tmp/nutrition-review-evidence
           mkdir -p "$DEST"
-
-          gh release download "$ARCHIVE_TAG" \
-            --repo "$GITHUB_REPOSITORY" \
-            --dir "$DEST" \
-            --pattern "fdc-candidate-evidence-v60-${OLD_EVIDENCE_SHA}.json.gz" \
-            --pattern "fdc-candidate-evidence-v60-${PINNED_EVIDENCE_SHA}.json.gz"
-
-          OLD_GZ="$DEST/fdc-candidate-evidence-v60-${OLD_EVIDENCE_SHA}.json.gz"
-          PINNED_GZ="$DEST/fdc-candidate-evidence-v60-${PINNED_EVIDENCE_SHA}.json.gz"
-          OLD_JSON="$DEST/fdc-candidate-evidence-v60-${OLD_EVIDENCE_SHA}.json"
-          PINNED_JSON="$DEST/fdc-candidate-evidence-v60-${PINNED_EVIDENCE_SHA}.json"
-
-          gzip -cd "$OLD_GZ" > "$OLD_JSON"
-          gzip -cd "$PINNED_GZ" > "$PINNED_JSON"
-
-          test "$(sha256sum "$OLD_JSON" | awk '{print $1}')" = "$OLD_EVIDENCE_SHA"
-          test "$(sha256sum "$PINNED_JSON" | awk '{print $1}')" = "$PINNED_EVIDENCE_SHA"
-
           test "$(gh release view "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq '.isDraft')" = "true"
+
+          while IFS= read -r SHA; do
+            test -n "$SHA"
+            ASSET="fdc-candidate-evidence-v60-${SHA}.json.gz"
+            JSON="$DEST/fdc-candidate-evidence-v60-${SHA}.json"
+            gh release download "$ARCHIVE_TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              --dir "$DEST" \
+              --pattern "$ASSET"
+            gzip -cd "$DEST/$ASSET" > "$JSON"
+            test "$(sha256sum "$JSON" | awk '{print $1}')" = "$SHA"
+          done < /tmp/nutrition-review-evidence-shas.txt
 
       - name: Recompile and verify committed review batches
         run: |
           set -Eeuo pipefail
           DEST=/tmp/nutrition-review-evidence
+          ARGS=()
+          while IFS= read -r SHA; do
+            ARGS+=(--evidence "$DEST/fdc-candidate-evidence-v60-${SHA}.json")
+          done < /tmp/nutrition-review-evidence-shas.txt
+          test "${#ARGS[@]}" -gt 0
           python tools/verify_post_activation_nutrition_review_decisions_v60.py \
-            --evidence "$DEST/fdc-candidate-evidence-v60-${OLD_EVIDENCE_SHA}.json" \
-            --evidence "$DEST/fdc-candidate-evidence-v60-${PINNED_EVIDENCE_SHA}.json" \
+            "${ARGS[@]}" \
             --decision-root tools \
             --review-root tools \
             --output /tmp/post-activation-review-verification.v60.json
