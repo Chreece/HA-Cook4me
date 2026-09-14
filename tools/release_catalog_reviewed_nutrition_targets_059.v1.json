@@ -22,6 +22,7 @@
   ],
   "kind": "cook4me-reviewed-nutrition-target-source",
   "policy": {
+    "candidateSearchIsIdentityProof": false,
     "exactFdcBindingRequired": true,
     "providerIdentityInference": false,
     "searchResultAutoAccepted": false,
