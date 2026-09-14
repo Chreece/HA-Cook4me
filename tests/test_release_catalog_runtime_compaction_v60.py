@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import importlib.util
 from pathlib import Path
 import sys
 import unittest
@@ -78,7 +77,7 @@ def payload() -> dict:
                                 "ingredientId": "M_FOOD_1",
                                 "key": "M_FOOD_1",
                                 "canonicalName": "Rice",
-                                "originalName": "Riso",
+                                "originalName": "Riso Arborio",
                                 "originalLanguage": "it",
                                 "semanticIdentityState": "reviewed",
                                 "quantity": 100,
@@ -134,6 +133,17 @@ class RuntimeCatalogCompactionTests(unittest.TestCase):
         self.assertNotIn("originalLanguage", local)
         self.assertNotIn("nutrition", variant)
         self.assertNotIn("calculatedNutritionV60", variant)
+
+    def test_unique_recipe_line_wording_is_folded_into_global_aliases(self):
+        self.assertGreaterEqual(self.summary["preservedUniqueRecipeLineAliases"], 2)
+        rice = next(row for row in self.compact["ingredients"] if row["id"] == "M_FOOD_1")
+        tomato = next(
+            row for row in self.compact["ingredients"] if row["id"] == "local:el:tomato"
+        )
+        self.assertIn("Riso Arborio", rice["aliases"]["it"])
+        self.assertIn("Pomodoro", tomato["aliases"]["it"])
+        prepared = search.prepare_search_index(self.compact["searchIndex"])
+        self.assertEqual(search.search_index(prepared, "arborio", size=10)["indices"], [0])
 
     def test_prefix_typeahead_works_without_persisted_prefix_postings(self):
         compiled = self.compact["searchIndex"]
