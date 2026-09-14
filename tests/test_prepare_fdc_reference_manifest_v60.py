@@ -20,6 +20,7 @@ def _sha(path: Path) -> str:
 
 
 def _seed_dataset_files(root: Path) -> None:
+    root.mkdir(parents=True, exist_ok=True)
     for index, dataset in enumerate(prepare_fdc._DATASETS, 1):
         (root / dataset["archiveName"]).write_bytes(f"archive-{index}".encode())
         (root / dataset["jsonName"]).write_text(
@@ -39,9 +40,13 @@ class PrepareFdcReferenceManifestV60Tests(unittest.TestCase):
             first_sha = _sha(manifest_path)
 
             self.assertFalse(first_summary["referenceManifestReused"])
+            self.assertTrue(first_summary["referenceManifestDeterministic"])
             self.assertEqual(first_summary["downloadedDatasetCount"], 0)
             self.assertEqual(first_summary["reusedDatasetCount"], 3)
             self.assertEqual(first_summary["referenceManifestSha256"], first_sha)
+            self.assertNotIn("generatedAt", first_manifest)
+            self.assertTrue(first_manifest["policy"]["manifestContentAddressed"])
+            self.assertFalse(first_manifest["policy"]["runtimeTimestampInManifest"])
 
             second_manifest, second_summary = prepare_fdc.prepare(root)
             self.assertTrue(second_summary["referenceManifestReused"])
@@ -51,6 +56,43 @@ class PrepareFdcReferenceManifestV60Tests(unittest.TestCase):
             self.assertEqual(_sha(manifest_path), first_sha)
             self.assertEqual(second_summary["referenceManifestSha256"], first_sha)
             self.assertEqual(second_manifest, first_manifest)
+
+    def test_independent_workspaces_get_identical_manifest_bytes(self):
+        with tempfile.TemporaryDirectory() as tmp1, tempfile.TemporaryDirectory() as tmp2:
+            first = Path(tmp1)
+            second = Path(tmp2)
+            _seed_dataset_files(first)
+            _seed_dataset_files(second)
+
+            first_manifest, first_summary = prepare_fdc.prepare(first)
+            second_manifest, second_summary = prepare_fdc.prepare(second)
+
+            self.assertEqual(first_manifest, second_manifest)
+            self.assertEqual(
+                (first / "reference-manifest.v60.json").read_bytes(),
+                (second / "reference-manifest.v60.json").read_bytes(),
+            )
+            self.assertEqual(
+                first_summary["referenceManifestSha256"],
+                second_summary["referenceManifestSha256"],
+            )
+            self.assertEqual(first_summary["datasets"], second_summary["datasets"])
+
+    def test_legacy_timestamped_manifest_is_migrated_to_content_addressed_form(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _seed_dataset_files(root)
+            rows = [prepare_fdc._existing_valid(root, dataset) for dataset in prepare_fdc._DATASETS]
+            self.assertTrue(all(row is not None for row in rows))
+            legacy = prepare_fdc._manifest_body([row for row in rows if row is not None])
+            legacy["generatedAt"] = "2026-09-14T00:00:00+00:00"
+            manifest_path = root / "reference-manifest.v60.json"
+            manifest_path.write_text(json.dumps(legacy, indent=2) + "\n", encoding="utf-8")
+
+            manifest, summary = prepare_fdc.prepare(root)
+            self.assertFalse(summary["referenceManifestReused"])
+            self.assertNotIn("generatedAt", manifest)
+            self.assertEqual(manifest, prepare_fdc._manifest_body([row for row in rows if row is not None]))
 
     def test_dataset_byte_change_forces_new_manifest_provenance(self):
         with tempfile.TemporaryDirectory() as tmp:
