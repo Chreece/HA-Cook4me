@@ -1,0 +1,77 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Ciabatta",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Bread, Italian",
+      "fdcId": 174913,
+      "notes": "Manual semantic review binds Cook4Me ciabatta to USDA SR Legacy 'Bread, Italian'. Ciabatta is an Italian yeast bread and this target's own pinned evidence contains that record at rank 1 via the discovery alias 'italian bread'. The alias is discovery evidence only, not identity proof. This binding does not infer a specific bakery formula, loaf hydration, crust ratio, enrichment, added oil, or serving size.",
+      "reviewTargetId": "concept:food:a0d903f1fe9c95b232be",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Prosecco",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Wine, sparkling",
+      "fdcId": 2710687,
+      "notes": "Manual semantic review binds Cook4Me Prosecco to USDA FNDDS 'Wine, sparkling'. Prosecco is a sparkling wine and this target's own pinned evidence contains that record at rank 1 via the discovery alias 'sparkling wine'. The alias is discovery evidence only, not identity proof. This binding does not infer sweetness class, grape blend, alcohol percentage, brand, carbonation level, or serving size.",
+      "reviewTargetId": "concept:food:0d1f00f0ef3f7cf0d59e",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "2 tbsp mirin",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Wine, rice",
+      "fdcId": 2710691,
+      "notes": "Manual semantic review binds the quantity-decorated Cook4Me ingredient '2 tbsp mirin' to USDA FNDDS 'Wine, rice'. The same FDC record was already explicitly reviewed for the generic Cook4Me target 'Mirin', and this target's own pinned evidence independently contains it at rank 1 via the discovery alias 'rice wine'. The quantity text does not change the per-100 g ingredient identity. This binding does not infer brand, sweetness grade, alcohol percentage, seasoning, or recipe-use dilution.",
+      "reviewTargetId": "concept:food:336707fa4bda9578d0fb",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Nori sheet (optional)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Seaweed, dried",
+      "fdcId": 2709988,
+      "notes": "Manual semantic review binds the Cook4Me nori-sheet ingredient to USDA FNDDS 'Seaweed, dried'. Nori sheets are dried edible seaweed and this target's own pinned evidence contains the dried-seaweed record at rank 1. The discovery alias is evidence only, not identity proof. This generic dried-seaweed profile does not infer nori species/cultivar, seasoning, roasting, added oil, salt, brand, or sheet weight.",
+      "reviewTargetId": "concept:food:e8d43c73a725e2234383",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Nori sheets",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Seaweed, dried",
+      "fdcId": 2709988,
+      "notes": "Manual semantic review binds the Cook4Me nori-sheets ingredient to USDA FNDDS 'Seaweed, dried'. Nori sheets are dried edible seaweed and this target's own pinned evidence contains the dried-seaweed record at rank 1. The discovery alias is evidence only, not identity proof. This generic dried-seaweed profile does not infer nori species/cultivar, seasoning, roasting, added oil, salt, brand, or sheet weight.",
+      "reviewTargetId": "concept:food:d592138611564b56ca0c",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "9775d0481709236cc37f88f378bcc80d466e79f43de5918cdde1640998099276"
+}
