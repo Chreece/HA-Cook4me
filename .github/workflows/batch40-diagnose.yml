@@ -19,118 +19,129 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
-      - name: Recover exact Batch 40 transport tail
+      - name: Reconstruct Batch 40 from Git history
         run: |
           python - <<'PY'
-          import base64, hashlib, io, json, tarfile
+          import base64, hashlib, io, json, subprocess, tarfile
           from pathlib import Path
 
-          paths = [
-            '.batch40-bootstrap/chunks/chunk-000','.batch40-bootstrap/chunks/chunk-001',
-            '.batch40-bootstrap/chunks/chunk-002','.batch40-bootstrap/chunks/chunk-004',
-            '.batch40-bootstrap/chunks/chunk-005','.batch40-bootstrap/chunks/chunk-006',
-            '.batch40-bootstrap/chunks/chunk-007','.batch40-bootstrap/chunks/chunk-008',
-            '.batch40-bootstrap/chunks/chunk-009','.batch40-bootstrap/chunks/chunk-010',
-            '.batch40-bootstrap/chunks/chunk-011','.batch40-bootstrap/chunks/chunk-012',
-            '.batch40-bootstrap/chunks/chunk-014','.batch40-bootstrap/chunks/chunk-015',
-            '.batch40-bootstrap/repair/part-0','.batch40-bootstrap/repair/part-1',
-            '.batch40-bootstrap/repair/part-2','.batch40-bootstrap/repair/part-3',
-            '.batch40-bootstrap/repair/part-4','.batch40-bootstrap/repair/part-5',
-            '.batch40-bootstrap/chunks/chunk-019']
-
-          short2 = '.batch40-bootstrap/repair/part-2'
-          short5 = '.batch40-bootstrap/repair/part-5'
-          alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-          target_payload_sha = 'b37496856a690426c98e64553a5161998613d1e36aec341d42b07a9c2474bdf8'
-          expected = {
-            'docs/nutrition-review-batch40-bulk-families-v60.md': 'c227c69267cd8b46e6cdbba5d381ae30442ce944bf20357f1c5c3c02a6c07236',
-            'tests/fixtures/nutrition-batch40-retained-reference-v60.json.gz': '4d62f672b126228294a07997c3b3db4bf4234f4a4ebfed24033432a8ec4f1e5a',
-            'tests/test_release_catalog_nutrition_review_batch39_v60.py': '73ccf64d67b74a08cc38ddf8ea8b13eec53a7072773c18813898fe83de8c7d9f',
-            'tests/test_release_catalog_nutrition_review_batch40_v60.py': '6a0d54cef8f45bacef55dd3c43887141e8ec826cceac485a2d47dc29a3713a47',
-            'tools/classify_nutrition_review_queue_v60.py': '5a501c7f34fdcad6a3f7c3b9bc4c59f6e0724f8d0b778a152847f9647b96d78b',
-            'tools/release_catalog_nutrition_bulk_family_rules_batch40.v1.json': '1f9cc8b052ae8e06ebe22bc26953ea16e159df739e150deb563fa2623ec76ed1',
-            'tools/release_catalog_reviewed_nutrition_targets_044.v1.json': 'c0f706fd97e750259ba369bcb387074f5e49504fce5e522588c320ddf253b83e',
-            'tools/release_catalog_reviewed_nutrition_targets_044b.v1.json': '9f808c7429547f8c5d89cc95edb215ca814641e2f100a8672ddb4fd4e839f6ea',
-            'tools/release_catalog_reviewed_nutrition_targets_044c.v1.json': '3878be1b8960f6bb95368996e262365afaf500479f74d7da589fa810c8ac8b0f',
-            'tools/release_catalog_reviewed_nutrition_targets_044d.v1.json': 'c1c785d35a7fe2e9ec90eb8bc25c7fb4bde242d77706e1771948d3bdfac07f1e',
-            'tools/release_catalog_reviewed_nutrition_targets_044e.v1.json': 'e7f0be03b2c003cfc236f8ed2db49e6a1a5b9827a09effa96f6382139e12863a',
-            'tools/release_catalog_reviewed_nutrition_targets_044f.v1.json': '316595cd3ff61363db9d4cabaca7b335c4fa5a803926e1ed5e1a7e7bc8ab6654',
+          target_sha = 'b37496856a690426c98e64553a5161998613d1e36aec341d42b07a9c2474bdf8'
+          snapshots = {
+            'initial_materializer': '4c54d010f2aa579b91c05f78d0f267f524f03da4',
+            'anchored_chunks': '7d828e1862b7a1d6908dee2485a649d6684a7dac',
+            'persistent_chunks_reader': '88c58f7ecfd209ff30c3350d3e0a8e690bbb218a',
+            'assembled_repairs': '598dddc71ed25c4d36405c6a30f35c2fce08a02a',
+            'fixed_part1': 'e3e3775d7cbb526c383099b7158f2f35a2b91e5b',
+            'fixed_part2': 'bbd3dc477ff9e7baea528cf73dca3f733f8091ff',
+            'appended_tail_bytes': '16c28c5538a0fbb4d80f12f5eddb4c9a7d9a3e42',
+            'hash_authority': 'fbf91fb1502eb364a659c08d7b89692fe5a024cd',
           }
+          expected_names = [
+            'docs/nutrition-review-batch40-bulk-families-v60.md',
+            'tests/fixtures/nutrition-batch40-retained-reference-v60.json.gz',
+            'tests/test_release_catalog_nutrition_review_batch39_v60.py',
+            'tests/test_release_catalog_nutrition_review_batch40_v60.py',
+            'tools/classify_nutrition_review_queue_v60.py',
+            'tools/release_catalog_nutrition_bulk_family_rules_batch40.v1.json',
+            'tools/release_catalog_reviewed_nutrition_targets_044.v1.json',
+            'tools/release_catalog_reviewed_nutrition_targets_044b.v1.json',
+            'tools/release_catalog_reviewed_nutrition_targets_044c.v1.json',
+            'tools/release_catalog_reviewed_nutrition_targets_044d.v1.json',
+            'tools/release_catalog_reviewed_nutrition_targets_044e.v1.json',
+            'tools/release_catalog_reviewed_nutrition_targets_044f.v1.json',
+          ]
 
-          text = {p: Path(p).read_text(encoding='ascii') for p in paths}
-          rows = []
-          for p in paths:
-            b = text[p].encode('ascii')
-            rows.append({
-              'path': p,
-              'len': len(b),
-              'sha256': hashlib.sha256(b).hexdigest(),
-              'tail': text[p][-12:],
-            })
+          def git_bytes(commit, path):
+            p = subprocess.run(['git', 'show', f'{commit}:{path}'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            return p.stdout if p.returncode == 0 else None
 
-          def encoded(c2, c5):
-            pieces = []
-            for p in paths:
-              s = text[p]
-              if p == short2:
-                s += c2
-              elif p == short5:
-                s += c5
-              pieces.append(s)
-            return ''.join(pieces)
-
-          sha_matches = []
-          manifest_matches = []
-          decoded_count = 0
-          for c2 in alphabet:
-            for c5 in alphabet:
-              enc = encoded(c2, c5)
-              try:
-                raw = base64.b64decode(enc, validate=True)
-              except Exception:
-                continue
-              decoded_count += 1
-              payload_sha = hashlib.sha256(raw).hexdigest()
-              if payload_sha == target_payload_sha:
-                sha_matches.append({'part2': c2, 'part5': c5, 'payload_sha256': payload_sha})
-                continue
-
-              # If the historical outer checksum is stale, the 12 per-file
-              # content hashes remain authoritative. Check those as fallback.
-              try:
-                with tarfile.open(fileobj=io.BytesIO(raw), mode='r:gz') as tf:
-                  members = tf.getmembers()
-                  if [m.name for m in members] != list(expected):
-                    continue
-                  ok = True
-                  for m in members:
-                    if not m.isfile():
-                      ok = False
-                      break
+          def inspect_payload(raw):
+            info = {'decoded_len': len(raw), 'payload_sha256': hashlib.sha256(raw).hexdigest()}
+            try:
+              with tarfile.open(fileobj=io.BytesIO(raw), mode='r:gz') as tf:
+                members = tf.getmembers()
+                info['tar_names'] = [m.name for m in members]
+                info['tar_name_match'] = info['tar_names'] == expected_names
+                info['tar_members'] = []
+                for m in members:
+                  row = {'name': m.name, 'size': m.size}
+                  if m.isfile():
                     src = tf.extractfile(m)
-                    if src is None or hashlib.sha256(src.read()).hexdigest() != expected[m.name]:
-                      ok = False
-                      break
-                  if ok:
-                    manifest_matches.append({'part2': c2, 'part5': c5, 'payload_sha256': payload_sha})
-              except Exception:
-                pass
+                    if src is not None:
+                      row['sha256'] = hashlib.sha256(src.read()).hexdigest()
+                  info['tar_members'].append(row)
+            except Exception as exc:
+              info['tar_error'] = str(exc)
+            return info
 
-          current_enc = encoded('J', 'P')
-          current_raw = base64.b64decode(current_enc, validate=True)
-          out = {
-            'parts': rows,
-            'encoded_len': len(current_enc),
-            'current_tail_fix': {'part2': 'J', 'part5': 'P'},
-            'current_payload_sha256': hashlib.sha256(current_raw).hexdigest(),
-            'target_payload_sha256': target_payload_sha,
-            'candidate_pairs_tested': len(alphabet) ** 2,
-            'decoded_candidate_pairs': decoded_count,
-            'target_sha_matches': sha_matches,
-            'full_manifest_matches': manifest_matches,
-          }
+          out = {'target_payload_sha256': target_sha, 'snapshots': {}}
+          exact_sources = []
+          for label, commit in snapshots.items():
+            row = {'commit': commit, 'chunks': []}
+            chunk_data = []
+            all_twenty = True
+            for i in range(20):
+              path = f'.batch40-bootstrap/chunks/chunk-{i:03d}'
+              data = git_bytes(commit, path)
+              if data is None:
+                all_twenty = False
+                row['chunks'].append({'name': f'chunk-{i:03d}', 'missing': True})
+                continue
+              row['chunks'].append({
+                'name': f'chunk-{i:03d}',
+                'len': len(data),
+                'sha256': hashlib.sha256(data).hexdigest(),
+                'head': data[:8].decode('ascii', 'replace'),
+                'tail': data[-12:].decode('ascii', 'replace'),
+              })
+              chunk_data.append(data)
+
+            row['all_twenty_chunks'] = all_twenty
+            if all_twenty:
+              encoded = b''.join(chunk_data)
+              row['encoded_len'] = len(encoded)
+              row['encoded_sha256'] = hashlib.sha256(encoded).hexdigest()
+              try:
+                raw = base64.b64decode(encoded, validate=True)
+                row['payload'] = inspect_payload(raw)
+                if row['payload']['payload_sha256'] == target_sha:
+                  exact_sources.append({'label': label, 'commit': commit, 'mode': '20_chunks'})
+              except Exception as exc:
+                row['decode_error'] = str(exc)
+
+            # Record historical repair pieces too, so we can see exactly when
+            # each truncated/corrupt object entered the chain.
+            repairs = []
+            for i in range(6):
+              path = f'.batch40-bootstrap/repair/part-{i}'
+              data = git_bytes(commit, path)
+              if data is not None:
+                repairs.append({
+                  'name': f'part-{i}',
+                  'len': len(data),
+                  'sha256': hashlib.sha256(data).hexdigest(),
+                  'head': data[:8].decode('ascii', 'replace'),
+                  'tail': data[-12:].decode('ascii', 'replace'),
+                })
+            row['repairs'] = repairs
+            out['snapshots'][label] = row
+
+          out['exact_sources'] = exact_sources
           Path('.batch40-diagnostic.json').write_text(json.dumps(out, indent=2, sort_keys=True) + '\n')
-          print(json.dumps(out, indent=2, sort_keys=True))
+          print(json.dumps({
+            'target_payload_sha256': target_sha,
+            'exact_sources': exact_sources,
+            'snapshot_summary': {
+              k: {
+                'all_twenty_chunks': v['all_twenty_chunks'],
+                'encoded_len': v.get('encoded_len'),
+                'payload_sha256': v.get('payload', {}).get('payload_sha256'),
+                'tar_name_match': v.get('payload', {}).get('tar_name_match'),
+                'repair_lengths': [r['len'] for r in v['repairs']],
+              }
+              for k, v in out['snapshots'].items()
+            },
+          }, indent=2, sort_keys=True))
           PY
       - name: Push diagnostic only
         run: |
@@ -139,5 +150,5 @@ jobs:
           git add .batch40-diagnostic.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Bruteforce Batch 40 missing transport bytes'
+          git commit -m 'Trace Batch 40 payload through Git history'
           git push origin "HEAD:$HEAD_BRANCH"
