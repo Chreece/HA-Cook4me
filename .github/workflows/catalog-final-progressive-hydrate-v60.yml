@@ -13,6 +13,7 @@ permissions:
   contents: write
 
 env:
+  RUN_REVISION: '2'
   REPAIR_RUN_ID: '34837322277'
   REPAIR_ARTIFACT: 'repaired-progressive-catalog-v60-f0f5185240239e656655b5026627727a7976084d'
 
