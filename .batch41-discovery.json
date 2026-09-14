@@ -1,0 +1,61 @@
+{
+  "artifactId": 10309371417,
+  "artifactInventory": [
+    {
+      "bytes": 2928608,
+      "jsonKeys": [
+        "kind",
+        "policy",
+        "recordedBindings",
+        "recordedBindingsSha256",
+        "reviewFiles",
+        "reviewFilesSha256",
+        "schemaVersion",
+        "sourceCommit",
+        "summary"
+      ],
+      "jsonKind": "cook4me-nutrition-review-checkpoint-v60",
+      "jsonSchemaVersion": 1,
+      "path": "checkpoint.json",
+      "payloadBytes": 2928608,
+      "payloadSha256": "00ec4c4e3ca561282dcde2da77ed060caf032a263a046ea50ae0c2522fd7692c",
+      "sha256": "00ec4c4e3ca561282dcde2da77ed060caf032a263a046ea50ae0c2522fd7692c"
+    },
+    {
+      "bytes": 2730092,
+      "jsonError": "'utf-8' codec can't decode byte 0x89 in position 152576: invalid start byte",
+      "path": "source.tar.gz",
+      "payloadBytes": 19476480,
+      "payloadSha256": "2580e3e0ad2f1591e57effb907b4b8b79e9af281401921ff5309663b632b96ed",
+      "sha256": "56e6552eb141bb8b447af6e7e051ee10e8b97e6dddb4f836f8cac46e4a025425"
+    },
+    {
+      "bytes": 66,
+      "jsonKeys": [
+        "recordedReviewTargetCount",
+        "reviewFileCount"
+      ],
+      "jsonKind": null,
+      "jsonSchemaVersion": null,
+      "path": "summary.json",
+      "payloadBytes": 66,
+      "payloadSha256": "85e5f318feadb6eb5bce3a6b859e16f3286609712cf3808681dd0151b040c3e9",
+      "sha256": "85e5f318feadb6eb5bce3a6b859e16f3286609712cf3808681dd0151b040c3e9"
+    }
+  ],
+  "classifierSummary": null,
+  "discovery": null,
+  "exactEvidenceMatches": [],
+  "expectedEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+  "kind": "cook4me-batch41-artifact-evidence-discovery-v60",
+  "policy": {
+    "automaticRuleExpansionForbidden": true,
+    "candidateRankIsIdentityProof": false,
+    "contextHeavyTargetsRemainUntouched": true,
+    "createsBindings": false,
+    "discoveryOnly": true,
+    "networkRequestsPerformedToFoodProvider": false,
+    "providerIdentityInference": false
+  },
+  "schemaVersion": 1
+}
