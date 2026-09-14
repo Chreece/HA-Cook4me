@@ -14,6 +14,16 @@ _PREFIX_PENALTY = 2
 _MIN_PREFIX = 3
 _MAX_PREFIX = 12
 
+# Query-only equivalences are deliberately tiny and language-scoped. They are
+# not fuzzy transliteration and they never mutate the compiled provider catalog.
+# Add entries only when a user-language spelling is an unambiguous equivalent
+# of a canonical/indexed culinary term.
+_QUERY_TOKEN_EQUIVALENTS_BY_LANGUAGE: dict[str, dict[str, tuple[str, ...]]] = {
+    "el": {
+        "ριζοτο": ("risotto",),
+    },
+}
+
 
 def _text(value: Any) -> str:
     return re.sub(r"\s+", " ", str(value or "").strip())
@@ -46,6 +56,42 @@ def _tokens(value: Any) -> tuple[str, ...]:
 
 def _language(value: Any) -> str:
     return _text(value).lower().replace("_", "-").split("-", 1)[0]
+
+
+def _query_token_variants(token: str, language: str) -> tuple[str, ...]:
+    """Return exact language-scoped equivalents for one normalized query token."""
+    normalized = normalize_search_text(token)
+    if not normalized:
+        return ()
+    aliases = (_QUERY_TOKEN_EQUIVALENTS_BY_LANGUAGE.get(_language(language)) or {}).get(
+        normalized,
+        (),
+    )
+    return tuple(
+        dict.fromkeys(
+            candidate
+            for candidate in (
+                normalized,
+                *(normalize_search_text(value) for value in aliases),
+            )
+            if candidate
+        )
+    )
+
+
+def _query_phrase_variants(normalized: str, language: str) -> tuple[str, ...]:
+    """Return the original phrase plus one exact canonicalized phrase variant."""
+    original = normalize_search_text(normalized)
+    if not original:
+        return ()
+    mapping = _QUERY_TOKEN_EQUIVALENTS_BY_LANGUAGE.get(_language(language)) or {}
+    parts = original.split(" ")
+    canonical = [
+        normalize_search_text((mapping.get(part) or (part,))[0]) or part
+        for part in parts
+    ]
+    expanded = " ".join(canonical).strip()
+    return tuple(dict.fromkeys(value for value in (original, expanded) if value))
 
 
 def _strings(value: Any) -> Iterable[str]:
@@ -396,10 +442,14 @@ def search_index(
 
     per_term: list[dict[int, int]] = []
     for token in query_tokens:
-        rows = token_postings.get(token)
-        if not rows and len(token) >= _MIN_PREFIX:
-            rows = prefix_postings.get(token)
-        if not rows:
+        current: dict[int, int] = {}
+        for variant in _query_token_variants(token, language_key):
+            rows = token_postings.get(variant)
+            if not rows and len(variant) >= _MIN_PREFIX:
+                rows = prefix_postings.get(variant)
+            for index, score in rows or ():
+                current[index] = max(current.get(index, 0), score)
+        if not current:
             return {
                 "indices": [],
                 "scores": {},
@@ -407,7 +457,6 @@ def search_index(
                 "page": page,
                 "size": size,
             }
-        current = _posting_map(rows)
         if allowed is not None:
             current = {
                 index: score
@@ -434,9 +483,10 @@ def search_index(
         index: sum(current.get(index, 0) for current in per_term)
         for index in candidates
     }
-    for index, phrase_score in phrase_postings.get(normalized, ()):
-        if index in scores:
-            scores[index] += phrase_score
+    for phrase in _query_phrase_variants(normalized, language_key):
+        for index, phrase_score in phrase_postings.get(phrase, ()):
+            if index in scores:
+                scores[index] += phrase_score
 
     ranked = sorted(scores, key=lambda index: (-scores[index], index))
     total = len(ranked)
