@@ -5,6 +5,11 @@ This is review evidence only. It performs no identity selection, writes no
 reviewed binding, and never treats candidate rank as identity proof. Each target
 is searched independently against the pinned local FDC reference corpus and the
 result retains the exact review-target identity and usage impact.
+
+Bulk discovery uses a candidate-only reference index so the hosted runner does
+not retain the full raw nutrient payload for every USDA food while reviewing
+1,000+ unresolved Cook4Me targets. Exact reviewed-FDC nutrition resolution keeps
+using the full reference index elsewhere.
 """
 from __future__ import annotations
 
@@ -21,6 +26,7 @@ if str(TOOLS) not in sys.path:
     sys.path.insert(0, str(TOOLS))
 
 import fdc_reference_data_v60 as reference  # type: ignore  # noqa: E402
+import fdc_candidate_reference_data_v60 as candidate_reference  # type: ignore  # noqa: E402
 
 TARGET_KIND = "cook4me-release-catalog-nutrition-review-targets-v60"
 EVIDENCE_KIND = "cook4me-fdc-review-target-candidate-evidence-offline-v60"
@@ -143,6 +149,8 @@ def capture(
     if not manifest_sha:
         raise RuntimeError("reference index did not expose manifest SHA256")
 
+    candidate_only = bool(getattr(index, "candidate_only", False))
+    indexed_fdc_ids = max(0, int(getattr(index, "indexed_fdc_id_count", 0) or 0))
     payload = {
         "schemaVersion": 1,
         "kind": EVIDENCE_KIND,
@@ -150,6 +158,8 @@ def capture(
         "referenceManifestSha256": manifest_sha,
         "sourceTargetKind": TARGET_KIND,
         "maxCandidatesPerTarget": maximum,
+        "candidateOnlyReferenceIndex": candidate_only,
+        "indexedReferenceFdcIdCount": indexed_fdc_ids,
         "policy": {
             "candidateSearchIsIdentityProof": False,
             "selectionPerformed": False,
@@ -169,6 +179,8 @@ def capture(
     summary = {
         "catalogVersion": payload["catalogVersion"],
         "referenceManifestSha256": manifest_sha,
+        "candidateOnlyReferenceIndex": candidate_only,
+        "indexedReferenceFdcIdCount": indexed_fdc_ids,
         "reviewTargetCount": len(items),
         "usedReviewTargetCount": used_targets,
         "withCandidateCount": with_candidates,
@@ -198,7 +210,9 @@ def main() -> int:
     args = parser.parse_args()
 
     targets = _load(Path(args.targets).expanduser())
-    index = reference.ReferenceIndex(Path(args.reference_manifest).expanduser())
+    index = candidate_reference.CandidateReferenceIndex(
+        Path(args.reference_manifest).expanduser()
+    )
     payload, summary = capture(targets, index, max_candidates=args.max_candidates)
 
     output = Path(args.output).expanduser()

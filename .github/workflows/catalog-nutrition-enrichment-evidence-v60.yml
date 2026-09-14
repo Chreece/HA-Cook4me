@@ -8,8 +8,10 @@ on:
       - .github/workflows/catalog-nutrition-enrichment-evidence-v60.yml
       - tools/capture_release_catalog_fdc_candidate_evidence_offline_v60.py
       - tools/classify_release_catalog_fdc_candidate_evidence_v60.py
+      - tools/fdc_candidate_reference_data_v60.py
       - tools/prepare_post_activation_nutrition_review_targets_v60.py
       - tests/test_capture_release_catalog_fdc_candidate_evidence_offline_v60.py
+      - tests/test_fdc_candidate_reference_data_v60.py
       - tests/test_prepare_post_activation_nutrition_review_targets_v60.py
   workflow_dispatch:
 
@@ -35,6 +37,7 @@ jobs:
           set -Eeuo pipefail
           python -m unittest \
             tests.test_capture_release_catalog_fdc_candidate_evidence_offline_v60 \
+            tests.test_fdc_candidate_reference_data_v60 \
             tests.test_prepare_post_activation_nutrition_review_targets_v60 -v
 
       - name: Prove activated catalog baseline
@@ -141,6 +144,8 @@ jobs:
           triage = json.loads((root / 'fdc-candidate-triage-summary.v60.json').read_text(encoding='utf-8'))
           facts = {
               'reviewTargetCount': int(evidence.get('reviewTargetCount') or 0),
+              'candidateOnlyReferenceIndex': evidence.get('candidateOnlyReferenceIndex') is True,
+              'indexedReferenceFdcIdCount': int(evidence.get('indexedReferenceFdcIdCount') or 0),
               'withCandidateCount': int(evidence.get('withCandidateCount') or 0),
               'zeroCandidateCount': int(evidence.get('zeroCandidateCount') or 0),
               'uniqueLiteralExactDescriptionMatchTargetCount': int(evidence.get('uniqueLiteralExactDescriptionMatchTargetCount') or 0),
@@ -155,6 +160,8 @@ jobs:
           }
           if facts['reviewTargetCount'] != 1251:
               raise SystemExit(f"candidate evidence lost review targets: {facts['reviewTargetCount']}")
+          if not facts['candidateOnlyReferenceIndex'] or facts['indexedReferenceFdcIdCount'] <= 0:
+              raise SystemExit(f'candidate capture did not use lightweight reference index: {facts}')
           if facts['selectionCount'] or facts['bindingCreatedCount'] or facts['networkRequestsPerformed']:
               raise SystemExit(f'candidate evidence violated non-binding/offline contract: {facts}')
           (root / 'nutrition-enrichment-facts.v60.json').write_text(
