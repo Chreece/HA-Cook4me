@@ -18,6 +18,8 @@ jobs:
   build-reuse-proposals:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,14 +35,40 @@ jobs:
           set -Eeuo pipefail
           python -m unittest tests.test_release_catalog_nutrition_review_reuse_proposal_v60 -v
 
-      - name: Download successful post-activation evidence
-        uses: actions/download-artifact@v4
-        with:
-          name: nutrition-enrichment-evidence-v60-98a0b0e284749622787ff251340d0100b650e2c4
-          path: /tmp/nutrition-evidence
-          repository: Chreece/HA-Cook4me
-          run-id: 34847903376
-          github-token: ${{ github.token }}
+      - name: Resolve latest successful post-activation evidence
+        id: evidence
+        run: |
+          set -Eeuo pipefail
+          ROW="$(
+            gh run list \
+              --repo "$GITHUB_REPOSITORY" \
+              --workflow catalog-nutrition-enrichment-evidence-v60.yml \
+              --branch cook4me-nutrition-enrichment-post-activation-v60 \
+              --status success \
+              --limit 1 \
+              --json databaseId,headSha \
+              --jq '.[0] | "\(.databaseId) \(.headSha)"'
+          )"
+          RUN_ID="${ROW%% *}"
+          HEAD_SHA="${ROW#* }"
+          if [ -z "$RUN_ID" ] || [ -z "$HEAD_SHA" ] || [ "$RUN_ID" = "$ROW" ]; then
+            echo "Unable to resolve the latest successful nutrition evidence run: $ROW" >&2
+            false
+          fi
+          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+          echo "head_sha=$HEAD_SHA" >> "$GITHUB_OUTPUT"
+          echo "Using nutrition evidence run $RUN_ID at $HEAD_SHA"
+
+      - name: Download latest successful post-activation evidence
+        run: |
+          set -Eeuo pipefail
+          rm -rf /tmp/nutrition-evidence
+          mkdir -p /tmp/nutrition-evidence
+          gh run download "${{ steps.evidence.outputs.run_id }}" \
+            --repo "$GITHUB_REPOSITORY" \
+            --name "nutrition-enrichment-evidence-v60-${{ steps.evidence.outputs.head_sha }}" \
+            --dir /tmp/nutrition-evidence
+          test -s /tmp/nutrition-evidence/fdc-candidate-evidence.v60.json
 
       - name: Build exact-canonical historical reuse proposals
         run: |
