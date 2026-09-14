@@ -1,4 +1,4 @@
-name: Recover exact Batch 40 missing shards
+name: Validate and clean Batch 40 recovery
 
 on:
   pull_request:
@@ -8,10 +8,15 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: batch40-cleanup-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
-  recover:
+  validate-cleanup:
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     env:
       HEAD_BRANCH: ${{ github.head_ref }}
     steps:
@@ -19,185 +24,46 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
-      - name: Rebuild and hash-prove 044d/e/f
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate recovered Batch 40 source
         run: |
+          export TMPDIR="$RUNNER_TEMP"
+          python scripts/version.py validate
+          python -m compileall -q custom_components/cook4me tests tools
           python - <<'PY'
-          from __future__ import annotations
-          import gzip, hashlib, json, re
+          import json
           from pathlib import Path
 
-          root = Path.cwd()
-          tools = root / 'tools'
-          known_names = [
-              'release_catalog_reviewed_nutrition_targets_044.v1.json',
-              'release_catalog_reviewed_nutrition_targets_044b.v1.json',
-              'release_catalog_reviewed_nutrition_targets_044c.v1.json',
-          ]
-          known_hashes = {
-              known_names[0]: 'c0f706fd97e750259ba369bcb387074f5e49504fce5e522588c320ddf253b83e',
-              known_names[1]: '9f808c7429547f8c5d89cc95edb215ca814641e2f100a8672ddb4fd4e839f6ea',
-              known_names[2]: '3878be1b8960f6bb95368996e262365afaf500479f74d7da589fa810c8ac8b0f',
-          }
-          missing = {
-              'release_catalog_reviewed_nutrition_targets_044d.v1.json': 'c1c785d35a7fe2e9ec90eb8bc25c7fb4bde242d77706e1771948d3bdfac07f1e',
-              'release_catalog_reviewed_nutrition_targets_044e.v1.json': 'e7f0be03b2c003cfc236f8ed2db49e6a1a5b9827a09effa96f6382139e12863a',
-              'release_catalog_reviewed_nutrition_targets_044f.v1.json': '316595cd3ff61363db9d4cabaca7b335c4fa5a803926e1ed5e1a7e7bc8ab6654',
-          }
-
-          known_docs = {n: json.loads((tools / n).read_text(encoding='utf-8')) for n in known_names}
-
-          def emit(doc):
-              # This must reproduce all surviving original shards byte-for-byte
-              # before it is trusted for the missing shards.
-              return (json.dumps(doc, indent=2, sort_keys=True, ensure_ascii=False) + '\n').encode('utf-8')
-
-          roundtrip = {}
-          for name in known_names:
-              generated = emit(known_docs[name])
-              original = (tools / name).read_bytes()
-              got = hashlib.sha256(generated).hexdigest()
-              roundtrip[name] = {
-                  'expected_sha256': known_hashes[name],
-                  'generated_sha256': got,
-                  'byte_exact': generated == original,
-              }
-              if generated != original or got != known_hashes[name]:
-                  raise SystemExit(f'known-shard serialization calibration failed: {name} {got}')
-
-          fixture = json.loads(gzip.decompress(
-              (root / 'tests/fixtures/nutrition-batch40-retained-reference-v60.json.gz').read_bytes()
-          ))
-          rules_doc = json.loads(
-              (tools / 'release_catalog_nutrition_bulk_family_rules_batch40.v1.json').read_text(encoding='utf-8')
-          )
-          rules = rules_doc['rules']
-          target_map = {r['reviewTargetId']: r for r in fixture['targets']}
-          source_map = {r['reviewTargetId']: r for r in fixture['sources']}
-
-          # All six shards share exactly the same top-level metadata/receipts.
-          template = known_docs[known_names[2]]
-          top = {k: v for k, v in template.items() if k != 'items'}
-          receipts = top['referenceReceipts']
-
-          suffix = {
-              'A': ' This is an explicitly reviewed direct food/state family; presentation wording does not create a new food identity. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.',
-              'B': ' This is an explicitly reviewed generic category fallback, not a claim that the retained USDA record is the exact named subtype, species, brand, formulation, cultivar, fatty-acid profile, moisture state or manufacturer product. The exact retained FDC record is used only after destination-specific review; source target/rank is a locator receipt and candidate ranking is not identity proof. No density, piece weight, edible yield, soaking, rinsing, draining, cooking conversion, concentration conversion or hidden ingredient ratio is inferred.',
-          }
-
-          def rule_for(target):
-              matches = [r for r in rules if re.match(r['pattern'], target['canonicalEnglishName'], re.I)]
-              if len(matches) != 1:
-                  raise SystemExit(f"{target['reviewTargetId']}: expected 1 rule, got {len(matches)}")
-              return matches[0]
-
-          def build_row(target):
-              rule = rule_for(target)
-              tier = rule['tier']
-              fdc_id = rule['fdcId']
-              receipt = receipts[str(fdc_id)]
-              source = source_map[receipt['sourceEvidenceTargetId']]
-              candidates = [
-                  c for c in source['candidates']
-                  if c['fdcId'] == fdc_id
-                  and c['localEvidenceRank'] == receipt['sourceEvidenceCandidateRank']
-              ]
-              if len(candidates) != 1:
-                  raise SystemExit(
-                      f"{target['reviewTargetId']}: receipt candidate mismatch for FDC {fdc_id}: {len(candidates)}"
-                  )
-              candidate = candidates[0]
-              if candidate['description'] != rule['fdcDescription']:
-                  raise SystemExit(f"{target['reviewTargetId']}: FDC description mismatch")
-              return {
-                  'bulkFamilyRuleId': rule['ruleId'],
-                  'bulkFamilyRuleRegistry': 'release_catalog_nutrition_bulk_family_rules_batch40.v1.json',
-                  'bulkFamilyTier': tier,
-                  'canonicalEnglishName': target['canonicalEnglishName'],
-                  'confidence': 'high' if tier == 'A' else 'medium',
-                  'fdcDataType': candidate['dataType'],
-                  'fdcDescription': candidate['description'],
-                  'fdcId': fdc_id,
-                  'notes': f"Batch 40 bulk-family Tier {tier} / {rule['ruleId']}. {rule['contract']}" + suffix[tier],
-                  'reviewTargetId': target['reviewTargetId'],
-                  'reviewTargetKind': target['reviewTargetKind'],
-                  'sourceCandidateSha256': receipt['sourceCandidateSha256'],
-                  'sourceEvidenceCandidateRank': receipt['sourceEvidenceCandidateRank'],
-                  'sourceEvidenceSha256': top['sourceEvidenceSha256'],
-                  'sourceEvidenceTargetId': receipt['sourceEvidenceTargetId'],
-                  'usageCountAtReview': target['usageCountSum'],
-              }
-
-          # Re-prove the row builder against every one of the 60 intact rows.
-          intact_row_count = 0
-          for doc in known_docs.values():
-              for original in doc['items']:
-                  rebuilt = build_row(target_map[original['reviewTargetId']])
-                  if rebuilt != original:
-                      raise SystemExit(f"row rebuild mismatch: {original['reviewTargetId']}")
-                  intact_row_count += 1
-
-          # 044 and 044b are the two special initial waves. The remaining 70
-          # targets are reviewTargetId-sorted and split c/d/e/f 20/20/20/10.
-          first40 = {
-              r['reviewTargetId']
-              for name in known_names[:2]
-              for r in known_docs[name]['items']
-          }
-          remainder = sorted(
-              t['reviewTargetId'] for t in fixture['targets']
-              if t['reviewTargetId'] not in first40
-          )
-          partitions = [remainder[i:i+20] for i in range(0, len(remainder), 20)]
-          c_ids = [r['reviewTargetId'] for r in known_docs[known_names[2]]['items']]
-          if len(partitions) != 4 or [len(x) for x in partitions] != [20, 20, 20, 10]:
-              raise SystemExit(f'unexpected remainder partition sizes: {[len(x) for x in partitions]}')
-          if partitions[0] != c_ids:
-              raise SystemExit('044c does not equal first sorted remainder partition')
-
-          result = {
-              'known_serialization_roundtrip': roundtrip,
-              'intact_rows_rebuilt_exactly': intact_row_count,
-              'partition_sizes': [len(x) for x in partitions],
-              'generated': {},
-          }
-          for (name, expected_sha), ids in zip(missing.items(), partitions[1:]):
-              doc = dict(top)
-              doc['items'] = [build_row(target_map[rid]) for rid in ids]
-              data = emit(doc)
-              got = hashlib.sha256(data).hexdigest()
-              result['generated'][name] = {
-                  'count': len(ids),
-                  'first': ids[0],
-                  'last': ids[-1],
-                  'expected_sha256': expected_sha,
-                  'generated_sha256': got,
-                  'hash_match': got == expected_sha,
-              }
-              if got != expected_sha:
-                  Path('.batch40-diagnostic.json').write_text(
-                      json.dumps(result, indent=2, sort_keys=True) + '\n', encoding='utf-8'
-                  )
-                  raise SystemExit(f'{name}: reconstructed hash {got} != {expected_sha}')
-              (tools / name).write_bytes(data)
-
-          Path('.batch40-diagnostic.json').write_text(
-              json.dumps(result, indent=2, sort_keys=True) + '\n', encoding='utf-8'
-          )
-          print(json.dumps(result, indent=2, sort_keys=True))
+          count = 0
+          for path in Path('.').rglob('*.json'):
+              if '.git' in path.parts:
+                  continue
+              json.loads(path.read_text(encoding='utf-8'))
+              count += 1
+          print(f'JSON OK: {count}')
           PY
-      - name: Run Batch 40 regression tests
+          find . -name '*.sh' -not -path './.git/*' -print0 | xargs -0 -r -n1 bash -n
+          for f in custom_components/cook4me/frontend/cook4me-panel-v*.js; do
+            node --check "$f"
+          done
+          python -m unittest discover -s tests -v
+      - name: Remove recovery-only transport and diagnostics
         run: |
-          python -m unittest tests.test_release_catalog_nutrition_review_batch40_v60 -v
-      - name: Push hash-proven missing shards
+          rm -rf .batch40-bootstrap
+          rm -f .batch40-diagnostic.json
+          rm -f .github/workflows/batch40-finalize.yml
+      - name: Push clean validated Batch 40 source
         run: |
           git fetch origin "$HEAD_BRANCH"
-          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/$HEAD_BRANCH)" || exit 78
-          git add \
-            tools/release_catalog_reviewed_nutrition_targets_044d.v1.json \
-            tools/release_catalog_reviewed_nutrition_targets_044e.v1.json \
-            tools/release_catalog_reviewed_nutrition_targets_044f.v1.json \
-            .batch40-diagnostic.json
+          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/$HEAD_BRANCH)" || { echo 'Branch advanced during validation'; exit 78; }
+          git add -A
+          git diff --cached --quiet && { echo 'No cleanup changes to commit'; exit 0; }
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Recover exact Batch 40 reviewed nutrition shards'
+          git commit -m 'Validate Batch 40 and remove recovery transport'
           git push origin "HEAD:$HEAD_BRANCH"
