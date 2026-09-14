@@ -31,6 +31,43 @@ jobs:
         with:
           python-version: '3.13'
 
+      - name: Classify activation trigger
+        id: trigger
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -Eeuo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          event_name = os.environ.get('EVENT_NAME', '')
+          allow_zero_delta = event_name == 'workflow_dispatch'
+          changed = []
+          if event_name == 'push':
+              event = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text(encoding='utf-8'))
+              head_commit = event.get('head_commit') if isinstance(event.get('head_commit'), dict) else {}
+              for key in ('added', 'modified', 'removed'):
+                  changed.extend(str(path) for path in head_commit.get(key) or [])
+              changed = sorted(set(changed))
+              workflow_path = '.github/workflows/catalog-post-activation-nutrition-activate-v60.yml'
+              review_target_changed = any(
+                  path.startswith('tools/release_catalog_reviewed_nutrition_targets_')
+                  and path.endswith('.v1.json')
+                  for path in changed
+              )
+              allow_zero_delta = workflow_path in changed and not review_target_changed
+
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as handle:
+              handle.write(f"allow_zero_delta={'true' if allow_zero_delta else 'false'}\n")
+          print(json.dumps({
+              'eventName': event_name,
+              'changedPaths': changed,
+              'allowZeroDelta': allow_zero_delta,
+          }, ensure_ascii=False))
+          PY
+
       - name: Run activation regressions
         run: |
           set -Eeuo pipefail
@@ -70,6 +107,8 @@ jobs:
             | tee "$BUILD/activation-validation.v60.json"
 
       - name: Prove exact coverage delta and runtime invariants
+        env:
+          ALLOW_ZERO_DELTA: ${{ steps.trigger.outputs.allow_zero_delta }}
         run: |
           set -Eeuo pipefail
           BUILD="$RUNNER_TEMP/cook4me-post-activation-nutrition-v60"
@@ -83,6 +122,7 @@ jobs:
           source = catalog.get('source') if isinstance(catalog.get('source'), dict) else {}
           baseline = json.loads(Path('custom_components/cook4me/catalog/merged_catalog.v1.json').read_text(encoding='utf-8'))
           baseline_source = baseline.get('source') if isinstance(baseline.get('source'), dict) else {}
+          allow_zero_delta = os.environ.get('ALLOW_ZERO_DELTA') == 'true'
           sys.path.insert(0, str(Path.cwd() / 'custom_components' / 'cook4me'))
           import catalog_search_index as search
           prepared = search.prepare_search_index(catalog.get('searchIndex') or {})
@@ -106,6 +146,7 @@ jobs:
               'resolvedAfter': int(source.get('reviewedNutritionResolvedCount') or 0),
               'requiredAfter': int(source.get('reviewedNutritionRequiredCount') or 0),
               'pendingAfter': int(summary.get('pendingIdentityCountAfter') or 0),
+              'allowZeroDelta': allow_zero_delta,
               'runtimeCatalogCompacted': source.get('runtimeCatalogCompacted') is True,
               'runtimeRecipeNutritionOnDemand': source.get('runtimeRecipeNutritionOnDemand') is True,
               'prefixPostingsPersisted': bool((catalog.get('searchIndex') or {}).get('prefixPostings')),
@@ -125,7 +166,13 @@ jobs:
           if facts['resolvedBefore'] != facts['expectedResolvedBefore'] or facts['requiredBefore'] != facts['expectedRequiredBefore']:
               raise SystemExit(f'activation did not start from the checked-out catalog nutrition baseline: {facts}')
           if facts['newlyResolvedTargets'] <= 0 or facts['newlyResolvedIdentities'] <= 0:
-              raise SystemExit(f'activation resolved no new reviewed nutrition: {facts}')
+              clean_zero_delta = (
+                  facts['allowZeroDelta']
+                  and facts['newlyResolvedTargets'] == 0
+                  and facts['newlyResolvedIdentities'] == 0
+              )
+              if not clean_zero_delta:
+                  raise SystemExit(f'activation resolved no new reviewed nutrition: {facts}')
           if facts['resolvedAfter'] != facts['resolvedBefore'] + facts['newlyResolvedIdentities']:
               raise SystemExit(f'activation coverage delta is not exact: {facts}')
           if facts['requiredAfter'] != facts['requiredBefore']:
