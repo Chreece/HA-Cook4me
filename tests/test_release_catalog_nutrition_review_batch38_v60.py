@@ -110,7 +110,7 @@ class Batch38BulkFamilyTests(unittest.TestCase):
   def selective_read(path):
    if Path(path).name=='ignored': return evidence,EVIDENCE_SHA
    return original_read(path)
-  with patch.object(holds,'audit',return_value=audit), patch.object(cp,'_read',side_effect=selective_read), patch.object(resolver,'load_reviews',return_value={}):
+  with patch.object(holds,'audit',return_value=audit), patch.object(cp,'_read',side_effect=selective_read), patch.object(resolver,'load_reviews',return_value={}), patch.object(classifier.worklist,'validate_ledger',return_value={}):
    # Rule registries/review rows remain real; only the synthetic evidence path is mocked.
    result=classifier.classify(Path('ignored'),review_root=TOOLS)
   self.assertEqual(result['summary']['batch37ExplicitReviewCount'],106)
