@@ -1,0 +1,101 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Ketchup, mustard or burger sauce",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Ketchup",
+      "fdcId": 2709733,
+      "notes": "Manual review accepts FNDDS 'Ketchup' as the bounded reference already used for the near-duplicate ketchup/mustard/burger-sauce label. This does not make mustard or burger sauce nutritionally identical to ketchup; the binding is only a representative reference for this alternative-condiment target.",
+      "reviewTargetId": "concept:food:cd417d506981fd1f890e",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Sweet bean sauce",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Black bean sauce",
+      "fdcId": 2707404,
+      "notes": "Manual review accepts FNDDS 'Black bean sauce' as the bounded reference already used for the near-duplicate sweet-bean-sauce label. Exact bean species, fermentation, sugar, sodium, oil, brand, and recipe formulation are not inferred.",
+      "reviewTargetId": "concept:food:b346d38084cf40e7b42d",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 11,
+      "canonicalEnglishName": "Frozen peeled shrimp tails",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Shrimp, NFS",
+      "fdcId": 2706360,
+      "notes": "Manual review accepts FNDDS 'Shrimp, NFS' as the generic shrimp reference already used for peeled-shrimp-tail labels. Freezing and peeling preserve the shrimp identity, but species, origin, glazing/brine, raw/cooked state, yield, and recipe preparation are not inferred.",
+      "reviewTargetId": "concept:food:b40292708d039796f5c1",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 10,
+      "canonicalEnglishName": "Red, green and yellow peppers",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Peppers, bell, yellow, raw",
+      "fdcId": 2258589,
+      "notes": "Manual review accepts raw yellow bell pepper as the representative reference already used for near-duplicate mixed-color bell-pepper labels. It does not represent an exact red/green/yellow blend or cultivar mix, and no cooking or serving conversion is inferred.",
+      "reviewTargetId": "concept:food:d322b71c9f0519010ef8",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 3,
+      "canonicalEnglishName": "Consommé granules, a little for finishing",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Soup, bouillon cubes and granules, low sodium, dry",
+      "fdcId": 171613,
+      "notes": "Manual review accepts the dry low-sodium bouillon/granule record as the bounded reference already used for 'Consommé granules'. The finishing instruction changes use, not ingredient identity; actual flavor, sodium level, brand, dilution, and prepared concentration remain unspecified.",
+      "reviewTargetId": "concept:food:b2ec6328802ecbf8f2f7",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 12,
+      "canonicalEnglishName": "Salted butter, melted with chocolate",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Butter, salted",
+      "fdcId": 173410,
+      "notes": "Manual review binds only the salted-butter component to USDA 'Butter, salted', consistent with prior salted-butter reviews. 'Melted with chocolate' is a preparation/use instruction; chocolate nutrition remains separate and no brand, salt level, water loss, or mixture ratio is inferred.",
+      "reviewTargetId": "concept:food:f1996cccd060ca556787",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Slices of toasted rustic bread",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Bread, rye, toasted",
+      "fdcId": 172685,
+      "notes": "Manual review accepts USDA toasted rye bread as the bounded reference already used for the near-duplicate 'Large slices of toasted rustic bread'. Slice size does not change per-100-g composition, while 'rustic' does not prove an exact rye formula, brand, or toast level.",
+      "reviewTargetId": "concept:food:a58723a5ce67320ac7ad",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "9775db36fdec8ef6ac129ab28b5fe9bbad31ea2cf4b46e212167518762250b71"
+}
