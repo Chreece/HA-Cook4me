@@ -1,0 +1,84 @@
+name: Finalize Batch 41 nutrition triage hardening
+
+on:
+  push:
+    branches:
+      - cook4me-nutrition-batch41-triage-hardening-v60
+    paths:
+      - '.github/workflows/batch41-finalize.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      BRANCH: cook4me-nutrition-batch41-triage-hardening-v60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Harden context/composition triage
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('tools/classify_nutrition_review_queue_v60.py')
+          text = path.read_text(encoding='utf-8')
+          old = '''COMPLEX = re.compile(
+              r"\\b(?:and|or|mix|blend|seasoning|spices?|stock|bouillon|broth|sauce|paste|roux|soup|"
+              r"brine|soak(?:ed|ing)?|marinat(?:ed|ing)|cured|smoked|cooked|boiled|fried|roasted|"
+              r"toasted|dehydrated|dried|frozen|canned|pickled|preserve|syrup|extract|flavou?r|"
+              r"concentrat(?:e|ed)|liquid|cream|fat|combined|stuffed|ready-made|store-bought|"
+              r"commercial|unknown|water or|or water)\\b",
+              re.IGNORECASE,
+          )'''.replace('          ', '')
+          new = '''COMPLEX = re.compile(
+              r"\\b(?:and|or|mix(?:ed|ing|tures?)?|blend(?:ed|ing)?|seasoning|spices?|stock|bouillon|broth|"
+              r"sauce|paste|roux|soup|consomm[eé]|brine|soak(?:ed|ing)?|marinat(?:ed|ing)|marinades?|"
+              r"cured|smoked|cooked|pre[- ]?cooked|boiled|fried|roasted|toasted|dehydrated|"
+              r"rehydrat(?:ed|ing)?|dried|frozen|canned|pickled|preserv(?:e|ed|es|ing)|ferment(?:ed|ing)?|"
+              r"syrup|extract|flavou?r(?:ed|ing|ings)?|concentrat(?:e|ed)|liquid|cream|fat|combined|stuffed|"
+              r"ready-made|store-bought|commercial|unknown|water or|or water|slurry|pur[eé]e?s?|compotes?|"
+              r"coulis|mousses?|vinaigrettes?|dressings?|starters?|dumplings?|meatballs?|candied|glazed|"
+              r"food colou?r(?:ing)?|bouquet(?: garni)?|spreads?|puddings?|dough|etc)\\b|&",
+              re.IGNORECASE,
+          )'''.replace('          ', '')
+          if text.count(old) != 1:
+              raise SystemExit(f'expected exactly one legacy COMPLEX block, found {text.count(old)}')
+          path.write_text(text.replace(old, new), encoding='utf-8')
+
+          test = Path('tests/test_release_catalog_nutrition_review_batch41_v60.py')
+          test_text = test.read_text(encoding='utf-8')
+          old_sha = '57ed367ab1ed7d2ccb45374ea2cbed2f212bb7f78367e8ce065361ef1cbb7029'
+          new_sha = 'b142c7331c47b14250fff39ad3070af14dfb52822855759f0e39a2ed29a6d28e'
+          if test_text.count(old_sha) != 1:
+              raise SystemExit('Batch 41 fixture SHA placeholder not found exactly once')
+          test.write_text(test_text.replace(old_sha, new_sha), encoding='utf-8')
+          PY
+      - name: Validate focused nutrition contracts
+        run: |
+          python scripts/version.py validate
+          python -m compileall -q tools/classify_nutrition_review_queue_v60.py tests/test_release_catalog_nutrition_review_batch40_v60.py tests/test_release_catalog_nutrition_review_batch41_v60.py
+          python -m unittest \
+            tests.test_release_catalog_nutrition_review_batch40_v60 \
+            tests.test_release_catalog_nutrition_review_batch41_v60 \
+            -v
+      - name: Push validated source and remove one-shot workflow
+        run: |
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/$BRANCH)" || {
+            echo 'Branch advanced during validation'
+            exit 78
+          }
+          rm .github/workflows/batch41-finalize.yml
+          git add -A
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Harden Batch 41 nutrition review triage'
+          git push origin "HEAD:$BRANCH"
