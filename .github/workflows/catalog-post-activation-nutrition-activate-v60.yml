@@ -1,11 +1,6 @@
 name: Activate post-activation reviewed nutrition v60
 
 on:
-  workflow_run:
-    workflows:
-      - Validate post-activation nutrition review decisions v60
-    types:
-      - completed
   push:
     branches:
       - cook4me-nutrition-enrichment-post-activation-v60
@@ -14,6 +9,11 @@ on:
       - tools/release_catalog_nutrition_review_hold_releases.v1.json
       - tools/nutrition_review_holds_v60.py
   workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Exact verified commit SHA to activate; empty is a manual maintenance run
+        required: false
+        type: string
 
 concurrency:
   group: catalog-post-activation-nutrition-activate-v60-cook4me-nutrition-enrichment-post-activation-v60
@@ -27,13 +27,12 @@ permissions:
 
 jobs:
   activate-reviewed-nutrition:
-    if: ${{ github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'cook4me-nutrition-enrichment-post-activation-v60') }}
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.source_sha != '' && inputs.source_sha || github.sha }}
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
@@ -44,22 +43,32 @@ jobs:
         id: trigger
         env:
           EVENT_NAME: ${{ github.event_name }}
+          DISPATCH_SOURCE_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.source_sha || '' }}
         run: |
           set -Eeuo pipefail
           python - <<'PY'
           import json
           import os
           from pathlib import Path
+          import re
           import subprocess
 
           event_name = os.environ.get('EVENT_NAME', '')
+          dispatch_source_sha = os.environ.get('DISPATCH_SOURCE_SHA', '').strip()
           source_sha = subprocess.check_output(
               ['git', 'rev-parse', 'HEAD'], text=True
           ).strip()
-          allow_zero_delta = event_name == 'workflow_dispatch'
           changed = []
+          allow_zero_delta = event_name == 'workflow_dispatch'
 
-          if event_name == 'workflow_run':
+          if event_name == 'workflow_dispatch' and dispatch_source_sha:
+              if not re.fullmatch(r'[0-9a-f]{40}', dispatch_source_sha):
+                  raise SystemExit(f'invalid verified source SHA: {dispatch_source_sha!r}')
+              if source_sha != dispatch_source_sha:
+                  raise SystemExit(
+                      f'checked-out activation SHA differs from verified source: '
+                      f'{source_sha} != {dispatch_source_sha}'
+                  )
               changed = subprocess.check_output(
                   ['git', 'diff', '--name-only', 'HEAD^', 'HEAD'], text=True
               ).splitlines()
@@ -69,9 +78,9 @@ jobs:
                   and path.endswith('.v1.json')
                   for path in changed
               )
-              # A successful decision-verification run is the trust boundary.
-              # Review batches normally require a positive activation delta;
-              # validation/tool-only maintenance may legitimately be zero-delta.
+              # A verifier-dispatched review batch normally must resolve new
+              # identities. Verification/workflow maintenance may legitimately
+              # exercise this path with a clean zero-delta activation.
               allow_zero_delta = not reviewed_target_changed
           elif event_name == 'push':
               event = json.loads(
@@ -85,22 +94,20 @@ jobs:
               for key in ('added', 'modified', 'removed'):
                   changed.extend(str(path) for path in head_commit.get(key) or [])
               changed = sorted(set(changed))
-              workflow_path = '.github/workflows/catalog-post-activation-nutrition-activate-v60.yml'
               activation_input_changed = any(
                   path == 'tools/release_catalog_nutrition_review_holds.v1.json'
                   or path == 'tools/release_catalog_nutrition_review_hold_releases.v1.json'
                   or path == 'tools/nutrition_review_holds_v60.py'
                   for path in changed
               )
-              # Kept for safe transition if GitHub evaluates this workflow-file
-              # update against the previous push-path definition.
-              allow_zero_delta = workflow_path in changed and not activation_input_changed
+              allow_zero_delta = not activation_input_changed
 
           with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as handle:
               handle.write(f"allow_zero_delta={'true' if allow_zero_delta else 'false'}\n")
               handle.write(f"source_sha={source_sha}\n")
           print(json.dumps({
               'eventName': event_name,
+              'dispatchSourceSha': dispatch_source_sha,
               'sourceSha': source_sha,
               'changedPaths': changed,
               'allowZeroDelta': allow_zero_delta,
