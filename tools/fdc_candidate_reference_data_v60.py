@@ -8,11 +8,11 @@ candidate metadata and the lexical token index. Keeping the full raw Foundation,
 SR Legacy and FNDDS records in memory during a 1,000+ target evidence pass wastes
 hundreds of MB and can force hosted runners into heavy memory pressure.
 
-Candidate scoring is byte-compatible with ``ReferenceIndex`` but stores private
-precomputed normalization/token metadata beside each compact candidate. That
-avoids repeating Unicode normalization, regex tokenization, and lexical-form
-expansion for the same USDA row on every target search. Private score metadata is
-never added to candidate rows, so it cannot leak into immutable evidence JSON.
+Candidate scoring is byte-compatible with ``ReferenceIndex``. Row-invariant
+normalization/token metadata is precomputed privately, and the expensive
+``SequenceMatcher`` ratio is evaluated only for candidates whose strict maximum
+possible score can still enter the requested top-N. Private optimization metadata
+never enters candidate rows, so it cannot leak into immutable evidence JSON.
 
 This index cannot resolve nutrition profiles: ``food()`` and ``metadata()`` fail
 closed.
@@ -21,6 +21,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from difflib import SequenceMatcher
+import heapq
 from pathlib import Path
 from typing import Any
 
@@ -133,7 +134,18 @@ class CandidateReferenceIndex(reference.ReferenceIndex):
     def _rank(
         self, query: str, *, max_candidates: int
     ) -> list[tuple[float, int, dict[str, Any]]]:
-        """Rank with the exact ReferenceIndex formula using cached row metadata."""
+        """Return the exact ReferenceIndex top-N with bounded ratio evaluation.
+
+        ``SequenceMatcher.ratio()`` contributes at most 120 points. We first
+        calculate every other score component and an exact upper bound using a
+        hypothetical ratio of 1.0, then visit candidates from highest upper bound
+        down. Once that bound is strictly below the current Nth exact score, no
+        remaining candidate can enter the top-N and ratio evaluation can stop.
+
+        Exact score arithmetic deliberately keeps the original operation order:
+        overlap terms, then sequence contribution, then phrase bonus, then the
+        Foundation tie bonus. This preserves floating-point output byte-for-byte.
+        """
         query_lookup_tokens = reference.lexical_tokens(query)
         candidate_indices: set[int] = set()
         for token in query_lookup_tokens:
@@ -146,37 +158,76 @@ class CandidateReferenceIndex(reference.ReferenceIndex):
             return []
         q_raw_tokens = frozenset(reference.tokens(q))
         q_tokens = frozenset(reference.lexical_tokens(q))
+        limit = max(1, int(max_candidates))
 
-        ranked: list[tuple[float, int, dict[str, Any]]] = []
+        # (maximum possible exact score, fdcId, record index, overlap base,
+        #  phrase bonus, Foundation bonus)
+        bounded: list[tuple[float, int, int, float, float, bool]] = []
         for index in candidate_indices:
             row = self.records[index]
             d, d_raw_tokens, d_tokens, extras, extra_tokens = self._score_rows[index]
             if not d:
                 continue
             overlap = len(q_tokens & d_tokens)
-            if not overlap:
-                if not (q in extras or q_tokens.intersection(extra_tokens)):
-                    continue
+            if not overlap and not (q in extras or q_tokens.intersection(extra_tokens)):
+                continue
+
             coverage = overlap / max(1, len(q_tokens))
             precision = overlap / max(1, len(d_tokens))
-            sequence = SequenceMatcher(None, q, d).ratio()
-            score = coverage * 400.0 + precision * 80.0 + sequence * 120.0
+            overlap_base = coverage * 400.0 + precision * 80.0
+
+            phrase_bonus = 0.0
             if q == d:
-                score += 1000.0
+                phrase_bonus = 1000.0
             elif q_raw_tokens and q_raw_tokens == d_raw_tokens:
-                score += 900.0
+                phrase_bonus = 900.0
             elif d.startswith(q) or q.startswith(d):
-                score += 300.0
+                phrase_bonus = 300.0
             elif q in d:
-                score += 200.0
-            if row.get("dataType") == "Foundation":
+                phrase_bonus = 200.0
+            foundation = row.get("dataType") == "Foundation"
+
+            # SequenceMatcher.ratio() is in [0, 1]. Calculate the bound in the
+            # same addition order as an exact score with ratio=1 so it is never
+            # below any possible score for this row.
+            upper = overlap_base + 120.0
+            if phrase_bonus:
+                upper += phrase_bonus
+            if foundation:
+                upper += 2.0
+            bounded.append(
+                (upper, int(row["fdcId"]), index, overlap_base, phrase_bonus, foundation)
+            )
+
+        bounded.sort(key=lambda item: (-item[0], item[1]))
+
+        # Heap root is the worst retained top-N row: lower score is worse, and
+        # for equal scores a larger FDC ID is worse (hence -fdcId).
+        best: list[tuple[float, int, int, dict[str, Any]]] = []
+        for upper, fdc_id, index, overlap_base, phrase_bonus, foundation in bounded:
+            if len(best) >= limit and upper < best[0][0]:
+                break
+
+            d = self._score_rows[index][0]
+            sequence = SequenceMatcher(None, q, d).ratio()
+            score = overlap_base + sequence * 120.0
+            if phrase_bonus:
+                score += phrase_bonus
+            if foundation:
                 score += 2.0
             if score <= 0:
                 continue
-            ranked.append((score, int(row["fdcId"]), row))
 
+            row = self.records[index]
+            entry = (score, -fdc_id, fdc_id, row)
+            if len(best) < limit:
+                heapq.heappush(best, entry)
+            elif entry[:2] > best[0][:2]:
+                heapq.heapreplace(best, entry)
+
+        ranked = [(score, fdc_id, row) for score, _neg_id, fdc_id, row in best]
         ranked.sort(key=lambda item: (-item[0], item[1]))
-        return ranked[: max(1, int(max_candidates))]
+        return ranked
 
     def food(self, fdc_id: int) -> dict[str, Any]:
         raise RuntimeError(

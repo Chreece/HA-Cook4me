@@ -5,6 +5,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT / "tools"
@@ -124,6 +125,39 @@ class CandidateReferenceIndexTests(unittest.TestCase):
                 any(key.startswith("_") for row in light.records for key in row),
                 "private precomputed score metadata leaked into candidate rows",
             )
+
+    def test_score_upper_bound_prunes_sequence_matching_without_changing_top_n(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = self._manifest(root)
+            foundation = root / "foundation.json"
+            payload = json.loads(foundation.read_text(encoding="utf-8"))
+            payload["FoundationFoods"].extend(
+                {
+                    "fdcId": 1000 + index,
+                    "description": f"Tomato product number {index} prepared with vegetables and sauce",
+                }
+                for index in range(1, 41)
+            )
+            foundation.write_text(json.dumps(payload), encoding="utf-8")
+
+            full = full_reference.ReferenceIndex(manifest)
+            light = candidate_reference.CandidateReferenceIndex(manifest)
+            expected = full._rank("Tomato", max_candidates=1)
+            original_matcher = candidate_reference.SequenceMatcher
+            calls = 0
+
+            def counted_matcher(*args, **kwargs):
+                nonlocal calls
+                calls += 1
+                return original_matcher(*args, **kwargs)
+
+            with patch.object(candidate_reference, "SequenceMatcher", side_effect=counted_matcher):
+                actual = light._rank("Tomato", max_candidates=1)
+
+            self.assertEqual(actual, expected)
+            self.assertLess(calls, 10, "upper-bound pruning did not reduce ratio evaluations")
+            self.assertGreater(len(light.records), 40)
 
     def test_candidate_index_cannot_be_used_for_exact_nutrition_resolution(self):
         with tempfile.TemporaryDirectory() as directory:
