@@ -1,4 +1,4 @@
-name: Recover verified Batch 40 source
+name: Analyze Batch 40 source reconstruction
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  recover:
+  analyze:
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     env:
@@ -19,96 +19,129 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
-      - name: Promote hash-verified Batch 40 members
+      - name: Infer exact Batch 40 shard construction
         run: |
           python - <<'PY'
-          import base64, hashlib, io, json, os, pathlib, tarfile
+          import gzip, json, re
+          from pathlib import Path
 
-          root = pathlib.Path.cwd()
-          parts = [
-            '.batch40-bootstrap/chunks/chunk-000','.batch40-bootstrap/chunks/chunk-001',
-            '.batch40-bootstrap/chunks/chunk-002','.batch40-bootstrap/chunks/chunk-004',
-            '.batch40-bootstrap/chunks/chunk-005','.batch40-bootstrap/chunks/chunk-006',
-            '.batch40-bootstrap/chunks/chunk-007','.batch40-bootstrap/chunks/chunk-008',
-            '.batch40-bootstrap/chunks/chunk-009','.batch40-bootstrap/chunks/chunk-010',
-            '.batch40-bootstrap/chunks/chunk-011','.batch40-bootstrap/chunks/chunk-012',
-            '.batch40-bootstrap/chunks/chunk-014','.batch40-bootstrap/chunks/chunk-015',
-            '.batch40-bootstrap/repair/part-0','.batch40-bootstrap/repair/part-1',
-            '.batch40-bootstrap/repair/part-2','.batch40-bootstrap/repair/part-3',
-            '.batch40-bootstrap/repair/part-4','.batch40-bootstrap/repair/part-5',
-            '.batch40-bootstrap/chunks/chunk-019']
-          tail_fix = {
-            '.batch40-bootstrap/repair/part-2': 'J',
-            '.batch40-bootstrap/repair/part-5': 'P',
-          }
-          expected = {
-            'docs/nutrition-review-batch40-bulk-families-v60.md': ('c227c69267cd8b46e6cdbba5d381ae30442ce944bf20357f1c5c3c02a6c07236', 0o644),
-            'tests/fixtures/nutrition-batch40-retained-reference-v60.json.gz': ('4d62f672b126228294a07997c3b3db4bf4234f4a4ebfed24033432a8ec4f1e5a', 0o644),
-            'tests/test_release_catalog_nutrition_review_batch39_v60.py': ('73ccf64d67b74a08cc38ddf8ea8b13eec53a7072773c18813898fe83de8c7d9f', 0o644),
-            'tests/test_release_catalog_nutrition_review_batch40_v60.py': ('6a0d54cef8f45bacef55dd3c43887141e8ec826cceac485a2d47dc29a3713a47', 0o644),
-            'tools/classify_nutrition_review_queue_v60.py': ('5a501c7f34fdcad6a3f7c3b9bc4c59f6e0724f8d0b778a152847f9647b96d78b', 0o755),
-            'tools/release_catalog_nutrition_bulk_family_rules_batch40.v1.json': ('1f9cc8b052ae8e06ebe22bc26953ea16e159df739e150deb563fa2623ec76ed1', 0o644),
-            'tools/release_catalog_reviewed_nutrition_targets_044.v1.json': ('c0f706fd97e750259ba369bcb387074f5e49504fce5e522588c320ddf253b83e', 0o644),
-            'tools/release_catalog_reviewed_nutrition_targets_044b.v1.json': ('9f808c7429547f8c5d89cc95edb215ca814641e2f100a8672ddb4fd4e839f6ea', 0o644),
-            'tools/release_catalog_reviewed_nutrition_targets_044c.v1.json': ('3878be1b8960f6bb95368996e262365afaf500479f74d7da589fa810c8ac8b0f', 0o644),
-          }
+          root = Path.cwd()
+          tools = root / 'tools'
+          shard_names = [
+            'release_catalog_reviewed_nutrition_targets_044.v1.json',
+            'release_catalog_reviewed_nutrition_targets_044b.v1.json',
+            'release_catalog_reviewed_nutrition_targets_044c.v1.json',
+          ]
+          docs = {name: json.loads((tools / name).read_text()) for name in shard_names}
+          rules_doc = json.loads((tools / 'release_catalog_nutrition_bulk_family_rules_batch40.v1.json').read_text())
+          rules = rules_doc['rules']
+          fixture = json.loads(gzip.decompress((root / 'tests/fixtures/nutrition-batch40-retained-reference-v60.json.gz').read_bytes()))
+          targets = fixture['targets']
+          sources = fixture['sources']
+          target_map = {r['reviewTargetId']: r for r in targets}
+          source_map = {r['reviewTargetId']: r for r in sources}
+          order = [r['reviewTargetId'] for r in targets]
+          pos = {rid: i for i, rid in enumerate(order)}
 
-          encoded = ''.join((root / p).read_text(encoding='ascii') + tail_fix.get(p, '') for p in parts)
-          raw = base64.b64decode(encoded, validate=True)
-          promoted = []
-          seen = {}
-          with tarfile.open(fileobj=io.BytesIO(raw), mode='r:gz') as tf:
-            for member in tf.getmembers():
-              if not member.isfile() or member.name not in expected:
+          all_existing = []
+          shard_summary = {}
+          top_levels = {}
+          for name, doc in docs.items():
+            ids = [r['reviewTargetId'] for r in doc['items']]
+            all_existing += ids
+            positions = [pos[i] for i in ids]
+            shard_summary[name] = {
+              'count': len(ids),
+              'positions': positions,
+              'contiguous': positions == list(range(min(positions), max(positions) + 1)) if positions else True,
+              'first_id': ids[0] if ids else None,
+              'last_id': ids[-1] if ids else None,
+            }
+            top_levels[name] = {k: v for k, v in doc.items() if k != 'items'}
+
+          existing_set = set(all_existing)
+          remaining_ids = [rid for rid in order if rid not in existing_set]
+
+          before_contract = set()
+          after_contract = set()
+          row_keys = set()
+          confidence_by_tier = {}
+          field_mismatches = []
+          for doc in docs.values():
+            for row in doc['items']:
+              row_keys.update(row)
+              confidence_by_tier.setdefault(row['bulkFamilyTier'], set()).add(row['confidence'])
+              matched = [r for r in rules if re.match(r['pattern'], row['canonicalEnglishName'], re.I)]
+              if len(matched) != 1:
+                field_mismatches.append({'id': row['reviewTargetId'], 'problem': f'rule_matches={len(matched)}'})
                 continue
-              src = tf.extractfile(member)
-              if src is None:
-                continue
-              data = src.read()
-              got = hashlib.sha256(data).hexdigest()
-              seen[member.name] = got
-              want, mode = expected[member.name]
-              if got != want:
-                raise SystemExit(f'hash mismatch for supposedly verified member {member.name}: {got} != {want}')
-              dest = root / member.name
-              dest.parent.mkdir(parents=True, exist_ok=True)
-              dest.write_bytes(data)
-              os.chmod(dest, mode)
-              promoted.append(member.name)
+              rule = matched[0]
+              contract = rule['contract']
+              notes = row['notes']
+              if contract not in notes:
+                field_mismatches.append({'id': row['reviewTargetId'], 'problem': 'contract_missing_from_notes'})
+              else:
+                pre, post = notes.split(contract, 1)
+                # Normalize the row-specific rule/tier tokens to expose whether
+                # there is one exact notes template.
+                pre = pre.replace(row['bulkFamilyRuleId'], '<RULE>').replace(row['bulkFamilyTier'], '<TIER>')
+                before_contract.add(pre)
+                after_contract.add(post)
 
-          if promoted != list(expected):
-            missing = [p for p in expected if p not in promoted]
-            raise SystemExit(f'expected verified members missing: {missing}')
+              target = target_map[row['reviewTargetId']]
+              source = source_map[row['reviewTargetId']]
+              for key, expected in (
+                ('canonicalEnglishName', target.get('canonicalEnglishName')),
+                ('usageCountAtReview', target.get('usageCountSum')),
+              ):
+                if row.get(key) != expected:
+                  field_mismatches.append({'id': row['reviewTargetId'], 'field': key, 'row': row.get(key), 'expected': expected})
 
-          diagnostic = {
-            'recovery': 'verified-prefix-materialization',
-            'promoted': promoted,
-            'verified_count': len(promoted),
-            'source_payload_sha256': hashlib.sha256(raw).hexdigest(),
-            'remaining_expected_files': [
-              'tools/release_catalog_reviewed_nutrition_targets_044d.v1.json',
-              'tools/release_catalog_reviewed_nutrition_targets_044e.v1.json',
-              'tools/release_catalog_reviewed_nutrition_targets_044f.v1.json',
-            ],
+          sample_existing = docs[shard_names[0]]['items'][0]
+          sample_missing_id = remaining_ids[0]
+          analysis = {
+            'fixture_target_count': len(targets),
+            'fixture_source_count': len(sources),
+            'fixture_order_first_20': order[:20],
+            'shards': shard_summary,
+            'existing_count': len(all_existing),
+            'existing_unique_count': len(existing_set),
+            'remaining_count': len(remaining_ids),
+            'remaining_ids': remaining_ids,
+            'top_level_documents': top_levels,
+            'row_keys': sorted(row_keys),
+            'confidence_by_tier': {k: sorted(v) for k, v in confidence_by_tier.items()},
+            'normalized_notes_prefixes': sorted(before_contract),
+            'notes_suffixes': sorted(after_contract),
+            'field_mismatches': field_mismatches,
+            'sample_existing_row': sample_existing,
+            'sample_existing_target': target_map[sample_existing['reviewTargetId']],
+            'sample_existing_source': source_map[sample_existing['reviewTargetId']],
+            'sample_missing_target': target_map[sample_missing_id],
+            'sample_missing_source': source_map[sample_missing_id],
           }
-          pathlib.Path('.batch40-diagnostic.json').write_text(json.dumps(diagnostic, indent=2) + '\n')
-          print(json.dumps(diagnostic, indent=2))
+          Path('.batch40-diagnostic.json').write_text(json.dumps(analysis, indent=2, sort_keys=True) + '\n')
+          print(json.dumps({
+            'shards': shard_summary,
+            'existing_count': len(all_existing),
+            'remaining_count': len(remaining_ids),
+            'remaining_ids': remaining_ids,
+            'row_keys': sorted(row_keys),
+            'confidence_by_tier': {k: sorted(v) for k, v in confidence_by_tier.items()},
+            'normalized_notes_prefixes': sorted(before_contract),
+            'notes_suffixes': sorted(after_contract),
+            'field_mismatches': field_mismatches,
+            'top_level_documents': top_levels,
+            'sample_missing_target': target_map[sample_missing_id],
+            'sample_missing_source': source_map[sample_missing_id],
+          }, indent=2, sort_keys=True))
           PY
-      - name: Push verified source prefix
+      - name: Push reconstruction analysis
         run: |
           git fetch origin "$HEAD_BRANCH"
           test "$(git rev-parse HEAD)" = "$(git rev-parse origin/$HEAD_BRANCH)" || exit 78
-          git add docs/nutrition-review-batch40-bulk-families-v60.md \
-            tests/fixtures/nutrition-batch40-retained-reference-v60.json.gz \
-            tests/test_release_catalog_nutrition_review_batch39_v60.py \
-            tests/test_release_catalog_nutrition_review_batch40_v60.py \
-            tools/classify_nutrition_review_queue_v60.py \
-            tools/release_catalog_nutrition_bulk_family_rules_batch40.v1.json \
-            tools/release_catalog_reviewed_nutrition_targets_044.v1.json \
-            tools/release_catalog_reviewed_nutrition_targets_044b.v1.json \
-            tools/release_catalog_reviewed_nutrition_targets_044c.v1.json \
-            .batch40-diagnostic.json
+          git add .batch40-diagnostic.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Recover hash-verified Batch 40 source prefix'
+          git commit -m 'Analyze exact Batch 40 shard construction'
           git push origin "HEAD:$HEAD_BRANCH"
