@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "catalogVersion": "2026-09-11-v60-capture3",
+  "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "policy": {
+    "searchResultAutoAccepted": false,
+    "exactFdcBindingRequired": true,
+    "semanticConceptGroupingReviewed": true,
+    "providerIdentityInference": false,
+    "candidateSearchIsIdentityProof": false
+  },
+  "selectionMethod": "explicit-semantic-review",
+  "evidenceBindingScope": "retained-reference-record",
+  "sourceEvidenceSha256": "e3b22f9b0834a79ffcc471d7bc61c07f08ce1f63da312c2ac36e84633c2931ac",
+  "nutritionScope": "Batch 42 explicit generic per-100-g ingredient references. Presentation-only wording does not authorize piece/yield, density, cooking, draining or hidden formulation conversion.",
+  "referenceUse": "Source target/rank only locates an existing retained FDC record. Every destination is reviewed independently; locator identity and rank are never semantic proof.",
+  "referenceReceipts": {
+    "167568": {
+      "sourceEvidenceTargetId": "concept:food:8b3f6561935b778e8e87",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceCandidateSha256": "6c2b361ec56a4f32ad59f6f95b6650f546bdb40197cc9a8ce343765af40c76a9"
+    },
+    "168287": {
+      "sourceEvidenceTargetId": "M_FOOD_520",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceCandidateSha256": "01cf6ed07b0a85d543a0bf76ea19e22e9cd3596e1b5226171fae2e65acb1e40d"
+    },
+    "2707478": {
+      "sourceEvidenceTargetId": "concept:food:a4a8f5e3bb1da055eb9c",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceCandidateSha256": "9865f89d87f76ddb7d7bdde5393b36aa337d84b95c2330b8f34a5016dbde2268"
+    },
+    "2706550": {
+      "sourceEvidenceTargetId": "concept:food:cd554715018ca565e053",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceCandidateSha256": "22a8adb50de31ba7c5eefac5c2b7747d3ebff245fe8406660579ce3fcf59842d"
+    },
+    "174924": {
+      "sourceEvidenceTargetId": "concept:food:60b22c4255ce8686d254",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceCandidateSha256": "5df4e34638757679aa912246dbef8e30a2877e0186f3584763410dfad95f9369"
+    },
+    "2706224": {
+      "sourceEvidenceTargetId": "concept:food:fb42017da86e3c621ead",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceCandidateSha256": "1f3df61acfb428b0e7118fc9ee53a0a57481aaa815921f1b08f926ef825571ba"
+    }
+  },
+  "items": [
+    {
+      "reviewTargetId": "concept:food:eb11f6da227c6100c8fc",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Cooking chocolate",
+      "fdcId": 167568,
+      "confidence": "medium",
+      "fdcDescription": "Baking chocolate, unsweetened, squares",
+      "fdcDataType": "SR Legacy",
+      "usageCountAtReview": 8,
+      "notes": "Generic cooking chocolate with no cocoa percentage uses the same retained unsweetened baking-chocolate reference already reviewed for plain/melted cooking chocolate. Chopping or melting is presentation only; exact cocoa percentage, sugar content, brand and tempering formulation are not certified."
+    },
+    {
+      "reviewTargetId": "concept:food:6eda7b2d2133e06c9f30",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Salted pork (in 100 g pieces)",
+      "fdcId": 168287,
+      "confidence": "high",
+      "fdcDescription": "Pork, cured, salt pork, raw",
+      "fdcDataType": "SR Legacy",
+      "usageCountAtReview": 1,
+      "notes": "Salted pork with a stated piece size is still plain salt pork. Use the retained raw cured salt-pork reference; the 100 g piece wording is a portion description only and does not authorize yield, cooking or density conversion."
+    },
+    {
+      "reviewTargetId": "concept:food:37b8f75c9aff6464fb39",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Salted pork (100 g pieces)",
+      "fdcId": 168287,
+      "confidence": "high",
+      "fdcDescription": "Pork, cured, salt pork, raw",
+      "fdcDataType": "SR Legacy",
+      "usageCountAtReview": 1,
+      "notes": "Salted pork with a stated piece size is still plain salt pork. Use the retained raw cured salt-pork reference; the 100 g piece wording is a portion description only and does not authorize yield, cooking or density conversion."
+    },
+    {
+      "reviewTargetId": "concept:food:558a86cdc27ec01b1223",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Seitan steaks (100–125 g)",
+      "fdcId": 2707478,
+      "confidence": "medium",
+      "fdcDescription": "Vegetarian, fillet",
+      "fdcDataType": "Survey (FNDDS)",
+      "usageCountAtReview": 1,
+      "notes": "Seitan steak wording matches the already reviewed generic prepared meat-substitute fillet family. Use Vegetarian, fillet as a bounded generic reference; wheat/soy/pea formulation, seasoning, brand and breading are not certified."
+    },
+    {
+      "reviewTargetId": "concept:food:8b371af1a2115d18effc",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Chikuwa, cut diagonally in half",
+      "fdcId": 2706550,
+      "confidence": "medium",
+      "fdcDescription": "Fish, cake or patty",
+      "fdcDataType": "Survey (FNDDS)",
+      "usageCountAtReview": 1,
+      "notes": "Chikuwa is a Japanese fish-cake product and halving it diagonally changes only presentation. Use the retained generic fish cake/patty reference already used for reviewed chikuwa variants; fish species, starch ratio and manufacturer formulation are not certified."
+    },
+    {
+      "reviewTargetId": "concept:food:ce1d929988b42e977664",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Kamaboko, cut 5 mm wide",
+      "fdcId": 2706550,
+      "confidence": "medium",
+      "fdcDescription": "Fish, cake or patty",
+      "fdcDataType": "Survey (FNDDS)",
+      "usageCountAtReview": 1,
+      "notes": "Kamaboko is a Japanese fish-cake product and cutting it 5 mm wide changes only presentation. Use the retained generic fish cake/patty reference already used for reviewed kamaboko; fish species, starch ratio and manufacturer formulation are not certified."
+    },
+    {
+      "reviewTargetId": "concept:food:c5655cf4596b7190147e",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Hanpen, cut into bite-size pieces",
+      "fdcId": 2706550,
+      "confidence": "medium",
+      "fdcDescription": "Fish, cake or patty",
+      "fdcDataType": "Survey (FNDDS)",
+      "usageCountAtReview": 1,
+      "notes": "Hanpen is a Japanese fish-cake product and cutting it into bite-size pieces changes only presentation. Use the retained generic fish cake/patty reference already used for reviewed hanpen; fish species, starch ratio and manufacturer formulation are not certified."
+    },
+    {
+      "reviewTargetId": "concept:food:0b390327b21f749569a0",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Slice of crustless sandwich bread",
+      "fdcId": 174924,
+      "confidence": "medium",
+      "fdcDescription": "Bread, white, commercially prepared (includes soft bread crumbs)",
+      "fdcDataType": "SR Legacy",
+      "usageCountAtReview": 1,
+      "notes": "A slice of crustless sandwich bread remains commercially prepared sandwich bread; slicing and crust removal do not create another food. Use the retained white commercial bread reference already reviewed for crustless sandwich bread; exact brand, enrichment and crumb moisture are not certified."
+    },
+    {
+      "reviewTargetId": "concept:food:ccb7c14f2b4cef108a97",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Skate wing, halved",
+      "fdcId": 2706224,
+      "confidence": "medium",
+      "fdcDescription": "Fish, NFS",
+      "fdcDataType": "Survey (FNDDS)",
+      "usageCountAtReview": 1,
+      "notes": "A halved skate wing remains plain skate. The retained corpus lacks a compatible skate-specific raw wing profile, so use the established Fish, NFS generic named-fish fallback; species-specific fatty-acid profile and trimming are not certified."
+    }
+  ]
+}

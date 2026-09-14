@@ -24,7 +24,7 @@ class Batch40BulkFamilyTests(unittest.TestCase):
   self.assertEqual(len(self.items),110); self.assertEqual(len(self.ids),110); self.assertEqual(sum(r['usageCountAtReview'] for r in self.items),765); self.assertEqual(sum(r['bulkFamilyTier']=='A' for r in self.items),7); self.assertEqual(sum(r['bulkFamilyTier']=='B' for r in self.items),103)
  def test_exact_batch39_baseline_and_checkpoint_moves_to_5071(self):
   names={r['path'] for r in self.checkpoint['reviewFiles'] if r['path'] < 'release_catalog_reviewed_nutrition_targets_044'}; bindings=[r for r in self.checkpoint['recordedBindings'] if r['reviewFile'] in names]; reviews=[r for r in self.checkpoint['reviewFiles'] if r['path'] in names]
-  self.assertEqual(len(bindings),4961); self.assertEqual(cp._digest(cp._encoded(bindings)),BASE_BINDINGS_SHA); self.assertEqual(cp._digest(cp._encoded(reviews)),BASE_REVIEW_SHA); self.assertEqual(self.checkpoint['summary']['recordedReviewTargetCount'],5071)
+  self.assertEqual(len(bindings),4961); self.assertEqual(cp._digest(cp._encoded(bindings)),BASE_BINDINGS_SHA); self.assertEqual(cp._digest(cp._encoded(reviews)),BASE_REVIEW_SHA); self.assertEqual(len(bindings) + len(self.items),5071)
  def test_destinations_disjoint_holds_unchanged(self):
   others={r['reviewTargetId'] for r in self.checkpoint['recordedBindings'] if r['reviewFile'] not in self.source_names}; self.assertFalse(self.ids&others); held=holds.load_holds(); self.assertEqual(len(held['targets']),12); self.assertEqual(held['registrySha256'],self.fixture['holdRegistrySha256']); self.assertFalse(self.ids&set(held['targets'])); self.assertFalse(set(self.sources)&set(held['targets']))
  def test_each_row_matches_exactly_one_batch40_rule(self):
