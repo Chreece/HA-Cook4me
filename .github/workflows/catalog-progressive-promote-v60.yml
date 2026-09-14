@@ -1,4 +1,4 @@
-name: Promote progressive catalog with offline nutrition v60
+name: Promote preserved progressive catalog v60
 
 on:
   push:
@@ -13,8 +13,10 @@ permissions:
   contents: write
 
 env:
-  SOURCE_RUN_ID: '34830320618'
-  SOURCE_HEAD_SHA: '7090fa6866bb90b9bda76c45831ac6bb3fc2fe80'
+  CAPTURE_RUN_ID: '34833842515'
+  CAPTURE_HEAD_SHA: '11f77b687aea2055e1ef2259e622718f2ec1ffc0'
+  PROBE_RUN_ID: '34836387461'
+  PROBE_HEAD_SHA: '73a36270d0de9fdbbccbdadb7903dcd93aaaea5c'
 
 jobs:
   promote-progressive-catalog:
@@ -29,49 +31,51 @@ jobs:
           python-version: '3.13'
       - name: Install standalone catalog requirements
         run: python -m pip install --disable-pip-version-check 'curl-cffi==0.13.0' 'websocket-client==1.8.0'
-      - name: Wait for the single provider-capture artifact
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -Eeuo pipefail
-          for attempt in $(seq 1 240); do
-            line="$(gh run view "$SOURCE_RUN_ID" --repo "$GITHUB_REPOSITORY" --json status,conclusion --jq '.status + " " + (.conclusion // "")')"
-            echo "source run: $line"
-            status="${line%% *}"
-            conclusion="${line#* }"
-            if [[ "$status" == "completed" ]]; then
-              [[ "$conclusion" == "success" ]] || { echo "source run failed: $conclusion" >&2; exit 1; }
-              exit 0
-            fi
-            sleep 15
-          done
-          echo "source run did not complete in time" >&2
-          exit 1
-      - name: Download exact validated capture artifact
+
+      - name: Download preserved provider capture and targeted 404 evidence
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -Eeuo pipefail
           BUILD="$RUNNER_TEMP/cook4me-progressive-promote"
-          mkdir -p "$BUILD/source"
-          gh run download "$SOURCE_RUN_ID" \
+          mkdir -p "$BUILD/capture" "$BUILD/probe"
+          gh run download "$CAPTURE_RUN_ID" \
             --repo "$GITHUB_REPOSITORY" \
-            --name "progressive-catalog-v60-${SOURCE_HEAD_SHA}" \
-            --dir "$BUILD/source"
-          test -f "$BUILD/source/candidate-catalog.v60.json"
-          test -f "$BUILD/source/progressive-catalog-summary.v60.json"
-      - name: Recreate exact nutrition queue and compact review targets
+            --name "progressive-catalog-capture-diagnostic-v60-${CAPTURE_HEAD_SHA}" \
+            --dir "$BUILD/capture"
+          gh run download "$PROBE_RUN_ID" \
+            --repo "$GITHUB_REPOSITORY" \
+            --name "failed-detail-evidence-v60-${PROBE_HEAD_SHA}" \
+            --dir "$BUILD/probe"
+          test -f "$BUILD/capture/captured-semantic-catalog.v60.json"
+          test -f "$BUILD/probe/failed-detail-evidence.v60.json"
+
+      - name: Repair only independently reproduced stale 404 detail rows
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-progressive-promote"
+          python tools/repair_release_catalog_v60_probed_404s.py \
+            --catalog "$BUILD/capture/captured-semantic-catalog.v60.json" \
+            --evidence "$BUILD/probe/failed-detail-evidence.v60.json" \
+            --output "$BUILD/repaired-catalog.v60.json" \
+            --summary "$BUILD/repair-summary.v60.json"
+          python tools/validate_release_catalog_v60.py \
+            "$BUILD/repaired-catalog.v60.json" \
+            | tee "$BUILD/repaired-validation.v60.json"
+
+      - name: Recreate nutrition queue and compact review targets
         run: |
           set -Eeuo pipefail
           BUILD="$RUNNER_TEMP/cook4me-progressive-promote"
           python tools/snapshot_release_catalog_nutrition_queue_v60.py \
-            --catalog "$BUILD/source/candidate-catalog.v60.json" \
+            --catalog "$BUILD/repaired-catalog.v60.json" \
             --output "$BUILD/nutrition-queue.v60.json" \
             --summary "$BUILD/nutrition-queue-summary.v60.json"
           python tools/compact_release_catalog_nutrition_review_targets_v60.py \
             --queue "$BUILD/nutrition-queue.v60.json" \
             --output "$BUILD/nutrition-review-targets.v60.json" \
             --summary "$BUILD/nutrition-review-targets-summary.v60.json"
+
       - name: Download pinned public USDA bulk reference data
         run: |
           set -Eeuo pipefail
@@ -79,7 +83,8 @@ jobs:
           python tools/prepare_fdc_reference_data_v60.py \
             --output-dir "$BUILD/fdc-reference-v60" \
             | tee "$BUILD/fdc-reference-summary.v60.json"
-      - name: Resolve every already-reviewed exact FDC binding offline
+
+      - name: Resolve all existing reviewed exact FDC bindings offline
         run: |
           set -Eeuo pipefail
           BUILD="$RUNNER_TEMP/cook4me-progressive-promote"
@@ -96,6 +101,7 @@ jobs:
           if [[ "$rc" -ne 0 && "$rc" -ne 2 ]]; then
             exit "$rc"
           fi
+
       - name: Attach reviewed nutrition and regenerate derived indexes offline
         run: |
           set -Eeuo pipefail
@@ -111,7 +117,7 @@ jobs:
           sys.path.insert(0, str(Path.cwd() / 'custom_components' / 'cook4me'))
           import build_release_catalog_v60_reviewed as builder
 
-          captured = json.loads((root / 'source' / 'candidate-catalog.v60.json').read_text(encoding='utf-8'))
+          captured = json.loads((root / 'repaired-catalog.v60.json').read_text(encoding='utf-8'))
           cache = json.loads((root / 'fdc-nutrition-reviewed-v60.json').read_text(encoding='utf-8'))
           result = builder.apply_reviewed_nutrition(captured, cache)
           (root / 'candidate-catalog-reviewed-nutrition.v60.json').write_text(
@@ -119,14 +125,28 @@ jobs:
               encoding='utf-8',
           )
           PY
-      - name: Validate progressive final catalog
+
+      - name: Compact runtime catalog without dropping recipe data
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-progressive-promote"
+          python tools/compact_release_catalog_v60_runtime.py \
+            --catalog "$BUILD/candidate-catalog-reviewed-nutrition.v60.json" \
+            --output "$BUILD/final-catalog.v60.json" \
+            --report "$BUILD/runtime-compaction.v60.json"
+          size="$(stat -c %s "$BUILD/final-catalog.v60.json")"
+          echo "final catalog bytes: $size"
+          test "$size" -lt 95000000
+
+      - name: Validate compact progressive final catalog
         run: |
           set -Eeuo pipefail
           BUILD="$RUNNER_TEMP/cook4me-progressive-promote"
           python tools/validate_release_catalog_v60.py \
-            "$BUILD/candidate-catalog-reviewed-nutrition.v60.json" \
+            "$BUILD/final-catalog.v60.json" \
             | tee "$BUILD/final-validation.v60.json"
-      - name: Record search and nutrition coverage
+
+      - name: Prove Greek cross-language search and record nutrition coverage
         run: |
           set -Eeuo pipefail
           BUILD="$RUNNER_TEMP/cook4me-progressive-promote"
@@ -140,63 +160,89 @@ jobs:
           sys.path.insert(0, str(Path.cwd() / 'custom_components' / 'cook4me'))
           import catalog_search_index as search
 
-          catalog = root / 'candidate-catalog-reviewed-nutrition.v60.json'
+          catalog = root / 'final-catalog.v60.json'
           payload = json.loads(catalog.read_text(encoding='utf-8'))
           prepared = search.prepare_search_index(payload.get('searchIndex') or {})
 
           def query(value):
-              result = search.search_index(prepared, value, language='el', strict_language=False, page=0, size=20)
-              return {'query': value, 'total': int(result.get('total') or 0), 'indices': list(result.get('indices') or [])}
+              result = search.search_index(
+                  prepared,
+                  value,
+                  language='el',
+                  strict_language=False,
+                  page=0,
+                  size=20,
+              )
+              return {
+                  'query': value,
+                  'total': int(result.get('total') or 0),
+                  'indices': list(result.get('indices') or []),
+              }
 
           source = payload.get('source') if isinstance(payload.get('source'), dict) else {}
           pending = json.loads((root / 'nutrition-pending.v60.json').read_text(encoding='utf-8'))
           pending_summary = pending.get('summary') if isinstance(pending.get('summary'), dict) else {}
+          greek = query('ριζότο')
+          latin = query('risotto')
           summary = {
               'catalogVersion': payload.get('catalogVersion'),
               'complete': payload.get('complete') is True,
               'catalogBytes': catalog.stat().st_size,
               'recipes': len(payload.get('recipes') or []),
+              'variants': sum(len(row.get('variants') or []) for row in payload.get('recipes') or [] if isinstance(row, dict)),
               'ingredients': len(payload.get('ingredients') or []),
               'auditedCatalogCount': int(source.get('auditedCatalogCount') or 0),
               'sourceCatalogCount': int(source.get('sourceCatalogCount') or 0),
+              'detailNotFoundCount': int(source.get('detailNotFoundCount') or 0),
+              'failedDetailCount': int(source.get('failedDetailCount') or 0),
               'nutritionRequiredForComplete': source.get('nutritionRequiredForComplete'),
               'reviewedNutritionResolvedCount': int(source.get('reviewedNutritionResolvedCount') or 0),
               'reviewedNutritionRequiredCount': int(source.get('reviewedNutritionRequiredCount') or 0),
               'foodIntelligenceNutritionResolvedCount': int(source.get('foodIntelligenceNutritionResolvedCount') or 0),
               'foodIntelligenceIngredientCount': int(source.get('foodIntelligenceIngredientCount') or 0),
               'recipeVariantNutritionFullyCoveredCount': int(source.get('recipeVariantNutritionFullyCoveredCount') or 0),
-              'recipeVariantNutritionVectorCount': int(source.get('recipeVariantNutritionVectorCount') or 0),
               'pendingReviewTargetCount': int(pending_summary.get('pendingReviewTargetCount') or 0),
               'pendingIdentityCount': int(pending_summary.get('pendingIdentityCount') or 0),
               'networkRequestsForNutrition': False,
               'searchIndexStats': (payload.get('searchIndex') or {}).get('stats') or {},
-              'greekRisotto': query('ριζότο'),
-              'latinRisotto': query('risotto'),
+              'greekRisotto': greek,
+              'latinRisotto': latin,
           }
-          if summary['catalogBytes'] >= 95_000_000:
-              raise SystemExit(f"catalog too large for safe GitHub storage: {summary['catalogBytes']} bytes")
           if not summary['complete']:
               raise SystemExit('final progressive catalog is not capture-complete')
+          if summary['auditedCatalogCount'] != 28:
+              raise SystemExit('final progressive catalog does not account for all 28 audited mappings')
+          if summary['failedDetailCount'] != 0:
+              raise SystemExit('unaccounted recipe-detail failures remain')
+          if summary['detailNotFoundCount'] != 1485:
+              raise SystemExit(f"unexpected accounted detail-not-found count: {summary['detailNotFoundCount']}")
           if summary['nutritionRequiredForComplete'] is not False:
               raise SystemExit('nutrition is still incorrectly required for catalog activation')
+          if latin['total'] <= 0:
+              raise SystemExit('real catalog contains no risotto search results')
+          if greek['total'] != latin['total']:
+              raise SystemExit(f"Greek risotto expansion differs from canonical results: {greek['total']} != {latin['total']}")
           (root / 'progressive-final-summary.v60.json').write_text(
               json.dumps(summary, ensure_ascii=False, indent=2) + '\n',
               encoding='utf-8',
           )
           print(json.dumps(summary, ensure_ascii=False, indent=2))
           PY
+
       - name: Verify final artifact contains no secrets
         run: |
           set -Eeuo pipefail
           BUILD="$RUNNER_TEMP/cook4me-progressive-promote"
           ! grep -Eiq 'access[_-]?token|refresh[_-]?token|authorization|bearer |password|api[_-]?key|client[_-]?secret' \
-            "$BUILD/candidate-catalog-reviewed-nutrition.v60.json" \
-            "$BUILD/progressive-final-summary.v60.json"
+            "$BUILD/final-catalog.v60.json" \
+            "$BUILD/progressive-final-summary.v60.json" \
+            "$BUILD/repair-summary.v60.json"
+
       - name: Promote exact validated bytes onto continuation branch
         run: |
           set -Eeuo pipefail
           BUILD="$RUNNER_TEMP/cook4me-progressive-promote"
-          cp "$BUILD/candidate-catalog-reviewed-nutrition.v60.json" \
+          cp "$BUILD/final-catalog.v60.json" \
             custom_components/cook4me/catalog/merged_catalog.v1.json
           cp "$BUILD/progressive-final-summary.v60.json" \
             tools/progressive_catalog_activation_v60_summary.json
@@ -206,19 +252,28 @@ jobs:
             custom_components/cook4me/catalog/merged_catalog.v1.json \
             tools/progressive_catalog_activation_v60_summary.json
           git diff --cached --check
-          git diff --cached --quiet && exit 0
+          if git diff --cached --quiet; then
+            echo 'validated catalog bytes already promoted'
+            exit 0
+          fi
           git commit -m "Activate progressive multilingual release catalog v60"
           git push origin HEAD:cook4me-progressive-catalog-activation-v60
+
       - name: Upload promotion evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: progressive-catalog-promotion-v60-${{ github.sha }}
           path: |
+            ${{ runner.temp }}/cook4me-progressive-promote/repair-summary.v60.json
+            ${{ runner.temp }}/cook4me-progressive-promote/repaired-validation.v60.json
             ${{ runner.temp }}/cook4me-progressive-promote/nutrition-queue-summary.v60.json
             ${{ runner.temp }}/cook4me-progressive-promote/nutrition-review-targets-summary.v60.json
+            ${{ runner.temp }}/cook4me-progressive-promote/fdc-reference-summary.v60.json
             ${{ runner.temp }}/cook4me-progressive-promote/offline-nutrition-resolution-summary.v60.json
             ${{ runner.temp }}/cook4me-progressive-promote/nutrition-pending.v60.json
+            ${{ runner.temp }}/cook4me-progressive-promote/runtime-compaction.v60.json
             ${{ runner.temp }}/cook4me-progressive-promote/final-validation.v60.json
             ${{ runner.temp }}/cook4me-progressive-promote/progressive-final-summary.v60.json
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 7
