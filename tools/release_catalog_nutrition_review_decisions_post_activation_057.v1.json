@@ -1,0 +1,44 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "evidenceBindingScope": "retained-reference-record",
+  "items": [
+    {
+      "approved": true,
+      "canonicalEnglishName": "Peach, peeled and diced",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Peaches, yellow, raw",
+      "fdcId": 325430,
+      "notes": "Explicit destination review accepts USDA Foundation 'Peaches, yellow, raw' as a bounded nutrition reference for the target peach that is peeled and diced but remains uncooked. Peeling and dicing do not change the underlying peach identity, but removing the skin can modestly change fibre and micronutrient composition, so confidence is medium rather than high. The retained record does not certify cultivar, ripeness, peel-loss fraction, drained yield, serving mass, or any added syrup/cooking treatment. Nutrition remains the USDA per-100-g raw peach reference; canned, cooked, frozen, dried, puréed, or syrup-packed peach identities remain separate.",
+      "reviewTargetId": "concept:food:61c04d38957512420ad9",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:62bf85d8452fa206ceed"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Yellow (or red) tomatoes, peeled and chopped",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Tomatoes, raw",
+      "fdcId": 2709719,
+      "notes": "Explicit destination review accepts the USDA/FNDDS generic 'Tomatoes, raw' record as a bounded nutrition reference for yellow-or-red tomatoes that are peeled and chopped but remain uncooked. The generic raw-tomato record intentionally avoids asserting one color/cultivar, while peeling can modestly change fibre and micronutrient composition; confidence is therefore medium. The binding does not infer cultivar proportions, ripeness, peel-loss fraction, drained yield, serving mass, sauce/confit preparation, or any cooking conversion. Canned, cooked, sun-dried, sauce, paste, and confit tomato identities remain separate.",
+      "reviewTargetId": "concept:food:83725625993a397db981",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceTargetId": "concept:food:e3fea58c69ff8c1fc700"
+    }
+  ],
+  "kind": "cook4me-fdc-retained-reference-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "5b98ea0b699e314989dc3bd05719a78ff33fb66aaa352345a237733616b383d5"
+}
