@@ -8,17 +8,26 @@ candidate metadata and the lexical token index. Keeping the full raw Foundation,
 SR Legacy and FNDDS records in memory during a 1,000+ target evidence pass wastes
 hundreds of MB and can force hosted runners into heavy memory pressure.
 
-This class preserves the exact candidate scoring/search implementation by
-subclassing ``ReferenceIndex`` and changing only construction/storage. It cannot
-be used to resolve nutrition profiles: ``food()`` and ``metadata()`` fail closed.
+Candidate scoring is byte-compatible with ``ReferenceIndex`` but stores private
+precomputed normalization/token metadata beside each compact candidate. That
+avoids repeating Unicode normalization, regex tokenization, and lexical-form
+expansion for the same USDA row on every target search. Private score metadata is
+never added to candidate rows, so it cannot leak into immutable evidence JSON.
+
+This index cannot resolve nutrition profiles: ``food()`` and ``metadata()`` fail
+closed.
 """
 from __future__ import annotations
 
 from collections import defaultdict
+from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any
 
 import fdc_reference_data_v60 as reference
+
+
+_ScoreRow = tuple[str, frozenset[str], frozenset[str], str, frozenset[str]]
 
 
 class CandidateReferenceIndex(reference.ReferenceIndex):
@@ -43,6 +52,7 @@ class CandidateReferenceIndex(reference.ReferenceIndex):
         self.manifest = manifest
         self.manifest_sha256 = reference.sha256(self.manifest_path)
         self.records: list[dict[str, Any]] = []
+        self._score_rows: list[_ScoreRow] = []
         self._token_index: dict[str, set[int]] = defaultdict(set)
         seen_fdc_ids: set[int] = set()
         self.candidate_only = True
@@ -74,6 +84,32 @@ class CandidateReferenceIndex(reference.ReferenceIndex):
 
                 record_index = len(self.records)
                 self.records.append(candidate)
+
+                description = reference.norm(candidate.get("description"))
+                description_raw_tokens = frozenset(reference.tokens(description))
+                description_tokens = frozenset(reference.lexical_tokens(description))
+                extras = reference.norm(
+                    " ".join(
+                        reference.text(candidate.get(key))
+                        for key in (
+                            "commonNames",
+                            "scientificName",
+                            "additionalDescriptions",
+                        )
+                        if candidate.get(key)
+                    )
+                )
+                extra_tokens = frozenset(reference.lexical_tokens(extras))
+                self._score_rows.append(
+                    (
+                        description,
+                        description_raw_tokens,
+                        description_tokens,
+                        extras,
+                        extra_tokens,
+                    )
+                )
+
                 searchable = " ".join(
                     reference.text(candidate.get(key))
                     for key in (
@@ -88,11 +124,59 @@ class CandidateReferenceIndex(reference.ReferenceIndex):
                 for token in reference.lexical_tokens(searchable):
                     self._token_index[token].add(record_index)
 
-            # Crucial difference from ReferenceIndex: no raw USDA row survives
-            # this dataset iteration. The next payload may therefore reclaim it.
             del payload
 
+        if len(self._score_rows) != len(self.records):
+            raise RuntimeError("candidate score metadata/index length mismatch")
         self.indexed_fdc_id_count = len(seen_fdc_ids)
+
+    def _rank(
+        self, query: str, *, max_candidates: int
+    ) -> list[tuple[float, int, dict[str, Any]]]:
+        """Rank with the exact ReferenceIndex formula using cached row metadata."""
+        query_lookup_tokens = reference.lexical_tokens(query)
+        candidate_indices: set[int] = set()
+        for token in query_lookup_tokens:
+            candidate_indices.update(self._token_index.get(token, set()))
+        if not candidate_indices:
+            return []
+
+        q = reference.norm(query)
+        if not q:
+            return []
+        q_raw_tokens = frozenset(reference.tokens(q))
+        q_tokens = frozenset(reference.lexical_tokens(q))
+
+        ranked: list[tuple[float, int, dict[str, Any]]] = []
+        for index in candidate_indices:
+            row = self.records[index]
+            d, d_raw_tokens, d_tokens, extras, extra_tokens = self._score_rows[index]
+            if not d:
+                continue
+            overlap = len(q_tokens & d_tokens)
+            if not overlap:
+                if not (q in extras or q_tokens.intersection(extra_tokens)):
+                    continue
+            coverage = overlap / max(1, len(q_tokens))
+            precision = overlap / max(1, len(d_tokens))
+            sequence = SequenceMatcher(None, q, d).ratio()
+            score = coverage * 400.0 + precision * 80.0 + sequence * 120.0
+            if q == d:
+                score += 1000.0
+            elif q_raw_tokens and q_raw_tokens == d_raw_tokens:
+                score += 900.0
+            elif d.startswith(q) or q.startswith(d):
+                score += 300.0
+            elif q in d:
+                score += 200.0
+            if row.get("dataType") == "Foundation":
+                score += 2.0
+            if score <= 0:
+                continue
+            ranked.append((score, int(row["fdcId"]), row))
+
+        ranked.sort(key=lambda item: (-item[0], item[1]))
+        return ranked[: max(1, int(max_candidates))]
 
     def food(self, fdc_id: int) -> dict[str, Any]:
         raise RuntimeError(

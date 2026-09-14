@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import importlib.util
 import json
 from pathlib import Path
 import sys
@@ -28,6 +27,9 @@ class CandidateReferenceIndexTests(unittest.TestCase):
                         "fdcId": 101,
                         "description": "Tomato",
                         "foodCategory": {"description": "Vegetables"},
+                        "scientificName": "Solanum lycopersicum",
+                        "commonNames": "garden tomato",
+                        "additionalDescriptions": "fresh whole tomato",
                     },
                     {
                         "fdcId": 102,
@@ -42,7 +44,11 @@ class CandidateReferenceIndexTests(unittest.TestCase):
                 "SRLegacyFoods",
                 [
                     {"fdcId": 201, "description": "Tomatoes, red, ripe, raw"},
-                    {"fdcId": 202, "description": "Sugar, brown"},
+                    {
+                        "fdcId": 202,
+                        "description": "Sugar, brown",
+                        "commonNames": "muscovado sugar",
+                    },
                 ],
             ),
             (
@@ -60,9 +66,7 @@ class CandidateReferenceIndexTests(unittest.TestCase):
         ]
         manifest_rows = []
         for data_type, filename, key, rows in datasets:
-            (root / filename).write_text(
-                json.dumps({key: rows}), encoding="utf-8"
-            )
+            (root / filename).write_text(json.dumps({key: rows}), encoding="utf-8")
             manifest_rows.append(
                 {
                     "dataType": data_type,
@@ -83,20 +87,43 @@ class CandidateReferenceIndexTests(unittest.TestCase):
         )
         return manifest
 
-    def test_candidate_index_returns_same_candidate_search_as_full_index(self):
+    def test_candidate_index_returns_exact_same_scores_ranks_and_rows_as_full_index(self):
         with tempfile.TemporaryDirectory() as directory:
             manifest = self._manifest(Path(directory))
             full = full_reference.ReferenceIndex(manifest)
             light = candidate_reference.CandidateReferenceIndex(manifest)
-            for query in ("Tomato", "Brown sugar", "rice", "vegetables"):
+            queries = (
+                "Tomato",
+                "tomatoes",
+                "Brown sugar",
+                "Sugar brown",
+                "rice",
+                "vegetables",
+                "Solanum lycopersicum",
+                "garden tomato",
+                "fresh whole",
+                "muscovado",
+                "does-not-exist",
+            )
+            for query in queries:
                 with self.subTest(query=query):
+                    self.assertEqual(
+                        light._rank(query, max_candidates=20),
+                        full._rank(query, max_candidates=20),
+                    )
                     self.assertEqual(
                         light.search(query, max_candidates=8),
                         full.search(query, max_candidates=8),
                     )
+
             self.assertTrue(light.candidate_only)
             self.assertEqual(light.indexed_fdc_id_count, 5)
+            self.assertEqual(len(light._score_rows), len(light.records))
             self.assertFalse(hasattr(light, "_raw_by_id"))
+            self.assertFalse(
+                any(key.startswith("_") for row in light.records for key in row),
+                "private precomputed score metadata leaked into candidate rows",
+            )
 
     def test_candidate_index_cannot_be_used_for_exact_nutrition_resolution(self):
         with tempfile.TemporaryDirectory() as directory:
