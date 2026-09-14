@@ -5,10 +5,7 @@ on:
     branches:
       - cook4me-nutrition-enrichment-post-activation-v60
     paths:
-      - .github/workflows/catalog-post-activation-nutrition-activate-v60.yml
-      - tools/activate_post_activation_reviewed_nutrition_v60.py
       - tools/release_catalog_reviewed_nutrition_targets_*.v1.json
-      - tests/test_activate_post_activation_reviewed_nutrition_v60.py
   workflow_dispatch:
 
 concurrency:
