@@ -85,7 +85,7 @@ class Batch39BulkFamilyTests(unittest.TestCase):
   def selective_read(path):
    if Path(path).name=='ignored': return evidence,EVIDENCE_SHA
    return original_read(path)
-  with patch.object(holds,'audit',return_value=audit), patch.object(cp,'_read',side_effect=selective_read), patch.object(resolver,'load_reviews',return_value={}): result=classifier.classify(Path('ignored'),review_root=TOOLS)
+  with patch.object(holds,'audit',return_value=audit), patch.object(cp,'_read',side_effect=selective_read), patch.object(resolver,'load_reviews',return_value={}), patch.object(classifier.worklist,'validate_ledger',return_value={}): result=classifier.classify(Path('ignored'),review_root=TOOLS)
   self.assertEqual(result['summary']['batch37ExplicitReviewCount'],106); self.assertEqual(result['summary']['batch38ExplicitReviewCount'],111); self.assertEqual(result['summary']['batch39ExplicitReviewCount'],122); self.assertGreaterEqual(result['summary']['explicitBulkReviewCount'],339); self.assertEqual(result['summary']['bindingsApprovedByClassifier'],0)
 
  def test_named_rice_rules_exclude_generic_and_prepared_rice(self):

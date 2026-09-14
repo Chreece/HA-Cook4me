@@ -48,7 +48,7 @@ class Batch40BulkFamilyTests(unittest.TestCase):
   def selective(path):
    if Path(path).name=='ignored': return {'source':True},EVIDENCE_SHA
    return original(path)
-  with patch.object(holds,'audit',return_value=audit),patch.object(cp,'_read',side_effect=selective),patch.object(resolver,'load_reviews',return_value={}): result=classifier.classify(Path('ignored'),review_root=TOOLS)
+  with patch.object(holds,'audit',return_value=audit),patch.object(cp,'_read',side_effect=selective),patch.object(resolver,'load_reviews',return_value={}),patch.object(classifier.worklist,'validate_ledger',return_value={}): result=classifier.classify(Path('ignored'),review_root=TOOLS)
   self.assertEqual(result['summary']['batch37ExplicitReviewCount'],106); self.assertEqual(result['summary']['batch38ExplicitReviewCount'],111); self.assertEqual(result['summary']['batch39ExplicitReviewCount'],122); self.assertEqual(result['summary']['batch40ExplicitReviewCount'],110); self.assertEqual(result['summary']['explicitBulkReviewCount'],449); self.assertEqual(result['summary']['bindingsApprovedByClassifier'],0)
  def test_known_ambiguous_families_stay_out(self):
   names={r['canonicalEnglishName'] for r in self.items}

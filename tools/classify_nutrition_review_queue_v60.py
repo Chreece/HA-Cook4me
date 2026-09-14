@@ -20,6 +20,7 @@ if str(TOOLS) not in sys.path:
     sys.path.insert(0, str(TOOLS))
 
 import nutrition_review_holds_v60 as holds  # noqa: E402
+import prepare_nutrition_review_worklist_v60 as worklist  # noqa: E402
 import resolve_reviewed_release_catalog_nutrition_targets_v60 as resolver  # noqa: E402
 import snapshot_nutrition_review_checkpoint_v60 as cp  # noqa: E402
 
@@ -97,6 +98,7 @@ def _partition_remaining(
     compiled: list[tuple[dict[str, Any], re.Pattern[str]]],
     *,
     has_candidates=None,
+    evidence_requirements: dict[str, dict[str, Any]] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     """Losslessly partition unresolved rows without selecting or approving anything.
 
@@ -106,6 +108,8 @@ def _partition_remaining(
     """
     if has_candidates is None:
         has_candidates = lambda row: bool(row.get("candidates"))
+    if evidence_requirements is None:
+        evidence_requirements = {}
     tier_b: list[dict[str, Any]] = []
     tier_c: list[dict[str, Any]] = []
     rule_covered_unreviewed: list[dict[str, Any]] = []
@@ -119,6 +123,16 @@ def _partition_remaining(
             raise ValueError(f"duplicate remaining target: {target_id}")
         seen.add(target_id)
         row = deepcopy(raw)
+        requirement = evidence_requirements.get(target_id)
+        if requirement is not None:
+            if not isinstance(requirement, dict):
+                raise ValueError(f"invalid evidence requirement: {target_id}")
+            row["classification"] = "C-explicit-evidence-requirement"
+            row["evidenceRequirementReasonCode"] = cp._text(
+                requirement, "reasonCode", target_id
+            )
+            tier_c.append(row)
+            continue
         matched = _matches(name, compiled)
         if len(matched) > 1:
             raise ValueError(f"remaining target matches multiple rules: {target_id}")
@@ -154,6 +168,10 @@ def classify(evidence_path: Path, *, review_root: Path = TOOLS) -> dict[str, Any
     evidence, evidence_sha = cp._read(evidence_path)
     if evidence_sha != rules_doc.get("sourceEvidenceSha256"):
         raise ValueError("bulk-family rules target a different evidence snapshot")
+    blocker_doc, _blocker_sha = cp._read(review_root / worklist.LEDGER.name)
+    evidence_requirements = worklist.validate_ledger(
+        blocker_doc, evidence, evidence_sha
+    )
     reviews = resolver.load_reviews(review_root)
     held = {r["reviewTargetId"] for r in audit["heldTargets"]}
 
@@ -195,8 +213,18 @@ def classify(evidence_path: Path, *, review_root: Path = TOOLS) -> dict[str, Any
             coverage.append({"reviewTargetId": target_id, "ruleId": rule["ruleId"], "tier": rule["tier"], "reviewFile": path.name})
 
     rule_covered_unreviewed, tier_b, tier_c = _partition_remaining(
-        audit["remainingUnheldCandidates"], compiled
+        audit["remainingUnheldCandidates"],
+        compiled,
+        evidence_requirements=evidence_requirements,
     )
+    remaining_ids = {
+        row["reviewTargetId"] for row in audit["remainingUnheldCandidates"]
+    }
+    active_requirements = {
+        target_id: requirement
+        for target_id, requirement in evidence_requirements.items()
+        if target_id in remaining_ids
+    }
 
     summary = {
         "recordedReviewTargetCount": audit["summary"]["recordedReviewTargetCount"],
@@ -216,6 +244,7 @@ def classify(evidence_path: Path, *, review_root: Path = TOOLS) -> dict[str, Any
         "batch40TierACount": sum(r["tier"] == "A" and r["reviewTargetId"] in batch40_ids for r in coverage),
         "batch40TierBCount": sum(r["tier"] == "B" and r["reviewTargetId"] in batch40_ids for r in coverage),
         "unreviewedRuleMatchCount": len(rule_covered_unreviewed),
+        "activeEvidenceRequirementCount": len(active_requirements),
         "manualFamilyCandidateCount": len(tier_b),
         "contextHeavyCount": len(tier_c),
         "bindingsApprovedByClassifier": 0,
@@ -233,6 +262,7 @@ def classify(evidence_path: Path, *, review_root: Path = TOOLS) -> dict[str, Any
             "classificationIsApproval": False,
             "ruleMatchWithoutReviewRowIsApproval": False,
             "candidateRankIsIdentityProof": False,
+            "explicitEvidenceRequirementForcesContext": True,
             "networkRequestsPerformed": False,
         },
         "summary": summary,
