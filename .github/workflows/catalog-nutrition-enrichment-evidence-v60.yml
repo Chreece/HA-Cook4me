@@ -6,6 +6,7 @@ on:
       - cook4me-nutrition-enrichment-post-activation-v60
     paths:
       - .github/workflows/catalog-nutrition-enrichment-evidence-v60.yml
+      - custom_components/cook4me/catalog/merged_catalog.v1.json
       - tools/capture_release_catalog_fdc_candidate_evidence_offline_v60.py
       - tools/classify_release_catalog_fdc_candidate_evidence_v60.py
       - tools/fdc_candidate_reference_data_v60.py
