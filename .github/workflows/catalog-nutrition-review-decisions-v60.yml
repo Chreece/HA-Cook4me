@@ -1,0 +1,46 @@
+name: Validate post-activation nutrition review decisions v60
+
+on:
+  push:
+    branches:
+      - cook4me-nutrition-enrichment-post-activation-v60
+    paths:
+      - .github/workflows/catalog-nutrition-review-decisions-v60.yml
+      - tools/compile_release_catalog_fdc_review_decisions_v60.py
+      - tools/snapshot_nutrition_review_checkpoint_v60.py
+      - tools/resolve_reviewed_release_catalog_nutrition_targets_v60.py
+      - tests/test_compile_release_catalog_fdc_review_decisions_v60.py
+      - tests/test_nutrition_review_checkpoint_v60.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-review-decisions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Compile review-decision tooling
+        run: |
+          set -Eeuo pipefail
+          python -m py_compile \
+            tools/compile_release_catalog_fdc_review_decisions_v60.py \
+            tools/snapshot_nutrition_review_checkpoint_v60.py \
+            tools/resolve_reviewed_release_catalog_nutrition_targets_v60.py
+
+      - name: Run fail-closed review-decision regressions
+        run: |
+          set -Eeuo pipefail
+          python -m unittest \
+            tests.test_compile_release_catalog_fdc_review_decisions_v60 \
+            tests.test_nutrition_review_checkpoint_v60 -v
