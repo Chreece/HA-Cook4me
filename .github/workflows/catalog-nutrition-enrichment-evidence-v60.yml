@@ -75,6 +75,7 @@ jobs:
           mkdir -p "$BUILD"
           python tools/prepare_post_activation_nutrition_review_targets_v60.py \
             --catalog custom_components/cook4me/catalog/merged_catalog.v1.json \
+            --review-root tools \
             --queue-output "$BUILD/nutrition-queue.v60.json" \
             --queue-summary "$BUILD/nutrition-queue-summary.v60.json" \
             --targets-output "$BUILD/nutrition-review-targets.v60.json" \
@@ -91,16 +92,27 @@ jobs:
           queue = json.loads((root / 'nutrition-queue-summary.v60.json').read_text(encoding='utf-8'))
           targets = json.loads((root / 'nutrition-review-targets-summary.v60.json').read_text(encoding='utf-8'))
           facts = {
+              'activatedPendingIdentityCount': int(queue.get('activatedPendingNutritionCount') or 0),
               'pendingIdentityCount': int(queue.get('pendingNutritionCount') or 0),
+              'reviewedAfterActivationIdentityCount': int(queue.get('reviewedAfterActivationIdentityCount') or 0),
+              'activatedReviewTargetCount': int(targets.get('activatedReviewTargetCount') or 0),
               'reviewTargetCount': int(targets.get('reviewTargetCount') or 0),
+              'reviewedAfterActivationTargetCount': int(targets.get('reviewedAfterActivationTargetCount') or 0),
+              'reviewedAfterActivationUsageCountSum': int(targets.get('reviewedAfterActivationUsageCountSum') or 0),
               'usedReviewTargetCount': int(targets.get('usedReviewTargetCount') or 0),
               'runtimeSemanticReviewReceipts': int(targets.get('postActivationSemanticReviewReceiptCount') or 0),
               'runtimeSemanticReviewReceiptTargets': int(targets.get('postActivationSemanticReviewReceiptTargetCount') or 0),
           }
-          if facts['pendingIdentityCount'] != 1851:
-              raise SystemExit(f"unexpected pending identity count: {facts['pendingIdentityCount']}")
-          if facts['reviewTargetCount'] != 1251:
-              raise SystemExit(f"unexpected review target count: {facts['reviewTargetCount']}")
+          if facts['activatedPendingIdentityCount'] != 1851:
+              raise SystemExit(f"unexpected activated pending identity count: {facts['activatedPendingIdentityCount']}")
+          if facts['activatedReviewTargetCount'] != 1251:
+              raise SystemExit(f"unexpected activated review target count: {facts['activatedReviewTargetCount']}")
+          if facts['pendingIdentityCount'] + facts['reviewedAfterActivationIdentityCount'] != 1851:
+              raise SystemExit(f"review overlay lost activated identities: {facts}")
+          if facts['reviewTargetCount'] + facts['reviewedAfterActivationTargetCount'] != 1251:
+              raise SystemExit(f"review overlay lost activated targets: {facts}")
+          if facts['reviewedAfterActivationTargetCount'] <= 0:
+              raise SystemExit(f"expected reviewed-after-activation targets to be subtracted: {facts}")
           print(json.dumps(facts, ensure_ascii=False, indent=2))
           PY
 
@@ -112,7 +124,7 @@ jobs:
             --output-dir "$BUILD/fdc-reference-v60" \
             | tee "$BUILD/fdc-reference-summary.v60.json"
 
-      - name: Capture candidate evidence for all review targets offline
+      - name: Capture candidate evidence for all remaining review targets offline
         run: |
           set -Eeuo pipefail
           BUILD="$RUNNER_TEMP/cook4me-nutrition-enrichment-v60"
@@ -140,10 +152,13 @@ jobs:
           import json, os
           from pathlib import Path
           root = Path(os.environ['RUNNER_TEMP']) / 'cook4me-nutrition-enrichment-v60'
+          targets = json.loads((root / 'nutrition-review-targets-summary.v60.json').read_text(encoding='utf-8'))
           evidence = json.loads((root / 'fdc-candidate-evidence-summary.v60.json').read_text(encoding='utf-8'))
           triage = json.loads((root / 'fdc-candidate-triage-summary.v60.json').read_text(encoding='utf-8'))
+          expected_targets = int(targets.get('reviewTargetCount') or 0)
           facts = {
               'reviewTargetCount': int(evidence.get('reviewTargetCount') or 0),
+              'reviewedAfterActivationTargetCount': int(targets.get('reviewedAfterActivationTargetCount') or 0),
               'candidateOnlyReferenceIndex': evidence.get('candidateOnlyReferenceIndex') is True,
               'indexedReferenceFdcIdCount': int(evidence.get('indexedReferenceFdcIdCount') or 0),
               'withCandidateCount': int(evidence.get('withCandidateCount') or 0),
@@ -158,8 +173,10 @@ jobs:
               'bindingCreatedCount': int(triage.get('bindingCreatedCount') or 0),
               'networkRequestsPerformed': bool(triage.get('networkRequestsPerformed')),
           }
-          if facts['reviewTargetCount'] != 1251:
-              raise SystemExit(f"candidate evidence lost review targets: {facts['reviewTargetCount']}")
+          if facts['reviewTargetCount'] != expected_targets:
+              raise SystemExit(f"candidate evidence lost review targets: expected={expected_targets} actual={facts['reviewTargetCount']}")
+          if facts['reviewTargetCount'] + facts['reviewedAfterActivationTargetCount'] != 1251:
+              raise SystemExit(f"candidate evidence/review overlay does not reconcile to activated target count: {facts}")
           if not facts['candidateOnlyReferenceIndex'] or facts['indexedReferenceFdcIdCount'] <= 0:
               raise SystemExit(f'candidate capture did not use lightweight reference index: {facts}')
           if facts['selectionCount'] or facts['bindingCreatedCount'] or facts['networkRequestsPerformed']:
