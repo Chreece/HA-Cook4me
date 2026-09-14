@@ -24,6 +24,7 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
+  actions: write
   contents: write
 
 jobs:
@@ -33,6 +34,7 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       ARCHIVE_TAG: nutrition-evidence-v60-archive
+      ACTIVATION_BRANCH: cook4me-nutrition-enrichment-post-activation-v60
     steps:
       - uses: actions/checkout@v4
         with:
@@ -119,3 +121,13 @@ jobs:
             --review-root tools \
             --output /tmp/post-activation-review-verification.v60.json
           cat /tmp/post-activation-review-verification.v60.json
+
+      - name: Dispatch activation for verified review state
+        run: |
+          set -Eeuo pipefail
+          test -n "$GITHUB_SHA"
+          gh workflow run catalog-post-activation-nutrition-activate-v60.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref "$ACTIVATION_BRANCH" \
+            -f source_sha="$GITHUB_SHA"
+          echo "Dispatched nutrition activation for verified SHA $GITHUB_SHA"
