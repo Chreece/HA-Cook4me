@@ -26,27 +26,103 @@ jobs:
       - name: Install standalone catalog requirements
         run: python -m pip install --disable-pip-version-check 'curl-cffi==0.13.0' 'websocket-client==1.8.0'
       - name: Capture all audited catalogs once with progressive nutrition
+        id: capture
         run: |
-          set -Eeuo pipefail
+          set -uo pipefail
           BUILD="$RUNNER_TEMP/cook4me-progressive-v60"
           HOME_EMPTY="$RUNNER_TEMP/cook4me-empty-home"
           mkdir -p "$BUILD" "$HOME_EMPTY"
+          set +e
           python tools/run_release_catalog_v60_capture_once.py \
             --catalog-version "2026-09-14-v60-progressive" \
             --storage-home "$HOME_EMPTY" \
             --configured-language de \
             --configured-country DE \
             --workers 8 \
+            --verbose \
             --build-dir "$BUILD" \
             --nutrition-cache "$BUILD/fdc-nutrition-reviewed-v60.json" \
-            --review-root tools
+            --review-root tools \
+            2>&1 | tee "$BUILD/capture-command.v60.log"
+          rc=${PIPESTATUS[0]}
+          set -e
+          echo "exit_code=$rc" >> "$GITHUB_OUTPUT"
+          if [[ "$rc" -eq 0 ]]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          fi
+          if [[ -f "$BUILD/captured-semantic-catalog.v60.json" ]]; then
+            echo "captured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "captured=false" >> "$GITHUB_OUTPUT"
+          fi
+          if [[ -f "$BUILD/release-manifest.v60.json" ]]; then
+            echo '--- release manifest after capture ---'
+            cat "$BUILD/release-manifest.v60.json"
+          fi
+          exit 0
+      - name: Diagnose captured semantic artifact
+        if: always()
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-progressive-v60"
+          python - <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          root = Path(os.environ['RUNNER_TEMP']) / 'cook4me-progressive-v60'
+          sys.path.insert(0, str(Path.cwd() / 'tools'))
+          import validate_release_catalog_v60 as validator
+
+          catalog = root / 'captured-semantic-catalog.v60.json'
+          report = root / 'capture-validation.v60.json'
+          if not catalog.exists():
+              result = {
+                  'valid': False,
+                  'errors': ['captured-semantic-catalog.v60.json was not produced'],
+                  'warnings': [],
+                  'stats': {},
+              }
+          else:
+              payload = json.loads(catalog.read_text(encoding='utf-8'))
+              result = validator.validate(
+                  payload,
+                  require_complete=True,
+                  require_intelligence=False,
+              )
+          report.write_text(
+              json.dumps(result, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(json.dumps(result, ensure_ascii=False, indent=2))
+          PY
+      - name: Upload capture diagnostic artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: progressive-catalog-capture-diagnostic-v60-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/cook4me-progressive-v60/captured-semantic-catalog.v60.json
+            ${{ runner.temp }}/cook4me-progressive-v60/candidate-catalog.v60.json
+            ${{ runner.temp }}/cook4me-progressive-v60/nutrition-queue-summary.v60.json
+            ${{ runner.temp }}/cook4me-progressive-v60/nutrition-pending.v60.json
+            ${{ runner.temp }}/cook4me-progressive-v60/release-manifest.v60.json
+            ${{ runner.temp }}/cook4me-progressive-v60/capture-validation.v60.json
+            ${{ runner.temp }}/cook4me-progressive-v60/capture-command.v60.log
+          if-no-files-found: warn
+          retention-days: 7
       - name: Independently validate progressive candidate
+        if: steps.capture.outputs.ok == 'true'
         run: |
           set -Eeuo pipefail
           BUILD="$RUNNER_TEMP/cook4me-progressive-v60"
           python tools/validate_release_catalog_v60.py "$BUILD/candidate-catalog.v60.json" \
             | tee "$BUILD/validation.v60.json"
       - name: Prove all-language search and record Greek risotto result
+        if: steps.capture.outputs.ok == 'true'
         run: |
           set -Eeuo pipefail
           BUILD="$RUNNER_TEMP/cook4me-progressive-v60"
@@ -132,6 +208,7 @@ jobs:
               raise SystemExit('progressive catalog still blocks activation on nutrition')
           PY
       - name: Verify persisted artifacts contain no secrets
+        if: steps.capture.outputs.ok == 'true'
         run: |
           set -Eeuo pipefail
           BUILD="$RUNNER_TEMP/cook4me-progressive-v60"
@@ -140,6 +217,7 @@ jobs:
             "$BUILD/release-manifest.v60.json" \
             "$BUILD/progressive-catalog-summary.v60.json"
       - name: Upload validated progressive catalog
+        if: steps.capture.outputs.ok == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: progressive-catalog-v60-${{ github.sha }}
@@ -153,3 +231,8 @@ jobs:
             ${{ runner.temp }}/cook4me-progressive-v60/progressive-catalog-summary.v60.json
           if-no-files-found: error
           retention-days: 7
+      - name: Fail closed after preserving an invalid capture
+        if: always() && steps.capture.outputs.ok != 'true'
+        run: |
+          echo "capture gate failed with exit code ${{ steps.capture.outputs.exit_code }}; diagnostic artifact was preserved" >&2
+          exit 2
