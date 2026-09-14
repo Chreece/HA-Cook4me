@@ -24,6 +24,7 @@ _ALLOWED_DATA_TYPES = {"Foundation", "SR Legacy", "Survey (FNDDS)"}
 # produces zero candidates, and every alias-derived candidate is marked so a
 # reviewer can see that the result did not come from the original wording.
 _DISCOVERY_ALIASES: dict[str, tuple[str, ...]] = {
+    "2 tbsp mirin": ("rice wine", "sweet rice wine"),
     "aubergine": ("eggplant",),
     "beetroot": ("beet", "beets"),
     "beansprouts": ("bean sprouts",),
@@ -31,21 +32,19 @@ _DISCOVERY_ALIASES: dict[str, tuple[str, ...]] = {
     "breadcrumbs": ("bread crumbs",),
     "chilli": ("chili",),
     "ciabatta": ("italian bread",),
+    "cornflakes": ("corn flakes",),
     # Cornflour is locale-sensitive. Surface both starch and flour candidates;
     # review must decide the intended identity from Cook4Me evidence.
-    "cornflakes": ("corn flakes",),
     "cornflour": ("cornstarch", "corn starch", "corn flour"),
     "courgette": ("zucchini",),
     "courgettes": ("zucchini",),
-    "doubanjiang": ("chili bean sauce", "chili bean paste"),
-    "gochujang": ("red pepper paste", "chili paste"),
-    "guanciale": ("pork jowl",),
     "kombu": ("kelp",),
-    "labneh": ("yogurt cheese", "strained yogurt"),
+    "kombu 3x3": ("kelp",),
     "linseeds": ("flax seeds",),
-    "matcha": ("green tea powder", "green tea"),
     "mirin": ("rice wine", "sweet rice wine"),
-    "nori": ("seaweed",),
+    "nori": ("dried seaweed", "seaweed"),
+    "nori sheet optional": ("dried seaweed", "seaweed"),
+    "nori sheets": ("dried seaweed", "seaweed"),
     "panko breadcrumbs": ("panko bread crumbs", "bread crumbs"),
     "passata": ("tomato puree",),
     "pomelo": ("pummelo",),
