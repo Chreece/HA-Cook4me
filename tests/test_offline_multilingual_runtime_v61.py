@@ -161,6 +161,18 @@ class OfflineMultilingualRuntimeTests(unittest.TestCase):
                 self.assertEqual(result["catalogNutrition"]["basisUnit"], "g")
                 self.assertTrue(result["officialRecipeUsage"])
                 self.assertEqual(result["stock"], None)
+                self.assertEqual(result["ingredientInfoContract"], "offline-ingredient-info-v62")
+                async def executor(function, *args):
+                    return function(*args)
+                hass = types.SimpleNamespace(async_add_executor_job=AsyncMock(side_effect=executor))
+                await ws.ws_ingredient_info(hass, connection, {"id": 3, "ingredient": {"foodKey": "M_FOOD_421", "foodName": "Arroz"}, "language": "el"})
+                rice = responses[3]
+                self.assertEqual(rice["ingredient"]["name"], "Ρύζι")
+                self.assertIsNone(rice["catalogNutrition"])
+                self.assertTrue(rice["nutritionReferences"])
+                self.assertTrue(all(row["referenceOnly"] for row in rice["nutritionReferences"]))
+                self.assertEqual(len({row["displayFamilyId"] for row in rice["officialRecipeUsage"]}), len(rice["officialRecipeUsage"]))
+                hass.async_add_executor_job.assert_awaited()
                 # Existing saved product/reference data remains distinct.
                 saved = {"nutrition": {"basisQuantity": 100, "basisUnit": "ml", "values": {"energyKcal": 20}}}
                 store.get_generic = lambda _: deepcopy(saved)
@@ -178,7 +190,7 @@ class OfflineMultilingualRuntimeTests(unittest.TestCase):
         prefix = "cook4me_offline_v61_test"
         identity = lambda value: value
         websocket_api = types.SimpleNamespace(websocket_command=lambda _: identity, async_response=identity)
-        bridge = types.SimpleNamespace(can_accept_recipe=False, recipe_hub=types.SimpleNamespace(annotate=deepcopy))
+        bridge = types.SimpleNamespace(can_accept_recipe=False, recipe_hub=types.SimpleNamespace(annotate=deepcopy, profile={}))
         legacy = types.SimpleNamespace(_bridge=lambda *_: bridge, _send_error=lambda *args: self.fail(str(args)))
         v30 = types.SimpleNamespace(_device_language=lambda _: "de", _device_country=lambda _: "DE", _annotate_search=lambda _, result: result)
 
@@ -210,6 +222,14 @@ class OfflineMultilingualRuntimeTests(unittest.TestCase):
                 await ws.ws_recipe_detail(None, connection, {"id": 2, "variant_id": first["searchVariantId"], "language": "de"})
                 self.assertEqual(responses[2]["catalogNutrition"], first["catalogNutrition"])
                 self.assertTrue(responses[2]["offline"])
+                async def executor(function, *args):
+                    return function(*args)
+                hass = types.SimpleNamespace(async_add_executor_job=AsyncMock(side_effect=executor))
+                await ws.ws_ingredient_catalog(hass, connection, {"id": 3, "language": "el-GR"})
+                self.assertEqual(responses[3]["language"], "el")
+                self.assertEqual(responses[3]["presentationVersion"], 62)
+                self.assertEqual(sum(row["name"] == "Ρύζι" for row in responses[3]["items"]), 1)
+                hass.async_add_executor_job.assert_awaited()
 
         asyncio.run(run())
 

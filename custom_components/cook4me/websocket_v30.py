@@ -86,6 +86,7 @@ async def _search(hass: HomeAssistant, bridge, *, query: str, page: int, size: i
             page=page,
             size=size,
             strict_language=strict_language,
+            group_families=True,
         )
         if coordinator is not None:
             coordinator.progress(operation, "catalog_index", completed=1, total=1, message="Release catalog ready")

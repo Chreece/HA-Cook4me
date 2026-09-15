@@ -36,6 +36,7 @@ def _offline_search(bridge, *, query: str, query_language: str, languages: tuple
         catalog_languages=languages or None,
         page=page,
         size=size,
+        group_families=True,
     )
     result.update({
         "queryLanguage": _language(query_language),
@@ -96,6 +97,7 @@ async def ws_recipe_detail(hass: HomeAssistant, connection, msg) -> None:
                 language=language,
                 configured_language=v30._device_language(bridge),
                 country=v30._device_country(bridge),
+                group_families=True,
             )
         if isinstance(local, dict):
             result = bridge.recipe_hub.annotate(deepcopy(local))
@@ -123,7 +125,37 @@ async def ws_recipe_detail(hass: HomeAssistant, connection, msg) -> None:
     connection.send_result(msg["id"], result)
 
 
+@websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/v31/ingredient_catalog",
+    vol.Optional("entry_id"): str,
+    vol.Optional("language", default="en"): str,
+    vol.Optional("refresh", default=False): bool,
+})
+@websocket_api.async_response
+async def ws_ingredient_catalog(hass, connection, msg) -> None:
+    try:
+        bridge = legacy._bridge(hass, msg.get("entry_id"))
+        language = _language(msg.get("language")) or "en"
+        items = await hass.async_add_executor_job(release_catalog.ingredient_choices, language)
+        connection.send_result(msg["id"], {"items": items, "language": language, "presentationVersion": 62, "offline": True, "houseIngredients": bridge.recipe_hub.profile.get("houseIngredients") or []})
+    except Exception as exc:
+        legacy._send_error(connection, msg, exc)
+
+
+@websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/v31/ingredient_info",
+    vol.Optional("entry_id"): str,
+    vol.Required("ingredient"): dict,
+    vol.Optional("language"): str,
+    vol.Optional("include_official_usage", default=True): bool,
+})
+@websocket_api.async_response
+async def ws_ingredient_info(hass, connection, msg) -> None:
+    from .websocket_v18 import ws_ingredient_info as ingredient_info
+    await ingredient_info(hass, connection, msg)
+
+
 @callback
 def async_register(hass: HomeAssistant) -> None:
-    for command in (ws_official_search, ws_recipe_detail):
+    for command in (ws_official_search, ws_recipe_detail, ws_ingredient_catalog, ws_ingredient_info):
         websocket_api.async_register_command(hass, command)

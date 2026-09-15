@@ -50,6 +50,8 @@ jobs:
           bash -n tools/run_release_catalog_taxonomy_capture.sh
           bash -n tools/run_release_catalog_fdc_offline_review_prep_v60.sh
           bash -n tools/deploy_offline_runtime_v61.sh
+          bash -n tools/deploy_offline_runtime_v62.sh
+          python tools/build_frontend_bundle_v62.py --check
           python - <<'PY'
           import json
           from pathlib import Path
@@ -59,7 +61,7 @@ jobs:
           PY
           for f in custom_components/cook4me/frontend/cook4me-panel-v*.js; do node --check "$f"; done
       - name: Check installer backup and rollback with isolated command stubs
-        run: sudo "$(command -v python)" -m unittest discover -s tests -p test_deploy_offline_runtime_v61.py -v
+        run: sudo "$(command -v python)" -m unittest discover -s tests -p 'test_deploy_offline_runtime_v*.py' -v
       - name: Instantiate Recipe Hub in a DOM runtime
         run: |
           npm install --no-save --package-lock=false linkedom@0.18.12
@@ -73,5 +75,6 @@ jobs:
           timeout 20s node --experimental-default-type=module tests/frontend_v58_regression_smoke.mjs
           timeout 20s node --experimental-default-type=module tests/frontend_v59_regression_smoke.mjs
           timeout 20s node --experimental-default-type=module tests/frontend_v61_regression_smoke.mjs
+          timeout 20s node --experimental-default-type=module tests/frontend_v62_regression_smoke.mjs
       - name: Run focused tests
         run: python -m unittest discover -s tests -v

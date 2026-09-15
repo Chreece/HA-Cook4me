@@ -9,6 +9,7 @@ from typing import Any, Iterable
 try:
     from . import release_catalog_legacy as _legacy
     from . import recipe_metrics_v60 as _metrics
+    from . import catalog_presentation as _presentation
     from .catalog_search_index import (
         compile_search_index,
         prepare_search_index,
@@ -33,6 +34,7 @@ except ImportError:  # Standalone unit-test import via spec_from_file_location.
     _metrics = _load_sibling(
         "cook4me_recipe_metrics_runtime_test", "recipe_metrics_v60.py"
     )
+    _presentation = _load_sibling("cook4me_catalog_presentation", "catalog_presentation.py")
     _search_module = _load_sibling(
         "cook4me_catalog_search_index_runtime_test", "catalog_search_index.py"
     )
@@ -121,6 +123,7 @@ def _prepare_fast_indexes(payload: dict[str, Any]) -> None:
     # Recipe totals are cheap to calculate for the handful of rows materialized
     # by a page request, avoiding one large duplicated vector per variant.
     payload["_runtimeNutritionIndex"] = _metrics.build_nutrition_index(ingredient_rows)
+    _presentation.prepare_families(payload)
 
 
 def _global_ingredient(payload: dict[str, Any], row: Any) -> dict[str, Any] | None:
@@ -446,6 +449,7 @@ def recipe_by_variant(
             language=language,
             configured_language=configured_language,
             country=country,
+            variant_id=wanted,
         ),
     )
 

@@ -590,6 +590,11 @@ async def ws_ingredient_info(hass, connection, msg) -> None:
             + list(book_state.get("recipeList") or []),
             stock or ingredient,
         )
+        reference_language = msg.get("language") or "en"
+        references = (
+            await hass.async_add_executor_job(release_catalog.ingredient_nutrition_references, ingredient, reference_language)
+            if hass is not None else release_catalog.ingredient_nutrition_references(ingredient, reference_language)
+        )
 
         official: list[dict[str, Any]] = []
         if name and bool(msg.get("include_official_usage", True)):
@@ -602,6 +607,7 @@ async def ws_ingredient_info(hass, connection, msg) -> None:
                         configured_language=v11._device_language(bridge),
                         country=str(bridge.entry.data.get(CONF_COUNTRY, DEFAULT_COUNTRY)),
                         size=12,
+                        group_families=True,
                     )
                 else:
                     search = await v10._search_with_diagnostic(
@@ -629,11 +635,13 @@ async def ws_ingredient_info(hass, connection, msg) -> None:
                 "identity": identity,
                 "ingredient": {
                     **({"key": stock.get("key")} if stock and stock.get("key") else {}),
-                    "name": name or (stock or {}).get("name") or "Ingredient",
+                    "name": release_catalog.ingredient_display_name(ingredient, msg.get("language") or "en") or name or (stock or {}).get("name") or "Ingredient",
                 },
                 "stock": stock,
                 "genericNutrition": generic,
                 "catalogNutrition": catalog_nutrition,
+                "ingredientInfoContract": "offline-ingredient-info-v62",
+                "nutritionReferences": references,
                 "exactNutritionLots": exact_lots,
                 "history": history,
                 "historyCount": len(history),

@@ -132,6 +132,52 @@ def ingredient_nutrition_profile(ingredient: Any) -> dict[str, Any] | None:
     return _core.ingredient_nutrition_profile(ingredient)
 
 
+def ingredient_choices(language: str, query: str = "", limit: int | None = None):
+    return _core._presentation.ingredient_choices(load_release_catalog(), language, query, limit)
+
+
+def ingredient_display_name(ingredient: Any, language: str) -> str:
+    raw = _core._global_ingredient(load_release_catalog(), ingredient)
+    return _core._presentation.display_name(raw or ingredient, language)
+
+
+def ingredient_nutrition_references(ingredient: Any, language: str):
+    """Offer explicitly different food types for comparison, not an assigned profile."""
+    payload = load_release_catalog()
+    source = _core._global_ingredient(payload, ingredient)
+    if not source or ingredient_nutrition_profile(ingredient):
+        return []
+    wanted = _core._presentation.name_key(source.get("canonicalName", ""))
+    if not wanted or len(wanted.split()) > 2:
+        return []
+    candidates = []
+    for raw in payload.get("ingredients", []):
+        name = _core._presentation.name_key(_core._presentation.clean_name(raw.get("canonicalName")))
+        if name == wanted or not name.endswith(" "+wanted) or not raw.get("nutrition"):
+            continue
+        profile = ingredient_nutrition_profile({"ingredientId": raw["id"]})
+        if profile:
+            candidates.append((name, raw, profile))
+    candidates.sort(key=lambda value: (value[0] not in {"cooked rice", "basmati rice", "brown rice"}, len(value[0]), value[0]))
+    output, seen = [], set()
+    for name, raw, profile in candidates:
+        key = (name, str(profile.get("sourceId")))
+        if key in seen:
+            continue
+        seen.add(key)
+        output.append({"ingredientId": raw["id"], "name": _core._presentation.display_name(raw, language), "nutrition": profile, "referenceOnly": True})
+        if len(output) == 4:
+            break
+    return output
+
+
+def _display_family_row(payload, members, language, configured_language, country, preferred_variant=""):
+    def materialize(raw, variant_id, display_language, enrich=True):
+        row = _core._legacy._recipe_row(raw, language=display_language, configured_language=configured_language, country=country, variant_id=variant_id)
+        return _core._enrich_recipe_row(payload, row) if enrich else row
+    return _core._presentation.family_row(payload, members, language=language, configured_language=configured_language, country=country, materialize=materialize, preferred_variant=preferred_variant)
+
+
 def search_release_recipes(
     query: str,
     *,
@@ -144,6 +190,7 @@ def search_release_recipes(
     diet: str = "",
     allergies: Iterable[str] = (),
     catalog_languages: Iterable[str] | None = None,
+    group_families: bool = False,
 ) -> dict[str, Any]:
     """Intersect precompiled search and strict safety sets before pagination."""
     page = max(0, int(page))
@@ -184,9 +231,18 @@ def search_release_recipes(
         language=language,
         strict_language=strict_language,
         allowed_indices=allowed,
-        page=page,
-        size=size,
+        page=0 if group_families else page,
+        size=max(1, len(recipes)) if group_families else size,
     )
+
+    family_members = {}
+    if group_families:
+        roots = payload["_runtimeDisplayFamily"]
+        for index in match["indices"]:
+            family_members.setdefault(roots[index], []).append(index)
+        match["rawTotal"] = match["total"]
+        match["total"] = len(family_members)
+        match["indices"] = [members[0] for members in list(family_members.values())[page*size:(page+1)*size]]
 
     items: list[dict[str, Any]] = []
     scores = match.get("scores") if isinstance(match.get("scores"), dict) else {}
@@ -201,6 +257,8 @@ def search_release_recipes(
             selected for selected in selected_languages or ()
             if recipe_index in by_language.get(selected, ())
         ), language)
+        if group_families:
+            display_language = language
         row = _core._enrich_recipe_row(
             payload,
             _core._legacy._recipe_row(
@@ -210,6 +268,8 @@ def search_release_recipes(
                 country=country,
             ),
         )
+        if group_families:
+            row = _display_family_row(payload, family_members[payload["_runtimeDisplayFamily"][recipe_index]], display_language, configured_language, country)
         if row:
             row["catalogLanguage"] = row.get("language") or display_language
             if recipe_index in scores:
@@ -241,6 +301,8 @@ def search_release_recipes(
         },
         "rawVariantCount": int(payload.get("_runtimeRawVariantCount") or 0),
         "groupedRecipeCount": len(items),
+        "rawMatchedPublications": match.get("rawTotal", total),
+        "displayFamilies": group_families,
         "items": items,
         "cacheHit": True,
         "checkedOnline": False,
@@ -263,8 +325,15 @@ def recipe_by_variant(
     language: str,
     configured_language: str,
     country: str,
+    group_families: bool = False,
 ) -> dict[str, Any] | None:
-    load_release_catalog()
+    payload = load_release_catalog()
+    if group_families:
+        index = payload["_runtimeRecipeByVariant"].get(str(variant_id))
+        if index is None:
+            return None
+        members = payload["_runtimeDisplayFamilyMembers"][payload["_runtimeDisplayFamily"][index]]
+        return _display_family_row(payload, members, language, configured_language, country, str(variant_id))
     return _core.recipe_by_variant(
         variant_id,
         language=language,
