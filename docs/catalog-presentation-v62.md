@@ -1,5 +1,9 @@
 # Catalog presentation and ingredient popup follow-up
 
+Historical v62 notes. The active update is described in
+[Shared controls and bundled Greek catalog (v63)](shared-ui-and-greek-catalog-v63.md).
+The v63 installer ships all Greek labels and does not use Ollama.
+
 The September 15 screenshots exposed three separate issues: a stale ingredient
 popup constructor, genuinely absent generic-rice nutrient data, and raw provider
 publications/names being presented as separate user choices.

@@ -60,6 +60,7 @@ def _rank_filtered(
     *,
     diet: str,
     limit: int,
+    unlimited: bool = False,
 ) -> list[dict[str, Any]]:
     """Rank recipes against exact stock quantities and soon-expiring batches."""
     profile = bridge.recipe_hub.profile
@@ -115,7 +116,7 @@ def _rank_filtered(
         key=lambda row: row.get("match", {}).get("score", -1000),
         reverse=True,
     )
-    return scored[: max(1, min(int(limit), 30))]
+    return scored if unlimited else scored[: max(1, min(int(limit), 30))]
 
 
 @callback

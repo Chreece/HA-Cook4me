@@ -191,6 +191,8 @@ def search_release_recipes(
     allergies: Iterable[str] = (),
     catalog_languages: Iterable[str] | None = None,
     group_families: bool = False,
+    filter_rows=None,
+    all_results: bool = False,
 ) -> dict[str, Any]:
     """Intersect precompiled search and strict safety sets before pagination."""
     page = max(0, int(page))
@@ -242,7 +244,8 @@ def search_release_recipes(
             family_members.setdefault(roots[index], []).append(index)
         match["rawTotal"] = match["total"]
         match["total"] = len(family_members)
-        match["indices"] = [members[0] for members in list(family_members.values())[page*size:(page+1)*size]]
+        matching_families = list(family_members.values())
+        match["indices"] = [members[0] for members in (matching_families if filter_rows or all_results else matching_families[page*size:(page+1)*size])]
 
     items: list[dict[str, Any]] = []
     scores = match.get("scores") if isinstance(match.get("scores"), dict) else {}
@@ -283,6 +286,11 @@ def search_release_recipes(
                 )
             items.append(row)
 
+    if filter_rows is not None:
+        items = filter_rows(items)
+        match["total"] = len(items)
+        if not all_results:
+            items = items[page*size:(page+1)*size]
     total = int(match.get("total") or 0)
     total_pages = (total + size - 1) // size if total else 0
     return {

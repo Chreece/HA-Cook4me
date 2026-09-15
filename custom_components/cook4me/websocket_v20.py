@@ -300,16 +300,28 @@ async def _generate_week(
     query: str,
     refresh: bool,
     replace_slot_id: str = "",
+    shared_filters: dict | None = None,
+    ui_language: str = "en",
 ) -> dict[str, Any]:
-    candidates, errors = await _week_candidates(
-        hass, bridge, lifecycle,
-        languages=languages, diet=diet, query=query, refresh=refresh,
-    )
+    from . import release_catalog
+    if shared_filters is not None and release_catalog.release_catalog_ready():
+        from .shared_recipe_runtime import search_filtered
+        result = await search_filtered(bridge, query=query, languages=languages, language=ui_language, filters=shared_filters)
+        candidates, errors = result["items"], []
+    else:
+        candidates, errors = await _week_candidates(
+            hass, bridge, lifecycle,
+            languages=languages, diet=diet, query=query, refresh=refresh,
+        )
+        if shared_filters is not None:
+            from .shared_recipe_runtime import processor
+            process = await processor(bridge, shared_filters, language=ui_language, rank=False)
+            candidates = await hass.async_add_executor_job(process, candidates)
     nutrition_store = await nutrition_store_for_bridge(bridge)
     cost_store = await cost_store_for_bridge(bridge)
     inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
     goal = normalize_nutrition_goal(
-        bridge.recipe_hub.ui_preferences.get("nutritionGoal") or "balanced"
+        (shared_filters or {}).get("nutritionGoal") or bridge.recipe_hub.ui_preferences.get("nutritionGoal") or "balanced"
     )
     start = date.fromisoformat(week_start)
     settings = lifecycle.settings
@@ -332,6 +344,13 @@ async def _generate_week(
     used_recipes = {recipe_identity(row.get("recipe") or {}) for row in planned}
     used_leftovers = {_text(row.get("leftoverId")) for row in planned if row.get("leftoverId")}
     leftovers = [row for row in lifecycle.leftovers if _text(row.get("id")) not in used_leftovers]
+    if shared_filters is not None:
+        history = await meal_history_store_for_bridge(bridge)
+        meals = {row.get("id"): row for row in history.recent(200)}
+        allowed = {recipe_identity(row) for row in candidates}
+        for leftover in leftovers:
+            leftover["recipe"] = _leftover_recipe(leftover, meals)
+        leftovers = [row for row in leftovers if recipe_identity(row["recipe"]) in allowed]
 
     for stamp, meal_type in desired:
         if (
@@ -376,6 +395,8 @@ async def _generate_week(
                 generic=nutrition_store.generic,
                 stock_lots=nutrition_store.stock_lots,
             )
+            if not nutrition.get("totals"):
+                nutrition = deepcopy(candidate.get("catalogNutrition") or candidate.get("nutrition") or nutrition)
             nutrition_hint = nutrition_goal_bonus(nutrition, goal)
             candidate_slot = {
                 "id": f"{stamp}:{meal_type}",
@@ -386,7 +407,7 @@ async def _generate_week(
             penalty = _plan_penalty(planned, candidate_slot, inventory)
             score = (
                 float((candidate.get("match") or {}).get("score") or 0.0)
-                + float(nutrition_hint.get("bonus") or 0.0)
+                + (0.0 if shared_filters is not None else float(nutrition_hint.get("bonus") or 0.0))
                 - penalty
             )
             if score <= best_score:
@@ -423,6 +444,13 @@ async def _generate_week(
     return {"catalogErrors": errors, "slotCount": len(planned)}
 
 
+def _leftover_recipe(leftover, meals):
+    if leftover.get("recipe"):
+        return deepcopy(leftover["recipe"])
+    meal = meals.get(leftover.get("mealHistoryId")) or {}
+    return deepcopy(meal.get("recipe") or {key: meal[key] for key in ("title", "groupingFunctionalId", "variantFunctionalId") if meal.get(key)})
+
+
 async def _state(hass: HomeAssistant, bridge, *, history_days: int = 30) -> dict[str, Any]:
     lifecycle = await meal_lifecycle_store_for_bridge(bridge)
     cost_store = await cost_store_for_bridge(bridge)
@@ -437,6 +465,9 @@ async def _state(hass: HomeAssistant, bridge, *, history_days: int = 30) -> dict
         _currency_map_add(weekly_cost, cost.get("totalsByCurrency"))
     history = await meal_history_store_for_bridge(bridge)
     recent = history.recent(200)
+    meals = {row.get("id"): row for row in recent}
+    for leftover in state.get("leftovers", []):
+        leftover["recipe"] = _leftover_recipe(leftover, meals)
     state.update({
         "weeklyCostByCurrency": _currency_map(weekly_cost),
         "costSettings": cost_store.settings,
@@ -645,6 +676,8 @@ async def ws_week_settings_set(hass, connection, msg) -> None:
 
 @websocket_api.websocket_command({
     vol.Required("type"): "cook4me/v20/week_generate",
+    vol.Optional("shared_filters"): dict,
+    vol.Optional("ui_language"): str,
     vol.Optional("entry_id"): str,
     vol.Optional("week_start"): str,
     vol.Optional("languages", default=[]): [str],
@@ -670,6 +703,8 @@ async def ws_week_generate(hass, connection, msg) -> None:
             query=_text(msg.get("query")),
             refresh=bool(msg.get("refresh")),
             replace_slot_id=_text(msg.get("replace_slot_id")),
+            shared_filters=msg.get("shared_filters"),
+            ui_language=msg.get("ui_language", "en"),
         )
         result = {**generation, **await _state(hass, bridge)}
     except Exception as exc:

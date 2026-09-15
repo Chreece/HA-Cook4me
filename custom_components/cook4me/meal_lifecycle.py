@@ -66,6 +66,7 @@ def _recipe_snapshot(recipe: Any) -> dict[str, Any]:
         "servings", "groupSize", "yield", "ingredients", "steps", "cover",
         "image", "imageUrl", "courses", "occasions", "mealTypes", "meal_types",
         "nutrition", "officialNutrition", "match", "cost",
+        "displayFamilyId", "catalogNutrition", "sendGroupingFunctionalId", "sendRecipeFunctionalId",
     )
     return {key: deepcopy(recipe[key]) for key in keep if key in recipe}
 
@@ -472,6 +473,7 @@ class Cook4MeMealLifecycleStore:
         row = {
             "id": str(uuid4()),
             "mealHistoryId": _text(meal.get("id")),
+            "recipe": _recipe_snapshot(meal.get("recipe") or {key: meal[key] for key in ("title", "groupingFunctionalId", "variantFunctionalId") if meal.get(key)}),
             "title": _text(meal.get("title")) or "Cook4Me leftovers",
             "servings": remaining,
             "originalServings": servings,

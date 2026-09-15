@@ -212,7 +212,10 @@ class OfflineMultilingualRuntimeTests(unittest.TestCase):
 
         async def run():
             with patch.object(socket, "socket", side_effect=AssertionError("offline websocket opened network")):
-                await ws.ws_official_search(None, connection, {"id": 1, "query": "ριζότο", "query_language": "el", "languages": ["de"]})
+                async def executor(function, *args):
+                    return function(*args)
+                hass = types.SimpleNamespace(async_add_executor_job=AsyncMock(side_effect=executor))
+                await ws.ws_official_search(hass, connection, {"id": 1, "query": "ριζότο", "query_language": "el", "languages": ["de"]})
                 result = responses[1]
                 self.assertGreater(result["page"]["totalElements"], 0)
                 self.assertEqual(result["resolvedQuery"], "risotto")
@@ -227,7 +230,7 @@ class OfflineMultilingualRuntimeTests(unittest.TestCase):
                 hass = types.SimpleNamespace(async_add_executor_job=AsyncMock(side_effect=executor))
                 await ws.ws_ingredient_catalog(hass, connection, {"id": 3, "language": "el-GR"})
                 self.assertEqual(responses[3]["language"], "el")
-                self.assertEqual(responses[3]["presentationVersion"], 62)
+                self.assertEqual(responses[3]["presentationVersion"], 63)
                 self.assertEqual(sum(row["name"] == "Ρύζι" for row in responses[3]["items"]), 1)
                 hass.async_add_executor_job.assert_awaited()
 

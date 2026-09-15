@@ -120,6 +120,7 @@ class Cook4MeMealHistoryStore:
 
         row = {
             "id": str(uuid4()),
+            "recipe": deepcopy(recipe),
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "title": str(
                 recipe.get("recipeTitle")

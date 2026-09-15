@@ -73,6 +73,15 @@ def display_name(raw, language):
     return clean_name(source) if source and code != "en" else canonical
 
 
+@lru_cache(maxsize=1)
+def excluded_names():
+    """Reviewed non-food fragments; the raw catalog is left intact."""
+    result = set()
+    for path in Path(__file__).with_name("catalog_ui_locales").glob("*.json"):
+        result.update(json.loads(path.read_text()).get("excludedNames", []))
+    return result
+
+
 def ingredient_choices(payload, language, query="", limit=None):
     """One choice per cleaned name, retaining all source IDs as display metadata."""
     groups = defaultdict(list)
@@ -82,18 +91,19 @@ def ingredient_choices(payload, language, query="", limit=None):
         canonical = clean_name(raw.get("canonicalName"))
         if re.match(r"^(?:or\b|and\b|fragment\b|for\b|optional\b|quantity\b|a little\b)", canonical, re.I):
             continue
-        if canonical:
-            groups[name_key(canonical)].append(raw)
+        if canonical and name_key(canonical) not in excluded_names():
+            # Reviewed locale synonyms are display aliases, never nutrient aliases.
+            groups[name_key(display_name(raw, language))].append(raw)
     choices = []
     wanted = norm(query)
     for canonical, members in groups.items():
         # Prefer the actual generic provider row; never assign its ID to siblings.
-        raw = min(members, key=lambda r: (not bool(r.get("key")), name_key(r.get("canonicalName")) != canonical, not bool(r.get("nutrition")), str(r.get("id"))))
+        raw = min(members, key=lambda r: (not bool(r.get("key")), len(clean_name(r.get("canonicalName"))), not bool(r.get("nutrition")), str(r.get("id"))))
         name = display_name(raw, language)
-        if wanted and wanted not in norm(name) and wanted not in canonical:
+        if wanted and wanted not in norm(name) and not any(wanted in norm(r.get("canonicalName")) for r in members):
             continue
         row = {key: raw[key] for key in ("id", "key", "conceptId", "classification", "nutritionEligible") if key in raw}
-        row.update(ingredientId=raw["id"], name=name, foodName=name, canonicalName=clean_name(raw.get("canonicalName")), displayGroupId="ingredient:"+hashlib.sha256(canonical.encode()).hexdigest()[:16], sourceIngredientIds=[member["id"] for member in members], displayLanguage=language, presentationVersion=62)
+        row.update(ingredientId=raw["id"], name=name, foodName=name, canonicalName=clean_name(raw.get("canonicalName")), displayGroupId="ingredient:"+hashlib.sha256(canonical.encode()).hexdigest()[:16], sourceIngredientIds=[member["id"] for member in members], displayLanguage=language, presentationVersion=63)
         if raw.get("key"):
             row["foodKey"] = raw["key"]
         choices.append(row)

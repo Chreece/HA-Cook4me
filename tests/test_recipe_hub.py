@@ -78,5 +78,28 @@ class RecipeHubTests(unittest.TestCase):
         self.assertIn("mushroom", annotated["match"]["habitHits"])
 
 
+    def test_user_navigation_and_filters_survive_restart_without_cross_user_changes(self):
+        from copy import deepcopy
+        from unittest.mock import AsyncMock
+        async def run():
+            hub = self.new_hub()
+            await hub.async_set_user_ui_preferences("alice", {"lastTab": "week", "filters": {"diet": "vegan", "onlyHome": True}})
+            await hub.async_set_user_ui_preferences("bob", {"lastTab": "official"})
+            await hub.async_set_user_ui_preferences("alice", {"lastTab": "today"})
+            saved = deepcopy(hub._store.saved)
+            restored = self.new_hub()
+            restored._store.async_load = AsyncMock(return_value=saved)
+            await restored.async_load()
+            self.assertEqual(restored.user_ui_preferences("alice")["lastTab"], "today")
+            self.assertEqual(restored.user_ui_preferences("alice")["filters"]["diet"], "vegan")
+            self.assertTrue(restored.user_ui_preferences("alice")["filters"]["onlyHome"])
+            self.assertEqual(restored.user_ui_preferences("bob"), {"lastTab": "official"})
+            self.assertEqual(restored.user_ui_preferences("unknown"), {})
+            returned = restored.user_ui_preferences("alice")
+            returned["filters"]["diet"] = "omnivore"
+            self.assertEqual(restored.user_ui_preferences("alice")["filters"]["diet"], "vegan")
+        asyncio.run(run())
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+from functools import partial
 from typing import Any
 
 import voluptuous as vol
@@ -27,7 +28,7 @@ def _selected_languages(values: Any) -> tuple[str, ...]:
     return tuple(dict.fromkeys(lang for value in values if (lang := _language(value))))
 
 
-def _offline_search(bridge, *, query: str, query_language: str, languages: tuple[str, ...], page: int, size: int) -> dict[str, Any]:
+def _offline_search(bridge, *, query: str, query_language: str, languages: tuple[str, ...], page: int, size: int, filter_rows=None, diet="") -> dict[str, Any]:
     result = release_catalog.search_release_recipes(
         query,
         language=_language(query_language),
@@ -37,6 +38,8 @@ def _offline_search(bridge, *, query: str, query_language: str, languages: tuple
         page=page,
         size=size,
         group_families=True,
+        filter_rows=filter_rows,
+        diet=diet,
     )
     result.update({
         "queryLanguage": _language(query_language),
@@ -57,6 +60,7 @@ def _offline_search(bridge, *, query: str, query_language: str, languages: tuple
     vol.Optional("languages", default=[]): [str],
     vol.Optional("page", default=0): vol.All(vol.Coerce(int), vol.Range(min=0)),
     vol.Optional("size", default=20): vol.All(vol.Coerce(int), vol.Range(min=1, max=50)),
+    vol.Optional("shared_filters"): dict,
 })
 @websocket_api.async_response
 async def ws_official_search(hass, connection, msg) -> None:
@@ -64,14 +68,21 @@ async def ws_official_search(hass, connection, msg) -> None:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         if not release_catalog.release_catalog_ready():
             raise RuntimeError("offline release catalog is unavailable")
-        result = _offline_search(
+        filters = msg.get("shared_filters")
+        filter_rows = None
+        diet = ""
+        if isinstance(filters, dict):
+            from .shared_recipe_runtime import processor
+            filter_rows = await processor(bridge, filters, language=_language(msg.get("query_language")))
+        result = await hass.async_add_executor_job(partial(_offline_search,
             bridge,
             query=_text(msg.get("query")),
             query_language=_text(msg.get("query_language")) or v30._device_language(bridge),
             languages=_selected_languages(msg.get("languages")),
             page=int(msg.get("page", 0)),
             size=int(msg.get("size", 20)),
-        )
+            filter_rows=filter_rows, diet=diet,
+        ))
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)
@@ -137,7 +148,7 @@ async def ws_ingredient_catalog(hass, connection, msg) -> None:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         language = _language(msg.get("language")) or "en"
         items = await hass.async_add_executor_job(release_catalog.ingredient_choices, language)
-        connection.send_result(msg["id"], {"items": items, "language": language, "presentationVersion": 62, "offline": True, "houseIngredients": bridge.recipe_hub.profile.get("houseIngredients") or []})
+        connection.send_result(msg["id"], {"items": items, "language": language, "presentationVersion": 63, "offline": True, "houseIngredients": bridge.recipe_hub.profile.get("houseIngredients") or []})
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
 
@@ -155,7 +166,26 @@ async def ws_ingredient_info(hass, connection, msg) -> None:
     await ingredient_info(hass, connection, msg)
 
 
+@websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/v31/ui_preferences",
+    vol.Optional("entry_id"): str,
+    vol.Optional("preferences"): dict,
+})
+@websocket_api.async_response
+async def ws_ui_preferences(hass, connection, msg) -> None:
+    try:
+        bridge = legacy._bridge(hass, msg.get("entry_id"))
+        user_id = str(connection.user.id)
+        if "preferences" in msg:
+            result = await bridge.recipe_hub.async_set_user_ui_preferences(user_id, msg["preferences"])
+        else:
+            result = bridge.recipe_hub.user_ui_preferences(user_id)
+        connection.send_result(msg["id"], result)
+    except Exception as exc:
+        legacy._send_error(connection, msg, exc)
+
+
 @callback
 def async_register(hass: HomeAssistant) -> None:
-    for command in (ws_official_search, ws_recipe_detail, ws_ingredient_catalog, ws_ingredient_info):
+    for command in (ws_official_search, ws_recipe_detail, ws_ingredient_catalog, ws_ingredient_info, ws_ui_preferences):
         websocket_api.async_register_command(hass, command)
