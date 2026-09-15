@@ -28,7 +28,7 @@ def _selected_languages(values: Any) -> tuple[str, ...]:
     return tuple(dict.fromkeys(lang for value in values if (lang := _language(value))))
 
 
-def _offline_search(bridge, *, query: str, query_language: str, languages: tuple[str, ...], page: int, size: int, filter_rows=None, diet="") -> dict[str, Any]:
+def _offline_search(bridge, *, query: str, query_language: str, languages: tuple[str, ...], page: int, size: int, filter_rows=None, diet="", progress=None) -> dict[str, Any]:
     result = release_catalog.search_release_recipes(
         query,
         language=_language(query_language),
@@ -39,7 +39,7 @@ def _offline_search(bridge, *, query: str, query_language: str, languages: tuple
         size=size,
         group_families=True,
         filter_rows=filter_rows,
-        diet=diet,
+        diet=diet, progress=progress,
     )
     result.update({
         "queryLanguage": _language(query_language),
@@ -49,7 +49,11 @@ def _offline_search(bridge, *, query: str, query_language: str, languages: tuple
         "searchContract": "release-multilingual-index-v31-exact-query-translations",
         "releaseCatalog": release_catalog.release_catalog_summary(),
     })
-    return v30._annotate_search(bridge, result)
+    annotated = v30._annotate_search(bridge, result)
+    if filter_rows:
+        for source, row in zip(result["items"], annotated["items"]):
+            row["match"] = deepcopy(source.get("match", {}))
+    return annotated
 
 
 @websocket_api.websocket_command({
@@ -61,6 +65,7 @@ def _offline_search(bridge, *, query: str, query_language: str, languages: tuple
     vol.Optional("page", default=0): vol.All(vol.Coerce(int), vol.Range(min=0)),
     vol.Optional("size", default=20): vol.All(vol.Coerce(int), vol.Range(min=1, max=50)),
     vol.Optional("shared_filters"): dict,
+    vol.Optional("client_operation_id", default=""): str,
 })
 @websocket_api.async_response
 async def ws_official_search(hass, connection, msg) -> None:
@@ -68,21 +73,30 @@ async def ws_official_search(hass, connection, msg) -> None:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         if not release_catalog.release_catalog_ready():
             raise RuntimeError("offline release catalog is unavailable")
-        filters = msg.get("shared_filters")
-        filter_rows = None
-        diet = ""
-        if isinstance(filters, dict):
-            from .shared_recipe_runtime import processor
-            filter_rows = await processor(bridge, filters, language=_language(msg.get("query_language")))
-        result = await hass.async_add_executor_job(partial(_offline_search,
-            bridge,
-            query=_text(msg.get("query")),
-            query_language=_text(msg.get("query_language")) or v30._device_language(bridge),
-            languages=_selected_languages(msg.get("languages")),
-            page=int(msg.get("page", 0)),
-            size=int(msg.get("size", 20)),
-            filter_rows=filter_rows, diet=diet,
-        ))
+        async def search(progress=None):
+            filters = msg.get("shared_filters")
+            filter_rows = None
+            if isinstance(filters, dict):
+                from .shared_recipe_runtime import processor
+                filter_rows = await processor(bridge, filters, language=_language(msg.get("query_language")), progress=progress)
+            return await hass.async_add_executor_job(partial(_offline_search,
+                bridge,
+                query=_text(msg.get("query")),
+                query_language=_text(msg.get("query_language")) or v30._device_language(bridge),
+                languages=_selected_languages(msg.get("languages")),
+                page=int(msg.get("page", 0)),
+                size=int(msg.get("size", 20)),
+                filter_rows=filter_rows, progress=progress,
+            ))
+        if msg.get("client_operation_id"):
+            from .shared_recipe_runtime import executor_progress
+            coordinator = await request_coordinator(hass)
+            async with coordinator.operation("official_search", "Official catalog", entry_ids=[bridge.entry.entry_id], client_operation_id=msg["client_operation_id"]) as operation:
+                report = executor_progress(lambda phase, **values: coordinator.progress(operation, phase, **values))
+                result = await search(report)
+        else:
+            result = await search()
+
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)

@@ -67,7 +67,7 @@ def compact_today_recipe(value: Any) -> dict[str, Any] | None:
         "sendGroupingFunctionalId", "sendRecipeFunctionalId", "title",
         "canonicalName", "cover", "language", "market", "groupSize",
         "todayCatalogLanguage", "source", "releaseCatalogVersion",
-        "deviceCanAccept", "sendable",
+        "deviceCanAccept", "sendable", "todayMealType", "displayFamilyId", "mealTypeSource",
     )
     for key in scalar_keys:
         if key in value and value[key] not in (None, ""):
@@ -102,7 +102,7 @@ def compact_today_result(result: Any) -> dict[str, Any] | None:
     for key in (
         "candidateCount", "rankedCount", "catalogCandidateCounts",
         "catalogRankedCounts", "catalogSelectedCounts", "catalogLanguagesUsed",
-        "filters", "catalogMode", "catalogVersion",
+        "filters", "catalogMode", "catalogVersion", "categoryCounts", "emptyMealTypes",
     ):
         if key in result:
             out[key] = deepcopy(result[key])

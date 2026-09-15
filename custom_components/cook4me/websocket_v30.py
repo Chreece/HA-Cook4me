@@ -254,15 +254,24 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
         from .shared_recipe_runtime import search_filtered
         filters = {**msg["shared_filters"], "mealTypes": msg.get("meal_types") or msg["shared_filters"].get("mealTypes", [])}
         languages = v18._languages(bridge, msg.get("languages"))
-        coordinator.progress(operation, "ranking", completed=0, total=1, message="Filtering offline recipe families")
-        found = await search_filtered(bridge, query=_text(msg.get("query")), languages=languages, language=msg.get("ui_language", "en"), filters=filters)
+        if msg.get("group_by_meal_type"):
+            languages = list(dict.fromkeys(str(code).lower().replace("_", "-").split("-", 1)[0]
+                for code in msg.get("languages", []) if recipe_languages.is_official_catalog_language(code)))
+        coordinator.progress(operation, "catalog_index")
+        found = await search_filtered(bridge, query=_text(msg.get("query")), languages=languages, language=msg.get("ui_language", "en"), filters=filters,
+            progress=lambda phase, **values: coordinator.progress(operation, phase, **values))
         rows = found["items"]
         for row in rows:
             row["todayCatalogLanguage"] = row.get("language")
             row["deviceCanAccept"] = bridge.can_accept_recipe
-        chosen = select_catalog_balanced(rows, int(msg.get("meal_count", 1)), languages, diversity=bool(msg.get("variety", True)))
-        result = {"date": dt_util.now().date().isoformat(), "items": chosen, "candidateCount": len(rows), "rankedCount": len(rows), "catalogErrors": [], "catalogMode": "release_offline", "filters": filters}
         store = await today_plan_store_for_bridge(bridge)
+        if msg.get("group_by_meal_type"):
+            from .today_multilang import select_today_categories
+            selected = await hass.async_add_executor_job(select_today_categories, rows, filters["mealTypes"], languages, (store.snapshot or {}).get("items", []))
+        else:
+            selected = {"items": select_catalog_balanced(rows, int(msg.get("meal_count", 1)), languages, diversity=bool(msg.get("variety", True)))}
+        result = {"date": dt_util.now().date().isoformat(), **selected, "candidateCount": len(rows), "rankedCount": len(rows), "catalogErrors": [], "catalogMode": "release_offline", "filters": filters}
+        coordinator.progress(operation, "persist")
         await store.async_set(result)
         coordinator.progress(operation, "persist", completed=1, total=1, message="Today plan saved locally")
         return result
@@ -496,6 +505,7 @@ async def ws_ingredient_catalog(hass, connection, msg) -> None:
 @websocket_api.websocket_command({
     vol.Required("type"): "cook4me/v30/today_suggest", vol.Optional("entry_id"): str,
     vol.Optional("shared_filters"): dict, vol.Optional("ui_language"): str,
+    vol.Optional("group_by_meal_type", default=False): bool,
     vol.Optional("languages", default=[]): [str], vol.Optional("diet", default="profile"): vol.In(v18._DIET_FILTERS),
     vol.Optional("meal_types", default=[]): [str], vol.Optional("only_home", default=False): bool,
     vol.Optional("nutrition_goal", default="balanced"): str,

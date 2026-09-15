@@ -102,7 +102,7 @@ def _ingredient_text(item: Any) -> str:
     if not isinstance(item, dict):
         return normalize_text(item)
     values: list[str] = []
-    for key in ("name", "description", "applicationDescription", "applianceDescription"):
+    for key in ("name", "canonicalName", "description", "applicationDescription", "applianceDescription"):
         if item.get(key):
             values.append(str(item[key]))
     food = item.get("food")

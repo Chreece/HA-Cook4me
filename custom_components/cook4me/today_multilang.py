@@ -143,3 +143,24 @@ def select_catalog_balanced(
         chosen.append(picked)
 
     return chosen
+
+
+def select_today_categories(rows, categories, languages, previous=()):
+    """One distinct family per requested category, rotating the previous plan."""
+    from .today_logic import normalize_meal_types, recipe_matches_meal_types
+    identity = lambda row: row.get("displayFamilyId") or recipe_identity(row)
+    prior = {row.get("todayMealType"): identity(row) for row in previous}
+    chosen, seen, counts = [], set(), {}
+    for category in normalize_meal_types(categories):
+        matching = [row for row in rows if recipe_matches_meal_types(row, [category])]
+        counts[category] = len(matching)
+        pool = [row for row in matching if identity(row) not in seen]
+        fresh = [row for row in pool if identity(row) != prior.get(category)]
+        selected = select_catalog_balanced(fresh or pool, 1, languages)
+        if selected:
+            row = selected[0]
+            row["todayMealType"] = category
+            seen.add(identity(row))
+            chosen.append(row)
+    return {"items": chosen, "categoryCounts": counts,
+        "emptyMealTypes": [category for category in counts if not any(row["todayMealType"] == category for row in chosen)]}

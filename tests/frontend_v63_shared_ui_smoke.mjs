@@ -13,8 +13,9 @@ Object.defineProperty(window.HTMLSelectElement.prototype,"value",{configurable:t
 const storage=new Map();
 globalThis.localStorage={getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
 
-await import("../custom_components/cook4me/frontend/cook4me-panel-v63-bundle.js");
-const panel=document.createElement("cook4me-recipe-hub-panel-v63");
+const version=process.env.COOK4ME_TEST_PANEL_VERSION||"63";
+await import(`../custom_components/cook4me/frontend/cook4me-panel-v${version}-bundle.js`);
+const panel=document.createElement(`cook4me-recipe-hub-panel-v${version}`);
 const requests=[];
 let server={lastTab:"today",filters:{diet:"vegetarian",languages:["de"],mealTypes:["main"],ingredients:[],maxCost:"",onlyHome:false}};
 const recipe={title:"Test rice",displayVariantId:"278301",searchVariantId:"278301",sendVariantId:"278301",sendGroupingFunctionalId:"3141015",language:"de",servings:4,ingredients:[{ingredientId:"rice",name:"Ρύζι",quantity:200,unit:"g"}],steps:[{text:"Cook the rice for 10 minutes."}],match:{safe:true},languageVariants:[{language:"de",servingVariants:[{displayVariantId:"278301",sendVariantId:"278301",servings:4},{displayVariantId:"278302",sendVariantId:"278302",servings:6}]}]};
@@ -57,7 +58,7 @@ const a=panel._processStart("A","First"),b=panel._processStart("B","Second");pan
 assert.equal(panel._shouldTranslate(),false,"No implicit Ollama/AI translation");
 // A second browser with empty local storage restores the server's menu and filters.
 storage.clear();
-const second=document.createElement("cook4me-recipe-hub-panel-v63");
+const second=document.createElement(`cook4me-recipe-hub-panel-v${version}`);
 second._entryId="entry";second._entries=panel._entries;second._hass=panel._hass;second._capabilities=panel._capabilities;
 second._requestSection=async()=>{};second._renderShell();await second._restorePreferences();await tick();
 assert.equal(second._tab,"official");assert.equal(second._filters().diet,"vegan");

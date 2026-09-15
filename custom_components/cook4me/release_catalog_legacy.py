@@ -414,6 +414,9 @@ def _recipe_row(
         ],
         "nutrition": deepcopy(display.get("nutrition") or recipe.get("nutrition")),
         "catalogNutrition": deepcopy(display.get("nutrition") or recipe.get("nutrition")),
+        **{field: deepcopy(display.get(field, recipe.get(field)))
+           for field in ("mealTypes", "courses", "occasions", "recipeType", "excludedFoods", "detectedExcludedFoods")
+           if field in display or field in recipe},
         "source": "cook4me_release_catalog",
         "releaseCatalogVersion": _text(load_release_catalog().get("catalogVersion")),
         "sendable": bool(send and send_grouping and send_variant and send_recipe),

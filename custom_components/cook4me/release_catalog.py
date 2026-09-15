@@ -193,6 +193,7 @@ def search_release_recipes(
     group_families: bool = False,
     filter_rows=None,
     all_results: bool = False,
+    progress=None,
 ) -> dict[str, Any]:
     """Intersect precompiled search and strict safety sets before pagination."""
     page = max(0, int(page))
@@ -249,7 +250,10 @@ def search_release_recipes(
 
     items: list[dict[str, Any]] = []
     scores = match.get("scores") if isinstance(match.get("scores"), dict) else {}
-    for recipe_index in match.get("indices") or []:
+    indices = match.get("indices") or []
+    if progress:
+        progress("catalog_index", completed=0, total=len(indices))
+    for completed, recipe_index in enumerate(indices, 1):
         try:
             raw = recipes[recipe_index]
         except (IndexError, TypeError):
@@ -285,6 +289,8 @@ def search_release_recipes(
                     allergies=allergy_values,
                 )
             items.append(row)
+        if progress and (completed % 25 == 0 or completed == len(indices)):
+            progress("catalog_index", completed=completed, total=len(indices))
 
     if filter_rows is not None:
         items = filter_rows(items)

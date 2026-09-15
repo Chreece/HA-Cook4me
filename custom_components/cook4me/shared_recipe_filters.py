@@ -2,7 +2,7 @@
 from copy import deepcopy
 import math
 
-from .today_logic import recipe_matches_meal_types, calorie_target_bonus
+from .today_logic import recipe_matches_meal_types, calorie_target_bonus, offline_meal_types
 from .food_intelligence import nutrition_goal_bonus
 
 
@@ -43,13 +43,15 @@ def normalize_preferences(value):
     return result
 
 
-def apply_filters(rows, filters, *, ingredient_groups=None, cost=None, nutrition=None, recent=(), score_targets=True):
+def apply_filters(rows, filters, *, ingredient_groups=None, cost=None, nutrition=None, recent=(), score_targets=True, progress=None):
     """Filter before pagination/selection. Unknown costs never count as free."""
     settings = normalize_filters(filters)
     groups = ingredient_groups or {}
     selected = [set(groups.get(key, [key.removeprefix("k:").removeprefix("i:")])) for key in settings["ingredients"]]
     result = []
-    for source in rows:
+    for completed, source in enumerate(rows, 1):
+        if progress and (completed == 1 or completed % 25 == 0):
+            progress("nutrition", completed=completed-1, total=len(rows))
         if settings["mealTypes"] and not recipe_matches_meal_types(source, settings["mealTypes"]):
             continue
         if source.get("displayFamilyId") in recent or source.get("displayVariantId") in recent:
@@ -63,6 +65,9 @@ def apply_filters(rows, filters, *, ingredient_groups=None, cost=None, nutrition
         if any(not aliases.intersection(identities) for aliases in selected):
             continue
         row = deepcopy(source)
+        if not any(row.get(key) for key in ("mealTypes", "courses", "occasions", "recipeType")):
+            row["mealTypes"] = offline_meal_types(row)
+            row["mealTypeSource"] = "canonical_title" if row["mealTypes"] else "unknown"
         if settings["maxCost"] is not None:
             estimate = cost(row) if cost else row.get("cost") or {}
             amounts = estimate.get("perServingByCurrency") or {}
@@ -88,6 +93,8 @@ def apply_filters(rows, filters, *, ingredient_groups=None, cost=None, nutrition
                 score += 10 * max(-1, 1 - abs(actual-target)/target)
         match["score"] = round(score, 2)
         result.append(row)
+    if progress:
+        progress("nutrition", completed=len(rows), total=len(rows))
     return sorted(result, key=lambda row: row.get("match", {}).get("score", 0), reverse=True)
 
 
