@@ -52,3 +52,9 @@ integration, restores it if activation fails, and checks that Home Assistant
 serves the exact installed bundle. Deployment on the user's system still
 requires running the installer there; local backend/DOM checks are not a device
 visual test.
+
+Published runtime: `fee2553535b23c1486e87cdf17ef807b564ebdaa`. The full Python
+suite ran 1,201 tests: 1,190 passed and the same 11 historical nutrition-review
+assertions in batches 42–50 failed as in v62/v63. No new failing assertions were
+introduced. The final pinned installer also passes its isolated backup,
+activation-failure, missing-locale and mount-validation checks.
