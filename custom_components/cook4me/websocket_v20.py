@@ -734,14 +734,21 @@ async def ws_week_slot_clear(hass, connection, msg) -> None:
 @websocket_api.websocket_command({
     vol.Required("type"): "cook4me/v20/week_add_shopping",
     vol.Optional("entry_id"): str,
+    vol.Optional("ui_language"): str,
 })
 @websocket_api.async_response
 async def ws_week_add_shopping(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         lifecycle = await meal_lifecycle_store_for_bridge(bridge)
-        rows = lifecycle.snapshot(bridge.recipe_hub.profile.get("houseIngredients") or [],
-            start_date=dt_util.now().date())["shoppingDelta"]
+        snapshot = lifecycle.snapshot(bridge.recipe_hub.profile.get("houseIngredients") or [],
+            start_date=dt_util.now().date())
+        rows = snapshot["shoppingDelta"]
+        if msg.get("ui_language"):
+            from .shopping_presentation import shopping_rows
+            rows = await hass.async_add_executor_job(shopping_rows, rows,
+                msg["ui_language"], getattr(hass.config, "country", ""),
+                [item for slot in snapshot["slots"] for item in (slot.get("recipe") or {}).get("ingredients") or []])
         result = await _shopping_add(hass, rows)
         result["shoppingDelta"] = rows
     except Exception as exc:

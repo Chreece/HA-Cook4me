@@ -174,9 +174,11 @@ class RecipeCardDataTests(unittest.TestCase):
             result = resolver.translation_capabilities(hass)
             self.assertEqual(result["localAiTaskEntityId"], "ai_task.local")
             self.assertNotIn(entities[0].entity_id, result["localAiTaskEntityIds"])
-            for state in ("unavailable", "unknown"):
-                states["ai_task.local"].state = state
-                self.assertFalse(resolver.translation_capabilities(hass)["localAiTaskAvailable"])
+            states["ai_task.local"].state = "unknown"
+            self.assertTrue(resolver.translation_capabilities(hass)["localAiTaskAvailable"],
+                "An unused AI Task has no last-activity timestamp")
+            states["ai_task.local"].state = "unavailable"
+            self.assertFalse(resolver.translation_capabilities(hass)["localAiTaskAvailable"])
             hass.data = {}
             self.assertFalse(resolver.translation_capabilities(hass)["localAiTaskAvailable"])
 

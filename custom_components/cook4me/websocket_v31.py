@@ -209,7 +209,7 @@ async def ws_recipe_translation(hass, connection, msg):
         from . import websocket_v7 as v7
         from .local_ai import translation_capabilities
         from .recipe_cache import translation_cache_key
-        from .recipe_translation import bundled_translation, apply_saved_translation
+        from .recipe_translation import bundled_translation, apply_saved_translation, translation_prompt
         from .recipe_presentation import present_recipe
         language = _language(msg["target_language"])
         recipe = msg["recipe"]
@@ -238,7 +238,7 @@ async def ws_recipe_translation(hass, connection, msg):
                     return
                 generated = await ai_task.async_generate_data(hass,
                     task_name="Cook4Me recipe translation", entity_id=entity_id,
-                    instructions=v7._translation_prompt([{"id": "0", **v5._translation_payload(recipe)}], language))
+                    instructions=translation_prompt(recipe, language))
             parsed = v5._parse_ai_json(generated.data)
             rows = parsed.get("recipes") if isinstance(parsed, dict) else None
             saved = next((row for row in rows if isinstance(row, dict) and str(row.get("id")) == "0"), None) if isinstance(rows, list) else None

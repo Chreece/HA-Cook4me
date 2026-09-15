@@ -62,6 +62,8 @@ jobs:
           python tools/build_frontend_bundle_v66.py --check
           bash -n tools/deploy_offline_runtime_v67.sh
           python tools/build_frontend_bundle_v67.py --check
+          bash -n tools/deploy_offline_runtime_v68.sh
+          python tools/build_frontend_bundle_v68.py --check
           python - <<'PY'
           import json
           from pathlib import Path
@@ -97,5 +99,9 @@ jobs:
           COOK4ME_TEST_PANEL_VERSION=67 timeout 20s node --experimental-default-type=module tests/frontend_v63_shared_ui_smoke.mjs
           COOK4ME_TEST_PANEL_VERSION=67 timeout 180s node --experimental-default-type=module tests/frontend_v64_catalog_flow_smoke.mjs
           timeout 20s node --experimental-default-type=module tests/frontend_v67_recipe_layout_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=68 timeout 20s node tests/frontend_v63_shared_ui_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=68 timeout 180s node tests/frontend_v64_catalog_flow_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=68 timeout 20s node tests/frontend_v67_recipe_layout_smoke.mjs
+          timeout 40s node tests/frontend_v68_recipe_actions_smoke.mjs
       - name: Run focused tests
         run: python -m unittest discover -s tests -v

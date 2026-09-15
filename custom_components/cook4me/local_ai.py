@@ -19,7 +19,9 @@ def translation_capabilities(hass):
         entity_id = entity.entity_id
         candidates.append(entity_id)
         state = hass.states.get(entity_id)
-        if getattr(entity, "available", False) and state and state.state not in ("unavailable", "unknown"):
+        # AI Task state is the last activity timestamp. A ready task that has
+        # never run has state "unknown"; availability is a separate property.
+        if getattr(entity, "available", False) and state and state.state != "unavailable":
             available.append(entity_id)
     available.sort(key=lambda entity_id: (entity_id != preferred, entity_id))
     return {

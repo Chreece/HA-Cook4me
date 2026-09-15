@@ -217,12 +217,14 @@ def ws_capabilities(hass: HomeAssistant, connection: websocket_api.ActiveConnect
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         device_language = _device_language(bridge)
         ai_task = v5._default_ai_task_entity_id(hass)
+        from .local_ai import translation_capabilities
         result = {
             "languages": recipe_languages.language_options(),
             "deviceCatalogLanguage": device_language,
             "ingredientCatalogLanguage": device_language,
             "defaultAiTaskAvailable": ai_task is not None,
             "defaultAiTaskEntityId": ai_task,
+            **translation_capabilities(hass),
             "preferences": bridge.recipe_hub.ui_preferences,
         }
     except Exception as exc:
@@ -254,12 +256,18 @@ async def ws_ingredient_catalog(hass: HomeAssistant, connection: websocket_api.A
     vol.Required("type"): "cook4me/v11/shopping_add",
     vol.Optional("entry_id"): str,
     vol.Required("ingredients"): [vol.Any(str, dict)],
+    vol.Optional("ui_language"): str,
 })
 @websocket_api.async_response
 async def ws_shopping_add(hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: dict[str, Any]) -> None:
     try:
         legacy._bridge(hass, msg.get("entry_id"))
-        result = await _add_to_shopping_list(hass, list(msg.get("ingredients") or []))
+        ingredients = list(msg.get("ingredients") or [])
+        if msg.get("ui_language"):
+            from .shopping_presentation import shopping_rows
+            ingredients = await hass.async_add_executor_job(shopping_rows, ingredients,
+                msg["ui_language"], getattr(hass.config, "country", ""))
+        result = await _add_to_shopping_list(hass, ingredients)
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
         return
