@@ -209,7 +209,8 @@ async def ws_recipe_translation(hass, connection, msg):
         from . import websocket_v7 as v7
         from .local_ai import translation_capabilities
         from .recipe_cache import translation_cache_key
-        from .recipe_translation import bundled_translation, apply_saved_translation, translation_prompt
+        from .recipe_translation import (bundled_translation, apply_saved_translation,
+            translation_prompt, text_translation_cache_key, complete_translation)
         from .recipe_presentation import present_recipe
         language = _language(msg["target_language"])
         recipe = msg["recipe"]
@@ -218,9 +219,15 @@ async def ws_recipe_translation(hass, connection, msg):
             connection.send_result(msg["id"], {"available": False, "reason": "local_ai_unavailable"})
             return
         cache = await v7._cache_for(hass, bridge)
-        key = translation_cache_key(recipe, language)
+        key = text_translation_cache_key(recipe, language)
         saved = cache.get("translation", key)
         translated = apply_saved_translation(recipe, saved, language) if isinstance(saved, dict) else None
+        if translated is None:
+            # Adopt existing successful translations without another model call.
+            saved = cache.get("translation", translation_cache_key(recipe, language))
+            translated = apply_saved_translation(recipe, saved, language) if isinstance(saved, dict) else None
+            if translated:
+                await cache.async_set("translation", key, saved)
         if translated is None:
             saved = bundled_translation(recipe, language)
             translated = apply_saved_translation(recipe, saved, language) if saved else None
@@ -230,18 +237,28 @@ async def ws_recipe_translation(hass, connection, msg):
             from homeassistant.components import ai_task
             from . import websocket_v5 as v5
             coordinator = await request_coordinator(hass)
-            async with coordinator.operation("recipe_translation", "Translate recipe", entry_ids=[bridge.entry.entry_id], client_operation_id=msg.get("client_operation_id")):
+            async with coordinator.operation("recipe_translation", "Translate recipe", entry_ids=[bridge.entry.entry_id], client_operation_id=msg.get("client_operation_id")) as operation:
                 # Recheck after waiting for another job, and pin the LOCAL entity.
                 entity_id = translation_capabilities(hass)["localAiTaskEntityId"]
                 if not entity_id:
                     connection.send_result(msg["id"], {"available": False, "reason": "local_ai_unavailable"})
                     return
-                generated = await ai_task.async_generate_data(hass,
-                    task_name="Cook4Me recipe translation", entity_id=entity_id,
-                    instructions=translation_prompt(recipe, language))
-            parsed = v5._parse_ai_json(generated.data)
-            rows = parsed.get("recipes") if isinstance(parsed, dict) else None
-            saved = next((row for row in rows if isinstance(row, dict) and str(row.get("id")) == "0"), None) if isinstance(rows, list) else None
+                async def generate(part):
+                    if translation_capabilities(hass)["localAiTaskEntityId"] != entity_id:
+                        raise ValueError("Local AI is no longer available")
+                    generated = await ai_task.async_generate_data(hass,
+                        task_name="Cook4Me recipe translation", entity_id=entity_id,
+                        instructions=translation_prompt(part, language))
+                    parsed = v5._parse_ai_json(generated.data)
+                    rows = parsed.get("recipes") if isinstance(parsed, dict) else None
+                    return next((row for row in rows if isinstance(row, dict) and str(row.get("id")) == "0"), None) if isinstance(rows, list) else None
+
+                def progress(completed, total):
+                    coordinator.progress(operation, "translation", completed=completed, total=total,
+                        message="Translating recipe title and steps")
+
+                progress(0, len(recipe["steps"]))
+                saved = await complete_translation(recipe, language, generate, progress)
             if saved:
                 saved = {**saved, "method": "local_ai"}
                 translated = apply_saved_translation(recipe, saved, language)
@@ -250,6 +267,8 @@ async def ws_recipe_translation(hass, connection, msg):
         result = {"available": translated is not None, "local": True}
         if translated:
             result["recipe"] = present_recipe(translated, language)
+        else:
+            result["reason"] = "incomplete_translation" if recipe.get("steps") else "instructions_unavailable"
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)

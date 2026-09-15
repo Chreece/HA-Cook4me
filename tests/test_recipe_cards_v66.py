@@ -32,7 +32,7 @@ class RecipeCardDataTests(unittest.TestCase):
         @asynccontextmanager
         async def operation(*args, **kwargs):
             yield object()
-        coordinator = types.SimpleNamespace(operation=operation)
+        coordinator = types.SimpleNamespace(operation=operation, progress=lambda *args, **kwargs: None)
         bridge = types.SimpleNamespace(entry=types.SimpleNamespace(entry_id="entry"),
             recipe_hub=types.SimpleNamespace(annotate=deepcopy), can_accept_recipe=False)
         cache = {}

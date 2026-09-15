@@ -14,7 +14,7 @@ Object.defineProperty(window.HTMLSelectElement.prototype,"value",{configurable:t
 const storage=new Map();
 globalThis.localStorage={getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
 
-const version="69";
+const version=process.env.COOK4ME_TEST_PANEL_VERSION||"69";
 await import(`../custom_components/cook4me/frontend/cook4me-panel-v${version}-bundle.js`);
 const panel=document.createElement(`cook4me-recipe-hub-panel-v${version}`),requests=[];
 const tick=()=>new Promise(resolve=>setTimeout(resolve,10));
