@@ -1,0 +1,36 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-target-candidate-binding",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "candidateEvidenceRank": 3,
+      "canonicalEnglishName": "Consommé granules, a little for finishing",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Soup, bouillon cubes and granules, low sodium, dry",
+      "fdcId": 171613,
+      "notes": "Manual semantic review binds Cook4Me 'Consommé granules, a little for finishing' to USDA SR Legacy 'Soup, bouillon cubes and granules, low sodium, dry'. The same exact FDC record was already explicitly reviewed for Cook4Me 'Consommé granules'; 'a little' is quantity wording and 'for finishing' is recipe-use wording, neither changes the dry granule ingredient identity. This target's own pinned evidence independently contains the record at rank 3. Candidate rank and historical reuse are review aids only, not identity proof. This continuation preserves the existing reviewed granule mapping and does not infer sodium level, stock base, brand, serving size, dilution, or prepared-broth yield.",
+      "reviewTargetId": "concept:food:b2ec6328802ecbf8f2f7",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "6968f6c171084618998994abfa9a9e8e36431226d45e55a40e2de2cb12c0e974",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "a6cb4c48588643369eff0b4b64ac640f581983fc1b9b19d2b5014df87d8e761d",
+      "sourceEvidenceTargetId": "concept:food:b2ec6328802ecbf8f2f7",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "reviewDecisionSha256": "31ec1a757ebc91f2168536ad27ff53e2d5ffdd0de1e70d2856c686fa90652f29",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "a6cb4c48588643369eff0b4b64ac640f581983fc1b9b19d2b5014df87d8e761d"
+}
