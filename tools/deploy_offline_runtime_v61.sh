@@ -3,7 +3,7 @@
 # Do not source this file into an interactive shell.
 set -Eeuo pipefail
 
-SOURCE_COMMIT=2ef181c0a604b0a5b8469571cd898859ae665a4b
+SOURCE_COMMIT=3b75a1bbf9eb166f81d38d7f94fc20f0892e9756
 SOURCE_REPO=https://github.com/Chreece/HA-Cook4me.git
 CONFIG=${COOK4ME_CONFIG:-/home/chreece/homeassistant/config}
 CONTAINER=${COOK4ME_CONTAINER:-homeassistant}
@@ -154,6 +154,12 @@ with patch.object(socket, "socket", side_effect=AssertionError("offline catalog 
         assert detail["catalogNutrition"] == row["catalogNutrition"], "Search/detail nutrition mismatch"
         assert detail["sendVariantId"] == row["sendVariantId"], "Search/detail device identity mismatch"
     print(f"  {len(recipes)} recipes; offline nutrition and device identity checks passed")
+    ingredient = release.ingredient_nutrition_profile({"ingredientId": "M_FOOD_246"})
+    assert ingredient is not None, "Ingredient popup catalog profile is missing"
+    assert (ingredient["basisQuantity"], ingredient["basisUnit"]) == (100, "g"), "Ingredient nutrient basis mismatch"
+    assert ingredient["values"]["energyKcal"] == 884, "Ingredient nutrient value mismatch"
+    assert release.ingredient_nutrition_profile({"ingredientId": "unknown", "name": "Olive oil"}) is None, "Ingredient identity was guessed"
+    print("  Ingredient popup reference: olive oil, 884 kcal per 100 g")
 PY
 
 printf '%s\n' "$SOURCE_COMMIT" > "$RUN/installed-commit.txt"

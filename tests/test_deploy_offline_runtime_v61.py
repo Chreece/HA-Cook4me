@@ -10,7 +10,7 @@ import unittest
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "tools/deploy_offline_runtime_v61.sh"
-COMMIT = "2ef181c0a604b0a5b8469571cd898859ae665a4b"
+COMMIT = "3b75a1bbf9eb166f81d38d7f94fc20f0892e9756"
 FAKE_COMMAND = r'''#!/usr/bin/env python3
 import json, os, pathlib, shutil, sys
 name = pathlib.Path(sys.argv[0]).name
@@ -30,7 +30,7 @@ if name == "git":
         (staged / "query_vocabulary.json").write_text("{}")
         (staged / "installed.txt").write_text("new")
     elif "rev-parse" in args:
-        print("2ef181c0a604b0a5b8469571cd898859ae665a4b")
+        print("3b75a1bbf9eb166f81d38d7f94fc20f0892e9756")
 elif name == "docker":
     if args[0] == "inspect":
         if "State.Running" in args[2]:

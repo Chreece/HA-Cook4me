@@ -85,7 +85,7 @@ below needs installation. These changes have not been published as a release.
 
 `tools/deploy_offline_runtime_v61.sh` provides the homeserver test installation.
 Run it as a standalone script with `sudo bash`, never source it. It fetches the
-fixed runtime commit `2ef181c0a604b0a5b8469571cd898859ae665a4b`, verifies the
+fixed runtime commit `3b75a1bbf9eb166f81d38d7f94fc20f0892e9756`, verifies the
 `homeassistant` container's `/config` mount against
 `/home/chreece/homeassistant/config`, and runs the offline runtime tests
 using the container's Python before stopping Home Assistant. It replaces the
