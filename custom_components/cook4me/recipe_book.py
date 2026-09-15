@@ -61,14 +61,15 @@ class Cook4MeRecipeBookStore:
         row = self._data.get("queuedSend")
         return deepcopy(row) if isinstance(row, dict) else None
 
-    async def async_toggle(self, collection: str, recipe: dict[str, Any]) -> dict[str, Any]:
+    async def async_toggle(self, collection: str, recipe: dict[str, Any], *, remove: bool = False) -> dict[str, Any]:
         if collection not in {"favorites", "recipeList"}:
             raise ValueError("Recipe collection must be favorites or recipeList")
-        key = recipe_storage_key(recipe)
+        rows = self._data[collection]
+        saved_key = str(recipe.get("bookKey") or "")
+        key = saved_key if saved_key and (remove or saved_key in rows) else recipe_storage_key(recipe)
         if not key:
             raise ValueError("Recipe has no stable identity")
-        rows = self._data[collection]
-        if key in rows:
+        if remove or key in rows:
             rows.pop(key, None)
             added = False
         else:
@@ -81,6 +82,21 @@ class Cook4MeRecipeBookStore:
             added = True
         await self._save()
         return {"added": added, "collection": collection, "key": key, **self.snapshot()}
+
+    async def async_remove_local_recipe(self, recipe_id: str) -> int:
+        """Remove stale saved copies of a deleted local recipe only."""
+        removed = 0
+        official_ids = ("groupingFunctionalId", "sendGroupingFunctionalId", "recipeFunctionalId",
+            "variantFunctionalId", "displayVariantId", "searchVariantId")
+        for collection in ("favorites", "recipeList"):
+            rows = self._data[collection]
+            for key, recipe in list(rows.items()):
+                if str(recipe.get("id") or "") == recipe_id and not any(recipe.get(field) for field in official_ids):
+                    rows.pop(key)
+                    removed += 1
+        if removed:
+            await self._save()
+        return removed
 
     async def async_queue_send(self, recipe: dict[str, Any], *, reason: str) -> dict[str, Any]:
         snapshot = recipe_snapshot(recipe)

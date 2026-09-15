@@ -189,10 +189,12 @@ async def ws_capabilities(
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         entity_id = v5._default_ai_task_entity_id(hass)
+        from .local_ai import translation_capabilities
         result = {
             "languages": recipe_languages.language_options(),
             "defaultAiTaskAvailable": entity_id is not None,
             "defaultAiTaskEntityId": entity_id,
+            **translation_capabilities(hass),
             "persistentCache": True,
             "persistentPreferences": True,
             "preferences": bridge.recipe_hub.ui_preferences,

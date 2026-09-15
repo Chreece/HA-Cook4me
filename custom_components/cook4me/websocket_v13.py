@@ -60,9 +60,11 @@ def _rank_filtered(
     *,
     diet: str,
     limit: int,
+    unlimited: bool = False,
+    progress=None,
 ) -> list[dict[str, Any]]:
     """Rank recipes against exact stock quantities and soon-expiring batches."""
-    profile = bridge.recipe_hub.profile
+    profile = deepcopy(bridge.recipe_hub.profile)
     profile["habitTerms"] = bridge.recipe_hub.habit_terms
     if diet != "profile":
         profile["diet"] = diet
@@ -70,7 +72,9 @@ def _rank_filtered(
     today = dt_util.now().date()
 
     scored: list[dict[str, Any]] = []
-    for recipe in recipes:
+    for completed, recipe in enumerate(recipes, 1):
+        if progress and (completed == 1 or completed % 25 == 0 or completed == len(recipes)):
+            progress(completed - 1, len(recipes))
         if not isinstance(recipe, dict):
             continue
         result = deepcopy(recipe)
@@ -111,11 +115,13 @@ def _rank_filtered(
         result["match"]["score"] = round(base_score + expiry_bonus + quantity_adjustment, 1)
         scored.append(result)
 
+    if progress:
+        progress(len(recipes), len(recipes))
     scored.sort(
         key=lambda row: row.get("match", {}).get("score", -1000),
         reverse=True,
     )
-    return scored[: max(1, min(int(limit), 30))]
+    return scored if unlimited else scored[: max(1, min(int(limit), 30))]
 
 
 @callback

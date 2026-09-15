@@ -75,6 +75,7 @@ class Cook4MeRecipeHub:
             "recipes": [],
             "history": [],
             "uiPreferences": deepcopy(_DEFAULT_UI_PREFERENCES),
+            "userUiPreferences": {},
             "pendingConsumption": None,
         }
 
@@ -99,6 +100,10 @@ class Cook4MeRecipeHub:
             merged_ui.update(ui_preferences)
             self._data["uiPreferences"] = self._normalize_ui_preferences(merged_ui)
         pending = saved.get("pendingConsumption")
+        from .shared_recipe_filters import normalize_preferences
+        users = saved.get("userUiPreferences")
+        if isinstance(users, dict):
+            self._data["userUiPreferences"] = {str(key): normalize_preferences(value) for key, value in users.items()}
         if isinstance(pending, dict) and isinstance(pending.get("ingredients"), list):
             self._data["pendingConsumption"] = deepcopy(pending)
 
@@ -322,6 +327,17 @@ class Cook4MeRecipeHub:
             self._data["pendingConsumption"] = None
             await self._save()
             return True
+
+    def user_ui_preferences(self, user_id: str) -> dict[str, Any]:
+        return deepcopy(self._data.get("userUiPreferences", {}).get(user_id, {}))
+
+    async def async_set_user_ui_preferences(self, user_id: str, preferences: dict[str, Any]) -> dict[str, Any]:
+        from .shared_recipe_filters import normalize_preferences
+        async with self._lock:
+            users = self._data.setdefault("userUiPreferences", {})
+            users[user_id] = {**users.get(user_id, {}), **normalize_preferences(preferences)}
+            await self._save()
+            return self.user_ui_preferences(user_id)
 
     async def async_set_ui_preferences(self, preferences: dict[str, Any]) -> dict[str, Any]:
         """Persist Recipe Hub display controls without touching dietary profile data."""

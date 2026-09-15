@@ -4,6 +4,7 @@ import importlib.util
 from pathlib import Path
 import sys
 import types
+import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 COMPONENT = ROOT / "custom_components" / "cook4me"
@@ -35,16 +36,30 @@ def _prepared(*tokens):
     }
 
 
-def test_script_recovery_is_generic_not_food_alias_table():
-    query = _load()
-    prepared = _prepared("paprika", "risotto", "pasta")
-    assert query.resolve_multilingual_query(prepared, "πάπρικα") == ("paprika", True)
-    assert query.resolve_multilingual_query(prepared, "ριζότο") == ("risotto", True)
-    assert query.resolve_multilingual_query(prepared, "ризото") == ("risotto", True)
-    assert query.resolve_multilingual_query(prepared, "паста") == ("pasta", True)
+class MultilingualQueryV31Tests(unittest.TestCase):
+    def setUp(self):
+        self.query = _load()
+
+    def test_canonical_translation_wins_over_nearby_foreign_token(self):
+        prepared = _prepared("makaronie", "pasta", "rizoto", "risotto")
+        self.assertEqual(self.query.resolve_multilingual_query(prepared, "ριζότο"), ("risotto", True))
+        self.assertEqual(self.query.resolve_multilingual_query(prepared, "μακαρόνια"), ("pasta", True))
+
+    def test_general_recipe_phrase_composes_dish_modifier_and_ingredient(self):
+        prepared = _prepared("creamy", "risotto", "mushroom")
+        self.assertEqual(
+            self.query.resolve_multilingual_query(prepared, "κρεμώδες ριζότο με μανιτάρια"),
+            ("creamy risotto mushroom", True),
+        )
+
+    def test_unknown_words_and_negations_are_not_discarded_or_guessed(self):
+        prepared = _prepared("risotto", "sopa", "pasta")
+        self.assertEqual(self.query.resolve_multilingual_query(prepared, "ριζότα"), ("ριζοτα", False))
+        self.assertEqual(self.query.resolve_multilingual_query(prepared, "σούπα χωρίς αλάτι"), ("soup χωρισ αλατι", True))
+
+    def test_multiword_alias_is_resolved_before_function_words(self):
+        self.assertEqual(self.query.resolve_multilingual_query({}, "pommes de terre", "fr"), ("potato", True))
 
 
-def test_exact_catalog_script_token_wins_before_transliteration():
-    query = _load()
-    prepared = _prepared("ριζοτο", "risotto")
-    assert query.resolve_multilingual_query(prepared, "ριζότο") == ("ριζοτο", False)
+if __name__ == "__main__":
+    unittest.main()

@@ -11,14 +11,14 @@ from homeassistant.components import ai_task, websocket_api
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.util import dt as dt_util
 
-from . import recipe_languages
+from . import recipe_languages, release_catalog
 from . import websocket as legacy
 from . import websocket_v5 as v5
 from . import websocket_v10 as v10
 from . import websocket_v11 as v11
 from . import websocket_v13 as v13
 from .barcode import confident_match, suggest_catalog_matches
-from .const import DATA_BRIDGES, DOMAIN
+from .const import CONF_COUNTRY, DEFAULT_COUNTRY, DATA_BRIDGES, DOMAIN
 from .food_intelligence import nutrition_goal_bonus, normalize_nutrition_goal
 from .inventory import inventory_identity
 from .meal_history import meal_history_store_for_bridge
@@ -421,6 +421,7 @@ async def ws_recipe_book_state(hass, connection, msg) -> None:
         vol.Optional("entry_id"): str,
         vol.Required("collection"): vol.In(["favorites", "recipeList"]),
         vol.Required("recipe"): dict,
+        vol.Optional("remove", default=False): bool,
     }
 )
 @websocket_api.async_response
@@ -428,7 +429,7 @@ async def ws_recipe_book_toggle(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         store = await recipe_book_store_for_bridge(bridge)
-        result = await store.async_toggle(str(msg["collection"]), dict(msg["recipe"]))
+        result = await store.async_toggle(str(msg["collection"]), dict(msg["recipe"]), remove=bool(msg.get("remove")))
         connection.send_result(msg["id"], result)
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
@@ -576,6 +577,7 @@ async def ws_ingredient_info(hass, connection, msg) -> None:
         identity = inventory_identity(stock or ingredient)
         nutrition_store = await nutrition_store_for_bridge(bridge)
         generic = nutrition_store.get_generic(identity) if identity else None
+        catalog_nutrition = release_catalog.ingredient_nutrition_profile(ingredient)
         exact_lots = (
             nutrition_store.stock_lots.get(identity, []) if identity else []
         )
@@ -589,21 +591,36 @@ async def ws_ingredient_info(hass, connection, msg) -> None:
             + list(book_state.get("recipeList") or []),
             stock or ingredient,
         )
+        reference_language = msg.get("language") or "en"
+        references = (
+            await hass.async_add_executor_job(release_catalog.ingredient_nutrition_references, ingredient, reference_language)
+            if hass is not None else release_catalog.ingredient_nutrition_references(ingredient, reference_language)
+        )
 
         official: list[dict[str, Any]] = []
         if name and bool(msg.get("include_official_usage", True)):
             language = str(msg.get("language") or v11._device_language(bridge))
             try:
-                search = await v10._search_with_diagnostic(
-                    hass,
-                    bridge,
-                    query=name,
-                    page=0,
-                    size=12,
-                    language=language,
-                    strict_language=False,
-                    refresh=False,
-                )
+                if release_catalog.release_catalog_ready():
+                    search = release_catalog.search_release_recipes(
+                        name,
+                        language=language,
+                        configured_language=v11._device_language(bridge),
+                        country=str(bridge.entry.data.get(CONF_COUNTRY, DEFAULT_COUNTRY)),
+                        size=12,
+                        group_families=True,
+                    )
+                else:
+                    search = await v10._search_with_diagnostic(
+                        hass,
+                        bridge,
+                        query=name,
+                        page=0,
+                        size=12,
+                        language=language,
+                        strict_language=False,
+                        refresh=False,
+                    )
                 if search.get("ok", True):
                     official = [
                         row
@@ -619,10 +636,13 @@ async def ws_ingredient_info(hass, connection, msg) -> None:
                 "identity": identity,
                 "ingredient": {
                     **({"key": stock.get("key")} if stock and stock.get("key") else {}),
-                    "name": name or (stock or {}).get("name") or "Ingredient",
+                    "name": release_catalog.ingredient_display_name(ingredient, msg.get("language") or "en") or name or (stock or {}).get("name") or "Ingredient",
                 },
                 "stock": stock,
                 "genericNutrition": generic,
+                "catalogNutrition": catalog_nutrition,
+                "ingredientInfoContract": "offline-ingredient-info-v62",
+                "nutritionReferences": references,
                 "exactNutritionLots": exact_lots,
                 "history": history,
                 "historyCount": len(history),

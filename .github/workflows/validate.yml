@@ -49,6 +49,29 @@ jobs:
           bash -n tools/run_release_catalog_local_translation.sh
           bash -n tools/run_release_catalog_taxonomy_capture.sh
           bash -n tools/run_release_catalog_fdc_offline_review_prep_v60.sh
+          bash -n tools/deploy_offline_runtime_v61.sh
+          bash -n tools/deploy_offline_runtime_v62.sh
+          python tools/build_frontend_bundle_v62.py --check
+          bash -n tools/deploy_offline_runtime_v63.sh
+          python tools/build_frontend_bundle_v63.py --check
+          bash -n tools/deploy_offline_runtime_v64.sh
+          python tools/build_frontend_bundle_v64.py --check
+          bash -n tools/deploy_offline_runtime_v65.sh
+          python tools/build_frontend_bundle_v65.py --check
+          bash -n tools/deploy_offline_runtime_v66.sh
+          python tools/build_frontend_bundle_v66.py --check
+          bash -n tools/deploy_offline_runtime_v67.sh
+          python tools/build_frontend_bundle_v67.py --check
+          bash -n tools/deploy_offline_runtime_v68.sh
+          python tools/build_frontend_bundle_v68.py --check
+          bash -n tools/deploy_offline_runtime_v69.sh
+          python tools/build_frontend_bundle_v69.py --check
+          bash -n tools/deploy_offline_runtime_v70.sh
+          python tools/build_frontend_bundle_v70.py --check
+          bash -n tools/deploy_offline_runtime_v71.sh
+          python tools/build_frontend_bundle_v71.py --check
+          python tools/build_frontend_bundle_v72.py --check
+          python tools/build_frontend_bundle_v73.py --check
           python - <<'PY'
           import json
           from pathlib import Path
@@ -57,6 +80,8 @@ jobs:
           print('JSON OK')
           PY
           for f in custom_components/cook4me/frontend/cook4me-panel-v*.js; do node --check "$f"; done
+      - name: Check installer backup and rollback with isolated command stubs
+        run: sudo "$(command -v python)" -m unittest discover -s tests -p 'test_deploy_offline_runtime_v*.py' -v
       - name: Instantiate Recipe Hub in a DOM runtime
         run: |
           npm install --no-save --package-lock=false linkedom@0.18.12
@@ -69,5 +94,61 @@ jobs:
           timeout 20s node --experimental-default-type=module tests/frontend_server_seed_ui_smoke.mjs
           timeout 20s node --experimental-default-type=module tests/frontend_v58_regression_smoke.mjs
           timeout 20s node --experimental-default-type=module tests/frontend_v59_regression_smoke.mjs
+          timeout 20s node --experimental-default-type=module tests/frontend_v61_regression_smoke.mjs
+          timeout 20s node --experimental-default-type=module tests/frontend_v62_regression_smoke.mjs
+          timeout 20s node --experimental-default-type=module tests/frontend_v63_shared_ui_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=64 timeout 20s node --experimental-default-type=module tests/frontend_v63_shared_ui_smoke.mjs
+          timeout 180s node --experimental-default-type=module tests/frontend_v64_catalog_flow_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=65 timeout 20s node --experimental-default-type=module tests/frontend_v63_shared_ui_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=65 timeout 180s node --experimental-default-type=module tests/frontend_v64_catalog_flow_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=66 timeout 20s node --experimental-default-type=module tests/frontend_v63_shared_ui_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=66 timeout 180s node --experimental-default-type=module tests/frontend_v64_catalog_flow_smoke.mjs
+          timeout 20s node --experimental-default-type=module tests/frontend_v66_recipe_cards_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=67 timeout 20s node --experimental-default-type=module tests/frontend_v63_shared_ui_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=67 timeout 180s node --experimental-default-type=module tests/frontend_v64_catalog_flow_smoke.mjs
+          timeout 20s node --experimental-default-type=module tests/frontend_v67_recipe_layout_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=68 timeout 20s node tests/frontend_v63_shared_ui_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=68 timeout 180s node tests/frontend_v64_catalog_flow_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=68 timeout 20s node tests/frontend_v67_recipe_layout_smoke.mjs
+          timeout 40s node tests/frontend_v68_recipe_actions_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=69 timeout 20s node tests/frontend_v63_shared_ui_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=69 timeout 180s node tests/frontend_v64_catalog_flow_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=69 timeout 20s node tests/frontend_v67_recipe_layout_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=69 timeout 40s node tests/frontend_v68_recipe_actions_smoke.mjs
+          timeout 40s node tests/frontend_v69_photo_overlay_smoke.mjs
+      - name: Fullscreen translation and active v70 panel
+        run: |
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=70 node tests/frontend_v63_shared_ui_smoke.mjs
+          timeout 180s env COOK4ME_TEST_PANEL_VERSION=70 node tests/frontend_v64_catalog_flow_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=70 node tests/frontend_v67_recipe_layout_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=70 node tests/frontend_v68_recipe_actions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=70 node tests/frontend_v69_photo_overlay_smoke.mjs
+          timeout 40s node tests/frontend_v70_fullscreen_translation_smoke.mjs
+      - name: Recipe card layout and removal on active v71 panel
+        run: |
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=71 node tests/frontend_v63_shared_ui_smoke.mjs
+          timeout 180s env COOK4ME_TEST_PANEL_VERSION=71 node tests/frontend_v64_catalog_flow_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=71 node tests/frontend_v67_recipe_layout_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=71 node tests/frontend_v68_recipe_actions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=71 node tests/frontend_v69_photo_overlay_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=71 node tests/frontend_v70_fullscreen_translation_smoke.mjs
+          timeout 40s node tests/frontend_v71_card_interactions_smoke.mjs
+      - name: Device settings and announcements on active v72 panel
+        run: |
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v63_shared_ui_smoke.mjs
+          timeout 180s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v64_catalog_flow_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v67_recipe_layout_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v68_recipe_actions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v69_photo_overlay_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v70_fullscreen_translation_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v71_card_interactions_smoke.mjs
+          timeout 40s node tests/frontend_v72_device_settings_smoke.mjs
+      - name: Verify photo bounds in a real browser
+        run: |
+          npm install --no-save --package-lock=false linkedom@0.18.12 playwright@1.62.1
+          npx playwright install --with-deps chromium
+          timeout 60s node tests/frontend_v73_photo_bounds_browser.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=73 node tests/frontend_v71_card_interactions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=73 node tests/frontend_v72_device_settings_smoke.mjs
       - name: Run focused tests
         run: python -m unittest discover -s tests -v
