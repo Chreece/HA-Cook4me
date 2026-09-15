@@ -14,7 +14,7 @@ class Cook4MeEntity(Entity):
             manufacturer="Groupe SEB / KRUPS",
             model="Cook4Me",
             sw_version=bridge.data.get("uiFirmware"),
-            configuration_url=f"/cook4me?device={bridge.entry.entry_id}",
+            configuration_url=f"homeassistant://cook4me?device={bridge.entry.entry_id}",
         )
     @property
     def available(self) -> bool:

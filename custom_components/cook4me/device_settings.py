@@ -126,8 +126,21 @@ class DeviceSettings:
             return
         from homeassistant.helpers import entity_registry as er
         registry = er.async_get(self.bridge.hass)
+        entries = er.async_entries_for_config_entry(registry, self.bridge.entry.entry_id)
+        primary_ids = {f"{self.bridge.device_uuid}_{key}" for key in ("summary", "connected")}
+        ready = set()
+        for row in entries:
+            if row.platform != DOMAIN or row.unique_id not in primary_ids or row.disabled_by is not None:
+                continue
+            state = self.bridge.hass.states.get(row.entity_id)
+            if state is not None and state.state not in ("unavailable", "unknown") and not state.attributes.get("restored"):
+                ready.add(row.unique_id)
+        if ready != primary_ids:
+            # Keep legacy telemetry when either replacement failed to register.
+            # Do not mark the migration done; the next successful setup retries.
+            return
         legacy_ids = {f"{self.bridge.device_uuid}_{key}" for key in LEGACY_KEYS}
-        for row in er.async_entries_for_config_entry(registry, self.bridge.entry.entry_id):
+        for row in entries:
             if row.platform == DOMAIN and row.unique_id in legacy_ids and row.disabled_by is None:
                 registry.async_update_entity(row.entity_id, disabled_by=er.RegistryEntryDisabler.INTEGRATION)
         data = deepcopy(self.data)

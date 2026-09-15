@@ -71,6 +71,7 @@ jobs:
           bash -n tools/deploy_offline_runtime_v71.sh
           python tools/build_frontend_bundle_v71.py --check
           python tools/build_frontend_bundle_v72.py --check
+          python tools/build_frontend_bundle_v73.py --check
           python - <<'PY'
           import json
           from pathlib import Path
@@ -142,5 +143,12 @@ jobs:
           timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v70_fullscreen_translation_smoke.mjs
           timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v71_card_interactions_smoke.mjs
           timeout 40s node tests/frontend_v72_device_settings_smoke.mjs
+      - name: Verify photo bounds in a real browser
+        run: |
+          npm install --no-save --package-lock=false linkedom@0.18.12 playwright@1.62.1
+          npx playwright install --with-deps chromium
+          timeout 60s node tests/frontend_v73_photo_bounds_browser.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=73 node tests/frontend_v71_card_interactions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=73 node tests/frontend_v72_device_settings_smoke.mjs
       - name: Run focused tests
         run: python -m unittest discover -s tests -v

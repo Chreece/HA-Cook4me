@@ -7,8 +7,9 @@ globalThis.ResizeObserver=class{observe(){} disconnect(){}};globalThis.CSS={esca
 const selectValue=Object.getOwnPropertyDescriptor(window.HTMLSelectElement.prototype,'value');
 Object.defineProperty(window.HTMLSelectElement.prototype,'value',{configurable:true,get:selectValue.get,set(value){for(const option of this.options)option.selected=option.value===String(value);}});
 const storage=new Map();globalThis.localStorage={getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
-await import('../custom_components/cook4me/frontend/cook4me-panel-v72-bundle.js');
-const panel=document.createElement('cook4me-recipe-hub-panel-v72');
+const version=process.env.COOK4ME_TEST_PANEL_VERSION||'72';
+await import(`../custom_components/cook4me/frontend/cook4me-panel-v${version}-bundle.js`);
+const panel=document.createElement(`cook4me-recipe-hub-panel-v${version}`);
 const tick=()=>new Promise(resolve=>setTimeout(resolve,15));
 const requests=[],subscriptions=[];let unsubscriptions=0;
 const defaults={enabled:false,recipe:true,steps:true,state:true,connection:false,players:[],tts:'',ai:'',language:'',voice:''};

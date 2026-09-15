@@ -60,7 +60,7 @@ resolveToday(fixture.today);await tick();
 assert.equal(panel._todayBusy,false);assert.equal(job.ended,true);
 assert.equal(panel.shadowRoot.querySelectorAll("#todayGrid article.recipe").length,fixture.today.items.length);
 assert.equal(panel.shadowRoot.querySelectorAll(".rx-category-result").length,fixture.today.items.length);
-assert.equal(panel.getAttribute("data-cook4me-build"),({64:"2026.9.15.6",65:"2026.9.15.7",66:"2026.9.15.8",67:"2026.9.15.9",68:"2026.9.15.10",69:"2026.9.15.11",70:"2026.9.15.12",71:"2026.9.15.13",72:"2026.9.15.14"})[version]);
+assert.equal(panel.getAttribute("data-cook4me-build"),({64:"2026.9.15.6",65:"2026.9.15.7",66:"2026.9.15.8",67:"2026.9.15.9",68:"2026.9.15.10",69:"2026.9.15.11",70:"2026.9.15.12",71:"2026.9.15.13",72:"2026.9.15.14",73:"2026.9.15.15"})[version]);
 assert.equal(panel.shadowRoot.querySelector("#cook4meLoadStatus")?.textContent||"","");
 // The real Ramen response passes through Official's actual search/render path.
 panel._tab="official";panel._renderTab();await panel._search("ramen");
