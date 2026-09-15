@@ -2,6 +2,9 @@ from __future__ import annotations
 
 from bisect import bisect_left
 from collections import defaultdict
+from functools import lru_cache
+import json
+from pathlib import Path
 import re
 import unicodedata
 from typing import Any, Iterable
@@ -14,16 +17,6 @@ _INGREDIENT_PHRASE_WEIGHT = 15
 _PREFIX_PENALTY = 2
 _MIN_PREFIX = 3
 _MAX_PREFIX = 12
-
-# Query-only equivalences are deliberately tiny and language-scoped. They are
-# not fuzzy transliteration and they never mutate the compiled provider catalog.
-# Add entries only when a user-language spelling is an unambiguous equivalent
-# of a canonical/indexed culinary term.
-_QUERY_TOKEN_EQUIVALENTS_BY_LANGUAGE: dict[str, dict[str, tuple[str, ...]]] = {
-    "el": {
-        "ριζοτο": ("risotto",),
-    },
-}
 
 
 def _text(value: Any) -> str:
@@ -59,40 +52,81 @@ def _language(value: Any) -> str:
     return _text(value).lower().replace("_", "-").split("-", 1)[0]
 
 
-def _query_token_variants(token: str, language: str) -> tuple[str, ...]:
-    """Return exact language-scoped equivalents for one normalized query token."""
-    normalized = normalize_search_text(token)
-    if not normalized:
-        return ()
-    aliases = (_QUERY_TOKEN_EQUIVALENTS_BY_LANGUAGE.get(_language(language)) or {}).get(
-        normalized,
-        (),
-    )
-    return tuple(
-        dict.fromkeys(
-            candidate
-            for candidate in (
-                normalized,
-                *(normalize_search_text(value) for value in aliases),
-            )
-            if candidate
-        )
+@lru_cache(maxsize=1)
+def _query_vocabulary() -> tuple[dict, dict]:
+    """Load small query translations separately from immutable provider data."""
+    payload = json.loads(Path(__file__).with_name("query_vocabulary.json").read_text(encoding="utf-8"))
+    aliases: dict[str, dict[str, tuple[str, ...]]] = defaultdict(dict)
+    for row in payload["terms"]:
+        canonical = tuple(dict.fromkeys(normalize_search_text(v) for v in row["en"]))
+        for language, values in row.items():
+            for value in values:
+                alias = normalize_search_text(value)
+                previous = aliases[language].get(alias, ())
+                aliases[language][alias] = tuple(dict.fromkeys((*previous, *canonical)))
+    stops = {
+        language: frozenset(normalize_search_text(value) for value in values)
+        for language, values in payload["stopwords"].items()
+    }
+    return dict(aliases), stops
+
+
+def _query_language(query: str, language: str) -> str:
+    # Script is evidence about the typed query, not about source catalog filters.
+    if any("GREEK" in unicodedata.name(char, "") for char in query):
+        return "el"
+    return _language(language)
+
+
+def query_terms(query: str, language: str = "") -> tuple[tuple[str, ...], ...]:
+    """AND query terms, OR their exact translations; retain the original wording.
+
+    Longest known phrases are consumed together (e.g. pommes de terre). Unknown
+    words are retained, including negations: never silently broaden a request by
+    dropping content words or choosing a nearby, unrelated catalog token.
+    """
+    normalized = normalize_search_text(query)
+    words = normalized.split()
+    aliases, stopwords = _query_vocabulary()
+    language = _query_language(normalized, language)
+    mapping = dict(aliases.get("en", {}))
+    mapping.update(aliases.get(language, {}))
+    stops = stopwords.get(language, frozenset())
+    result: list[tuple[str, ...]] = []
+    position = 0
+    while position < len(words):
+        selected = None
+        for length in range(min(4, len(words) - position), 0, -1):
+            phrase = " ".join(words[position:position + length])
+            if phrase in mapping:
+                selected = (phrase, length, mapping[phrase])
+                break
+        if selected is not None:
+            phrase, length, equivalents = selected
+            result.append(tuple(dict.fromkeys((phrase, *equivalents))))
+            position += length
+            continue
+        word = words[position]
+        if word not in stops:
+            result.append((word,))
+        position += 1
+    return tuple(result)
+
+
+def resolved_query_text(query: str, language: str = "") -> str:
+    terms = query_terms(query, language)
+    english = _query_vocabulary()[0].get("en", {})
+    return " ".join(
+        english[term[0]][0] if term[0] in english
+        else term[1] if len(term) > 1 else term[0]
+        for term in terms
     )
 
 
 def _query_phrase_variants(normalized: str, language: str) -> tuple[str, ...]:
-    """Return the original phrase plus one exact canonicalized phrase variant."""
-    original = normalize_search_text(normalized)
-    if not original:
-        return ()
-    mapping = _QUERY_TOKEN_EQUIVALENTS_BY_LANGUAGE.get(_language(language)) or {}
-    parts = original.split(" ")
-    canonical = [
-        normalize_search_text((mapping.get(part) or (part,))[0]) or part
-        for part in parts
-    ]
-    expanded = " ".join(canonical).strip()
-    return tuple(dict.fromkeys(value for value in (original, expanded) if value))
+    return tuple(dict.fromkeys(value for value in (
+        normalize_search_text(normalized), resolved_query_text(normalized, language)
+    ) if value))
 
 
 def _strings(value: Any) -> Iterable[str]:
@@ -370,6 +404,7 @@ def prepare_search_index(compiled: Any) -> dict[str, Any]:
                     if isinstance(index, int) and index >= 0
                 )
 
+    _query_vocabulary()  # Warm the query lexicon alongside the release indexes.
     token_postings = postings("tokenPostings")
     return {
         "schemaVersion": SEARCH_INDEX_SCHEMA_VERSION,
@@ -452,7 +487,7 @@ def search_index(
         )
 
     normalized = normalize_search_text(query)
-    query_tokens = _tokens(normalized)
+    terms = query_terms(normalized, language_key)
     token_postings = prepared.get("tokenPostings") or {}
     phrase_postings = prepared.get("phrasePostings") or {}
 
@@ -472,14 +507,23 @@ def search_index(
             "size": size,
         }
 
+    if not terms:
+        return {"indices": [], "scores": {}, "total": 0, "page": page, "size": size}
+
     per_term: list[dict[int, int]] = []
-    for token in query_tokens:
+    for alternatives in terms:
         current: dict[int, int] = {}
-        for variant in _query_token_variants(token, language_key):
-            rows = token_postings.get(variant)
-            if not rows:
-                rows = _prefix_rows(prepared, variant)
-            for index, score in rows or ():
+        for alternative in alternatives:
+            # One translated term can contain several words (e.g. olive oil).
+            parts: list[dict[int, int]] = []
+            for word in _tokens(alternative):
+                rows = token_postings.get(word) or _prefix_rows(prepared, word)
+                parts.append(_posting_map(rows or ()))
+            matching = set(parts[0]) if parts else set()
+            for part in parts[1:]:
+                matching.intersection_update(part)
+            for index in matching:
+                score = sum(part[index] for part in parts)
                 current[index] = max(current.get(index, 0), score)
         if not current:
             return {

@@ -96,6 +96,7 @@ def release_catalog_summary() -> dict[str, Any]:
     )
     summary.update(
         {
+            "catalogLanguages": sorted((payload.get("_runtimeSearchIndex") or {}).get("recipeLanguages", {})),
             "compiledSafetyReady": bool(runtime_safety.get("_prepared")),
             "compiledSafetyPrebuilt": bool(payload.get("_runtimeSafetyPrecompiled")),
             "compiledSafetyRecipeCount": int(runtime_safety.get("recipeCount") or 0),
@@ -137,6 +138,7 @@ def search_release_recipes(
     strict_language: bool = False,
     diet: str = "",
     allergies: Iterable[str] = (),
+    catalog_languages: Iterable[str] | None = None,
 ) -> dict[str, Any]:
     """Intersect precompiled search and strict safety sets before pagination."""
     page = max(0, int(page))
@@ -160,6 +162,17 @@ def search_release_recipes(
         else None
     )
 
+    # Source-language filters and the typed query's language are independent.
+    selected_languages = None if catalog_languages is None else tuple(dict.fromkeys(
+        _core._language(value) for value in catalog_languages if _text(value)
+    ))
+    by_language = runtime_search.get("recipeLanguages") or {}
+    if selected_languages is not None:
+        source_allowed: set[int] = set()
+        for selected in selected_languages:
+            source_allowed.update(by_language.get(selected, ()))
+        allowed = source_allowed if allowed is None else set(allowed) & source_allowed
+
     match = _core.search_index(
         runtime_search,
         query,
@@ -179,16 +192,21 @@ def search_release_recipes(
             continue
         if not isinstance(raw, dict):
             continue
+        display_language = next((
+            selected for selected in selected_languages or ()
+            if recipe_index in by_language.get(selected, ())
+        ), language)
         row = _core._enrich_recipe_row(
             payload,
             _core._legacy._recipe_row(
                 raw,
-                language=language,
+                language=display_language,
                 configured_language=configured_language,
                 country=country,
             ),
         )
         if row:
+            row["catalogLanguage"] = row.get("language") or display_language
             if recipe_index in scores:
                 row["searchScore"] = scores[recipe_index]
             if safety_filtered:
@@ -205,6 +223,8 @@ def search_release_recipes(
     return {
         "ok": True,
         "query": _text(query),
+        "resolvedQuery": _core.resolved_query_text(query, language),
+        "queryRecovered": _core.resolved_query_text(query, language) != _core.normalize_search_text(query),
         "requestedLanguage": _text(language).lower(),
         "configuredLanguage": _text(configured_language).lower(),
         "market": f"GS_{_text(country).upper()}",

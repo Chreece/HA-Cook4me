@@ -13,6 +13,8 @@ try:
         compile_search_index,
         prepare_search_index,
         search_index,
+        resolved_query_text,
+        normalize_search_text,
     )
 except ImportError:  # Standalone unit-test import via spec_from_file_location.
     def _load_sibling(module_name: str, filename: str):
@@ -37,6 +39,8 @@ except ImportError:  # Standalone unit-test import via spec_from_file_location.
     compile_search_index = _search_module.compile_search_index
     prepare_search_index = _search_module.prepare_search_index
     search_index = _search_module.search_index
+    resolved_query_text = _search_module.resolved_query_text
+    normalize_search_text = _search_module.normalize_search_text
 
 
 _SCHEMA_VERSION = _legacy._SCHEMA_VERSION

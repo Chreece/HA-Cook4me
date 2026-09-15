@@ -10,7 +10,6 @@ from homeassistant.core import HomeAssistant, callback
 from . import release_catalog
 from . import websocket as legacy
 from . import websocket_v30 as v30
-from .multilingual_query import resolve_multilingual_query
 from .request_coordinator import request_coordinator
 
 
@@ -28,87 +27,24 @@ def _selected_languages(values: Any) -> tuple[str, ...]:
     return tuple(dict.fromkeys(lang for value in values if (lang := _language(value))))
 
 
-def _allowed_indices(prepared: dict[str, Any], languages: tuple[str, ...]) -> frozenset[int] | None:
-    if not languages:
-        return None
-    by_language = prepared.get("recipeLanguages") or {}
-    allowed: set[int] = set()
-    for language in languages:
-        allowed.update(by_language.get(language, ()))
-    return frozenset(allowed)
-
-
-def _display_language(prepared: dict[str, Any], recipe_index: int, languages: tuple[str, ...], fallback: str) -> str:
-    by_language = prepared.get("recipeLanguages") or {}
-    for language in languages:
-        if recipe_index in by_language.get(language, ()):
-            return language
-    return fallback
-
-
 def _offline_search(bridge, *, query: str, query_language: str, languages: tuple[str, ...], page: int, size: int) -> dict[str, Any]:
-    payload = release_catalog.load_release_catalog()
-    prepared = payload.get("_runtimeSearchIndex") or {}
-    resolved_query, query_recovered = resolve_multilingual_query(prepared, query)
-    allowed = _allowed_indices(prepared, languages)
-    match = release_catalog._core.search_index(
-        prepared,
-        resolved_query,
-        language="",
-        strict_language=False,
-        allowed_indices=allowed,
+    result = release_catalog.search_release_recipes(
+        query,
+        language=_language(query_language),
+        configured_language=v30._device_language(bridge),
+        country=v30._device_country(bridge),
+        catalog_languages=languages or None,
         page=page,
         size=size,
     )
-    recipes = payload.get("recipes") or []
-    scores = match.get("scores") if isinstance(match.get("scores"), dict) else {}
-    configured = v30._device_language(bridge)
-    country = v30._device_country(bridge)
-    fallback_language = _language(query_language) or configured
-    items: list[dict[str, Any]] = []
-    for recipe_index in match.get("indices") or []:
-        try:
-            raw = recipes[recipe_index]
-        except (IndexError, TypeError):
-            continue
-        if not isinstance(raw, dict):
-            continue
-        row_language = _display_language(prepared, recipe_index, languages, fallback_language)
-        row = release_catalog._core._enrich_recipe_row(
-            payload,
-            release_catalog._core._legacy._recipe_row(
-                raw,
-                language=row_language,
-                configured_language=configured,
-                country=country,
-            ),
-        )
-        if not row:
-            continue
-        if recipe_index in scores:
-            row["searchScore"] = scores[recipe_index]
-        row["catalogLanguage"] = row_language
-        items.append(row)
-    total = int(match.get("total") or 0)
-    total_pages = (total + size - 1) // size if total else 0
-    result = {
-        "ok": True,
-        "query": _text(query),
-        "resolvedQuery": resolved_query,
-        "queryRecovered": query_recovered,
+    result.update({
         "queryLanguage": _language(query_language),
         "catalogLanguages": list(languages),
-        "page": {"number": page, "size": size, "totalElements": total, "totalPages": total_pages},
-        "groupedRecipeCount": len(items),
-        "items": items,
-        "cacheHit": True,
-        "checkedOnline": False,
-        "offline": True,
         "serverFetch": False,
         "catalogMode": "release_offline",
-        "searchContract": "release-multilingual-index-v31-script-recovery",
+        "searchContract": "release-multilingual-index-v31-exact-query-translations",
         "releaseCatalog": release_catalog.release_catalog_summary(),
-    }
+    })
     return v30._annotate_search(bridge, result)
 
 
