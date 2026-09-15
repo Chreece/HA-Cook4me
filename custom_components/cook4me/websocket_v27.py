@@ -16,6 +16,10 @@ _BOOTSTRAP_STATE_KEYS = (
     "status",
     "recipeTitle",
     "currentInstruction",
+    "variantFunctionalId",
+    "stepFunctionalId",
+    "stepIndex",
+    "recipeStepCount",
 )
 
 

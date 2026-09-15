@@ -22,6 +22,7 @@ const backend=spawnSync("python",["tests/test_catalog_flow_v64.py","--fixture",f
 assert.equal(backend.status,0,backend.stderr);
 const fixture=JSON.parse(readFileSync(fixturePath,"utf8"));rmSync(temp,{recursive:true});
 const version=process.env.COOK4ME_TEST_PANEL_VERSION||"64";
+const watchdog=setTimeout(()=>{console.error("Recipe flow did not complete");process.exit(1);},20000);
 await import(`../custom_components/cook4me/frontend/cook4me-panel-v${version}-bundle.js`);
 const panel=document.createElement(`cook4me-recipe-hub-panel-v${version}`);
 const requests=[];let resolveToday;
@@ -59,13 +60,13 @@ resolveToday(fixture.today);await tick();
 assert.equal(panel._todayBusy,false);assert.equal(job.ended,true);
 assert.equal(panel.shadowRoot.querySelectorAll("#todayGrid article.recipe").length,fixture.today.items.length);
 assert.equal(panel.shadowRoot.querySelectorAll(".rx-category-result").length,fixture.today.items.length);
-assert.equal(panel.getAttribute("data-cook4me-build"),version==="65"?"2026.9.15.7":"2026.9.15.6");
+assert.equal(panel.getAttribute("data-cook4me-build"),({64:"2026.9.15.6",65:"2026.9.15.7",66:"2026.9.15.8"})[version]);
 assert.equal(panel.shadowRoot.querySelector("#cook4meLoadStatus")?.textContent||"","");
 // The real Ramen response passes through Official's actual search/render path.
 panel._tab="official";panel._renderTab();await panel._search("ramen");
 assert.ok(panel._results.length>0);assert.ok(panel.shadowRoot.querySelectorAll("article.recipe").length>0);
 assert.equal(panel.shadowRoot.querySelector("#cook4meLoadStatus")?.textContent||"","");
-if(version==="65"){
+if(Number(version)>=65){
  panel._ingredientCatalog=fixture.ingredientChoices;
  panel._showFilter("ingredients");
  const dialog=panel.shadowRoot.querySelector('[data-filter-dialog="ingredients"]'),input=dialog.querySelector("[data-ingredient-search]");
@@ -113,7 +114,7 @@ assert.equal(panel._todayBusy,false);
 // Switching user/device before a response must not put that old plan on screen.
 connection.sendMessagePromise=normal;panel.shadowRoot.querySelector("#todaySuggest").click();await tick();
 panel._entryId="other-entry";resolveToday(fixture.today);await tick();assert.equal(panel._todayResults.length,0);
-panel.disconnectedCallback();
+panel.disconnectedCallback();clearTimeout(watchdog);
 console.log(`${fixture.official.items.length} ramen families; ${fixture.today.items.length} Today categories`);
 console.log("v64 real catalog, Today button, Official ramen, progress, empty/error and stale response flows passed");
 process.exit(0);
