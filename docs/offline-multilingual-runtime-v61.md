@@ -81,3 +81,24 @@ Install the complete integration from the review branch and restart Home
 Assistant, then reopen Recipe Hub. Copying only `merged_catalog.v1.json` does not
 install the query engine, vocabulary, websocket, or panel fixes. This change has
 not been deployed to the homeserver or published as a release.
+
+`tools/deploy_offline_runtime_v61.sh` provides the homeserver test installation.
+Run it as a standalone script with `sudo bash`, never source it. It fetches the
+fixed runtime commit `2ef181c0a604b0a5b8469571cd898859ae665a4b`, verifies the
+`homeassistant` container's `/config` mount against
+`/home/chreece/homeassistant/config`, and runs the eight offline runtime tests
+using the container's Python before stopping Home Assistant. It replaces the
+complete component, keeping the previous component under
+`config/.cook4me-deploy/v61-<timestamp>-<unique>/previous-cook4me`.
+
+After restart it waits up to four minutes for the installed panel to be served
+and checks real installed catalog counts, Greek searches, nutrition, and device
+identity without opening a network socket. Startup or verification failure
+triggers restoration of the previous integration and another start. Profiles
+and credentials in `.storage` are outside the replacement. This verifies the
+installed catalog and panel registration; an actual mobile UI check still needs
+the user's browser/app. The script reports rollback failures explicitly if
+Docker or filesystem operations themselves fail. It retains its private source
+checkout for diagnosis and refuses overlapping deployments. Deployment tests
+simulate success, preflight rejection, mismatched mounts, failed replacement,
+failed start, panel timeout, and failed installed-catalog verification.
