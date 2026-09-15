@@ -66,9 +66,9 @@ after registering the old panel, exercise the rice dialog and Greek ingredient
 picker, and verify offline variant routing. Installer fixtures cover backup,
 mount validation, translation failure before restart, and rollback.
 
-The complete Python suite retains the existing nutrition-review failures in
-historical batches 42–50; these are not relaxed by this change. See the PR for the
-recorded run. `tools/build_frontend_bundle_v62.py --check` verifies that the
+The complete Python suite ran 1,182 tests: 1,171 passed and the same 11 existing
+nutrition-review assertions failed in historical batches 42–50. Those assertions
+are not relaxed by this change. `tools/build_frontend_bundle_v62.py --check` verifies that the
 committed bundle matches its source modules.
 
 The homeserver cannot be reached from this workspace. Its Ollama translation
@@ -76,3 +76,6 @@ job and the final Home Assistant/mobile behavior must therefore be verified
 when the pinned installer runs there. The installer checks that Home Assistant
 serves the exact new bundle and validates the installed offline catalog; it
 restores the previous component if startup or post-install checks fail.
+
+The v62 installer is pinned to runtime commit
+`66d813be424447c42bbdd00168264e5f1264d4de`.
