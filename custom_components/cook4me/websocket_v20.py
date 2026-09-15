@@ -34,7 +34,7 @@ from .meal_lifecycle import (
     meal_lifecycle_store_for_bridge,
     reservation_status,
     shopping_delta,
-    week_monday,
+    rolling_week_start,
 )
 from .nutrition import nutrition_store_for_bridge
 from .nutrition_fefo import calculate_recipe_nutrition_fefo
@@ -304,6 +304,10 @@ async def _generate_week(
     ui_language: str = "en",
 ) -> dict[str, Any]:
     from . import release_catalog
+    if replace_slot_id and not any(row.get("id") == replace_slot_id and
+            week_start <= _text(row.get("date")) <= (date.fromisoformat(week_start) + timedelta(days=6)).isoformat()
+            for row in lifecycle.slots):
+        raise ValueError("The selected meal is no longer in the next seven days")
     if shared_filters is not None and release_catalog.release_catalog_ready():
         from .shared_recipe_runtime import search_filtered
         result = await search_filtered(bridge, query=query, languages=languages, language=ui_language, filters=shared_filters)
@@ -455,7 +459,7 @@ async def _state(hass: HomeAssistant, bridge, *, history_days: int = 30) -> dict
     lifecycle = await meal_lifecycle_store_for_bridge(bridge)
     cost_store = await cost_store_for_bridge(bridge)
     inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
-    state = lifecycle.snapshot(inventory)
+    state = lifecycle.snapshot(inventory, start_date=dt_util.now().date())
     weekly_cost: dict[str, float] = {}
     for slot in state["slots"]:
         cost = slot.get("cost") if isinstance(slot.get("cost"), dict) else {}
@@ -692,9 +696,7 @@ async def ws_week_generate(hass, connection, msg) -> None:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         lifecycle = await meal_lifecycle_store_for_bridge(bridge)
         raw_start = _text(msg.get("week_start"))
-        week_start = week_monday()
-        if raw_start:
-            week_start = week_monday(date.fromisoformat(raw_start))
+        week_start = rolling_week_start(raw_start, dt_util.now().date())
         generation = await _generate_week(
             hass, bridge, lifecycle,
             week_start=week_start,
@@ -738,9 +740,8 @@ async def ws_week_add_shopping(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         lifecycle = await meal_lifecycle_store_for_bridge(bridge)
-        rows = shopping_delta(
-            lifecycle.slots, bridge.recipe_hub.profile.get("houseIngredients") or []
-        )
+        rows = lifecycle.snapshot(bridge.recipe_hub.profile.get("houseIngredients") or [],
+            start_date=dt_util.now().date())["shoppingDelta"]
         result = await _shopping_add(hass, rows)
         result["shoppingDelta"] = rows
     except Exception as exc:

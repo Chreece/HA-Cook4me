@@ -23,6 +23,7 @@ const connection={sendMessagePromise:async msg=>{requests.push(msg);if(msg.type.
 panel._entryId="entry";panel._entries=[{entry_id:"entry",title:"Cook4Me",profile:{houseIngredients:[]},recipes:[]}];
 panel._hass={language:"el",user:{id:"user1"},states:{},connection};panel._capabilities={languages:[{code:"de"},{code:"fr"}],deviceCatalogLanguage:"de"};
 panel._weekState={weekStart:"2026-09-14",slots:[{id:"slot",date:"2026-09-15",mealType:"dinner",recipe}],settings:{mealTypes:["dinner"]}};panel._weekStateEntry="entry";
+if(Number(version)>=67){panel._v67Today=()=>"2026-09-15";panel._loadWeekState=async()=>{};}
 panel._requestSection=async()=>{};panel._loadRecipeNutrition=async()=>{};
 panel._renderShell();await panel._restorePreferences();
 const tick=()=>new Promise(resolve=>setTimeout(resolve,5));
@@ -33,7 +34,7 @@ for(const tab of ["today","week","official"]){
  const keys=[...bar.querySelectorAll("button")].map(x=>x.dataset.filter);
  assert.equal(keys.length,7);if(controls)assert.deepEqual(keys,controls);controls=keys;
  assert.equal(panel.shadowRoot.querySelector('[data-tab="recommend"]'),null);
- assert.equal(panel.shadowRoot.querySelector('[data-tab="week"] ha-icon').getAttribute("icon"),"mdi:calendar-week");
+ if(Number(version)>=67)assert.ok(panel.shadowRoot.querySelector('[data-tab="week"] svg[data-v67-week-icon]'));else assert.equal(panel.shadowRoot.querySelector('[data-tab="week"] ha-icon').getAttribute("icon"),"mdi:calendar-week");
  assert.equal(panel.shadowRoot.querySelector("#officialCatalogLanguages"),null);
 }
 panel._tab="week";panel._renderTab();

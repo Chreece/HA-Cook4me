@@ -51,6 +51,11 @@ def week_monday(value: date | datetime | None = None) -> str:
     return (current - timedelta(days=current.weekday())).isoformat()
 
 
+def rolling_week_start(value: str | None, today: date) -> str:
+    """Keep an explicit future start, but never generate an expired plan."""
+    return max(date.fromisoformat(value) if value else today, today).isoformat()
+
+
 def _meal_type(value: Any) -> str:
     token = _text(value).lower()
     return token if token in _VALID_MEAL_TYPES else "dinner"
@@ -315,7 +320,7 @@ class Cook4MeMealLifecycleStore:
     def settings(self) -> dict[str, Any]:
         return deepcopy(self._data["settings"])
 
-    def snapshot(self, inventory: Any = None) -> dict[str, Any]:
+    def snapshot(self, inventory: Any = None, *, start_date: date | None = None) -> dict[str, Any]:
         result = {
             "weekStart": self._data["weekStart"],
             "slots": self.slots,
@@ -324,6 +329,11 @@ class Cook4MeMealLifecycleStore:
             "substitutions": deepcopy(self._data["substitutions"]),
             "settings": self.settings,
         }
+        if start_date is not None:
+            first, last = start_date.isoformat(), (start_date + timedelta(days=6)).isoformat()
+            result["weekStart"] = first
+            result["weekEnd"] = last
+            result["slots"] = [slot for slot in result["slots"] if first <= slot["date"] <= last]
         if inventory is not None:
             result["reservations"] = reservation_status(result["slots"], inventory)
             result["shoppingDelta"] = shopping_delta(result["slots"], inventory)
