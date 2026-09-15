@@ -63,3 +63,5 @@ invalidation adjustments, all eleven multilingual regressions and both active
 frontend DOM suites passed. The installer uses isolated command-stub tests for
 success, backup/rollback, missing locales and mount validation; its final source
 pin is rechecked before publication.
+
+Published runtime: `76dbeaa5d113e402448abdeb979ef1076246e561`.

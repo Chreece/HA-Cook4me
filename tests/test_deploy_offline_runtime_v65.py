@@ -11,7 +11,7 @@ import unittest
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "tools/deploy_offline_runtime_v65.sh"
-COMMIT = "fee2553535b23c1486e87cdf17ef807b564ebdaa"
+COMMIT = "76dbeaa5d113e402448abdeb979ef1076246e561"
 FAKE_COMMAND = r'''#!/usr/bin/env python3
 import json, os, pathlib, shutil, sys
 name = pathlib.Path(sys.argv[0]).name
@@ -34,7 +34,7 @@ if name == "git":
         if scenario != "missing_locale":
             (staged / "catalog_ui_locales/el.json").write_text("{}")
     elif "rev-parse" in args:
-        print("fee2553535b23c1486e87cdf17ef807b564ebdaa")
+        print("76dbeaa5d113e402448abdeb979ef1076246e561")
 elif name == "docker":
     if args[0] == "inspect":
         if "State.Running" in args[2]:

@@ -3,7 +3,7 @@
 # Do not source this file into an interactive shell.
 set -Eeuo pipefail
 
-SOURCE_COMMIT=fee2553535b23c1486e87cdf17ef807b564ebdaa
+SOURCE_COMMIT=76dbeaa5d113e402448abdeb979ef1076246e561
 SOURCE_REPO=https://github.com/Chreece/HA-Cook4me.git
 CONFIG=${COOK4ME_CONFIG:-/home/chreece/homeassistant/config}
 CONTAINER=${COOK4ME_CONTAINER:-homeassistant}
