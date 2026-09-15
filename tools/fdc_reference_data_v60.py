@@ -18,6 +18,7 @@ from typing import Any
 
 REFERENCE_KIND = "cook4me-fdc-reference-data-v60"
 _ALLOWED_DATA_TYPES = {"Foundation", "SR Legacy", "Survey (FNDDS)"}
+_SECTION_PREFIX_RE = re.compile(r"^[A-Z]-\s+(.+)$")
 
 # Candidate-discovery aliases only. They are intentionally conservative spelling
 # or culinary-name equivalents. They are consulted only when the literal query
@@ -70,6 +71,12 @@ def norm(value: Any) -> str:
     value = unicodedata.normalize("NFKD", value)
     value = "".join(char for char in value if unicodedata.category(char) != "Mn")
     return re.sub(r"[^0-9a-z]+", " ", value).strip()
+
+
+def _section_prefix_query(value: Any) -> str:
+    """Return a recipe-section-stripped discovery query, never an identity alias."""
+    match = _SECTION_PREFIX_RE.fullmatch(text(value))
+    return text(match.group(1)) if match else ""
 
 
 def tokens(value: Any) -> tuple[str, ...]:
@@ -319,14 +326,26 @@ class ReferenceIndex:
         return out
 
     def search(self, query: str, *, max_candidates: int = 8) -> list[dict[str, Any]]:
-        # Always prefer literal/accent-folded search. Aliases are a zero-result
-        # fallback only, so they cannot displace evidence already found from the
-        # source wording.
+        # Always prefer literal/accent-folded search. Section-prefix stripping
+        # and aliases are zero-result discovery fallbacks only, so neither can
+        # displace evidence already found from the source wording.
         ranked = self._rank(query, max_candidates=max_candidates)
         if ranked:
             return self._render(ranked)
 
-        aliases = _DISCOVERY_ALIASES.get(norm(query), ())
+        section_query = _section_prefix_query(query)
+        if section_query:
+            section_ranked = self._rank(section_query, max_candidates=max_candidates)
+            if section_ranked:
+                matched_queries = {
+                    fdc_id: section_query for _score, fdc_id, _row in section_ranked
+                }
+                return self._render(section_ranked, matched_queries=matched_queries)
+
+        aliases = list(_DISCOVERY_ALIASES.get(norm(query), ()))
+        if section_query:
+            aliases.extend(_DISCOVERY_ALIASES.get(norm(section_query), ()))
+        aliases = list(dict.fromkeys(aliases))
         if not aliases:
             return []
 

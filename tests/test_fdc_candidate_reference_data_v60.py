@@ -16,6 +16,18 @@ import fdc_reference_data_v60 as full_reference  # noqa: E402
 import fdc_candidate_reference_data_v60 as candidate_reference  # noqa: E402
 
 
+class _DiscoveryFallbackIndex(full_reference.ReferenceIndex):
+    """Tiny deterministic search double for fallback-order regressions."""
+
+    def __init__(self, ranked_by_query):
+        self.ranked_by_query = ranked_by_query
+        self.calls = []
+
+    def _rank(self, query: str, *, max_candidates: int):
+        self.calls.append(query)
+        return list(self.ranked_by_query.get(query, ()))[:max_candidates]
+
+
 class CandidateReferenceIndexTests(unittest.TestCase):
     def _manifest(self, root: Path) -> Path:
         datasets = [
@@ -186,6 +198,54 @@ class CandidateReferenceIndexTests(unittest.TestCase):
             self.assertEqual(rows[0]["fdcId"], 101)
             self.assertNotIn("localEvidenceQueryAlias", rows[0])
             self.assertNotIn("localEvidenceMatchedQuery", rows[0])
+
+    def test_section_prefix_is_zero_result_marked_discovery_fallback(self):
+        literal = (
+            90.0,
+            900,
+            {"fdcId": 900, "description": "Literal result", "dataType": "SR Legacy"},
+        )
+        stripped = (
+            80.0,
+            800,
+            {"fdcId": 800, "description": "Udon", "dataType": "Survey (FNDDS)"},
+        )
+
+        # Literal evidence stays first and is never mislabeled as transformed.
+        index = _DiscoveryFallbackIndex({"B- udon": [literal], "udon": [stripped]})
+        rows = index.search("B- udon")
+        self.assertEqual(index.calls, ["B- udon"])
+        self.assertEqual(rows[0]["fdcId"], 900)
+        self.assertNotIn("localEvidenceQueryAlias", rows[0])
+        self.assertNotIn("localEvidenceMatchedQuery", rows[0])
+
+        # Only a literal miss permits stripping the uppercase section prefix.
+        index = _DiscoveryFallbackIndex({"udon": [stripped]})
+        rows = index.search("B- udon")
+        self.assertEqual(index.calls, ["B- udon", "udon"])
+        self.assertEqual(rows[0]["fdcId"], 800)
+        self.assertTrue(rows[0]["localEvidenceQueryAlias"])
+        self.assertEqual(rows[0]["localEvidenceMatchedQuery"], "udon")
+
+    def test_section_prefix_can_chain_to_existing_static_alias(self):
+        crumbs = (
+            70.0,
+            700,
+            {"fdcId": 700, "description": "Bread crumbs", "dataType": "SR Legacy"},
+        )
+        index = _DiscoveryFallbackIndex({"bread crumbs": [crumbs]})
+        rows = index.search("B- breadcrumbs")
+        self.assertEqual(index.calls, ["B- breadcrumbs", "breadcrumbs", "bread crumbs"])
+        self.assertEqual(rows[0]["fdcId"], 700)
+        self.assertTrue(rows[0]["localEvidenceQueryAlias"])
+        self.assertEqual(rows[0]["localEvidenceMatchedQuery"], "bread crumbs")
+
+    def test_section_prefix_syntax_does_not_strip_food_names_or_lowercase(self):
+        self.assertEqual(full_reference._section_prefix_query("A- udon"), "udon")
+        self.assertEqual(full_reference._section_prefix_query("B-   breadcrumbs"), "breadcrumbs")
+        self.assertEqual(full_reference._section_prefix_query("D-ribose"), "")
+        self.assertEqual(full_reference._section_prefix_query("b- udon"), "")
+        self.assertEqual(full_reference._section_prefix_query("A-"), "")
 
     def test_score_upper_bound_prunes_sequence_matching_without_changing_top_n(self):
         with tempfile.TemporaryDirectory() as directory:
