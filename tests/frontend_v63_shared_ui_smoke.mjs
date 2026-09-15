@@ -85,6 +85,14 @@ await panel._api("cook4me/v18/today_suggest",{entry_id:"entry",languages:["de"],
 await panel._api("cook4me/v20/week_generate",{entry_id:"entry"});
 assert.equal(requests.findLast(msg=>msg.type.endsWith("today_suggest")).shared_filters.diet,"vegan");
 assert.equal(requests.findLast(msg=>msg.type.endsWith("week_generate")).shared_filters.diet,"vegan");
+if(version==="65"){
+ panel._ingredientCatalog=[{name:"Ρύζι",presentationVersion:63,displayLanguage:"el"}];
+ assert.equal(panel._resourceHasData("catalog"),false);
+ panel._discardOldCatalog();assert.deepEqual(panel._ingredientCatalog,[]);
+ panel._ingredientCatalog=[{name:"Ρύζι",presentationVersion:63,displayLanguage:"el",searchAliases:["Rice","Arroz"]}];
+ panel._discardOldCatalog();assert.equal(panel._resourceHasData("catalog"),true);
+ assert.equal(panel._ingredientQueryMatches(panel._ingredientCatalog[0],"arroz"),true);
+}
 second.disconnectedCallback();
 console.log("v63 shared controls, navigation, recipe dialogs and concurrent progress passed");
 panel.disconnectedCallback();process.exit(0);

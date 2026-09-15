@@ -9,6 +9,15 @@ from pathlib import Path
 import re
 import unicodedata
 
+try:
+    from .catalog_search_index import _strings, normalize_search_text, query_terms
+except ImportError:  # Standalone offline catalog tools.
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("cook4me_presentation_search", Path(__file__).with_name("catalog_search_index.py"))
+    search = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(search)
+    _strings, normalize_search_text, query_terms = search._strings, search.normalize_search_text, search.query_terms
+
 
 def norm(value):
     return " ".join("".join(c for c in unicodedata.normalize("NFKD", str(value).casefold()) if not unicodedata.combining(c)).split())
@@ -84,6 +93,11 @@ def excluded_names():
 
 def ingredient_choices(payload, language, query="", limit=None):
     """One choice per cleaned name, retaining all source IDs as display metadata."""
+    terms = query_terms(query, language, (payload.get("_runtimeSearchIndex") or {}).get("catalogQueryAliases"))
+    def matches(aliases):
+        texts = [normalize_search_text(alias).split() for alias in aliases if alias]
+        return all(any(all(any(token.startswith(word) for token in text) for word in alternative.split())
+            for text in texts for alternative in alternatives) for alternatives in terms)
     groups = defaultdict(list)
     for raw in payload.get("ingredients", []):
         if raw.get("classification") in {"equipment", "other", "ambiguous"}:
@@ -95,15 +109,22 @@ def ingredient_choices(payload, language, query="", limit=None):
             # Reviewed locale synonyms are display aliases, never nutrient aliases.
             groups[name_key(display_name(raw, language))].append(raw)
     choices = []
-    wanted = norm(query)
     for canonical, members in groups.items():
         # Prefer the actual generic provider row; never assign its ID to siblings.
         raw = min(members, key=lambda r: (not bool(r.get("key")), len(clean_name(r.get("canonicalName"))), not bool(r.get("nutrition")), str(r.get("id"))))
         name = display_name(raw, language)
-        if wanted and wanted not in norm(name) and not any(wanted in norm(r.get("canonicalName")) for r in members):
+        search_aliases = {name}
+        for member in members:
+            cleaned = clean_name(member.get("canonicalName"))
+            search_aliases.add(cleaned)
+            search_aliases.update(_strings(member.get("translations")))
+            search_aliases.update(_strings(member.get("aliases")))
+            search_aliases.update(locale[name_key(cleaned)] for locale in labels().values() if name_key(cleaned) in locale)
+        if terms and not matches(search_aliases):
             continue
         row = {key: raw[key] for key in ("id", "key", "conceptId", "classification", "nutritionEligible") if key in raw}
         row.update(ingredientId=raw["id"], name=name, foodName=name, canonicalName=clean_name(raw.get("canonicalName")), displayGroupId="ingredient:"+hashlib.sha256(canonical.encode()).hexdigest()[:16], sourceIngredientIds=[member["id"] for member in members], displayLanguage=language, presentationVersion=63)
+        row["searchAliases"] = sorted(alias for alias in search_aliases if alias)
         if raw.get("key"):
             row["foodKey"] = raw["key"]
         choices.append(row)
@@ -127,10 +148,11 @@ def prepare_families(payload):
             cover = str(variant.get("cover") or "")
             ingredients = tuple(sorted({norm(clean_name(lookup.get(str(row.get("ingredientId") or row.get("key") or row.get("foodKey")), {}).get("canonicalName") or row.get("ingredientId") or row.get("name") or "")) for row in variant.get("ingredients", []) if isinstance(row, dict)}))
             unit = str((variant.get("yield") or {}).get("unitKey") or (variant.get("yield") or {}).get("unit") or "")
-            # Exact title, image, food identities and yield dimension only.
+            # A display family requires the same canonical title, image and
+            # yield dimension. Original regional editions remain selectable.
             if not title or not cover or not ingredients:
                 continue
-            key = (title, cover, ingredients, unit)
+            key = (title, cover, unit)
             if key in keys:
                 left, right = root(index), root(keys[key])
                 parents[max(left, right)] = min(left, right)
@@ -141,6 +163,22 @@ def prepare_families(payload):
         families[root(index)].append(index)
     payload["_runtimeDisplayFamily"] = {index: root(index) for index in range(len(recipes))}
     payload["_runtimeDisplayFamilyMembers"] = dict(families)
+    def signature(index):
+        variants = recipes[index].get("variants") or []
+        variant = min(variants, key=lambda row: (abs(float(row.get("servings") or 4)-4), str(row.get("variantId"))))
+        amount = float(variant.get("servings") or (variant.get("yield") or {}).get("quantity") or 1)
+        parts = []
+        for row in variant.get("ingredients", []):
+            ident = str(row.get("ingredientId") or row.get("key") or row.get("foodKey") or "")
+            name = name_key(clean_name(lookup.get(ident, {}).get("canonicalName") or row.get("canonicalName") or row.get("name") or ident))
+            quantity = row.get("quantity")
+            per_unit = round(float(quantity)/amount, 6) if isinstance(quantity, (int, float)) else None
+            parts.append((name, per_unit, str(row.get("unitKey") or row.get("unit") or "")))
+        return tuple(sorted(parts, key=repr))
+    # Do not collapse same-language/quantity editions if their actual foods or
+    # proportions differ. Shared filters must evaluate each such edition.
+    payload["_runtimeRegionalFamilies"] = {family for family, members in families.items()
+        if len(members) > 1 and len({signature(index) for index in members}) > 1}
 
 
 def family_row(payload, members, *, language, configured_language, country, materialize, preferred_variant=""):
@@ -156,8 +194,11 @@ def family_row(payload, members, *, language, configured_language, country, mate
     if row is None:
         return None
     root = payload["_runtimeDisplayFamily"][index]
+    regional = root in payload.get("_runtimeRegionalFamilies", set())
     row["displayFamilyId"] = "family:"+str(recipes[root].get("groupingFunctionalId") or root)
     row["publicationCount"] = len(members)
+    if regional:
+        row["regionalPublications"] = True
     languages = defaultdict(list)
     variants = []
     seen = set()
@@ -182,10 +223,14 @@ def family_row(payload, members, *, language, configured_language, country, mate
         # Same language/quantity may have multiple market publications.
         unique = {}
         for option in options:
-            key = (option["servings"], str(option["yield"].get("unitKey") or option["yield"].get("unit") or ""))
+            key = (option["servings"], str(option["yield"].get("unitKey") or option["yield"].get("unit") or ""), option["displayGroupingFunctionalId"] if regional else "")
             if key not in unique or option["displayVariantId"] == row.get("displayVariantId") or (option.get("sendVariantId") and not unique[key].get("sendVariantId")):
                 unique[key] = option
         options = sorted(unique.values(), key=lambda r: (float(r.get("servings") or 0), r["displayVariantId"]))
+        groups = sorted({str(option["displayGroupingFunctionalId"]) for option in options})
+        if regional and len(groups) > 1:
+            for option in options:
+                option["publicationNumber"] = groups.index(str(option["displayGroupingFunctionalId"])) + 1
         language_rows.append({"language": code, "servingVariants": options, "availableServings": [r["servings"] for r in options], "sendable": any(r.get("sendVariantId") for r in options)})
     row["languageVariants"] = language_rows
     row["availableLanguages"] = [r["language"] for r in language_rows]

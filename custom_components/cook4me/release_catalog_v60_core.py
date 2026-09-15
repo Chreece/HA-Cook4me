@@ -16,6 +16,7 @@ try:
         search_index,
         resolved_query_text,
         normalize_search_text,
+        prepare_catalog_query_aliases,
     )
 except ImportError:  # Standalone unit-test import via spec_from_file_location.
     def _load_sibling(module_name: str, filename: str):
@@ -43,6 +44,7 @@ except ImportError:  # Standalone unit-test import via spec_from_file_location.
     search_index = _search_module.search_index
     resolved_query_text = _search_module.resolved_query_text
     normalize_search_text = _search_module.normalize_search_text
+    prepare_catalog_query_aliases = _search_module.prepare_catalog_query_aliases
 
 
 _SCHEMA_VERSION = _legacy._SCHEMA_VERSION
@@ -90,6 +92,7 @@ def _prepare_fast_indexes(payload: dict[str, Any]) -> None:
         # release builds should ship searchIndex so this work stays build-time.
         compiled = compile_search_index(payload)
     payload["_runtimeSearchIndex"] = prepare_search_index(compiled)
+    payload["_runtimeSearchIndex"]["catalogQueryAliases"] = prepare_catalog_query_aliases(payload, _presentation.labels())
     payload["_runtimeSearchPrecompiled"] = precompiled
 
     variants: dict[str, int] = {}

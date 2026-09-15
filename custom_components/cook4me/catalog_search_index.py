@@ -78,7 +78,85 @@ def _query_language(query: str, language: str) -> str:
     return _language(language)
 
 
-def query_terms(query: str, language: str = "") -> tuple[tuple[str, ...], ...]:
+def prepare_catalog_query_aliases(payload, localized_labels):
+    """Index the complete reviewed bilingual catalog, not a dish whitelist.
+
+    These are query alternatives only. They cannot merge ingredient identity,
+    transfer nutrients, change dietary evidence or assign provider recipe IDs.
+    """
+    base, stops = _query_vocabulary()
+    aliases = {language: {key: list(values) for key, values in rows.items()} for language, rows in base.items()}
+    def add(language, label, canonical):
+        language = _language(language)
+        label, canonical = normalize_search_text(label), normalize_search_text(canonical)
+        if not label or not canonical or not language:
+            return
+        values = aliases.setdefault(language, {}).setdefault(label, [])
+        if canonical not in values:
+            values.append(canonical)
+    for language, labels in localized_labels.items():
+        for canonical, label in labels.items():
+            add(language, label, canonical)
+    for ingredient in payload.get("ingredients", []):
+        canonical = ingredient.get("canonicalName")
+        if not canonical or ingredient.get("classification") in {"equipment", "other", "ambiguous"}:
+            continue
+        for field in ("translations", "aliases"):
+            for language, values in (ingredient.get(field) or {}).items():
+                for label in _strings(values):
+                    add(language, label, canonical)
+        add(ingredient.get("originalLanguage") or ingredient.get("language"), ingredient.get("originalName"), canonical)
+    for recipe in payload.get("recipes", []):
+        canonical = recipe.get("canonicalName")
+        if not canonical:
+            continue
+        for variant in recipe.get("variants", []):
+            add(variant.get("originalLanguage") or variant.get("language"), variant.get("originalTitle") or variant.get("title"), canonical)
+
+    # Recover independently identifiable words from existing bilingual labels.
+    # E.g. removing a known translation of "noodles" from a food label leaves
+    # its dish qualifier. Ambiguous residual phrases are never guessed.
+    english = {word: values[0] for word, values in base.get("en", {}).items()
+        if " " not in word and values and " " not in values[0]}
+    english_stops = set(stops.get("en", ())) | {"of"}
+    def words(value):
+        return {english.get(word, word) for word in value.split() if word not in english_stops}
+    for language, labels in aliases.items():
+        if language == "en":
+            continue
+        source_stops = stops.get(language, ())
+        pairs = [(set(label.split())-set(source_stops), set().union(*(words(value) for value in values))) for label, values in labels.items()]
+        for _ in range(4):
+            known = {label: set().union(*(words(value) for value in values)) for label, values in labels.items() if " " not in label}
+            contexts = defaultdict(list)
+            for source, target in pairs:
+                for word in source:
+                    if word in known or len(word) < 2:
+                        continue
+                    other = source - {word}
+                    residual = target - set().union(*(known.get(part, set()) for part in other))
+                    if residual:
+                        contexts[word].append((residual, all(part in known for part in other)))
+            learned = {}
+            for word, evidence in contexts.items():
+                common = set.intersection(*(values for values, _ in evidence))
+                if len(common) == 1 and (len(evidence) > 1 or evidence[0][1]):
+                    learned[word] = sorted(common)
+                elif all(len(values) == 1 and complete for values, complete in evidence):
+                    learned[word] = sorted(set.union(*(values for values, _ in evidence)))
+            if not learned:
+                break
+            labels.update(learned)
+    universal = {}
+    for labels in aliases.values():
+        for label, values in labels.items():
+            target = universal.setdefault(label, [])
+            target.extend(value for value in values if value not in target)
+    aliases["*"] = universal
+    return {language: {key: tuple(values) for key, values in labels.items()} for language, labels in aliases.items()}
+
+
+def query_terms(query: str, language: str = "", catalog_aliases=None) -> tuple[tuple[str, ...], ...]:
     """AND query terms, OR their exact translations; retain the original wording.
 
     Longest known phrases are consumed together (e.g. pommes de terre). Unknown
@@ -89,14 +167,16 @@ def query_terms(query: str, language: str = "") -> tuple[tuple[str, ...], ...]:
     words = normalized.split()
     aliases, stopwords = _query_vocabulary()
     language = _query_language(normalized, language)
-    mapping = dict(aliases.get("en", {}))
+    mapping = dict((catalog_aliases or {}).get("*", {}))
+    mapping.update(aliases.get("en", {}))
+    mapping.update((catalog_aliases or {}).get(language, {}))
     mapping.update(aliases.get(language, {}))
     stops = stopwords.get(language, frozenset())
     result: list[tuple[str, ...]] = []
     position = 0
     while position < len(words):
         selected = None
-        for length in range(min(4, len(words) - position), 0, -1):
+        for length in range(len(words) - position, 0, -1):
             phrase = " ".join(words[position:position + length])
             if phrase in mapping:
                 selected = (phrase, length, mapping[phrase])
@@ -113,8 +193,8 @@ def query_terms(query: str, language: str = "") -> tuple[tuple[str, ...], ...]:
     return tuple(result)
 
 
-def resolved_query_text(query: str, language: str = "") -> str:
-    terms = query_terms(query, language)
+def resolved_query_text(query: str, language: str = "", catalog_aliases=None) -> str:
+    terms = query_terms(query, language, catalog_aliases)
     english = _query_vocabulary()[0].get("en", {})
     return " ".join(
         english[term[0]][0] if term[0] in english
@@ -123,9 +203,9 @@ def resolved_query_text(query: str, language: str = "") -> str:
     )
 
 
-def _query_phrase_variants(normalized: str, language: str) -> tuple[str, ...]:
+def _query_phrase_variants(normalized: str, language: str, catalog_aliases=None) -> tuple[str, ...]:
     return tuple(dict.fromkeys(value for value in (
-        normalize_search_text(normalized), resolved_query_text(normalized, language)
+        normalize_search_text(normalized), resolved_query_text(normalized, language, catalog_aliases)
     ) if value))
 
 
@@ -487,7 +567,8 @@ def search_index(
         )
 
     normalized = normalize_search_text(query)
-    terms = query_terms(normalized, language_key)
+    catalog_aliases = prepared.get("catalogQueryAliases")
+    terms = query_terms(normalized, language_key, catalog_aliases)
     token_postings = prepared.get("tokenPostings") or {}
     phrase_postings = prepared.get("phrasePostings") or {}
 
@@ -559,7 +640,7 @@ def search_index(
         index: sum(current.get(index, 0) for current in per_term)
         for index in candidates
     }
-    for phrase in _query_phrase_variants(normalized, language_key):
+    for phrase in _query_phrase_variants(normalized, language_key, catalog_aliases):
         for index, phrase_score in phrase_postings.get(phrase, ()):
             if index in scores:
                 scores[index] += phrase_score

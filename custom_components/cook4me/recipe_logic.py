@@ -20,8 +20,8 @@ _MEAT_WORDS = {
 
 _FISH_WORDS = {
     "fish", "fisch", "ψαρι", "ψάρι", "salmon", "lachs", "σολομος", "σολομός", "tuna", "thunfisch",
-    "τονος", "τόνος", "shrimp", "prawn", "garnele", "garnelen", "γαριδα", "γαρίδα", "γαριδες", "γαρίδες",
-    "mussel", "muschel", "miesmuschel", "μυδι", "μύδι", "seafood", "meeresfruchte", "meeresfrüchte",
+    "τονος", "τόνος", "shrimp", "shrimps", "prawn", "prawns", "garnele", "garnelen", "γαριδα", "γαρίδα", "γαριδες", "γαρίδες",
+    "mussel", "mussels", "muschel", "miesmuschel", "μυδι", "μύδι", "seafood", "meeresfruchte", "meeresfrüchte",
 }
 
 _ANIMAL_WORDS = _MEAT_WORDS | _FISH_WORDS

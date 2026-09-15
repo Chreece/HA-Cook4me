@@ -266,34 +266,50 @@ def search_release_recipes(
         ), language)
         if group_families:
             display_language = language
-        row = _core._enrich_recipe_row(
-            payload,
-            _core._legacy._recipe_row(
-                raw,
-                language=display_language,
-                configured_language=configured_language,
-                country=country,
-            ),
-        )
         if group_families:
-            row = _display_family_row(payload, family_members[payload["_runtimeDisplayFamily"][recipe_index]], display_language, configured_language, country)
-        if row:
-            row["catalogLanguage"] = row.get("language") or display_language
-            if recipe_index in scores:
-                row["searchScore"] = scores[recipe_index]
-            if safety_filtered:
-                row["safety"] = _safety.recipe_safety(
-                    runtime_safety,
-                    recipe_index,
-                    diet=diet_value,
-                    allergies=allergy_values,
-                )
-            items.append(row)
+            family = payload["_runtimeDisplayFamily"][recipe_index]
+            members = family_members[family]
+            # Editions may have different ingredient IDs or nutrition even
+            # when their display names agree. Filter each original publication
+            # before selecting the family
+            # representative, so a nonmatching German row cannot hide a match
+            # from another selected catalog.
+            groups = [[member] for member in members] if filter_rows else [members]
+            candidates = [(group[0], _display_family_row(payload, group, display_language, configured_language, country)) for group in groups]
+        else:
+            candidates = [(recipe_index, _core._enrich_recipe_row(payload,
+                _core._legacy._recipe_row(raw, language=display_language, configured_language=configured_language, country=country)))]
+        for source_index, row in candidates:
+            if row:
+                row["catalogLanguage"] = row.get("language") or display_language
+                if source_index in scores:
+                    row["searchScore"] = scores[source_index]
+                if safety_filtered:
+                    row["safety"] = _safety.recipe_safety(runtime_safety, source_index, diet=diet_value, allergies=allergy_values)
+                items.append(row)
         if progress and (completed % 25 == 0 or completed == len(indices)):
             progress("catalog_index", completed=completed, total=len(indices))
 
     if filter_rows is not None:
         items = filter_rows(items)
+        if group_families:
+            surviving_families = {}
+            for row in items:
+                if row.get("displayFamilyId"):
+                    surviving_families.setdefault(row["displayFamilyId"], []).append(row)
+            merged_items, seen = [], set()
+            for row in items:
+                family = row.get("displayFamilyId")
+                if len(surviving_families.get(family, [])) > 1:
+                    if family in seen:
+                        continue
+                    seen.add(family)
+                    members = list(dict.fromkeys(payload["_runtimeRecipeByVariant"][str(item["displayVariantId"])] for item in surviving_families[family]))
+                    merged = _display_family_row(payload, members, language, configured_language, country, str(row["displayVariantId"]))
+                    # Keep the winning publication's measured filter/rank data.
+                    row = {**row, **merged, **{key: row[key] for key in ("match", "nutrition", "cost", "mealTypes", "mealTypeSource", "safety") if key in row}}
+                merged_items.append(row)
+            items = merged_items
         match["total"] = len(items)
         if not all_results:
             items = items[page*size:(page+1)*size]
@@ -302,8 +318,8 @@ def search_release_recipes(
     return {
         "ok": True,
         "query": _text(query),
-        "resolvedQuery": _core.resolved_query_text(query, language),
-        "queryRecovered": _core.resolved_query_text(query, language) != _core.normalize_search_text(query),
+        "resolvedQuery": _core.resolved_query_text(query, language, runtime_search.get("catalogQueryAliases")),
+        "queryRecovered": _core.resolved_query_text(query, language, runtime_search.get("catalogQueryAliases")) != _core.normalize_search_text(query),
         "requestedLanguage": _text(language).lower(),
         "configuredLanguage": _text(configured_language).lower(),
         "market": f"GS_{_text(country).upper()}",

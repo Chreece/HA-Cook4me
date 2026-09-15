@@ -21,16 +21,17 @@ const temp=mkdtempSync(join(tmpdir(),"cook4me-v64-flow-")),fixturePath=join(temp
 const backend=spawnSync("python",["tests/test_catalog_flow_v64.py","--fixture",fixturePath],{encoding:"utf8",timeout:120000});
 assert.equal(backend.status,0,backend.stderr);
 const fixture=JSON.parse(readFileSync(fixturePath,"utf8"));rmSync(temp,{recursive:true});
-await import("../custom_components/cook4me/frontend/cook4me-panel-v64-bundle.js");
-const panel=document.createElement("cook4me-recipe-hub-panel-v64");
+const version=process.env.COOK4ME_TEST_PANEL_VERSION||"64";
+await import(`../custom_components/cook4me/frontend/cook4me-panel-v${version}-bundle.js`);
+const panel=document.createElement(`cook4me-recipe-hub-panel-v${version}`);
 const requests=[];let resolveToday;
 const filters={...fixture.today.filters,ingredients:[],maxCost:"",onlyHome:false};
 const connection={sendMessagePromise:async msg=>{
  requests.push(msg);
  if(msg.type.endsWith("ui_preferences"))return {lastTab:"today",filters};
  if(msg.type.endsWith("today_suggest"))return new Promise(resolve=>{resolveToday=resolve;});
- if(msg.type.endsWith("official_search"))return fixture.official;
- if(msg.type.endsWith("recipe_detail"))return {...fixture.today.items[0],steps:[{text:"Detailed cooking step"}]};
+ if(msg.type.endsWith("official_search"))return msg.query==="Ράμεν"?fixture.officialGreek:fixture.official;
+ if(msg.type.endsWith("recipe_detail"))return fixture.ramenDetails[msg.variant_id]||{...fixture.today.items[0],steps:[{text:"Detailed cooking step"}]};
  return {};
 }};
 panel._entryId="entry";panel._entries=[{entry_id:"entry",title:"Cook4Me",profile:{houseIngredients:[]},recipes:[]}];
@@ -58,12 +59,48 @@ resolveToday(fixture.today);await tick();
 assert.equal(panel._todayBusy,false);assert.equal(job.ended,true);
 assert.equal(panel.shadowRoot.querySelectorAll("#todayGrid article.recipe").length,fixture.today.items.length);
 assert.equal(panel.shadowRoot.querySelectorAll(".rx-category-result").length,fixture.today.items.length);
-assert.equal(panel.getAttribute("data-cook4me-build"),"2026.9.15.6");
+assert.equal(panel.getAttribute("data-cook4me-build"),version==="65"?"2026.9.15.7":"2026.9.15.6");
 assert.equal(panel.shadowRoot.querySelector("#cook4meLoadStatus")?.textContent||"","");
 // The real Ramen response passes through Official's actual search/render path.
 panel._tab="official";panel._renderTab();await panel._search("ramen");
 assert.ok(panel._results.length>0);assert.ok(panel.shadowRoot.querySelectorAll("article.recipe").length>0);
 assert.equal(panel.shadowRoot.querySelector("#cook4meLoadStatus")?.textContent||"","");
+if(version==="65"){
+ panel._ingredientCatalog=fixture.ingredientChoices;
+ panel._showFilter("ingredients");
+ const dialog=panel.shadowRoot.querySelector('[data-filter-dialog="ingredients"]'),input=dialog.querySelector("[data-ingredient-search]");
+ for(const [query,name] of [["arroz","Ρύζι"],["cauliflower","Κουνουπίδι"],["κουνουπίδι","Κουνουπίδι"]]){
+  input.value=query;input.dispatchEvent(new Event("input"));
+  assert.ok([...dialog.querySelectorAll("[data-ingredient-choices] label")].some(label=>label.style.display!=="none"&&label.textContent===name),query);
+ }
+ dialog.querySelector("[data-close]").click();
+ const latinIds=panel._results.map(row=>row.displayFamilyId);
+ await panel._search("Ράμεν");assert.deepEqual(panel._results.map(row=>row.displayFamilyId),latinIds);
+ assert.equal(panel._results.length,2);
+ const regional=panel._results.find(row=>row.regionalPublications);
+ assert.ok(regional);assert.equal(regional.publicationCount,5);
+ await panel._selectRecipeLanguage(regional,"en",false);
+ const selected=regional.displayVariantId;
+ panel._recipeCard(regional,false);
+ assert.equal(regional.displayVariantId,selected,"Rendering must not silently change display-only servings");
+ assert.equal(regional.sendVariantId,null,"English edition must not acquire a German send identity");
+ const html=document.createElement("div");html.innerHTML=panel._servingSelectHtml(regional);
+ const ids=[...html.querySelectorAll("option")].map(option=>option.value);
+ assert.equal(ids.length,3);assert.equal(new Set(ids).size,3);assert.ok(ids.every(Boolean));
+ await panel._selectServing(regional,ids.find(id=>id!==selected),false);
+ assert.notEqual(regional.displayVariantId,selected);
+ assert.deepEqual(regional.ingredients,fixture.ramenDetails[regional.displayVariantId].ingredients);
+ await panel._selectRecipeLanguage(regional,"de",false);
+ html.innerHTML=panel._servingSelectHtml(regional);
+ assert.equal(html.querySelectorAll("option").length,6);
+ assert.ok(html.textContent.includes("Εκδοχή 1")&&html.textContent.includes("Εκδοχή 2"));
+ for(const variant of ["316542","326387"]){
+  await panel._selectServing(regional,variant,false);panel._recipeCard(regional,false);
+  assert.equal(regional.displayVariantId,variant);
+  assert.deepEqual(regional.ingredients,fixture.ramenDetails[variant].ingredients);
+  assert.equal(regional.sendVariantId,fixture.ramenDetails[variant].sendVariantId);
+ }
+}
 // An empty result has a visible explanation, and a failure is not success.
 panel._tab="today";panel._renderTab();panel.shadowRoot.querySelector("#todaySuggest").click();await tick();
 resolveToday({...fixture.today,items:[],emptyMealTypes:filters.mealTypes});await tick();

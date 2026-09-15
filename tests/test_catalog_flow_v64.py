@@ -28,7 +28,7 @@ class MemoryStore:
         self.data = None
 
 
-async def run_flow():
+async def run_flow(include_details=False):
     package = types.ModuleType(PREFIX)
     package.__path__ = [str(COMPONENT)]
     identity = lambda value: value
@@ -82,7 +82,17 @@ async def run_flow():
             # No-stock filters must still exclude every recipe requiring stock.
             await v31.ws_official_search(hass, connection, {"id": 3, "query": "ramen", "query_language": "el", "languages": LANGUAGES,
                 "shared_filters": {**filters, "onlyHome": True}})
-    return {"official": responses[1], "today": responses[2], "stockOnly": responses[3], "saved": saved, "events": events, "profile": profile}
+            await v31.ws_official_search(hass, connection, {"id": 4, "query": "Ράμεν", "query_language": "el", "languages": LANGUAGES,
+                "shared_filters": filters})
+            details, ingredient_choices = {}, []
+            if include_details:
+                ingredient_choices = release.ingredient_choices("el")
+                for row in responses[1]["items"]:
+                    for language in row["languageVariants"]:
+                        for option in language["servingVariants"]:
+                            variant = option["displayVariantId"]
+                            details[variant] = release.recipe_by_variant(variant, language=language["language"], configured_language="de", country="DE", group_families=True)
+    return {"official": responses[1], "officialGreek": responses[4], "ramenDetails": details, "ingredientChoices": ingredient_choices, "today": responses[2], "stockOnly": responses[3], "saved": saved, "events": events, "profile": profile}
 
 
 class CatalogFlowTests(unittest.TestCase):
@@ -138,6 +148,6 @@ class CatalogFlowTests(unittest.TestCase):
 
 if __name__ == "__main__":
     if len(sys.argv) == 3 and sys.argv[1] == "--fixture":
-        Path(sys.argv[2]).write_text(json.dumps(asyncio.run(run_flow()), ensure_ascii=False))
+        Path(sys.argv[2]).write_text(json.dumps(asyncio.run(run_flow(include_details=True)), ensure_ascii=False))
     else:
         unittest.main()

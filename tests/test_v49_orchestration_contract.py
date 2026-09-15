@@ -31,12 +31,12 @@ COORD = ROOT / "custom_components" / "cook4me" / "request_coordinator.py"
 
 
 class V49OrchestrationContractTests(unittest.TestCase):
-    def test_v64_is_active_and_all_new_backends_are_registered(self):
+    def test_v65_is_active_and_all_new_backends_are_registered(self):
         panel = PANEL.read_text(encoding="utf-8")
         manifest = MANIFEST.read_text(encoding="utf-8")
-        self.assertIn('cook4me-recipe-hub-panel-v64', panel)
-        self.assertIn('cook4me-panel-v64-bundle.js', panel)
-        self.assertIn('?v=2026.9.15.6', panel)
+        self.assertIn('cook4me-recipe-hub-panel-v65', panel)
+        self.assertIn('cook4me-panel-v65-bundle.js', panel)
+        self.assertIn('?v=2026.9.15.7', panel)
         self.assertIn('"version": "2026.9.9.2"', manifest)
         for version in (22, 23, 24, 25, 26, 27, 28, 29, 30, 31):
             self.assertIn(f'async_register_websocket_v{version}', panel)
