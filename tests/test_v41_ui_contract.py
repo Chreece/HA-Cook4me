@@ -46,7 +46,7 @@ class V41UIContractTests(unittest.TestCase):
         manifest = MANIFEST.read_text(encoding="utf-8")
         self.assertIn('cook4me-recipe-hub-panel-v61', panel)
         self.assertIn('cook4me-panel-v61.js', panel)
-        self.assertIn('?v=2026.9.15.2', panel)
+        self.assertIn('?v=2026.9.15.3', panel)
         self.assertIn('"version": "2026.9.9.2"', manifest)
         for version in (20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31):
             self.assertIn(f'async_register_websocket_v{version}', panel)

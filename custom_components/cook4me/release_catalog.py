@@ -127,6 +127,11 @@ def ingredient_rows(
     )
 
 
+def ingredient_nutrition_profile(ingredient: Any) -> dict[str, Any] | None:
+    load_release_catalog()
+    return _core.ingredient_nutrition_profile(ingredient)
+
+
 def search_release_recipes(
     query: str,
     *,

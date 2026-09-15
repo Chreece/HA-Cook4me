@@ -59,7 +59,7 @@ Against the unchanged 16,952-recipe / 32,163-variant catalog:
 | `ριζότο` / `risotto` | German | 11 each |
 | `soupe de tomates` | German | 9 |
 
-- Eight new full-catalog/runtime tests pass, including the actual v31 websocket
+- Eleven full-catalog/runtime tests pass, including the actual v31 websocket
   search/detail handlers with socket creation forbidden during their execution.
 - Query-unit tests cover original-label preservation, plural and phrase matching,
   conflicting vocabulary, and refusal to guess unknown words.
@@ -67,7 +67,7 @@ Against the unchanged 16,952-recipe / 32,163-variant catalog:
   persistence, nutrition, immediate results, and stale response protection. The
   existing v59 and menu smoke tests also pass.
 - Version validation, Python compilation, JavaScript syntax, and diff checks pass.
-- Full Python suite: **1,162 tests, 1,151 passed, 11 failed**. All 11 remaining
+- Full Python suite after the ingredient-popup follow-up: **1,169 tests, 1,158 passed, 11 failed**. All 11 remaining
   failures were reproduced on the untouched starting commit. They are historical
   nutrition-review snapshot assertions in batches 42–50, including a live count
   of 5,159 compared with the old expectation of 5,080. Review evidence and those
@@ -79,14 +79,15 @@ Against the unchanged 16,952-recipe / 32,163-variant catalog:
 
 Install the complete integration from the review branch and restart Home
 Assistant, then reopen Recipe Hub. Copying only `merged_catalog.v1.json` does not
-install the query engine, vocabulary, websocket, or panel fixes. This change has
-not been deployed to the homeserver or published as a release.
+install the query engine, vocabulary, websocket, or panel fixes. The user reported
+the initial v61 update working on the homeserver. The ingredient-popup follow-up
+below needs installation. These changes have not been published as a release.
 
 `tools/deploy_offline_runtime_v61.sh` provides the homeserver test installation.
 Run it as a standalone script with `sudo bash`, never source it. It fetches the
 fixed runtime commit `2ef181c0a604b0a5b8469571cd898859ae665a4b`, verifies the
 `homeassistant` container's `/config` mount against
-`/home/chreece/homeassistant/config`, and runs the eight offline runtime tests
+`/home/chreece/homeassistant/config`, and runs the offline runtime tests
 using the container's Python before stopping Home Assistant. It replaces the
 complete component, keeping the previous component under
 `config/.cook4me-deploy/v61-<timestamp>-<unique>/previous-cook4me`.
@@ -102,3 +103,25 @@ Docker or filesystem operations themselves fail. It retains its private source
 checkout for diagnosis and refuses overlapping deployments. Deployment tests
 simulate success, preflight rejection, mismatched mounts, failed replacement,
 failed start, panel timeout, and failed installed-catalog verification.
+
+## Ingredient popup follow-up
+
+The ingredient popup used only the old per-user nutrition cache, which can be
+empty even though the bundled catalog provides nutrients for recipe totals. It
+now resolves one reviewed profile by the clicked ingredient's explicit provider
+or source-local ID. Labels, semantic siblings, and query translations never
+assign a nutrient profile. The full nutrient table remains out of compact
+recipe/picker responses.
+
+The popup shows every available nutrient, its explicit reference quantity/unit,
+and whether it comes from the reviewed catalog, a saved reference, or a scanned
+product. Missing values stay absent; genuine zero values remain visible. The
+catalog reference takes precedence over a stale generic cache. Scanned-product
+values remain separate and retain their own basis, including per 100 ml.
+
+The popup's related-recipe search now uses the local catalog and ingredient reads
+do not wait behind AI operations. Translated ingredient display strings use the
+preserved structured row only when the row correspondence is unambiguous. The
+panel cache key is `2026.9.15.3`. Real catalog/websocket tests and DOM click tests
+cover empty legacy caches, provider and keyless IDs, unreviewed ingredients,
+translated clicks, null versus zero, basis labels, and saved/scanned references.

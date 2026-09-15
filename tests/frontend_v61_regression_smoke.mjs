@@ -65,6 +65,52 @@ assert.ok(card.includes(panel._t("recipeTotal")));assert.ok(card.includes(panel.
 const perServing=panel._v60Nutrition({...partial,catalogNutrition:{perServing:{energyKcal:25},totals:{energyKcal:100}}});
 assert.equal(perServing.energy,25);assert.equal(perServing.perServing,true);
 
+const ingredient={ingredientId:"M_FOOD_246",foodKey:"M_FOOD_246",foodName:"Olive oil",quantity:1,unit:"tbsp"};
+const ingredientInfo={ingredient:{name:"Olive oil"},stock:null,history:[],officialRecipeUsage:[],savedRecipeUsage:[],
+  catalogNutrition:{basisQuantity:100,basisUnit:"g",estimated:true,values:{energyKcal:884,protein:0,carbohydrates:0,fat:null,fiber:"",sodium:0.002}},
+  genericNutrition:{nutrition:{basisQuantity:100,basisUnit:"g",values:{energyKcal:999}}},
+  exactNutritionLots:[{productName:"Test product",nutrition:{basisQuantity:100,basisUnit:"ml",values:{energyKcal:200,fat:5}}}],
+};
+let ingredientRequest;
+panel._hass.language="en";
+panel._hass.connection.sendMessagePromise=async msg=>{ingredientRequest=msg;return ingredientInfo;};
+panel._cook4meApiTail=new Promise(()=>{});
+const ingredientCard=document.createElement("div");ingredientCard.innerHTML='<div class="ingredients"></div>';
+panel._decorateCardIngredients(ingredientCard,{ingredients:[ingredient]});
+ingredientCard.querySelector(".ingredient-pill").click();
+await new Promise(resolve=>setTimeout(resolve,0));
+assert.equal(ingredientRequest.type,"cook4me/v19/ingredient_info");
+assert.equal(ingredientRequest.ingredient.ingredientId,"M_FOOD_246","Click must retain the actual catalog identity");
+const ingredientDialog=panel.shadowRoot.querySelector(".rx-overlay");
+assert.ok(ingredientDialog,"Clicking a recipe ingredient should open its popup");
+const reference=ingredientDialog.querySelector('[data-ingredient-nutrition="catalog"]');
+assert.ok(reference.textContent.includes("per 100 g"));
+assert.ok(reference.textContent.includes("884 kcal"));
+assert.ok(reference.querySelector('[data-nutrient="protein"]').textContent.includes("0 g"));
+assert.ok(reference.querySelector('[data-nutrient="sodium"]').textContent.includes("0.002 g"));
+assert.equal(reference.querySelector('[data-nutrient="fat"]'),null,"Unknown fat must not be shown as zero");
+assert.equal(reference.querySelector('[data-nutrient="fiber"]'),null);
+assert.equal(ingredientDialog.querySelector('[data-ingredient-nutrition="saved"]'),null,"Catalog reference takes precedence over stale generic cache");
+const product=ingredientDialog.querySelector('[data-ingredient-nutrition="product"]');
+assert.ok(product.textContent.includes("Test product"));assert.ok(product.textContent.includes("per 100 ml"));
+assert.ok(product.textContent.includes("200 kcal"));
+assert.ok(ingredientDialog.querySelector("[data-shop]"),"Shopping action remains available");
+ingredientDialog.querySelector("[data-close]").click();assert.equal(panel.shadowRoot.querySelector(".rx-overlay"),null);
+const translatedRecipe={ingredients:[{...ingredient}],sourceLanguage:"de"};
+panel._applyTranslation(translatedRecipe,{ingredients:["ελαιόλαδο"]});
+await panel._showIngredientInfo(translatedRecipe.ingredients[0],translatedRecipe);
+assert.equal(ingredientRequest.ingredient.ingredientId,"M_FOOD_246","Translated display text must still open the original catalog ingredient");
+panel.shadowRoot.querySelector(".rx-overlay [data-close]").click();
+await panel._showIngredientInfo("same label",{ingredients:["same label","same label"],_nutritionIngredients:[ingredient,{ingredientId:"different"}]});
+assert.deepEqual(ingredientRequest.ingredient,{name:"same label"},"Ambiguous translated rows must not receive a guessed identity");
+panel.shadowRoot.querySelector(".rx-overlay [data-close]").click();
+const fallback=panel._ingredientNutritionHtml({catalogNutrition:{values:{energyKcal:null}},genericNutrition:{nutrition:{basisQuantity:100,basisUnit:"ml",values:{energyKcal:50}}}});
+assert.ok(fallback.includes('data-ingredient-nutrition="saved"'));assert.ok(fallback.includes("per 100 ml"));
+assert.ok(panel._ingredientNutritionHtml({}).includes("data-ingredient-nutrition-unavailable"));
+for(const [language,basis] of [["de","pro 100 g"],["el","ανά 100 g"]]){
+  panel._hass.language=language;assert.ok(panel._ingredientNutritionHtml(ingredientInfo).includes(basis));
+}
+
 const deferred=()=>{let resolve;const promise=new Promise(done=>resolve=done);return {promise,resolve};};
 const requests=[];const translation=deferred();
 panel._hass.connection.sendMessagePromise=msg=>{const request=deferred();requests.push({msg,...request});return request.promise;};

@@ -156,6 +156,25 @@ def _enrich_display_ingredient(
     return out
 
 
+def ingredient_nutrition_profile(ingredient: Any) -> dict[str, Any] | None:
+    """Read one catalog profile by explicit ingredient identity, never by name.
+
+    Recipe/picker rows intentionally omit nutrient blobs. Resolve the selected
+    row against the immutable global table without copying the full catalog or
+    borrowing evidence from a similarly named food or a semantic sibling.
+    """
+    source = _global_ingredient(load_release_catalog(), ingredient)
+    if not source or source.get("nutritionEligible") is False:
+        return None
+    if _text(source.get("classification")).lower() in _NON_FOOD_CLASSIFICATIONS:
+        return None
+    profile = _metrics.normalize_nutrition_profile(source.get("nutrition"))
+    if profile is not None:
+        profile["ingredientId"] = _text(source.get("id") or source.get("ingredientId") or source.get("key"))
+        profile["estimated"] = True
+    return profile
+
+
 def _enrich_recipe_row(
     payload: dict[str, Any], row: dict[str, Any] | None
 ) -> dict[str, Any] | None:

@@ -9,7 +9,7 @@ import socket
 import sys
 import types
 import unittest
-from unittest.mock import patch
+from unittest.mock import AsyncMock, patch
 
 COMPONENT = Path(__file__).resolve().parents[1] / "custom_components/cook4me"
 
@@ -101,6 +101,78 @@ class OfflineMultilingualRuntimeTests(unittest.TestCase):
                     if key in seen:
                         self.assertEqual(seen[key], row["en"], key)
                     seen[key] = row["en"]
+
+    def test_ingredient_nutrients_resolve_provider_and_keyless_ids_without_name_guessing(self):
+        rows = [row for row in self.payload["ingredients"] if row.get("nutrition")]
+        provider = next(row for row in rows if row.get("key") == "M_FOOD_246")
+        local = next(row for row in rows if str(row.get("id", "")).startswith("local:"))
+        for raw in (provider, local):
+            for field in ("ingredientId", "id", "key", "foodKey"):
+                with self.subTest(ingredient=raw["id"], field=field):
+                    with patch.object(socket, "socket", side_effect=AssertionError("ingredient nutrients opened network")):
+                        result = self.release.ingredient_nutrition_profile({field: raw["id"], "name": "translated label"})
+                    self.assertEqual(result["values"], raw["nutrition"]["values"])
+                    self.assertEqual((result["basisQuantity"], result["basisUnit"]), (100, "g"))
+                    self.assertEqual(result["ingredientId"], raw["id"])
+                    result["values"]["energyKcal"] = -1
+                    self.assertNotEqual(self.release.ingredient_nutrition_profile({field: raw["id"]})["values"].get("energyKcal"), -1)
+        self.assertIsNone(self.release.ingredient_nutrition_profile({"name": "Olive oil"}))
+        self.assertIsNone(self.release.ingredient_nutrition_profile({"ingredientId": "unknown", "name": "Olive oil"}))
+        self.assertIsNone(self.release.ingredient_nutrition_profile({"conceptId": local.get("conceptId")}))
+
+    def test_unreviewed_ingredient_does_not_borrow_a_known_name_profile(self):
+        raw = next(row for row in self.payload["ingredients"] if not row.get("nutrition"))
+        self.assertIsNone(self.release.ingredient_nutrition_profile({"ingredientId": raw["id"], "name": "Olive oil", "nutrition": {"values": {"energyKcal": 999}}}))
+
+    def test_ingredient_popup_websocket_reads_catalog_without_legacy_cache_or_network(self):
+        prefix = "cook4me_offline_v61_test"
+        identity = lambda value: value
+        bridge = types.SimpleNamespace(entry=types.SimpleNamespace(data={"country": "DE"}), recipe_hub=types.SimpleNamespace(profile={}, recipes=[]))
+        responses = {}
+        connection = types.SimpleNamespace(send_result=lambda ident, result: responses.update({ident: result}))
+        legacy = types.SimpleNamespace(_bridge=lambda *_: bridge, _send_error=lambda *args: self.fail(str(args)))
+        forbidden = AsyncMock(side_effect=AssertionError("ingredient popup used the cloud"))
+        store = types.SimpleNamespace(get_generic=lambda _: None, stock_lots={})
+        modules = {
+            "voluptuous": types.SimpleNamespace(Required=lambda value, **_: value, Optional=lambda value, **_: value, All=lambda *args: None, Any=lambda *args: None, In=lambda _: None, Coerce=lambda _: None, Range=lambda **kwargs: None),
+            "homeassistant.core": types.SimpleNamespace(HomeAssistant=object, callback=identity),
+            "homeassistant.components": types.SimpleNamespace(ai_task=object, websocket_api=types.SimpleNamespace(websocket_command=lambda _: identity, async_response=identity)),
+            "homeassistant.util": types.SimpleNamespace(dt=object),
+            f"{prefix}.websocket": legacy,
+            f"{prefix}.websocket_v5": types.SimpleNamespace(),
+            f"{prefix}.websocket_v10": types.SimpleNamespace(_search_with_diagnostic=forbidden),
+            f"{prefix}.websocket_v11": types.SimpleNamespace(_device_language=lambda _: "de"),
+            f"{prefix}.websocket_v13": types.SimpleNamespace(),
+            f"{prefix}.barcode": types.SimpleNamespace(confident_match=identity, suggest_catalog_matches=identity),
+            f"{prefix}.nutrition": types.SimpleNamespace(nutrition_store_for_bridge=AsyncMock(return_value=store)),
+            f"{prefix}.nutrition_fefo": types.SimpleNamespace(calculate_recipe_nutrition_fefo=identity),
+            f"{prefix}.meal_history": types.SimpleNamespace(meal_history_store_for_bridge=AsyncMock(return_value=types.SimpleNamespace(recent=lambda _: []))),
+            f"{prefix}.recipe_book": types.SimpleNamespace(recipe_book_store_for_bridge=AsyncMock(return_value=types.SimpleNamespace(snapshot=lambda: {}))),
+        }
+        with patch.dict(sys.modules, modules):
+            ws = importlib.import_module(f"{prefix}.websocket_v18")
+
+        async def run():
+            with patch.object(socket, "socket", side_effect=AssertionError("ingredient popup opened network")):
+                await ws.ws_ingredient_info(None, connection, {"id": 1, "ingredient": {"foodKey": "M_FOOD_246", "foodName": "ελαιόλαδο"}, "language": "el"})
+                result = responses[1]
+                self.assertIsNone(result["genericNutrition"])
+                self.assertEqual(result["catalogNutrition"]["values"]["energyKcal"], 884)
+                self.assertEqual(result["catalogNutrition"]["basisUnit"], "g")
+                self.assertTrue(result["officialRecipeUsage"])
+                self.assertEqual(result["stock"], None)
+                # Existing saved product/reference data remains distinct.
+                saved = {"nutrition": {"basisQuantity": 100, "basisUnit": "ml", "values": {"energyKcal": 20}}}
+                store.get_generic = lambda _: deepcopy(saved)
+                store.stock_lots = {result["identity"]: [{"productName": "Test product", **saved}]}
+                await ws.ws_ingredient_info(None, connection, {"id": 2, "ingredient": {"foodKey": "M_FOOD_246", "foodName": "Olive oil"}, "include_official_usage": False})
+                self.assertEqual(responses[2]["genericNutrition"], saved)
+                self.assertEqual(responses[2]["exactNutritionLots"][0]["nutrition"], saved["nutrition"])
+                self.assertEqual(responses[2]["catalogNutrition"]["values"]["energyKcal"], 884)
+                self.assertEqual(responses[2]["officialRecipeUsage"], [])
+                forbidden.assert_not_awaited()
+
+        asyncio.run(run())
 
     def test_websocket_search_and_detail_use_the_same_offline_catalog(self):
         prefix = "cook4me_offline_v61_test"

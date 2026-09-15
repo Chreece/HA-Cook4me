@@ -7,11 +7,16 @@ const TEXT={
   el:{chooseCatalog:"Επίλεξε τουλάχιστον μία γλώσσα καταλόγου.",closeCatalog:"Τέλος",partialNutrition:"Μερική εκτίμηση",estimatedNutrition:"Εκτίμηση",offlineCatalogHelp:"Αναζήτησε πιάτα ή υλικά στον τοπικό κατάλογο Cook4Me. Οι γλώσσες των καταλόγων είναι ανεξάρτητες από τη γλώσσα αναζήτησης."},
 };
 const SOURCE_LANGUAGES="ar bg cs de en es fr hr hu it ja ko pl pt ro ru sk sl tr uk zh".split(" ");
+const INGREDIENT_TEXT={
+  en:{catalogNutrientReference:"Reviewed catalog reference",savedNutrientReference:"Saved nutrition reference",ingredientNutrientsUnavailable:"No nutrient data available for this ingredient yet.",nutrientBasis:"per {quantity} {unit}",nutrientBasisUnknown:"Quantity basis unavailable",nutrientEnergy:"Energy",nutrientSodium:"Sodium"},
+  de:{catalogNutrientReference:"Geprüfte Katalogreferenz",savedNutrientReference:"Gespeicherte Nährwertreferenz",ingredientNutrientsUnavailable:"Für diese Zutat sind noch keine Nährwertdaten verfügbar.",nutrientBasis:"pro {quantity} {unit}",nutrientBasisUnknown:"Bezugsmenge nicht verfügbar",nutrientEnergy:"Energie",nutrientSodium:"Natrium"},
+  el:{catalogNutrientReference:"Ελεγμένα στοιχεία καταλόγου",savedNutrientReference:"Αποθηκευμένα διατροφικά στοιχεία",ingredientNutrientsUnavailable:"Δεν υπάρχουν ακόμη διατροφικά δεδομένα για αυτό το υλικό.",nutrientBasis:"ανά {quantity} {unit}",nutrientBasisUnknown:"Η ποσότητα αναφοράς δεν είναι διαθέσιμη",nutrientEnergy:"Ενέργεια",nutrientSodium:"Νάτριο"},
+};
 const code=value=>String(value||"").toLowerCase().replaceAll("_","-").split("-")[0];
 const number=value=>value!==null&&value!==undefined&&value!==""&&typeof value!=="boolean"&&Number.isFinite(Number(value))?Number(value):null;
 
 class Cook4MeRecipeHubPanelV61 extends BasePanel{
-  _t(key){return TEXT[this._langCode()]?.[key]||TEXT.en[key]||super._t(key);}
+  _t(key){return INGREDIENT_TEXT[this._langCode()]?.[key]||INGREDIENT_TEXT.en[key]||TEXT[this._langCode()]?.[key]||TEXT.en[key]||super._t(key);}
 
   connectedCallback(){
     if(super.connectedCallback)super.connectedCallback();
@@ -84,8 +89,8 @@ class Cook4MeRecipeHubPanelV61 extends BasePanel{
 
   async _api(type,data={}){
     const mapped=this._v59MapApi(type);
-    // These reads use immutable local data and must not wait behind AI/cloud work.
-    if(mapped==="cook4me/v31/official_search"||(mapped==="cook4me/v31/recipe_detail"&&!data.refresh)){
+    // Catalog and ingredient reads must not wait behind AI/cloud work.
+    if(mapped==="cook4me/v19/ingredient_info"||mapped==="cook4me/v31/official_search"||(mapped==="cook4me/v31/recipe_detail"&&!data.refresh)){
       if(!this._hass)throw new Error("Home Assistant unavailable");
       return this._hass.connection.sendMessagePromise({...data,type:mapped});
     }
@@ -113,6 +118,49 @@ class Cook4MeRecipeHubPanelV61 extends BasePanel{
         }).catch(()=>{});
       }
     }catch(error){if(request===this._v61SearchRequest&&entry===this._entryId)this._message(`${this._t("error")}: ${error.message||error}`,true);}
+  }
+
+  async _showIngredientInfo(ingredient,recipe){
+    let source=ingredient;
+    if(!source||typeof source!=="object"){
+      // Translation stores display strings and keeps the original structured
+      // ingredients separately. Use that identity only for a unique aligned row.
+      const displayed=recipe?.ingredients,originals=recipe?._nutritionIngredients;
+      const index=Array.isArray(displayed)?displayed.indexOf(ingredient):-1;
+      source=index>=0&&index===displayed.lastIndexOf(ingredient)&&Array.isArray(originals)
+        &&originals.length===displayed.length&&originals[index]&&typeof originals[index]==="object"
+        ?originals[index]:{name:String(ingredient||"")};
+    }
+    return super._showIngredientInfo(source,recipe);
+  }
+
+  _ingredientNutritionHtml(info){
+    const rows=[
+      ["energyKcal","calories","kcal"],["energyKJ","nutrientEnergy","kJ"],
+      ["protein","protein","g"],["carbohydrates","carbs","g"],["fat","fat","g"],
+      ["fiber","fiber","g"],["sugars","sugars","g"],["saturatedFat","saturatedFat","g"],
+      ["salt","salt","g"],["sodium","nutrientSodium","g"],
+    ];
+    const format=new Intl.NumberFormat(this._langCode(),{maximumFractionDigits:3});
+    const render=(profile,title,kind)=>{
+      if(!profile||typeof profile!=="object")return "";
+      const values=profile.values||{};
+      const chips=rows.flatMap(([key,label,unit])=>{
+        const value=number(values[key]);
+        return value===null||value<0?[]:[`<span class="chip" data-nutrient="${key}">${this._escape(this._t(label))}: ${this._escape(format.format(value))} ${unit}</span>`];
+      }).join("");
+      if(!chips)return "";
+      const quantity=number(profile.basisQuantity);
+      const basis=quantity!==null&&quantity>0&&profile.basisUnit
+        ?this._t("nutrientBasis").replace("{quantity}",format.format(quantity)).replace("{unit}",profile.basisUnit)
+        :this._t("nutrientBasisUnknown");
+      return `<div data-ingredient-nutrition="${kind}" style="margin:8px 0"><strong>${this._escape(title)}</strong><div class="muted">${this._escape(basis)}${profile.estimated?` · ${this._escape(this._t("estimatedNutrition"))}`:""}</div><div class="chips">${chips}</div></div>`;
+    };
+    const reference=render(info.catalogNutrition,this._t("catalogNutrientReference"),"catalog")
+      ||render(info.genericNutrition?.nutrition||info.genericNutrition,this._t("savedNutrientReference"),"saved");
+    const products=(info.exactNutritionLots||[]).map(lot=>render(lot.nutrition,lot.productName||lot.nutrition?.label||this._t("exactProducts"),"product")).filter(Boolean);
+    return `${reference}${products.length?`<h4>${this._escape(this._t("exactProducts"))}</h4>${products.join("")}`:""}`
+      ||`<div class="muted" data-ingredient-nutrition-unavailable>${this._escape(this._t("ingredientNutrientsUnavailable"))}</div>`;
   }
 
   _v60Nutrition(recipe){
