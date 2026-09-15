@@ -1,0 +1,29 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 11,
+      "canonicalEnglishName": "Hazelnut cream (from organic shops)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Hazelnuts",
+      "fdcId": 2707502,
+      "notes": "Manual semantic review binds Cook4Me 'Hazelnut cream (from organic shops)' to USDA Survey (FNDDS) 'Hazelnuts'. The same exact FDC record was already explicitly reviewed for Cook4Me 'Hazelnut cream'; the parenthetical 'from organic shops' is sourcing wording and does not change the reviewed ingredient identity. This target's own pinned evidence independently contains the record at rank 11. Candidate rank and historical reuse are review aids only, not identity proof. Confidence remains medium because the USDA record describes hazelnuts rather than a specific hazelnut-cream formulation, and this continuation does not infer added sugar, oils, dairy, cocoa, texture, brand, organic certification, or processing method.",
+      "reviewTargetId": "concept:food:f820f7ae0ff62c534dc6",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "64a2aaadcfa340d1ff9ad7ae7060c863f7ce5878b4203bd28e3e7769d76ac94f"
+}
