@@ -304,6 +304,7 @@ async def _generate_week(
     ui_language: str = "en",
 ) -> dict[str, Any]:
     from . import release_catalog
+    from .weekly_variety import signature, already_planned
     if replace_slot_id and not any(row.get("id") == replace_slot_id and
             week_start <= _text(row.get("date")) <= (date.fromisoformat(week_start) + timedelta(days=6)).isoformat()
             for row in lifecycle.slots):
@@ -345,7 +346,12 @@ async def _generate_week(
                 desired.append((stamp, _text(meal_type)))
 
     planned = list(existing)
-    used_recipes = {recipe_identity(row.get("recipe") or {}) for row in planned}
+    end = (start + timedelta(days=6)).isoformat()
+    used_recipes = [signature(row.get("recipe")) for row in planned
+        if week_start <= _text(row.get("date")) <= end and row.get("recipe")]
+    if replace_target and replace_target.get("recipe"):
+        used_recipes.append(signature(replace_target["recipe"]))
+    candidate_signatures = {id(row): signature(row) for row in candidates}
     used_leftovers = {_text(row.get("leftoverId")) for row in planned if row.get("leftoverId")}
     leftovers = [row for row in lifecycle.leftovers if _text(row.get("id")) not in used_leftovers]
     if shared_filters is not None:
@@ -372,17 +378,19 @@ async def _generate_week(
                 "nutrition": deepcopy(leftover.get("nutrition") or {}),
                 "cost": {"totalsByCurrency": deepcopy(leftover.get("costByCurrency") or {})},
             })
+            if leftover.get("recipe"):
+                used_recipes.append(signature(leftover["recipe"]))
             continue
 
         wanted_taxonomy = ["breakfast"] if meal_type == "breakfast" else ["main"]
         pool = [
             row for row in candidates
-            if recipe_identity(row) not in used_recipes
+            if not already_planned(candidate_signatures[id(row)], used_recipes)
             and recipe_matches_meal_types(row, wanted_taxonomy)
         ]
         taxonomy_fallback = False
         if not pool:
-            pool = [row for row in candidates if recipe_identity(row) not in used_recipes]
+            pool = [row for row in candidates if not already_planned(candidate_signatures[id(row)], used_recipes)]
             taxonomy_fallback = True
         if not pool:
             continue
@@ -438,7 +446,7 @@ async def _generate_week(
             "nutrition": best_nutrition,
             "cost": best_cost,
         })
-        used_recipes.add(recipe_identity(selected))
+        used_recipes.append(candidate_signatures[id(best)])
 
     planned.sort(key=lambda row: (row.get("date") or "", row.get("mealType") or ""))
     if replace_slot_id:

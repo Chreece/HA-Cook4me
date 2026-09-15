@@ -14,7 +14,7 @@ Object.defineProperty(window.HTMLSelectElement.prototype,"value",{configurable:t
 const storage=new Map();
 globalThis.localStorage={getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
 
-const version=process.env.COOK4ME_TEST_PANEL_VERSION||"68";
+const version="69";
 await import(`../custom_components/cook4me/frontend/cook4me-panel-v${version}-bundle.js`);
 const panel=document.createElement(`cook4me-recipe-hub-panel-v${version}`),requests=[];
 const tick=()=>new Promise(resolve=>setTimeout(resolve,10));
@@ -48,49 +48,44 @@ panel._hass={language:"el",config:{country:"DE"},user:{id:"user"},states:{},conn
 panel._capabilities={languages:filters.languages.map(code=>({code})),deviceCatalogLanguage:"de"};
 panel._loadWeekState=async()=>{};panel._requestSection=async()=>{};panel._loadRecipeNutrition=async()=>{};panel._loadOverview=async()=>{};panel._loadIngredientCatalog=async()=>{};
 panel._renderShell();await panel._restorePreferences();panel._tab="official";await panel._search("garden");
-const content=()=>panel.shadowRoot.querySelector('#content'),card=()=>content().querySelector('article.recipe');
-// Exercise the queued modernizer: these passed synchronously in v67 but were
-// replaced again during the later DOM pass on the user's browser.
-for(const tab of ['today','week','official','book']){
- panel._tab=tab;panel._renderTabs();panel._modernizeSoon();await tick();
- const week=panel.shadowRoot.querySelector('[data-tab=week]');
- assert.ok(week.querySelector('svg[data-v67-week-icon]'),`Calendar after deferred pass on ${tab}`);
- assert.equal(week.querySelector('ha-icon[icon="mdi:circle-small"]'),null);
- const before=week.innerHTML;panel._modernizeTabs();assert.equal(week.innerHTML,before,'Decorator is idempotent');
+const content=()=>panel.shadowRoot.querySelector('#content');
+const verifyCard=card=>{
+ assert.ok(card.firstElementChild.classList.contains('rx-v66-title'),'Title comes first');
+ const frame=card.querySelector('.rx-v69-media'),photo=frame.querySelector('[data-v66-photo]'),actions=frame.querySelector('.rx-v69-overlay');
+ assert.equal(card.firstElementChild.nextElementSibling,frame,'Photo follows title');
+ assert.equal(photo.parentElement,frame);assert.equal(actions.parentElement,frame);
+ assert.equal(photo.querySelector('button,select'),null,'Actions are siblings, never nested buttons');
+ assert.ok(actions.querySelector('[data-v66-action=send]'));
+ assert.ok(actions.querySelector('[data-v66-action=expand]'));
+ assert.equal(card.querySelector('.rx-v66-title button'),null);
+ assert.equal(actions.querySelector('[data-v66-action=send]').querySelectorAll('ha-icon').length,1);
+};
+for(const tab of ['official','today','week','mine','book']){
+ panel._tab=tab;panel._v66Tags=new Map();panel._todayResults=structuredClone(all);
+ panel._entries[0].recipes=structuredClone(all);
+ panel._bookState={favorites:structuredClone(all),recipeList:structuredClone(all)};
+ panel._v67Today=()=> '2026-09-15';
+ panel._weekState={weekStart:'2026-09-15',slots:all.slice(0,7).map((recipe,index)=>({id:`slot-${index}`,date:`2026-09-${15+index}`,mealType:'breakfast',recipe})),settings:{}};
+ panel._renderTabs();panel._renderTab();panel._modernizeSoon();await tick();
+ const cards=[...content().querySelectorAll('article.recipe')];assert.ok(cards.length,tab);
+ for(const card of cards)verifyCard(card);
+ assert.ok(panel.shadowRoot.querySelector('[data-tab=week] svg[data-v67-week-icon]'));
 }
-panel._tab='official';panel._renderTab();panel._modernizeSoon();await tick();
-let send=card().querySelector('[data-v66-action=send]');
-assert.equal(send.querySelectorAll('ha-icon').length,1);assert.equal(send.querySelector('ha-icon').getAttribute('icon'),'mdi:send');
-assert.equal(panel._resourceHasData('capabilities'),false,'Old cached capabilities need refreshing');
-panel._hass.states['ai_task.local']={state:'unknown'};
-panel._allowResource('capabilities');await panel._loadCapabilities();
-assert.ok(requests.some(msg=>msg.type==='cook4me/v11/capabilities'));
-assert.ok(panel._v66LocalAiAvailable());assert.ok(card().querySelector('[data-v66-action=translate]'));
-assert.equal(requests.filter(msg=>msg.type.endsWith('recipe_translation')).length,0);
-card().querySelector('[data-v66-action=translate]').click();await tick();
-assert.equal(card().querySelector('h3').textContent.includes('Συνταγή κήπου'),true);
-card().querySelector('[data-v66-action=expand]').click();await tick();
-assert.ok(card().textContent.includes('Ετοιμάστε τα λαχανικά'),'Translated steps survive expansion');
-// The fullscreen copy and the corresponding result both change immediately.
-await panel._showRecipe(panel._results[1]);await tick();
-let dialog=panel.shadowRoot.querySelector('[data-recipe-dialog]');
-panel._modernizeSoon();await tick();
-assert.equal(dialog.querySelector('[data-v66-action=send]').querySelectorAll('ha-icon').length,1);
-dialog.querySelector('[data-v66-action=translate]').click();await tick();
-dialog=panel.shadowRoot.querySelector('[data-recipe-dialog]');
-assert.ok(dialog.querySelector('h2').textContent.includes('Συνταγή κήπου'));
-assert.ok(dialog.querySelector('.rx-v66-steps').textContent.includes('Μαγειρέψτε τα λαχανικά'));
-assert.equal(panel._results[1].title,'Συνταγή κήπου');
-panel._v63CloseRecipe();
-// Real shopping action retains source language metadata and passes UI language.
-card().querySelector('[data-v66-action=shopping]').click();await tick();
-const shopping=requests.findLast(msg=>msg.type.endsWith('/shopping_add'));
-assert.equal(shopping.ui_language,'el');assert.equal(shopping.ingredients[0].originalName,'Karotte');
-assert.equal(shopping.ingredients[0].quantity,100);assert.equal(shopping.ingredients[0].unit,'g');
-await panel._addPlanShopping();assert.equal(requests.findLast(msg=>msg.type.endsWith('/week_add_shopping')).ui_language,'el');
-// Availability changes arrive through the actual HA setter, no manual refresh.
-panel.hass={...panel._hass,states:{'ai_task.local':{state:'unavailable'}}};await tick();
-assert.equal(content().querySelector('[data-v66-action=translate]'),null);
-panel.hass={...panel._hass,states:{'ai_task.local':{state:'unknown'}}};await tick();
-assert.ok(content().querySelector('[data-v66-action=translate]'));
-panel.disconnectedCallback();console.log('v68 active capabilities, deferred icons, title/steps translation and shopping actions passed');process.exit(0);
+panel._tab='official';panel._renderTab();await tick();
+let card=content().querySelector('article.recipe');
+card.querySelector('[data-v66-action=expand]').click();await tick();
+card=content().querySelector('article.recipe');verifyCard(card);
+assert.ok(card.querySelector('.rx-v66-body'));assert.equal(panel.shadowRoot.querySelector('[data-recipe-dialog]'),null,'Action click does not open the photo');
+card.querySelector('[data-v66-photo]').click();await tick();
+let dialog=panel.shadowRoot.querySelector('[data-recipe-dialog]');assert.ok(dialog);
+assert.equal(dialog.querySelector('.rx-dialog').firstElementChild.tagName,'HEADER');
+assert.ok(dialog.querySelector('.rx-v69-media .rx-v69-overlay [data-v66-action=send]'));
+assert.equal(dialog.querySelector('.rx-v66-full-photo button'),null);
+dialog.querySelector('[data-v66-action=cook]').click();await tick();
+dialog=panel.shadowRoot.querySelector('[data-recipe-dialog]');assert.ok(dialog.hasAttribute('data-v67-cooking'));
+assert.ok(dialog.querySelector('[aria-current=step]'));
+assert.ok(dialog.querySelector('.rx-v69-media .rx-v69-overlay'));
+const css=panel.shadowRoot.querySelector('#cook4meV69Styles').textContent;
+assert.ok(css.includes('opacity:.5'));assert.ok(css.includes(':has(button:hover,select:hover)'));assert.ok(css.includes(':focus-within'));assert.ok(css.includes('{opacity:1}'));
+assert.ok(css.includes('position:absolute'));assert.ok(css.includes('inset:auto 0 0'));
+panel._v63CloseRecipe();panel.disconnectedCallback();console.log('v69 title-first cards, photo action overlays, deferred icons and fullscreen cooking passed');process.exit(0);
