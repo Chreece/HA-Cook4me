@@ -1,0 +1,29 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 3,
+      "canonicalEnglishName": "Herb crackers",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Crackers, NFS",
+      "fdcId": 2708132,
+      "notes": "Manual semantic review binds Cook4Me 'Herb crackers' to USDA Survey (FNDDS) 'Crackers, NFS'. The same exact FDC record was already explicitly reviewed for Cook4Me 'Crackers'; 'herb' is a flavor qualifier on the same cracker product class, while this target's own pinned evidence independently contains the generic cracker record at rank 3. Candidate rank and historical reuse are review aids only, not identity proof. Confidence remains medium because USDA's not-further-specified record does not establish the cracker's flour, fat, salt level, herb blend, brand, or formulation, and this continuation does not infer any of those details.",
+      "reviewTargetId": "concept:food:0d9cd3d4becebe9ab399",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "c1517ea2bcc20789db47ef2e1153b64594f105f5bd6812e7bec1afc1c146ae95"
+}
