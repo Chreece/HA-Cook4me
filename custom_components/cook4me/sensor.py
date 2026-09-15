@@ -55,7 +55,9 @@ class Cook4MeSensor(Cook4MeEntity, SensorEntity):
     @property
     def native_value(self):
         if self.entity_description.key == "summary":
-            return self.bridge.data.get("phase") or self.bridge.data.get("status") or ("online" if self.bridge.available else "offline")
+            if not self.bridge.available:
+                return "offline"
+            return self.bridge.data.get("phase") or self.bridge.data.get("status") or "online"
         value = self.bridge.data.get(self.entity_description.data_key)
         if self.entity_description.timestamp_ms and isinstance(value, (int, float)):
             return datetime.fromtimestamp(value / 1000, tz=timezone.utc)

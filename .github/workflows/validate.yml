@@ -70,6 +70,7 @@ jobs:
           python tools/build_frontend_bundle_v70.py --check
           bash -n tools/deploy_offline_runtime_v71.sh
           python tools/build_frontend_bundle_v71.py --check
+          python tools/build_frontend_bundle_v72.py --check
           python - <<'PY'
           import json
           from pathlib import Path
@@ -131,5 +132,15 @@ jobs:
           timeout 40s env COOK4ME_TEST_PANEL_VERSION=71 node tests/frontend_v69_photo_overlay_smoke.mjs
           timeout 40s env COOK4ME_TEST_PANEL_VERSION=71 node tests/frontend_v70_fullscreen_translation_smoke.mjs
           timeout 40s node tests/frontend_v71_card_interactions_smoke.mjs
+      - name: Device settings and announcements on active v72 panel
+        run: |
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v63_shared_ui_smoke.mjs
+          timeout 180s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v64_catalog_flow_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v67_recipe_layout_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v68_recipe_actions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v69_photo_overlay_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v70_fullscreen_translation_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v71_card_interactions_smoke.mjs
+          timeout 40s node tests/frontend_v72_device_settings_smoke.mjs
       - name: Run focused tests
         run: python -m unittest discover -s tests -v

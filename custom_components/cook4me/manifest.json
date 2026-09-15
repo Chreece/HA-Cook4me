@@ -15,7 +15,9 @@
   ],
   "after_dependencies": [
     "conversation",
-    "ai_task"
+    "ai_task",
+    "tts",
+    "media_player"
   ],
   "bluetooth": [
     {

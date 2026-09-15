@@ -297,7 +297,12 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    from .device_settings import DeviceSettings
+    from .announcements import Announcements
     bridge = Cook4MeBridge(hass, entry)
+    bridge.device_settings = DeviceSettings(bridge)
+    await bridge.device_settings.async_load()
+    await bridge.device_settings.async_consolidate_entities()
     await bridge.async_start()
     entry.runtime_data = bridge
     hass.data.setdefault(DOMAIN, {}).setdefault(DATA_BRIDGES, {})[entry.entry_id] = bridge
@@ -305,12 +310,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     update_expiry_notification(bridge)
     bridge._expiry_listener_unsub = register_daily_expiry_check(bridge)
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    bridge.announcements = Announcements(bridge, bridge.device_settings)
+    bridge.announcements.start()
     return True
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     if ok:
+        await entry.runtime_data.announcements.close()
         completion_unsub = getattr(entry.runtime_data, "_completion_listener_unsub", None)
         if callable(completion_unsub):
             completion_unsub()
