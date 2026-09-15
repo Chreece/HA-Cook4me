@@ -421,6 +421,7 @@ async def ws_recipe_book_state(hass, connection, msg) -> None:
         vol.Optional("entry_id"): str,
         vol.Required("collection"): vol.In(["favorites", "recipeList"]),
         vol.Required("recipe"): dict,
+        vol.Optional("remove", default=False): bool,
     }
 )
 @websocket_api.async_response
@@ -428,7 +429,7 @@ async def ws_recipe_book_toggle(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         store = await recipe_book_store_for_bridge(bridge)
-        result = await store.async_toggle(str(msg["collection"]), dict(msg["recipe"]))
+        result = await store.async_toggle(str(msg["collection"]), dict(msg["recipe"]), remove=bool(msg.get("remove")))
         connection.send_result(msg["id"], result)
     except Exception as exc:
         legacy._send_error(connection, msg, exc)

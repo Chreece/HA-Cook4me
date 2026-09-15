@@ -492,7 +492,10 @@ async def ws_recipe_delete(hass: HomeAssistant, connection: websocket_api.Active
     try:
         bridge = _bridge(hass, msg.get("entry_id"))
         changed = await bridge.recipe_hub.async_delete_recipe(msg["recipe_id"])
+        from .recipe_book import recipe_book_store_for_bridge
+        book = await recipe_book_store_for_bridge(bridge)
+        removed = await book.async_remove_local_recipe(msg["recipe_id"])
     except Exception as exc:
         _send_error(connection, msg, exc)
         return
-    connection.send_result(msg["id"], {"deleted": changed})
+    connection.send_result(msg["id"], {"deleted": changed or bool(removed), "book": book.snapshot()})
