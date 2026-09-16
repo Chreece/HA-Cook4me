@@ -15,7 +15,7 @@
     "exactLooseLaneExcluded": true
   },
   "summary": {
-    "candidateCount": 17
+    "candidateCount": 10
   },
   "items": [
     {
@@ -220,82 +220,6 @@
       }
     },
     {
-      "sourceIngredientId": "local:ja:19b86c6fe08208b7291b",
-      "conceptId": "concept:source:9bbb1d919383c46e31a3",
-      "language": "ja",
-      "source": "A-クリームチーズ(常温に戻す",
-      "english": "A - Cream cheese (bring to room temperature)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_086.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:food:35f3eb4d93302e449378",
-          "canonicalEnglish": "A- cream cheese, brought to room temperature",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.75
-        },
-        {
-          "conceptId": "concept:food:a8784c0244aa490a880b",
-          "canonicalEnglish": "A - Beaten egg (bring to room temperature)",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5556
-        },
-        {
-          "conceptId": "concept:food:6913a067183ef4eba61f",
-          "canonicalEnglish": "A - Beaten medium egg (bring to room temperature)",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ],
-      "reviewLane": {
-        "bestTokenJaccard": 0.75,
-        "runnerUpTokenJaccard": 0.5556,
-        "scoreGap": 0.1944
-      }
-    },
-    {
-      "sourceIngredientId": "local:ja:273c360223e6802a6cac",
-      "conceptId": "concept:source:8de7e6b5b844757e29d9",
-      "language": "ja",
-      "source": "A-クリームチーズ(常温戻す",
-      "english": "A - Cream cheese (bring to room temperature)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_086.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:food:35f3eb4d93302e449378",
-          "canonicalEnglish": "A- cream cheese, brought to room temperature",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.75
-        },
-        {
-          "conceptId": "concept:food:a8784c0244aa490a880b",
-          "canonicalEnglish": "A - Beaten egg (bring to room temperature)",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5556
-        },
-        {
-          "conceptId": "concept:food:6913a067183ef4eba61f",
-          "canonicalEnglish": "A - Beaten medium egg (bring to room temperature)",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ],
-      "reviewLane": {
-        "bestTokenJaccard": 0.75,
-        "runnerUpTokenJaccard": 0.5556,
-        "scoreGap": 0.1944
-      }
-    },
-    {
       "sourceIngredientId": "local:ko:aa3c73bdcee31bbc5fd8",
       "conceptId": "concept:source:1295fbd64b6a375178ac",
       "language": "ko",
@@ -410,37 +334,6 @@
       }
     },
     {
-      "sourceIngredientId": "local:uk:01545719973c1f64b25f",
-      "conceptId": "concept:source:82ef1908aaacda29439c",
-      "language": "uk",
-      "source": "гр оцту (не бальзамічного)",
-      "english": "g vinegar (not balsamic)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_063.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:food:893dfa946d4f4c0212c2",
-          "canonicalEnglish": "Vinegar (not balsamic)",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.75
-        },
-        {
-          "conceptId": "concept:food:ae1b41d1b42977185484",
-          "canonicalEnglish": "Balsamic vinegar",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ],
-      "reviewLane": {
-        "bestTokenJaccard": 0.75,
-        "runnerUpTokenJaccard": 0.5,
-        "scoreGap": 0.25
-      }
-    },
-    {
       "sourceIngredientId": "local:zh:e6619b1fbe0471126133",
       "conceptId": "concept:source:577d276576d02549992c",
       "language": "zh",
@@ -538,158 +431,6 @@
         "bestTokenJaccard": 0.75,
         "runnerUpTokenJaccard": 0.5,
         "scoreGap": 0.25
-      }
-    },
-    {
-      "sourceIngredientId": "local:zh:bb2bd75d09cbf88a5720",
-      "conceptId": "concept:source:ddfee104cea6efc17748",
-      "language": "zh",
-      "source": "紅薑(調味用) 少許",
-      "english": "Red pickled ginger (for seasoning), a little",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_069.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:food:bd8a4ba810181bebb7ac",
-          "canonicalEnglish": "Red pickled ginger, a little for finishing",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.75
-        },
-        {
-          "conceptId": "concept:food:ea421a7f67bff040e7a0",
-          "canonicalEnglish": "Mint (for seasoning), a little",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        },
-        {
-          "conceptId": "concept:food:b5da869ff3f70452c0fa",
-          "canonicalEnglish": "Pepper (for seasoning), a little",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ],
-      "reviewLane": {
-        "bestTokenJaccard": 0.75,
-        "runnerUpTokenJaccard": 0.5,
-        "scoreGap": 0.25
-      }
-    },
-    {
-      "sourceIngredientId": "local:ko:2cefa14e4084e3715a38",
-      "conceptId": "concept:source:a493132186ca04c603d1",
-      "language": "ko",
-      "source": "간장 (고명)",
-      "english": "Soy sauce (garnish/seasoning)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_074.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:food:8d81eeb437fe51caa8ca",
-          "canonicalEnglish": "Soy sauce (seasoning)",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.75
-        },
-        {
-          "conceptId": "concept:food:b650dd3526b53ee0c14f",
-          "canonicalEnglish": "Soup soy sauce (for seasoning)",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        },
-        {
-          "conceptId": "concept:food:89def1bcd6f4bf19f65d",
-          "canonicalEnglish": "Soy sauce (for seasoning pork)",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        },
-        {
-          "conceptId": "concept:food:18c81c4b24cfc58639aa",
-          "canonicalEnglish": "Soy sauce",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ],
-      "reviewLane": {
-        "bestTokenJaccard": 0.75,
-        "runnerUpTokenJaccard": 0.5,
-        "scoreGap": 0.25
-      }
-    },
-    {
-      "sourceIngredientId": "local:zh:d6a88d18c712517f6f4c",
-      "conceptId": "concept:source:f11ed79e97391f551cd9",
-      "language": "zh",
-      "source": "水 (有些使用在吉利丁)",
-      "english": "Water (some for gelatin)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_069.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:food:24b80a3cc9898f2fda64",
-          "canonicalEnglish": "Water (for gelatin)",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.75
-        },
-        {
-          "conceptId": "concept:food:813208a96527aed82833",
-          "canonicalEnglish": "Water (for blooming gelatin)",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.6
-        },
-        {
-          "conceptId": "concept:food:3121960540919e394476",
-          "canonicalEnglish": "Water (for dissolving gelatin)",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.6
-        },
-        {
-          "conceptId": "concept:food:2b0a1ed27857d6a78444",
-          "canonicalEnglish": "B- water (for gelatin)",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.6
-        }
-      ],
-      "reviewLane": {
-        "bestTokenJaccard": 0.75,
-        "runnerUpTokenJaccard": 0.6,
-        "scoreGap": 0.15
-      }
-    },
-    {
-      "sourceIngredientId": "local:uk:7fa976aed35498c38072",
-      "conceptId": "concept:source:0a746927ed38b7796743",
-      "language": "uk",
-      "source": "кристалізованих лимони (без м'якоті, тонко нарізаних)",
-      "english": "Candied lemons (without flesh, thinly sliced)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_094.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:food:d32cf5542653f0205212",
-          "canonicalEnglish": "Candied lemon (without flesh, thinly sliced)",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.7143
-        }
-      ],
-      "reviewLane": {
-        "bestTokenJaccard": 0.7143,
-        "runnerUpTokenJaccard": 0.0,
-        "scoreGap": 0.7143
       }
     }
   ]

@@ -7,7 +7,7 @@
     "candidateSearchIsIdentityProof": false
   },
   "summary": {
-    "candidateCount": 17
+    "candidateCount": 10
   },
   "items": [
     {
@@ -59,30 +59,6 @@
       "scoreGap": 0.7778
     },
     {
-      "sourceIngredientId": "local:ja:19b86c6fe08208b7291b",
-      "language": "ja",
-      "source": "A-クリームチーズ(常温に戻す",
-      "english": "A - Cream cheese (bring to room temperature)",
-      "classification": "food",
-      "bestConceptId": "concept:food:35f3eb4d93302e449378",
-      "bestCanonicalEnglish": "A- cream cheese, brought to room temperature",
-      "bestTokenJaccard": 0.75,
-      "runnerUpTokenJaccard": 0.5556,
-      "scoreGap": 0.1944
-    },
-    {
-      "sourceIngredientId": "local:ja:273c360223e6802a6cac",
-      "language": "ja",
-      "source": "A-クリームチーズ(常温戻す",
-      "english": "A - Cream cheese (bring to room temperature)",
-      "classification": "food",
-      "bestConceptId": "concept:food:35f3eb4d93302e449378",
-      "bestCanonicalEnglish": "A- cream cheese, brought to room temperature",
-      "bestTokenJaccard": 0.75,
-      "runnerUpTokenJaccard": 0.5556,
-      "scoreGap": 0.1944
-    },
-    {
       "sourceIngredientId": "local:ko:aa3c73bdcee31bbc5fd8",
       "language": "ko",
       "source": "진간장 (쯔유)",
@@ -119,18 +95,6 @@
       "scoreGap": 0.15
     },
     {
-      "sourceIngredientId": "local:uk:01545719973c1f64b25f",
-      "language": "uk",
-      "source": "гр оцту (не бальзамічного)",
-      "english": "g vinegar (not balsamic)",
-      "classification": "food",
-      "bestConceptId": "concept:food:893dfa946d4f4c0212c2",
-      "bestCanonicalEnglish": "Vinegar (not balsamic)",
-      "bestTokenJaccard": 0.75,
-      "runnerUpTokenJaccard": 0.5,
-      "scoreGap": 0.25
-    },
-    {
       "sourceIngredientId": "local:zh:e6619b1fbe0471126133",
       "language": "zh",
       "source": "中濃醬料",
@@ -165,54 +129,6 @@
       "bestTokenJaccard": 0.75,
       "runnerUpTokenJaccard": 0.5,
       "scoreGap": 0.25
-    },
-    {
-      "sourceIngredientId": "local:zh:bb2bd75d09cbf88a5720",
-      "language": "zh",
-      "source": "紅薑(調味用) 少許",
-      "english": "Red pickled ginger (for seasoning), a little",
-      "classification": "food",
-      "bestConceptId": "concept:food:bd8a4ba810181bebb7ac",
-      "bestCanonicalEnglish": "Red pickled ginger, a little for finishing",
-      "bestTokenJaccard": 0.75,
-      "runnerUpTokenJaccard": 0.5,
-      "scoreGap": 0.25
-    },
-    {
-      "sourceIngredientId": "local:ko:2cefa14e4084e3715a38",
-      "language": "ko",
-      "source": "간장 (고명)",
-      "english": "Soy sauce (garnish/seasoning)",
-      "classification": "food",
-      "bestConceptId": "concept:food:8d81eeb437fe51caa8ca",
-      "bestCanonicalEnglish": "Soy sauce (seasoning)",
-      "bestTokenJaccard": 0.75,
-      "runnerUpTokenJaccard": 0.5,
-      "scoreGap": 0.25
-    },
-    {
-      "sourceIngredientId": "local:zh:d6a88d18c712517f6f4c",
-      "language": "zh",
-      "source": "水 (有些使用在吉利丁)",
-      "english": "Water (some for gelatin)",
-      "classification": "food",
-      "bestConceptId": "concept:food:24b80a3cc9898f2fda64",
-      "bestCanonicalEnglish": "Water (for gelatin)",
-      "bestTokenJaccard": 0.75,
-      "runnerUpTokenJaccard": 0.6,
-      "scoreGap": 0.15
-    },
-    {
-      "sourceIngredientId": "local:uk:7fa976aed35498c38072",
-      "language": "uk",
-      "source": "кристалізованих лимони (без м'якоті, тонко нарізаних)",
-      "english": "Candied lemons (without flesh, thinly sliced)",
-      "classification": "food",
-      "bestConceptId": "concept:food:d32cf5542653f0205212",
-      "bestCanonicalEnglish": "Candied lemon (without flesh, thinly sliced)",
-      "bestTokenJaccard": 0.7143,
-      "runnerUpTokenJaccard": 0.0,
-      "scoreGap": 0.7143
     }
   ]
 }
