@@ -11,6 +11,7 @@ TOOLS = ROOT / "tools"
 sys.path.insert(0, str(TOOLS))
 
 import classify_nutrition_review_queue_v60 as classifier  # noqa: E402
+import nutrition_review_history_v60 as history  # noqa: E402
 import snapshot_nutrition_review_checkpoint_v60 as cp  # noqa: E402
 
 FIXTURE = ROOT / "tests/fixtures/nutrition-batch47-pepper-salt-triage-v60.json"
@@ -103,7 +104,7 @@ class Batch47PepperSaltTriageTests(unittest.TestCase):
         self.assertEqual(self.fixture["bindingsCreatedByBatch47"], 0)
 
     def test_triage_only_does_not_change_recorded_bindings(self):
-        checkpoint = cp.build_checkpoint(TOOLS)
+        checkpoint = history.historical_checkpoint(cp.build_checkpoint(TOOLS))
         self.assertEqual(checkpoint["summary"]["recordedReviewTargetCount"], 5080)
         self.assertEqual(self.fixture["bindingsCreatedByBatch47"], 0)
 
