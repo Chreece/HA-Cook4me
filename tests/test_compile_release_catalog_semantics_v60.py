@@ -223,6 +223,31 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
             "Lemon (finely grated zest)",
         )
 
+    def test_whitelisted_measurement_and_review_metadata_are_syntax_only(self):
+        cases = (
+            ("B- water (for dissolving)", "Water"),
+            ("Boiling water (to pour over salted fish)", "Boiling water"),
+            ("Butter (abbreviated source)", "Butter"),
+            ("Cups of sugar", "Sugar"),
+            ("One-third teaspoon turmeric", "Turmeric"),
+            ("Tablespoon of fish sauce (quantity count omitted)", "Fish sauce"),
+            ("Tablespoon of raisins (quantity count omitted)", "Raisins"),
+            ("Tablespoon of sweetcorn (quantity count omitted)", "Sweetcorn"),
+            ("Tablespoon(s) of oil (quantity incomplete)", "Oil"),
+            ("Teaspoon of cumin (quantity count omitted)", "Cumin"),
+        )
+        for source, target in cases:
+            with self.subTest(source=source):
+                self._assert_syntax_merge(source, target)
+
+    def test_new_syntax_rules_do_not_erase_semantic_parentheticals(self):
+        value = "Vegetable stock (or salted water; source grammar)"
+        self.assertEqual(mod._safe_syntactic_english(value), value)
+        self.assertEqual(
+            mod._safe_syntactic_english("Red chili paste (to taste)"),
+            "Red chili paste (to taste)",
+        )
+
     def test_unwhitelisted_syntax_equivalent_row_remains_pending(self):
         payload = self._syntax_payload("A- melted butter", "Melted butter")
         result = mod.compile_semantic_concepts([("batch.json", payload)])

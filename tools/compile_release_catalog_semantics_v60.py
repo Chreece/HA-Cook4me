@@ -91,6 +91,28 @@ _QUALIFIED_QUANTITY_ANNOTATION = re.compile(
     r"\s*\(([^()]*)\s*;\s*quantity fragment:\s*[^()]+\)\s*$",
     re.IGNORECASE,
 )
+_QUANTITY_COUNT_OMITTED = re.compile(
+    r"\s*\(quantity count omitted\)\s*$",
+    re.IGNORECASE,
+)
+_QUANTITY_INCOMPLETE = re.compile(
+    r"\s*\(quantity incomplete\)\s*$",
+    re.IGNORECASE,
+)
+_ABBREVIATED_SOURCE = re.compile(
+    r"\s*\(abbreviated source\)\s*$",
+    re.IGNORECASE,
+)
+_RECIPE_USE_PAREN = re.compile(
+    r"\s*\((?:for\s+dissolving(?:\s+[^()]*)?|to\s+pour(?:\s+[^()]*)?)\)\s*$",
+    re.IGNORECASE,
+)
+_MEASUREMENT_PREFIX = re.compile(
+    r"^(?:(?:tablespoon\(s\)|tablespoons?|teaspoons?|cups?)\s+of\s+"
+    r"|(?:one[- ]third|one[- ]half|half)\s+teaspoons?\s+"
+    r"|(?:tbsp|tsp|g)\s+|dl\s+(?:of\s+)?)",
+    re.IGNORECASE,
+)
 
 
 def _text(value: Any) -> str:
@@ -515,6 +537,11 @@ def _safe_syntactic_english(value: str) -> str:
                     + f" ({qualifier})"
                     + text[match.end() :]
                 ).strip()
+        text = _QUANTITY_COUNT_OMITTED.sub("", text, count=1).strip()
+        text = _QUANTITY_INCOMPLETE.sub("", text, count=1).strip()
+        text = _ABBREVIATED_SOURCE.sub("", text, count=1).strip()
+        text = _RECIPE_USE_PAREN.sub("", text, count=1).strip()
+        text = _MEASUREMENT_PREFIX.sub("", text, count=1).strip()
         if text == before:
             return text
 
