@@ -21,6 +21,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -Eeuo pipefail
+          # Dispatch checkpoint: third conservative standalone semantic batch.
           gh workflow run catalog-semantic-resolution-apply-v60.yml \
             --repo "$GITHUB_REPOSITORY" \
             --ref cook4me-ingredient-semantic-confirmation-v60
