@@ -1,0 +1,282 @@
+name: Build post-activation nutrition evidence v60
+
+on:
+  push:
+    branches:
+      - cook4me-nutrition-enrichment-post-activation-v60
+    paths:
+      - .github/workflows/catalog-nutrition-enrichment-evidence-v60.yml
+      - custom_components/cook4me/catalog/merged_catalog.v1.json
+      - tools/capture_release_catalog_fdc_candidate_evidence_offline_v60.py
+      - tools/classify_release_catalog_fdc_candidate_evidence_v60.py
+      - tools/fdc_candidate_reference_data_v60.py
+      - tools/fdc_reference_data_v60.py
+      - tools/prepare_fdc_reference_data_v60.py
+      - tools/prepare_post_activation_nutrition_review_targets_v60.py
+      - tools/release_catalog_reviewed_nutrition_targets_*.v1.json
+      - tests/test_capture_release_catalog_fdc_candidate_evidence_offline_v60.py
+      - tests/test_fdc_candidate_reference_data_v60.py
+      - tests/test_prepare_fdc_reference_manifest_v60.py
+      - tests/test_prepare_post_activation_nutrition_review_targets_v60.py
+  workflow_dispatch:
+
+concurrency:
+  group: catalog-nutrition-enrichment-evidence-v60-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  actions: write
+  contents: write
+  attestations: write
+  id-token: write
+
+jobs:
+  build-nutrition-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ARCHIVE_TAG: nutrition-evidence-v60-archive
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Run focused evidence regressions
+        run: |
+          set -Eeuo pipefail
+          python -m unittest \
+            tests.test_capture_release_catalog_fdc_candidate_evidence_offline_v60 \
+            tests.test_fdc_candidate_reference_data_v60 \
+            tests.test_prepare_fdc_reference_manifest_v60 \
+            tests.test_prepare_post_activation_nutrition_review_targets_v60 -v
+
+      - name: Prove activated catalog baseline
+        run: |
+          set -Eeuo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          catalog = Path('custom_components/cook4me/catalog/merged_catalog.v1.json')
+          payload = json.loads(catalog.read_text(encoding='utf-8'))
+          source = payload.get('source') if isinstance(payload.get('source'), dict) else {}
+          facts = {
+              'complete': payload.get('complete') is True,
+              'runtimeCatalogCompacted': source.get('runtimeCatalogCompacted') is True,
+              'recipes': len(payload.get('recipes') or []),
+              'variants': sum(len(r.get('variants') or []) for r in payload.get('recipes') or [] if isinstance(r, dict)),
+              'ingredients': len(payload.get('ingredients') or []),
+              'reviewedNutritionResolvedCount': int(source.get('reviewedNutritionResolvedCount') or 0),
+              'reviewedNutritionRequiredCount': int(source.get('reviewedNutritionRequiredCount') or 0),
+              'failedDetailCount': int(source.get('failedDetailCount') or 0),
+          }
+          facts['expectedPendingIdentityCount'] = max(
+              0, facts['reviewedNutritionRequiredCount'] - facts['reviewedNutritionResolvedCount']
+          )
+          if not facts['complete'] or not facts['runtimeCatalogCompacted']:
+              raise SystemExit(f'release catalog is not the activated compact v60 baseline: {facts}')
+          if (facts['recipes'], facts['variants'], facts['ingredients']) != (16952, 32163, 11748):
+              raise SystemExit(f'activated release counts changed: {facts}')
+          if facts['failedDetailCount'] != 0:
+              raise SystemExit(f"activated catalog has failed details: {facts['failedDetailCount']}")
+          if facts['reviewedNutritionRequiredCount'] != 10776:
+              raise SystemExit(f"nutrition-required identity count changed: {facts}")
+          if not 0 <= facts['reviewedNutritionResolvedCount'] <= facts['reviewedNutritionRequiredCount']:
+              raise SystemExit(f"invalid reviewed nutrition coverage: {facts}")
+          print(json.dumps(facts, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Prepare unresolved review targets from activated compact catalog
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-nutrition-enrichment-v60"
+          mkdir -p "$BUILD"
+          python tools/prepare_post_activation_nutrition_review_targets_v60.py \
+            --catalog custom_components/cook4me/catalog/merged_catalog.v1.json \
+            --review-root tools \
+            --queue-output "$BUILD/nutrition-queue.v60.json" \
+            --queue-summary "$BUILD/nutrition-queue-summary.v60.json" \
+            --targets-output "$BUILD/nutrition-review-targets.v60.json" \
+            --targets-summary "$BUILD/nutrition-review-targets-summary.v60.json"
+
+      - name: Verify expected post-activation unresolved set
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-nutrition-enrichment-v60"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          root = Path(os.environ['RUNNER_TEMP']) / 'cook4me-nutrition-enrichment-v60'
+          queue = json.loads((root / 'nutrition-queue-summary.v60.json').read_text(encoding='utf-8'))
+          targets = json.loads((root / 'nutrition-review-targets-summary.v60.json').read_text(encoding='utf-8'))
+          catalog = json.loads(Path('custom_components/cook4me/catalog/merged_catalog.v1.json').read_text(encoding='utf-8'))
+          source = catalog.get('source') if isinstance(catalog.get('source'), dict) else {}
+          required = int(source.get('reviewedNutritionRequiredCount') or 0)
+          resolved = int(source.get('reviewedNutritionResolvedCount') or 0)
+          expected_pending = max(0, required - resolved)
+          facts = {
+              'expectedPendingIdentityCount': expected_pending,
+              'activatedPendingIdentityCount': int(queue.get('activatedPendingNutritionCount') or 0),
+              'pendingIdentityCount': int(queue.get('pendingNutritionCount') or 0),
+              'reviewedAfterActivationIdentityCount': int(queue.get('reviewedAfterActivationIdentityCount') or 0),
+              'activatedReviewTargetCount': int(targets.get('activatedReviewTargetCount') or 0),
+              'reviewTargetCount': int(targets.get('reviewTargetCount') or 0),
+              'reviewedAfterActivationTargetCount': int(targets.get('reviewedAfterActivationTargetCount') or 0),
+              'reviewedAfterActivationUsageCountSum': int(targets.get('reviewedAfterActivationUsageCountSum') or 0),
+              'usedReviewTargetCount': int(targets.get('usedReviewTargetCount') or 0),
+              'runtimeSemanticReviewReceipts': int(targets.get('postActivationSemanticReviewReceiptCount') or 0),
+              'runtimeSemanticReviewReceiptTargets': int(targets.get('postActivationSemanticReviewReceiptTargetCount') or 0),
+          }
+          if facts['activatedPendingIdentityCount'] != expected_pending:
+              raise SystemExit(f"activated pending identities do not match required-resolved: {facts}")
+          if facts['pendingIdentityCount'] + facts['reviewedAfterActivationIdentityCount'] != facts['activatedPendingIdentityCount']:
+              raise SystemExit(f"review overlay lost activated identities: {facts}")
+          if facts['reviewTargetCount'] + facts['reviewedAfterActivationTargetCount'] != facts['activatedReviewTargetCount']:
+              raise SystemExit(f"review overlay lost activated targets: {facts}")
+          if expected_pending and facts['activatedReviewTargetCount'] <= 0:
+              raise SystemExit(f"pending identities exist without review targets: {facts}")
+          print(json.dumps(facts, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Download pinned public USDA reference data
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-nutrition-enrichment-v60"
+          python tools/prepare_fdc_reference_data_v60.py \
+            --output-dir "$BUILD/fdc-reference-v60" \
+            | tee "$BUILD/fdc-reference-summary.v60.json"
+
+      - name: Capture candidate evidence for all remaining review targets offline
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-nutrition-enrichment-v60"
+          python tools/capture_release_catalog_fdc_candidate_evidence_offline_v60.py \
+            --targets "$BUILD/nutrition-review-targets.v60.json" \
+            --reference-manifest "$BUILD/fdc-reference-v60/reference-manifest.v60.json" \
+            --output "$BUILD/fdc-candidate-evidence.v60.json" \
+            --summary-output "$BUILD/fdc-candidate-evidence-summary.v60.json" \
+            --max-candidates 12
+
+      - name: Classify evidence into deterministic review lanes
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-nutrition-enrichment-v60"
+          python tools/classify_release_catalog_fdc_candidate_evidence_v60.py \
+            --evidence "$BUILD/fdc-candidate-evidence.v60.json" \
+            --output "$BUILD/fdc-candidate-triage.v60.json" \
+            --summary-output "$BUILD/fdc-candidate-triage-summary.v60.json"
+
+      - name: Verify evidence is complete and non-binding
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-nutrition-enrichment-v60"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          root = Path(os.environ['RUNNER_TEMP']) / 'cook4me-nutrition-enrichment-v60'
+          targets = json.loads((root / 'nutrition-review-targets-summary.v60.json').read_text(encoding='utf-8'))
+          evidence = json.loads((root / 'fdc-candidate-evidence-summary.v60.json').read_text(encoding='utf-8'))
+          reference = json.loads((root / 'fdc-reference-summary.v60.json').read_text(encoding='utf-8'))
+          triage = json.loads((root / 'fdc-candidate-triage-summary.v60.json').read_text(encoding='utf-8'))
+          expected_targets = int(targets.get('reviewTargetCount') or 0)
+          activated_targets = int(targets.get('activatedReviewTargetCount') or 0)
+          facts = {
+              'reviewTargetCount': int(evidence.get('reviewTargetCount') or 0),
+              'activatedReviewTargetCount': activated_targets,
+              'reviewedAfterActivationTargetCount': int(targets.get('reviewedAfterActivationTargetCount') or 0),
+              'candidateOnlyReferenceIndex': evidence.get('candidateOnlyReferenceIndex') is True,
+              'referenceManifestDeterministic': reference.get('referenceManifestDeterministic') is True,
+              'referenceManifestSha256': str(reference.get('referenceManifestSha256') or ''),
+              'referenceDatasetCount': int(reference.get('datasetCount') or 0),
+              'indexedReferenceFdcIdCount': int(evidence.get('indexedReferenceFdcIdCount') or 0),
+              'withCandidateCount': int(evidence.get('withCandidateCount') or 0),
+              'zeroCandidateCount': int(evidence.get('zeroCandidateCount') or 0),
+              'uniqueLiteralExactDescriptionMatchTargetCount': int(evidence.get('uniqueLiteralExactDescriptionMatchTargetCount') or 0),
+              'multipleLiteralExactDescriptionMatchTargetCount': int(evidence.get('multipleLiteralExactDescriptionMatchTargetCount') or 0),
+              'singletonCandidateCount': int(evidence.get('singletonCandidateCount') or 0),
+              'aliasFallbackTargetCount': int(evidence.get('aliasFallbackTargetCount') or 0),
+              'reviewTargetsByLane': triage.get('reviewTargetsByLane') or {},
+              'usageByLane': triage.get('usageByLane') or {},
+              'selectionCount': int(triage.get('selectionCount') or 0),
+              'bindingCreatedCount': int(triage.get('bindingCreatedCount') or 0),
+              'networkRequestsPerformed': bool(triage.get('networkRequestsPerformed')),
+          }
+          if facts['reviewTargetCount'] != expected_targets:
+              raise SystemExit(f"candidate evidence lost review targets: expected={expected_targets} actual={facts['reviewTargetCount']}")
+          if facts['reviewTargetCount'] + facts['reviewedAfterActivationTargetCount'] != activated_targets:
+              raise SystemExit(f"candidate evidence/review overlay does not reconcile to activated target count: {facts}")
+          if not facts['candidateOnlyReferenceIndex'] or (facts['reviewTargetCount'] and facts['indexedReferenceFdcIdCount'] <= 0):
+              raise SystemExit(f'candidate capture did not use lightweight reference index: {facts}')
+          if not facts['referenceManifestDeterministic'] or facts['referenceDatasetCount'] != 3:
+              raise SystemExit(f'FDC reference provenance is not deterministic/complete: {facts}')
+          if evidence.get('referenceManifestSha256') != facts['referenceManifestSha256']:
+              raise SystemExit(f"candidate evidence/reference manifest SHA mismatch: {facts}")
+          if facts['selectionCount'] or facts['bindingCreatedCount'] or facts['networkRequestsPerformed']:
+              raise SystemExit(f'candidate evidence violated non-binding/offline contract: {facts}')
+          (root / 'nutrition-enrichment-facts.v60.json').write_text(
+              json.dumps(facts, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(facts, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Archive immutable candidate evidence
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-nutrition-enrichment-v60"
+          EVIDENCE="$BUILD/fdc-candidate-evidence.v60.json"
+          EVIDENCE_SHA="$(sha256sum "$EVIDENCE" | awk '{print $1}')"
+          ASSET="/tmp/fdc-candidate-evidence-v60-${EVIDENCE_SHA}.json.gz"
+          gzip -n -9 -c "$EVIDENCE" > "$ASSET"
+
+          if ! gh release view "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$ARCHIVE_TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              --draft \
+              --target "$GITHUB_SHA" \
+              --title "Cook4Me v60 nutrition evidence archive" \
+              --notes "Internal immutable candidate-evidence archive. Candidate evidence is non-binding and requires explicit reviewed decisions."
+          fi
+
+          test "$(gh release view "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq '.isDraft')" = "true"
+          gh release upload "$ARCHIVE_TAG" "$ASSET" --repo "$GITHUB_REPOSITORY" --clobber
+          gh release view "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' \
+            | grep -Fx "$(basename "$ASSET")"
+          echo "Archived immutable nutrition evidence: ${EVIDENCE_SHA}"
+
+      - name: Upload post-activation nutrition evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: nutrition-enrichment-evidence-v60-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/cook4me-nutrition-enrichment-v60/nutrition-queue-summary.v60.json
+            ${{ runner.temp }}/cook4me-nutrition-enrichment-v60/nutrition-review-targets-summary.v60.json
+            ${{ runner.temp }}/cook4me-nutrition-enrichment-v60/fdc-reference-summary.v60.json
+            ${{ runner.temp }}/cook4me-nutrition-enrichment-v60/fdc-reference-v60/reference-manifest.v60.json
+            ${{ runner.temp }}/cook4me-nutrition-enrichment-v60/fdc-candidate-evidence.v60.json
+            ${{ runner.temp }}/cook4me-nutrition-enrichment-v60/fdc-candidate-evidence-summary.v60.json
+            ${{ runner.temp }}/cook4me-nutrition-enrichment-v60/fdc-candidate-triage.v60.json
+            ${{ runner.temp }}/cook4me-nutrition-enrichment-v60/fdc-candidate-triage-summary.v60.json
+            ${{ runner.temp }}/cook4me-nutrition-enrichment-v60/nutrition-enrichment-facts.v60.json
+          if-no-files-found: error
+          compression-level: 9
+          retention-days: 7
+
+      - name: Dispatch reviewers for this exact evidence snapshot
+        run: |
+          set -Eeuo pipefail
+          BRANCH="cook4me-nutrition-enrichment-post-activation-v60"
+          echo "Dispatching reviewer workflows for exact evidence head $GITHUB_SHA"
+          for WORKFLOW in \
+            catalog-nutrition-review-reuse-post-activation-v60.yml \
+            catalog-nutrition-review-semantic-reuse-post-activation-v60.yml
+          do
+            gh workflow run "$WORKFLOW" \
+              --repo "$GITHUB_REPOSITORY" \
+              --ref "$BRANCH" \
+              -f evidence_head_sha="$GITHUB_SHA"
+          done

@@ -1,0 +1,31 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "evidenceBindingScope": "retained-reference-record",
+  "items": [
+    {
+      "approved": true,
+      "canonicalEnglishName": "Cream (35% fat)",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Cream, heavy",
+      "fdcId": 2346386,
+      "notes": "Explicit destination review accepts USDA Foundation 'Cream, heavy' as a bounded nutrition reference for the target explicitly labeled dairy cream at 35% fat. The retained record is a non-cultured heavy cream rather than sour cream or cream cheese, but it does not certify an exact 35% fat formulation, brand, homogenization, stabilizers, whipping state, or regional labeling standard; confidence is therefore medium. Nutrition remains the USDA per-100-g reference with no serving, volume-to-mass, or fat-percentage adjustment. This decision is specific to the 35% target and does not authorize reuse for the unresolved 30%, 15%, double-cream, crème-fraîche, or plant-based cream identities.",
+      "reviewTargetId": "concept:food:eca81ce41a979d57f9f8",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:2538a9bc2093adbe8813"
+    }
+  ],
+  "kind": "cook4me-fdc-retained-reference-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "5b98ea0b699e314989dc3bd05719a78ff33fb66aaa352345a237733616b383d5"
+}

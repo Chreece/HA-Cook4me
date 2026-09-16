@@ -1,0 +1,31 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "evidenceBindingScope": "retained-reference-record",
+  "items": [
+    {
+      "approved": true,
+      "canonicalEnglishName": "B- breadcrumbs",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Bread, crumbs, dry, grated, plain",
+      "fdcId": 174928,
+      "notes": "Manual semantic review binds Cook4Me 'B- breadcrumbs' to USDA SR Legacy 'Bread, crumbs, dry, grated, plain'. The 'B-' prefix is a recipe-section marker and does not change the breadcrumb ingredient identity. The retained source target/rank is only a locator receipt for the exact USDA record and is not identity proof for the destination. This binding specifically chooses plain dry grated breadcrumbs and does not infer seasoned crumbs, soft bread crumbs, panko, fresh crumbs, bread variety, brand, added fat, frying state, density, or any volume-to-mass conversion.",
+      "reviewTargetId": "concept:food:dc210971ab5b65f8c243",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:39e643ea7a61e21d00ee"
+    }
+  ],
+  "kind": "cook4me-fdc-retained-reference-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "967524e444e25ee9b1b52ae44e542a246fde762359bd962d0d151b72e4949243"
+}

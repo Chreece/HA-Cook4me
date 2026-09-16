@@ -1,0 +1,29 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 3,
+      "canonicalEnglishName": "Glutinous rice (soak in lukewarm water for 1 hour, then drain)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Rice, white, glutinous, unenriched, uncooked",
+      "fdcId": 168883,
+      "notes": "Manual semantic review binds Cook4Me 'Glutinous rice (soak in lukewarm water for 1 hour, then drain)' to USDA SR Legacy 'Rice, white, glutinous, unenriched, uncooked'. The same exact FDC record was already explicitly reviewed for Cook4Me 'Glutinous rice'; the soak-and-drain wording is a recipe preparation instruction applied to that same rice rather than a different ingredient identity. This target's own pinned evidence independently contains the record at rank 3. Candidate rank and historical reuse are review aids only, not identity proof. Confidence remains medium because the USDA record is the uncooked rice reference and this continuation does not infer water absorption, drained weight, cooking yield, serving weight, or post-soak nutrient density.",
+      "reviewTargetId": "concept:food:636215975869db997ad7",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "4a0a0971602feef9d8306587a6ec4c38098f9176eabbccde891cec67cd27fc0b"
+}

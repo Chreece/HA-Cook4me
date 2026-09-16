@@ -1,0 +1,140 @@
+name: Validate post-activation nutrition review decisions v60
+
+on:
+  push:
+    branches:
+      - cook4me-nutrition-enrichment-post-activation-v60
+    paths:
+      - .github/workflows/catalog-nutrition-review-decisions-v60.yml
+      - tools/compile_release_catalog_fdc_review_decisions_v60.py
+      - tools/compile_release_catalog_fdc_retained_review_decisions_v60.py
+      - tools/verify_post_activation_nutrition_review_decisions_v60.py
+      - tools/snapshot_nutrition_review_checkpoint_v60.py
+      - tools/resolve_reviewed_release_catalog_nutrition_targets_v60.py
+      - tools/release_catalog_nutrition_review_decisions_post_activation_*.v1.json
+      - tools/release_catalog_reviewed_nutrition_targets_*.v1.json
+      - tests/test_compile_release_catalog_fdc_review_decisions_v60.py
+      - tests/test_compile_release_catalog_fdc_retained_review_decisions_v60.py
+      - tests/test_verify_post_activation_nutrition_review_decisions_v60.py
+      - tests/test_nutrition_review_checkpoint_v60.py
+  workflow_dispatch:
+
+concurrency:
+  group: catalog-nutrition-review-decisions-v60-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  actions: write
+  contents: write
+
+jobs:
+  validate-review-decisions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ARCHIVE_TAG: nutrition-evidence-v60-archive
+      ACTIVATION_BRANCH: cook4me-nutrition-enrichment-post-activation-v60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Compile review-decision tooling
+        run: |
+          set -Eeuo pipefail
+          python -m py_compile \
+            tools/compile_release_catalog_fdc_review_decisions_v60.py \
+            tools/compile_release_catalog_fdc_retained_review_decisions_v60.py \
+            tools/verify_post_activation_nutrition_review_decisions_v60.py \
+            tools/snapshot_nutrition_review_checkpoint_v60.py \
+            tools/resolve_reviewed_release_catalog_nutrition_targets_v60.py
+
+      - name: Run fail-closed review-decision regressions
+        run: |
+          set -Eeuo pipefail
+          python -m unittest \
+            tests.test_compile_release_catalog_fdc_review_decisions_v60 \
+            tests.test_compile_release_catalog_fdc_retained_review_decisions_v60 \
+            tests.test_verify_post_activation_nutrition_review_decisions_v60 \
+            tests.test_nutrition_review_checkpoint_v60 -v
+
+      - name: Resolve exact evidence snapshots required by committed decisions
+        run: |
+          set -Eeuo pipefail
+          python - <<'PY'
+          import json, re
+          from pathlib import Path
+          pattern = re.compile(r'[0-9a-f]{64}\Z')
+          shas = set()
+          paths = sorted(Path('tools').glob('release_catalog_nutrition_review_decisions_post_activation_*.v1.json'))
+          if not paths:
+              raise SystemExit('no post-activation nutrition decision files found')
+          for path in paths:
+              value = json.loads(path.read_text(encoding='utf-8'))
+              sha = str(value.get('sourceEvidenceSha256') or '').strip()
+              if not pattern.fullmatch(sha):
+                  raise SystemExit(f'{path}: invalid sourceEvidenceSha256 {sha!r}')
+              shas.add(sha)
+          output = Path('/tmp/nutrition-review-evidence-shas.txt')
+          output.write_text(''.join(f'{sha}\n' for sha in sorted(shas)), encoding='utf-8')
+          print(f'required immutable evidence snapshots: {len(shas)}')
+          print(output.read_text(encoding='utf-8'), end='')
+          PY
+
+      - name: Download permanent immutable evidence snapshots
+        run: |
+          set -Eeuo pipefail
+          DEST=/tmp/nutrition-review-evidence
+          mkdir -p "$DEST"
+          test "$(gh release view "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq '.isDraft')" = "true"
+
+          while IFS= read -r SHA; do
+            test -n "$SHA"
+            ASSET="fdc-candidate-evidence-v60-${SHA}.json.gz"
+            JSON="$DEST/fdc-candidate-evidence-v60-${SHA}.json"
+            gh release download "$ARCHIVE_TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              --dir "$DEST" \
+              --pattern "$ASSET"
+            gzip -cd "$DEST/$ASSET" > "$JSON"
+            test "$(sha256sum "$JSON" | awk '{print $1}')" = "$SHA"
+          done < /tmp/nutrition-review-evidence-shas.txt
+
+      - name: Recompile and verify committed review batches
+        run: |
+          set -Eeuo pipefail
+          DEST=/tmp/nutrition-review-evidence
+          ARGS=()
+          while IFS= read -r SHA; do
+            ARGS+=(--evidence "$DEST/fdc-candidate-evidence-v60-${SHA}.json")
+          done < /tmp/nutrition-review-evidence-shas.txt
+          test "${#ARGS[@]}" -gt 0
+          python tools/verify_post_activation_nutrition_review_decisions_v60.py \
+            "${ARGS[@]}" \
+            --decision-root tools \
+            --review-root tools \
+            --output /tmp/post-activation-review-verification.v60.json
+          cat /tmp/post-activation-review-verification.v60.json
+
+      - name: Dispatch activation only for a verified reviewed-target batch
+        run: |
+          set -Eeuo pipefail
+          CHANGED="$(git diff --name-only HEAD^ HEAD)"
+          printf '%s\n' "$CHANGED"
+          if ! printf '%s\n' "$CHANGED" \
+            | grep -Eq '^tools/release_catalog_reviewed_nutrition_targets_[^/]+\.v1\.json$'; then
+            echo "Verified corpus is healthy; current commit contains no reviewed-target batch, so activation is not required."
+            exit 0
+          fi
+          test -n "$GITHUB_SHA"
+          gh workflow run catalog-post-activation-nutrition-activate-v60.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref "$ACTIVATION_BRANCH" \
+            -f source_sha="$GITHUB_SHA"
+          echo "Dispatched nutrition activation for verified review-batch SHA $GITHUB_SHA"

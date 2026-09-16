@@ -1,0 +1,29 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 12,
+      "canonicalEnglishName": "Sweet potato, thickly peeled, cut 1 cm wide and soaked in water for 30 minutes",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Sweet potato, raw, unprepared (Includes foods for USDA's Food Distribution Program)",
+      "fdcId": 168482,
+      "notes": "Explicit semantic review binds this uncooked sweet-potato preparation to USDA sweet potato, raw, unprepared. Thick peeling, cutting, and a 30-minute water soak do not change the underlying food identity or create a cooked product, but they may modestly alter the edible portion or water-soluble nutrients, so confidence is medium rather than high. The USDA record is used only as the per-100-g raw sweet-potato nutrition reference; Cook4Me does not infer skin contribution, soak loss, water uptake, drained yield, serving mass, or any cooking conversion. Cooked, canned, fried, candied, frozen, or paste forms remain separate identities.",
+      "reviewTargetId": "concept:food:25e3f9bd09f4e9502690",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "5b98ea0b699e314989dc3bd05719a78ff33fb66aaa352345a237733616b383d5"
+}

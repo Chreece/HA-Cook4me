@@ -1,0 +1,29 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Sweet bean sauce",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Black bean sauce",
+      "fdcId": 2707404,
+      "notes": "Manual semantic review binds Cook4Me 'Sweet bean sauce' to USDA FNDDS 'Black bean sauce'. The same exact FDC record was already explicitly reviewed for Cook4Me 'B- sweet bean sauce'; the leading 'B-' is a recipe-section marker and does not change the ingredient identity. This target's own pinned evidence independently contains the record at rank 2. Candidate rank and historical reuse are review aids only, not identity proof. This continuation preserves the existing reviewed generic sauce mapping and does not infer bean cultivar, fermentation style, sweetness, brand, ingredient proportions, serving size, or dilution.",
+      "reviewTargetId": "concept:food:b346d38084cf40e7b42d",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "530231bd1a6bb6605b0dd587d70ef928ebae98faad794151eab9a9c6b7aed168"
+}

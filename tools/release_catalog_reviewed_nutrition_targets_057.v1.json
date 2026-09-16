@@ -1,0 +1,63 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-retained-reference-binding",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Peach, peeled and diced",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Peaches, yellow, raw",
+      "fdcId": 325430,
+      "notes": "Explicit destination review accepts USDA Foundation 'Peaches, yellow, raw' as a bounded nutrition reference for the target peach that is peeled and diced but remains uncooked. Peeling and dicing do not change the underlying peach identity, but removing the skin can modestly change fibre and micronutrient composition, so confidence is medium rather than high. The retained record does not certify cultivar, ripeness, peel-loss fraction, drained yield, serving mass, or any added syrup/cooking treatment. Nutrition remains the USDA per-100-g raw peach reference; canned, cooked, frozen, dried, puréed, or syrup-packed peach identities remain separate.",
+      "reviewTargetId": "concept:food:61c04d38957512420ad9",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "42afb54feee88ecebbc7a1bbe7e188f0db5d2991f0cd6099dd27ffc51ff942a2",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "5b98ea0b699e314989dc3bd05719a78ff33fb66aaa352345a237733616b383d5",
+      "sourceEvidenceTargetId": "concept:food:62bf85d8452fa206ceed",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Yellow (or red) tomatoes, peeled and chopped",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Tomatoes, raw",
+      "fdcId": 2709719,
+      "notes": "Explicit destination review accepts the USDA/FNDDS generic 'Tomatoes, raw' record as a bounded nutrition reference for yellow-or-red tomatoes that are peeled and chopped but remain uncooked. The generic raw-tomato record intentionally avoids asserting one color/cultivar, while peeling can modestly change fibre and micronutrient composition; confidence is therefore medium. The binding does not infer cultivar proportions, ripeness, peel-loss fraction, drained yield, serving mass, sauce/confit preparation, or any cooking conversion. Canned, cooked, sun-dried, sauce, paste, and confit tomato identities remain separate.",
+      "reviewTargetId": "concept:food:83725625993a397db981",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "1bb7caeb63845e17b67868efd54a4390b0eb07a093260cbc22e7488a535b223f",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceSha256": "5b98ea0b699e314989dc3bd05719a78ff33fb66aaa352345a237733616b383d5",
+      "sourceEvidenceTargetId": "concept:food:e3fea58c69ff8c1fc700",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "referenceReceipts": {
+    "2709719": {
+      "sourceCandidateSha256": "1bb7caeb63845e17b67868efd54a4390b0eb07a093260cbc22e7488a535b223f",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceTargetId": "concept:food:e3fea58c69ff8c1fc700"
+    },
+    "325430": {
+      "sourceCandidateSha256": "42afb54feee88ecebbc7a1bbe7e188f0db5d2991f0cd6099dd27ffc51ff942a2",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:62bf85d8452fa206ceed"
+    }
+  },
+  "reviewDecisionSha256": "4d0f1edb7a87f779db834783df43ca02fc95f3151865be1dbfe6802612130ba0",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "5b98ea0b699e314989dc3bd05719a78ff33fb66aaa352345a237733616b383d5"
+}

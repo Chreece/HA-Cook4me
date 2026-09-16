@@ -1,0 +1,36 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-target-candidate-binding",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Boiled pork backbone",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Pork, bones",
+      "fdcId": 2705897,
+      "notes": "Manual semantic review binds Cook4Me 'Boiled pork backbone' to USDA FNDDS 'Pork, bones'. The same exact FDC record was already explicitly reviewed for Cook4Me 'Pork backbone', and USDA historical food-code documentation for cooked pork neckbones explicitly includes pork backbone, preserving the cut identity and cooked state. 'Boiled' is a narrower cooked preparation; this binding does not claim a boiling-specific USDA nutrient factor. This target's own pinned evidence independently contains the record at rank 9. Candidate rank, historical reuse, and coding lineage are review aids only, not automatic identity proof. This binding does not infer raw pork bones, spareribs, hocks, smoked or cured neck bones, bone broth or stock, edible-bone mass, preparation yield, or any bone-to-meat conversion.",
+      "reviewTargetId": "concept:food:58a19f0b8f28e870fcce",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "23c65142a2bce8dfb1c581b4dc7c9e47bf5e4142171a1b8779a043a5d64c4db0",
+      "sourceEvidenceCandidateRank": 9,
+      "sourceEvidenceSha256": "320c60e5a5cde6536c29a865500476b974a0877acedb0154dc552de266144b3b",
+      "sourceEvidenceTargetId": "concept:food:58a19f0b8f28e870fcce",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "reviewDecisionSha256": "b1c923fec3c7d6520d7715b8ba391c1e8ea545f7dcbfdc5dcb89920f3d499650",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "320c60e5a5cde6536c29a865500476b974a0877acedb0154dc552de266144b3b"
+}

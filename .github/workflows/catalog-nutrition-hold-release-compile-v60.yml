@@ -1,0 +1,107 @@
+name: Compile nutrition hold releases v60
+
+on:
+  push:
+    branches:
+      - cook4me-nutrition-enrichment-post-activation-v60
+    paths:
+      - .github/workflows/catalog-nutrition-hold-release-compile-v60.yml
+      - tools/compile_release_catalog_nutrition_hold_release_v60.py
+      - tools/release_catalog_nutrition_review_hold_release_decisions.v1.json
+      - tools/release_catalog_nutrition_review_holds.v1.json
+      - tests/test_compile_release_catalog_nutrition_hold_release_v60.py
+  workflow_dispatch:
+
+concurrency:
+  group: catalog-nutrition-hold-release-compile-v60-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  attestations: write
+  id-token: write
+
+jobs:
+  compile-hold-releases:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ARCHIVE_TAG: nutrition-evidence-v60-archive
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Compile tooling and run fail-closed regressions
+        run: |
+          set -Eeuo pipefail
+          python -m py_compile tools/compile_release_catalog_nutrition_hold_release_v60.py
+          python -m unittest tests.test_compile_release_catalog_nutrition_hold_release_v60 -v
+
+      - name: Resolve exact immutable evidence generations
+        run: |
+          set -Eeuo pipefail
+          python - <<'PY'
+          import json, re
+          from pathlib import Path
+          value = json.loads(Path('tools/release_catalog_nutrition_review_hold_release_decisions.v1.json').read_text(encoding='utf-8'))
+          shas = sorted({str(row.get('sourceEvidenceSha256') or '') for row in value.get('items') or []})
+          pattern = re.compile(r'[0-9a-f]{64}\Z')
+          if not shas or any(not pattern.fullmatch(sha) for sha in shas):
+              raise SystemExit(f'invalid hold-release evidence SHA set: {shas}')
+          Path('/tmp/hold-release-evidence-shas.txt').write_text(''.join(f'{sha}\n' for sha in shas), encoding='utf-8')
+          print('\n'.join(shas))
+          PY
+
+      - name: Download permanent immutable evidence snapshots
+        run: |
+          set -Eeuo pipefail
+          DEST=/tmp/hold-release-evidence
+          mkdir -p "$DEST"
+          test "$(gh release view "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq '.isDraft')" = "true"
+          while IFS= read -r SHA; do
+            ASSET="fdc-candidate-evidence-v60-${SHA}.json.gz"
+            JSON="$DEST/fdc-candidate-evidence-v60-${SHA}.json"
+            gh release download "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --dir "$DEST" --pattern "$ASSET"
+            gzip -cd "$DEST/$ASSET" > "$JSON"
+            test "$(sha256sum "$JSON" | awk '{print $1}')" = "$SHA"
+          done < /tmp/hold-release-evidence-shas.txt
+
+      - name: Compile release twice and prove deterministic bytes
+        run: |
+          set -Eeuo pipefail
+          DEST=/tmp/hold-release-evidence
+          ARGS=()
+          while IFS= read -r SHA; do
+            ARGS+=(--evidence "$DEST/fdc-candidate-evidence-v60-${SHA}.json")
+          done < /tmp/hold-release-evidence-shas.txt
+          python tools/compile_release_catalog_nutrition_hold_release_v60.py \
+            --decisions tools/release_catalog_nutrition_review_hold_release_decisions.v1.json \
+            "${ARGS[@]}" \
+            --output /tmp/release_catalog_nutrition_review_hold_releases.v1.json \
+            --summary-output /tmp/nutrition-hold-release-summary.v1.json
+          python tools/compile_release_catalog_nutrition_hold_release_v60.py \
+            --decisions tools/release_catalog_nutrition_review_hold_release_decisions.v1.json \
+            "${ARGS[@]}" \
+            --output /tmp/release_catalog_nutrition_review_hold_releases.second.v1.json \
+            --summary-output /tmp/nutrition-hold-release-summary.second.v1.json
+          cmp -s /tmp/release_catalog_nutrition_review_hold_releases.v1.json /tmp/release_catalog_nutrition_review_hold_releases.second.v1.json
+          cmp -s /tmp/nutrition-hold-release-summary.v1.json /tmp/nutrition-hold-release-summary.second.v1.json
+          cat /tmp/nutrition-hold-release-summary.v1.json
+
+      - name: Upload compiled hold-release evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: nutrition-hold-release-compiled-v60-${{ github.sha }}
+          path: |
+            /tmp/release_catalog_nutrition_review_hold_releases.v1.json
+            /tmp/nutrition-hold-release-summary.v1.json
+          if-no-files-found: error
+          compression-level: 9
+          retention-days: 7
