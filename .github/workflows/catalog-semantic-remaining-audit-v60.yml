@@ -55,7 +55,7 @@ jobs:
           path = Path('tools/remaining_semantic_ingredient_audit_v60.json')
           payload = json.loads(path.read_text(encoding='utf-8'))
           summary = payload['summary']
-          if int(summary.get('remaining') or 0) != 308:
+          if int(summary.get('remaining') or 0) != 300:
               raise SystemExit(f"unexpected unresolved semantic count: {summary.get('remaining')}")
           if payload.get('policy', {}).get('automaticApproval') is not False:
               raise SystemExit('audit must not approve semantic mappings')
@@ -66,6 +66,11 @@ jobs:
           )
           if int(exact.get('summary', {}).get('candidateCount') or 0) != 0:
               raise SystemExit('approved exact-loose rows unexpectedly remain unresolved')
+          syntactic = json.loads(
+              Path('tools/remaining_semantic_syntactic_candidates_v60.json').read_text(encoding='utf-8')
+          )
+          if int(syntactic.get('summary', {}).get('candidateCount') or 0) != 0:
+              raise SystemExit('approved metadata-only rows unexpectedly remain unresolved')
           for name in (
               'remaining_semantic_high_similarity_v60.json',
               'remaining_semantic_similarity_070_v60.json',
@@ -76,6 +81,7 @@ jobs:
               if lane.get('policy', {}).get('automaticApproval') is not False:
                   raise SystemExit(f'{name} must remain review-only')
               print(name, json.dumps(lane.get('summary') or {}, ensure_ascii=False))
+          print(json.dumps(summary, ensure_ascii=False, indent=2))
           PY
       - name: Commit exact audit reports
         run: |
