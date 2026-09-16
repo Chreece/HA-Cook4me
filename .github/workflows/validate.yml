@@ -210,3 +210,13 @@ jobs:
           timeout 90s env COOK4ME_TEST_PANEL_VERSION=80 node tests/frontend_v79_prices_browser.mjs
       - name: Validate v80 pinned installer
         run: sudo "$(command -v python)" -m unittest discover -s tests -p test_deploy_offline_runtime_v80.py -v
+
+      - name: Verify v81 device information and announcements
+        run: |
+          python tools/build_frontend_bundle_v81.py --check
+          bash -n tools/deploy_offline_runtime_v81.sh
+          timeout 90s node tests/frontend_v81_device_browser.mjs
+          timeout 90s env COOK4ME_TEST_PANEL_VERSION=81 node tests/frontend_v80_unified_scanner_browser.mjs
+          timeout 90s env COOK4ME_TEST_PANEL_VERSION=81 node tests/frontend_v79_prices_browser.mjs
+      - name: Validate v81 pinned installer
+        run: sudo "$(command -v python)" -m unittest discover -s tests -p test_deploy_offline_runtime_v81.py -v

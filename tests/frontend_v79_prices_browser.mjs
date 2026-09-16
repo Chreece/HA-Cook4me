@@ -52,6 +52,7 @@ try{
  const settingsCall=await page.evaluate(()=>window.calls.filter(r=>r.type.endsWith('/price_settings')).at(-1));
  assert.ok(!('currency' in settingsCall),'Changing country asks the server to choose its currency');
  await panel.locator('[data-v79-country]').fill('DE');await panel.locator('[data-v79-save-settings]').click();await page.waitForFunction(()=>window.panel._v79Settings?.country==='DE');
+ await panel.locator('[data-v78-pane=stock]').click();
  await panel.locator('[data-v78-open=barcode]').first().click();const dialog=panel.locator('dialog.v78-capture');
  await dialog.locator('[data-draft=barcode]').fill('12345678');await dialog.locator('[data-v78-lookup]').click();
  await page.waitForFunction(()=>window.panel._v78Draft?.priceResult?.estimate===3);

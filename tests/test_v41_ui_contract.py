@@ -41,12 +41,12 @@ class V41UIContractTests(unittest.TestCase):
         self.assertIn('details.rx-advanced[open]', text)
         self.assertIn('if(!path.includes(menu))menu.removeAttribute("open")', text)
 
-    def test_v80_is_active_server_seeded_and_cache_busted(self):
+    def test_v81_is_active_server_seeded_and_cache_busted(self):
         panel = PANEL.read_text(encoding="utf-8")
         manifest = MANIFEST.read_text(encoding="utf-8")
-        self.assertIn('cook4me-recipe-hub-panel-v80', panel)
-        self.assertIn('cook4me-panel-v80-bundle.js', panel)
-        self.assertIn('?v=2026.9.16.5', panel)
+        self.assertIn('cook4me-recipe-hub-panel-v81', panel)
+        self.assertIn('cook4me-panel-v81-bundle.js', panel)
+        self.assertIn('?v=2026.9.16.6', panel)
         self.assertIn('"version": "2026.9.9.2"', manifest)
         for version in (20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32):
             self.assertIn(f'async_register_websocket_v{version}', panel)

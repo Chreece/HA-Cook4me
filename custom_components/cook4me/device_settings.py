@@ -32,6 +32,17 @@ def device_access(hass, bridge, user):
                for row in er.async_entries_for_config_entry(registry, bridge.entry.entry_id))
 
 
+def device_read_access(hass, bridge, user):
+    """Allow telemetry without requiring permission to control the cooker."""
+    from homeassistant.helpers import entity_registry as er
+    if not user or not user.is_active:
+        return False
+    registry = er.async_get(hass)
+    return any(row.unique_id == f"{bridge.device_uuid}_summary"
+               and user.permissions.check_entity(row.entity_id, POLICY_READ)
+               for row in er.async_entries_for_config_entry(registry, bridge.entry.entry_id))
+
+
 def choices(hass, user):
     from homeassistant.components.media_player import MediaPlayerEntityFeature as Feature
     from homeassistant.components.ai_task.const import AITaskEntityFeature
