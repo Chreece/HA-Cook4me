@@ -1,0 +1,106 @@
+name: Merge exact standalone semantic pairs v60
+
+on:
+  push:
+    branches:
+      - cook4me-ingredient-semantic-confirmation-v60
+    paths:
+      - '.github/workflows/standalone-semantic-equivalence-pairs-v60.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  merge-exact-pairs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Patch exact source-local equivalence support
+        run: |
+          set -Eeuo pipefail
+          python tools/patch_standalone_semantic_equivalences_v60.py
+          git diff --check
+
+      - name: Run semantic equivalence regressions
+        run: |
+          set -Eeuo pipefail
+          python -m unittest discover -s tests -p 'test_compile_release_catalog_semantics_v60.py'
+          python -m unittest discover -s tests -p 'test_semantic_standalone_dispositions_v60.py'
+          python -m unittest discover -s tests -p 'test_semantic_standalone_equivalences_v60.py'
+
+      - name: Prove exact repository closure
+        run: |
+          set -Eeuo pipefail
+          python tools/compile_release_catalog_semantics_v60.py \
+            --reviews-dir tools \
+            --output "$RUNNER_TEMP/semantic-with-standalone-equivalences.json" \
+            | tee "$RUNNER_TEMP/semantic-with-standalone-equivalences-summary.json"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          payload = json.loads(
+              Path('$RUNNER_TEMP/semantic-with-standalone-equivalences.json'.replace('$RUNNER_TEMP', __import__('os').environ['RUNNER_TEMP'])).read_text(encoding='utf-8')
+          )
+          summary = payload['summary']
+          ledger = json.loads(
+              Path('tools/release_catalog_semantic_standalone_equivalences.v1.json').read_text(encoding='utf-8')
+          )
+          standalone = json.loads(
+              Path('tools/release_catalog_semantic_standalone_dispositions.v1.json').read_text(encoding='utf-8')
+          )
+          pairs = ledger.get('items') or []
+          if int(summary.get('needsSemanticConfirmationSourceLabels') or -1) != 0:
+              raise SystemExit('exact standalone pair merge reopened semantic pending work')
+          if int(summary.get('standaloneEquivalentSourceLabels') or -1) != len(pairs):
+              raise SystemExit('standalone equivalence summary mismatch')
+          if int((ledger.get('summary') or {}).get('equivalenceCount') or -1) != len(pairs):
+              raise SystemExit('equivalence ledger summary mismatch')
+          standalone_ids = {
+              row['sourceIngredientId'] for row in standalone.get('items') or []
+              if isinstance(row, dict)
+          }
+          concepts = {row['conceptId']: row for row in payload.get('concepts') or []}
+          mapping = payload['sourceIdentityToConcept']
+          for pair in pairs:
+              source_id = pair['sourceIngredientId']
+              target_id = pair['targetSourceIngredientId']
+              if source_id in standalone_ids:
+                  raise SystemExit(f'equivalence source still standalone: {source_id}')
+              if target_id not in standalone_ids:
+                  raise SystemExit(f'equivalence target lost standalone closure: {target_id}')
+              if mapping.get(source_id) != mapping.get(target_id):
+                  raise SystemExit(f'equivalence pair maps to different concepts: {source_id}')
+              concept = concepts[mapping[source_id]]
+              if not concept['conceptId'].startswith('concept:source:'):
+                  raise SystemExit(f'equivalence escaped source-local concept: {source_id}')
+              if any(concept.get(key) is not False for key in ('nutritionEligible','dietEligible','allergenEligible')):
+                  raise SystemExit(f'equivalence gained safety eligibility: {source_id}')
+          print(json.dumps({
+              'equivalenceCount': len(pairs),
+              'standaloneRemaining': len(standalone_ids),
+              'semanticConcepts': summary['semanticConcepts'],
+              'pending': summary['needsSemanticConfirmationSourceLabels'],
+          }, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Commit validated exact standalone equivalences
+        run: |
+          set -Eeuo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            tools/compile_release_catalog_semantics_v60.py \
+            tools/release_catalog_semantic_standalone_dispositions.v1.json \
+            tests/test_compile_release_catalog_semantics_v60.py
+          git diff --cached --check
+          git commit -m 'Merge exact reviewed standalone ingredient pairs v60'
+          git push origin HEAD:cook4me-ingredient-semantic-confirmation-v60
