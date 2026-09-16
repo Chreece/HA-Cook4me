@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
 """Compile reviewed keyless Cook4Me labels into conservative semantic concepts.
 
-This maintenance transform deliberately keeps three identities separate:
+Provider identity, source-local identity, and semantic concept identity remain
+separate. High-confidence reviewed rows may merge automatically only by exact
+reviewed English + classification. Medium-confidence rows stay source-local
+unless an exact, explicitly recorded confirmation approves a merge.
 
-1. provider identity (for example M_FOOD_*), which is authoritative only when
-   the provider supplied it;
-2. source-local keyless identity, which is deterministic from language + exact
-   reviewed source label and matches the v2 assembly-prep identity contract;
-3. semantic concept identity, which may group independently reviewed source
-   labels only when classification and English semantics are both high
-   confidence and exactly equal after normalization, or when an explicit
-   confirmation record safely joins a previously source-local row to an
-   already high-confidence reviewed concept.
+Two confirmation lanes exist:
+1. exact reviewed-English confirmations with an explicit target concept ID;
+2. explicitly whitelisted syntactic normalizations for exact source-local IDs.
 
-The compiler never assigns or infers an M_FOOD key.
+Neither lane assigns or infers an M_FOOD provider key.
 """
 from __future__ import annotations
 
@@ -30,6 +27,9 @@ ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT / "tools"
 BASE_REVIEW = TOOLS / "release_catalog_reviewed_keyless_ingredients.v1.json"
 CONFIRMATION_FILE = TOOLS / "release_catalog_semantic_confirmations.v1.json"
+SYNTAX_CONFIRMATION_FILE = (
+    TOOLS / "release_catalog_semantic_syntactic_confirmation_ids.v1.txt"
+)
 
 _ALLOWED_CLASSIFICATIONS = {"food", "equipment", "other", "ambiguous"}
 _MERGEABLE_CLASSIFICATIONS = {"food", "equipment", "other"}
@@ -40,6 +40,20 @@ _CONFIRMATION_POLICY = {
     "sourceLocalIdentityPreserved": True,
     "manualConfirmationRequired": True,
 }
+_SECTION_PREFIX = re.compile(r"^[A-C]\s*[-–—:]\s*", re.IGNORECASE)
+_MALFORMED_QUANTITY_PREFIX = re.compile(r"^/\d+(?:[.,]\d+)?\s+")
+_REVIEW_ONLY_ANNOTATION = re.compile(
+    r"\s*\((source (?:spelling|grammar|wording))\)\s*$",
+    re.IGNORECASE,
+)
+_QUANTITY_ONLY_ANNOTATION = re.compile(
+    r"\s*\(quantity fragment:\s*[^()]+\)\s*$",
+    re.IGNORECASE,
+)
+_QUALIFIED_QUANTITY_ANNOTATION = re.compile(
+    r"\s*\(([^()]*)\s*;\s*quantity fragment:\s*[^()]+\)\s*$",
+    re.IGNORECASE,
+)
 
 
 def _text(value: Any) -> str:
@@ -142,6 +156,28 @@ def _load_confirmation_payload(path: Path) -> dict[str, Any]:
     return value
 
 
+def _load_syntax_confirmation_ids(path: Path) -> set[str]:
+    seen: set[str] = set()
+    for line_number, raw in enumerate(
+        path.read_text(encoding="utf-8").splitlines(), 1
+    ):
+        value = raw.strip()
+        if not value or value.startswith("#"):
+            continue
+        if not value.startswith("local:") or any(char.isspace() for char in value):
+            raise RuntimeError(
+                f"{path}: line {line_number}: invalid source-local identity"
+            )
+        if value in seen:
+            raise RuntimeError(
+                f"{path}: line {line_number}: duplicate source-local identity"
+            )
+        seen.add(value)
+    if not seen:
+        raise RuntimeError(f"{path}: no syntactic confirmation identities")
+    return seen
+
+
 def iter_review_rows(
     payloads: Iterable[tuple[str, dict[str, Any]]]
 ) -> Iterable[dict[str, Any]]:
@@ -192,6 +228,18 @@ def iter_review_rows(
             yield row
 
 
+def _rows_by_source_id(
+    review_rows: list[dict[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    out: dict[str, dict[str, Any]] = {}
+    for row in review_rows:
+        source_id = source_local_ingredient_id(row["language"], row["source"])
+        if source_id in out:
+            raise RuntimeError(f"duplicate source-local identity: {source_id}")
+        out[source_id] = row
+    return out
+
+
 def _high_confidence_concepts(
     review_rows: list[dict[str, Any]],
 ) -> dict[str, dict[str, Any]]:
@@ -208,12 +256,14 @@ def _high_confidence_concepts(
             previous["classification"] != row["classification"]
             or _norm(previous["english"]) != _norm(row["english"])
         ):
-            raise RuntimeError(f"high-confidence semantic collision for {concept_id}")
+            raise RuntimeError(
+                f"high-confidence semantic collision for {concept_id}"
+            )
         concepts.setdefault(concept_id, row)
     return concepts
 
 
-def _confirmation_map(
+def _exact_confirmation_map(
     review_rows: list[dict[str, Any]],
     confirmation_payload: dict[str, Any] | None,
     *,
@@ -236,13 +286,7 @@ def _confirmation_map(
     if not isinstance(items, list):
         raise RuntimeError("confirmation items must be a list")
 
-    rows_by_source_id: dict[str, dict[str, Any]] = {}
-    for row in review_rows:
-        source_id = source_local_ingredient_id(row["language"], row["source"])
-        if source_id in rows_by_source_id:
-            raise RuntimeError(f"duplicate source-local identity: {source_id}")
-        rows_by_source_id[source_id] = row
-
+    rows_by_source_id = _rows_by_source_id(review_rows)
     high_concepts = _high_confidence_concepts(review_rows)
     out: dict[str, dict[str, str]] = {}
     for index, raw in enumerate(items, 1):
@@ -250,23 +294,29 @@ def _confirmation_map(
             raise RuntimeError(f"confirmation item {index}: expected object")
         source_id = _text(raw.get("sourceIngredientId"))
         concept_id = _text(raw.get("confirmedConceptId"))
-        if not source_id.startswith("local:") or not concept_id.startswith("concept:"):
+        if not source_id.startswith("local:") or not concept_id.startswith(
+            "concept:"
+        ):
             raise RuntimeError(f"confirmation item {index}: invalid identity")
         if source_id in out:
-            raise RuntimeError(f"duplicate semantic confirmation for {source_id}")
+            raise RuntimeError(
+                f"duplicate semantic confirmation for {source_id}"
+            )
 
         source_row = rows_by_source_id.get(source_id)
         if source_row is None:
             raise RuntimeError(
-                f"semantic confirmation source is not a reviewed identity: {source_id}"
+                "semantic confirmation source is not a reviewed identity: "
+                f"{source_id}"
             )
         if source_row["confidence"] == "high":
             raise RuntimeError(
-                f"semantic confirmation is redundant for high-confidence source: {source_id}"
+                "semantic confirmation is redundant for high-confidence source: "
+                f"{source_id}"
             )
         if source_row["classification"] not in _MERGEABLE_CLASSIFICATIONS:
             raise RuntimeError(
-                f"semantic confirmation cannot merge classification "
+                "semantic confirmation cannot merge classification "
                 f"{source_row['classification']!r}: {source_id}"
             )
 
@@ -283,7 +333,8 @@ def _confirmation_map(
         target_row = high_concepts.get(concept_id)
         if target_row is None:
             raise RuntimeError(
-                f"semantic confirmation target lacks high-confidence evidence: {concept_id}"
+                "semantic confirmation target lacks high-confidence evidence: "
+                f"{concept_id}"
             )
         if (
             target_row["classification"] != source_row["classification"]
@@ -296,8 +347,128 @@ def _confirmation_map(
         out[source_id] = {
             "confirmedConceptId": concept_id,
             "confirmationFile": confirmation_file or "<inline>",
+            "confirmationMethod": "explicit-reviewed-english-classification",
         }
     return out
+
+
+def _safe_syntactic_english(value: str) -> str:
+    """Normalize only review syntax; never rewrite food semantics.
+
+    This helper is never an automatic approval mechanism. It is called only for
+    source IDs present in the explicit syntactic-confirmation whitelist.
+    """
+    text = _text(value)
+    while True:
+        before = text
+        text = _SECTION_PREFIX.sub("", text, count=1).strip()
+        text = _MALFORMED_QUANTITY_PREFIX.sub("", text, count=1).strip()
+        text = _REVIEW_ONLY_ANNOTATION.sub("", text, count=1).strip()
+        text = _QUANTITY_ONLY_ANNOTATION.sub("", text, count=1).strip()
+        match = _QUALIFIED_QUANTITY_ANNOTATION.search(text)
+        if match:
+            qualifier = _text(match.group(1))
+            if qualifier:
+                text = (
+                    text[: match.start()]
+                    + f" ({qualifier})"
+                    + text[match.end() :]
+                ).strip()
+        if text == before:
+            return text
+
+
+def _syntactic_confirmation_map(
+    review_rows: list[dict[str, Any]],
+    source_ids: set[str] | None,
+    *,
+    confirmation_file: str = "",
+) -> dict[str, dict[str, str]]:
+    if not source_ids:
+        return {}
+
+    rows_by_source_id = _rows_by_source_id(review_rows)
+    high_concepts = _high_confidence_concepts(review_rows)
+    out: dict[str, dict[str, str]] = {}
+
+    for source_id in sorted(source_ids):
+        source_row = rows_by_source_id.get(source_id)
+        if source_row is None:
+            raise RuntimeError(
+                "syntactic confirmation source is not a reviewed identity: "
+                f"{source_id}"
+            )
+        if source_row["confidence"] == "high":
+            raise RuntimeError(
+                "syntactic confirmation is redundant for high-confidence source: "
+                f"{source_id}"
+            )
+        if source_row["classification"] not in _MERGEABLE_CLASSIFICATIONS:
+            raise RuntimeError(
+                "syntactic confirmation cannot merge classification "
+                f"{source_row['classification']!r}: {source_id}"
+            )
+
+        normalized_english = _safe_syntactic_english(source_row["english"])
+        if (
+            not normalized_english
+            or _norm(normalized_english) == _norm(source_row["english"])
+        ):
+            raise RuntimeError(
+                "syntactic confirmation does not remove approved syntax noise: "
+                f"{source_id}"
+            )
+
+        concept_id = _semantic_concept_id(
+            source_row["classification"], normalized_english
+        )
+        target_row = high_concepts.get(concept_id)
+        if target_row is None:
+            raise RuntimeError(
+                "syntactic confirmation target lacks exact high-confidence "
+                f"reviewed evidence: {source_id} -> {normalized_english!r}"
+            )
+        if (
+            target_row["classification"] != source_row["classification"]
+            or _norm(target_row["english"]) != _norm(normalized_english)
+        ):
+            raise RuntimeError(
+                f"syntactic confirmation target meaning differs for {source_id}"
+            )
+
+        out[source_id] = {
+            "confirmedConceptId": concept_id,
+            "confirmationFile": confirmation_file or "<inline-syntax>",
+            "confirmationMethod": "explicit-reviewed-syntactic-normalization",
+        }
+    return out
+
+
+def _confirmation_map(
+    review_rows: list[dict[str, Any]],
+    confirmation_payload: dict[str, Any] | None,
+    *,
+    confirmation_file: str = "",
+    syntax_confirmation_ids: set[str] | None = None,
+    syntax_confirmation_file: str = "",
+) -> tuple[dict[str, dict[str, str]], int, int]:
+    exact = _exact_confirmation_map(
+        review_rows,
+        confirmation_payload,
+        confirmation_file=confirmation_file,
+    )
+    syntactic = _syntactic_confirmation_map(
+        review_rows,
+        syntax_confirmation_ids,
+        confirmation_file=syntax_confirmation_file,
+    )
+    overlap = set(exact) & set(syntactic)
+    if overlap:
+        raise RuntimeError(
+            "same source identity appears in exact and syntactic confirmations: "
+            + ", ".join(sorted(overlap))
+        )
+    return {**exact, **syntactic}, len(exact), len(syntactic)
 
 
 def compile_semantic_concepts(
@@ -305,16 +476,20 @@ def compile_semantic_concepts(
     *,
     confirmation_payload: dict[str, Any] | None = None,
     confirmation_file: str = "",
+    syntax_confirmation_ids: set[str] | None = None,
+    syntax_confirmation_file: str = "",
 ) -> dict[str, Any]:
     """Compile review rows without promoting semantic equality to provider ID."""
     concepts: dict[str, dict[str, Any]] = {}
     source_identity_to_concept: dict[str, str] = {}
     review_rows = list(iter_review_rows(payloads))
     high_concepts = _high_confidence_concepts(review_rows)
-    confirmations = _confirmation_map(
+    confirmations, exact_count, syntactic_count = _confirmation_map(
         review_rows,
         confirmation_payload,
         confirmation_file=confirmation_file,
+        syntax_confirmation_ids=syntax_confirmation_ids,
+        syntax_confirmation_file=syntax_confirmation_file,
     )
 
     for row in review_rows:
@@ -366,12 +541,12 @@ def compile_semantic_concepts(
         )
         if (
             concept["classification"] != classification
-            or _norm(concept["canonicalEnglish"]) != _norm(english)
+            or _norm(concept["canonicalEnglish"]) != _norm(canonical_english)
         ):
             raise RuntimeError(
                 f"semantic concept collision for {concept_id}: "
                 f"{concept['canonicalEnglish']!r}/{concept['classification']} vs "
-                f"{english!r}/{classification}"
+                f"{canonical_english!r}/{classification}"
             )
 
         aliases: dict[str, list[str]] = concept["aliases"]
@@ -379,8 +554,9 @@ def compile_semantic_concepts(
         if source not in aliases[language]:
             aliases[language].append(source)
         aliases.setdefault("en", [])
-        if english not in aliases["en"]:
-            aliases["en"].append(english)
+        for english_alias in (canonical_english, english):
+            if english_alias not in aliases["en"]:
+                aliases["en"].append(english_alias)
 
         identity = {
             "ingredientId": source_id,
@@ -393,10 +569,12 @@ def compile_semantic_concepts(
         if notes := row.get("notes"):
             identity["notes"] = notes
         if confirmation is not None:
-            identity["semanticConfirmationFile"] = confirmation["confirmationFile"]
-            identity["semanticConfirmationMethod"] = (
-                "explicit-reviewed-english-classification"
-            )
+            identity["semanticConfirmationFile"] = confirmation[
+                "confirmationFile"
+            ]
+            identity["semanticConfirmationMethod"] = confirmation[
+                "confirmationMethod"
+            ]
         concept["sourceIdentities"].append(identity)
         source_identity_to_concept[source_id] = concept_id
 
@@ -440,6 +618,7 @@ def compile_semantic_concepts(
             "sourceLocalIdentityPreserved": True,
             "highConfidenceExactEnglishMerge": True,
             "explicitSemanticConfirmationMerge": True,
+            "explicitSyntacticConfirmationMerge": True,
             "mediumConfidenceCrossLanguageMerge": False,
             "mediumConfidenceAutomaticCrossLanguageMerge": False,
             "ambiguousCrossLanguageMerge": False,
@@ -453,8 +632,14 @@ def compile_semantic_concepts(
                 for row in ordered
             ),
             "confirmedSourceLabels": len(confirmations),
-            "needsSemanticConfirmationSourceLabels": needs_confirmation_sources,
-            "classificationCounts": dict(sorted(classification_counts.items())),
+            "exactConfirmedSourceLabels": exact_count,
+            "syntacticConfirmedSourceLabels": syntactic_count,
+            "needsSemanticConfirmationSourceLabels": (
+                needs_confirmation_sources
+            ),
+            "classificationCounts": dict(
+                sorted(classification_counts.items())
+            ),
             "confidenceCounts": dict(sorted(confidence_counts.items())),
         },
         "sourceIdentityToConcept": dict(
@@ -468,16 +653,26 @@ def compile_from_paths(
     paths: Iterable[Path],
     *,
     confirmation_path: Path | None = None,
+    syntax_confirmation_path: Path | None = None,
 ) -> dict[str, Any]:
     path_list = list(paths)
     payloads = [(path.name, _load_payload(path)) for path in path_list]
 
-    if confirmation_path is None and path_list:
+    review_dir: Path | None = None
+    if path_list:
         parents = {path.parent.resolve() for path in path_list}
         if len(parents) == 1:
-            candidate = next(iter(parents)) / CONFIRMATION_FILE.name
-            if candidate.exists():
-                confirmation_path = candidate
+            review_dir = next(iter(parents))
+
+    if confirmation_path is None and review_dir is not None:
+        candidate = review_dir / CONFIRMATION_FILE.name
+        if candidate.exists():
+            confirmation_path = candidate
+
+    if syntax_confirmation_path is None and review_dir is not None:
+        candidate = review_dir / SYNTAX_CONFIRMATION_FILE.name
+        if candidate.exists():
+            syntax_confirmation_path = candidate
 
     confirmation_payload = None
     confirmation_file = ""
@@ -485,10 +680,20 @@ def compile_from_paths(
         confirmation_payload = _load_confirmation_payload(confirmation_path)
         confirmation_file = confirmation_path.name
 
+    syntax_confirmation_ids: set[str] | None = None
+    syntax_confirmation_file = ""
+    if syntax_confirmation_path is not None:
+        syntax_confirmation_ids = _load_syntax_confirmation_ids(
+            syntax_confirmation_path
+        )
+        syntax_confirmation_file = syntax_confirmation_path.name
+
     return compile_semantic_concepts(
         payloads,
         confirmation_payload=confirmation_payload,
         confirmation_file=confirmation_file,
+        syntax_confirmation_ids=syntax_confirmation_ids,
+        syntax_confirmation_file=syntax_confirmation_file,
     )
 
 
@@ -507,9 +712,19 @@ def main() -> int:
         "--confirmations",
         default="",
         help=(
-            "Optional explicit semantic confirmation file. When omitted, "
+            "Optional exact semantic confirmation JSON. When omitted, "
             "release_catalog_semantic_confirmations.v1.json is loaded from "
             "the reviews directory when present."
+        ),
+    )
+    parser.add_argument(
+        "--syntax-confirmations",
+        default="",
+        help=(
+            "Optional source-ID whitelist for reviewed syntactic "
+            "normalizations. When omitted, "
+            "release_catalog_semantic_syntactic_confirmation_ids.v1.txt is "
+            "loaded from the reviews directory when present."
         ),
     )
     args = parser.parse_args()
@@ -522,7 +737,16 @@ def main() -> int:
     confirmation_path = (
         Path(args.confirmations).expanduser() if args.confirmations else None
     )
-    payload = compile_from_paths(paths, confirmation_path=confirmation_path)
+    syntax_confirmation_path = (
+        Path(args.syntax_confirmations).expanduser()
+        if args.syntax_confirmations
+        else None
+    )
+    payload = compile_from_paths(
+        paths,
+        confirmation_path=confirmation_path,
+        syntax_confirmation_path=syntax_confirmation_path,
+    )
     output = Path(args.output).expanduser()
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(
