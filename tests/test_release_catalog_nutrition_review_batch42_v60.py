@@ -4,6 +4,7 @@ from pathlib import Path
 import sys
 ROOT=Path(__file__).resolve().parents[1]; TOOLS=ROOT/'tools'; sys.path.insert(0,str(TOOLS))
 import classify_nutrition_review_queue_v60 as classifier
+import nutrition_review_history_v60 as history
 import nutrition_review_holds_v60 as holds
 import resolve_reviewed_release_catalog_nutrition_targets_v60 as resolver
 import snapshot_nutrition_review_checkpoint_v60 as cp
@@ -21,7 +22,7 @@ class Batch42ExplicitReviews(unittest.TestCase):
  def setUpClass(cls):
   cls.doc=json.loads(SOURCE.read_text()); cls.items=cls.doc['items']
   cls.fixture=json.loads(FIXTURE.read_text())
-  cls.checkpoint=cp.build_checkpoint(TOOLS)
+  cls.checkpoint=history.historical_checkpoint(cp.build_checkpoint(TOOLS))
   cls.records=[r for r in cls.checkpoint['recordedBindings'] if r['reviewFile']==SOURCE.name]
   cls.targets={r['reviewTargetId']:r for r in cls.fixture['targets']}
   cls.sources={r['reviewTargetId']:{'reviewTargetId':r['reviewTargetId'],'candidates':[r['candidate']]} for r in cls.fixture['sourceCandidates']}
