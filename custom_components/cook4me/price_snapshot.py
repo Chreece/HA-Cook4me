@@ -45,7 +45,8 @@ def snapshot_observations(*, barcode='', category='', country='', currency='', u
         if barcode:
             if row.get('barcode') != barcode:
                 continue
-        elif category not in row.get('categories', []):
+        elif (category not in row.get('categories', []) or category in row.get('categoryExclusions', [])
+              or not category_observation_allowed(row, category)):
             continue
         try:
             observed = datetime.fromisoformat(row['date']).date()
@@ -60,3 +61,12 @@ def snapshot_observations(*, barcode='', category='', country='', currency='', u
         result.append({**deepcopy(row), 'category': category})
     primary = [row for row in result if row.get('source') not in {'retail_snapshot', 'utility_snapshot'}]
     return primary or result
+
+
+def category_observation_allowed(row, category):
+    """A seasoning mix was incorrectly tagged as chicken meat upstream.
+
+    Keep exact barcode lookup usable; this exclusion is only for generic meat
+    estimates, including refreshed observations from Open Prices.
+    """
+    return not (category == 'en:chickens' and str(row.get('id') or row.get('observationId')) == '307878')

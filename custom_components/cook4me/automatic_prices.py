@@ -16,7 +16,7 @@ from .inventory import inventory_identity, convert_amount
 from .recipe_cost_cache import recipe_cost_cache_for_bridge
 from .price_units import price_ingredient
 from .price_measurements import price_options
-from .price_snapshot import snapshot_observations
+from .price_snapshot import snapshot_observations, category_observation_allowed
 from .price_identity import pricing_name, is_cost_heading, reviewed_recipe_ingredient
 
 # Exact English catalog names only. Prepared/mixed foods are never collapsed into
@@ -588,6 +588,18 @@ for tag, kind, names in (
         _CATEGORIES[name] = (tag, kind)
 
 
+# v90: distinct dry pasta, raw roots, and cooked-bean references.
+for tag, kind, names in (
+    ('cook4me:wholegrain-pasta', 'REFERENCE', 'whole-grain pasta|wholegrain pasta|whole-wheat pasta'),
+    ('en:noodles', 'PRODUCT', 'wheat pasta|wheat noodles'),
+    ('cook4me:raw-beetroot', 'REFERENCE', 'raw beetroot|raw red beetroot'),
+    ('cook4me:cooked-flageolets', 'REFERENCE', 'cooked flageolet beans|canned flageolet beans'),
+    ('cook4me:raw-poultry-fillet', 'REFERENCE', 'poultry fillet'),
+):
+    for name in names.split('|'):
+        _CATEGORIES[name] = (tag, kind)
+
+
 def country_currency(country):
     return next(iter(COUNTRY_CURRENCIES.get(country, [])), '')
 
@@ -685,7 +697,11 @@ async def _observations(bridge, *, barcode='', category='', category_type='CATEG
             bridge._price_queries[key] = (time.monotonic() + 3600, task, time.monotonic())
             while len(bridge._price_queries) > 500:
                 bridge._price_queries.pop(next(iter(bridge._price_queries)))
-    return deepcopy(await asyncio.shield(task))
+    result = deepcopy(await asyncio.shield(task))
+    if category and not barcode:
+        result['items'] = [row for row in result.get('items', []) if category_observation_allowed(row, category)]
+        result['usableCount'] = len(result['items'])
+    return result
 
 
 async def _store_observation(store, identity, row, *, generic=False):
@@ -889,6 +905,7 @@ async def recipe_price(bridge, recipe, catalog, *, refresh_since=None):
                 checkedAt=datetime.now(timezone.utc).isoformat(), refreshed=refresh_since is not None,
                 refreshPolicy={'observationsSeconds': 86400, 'missSeconds': 3600, 'failureSeconds': 60,
                                'onDemand': True, 'maximumObservationDays': 180})
+    _mark_food_coverage(cost, recipe)
     return cost
 
 
@@ -919,13 +936,24 @@ async def offline_recipe_price(bridge, recipe, catalog):
                     row = max(rows, key=lambda row: row.get('date', ''))
                     store._data['references']['preview:' + identity + ':' + option['unit']] = {
                         **row, 'identity': identity, 'source': row['source'] if row.get('source') in {'retail_snapshot', 'utility_snapshot'} else 'open_prices_category',
-                        'observationId': row['id'], 'updatedAt': datetime.now(timezone.utc).isoformat()}
-    from .costing import calculate_recipe_cost
-    cost = calculate_recipe_cost(recipe, bridge.recipe_hub.profile.get('houseIngredients') or [], store,
+                        'observationId': row['id'], 'updatedAt': row.get('date', '')}
+    cache = await recipe_cost_cache_for_bridge(bridge)
+    cost = await cache.async_cost(recipe, bridge.recipe_hub.profile.get('houseIngredients') or [], store,
         country=settings['country'], currency=settings['currency'])
     for row in cost.get('ingredients', []):
         if row.get('coverage', 0) < 1:
             row['priceStatus'] = 'recipe_amount_unknown' if row.get('reason') == 'recipe_amount_unknown' else 'offline_price_missing'
     cost.update(settings=settings, offlinePreview=True, priceLookupPending=False,
                 checkedAt=datetime.now(timezone.utc).isoformat())
+    _mark_food_coverage(cost, recipe)
     return cost
+
+
+def _mark_food_coverage(cost, recipe):
+    water_ids = {inventory_identity(item) for item in recipe.get('ingredients', [])
+                 if pricing_name(item) in {'water', 'tap water'}}
+    foods = [row for row in cost.get('ingredients', []) if row.get('identity') not in water_ids]
+    cost['foodIngredientCount'] = len(foods)
+    cost['pricedFoodIngredientCount'] = sum(row.get('coverage', 0) > 0 for row in foods)
+    cost['waterOnlyEstimate'] = bool(foods and not cost['pricedFoodIngredientCount']
+                                    and any(row.get('coverage', 0) > 0 for row in cost.get('ingredients', [])))

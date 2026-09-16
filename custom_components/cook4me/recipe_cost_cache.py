@@ -48,7 +48,7 @@ def _recipe_price_shape(recipe: Any) -> dict[str, Any]:
         "servings": recipe.get("servings") or recipe.get("groupSize"),
         "yield": deepcopy(recipe.get("yield")) if isinstance(recipe.get("yield"), dict) else None,
         "ingredients": ingredients,
-        "quantityEvidenceVersion": 89,
+        "quantityEvidenceVersion": 90,
     }
 
 
@@ -200,3 +200,16 @@ async def recipe_cost_cache_for_bridge(bridge: Any) -> Cook4MeRecipeCostCache:
         await cache.async_load()
         bridge._recipe_cost_cache_v1 = cache
     return cache
+
+
+async def preview_cache_token(bridge: Any) -> str:
+    """Validate browser previews without recalculating individual recipes."""
+    from .costs import cost_store_for_bridge
+    store = await cost_store_for_bridge(bridge)
+    return _canonical_hash({
+        "evidenceVersion": 90,
+        "date": datetime.now(timezone.utc).date().isoformat(),
+        "settings": store.settings,
+        "inventory": bridge.recipe_hub.profile.get("houseIngredients") or [],
+        "references": store._data.get("references", {}),
+    })

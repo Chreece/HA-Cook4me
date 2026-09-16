@@ -143,7 +143,7 @@ class Cook4MeCostStore:
         self._data: dict[str, Any] = {
             "settings": {"currency": "", "country": "", "autoGlobalPrices": True},
             "references": {},
-            "priceEvidenceRevision": 87,
+            "priceEvidenceRevision": 90,
         }
 
     async def async_load(self) -> None:
@@ -165,7 +165,7 @@ class Cook4MeCostStore:
             }
         # Rebuild external estimates under the stricter food/package rules.
         # User-entered prices and exact purchase history remain untouched.
-        if isinstance(saved, dict) and saved.get("priceEvidenceRevision") != 87:
+        if isinstance(saved, dict) and saved.get("priceEvidenceRevision") != 90:
             self._data["references"] = {key: ref for key, ref in self._data["references"].items()
                 if not str(ref.get("source", "")).startswith("open_prices") and ref.get("source") not in {"retail_snapshot", "utility_snapshot"}}
             await self._save()

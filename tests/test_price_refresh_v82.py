@@ -44,7 +44,7 @@ class PriceRefreshTests(unittest.IsolatedAsyncioTestCase):
         results, errors = [], []
         connection = runtime.NS(send_result=lambda _id, value: results.append(value))
         authorize = unittest.mock.Mock(return_value=self.bridge)
-        ns = {'_authorized': authorize, 'v11': runtime.NS(_ingredient_catalog=AsyncMock(return_value={'items': [self.ingredient]})),
+        ns = {'preview_cache_token': self.cache.preview_cache_token, '_authorized': authorize, 'v11': runtime.NS(_ingredient_catalog=AsyncMock(return_value={'items': [self.ingredient]})),
               'asyncio': asyncio, 'time': time, 'recipe_price': self.prices.recipe_price,
               'legacy': runtime.NS(_send_error=lambda *args: errors.append(args))}
         runtime.functions('websocket_v34.py', {'ws_recipe_cost_refresh'}, ns)
@@ -60,7 +60,7 @@ class PriceRefreshTests(unittest.IsolatedAsyncioTestCase):
     async def test_local_catalog_id_product_price_is_accepted(self):
         results, errors = [], []
         ingredient = {'id': 'local:en:rice', 'ingredientId': 'local:en:rice', 'name': 'Rice', 'canonicalName': 'Rice'}
-        ns = {'_authorized': lambda *args: self.bridge,
+        ns = {'preview_cache_token': self.cache.preview_cache_token, '_authorized': lambda *args: self.bridge,
               'v11': runtime.NS(_ingredient_catalog=AsyncMock(return_value={'items': [ingredient]})),
               'inventory_identity': self.prices.inventory_identity, 'product_price': self.prices.product_price,
               'legacy': runtime.NS(_send_error=lambda *args: errors.append(args))}

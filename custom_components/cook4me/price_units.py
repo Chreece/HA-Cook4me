@@ -10,6 +10,8 @@ from copy import deepcopy
 # Verified against unit labels in the bundled multilingual recipe catalog.
 _UNITS = {'UNIT_27': 'g', 'UNIT_54': 'mg', 'UNIT_56': 'kg', 'UNIT_35': 'ml',
           'UNIT_14': 'cl', 'UNIT_22': 'dl', 'UNIT_32': 'l', 'UNIT_41': 'pcs'}
+_EMBEDDED_SPOONS = {'tablespoon of olive oil', 'tablespoon of sesame oil',
+                    'tablespoon of soy sauce', 'tablespoon of mirin'}
 _COUNT = {'piece', 'pieces', 'unit', 'units', 'unit(s)'}
 
 
@@ -21,6 +23,10 @@ def price_ingredient(item):
     target = result
     if result.get('quantity') is None and isinstance(result.get('weight'), dict):
         target = result['weight']
+    name = str(result.get('canonicalName') or result.get('name') or '').strip().casefold()
+    if not target.get('unitKey') and not target.get('unit') and name in _EMBEDDED_SPOONS:
+        target['unitKey'] = 'UNIT_12'
+        target['unit'] = 'tbsp'
     key = target.get('unitKey')
     if key in _UNITS:
         target['unit'] = _UNITS[key]

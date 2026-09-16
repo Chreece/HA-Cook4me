@@ -14,6 +14,7 @@ from .automatic_prices import country_currency, price_settings, product_price, r
 from .barcode import normalize_barcode
 from .costs import _country, _currency, cost_store_for_bridge
 from .inventory import inventory_identity
+from .recipe_cost_cache import preview_cache_token
 
 
 @websocket_api.websocket_command({vol.Required('type'): 'cook4me/v34/price_settings', vol.Required('entry_id'): str,
@@ -32,7 +33,7 @@ async def ws_price_settings(hass, connection, msg):
             store = await cost_store_for_bridge(bridge)
             settings = await store.async_set_settings(country=country, currency=currency,
                 auto_global_prices=msg.get('auto_global_prices', settings['autoGlobalPrices']))
-        connection.send_result(msg['id'], {'settings': settings})
+        connection.send_result(msg['id'], {'settings': settings, 'priceCacheToken': await preview_cache_token(bridge)})
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
 
@@ -57,6 +58,7 @@ async def ws_product_price(hass, connection, msg):
                 raise ValueError('Choose an ingredient from the Cook4Me catalog')
             ingredient = {**ingredient, 'key': ingredient.get('key') or ingredient.get('ingredientId') or ingredient.get('id')}
         result = await product_price(bridge, barcode=barcode, ingredient=ingredient, quantity=msg.get('quantity'), unit=msg.get('unit', ''))
+        result['priceCacheToken'] = await preview_cache_token(bridge)
         connection.send_result(msg['id'], result)
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
@@ -83,6 +85,7 @@ async def ws_recipe_cost(hass, connection, msg):
         else:
             catalog = await v11._ingredient_catalog(hass, bridge, 'en', refresh=False)
             result = await recipe_price(bridge, msg['recipe'], catalog.get('items', []))
+        result['priceCacheToken'] = await preview_cache_token(bridge)
         connection.send_result(msg['id'], result)
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
@@ -101,7 +104,7 @@ async def ws_recipe_cost_refresh(hass, connection, msg):
         since = time.monotonic()
         costs = await asyncio.gather(*(recipe_price(bridge, recipe, catalog.get('items', []),
                                       refresh_since=since) for recipe in recipes))
-        connection.send_result(msg['id'], {'costs': costs})
+        connection.send_result(msg['id'], {'costs': costs, 'priceCacheToken': await preview_cache_token(bridge)})
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
 

@@ -1867,6 +1867,146 @@
       "confidence": "external_observation",
       "barcode": "",
       "note": "Whole raw coconut sold per piece. Gram costs use the disclosed USDA edible-meat yield estimate, not the retail shell weight; not dried coconut. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1447524-v90-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1447524/dmbio-trockenfruechte-rosinen",
+      "productName": "dmBio raisins",
+      "amount": 2.95,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany",
+      "categories": [
+        "en:raisins"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Dried grapes, not fresh grapes. Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-30958-v90-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/en-DE/30958-kitchin-organic-durum-whole-wheat-semolina-pasta",
+      "productName": "KITCHIN organic whole-wheat fusilli",
+      "amount": 0.85,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "cook4me:wholegrain-pasta"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Dry whole-wheat pasta reference; regular price excludes member discounts. Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "gourmet-24235-v90-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.gourmet-versand.com/de/article24235/flageolets-bohnenkerne-gegart-800-g.html",
+      "productName": "Avril cooked flageolet beans",
+      "amount": 4.12,
+      "currency": "EUR",
+      "basisQuantity": 530,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "GOURMET VERSAND Germany",
+      "categories": [
+        "cook4me:cooked-flageolets"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "800 g can, 530 g drained beans. Price uses drained edible weight. Cooked beans, not dried beans. Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-90417-v90-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/90417-watzkendorf-bio-rote-bete-wiegeware",
+      "productName": "Watzkendorf organic raw beetroot",
+      "amount": 3.79,
+      "currency": "EUR",
+      "basisQuantity": 1000,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "cook4me:raw-beetroot"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular weighed price excludes the 10% personal discount. Raw beetroot, not cooked vacuum-packed beetroot. Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "ludwig-topinambur-v90-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://ludwigs.shop/produkt/topinambur/",
+      "productName": "Ludwig fresh Jerusalem artichoke",
+      "amount": 0.69,
+      "currency": "EUR",
+      "basisQuantity": 100,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Ludwig Obst- und Gemüsebau · Griesheim, Germany",
+      "categories": [
+        "en:jerusalem-artichoke"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh tubers, not powder, syrup or ordinary artichoke. Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "ludwig-pastinake-v90-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://ludwigs.shop/product-category/gemuese/",
+      "productName": "Ludwig fresh parsnips",
+      "amount": 1.99,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Ludwig Obst- und Gemüsebau · Griesheim, Germany",
+      "categories": [
+        "en:parsnip"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Pastinake listing: fresh roots, 500 g. Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "aldi-211427-v90-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/meine-metzgerei-haehnchen-brustfilet-600-g-000000000000211427",
+      "productName": "MEINE METZGEREI raw chicken breast fillet",
+      "amount": 6.79,
+      "currency": "EUR",
+      "basisQuantity": 600,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany",
+      "categories": [
+        "cook4me:raw-poultry-fillet"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named raw chicken-breast benchmark for poultry fillets. Species and cut can affect price; not prepared slices, bone-in pieces or a whole bird. Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
     }
   ]
 }

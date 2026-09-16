@@ -103,13 +103,16 @@ class AutomaticPriceTests(unittest.IsolatedAsyncioTestCase):
         results, errors = [], []
         connection = runtime.NS(send_result=lambda _id, result: results.append(result),
                                 send_error=lambda _id, code, error: errors.append(error))
-        ns = {'_authorized': lambda *args: self.bridge, 'price_settings': self.prices.price_settings,
+        ns = {'preview_cache_token': self.cache.preview_cache_token,
+              '_authorized': lambda *args: self.bridge, 'price_settings': self.prices.price_settings,
               'country_currency': self.prices.country_currency, 'validate_market': self.prices.validate_market,
               '_country': self.costs._country, '_currency': self.costs._currency,
               'cost_store_for_bridge': self.costs.cost_store_for_bridge,
               'legacy': runtime.NS(_send_error=lambda c,m,e:c.send_error(m['id'], 'error', str(e)))}
         runtime.functions('websocket_v34.py', {'ws_price_settings'}, ns)
         await ns['ws_price_settings'](self.hass, connection, {'id': 1, 'country': 'CA', 'auto_global_prices': False})
+        self.assertFalse(errors)
+        self.assertRegex(results[0]['priceCacheToken'], r'^[0-9a-f]{64}$')
         self.assertEqual(results[0]['settings'], {'country': 'CA', 'currency': 'CAD', 'autoGlobalPrices': False})
         await ns['ws_price_settings'](self.hass, connection, {'id': 2, 'country': 'invalid'})
         self.assertTrue(errors)

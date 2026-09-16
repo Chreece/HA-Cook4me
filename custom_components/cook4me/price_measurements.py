@@ -21,7 +21,7 @@ _COUNTS = {'egg', 'eggs', 'onion', 'onions', 'carrot', 'carrots', 'tomato', 'tom
            'cucumber', 'cucumbers', 'leek', 'leeks', 'white potatoes', 'potato', 'potatoes',
            'lemon', 'lemons', 'lime', 'limes', 'orange', 'oranges', 'shallot', 'shallots',
            'welsh onion', 'spring onion', 'spring onions', 'green onion', 'green onions',
-           'banana', 'bananas', 'pear', 'pears', 'plum', 'plums', 'strawberry', 'strawberries',
+           'raw beetroot', 'parsnip', 'parsnips', 'banana', 'bananas', 'pear', 'pears', 'plum', 'plums', 'strawberry', 'strawberries',
            'radish', 'radishes', 'date', 'dates', 'dried dates', 'pitted dates', 'medjool date', 'medjool dates'}
 
 

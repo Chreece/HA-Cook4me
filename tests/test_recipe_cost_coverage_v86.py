@@ -139,6 +139,7 @@ class RecipeCostCoverageTests(unittest.IsolatedAsyncioTestCase):
             variant_id = next(iter(payload['_runtimeRecipeByVariant']))
         results=[];errors=[]
         ns={'__name__':previous.runtime.PREFIX+'.websocket_v34','__package__':previous.runtime.PREFIX,
+            'preview_cache_token':self.cache.preview_cache_token,
             '_authorized':lambda *args:self.bridge,'_country':self.costs._country,
             'offline_recipe_price':self.prices.offline_recipe_price,
             'legacy':previous.runtime.NS(_send_error=lambda *args:errors.append(str(args[-1])))}
@@ -176,7 +177,7 @@ class RecipeCostCoverageTests(unittest.IsolatedAsyncioTestCase):
         fresh=self.costs.Cook4MeCostStore(self.hass,'test');fresh._store.saved=saved
         await fresh.async_load()
         self.assertEqual({r['source'] for r in fresh._data['references'].values()},{'manual','purchase','purchase_reference'})
-        self.assertEqual(fresh._store.saved['priceEvidenceRevision'],87)
+        self.assertEqual(fresh._store.saved['priceEvidenceRevision'],90)
         saved=fresh._store.saved
         fresh._loaded=False;await fresh.async_load();self.assertEqual(fresh._data,saved)
 
