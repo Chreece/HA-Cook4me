@@ -35,6 +35,7 @@ jobs:
         run: |
           set -Eeuo pipefail
           python tools/apply_safe_standalone_semantic_batch_v60.py
+          python tools/make_semantic_confirmation_regressions_count_driven_v60.py
           git diff --check
 
       - name: Run semantic regressions
@@ -146,6 +147,7 @@ jobs:
           git add \
             tools/release_catalog_semantic_confirmations.v1.json \
             tools/release_catalog_semantic_standalone_dispositions.v1.json \
+            tests/test_compile_release_catalog_semantics_v60.py \
             tests/test_semantic_standalone_dispositions_v60.py
           git diff --cached --check
           git commit -m 'Merge first safe standalone ingredient semantics v60'
