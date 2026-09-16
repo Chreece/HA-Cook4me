@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-semantic-similarity-compact-review-v60",
+  "policy": {
+    "automaticApproval": false,
+    "manualSemanticReviewRequired": true,
+    "candidateSearchIsIdentityProof": false
+  },
+  "summary": {
+    "candidateCount": 19
+  },
+  "items": [
+    {
+      "sourceIngredientId": "local:ro:84c40996b17c62040229",
+      "language": "ro",
+      "source": "Mușchi de porc, tocat (sau bacon)",
+      "english": "Pork loin, chopped (or bacon)",
+      "classification": "food",
+      "bestConceptId": "concept:food:33ce6e5c36aafb50555d",
+      "bestCanonicalEnglish": "Pork loin, chopped (or diced bacon)",
+      "bestTokenJaccard": 0.8333,
+      "runnerUpTokenJaccard": 0.6667,
+      "scoreGap": 0.1666
+    },
+    {
+      "sourceIngredientId": "local:sk:445e5aca7cbdcdfeb252",
+      "language": "sk",
+      "source": "Bravčová rolka, nasekaná (alebo slanina na špikovanie)",
+      "english": "Pork roll, chopped (or larding bacon)",
+      "classification": "food",
+      "bestConceptId": "concept:food:a7e0011a9490d0f1ee97",
+      "bestCanonicalEnglish": "Pork, chopped (or larding bacon)",
+      "bestTokenJaccard": 0.8333,
+      "runnerUpTokenJaccard": 0.5714,
+      "scoreGap": 0.2619
+    },
+    {
+      "sourceIngredientId": "local:uk:a6bb10f9d16236865b30",
+      "language": "uk",
+      "source": "осімінога (попередньо готувати 10 хвилин у чаші)",
+      "english": "Octopus (pre-cook for 10 minutes in the bowl; source typo)",
+      "classification": "food",
+      "bestConceptId": "concept:food:ae5b9bf3dec2cdf70252",
+      "bestCanonicalEnglish": "Octopus (pre-cook for 10 minutes in the bowl)",
+      "bestTokenJaccard": 0.8182,
+      "runnerUpTokenJaccard": 0.0,
+      "scoreGap": 0.8182
+    },
+    {
+      "sourceIngredientId": "local:bg:e35ac76229b5c78378c4",
+      "language": "bg",
+      "source": "Филизи нарязан кориандър",
+      "english": "Sprigs of chopped coriander",
+      "classification": "food",
+      "bestConceptId": "concept:food:474736156e14c2d92bac",
+      "bestCanonicalEnglish": "Chopped sprigs of fresh coriander",
+      "bestTokenJaccard": 0.8,
+      "runnerUpTokenJaccard": 0.6,
+      "scoreGap": 0.2
+    },
+    {
+      "sourceIngredientId": "local:ja:ae2da194e218ec8ad4c3",
+      "language": "ja",
+      "source": "A-きび砂糖(砂糖でも可)",
+      "english": "A - Millet sugar (regular sugar may also be used)",
+      "classification": "food",
+      "bestConceptId": "concept:food:c8d7d41d59cc291c0ecc",
+      "bestCanonicalEnglish": "A - Granulated sugar (regular sugar may also be used)",
+      "bestTokenJaccard": 0.7778,
+      "runnerUpTokenJaccard": 0.0,
+      "scoreGap": 0.7778
+    },
+    {
+      "sourceIngredientId": "local:ja:19b86c6fe08208b7291b",
+      "language": "ja",
+      "source": "A-クリームチーズ(常温に戻す",
+      "english": "A - Cream cheese (bring to room temperature)",
+      "classification": "food",
+      "bestConceptId": "concept:food:35f3eb4d93302e449378",
+      "bestCanonicalEnglish": "A- cream cheese, brought to room temperature",
+      "bestTokenJaccard": 0.75,
+      "runnerUpTokenJaccard": 0.5556,
+      "scoreGap": 0.1944
+    },
+    {
+      "sourceIngredientId": "local:ja:273c360223e6802a6cac",
+      "language": "ja",
+      "source": "A-クリームチーズ(常温戻す",
+      "english": "A - Cream cheese (bring to room temperature)",
+      "classification": "food",
+      "bestConceptId": "concept:food:35f3eb4d93302e449378",
+      "bestCanonicalEnglish": "A- cream cheese, brought to room temperature",
+      "bestTokenJaccard": 0.75,
+      "runnerUpTokenJaccard": 0.5556,
+      "scoreGap": 0.1944
+    },
+    {
+      "sourceIngredientId": "local:ko:aa3c73bdcee31bbc5fd8",
+      "language": "ko",
+      "source": "진간장 (쯔유)",
+      "english": "Dark soy sauce (tsuyu)",
+      "classification": "food",
+      "bestConceptId": "concept:food:ecd43074be82c091def2",
+      "bestCanonicalEnglish": "Dark soy sauce",
+      "bestTokenJaccard": 0.75,
+      "runnerUpTokenJaccard": 0.5,
+      "scoreGap": 0.25
+    },
+    {
+      "sourceIngredientId": "local:ja:325b3926b9889ae47d9c",
+      "language": "ja",
+      "source": "乾燥椎茸スライス(表示通り戻",
+      "english": "Dried sliced shiitake mushrooms, rehydrated as directed",
+      "classification": "food",
+      "bestConceptId": "concept:food:cac7966891ffac4a70d2",
+      "bestCanonicalEnglish": "Small dried shiitake mushrooms, rehydrated as directed",
+      "bestTokenJaccard": 0.75,
+      "runnerUpTokenJaccard": 0.5,
+      "scoreGap": 0.25
+    },
+    {
+      "sourceIngredientId": "local:sk:dbf2def148e13391a2f3",
+      "language": "sk",
+      "source": "Jednoliata smotana na šľahanie",
+      "english": "Full-fat whipping cream",
+      "classification": "food",
+      "bestConceptId": "concept:food:6309c668f68dbb3c6523",
+      "bestCanonicalEnglish": "Full-fat cream",
+      "bestTokenJaccard": 0.75,
+      "runnerUpTokenJaccard": 0.6,
+      "scoreGap": 0.15
+    },
+    {
+      "sourceIngredientId": "local:uk:01545719973c1f64b25f",
+      "language": "uk",
+      "source": "гр оцту (не бальзамічного)",
+      "english": "g vinegar (not balsamic)",
+      "classification": "food",
+      "bestConceptId": "concept:food:893dfa946d4f4c0212c2",
+      "bestCanonicalEnglish": "Vinegar (not balsamic)",
+      "bestTokenJaccard": 0.75,
+      "runnerUpTokenJaccard": 0.5,
+      "scoreGap": 0.25
+    },
+    {
+      "sourceIngredientId": "local:zh:e6619b1fbe0471126133",
+      "language": "zh",
+      "source": "中濃醬料",
+      "english": "Medium-thick sauce",
+      "classification": "food",
+      "bestConceptId": "concept:food:78f12ab3bec23eb3d649",
+      "bestCanonicalEnglish": "Japanese medium-thick sauce",
+      "bestTokenJaccard": 0.75,
+      "runnerUpTokenJaccard": 0.0,
+      "scoreGap": 0.75
+    },
+    {
+      "sourceIngredientId": "local:uk:3a60f41add0d76e4b750",
+      "language": "uk",
+      "source": "фаршу із стейка білої риби",
+      "english": "Minced white-fish steak",
+      "classification": "food",
+      "bestConceptId": "concept:food:898785471246aeebc641",
+      "bestCanonicalEnglish": "Minced white fish",
+      "bestTokenJaccard": 0.75,
+      "runnerUpTokenJaccard": 0.5,
+      "scoreGap": 0.25
+    },
+    {
+      "sourceIngredientId": "local:uk:e77be72c3a96cb5f20c5",
+      "language": "uk",
+      "source": "фаршу зі стейка білої риби",
+      "english": "Minced white-fish steak",
+      "classification": "food",
+      "bestConceptId": "concept:food:898785471246aeebc641",
+      "bestCanonicalEnglish": "Minced white fish",
+      "bestTokenJaccard": 0.75,
+      "runnerUpTokenJaccard": 0.5,
+      "scoreGap": 0.25
+    },
+    {
+      "sourceIngredientId": "local:zh:bb2bd75d09cbf88a5720",
+      "language": "zh",
+      "source": "紅薑(調味用) 少許",
+      "english": "Red pickled ginger (for seasoning), a little",
+      "classification": "food",
+      "bestConceptId": "concept:food:bd8a4ba810181bebb7ac",
+      "bestCanonicalEnglish": "Red pickled ginger, a little for finishing",
+      "bestTokenJaccard": 0.75,
+      "runnerUpTokenJaccard": 0.5,
+      "scoreGap": 0.25
+    },
+    {
+      "sourceIngredientId": "local:ko:2cefa14e4084e3715a38",
+      "language": "ko",
+      "source": "간장 (고명)",
+      "english": "Soy sauce (garnish/seasoning)",
+      "classification": "food",
+      "bestConceptId": "concept:food:8d81eeb437fe51caa8ca",
+      "bestCanonicalEnglish": "Soy sauce (seasoning)",
+      "bestTokenJaccard": 0.75,
+      "runnerUpTokenJaccard": 0.5,
+      "scoreGap": 0.25
+    },
+    {
+      "sourceIngredientId": "local:zh:d6a88d18c712517f6f4c",
+      "language": "zh",
+      "source": "水 (有些使用在吉利丁)",
+      "english": "Water (some for gelatin)",
+      "classification": "food",
+      "bestConceptId": "concept:food:24b80a3cc9898f2fda64",
+      "bestCanonicalEnglish": "Water (for gelatin)",
+      "bestTokenJaccard": 0.75,
+      "runnerUpTokenJaccard": 0.6,
+      "scoreGap": 0.15
+    },
+    {
+      "sourceIngredientId": "local:uk:7fa976aed35498c38072",
+      "language": "uk",
+      "source": "кристалізованих лимони (без м'якоті, тонко нарізаних)",
+      "english": "Candied lemons (without flesh, thinly sliced)",
+      "classification": "food",
+      "bestConceptId": "concept:food:d32cf5542653f0205212",
+      "bestCanonicalEnglish": "Candied lemon (without flesh, thinly sliced)",
+      "bestTokenJaccard": 0.7143,
+      "runnerUpTokenJaccard": 0.0,
+      "scoreGap": 0.7143
+    },
+    {
+      "sourceIngredientId": "local:uk:5b0990cf1734d6ae91ac",
+      "language": "uk",
+      "source": "підсоленого вершкового масла, розтопленого з шоколаом",
+      "english": "Salted butter melted with chocolate (source typo)",
+      "classification": "food",
+      "bestConceptId": "concept:food:f1996cccd060ca556787",
+      "bestCanonicalEnglish": "Salted butter, melted with chocolate",
+      "bestTokenJaccard": 0.7143,
+      "runnerUpTokenJaccard": 0.5,
+      "scoreGap": 0.2143
+    }
+  ]
+}
