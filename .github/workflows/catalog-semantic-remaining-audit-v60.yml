@@ -28,7 +28,8 @@ jobs:
           set -Eeuo pipefail
           python tools/audit_remaining_semantic_ingredients_v60.py \
             --review-root tools \
-            --output tools/remaining_semantic_ingredient_audit_v60.json
+            --output tools/remaining_semantic_ingredient_audit_v60.json \
+            --exact-output tools/remaining_semantic_exact_loose_v60.json
           python - <<'PY'
           import json
           from pathlib import Path
@@ -41,6 +42,13 @@ jobs:
               raise SystemExit('audit must not approve semantic mappings')
           if payload.get('policy', {}).get('providerIdentityAssigned') is not False:
               raise SystemExit('audit must not assign provider identities')
+          exact = json.loads(
+              Path('tools/remaining_semantic_exact_loose_v60.json').read_text(encoding='utf-8')
+          )
+          if int(exact.get('summary', {}).get('candidateCount') or 0) != 11:
+              raise SystemExit('unexpected exact-loose candidate count')
+          if exact.get('policy', {}).get('automaticApproval') is not False:
+              raise SystemExit('exact-loose lane must remain review-only')
           print(json.dumps(summary, ensure_ascii=False, indent=2))
           PY
       - name: Commit exact audit report
@@ -48,10 +56,12 @@ jobs:
           set -Eeuo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/remaining_semantic_ingredient_audit_v60.json
+          git add \
+            tools/remaining_semantic_ingredient_audit_v60.json \
+            tools/remaining_semantic_exact_loose_v60.json
           git diff --cached --check
           if git diff --cached --quiet; then
-            echo 'audit report already current'
+            echo 'audit reports already current'
             exit 0
           fi
           git commit -m "Audit remaining unresolved ingredient semantics v60"
@@ -60,6 +70,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: remaining-semantic-ingredient-audit-v60-${{ github.sha }}
-          path: tools/remaining_semantic_ingredient_audit_v60.json
+          path: |
+            tools/remaining_semantic_ingredient_audit_v60.json
+            tools/remaining_semantic_exact_loose_v60.json
           if-no-files-found: error
           retention-days: 7
