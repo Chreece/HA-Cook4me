@@ -33,6 +33,9 @@ SYNTAX_CONFIRMATION_FILE = (
 STANDALONE_DISPOSITION_FILE = (
     TOOLS / "release_catalog_semantic_standalone_dispositions.v1.json"
 )
+STANDALONE_EQUIVALENCE_FILE = (
+    TOOLS / "release_catalog_semantic_standalone_equivalences.v1.json"
+)
 _STANDALONE_KIND = "cook4me-semantic-ingredient-standalone-dispositions"
 _STANDALONE_POLICY = {
     "providerIdentityAssigned": False,
@@ -40,6 +43,18 @@ _STANDALONE_POLICY = {
     "crossIdentityMergeAllowed": False,
     "reviewDispositionOnly": True,
     "exactReviewedEnglishAndClassificationRequired": True,
+    "safetyEligibilityGranted": False,
+}
+
+_STANDALONE_EQUIVALENCE_KIND = (
+    "cook4me-semantic-ingredient-standalone-equivalences"
+)
+_STANDALONE_EQUIVALENCE_POLICY = {
+    "providerIdentityAssigned": False,
+    "sourceLocalIdentityPreserved": True,
+    "targetRemainsStandalone": True,
+    "exactReviewedEnglishAndClassificationRequired": True,
+    "manualReviewRequired": True,
     "safetyEligibilityGranted": False,
 }
 
@@ -235,6 +250,29 @@ def _load_standalone_payload(path: Path) -> dict[str, Any]:
     items = value.get("items")
     if not isinstance(items, list):
         raise RuntimeError(f"{path}: standalone disposition items must be a list")
+    return value
+
+
+def _load_standalone_equivalence_payload(path: Path) -> dict[str, Any]:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise RuntimeError(f"{path}: expected JSON object")
+    if value.get("schemaVersion") != 1:
+        raise RuntimeError(f"{path}: unsupported standalone equivalence schemaVersion")
+    if value.get("kind") != _STANDALONE_EQUIVALENCE_KIND:
+        raise RuntimeError(f"{path}: unexpected standalone equivalence kind")
+    policy = value.get("policy")
+    if not isinstance(policy, dict) or any(
+        policy.get(key) is not expected
+        for key, expected in _STANDALONE_EQUIVALENCE_POLICY.items()
+    ):
+        raise RuntimeError(f"{path}: unsafe standalone equivalence policy")
+    items = value.get("items")
+    if not isinstance(items, list):
+        raise RuntimeError(f"{path}: standalone equivalence items must be a list")
+    summary = value.get("summary") or {}
+    if int(summary.get("equivalenceCount") or -1) != len(items):
+        raise RuntimeError(f"{path}: stale standalone equivalence summary count")
     return value
 
 
@@ -651,6 +689,116 @@ def _standalone_disposition_map(
     return out
 
 
+def _standalone_equivalence_map(
+    review_rows: list[dict[str, Any]],
+    equivalence_payload: dict[str, Any] | None,
+    standalone: dict[str, dict[str, str]],
+    *,
+    equivalence_file: str = "",
+) -> dict[str, dict[str, str]]:
+    if equivalence_payload is None:
+        return {}
+    if equivalence_payload.get("schemaVersion") != 1:
+        raise RuntimeError("unsupported standalone equivalence schemaVersion")
+    if equivalence_payload.get("kind") != _STANDALONE_EQUIVALENCE_KIND:
+        raise RuntimeError("unexpected standalone equivalence kind")
+    policy = equivalence_payload.get("policy")
+    if not isinstance(policy, dict) or any(
+        policy.get(key) is not expected
+        for key, expected in _STANDALONE_EQUIVALENCE_POLICY.items()
+    ):
+        raise RuntimeError("unsafe standalone equivalence policy")
+    items = equivalence_payload.get("items")
+    if not isinstance(items, list):
+        raise RuntimeError("standalone equivalence items must be a list")
+    summary = equivalence_payload.get("summary") or {}
+    if int(summary.get("equivalenceCount") or -1) != len(items):
+        raise RuntimeError("stale standalone equivalence summary count")
+
+    rows_by_source_id = _rows_by_source_id(review_rows)
+    out: dict[str, dict[str, str]] = {}
+    used_ids: set[str] = set()
+    for index, raw in enumerate(items, 1):
+        if not isinstance(raw, dict):
+            raise RuntimeError(f"standalone equivalence item {index}: expected object")
+        source_id = _text(raw.get("sourceIngredientId"))
+        target_id = _text(raw.get("targetSourceIngredientId"))
+        if (
+            not source_id.startswith("local:")
+            or not target_id.startswith("local:")
+            or source_id == target_id
+        ):
+            raise RuntimeError(f"standalone equivalence item {index}: invalid source/target identity")
+        if source_id in used_ids or target_id in used_ids:
+            raise RuntimeError(
+                "standalone equivalence identities must form disjoint reviewed pairs: "
+                f"{source_id} -> {target_id}"
+            )
+        used_ids.update((source_id, target_id))
+        if source_id in standalone:
+            raise RuntimeError(
+                f"standalone equivalence source must be removed from standalone ledger: {source_id}"
+            )
+        target_disposition = standalone.get(target_id)
+        if (
+            target_disposition is None
+            or target_disposition.get("disposition")
+            != "reviewed-source-local-standalone"
+        ):
+            raise RuntimeError(
+                f"standalone equivalence target must remain standalone: {target_id}"
+            )
+
+        source_row = rows_by_source_id.get(source_id)
+        target_row = rows_by_source_id.get(target_id)
+        if source_row is None or target_row is None:
+            raise RuntimeError(
+                f"standalone equivalence pair lacks reviewed source evidence: {source_id} -> {target_id}"
+            )
+        if source_row["confidence"] == "high" or target_row["confidence"] == "high":
+            raise RuntimeError(
+                f"standalone equivalence cannot replace high-confidence semantics: {source_id} -> {target_id}"
+            )
+        classification = _text(raw.get("classification")).lower()
+        if (
+            classification not in _MERGEABLE_CLASSIFICATIONS
+            or source_row["classification"] != classification
+            or target_row["classification"] != classification
+        ):
+            raise RuntimeError(
+                f"standalone equivalence classification differs: {source_id} -> {target_id}"
+            )
+        source_english = _text(raw.get("sourceReviewedEnglish"))
+        target_english = _text(raw.get("targetReviewedEnglish"))
+        if source_english != source_row["english"]:
+            raise RuntimeError(
+                f"standalone equivalence sourceReviewedEnglish differs for {source_id}"
+            )
+        if target_english != target_row["english"]:
+            raise RuntimeError(
+                f"standalone equivalence targetReviewedEnglish differs for {target_id}"
+            )
+        if _norm(source_english) != _norm(target_english):
+            raise RuntimeError(
+                f"standalone equivalence reviewed meanings differ: {source_id} -> {target_id}"
+            )
+        rationale = _text(raw.get("rationale"))
+        if len(rationale) < 20:
+            raise RuntimeError(
+                f"standalone equivalence rationale is too short for {source_id}"
+            )
+        out[source_id] = {
+            "targetSourceIngredientId": target_id,
+            "targetConceptId": _source_concept_id(
+                target_row["language"], target_row["source"]
+            ),
+            "targetCanonicalEnglish": target_row["english"],
+            "equivalenceFile": equivalence_file or "<inline-standalone-equivalence>",
+            "rationale": rationale,
+        }
+    return out
+
+
 def _confirmation_map(
     review_rows: list[dict[str, Any]],
     confirmation_payload: dict[str, Any] | None,
@@ -697,6 +845,8 @@ def compile_semantic_concepts(
     syntax_confirmation_file: str = "",
     standalone_payload: dict[str, Any] | None = None,
     standalone_file: str = "",
+    standalone_equivalence_payload: dict[str, Any] | None = None,
+    standalone_equivalence_file: str = "",
 ) -> dict[str, Any]:
     """Compile review rows without promoting semantic equality to provider ID."""
     concepts: dict[str, dict[str, Any]] = {}
@@ -715,10 +865,28 @@ def compile_semantic_concepts(
         standalone_payload,
         standalone_file=standalone_file,
     )
+    standalone_equivalences = _standalone_equivalence_map(
+        review_rows,
+        standalone_equivalence_payload,
+        standalone,
+        equivalence_file=standalone_equivalence_file,
+    )
     overlap = set(confirmations) & set(standalone)
     if overlap:
         raise RuntimeError(
             "same source identity appears in semantic confirmation and standalone disposition: "
+            + ", ".join(sorted(overlap))
+        )
+    overlap = set(confirmations) & set(standalone_equivalences)
+    if overlap:
+        raise RuntimeError(
+            "same source identity appears in semantic confirmation and standalone equivalence: "
+            + ", ".join(sorted(overlap))
+        )
+    overlap = set(standalone) & set(standalone_equivalences)
+    if overlap:
+        raise RuntimeError(
+            "same source identity appears in standalone disposition and standalone equivalence: "
             + ", ".join(sorted(overlap))
         )
 
@@ -731,6 +899,7 @@ def compile_semantic_concepts(
         source_id = source_local_ingredient_id(language, source)
         confirmation = confirmations.get(source_id)
         standalone_disposition = standalone.get(source_id)
+        standalone_equivalence = standalone_equivalences.get(source_id)
 
         mergeable = (
             confidence == "high"
@@ -740,6 +909,9 @@ def compile_semantic_concepts(
         if explicitly_confirmed:
             concept_id = confirmation["confirmedConceptId"]
             canonical_english = high_concepts[concept_id]["english"]
+        elif standalone_equivalence is not None:
+            concept_id = standalone_equivalence["targetConceptId"]
+            canonical_english = standalone_equivalence["targetCanonicalEnglish"]
         elif mergeable:
             concept_id = _semantic_concept_id(classification, english)
             canonical_english = english
@@ -748,15 +920,23 @@ def compile_semantic_concepts(
             canonical_english = english
 
         concept_mergeable = mergeable or explicitly_confirmed
-        review_closed = concept_mergeable or standalone_disposition is not None
+        review_closed = bool(
+            concept_mergeable
+            or standalone_disposition is not None
+            or standalone_equivalence is not None
+        )
         if standalone_disposition is not None:
             merge_policy = standalone_disposition["disposition"]
+        elif standalone_equivalence is not None:
+            merge_policy = "reviewed-source-local-standalone"
         elif concept_mergeable:
             merge_policy = "reviewed-high-exact-english"
         else:
             merge_policy = "source-local-conservative"
-        safety_eligible = (
-            classification == "food" and standalone_disposition is None
+        safety_eligible = bool(
+            classification == "food"
+            and standalone_disposition is None
+            and standalone_equivalence is None
         )
 
         concept = concepts.setdefault(
@@ -823,6 +1003,16 @@ def compile_semantic_concepts(
             identity["semanticReviewDispositionRationale"] = standalone_disposition[
                 "rationale"
             ]
+        if standalone_equivalence is not None:
+            identity["semanticStandaloneEquivalenceFile"] = standalone_equivalence[
+                "equivalenceFile"
+            ]
+            identity["semanticStandaloneEquivalenceTargetSourceIngredientId"] = (
+                standalone_equivalence["targetSourceIngredientId"]
+            )
+            identity["semanticStandaloneEquivalenceRationale"] = standalone_equivalence[
+                "rationale"
+            ]
         concept["sourceIdentities"].append(identity)
         source_identity_to_concept[source_id] = concept_id
 
@@ -859,6 +1049,7 @@ def compile_semantic_concepts(
         if row.get("needsSemanticConfirmation") is True
     )
     standalone_count = len(standalone)
+    standalone_equivalence_count = len(standalone_equivalences)
     reviewed_ambiguous_count = sum(
         row.get("disposition") == "reviewed-ambiguous-source-fragment"
         for row in standalone.values()
@@ -873,7 +1064,9 @@ def compile_semantic_concepts(
             "explicitSemanticConfirmationMerge": True,
             "explicitSyntacticConfirmationMerge": True,
             "explicitStandaloneReviewClosure": True,
+            "explicitStandaloneSemanticEquivalence": True,
             "standaloneReviewClosureGrantsSafetyEligibility": False,
+            "standaloneSemanticEquivalenceGrantsSafetyEligibility": False,
             "mediumConfidenceCrossLanguageMerge": False,
             "mediumConfidenceAutomaticCrossLanguageMerge": False,
             "ambiguousCrossLanguageMerge": False,
@@ -891,6 +1084,7 @@ def compile_semantic_concepts(
             "semanticEquivalentConfirmedSourceLabels": equivalence_count,
             "syntacticConfirmedSourceLabels": syntactic_count,
             "standaloneConfirmedSourceLabels": standalone_count,
+            "standaloneEquivalentSourceLabels": standalone_equivalence_count,
             "reviewedAmbiguousSourceLabels": reviewed_ambiguous_count,
             "needsSemanticConfirmationSourceLabels": (
                 needs_confirmation_sources
@@ -913,6 +1107,7 @@ def compile_from_paths(
     confirmation_path: Path | None = None,
     syntax_confirmation_path: Path | None = None,
     standalone_path: Path | None = None,
+    standalone_equivalence_path: Path | None = None,
 ) -> dict[str, Any]:
     path_list = list(paths)
     payloads = [(path.name, _load_payload(path)) for path in path_list]
@@ -938,6 +1133,11 @@ def compile_from_paths(
         if candidate.exists():
             standalone_path = candidate
 
+    if standalone_equivalence_path is None and review_dir is not None:
+        candidate = review_dir / STANDALONE_EQUIVALENCE_FILE.name
+        if candidate.exists():
+            standalone_equivalence_path = candidate
+
     confirmation_payload = None
     confirmation_file = ""
     if confirmation_path is not None:
@@ -958,6 +1158,14 @@ def compile_from_paths(
         standalone_payload = _load_standalone_payload(standalone_path)
         standalone_file = standalone_path.name
 
+    standalone_equivalence_payload = None
+    standalone_equivalence_file = ""
+    if standalone_equivalence_path is not None:
+        standalone_equivalence_payload = _load_standalone_equivalence_payload(
+            standalone_equivalence_path
+        )
+        standalone_equivalence_file = standalone_equivalence_path.name
+
     return compile_semantic_concepts(
         payloads,
         confirmation_payload=confirmation_payload,
@@ -966,6 +1174,8 @@ def compile_from_paths(
         syntax_confirmation_file=syntax_confirmation_file,
         standalone_payload=standalone_payload,
         standalone_file=standalone_file,
+        standalone_equivalence_payload=standalone_equivalence_payload,
+        standalone_equivalence_file=standalone_equivalence_file,
     )
 
 
@@ -1008,6 +1218,15 @@ def main() -> int:
             "from the reviews directory when present."
         ),
     )
+    parser.add_argument(
+        "--standalone-equivalences",
+        default="",
+        help=(
+            "Optional exact reviewed source-local equivalence JSON. When omitted, "
+            "release_catalog_semantic_standalone_equivalences.v1.json is loaded "
+            "from the reviews directory when present."
+        ),
+    )
     args = parser.parse_args()
 
     review_dir = Path(args.reviews_dir).expanduser()
@@ -1028,11 +1247,17 @@ def main() -> int:
         if args.standalone_dispositions
         else None
     )
+    standalone_equivalence_path = (
+        Path(args.standalone_equivalences).expanduser()
+        if args.standalone_equivalences
+        else None
+    )
     payload = compile_from_paths(
         paths,
         confirmation_path=confirmation_path,
         syntax_confirmation_path=syntax_confirmation_path,
         standalone_path=standalone_path,
+        standalone_equivalence_path=standalone_equivalence_path,
     )
     output = Path(args.output).expanduser()
     output.parent.mkdir(parents=True, exist_ok=True)

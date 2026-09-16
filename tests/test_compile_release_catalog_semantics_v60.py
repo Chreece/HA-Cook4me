@@ -408,7 +408,13 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
             tools / "release_catalog_semantic_standalone_dispositions.v1.json"
         )
         standalone_count = len(standalone.get("items") or [])
-        review_total = total + standalone_count
+        standalone_equivalences = mod._load_standalone_equivalence_payload(
+            tools / "release_catalog_semantic_standalone_equivalences.v1.json"
+        )
+        standalone_equivalence_count = len(
+            standalone_equivalences.get("items") or []
+        )
+        review_total = total + standalone_count + standalone_equivalence_count
 
         self.assertEqual(
             confirmed["summary"]["exactConfirmedSourceLabels"],
@@ -426,6 +432,10 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
             confirmed["summary"]["standaloneConfirmedSourceLabels"],
             standalone_count,
         )
+        self.assertEqual(
+            confirmed["summary"]["standaloneEquivalentSourceLabels"],
+            standalone_equivalence_count,
+        )
         self.assertEqual(confirmed["summary"]["confirmedSourceLabels"], total)
         self.assertEqual(
             baseline["summary"]["needsSemanticConfirmationSourceLabels"]
@@ -435,7 +445,7 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
         self.assertEqual(
             baseline["summary"]["semanticConcepts"]
             - confirmed["summary"]["semanticConcepts"],
-            total,
+            total + standalone_equivalence_count,
         )
         self.assertEqual(
             confirmed["summary"]["needsSemanticConfirmationSourceLabels"],
