@@ -35,3 +35,22 @@ stock/save retries, storage management, camera cleanup, stale results and a real
 recipe-ingredient button opening its details. The existing automatic product and
 recipe price checks run against v80. Physical camera recognition and deployment
 still need the user's Home Assistant host.
+
+## Validation and delivery
+
+- The 1,427-test Python run had 1,426 passes and one environment error: this
+  workspace's test virtualenv lacked the already-declared Pillow dependency.
+  After installing `requirements-test.txt`, all 18 capture tests, including JPEG
+  decoding, passed. No application change was needed for that environment issue.
+- The three new ingredient-endpoint tests reproduced the original TypeError before
+  the fix and pass after it, including the production scheduling/response contract.
+- Chromium unified-scanner and ingredient-click checks pass at desktop, 390 px and
+  360 px widths, with English, German and Greek mobile layouts.
+- The existing product/recipe pricing browser suite passes against v80.
+- All four pinned-installer tests pass, including backups, wrong config mounts,
+  missing source data and rollback after startup/activation failures.
+- Bundle regeneration, JavaScript/Python syntax, version, workflow parsing and
+  whitespace checks passed. No live HA deployment was performed here.
+
+Runtime commit: `7cb8f74f786f112e9c67fd109f1d83102a1424c5`.
+Pinned installer: `tools/deploy_offline_runtime_v80.sh`.
