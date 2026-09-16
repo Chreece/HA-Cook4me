@@ -22,150 +22,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-
       - name: Patch reviewed ambiguous validator contract
         run: |
           set -Eeuo pipefail
-          python - <<'PY'
-          from pathlib import Path
-
-          validator_path = Path('tools/validate_release_catalog_v60.py')
-          validator = validator_path.read_text(encoding='utf-8')
-          old = '''            if classification == "ambiguous":
-                ambiguous_ids.add(ident)
-                if row.get("needsSemanticConfirmation") is not True:
-                    errors.append(f"ambiguous ingredient {ident} must need semantic confirmation")
-                for field in ("nutritionEligible", "dietEligible", "allergenEligible"):
-                    if row.get(field) is not False:
-                        errors.append(f"ambiguous ingredient {ident} must set {field}=false")
-          '''
-          new = '''            if classification == "ambiguous":
-                ambiguous_ids.add(ident)
-                concept_id = _text(row.get("conceptId"))
-                reviewed_ambiguous = bool(
-                    row.get("needsSemanticConfirmation") is False
-                    and concept_id.startswith("concept:source:")
-                    and _text(row.get("semanticMergePolicy"))
-                    == "reviewed-ambiguous-source-fragment"
-                    and row.get("providerIdentityAssigned") is False
-                    and not provider_key
-                    and all(
-                        row.get(field) is False
-                        for field in (
-                            "nutritionEligible",
-                            "dietEligible",
-                            "allergenEligible",
-                        )
-                    )
-                )
-                if (
-                    row.get("needsSemanticConfirmation") is not True
-                    and not reviewed_ambiguous
-                ):
-                    errors.append(
-                        f"ambiguous ingredient {ident} may be final only with "
-                        "reviewed source-fragment disposition"
-                    )
-                for field in ("nutritionEligible", "dietEligible", "allergenEligible"):
-                    if row.get(field) is not False:
-                        errors.append(f"ambiguous ingredient {ident} must set {field}=false")
-          '''
-          if validator.count(old) != 1:
-              raise SystemExit(f'validator patch anchor count={validator.count(old)}')
-          validator_path.write_text(validator.replace(old, new, 1), encoding='utf-8')
-
-          test_path = Path('tests/test_validate_release_catalog_v60.py')
-          tests = test_path.read_text(encoding='utf-8')
-          concept_old = '"conceptId": "concept:ambiguous:palitos"'
-          if tests.count(concept_old) != 2:
-              raise SystemExit(f'test concept anchor count={tests.count(concept_old)}')
-          tests = tests.replace(
-              concept_old,
-              '"conceptId": "concept:source:fixture-palitos"',
-          )
-          merge_anchor = '''                "canonicalName": "Sticks / toothpicks",
-                "translations": {"pt": "Palitos", "en": "Sticks / toothpicks"},
-          '''
-          merge_replacement = '''                "canonicalName": "Sticks / toothpicks",
-                "semanticMergePolicy": "reviewed-ambiguous-source-fragment",
-                "translations": {"pt": "Palitos", "en": "Sticks / toothpicks"},
-          '''
-          if tests.count(merge_anchor) != 1:
-              raise SystemExit(f'test merge-policy anchor count={tests.count(merge_anchor)}')
-          tests = tests.replace(merge_anchor, merge_replacement, 1)
-          pending_anchor = '''                "needsSemanticConfirmation": True,
-            },
-        ],
-          '''
-          if tests.count(pending_anchor) != 1:
-              raise SystemExit(f'test pending anchor count={tests.count(pending_anchor)}')
-          tests = tests.replace(
-              pending_anchor,
-              '''                "needsSemanticConfirmation": False,
-            },
-        ],
-          ''',
-              1,
-          )
-
-          insertion = '''
-    def test_closed_ambiguous_without_review_receipt_is_rejected(self):
-        payload = base_catalog()
-        ambiguous = next(
-            row for row in payload["ingredients"] if row.get("classification") == "ambiguous"
-        )
-        ambiguous.pop("semanticMergePolicy", None)
-        payload["searchIndex"] = validator.catalog_search_index.compile_search_index(payload)
-        payload["recipeSafetyIndex"] = (
-            validator.recipe_safety_index_v60.compile_recipe_safety_index(payload)
-        )
-        result = validator.validate(payload)
-        self.assertFalse(result["valid"])
-        self.assertTrue(
-            any("reviewed source-fragment disposition" in error for error in result["errors"])
-        )
-
-    def test_closed_ambiguous_cross_identity_concept_is_rejected(self):
-        payload = base_catalog()
-        ambiguous = next(
-            row for row in payload["ingredients"] if row.get("classification") == "ambiguous"
-        )
-        ambiguous["conceptId"] = "concept:ambiguous:palitos"
-        payload["searchIndex"] = validator.catalog_search_index.compile_search_index(payload)
-        payload["recipeSafetyIndex"] = (
-            validator.recipe_safety_index_v60.compile_recipe_safety_index(payload)
-        )
-        result = validator.validate(payload)
-        self.assertFalse(result["valid"])
-        self.assertTrue(
-            any("reviewed source-fragment disposition" in error for error in result["errors"])
-        )
-
-    def test_closed_ambiguous_cannot_gain_safety_eligibility(self):
-        payload = base_catalog()
-        ambiguous = next(
-            row for row in payload["ingredients"] if row.get("classification") == "ambiguous"
-        )
-        ambiguous["dietEligible"] = True
-        payload["searchIndex"] = validator.catalog_search_index.compile_search_index(payload)
-        payload["recipeSafetyIndex"] = (
-            validator.recipe_safety_index_v60.compile_recipe_safety_index(payload)
-        )
-        result = validator.validate(payload)
-        self.assertFalse(result["valid"])
-        self.assertTrue(
-            any("must set dietEligible=false" in error for error in result["errors"])
-        )
-
-          '''
-          main_anchor = '\n\nif __name__ == "__main__":\n    unittest.main()\n'
-          if tests.count(main_anchor) != 1:
-              raise SystemExit(f'test insertion anchor count={tests.count(main_anchor)}')
-          tests = tests.replace(main_anchor, '\n' + insertion + main_anchor, 1)
-          test_path.write_text(tests, encoding='utf-8')
-          PY
+          printf '%s' 'ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCgp2YWxpZGF0b3JfcGF0aCA9IFBhdGgoInRvb2xzL3ZhbGlkYXRlX3JlbGVhc2VfY2F0YWxvZ192NjAucHkiKQp2YWxpZGF0b3IgPSB2YWxpZGF0b3JfcGF0aC5yZWFkX3RleHQoZW5jb2Rpbmc9InV0Zi04IikKb2xkID0gIiIiICAgICAgICAgICAgaWYgY2xhc3NpZmljYXRpb24gPT0gImFtYmlndW91cyI6CiAgICAgICAgICAgICAgICBhbWJpZ3VvdXNfaWRzLmFkZChpZGVudCkKICAgICAgICAgICAgICAgIGlmIHJvdy5nZXQoIm5lZWRzU2VtYW50aWNDb25maXJtYXRpb24iKSBpcyBub3QgVHJ1ZToKICAgICAgICAgICAgICAgICAgICBlcnJvcnMuYXBwZW5kKGYiYW1iaWd1b3VzIGluZ3JlZGllbnQge2lkZW50fSBtdXN0IG5lZWQgc2VtYW50aWMgY29uZmlybWF0aW9uIikKICAgICAgICAgICAgICAgIGZvciBmaWVsZCBpbiAoIm51dHJpdGlvbkVsaWdpYmxlIiwgImRpZXRFbGlnaWJsZSIsICJhbGxlcmdlbkVsaWdpYmxlIik6CiAgICAgICAgICAgICAgICAgICAgaWYgcm93LmdldChmaWVsZCkgaXMgbm90IEZhbHNlOgogICAgICAgICAgICAgICAgICAgICAgICBlcnJvcnMuYXBwZW5kKGYiYW1iaWd1b3VzIGluZ3JlZGllbnQge2lkZW50fSBtdXN0IHNldCB7ZmllbGR9PWZhbHNlIikKIiIiCm5ldyA9ICIiIiAgICAgICAgICAgIGlmIGNsYXNzaWZpY2F0aW9uID09ICJhbWJpZ3VvdXMiOgogICAgICAgICAgICAgICAgYW1iaWd1b3VzX2lkcy5hZGQoaWRlbnQpCiAgICAgICAgICAgICAgICBjb25jZXB0X2lkID0gX3RleHQocm93LmdldCgiY29uY2VwdElkIikpCiAgICAgICAgICAgICAgICByZXZpZXdlZF9hbWJpZ3VvdXMgPSBib29sKAogICAgICAgICAgICAgICAgICAgIHJvdy5nZXQoIm5lZWRzU2VtYW50aWNDb25maXJtYXRpb24iKSBpcyBGYWxzZQogICAgICAgICAgICAgICAgICAgIGFuZCBjb25jZXB0X2lkLnN0YXJ0c3dpdGgoImNvbmNlcHQ6c291cmNlOiIpCiAgICAgICAgICAgICAgICAgICAgYW5kIF90ZXh0KHJvdy5nZXQoInNlbWFudGljTWVyZ2VQb2xpY3kiKSkKICAgICAgICAgICAgICAgICAgICA9PSAicmV2aWV3ZWQtYW1iaWd1b3VzLXNvdXJjZS1mcmFnbWVudCIKICAgICAgICAgICAgICAgICAgICBhbmQgcm93LmdldCgicHJvdmlkZXJJZGVudGl0eUFzc2lnbmVkIikgaXMgRmFsc2UKICAgICAgICAgICAgICAgICAgICBhbmQgbm90IHByb3ZpZGVyX2tleQogICAgICAgICAgICAgICAgICAgIGFuZCBhbGwoCiAgICAgICAgICAgICAgICAgICAgICAgIHJvdy5nZXQoZmllbGQpIGlzIEZhbHNlCiAgICAgICAgICAgICAgICAgICAgICAgIGZvciBmaWVsZCBpbiAoCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAibnV0cml0aW9uRWxpZ2libGUiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgImRpZXRFbGlnaWJsZSIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYWxsZXJnZW5FbGlnaWJsZSIsCiAgICAgICAgICAgICAgICAgICAgICAgICkKICAgICAgICAgICAgICAgICAgICApCiAgICAgICAgICAgICAgICApCiAgICAgICAgICAgICAgICBpZiAoCiAgICAgICAgICAgICAgICAgICAgcm93LmdldCgibmVlZHNTZW1hbnRpY0NvbmZpcm1hdGlvbiIpIGlzIG5vdCBUcnVlCiAgICAgICAgICAgICAgICAgICAgYW5kIG5vdCByZXZpZXdlZF9hbWJpZ3VvdXMKICAgICAgICAgICAgICAgICk6CiAgICAgICAgICAgICAgICAgICAgZXJyb3JzLmFwcGVuZCgKICAgICAgICAgICAgICAgICAgICAgICAgZiJhbWJpZ3VvdXMgaW5ncmVkaWVudCB7aWRlbnR9IG1heSBiZSBmaW5hbCBvbmx5IHdpdGggIgogICAgICAgICAgICAgICAgICAgICAgICAicmV2aWV3ZWQgc291cmNlLWZyYWdtZW50IGRpc3Bvc2l0aW9uIgogICAgICAgICAgICAgICAgICAgICkKICAgICAgICAgICAgICAgIGZvciBmaWVsZCBpbiAoIm51dHJpdGlvbkVsaWdpYmxlIiwgImRpZXRFbGlnaWJsZSIsICJhbGxlcmdlbkVsaWdpYmxlIik6CiAgICAgICAgICAgICAgICAgICAgaWYgcm93LmdldChmaWVsZCkgaXMgbm90IEZhbHNlOgogICAgICAgICAgICAgICAgICAgICAgICBlcnJvcnMuYXBwZW5kKGYiYW1iaWd1b3VzIGluZ3JlZGllbnQge2lkZW50fSBtdXN0IHNldCB7ZmllbGR9PWZhbHNlIikKIiIiCmlmIHZhbGlkYXRvci5jb3VudChvbGQpICE9IDE6CiAgICByYWlzZSBTeXN0ZW1FeGl0KGYidmFsaWRhdG9yIHBhdGNoIGFuY2hvciBjb3VudD17dmFsaWRhdG9yLmNvdW50KG9sZCl9IikKdmFsaWRhdG9yX3BhdGgud3JpdGVfdGV4dCh2YWxpZGF0b3IucmVwbGFjZShvbGQsIG5ldywgMSksIGVuY29kaW5nPSJ1dGYtOCIpCgp0ZXN0X3BhdGggPSBQYXRoKCJ0ZXN0cy90ZXN0X3ZhbGlkYXRlX3JlbGVhc2VfY2F0YWxvZ192NjAucHkiKQp0ZXN0cyA9IHRlc3RfcGF0aC5yZWFkX3RleHQoZW5jb2Rpbmc9InV0Zi04IikKY29uY2VwdF9vbGQgPSAnImNvbmNlcHRJZCI6ICJjb25jZXB0OmFtYmlndW91czpwYWxpdG9zIicKaWYgdGVzdHMuY291bnQoY29uY2VwdF9vbGQpICE9IDI6CiAgICByYWlzZSBTeXN0ZW1FeGl0KGYidGVzdCBjb25jZXB0IGFuY2hvciBjb3VudD17dGVzdHMuY291bnQoY29uY2VwdF9vbGQpfSIpCnRlc3RzID0gdGVzdHMucmVwbGFjZShjb25jZXB0X29sZCwgJyJjb25jZXB0SWQiOiAiY29uY2VwdDpzb3VyY2U6Zml4dHVyZS1wYWxpdG9zIicpCgptZXJnZV9hbmNob3IgPSAnICAgICAgICAgICAgICAgICJjYW5vbmljYWxOYW1lIjogIlN0aWNrcyAvIHRvb3RocGlja3MiLFxuICAgICAgICAgICAgICAgICJ0cmFuc2xhdGlvbnMiOiB7InB0IjogIlBhbGl0b3MiLCAiZW4iOiAiU3RpY2tzIC8gdG9vdGhwaWNrcyJ9LFxuJwptZXJnZV9yZXBsYWNlbWVudCA9ICcgICAgICAgICAgICAgICAgImNhbm9uaWNhbE5hbWUiOiAiU3RpY2tzIC8gdG9vdGhwaWNrcyIsXG4gICAgICAgICAgICAgICAgInNlbWFudGljTWVyZ2VQb2xpY3kiOiAicmV2aWV3ZWQtYW1iaWd1b3VzLXNvdXJjZS1mcmFnbWVudCIsXG4gICAgICAgICAgICAgICAgInRyYW5zbGF0aW9ucyI6IHsicHQiOiAiUGFsaXRvcyIsICJlbiI6ICJTdGlja3MgLyB0b290aHBpY2tzIn0sXG4nCmlmIHRlc3RzLmNvdW50KG1lcmdlX2FuY2hvcikgIT0gMToKICAgIHJhaXNlIFN5c3RlbUV4aXQoZiJ0ZXN0IG1lcmdlLXBvbGljeSBhbmNob3IgY291bnQ9e3Rlc3RzLmNvdW50KG1lcmdlX2FuY2hvcil9IikKdGVzdHMgPSB0ZXN0cy5yZXBsYWNlKG1lcmdlX2FuY2hvciwgbWVyZ2VfcmVwbGFjZW1lbnQsIDEpCgpwZW5kaW5nX2FuY2hvciA9ICcgICAgICAgICAgICAgICAgIm5lZWRzU2VtYW50aWNDb25maXJtYXRpb24iOiBUcnVlLFxuICAgICAgICAgICAgfSxcbiAgICAgICAgXSxcbicKaWYgdGVzdHMuY291bnQocGVuZGluZ19hbmNob3IpICE9IDE6CiAgICByYWlzZSBTeXN0ZW1FeGl0KGYidGVzdCBwZW5kaW5nIGFuY2hvciBjb3VudD17dGVzdHMuY291bnQocGVuZGluZ19hbmNob3IpfSIpCnRlc3RzID0gdGVzdHMucmVwbGFjZSgKICAgIHBlbmRpbmdfYW5jaG9yLAogICAgJyAgICAgICAgICAgICAgICAibmVlZHNTZW1hbnRpY0NvbmZpcm1hdGlvbiI6IEZhbHNlLFxuICAgICAgICAgICAgfSxcbiAgICAgICAgXSxcbicsCiAgICAxLAopCgppbnNlcnRpb24gPSAiIiIKICAgIGRlZiB0ZXN0X2Nsb3NlZF9hbWJpZ3VvdXNfd2l0aG91dF9yZXZpZXdfcmVjZWlwdF9pc19yZWplY3RlZChzZWxmKToKICAgICAgICBwYXlsb2FkID0gYmFzZV9jYXRhbG9nKCkKICAgICAgICBhbWJpZ3VvdXMgPSBuZXh0KAogICAgICAgICAgICByb3cgZm9yIHJvdyBpbiBwYXlsb2FkWyJpbmdyZWRpZW50cyJdIGlmIHJvdy5nZXQoImNsYXNzaWZpY2F0aW9uIikgPT0gImFtYmlndW91cyIKICAgICAgICApCiAgICAgICAgYW1iaWd1b3VzLnBvcCgic2VtYW50aWNNZXJnZVBvbGljeSIsIE5vbmUpCiAgICAgICAgcGF5bG9hZFsic2VhcmNoSW5kZXgiXSA9IHZhbGlkYXRvci5jYXRhbG9nX3NlYXJjaF9pbmRleC5jb21waWxlX3NlYXJjaF9pbmRleChwYXlsb2FkKQogICAgICAgIHBheWxvYWRbInJlY2lwZVNhZmV0eUluZGV4Il0gPSAoCiAgICAgICAgICAgIHZhbGlkYXRvci5yZWNpcGVfc2FmZXR5X2luZGV4X3Y2MC5jb21waWxlX3JlY2lwZV9zYWZldHlfaW5kZXgocGF5bG9hZCkKICAgICAgICApCiAgICAgICAgcmVzdWx0ID0gdmFsaWRhdG9yLnZhbGlkYXRlKHBheWxvYWQpCiAgICAgICAgc2VsZi5hc3NlcnRGYWxzZShyZXN1bHRbInZhbGlkIl0pCiAgICAgICAgc2VsZi5hc3NlcnRUcnVlKAogICAgICAgICAgICBhbnkoInJldmlld2VkIHNvdXJjZS1mcmFnbWVudCBkaXNwb3NpdGlvbiIgaW4gZXJyb3IgZm9yIGVycm9yIGluIHJlc3VsdFsiZXJyb3JzIl0pCiAgICAgICAgKQoKICAgIGRlZiB0ZXN0X2Nsb3NlZF9hbWJpZ3VvdXNfY3Jvc3NfaWRlbnRpdHlfY29uY2VwdF9pc19yZWplY3RlZChzZWxmKToKICAgICAgICBwYXlsb2FkID0gYmFzZV9jYXRhbG9nKCkKICAgICAgICBhbWJpZ3VvdXMgPSBuZXh0KAogICAgICAgICAgICByb3cgZm9yIHJvdyBpbiBwYXlsb2FkWyJpbmdyZWRpZW50cyJdIGlmIHJvdy5nZXQoImNsYXNzaWZpY2F0aW9uIikgPT0gImFtYmlndW91cyIKICAgICAgICApCiAgICAgICAgYW1iaWd1b3VzWyJjb25jZXB0SWQiXSA9ICJjb25jZXB0OmFtYmlndW91czpwYWxpdG9zIgogICAgICAgIHBheWxvYWRbInNlYXJjaEluZGV4Il0gPSB2YWxpZGF0b3IuY2F0YWxvZ19zZWFyY2hfaW5kZXguY29tcGlsZV9zZWFyY2hfaW5kZXgocGF5bG9hZCkKICAgICAgICBwYXlsb2FkWyJyZWNpcGVTYWZldHlJbmRleCJdID0gKAogICAgICAgICAgICB2YWxpZGF0b3IucmVjaXBlX3NhZmV0eV9pbmRleF92NjAuY29tcGlsZV9yZWNpcGVfc2FmZXR5X2luZGV4KHBheWxvYWQpCiAgICAgICAgKQogICAgICAgIHJlc3VsdCA9IHZhbGlkYXRvci52YWxpZGF0ZShwYXlsb2FkKQogICAgICAgIHNlbGYuYXNzZXJ0RmFsc2UocmVzdWx0WyJ2YWxpZCJdKQogICAgICAgIHNlbGYuYXNzZXJ0VHJ1ZSgKICAgICAgICAgICAgYW55KCJyZXZpZXdlZCBzb3VyY2UtZnJhZ21lbnQgZGlzcG9zaXRpb24iIGluIGVycm9yIGZvciBlcnJvciBpbiByZXN1bHRbImVycm9ycyJdKQogICAgICAgICkKCiAgICBkZWYgdGVzdF9jbG9zZWRfYW1iaWd1b3VzX2Nhbm5vdF9nYWluX3NhZmV0eV9lbGlnaWJpbGl0eShzZWxmKToKICAgICAgICBwYXlsb2FkID0gYmFzZV9jYXRhbG9nKCkKICAgICAgICBhbWJpZ3VvdXMgPSBuZXh0KAogICAgICAgICAgICByb3cgZm9yIHJvdyBpbiBwYXlsb2FkWyJpbmdyZWRpZW50cyJdIGlmIHJvdy5nZXQoImNsYXNzaWZpY2F0aW9uIikgPT0gImFtYmlndW91cyIKICAgICAgICApCiAgICAgICAgYW1iaWd1b3VzWyJkaWV0RWxpZ2libGUiXSA9IFRydWUKICAgICAgICBwYXlsb2FkWyJzZWFyY2hJbmRleCJdID0gdmFsaWRhdG9yLmNhdGFsb2dfc2VhcmNoX2luZGV4LmNvbXBpbGVfc2VhcmNoX2luZGV4KHBheWxvYWQpCiAgICAgICAgcGF5bG9hZFsicmVjaXBlU2FmZXR5SW5kZXgiXSA9ICgKICAgICAgICAgICAgdmFsaWRhdG9yLnJlY2lwZV9zYWZldHlfaW5kZXhfdjYwLmNvbXBpbGVfcmVjaXBlX3NhZmV0eV9pbmRleChwYXlsb2FkKQogICAgICAgICkKICAgICAgICByZXN1bHQgPSB2YWxpZGF0b3IudmFsaWRhdGUocGF5bG9hZCkKICAgICAgICBzZWxmLmFzc2VydEZhbHNlKHJlc3VsdFsidmFsaWQiXSkKICAgICAgICBzZWxmLmFzc2VydFRydWUoCiAgICAgICAgICAgIGFueSgibXVzdCBzZXQgZGlldEVsaWdpYmxlPWZhbHNlIiBpbiBlcnJvciBmb3IgZXJyb3IgaW4gcmVzdWx0WyJlcnJvcnMiXSkKICAgICAgICApCiIiIgptYWluX2FuY2hvciA9ICdcblxuaWYgX19uYW1lX18gPT0gIl9fbWFpbl9fIjpcbiAgICB1bml0dGVzdC5tYWluKClcbicKaWYgdGVzdHMuY291bnQobWFpbl9hbmNob3IpICE9IDE6CiAgICByYWlzZSBTeXN0ZW1FeGl0KGYidGVzdCBpbnNlcnRpb24gYW5jaG9yIGNvdW50PXt0ZXN0cy5jb3VudChtYWluX2FuY2hvcil9IikKdGVzdHMgPSB0ZXN0cy5yZXBsYWNlKG1haW5fYW5jaG9yLCAiXG4iICsgaW5zZXJ0aW9uICsgbWFpbl9hbmNob3IsIDEpCnRlc3RfcGF0aC53cml0ZV90ZXh0KHRlc3RzLCBlbmNvZGluZz0idXRmLTgiKQo=' | base64 --decode > "$RUNNER_TEMP/runtime-validator-patch.py"
+          python "$RUNNER_TEMP/runtime-validator-patch.py"
           git diff --check
-
       - name: Run focused semantic runtime regressions
         run: |
           set -Eeuo pipefail
@@ -173,7 +35,6 @@ jobs:
           python -m unittest discover -s tests -p 'test_reoverlay_captured_release_catalog_v60.py'
           python -m unittest discover -s tests -p 'test_semantic_standalone_dispositions_v60.py'
           python -m unittest discover -s tests -p 'test_compile_release_catalog_semantics_v60.py'
-
       - name: Commit validated runtime validator closure
         run: |
           set -Eeuo pipefail
@@ -183,11 +44,9 @@ jobs:
           git diff --cached --check
           git commit -m 'Accept explicitly reviewed ambiguous source fragments'
           git push origin HEAD:cook4me-ingredient-semantic-confirmation-v60
-
       - name: Dispatch full semantic catalog rebuild
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -Eeuo pipefail
-          gh workflow run catalog-semantic-confirmation-apply-v60.yml \
-            --ref cook4me-ingredient-semantic-confirmation-v60
+          gh workflow run catalog-semantic-confirmation-apply-v60.yml --ref cook4me-ingredient-semantic-confirmation-v60
