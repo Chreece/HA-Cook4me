@@ -184,54 +184,18 @@ async def _hydrate_global_prices(
     cost_store,
     recipe: dict[str, Any],
 ) -> int:
-    settings = cost_store.settings
+    from .automatic_prices import product_price, price_settings
+    import asyncio
+    settings = await price_settings(bridge)
     if not settings.get("autoGlobalPrices"):
         return 0
-    inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
-    wanted = {
-        inventory_identity(row)
-        for row in recipe.get("ingredients") or []
-        if isinstance(row, dict)
-    }
-    barcodes: list[str] = []
-    for row in inventory:
-        if not isinstance(row, dict) or inventory_identity(row) not in wanted:
-            continue
-        for lot in row.get("lots") or []:
-            if not isinstance(lot, dict):
-                continue
-            barcode = _text(lot.get("barcode"))
-            if not barcode or barcode in barcodes:
-                continue
-            if cost_store.best_reference(
-                f"barcode:{barcode}",
-                currency=settings.get("currency", ""),
-                country=settings.get("country", ""),
-            ) is not None:
-                continue
-            barcodes.append(barcode)
-            if len(barcodes) >= _MAX_GLOBAL_PRICE_LOOKUPS:
-                break
-        if len(barcodes) >= _MAX_GLOBAL_PRICE_LOOKUPS:
-            break
+    wanted = {inventory_identity(row) for row in recipe.get("ingredients") or [] if isinstance(row, dict)}
+    items = [(row, lot) for row in bridge.recipe_hub.profile.get("houseIngredients") or []
+             if inventory_identity(row) in wanted for lot in row.get("lots") or [] if lot.get("barcode")]
+    results = await asyncio.gather(*(product_price(bridge, barcode=lot["barcode"], ingredient=row,
+        unit=row.get("unit", ""), settings=settings) for row, lot in items[:_MAX_GLOBAL_PRICE_LOOKUPS]), return_exceptions=True)
+    return sum(isinstance(result, dict) and bool(result.get("reference")) for result in results)
 
-    stored = 0
-    for barcode in barcodes:
-        result = await hass.async_add_executor_job(
-            lambda code=barcode: lookup_open_prices_safe(
-                code,
-                currency=settings.get("currency", ""),
-                country=settings.get("country", ""),
-            )
-        )
-        if result.get("ok") and await store_best_open_price(
-            cost_store,
-            result,
-            currency=settings.get("currency", ""),
-            country=settings.get("country", ""),
-        ):
-            stored += 1
-    return stored
 
 
 def _feedback_adjust(lifecycle, recipe: dict[str, Any]) -> dict[str, Any]:

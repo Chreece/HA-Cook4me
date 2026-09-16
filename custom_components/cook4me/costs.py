@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 from copy import deepcopy
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
+import asyncio
 import json
 import math
-import statistics
 from typing import Any
 import urllib.error
 import urllib.parse
@@ -27,8 +27,10 @@ def _text(value: Any) -> str:
 
 
 def _number(value: Any) -> float | None:
+    if isinstance(value, bool):
+        return None
     try:
-        number = float(value)
+        number = float(value.replace(",", ".") if isinstance(value, str) else value)
     except (TypeError, ValueError):
         return None
     if not math.isfinite(number) or number < 0:
@@ -133,6 +135,7 @@ class Cook4MeCostStore:
             hass, _STORAGE_VERSION, f"{DOMAIN}.{entry_id}.costs"
         )
         self._loaded = False
+        self._lock = asyncio.Lock()
         self._data: dict[str, Any] = {
             "settings": {"currency": "", "country": "", "autoGlobalPrices": True},
             "references": {},
@@ -174,16 +177,18 @@ class Cook4MeCostStore:
     async def async_set_settings(
         self, *, currency: Any = None, country: Any = None, auto_global_prices: Any = None
     ) -> dict[str, Any]:
-        settings = dict(self._data["settings"])
-        if currency is not None:
-            settings["currency"] = _currency(currency)
-        if country is not None:
-            settings["country"] = _country(country)
-        if auto_global_prices is not None:
-            settings["autoGlobalPrices"] = bool(auto_global_prices)
-        self._data["settings"] = settings
-        await self._save()
-        return self.settings
+        async with self._lock:
+            data = deepcopy(self._data)
+            settings = data["settings"]
+            if currency is not None:
+                settings["currency"] = _currency(currency)
+            if country is not None:
+                settings["country"] = _country(country)
+            if auto_global_prices is not None:
+                settings["autoGlobalPrices"] = bool(auto_global_prices)
+            await self._store.async_save(data)
+            self._data = data
+            return self.settings
 
     async def async_set_reference(
         self,
@@ -224,11 +229,14 @@ class Cook4MeCostStore:
             "updatedAt": datetime.now(timezone.utc).isoformat(),
         }
         key = _reference_key(identity, curr, row["country"], row["source"])
-        refs = self._data.setdefault("references", {})
-        refs[key] = row
-        while len(refs) > _MAX_REFERENCES:
-            refs.pop(next(iter(refs)), None)
-        await self._save()
+        async with self._lock:
+            data = deepcopy(self._data)
+            refs = data.setdefault("references", {})
+            refs[key] = row
+            while len(refs) > _MAX_REFERENCES:
+                refs.pop(next(iter(refs)), None)
+            await self._store.async_save(data)
+            self._data = data
         return deepcopy(row)
 
     def _references_for(self, identity: str, *, currency: str = "") -> list[dict[str, Any]]:
@@ -253,6 +261,15 @@ class Cook4MeCostStore:
         if not rows:
             return None
         wanted_country = _country(country)
+        # Country is a boundary, never a preference that falls back abroad.
+        if wanted_country:
+            rows = [row for row in rows if _country(row.get("country")) == wanted_country]
+        cutoff = (datetime.now(timezone.utc).date() - timedelta(days=180)).isoformat()
+        today = datetime.now(timezone.utc).date().isoformat()
+        rows = [row for row in rows if not str(row.get("source", "")).startswith("open_prices")
+                or cutoff <= _text(row.get("date")) <= today]
+        if not rows:
+            return None
 
         def rank(row: dict[str, Any]) -> tuple[int, int, str]:
             source = _text(row.get("source"))
@@ -286,95 +303,83 @@ async def cost_store_for_bridge(bridge: Any) -> Cook4MeCostStore:
 
 
 def lookup_open_prices(
-    barcode: str,
-    *,
-    currency: str = "",
-    country: str = "",
-    timeout: int = 15,
+    barcode: str = "", *, currency: str = "", country: str = "", timeout: int = 15,
+    category: str = "", category_type: str = "CATEGORY",
 ) -> dict[str, Any]:
-    code = _text(barcode)
-    if not code:
+    """Bounded, read-only observations, strictly checked against the requested market.
+
+    Open Prices has no country filter on /prices. Filter returned locations locally;
+    an empty result means no usable observation in this bounded sample, not free food.
+    PRODUCT rows use the documented package price (price_per may be null).
+    CATEGORY rows explicitly use UNIT or KILOGRAM. Never infer a package weight.
+    """
+    code, curr, market = _text(barcode), _currency(currency), _country(country)
+    if not code and not category:
         return {"ok": False, "reason": "empty_barcode", "items": []}
-    params: dict[str, Any] = {
-        "product_code": code,
-        "type": "PRODUCT",
-        "duplicate_of__isnull": "true",
-        "size": 100,
-        "order_by": "-date",
-    }
-    curr = _currency(currency)
+    today = datetime.now(timezone.utc).date()
+    cutoff = today - timedelta(days=180)
+    params = {"type": "PRODUCT" if code else category_type, "duplicate_of__isnull": "true",
+              "size": 100, "order_by": "-date", "date__gte": cutoff.isoformat(),
+              "date__lte": today.isoformat(), "price_is_discounted": "false"}
+    if code:
+        params["product_code"] = code
+    elif category_type == "PRODUCT":
+        params["product__categories_tags__contains"] = category
+    else:
+        params["category_tag"] = category
     if curr:
         params["currency"] = curr
-    url = f"{_OPEN_PRICES_URL}?{urllib.parse.urlencode(params)}"
-    request = urllib.request.Request(
-        url,
-        headers={"Accept": "application/json", "User-Agent": _OPEN_PRICES_USER_AGENT},
-    )
+    request = urllib.request.Request(f"{_OPEN_PRICES_URL}?{urllib.parse.urlencode(params)}",
+        headers={"Accept": "application/json", "User-Agent": _OPEN_PRICES_USER_AGENT})
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
-            payload = json.loads(response.read().decode("utf-8"))
-    except urllib.error.HTTPError as exc:
-        return {"ok": False, "reason": f"http_{exc.code}", "items": []}
-    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+            data = response.read(2_000_001)
+        if len(data) > 2_000_000:
+            return {"ok": False, "reason": "response_too_large", "items": []}
+        payload = json.loads(data.decode("utf-8"))
+    except (OSError, ValueError) as exc:
         return {"ok": False, "reason": type(exc).__name__, "items": []}
-
-    wanted_country = _country(country)
-    normalized: list[dict[str, Any]] = []
-    for row in payload.get("items") if isinstance(payload, dict) else []:
-        if not isinstance(row, dict) or _text(row.get("product_code")) != code:
+    normalized = []
+    for row in (payload.get("items") or []) if isinstance(payload, dict) else []:
+        if not isinstance(row, dict) or row.get("duplicate_of") or row.get("price_is_discounted"):
             continue
-        price = _number(row.get("price"))
-        row_currency = _currency(row.get("currency"))
-        if price is None or not row_currency:
+        if code and _text(row.get("product_code")) != code:
             continue
         location = row.get("location") if isinstance(row.get("location"), dict) else {}
-        row_country = _country(location.get("osm_address_country_code"))
-        if wanted_country and row_country and row_country != wanted_country:
-            continue
         product = row.get("product") if isinstance(row.get("product"), dict) else {}
-        basis_quantity = None
-        basis_unit = ""
+        row_country = _country(location.get("osm_address_country_code"))
+        row_currency, amount = _currency(row.get("currency")), _number(row.get("price"))
+        if amount is None or not row_currency or (curr and row_currency != curr):
+            continue
+        if market and row_country != market:
+            continue
+        try:
+            observed = date.fromisoformat(_text(row.get("date")))
+        except ValueError:
+            continue
+        if not cutoff <= observed <= today:
+            continue
+        if category and not code:
+            if category_type == "CATEGORY" and row.get("category_tag") != category:
+                continue
+            if category_type == "PRODUCT" and category not in (product.get("categories_tags") or []):
+                continue
         price_per = _text(row.get("price_per")).upper()
-        if price_per == "UNIT":
-            basis_quantity = _number(product.get("product_quantity"))
-            basis_unit = _text(product.get("product_quantity_unit"))
-        elif price_per == "KG":
-            basis_quantity, basis_unit = 1.0, "kg"
-        elif price_per in {"L", "LITER", "LITRE"}:
-            basis_quantity, basis_unit = 1.0, "l"
-        usable = bool(basis_quantity is not None and basis_quantity > 0 and basis_unit)
-        normalized.append(
-            {
-                "id": row.get("id"),
-                "barcode": code,
-                "amount": price,
-                "currency": row_currency,
-                "basisQuantity": basis_quantity,
-                "basisUnit": basis_unit,
-                "pricePer": price_per,
-                "usable": usable,
-                "date": _text(row.get("date")),
-                "country": row_country,
-                "location": _text(location.get("osm_name") or location.get("osm_display_name")),
-                "productName": _text(row.get("product_name") or product.get("product_name")),
-                "source": "open_prices",
-                "confidence": "external_observation",
-            }
-        )
-
-    groups: dict[str, list[float]] = {}
-    for row in normalized:
-        if row["usable"]:
-            groups.setdefault(row["currency"], []).append(float(row["amount"]))
-    medians = {key: round(statistics.median(values), 2) for key, values in groups.items() if values}
-    return {
-        "ok": True,
-        "barcode": code,
-        "items": normalized,
-        "count": len(normalized),
-        "usableCount": sum(bool(row["usable"]) for row in normalized),
-        "medianObservedPriceByCurrency": medians,
-    }
+        basis, unit = None, ""
+        if row.get("type") == "PRODUCT" and price_per in {"", "UNIT"}:
+            basis, unit = _number(product.get("product_quantity")), _text(product.get("product_quantity_unit"))
+        elif price_per == "KILOGRAM":
+            basis, unit = 1.0, "kg"
+        elif row.get("type") == "CATEGORY" and price_per == "UNIT":
+            basis, unit = 1.0, "pcs"
+        normalized.append({"id": row.get("id"), "barcode": _text(row.get("product_code")),
+            "amount": amount, "currency": row_currency, "basisQuantity": basis, "basisUnit": unit,
+            "pricePer": price_per, "usable": bool(basis and unit), "date": observed.isoformat(),
+            "country": row_country, "location": _text(location.get("osm_name") or location.get("osm_display_name")),
+            "productName": _text(row.get("product_name") or product.get("product_name")),
+            "source": "open_prices", "confidence": "external_observation", "category": category})
+    return {"ok": True, "barcode": code, "items": normalized, "count": len(normalized),
+            "usableCount": sum(bool(row["usable"]) for row in normalized)}
 
 
 async def async_store_open_price_result(
@@ -391,9 +396,7 @@ async def async_store_open_price_result(
     country = _country(preferred_country)
     filtered = [row for row in items if not curr or row.get("currency") == curr]
     if country:
-        local = [row for row in filtered if row.get("country") == country]
-        if local:
-            filtered = local
+        filtered = [row for row in filtered if row.get("country") == country]
     if not filtered:
         return None
     filtered.sort(key=lambda row: _text(row.get("date")), reverse=True)

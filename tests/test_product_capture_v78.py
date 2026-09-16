@@ -111,6 +111,8 @@ class ProductCaptureTests(unittest.IsolatedAsyncioTestCase):
             '_state':lambda *args:{'houseIngredients':self.bridge.recipe_hub.profile['houseIngredients']},
             'nutrition_store_for_bridge':AsyncMock(return_value=object()),
             'async_save_lot_nutrition':AsyncMock(), 'async_reconcile_nutrition_inventory':AsyncMock(),
+            'validate_paid_price':importlib.import_module(runtime.PREFIX+'.automatic_prices').validate_paid_price,
+            'save_product_prices':AsyncMock(),
             'update_expiry_notification':lambda bridge:None}
         runtime.functions('websocket_v33.py',{'ws_barcode_lookup','ws_product_add','_draft','_image_bytes'},ns)
         return ns

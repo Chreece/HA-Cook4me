@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import {fileURLToPath} from 'node:url';
+const version=process.env.COOK4ME_TEST_PANEL_VERSION||'78';
 const {chromium}=createRequire(import.meta.url)('playwright');
 const browser=await chromium.launch({headless:true,executablePath:process.env.COOK4ME_CHROMIUM_EXECUTABLE||undefined,args:['--no-sandbox','--disable-gpu','--disable-software-rasterizer','--use-gl=disabled']});
 try{
@@ -8,9 +9,9 @@ try{
  page.on('pageerror',error=>errors.push(error.message));
  await page.route('http://cook4me.test/**',r=>r.fulfill({contentType:'text/html',body:'<!doctype html><style>body{margin:0;font-family:Arial;--primary-color:#3d775d;--primary-text-color:#253b30;--primary-background-color:#f8faf8;--card-background-color:#fff;--secondary-background-color:#edf2ee;--secondary-text-color:#627468;--divider-color:#dce5df}</style><body></body>'}));
  await page.goto('http://cook4me.test/');
- await page.addScriptTag({path:fileURLToPath(new URL('../custom_components/cook4me/frontend/cook4me-panel-v78-bundle.js',import.meta.url))});
- await page.evaluate(()=>{
-  const panel=document.createElement('cook4me-recipe-hub-panel-v78');window.panel=panel;window.calls=[];
+ await page.addScriptTag({path:fileURLToPath(new URL(`../custom_components/cook4me/frontend/cook4me-panel-v${version}-bundle.js`,import.meta.url))});
+ await page.evaluate(version=>{
+  const panel=document.createElement(`cook4me-recipe-hub-panel-v${version}`);window.panel=panel;window.calls=[];
   for(const method of ['_restorePreferences','_loadOverview','_loadBookState','_requestSection','_loadRecipeNutrition','_loadNutritionSettings','_loadFoodState','_loadInventoryState','_loadIngredientCatalog'])panel[method]=async()=>{};
   panel._hass={language:'en',user:{id:'scanner'},states:{},config:{country:'DE'},connection:{}};
   panel._entryId='one';panel._entries=[{entry_id:'one',title:'Kitchen Cook4Me',connected:true,state:{},recipes:[],profile:{diet:'vegetarian',houseIngredients:[],allergies:['peanuts'],avoid:[],preferences:[],householdMembers:[]}}];panel._tab='profile';
@@ -27,8 +28,8 @@ try{
    return {};
   };
   document.body.append(panel);panel._renderShell();panel._renderTab();
- });
- const panel=page.locator('cook4me-recipe-hub-panel-v78');
+ },version);
+ const panel=page.locator(`cook4me-recipe-hub-panel-v${version}`);
  assert.equal(await panel.locator('[data-v78-section=stock]').isVisible(),true);
  await panel.locator('[data-v78-pane=food]').click();await panel.locator('#preferences').fill('Quick dinners');
  await page.evaluate(()=>window.panel._renderTab());assert.equal(await panel.locator('#preferences').inputValue(),'Quick dinners');

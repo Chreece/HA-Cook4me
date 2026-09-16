@@ -25,6 +25,7 @@ from .nutrition_label import async_save_lot_nutrition
 from .nutrition_inventory import async_reconcile_nutrition_inventory
 from .storage_locations import normalize_locations
 from .expiry import update_expiry_notification
+from .automatic_prices import validate_paid_price, save_product_prices
 
 
 def _ai_choices(hass, user):
@@ -189,7 +190,7 @@ async def ws_recognize_photo(hass, connection, msg):
                                   vol.Required("ingredient"): dict, vol.Required("quantity"): vol.Any(int, float, str),
                                   vol.Required("unit"): str, vol.Optional("language"): str,
                                   vol.Optional("best_before", default=""): str, vol.Optional("lot_metadata", default={}): dict,
-                                  vol.Optional("nutrition"): dict})
+                                  vol.Optional("nutrition"): dict, vol.Optional("paid_price"): dict})
 @websocket_api.async_response
 async def ws_product_add(hass, connection, msg):
     committed = False
@@ -201,6 +202,10 @@ async def ws_product_add(hass, connection, msg):
             raise ValueError("Choose an ingredient from the Cook4Me catalog")
         if not _quantity(msg["quantity"]) or not msg["unit"].strip():
             raise ValueError("Enter a positive package amount and unit")
+        # Validate paid amounts before committing stock. Observation estimates are
+        # never accepted as paid prices from the browser.
+        validate_paid_price(msg.get("paid_price"))
+        ingredient = {**ingredient, "key": ingredient.get("key") or ingredient.get("ingredientId") or ingredient.get("id")}
         metadata = {key: value for key, value in msg.get("lot_metadata", {}).items() if key in {
             "barcode", "productName", "brand", "storageLocationId", "purchaseDate", "openedAt", "useWithinDays"}}
         if not metadata.get("storageLocationId"):
@@ -240,6 +245,10 @@ async def ws_product_add(hass, connection, msg):
                         "productName": metadata.get("productName"), "brand": metadata.get("brand"), "nutrition": nutrition})
             except Exception:
                 warnings.append("Stock saved, but the barcode mapping could not be remembered.")
+            try:
+                await save_product_prices(bridge, ingredient, receipt["lotId"], msg, metadata)
+            except Exception:
+                warnings.append("Stock saved, but prices could not be saved. Retry this save to finish without adding stock again.")
             update_expiry_notification(bridge)
             connection.send_result(msg["id"], {"status": "added", "lotId": receipt["lotId"], "warnings": warnings,
                 **_state(hass, bridge, connection.user)})

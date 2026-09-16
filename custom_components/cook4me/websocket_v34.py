@@ -1,0 +1,77 @@
+"""Automatic country-scoped product and recipe prices."""
+from __future__ import annotations
+
+import voluptuous as vol
+from homeassistant.components import websocket_api
+from homeassistant.core import callback
+
+from . import websocket as legacy, websocket_v11 as v11
+from .websocket_v32 import _authorized
+from .automatic_prices import country_currency, price_settings, product_price, recipe_price, validate_market
+from .barcode import normalize_barcode
+from .costs import _country, _currency, cost_store_for_bridge
+from .inventory import inventory_identity
+
+
+@websocket_api.websocket_command({vol.Required('type'): 'cook4me/v34/price_settings', vol.Required('entry_id'): str,
+    vol.Optional('country'): str, vol.Optional('currency'): str, vol.Optional('auto_global_prices'): bool})
+@websocket_api.async_response
+async def ws_price_settings(hass, connection, msg):
+    try:
+        bridge = _authorized(hass, connection, msg)
+        settings = await price_settings(bridge)
+        if any(key in msg for key in ('country', 'currency', 'auto_global_prices')):
+            country = _country(msg.get('country', settings['country']))
+            currency = _currency(msg.get('currency', country_currency(country) if 'country' in msg else settings['currency']))
+            if not country or not currency:
+                raise ValueError('Choose a country code (for example DE) and currency (for example EUR)')
+            validate_market(country, currency)
+            store = await cost_store_for_bridge(bridge)
+            settings = await store.async_set_settings(country=country, currency=currency,
+                auto_global_prices=msg.get('auto_global_prices', settings['autoGlobalPrices']))
+        connection.send_result(msg['id'], {'settings': settings})
+    except Exception as exc:
+        legacy._send_error(connection, msg, exc)
+
+
+@websocket_api.websocket_command({vol.Required('type'): 'cook4me/v34/product_price', vol.Required('entry_id'): str,
+    vol.Optional('barcode', default=''): str, vol.Optional('ingredient'): dict, vol.Optional('language', default='en'): str,
+    vol.Optional('quantity'): vol.Any(int, float, str), vol.Optional('unit', default=''): str})
+@websocket_api.async_response
+async def ws_product_price(hass, connection, msg):
+    try:
+        bridge = _authorized(hass, connection, msg)
+        barcode = normalize_barcode(msg['barcode']) if msg.get('barcode') else ''
+        ingredient = None
+        if msg.get('ingredient'):
+            catalog = await v11._ingredient_catalog(hass, bridge, msg.get('language') or 'en', refresh=False)
+            wanted = inventory_identity(msg['ingredient'])
+            ingredient = next((row for row in catalog.get('items', []) if inventory_identity(row) == wanted), None)
+            if ingredient is None:
+                raise ValueError('Choose an ingredient from the Cook4Me catalog')
+            ingredient = {**ingredient, 'key': ingredient.get('key') or ingredient.get('ingredientId') or ingredient.get('id')}
+        result = await product_price(bridge, barcode=barcode, ingredient=ingredient, quantity=msg.get('quantity'), unit=msg.get('unit', ''))
+        connection.send_result(msg['id'], result)
+    except Exception as exc:
+        legacy._send_error(connection, msg, exc)
+
+
+@websocket_api.websocket_command({vol.Required('type'): 'cook4me/v34/recipe_cost', vol.Required('entry_id'): str,
+    vol.Required('recipe'): dict})
+@websocket_api.async_response
+async def ws_recipe_cost(hass, connection, msg):
+    try:
+        bridge = _authorized(hass, connection, msg)
+        if len(msg['recipe'].get('ingredients') or []) > 200:
+            raise ValueError('This recipe has too many ingredients')
+        catalog = await v11._ingredient_catalog(hass, bridge, 'en', refresh=False)
+        result = await recipe_price(bridge, msg['recipe'], catalog.get('items', []))
+        connection.send_result(msg['id'], result)
+    except Exception as exc:
+        legacy._send_error(connection, msg, exc)
+
+
+@callback
+def async_register(hass):
+    for command in (ws_price_settings, ws_product_price, ws_recipe_cost):
+        websocket_api.async_register_command(hass, command)

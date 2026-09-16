@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+from datetime import datetime, timezone
 from hashlib import sha256
 import json
 from typing import Any
@@ -94,23 +95,11 @@ def _reference_shape(store: Any, identities: set[str]) -> list[dict[str, Any]]:
     data = getattr(store, "_data", {})
     raw_refs = data.get("references") if isinstance(data, dict) else {}
     rows: list[dict[str, Any]] = []
-    for ident in sorted(identities):
-        for raw in (raw_refs.get(ident) if isinstance(raw_refs, dict) else []) or []:
-            if not isinstance(raw, dict):
-                continue
-            rows.append({
-                "identity": ident,
-                "amount": raw.get("amount"),
-                "currency": _text(raw.get("currency")),
-                "basisQuantity": raw.get("basisQuantity"),
-                "basisUnit": _text(raw.get("basisUnit")),
-                "source": _text(raw.get("source")),
-                "confidence": _text(raw.get("confidence")),
-                "country": _text(raw.get("country")),
-                "barcode": _text(raw.get("barcode")),
-                "observationId": _text(raw.get("observationId")),
-                "date": _text(raw.get("date")),
-            })
+    for raw in (raw_refs.values() if isinstance(raw_refs, dict) else []):
+        # Current storage is composite-key -> row, not identity -> list.
+        if not isinstance(raw, dict) or raw.get("identity") not in identities:
+            continue
+        rows.append(deepcopy(raw))
     rows.sort(key=lambda row: json.dumps(row, sort_keys=True, default=str))
     return rows
 
@@ -118,6 +107,8 @@ def _reference_shape(store: Any, identities: set[str]) -> list[dict[str, Any]]:
 def pricing_fingerprint(recipe: dict[str, Any], inventory: Any, store: Any) -> str:
     stock, identities = _relevant_inventory(recipe, inventory)
     return _canonical_hash({
+        "calculatorVersion": 79,
+        "priceDate": datetime.now(timezone.utc).date().isoformat(),
         "settings": {
             "currency": _text(getattr(store, "settings", {}).get("currency")),
             "country": _text(getattr(store, "settings", {}).get("country")),
