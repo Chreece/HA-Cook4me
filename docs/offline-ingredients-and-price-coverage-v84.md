@@ -82,3 +82,10 @@ active-panel assertions still expecting v83. Those assertions were updated to v8
 and the affected suites passed together with the final pricing regressions.
 Additional focused tests cover unknown measurement budgets and continued hydration.
 Bundle generation, JavaScript/Python syntax, version and diff validation passed.
+
+Runtime commit: `d88f73d0420b48bea075986b20d15a3cf274a8fd`.
+Installer: `tools/deploy_offline_runtime_v84.sh`; it preserves a backup, runs offline
+preflight checks, verifies the served panel, and rolls back failed activation.
+
+All four v84 installer tests passed, including backup/rollback and source/mount
+validation. No changes were applied to a live Home Assistant installation.
