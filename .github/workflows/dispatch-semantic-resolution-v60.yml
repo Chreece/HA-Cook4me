@@ -21,8 +21,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -Eeuo pipefail
-          # Dispatch after the second evidence-pinned standalone merge batch.
-          gh workflow run catalog-semantic-confirmation-apply-v60.yml \
+          gh workflow run catalog-semantic-resolution-apply-v60.yml \
             --repo "$GITHUB_REPOSITORY" \
             --ref cook4me-ingredient-semantic-confirmation-v60
           gh workflow run catalog-semantic-remaining-audit-v60.yml \
