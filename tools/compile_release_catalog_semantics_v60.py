@@ -46,6 +46,14 @@ _REVIEW_ONLY_ANNOTATION = re.compile(
     r"\s*\((source (?:spelling|grammar|wording))\)\s*$",
     re.IGNORECASE,
 )
+_SOURCE_TYPO_ONLY = re.compile(
+    r"\s*\(source typo\)\s*$",
+    re.IGNORECASE,
+)
+_QUALIFIED_SOURCE_TYPO = re.compile(
+    r"\s*\(([^()]*)\s*;\s*source typo\)\s*$",
+    re.IGNORECASE,
+)
 _QUANTITY_ONLY_ANNOTATION = re.compile(
     r"\s*\(quantity fragment:\s*[^()]+\)\s*$",
     re.IGNORECASE,
@@ -384,6 +392,16 @@ def _safe_syntactic_english(value: str) -> str:
         text = _SECTION_PREFIX.sub("", text, count=1).strip()
         text = _MALFORMED_QUANTITY_PREFIX.sub("", text, count=1).strip()
         text = _REVIEW_ONLY_ANNOTATION.sub("", text, count=1).strip()
+        source_typo = _QUALIFIED_SOURCE_TYPO.search(text)
+        if source_typo:
+            qualifier = _text(source_typo.group(1))
+            text = (
+                text[: source_typo.start()]
+                + (f" ({qualifier})" if qualifier else "")
+                + text[source_typo.end() :]
+            ).strip()
+        else:
+            text = _SOURCE_TYPO_ONLY.sub("", text, count=1).strip()
         text = _QUANTITY_ONLY_ANNOTATION.sub("", text, count=1).strip()
         match = _QUALIFIED_QUANTITY_ANNOTATION.search(text)
         if match:
