@@ -1,0 +1,193 @@
+name: Close reviewed ambiguous runtime validator v60
+
+on:
+  push:
+    branches:
+      - cook4me-ingredient-semantic-confirmation-v60
+    paths:
+      - '.github/workflows/runtime-validator-reviewed-ambiguous-v60.yml'
+
+permissions:
+  actions: write
+  contents: write
+
+jobs:
+  patch-test-dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Patch reviewed ambiguous validator contract
+        run: |
+          set -Eeuo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          validator_path = Path('tools/validate_release_catalog_v60.py')
+          validator = validator_path.read_text(encoding='utf-8')
+          old = '''            if classification == "ambiguous":
+                ambiguous_ids.add(ident)
+                if row.get("needsSemanticConfirmation") is not True:
+                    errors.append(f"ambiguous ingredient {ident} must need semantic confirmation")
+                for field in ("nutritionEligible", "dietEligible", "allergenEligible"):
+                    if row.get(field) is not False:
+                        errors.append(f"ambiguous ingredient {ident} must set {field}=false")
+          '''
+          new = '''            if classification == "ambiguous":
+                ambiguous_ids.add(ident)
+                concept_id = _text(row.get("conceptId"))
+                reviewed_ambiguous = bool(
+                    row.get("needsSemanticConfirmation") is False
+                    and concept_id.startswith("concept:source:")
+                    and _text(row.get("semanticMergePolicy"))
+                    == "reviewed-ambiguous-source-fragment"
+                    and row.get("providerIdentityAssigned") is False
+                    and not provider_key
+                    and all(
+                        row.get(field) is False
+                        for field in (
+                            "nutritionEligible",
+                            "dietEligible",
+                            "allergenEligible",
+                        )
+                    )
+                )
+                if (
+                    row.get("needsSemanticConfirmation") is not True
+                    and not reviewed_ambiguous
+                ):
+                    errors.append(
+                        f"ambiguous ingredient {ident} may be final only with "
+                        "reviewed source-fragment disposition"
+                    )
+                for field in ("nutritionEligible", "dietEligible", "allergenEligible"):
+                    if row.get(field) is not False:
+                        errors.append(f"ambiguous ingredient {ident} must set {field}=false")
+          '''
+          if validator.count(old) != 1:
+              raise SystemExit(f'validator patch anchor count={validator.count(old)}')
+          validator_path.write_text(validator.replace(old, new, 1), encoding='utf-8')
+
+          test_path = Path('tests/test_validate_release_catalog_v60.py')
+          tests = test_path.read_text(encoding='utf-8')
+          concept_old = '"conceptId": "concept:ambiguous:palitos"'
+          if tests.count(concept_old) != 2:
+              raise SystemExit(f'test concept anchor count={tests.count(concept_old)}')
+          tests = tests.replace(
+              concept_old,
+              '"conceptId": "concept:source:fixture-palitos"',
+          )
+          merge_anchor = '''                "canonicalName": "Sticks / toothpicks",
+                "translations": {"pt": "Palitos", "en": "Sticks / toothpicks"},
+          '''
+          merge_replacement = '''                "canonicalName": "Sticks / toothpicks",
+                "semanticMergePolicy": "reviewed-ambiguous-source-fragment",
+                "translations": {"pt": "Palitos", "en": "Sticks / toothpicks"},
+          '''
+          if tests.count(merge_anchor) != 1:
+              raise SystemExit(f'test merge-policy anchor count={tests.count(merge_anchor)}')
+          tests = tests.replace(merge_anchor, merge_replacement, 1)
+          pending_anchor = '''                "needsSemanticConfirmation": True,
+            },
+        ],
+          '''
+          if tests.count(pending_anchor) != 1:
+              raise SystemExit(f'test pending anchor count={tests.count(pending_anchor)}')
+          tests = tests.replace(
+              pending_anchor,
+              '''                "needsSemanticConfirmation": False,
+            },
+        ],
+          ''',
+              1,
+          )
+
+          insertion = '''
+    def test_closed_ambiguous_without_review_receipt_is_rejected(self):
+        payload = base_catalog()
+        ambiguous = next(
+            row for row in payload["ingredients"] if row.get("classification") == "ambiguous"
+        )
+        ambiguous.pop("semanticMergePolicy", None)
+        payload["searchIndex"] = validator.catalog_search_index.compile_search_index(payload)
+        payload["recipeSafetyIndex"] = (
+            validator.recipe_safety_index_v60.compile_recipe_safety_index(payload)
+        )
+        result = validator.validate(payload)
+        self.assertFalse(result["valid"])
+        self.assertTrue(
+            any("reviewed source-fragment disposition" in error for error in result["errors"])
+        )
+
+    def test_closed_ambiguous_cross_identity_concept_is_rejected(self):
+        payload = base_catalog()
+        ambiguous = next(
+            row for row in payload["ingredients"] if row.get("classification") == "ambiguous"
+        )
+        ambiguous["conceptId"] = "concept:ambiguous:palitos"
+        payload["searchIndex"] = validator.catalog_search_index.compile_search_index(payload)
+        payload["recipeSafetyIndex"] = (
+            validator.recipe_safety_index_v60.compile_recipe_safety_index(payload)
+        )
+        result = validator.validate(payload)
+        self.assertFalse(result["valid"])
+        self.assertTrue(
+            any("reviewed source-fragment disposition" in error for error in result["errors"])
+        )
+
+    def test_closed_ambiguous_cannot_gain_safety_eligibility(self):
+        payload = base_catalog()
+        ambiguous = next(
+            row for row in payload["ingredients"] if row.get("classification") == "ambiguous"
+        )
+        ambiguous["dietEligible"] = True
+        payload["searchIndex"] = validator.catalog_search_index.compile_search_index(payload)
+        payload["recipeSafetyIndex"] = (
+            validator.recipe_safety_index_v60.compile_recipe_safety_index(payload)
+        )
+        result = validator.validate(payload)
+        self.assertFalse(result["valid"])
+        self.assertTrue(
+            any("must set dietEligible=false" in error for error in result["errors"])
+        )
+
+          '''
+          main_anchor = '\n\nif __name__ == "__main__":\n    unittest.main()\n'
+          if tests.count(main_anchor) != 1:
+              raise SystemExit(f'test insertion anchor count={tests.count(main_anchor)}')
+          tests = tests.replace(main_anchor, '\n' + insertion + main_anchor, 1)
+          test_path.write_text(tests, encoding='utf-8')
+          PY
+          git diff --check
+
+      - name: Run focused semantic runtime regressions
+        run: |
+          set -Eeuo pipefail
+          python -m unittest discover -s tests -p 'test_validate_release_catalog_v60.py'
+          python -m unittest discover -s tests -p 'test_reoverlay_captured_release_catalog_v60.py'
+          python -m unittest discover -s tests -p 'test_semantic_standalone_dispositions_v60.py'
+          python -m unittest discover -s tests -p 'test_compile_release_catalog_semantics_v60.py'
+
+      - name: Commit validated runtime validator closure
+        run: |
+          set -Eeuo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add tools/validate_release_catalog_v60.py tests/test_validate_release_catalog_v60.py
+          git diff --cached --check
+          git commit -m 'Accept explicitly reviewed ambiguous source fragments'
+          git push origin HEAD:cook4me-ingredient-semantic-confirmation-v60
+
+      - name: Dispatch full semantic catalog rebuild
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -Eeuo pipefail
+          gh workflow run catalog-semantic-confirmation-apply-v60.yml \
+            --ref cook4me-ingredient-semantic-confirmation-v60
