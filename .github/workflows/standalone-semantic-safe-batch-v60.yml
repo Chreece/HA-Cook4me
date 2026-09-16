@@ -34,7 +34,7 @@ jobs:
       - name: Apply evidence-pinned safe merge batch
         run: |
           set -Eeuo pipefail
-          python tools/apply_safe_standalone_semantic_batch2_v60.py
+          python tools/apply_safe_standalone_semantic_batch3_v60.py
           git diff --check
 
       - name: Run semantic regressions
@@ -42,6 +42,7 @@ jobs:
           set -Eeuo pipefail
           python -m unittest discover -s tests -p 'test_compile_release_catalog_semantics_v60.py'
           python -m unittest discover -s tests -p 'test_semantic_standalone_dispositions_v60.py'
+          python -m unittest discover -s tests -p 'test_semantic_standalone_equivalences_v60.py'
 
       - name: Prove exact semantic delta
         run: |
@@ -60,15 +61,15 @@ jobs:
           before = json.loads(Path(os.environ['RUNNER_TEMP'], 'semantic-before.json').read_text(encoding='utf-8'))
           after = json.loads(Path(os.environ['RUNNER_TEMP'], 'semantic-after.json').read_text(encoding='utf-8'))
 
-          helper_path = root / 'tools/apply_safe_standalone_semantic_batch2_v60.py'
-          spec = importlib.util.spec_from_file_location('cook4me_safe_semantic_batch2_check', helper_path)
+          helper_path = root / 'tools/apply_safe_standalone_semantic_batch3_v60.py'
+          spec = importlib.util.spec_from_file_location('cook4me_safe_semantic_batch3_check', helper_path)
           helper = importlib.util.module_from_spec(spec)
           assert spec.loader is not None
           spec.loader.exec_module(helper)
           decisions = helper.DECISIONS
           expected_delta = len(decisions)
-          if expected_delta <= 0:
-              raise SystemExit('safe semantic batch is empty')
+          if expected_delta != 22:
+              raise SystemExit(f'unexpected safe semantic batch size: {expected_delta}')
 
           before_summary = before['summary']
           after_summary = after['summary']
@@ -96,6 +97,8 @@ jobs:
               raise SystemExit('semantic concept consolidation count mismatch')
           if after_summary['reviewedAmbiguousSourceLabels'] != before_summary['reviewedAmbiguousSourceLabels']:
               raise SystemExit('ambiguous reviewed closure count changed')
+          if after_summary.get('standaloneEquivalentSourceLabels') != before_summary.get('standaloneEquivalentSourceLabels'):
+              raise SystemExit('exact standalone-pair resolution count changed')
 
           mapping = after['sourceIdentityToConcept']
           standalone = json.loads(
@@ -134,6 +137,7 @@ jobs:
               'semanticEquivalenceAfter': after_summary['semanticEquivalentConfirmedSourceLabels'],
               'semanticConceptsBefore': before_summary['semanticConcepts'],
               'semanticConceptsAfter': after_summary['semanticConcepts'],
+              'standalonePairCount': after_summary.get('standaloneEquivalentSourceLabels'),
               'pendingAfter': after_summary['needsSemanticConfirmationSourceLabels'],
           }, ensure_ascii=False, indent=2))
           PY
@@ -147,5 +151,5 @@ jobs:
             tools/release_catalog_semantic_confirmations.v1.json \
             tools/release_catalog_semantic_standalone_dispositions.v1.json
           git diff --cached --check
-          git commit -m 'Merge second safe standalone ingredient semantics v60'
+          git commit -m 'Merge third safe standalone ingredient semantics v60'
           git push origin HEAD:cook4me-ingredient-semantic-confirmation-v60
