@@ -76,6 +76,7 @@ jobs:
           python tools/build_frontend_bundle_v73.py --check
           python tools/build_frontend_bundle_v74.py --check
           python tools/build_frontend_bundle_v76.py --check
+          python tools/build_frontend_bundle_v77.py --check
           bash -n tools/deploy_offline_runtime_v75.sh
           python - <<'PY'
           import json
@@ -171,3 +172,11 @@ jobs:
           timeout 60s env COOK4ME_TEST_PANEL_VERSION=76 node tests/frontend_v73_photo_bounds_browser.mjs
       - name: Validate v76 installer
         run: sudo "$(command -v python)" -m unittest discover -s tests -p test_deploy_offline_runtime_v76.py -v
+      - name: Verify v77 sending with ingredient replacements
+        run: |
+          bash -n tools/deploy_offline_runtime_v77.sh
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=77 node tests/frontend_v76_diet_substitutions_smoke.mjs
+          timeout 40s node tests/frontend_v77_diet_send_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=77 node tests/frontend_v71_card_interactions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=77 node tests/frontend_v74_async_navigation_smoke.mjs
+          timeout 60s env COOK4ME_TEST_PANEL_VERSION=77 node tests/frontend_v73_photo_bounds_browser.mjs

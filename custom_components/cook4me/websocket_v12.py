@@ -151,15 +151,15 @@ async def _wait_for_loaded_variant(bridge, variant_id: str, timeout: float = 10.
     return _loaded_variant(bridge) == target
 
 
-async def _send_recipe_replaceable(bridge, variant_id: str) -> dict[str, Any]:
+async def _send_recipe_replaceable(bridge, variant_id: str, *, diet: str | None = None) -> dict[str, Any]:
     lock = getattr(bridge, "_send_lock", None)
     if lock is None:
         lock = bridge._send_lock = asyncio.Lock()
     async with lock:
-        return await _send_recipe_replaceable_locked(bridge, variant_id)
+        return await _send_recipe_replaceable_locked(bridge, variant_id, diet=diet)
 
 
-async def _send_recipe_replaceable_locked(bridge, variant_id: str) -> dict[str, Any]:
+async def _send_recipe_replaceable_locked(bridge, variant_id: str, *, diet: str | None = None) -> dict[str, Any]:
     """Send a recipe, replacing only a safely pre-cook loaded recipe.
 
     The proven cloud route writes a new recipe reference into the appliance
@@ -183,7 +183,7 @@ async def _send_recipe_replaceable_locked(bridge, variant_id: str) -> dict[str, 
     if not bridge.available:
         raise HomeAssistantError("Cook4Me is not connected to the cloud")
 
-    annotated = bridge._profile_match_or_raise(meta)
+    annotated = bridge._profile_match_or_raise(meta, **({"diet": diet} if diet is not None else {}))
     loaded = bridge.loaded_recipe
     replacing = False
     phase = _recipe_phase(bridge)

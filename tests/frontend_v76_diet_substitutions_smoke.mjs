@@ -5,8 +5,9 @@ for(const key of ['document','customElements','HTMLElement','Node','Event','Cust
 globalThis.window=window;globalThis.requestAnimationFrame=fn=>setTimeout(fn,0);globalThis.cancelAnimationFrame=clearTimeout;
 globalThis.ResizeObserver=class{observe(){} disconnect(){}};globalThis.CSS={escape:String};
 globalThis.localStorage={getItem:()=>null,setItem(){},removeItem(){}};
-await import('../custom_components/cook4me/frontend/cook4me-panel-v76-bundle.js');
-const panel=document.createElement('cook4me-recipe-hub-panel-v76');
+const version=process.env.COOK4ME_TEST_PANEL_VERSION||'76';
+await import(`../custom_components/cook4me/frontend/cook4me-panel-v${version}-bundle.js`);
+const panel=document.createElement(`cook4me-recipe-hub-panel-v${version}`);
 panel._entryId='one';panel._hass={user:{id:'alice'},language:'el',connection:{sendMessagePromise:async msg=>{calls.push(msg);return {};}}};
 panel._entries=[{entry_id:'one',profile:{diet:'omnivore'},recipes:[]}];panel._tab='official';
 panel._v63FilterKey=panel._prefKey();panel._v63Filters={diet:'vegetarian',languages:['de'],mealTypes:[]};
@@ -24,7 +25,7 @@ const body=panel._v67Dom(panel._v66Body(recipe,false,{sections:new Set(),device:
 assert.equal(body.querySelectorAll('[data-v76-substitution]').length,2);
 assert.match(body.textContent,/Σφιχτό τόφου/);assert.match(body.textContent,/Μανιτάρια/);
 assert.equal(body.querySelectorAll('script').length,0);
-assert.equal(body.querySelector('[data-v66-action="send"]').disabled,true);
+assert.equal(body.querySelector('[data-v66-action="send"]').disabled,Number(version)<77);
 assert.equal(body.querySelector('[data-v66-action="shopping"]').disabled,true);
 await panel._api('cook4me/v31/recipe_detail',{entry_id:'one',variant_id:'r'});
 assert.equal(calls.at(-1).diet,'vegetarian','Opening detail preserves selected diet rather than household diet');

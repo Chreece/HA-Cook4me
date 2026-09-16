@@ -79,15 +79,16 @@ class RuntimeDietTests(unittest.IsolatedAsyncioTestCase):
     setUp = runtime.AuditTests.setUp
     asyncTearDown = runtime.AuditTests.asyncTearDown
 
-    async def test_original_cloud_recipe_stays_blocked_even_with_suggestions(self):
+    async def test_original_cloud_recipe_can_send_with_complete_suggestions(self):
         self.bridge.recipe_hub._data["profile"]["diet"] = "vegetarian"
         self.bridge.data = {"connected": True}
         meta = {"title": "Duck and prawns", "groupingFunctionalId": "g", "recipeFunctionalId": "r", "ingredients": ["duck", "prawns"]}
         self.bridge.async_recipe_detail = AsyncMock(return_value=meta)
         self.bridge._run_client_json = AsyncMock()
-        with self.assertRaisesRegex(runtime.HomeAssistantError, "dietary"):
-            await self.bridge.async_send_variant("r")
-        self.bridge._run_client_json.assert_not_awaited()
+        result = await self.bridge.async_send_variant("r")
+        self.assertFalse(result["recipe"]["match"]["safe"])
+        self.assertTrue(result["recipe"]["match"]["eligibleWithSubstitutions"])
+        self.bridge._run_client_json.assert_awaited_once_with("send-recipe", "g", "r", timeout=45)
 
     async def test_selected_diet_and_cache_preserve_original_and_all_substitutions(self):
         recipe = {"title": "Duck and prawns", "ingredients": ["duck", "prawns"]}

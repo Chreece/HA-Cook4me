@@ -150,7 +150,8 @@ async def _flush_one_queued_send(bridge) -> None:
             return
         # Detail retrieval and waiting behind another send can outlive a queue
         # cancellation/replacement. Check again under the device send lock.
-        await bridge.async_send_variant(variant, still_current=lambda: store.queued_send == queued)
+        diet_args = {"diet": queued["diet"]} if queued.get("diet") is not None else {}
+        await bridge.async_send_variant(variant, still_current=lambda: store.queued_send == queued, **diet_args)
         await store.async_clear_queue(expected=queued)
     except Exception:
         # Keep the request cached. Device state and cloud credentials can recover later.

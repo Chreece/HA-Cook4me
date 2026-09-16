@@ -11,6 +11,7 @@ from . import websocket_v12 as v12
 from . import websocket_v18 as v18
 from . import websocket_v22 as v22
 from .const import DATA_BRIDGES, DOMAIN
+from .bridge import Cook4MeDietaryError
 from .recipe_book import recipe_book_store_for_bridge
 from .request_coordinator import request_coordinator
 
@@ -36,11 +37,16 @@ async def _send_one_exact(bridge, recipe: dict[str, Any]) -> dict[str, Any]:
             "reason": "custom_recipe_has_no_official_seb_id",
         }
 
+    diet = recipe.get("sendDiet")
+    if diet not in (None, "profile", "omnivore", "pescatarian", "vegetarian", "vegan"):
+        return {"sent": False, "queued": False, "reason": "invalid_diet", "error": "Invalid Cook4Me diet selection"}
     store = await recipe_book_store_for_bridge(bridge)
     previous = store.queued_send
     if bridge.available:
         try:
-            result = await v12._send_recipe_replaceable(bridge, variant)
+            result = await v12._send_recipe_replaceable(bridge, variant, **({"diet": diet} if diet is not None else {}))
+        except Cook4MeDietaryError as exc:
+            return {"sent": False, "queued": False, "reason": "dietary_profile", "error": str(exc)}
         except Exception as exc:
             reason = "device_busy" if bridge.available else "device_offline"
             store = await recipe_book_store_for_bridge(bridge)

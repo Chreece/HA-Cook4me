@@ -139,6 +139,7 @@ class Cook4MeRecipeBookStore:
         data["queuedSend"] = {
             "queueId": str(uuid4()),
             "variantId": variant,
+            "diet": recipe.get("sendDiet"),
             "title": str(recipe.get("title") or variant),
             "reason": str(reason or "waiting_for_device"),
             "queuedAt": datetime.now(timezone.utc).isoformat(),

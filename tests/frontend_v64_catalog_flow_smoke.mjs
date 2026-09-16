@@ -60,7 +60,7 @@ resolveToday(fixture.today);await tick();
 assert.equal(panel._todayBusy,false);assert.equal(job.ended,true);
 assert.equal(panel.shadowRoot.querySelectorAll("#todayGrid article.recipe").length,fixture.today.items.length);
 assert.equal(panel.shadowRoot.querySelectorAll(".rx-category-result").length,fixture.today.items.length);
-assert.equal(panel.getAttribute("data-cook4me-build"),({64:"2026.9.15.6",65:"2026.9.15.7",66:"2026.9.15.8",67:"2026.9.15.9",68:"2026.9.15.10",69:"2026.9.15.11",70:"2026.9.15.12",71:"2026.9.15.13",72:"2026.9.15.14",73:"2026.9.15.15",74:"2026.9.15.16"})[version]);
+assert.equal(panel.getAttribute("data-cook4me-build"),({64:"2026.9.15.6",65:"2026.9.15.7",66:"2026.9.15.8",67:"2026.9.15.9",68:"2026.9.15.10",69:"2026.9.15.11",70:"2026.9.15.12",71:"2026.9.15.13",72:"2026.9.15.14",73:"2026.9.15.15",74:"2026.9.15.16",76:"2026.9.16.1",77:"2026.9.16.2"})[version]);
 assert.equal(panel.shadowRoot.querySelector("#cook4meLoadStatus")?.textContent||"","");
 // The real Ramen response passes through Official's actual search/render path.
 panel._tab="official";panel._renderTab();await panel._search("ramen");
@@ -77,8 +77,10 @@ if(Number(version)>=65){
  dialog.querySelector("[data-close]").click();
  const latinIds=panel._results.map(row=>row.displayFamilyId);
  await panel._search("Ράμεν");assert.deepEqual(panel._results.map(row=>row.displayFamilyId),latinIds);
- assert.equal(panel._results.length,2);
- const regional=panel._results.find(row=>row.regionalPublications);
+ // Complete diet adaptations add families; the UI must retain every checked
+ // backend result rather than assume the historical two vegetarian families.
+ assert.equal(panel._results.length,fixture.official.items.length);
+ const regional=panel._results.find(row=>row.regionalPublications&&row.canonicalName==="Vegetable ramen");
  assert.ok(regional);assert.equal(regional.publicationCount,5);
  await panel._selectRecipeLanguage(regional,"en",false);
  const selected=regional.displayVariantId;
