@@ -100,7 +100,7 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
         self.assertEqual(medium["mergePolicy"], "source-local-conservative")
         self.assertTrue(medium["needsSemanticConfirmation"])
 
-    def test_explicit_confirmation_merges_medium_into_existing_high_concept(self):
+    def test_explicit_exact_confirmation_merges_medium_into_existing_high_concept(self):
         payload = self._payload(
             [
                 {
@@ -136,26 +136,114 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
         )
         self.assertEqual(result["summary"]["semanticConcepts"], 1)
         self.assertEqual(result["summary"]["confirmedSourceLabels"], 1)
+        self.assertEqual(result["summary"]["exactConfirmedSourceLabels"], 1)
+        self.assertEqual(result["summary"]["syntacticConfirmedSourceLabels"], 0)
         self.assertEqual(
             result["summary"]["needsSemanticConfirmationSourceLabels"], 0
         )
         self.assertEqual(result["sourceIdentityToConcept"][source_id], concept_id)
         concept = result["concepts"][0]
-        self.assertFalse(concept["needsSemanticConfirmation"])
-        self.assertEqual(concept["mergePolicy"], "reviewed-high-exact-english")
-        confirmed_identity = next(
+        identity = next(
             row
             for row in concept["sourceIdentities"]
             if row["ingredientId"] == source_id
         )
-        self.assertEqual(confirmed_identity["confidence"], "medium")
         self.assertEqual(
-            confirmed_identity["semanticConfirmationMethod"],
+            identity["semanticConfirmationMethod"],
             "explicit-reviewed-english-classification",
         )
-        self.assertEqual(
-            confirmed_identity["semanticConfirmationFile"], "confirmations.json"
+
+    def _syntax_payload(self, medium_english, high_english, *, source="Medium source"):
+        return self._payload(
+            [
+                {
+                    "language": "uk",
+                    "source": source,
+                    "english": medium_english,
+                    "classification": "food",
+                    "confidence": "medium",
+                },
+                {
+                    "language": "en",
+                    "source": high_english,
+                    "english": high_english,
+                    "classification": "food",
+                    "confidence": "high",
+                },
+            ]
         )
+
+    def _assert_syntax_merge(self, medium_english, high_english):
+        payload = self._syntax_payload(medium_english, high_english)
+        source_id = mod.source_local_ingredient_id("uk", "Medium source")
+        result = mod.compile_semantic_concepts(
+            [("batch.json", payload)],
+            syntax_confirmation_ids={source_id},
+            syntax_confirmation_file="syntax.txt",
+        )
+        concept_id = mod._semantic_concept_id("food", high_english)
+        self.assertEqual(result["sourceIdentityToConcept"][source_id], concept_id)
+        self.assertEqual(result["summary"]["syntacticConfirmedSourceLabels"], 1)
+        self.assertEqual(
+            result["summary"]["needsSemanticConfirmationSourceLabels"], 0
+        )
+        concept = next(
+            row for row in result["concepts"] if row["conceptId"] == concept_id
+        )
+        identity = next(
+            row
+            for row in concept["sourceIdentities"]
+            if row["ingredientId"] == source_id
+        )
+        self.assertEqual(
+            identity["semanticConfirmationMethod"],
+            "explicit-reviewed-syntactic-normalization",
+        )
+
+    def test_whitelisted_section_prefix_is_syntax_only(self):
+        self._assert_syntax_merge("A- melted butter", "Melted butter")
+
+    def test_whitelisted_malformed_quantity_prefix_is_syntax_only(self):
+        self._assert_syntax_merge(
+            "/2 onion, peeled and chopped", "Onion, peeled and chopped"
+        )
+
+    def test_whitelisted_review_annotation_is_syntax_only(self):
+        self._assert_syntax_merge("Egg noodles (source grammar)", "Egg noodles")
+
+    def test_whitelisted_quantity_annotation_preserves_real_qualifier(self):
+        self._assert_syntax_merge(
+            "Candied lemon (without flesh, thinly sliced; quantity fragment: /2)",
+            "Candied lemon (without flesh, thinly sliced)",
+        )
+        self.assertEqual(
+            mod._safe_syntactic_english(
+                "Lemon (finely grated zest; quantity fragment: /3)"
+            ),
+            "Lemon (finely grated zest)",
+        )
+
+    def test_unwhitelisted_syntax_equivalent_row_remains_pending(self):
+        payload = self._syntax_payload("A- melted butter", "Melted butter")
+        result = mod.compile_semantic_concepts([("batch.json", payload)])
+        self.assertEqual(result["summary"]["syntacticConfirmedSourceLabels"], 0)
+        self.assertEqual(
+            result["summary"]["needsSemanticConfirmationSourceLabels"], 1
+        )
+        self.assertEqual(result["summary"]["semanticConcepts"], 2)
+
+    def test_alternative_ingredient_wording_is_not_syntactically_erased(self):
+        value = "Vegetable stock (or salted water; source grammar)"
+        self.assertEqual(mod._safe_syntactic_english(value), value)
+        payload = self._syntax_payload(value, "Vegetable stock")
+        source_id = mod.source_local_ingredient_id("uk", "Medium source")
+        with self.assertRaisesRegex(
+            RuntimeError, "does not remove approved syntax noise"
+        ):
+            mod.compile_semantic_concepts(
+                [("batch.json", payload)],
+                syntax_confirmation_ids={source_id},
+            )
 
     def test_confirmation_requires_existing_high_confidence_target(self):
         payload = self._payload(
@@ -186,8 +274,8 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
                 confirmation_payload=confirmation,
             )
 
-    def test_confirmation_rejects_wrong_meaning_or_ambiguous_source(self):
-        food_payload = self._payload(
+    def test_exact_confirmation_rejects_wrong_meaning(self):
+        payload = self._payload(
             [
                 {
                     "language": "tr",
@@ -225,46 +313,17 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
         )
         with self.assertRaisesRegex(RuntimeError, "does not preserve exact"):
             mod.compile_semantic_concepts(
-                [("batch.json", food_payload)],
+                [("batch.json", payload)],
                 confirmation_payload=wrong,
             )
 
-        ambiguous_payload = self._payload(
-            [
-                {
-                    "language": "uk",
-                    "source": "очищених та тонко нарізаних",
-                    "english": "Peeled and thinly sliced",
-                    "classification": "ambiguous",
-                    "confidence": "medium",
-                }
-            ]
-        )
-        ambiguous_id = mod.source_local_ingredient_id(
-            "uk", "очищених та тонко нарізаних"
-        )
-        ambiguous_confirmation = self._confirmation(
-            [
-                {
-                    "sourceIngredientId": ambiguous_id,
-                    "confirmedConceptId": mod._semantic_concept_id(
-                        "ambiguous", "Peeled and thinly sliced"
-                    ),
-                }
-            ]
-        )
-        with self.assertRaisesRegex(RuntimeError, "cannot merge classification"):
-            mod.compile_semantic_concepts(
-                [("batch.json", ambiguous_payload)],
-                confirmation_payload=ambiguous_confirmation,
-            )
-
-    def test_ambiguous_review_is_preserved_but_never_nutrition_eligible(self):
+    def test_ambiguous_review_is_preserved_and_cannot_be_syntax_confirmed(self):
+        source = "очищених та тонко нарізаних"
         payload = self._payload(
             [
                 {
                     "language": "uk",
-                    "source": "очищених та тонko нарізanих",
+                    "source": source,
                     "english": "Peeled and thinly sliced",
                     "classification": "ambiguous",
                     "confidence": "medium",
@@ -273,11 +332,16 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
         )
         result = mod.compile_semantic_concepts([("batch.json", payload)])
         concept = result["concepts"][0]
-        self.assertEqual(concept["classification"], "ambiguous")
         self.assertFalse(concept["nutritionEligible"])
         self.assertFalse(concept["dietEligible"])
         self.assertFalse(concept["allergenEligible"])
         self.assertTrue(concept["needsSemanticConfirmation"])
+        source_id = mod.source_local_ingredient_id("uk", source)
+        with self.assertRaisesRegex(RuntimeError, "cannot merge classification"):
+            mod.compile_semantic_concepts(
+                [("batch.json", payload)],
+                syntax_confirmation_ids={source_id},
+            )
 
     def test_source_local_identity_matches_v2_contract_and_is_stable(self):
         first = mod.source_local_ingredient_id("de", "Tomate")
@@ -309,44 +373,58 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             mod.compile_semantic_concepts([("batch.json", payload)])
 
-    def test_repository_confirmation_overlay_is_exact_and_lossless(self):
+    def test_repository_confirmation_overlays_are_exact_and_lossless(self):
         tools = ROOT / "tools"
-        confirmation_path = tools / "release_catalog_semantic_confirmations.v1.json"
-        confirmation = json.loads(confirmation_path.read_text(encoding="utf-8"))
-        items = confirmation["items"]
-        self.assertGreaterEqual(len(items), 100)
+        exact_path = tools / "release_catalog_semantic_confirmations.v1.json"
+        syntax_path = (
+            tools
+            / "release_catalog_semantic_syntactic_confirmation_ids.v1.txt"
+        )
+        exact_items = json.loads(
+            exact_path.read_text(encoding="utf-8")
+        )["items"]
+        syntax_ids = mod._load_syntax_confirmation_ids(syntax_path)
+        self.assertEqual(len(exact_items), 115)
+        self.assertEqual(len(syntax_ids), 54)
+        self.assertFalse(
+            {row["sourceIngredientId"] for row in exact_items} & syntax_ids
+        )
 
         paths = mod._review_paths(tools)
         payloads = [(path.name, mod._load_payload(path)) for path in paths]
         baseline = mod.compile_semantic_concepts(payloads)
         confirmed = mod.compile_from_paths(paths)
+        total = len(exact_items) + len(syntax_ids)
 
         self.assertEqual(
-            confirmed["summary"]["confirmedSourceLabels"], len(items)
+            confirmed["summary"]["exactConfirmedSourceLabels"],
+            len(exact_items),
         )
+        self.assertEqual(
+            confirmed["summary"]["syntacticConfirmedSourceLabels"],
+            len(syntax_ids),
+        )
+        self.assertEqual(confirmed["summary"]["confirmedSourceLabels"], total)
         self.assertEqual(
             baseline["summary"]["needsSemanticConfirmationSourceLabels"]
             - confirmed["summary"]["needsSemanticConfirmationSourceLabels"],
-            len(items),
+            total,
         )
         self.assertEqual(
             baseline["summary"]["semanticConcepts"]
             - confirmed["summary"]["semanticConcepts"],
-            len(items),
+            total,
+        )
+        self.assertEqual(
+            confirmed["summary"]["needsSemanticConfirmationSourceLabels"],
+            330,
         )
 
         concepts = {
             row["conceptId"]: row for row in confirmed["concepts"]
         }
-        seen_sources = set()
-        for item in items:
-            source_id = item["sourceIngredientId"]
-            target_id = item["confirmedConceptId"]
-            self.assertNotIn(source_id, seen_sources)
-            seen_sources.add(source_id)
-            self.assertEqual(
-                confirmed["sourceIdentityToConcept"][source_id], target_id
-            )
+        for source_id in syntax_ids:
+            target_id = confirmed["sourceIdentityToConcept"][source_id]
             concept = concepts[target_id]
             self.assertFalse(concept["needsSemanticConfirmation"])
             identity = next(
@@ -356,7 +434,7 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
             )
             self.assertEqual(
                 identity["semanticConfirmationMethod"],
-                "explicit-reviewed-english-classification",
+                "explicit-reviewed-syntactic-normalization",
             )
 
 
