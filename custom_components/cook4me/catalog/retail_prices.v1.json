@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-16",
+  "note": "Public package-price facts, checked on the linked German retail listings. VAT included; shipping excluded. Generic category estimates use the named product variety, not a national average.",
+  "observations": [
+    {
+      "id": "dm-1454994-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1454994/dmbio-vollrohrzucker",
+      "productName": "dmBio whole cane sugar",
+      "amount": 2.45,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:sugars",
+        "en:brown-sugars"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": ""
+    },
+    {
+      "id": "dm-1713047-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1713047/dmbio-backpulver-mit-reinweinstein-4x17-g",
+      "productName": "dmBio cream-of-tartar baking powder",
+      "amount": 0.7,
+      "currency": "EUR",
+      "basisQuantity": 68,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:baking-powders"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": ""
+    },
+    {
+      "id": "dm-1713048-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1713048/dmbio-backhefe-2er-pack",
+      "productName": "dmBio dried baking yeast",
+      "amount": 0.8,
+      "currency": "EUR",
+      "basisQuantity": 14,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:dried-yeasts"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": ""
+    },
+    {
+      "id": "dm-1601903-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1601903/dmbio-speisestaerke-reine-maisstaerke",
+      "productName": "dmBio corn starch",
+      "amount": 1.75,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:corn-starch"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": ""
+    },
+    {
+      "id": "dm-1465655-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1465655/dmbio-vanillezucker-mit-bourbon-vanille-4x8g",
+      "productName": "dmBio vanilla sugar",
+      "amount": 1.85,
+      "currency": "EUR",
+      "basisQuantity": 32,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:vanilla-sugars"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": ""
+    },
+    {
+      "id": "dm-1461618-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1461618/dmbio-bourbon-vanille-gemahlen",
+      "productName": "dmBio ground vanilla",
+      "amount": 2.95,
+      "currency": "EUR",
+      "basisQuantity": 5,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:vanilla"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": ""
+    }
+  ]
+}

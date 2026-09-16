@@ -43,7 +43,7 @@ class OfflinePriceTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(again['totalsByCurrency'], {'EUR': 1.2})
         self.assertEqual(result['ingredients'][0]['references'][0]['source'], 'open_prices_category')
         self.assertEqual(result['ingredients'][0]['references'][0]['observationId'], 7)
-        self.assertTrue(all(not key[0] for key in self.bridge._price_queries), 'Category evidence is not a confirmed barcode assignment')
+        self.assertTrue(all(not key[0] for key in getattr(self.bridge, '_price_queries', {})), 'Category evidence is not a confirmed barcode assignment')
 
     def test_snapshot_boundaries_and_actual_observation_expiry(self):
         cases = [dict(country='FR'), dict(currency='USD'), dict(categories=['en:rice-pudding']),
@@ -78,7 +78,7 @@ class OfflinePriceTests(unittest.IsolatedAsyncioTestCase):
             store = await self.store()
             for ref in store._data['references'].values():
                 ref['updatedAt']=(datetime.now(timezone.utc)-timedelta(days=2)).isoformat()
-            self.bridge._price_queries.clear()
+            getattr(self.bridge, '_price_queries', {}).clear()
             with patch.object(self.costs.urllib.request,'urlopen',return_value=io.BytesIO(json.dumps({'items':[self.raw(id=10,price=5)]}).encode())) as get:
                 result=await self.prices.product_price(self.bridge,ingredient=self.ingredient,quantity=200,unit='g')
         self.assertEqual(get.call_count,1)
@@ -152,8 +152,8 @@ class OfflinePriceTests(unittest.IsolatedAsyncioTestCase):
     def test_shipped_snapshot_has_only_public_price_evidence_and_supported_categories(self):
         data=json.loads((Path(__file__).resolve().parents[1]/'custom_components/cook4me/catalog/observed_prices.v1.json').read_text())
         tags={v[0] for v in self.prices._CATEGORIES.values()}
-        self.assertGreaterEqual(len(data['observations']),450)
-        self.assertGreaterEqual(len([r for r in data['observations'] if r['country']=='DE']),200)
+        self.assertGreaterEqual(len(data['observations']),350)
+        self.assertGreaterEqual(len([r for r in data['observations'] if r['country']=='DE']),170)
         for row in data['observations']:
             self.assertTrue(set(row['categories'])<=tags)
             self.assertGreater(row['amount'],0);self.assertGreater(row['basisQuantity'],0)

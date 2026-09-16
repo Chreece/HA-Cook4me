@@ -14,6 +14,7 @@ from .costs import (
     lookup_open_prices,
 )
 from .inventory import convert_amount, inventory_identity, normalize_inventory
+from .price_measurements import price_options
 
 
 def _add(target: dict[str, float], currency: str, value: float | None) -> None:
@@ -39,8 +40,12 @@ def _ingredient(item: Any) -> dict[str, Any] | None:
     key = _text(item.get("key") or item.get("foodKey") or item.get("ingredientId"))
     if not name and not key:
         return None
+    options = price_options(item)
     amount, unit = _recipe_amount(item)
+    if options:
+        amount, unit = options[0]['quantity'], options[0]['unit']
     out: dict[str, Any] = {"name": name or key, "quantity": amount, "unit": unit}
+    out["priceOptions"] = options
     if key:
         out["key"] = key
     return out
@@ -122,6 +127,8 @@ def calculate_recipe_cost(
         costs: dict[str, float] = {}
         kinds: list[str] = []
         evidence: list[dict[str, Any]] = []
+        quantity_estimate = (ingredient["priceOptions"][0].get("estimate")
+                             if ingredient.get("priceOptions") else None)
         stock_row = _stock_row(stock, ingredient)
         stock_unit = _text((stock_row or {}).get("unit")) or unit
 
@@ -153,19 +160,24 @@ def calculate_recipe_cost(
         # Unpriced stock can use an explicit ingredient estimate too.
         remaining = max(0.0, required - covered)
         if remaining > 1e-9:
-            reference = store.best_reference(ident, currency=wanted_currency, country=wanted_country, unit=unit)
-            if reference is not None:
-                cost = _cost_for_amount(reference, remaining, unit)
+            for option in ingredient.get("priceOptions") or [{"quantity": required, "unit": unit}]:
+                reference = store.best_reference(ident, currency=wanted_currency,
+                                                 country=wanted_country, unit=option['unit'])
+                if reference is None:
+                    continue
+                cost = _cost_for_amount(reference, remaining / required * option['quantity'], option['unit'])
                 curr = _currency(reference.get("currency"))
                 if cost is not None and curr:
                     _add(costs, curr, cost)
                     _add(totals, curr, cost)
                     evidence.append(reference)
                     covered += remaining
+                    quantity_estimate = option.get('estimate') or quantity_estimate
                     source = _text(reference.get("source"))
                     kind = "manual_reference" if source == "manual" else "ingredient_reference"
                     if kind not in kinds:
                         kinds.append(kind)
+                    break
 
         rows.append({
             "identity": ident,
@@ -178,6 +190,7 @@ def calculate_recipe_cost(
             "costsByCurrency": _rounded_currency(costs),
             "sourceKinds": kinds,
             "references": evidence,
+            "quantityEstimate": quantity_estimate if costs else None,
         })
 
     known_rows = rows
@@ -208,7 +221,7 @@ def calculate_recipe_cost(
         "missingIngredientCount": sum(row.get("coverage", 0) < 1 for row in rows),
         "exactPurchaseCoverage": round(exact_coverage, 4),
         "estimated": any(
-            any(kind != "exact_purchase" for kind in row.get("sourceKinds") or [])
+            bool(row.get("quantityEstimate")) or any(kind != "exact_purchase" for kind in row.get("sourceKinds") or [])
             for row in rows
         ),
         "targetCurrency": wanted_currency,

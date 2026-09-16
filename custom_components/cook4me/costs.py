@@ -15,6 +15,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
 
 from .price_quantities import explicit_product_basis
+from .price_food_forms import compatible_food_form, category_unit_basis, compatible_category_basis, consistent_package_basis
 from .price_snapshot import country_locations, snapshot_observations
 from .const import DOMAIN
 from .inventory import convert_amount, inventory_identity, normalize_inventory
@@ -142,6 +143,7 @@ class Cook4MeCostStore:
         self._data: dict[str, Any] = {
             "settings": {"currency": "", "country": "", "autoGlobalPrices": True},
             "references": {},
+            "priceEvidenceRevision": 86,
         }
 
     async def async_load(self) -> None:
@@ -161,6 +163,12 @@ class Cook4MeCostStore:
                 for key, value in list(refs.items())[-_MAX_REFERENCES:]
                 if isinstance(value, dict)
             }
+        # Rebuild external estimates under the stricter food/package rules.
+        # User-entered prices and exact purchase history remain untouched.
+        if isinstance(saved, dict) and saved.get("priceEvidenceRevision") != 86:
+            self._data["references"] = {key: ref for key, ref in self._data["references"].items()
+                if not str(ref.get("source", "")).startswith("open_prices")}
+            await self._save()
         self._loaded = True
 
     async def _save(self) -> None:
@@ -208,6 +216,8 @@ class Cook4MeCostStore:
         date: str = "",
         barcode: str = "",
         observation_id: Any = None,
+        source_url: str = "",
+        product_name: str = "",
     ) -> dict[str, Any]:
         identity = _text(identity)
         amount_value = _number(amount)
@@ -229,6 +239,8 @@ class Cook4MeCostStore:
             "date": _text(date)[:40],
             "barcode": _text(barcode)[:80],
             "observationId": observation_id,
+            "sourceUrl": _text(source_url)[:500],
+            "productName": _text(product_name)[:300],
             "updatedAt": datetime.now(timezone.utc).isoformat(),
         }
         key = _reference_key(identity, curr, row["country"], row["source"]) + "|" + unit.casefold()
@@ -272,7 +284,7 @@ class Cook4MeCostStore:
             rows = [row for row in rows if _country(row.get("country")) == wanted_country]
         cutoff = (datetime.now(timezone.utc).date() - timedelta(days=180)).isoformat()
         today = datetime.now(timezone.utc).date().isoformat()
-        rows = [row for row in rows if not str(row.get("source", "")).startswith("open_prices")
+        rows = [row for row in rows if (not str(row.get("source", "")).startswith("open_prices") and row.get("source") != "retail_snapshot")
                 or cutoff <= _text(row.get("date")) <= today]
         if not rows:
             return None
@@ -425,6 +437,8 @@ def _normalize_open_prices(items, *, code, curr, market, category, category_type
                 continue
             if category_type == "PRODUCT" and category not in (product.get("categories_tags") or []):
                 continue
+        if category and not code and not compatible_food_form(row, category):
+            continue
         price_per = _text(row.get("price_per")).upper()
         basis, unit = None, ""
         if row.get("type") == "PRODUCT" and price_per in {"", "UNIT"}:
@@ -432,7 +446,11 @@ def _normalize_open_prices(items, *, code, curr, market, category, category_type
         elif price_per == "KILOGRAM":
             basis, unit = 1.0, "kg"
         elif row.get("type") == "CATEGORY" and price_per == "UNIT":
-            basis, unit = 1.0, "pcs"
+            basis, unit = category_unit_basis(row)
+        if not consistent_package_basis(row, basis, unit):
+            basis, unit = None, ""
+        if category and not code and not compatible_category_basis(row, category, unit):
+            basis, unit = None, ""
         normalized.append({"id": row.get("id"), "barcode": _text(row.get("product_code")),
             "amount": amount, "currency": row_currency, "basisQuantity": basis, "basisUnit": unit,
             "pricePer": price_per, "usable": bool(basis and unit), "date": observed.isoformat(),

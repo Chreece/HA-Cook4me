@@ -23,6 +23,11 @@ _QUANTITIES = importlib.util.module_from_spec(_SPEC)
 _SPEC.loader.exec_module(_QUANTITIES)
 
 
+_SPEC_FORMS = importlib.util.spec_from_file_location('price_food_forms', ROOT / 'custom_components/cook4me/price_food_forms.py')
+_FORMS = importlib.util.module_from_spec(_SPEC_FORMS)
+_SPEC_FORMS.loader.exec_module(_FORMS)
+
+
 def mapped_categories():
     tree = ast.parse((ROOT / 'custom_components/cook4me/automatic_prices.py').read_text())
     result = set()
@@ -62,16 +67,21 @@ def normalize(row, locations, categories, today):
     product = row.get('product') if isinstance(row.get('product'), dict) else {}
     kind, price_per = row.get('type'), str(row.get('price_per') or '').upper()
     tags = set(product.get('categories_tags') or []) if kind == 'PRODUCT' else {row.get('category_tag')}
-    tags &= categories
+    tags = {tag for tag in tags & categories if _FORMS.compatible_food_form(row, tag)}
     if not tags:
         return None
     if price_per == 'KILOGRAM':
         quantity, unit = 1, 'kg'
     elif kind == 'CATEGORY' and price_per == 'UNIT':
-        quantity, unit = 1, 'pcs'
+        quantity, unit = _FORMS.category_unit_basis(row)
     elif kind == 'PRODUCT' and price_per in {'', 'UNIT'}:
         quantity, unit = _QUANTITIES.explicit_product_basis(product)
     else:
+        return None
+    if not _FORMS.consistent_package_basis(row, quantity, unit):
+        return None
+    tags = {tag for tag in tags if _FORMS.compatible_category_basis(row, tag, unit)}
+    if not tags:
         return None
     try:
         quantity = float(quantity)

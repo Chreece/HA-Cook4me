@@ -26,6 +26,10 @@ class AutomaticPriceTests(unittest.IsolatedAsyncioTestCase):
         self.calc = importlib.import_module(runtime.PREFIX + '.costing')
         self.prices = importlib.import_module(runtime.PREFIX + '.automatic_prices')
         self.cache = importlib.import_module(runtime.PREFIX + '.recipe_cost_cache')
+        snapshot = importlib.import_module(runtime.PREFIX + '.price_snapshot')
+        offline = patch.object(snapshot, '_load', return_value={})
+        offline.start()
+        self.addCleanup(offline.stop)
         self.today = datetime.now(timezone.utc).date().isoformat()
         self.ingredient = {'key': 'rice', 'name': 'Rice', 'canonicalName': 'rice'}
         self.recipe = {'servings': 2, 'ingredients': [{**self.ingredient, 'quantity': 200, 'unit': 'g'}]}
@@ -73,6 +77,8 @@ class AutomaticPriceTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result['usableCount'], 1)
         self.assertEqual(result['items'][0]['basisUnit'], 'kg')
         unit = self.lookup([{**raw, 'price_per': 'UNIT'}], barcode='', category='en:tomatoes')
+        self.assertFalse(unit['items'][0]['usable'])
+        unit = self.lookup([{**raw, 'price_per': 'UNIT', 'product_name': 'Tomate 1 Stück'}], barcode='', category='en:tomatoes')
         self.assertEqual(unit['items'][0]['basisUnit'], 'pcs')
 
     def test_packaged_category_checks_returned_product_taxonomy(self):

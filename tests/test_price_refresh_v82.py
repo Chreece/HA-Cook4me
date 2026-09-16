@@ -92,7 +92,7 @@ class PriceRefreshTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(result['complete'])
 
     def test_verified_taxonomy_tags_and_distinct_food_forms(self):
-        for name, tag in [('tofu', 'en:plain-tofu'), ('zucchini', 'en:zucchini'), ('garlic', 'en:garlics'),
+        for name, tag in [('tofu', 'en:plain-tofu'), ('zucchini', 'en:zucchini'), ('garlic', 'en:garlic'),
                           ('brown rice', 'en:brown-rices'), ('canned chickpeas', 'en:canned-chickpeas'),
                           ('extra virgin olive oil', 'en:extra-virgin-olive-oils')]:
             self.assertEqual(self.prices.category_for({'canonicalName': name})[0], tag)

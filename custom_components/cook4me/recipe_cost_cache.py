@@ -37,6 +37,8 @@ def _recipe_price_shape(recipe: Any) -> dict[str, Any]:
             "key": _text(raw.get("key") or raw.get("foodKey")),
             "quantity": raw.get("quantity"),
             "unit": _text(raw.get("unit")),
+            "canonicalName": _text(raw.get("canonicalName")),
+            "unitKey": _text(raw.get("unitKey")),
             "weight": deepcopy(raw.get("weight")) if isinstance(raw.get("weight"), dict) else None,
         })
     return {
@@ -46,6 +48,7 @@ def _recipe_price_shape(recipe: Any) -> dict[str, Any]:
         "servings": recipe.get("servings") or recipe.get("groupSize"),
         "yield": deepcopy(recipe.get("yield")) if isinstance(recipe.get("yield"), dict) else None,
         "ingredients": ingredients,
+        "quantityEvidenceVersion": 86,
     }
 
 

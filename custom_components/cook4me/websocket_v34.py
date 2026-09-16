@@ -10,7 +10,7 @@ from homeassistant.core import callback
 
 from . import websocket as legacy, websocket_v11 as v11
 from .websocket_v32 import _authorized
-from .automatic_prices import country_currency, price_settings, product_price, recipe_price, validate_market
+from .automatic_prices import country_currency, price_settings, product_price, recipe_price, offline_recipe_price, validate_market
 from .barcode import normalize_barcode
 from .costs import _country, _currency, cost_store_for_bridge
 from .inventory import inventory_identity
@@ -63,15 +63,26 @@ async def ws_product_price(hass, connection, msg):
 
 
 @websocket_api.websocket_command({vol.Required('type'): 'cook4me/v34/recipe_cost', vol.Required('entry_id'): str,
-    vol.Required('recipe'): dict})
+    vol.Required('recipe'): dict, vol.Optional('offline_only', default=False): bool})
 @websocket_api.async_response
 async def ws_recipe_cost(hass, connection, msg):
     try:
         bridge = _authorized(hass, connection, msg)
         if len(msg['recipe'].get('ingredients') or []) > 200:
             raise ValueError('This recipe has too many ingredients')
-        catalog = await v11._ingredient_catalog(hass, bridge, 'en', refresh=False)
-        result = await recipe_price(bridge, msg['recipe'], catalog.get('items', []))
+        if msg.get('offline_only'):
+            from .release_catalog import ingredient_choices, recipe_by_variant, async_warm_release_catalog
+            await async_warm_release_catalog(hass)
+            recipe = msg['recipe']
+            if not recipe.get('ingredients'):
+                recipe = recipe_by_variant(str(recipe.get('variantFunctionalId') or ''), language='en',
+                    configured_language='en', country=_country(getattr(hass.config, 'country', '')))
+                if not recipe:
+                    raise ValueError('Recipe details are not available offline')
+            result = await offline_recipe_price(bridge, recipe, ingredient_choices('en'))
+        else:
+            catalog = await v11._ingredient_catalog(hass, bridge, 'en', refresh=False)
+            result = await recipe_price(bridge, msg['recipe'], catalog.get('items', []))
         connection.send_result(msg['id'], result)
     except Exception as exc:
         legacy._send_error(connection, msg, exc)

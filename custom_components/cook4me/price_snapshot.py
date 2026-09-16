@@ -1,4 +1,4 @@
-"""Offline, dated Open Prices evidence. Call from the price lookup executor."""
+"""Offline, dated public price evidence, warmed in the setup executor."""
 from copy import deepcopy
 from datetime import datetime, timedelta, timezone
 from functools import lru_cache
@@ -15,6 +15,12 @@ def _load():
     try:
         data = json.loads(_PATH.read_text(encoding='utf-8'))
         if data.get('schemaVersion') == 1:
+            try:
+                retail = json.loads(_PATH.with_name('retail_prices.v1.json').read_text(encoding='utf-8'))
+                if retail.get('schemaVersion') == 1:
+                    data['observations'].extend(retail.get('observations') or [])
+            except (OSError, ValueError, AttributeError):
+                pass
             return data
     except (OSError, ValueError, AttributeError):
         pass
@@ -52,4 +58,5 @@ def snapshot_observations(*, barcode='', category='', country='', currency='', u
         if unit and convert_amount(1, unit, row.get('basisUnit')) is None:
             continue
         result.append({**deepcopy(row), 'category': category})
-    return result
+    primary = [row for row in result if row.get('source') != 'retail_snapshot']
+    return primary or result

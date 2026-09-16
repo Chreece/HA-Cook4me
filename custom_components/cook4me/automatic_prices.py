@@ -15,10 +15,12 @@ from .costs import _cost_for_amount, _country, _currency, _number, cost_store_fo
 from .inventory import inventory_identity, convert_amount
 from .recipe_cost_cache import recipe_cost_cache_for_bridge
 from .price_units import price_ingredient
+from .price_measurements import price_options
+from .price_snapshot import snapshot_observations
 
 # Exact English catalog names only. Prepared/mixed foods are never collapsed into
 # a raw ingredient by fuzzy matching. Category matches remain estimates.
-_RECIPE_WAIT_SECONDS = 20
+_RECIPE_WAIT_SECONDS = 2
 _CATEGORIES = {}
 for tag, kind, names in (
     ('tomatoes', 'CATEGORY', 'tomato|tomatoes'), ('potatoes', 'CATEGORY', 'potato|potatoes'),
@@ -26,7 +28,7 @@ for tag, kind, names in (
     ('zucchini', 'CATEGORY', 'courgette|courgettes|zucchini'), ('aubergines', 'CATEGORY', 'aubergine|aubergines|eggplant'),
     ('broccoli', 'CATEGORY', 'broccoli'), ('cauliflowers', 'CATEGORY', 'cauliflower'),
     ('cucumbers', 'CATEGORY', 'cucumber|cucumbers'), ('leeks', 'CATEGORY', 'leek|leeks'),
-    ('spinachs', 'CATEGORY', 'spinach'), ('garlics', 'CATEGORY', 'garlic'),
+    ('spinachs', 'CATEGORY', 'spinach'), ('garlic', 'CATEGORY', 'garlic'),
     ('lemons', 'CATEGORY', 'lemon|lemons'), ('apples', 'CATEGORY', 'apple|apples'),
     ('bananas', 'CATEGORY', 'banana|bananas'), ('oranges', 'CATEGORY', 'orange|oranges'),
     ('rices', 'PRODUCT', 'rice'), ('basmati-rices', 'PRODUCT', 'basmati rice'),
@@ -510,6 +512,7 @@ for category, kind, names in (
     ('en:scallions', 'CATEGORY', 'green onion'),
     ('en:paprika', 'PRODUCT', 'ground paprika'),
     ('en:goat-cheeses', 'PRODUCT', 'goat’s cheese'),
+    ('en:dried-yeasts', 'PRODUCT', "dry yeast|dried yeast|dried baker's yeast|active dry yeast"),
 ):
     for name in names.split('|'):
         _CATEGORIES[name] = (category, kind)
@@ -566,7 +569,7 @@ def canonical_recipe(recipe, catalog):
 def _fresh(reference):
     if not reference:
         return False
-    if not str(reference.get('source', '')).startswith('open_prices'):
+    if not str(reference.get('source', '')).startswith('open_prices') and reference.get('source') != 'retail_snapshot':
         return True
     try:
         return (datetime.now(timezone.utc) - datetime.fromisoformat(reference['updatedAt'])).total_seconds() < 86400
@@ -576,6 +579,11 @@ def _fresh(reference):
 
 async def _observations(bridge, *, barcode='', category='', category_type='CATEGORY', unit='', settings, refresh_since=None, prefer_snapshot=False):
     """Coalesce repeated requests; bound concurrency and cache misses for an hour."""
+    if prefer_snapshot and refresh_since is None:
+        rows = snapshot_observations(barcode=barcode, category=category,
+            country=settings['country'], currency=settings['currency'], unit=unit)
+        if rows:
+            return {'ok': True, 'items': rows, 'usableCount': len(rows), 'source': 'offline_snapshot'}
     if not hasattr(bridge, '_price_queries'):
         bridge._price_queries = {}
         bridge._price_query_lock = asyncio.Lock()
@@ -607,7 +615,7 @@ async def _observations(bridge, *, barcode='', category='', category_type='CATEG
 
 
 async def _store_observation(store, identity, row, *, generic=False):
-    source = 'open_prices_category' if generic else 'open_prices'
+    source = 'retail_snapshot' if row.get('source') == 'retail_snapshot' else 'open_prices_category' if generic else 'open_prices'
     existing = next((ref for ref in store._data.get('references', {}).values()
                      if ref.get('identity') == identity and ref.get('source') == source
                      and ref.get('country') == row['country'] and ref.get('currency') == row['currency']
@@ -618,9 +626,10 @@ async def _store_observation(store, identity, row, *, generic=False):
         return deepcopy(existing)
     return await store.async_set_reference(identity, amount=row['amount'], currency=row['currency'],
         basis_quantity=row['basisQuantity'], basis_unit=row['basisUnit'],
-        source='open_prices_category' if generic else 'open_prices', confidence='external_observation',
+        source=source, confidence='external_observation',
         country=row['country'], location=row.get('location', ''), date=row.get('date', ''),
-        barcode=row.get('barcode', ''), observation_id=row.get('id') or row.get('observationId'))
+        barcode=row.get('barcode', ''), observation_id=row.get('id') or row.get('observationId'),
+        source_url=row.get('sourceUrl', ''), product_name=row.get('productName', ''))
 
 
 async def product_price(bridge, *, barcode='', ingredient=None, quantity=None, unit='', settings=None, refresh_since=None):
@@ -728,6 +737,16 @@ async def recipe_price(bridge, recipe, catalog, *, refresh_since=None):
         weight = item.get('weight') if isinstance(item.get('weight'), dict) else {}
         amount = item.get('quantity') if item.get('quantity') is not None else weight.get('quantity')
         unit = item.get('unit') or weight.get('unit', '')
+        options = price_options(item)
+        supported = [option for option in options if any(
+            convert_amount(1, option['unit'], basis) is not None for basis in ('g', 'ml', 'pcs'))]
+        if supported:
+            category = category_for(item)
+            chosen = next((option for option in supported if
+                store.best_reference(identity, country=settings['country'], currency=settings['currency'], unit=option['unit'])
+                or category and snapshot_observations(category=category[0], country=settings['country'],
+                    currency=settings['currency'], unit=option['unit'])), supported[0])
+            amount, unit = chosen['quantity'], chosen['unit']
         if amount is None or not unit:
             lookup_status[identity] = 'recipe_amount_unknown'
             continue
@@ -739,7 +758,7 @@ async def recipe_price(bridge, recipe, catalog, *, refresh_since=None):
         if not codes:
             # Confirmed product->ingredient evidence remains usable after stock is consumed.
             ref = store.best_reference(identity, country=settings['country'], currency=settings['currency'])
-            codes = {ref['barcode']} if ref and ref.get('barcode') and ref.get('source') != 'open_prices_category' else {''}
+            codes = {ref['barcode']} if ref and ref.get('barcode') and ref.get('source') not in {'open_prices_category', 'retail_snapshot'} else {''}
         for code in sorted(codes):
             if len(tasks) >= 24:
                 skipped = True
@@ -791,9 +810,48 @@ async def recipe_price(bridge, recipe, catalog, *, refresh_since=None):
         if row.get('coverage', 0) < 1:
             row['priceStatus'] = ('recipe_amount_unknown' if row.get('reason') == 'recipe_amount_unknown'
                                   else lookup_status.get(row['identity']) or ('source_unavailable' if failures else 'no_observation'))
-    cost.update(settings=settings, priceLookupIncomplete=bool(failures), priceLookupPending=bool(pending), priceSource='Open Prices',
+    cost.update(settings=settings, priceLookupIncomplete=bool(failures), priceLookupPending=bool(pending), priceSource='Public price observations',
                 originalIngredients=True, ingredientLimitReached=skipped,
                 checkedAt=datetime.now(timezone.utc).isoformat(), refreshed=refresh_since is not None,
                 refreshPolicy={'observationsSeconds': 86400, 'missSeconds': 3600, 'failureSeconds': 60,
                                'onDemand': True, 'maximumObservationDays': 180})
+    return cost
+
+
+async def offline_recipe_price(bridge, recipe, catalog):
+    """Immediate card preview from local evidence, without provider requests.
+
+    Use an ephemeral reference set: scrolling through cards must not rewrite the
+    user's price store or turn a generic product into a confirmed barcode link.
+    """
+    from copy import copy
+    settings = await price_settings(bridge)
+    saved = await cost_store_for_bridge(bridge)
+    store = copy(saved)
+    store._data = deepcopy(saved._data)
+    recipe = canonical_recipe(recipe, catalog)
+    if settings.get('autoGlobalPrices'):
+        for item in recipe.get('ingredients', []):
+            category = category_for(item)
+            if not category:
+                continue
+            identity = inventory_identity(item)
+            for option in price_options(item):
+                if store.best_reference(identity, country=settings['country'], currency=settings['currency'], unit=option['unit']):
+                    continue
+                rows = snapshot_observations(category=category[0], country=settings['country'],
+                    currency=settings['currency'], unit=option['unit'])
+                if rows:
+                    row = max(rows, key=lambda row: row.get('date', ''))
+                    store._data['references']['preview:' + identity + ':' + option['unit']] = {
+                        **row, 'identity': identity, 'source': 'retail_snapshot' if row.get('source') == 'retail_snapshot' else 'open_prices_category',
+                        'observationId': row['id'], 'updatedAt': datetime.now(timezone.utc).isoformat()}
+    from .costing import calculate_recipe_cost
+    cost = calculate_recipe_cost(recipe, bridge.recipe_hub.profile.get('houseIngredients') or [], store,
+        country=settings['country'], currency=settings['currency'])
+    for row in cost.get('ingredients', []):
+        if row.get('coverage', 0) < 1:
+            row['priceStatus'] = 'recipe_amount_unknown' if row.get('reason') == 'recipe_amount_unknown' else 'offline_price_missing'
+    cost.update(settings=settings, offlinePreview=True, priceLookupPending=False,
+                checkedAt=datetime.now(timezone.utc).isoformat())
     return cost
