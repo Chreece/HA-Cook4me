@@ -44,3 +44,8 @@ persistence, original recipe send protection and shopping reservations. DOM
 checks cover stale results, selected-diet requests, escaped replacement text and
 disabled original actions. Browser geometry checks retain 42 cards across six
 layouts. Live Home Assistant/appliance verification remains pending.
+
+Validation: all 1,356 Python tests passed. The final pinned installer passed all
+four installation, backup and rollback checks. Four dashboard DOM suites passed,
+and Chromium verified all 42 card layouts including replacement badges and lists.
+The runtime is pinned to `d17bc0c8627831c7ae5c4e54f098b3e8d13242dd`.
