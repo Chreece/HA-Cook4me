@@ -15,7 +15,6 @@ from .const import DOMAIN
 _STORAGE_VERSION = 1
 _TTL = 24 * 60 * 60
 _MAX_LANGUAGES = 8
-_MAX_ITEMS = 5000
 RECIPE_FALLBACK_SOURCE = "hydrated_official_recipes_fallback:v3_food_identity"
 
 _VULGAR_FRACTIONS = "¼½¾⅐⅑⅒⅓⅔⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞"
@@ -221,19 +220,30 @@ def normalize_house_ingredients(value: Any) -> list[dict[str, str]]:
 
 
 def _dedupe_catalog_names(rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    """Drop redundant keyless aliases without collapsing authoritative identities.
+
+    Different provider keys are distinct identities even when their localized display
+    names are equal. A keyless row with the same normalized name as any keyed row is
+    only a weaker alias and can be omitted. Identical keyless names are also collapsed.
+    """
+    keyed_names = {
+        _norm(row.get("name"))
+        for row in rows
+        if row.get("key") and _norm(row.get("name"))
+    }
     out: list[dict[str, str]] = []
-    by_name: dict[str, int] = {}
+    seen_keyless_names: set[str] = set()
     for row in rows:
         normalized = _norm(row.get("name"))
         if not normalized:
             continue
-        existing_index = by_name.get(normalized)
-        if existing_index is None:
-            by_name[normalized] = len(out)
+        if row.get("key"):
             out.append(row)
             continue
-        if not out[existing_index].get("key") and row.get("key"):
-            out[existing_index] = row
+        if normalized in keyed_names or normalized in seen_keyless_names:
+            continue
+        seen_keyless_names.add(normalized)
+        out.append(row)
     return out
 
 
@@ -256,10 +266,8 @@ def _clean_catalog_rows(rows: list[Any]) -> list[dict[str, str]]:
         if key:
             row["key"] = key
         out.append(row)
-        if len(out) >= _MAX_ITEMS:
-            break
     out = _dedupe_catalog_names(out)
-    return sorted(out, key=lambda row: _norm(row["name"]))
+    return sorted(out, key=lambda row: (_norm(row["name"]), row.get("key", "")))
 
 
 def catalog_items_from_recipes(recipes: list[dict[str, Any]]) -> list[dict[str, str]]:
