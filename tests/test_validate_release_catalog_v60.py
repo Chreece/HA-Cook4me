@@ -84,8 +84,9 @@ def base_catalog() -> dict:
             },
             {
                 "id": "local:pt:palitos",
-                "conceptId": "concept:ambiguous:palitos",
+                "conceptId": "concept:source:fixture-palitos",
                 "canonicalName": "Sticks / toothpicks",
+                "semanticMergePolicy": "reviewed-ambiguous-source-fragment",
                 "translations": {"pt": "Palitos", "en": "Sticks / toothpicks"},
                 "aliases": {"pt": ["Palitos"], "en": ["Sticks / toothpicks"]},
                 "classification": "ambiguous",
@@ -94,7 +95,7 @@ def base_catalog() -> dict:
                 "nutritionEligible": False,
                 "dietEligible": False,
                 "allergenEligible": False,
-                "needsSemanticConfirmation": True,
+                "needsSemanticConfirmation": False,
             },
         ],
         "recipes": [
@@ -129,7 +130,7 @@ def base_catalog() -> dict:
                             },
                             {
                                 "ingredientId": "local:pt:palitos",
-                                "conceptId": "concept:ambiguous:palitos",
+                                "conceptId": "concept:source:fixture-palitos",
                                 "classification": "ambiguous",
                                 "sourceLocalIdentity": True,
                                 "providerIdentityAssigned": False,
@@ -261,6 +262,55 @@ class ValidateReleaseCatalogV60Tests(unittest.TestCase):
         )
         self.assertTrue(
             any("NutritionComplete" in error for error in result["errors"])
+        )
+
+
+    def test_closed_ambiguous_without_review_receipt_is_rejected(self):
+        payload = base_catalog()
+        ambiguous = next(
+            row for row in payload["ingredients"] if row.get("classification") == "ambiguous"
+        )
+        ambiguous.pop("semanticMergePolicy", None)
+        payload["searchIndex"] = validator.catalog_search_index.compile_search_index(payload)
+        payload["recipeSafetyIndex"] = (
+            validator.recipe_safety_index_v60.compile_recipe_safety_index(payload)
+        )
+        result = validator.validate(payload)
+        self.assertFalse(result["valid"])
+        self.assertTrue(
+            any("reviewed source-fragment disposition" in error for error in result["errors"])
+        )
+
+    def test_closed_ambiguous_cross_identity_concept_is_rejected(self):
+        payload = base_catalog()
+        ambiguous = next(
+            row for row in payload["ingredients"] if row.get("classification") == "ambiguous"
+        )
+        ambiguous["conceptId"] = "concept:ambiguous:palitos"
+        payload["searchIndex"] = validator.catalog_search_index.compile_search_index(payload)
+        payload["recipeSafetyIndex"] = (
+            validator.recipe_safety_index_v60.compile_recipe_safety_index(payload)
+        )
+        result = validator.validate(payload)
+        self.assertFalse(result["valid"])
+        self.assertTrue(
+            any("reviewed source-fragment disposition" in error for error in result["errors"])
+        )
+
+    def test_closed_ambiguous_cannot_gain_safety_eligibility(self):
+        payload = base_catalog()
+        ambiguous = next(
+            row for row in payload["ingredients"] if row.get("classification") == "ambiguous"
+        )
+        ambiguous["dietEligible"] = True
+        payload["searchIndex"] = validator.catalog_search_index.compile_search_index(payload)
+        payload["recipeSafetyIndex"] = (
+            validator.recipe_safety_index_v60.compile_recipe_safety_index(payload)
+        )
+        result = validator.validate(payload)
+        self.assertFalse(result["valid"])
+        self.assertTrue(
+            any("must set dietEligible=false" in error for error in result["errors"])
         )
 
 
