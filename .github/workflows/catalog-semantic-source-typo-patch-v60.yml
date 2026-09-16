@@ -1,0 +1,130 @@
+name: Apply source-typo semantic normalization v60
+
+on:
+  push:
+    branches:
+      - cook4me-ingredient-semantic-confirmation-v60
+    paths:
+      - '.github/workflows/catalog-semantic-source-typo-patch-v60.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-source-typo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Patch only explicit source-typo review metadata handling
+        run: |
+          set -Eeuo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          compiler = Path('tools/compile_release_catalog_semantics_v60.py')
+          text = compiler.read_text(encoding='utf-8')
+
+          old_regex = '''_REVIEW_ONLY_ANNOTATION = re.compile(
+              r"\\s*\\((source (?:spelling|grammar|wording))\\)\\s*$",
+              re.IGNORECASE,
+          )
+          _QUANTITY_ONLY_ANNOTATION = re.compile(
+          '''
+          new_regex = '''_REVIEW_ONLY_ANNOTATION = re.compile(
+              r"\\s*\\((source (?:spelling|grammar|wording))\\)\\s*$",
+              re.IGNORECASE,
+          )
+          _SOURCE_TYPO_ONLY = re.compile(
+              r"\\s*\\(source typo\\)\\s*$",
+              re.IGNORECASE,
+          )
+          _QUALIFIED_SOURCE_TYPO = re.compile(
+              r"\\s*\\(([^()]*)\\s*;\\s*source typo\\)\\s*$",
+              re.IGNORECASE,
+          )
+          _QUANTITY_ONLY_ANNOTATION = re.compile(
+          '''
+          if text.count(old_regex) != 1:
+              raise SystemExit('source-typo regex insertion point changed')
+          text = text.replace(old_regex, new_regex, 1)
+
+          old_body = '''        text = _REVIEW_ONLY_ANNOTATION.sub("", text, count=1).strip()
+                  text = _QUANTITY_ONLY_ANNOTATION.sub("", text, count=1).strip()
+          '''
+          new_body = '''        text = _REVIEW_ONLY_ANNOTATION.sub("", text, count=1).strip()
+                  source_typo = _QUALIFIED_SOURCE_TYPO.search(text)
+                  if source_typo:
+                      qualifier = _text(source_typo.group(1))
+                      text = (
+                          text[: source_typo.start()]
+                          + (f" ({qualifier})" if qualifier else "")
+                          + text[source_typo.end() :]
+                      ).strip()
+                  else:
+                      text = _SOURCE_TYPO_ONLY.sub("", text, count=1).strip()
+                  text = _QUANTITY_ONLY_ANNOTATION.sub("", text, count=1).strip()
+          '''
+          if text.count(old_body) != 1:
+              raise SystemExit('source-typo normalizer insertion point changed')
+          compiler.write_text(text.replace(old_body, new_body, 1), encoding='utf-8')
+
+          whitelist = Path('tools/release_catalog_semantic_syntactic_confirmation_ids.v1.txt')
+          lines = whitelist.read_text(encoding='utf-8').splitlines()
+          ids = [
+              'local:uk:f570284e6f38b35c21f1',
+              'local:pl:796211389a361f85176e',
+              'local:pl:3a8eebf3b148eb513608',
+              'local:uk:e604ed889b05ad910808',
+              'local:ru:6236639eca31bbd39403',
+              'local:pl:cd12c1f5c74818ea1d9d',
+              'local:uk:a6bb10f9d16236865b30',
+          ]
+          existing = {line.strip() for line in lines}
+          missing = [value for value in ids if value not in existing]
+          if missing:
+              lines.append('# Exact reviewed source-typo metadata normalizations.')
+              lines.extend(missing)
+          whitelist.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+      - name: Run semantic confirmation regression tests
+        run: |
+          set -Eeuo pipefail
+          python -m unittest discover -s tests -p 'test_semantic_*v60.py' -v
+          python -m unittest discover -s tests -p 'test_compile_release_catalog_semantics_v60.py' -v
+          python tools/compile_release_catalog_semantics_v60.py \
+            --reviews-dir tools \
+            --output "$RUNNER_TEMP/semantic-after-source-typo.v60.json"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          payload = json.loads(
+              (Path(os.environ['RUNNER_TEMP']) / 'semantic-after-source-typo.v60.json').read_text(encoding='utf-8')
+          )
+          summary = payload['summary']
+          if int(summary.get('needsSemanticConfirmationSourceLabels') or 0) != 301:
+              raise SystemExit(f"unexpected semantic pending count: {summary}")
+          if int(summary.get('syntacticConfirmedSourceLabels') or 0) != 83:
+              raise SystemExit(f"unexpected syntactic confirmation count: {summary}")
+          print(json.dumps(summary, ensure_ascii=False, indent=2))
+          PY
+      - name: Commit tested compiler change and remove one-time workflow
+        run: |
+          set -Eeuo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+Chreece@users.noreply.github.com"
+          git rm .github/workflows/catalog-semantic-source-typo-patch-v60.yml
+          git add \
+            tools/compile_release_catalog_semantics_v60.py \
+            tools/release_catalog_semantic_syntactic_confirmation_ids.v1.txt \
+            tests/test_semantic_source_typo_confirmations_v60.py
+          git diff --cached --check
+          git commit -m 'Support explicit source-typo semantic confirmations'
+          git pull --rebase origin cook4me-ingredient-semantic-confirmation-v60
+          git push origin HEAD:cook4me-ingredient-semantic-confirmation-v60
