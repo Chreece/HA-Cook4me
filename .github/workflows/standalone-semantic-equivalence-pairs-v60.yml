@@ -45,10 +45,11 @@ jobs:
             | tee "$RUNNER_TEMP/semantic-with-standalone-equivalences-summary.json"
           python - <<'PY'
           import json
+          import os
           from pathlib import Path
 
           payload = json.loads(
-              Path('$RUNNER_TEMP/semantic-with-standalone-equivalences.json'.replace('$RUNNER_TEMP', __import__('os').environ['RUNNER_TEMP'])).read_text(encoding='utf-8')
+              Path(os.environ['RUNNER_TEMP'], 'semantic-with-standalone-equivalences.json').read_text(encoding='utf-8')
           )
           summary = payload['summary']
           ledger = json.loads(
@@ -58,7 +59,7 @@ jobs:
               Path('tools/release_catalog_semantic_standalone_dispositions.v1.json').read_text(encoding='utf-8')
           )
           pairs = ledger.get('items') or []
-          if int(summary.get('needsSemanticConfirmationSourceLabels') or -1) != 0:
+          if summary.get('needsSemanticConfirmationSourceLabels') != 0:
               raise SystemExit('exact standalone pair merge reopened semantic pending work')
           if int(summary.get('standaloneEquivalentSourceLabels') or -1) != len(pairs):
               raise SystemExit('standalone equivalence summary mismatch')
