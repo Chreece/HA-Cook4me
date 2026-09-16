@@ -198,7 +198,7 @@ class OfflineMultilingualRuntimeTests(unittest.TestCase):
             self.fail("Offline recipe unexpectedly entered the live request queue")
 
         modules = {
-            "voluptuous": types.SimpleNamespace(Required=lambda value, **_: value, Optional=lambda value, **_: value, All=lambda *args: None, Coerce=lambda _: None, Range=lambda **kwargs: None),
+            "voluptuous": types.SimpleNamespace(Required=lambda value, **_: value, Optional=lambda value, **_: value, All=lambda *args: None, In=lambda _: None, Coerce=lambda _: None, Range=lambda **kwargs: None),
             "homeassistant.core": types.SimpleNamespace(HomeAssistant=object, callback=identity),
             "homeassistant.components": types.SimpleNamespace(websocket_api=websocket_api),
             f"{prefix}.websocket": legacy,

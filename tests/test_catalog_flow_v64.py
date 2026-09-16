@@ -108,8 +108,14 @@ class CatalogFlowTests(unittest.TestCase):
         self.assertGreater(len(rows), 0)
         self.assertEqual(len(rows), len({row["displayFamilyId"] for row in rows}))
         for row in rows:
-            self.assertTrue(row["match"]["safe"])
-            self.assertNotIn("lamb", row["canonicalName"].lower())
+            match = row["match"]
+            self.assertTrue(match["safe"] or match["eligibleWithSubstitutions"])
+            if not match["safe"]:
+                from test_recipe_logic import logic
+                conflicts = {i for i, item in enumerate(row["ingredients"])
+                    if not logic.dietary_flags({"ingredients": [item]})["vegetarian"]}
+                self.assertEqual({s["ingredientIndex"] for s in match["substitutions"]}, conflicts)
+                self.assertEqual(match["violations"], ["diet:vegetarian"])
             self.assertEqual(row["mealTypes"], ["soup"])
         self.assertEqual(self.flow["stockOnly"]["items"], [])
 

@@ -75,6 +75,7 @@ jobs:
           python tools/build_frontend_bundle_v72.py --check
           python tools/build_frontend_bundle_v73.py --check
           python tools/build_frontend_bundle_v74.py --check
+          python tools/build_frontend_bundle_v76.py --check
           bash -n tools/deploy_offline_runtime_v75.sh
           python - <<'PY'
           import json
@@ -162,3 +163,11 @@ jobs:
           timeout 40s env COOK4ME_TEST_PANEL_VERSION=74 node tests/frontend_v72_device_settings_smoke.mjs
       - name: Run focused tests
         run: python -m unittest discover -s tests -v
+      - name: Verify v76 diet substitutions and active dashboard
+        run: |
+          bash -n tools/deploy_offline_runtime_v76.sh
+          timeout 40s node tests/frontend_v76_diet_substitutions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=76 node tests/frontend_v71_card_interactions_smoke.mjs
+          timeout 60s env COOK4ME_TEST_PANEL_VERSION=76 node tests/frontend_v73_photo_bounds_browser.mjs
+      - name: Validate v76 installer
+        run: sudo "$(command -v python)" -m unittest discover -s tests -p test_deploy_offline_runtime_v76.py -v

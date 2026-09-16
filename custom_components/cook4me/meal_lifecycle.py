@@ -131,6 +131,10 @@ def planned_requirements(slots: Any) -> list[dict[str, Any]]:
         slot = _slot(raw_slot)
         if slot is None or slot.get("leftoverId"):
             continue
+        if ((slot.get("recipe") or {}).get("match") or {}).get("requiresSubstitutions"):
+            # Replacement quantities are advisory; do not reserve or purchase
+            # the incompatible original ingredients for an unfinished adaptation.
+            continue
         for raw in (slot.get("recipe") or {}).get("ingredients") or []:
             ingredient = _ingredient(raw)
             if ingredient is None:

@@ -80,6 +80,13 @@ def _rank_filtered(
         result = deepcopy(recipe)
         base_match = score_recipe(result, profile)
         result["match"] = enrich_match_with_house_keys(result, base_match, house)
+        if result["match"].get("eligibleWithSubstitutions"):
+            # Stock quantities and expiry bonuses refer to the original animal
+            # ingredients. They must not rank an adaptation as ready to cook.
+            result["match"].update(fullyAvailableByQuantity=False, quantityCoverage=0,
+                quantityConfidence="unknown", quantityShortages=[], quantityAvailability=[])
+            scored.append(result)
+            continue
         if not result["match"].get("safe"):
             continue
 

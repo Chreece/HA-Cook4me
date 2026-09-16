@@ -426,10 +426,13 @@ class Cook4MeRecipeHub:
         profile["habitTerms"] = self._habit_terms()
         return profile
 
-    def annotate(self, recipe: dict[str, Any]) -> dict[str, Any]:
+    def annotate(self, recipe: dict[str, Any], *, diet: str | None = None) -> dict[str, Any]:
         result = deepcopy(recipe)
         house = self._data["profile"].get("houseIngredients")
-        base_match = score_recipe(result, self._scoring_profile())
+        profile = self._scoring_profile()
+        if diet in {"omnivore", "pescatarian", "vegetarian", "vegan"}:
+            profile["diet"] = diet
+        base_match = score_recipe(result, profile)
         match = enrich_match_with_house_keys(result, base_match, house)
         if match.get("safe"):
             quantity = recipe_quantity_feasibility(
@@ -465,6 +468,6 @@ class Cook4MeRecipeHub:
 
     def rank(self, recipes: list[dict[str, Any]], limit: int = 12) -> list[dict[str, Any]]:
         scored = [self.annotate(x) for x in recipes if isinstance(x, dict)]
-        safe = [x for x in scored if x.get("match", {}).get("safe")]
+        safe = [x for x in scored if x.get("match", {}).get("safe") or x.get("match", {}).get("eligibleWithSubstitutions")]
         safe.sort(key=lambda x: x.get("match", {}).get("score", -1000), reverse=True)
         return safe[: max(1, min(int(limit), 50))]

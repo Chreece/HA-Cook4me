@@ -357,7 +357,8 @@ async def _generate_week(
     if shared_filters is not None:
         history = await meal_history_store_for_bridge(bridge)
         meals = {row.get("id"): row for row in history.recent(200)}
-        allowed = {recipe_identity(row) for row in candidates}
+        # A cooked leftover cannot be made vegetarian by replacing raw meat.
+        allowed = {recipe_identity(row) for row in candidates if (row.get("match") or {}).get("safe")}
         for leftover in leftovers:
             leftover["recipe"] = _leftover_recipe(leftover, meals)
         leftovers = [row for row in leftovers if recipe_identity(row["recipe"]) in allowed]
@@ -751,6 +752,8 @@ async def ws_week_add_shopping(hass, connection, msg) -> None:
         lifecycle = await meal_lifecycle_store_for_bridge(bridge)
         snapshot = lifecycle.snapshot(bridge.recipe_hub.profile.get("houseIngredients") or [],
             start_date=dt_util.now().date())
+        if any((((slot.get("recipe") or {}).get("match") or {}).get("requiresSubstitutions")) for slot in snapshot["slots"]):
+            raise ValueError("Some planned recipes still need ingredient replacements. Resolve those recipes before adding the week to shopping.")
         rows = snapshot["shoppingDelta"]
         if msg.get("ui_language"):
             from .shopping_presentation import shopping_rows

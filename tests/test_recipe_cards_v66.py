@@ -44,7 +44,7 @@ class RecipeCardDataTests(unittest.TestCase):
             "homeassistant.components": types.SimpleNamespace(websocket_api=api, ai_task=types.SimpleNamespace(async_generate_data=generate)),
             "homeassistant.helpers.storage": types.SimpleNamespace(Store=object),
             "voluptuous": types.SimpleNamespace(Required=lambda v, **_: v, Optional=lambda v, **_: v,
-                All=lambda *args: None, Coerce=lambda _: None, Range=lambda **_: None),
+                All=lambda *args: None, In=lambda _: None, Coerce=lambda _: None, Range=lambda **_: None),
             f"{PREFIX}.websocket": types.SimpleNamespace(_bridge=lambda *_: bridge,
                 _send_error=lambda *args: (_ for _ in ()).throw(AssertionError(str(args)))),
             f"{PREFIX}.websocket_v30": types.SimpleNamespace(_device_language=lambda _: "de",

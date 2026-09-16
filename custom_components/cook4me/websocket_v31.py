@@ -109,6 +109,7 @@ async def ws_official_search(hass, connection, msg) -> None:
     vol.Optional("language", default=""): str,
     vol.Optional("ui_language", default=""): str,
     vol.Optional("include_instructions", default=False): bool,
+    vol.Optional("diet", default="profile"): vol.In(("profile", "omnivore", "pescatarian", "vegetarian", "vegan")),
     vol.Optional("client_operation_id", default=""): str,
     vol.Optional("refresh", default=False): bool,
 })
@@ -171,6 +172,8 @@ async def ws_recipe_detail(hass: HomeAssistant, connection, msg) -> None:
                     coordinator=coordinator,
                     operation=operation,
                 )
+        if msg.get("diet", "profile") != "profile":
+            result = bridge.recipe_hub.annotate(result, diet=msg["diet"])
         from .recipe_presentation import present_recipe
         result = present_recipe(result, _language(msg.get("ui_language")) or language)
     except Exception as exc:
@@ -183,13 +186,16 @@ async def ws_recipe_detail(hass: HomeAssistant, connection, msg) -> None:
     vol.Optional("entry_id"): str,
     vol.Required("recipe"): dict,
     vol.Required("language"): str,
+    vol.Optional("diet", default="profile"): vol.In(("profile", "omnivore", "pescatarian", "vegetarian", "vegan")),
 })
 @websocket_api.async_response
 async def ws_recipe_presentation(hass, connection, msg):
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         from .recipe_presentation import present_recipe
-        result = await hass.async_add_executor_job(present_recipe, bridge.recipe_hub.annotate(msg["recipe"]), _language(msg["language"]))
+        annotated = (bridge.recipe_hub.annotate(msg["recipe"], diet=msg["diet"])
+            if msg.get("diet", "profile") != "profile" else bridge.recipe_hub.annotate(msg["recipe"]))
+        result = await hass.async_add_executor_job(present_recipe, annotated, _language(msg["language"]))
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)

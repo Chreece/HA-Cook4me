@@ -57,6 +57,10 @@ def apply_filters(rows, filters, *, ingredient_groups=None, cost=None, nutrition
         if source.get("displayFamilyId") in recent or source.get("displayVariantId") in recent:
             continue
         match = source.get("match") or {}
+        if match.get("requiresSubstitutions") and (settings["onlyHome"] or
+                settings["maxCost"] is not None or settings["maxMissing"] is not None):
+            # A replacement's quantity/price cannot be borrowed from the original.
+            continue
         if settings["onlyHome"] and not match.get("fullyAvailableByQuantity"):
             continue
         if settings["maxMissing"] is not None and len(match.get("quantityShortages") or []) > settings["maxMissing"]:

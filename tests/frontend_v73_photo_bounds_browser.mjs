@@ -25,8 +25,10 @@ try{
   // only; every card, action, style and responsive grid comes from the bundle.
   const icons=document.createElement('style');icons.textContent='ha-icon{display:inline-block;width:22px;height:22px}ha-icon::after{content:"◆"}';panel.shadowRoot.append(icons);
   const cover='data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450"><rect width="800" height="450" fill="#dea958"/><circle cx="400" cy="225" r="180" fill="#fff2d0"/><circle cx="400" cy="225" r="135" fill="#809447"/><path d="M0 430H800" stroke="#da4444" stroke-width="40"/></svg>');
-  const recipe=(i)=>({id:`r${i}`,source:'release_offline',title:i%2?'Μπρουσκέτα φασολιών και κρέμας κατσίκι':'Βρώμη με φρούτα και σιρόπι σφενδάμου',language:'de',displayVariantId:`${i}-de-4`,searchVariantId:`${i}-de-4`,sendVariantId:`${i}-de-4`,cover:i===6?'':cover,servings:4,ingredients:[],steps:[{instruction:'Stir for 2 minutes'}],dietary:{vegetarian:true},mealTypes:['main'],match:{safe:true}});
+  const recipe=(i)=>({id:`r${i}`,source:'release_offline',title:i%2?'Μπρουσκέτα φασολιών και κρέμας κατσίκι':'Βρώμη με φρούτα και σιρόπι σφενδάμου',language:'de',displayVariantId:`${i}-de-4`,searchVariantId:`${i}-de-4`,sendVariantId:`${i}-de-4`,cover:i===6?'':cover,servings:4,ingredients:[],steps:[{instruction:'Stir for 2 minutes'}],dietary:{vegetarian:true},mealTypes:['main'],match:{...(Number(version)>=76?{diet:'vegetarian',dietCheckVersion:76}:{}),safe:true}});
   window.recipes=Array.from({length:7},(_,i)=>recipe(i));
+  if(Number(version)>=76)window.recipes[0].match={diet:'vegetarian',dietCheckVersion:76,safe:false,eligibleWithSubstitutions:true,requiresSubstitutions:true,
+   substitutions:[{ingredientIndex:0,original:'Πάπια',replacement:{key:'tofu',name:'Firm tofu'}},{ingredientIndex:1,original:'Γαρίδες',replacement:{key:'mushrooms',name:'Mushrooms'}}]};
   window.render=(kind,expanded=false)=>{
    const content=panel.shadowRoot.querySelector('#content');
    let html='';
@@ -53,6 +55,7 @@ try{
    return {card:box(card),media:box(media),overlay:box(overlay),title:box(card.querySelector('.rx-v66-title')),padding:style.padding,gap:style.gap,
     controls:[...overlay.querySelectorAll('button,select')].map(box),body:card.querySelector('.rx-v66-body')?box(card.querySelector('.rx-v66-body')):null};
   }));
+  assert.equal(rows.length,7,'All seven test cards must be rendered');
   for(const [i,row] of rows.entries()){
    const context=`${width}px ${kind} ${expanded?'expanded':'collapsed'} card ${i}`;
    assert.ok(row.media.bottom<=row.card.bottom-1+.5,`${context}: photo bottom ${row.media.bottom} exceeds card ${row.card.bottom}`);
