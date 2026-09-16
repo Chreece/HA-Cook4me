@@ -322,9 +322,11 @@ class Cook4MeCurrencyFxStore:
 
 
 async def currency_fx_store_for_bridge(bridge: Any) -> Cook4MeCurrencyFxStore:
-    store = getattr(bridge, "_currency_fx_store", None)
-    if store is None:
-        store = Cook4MeCurrencyFxStore(bridge.hass, bridge.entry.entry_id)
-        await store.async_load()
-        bridge._currency_fx_store = store
-    return store
+    from .store_helpers import store_load_lock
+    async with store_load_lock(bridge, 'currency_fx'):
+        store = getattr(bridge, "_currency_fx_store", None)
+        if store is None:
+            store = Cook4MeCurrencyFxStore(bridge.hass, bridge.entry.entry_id)
+            await store.async_load()
+            bridge._currency_fx_store = store
+        return store

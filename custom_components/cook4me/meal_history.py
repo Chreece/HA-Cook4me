@@ -225,11 +225,13 @@ class Cook4MeMealHistoryStore:
 
 
 async def meal_history_store_for_bridge(bridge: Any) -> Cook4MeMealHistoryStore:
-    store = getattr(bridge, "_meal_history_store", None)
-    if store is None:
-        store = Cook4MeMealHistoryStore(
-            bridge.hass, bridge.entry.entry_id
-        )
-        await store.async_load()
-        bridge._meal_history_store = store
-    return store
+    from .store_helpers import store_load_lock
+    async with store_load_lock(bridge, 'meal_history'):
+        store = getattr(bridge, "_meal_history_store", None)
+        if store is None:
+            store = Cook4MeMealHistoryStore(
+                bridge.hass, bridge.entry.entry_id
+            )
+            await store.async_load()
+            bridge._meal_history_store = store
+        return store

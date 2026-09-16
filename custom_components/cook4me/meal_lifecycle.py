@@ -576,9 +576,11 @@ class Cook4MeMealLifecycleStore:
 
 
 async def meal_lifecycle_store_for_bridge(bridge: Any) -> Cook4MeMealLifecycleStore:
-    store = getattr(bridge, "_meal_lifecycle_store", None)
-    if store is None:
-        store = Cook4MeMealLifecycleStore(bridge.hass, bridge.entry.entry_id)
-        await store.async_load()
-        bridge._meal_lifecycle_store = store
-    return store
+    from .store_helpers import store_load_lock
+    async with store_load_lock(bridge, 'meal_lifecycle'):
+        store = getattr(bridge, "_meal_lifecycle_store", None)
+        if store is None:
+            store = Cook4MeMealLifecycleStore(bridge.hass, bridge.entry.entry_id)
+            await store.async_load()
+            bridge._meal_lifecycle_store = store
+        return store

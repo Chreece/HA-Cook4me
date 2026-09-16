@@ -80,7 +80,11 @@ class Batch48GenericSeafoodTriageTests(unittest.TestCase):
 
     def test_triage_only_does_not_change_recorded_bindings(self):
         checkpoint = cp.build_checkpoint(TOOLS)
-        self.assertEqual(checkpoint["summary"]["recordedReviewTargetCount"], 5080)
+        # Triage used the batch42 checkpoint; subsequent explicit reviews
+        # must not be counted as bindings created by this historical batch.
+        historical = [row for row in checkpoint["recordedBindings"]
+                      if row["reviewFile"] <= "release_catalog_reviewed_nutrition_targets_045.v1.json"]
+        self.assertEqual(len(historical), 5080)
         self.assertEqual(self.fixture["bindingsCreatedByBatch48"], 0)
 
 

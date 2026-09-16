@@ -275,12 +275,14 @@ class Cook4MeCostStore:
 
 
 async def cost_store_for_bridge(bridge: Any) -> Cook4MeCostStore:
-    store = getattr(bridge, "_cost_store", None)
-    if store is None:
-        store = Cook4MeCostStore(bridge.hass, bridge.entry.entry_id)
-        await store.async_load()
-        bridge._cost_store = store
-    return store
+    from .store_helpers import store_load_lock
+    async with store_load_lock(bridge, 'costs'):
+        store = getattr(bridge, "_cost_store", None)
+        if store is None:
+            store = Cook4MeCostStore(bridge.hass, bridge.entry.entry_id)
+            await store.async_load()
+            bridge._cost_store = store
+        return store
 
 
 def lookup_open_prices(

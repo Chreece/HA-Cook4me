@@ -31,14 +31,15 @@ class Batch42ExplicitReviews(unittest.TestCase):
   self.assertEqual(hashlib.sha256(FIXTURE.read_bytes()).hexdigest(),FIXTURE_SHA)
   self.assertEqual(len(self.items),9); self.assertEqual(len({r['reviewTargetId'] for r in self.items}),9)
   self.assertEqual(sum(r['usageCountAtReview'] for r in self.items),16)
-  prior_files=[r for r in self.checkpoint['reviewFiles'] if r['path']!=SOURCE.name]
+  prior_files=[r for r in self.checkpoint['reviewFiles'] if r['path']<SOURCE.name]
   prior_names={r['path'] for r in prior_files}
   prior_bindings=[r for r in self.checkpoint['recordedBindings'] if r['reviewFile'] in prior_names]
   self.assertEqual(len(prior_files),260); self.assertEqual(len(prior_bindings),5071)
   self.assertEqual(cp._digest(cp._encoded(prior_files)),BASE_REVIEW_SHA)
   self.assertEqual(cp._digest(cp._encoded(prior_bindings)),BASE_BINDINGS_SHA)
-  self.assertEqual(self.checkpoint['summary']['reviewFileCount'],261)
-  self.assertEqual(self.checkpoint['summary']['recordedReviewTargetCount'],5080)
+  # This is the batch42 checkpoint; later explicit reviews are separate work.
+  self.assertEqual(sum(r['path']<=SOURCE.name for r in self.checkpoint['reviewFiles']),261)
+  self.assertEqual(sum(r['reviewFile']<=SOURCE.name for r in self.checkpoint['recordedBindings']),5080)
 
  def test_destination_identity_usage_and_holds(self):
   held=holds.load_holds(); self.assertEqual(len(held['targets']),12)
