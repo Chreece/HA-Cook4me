@@ -154,15 +154,40 @@ class IngredientCatalogTests(unittest.TestCase):
             ],
         )
 
-    def test_final_catalog_dedupes_same_clean_name_across_different_keys(self):
+    def test_distinct_provider_keys_with_same_clean_name_are_preserved(self):
         rows = self.module._clean_catalog_rows(
             [
-                {"key": "M_FOOD_A", "name": "Olivenöl"},
-                {"key": "M_FOOD_B", "name": "Olivenöl"},
+                {"key": "M_FOOD_589", "name": "Edamame"},
+                {"key": "M_FOOD_742", "name": "Edamame"},
+                {"name": "Edamame"},
+            ]
+        )
+        self.assertEqual(
+            rows,
+            [
+                {"key": "M_FOOD_589", "name": "Edamame"},
+                {"key": "M_FOOD_742", "name": "Edamame"},
+            ],
+        )
+
+    def test_keyless_duplicate_is_removed_when_authoritative_key_exists(self):
+        rows = self.module._clean_catalog_rows(
+            [
                 {"name": "Olivenöl"},
+                {"key": "M_FOOD_A", "name": "Olivenöl"},
             ]
         )
         self.assertEqual(rows, [{"key": "M_FOOD_A", "name": "Olivenöl"}])
+
+    def test_catalog_cleaning_does_not_truncate_after_5000_rows(self):
+        rows = [
+            {"key": f"M_FOOD_{index}", "name": f"Ingredient {index:05d}"}
+            for index in range(12_000)
+        ]
+        cleaned = self.module._clean_catalog_rows(rows)
+        self.assertEqual(len(cleaned), 12_000)
+        self.assertEqual(cleaned[0]["key"], "M_FOOD_0")
+        self.assertEqual(cleaned[-1]["key"], "M_FOOD_11999")
 
 
 if __name__ == "__main__":
