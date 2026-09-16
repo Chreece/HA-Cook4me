@@ -91,3 +91,11 @@ household price observations were available in this workspace.
   passed on v82. Desktop/mobile layouts were inspected. HA icon elements and API
   responses in the standalone harness are test fixtures.
 - The generated bundle, JavaScript syntax, version contract and diff checks passed.
+- Four additional pinned-installer tests passed, including failed activation
+  rollback, wrong mounts and missing source files. This gives 1,451 passing Python
+  tests across the runtime suite and v82 installer checks.
+
+Runtime commit: `9b0aa5fce6734f71a9304cd72d64e9e0f3ae94be`.
+The installer is `tools/deploy_offline_runtime_v82.sh`; it pins this runtime,
+keeps the previous component, verifies the new panel and restores the backup if
+activation fails. Reopen/reload Cook4Me after installation.
