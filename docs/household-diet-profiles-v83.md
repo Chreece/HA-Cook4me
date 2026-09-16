@@ -84,3 +84,10 @@ JavaScript/Python syntax, workflow YAML, version and diff checks passed.
 The real English catalog exposes 3,680 choices; its largest linked alias set is
 137 entries. Cancelled filter dialogs and normalized numeric values are covered
 by browser checks so they do not spuriously change a selected profile to Manual.
+
+The four pinned v83 installer backup/rollback tests also passed (1,465 Python
+tests across the runtime suite and installer checks). Runtime commit:
+`36b59795fab2708d74ad478b56939b935a055ad3`. The installer at
+`tools/deploy_offline_runtime_v83.sh` pins this runtime, keeps the prior integration,
+restarts Home Assistant, verifies the served panel and rolls back on activation
+failure. Reopen/reload Cook4Me after installation.
