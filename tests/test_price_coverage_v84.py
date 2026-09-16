@@ -93,7 +93,7 @@ class PriceCoverageTests(unittest.IsolatedAsyncioTestCase):
     def test_reviewed_mapping_covers_frequent_foods_without_guessing_mixtures(self):
         for name in ['Salted Butter & Unsalted butter','White Potatoes','Ginger','Chicken breast','Salmon','Crème fraîche','Spring onion','Icing sugar']:
             self.assertIsNotNone(self.prices.category_for({'canonicalName':name}),name)
-        for name in ['Butter and olive oil','Salt and pepper','Water','Pepper','Cooked rice','Rice pudding']:
+        for name in ['Butter and olive oil','Salt and pepper','Pepper','Cooked rice','Rice pudding']:
             self.assertIsNone(self.prices.category_for({'canonicalName':name}),name)
         units=importlib.import_module(runtime.PREFIX+'.price_units')
         for unit in ['pinch','cup','tbsp','clove']:

@@ -58,5 +58,5 @@ def snapshot_observations(*, barcode='', category='', country='', currency='', u
         if unit and convert_amount(1, unit, row.get('basisUnit')) is None:
             continue
         result.append({**deepcopy(row), 'category': category})
-    primary = [row for row in result if row.get('source') != 'retail_snapshot']
+    primary = [row for row in result if row.get('source') not in {'retail_snapshot', 'utility_snapshot'}]
     return primary or result

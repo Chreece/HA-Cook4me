@@ -10,6 +10,7 @@ from pathlib import Path
 
 from .price_units import price_ingredient
 from .inventory import convert_amount
+from .price_identity import pricing_name
 
 _NIST = 'https://www.nist.gov/pml/owm/metric-si/metric-kitchen/metric-kitchen-cooking-measurement-equivalencies'
 _SPOONS = {'UNIT_11': 'tsp', 'UNIT_12': 'tbsp', 'tsp': 'tsp', 'teaspoon': 'tsp',
@@ -18,13 +19,20 @@ _COUNTS = {'egg', 'eggs', 'onion', 'onions', 'carrot', 'carrots', 'tomato', 'tom
            'cherry tomato', 'cherry tomatoes', 'apple', 'apples', 'zucchini', 'courgette',
            'courgettes', 'aubergine', 'aubergines', 'eggplant', 'red pepper', 'red bell pepper',
            'cucumber', 'cucumbers', 'leek', 'leeks', 'white potatoes', 'potato', 'potatoes',
-           'lemon', 'lemons', 'lime', 'limes', 'orange', 'oranges', 'shallot', 'shallots'}
+           'lemon', 'lemons', 'lime', 'limes', 'orange', 'oranges', 'shallot', 'shallots',
+           'welsh onion', 'spring onion', 'spring onions', 'green onion', 'green onions'}
 
 
 @lru_cache(maxsize=1)
 def _portions():
     payload = json.loads((Path(__file__).with_name('catalog') / 'price_portions.v1.json').read_text())
     return {(name, row['measure']): row for row in payload['portions'] for name in row['names']}
+
+
+@lru_cache(maxsize=1)
+def _densities():
+    payload = json.loads((Path(__file__).with_name('catalog') / 'price_densities.v1.json').read_text())
+    return {name: row for row in payload['densities'] for name in row['names']}
 
 
 def price_options(raw):
@@ -40,7 +48,7 @@ def price_options(raw):
         return []
     unit = str(target.get('unit') or '').strip()
     key = str(target.get('unitKey') or '')
-    name = str(item.get('canonicalName') or item.get('name') or '').strip().casefold()
+    name = pricing_name(item)
     options = [{'quantity': amount, 'unit': unit}] if unit else []
     if key in {'UNIT_138', 'UNIT_50'}:
         unit = 'pcs'
@@ -61,6 +69,11 @@ def price_options(raw):
         options.append({'quantity': amount * ml, 'unit': 'ml', 'estimate': {
             'kind': 'spoon_volume', 'label': f'1 {measure} ≈ {ml} ml', 'sourceUrl': _NIST,
             'sourceQuantity': amount, 'sourceUnit': measure, 'quantity': amount * ml, 'unit': 'ml'}})
+    if name in {'vegetable stock', 'vegetable stock cube'} and key in {'UNIT_17', 'UNIT_21'}:
+        options.append({'quantity': amount, 'unit': 'pcs', 'estimate': {
+            'kind': 'stock_cube', 'label': 'Stock cube count; named package uses 11 g cubes',
+            'sourceUrl': 'https://www.dm.de/p/d/1490263/dmbio-gemuesebruehwuerfel',
+            'sourceQuantity': amount, 'sourceUnit': unit, 'quantity': amount, 'unit': 'pcs'}})
     portion = _portions().get((name, measure))
     factor = 1
     if portion is None and measure in {'tsp', 'tbsp'}:
@@ -78,6 +91,14 @@ def price_options(raw):
     # measured spoon lets mass and volume meet without a universal water density.
     grams = convert_amount(amount, unit, 'g')
     millilitres = convert_amount(amount, unit, 'ml')
+    density = _densities().get(name)
+    if density and (grams is not None or millilitres is not None or measure in {'tsp', 'tbsp'}):
+        volume = millilitres if millilitres is not None else amount * (5 if measure == 'tsp' else 15)
+        converted = grams / density['gramsPerMl'] if grams is not None else volume * density['gramsPerMl']
+        destination = 'ml' if grams is not None else 'g'
+        options.append({'quantity': converted, 'unit': destination, 'estimate': {
+            'kind': 'food_density', 'label': density['label'], 'sourceUrl': density['sourceUrl'],
+            'sourceQuantity': amount, 'sourceUnit': unit, 'quantity': converted, 'unit': destination}})
     piece = _portions().get((name, 'piece'))
     spoon = _portions().get((name, 'tbsp')) or _portions().get((name, 'tsp'))
     if grams is not None and piece:

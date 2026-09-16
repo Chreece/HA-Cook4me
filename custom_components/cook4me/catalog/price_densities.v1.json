@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "source": "FAO/INFOODS Density Database v2 (2012), page 13",
+  "densities": [
+    {
+      "names": [
+        "thick crème fraîche",
+        "crème fraîche",
+        "creme fraiche"
+      ],
+      "gramsPerMl": 0.978,
+      "label": "FAO full-fat crème fraîche (38% fat), approximately 0.978 g/ml; fat content varies",
+      "sourceUrl": "https://www.fao.org/4/ap815e/ap815e.pdf"
+    }
+  ]
+}

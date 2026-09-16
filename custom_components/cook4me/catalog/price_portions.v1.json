@@ -386,8 +386,7 @@
     {
       "names": [
         "black pepper",
-        "ground black pepper",
-        "pepper"
+        "ground black pepper"
       ],
       "measure": "tsp",
       "grams": 2.3,
@@ -401,8 +400,7 @@
     {
       "names": [
         "black pepper",
-        "ground black pepper",
-        "pepper"
+        "ground black pepper"
       ],
       "measure": "tbsp",
       "grams": 6.9,
@@ -732,6 +730,121 @@
       "portion": "tsp unpacked",
       "sourceAmount": 1.0,
       "sourceGrams": 3.0
+    },
+    {
+      "names": [
+        "lemon",
+        "lemons"
+      ],
+      "measure": "piece",
+      "grams": 58.0,
+      "fdcId": 167746,
+      "portionId": 81883,
+      "food": "Lemons, raw, without peel",
+      "portion": "fruit (2-1/8\" dia)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 58.0
+    },
+    {
+      "names": [
+        "lime",
+        "limes"
+      ],
+      "measure": "piece",
+      "grams": 67.0,
+      "fdcId": 168155,
+      "portionId": 82570,
+      "food": "Limes, raw",
+      "portion": "fruit (2\" dia)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 67.0
+    },
+    {
+      "names": [
+        "coriander",
+        "fresh coriander",
+        "coriander leaves"
+      ],
+      "measure": "tbsp",
+      "grams": 1.0,
+      "fdcId": 169997,
+      "portionId": 85844,
+      "food": "Coriander (cilantro) leaves, raw",
+      "portion": "cup",
+      "sourceAmount": 0.25,
+      "sourceGrams": 4.0
+    },
+    {
+      "names": [
+        "curry",
+        "curry powder"
+      ],
+      "measure": "tsp",
+      "grams": 2.0,
+      "fdcId": 170924,
+      "portionId": 87546,
+      "food": "Spices, curry powder",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 2.0
+    },
+    {
+      "names": [
+        "curry",
+        "curry powder"
+      ],
+      "measure": "tbsp",
+      "grams": 6.3,
+      "fdcId": 170924,
+      "portionId": 87547,
+      "food": "Spices, curry powder",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 6.3
+    },
+    {
+      "names": [
+        "poppy seed",
+        "poppy seeds",
+        "ground poppy seeds"
+      ],
+      "measure": "tsp",
+      "grams": 2.8,
+      "fdcId": 171330,
+      "portionId": 88449,
+      "food": "Spices, poppy seed",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 2.8
+    },
+    {
+      "names": [
+        "poppy seed",
+        "poppy seeds",
+        "ground poppy seeds"
+      ],
+      "measure": "tbsp",
+      "grams": 8.8,
+      "fdcId": 171330,
+      "portionId": 88450,
+      "food": "Spices, poppy seed",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 8.8
+    },
+    {
+      "names": [
+        "mint",
+        "fresh mint"
+      ],
+      "measure": "tbsp",
+      "grams": 5.7,
+      "fdcId": 173475,
+      "portionId": 92613,
+      "food": "Spearmint, fresh",
+      "portion": "tbsp",
+      "sourceAmount": 2.0,
+      "sourceGrams": 11.4
     }
   ]
 }

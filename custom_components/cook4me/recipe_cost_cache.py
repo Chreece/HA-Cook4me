@@ -48,7 +48,7 @@ def _recipe_price_shape(recipe: Any) -> dict[str, Any]:
         "servings": recipe.get("servings") or recipe.get("groupSize"),
         "yield": deepcopy(recipe.get("yield")) if isinstance(recipe.get("yield"), dict) else None,
         "ingredients": ingredients,
-        "quantityEvidenceVersion": 86,
+        "quantityEvidenceVersion": 87,
     }
 
 

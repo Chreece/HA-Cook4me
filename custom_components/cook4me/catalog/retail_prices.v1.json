@@ -117,6 +117,571 @@
       "usable": true,
       "confidence": "external_observation",
       "barcode": ""
+    },
+    {
+      "id": "dm-3064564-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3064564/lebensbaum-kreuzkuemmel-gemahlen",
+      "productName": "LEBENSBAUM ground cumin",
+      "amount": 3.45,
+      "currency": "EUR",
+      "basisQuantity": 40,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:cumin",
+        "en:ground-cumin-seeds",
+        "en:cumin-powders"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "dm-1665593-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1665593/dmbio-kurkuma-gemahlen",
+      "productName": "dmBio ground turmeric",
+      "amount": 1.85,
+      "currency": "EUR",
+      "basisQuantity": 60,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:turmeric"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "dm-1666804-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1666804/dmbio-curry-mild",
+      "productName": "dmBio mild curry powder",
+      "amount": 1.85,
+      "currency": "EUR",
+      "basisQuantity": 60,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:curry-powders"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "dm-1446420-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1446420/dmbio-tomatenmark",
+      "productName": "dmBio double-concentrated tomato paste",
+      "amount": 0.95,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:tomato-pastes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "dm-1490263-pcs-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1490263/dmbio-gemuesebruehwuerfel",
+      "productName": "dmBio vegetable stock · 6 × 11 g cubes",
+      "amount": 0.75,
+      "currency": "EUR",
+      "basisQuantity": 6,
+      "basisUnit": "pcs",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:vegetable-stock"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Package directions: one 11 g cube per 500 ml water. Prepared-broth reference excludes water; cube sizes vary."
+    },
+    {
+      "id": "dm-1490263-ml-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1490263/dmbio-gemuesebruehwuerfel",
+      "productName": "dmBio vegetable stock · 3 litres prepared broth",
+      "amount": 0.75,
+      "currency": "EUR",
+      "basisQuantity": 3000,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:vegetable-stock"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Package directions: one 11 g cube per 500 ml water. Prepared-broth reference excludes water; cube sizes vary."
+    },
+    {
+      "id": "aldi-000000000000474280-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/hofburger-gouda-250-g-gerieben-000000000000474280",
+      "productName": "HOFBURGER Gouda, grated",
+      "amount": 1.79,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "cook4me:cheese",
+        "en:gouda"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Generic cheese estimate uses this named Gouda variety; other cheeses differ."
+    },
+    {
+      "id": "aldi-000000000000194677-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/bellasan-natives-rapsoel-500-ml-000000000000194677",
+      "productName": "BELLASAN virgin rapeseed oil",
+      "amount": 1.39,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:vegetable-oils",
+        "en:rapeseed-oils"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Generic cooking oil estimate uses rapeseed oil."
+    },
+    {
+      "id": "aldi-000000000000194341-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/le-gusto-schwarzer-pfeffer-gemahlen-50-g-000000000000194341",
+      "productName": "LE GUSTO ground black pepper",
+      "amount": 0.85,
+      "currency": "EUR",
+      "basisQuantity": 50,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:ground-black-peppers"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "aldi-000000000000194339-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/le-gusto-paprika-edelsuess-gemahlen-50-g-000000000000194339",
+      "productName": "LE GUSTO sweet paprika powder",
+      "amount": 0.75,
+      "currency": "EUR",
+      "basisQuantity": 50,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:paprika"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "aldi-000000000000194379-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/le-gusto-jodsalz-500-g-000000000000194379",
+      "productName": "LE GUSTO iodised salt",
+      "amount": 0.29,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:salts"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "aldi-000000000584724001-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/bio-bio-gemuesesortiment-750-g-junge-bohnen-000000000584724001",
+      "productName": "BIO BIO frozen green beans",
+      "amount": 2.69,
+      "currency": "EUR",
+      "basisQuantity": 750,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:green-beans"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Unseasoned frozen vegetable reference; fresh-market prices may differ."
+    },
+    {
+      "id": "aldi-000000000584724002-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/bio-bio-gemuesesortiment-750-g-broccoli-000000000584724002",
+      "productName": "BIO BIO frozen broccoli",
+      "amount": 2.69,
+      "currency": "EUR",
+      "basisQuantity": 750,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:broccoli"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Unseasoned frozen vegetable reference; fresh-market prices may differ."
+    },
+    {
+      "id": "aldi-000000000584753002-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/bio-bio-gemuesesortiment-750-g-blattspinat-000000000584753002",
+      "productName": "BIO BIO frozen leaf spinach",
+      "amount": 2.69,
+      "currency": "EUR",
+      "basisQuantity": 750,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:spinachs"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Unseasoned frozen vegetable reference; fresh-market prices may differ."
+    },
+    {
+      "id": "aldi-000000000584753003-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/bio-bio-gemuesesortiment-750-g-junge-erbsen-000000000584753003",
+      "productName": "BIO BIO frozen peas",
+      "amount": 2.69,
+      "currency": "EUR",
+      "basisQuantity": 750,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:peas",
+        "en:frozen-green-peas"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Unseasoned frozen vegetable reference; fresh-market prices may differ."
+    },
+    {
+      "id": "aldi-000000000584753004-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/bio-bio-gemuesesortiment-750-g-blumenkohl-000000000584753004",
+      "productName": "BIO BIO frozen cauliflower",
+      "amount": 2.69,
+      "currency": "EUR",
+      "basisQuantity": 750,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:cauliflowers"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Unseasoned frozen vegetable reference; fresh-market prices may differ."
+    },
+    {
+      "id": "aldi-000000000194190004-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/bio-bio-huelsenfruechte-500-g-rote-linsen-000000000194190004",
+      "productName": "BIO BIO dried red lentils",
+      "amount": 1.45,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:red-lentils"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "aldi-000000000194190005-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/bio-bio-huelsenfruechte-500-g-berglinsen-000000000194190005",
+      "productName": "BIO BIO dried mountain lentils",
+      "amount": 1.45,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:lentils"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "aldi-cheddar-press-20260415",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/newsroom/alle-pressemitteilungen/marke-und-produkte/2026/aldi-macht-kaese-guenstiger--bis-zu-30-cent-weniger-pro-packung",
+      "productName": "ALDI SÜD Cheddar",
+      "amount": 2.19,
+      "currency": "EUR",
+      "basisQuantity": 175,
+      "basisUnit": "g",
+      "date": "2026-04-15",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · price announcement",
+      "categories": [
+        "en:cheddar-cheese"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Published 15 April 2026; automatically excluded after the 180-day evidence window."
+    },
+    {
+      "id": "knuspr-94489-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/94489-miil-parmigiano-reggiano-dop-24-gereift",
+      "productName": "MIIL Parmigiano Reggiano DOP, 24 months",
+      "amount": 4.99,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "en:parmigiano-reggiano"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed price, without membership discount. Regional reference."
+    },
+    {
+      "id": "knuspr-3374-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/3374-schalotten-lang-netz",
+      "productName": "Long shallots",
+      "amount": 1.39,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "en:shallots"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed price, without membership discount. Regional reference."
+    },
+    {
+      "id": "knuspr-89672-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/89672-lauch-porree-1-stk",
+      "productName": "Leek",
+      "amount": 0.84,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "pcs",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "en:leeks"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed price, without membership discount. Regional reference. Per whole leek; a USDA edible portion estimate may be used for gram quantities."
+    },
+    {
+      "id": "knuspr-72159-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/72159-kitchin-mohnsamen-gemahlen",
+      "productName": "KITCHIN ground poppy seeds",
+      "amount": 2.09,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "cook4me:poppy-seeds"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed price, without membership discount. Regional reference. Plain seeds; not sweetened poppy filling."
+    },
+    {
+      "id": "knuspr-15104-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/15104-koriander",
+      "productName": "Herrmann Kräuter fresh coriander",
+      "amount": 1.99,
+      "currency": "EUR",
+      "basisQuantity": 100,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "en:fresh-coriander-leaves"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed price, without membership discount. Regional reference."
+    },
+    {
+      "id": "knuspr-15108-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/15108-minze",
+      "productName": "Herrmann Kräuter fresh mint",
+      "amount": 1.99,
+      "currency": "EUR",
+      "basisQuantity": 100,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "en:mint"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed price, without membership discount. Regional reference."
+    },
+    {
+      "id": "knuspr-1317-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/1317-dr-oetker-bourbon-vanille-extrakt",
+      "productName": "Dr. Oetker Bourbon vanilla extract",
+      "amount": 2.99,
+      "currency": "EUR",
+      "basisQuantity": 35,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "en:vanilla"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed price, without membership discount. Regional reference. Volume-based vanilla estimate uses liquid extract; gram-based vanilla keeps the ground-vanilla reference."
+    },
+    {
+      "id": "knuspr-30952-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/30952-kitchin-chifferi-no-132",
+      "productName": "KITCHIN Chifferi No. 132 durum-wheat macaroni",
+      "amount": 0.69,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "en:durum-wheat-macaroni"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed price, without membership discount. Regional reference."
+    },
+    {
+      "id": "bwb-water-20260916",
+      "source": "utility_snapshot",
+      "sourceUrl": "https://www.bwb.de/de/gebuehren.php",
+      "productName": "Berlin tap-water usage tariff",
+      "amount": 1.813,
+      "currency": "EUR",
+      "basisQuantity": 1000,
+      "basisUnit": "l",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Berliner Wasserbetriebe · Berlin",
+      "categories": [
+        "cook4me:tap-water"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regional benchmark, not your household tariff. Includes VAT; excludes fixed charges and wastewater."
     }
   ]
 }

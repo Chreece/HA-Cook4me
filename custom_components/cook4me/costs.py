@@ -143,7 +143,7 @@ class Cook4MeCostStore:
         self._data: dict[str, Any] = {
             "settings": {"currency": "", "country": "", "autoGlobalPrices": True},
             "references": {},
-            "priceEvidenceRevision": 86,
+            "priceEvidenceRevision": 87,
         }
 
     async def async_load(self) -> None:
@@ -165,9 +165,9 @@ class Cook4MeCostStore:
             }
         # Rebuild external estimates under the stricter food/package rules.
         # User-entered prices and exact purchase history remain untouched.
-        if isinstance(saved, dict) and saved.get("priceEvidenceRevision") != 86:
+        if isinstance(saved, dict) and saved.get("priceEvidenceRevision") != 87:
             self._data["references"] = {key: ref for key, ref in self._data["references"].items()
-                if not str(ref.get("source", "")).startswith("open_prices")}
+                if not str(ref.get("source", "")).startswith("open_prices") and ref.get("source") not in {"retail_snapshot", "utility_snapshot"}}
             await self._save()
         self._loaded = True
 
@@ -218,6 +218,7 @@ class Cook4MeCostStore:
         observation_id: Any = None,
         source_url: str = "",
         product_name: str = "",
+        note: str = "",
     ) -> dict[str, Any]:
         identity = _text(identity)
         amount_value = _number(amount)
@@ -241,6 +242,7 @@ class Cook4MeCostStore:
             "observationId": observation_id,
             "sourceUrl": _text(source_url)[:500],
             "productName": _text(product_name)[:300],
+            "note": _text(note)[:600],
             "updatedAt": datetime.now(timezone.utc).isoformat(),
         }
         key = _reference_key(identity, curr, row["country"], row["source"]) + "|" + unit.casefold()
@@ -284,7 +286,7 @@ class Cook4MeCostStore:
             rows = [row for row in rows if _country(row.get("country")) == wanted_country]
         cutoff = (datetime.now(timezone.utc).date() - timedelta(days=180)).isoformat()
         today = datetime.now(timezone.utc).date().isoformat()
-        rows = [row for row in rows if (not str(row.get("source", "")).startswith("open_prices") and row.get("source") != "retail_snapshot")
+        rows = [row for row in rows if (not str(row.get("source", "")).startswith("open_prices") and row.get("source") not in {"retail_snapshot", "utility_snapshot"})
                 or cutoff <= _text(row.get("date")) <= today]
         if not rows:
             return None

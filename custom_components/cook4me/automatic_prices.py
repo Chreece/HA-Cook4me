@@ -17,6 +17,7 @@ from .recipe_cost_cache import recipe_cost_cache_for_bridge
 from .price_units import price_ingredient
 from .price_measurements import price_options
 from .price_snapshot import snapshot_observations
+from .price_identity import pricing_name, is_cost_heading
 
 # Exact English catalog names only. Prepared/mixed foods are never collapsed into
 # a raw ingredient by fuzzy matching. Category matches remain estimates.
@@ -470,7 +471,7 @@ for category, kind, names in (
     ('en:mortadella', 'PRODUCT', 'mortadella'),
     ('en:pickled-cucumbers', 'PRODUCT', 'pickled cucumbers'),
     ('en:ratatouille', 'PRODUCT', 'ratatouille'),
-    ('en:fresh-mint', 'CATEGORY', 'fresh mint'),
+    ('en:mint', 'CATEGORY', 'fresh mint'),
     ('en:green-olives', 'PRODUCT', 'green olives'),
     ('en:cornmeal', 'PRODUCT', 'cornmeal'),
     ('en:sriracha-sauces', 'PRODUCT', 'sriracha sauce'),
@@ -518,6 +519,24 @@ for category, kind, names in (
         _CATEGORIES[name] = (category, kind)
 
 
+# Reviewed gaps. Private tags are named reference products/tariffs and must never
+# become broad Open Prices queries (especially powdered vs prepared stock).
+for tag, kind, names in (
+    ('cook4me:tap-water', 'REFERENCE', 'water|tap water'),
+    ('cook4me:vegetable-stock', 'REFERENCE', 'vegetable stock|vegetable stock cube'),
+    ('cook4me:cheese', 'REFERENCE', 'cheese'),
+    ('cook4me:poppy-seeds', 'REFERENCE', 'poppy seeds|poppy seed|ground poppy seeds'),
+    ('en:vegetable-oils', 'PRODUCT', 'oil'),
+    ('en:parmigiano-reggiano', 'PRODUCT', 'parmesan|parmesan cheese|grated parmesan'),
+    ('en:durum-wheat-macaroni', 'PRODUCT', 'macaroni'),
+    ('en:fresh-coriander-leaves', 'CATEGORY', 'coriander|fresh coriander|coriander leaves'),
+    ('en:mint', 'CATEGORY', 'mint|fresh mint'),
+    ('en:curry-powders', 'PRODUCT', 'curry'),
+):
+    for name in names.split('|'):
+        _CATEGORIES[name] = (tag, kind)
+
+
 def country_currency(country):
     return next(iter(COUNTRY_CURRENCIES.get(country, [])), '')
 
@@ -541,7 +560,7 @@ def category_for(ingredient):
     if not isinstance(ingredient, dict):
         return None
     # Callers supply the server catalog row, never a model's category guess.
-    name = str(ingredient.get('canonicalName') or ingredient.get('name') or '').strip().casefold()
+    name = pricing_name(ingredient)
     return _CATEGORIES.get(name)
 
 
@@ -559,6 +578,8 @@ def canonical_recipe(recipe, catalog):
             continue
         key = str(raw.get('key') or raw.get('foodKey') or raw.get('ingredientId') or raw.get('id') or '')
         match = lookup.get(key, {})
+        if is_cost_heading({**raw, 'key': key}):
+            continue
         rows.append(price_ingredient({**raw, **({'key': match.get('key') or match.get('ingredientId') or match.get('id') or key} if key else {}),
                      'name': raw.get('name') or raw.get('foodName') or match.get('name') or key,
                      'canonicalName': match.get('canonicalName') or match.get('name') or raw.get('canonicalName') or raw.get('name') or raw.get('foodName')}))
@@ -569,7 +590,7 @@ def canonical_recipe(recipe, catalog):
 def _fresh(reference):
     if not reference:
         return False
-    if not str(reference.get('source', '')).startswith('open_prices') and reference.get('source') != 'retail_snapshot':
+    if not str(reference.get('source', '')).startswith('open_prices') and reference.get('source') not in {'retail_snapshot', 'utility_snapshot'}:
         return True
     try:
         return (datetime.now(timezone.utc) - datetime.fromisoformat(reference['updatedAt'])).total_seconds() < 86400
@@ -579,11 +600,13 @@ def _fresh(reference):
 
 async def _observations(bridge, *, barcode='', category='', category_type='CATEGORY', unit='', settings, refresh_since=None, prefer_snapshot=False):
     """Coalesce repeated requests; bound concurrency and cache misses for an hour."""
-    if prefer_snapshot and refresh_since is None:
+    if (prefer_snapshot and refresh_since is None) or category.startswith('cook4me:'):
         rows = snapshot_observations(barcode=barcode, category=category,
             country=settings['country'], currency=settings['currency'], unit=unit)
         if rows:
             return {'ok': True, 'items': rows, 'usableCount': len(rows), 'source': 'offline_snapshot'}
+        if category.startswith('cook4me:'):
+            return {'ok': True, 'items': [], 'usableCount': 0, 'source': 'offline_snapshot'}
     if not hasattr(bridge, '_price_queries'):
         bridge._price_queries = {}
         bridge._price_query_lock = asyncio.Lock()
@@ -615,7 +638,7 @@ async def _observations(bridge, *, barcode='', category='', category_type='CATEG
 
 
 async def _store_observation(store, identity, row, *, generic=False):
-    source = 'retail_snapshot' if row.get('source') == 'retail_snapshot' else 'open_prices_category' if generic else 'open_prices'
+    source = row['source'] if row.get('source') in {'retail_snapshot', 'utility_snapshot'} else 'open_prices_category' if generic else 'open_prices'
     existing = next((ref for ref in store._data.get('references', {}).values()
                      if ref.get('identity') == identity and ref.get('source') == source
                      and ref.get('country') == row['country'] and ref.get('currency') == row['currency']
@@ -629,7 +652,7 @@ async def _store_observation(store, identity, row, *, generic=False):
         source=source, confidence='external_observation',
         country=row['country'], location=row.get('location', ''), date=row.get('date', ''),
         barcode=row.get('barcode', ''), observation_id=row.get('id') or row.get('observationId'),
-        source_url=row.get('sourceUrl', ''), product_name=row.get('productName', ''))
+        source_url=row.get('sourceUrl', ''), product_name=row.get('productName', ''), note=row.get('note', ''))
 
 
 async def product_price(bridge, *, barcode='', ingredient=None, quantity=None, unit='', settings=None, refresh_since=None):
@@ -758,7 +781,7 @@ async def recipe_price(bridge, recipe, catalog, *, refresh_since=None):
         if not codes:
             # Confirmed product->ingredient evidence remains usable after stock is consumed.
             ref = store.best_reference(identity, country=settings['country'], currency=settings['currency'])
-            codes = {ref['barcode']} if ref and ref.get('barcode') and ref.get('source') not in {'open_prices_category', 'retail_snapshot'} else {''}
+            codes = {ref['barcode']} if ref and ref.get('barcode') and ref.get('source') not in {'open_prices_category', 'retail_snapshot', 'utility_snapshot'} else {''}
         for code in sorted(codes):
             if len(tasks) >= 24:
                 skipped = True
@@ -844,7 +867,7 @@ async def offline_recipe_price(bridge, recipe, catalog):
                 if rows:
                     row = max(rows, key=lambda row: row.get('date', ''))
                     store._data['references']['preview:' + identity + ':' + option['unit']] = {
-                        **row, 'identity': identity, 'source': 'retail_snapshot' if row.get('source') == 'retail_snapshot' else 'open_prices_category',
+                        **row, 'identity': identity, 'source': row['source'] if row.get('source') in {'retail_snapshot', 'utility_snapshot'} else 'open_prices_category',
                         'observationId': row['id'], 'updatedAt': datetime.now(timezone.utc).isoformat()}
     from .costing import calculate_recipe_cost
     cost = calculate_recipe_cost(recipe, bridge.recipe_hub.profile.get('houseIngredients') or [], store,

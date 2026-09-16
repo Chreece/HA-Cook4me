@@ -176,7 +176,7 @@ class RecipeCostCoverageTests(unittest.IsolatedAsyncioTestCase):
         fresh=self.costs.Cook4MeCostStore(self.hass,'test');fresh._store.saved=saved
         await fresh.async_load()
         self.assertEqual({r['source'] for r in fresh._data['references'].values()},{'manual','purchase','purchase_reference'})
-        self.assertEqual(fresh._store.saved['priceEvidenceRevision'],86)
+        self.assertEqual(fresh._store.saved['priceEvidenceRevision'],87)
         saved=fresh._store.saved
         fresh._loaded=False;await fresh.async_load();self.assertEqual(fresh._data,saved)
 

@@ -169,9 +169,10 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     # first panel/search request never pays a synchronous JSON parse on the
     # event loop. load_release_catalog() is LRU-cached after this warm-up.
     await async_warm_release_catalog(hass)
-    from .price_measurements import _portions
+    from .price_measurements import _portions, _densities
     from .price_snapshot import _load as load_price_snapshot
     await hass.async_add_executor_job(_portions)
+    await hass.async_add_executor_job(_densities)
     await hass.async_add_executor_job(load_price_snapshot)
 
     async def handle_send_recipe(call: ServiceCall) -> dict[str, Any] | None:
