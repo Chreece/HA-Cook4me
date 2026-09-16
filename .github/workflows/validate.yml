@@ -78,6 +78,7 @@ jobs:
           python tools/build_frontend_bundle_v76.py --check
           python tools/build_frontend_bundle_v77.py --check
           python tools/build_frontend_bundle_v78.py --check
+          python tools/build_frontend_bundle_v79.py --check
           bash -n tools/deploy_offline_runtime_v75.sh
           python - <<'PY'
           import json
@@ -190,3 +191,13 @@ jobs:
           timeout 40s env COOK4ME_TEST_PANEL_VERSION=78 node tests/frontend_v76_diet_substitutions_smoke.mjs
           timeout 40s env COOK4ME_TEST_PANEL_VERSION=78 node tests/frontend_v72_device_settings_smoke.mjs
           timeout 40s env COOK4ME_TEST_PANEL_VERSION=78 node tests/frontend_v74_async_navigation_smoke.mjs
+
+      - name: Verify v79 automatic product and recipe prices
+        run: |
+          bash -n tools/deploy_offline_runtime_v79.sh
+          timeout 90s node tests/frontend_v79_prices_browser.mjs
+          timeout 90s env COOK4ME_TEST_PANEL_VERSION=79 node tests/frontend_v78_product_capture_browser.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=79 node tests/frontend_v77_diet_send_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=79 node tests/frontend_v76_diet_substitutions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=79 node tests/frontend_v72_device_settings_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=79 node tests/frontend_v74_async_navigation_smoke.mjs
