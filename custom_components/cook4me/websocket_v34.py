@@ -73,15 +73,17 @@ async def ws_recipe_cost(hass, connection, msg):
         if len(msg['recipe'].get('ingredients') or []) > 200:
             raise ValueError('This recipe has too many ingredients')
         if msg.get('offline_only'):
-            from .release_catalog import ingredient_choices, recipe_by_variant, async_warm_release_catalog
-            await async_warm_release_catalog(hass)
+            from .release_catalog import recipe_by_variant, async_warm_release_catalog
+            payload = await async_warm_release_catalog(hass)
             recipe = msg['recipe']
             if not recipe.get('ingredients'):
                 recipe = recipe_by_variant(str(recipe.get('variantFunctionalId') or ''), language='en',
                     configured_language='en', country=_country(getattr(hass.config, 'country', '')))
                 if not recipe:
                     raise ValueError('Recipe details are not available offline')
-            result = await offline_recipe_price(bridge, recipe, ingredient_choices('en'))
+            # Display choices group and simplify names; costing needs each source
+            # identity and its complete canonical preparation/measurement label.
+            result = await offline_recipe_price(bridge, recipe, payload['ingredients'])
         else:
             catalog = await v11._ingredient_catalog(hass, bridge, 'en', refresh=False)
             result = await recipe_price(bridge, msg['recipe'], catalog.get('items', []))

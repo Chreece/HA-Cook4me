@@ -53,7 +53,13 @@ _ALIASES = {'chopped onion': 'onion',
  'tablespoon of olive oil': 'olive oil',
  'tablespoon of sesame oil': 'sesame oil',
  'tablespoon of soy sauce': 'soy sauce',
- 'tablespoon of mirin': 'mirin'}
+ 'tablespoon of mirin': 'mirin',
+ 'tablespoons of extra virgin olive oil': 'extra virgin olive oil',
+ 'tablespoons mustard': 'mustard',
+ 'tablespoons white vinegar': 'white vinegar',
+ 'tablespoons of icing sugar': 'icing sugar',
+ 'tablespoons of oil': 'oil',
+ 'tablespoons of lime juice': 'lime juice'}
 
 def pricing_name(item):
     key = str(item.get('key') or item.get('ingredientId') or item.get('foodKey') or item.get('id') or '')
@@ -89,4 +95,14 @@ def reviewed_recipe_ingredient(item, recipe):
             or (variant in {'317074', '317075', '317076'} and key == 'local:de:61aaf81b774f8e119771')):
         return {**item, 'key': 'cook4me:recipe-cooked-flageolets',
                 'name': 'Cooked flageolet beans', 'canonicalName': 'cooked flageolet beans'}
+    # Original Moulinex recipe explicitly says 1 tablespoon of red curry paste
+    # and half an onion, not dry curry powder and a whole onion. Apply only to
+    # the reviewed 2-person variant; preserve edited, explicitly measured rows.
+    # https://www.moulinex.fr/recette/detail/PRO/nouilles-curry-rouge/2385359
+    if variant == '487446' and not item.get('unit') and not item.get('unitKey'):
+        if key == 'M_FOOD_161':
+            return {**item, 'key': 'cook4me:recipe-red-curry-paste',
+                    'name': 'Red curry paste', 'canonicalName': 'red curry paste', 'unit': 'tbsp', 'unitKey': 'UNIT_12'}
+        if key == 'M_FOOD_341':
+            return {**item, 'quantity': item['quantity'] / 2} if isinstance(item.get('quantity'), (int, float)) else item
     return item

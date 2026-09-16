@@ -2007,6 +2007,26 @@
       "confidence": "external_observation",
       "barcode": "",
       "note": "Named raw chicken-breast benchmark for poultry fillets. Species and cut can affect price; not prepared slices, bone-in pieces or a whole bird. Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-12094-v92-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/12094-spargel-gruen-bund",
+      "productName": "EATME fresh green asparagus, 450 g",
+      "amount": 5.99,
+      "currency": "EUR",
+      "basisQuantity": 450,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:green-asparagus"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh green asparagus only. Named reference product; VAT included, delivery excluded. Seasonal prices and region may differ."
     }
   ]
 }

@@ -22,7 +22,7 @@ class BudgetFallbackTests(unittest.IsolatedAsyncioTestCase):
         return await self.prices.offline_recipe_price(self.bridge,{'ingredients':[{'name':name,'quantity':quantity,'unit':unit,**extra}]},[])
 
     async def test_matched_ingredient_gets_traceable_budget_not_a_claimed_price(self):
-        result=await self.cost('Green asparagus',70)
+        result=await self.cost('Radish',70)
         self.assertFalse(result['complete']);self.assertEqual(result['totalsByCurrency'],{})
         self.assertTrue(result['budgetComplete']);self.assertGreater(result['budgetTotalsByCurrency']['EUR'],0)
         row=result['ingredients'][0];self.assertEqual(row['coverage'],0);self.assertEqual(row['budgetCoverage'],1)
@@ -37,9 +37,9 @@ class BudgetFallbackTests(unittest.IsolatedAsyncioTestCase):
         for name in ['Onion','Whole-grain pasta','Poultry fillet']:
             result=await self.cost(name)
             self.assertTrue(result['complete']);self.assertNotIn('fallbackIngredientCount',result)
-        store=await self.store();identity=self.prices.inventory_identity({'name':'Green asparagus'})
+        store=await self.store();identity=self.prices.inventory_identity({'name':'Radish'})
         await store.async_set_reference(identity,amount=2,currency='EUR',basis_quantity=100,basis_unit='g',country='DE',source='manual')
-        result=await self.cost('Green asparagus',100)
+        result=await self.cost('Radish',100)
         self.assertEqual(result['totalsByCurrency'],{'EUR':2});self.assertNotIn('fallbackIngredientCount',result)
 
     async def test_unknown_food_nonfood_missing_amount_and_unusable_unit_stay_unknown(self):
@@ -50,7 +50,7 @@ class BudgetFallbackTests(unittest.IsolatedAsyncioTestCase):
             result=await self.prices.offline_recipe_price(self.bridge,{'ingredients':[{'key':'not-food','quantity':100,'unit':'g'}]},[{'key':'not-food','canonicalName':'Rice','classification':classification}])
             self.assertFalse(result['ingredients'][0].get('fallbackEstimate'))
         with patch.object(self.bench,'_load',return_value={'observations':[]}):
-            self.bench._pools.cache_clear();self.assertNotIn('fallbackIngredientCount',await self.cost('Green asparagus'))
+            self.bench._pools.cache_clear();self.assertNotIn('fallbackIngredientCount',await self.cost('Radish'))
 
     async def test_catalog_match_without_a_price_taxonomy_uses_basket(self):
         recipe={'ingredients':[{'ingredientId':'local:test:food','quantity':100,'unit':'g'}]}
@@ -65,7 +65,7 @@ class BudgetFallbackTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(estimate['unit'],'g');self.assertTrue(estimate['quantityEstimate']);self.assertLess(estimate['quantity'],100)
 
     async def test_duplicate_rows_keep_their_own_amount_and_auto_off_invalidates_cache(self):
-        recipe={'ingredients':[{'name':'Green asparagus','quantity':100,'unit':'g'},{'name':'Green asparagus','quantity':250,'unit':'g'}]}
+        recipe={'ingredients':[{'name':'Radish','quantity':100,'unit':'g'},{'name':'Radish','quantity':250,'unit':'g'}]}
         result=await self.prices.offline_recipe_price(self.bridge,recipe,[])
         amounts=[r['fallbackEstimate']['amount'] for r in result['ingredients']]
         self.assertAlmostEqual(amounts[1],2.5*amounts[0],places=3)
@@ -76,11 +76,11 @@ class BudgetFallbackTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(disabled['costCacheHit']);self.assertNotIn('fallbackIngredientCount',disabled)
 
     async def test_partial_purchase_prices_only_the_uncovered_remainder(self):
-        await self.bridge.recipe_hub.async_inventory_add({'name':'Green asparagus'},quantity=100,unit='g')
+        await self.bridge.recipe_hub.async_inventory_add({'name':'Radish'},quantity=100,unit='g')
         lot=self.bridge.recipe_hub.profile['houseIngredients'][0]['lots'][0]
         store=await self.store()
         await store.async_set_reference('lot:'+lot['id'],amount=2,currency='EUR',basis_quantity=100,basis_unit='g',country='DE',source='purchase',confidence='exact_purchase')
-        result=await self.cost('Green asparagus',200)
+        result=await self.cost('Radish',200)
         row=result['ingredients'][0];self.assertEqual(row['coverage'],.5);self.assertEqual(result['totalsByCurrency'],{'EUR':2})
         self.assertEqual(row['fallbackEstimate']['quantity'],100)
         self.assertAlmostEqual(result['budgetTotalsByCurrency']['EUR'],round(2+row['fallbackEstimate']['amount'],2))
@@ -94,7 +94,7 @@ class BudgetFallbackTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_live_cost_path_also_returns_the_budget(self):
         with patch.object(self.prices,'lookup_open_prices',return_value={'ok':True,'items':[],'usableCount':0}):
-            result=await self.prices.recipe_price(self.bridge,{'ingredients':[{'name':'Green asparagus','quantity':70,'unit':'g'}]},[])
+            result=await self.prices.recipe_price(self.bridge,{'ingredients':[{'name':'Radish','quantity':70,'unit':'g'}]},[])
         self.assertTrue(result['budgetComplete']);self.assertFalse(result['complete'])
 
     def test_only_local_fresh_positive_prices_enter_benchmark(self):
