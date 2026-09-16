@@ -96,22 +96,42 @@ jobs:
 
           tests = Path('tests/test_compile_release_catalog_semantics_v60.py')
           test_text = tests.read_text(encoding='utf-8')
-          old_error = '''        with self.assertRaisesRegex(
+          replacements = [
+              (
+                  '''        with self.assertRaisesRegex(
                       RuntimeError, "does not remove approved syntax noise"
                   ):
-          '''
-          new_error = '''        with self.assertRaisesRegex(
+          ''',
+                  '''        with self.assertRaisesRegex(
                       RuntimeError, "unique punctuation-only high-confidence target"
                   ):
-          '''
-          if test_text.count(old_error) != 1:
-              raise SystemExit('stale error assertion insertion point changed')
-          test_text = test_text.replace(old_error, new_error, 1)
-          old_count = '        self.assertEqual(len(syntax_ids), 54)\n'
-          new_count = '        self.assertTrue(syntax_ids)\n'
-          if test_text.count(old_count) != 1:
-              raise SystemExit('stale syntax-count assertion insertion point changed')
-          tests.write_text(test_text.replace(old_count, new_count, 1), encoding='utf-8')
+          ''',
+                  'stale error assertion',
+              ),
+              (
+                  '        self.assertEqual(len(syntax_ids), 54)\n',
+                  '        self.assertTrue(syntax_ids)\n',
+                  'stale syntax-count assertion',
+              ),
+              (
+                  '''        self.assertEqual(
+                      confirmed["summary"]["needsSemanticConfirmationSourceLabels"],
+                      330,
+                  )
+          ''',
+                  '''        self.assertEqual(
+                      confirmed["summary"]["needsSemanticConfirmationSourceLabels"],
+                      baseline["summary"]["needsSemanticConfirmationSourceLabels"] - total,
+                  )
+          ''',
+                  'stale pending-count assertion',
+              ),
+          ]
+          for old, new, label in replacements:
+              if test_text.count(old) != 1:
+                  raise SystemExit(f'{label} insertion point changed')
+              test_text = test_text.replace(old, new, 1)
+          tests.write_text(test_text, encoding='utf-8')
           PY
       - name: Run semantic confirmation regression tests
         run: |
