@@ -56,9 +56,11 @@ jobs:
           # existed before post-activation enrichment. Keep later reviewed target
           # files out of that historical view, then restore them before the full
           # checkpoint snapshot below.
-          shopt -s nullglob
-          for file in tools/release_catalog_reviewed_nutrition_targets_0{46..99}.v1.json; do
-            mv "$file" "$HISTORICAL_TMP/"
+          for number in $(seq 46 99); do
+            file=$(printf 'tools/release_catalog_reviewed_nutrition_targets_%03d.v1.json' "$number")
+            if [[ -f "$file" ]]; then
+              mv "$file" "$HISTORICAL_TMP/"
+            fi
           done
 
           "$RUNNER_TEMP/cook4me-venv/bin/python" -m unittest discover \
