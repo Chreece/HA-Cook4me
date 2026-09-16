@@ -47,18 +47,20 @@ def _loose(value: Any) -> str:
     return "".join(out).strip()
 
 
-def _tokens(value: Any) -> set[str]:
-    return {token for token in _loose(value).split() if token}
+def _features(value: Any) -> tuple[str, frozenset[str]]:
+    loose = _loose(value)
+    return loose, frozenset(token for token in loose.split() if token)
 
 
-def _candidate_score(source: str, target: str) -> tuple[int, float, int]:
-    source_loose = _loose(source)
-    target_loose = _loose(target)
+def _score_features(
+    source_loose: str,
+    source_tokens: frozenset[str],
+    target_loose: str,
+    target_tokens: frozenset[str],
+) -> tuple[int, float, int]:
     exact_loose = int(source_loose == target_loose and bool(source_loose))
-    left = _tokens(source)
-    right = _tokens(target)
-    union = left | right
-    jaccard = len(left & right) / len(union) if union else 0.0
+    union = source_tokens | target_tokens
+    jaccard = len(source_tokens & target_tokens) / len(union) if union else 0.0
     length_delta = abs(len(source_loose) - len(target_loose))
     return exact_loose, jaccard, -length_delta
 
@@ -75,15 +77,43 @@ def audit(review_root: Path) -> dict[str, Any]:
     }
     mapping = compiled.get("sourceIdentityToConcept") or {}
 
-    high_rows = [
-        row
-        for row in rows
-        if row["confidence"] == "high"
-        and row["classification"] in semantics._MERGEABLE_CLASSIFICATIONS
-    ]
-    high_by_class: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for row in high_rows:
-        high_by_class[row["classification"]].append(row)
+    # Deduplicate high-confidence targets by semantic concept first, then precompute
+    # comparison features and a token inverted index. This keeps the audit fast even
+    # with thousands of reviewed source labels while producing the same candidates.
+    high_targets_by_class: dict[str, dict[str, dict[str, Any]]] = defaultdict(dict)
+    for row in rows:
+        if (
+            row["confidence"] != "high"
+            or row["classification"] not in semantics._MERGEABLE_CLASSIFICATIONS
+        ):
+            continue
+        concept_id = semantics._semantic_concept_id(
+            row["classification"], row["english"]
+        )
+        high_targets_by_class[row["classification"]].setdefault(
+            concept_id,
+            {
+                "conceptId": concept_id,
+                "canonicalEnglish": row["english"],
+                "classification": row["classification"],
+            },
+        )
+
+    target_features: dict[str, tuple[str, frozenset[str]]] = {}
+    exact_index: dict[str, dict[str, set[str]]] = defaultdict(
+        lambda: defaultdict(set)
+    )
+    token_index: dict[str, dict[str, set[str]]] = defaultdict(
+        lambda: defaultdict(set)
+    )
+    for classification, targets in high_targets_by_class.items():
+        for concept_id, target in targets.items():
+            loose, tokens = _features(target["canonicalEnglish"])
+            target_features[concept_id] = (loose, tokens)
+            if loose:
+                exact_index[classification][loose].add(concept_id)
+            for token in tokens:
+                token_index[classification][token].add(concept_id)
 
     unresolved: list[dict[str, Any]] = []
     for row in rows:
@@ -97,25 +127,32 @@ def audit(review_root: Path) -> dict[str, Any]:
 
         candidates: list[dict[str, Any]] = []
         if row["classification"] in semantics._MERGEABLE_CLASSIFICATIONS:
-            scored: list[tuple[tuple[int, float, int], dict[str, Any]]] = []
-            for target in high_by_class[row["classification"]]:
-                score = _candidate_score(row["english"], target["english"])
-                if score[0] or score[1] >= 0.5:
-                    scored.append((score, target))
-            scored.sort(key=lambda pair: pair[0], reverse=True)
-            seen_target: set[str] = set()
-            for score, target in scored[:8]:
-                target_id = semantics._semantic_concept_id(
-                    target["classification"], target["english"]
+            source_loose, source_tokens = _features(row["english"])
+            candidate_ids = set(
+                exact_index[row["classification"]].get(source_loose, set())
+            )
+            for token in source_tokens:
+                candidate_ids.update(
+                    token_index[row["classification"]].get(token, set())
                 )
-                if target_id in seen_target:
-                    continue
-                seen_target.add(target_id)
+
+            scored: list[tuple[tuple[int, float, int], str]] = []
+            for target_id in candidate_ids:
+                target_loose, target_tokens = target_features[target_id]
+                score = _score_features(
+                    source_loose,
+                    source_tokens,
+                    target_loose,
+                    target_tokens,
+                )
+                if score[0] or score[1] >= 0.5:
+                    scored.append((score, target_id))
+            scored.sort(key=lambda pair: (pair[0], pair[1]), reverse=True)
+            for score, target_id in scored[:8]:
+                target = high_targets_by_class[row["classification"]][target_id]
                 candidates.append(
                     {
-                        "conceptId": target_id,
-                        "canonicalEnglish": target["english"],
-                        "classification": target["classification"],
+                        **target,
                         "exactLooseText": bool(score[0]),
                         "tokenJaccard": round(score[1], 4),
                     }
