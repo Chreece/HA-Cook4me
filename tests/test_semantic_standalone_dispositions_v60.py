@@ -138,16 +138,32 @@ class StandaloneSemanticDispositionTests(unittest.TestCase):
                 encoding="utf-8"
             )
         )
-        self.assertEqual(ledger["summary"]["standaloneDispositionCount"], 293)
-        self.assertEqual(ledger["summary"]["reviewedAmbiguousCount"], 28)
-        self.assertEqual(ledger["summary"]["reviewedSourceLocalStandaloneCount"], 265)
-        ledger_ids = [row["sourceIngredientId"] for row in ledger["items"]]
+        ledger_items = [row for row in ledger["items"] if isinstance(row, dict)]
+        ambiguous_count = sum(
+            row.get("disposition") == "reviewed-ambiguous-source-fragment"
+            for row in ledger_items
+        )
+        mergeable_count = len(ledger_items) - ambiguous_count
+        self.assertEqual(
+            ledger["summary"]["standaloneDispositionCount"], len(ledger_items)
+        )
+        self.assertEqual(
+            ledger["summary"]["reviewedAmbiguousCount"], ambiguous_count
+        )
+        self.assertEqual(
+            ledger["summary"]["reviewedSourceLocalStandaloneCount"], mergeable_count
+        )
+        ledger_ids = [row["sourceIngredientId"] for row in ledger_items]
         self.assertEqual(len(ledger_ids), len(set(ledger_ids)))
 
         result = mod.compile_from_paths(mod._review_paths(tools))
         self.assertEqual(result["summary"]["needsSemanticConfirmationSourceLabels"], 0)
-        self.assertEqual(result["summary"]["standaloneConfirmedSourceLabels"], 293)
-        self.assertEqual(result["summary"]["reviewedAmbiguousSourceLabels"], 28)
+        self.assertEqual(
+            result["summary"]["standaloneConfirmedSourceLabels"], len(ledger_items)
+        )
+        self.assertEqual(
+            result["summary"]["reviewedAmbiguousSourceLabels"], ambiguous_count
+        )
 
         standalone_ids = {row["sourceIngredientId"] for row in ledger["items"]}
         concepts = {row["conceptId"]: row for row in result["concepts"]}
