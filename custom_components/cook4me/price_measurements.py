@@ -22,7 +22,7 @@ _COUNTS = {'egg', 'eggs', 'onion', 'onions', 'carrot', 'carrots', 'tomato', 'tom
            'lemon', 'lemons', 'lime', 'limes', 'orange', 'oranges', 'shallot', 'shallots',
            'welsh onion', 'spring onion', 'spring onions', 'green onion', 'green onions',
            'raw beetroot', 'parsnip', 'parsnips', 'banana', 'bananas', 'pear', 'pears', 'plum', 'plums', 'strawberry', 'strawberries',
-           'radish', 'radishes', 'date', 'dates', 'dried dates', 'pitted dates', 'medjool date', 'medjool dates'}
+           'radish', 'radishes', 'date', 'dates', 'dried dates', 'pitted dates', 'medjool date', 'medjool dates', 'small pumpkin', 'small hokkaido pumpkin'}
 
 
 @lru_cache(maxsize=1)
@@ -136,4 +136,11 @@ def price_options(raw):
             'label': _portion_evidence(spoon)['label'] + '; approximate spoon volume',
             'volumeSourceUrl': _NIST,
             'sourceQuantity': amount, 'sourceUnit': unit, 'quantity': converted, 'unit': destination}})
+    recovered = item.get('priceQuantityEvidence')
+    if recovered:
+        for option in options:
+            if option.get('estimate'):
+                option['estimate'] = {**option['estimate'], 'recipeSource': recovered}
+            else:
+                option['estimate'] = {**recovered, 'quantity': option['quantity'], 'unit': option['unit']}
     return options

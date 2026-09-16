@@ -1,0 +1,606 @@
+{
+  "variantId": "848764",
+  "source": "https://www.tefal.pl/przepisy/detail/index/source/PRO/id/848764/",
+  "recipe": {
+    "title": "Sałatka z buraczków, dyni i fety",
+    "ingredients": [
+      {
+        "ingredientId": "M_FOOD_32",
+        "key": "M_FOOD_32",
+        "foodKey": "M_FOOD_32",
+        "name": "Beetroot",
+        "foodName": "Beetroot",
+        "canonicalName": "Beetroot",
+        "quantity": 1.2,
+        "unit": "kg",
+        "unitKey": "UNIT_56"
+      },
+      {
+        "ingredientId": "M_FOOD_399",
+        "key": "M_FOOD_399",
+        "foodKey": "M_FOOD_399",
+        "name": "Pumpkin",
+        "foodName": "Pumpkin",
+        "canonicalName": "Pumpkin",
+        "quantity": 1.0
+      },
+      {
+        "ingredientId": "M_FOOD_191",
+        "key": "M_FOOD_191",
+        "foodKey": "M_FOOD_191",
+        "name": "Feta",
+        "foodName": "Feta",
+        "canonicalName": "Feta",
+        "quantity": 200.0,
+        "unit": "g",
+        "unitKey": "UNIT_27"
+      },
+      {
+        "ingredientId": "M_FOOD_329",
+        "key": "M_FOOD_329",
+        "foodKey": "M_FOOD_329",
+        "name": "Hazelnut",
+        "foodName": "Hazelnut",
+        "canonicalName": "Hazelnut",
+        "quantity": 60.0,
+        "unit": "g",
+        "unitKey": "UNIT_27"
+      },
+      {
+        "ingredientId": "M_FOOD_492",
+        "key": "M_FOOD_492",
+        "foodKey": "M_FOOD_492",
+        "name": "Balsamic vinegar",
+        "foodName": "Balsamic vinegar",
+        "canonicalName": "Balsamic vinegar",
+        "quantity": 20.0,
+        "unit": "g",
+        "unitKey": "UNIT_27"
+      },
+      {
+        "ingredientId": "M_FOOD_685",
+        "key": "M_FOOD_685",
+        "foodKey": "M_FOOD_685",
+        "name": "Rapeseed oil",
+        "foodName": "Rapeseed oil",
+        "canonicalName": "Rapeseed oil",
+        "quantity": 40.0,
+        "unit": "g",
+        "unitKey": "UNIT_27"
+      },
+      {
+        "ingredientId": "M_FOOD_137",
+        "key": "M_FOOD_137",
+        "foodKey": "M_FOOD_137",
+        "name": "Coriander",
+        "foodName": "Coriander",
+        "canonicalName": "Coriander",
+        "quantity": 20.0,
+        "unit": "g",
+        "unitKey": "UNIT_27"
+      },
+      {
+        "ingredientId": "M_FOOD_457",
+        "key": "M_FOOD_457",
+        "foodKey": "M_FOOD_457",
+        "name": "Salt",
+        "foodName": "Salt",
+        "canonicalName": "Salt"
+      },
+      {
+        "ingredientId": "M_FOOD_427",
+        "key": "M_FOOD_427",
+        "foodKey": "M_FOOD_427",
+        "name": "Rocket",
+        "foodName": "Rocket",
+        "canonicalName": "Rocket",
+        "quantity": 40.0,
+        "unit": "g",
+        "unitKey": "UNIT_27"
+      }
+    ]
+  },
+  "cost": {
+    "totalsByCurrency": {
+      "EUR": 9.31
+    },
+    "perServingByCurrency": {
+      "EUR": 2.33
+    },
+    "servings": 4.0,
+    "ingredients": [
+      {
+        "identity": "k:M_FOOD_32",
+        "name": "Beetroot",
+        "quantity": 1.2,
+        "unit": "kg",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 3.58
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": 323052,
+            "barcode": "4316268547598",
+            "amount": 1.49,
+            "currency": "EUR",
+            "basisQuantity": 500.0,
+            "basisUnit": "g",
+            "pricePer": "",
+            "usable": true,
+            "date": "2026-08-29",
+            "country": "DE",
+            "location": "Netto City",
+            "productName": "Bio Rote Bete gekocht 500g",
+            "source": "open_prices_category",
+            "confidence": "external_observation",
+            "categories": [
+              "en:beetroot"
+            ],
+            "category": "en:beetroot",
+            "identity": "k:M_FOOD_32",
+            "observationId": 323052,
+            "updatedAt": "2026-08-29"
+          }
+        ],
+        "quantityEstimate": null
+      },
+      {
+        "identity": "k:M_FOOD_399",
+        "name": "Small pumpkin",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.86
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "knuspr-1032-v94-20260916",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.knuspr.de/1032-bio-hokkaido-kuerbis-1-stk",
+            "productName": "BIO Hokkaido pumpkin, whole",
+            "amount": 2.15,
+            "currency": "EUR",
+            "basisQuantity": 1,
+            "basisUnit": "kg",
+            "date": "2026-09-16",
+            "country": "DE",
+            "location": "Knuspr Berlin and surroundings · online listing",
+            "categories": [
+              "en:pumpkins"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Listed unit price per kg; not a fixed piece price. Out of stock when checked. Named Hokkaido reference, variety and actual shop prices vary.",
+            "category": "en:pumpkins",
+            "identity": "k:M_FOOD_399",
+            "observationId": "knuspr-1032-v94-20260916",
+            "updatedAt": "2026-09-16"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "reference_portion",
+          "label": "Alnatura small Hokkaido recipe reference: 1 small pumpkin ≈ 400 g; variety and actual size vary",
+          "sourceUrl": "https://www.alnatura.de/de-de/rezepte/suche/hokkaido-suppe-105064/",
+          "sourceQuantity": 1.0,
+          "sourceUnit": "piece",
+          "quantity": 400.0,
+          "unit": "g",
+          "assumedCount": true,
+          "recipeSource": {
+            "kind": "source_recipe_quantity",
+            "label": "Tefal recipe 848764 specifies a small pumpkin; count retained for the cost estimate",
+            "sourceUrl": "https://www.tefal.pl/przepisy/detail/index/source/PRO/id/848764/",
+            "sourceQuantity": 1.0,
+            "sourceUnit": "piece"
+          }
+        }
+      },
+      {
+        "identity": "k:M_FOOD_191",
+        "name": "Feta",
+        "quantity": 200.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 2.69
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": 314965,
+            "barcode": "4337256665216",
+            "amount": 2.69,
+            "currency": "EUR",
+            "basisQuantity": 200.0,
+            "basisUnit": "g",
+            "pricePer": "",
+            "usable": true,
+            "date": "2026-08-21",
+            "country": "DE",
+            "location": "REWE",
+            "productName": "BIO FETA 45%",
+            "source": "open_prices_category",
+            "confidence": "external_observation",
+            "categories": [
+              "en:feta"
+            ],
+            "category": "en:feta",
+            "identity": "k:M_FOOD_191",
+            "observationId": 314965,
+            "updatedAt": "2026-08-21"
+          }
+        ],
+        "quantityEstimate": null
+      },
+      {
+        "identity": "k:M_FOOD_329",
+        "name": "Hazelnut",
+        "quantity": 60.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 1.09
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "dm-1446999-v89-20260916",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.dm.de/p/d/1446999/dmbio-haselnusskerne",
+            "productName": "dmBio hazelnut kernels",
+            "amount": 3.65,
+            "currency": "EUR",
+            "basisQuantity": 200,
+            "basisUnit": "g",
+            "date": "2026-09-16",
+            "country": "DE",
+            "location": "dm Germany · online listing",
+            "categories": [
+              "en:hazelnuts"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Unsalted kernels; shell weight excluded. Named reference product; VAT included, delivery excluded. Prices vary by shop and region.",
+            "category": "en:hazelnuts",
+            "identity": "k:M_FOOD_329",
+            "observationId": "dm-1446999-v89-20260916",
+            "updatedAt": "2026-09-16"
+          }
+        ],
+        "quantityEstimate": null
+      },
+      {
+        "identity": "k:M_FOOD_492",
+        "name": "Balsamic vinegar",
+        "quantity": 20.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.15
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": 304586,
+            "barcode": "4008100120549",
+            "amount": 3.99,
+            "currency": "EUR",
+            "basisQuantity": 500.0,
+            "basisUnit": "ml",
+            "pricePer": "",
+            "usable": true,
+            "date": "2026-08-06",
+            "country": "DE",
+            "location": "PENNY",
+            "productName": "Balsamico-Essig, weiß",
+            "source": "open_prices_category",
+            "confidence": "external_observation",
+            "categories": [
+              "en:balsamic-vinegars",
+              "en:vinegars"
+            ],
+            "category": "en:balsamic-vinegars",
+            "identity": "k:M_FOOD_492",
+            "observationId": 304586,
+            "updatedAt": "2026-08-06"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_density",
+          "label": "USDA Vinegar, balsamic: tbsp; approximate spoon volume",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/172241/nutrients",
+          "fdcId": 172241,
+          "portionId": 90145,
+          "volumeSourceUrl": "https://www.nist.gov/pml/owm/metric-si/metric-kitchen/metric-kitchen-cooking-measurement-equivalencies",
+          "sourceQuantity": 20.0,
+          "sourceUnit": "g",
+          "quantity": 18.75,
+          "unit": "ml"
+        }
+      },
+      {
+        "identity": "k:M_FOOD_685",
+        "name": "Rapeseed oil",
+        "quantity": 40.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.26
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": 329511,
+            "barcode": "4400050320145",
+            "amount": 2.99,
+            "currency": "EUR",
+            "basisQuantity": 500.0,
+            "basisUnit": "ml",
+            "pricePer": "",
+            "usable": true,
+            "date": "2026-09-09",
+            "country": "DE",
+            "location": "Netto Marken-Discount",
+            "productName": "Rapsöl von Kunella",
+            "source": "open_prices_category",
+            "confidence": "external_observation",
+            "categories": [
+              "en:rapeseed-oils",
+              "en:vegetable-oils"
+            ],
+            "category": "en:rapeseed-oils",
+            "identity": "k:M_FOOD_685",
+            "observationId": 329511,
+            "updatedAt": "2026-09-09"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_density",
+          "label": "FAO rapeseed oil at 20 °C: approximately 0.92 g/ml; temperature and product vary",
+          "sourceUrl": "https://www.fao.org/4/ap815e/ap815e.pdf",
+          "sourceQuantity": 40.0,
+          "sourceUnit": "g",
+          "quantity": 43.47826086956522,
+          "unit": "ml"
+        }
+      },
+      {
+        "identity": "k:M_FOOD_137",
+        "name": "Coriander",
+        "quantity": 20.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.4
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "knuspr-15104-20260916",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.knuspr.de/15104-koriander",
+            "productName": "Herrmann Kräuter fresh coriander",
+            "amount": 1.99,
+            "currency": "EUR",
+            "basisQuantity": 100,
+            "basisUnit": "g",
+            "date": "2026-09-16",
+            "country": "DE",
+            "location": "Knuspr · Berlin and surroundings",
+            "categories": [
+              "en:fresh-coriander-leaves"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Regular listed price, without membership discount. Regional reference.",
+            "category": "en:fresh-coriander-leaves",
+            "identity": "k:M_FOOD_137",
+            "observationId": "knuspr-15104-20260916",
+            "updatedAt": "2026-09-16"
+          }
+        ],
+        "quantityEstimate": null
+      },
+      {
+        "identity": "k:cook4me:recipe-salt-and-pepper",
+        "name": "Salt and pepper",
+        "quantity": 1.0,
+        "unit": "g",
+        "priced": false,
+        "coverage": 0.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {},
+        "sourceKinds": [],
+        "references": [],
+        "quantityEstimate": null,
+        "fallbackEstimate": {
+          "kind": "budget_benchmark",
+          "level": "food_group",
+          "confidence": "low",
+          "group": "spices",
+          "groupLabel": "Herbs and spices",
+          "country": "DE",
+          "currency": "EUR",
+          "quantity": 1.0,
+          "unit": "g",
+          "amount": 0.037,
+          "low": 0.015,
+          "high": 0.0983,
+          "unitPrice": 0.037000000000000005,
+          "sampleCount": 11,
+          "method": "median",
+          "rangeKind": "observed_peer_spread",
+          "oldestDate": "2026-07-25",
+          "newestDate": "2026-09-16",
+          "quantityEstimate": {
+            "kind": "source_recipe_quantity",
+            "label": "Tefal recipe 848764 lists 1 g salt and pepper to taste per 4 servings; budget allowance, mixture ratio unspecified",
+            "sourceUrl": "https://www.tefal.pl/przepisy/detail/index/source/PRO/id/848764/",
+            "sourceQuantity": null,
+            "sourceUnit": "",
+            "quantity": 1.0,
+            "unit": "g"
+          },
+          "sourceIds": [
+            "aldi-000000000000194339-20260916",
+            297236,
+            "aldi-000000000000194341-20260916",
+            "dm-1666804-20260916",
+            "dm-1435233-v88-20260916",
+            "dm-1666918-v88-20260916",
+            "knuspr-855-rosmarin-v88-20260916",
+            "knuspr-857-thymian-v88-20260916",
+            "knuspr-854-oregano-v88-20260916",
+            "dm-3064564-20260916",
+            "dm-3064302-v88-20260916"
+          ],
+          "sources": [
+            {
+              "id": "aldi-000000000000194339-20260916",
+              "name": "LE GUSTO sweet paprika powder",
+              "sourceUrl": "https://www.aldi-sued.de/produkt/le-gusto-paprika-edelsuess-gemahlen-50-g-000000000000194339",
+              "date": "2026-09-16",
+              "rate": 0.015,
+              "unit": "g"
+            },
+            {
+              "id": "dm-1666918-v88-20260916",
+              "name": "dmBio ground Ceylon cinnamon",
+              "sourceUrl": "https://www.dm.de/p/d/1666918/dmbio-ceylon-zimt",
+              "date": "2026-09-16",
+              "rate": 0.037000000000000005,
+              "unit": "g"
+            },
+            {
+              "id": "dm-3064302-v88-20260916",
+              "name": "LEBENSBAUM dried herbes de Provence",
+              "sourceUrl": "https://www.dm.de/p/d/3064302/lebensbaum-gewuerzmischung-kraeuter-der-provence",
+              "date": "2026-09-16",
+              "rate": 0.09833333333333334,
+              "unit": "g"
+            }
+          ]
+        },
+        "budgetCoverage": 1.0,
+        "priceStatus": "offline_price_missing"
+      },
+      {
+        "identity": "k:M_FOOD_427",
+        "name": "Rocket",
+        "quantity": 40.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.28
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": 282689,
+            "barcode": "8056684131211",
+            "amount": 0.88,
+            "currency": "EUR",
+            "basisQuantity": 125.0,
+            "basisUnit": "g",
+            "pricePer": "",
+            "usable": true,
+            "date": "2026-06-10",
+            "country": "DE",
+            "location": "Netto City",
+            "productName": "Rucola 125g",
+            "source": "open_prices_category",
+            "confidence": "external_observation",
+            "categories": [
+              "en:rocket"
+            ],
+            "category": "en:rocket",
+            "identity": "k:M_FOOD_427",
+            "observationId": 282689,
+            "updatedAt": "2026-06-10"
+          }
+        ],
+        "quantityEstimate": null
+      }
+    ],
+    "coverage": 0.8889,
+    "complete": false,
+    "missingIngredientCount": 1,
+    "exactPurchaseCoverage": 0.0,
+    "estimated": true,
+    "targetCurrency": "EUR",
+    "targetCountry": "DE",
+    "currencyConversionApplied": false,
+    "budgetEstimated": true,
+    "fallbackIngredientCount": 1,
+    "budgetTotalsByCurrency": {
+      "EUR": 9.35
+    },
+    "budgetRangeByCurrency": {
+      "EUR": {
+        "low": 9.33,
+        "high": 9.41
+      }
+    },
+    "budgetPerServingByCurrency": {
+      "EUR": 2.34
+    },
+    "budgetIngredientCount": 9,
+    "budgetComplete": true,
+    "budgetMissingIngredientCount": 0,
+    "budgetMethod": "local-food-benchmark-v91",
+    "costCacheHit": false,
+    "pricingFingerprint": "79758d9f11a127e2aa12c345514a75f1b9ed09c90561f089d429d9121d7c6084",
+    "recipePriceFingerprint": "3ec9a39e1cd512ba9025dc88e2c773c7fd0edea1e08afe35ddfbf3143f3cb676",
+    "costCacheContract": "price-evidence-fingerprint-v1",
+    "settings": {
+      "currency": "EUR",
+      "country": "DE",
+      "autoGlobalPrices": true
+    },
+    "offlinePreview": true,
+    "priceLookupPending": false,
+    "checkedAt": "2026-09-16T18:45:34.262548+00:00",
+    "foodIngredientCount": 9,
+    "pricedFoodIngredientCount": 8,
+    "waterOnlyEstimate": false
+  }
+}

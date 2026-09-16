@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "source": "FAO/INFOODS Density Database v2 (2012), page 13",
+  "source": "FAO/INFOODS Density Database v2 (2012), PDF pages 13–14",
   "densities": [
     {
       "names": [
@@ -10,6 +10,15 @@
       ],
       "gramsPerMl": 0.978,
       "label": "FAO full-fat crème fraîche (38% fat), approximately 0.978 g/ml; fat content varies",
+      "sourceUrl": "https://www.fao.org/4/ap815e/ap815e.pdf"
+    },
+    {
+      "names": [
+        "rapeseed oil",
+        "canola oil"
+      ],
+      "gramsPerMl": 0.92,
+      "label": "FAO rapeseed oil at 20 °C: approximately 0.92 g/ml; temperature and product vary",
       "sourceUrl": "https://www.fao.org/4/ap815e/ap815e.pdf"
     }
   ]

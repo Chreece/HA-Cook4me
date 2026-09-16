@@ -1,5 +1,7 @@
 """Reviewed provider identities used only for costing, never cooking data."""
 
+import math
+
 # The provider's English name "Pepper" covers three different foods. Only the
 # confirmed Pfeffer/Poivre identity may use ground black pepper references.
 _NAMES = {'M_FOOD_388': 'ground black pepper', 'M_FOOD_131': 'tomato paste'}
@@ -105,4 +107,30 @@ def reviewed_recipe_ingredient(item, recipe):
                     'name': 'Red curry paste', 'canonicalName': 'red curry paste', 'unit': 'tbsp', 'unitKey': 'UNIT_12'}
         if key == 'M_FOOD_341':
             return {**item, 'quantity': item['quantity'] / 2} if isinstance(item.get('quantity'), (int, float)) else item
+    # This source calls for one SMALL pumpkin, and lists 1 g of salt AND pepper
+    # to taste for four servings. The compact catalog lost both descriptions and
+    # the seasoning amount. Recover only this exact recipe, only absent units /
+    # amounts, and disclose the source's to-taste allowance as a budget estimate.
+    if variant == '848764' and not item.get('unit') and not item.get('unitKey'):
+        source = 'https://www.tefal.pl/przepisy/detail/index/source/PRO/id/848764/'
+        if key == 'M_FOOD_399' and isinstance(item.get('quantity'), (int, float)) and not isinstance(item['quantity'], bool):
+            return {**item, 'name': 'Small pumpkin', 'canonicalName': 'small pumpkin',
+                    'priceQuantityEvidence': {'kind': 'source_recipe_quantity',
+                        'label': 'Tefal recipe 848764 specifies a small pumpkin; count retained for the cost estimate',
+                        'sourceUrl': source, 'sourceQuantity': item['quantity'], 'sourceUnit': 'piece'}}
+        if key == 'M_FOOD_457' and item.get('quantity') is None and not item.get('weight'):
+            yield_data = recipe.get('yield') if isinstance(recipe.get('yield'), dict) else {}
+            raw_servings = recipe.get('servings') or recipe.get('groupSize') or yield_data.get('quantity') or 4
+            try:
+                servings = float(raw_servings)
+            except (TypeError, ValueError):
+                return item
+            if isinstance(raw_servings, bool) or not math.isfinite(servings) or servings <= 0:
+                return item
+            return {**item, 'key': 'cook4me:recipe-salt-and-pepper',
+                    'name': 'Salt and pepper', 'canonicalName': 'salt and pepper',
+                    'quantity': servings / 4, 'unit': 'g', 'unitKey': 'UNIT_27',
+                    'priceQuantityEvidence': {'kind': 'source_recipe_quantity',
+                        'label': 'Tefal recipe 848764 lists 1 g salt and pepper to taste per 4 servings; budget allowance, mixture ratio unspecified',
+                        'sourceUrl': source, 'sourceQuantity': None, 'sourceUnit': ''}}
     return item

@@ -87,7 +87,7 @@ for tag, kind, names in (
     ('strawberries', 'CATEGORY', 'strawberry'),
     ('pineapples', 'CATEGORY', 'pineapple'),
     ('walnuts', 'CATEGORY', 'walnut'),
-    ('pumpkins', 'CATEGORY', 'pumpkin'),
+    ('pumpkins', 'CATEGORY', 'pumpkin|small pumpkin|small hokkaido pumpkin'),
     ('celeriac', 'CATEGORY', 'celeriac'),
     ('green-cabbage', 'CATEGORY', 'green cabbage'),
     ('rosemary', 'CATEGORY', 'rosemary'),

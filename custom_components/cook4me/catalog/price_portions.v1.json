@@ -1235,6 +1235,32 @@
       "portion": "piece",
       "sourceAmount": 1.0,
       "sourceGrams": 2.0
+    },
+    {
+      "names": [
+        "balsamic vinegar"
+      ],
+      "measure": "tbsp",
+      "grams": 16.0,
+      "fdcId": 172241,
+      "portionId": 90145,
+      "food": "Vinegar, balsamic",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 16.0
+    },
+    {
+      "names": [
+        "balsamic vinegar"
+      ],
+      "measure": "tsp",
+      "grams": 5.3,
+      "fdcId": 172241,
+      "portionId": 90147,
+      "food": "Vinegar, balsamic",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 5.3
     }
   ]
 }

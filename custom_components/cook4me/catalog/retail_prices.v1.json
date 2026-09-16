@@ -2027,6 +2027,26 @@
       "confidence": "external_observation",
       "barcode": "",
       "note": "Fresh green asparagus only. Named reference product; VAT included, delivery excluded. Seasonal prices and region may differ."
+    },
+    {
+      "id": "knuspr-1032-v94-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/1032-bio-hokkaido-kuerbis-1-stk",
+      "productName": "BIO Hokkaido pumpkin, whole",
+      "amount": 2.15,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:pumpkins"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed unit price per kg; not a fixed piece price. Out of stock when checked. Named Hokkaido reference, variety and actual shop prices vary."
     }
   ]
 }
