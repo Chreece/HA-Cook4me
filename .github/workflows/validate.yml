@@ -34,6 +34,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Install Python test dependencies
+        run: python -m pip install -r requirements-test.txt
       - name: Validate version, JSON, Python, shell, and frontend syntax
         run: |
           python scripts/version.py validate
@@ -72,6 +74,8 @@ jobs:
           python tools/build_frontend_bundle_v71.py --check
           python tools/build_frontend_bundle_v72.py --check
           python tools/build_frontend_bundle_v73.py --check
+          python tools/build_frontend_bundle_v74.py --check
+          bash -n tools/deploy_offline_runtime_v75.sh
           python - <<'PY'
           import json
           from pathlib import Path
@@ -150,5 +154,11 @@ jobs:
           timeout 60s node tests/frontend_v73_photo_bounds_browser.mjs
           timeout 40s env COOK4ME_TEST_PANEL_VERSION=73 node tests/frontend_v71_card_interactions_smoke.mjs
           timeout 40s env COOK4ME_TEST_PANEL_VERSION=73 node tests/frontend_v72_device_settings_smoke.mjs
+      - name: Verify v74 audited dashboard flows
+        run: |
+          timeout 40s node tests/frontend_v74_async_navigation_smoke.mjs
+          timeout 60s env COOK4ME_TEST_PANEL_VERSION=74 node tests/frontend_v73_photo_bounds_browser.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=74 node tests/frontend_v71_card_interactions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=74 node tests/frontend_v72_device_settings_smoke.mjs
       - name: Run focused tests
         run: python -m unittest discover -s tests -v

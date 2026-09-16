@@ -12,7 +12,7 @@ from homeassistant.core import HomeAssistant
 from .const import DOMAIN
 
 _COORDINATOR_KEY = "request_coordinator"
-_OWNER: ContextVar[int | None] = ContextVar("cook4me_request_owner", default=None)
+_OWNER: ContextVar[tuple | None] = ContextVar("cook4me_request_owner", default=None)
 EVENT_OPERATION_PROGRESS = "cook4me_operation_progress"
 
 
@@ -54,7 +54,7 @@ class Cook4MeRequestCoordinator:
         error: Any = "",
     ) -> dict[str, Any] | None:
         """Publish measurable progress without fabricating percentages."""
-        if not isinstance(operation, dict):
+        if not isinstance(operation, dict) or operation.get("_finished"):
             return None
         client_id = _bounded_text(operation.get("clientOperationId"), 160)
         if not client_id:
@@ -88,6 +88,8 @@ class Cook4MeRequestCoordinator:
                 "message": event["message"],
             })
         self.hass.bus.async_fire(EVENT_OPERATION_PROGRESS, event)
+        if done:
+            operation["_finished"] = True
         return deepcopy(event)
 
     @asynccontextmanager
@@ -100,7 +102,7 @@ class Cook4MeRequestCoordinator:
         client_operation_id: str | None = None,
     ) -> AsyncIterator[dict[str, Any]]:
         owner = _OWNER.get()
-        if owner == id(self):
+        if owner == (id(self), asyncio.current_task()):
             yield self._running or {
                 "id": 0,
                 "kind": str(kind),
@@ -113,11 +115,15 @@ class Cook4MeRequestCoordinator:
         self._waiting += 1
         try:
             await self._lock.acquire()
+        except asyncio.CancelledError:
+            self.progress({"kind": kind, "title": title, "clientOperationId": client_operation_id},
+                          "cancelled", done=True, error="CancelledError")
+            raise
         finally:
             self._waiting = max(0, self._waiting - 1)
 
         self._sequence += 1
-        token = _OWNER.set(id(self))
+        token = _OWNER.set((id(self), asyncio.current_task()))
         op = {
             "id": self._sequence,
             "kind": str(kind or "work"),
@@ -135,6 +141,9 @@ class Cook4MeRequestCoordinator:
         self.progress(op, "starting")
         try:
             yield op
+        except asyncio.CancelledError:
+            self.progress(op, "cancelled", done=True, error="CancelledError")
+            raise
         except Exception as exc:
             self.progress(op, "failed", message=type(exc).__name__, done=True, error=type(exc).__name__)
             raise

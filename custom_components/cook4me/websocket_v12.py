@@ -152,6 +152,14 @@ async def _wait_for_loaded_variant(bridge, variant_id: str, timeout: float = 10.
 
 
 async def _send_recipe_replaceable(bridge, variant_id: str) -> dict[str, Any]:
+    lock = getattr(bridge, "_send_lock", None)
+    if lock is None:
+        lock = bridge._send_lock = asyncio.Lock()
+    async with lock:
+        return await _send_recipe_replaceable_locked(bridge, variant_id)
+
+
+async def _send_recipe_replaceable_locked(bridge, variant_id: str) -> dict[str, Any]:
     """Send a recipe, replacing only a safely pre-cook loaded recipe.
 
     The proven cloud route writes a new recipe reference into the appliance

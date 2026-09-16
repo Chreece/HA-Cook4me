@@ -61,6 +61,7 @@ class Batch43EvidenceRequirementTriageTests(unittest.TestCase):
         cls.checkpoint = cp.build_checkpoint(TOOLS)
         cls.recorded_ids = {
             row["reviewTargetId"] for row in cls.checkpoint["recordedBindings"]
+            if row["reviewFile"] <= "release_catalog_reviewed_nutrition_targets_045.v1.json"
         }
         cls.held_ids = set(holds.load_holds()["targets"])
         cls.active_ids = set(cls.requirements) - cls.recorded_ids - cls.held_ids
@@ -87,7 +88,7 @@ class Batch43EvidenceRequirementTriageTests(unittest.TestCase):
         self.assertFalse(set(self.requirements) & self.held_ids)
         self.assertEqual(len(self.active_ids), 19)
         self.assertEqual(len(self.active_rows), 19)
-        self.assertEqual(self.checkpoint["summary"]["recordedReviewTargetCount"], 5080)
+        self.assertEqual(len(self.recorded_ids), 5080)
 
     def test_exactly_nine_active_requirements_were_in_the_manual_lane(self):
         matched, manual, context = classifier._partition_remaining(

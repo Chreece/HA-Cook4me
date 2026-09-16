@@ -778,12 +778,14 @@ class Cook4MeNutritionStore:
 
 
 async def nutrition_store_for_bridge(bridge: Any) -> Cook4MeNutritionStore:
-    store = getattr(bridge, "_nutrition_store", None)
-    if store is None:
-        store = Cook4MeNutritionStore(bridge.hass, bridge.entry.entry_id)
-        await store.async_load()
-        bridge._nutrition_store = store
-    return store
+    from .store_helpers import store_load_lock
+    async with store_load_lock(bridge, 'nutrition'):
+        store = getattr(bridge, "_nutrition_store", None)
+        if store is None:
+            store = Cook4MeNutritionStore(bridge.hass, bridge.entry.entry_id)
+            await store.async_load()
+            bridge._nutrition_store = store
+        return store
 
 
 DEMO_KEY = _DEMO_KEY

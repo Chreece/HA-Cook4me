@@ -136,24 +136,25 @@ async def _search_catalogs(
 async def _flush_one_queued_send(bridge) -> None:
     if getattr(bridge, "_cook4me_queued_send_running", False):
         return
-    if not bridge.can_accept_recipe:
-        return
-    store = await recipe_book_store_for_bridge(bridge)
-    queued = store.queued_send
-    if not queued:
-        return
-    variant = str(queued.get("variantId") or "").strip()
-    if not variant:
-        await store.async_clear_queue()
+    if not bridge.can_accept_recipe or getattr(bridge, "_stopping", False):
         return
     bridge._cook4me_queued_send_running = True
     try:
-        await bridge.async_send_variant(variant)
+        store = await recipe_book_store_for_bridge(bridge)
+        queued = store.queued_send
+        if not queued or not bridge.can_accept_recipe or getattr(bridge, "_stopping", False):
+            return
+        variant = str(queued.get("variantId") or "").strip()
+        if not variant:
+            await store.async_clear_queue(expected=queued)
+            return
+        # Detail retrieval and waiting behind another send can outlive a queue
+        # cancellation/replacement. Check again under the device send lock.
+        await bridge.async_send_variant(variant, still_current=lambda: store.queued_send == queued)
+        await store.async_clear_queue(expected=queued)
     except Exception:
         # Keep the request cached. Device state and cloud credentials can recover later.
         return
-    else:
-        await store.async_clear_queue()
     finally:
         bridge._cook4me_queued_send_running = False
 
@@ -165,8 +166,8 @@ async def _send_queue_watch_loop(hass: HomeAssistant) -> None:
                 hass.data.get(DOMAIN, {}).get(DATA_BRIDGES, {}).values()
             )
             for bridge in bridges:
-                if bridge.can_accept_recipe:
-                    hass.async_create_task(_flush_one_queued_send(bridge))
+                if bridge.can_accept_recipe and not getattr(bridge, "_stopping", False):
+                    bridge.async_create_task(_flush_one_queued_send(bridge), "Cook4Me queued recipe")
         except asyncio.CancelledError:
             raise
         except Exception:
@@ -465,9 +466,11 @@ async def ws_send_or_queue(hass, connection, msg) -> None:
             )
             return
         if bridge.can_accept_recipe:
-            result = await bridge.async_send_variant(variant)
             store = await recipe_book_store_for_bridge(bridge)
-            await store.async_clear_queue()
+            previous = store.queued_send
+            result = await bridge.async_send_variant(variant)
+            if previous is not None:
+                await store.async_clear_queue(expected=previous)
             connection.send_result(
                 msg["id"], {"sent": True, "queued": False, "result": result}
             )

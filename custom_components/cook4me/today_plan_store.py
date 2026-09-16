@@ -147,9 +147,11 @@ class Cook4MeTodayPlanStore:
 
 
 async def today_plan_store_for_bridge(bridge: Any) -> Cook4MeTodayPlanStore:
-    store = getattr(bridge, "_today_plan_store", None)
-    if not isinstance(store, Cook4MeTodayPlanStore):
-        store = Cook4MeTodayPlanStore(bridge)
-        await store.async_load()
-        bridge._today_plan_store = store
-    return store
+    from .store_helpers import store_load_lock
+    async with store_load_lock(bridge, 'today_plan_store'):
+        store = getattr(bridge, "_today_plan_store", None)
+        if not isinstance(store, Cook4MeTodayPlanStore):
+            store = Cook4MeTodayPlanStore(bridge)
+            await store.async_load()
+            bridge._today_plan_store = store
+        return store

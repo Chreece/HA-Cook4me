@@ -122,7 +122,15 @@ class Announcements:
     def report(self, user_id, state, detail=""):
         self.status[user_id] = {"state": state, "detail": detail}
         for listener in list(self.listeners.get(user_id, ())):
-            listener(dict(self.status[user_id]))
+            try:
+                listener(dict(self.status[user_id]))
+            except Exception:
+                # A closed dashboard connection must not break delivery to
+                # speakers or prevent the remaining users from being served.
+                _LOGGER.debug("Cook4Me announcement status listener failed", exc_info=True)
+                listeners = self.listeners.get(user_id, [])
+                if listener in listeners:
+                    listeners.remove(listener)
 
     async def close(self):
         self.closed = True
@@ -145,8 +153,10 @@ class Announcements:
         if any(kind in {"recipe", "steps"} for kind, _ in events):
             if live.get("connected") is not True or step_key(data) != step_key(live):
                 return False
-        if any(kind == "state" for kind, _ in events) and live.get("phase") != data.get("phase"):
-            return False
+        if any(kind == "state" for kind, _ in events):
+            if (live.get("connected") is not True or live.get("phase") != data.get("phase")
+                    or identity(live) != identity(data)):
+                return False
         if any(kind == "connection" for kind, _ in events) and live.get("connected") != data.get("connected"):
             return False
         return True

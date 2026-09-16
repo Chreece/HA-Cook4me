@@ -122,6 +122,10 @@ class DeviceSettings:
 
     async def async_consolidate_entities(self):
         """One migration only; a later manual re-enable is respected."""
+        async with self.lock:
+            await self._async_consolidate_entities_locked()
+
+    async def _async_consolidate_entities_locked(self):
         if self.data.get("entitiesConsolidated"):
             return
         from homeassistant.helpers import entity_registry as er

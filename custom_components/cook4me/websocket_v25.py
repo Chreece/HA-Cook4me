@@ -36,13 +36,17 @@ async def _send_one_exact(bridge, recipe: dict[str, Any]) -> dict[str, Any]:
             "reason": "custom_recipe_has_no_official_seb_id",
         }
 
+    store = await recipe_book_store_for_bridge(bridge)
+    previous = store.queued_send
     if bridge.available:
         try:
             result = await v12._send_recipe_replaceable(bridge, variant)
         except Exception as exc:
             reason = "device_busy" if bridge.available else "device_offline"
             store = await recipe_book_store_for_bridge(bridge)
-            queued = await store.async_queue_send(recipe, reason=reason)
+            queued = await store.async_queue_send(recipe, reason=reason, expected=previous)
+            if queued.get("superseded"):
+                return {"sent": False, "queued": False, "reason": "newer_queue_request", "queuedSend": queued}
             return {
                 "sent": False,
                 "queued": True,
@@ -51,7 +55,8 @@ async def _send_one_exact(bridge, recipe: dict[str, Any]) -> dict[str, Any]:
                 "error": str(exc)[:300],
             }
         store = await recipe_book_store_for_bridge(bridge)
-        await store.async_clear_queue()
+        if previous is not None:
+            await store.async_clear_queue(expected=previous)
         return {"sent": True, "queued": False, "result": result}
 
     store = await recipe_book_store_for_bridge(bridge)

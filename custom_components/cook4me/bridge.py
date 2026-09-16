@@ -47,6 +47,9 @@ class Cook4MeBridge:
         self._recipe_cache: dict[str, dict[str, Any]] = {}
         self._recipe_metadata_task: asyncio.Task | None = None
         self._recipe_metadata_variant: str | None = None
+        self._background_tasks: set[asyncio.Task] = set()
+        self._client_processes: set[asyncio.subprocess.Process] = set()
+        self._send_lock = asyncio.Lock()
         self.recipe_hub = Cook4MeRecipeHub(hass, entry.entry_id)
         self._search_cache: dict[tuple[str, int, int, int], tuple[float, dict[str, Any]]] = {}
 
@@ -85,31 +88,91 @@ class Cook4MeBridge:
     async def async_start(self) -> None:
         await self.recipe_hub.async_load()
         self._stopping = False
+        self._first_state.clear()
         self._task = self.hass.async_create_background_task(self._run_forever(), "cook4me_mqtt")
+        first_state = asyncio.create_task(self._first_state.wait())
         try:
-            await asyncio.wait_for(self._first_state.wait(), timeout=75)
-        except TimeoutError as exc:
-            if self._task.done():
+            done, _ = await asyncio.wait((first_state, self._task), timeout=75,
+                                         return_when=asyncio.FIRST_COMPLETED)
+            if self._task in done:
                 err = self._task.exception()
                 if isinstance(err, ConfigEntryAuthFailed):
                     raise err
-                raise ConfigEntryNotReady(str(err or "Cook4Me connection failed")) from exc
-            raise ConfigEntryNotReady("Timed out waiting for initial Cook4Me state") from exc
+                raise ConfigEntryNotReady(str(err or "Cook4Me connection failed"))
+            if not self._first_state.is_set():
+                raise ConfigEntryNotReady("Timed out waiting for initial Cook4Me state")
+        except BaseException:
+            await self.async_stop()
+            raise
+        finally:
+            first_state.cancel()
+            await asyncio.gather(first_state, return_exceptions=True)
+
+    def async_create_task(self, coro, name: str) -> asyncio.Task:
+        """Track device-owned work so a reload cannot leave it running."""
+        task = self.hass.async_create_background_task(coro, name)
+        self._background_tasks.add(task)
+        task.add_done_callback(self._background_tasks.discard)
+        return task
+
+    @staticmethod
+    async def _stop_process(proc, *, drain: bool = True) -> None:
+        if proc.returncode is None:
+            try:
+                proc.terminate()
+            except ProcessLookupError:
+                pass
+
+        async def discard(stream) -> None:
+            if stream is not None:
+                while await stream.read(65536):
+                    pass
+
+        # wait() can stall on a full PIPE even after the child has exited.
+        # Only drain when this caller owns the readers; live client calls have
+        # their own communicate() reading both pipes during external shutdown.
+        readers = [discard(proc.stdout), discard(proc.stderr)] if drain else []
+        completion = asyncio.gather(proc.wait(), *readers)
+        try:
+            await asyncio.wait_for(asyncio.shield(completion), 5)
+        except TimeoutError:
+            try:
+                proc.kill()
+            except ProcessLookupError:
+                pass
+            await completion
+        finally:
+            if not completion.done():
+                completion.cancel()
+                await asyncio.gather(completion, return_exceptions=True)
 
     async def async_stop(self) -> None:
         self._stopping = True
-        if self._proc and self._proc.returncode is None:
-            self._proc.terminate()
+        tasks = set(self._background_tasks)
+        if self._task is not None:
+            tasks.add(self._task)
+        for task in tasks:
+            task.cancel()
+        await asyncio.gather(*tasks, return_exceptions=True)
+        await asyncio.gather(*(self._stop_process(proc, drain=False) for proc in list(self._client_processes)),
+                             return_exceptions=True)
+        if self._proc is not None:
+            await self._stop_process(self._proc)
+        self._task = self._proc = None
+        self._mark_disconnected()
+
+    def _notify_listeners(self) -> None:
+        for listener in list(self._listeners):
             try:
-                await asyncio.wait_for(self._proc.wait(), 10)
-            except TimeoutError:
-                self._proc.kill()
-        if self._task:
-            self._task.cancel()
-            try:
-                await self._task
-            except asyncio.CancelledError:
-                pass
+                listener()
+            except Exception:
+                _LOGGER.exception("Cook4Me state listener failed")
+
+    def _mark_disconnected(self) -> None:
+        self._cancel_recipe_metadata()
+        if self.data.get("connected") is True:
+            self.data = {**self.data, "connected": False, "available": False}
+            self._notify_listeners()
 
     @callback
     def async_add_listener(self, listener: Callable[[], None]) -> Callable[[], None]:
@@ -160,85 +223,76 @@ class Cook4MeBridge:
         current = steps[current_pos]
         self.data["currentInstruction"] = current.get("instruction")
         self.data["currentInstructions"] = current.get("instructions") or []
+        self.data.pop("nextInstruction", None)
+        self.data.pop("nextStepFunctionalId", None)
         if current_pos + 1 < len(steps):
             nxt = steps[current_pos + 1]
             if isinstance(nxt, dict):
                 self.data["nextInstruction"] = nxt.get("instruction")
                 self.data["nextStepFunctionalId"] = nxt.get("functionalId")
 
+    def _cancel_recipe_metadata(self) -> None:
+        if self._recipe_metadata_task and not self._recipe_metadata_task.done():
+            self._recipe_metadata_task.cancel()
+        self._recipe_metadata_task = None
+        self._recipe_metadata_variant = None
+
     def _maybe_schedule_recipe_metadata(self) -> None:
-        variant = self.data.get("variantFunctionalId")
+        variant = str(self.data.get("variantFunctionalId") or "")
         recipe = self.data.get("recipeFunctionalId")
-        if not variant or not recipe:
-            return
-        variant = str(variant)
-        if variant in self._recipe_cache:
+        if self._stopping or not self.available or not variant or not recipe or variant in self._recipe_cache:
+            self._cancel_recipe_metadata()
             return
         if self._recipe_metadata_task and not self._recipe_metadata_task.done() and self._recipe_metadata_variant == variant:
             return
+        self._cancel_recipe_metadata()
         self._recipe_metadata_variant = variant
-        self._recipe_metadata_task = self.hass.async_create_background_task(
+        self._recipe_metadata_task = self.async_create_task(
             self._async_fetch_recipe_metadata(str(recipe), variant),
             f"cook4me_recipe_metadata_{variant}",
         )
 
     async def _async_fetch_recipe_metadata(self, recipe_id: str, variant_id: str) -> None:
-        vendor = pathlib.Path(__file__).parent / "vendor"
-        proc = await asyncio.create_subprocess_exec(
-            *self._base_cmd(), "recipe-metadata", recipe_id, variant_id,
-            cwd=str(vendor), env=self._env(),
-            stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE,
-        )
-        out, err = await proc.communicate()
-        if proc.returncode:
-            msg = err.decode("utf-8", "replace")[-1200:].strip()
-            _LOGGER.warning("Cook4Me recipe metadata unavailable for variant %s: %s", variant_id, msg or f"client exit {proc.returncode}")
+        try:
+            meta = await self._run_client_json("recipe-metadata", recipe_id, variant_id, timeout=60)
+        except Exception as exc:
+            _LOGGER.warning("Cook4Me recipe metadata unavailable for variant %s: %s", variant_id, type(exc).__name__)
             return
-        meta = None
-        for line in reversed(out.decode("utf-8", "replace").splitlines()):
-            if not line.startswith("{"):
-                continue
-            try:
-                obj = json.loads(line)
-            except json.JSONDecodeError:
-                continue
-            if isinstance(obj, dict) and isinstance(obj.get("steps"), list):
-                meta = obj
-                break
-        if meta is None:
+        if not isinstance(meta.get("steps"), list):
             _LOGGER.warning("Cook4Me recipe metadata returned no parseable steps for variant %s", variant_id)
             return
         self._recipe_cache[variant_id] = meta
         # Only enrich the live state if the same recipe is still active.
-        if str(self.data.get("variantFunctionalId") or "") == variant_id:
+        if not self._stopping and str(self.data.get("variantFunctionalId") or "") == variant_id:
             self._apply_recipe_metadata()
-            for listener in list(self._listeners):
-                listener()
+            self._notify_listeners()
         _LOGGER.debug("Cook4Me recipe metadata loaded for variant %s (%s steps)", variant_id, meta.get("stepCount"))
 
     @callback
     def _publish(self, payload: dict[str, Any]) -> None:
+        if self._stopping:
+            return
         self.data = payload
         self._apply_recipe_metadata()
         self._maybe_schedule_recipe_metadata()
         self._first_state.set()
-        for listener in list(self._listeners):
-            listener()
+        self._notify_listeners()
 
     async def _run_forever(self) -> None:
         failures = 0
         while not self._stopping:
             vendor = pathlib.Path(__file__).parent / "vendor"
-            self._proc = await asyncio.create_subprocess_exec(
-                *self._base_cmd(), "watch-state",
-                cwd=str(vendor), env=self._env(),
-                stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE,
-            )
-            assert self._proc.stdout and self._proc.stderr
-            stderr_task = self.hass.async_create_background_task(self._drain_stderr(self._proc.stderr), "cook4me_stderr")
+            proc = stderr_task = None
+            rc = None
             got_state = False
             try:
-                while line := await self._proc.stdout.readline():
+                proc = self._proc = await asyncio.create_subprocess_exec(
+                    *self._base_cmd(), "watch-state", cwd=str(vendor), env=self._env(),
+                    stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE,
+                )
+                assert proc.stdout and proc.stderr
+                stderr_task = asyncio.create_task(self._drain_stderr(proc.stderr))
+                while line := await proc.stdout.readline():
                     text = line.decode("utf-8", "replace").strip()
                     if not text.startswith("{"):
                         continue
@@ -250,13 +304,21 @@ class Cook4MeBridge:
                         got_state = True
                         failures = 0
                         self._publish(obj)
-                rc = await self._proc.wait()
+                rc = await proc.wait()
+            except Exception as exc:
+                _LOGGER.warning("Cook4Me watcher interrupted: %s", type(exc).__name__)
             finally:
-                stderr_task.cancel()
+                if stderr_task is not None:
+                    stderr_task.cancel()
+                    await asyncio.gather(stderr_task, return_exceptions=True)
+                if proc is not None:
+                    await self._stop_process(proc)
+                self._proc = None
+                self._mark_disconnected()
             if self._stopping:
                 return
             failures += 1
-            if not got_state and failures >= 2:
+            if not got_state and failures >= 2 and not self._first_state.is_set():
                 raise ConfigEntryNotReady(f"Cook4Me watcher exited repeatedly (rc={rc})")
             await asyncio.sleep(min(30, failures * 3))
 
@@ -267,18 +329,26 @@ class Cook4MeBridge:
                 _LOGGER.debug("Cook4Me client: %s", text)
 
     async def _run_client_json(self, *args: str, timeout: float = 90) -> dict[str, Any]:
+        if self._stopping:
+            raise HomeAssistantError("Cook4Me is unloading")
         vendor = pathlib.Path(__file__).parent / "vendor"
         proc = await asyncio.create_subprocess_exec(
             *self._base_cmd(), *[str(x) for x in args],
             cwd=str(vendor), env=self._env(),
             stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE,
         )
+        self._client_processes.add(proc)
         try:
+            if self._stopping:
+                raise HomeAssistantError("Cook4Me is unloading")
             out, err = await asyncio.wait_for(proc.communicate(), timeout=timeout)
         except TimeoutError as exc:
-            proc.kill()
-            await proc.wait()
             raise HomeAssistantError(f"Cook4Me client timed out while running {args[0] if args else 'command'}") from exc
+        finally:
+            try:
+                await self._stop_process(proc)
+            finally:
+                self._client_processes.discard(proc)
         if proc.returncode:
             message = err.decode("utf-8", "replace")[-1600:].strip()
             raise HomeAssistantError(message or f"Cook4Me client exited with code {proc.returncode}")
@@ -376,7 +446,15 @@ class Cook4MeBridge:
             )
         return annotated
 
-    async def _async_send_resolved(self, meta: dict[str, Any]) -> dict[str, Any]:
+    async def _async_send_resolved(
+        self, meta: dict[str, Any], *, still_current: Callable[[], bool] | None = None,
+    ) -> dict[str, Any]:
+        async with self._send_lock:
+            if still_current is not None and not still_current():
+                return {"cancelled": True}
+            return await self._async_send_resolved_locked(meta)
+
+    async def _async_send_resolved_locked(self, meta: dict[str, Any]) -> dict[str, Any]:
         grouping = str(meta.get("groupingFunctionalId") or "").strip()
         recipe = str(meta.get("recipeFunctionalId") or "").strip()
         if not grouping or not recipe:
@@ -426,9 +504,11 @@ class Cook4MeBridge:
                 _LOGGER.warning("Cook4Me allow_loaded send requested despite active recipe: %s", loaded)
         return await self._async_send_resolved(meta)
 
-    async def async_send_variant(self, variant_id: str) -> dict[str, Any]:
+    async def async_send_variant(
+        self, variant_id: str, *, still_current: Callable[[], bool] | None = None,
+    ) -> dict[str, Any]:
         meta = await self.async_recipe_detail(variant_id)
-        return await self._async_send_resolved(meta)
+        return await self._async_send_resolved(meta, still_current=still_current)
 
 
 async def async_discover_appliances(hass: HomeAssistant, data: dict[str, Any]) -> list[dict[str, Any]]:
@@ -462,6 +542,8 @@ async def async_discover_appliances(hass: HomeAssistant, data: dict[str, Any]) -
         await proc.wait()
         _LOGGER.error("Cook4Me appliance discovery timed out after 90 seconds")
         raise Cook4MeCloudUnavailable("Cook4Me appliance discovery timed out after 90 seconds") from exc
+    finally:
+        await bridge._stop_process(proc)
     _LOGGER.warning("Cook4Me discovery subprocess finished rc=%s stdout_bytes=%s stderr_bytes=%s",
                     proc.returncode, len(out), len(err))
     if proc.returncode:
