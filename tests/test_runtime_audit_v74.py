@@ -10,7 +10,7 @@ from pathlib import Path
 import sys
 import types
 import unittest
-from unittest.mock import AsyncMock, patch
+from unittest.mock import ANY, AsyncMock, patch
 
 ROOT = Path(__file__).resolve().parents[1]
 COMPONENT = ROOT / 'custom_components/cook4me'
@@ -242,7 +242,7 @@ class AuditTests(unittest.IsolatedAsyncioTestCase):
         store = await self.bookmod.recipe_book_store_for_bridge(self.bridge)
         await store.async_queue_send({'sendVariantId':'old','title':'Old'}, reason='offline')
         started, release = asyncio.Event(), asyncio.Event()
-        async def send(variant):
+        async def send(variant, **kwargs):
             self.assertEqual(variant, 'old'); started.set(); await release.wait()
         bridge = NS(can_accept_recipe=True, async_send_variant=send)
         ns = {'recipe_book_store_for_bridge':AsyncMock(return_value=store)}
@@ -264,7 +264,7 @@ class AuditTests(unittest.IsolatedAsyncioTestCase):
         functions('websocket_v18.py', {'_flush_one_queued_send'}, ns)
         tasks = [asyncio.create_task(ns['_flush_one_queued_send'](bridge)) for _ in range(2)]
         await asyncio.sleep(0); gate.set(); await asyncio.gather(*tasks)
-        bridge.async_send_variant.assert_awaited_once_with('one')
+        bridge.async_send_variant.assert_awaited_once_with('one', still_current=ANY)
 
     async def test_offline_queue_preserves_selected_variant_identity(self):
         store = await self.bookmod.recipe_book_store_for_bridge(self.bridge)

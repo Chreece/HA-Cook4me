@@ -446,8 +446,12 @@ class Cook4MeBridge:
             )
         return annotated
 
-    async def _async_send_resolved(self, meta: dict[str, Any]) -> dict[str, Any]:
+    async def _async_send_resolved(
+        self, meta: dict[str, Any], *, still_current: Callable[[], bool] | None = None,
+    ) -> dict[str, Any]:
         async with self._send_lock:
+            if still_current is not None and not still_current():
+                return {"cancelled": True}
             return await self._async_send_resolved_locked(meta)
 
     async def _async_send_resolved_locked(self, meta: dict[str, Any]) -> dict[str, Any]:
@@ -500,9 +504,11 @@ class Cook4MeBridge:
                 _LOGGER.warning("Cook4Me allow_loaded send requested despite active recipe: %s", loaded)
         return await self._async_send_resolved(meta)
 
-    async def async_send_variant(self, variant_id: str) -> dict[str, Any]:
+    async def async_send_variant(
+        self, variant_id: str, *, still_current: Callable[[], bool] | None = None,
+    ) -> dict[str, Any]:
         meta = await self.async_recipe_detail(variant_id)
-        return await self._async_send_resolved(meta)
+        return await self._async_send_resolved(meta, still_current=still_current)
 
 
 async def async_discover_appliances(hass: HomeAssistant, data: dict[str, Any]) -> list[dict[str, Any]]:

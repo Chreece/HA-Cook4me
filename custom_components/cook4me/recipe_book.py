@@ -60,8 +60,10 @@ class Cook4MeRecipeBookStore:
                 self._data["queuedSend"] = deepcopy(queued)
         self._loaded = True
 
-    async def _save(self) -> None:
-        await self._store.async_save(deepcopy(self._data))
+    async def _save(self, data: dict[str, Any]) -> None:
+        # Readers and the send queue see only a successfully saved snapshot.
+        await self._store.async_save(deepcopy(data))
+        self._data = data
 
     def snapshot(self) -> dict[str, Any]:
         return {
@@ -79,7 +81,8 @@ class Cook4MeRecipeBookStore:
     async def async_toggle(self, collection: str, recipe: dict[str, Any], *, remove: bool = False) -> dict[str, Any]:
         if collection not in {"favorites", "recipeList"}:
             raise ValueError("Recipe collection must be favorites or recipeList")
-        rows = self._data[collection]
+        data = deepcopy(self._data)
+        rows = data[collection]
         saved_key = str(recipe.get("bookKey") or "")
         key = saved_key if saved_key and (remove or saved_key in rows) else recipe_storage_key(recipe)
         if not key:
@@ -95,23 +98,24 @@ class Cook4MeRecipeBookStore:
             while len(rows) > _MAX_BOOK_ITEMS:
                 rows.pop(next(iter(rows)), None)
             added = True
-        await self._save()
+        await self._save(data)
         return {"added": added, "collection": collection, "key": key, **self.snapshot()}
 
     @_serialized
     async def async_remove_local_recipe(self, recipe_id: str) -> int:
         """Remove stale saved copies of a deleted local recipe only."""
         removed = 0
+        data = deepcopy(self._data)
         official_ids = ("groupingFunctionalId", "sendGroupingFunctionalId", "recipeFunctionalId",
             "variantFunctionalId", "displayVariantId", "searchVariantId")
         for collection in ("favorites", "recipeList"):
-            rows = self._data[collection]
+            rows = data[collection]
             for key, recipe in list(rows.items()):
                 if str(recipe.get("id") or "") == recipe_id and not any(recipe.get(field) for field in official_ids):
                     rows.pop(key)
                     removed += 1
         if removed:
-            await self._save()
+            await self._save(data)
         return removed
 
     @_serialized
@@ -131,7 +135,8 @@ class Cook4MeRecipeBookStore:
         if not variant:
             raise ValueError("Official recipe has no sendable SEB recipe ID")
         previous = deepcopy(self._data.get("queuedSend"))
-        self._data["queuedSend"] = {
+        data = deepcopy(self._data)
+        data["queuedSend"] = {
             "queueId": str(uuid4()),
             "variantId": variant,
             "title": str(recipe.get("title") or variant),
@@ -139,7 +144,7 @@ class Cook4MeRecipeBookStore:
             "queuedAt": datetime.now(timezone.utc).isoformat(),
             "recipe": snapshot,
         }
-        await self._save()
+        await self._save(data)
         return {"queued": deepcopy(self._data["queuedSend"]), "replaced": previous}
 
     @_serialized
@@ -147,9 +152,10 @@ class Cook4MeRecipeBookStore:
         if expected is not None and self._data.get("queuedSend") != expected:
             return None
         previous = deepcopy(self._data.get("queuedSend"))
-        self._data["queuedSend"] = None
         if previous is not None:
-            await self._save()
+            data = deepcopy(self._data)
+            data["queuedSend"] = None
+            await self._save(data)
         return previous
 
 

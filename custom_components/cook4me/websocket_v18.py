@@ -148,7 +148,9 @@ async def _flush_one_queued_send(bridge) -> None:
         if not variant:
             await store.async_clear_queue(expected=queued)
             return
-        await bridge.async_send_variant(variant)
+        # Detail retrieval and waiting behind another send can outlive a queue
+        # cancellation/replacement. Check again under the device send lock.
+        await bridge.async_send_variant(variant, still_current=lambda: store.queued_send == queued)
         await store.async_clear_queue(expected=queued)
     except Exception:
         # Keep the request cached. Device state and cloud credentials can recover later.
