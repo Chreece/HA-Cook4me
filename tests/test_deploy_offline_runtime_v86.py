@@ -13,7 +13,7 @@ import unittest
 SCRIPT = Path(__file__).resolve().parents[1] / "tools/deploy_offline_runtime_v86.sh"
 COMMIT = "849280cf7e6ee2e2af089f47532301a900f08900"
 FAKE_COMMAND = r'''#!/usr/bin/env python3
-import json, os, pathlib, shutil, sys
+import json, os, pathlib, shutil, subprocess, sys
 name = pathlib.Path(sys.argv[0]).name
 args = sys.argv[1:]
 root = pathlib.Path(os.environ["DEPLOY_TEST_ROOT"])
@@ -26,19 +26,25 @@ if name == "git":
         pathlib.Path(args[-1]).mkdir()
     elif "checkout" in args:
         staged = pathlib.Path(args[1]) / "custom_components/cook4me"
+        shutil.copytree(os.environ["DEPLOY_TEST_COMPONENT"], staged,
+                        ignore=shutil.ignore_patterns("__pycache__", "frontend"))
         (staged / "frontend").mkdir(parents=True)
         (staged / "frontend/cook4me-panel-v86-bundle.js").write_text("new panel\n")
-        (staged / "query_vocabulary.json").write_text("{}")
-        (staged / "catalog").mkdir()
-        if scenario != "missing_prices":
-            (staged / "catalog/observed_prices.v1.json").write_text("{}")
-        (staged / "catalog/price_portions.v1.json").write_text("{}")
-        (staged / "catalog/retail_prices.v1.json").write_text("{}")
-        (staged / "price_snapshot.py").write_text("# prices")
+        if scenario == "missing_prices":
+            (staged / "catalog/observed_prices.v1.json").unlink()
+        if scenario in ("invalid_prices", "truncated_prices"):
+            prices_path = staged / "catalog/observed_prices.v1.json"
+            payload = json.loads(prices_path.read_text())
+            if scenario == "invalid_prices":
+                payload["schemaVersion"] = 999
+            else:
+                payload["observations"].pop()
+            prices_path.write_text(json.dumps(payload))
+        if scenario == "missing_retail":
+            (staged / "catalog/retail_prices.v1.json").unlink()
         (staged / "installed.txt").write_text("new")
-        (staged / "catalog_ui_locales").mkdir()
-        if scenario != "missing_locale":
-            (staged / "catalog_ui_locales/el.json").write_text("{}")
+        if scenario == "missing_locale":
+            (staged / "catalog_ui_locales/el.json").unlink()
     elif "rev-parse" in args:
         print("849280cf7e6ee2e2af089f47532301a900f08900")
 elif name == "docker":
@@ -52,8 +58,14 @@ elif name == "docker":
         if "unittest" in args and scenario == "preflight_failure":
             sys.exit(1)
         if "--interactive" in args:
-            sys.stdin.read()
-            if scenario == "probe_failure":
+            code = sys.stdin.read()
+            python_args = args[args.index("python") + 1:]
+            python_args = [str(config / value.removeprefix("/config/"))
+                           if value.startswith("/config/") else value for value in python_args]
+            result = subprocess.run([sys.executable, *python_args], input=code, text=True)
+            if result.returncode:
+                sys.exit(result.returncode)
+            if scenario == "probe_failure" and "/config/custom_components/cook4me" in args:
                 sys.exit(1)
     elif args[0] == "stop":
         (root / "running").write_text("false")
@@ -105,8 +117,10 @@ class DeploymentTests(unittest.TestCase):
             executable.chmod(0o755)
         env = dict(os.environ, PATH=f"{bin_dir}:{os.environ['PATH']}",
                    COOK4ME_CONFIG=str(config), COOK4ME_CONTAINER="test-homeassistant",
-                   COOK4ME_HEALTH_SECONDS="1", DEPLOY_TEST_ROOT=str(root), DEPLOY_TEST_SCENARIO=scenario)
-        result = subprocess.run(["bash", str(SCRIPT)], env=env, text=True, capture_output=True, timeout=30)
+                   COOK4ME_HEALTH_SECONDS="1", COOK4ME_UI_LANGUAGE="el",
+                   DEPLOY_TEST_COMPONENT=str(SCRIPT.parents[1] / "custom_components/cook4me"),
+                   DEPLOY_TEST_ROOT=str(root), DEPLOY_TEST_SCENARIO=scenario)
+        result = subprocess.run(["bash", str(SCRIPT)], env=env, text=True, capture_output=True, timeout=90)
         self.assertEqual((storage / "profile").read_text(), "preserve profile")
         self.assertEqual((root / "running").read_text(), "true", result.stdout + result.stderr)
         calls = [json.loads(line) for line in (root / "calls").read_text().splitlines()]
@@ -121,6 +135,12 @@ class DeploymentTests(unittest.TestCase):
         self.assertEqual((runs[0] / "previous-cook4me/installed.txt").read_text(), "original")
         self.assertEqual((runs[0] / "installed-commit.txt").read_text().strip(), COMMIT)
         self.assertIn("DEPLOYMENT PASSED", result.stdout)
+        self.assertEqual(result.stdout.count("Offline price snapshot: 377 observations"), 2)
+        probes = [i for i, call in enumerate(calls) if "--interactive" in call]
+        stop = next(i for i, call in enumerate(calls) if call[:2] == ["docker", "stop"])
+        self.assertEqual(len(probes), 2)
+        self.assertLess(probes[0], stop)
+        self.assertGreater(probes[1], stop)
         self.assertTrue(any("test_product_capture_v78.py" in call for call in calls))
         self.assertTrue(any("test_automatic_prices_v79.py" in call for call in calls))
         self.assertTrue(any("test_ingredient_endpoint_v80.py" in call for call in calls))
@@ -142,10 +162,22 @@ class DeploymentTests(unittest.TestCase):
         self.assertFalse(any(call[:2] == ["docker", "stop"] for call in calls))
 
     def test_missing_offline_price_file_leaves_installation_untouched(self):
-        result, _, target, calls = self.run_install("missing_prices")
-        self.assertNotEqual(result.returncode, 0)
-        self.assertEqual((target / "installed.txt").read_text(), "original")
-        self.assertFalse(any(call[:2] == ["docker", "stop"] for call in calls))
+        for scenario in ("missing_prices", "missing_retail"):
+            with self.subTest(scenario=scenario):
+                result, _, target, calls = self.run_install(scenario)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertEqual((target / "installed.txt").read_text(), "original")
+                self.assertFalse(any(call[:2] == ["docker", "stop"] for call in calls))
+
+    def test_invalid_snapshot_is_rejected_before_home_assistant_stops(self):
+        for scenario, message in (("invalid_prices", "unsupported schema"),
+                                  ("truncated_prices", "expected 371 observations, found 370")):
+            with self.subTest(scenario=scenario):
+                result, _, target, calls = self.run_install(scenario)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn(message, result.stderr)
+                self.assertEqual((target / "installed.txt").read_text(), "original")
+                self.assertFalse(any(call[:2] == ["docker", "stop"] for call in calls))
 
     def test_wrong_config_mount_is_rejected_before_source_fetch(self):
         result, _, target, calls = self.run_install("wrong_mount")

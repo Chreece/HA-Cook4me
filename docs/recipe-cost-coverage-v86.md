@@ -94,3 +94,24 @@ served-panel verification and rollback. It installs the v86 panel at cache key
 `2026.9.16.10`. Run it as a standalone script, not by sourcing it in the SSH shell.
 
 Tested runtime commit: `849280cf7e6ee2e2af089f47532301a900f08900`.
+
+### Installer correction, 2026-09-16
+
+The first v86 installer incorrectly retained v85's minimum of 481 observations in
+its activation probe. The valid v86 snapshot contains 371 Open Prices observations
+plus six retail observations, so the probe reported "Offline price snapshot is
+missing" and rolled the installation back. The earlier deployment simulation
+discarded the Python probe instead of executing it and therefore missed this bug.
+
+The corrected installer checks the schemas and pinned release counts for all three
+price evidence files (371 observations, six retail observations and 52 portions),
+then verifies that the real snapshot loader returns 377 observations. The same
+offline query, nutrition and price probe now runs before stopping Home Assistant
+and again after installation. Invalid staged data therefore fails before a restart.
+The runtime commit and frontend cache key are unchanged.
+
+Deployment regression tests now execute the actual embedded Python probe against
+copies of the release files. They verify successful installation and backup,
+missing or invalid evidence rejection before stopping Home Assistant, and rollback
+after activation failures. The original reported assertion was also reproduced
+against the real release files before applying the correction.

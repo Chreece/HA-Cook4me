@@ -89,6 +89,75 @@ rollback() {
 trap rollback ERR
 trap 'false' INT TERM HUP
 
+# Run the same real offline probe against staged and installed files.
+# A bad catalog must fail before Home Assistant is stopped.
+check_offline_runtime() {
+    docker exec --user 0 --interactive "$CONTAINER" python -B - "$1" "${COOK4ME_UI_LANGUAGE:-el}" <<'PY'
+import importlib
+import json
+from pathlib import Path
+import socket
+import sys
+import types
+from unittest.mock import patch
+
+package = types.ModuleType("cook4me_deploy_check")
+package.__path__ = [sys.argv[1]]
+sys.modules[package.__name__] = package
+release = importlib.import_module(f"{package.__name__}.release_catalog")
+with patch.object(socket, "socket", side_effect=AssertionError("offline catalog opened network")):
+    recipes = release.load_release_catalog()["recipes"]
+    assert len(recipes) == 16952, f"Unexpected recipe count: {len(recipes)}"
+    cases = [("ριζότο", None, 205), ("ριζότο ντομάτα", None, 25), ("σούπα με φακές", None, 77), ("ριζότο", ["de"], 11)]
+    for query, languages, expected in cases:
+        result = release.search_release_recipes(query, language="el", configured_language="de", country="DE", catalog_languages=languages, size=50)
+        count = result["page"]["totalElements"]
+        assert count == expected, f"{query}: expected {expected}, got {count}"
+        print(f"  {query} ({'all catalogs' if languages is None else 'German'}): {count}")
+    rows = [row for row in result["items"] if row["catalogNutrition"].get("perServing")]
+    assert rows, "No nutrition available for the German risotto results"
+    for row in rows:
+        detail = release.recipe_by_variant(row["searchVariantId"], language="de", configured_language="de", country="DE")
+        assert detail["catalogNutrition"] == row["catalogNutrition"], "Search/detail nutrition mismatch"
+        assert detail["sendVariantId"] == row["sendVariantId"], "Search/detail device identity mismatch"
+    print(f"  {len(recipes)} recipes; offline nutrition and device identity checks passed")
+    ingredient = release.ingredient_nutrition_profile({"ingredientId": "M_FOOD_246"})
+    assert ingredient is not None, "Ingredient popup catalog profile is missing"
+    assert (ingredient["basisQuantity"], ingredient["basisUnit"]) == (100, "g"), "Ingredient nutrient basis mismatch"
+    assert ingredient["values"]["energyKcal"] == 884, "Ingredient nutrient value mismatch"
+    assert release.ingredient_nutrition_profile({"ingredientId": "unknown", "name": "Olive oil"}) is None, "Ingredient identity was guessed"
+    print("  Ingredient popup reference: olive oil, 884 kcal per 100 g")
+    grouped = release.search_release_recipes("arroz", language="el", configured_language="de", country="DE", group_families=True)
+    rice = grouped["items"][0]
+    assert rice["publicationCount"] == 60 and rice["availableServings"] == [200, 300, 400, 500, 600], "Rice family grouping failed"
+    rice_id = {"ingredientId": "M_FOOD_421"}
+    assert release.ingredient_nutrition_profile(rice_id) is None, "Generic rice must not acquire a guessed nutrient profile"
+    assert release.ingredient_nutrition_references(rice_id, "el"), "Rice reference comparisons are missing"
+    choices = release.ingredient_choices(sys.argv[2])
+    assert choices and len({row["displayGroupId"] for row in choices}) == len(choices), "Ingredient choices contain duplicates"
+    if sys.argv[2] == "el":
+        import re
+        assert all(re.search(r"[\u0370-\u03ff\u1f00-\u1fff]", row["name"]) for row in choices), "Greek ingredient locale is incomplete"
+    print(f"  Rice: 60 publications grouped; {len(choices)} clean ingredient choices in {sys.argv[2]}")
+    # These counts belong to SOURCE_COMMIT, not to a previous release.
+    for filename, key, expected in (
+        ("observed_prices.v1.json", "observations", 371),
+        ("retail_prices.v1.json", "observations", 6),
+        ("price_portions.v1.json", "portions", 52),
+    ):
+        payload = json.loads((Path(sys.argv[1]) / "catalog" / filename).read_text(encoding="utf-8"))
+        assert payload.get("schemaVersion") == 1, f"{filename}: unsupported schema"
+        rows = payload.get(key, [])
+        assert len(rows) == expected, f"{filename}: expected {expected} {key}, found {len(rows)}"
+    prices = importlib.import_module(f"{package.__name__}.price_snapshot")
+    evidence = prices._load()
+    assert evidence.get("schemaVersion") == 1, "Offline price snapshot has an unsupported schema"
+    count = len(evidence.get("observations", []))
+    assert count == 377, f"Merged offline price snapshot: expected 377 observations, found {count}"
+    print(f"  Offline price snapshot: {len(evidence['observations'])} observations, built {evidence['generatedAt']}; expired evidence is excluded automatically")
+PY
+}
+
 printf 'Fetching tested Cook4me v86 commit %s...\n' "$SOURCE_COMMIT"
 git init --quiet "$SOURCE"
 git -C "$SOURCE" remote add origin "$SOURCE_REPO"
@@ -98,6 +167,9 @@ git -C "$SOURCE" checkout --quiet --detach FETCH_HEAD
 STAGED=$SOURCE/custom_components/cook4me
 [[ -s $STAGED/catalog/observed_prices.v1.json && -s $STAGED/catalog/price_portions.v1.json && -s $STAGED/catalog/retail_prices.v1.json && -s $STAGED/price_snapshot.py ]] || die 'Source is missing v86 price evidence.'
 [[ -s $STAGED/query_vocabulary.json && -s $STAGED/frontend/cook4me-panel-v86-bundle.js ]] || die 'Source is missing v86 runtime files.'
+
+printf 'Checking staged offline queries, nutrition and price evidence...\n'
+check_offline_runtime "$CONTAINER_SOURCE/custom_components/cook4me"
 
 printf 'Validating with the Python version in your Home Assistant container...\n'
 docker exec --user 0 --workdir "$CONTAINER_SOURCE" "$CONTAINER" python -m compileall -q custom_components/cook4me
@@ -155,57 +227,8 @@ while (( SECONDS < deadline )); do
 done
 (( panel_ready )) || die 'Home Assistant did not serve the installed v86 panel within the startup timeout.'
 
-printf 'Checking installed offline queries and nutrition...\n'
-docker exec --user 0 --interactive "$CONTAINER" python -B - /config/custom_components/cook4me "${COOK4ME_UI_LANGUAGE:-el}" <<'PY'
-import importlib
-import socket
-import sys
-import types
-from unittest.mock import patch
-
-package = types.ModuleType("cook4me_deploy_check")
-package.__path__ = [sys.argv[1]]
-sys.modules[package.__name__] = package
-release = importlib.import_module(f"{package.__name__}.release_catalog")
-with patch.object(socket, "socket", side_effect=AssertionError("offline catalog opened network")):
-    recipes = release.load_release_catalog()["recipes"]
-    assert len(recipes) == 16952, f"Unexpected recipe count: {len(recipes)}"
-    cases = [("ριζότο", None, 205), ("ριζότο ντομάτα", None, 25), ("σούπα με φακές", None, 77), ("ριζότο", ["de"], 11)]
-    for query, languages, expected in cases:
-        result = release.search_release_recipes(query, language="el", configured_language="de", country="DE", catalog_languages=languages, size=50)
-        count = result["page"]["totalElements"]
-        assert count == expected, f"{query}: expected {expected}, got {count}"
-        print(f"  {query} ({'all catalogs' if languages is None else 'German'}): {count}")
-    rows = [row for row in result["items"] if row["catalogNutrition"].get("perServing")]
-    assert rows, "No nutrition available for the German risotto results"
-    for row in rows:
-        detail = release.recipe_by_variant(row["searchVariantId"], language="de", configured_language="de", country="DE")
-        assert detail["catalogNutrition"] == row["catalogNutrition"], "Search/detail nutrition mismatch"
-        assert detail["sendVariantId"] == row["sendVariantId"], "Search/detail device identity mismatch"
-    print(f"  {len(recipes)} recipes; offline nutrition and device identity checks passed")
-    ingredient = release.ingredient_nutrition_profile({"ingredientId": "M_FOOD_246"})
-    assert ingredient is not None, "Ingredient popup catalog profile is missing"
-    assert (ingredient["basisQuantity"], ingredient["basisUnit"]) == (100, "g"), "Ingredient nutrient basis mismatch"
-    assert ingredient["values"]["energyKcal"] == 884, "Ingredient nutrient value mismatch"
-    assert release.ingredient_nutrition_profile({"ingredientId": "unknown", "name": "Olive oil"}) is None, "Ingredient identity was guessed"
-    print("  Ingredient popup reference: olive oil, 884 kcal per 100 g")
-    grouped = release.search_release_recipes("arroz", language="el", configured_language="de", country="DE", group_families=True)
-    rice = grouped["items"][0]
-    assert rice["publicationCount"] == 60 and rice["availableServings"] == [200, 300, 400, 500, 600], "Rice family grouping failed"
-    rice_id = {"ingredientId": "M_FOOD_421"}
-    assert release.ingredient_nutrition_profile(rice_id) is None, "Generic rice must not acquire a guessed nutrient profile"
-    assert release.ingredient_nutrition_references(rice_id, "el"), "Rice reference comparisons are missing"
-    choices = release.ingredient_choices(sys.argv[2])
-    assert choices and len({row["displayGroupId"] for row in choices}) == len(choices), "Ingredient choices contain duplicates"
-    if sys.argv[2] == "el":
-        import re
-        assert all(re.search(r"[\u0370-\u03ff\u1f00-\u1fff]", row["name"]) for row in choices), "Greek ingredient locale is incomplete"
-    print(f"  Rice: 60 publications grouped; {len(choices)} clean ingredient choices in {sys.argv[2]}")
-    prices = importlib.import_module(f"{package.__name__}.price_snapshot")
-    evidence = prices._load()
-    assert evidence.get("schemaVersion") == 1 and len(evidence.get("observations", [])) >= 481, "Offline price snapshot is missing"
-    print(f"  Offline price snapshot: {len(evidence['observations'])} observations, built {evidence['generatedAt']}; expired evidence is excluded automatically")
-PY
+printf 'Checking installed offline queries, nutrition and price evidence...\n'
+check_offline_runtime /config/custom_components/cook4me
 
 printf '%s\n' "$SOURCE_COMMIT" > "$RUN/installed-commit.txt"
 trap - ERR INT TERM HUP
