@@ -9,7 +9,9 @@ on:
       - 'tools/compile_release_catalog_semantics_v60.py'
       - 'tools/release_catalog_semantic_confirmations.v1.json'
       - 'tools/release_catalog_semantic_syntactic_confirmation_ids.v1.txt'
+      - 'tools/release_catalog_semantic_standalone_dispositions.v1.json'
       - 'tests/test_compile_release_catalog_semantics_v60.py'
+      - 'tests/test_semantic_standalone_dispositions_v60.py'
   workflow_dispatch:
 
 permissions:
@@ -59,48 +61,75 @@ jobs:
           assert spec.loader is not None
           spec.loader.exec_module(mod)
 
-          exact = json.loads(
+          confirmation_items = json.loads(
               (tools / 'release_catalog_semantic_confirmations.v1.json').read_text(
                   encoding='utf-8'
               )
           ).get('items') or []
+          equivalence_items = [
+              row for row in confirmation_items
+              if row.get('manualSemanticEquivalence') is True
+          ]
+          exact_items = [
+              row for row in confirmation_items
+              if row.get('manualSemanticEquivalence') is not True
+          ]
           syntax_path = (
               tools / 'release_catalog_semantic_syntactic_confirmation_ids.v1.txt'
           )
           syntax_ids = mod._load_syntax_confirmation_ids(syntax_path)
-          exact_ids = {row['sourceIngredientId'] for row in exact}
-          if exact_ids & syntax_ids:
-              raise SystemExit('exact and syntactic confirmation sets overlap')
+          standalone_payload = mod._load_standalone_payload(
+              tools / 'release_catalog_semantic_standalone_dispositions.v1.json'
+          )
+          standalone_ids = {
+              row['sourceIngredientId'] for row in standalone_payload.get('items') or []
+          }
+          confirmation_ids = {
+              row['sourceIngredientId'] for row in confirmation_items
+          }
+          if confirmation_ids & syntax_ids:
+              raise SystemExit('semantic and syntactic confirmation sets overlap')
+          if (confirmation_ids | syntax_ids) & standalone_ids:
+              raise SystemExit('standalone dispositions overlap merge confirmations')
 
           paths = mod._review_paths(tools)
           payloads = [(path.name, mod._load_payload(path)) for path in paths]
           before = mod.compile_semantic_concepts(payloads)
           after = mod.compile_from_paths(paths)
 
-          exact_count = len(exact)
+          exact_count = len(exact_items)
+          equivalence_count = len(equivalence_items)
           syntax_count = len(syntax_ids)
-          total = exact_count + syntax_count
+          standalone_count = len(standalone_ids)
+          confirmation_total = exact_count + equivalence_count + syntax_count
+          review_total = confirmation_total + standalone_count
           if after['summary']['exactConfirmedSourceLabels'] != exact_count:
               raise SystemExit('exact confirmation count mismatch')
+          if after['summary']['semanticEquivalentConfirmedSourceLabels'] != equivalence_count:
+              raise SystemExit('semantic-equivalence confirmation count mismatch')
           if after['summary']['syntacticConfirmedSourceLabels'] != syntax_count:
               raise SystemExit('syntactic confirmation count mismatch')
-          if after['summary']['confirmedSourceLabels'] != total:
-              raise SystemExit('total confirmation count mismatch')
+          if after['summary']['standaloneConfirmedSourceLabels'] != standalone_count:
+              raise SystemExit('standalone disposition count mismatch')
+          if after['summary']['reviewedAmbiguousSourceLabels'] != 28:
+              raise SystemExit('reviewed ambiguous disposition count mismatch')
+          if after['summary']['confirmedSourceLabels'] != confirmation_total:
+              raise SystemExit('merge confirmation total mismatch')
           if (
               before['summary']['needsSemanticConfirmationSourceLabels']
               - after['summary']['needsSemanticConfirmationSourceLabels']
-              != total
+              != review_total
           ):
               raise SystemExit('pending semantic decrement mismatch')
           if (
               before['summary']['semanticConcepts']
               - after['summary']['semanticConcepts']
-              != total
+              != confirmation_total
           ):
               raise SystemExit('semantic concept merge count mismatch')
 
           concepts = {row['conceptId']: row for row in after.get('concepts') or []}
-          expected_ids = exact_ids | syntax_ids
+          expected_ids = confirmation_ids | syntax_ids
           for source_id in expected_ids:
               target_id = after['sourceIdentityToConcept'].get(source_id)
               if not target_id:
@@ -120,11 +149,15 @@ jobs:
                   ),
                   None,
               )
-              expected_method = (
-                  'explicit-reviewed-syntactic-normalization'
-                  if source_id in syntax_ids
-                  else 'explicit-reviewed-english-classification'
-              )
+              if source_id in syntax_ids:
+                  expected_method = 'explicit-reviewed-syntactic-normalization'
+              elif any(
+                  row['sourceIngredientId'] == source_id
+                  for row in equivalence_items
+              ):
+                  expected_method = 'explicit-manual-semantic-equivalence'
+              else:
+                  expected_method = 'explicit-reviewed-english-classification'
               if (
                   not identity
                   or identity.get('semanticConfirmationMethod') != expected_method
@@ -133,10 +166,29 @@ jobs:
                       f'confirmation audit receipt missing or wrong: {source_id}'
                   )
 
+          for source_id in standalone_ids:
+              target_id = after['sourceIdentityToConcept'].get(source_id)
+              concept = concepts.get(target_id)
+              if not target_id or not concept:
+                  raise SystemExit(f'standalone source missing from semantic map: {source_id}')
+              if not target_id.startswith('concept:source:'):
+                  raise SystemExit(f'standalone source was cross-identity merged: {source_id}')
+              if concept.get('needsSemanticConfirmation') is True:
+                  raise SystemExit(f'standalone source still pending: {source_id}')
+              if any(
+                  concept.get(key) is not False
+                  for key in ('nutritionEligible', 'dietEligible', 'allergenEligible')
+              ):
+                  raise SystemExit(f'standalone source gained safety eligibility: {source_id}')
+
           audit = {
               'exactConfirmationCount': exact_count,
+              'semanticEquivalentConfirmationCount': equivalence_count,
               'syntacticConfirmationCount': syntax_count,
-              'confirmationCount': total,
+              'standaloneDispositionCount': standalone_count,
+              'reviewedAmbiguousDispositionCount': 28,
+              'confirmationCount': confirmation_total,
+              'reviewClosureCount': review_total,
               'beforeNeedsSemanticConfirmation': before['summary'][
                   'needsSemanticConfirmationSourceLabels'
               ],
@@ -311,7 +363,7 @@ jobs:
                   root / 'release_catalog_semantic_ingredients_v60.json'
               ).read_text(encoding='utf-8')
           )
-          exact = json.loads(
+          confirmation_items = json.loads(
               (
                   tools / 'release_catalog_semantic_confirmations.v1.json'
               ).read_text(encoding='utf-8')
@@ -320,8 +372,14 @@ jobs:
               tools
               / 'release_catalog_semantic_syntactic_confirmation_ids.v1.txt'
           )
-          exact_ids = {row['sourceIngredientId'] for row in exact}
-          expected_ids = exact_ids | syntax_ids
+          standalone_payload = mod._load_standalone_payload(
+              tools / 'release_catalog_semantic_standalone_dispositions.v1.json'
+          )
+          confirmation_ids = {row['sourceIngredientId'] for row in confirmation_items}
+          standalone_ids = {
+              row['sourceIngredientId'] for row in standalone_payload.get('items') or []
+          }
+          expected_ids = confirmation_ids | syntax_ids | standalone_ids
 
           def ident(row):
               return str(
@@ -384,9 +442,9 @@ jobs:
                   f'compiled semantic pending count {expected_after}'
               )
           delta = before_pending - after_pending
-          if delta not in {0, len(syntax_ids)}:
+          if delta < 0:
               raise SystemExit(
-                  f'unexpected active-catalog semantic decrement: {delta}'
+                  f'active-catalog semantic pending count increased: {delta}'
               )
 
           after_by_id = {
@@ -425,8 +483,9 @@ jobs:
               'recipes': len(after.get('recipes') or []),
               'variants': variants(after),
               'ingredients': len(after.get('ingredients') or []),
-              'semanticConfirmationAppliedCount': len(expected_ids),
-              'exactSemanticConfirmationCount': len(exact_ids),
+              'semanticReviewClosureAppliedCount': len(expected_ids),
+              'mergeSemanticConfirmationCount': len(confirmation_ids) + len(syntax_ids),
+              'standaloneSemanticDispositionCount': len(standalone_ids),
               'syntacticSemanticConfirmationCount': len(syntax_ids),
               'needsSemanticConfirmationBefore': before_pending,
               'needsSemanticConfirmationCount': after_pending,
