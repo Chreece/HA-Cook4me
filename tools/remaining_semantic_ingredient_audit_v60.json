@@ -8,19 +8,19 @@
     "sourceLocalIdentityPreserved": true
   },
   "summary": {
-    "remaining": 308,
+    "remaining": 300,
     "classificationCounts": {
       "ambiguous": 28,
       "equipment": 5,
-      "food": 273,
+      "food": 265,
       "other": 2
     },
     "confidenceCounts": {
-      "medium": 308
+      "medium": 300
     },
     "candidateLaneCounts": {
-      "none": 139,
-      "similar": 169
+      "none": 138,
+      "similar": 162
     }
   },
   "items": [
@@ -3051,25 +3051,6 @@
       "candidateTargets": []
     },
     {
-      "sourceIngredientId": "local:pl:796211389a361f85176e",
-      "conceptId": "concept:source:6dffb676d645749ab733",
-      "language": "pl",
-      "source": "Płatków koksowych",
-      "english": "Coconut flakes (source typo)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_089.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:food:dcea1d4a62fa675d1fcd",
-          "canonicalEnglish": "Coconut flakes",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ]
-    },
-    {
       "sourceIngredientId": "local:pl:254f0793f32b7b627f9e",
       "conceptId": "concept:source:36b1abd3988ae7190271",
       "language": "pl",
@@ -3082,25 +3063,6 @@
         {
           "conceptId": "concept:food:4e5441259b30ebb79b50",
           "canonicalEnglish": "Borscht concentrate",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ]
-    },
-    {
-      "sourceIngredientId": "local:pl:3a8eebf3b148eb513608",
-      "conceptId": "concept:source:160cf076cee9c3a678ba",
-      "language": "pl",
-      "source": "Wiórków koksowych",
-      "english": "Desiccated coconut (source typo)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_089.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:food:d5ecd53d8c116ad40c9d",
-          "canonicalEnglish": "Desiccated coconut",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -3138,17 +3100,6 @@
       "classification": "food",
       "confidence": "medium",
       "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_089.v1.json",
-      "candidateTargets": []
-    },
-    {
-      "sourceIngredientId": "local:pl:cd12c1f5c74818ea1d9d",
-      "conceptId": "concept:source:80c10f238fd308a96800",
-      "language": "pl",
-      "source": "Czonku",
-      "english": "Garlic (source typo)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_087.v1.json",
       "candidateTargets": []
     },
     {
@@ -3691,25 +3642,6 @@
       "confidence": "medium",
       "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_091.v1.json",
       "candidateTargets": []
-    },
-    {
-      "sourceIngredientId": "local:ru:6236639eca31bbd39403",
-      "conceptId": "concept:source:36d004c45be7b1a08d14",
-      "language": "ru",
-      "source": "замороженых бобовн",
-      "english": "Frozen beans (source typo)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_091.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:food:3a374fa0f616b41e5aa7",
-          "canonicalEnglish": "Frozen beans",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ]
     },
     {
       "sourceIngredientId": "local:sk:c0e9a71d9ce7e16fd20b",
@@ -4719,25 +4651,6 @@
       ]
     },
     {
-      "sourceIngredientId": "local:uk:f570284e6f38b35c21f1",
-      "conceptId": "concept:source:0e797bccbd7327b07a0d",
-      "language": "uk",
-      "source": "тортеліні з сиромт",
-      "english": "Cheese tortellini (source typo)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:food:9e7753fc7cf4c746383d",
-          "canonicalEnglish": "Cheese tortellini",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ]
-    },
-    {
       "sourceIngredientId": "local:uk:ad5fb5360aa52a253341",
       "conceptId": "concept:source:53af5c2c5bceba2f317a",
       "language": "uk",
@@ -5050,25 +4963,6 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5556
-        }
-      ]
-    },
-    {
-      "sourceIngredientId": "local:uk:e604ed889b05ad910808",
-      "conceptId": "concept:source:5ce14677dbc3358dcea5",
-      "language": "uk",
-      "source": "Качк, окіст",
-      "english": "Duck leg (source typo)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_094.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:food:941c08d4ca668ded088c",
-          "canonicalEnglish": "Duck leg",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
         }
       ]
     },
@@ -5574,25 +5468,6 @@
       ]
     },
     {
-      "sourceIngredientId": "local:uk:a6bb10f9d16236865b30",
-      "conceptId": "concept:source:8bf3abfdda91bca67bbc",
-      "language": "uk",
-      "source": "осімінога (попередньо готувати 10 хвилин у чаші)",
-      "english": "Octopus (pre-cook for 10 minutes in the bowl; source typo)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_095.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:food:ae5b9bf3dec2cdf70252",
-          "canonicalEnglish": "Octopus (pre-cook for 10 minutes in the bowl)",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.8182
-        }
-      ]
-    },
-    {
       "sourceIngredientId": "local:uk:f6ac0b3ed12940d23691",
       "conceptId": "concept:source:c035b9d4c624e0efb22a",
       "language": "uk",
@@ -5883,39 +5758,6 @@
       "confidence": "medium",
       "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_094.v1.json",
       "candidateTargets": []
-    },
-    {
-      "sourceIngredientId": "local:uk:5b0990cf1734d6ae91ac",
-      "conceptId": "concept:source:80b3e5e9b987c05a2711",
-      "language": "uk",
-      "source": "підсоленого вершкового масла, розтопленого з шоколаом",
-      "english": "Salted butter melted with chocolate (source typo)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_095.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:food:f1996cccd060ca556787",
-          "canonicalEnglish": "Salted butter, melted with chocolate",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.7143
-        },
-        {
-          "conceptId": "concept:food:edfdab7da66a219ae731",
-          "canonicalEnglish": "Butter melted with gianduja chocolate",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        },
-        {
-          "conceptId": "concept:food:8de0ea2e1d6a4ec2902e",
-          "canonicalEnglish": "Butter, melted with the chocolate",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ]
     },
     {
       "sourceIngredientId": "local:uk:818b6baed2321200c15e",

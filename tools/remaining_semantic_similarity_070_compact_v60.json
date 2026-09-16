@@ -7,7 +7,7 @@
     "candidateSearchIsIdentityProof": false
   },
   "summary": {
-    "candidateCount": 19
+    "candidateCount": 17
   },
   "items": [
     {
@@ -33,18 +33,6 @@
       "bestTokenJaccard": 0.8333,
       "runnerUpTokenJaccard": 0.5714,
       "scoreGap": 0.2619
-    },
-    {
-      "sourceIngredientId": "local:uk:a6bb10f9d16236865b30",
-      "language": "uk",
-      "source": "осімінога (попередньо готувати 10 хвилин у чаші)",
-      "english": "Octopus (pre-cook for 10 minutes in the bowl; source typo)",
-      "classification": "food",
-      "bestConceptId": "concept:food:ae5b9bf3dec2cdf70252",
-      "bestCanonicalEnglish": "Octopus (pre-cook for 10 minutes in the bowl)",
-      "bestTokenJaccard": 0.8182,
-      "runnerUpTokenJaccard": 0.0,
-      "scoreGap": 0.8182
     },
     {
       "sourceIngredientId": "local:bg:e35ac76229b5c78378c4",
@@ -225,18 +213,6 @@
       "bestTokenJaccard": 0.7143,
       "runnerUpTokenJaccard": 0.0,
       "scoreGap": 0.7143
-    },
-    {
-      "sourceIngredientId": "local:uk:5b0990cf1734d6ae91ac",
-      "language": "uk",
-      "source": "підсоленого вершкового масла, розтопленого з шоколаом",
-      "english": "Salted butter melted with chocolate (source typo)",
-      "classification": "food",
-      "bestConceptId": "concept:food:f1996cccd060ca556787",
-      "bestCanonicalEnglish": "Salted butter, melted with chocolate",
-      "bestTokenJaccard": 0.7143,
-      "runnerUpTokenJaccard": 0.5,
-      "scoreGap": 0.2143
     }
   ]
 }

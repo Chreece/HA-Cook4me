@@ -15,7 +15,7 @@
     "exactLooseLaneExcluded": true
   },
   "summary": {
-    "candidateCount": 4
+    "candidateCount": 3
   },
   "items": [
     {
@@ -148,30 +148,6 @@
         "bestTokenJaccard": 0.8333,
         "runnerUpTokenJaccard": 0.5714,
         "scoreGap": 0.2619
-      }
-    },
-    {
-      "sourceIngredientId": "local:uk:a6bb10f9d16236865b30",
-      "conceptId": "concept:source:8bf3abfdda91bca67bbc",
-      "language": "uk",
-      "source": "осімінога (попередньо готувати 10 хвилин у чаші)",
-      "english": "Octopus (pre-cook for 10 minutes in the bowl; source typo)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_095.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:food:ae5b9bf3dec2cdf70252",
-          "canonicalEnglish": "Octopus (pre-cook for 10 minutes in the bowl)",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.8182
-        }
-      ],
-      "reviewLane": {
-        "bestTokenJaccard": 0.8182,
-        "runnerUpTokenJaccard": 0.0,
-        "scoreGap": 0.8182
       }
     },
     {
