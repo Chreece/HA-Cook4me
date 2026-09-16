@@ -11,6 +11,7 @@ TOOLS = ROOT / "tools"
 sys.path.insert(0, str(TOOLS))
 
 import classify_nutrition_review_queue_v60 as classifier  # noqa: E402
+import nutrition_review_history_v60 as history  # noqa: E402
 import nutrition_review_holds_v60 as holds  # noqa: E402
 import prepare_nutrition_review_worklist_v60 as worklist  # noqa: E402
 import snapshot_nutrition_review_checkpoint_v60 as cp  # noqa: E402
@@ -58,7 +59,7 @@ class Batch43EvidenceRequirementTriageTests(unittest.TestCase):
         cls.requirements = worklist.validate_ledger(
             cls.ledger, cls.evidence_projection, EVIDENCE_SHA
         )
-        cls.checkpoint = cp.build_checkpoint(TOOLS)
+        cls.checkpoint = history.historical_checkpoint(cp.build_checkpoint(TOOLS))
         cls.recorded_ids = {
             row["reviewTargetId"] for row in cls.checkpoint["recordedBindings"]
         }
