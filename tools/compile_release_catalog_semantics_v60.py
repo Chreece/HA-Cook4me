@@ -440,6 +440,7 @@ def compile_semantic_concepts(
             "sourceLocalIdentityPreserved": True,
             "highConfidenceExactEnglishMerge": True,
             "explicitSemanticConfirmationMerge": True,
+            "mediumConfidenceCrossLanguageMerge": False,
             "mediumConfidenceAutomaticCrossLanguageMerge": False,
             "ambiguousCrossLanguageMerge": False,
             "providerKeyInference": False,
