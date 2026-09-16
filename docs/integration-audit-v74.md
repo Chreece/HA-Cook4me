@@ -49,6 +49,22 @@ Additional cases reproduced the stale loading indicator and obsolete metadata
 requests before fixing them. The existing catalog, recipe, announcement and
 browser layout suites are also run.
 
+Final local validation on 2026-09-15:
+
+- Full Python suite: 1,328 tests passed, including 25 audit regressions.
+- Nine dashboard suites passed on the active v74 bundle: shared UI, catalog
+  flows, layout, recipe actions, overlays, translation, card interactions,
+  announcement settings, and asynchronous navigation/preferences.
+- Chromium checked 42 cards across six desktop/mobile and expanded-card layouts.
+- Pinned installer tests passed, including backup preservation, rejected
+  preflight inputs and restoration after failed activation.
+- Bundle consistency, Python/JavaScript/shell syntax and version checks passed.
+
+The user authorized publication on 2026-09-16. The published runtime tree
+exactly matches the locally tested tree. The installer is pinned to runtime
+commit 46a47c18a37487571be46107610bdd60010c4c55.
+No live Home Assistant deployment was performed.
+
 The eleven historical nutrition-review test failures were traced to whole-ledger
 counts being used for batch42–50 checkpoints after later explicit reviews. Those
 tests now scope the historical checkpoint to the last review file for that batch,
