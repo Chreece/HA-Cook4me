@@ -12,6 +12,7 @@ on:
       - 'tools/summarize_semantic_similarity_lane_v60.py'
       - 'tools/compile_release_catalog_semantics_v60.py'
       - 'tools/release_catalog_semantic_standalone_dispositions.v1.json'
+      - 'tools/release_catalog_semantic_standalone_equivalences.v1.json'
       - '.github/workflows/catalog-semantic-remaining-audit-v60.yml'
   workflow_dispatch:
 
