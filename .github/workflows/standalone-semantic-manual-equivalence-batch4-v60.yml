@@ -1,0 +1,161 @@
+name: Merge manual standalone semantic equivalences batch 4 v60
+
+on:
+  push:
+    branches:
+      - cook4me-ingredient-semantic-confirmation-v60
+    paths:
+      - '.github/workflows/standalone-semantic-manual-equivalence-batch4-v60.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  merge-manual-equivalences:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Compile promoted baseline
+        run: |
+          set -Eeuo pipefail
+          python tools/compile_release_catalog_semantics_v60.py \
+            --reviews-dir tools \
+            --output "$RUNNER_TEMP/semantic-before.json" \
+            > "$RUNNER_TEMP/semantic-before-summary.json"
+
+      - name: Apply evidence-pinned manual source-local equivalences
+        run: |
+          set -Eeuo pipefail
+          python tools/apply_manual_standalone_semantic_equivalences_batch4_v60.py
+          git diff --check
+
+      - name: Run semantic regressions
+        run: |
+          set -Eeuo pipefail
+          python -m unittest discover -s tests -p 'test_compile_release_catalog_semantics_v60.py'
+          python -m unittest discover -s tests -p 'test_semantic_standalone_dispositions_v60.py'
+          python -m unittest discover -s tests -p 'test_semantic_standalone_equivalences_v60.py'
+          python -m unittest discover -s tests -p 'test_semantic_standalone_manual_equivalences_v60.py'
+
+      - name: Prove exact conservative delta
+        run: |
+          set -Eeuo pipefail
+          python tools/compile_release_catalog_semantics_v60.py \
+            --reviews-dir tools \
+            --output "$RUNNER_TEMP/semantic-after.json" \
+            > "$RUNNER_TEMP/semantic-after-summary.json"
+          python - <<'PY'
+          import importlib.util
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path.cwd()
+          before = json.loads(Path(os.environ['RUNNER_TEMP'], 'semantic-before.json').read_text(encoding='utf-8'))
+          after = json.loads(Path(os.environ['RUNNER_TEMP'], 'semantic-after.json').read_text(encoding='utf-8'))
+
+          helper_path = root / 'tools/apply_manual_standalone_semantic_equivalences_batch4_v60.py'
+          spec = importlib.util.spec_from_file_location('cook4me_manual_equiv_batch4_proof', helper_path)
+          helper = importlib.util.module_from_spec(spec)
+          assert spec.loader is not None
+          spec.loader.exec_module(helper)
+          decisions = helper.DECISIONS
+          delta = len(decisions)
+          if delta != 7:
+              raise SystemExit(f'expected seven manual equivalences, got {delta}')
+
+          bs = before['summary']
+          a = after['summary']
+          if bs['needsSemanticConfirmationSourceLabels'] != 0 or a['needsSemanticConfirmationSourceLabels'] != 0:
+              raise SystemExit('manual equivalence batch must preserve zero pending semantics')
+          if bs['standaloneConfirmedSourceLabels'] - a['standaloneConfirmedSourceLabels'] != delta:
+              raise SystemExit('standalone closure decrement mismatch')
+          if a['standaloneEquivalentSourceLabels'] - bs['standaloneEquivalentSourceLabels'] != delta:
+              raise SystemExit('standalone equivalence increment mismatch')
+          if bs['semanticConcepts'] - a['semanticConcepts'] != delta:
+              raise SystemExit('semantic concept consolidation mismatch')
+          if a['reviewedAmbiguousSourceLabels'] != bs['reviewedAmbiguousSourceLabels']:
+              raise SystemExit('ambiguous reviewed closure count changed')
+          if len(after['sourceIdentityToConcept']) != len(before['sourceIdentityToConcept']):
+              raise SystemExit('raw source identity coverage changed')
+
+          standalone = json.loads(
+              (root / 'tools/release_catalog_semantic_standalone_dispositions.v1.json').read_text(encoding='utf-8')
+          )
+          equivalence = json.loads(
+              (root / 'tools/release_catalog_semantic_standalone_equivalences.v1.json').read_text(encoding='utf-8')
+          )
+          standalone_ids = {
+              row['sourceIngredientId'] for row in standalone.get('items') or []
+              if isinstance(row, dict)
+          }
+          items = [row for row in equivalence.get('items') or [] if isinstance(row, dict)]
+          if len(items) != 14 or equivalence.get('summary', {}).get('equivalenceCount') != 14:
+              raise SystemExit('standalone equivalence ledger must contain fourteen reviewed sources')
+          if sum(row.get('manualSemanticEquivalence') is True for row in items) != 7:
+              raise SystemExit('manual standalone equivalence receipt count mismatch')
+          expected_policy = helper.NEW_POLICY
+          if equivalence.get('policy') != expected_policy:
+              raise SystemExit('manual standalone equivalence policy drift')
+
+          mapping = after['sourceIdentityToConcept']
+          concepts = {row['conceptId']: row for row in after.get('concepts') or []}
+          for decision in decisions:
+              source_id = decision['sourceIngredientId']
+              target_id = decision['targetSourceIngredientId']
+              if source_id in standalone_ids:
+                  raise SystemExit(f'manual equivalence source still standalone: {source_id}')
+              if target_id not in standalone_ids:
+                  raise SystemExit(f'manual equivalence target lost standalone root: {target_id}')
+              if mapping.get(source_id) != mapping.get(target_id):
+                  raise SystemExit(f'manual equivalence maps to different concept: {source_id}')
+              concept = concepts[mapping[source_id]]
+              if not concept['conceptId'].startswith('concept:source:'):
+                  raise SystemExit(f'manual equivalence escaped source-local concept: {source_id}')
+              if any(concept.get(key) is not False for key in ('nutritionEligible','dietEligible','allergenEligible')):
+                  raise SystemExit(f'manual equivalence gained safety eligibility: {source_id}')
+              identity = next(
+                  row for row in concept.get('sourceIdentities') or []
+                  if row.get('ingredientId') == source_id
+              )
+              if identity.get('semanticStandaloneEquivalenceMethod') != 'explicit-manual-source-local-equivalence':
+                  raise SystemExit(f'manual equivalence method receipt missing: {source_id}')
+              if identity.get('semanticStandaloneEquivalenceTargetSourceIngredientId') != target_id:
+                  raise SystemExit(f'manual equivalence target receipt drift: {source_id}')
+
+          print(json.dumps({
+              'manualEquivalencesAdded': delta,
+              'standaloneBefore': bs['standaloneConfirmedSourceLabels'],
+              'standaloneAfter': a['standaloneConfirmedSourceLabels'],
+              'standaloneEquivalenceBefore': bs['standaloneEquivalentSourceLabels'],
+              'standaloneEquivalenceAfter': a['standaloneEquivalentSourceLabels'],
+              'semanticConceptsBefore': bs['semanticConcepts'],
+              'semanticConceptsAfter': a['semanticConcepts'],
+              'ambiguousAfter': a['reviewedAmbiguousSourceLabels'],
+              'pendingAfter': a['needsSemanticConfirmationSourceLabels'],
+              'rawIdentityCount': len(after['sourceIdentityToConcept']),
+          }, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Commit validated manual standalone equivalences
+        run: |
+          set -Eeuo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            tools/compile_release_catalog_semantics_v60.py \
+            tools/release_catalog_semantic_standalone_dispositions.v1.json \
+            tools/release_catalog_semantic_standalone_equivalences.v1.json \
+            tests/test_semantic_standalone_equivalences_v60.py \
+            tests/test_semantic_standalone_manual_equivalences_v60.py
+          git diff --cached --check
+          git commit -m 'Merge manual reviewed standalone ingredient equivalences v60'
+          git push origin HEAD:cook4me-ingredient-semantic-confirmation-v60
