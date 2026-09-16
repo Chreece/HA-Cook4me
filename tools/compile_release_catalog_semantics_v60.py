@@ -68,6 +68,26 @@ def _norm(value: Any) -> str:
     ).casefold()
 
 
+def _structural_punctuation_key(value: Any) -> str:
+    """Case-insensitive text key that removes punctuation but preserves letters.
+
+    This is deliberately narrower than fuzzy or accent-folded matching. It is
+    used only inside the explicit source-ID syntactic-confirmation lane.
+    """
+    text = unicodedata.normalize("NFKC", _text(value)).casefold()
+    out: list[str] = []
+    pending_space = False
+    for char in text:
+        if char.isalnum():
+            if pending_space and out:
+                out.append(" ")
+            out.append(char)
+            pending_space = False
+        else:
+            pending_space = True
+    return "".join(out).strip()
+
+
 def _sha_text(*parts: str) -> str:
     digest = hashlib.sha256()
     for part in parts:
@@ -410,12 +430,9 @@ def _syntactic_confirmation_map(
             )
 
         normalized_english = _safe_syntactic_english(source_row["english"])
-        if (
-            not normalized_english
-            or _norm(normalized_english) == _norm(source_row["english"])
-        ):
+        if not normalized_english:
             raise RuntimeError(
-                "syntactic confirmation does not remove approved syntax noise: "
+                "syntactic confirmation produced empty reviewed English: "
                 f"{source_id}"
             )
 
@@ -423,15 +440,43 @@ def _syntactic_confirmation_map(
             source_row["classification"], normalized_english
         )
         target_row = high_concepts.get(concept_id)
+
         if target_row is None:
+            # Explicitly whitelisted section/header labels may differ from the
+            # reviewed target only by structural punctuation or case. Require one
+            # and only one high-confidence concept in the same classification.
+            punctuation_key = _structural_punctuation_key(normalized_english)
+            matches = [
+                (candidate_id, candidate)
+                for candidate_id, candidate in high_concepts.items()
+                if candidate["classification"] == source_row["classification"]
+                and _structural_punctuation_key(candidate["english"])
+                == punctuation_key
+            ]
+            if len(matches) != 1:
+                raise RuntimeError(
+                    "syntactic confirmation lacks a unique punctuation-only "
+                    f"high-confidence target: {source_id} -> {normalized_english!r} "
+                    f"matches={len(matches)}"
+                )
+            concept_id, target_row = matches[0]
+        elif _norm(normalized_english) == _norm(source_row["english"]):
             raise RuntimeError(
-                "syntactic confirmation target lacks exact high-confidence "
-                f"reviewed evidence: {source_id} -> {normalized_english!r}"
+                "syntactic confirmation does not remove approved syntax noise: "
+                f"{source_id}"
             )
-        if (
-            target_row["classification"] != source_row["classification"]
-            or _norm(target_row["english"]) != _norm(normalized_english)
-        ):
+
+        if target_row["classification"] != source_row["classification"]:
+            raise RuntimeError(
+                f"syntactic confirmation target classification differs for {source_id}"
+            )
+
+        target_exact = _norm(target_row["english"]) == _norm(normalized_english)
+        target_punctuation_only = (
+            _structural_punctuation_key(target_row["english"])
+            == _structural_punctuation_key(normalized_english)
+        )
+        if not target_exact and not target_punctuation_only:
             raise RuntimeError(
                 f"syntactic confirmation target meaning differs for {source_id}"
             )
