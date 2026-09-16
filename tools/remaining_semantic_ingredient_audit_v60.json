@@ -410,6 +410,20 @@
           "classification": "equipment",
           "exactLooseText": false,
           "tokenJaccard": 0.6667
+        },
+        {
+          "conceptId": "concept:equipment:9726ad8a4c6aa8b1947f",
+          "canonicalEnglish": "Aluminium ramekins (140 ml each)",
+          "classification": "equipment",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
+        },
+        {
+          "conceptId": "concept:equipment:ea95917cfdc1d20c6aea",
+          "canonicalEnglish": "Silicone ramekins, 120–140 ml",
+          "classification": "equipment",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
         }
       ]
     },
@@ -470,6 +484,55 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6667
+        },
+        {
+          "conceptId": "concept:food:72c30000417e070c4a86",
+          "canonicalEnglish": "*Chicken stock",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667
+        },
+        {
+          "conceptId": "concept:food:826eb8833ac1e5fab3cf",
+          "canonicalEnglish": "Chicken or meat stock, boiling",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.6
+        },
+        {
+          "conceptId": "concept:food:4b699a7031f660ff4dc1",
+          "canonicalEnglish": "Chicken stock powder",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:3b1dc8ab92bf2d44977b",
+          "canonicalEnglish": "Chicken stock granules",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:e1905deb4f56fea2c71c",
+          "canonicalEnglish": "Maggi chicken stock",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:dec9c58e4535c046ad67",
+          "canonicalEnglish": "Chicken stock seasoning",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:c528519d1b62230372f1",
+          "canonicalEnglish": "Chicken/meat stock",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
         }
       ]
     },
@@ -540,8 +603,15 @@
           "tokenJaccard": 0.6667
         },
         {
-          "conceptId": "concept:food:104d35ace7158688298d",
-          "canonicalEnglish": "Red chili pepper",
+          "conceptId": "concept:food:a91a2937af94dd935fc9",
+          "canonicalEnglish": "Red pepper paste",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:72bc23f3664c1de8ad17",
+          "canonicalEnglish": "Red pepper sauce",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -554,8 +624,29 @@
           "tokenJaccard": 0.5
         },
         {
-          "conceptId": "concept:food:a91a2937af94dd935fc9",
-          "canonicalEnglish": "Red pepper paste",
+          "conceptId": "concept:food:104d35ace7158688298d",
+          "canonicalEnglish": "Red chili pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:de302ca49112d875ed3d",
+          "canonicalEnglish": "Red bell pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:c68299772b0dd6603db2",
+          "canonicalEnglish": "Red pepper flakes",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:374c5c3dd10a04114459",
+          "canonicalEnglish": "Ground red pepper",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -618,6 +709,55 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.75
+        },
+        {
+          "conceptId": "concept:food:3eec801982d880a75d75",
+          "canonicalEnglish": "Pepper and salt",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.75
+        },
+        {
+          "conceptId": "concept:food:e1893ccc5a2ba731a06f",
+          "canonicalEnglish": "Salt and black pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.6
+        },
+        {
+          "conceptId": "concept:food:bd803a4dec6165f5d907",
+          "canonicalEnglish": "Salt, pepper and cumin",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.6
+        },
+        {
+          "conceptId": "concept:food:b9eda800a0a1c63b8e32",
+          "canonicalEnglish": "*Salt and white pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.6
+        },
+        {
+          "conceptId": "concept:food:917d225cb254edb97dbb",
+          "canonicalEnglish": "Salt, basil and pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.6
+        },
+        {
+          "conceptId": "concept:food:8e8761075e91bbe3a804",
+          "canonicalEnglish": "White pepper and salt",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.6
+        },
+        {
+          "conceptId": "concept:food:77608f794d3d48de957f",
+          "canonicalEnglish": "Salt and white pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.6
         }
       ]
     },
@@ -685,6 +825,13 @@
         {
           "conceptId": "concept:food:619f1fee0d637710fa71",
           "canonicalEnglish": "Dried chickpeas, soaked for 12 hours",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:5dccd0dc18067cc76695",
+          "canonicalEnglish": "Dried beans (soak for 12 hours)",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -773,6 +920,34 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6667
+        },
+        {
+          "conceptId": "concept:food:514aad102390f841fc6e",
+          "canonicalEnglish": "tbsp fish sauce",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:16793b3a381e06074cfd",
+          "canonicalEnglish": "B- fish sauce",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:8f1ff3018c9aea9e8a4b",
+          "canonicalEnglish": "Anchovy fish sauce",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:1a32ae861989b7dcb23d",
+          "canonicalEnglish": "Fish sauce (for sauce)",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
         }
       ]
     },
@@ -884,6 +1059,20 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5714
+        },
+        {
+          "conceptId": "concept:food:e5aae8b515c0768efd6e",
+          "canonicalEnglish": "Chocolate bar, broken into pieces",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
+        },
+        {
+          "conceptId": "concept:food:b99b096e037fc4e7d867",
+          "canonicalEnglish": "50% chocolate, broken into pieces",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
         }
       ]
     },
@@ -905,15 +1094,15 @@
           "tokenJaccard": 0.6667
         },
         {
-          "conceptId": "concept:food:3765aeb26a8e85da2ce7",
-          "canonicalEnglish": "Coriander, finely chopped",
+          "conceptId": "concept:food:c9dcf92e197c846086b9",
+          "canonicalEnglish": "Finely chopped coriander",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6
         },
         {
-          "conceptId": "concept:food:c9dcf92e197c846086b9",
-          "canonicalEnglish": "Finely chopped coriander",
+          "conceptId": "concept:food:3765aeb26a8e85da2ce7",
+          "canonicalEnglish": "Coriander, finely chopped",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6
@@ -957,6 +1146,13 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6
+        },
+        {
+          "conceptId": "concept:food:4179875632e333861592",
+          "canonicalEnglish": "Coriander, chopped",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
         },
         {
           "conceptId": "concept:food:121af8c0670c1ae6a6a9",
@@ -1088,6 +1284,34 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6667
+        },
+        {
+          "conceptId": "concept:food:f7d510a43521cd5bf884",
+          "canonicalEnglish": "Herbed cream cheese",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:a7dd43cba6926cf6c805",
+          "canonicalEnglish": "Chopped cream cheese",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:3c49e0876e8fd60886cf",
+          "canonicalEnglish": "Fresh cream cheese",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:1b640d1920af9dd9f153",
+          "canonicalEnglish": "Double-cream cream cheese",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
         }
       ]
     },
@@ -1151,6 +1375,13 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:59e287138322fba0b2db",
+          "canonicalEnglish": "Cooked red beans",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
         }
       ]
     },
@@ -1202,6 +1433,13 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:5dccd0dc18067cc76695",
+          "canonicalEnglish": "Dried beans (soak for 12 hours)",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
         }
       ]
     },
@@ -1216,15 +1454,15 @@
       "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_033.v1.json",
       "candidateTargets": [
         {
-          "conceptId": "concept:food:5fd7cec654118ce6ff64",
-          "canonicalEnglish": "Diced gingerbread",
+          "conceptId": "concept:food:c0e9ca92e53ebbabf772",
+          "canonicalEnglish": "Gingerbread, diced",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
         },
         {
-          "conceptId": "concept:food:c0e9ca92e53ebbabf772",
-          "canonicalEnglish": "Gingerbread, diced",
+          "conceptId": "concept:food:5fd7cec654118ce6ff64",
+          "canonicalEnglish": "Diced gingerbread",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -1265,6 +1503,34 @@
         {
           "conceptId": "concept:food:b3ca7820876d8475ef60",
           "canonicalEnglish": "Hemp seeds",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:b6f51dcc3bde7ba126c0",
+          "canonicalEnglish": "Mixed seeds",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:b479c828bd2de2c1be99",
+          "canonicalEnglish": "Cumin seeds",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:8889b334f6520664d42f",
+          "canonicalEnglish": "Poppy seeds",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:6c67674932822601a761",
+          "canonicalEnglish": "Sesame seeds",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -1385,6 +1651,13 @@
         {
           "conceptId": "concept:food:578c30c68f39443cbeb0",
           "canonicalEnglish": "Lemon",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:a8d71f803ef266b94ab5",
+          "canonicalEnglish": "Crystallized lemon, thinly sliced",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -1543,15 +1816,15 @@
           "tokenJaccard": 0.5714
         },
         {
-          "conceptId": "concept:food:3c59cc300b6bd2936c55",
-          "canonicalEnglish": "Chopped pork slice (or bacon)",
+          "conceptId": "concept:food:7956e4deb0d66743808a",
+          "canonicalEnglish": "Pork slice, chopped (or bacon)",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5714
         },
         {
-          "conceptId": "concept:food:7956e4deb0d66743808a",
-          "canonicalEnglish": "Pork slice, chopped (or bacon)",
+          "conceptId": "concept:food:3c59cc300b6bd2936c55",
+          "canonicalEnglish": "Chopped pork slice (or bacon)",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5714
@@ -1590,13 +1863,6 @@
           "tokenJaccard": 0.8571
         },
         {
-          "conceptId": "concept:food:3c59cc300b6bd2936c55",
-          "canonicalEnglish": "Chopped pork slice (or bacon)",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.8333
-        },
-        {
           "conceptId": "concept:food:7956e4deb0d66743808a",
           "canonicalEnglish": "Pork slice, chopped (or bacon)",
           "classification": "food",
@@ -1604,15 +1870,22 @@
           "tokenJaccard": 0.8333
         },
         {
-          "conceptId": "concept:food:33ce6e5c36aafb50555d",
-          "canonicalEnglish": "Pork loin, chopped (or diced bacon)",
+          "conceptId": "concept:food:3c59cc300b6bd2936c55",
+          "canonicalEnglish": "Chopped pork slice (or bacon)",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.8333
+        },
+        {
+          "conceptId": "concept:food:79b10980088d5aa4a464",
+          "canonicalEnglish": "Pork slice, chopped (or bacon pieces)",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.7143
         },
         {
-          "conceptId": "concept:food:79b10980088d5aa4a464",
-          "canonicalEnglish": "Pork slice, chopped (or bacon pieces)",
+          "conceptId": "concept:food:33ce6e5c36aafb50555d",
+          "canonicalEnglish": "Pork loin, chopped (or diced bacon)",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.7143
@@ -1671,6 +1944,13 @@
         {
           "conceptId": "concept:food:befd62f251475edc51d7",
           "canonicalEnglish": "Cooked white beans",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:59e287138322fba0b2db",
+          "canonicalEnglish": "Cooked red beans",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -1753,15 +2033,15 @@
       "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_012.v1.json",
       "candidateTargets": [
         {
-          "conceptId": "concept:food:82e70435b371231c287c",
-          "canonicalEnglish": "Pike dumplings",
+          "conceptId": "concept:food:cf67ce9fb44179365028",
+          "canonicalEnglish": "Fish dumplings",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
         },
         {
-          "conceptId": "concept:food:cf67ce9fb44179365028",
-          "canonicalEnglish": "Fish dumplings",
+          "conceptId": "concept:food:82e70435b371231c287c",
+          "canonicalEnglish": "Pike dumplings",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -1926,15 +2206,15 @@
           "tokenJaccard": 0.625
         },
         {
-          "conceptId": "concept:food:2ec95bc2fbcaa2c943bb",
-          "canonicalEnglish": "Celeriac, cut into 2 cm cubes",
+          "conceptId": "concept:food:cb73502f7abfd7d8370b",
+          "canonicalEnglish": "Potatoes, cut into 2 cm cubes",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.625
         },
         {
-          "conceptId": "concept:food:cb73502f7abfd7d8370b",
-          "canonicalEnglish": "Potatoes, cut into 2 cm cubes",
+          "conceptId": "concept:food:2ec95bc2fbcaa2c943bb",
+          "canonicalEnglish": "Celeriac, cut into 2 cm cubes",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.625
@@ -1945,6 +2225,27 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.625
+        },
+        {
+          "conceptId": "concept:food:adcb33fdc7588adf5d37",
+          "canonicalEnglish": "Carrot, cut into 2 cm cubes",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.625
+        },
+        {
+          "conceptId": "concept:food:8fe93dff08136e819cf4",
+          "canonicalEnglish": "Tofu, cut into 2 cm cubes",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.625
+        },
+        {
+          "conceptId": "concept:food:d4e2c4785c49fa31e6e0",
+          "canonicalEnglish": "Pork tenderloin, cut into 2 cm cubes",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5556
         }
       ]
     },
@@ -2600,6 +2901,13 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.625
+        },
+        {
+          "conceptId": "concept:food:ef70c8c9f7bad4b3bebc",
+          "canonicalEnglish": "Toasted sesame seeds (for seasoning), a little",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5556
         }
       ]
     },
@@ -3040,6 +3348,34 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:0564dd89ffa36c98678b",
+          "canonicalEnglish": "Cooked bell pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:e0d4a74f2babf491b663",
+          "canonicalEnglish": "Green bell pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:1d0a826b23be2cc3d80b",
+          "canonicalEnglish": "Diced bell pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:de302ca49112d875ed3d",
+          "canonicalEnglish": "Red bell pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
         }
       ]
     },
@@ -3091,6 +3427,34 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:d7950c9e17b7e6b83b98",
+          "canonicalEnglish": "Ground chili pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:ad59797da0ef7ed5d744",
+          "canonicalEnglish": "Ground black pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:8139859c824822638517",
+          "canonicalEnglish": "Ground coriander (optional)",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:5f5b026027f8d86cd04f",
+          "canonicalEnglish": "Ground fenugreek (optional)",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
         }
       ]
     },
@@ -3127,15 +3491,15 @@
       "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_055.v1.json",
       "candidateTargets": [
         {
-          "conceptId": "concept:food:24e51f8fcb610ccfcb4b",
-          "canonicalEnglish": "Salt and pepper, for seasoning",
+          "conceptId": "concept:food:440e354a36d91036547e",
+          "canonicalEnglish": "Salt and pepper for seasoning",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6667
         },
         {
-          "conceptId": "concept:food:440e354a36d91036547e",
-          "canonicalEnglish": "Salt and pepper for seasoning",
+          "conceptId": "concept:food:24e51f8fcb610ccfcb4b",
+          "canonicalEnglish": "Salt and pepper, for seasoning",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6667
@@ -3146,6 +3510,41 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6
+        },
+        {
+          "conceptId": "concept:food:3eec801982d880a75d75",
+          "canonicalEnglish": "Pepper and salt",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.6
+        },
+        {
+          "conceptId": "concept:food:6ab877df0cc2de54a692",
+          "canonicalEnglish": "Salt and cayenne pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:65e7aa98ca02b023e35a",
+          "canonicalEnglish": "Salt, pepper and nutmeg",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:e1893ccc5a2ba731a06f",
+          "canonicalEnglish": "Salt and black pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:bd803a4dec6165f5d907",
+          "canonicalEnglish": "Salt, pepper and cumin",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
         }
       ]
     },
@@ -3240,15 +3639,15 @@
           "tokenJaccard": 0.6667
         },
         {
-          "conceptId": "concept:food:3c59cc300b6bd2936c55",
-          "canonicalEnglish": "Chopped pork slice (or bacon)",
+          "conceptId": "concept:food:7956e4deb0d66743808a",
+          "canonicalEnglish": "Pork slice, chopped (or bacon)",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6667
         },
         {
-          "conceptId": "concept:food:7956e4deb0d66743808a",
-          "canonicalEnglish": "Pork slice, chopped (or bacon)",
+          "conceptId": "concept:food:3c59cc300b6bd2936c55",
+          "canonicalEnglish": "Chopped pork slice (or bacon)",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6667
@@ -3391,6 +3790,13 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6
+        },
+        {
+          "conceptId": "concept:food:0991f6b2ed715c2e351d",
+          "canonicalEnglish": "Whipping cream",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
         }
       ]
     },
@@ -3442,15 +3848,15 @@
           "tokenJaccard": 0.6667
         },
         {
-          "conceptId": "concept:food:3c59cc300b6bd2936c55",
-          "canonicalEnglish": "Chopped pork slice (or bacon)",
+          "conceptId": "concept:food:7956e4deb0d66743808a",
+          "canonicalEnglish": "Pork slice, chopped (or bacon)",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6667
         },
         {
-          "conceptId": "concept:food:7956e4deb0d66743808a",
-          "canonicalEnglish": "Pork slice, chopped (or bacon)",
+          "conceptId": "concept:food:3c59cc300b6bd2936c55",
+          "canonicalEnglish": "Chopped pork slice (or bacon)",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6667
@@ -3503,15 +3909,15 @@
           "tokenJaccard": 0.8333
         },
         {
-          "conceptId": "concept:food:3c59cc300b6bd2936c55",
-          "canonicalEnglish": "Chopped pork slice (or bacon)",
+          "conceptId": "concept:food:7956e4deb0d66743808a",
+          "canonicalEnglish": "Pork slice, chopped (or bacon)",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5714
         },
         {
-          "conceptId": "concept:food:7956e4deb0d66743808a",
-          "canonicalEnglish": "Pork slice, chopped (or bacon)",
+          "conceptId": "concept:food:3c59cc300b6bd2936c55",
+          "canonicalEnglish": "Chopped pork slice (or bacon)",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5714
@@ -3631,8 +4037,8 @@
       "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_060.v1.json",
       "candidateTargets": [
         {
-          "conceptId": "concept:food:807256af05fb4b3d1f28",
-          "canonicalEnglish": "Thinly sliced carrots",
+          "conceptId": "concept:food:ff666e7560c9700b4a12",
+          "canonicalEnglish": "Carrots, thinly sliced",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -3645,15 +4051,8 @@
           "tokenJaccard": 0.5
         },
         {
-          "conceptId": "concept:food:ff666e7560c9700b4a12",
-          "canonicalEnglish": "Carrots, thinly sliced",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        },
-        {
-          "conceptId": "concept:food:41bb7bc2b3c62790af93",
-          "canonicalEnglish": "Thinly sliced carrot",
+          "conceptId": "concept:food:807256af05fb4b3d1f28",
+          "canonicalEnglish": "Thinly sliced carrots",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -3666,6 +4065,13 @@
           "tokenJaccard": 0.5
         },
         {
+          "conceptId": "concept:food:9cd9164bbab8dd5d41fd",
+          "canonicalEnglish": "Ginger, thinly sliced",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
           "conceptId": "concept:food:8db9efcbd0251984ade5",
           "canonicalEnglish": "Celery, thinly sliced",
           "classification": "food",
@@ -3673,8 +4079,15 @@
           "tokenJaccard": 0.5
         },
         {
-          "conceptId": "concept:food:9cd9164bbab8dd5d41fd",
-          "canonicalEnglish": "Ginger, thinly sliced",
+          "conceptId": "concept:food:75898bb6e66ac2b7d44b",
+          "canonicalEnglish": "Gherkins, thinly sliced",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:41bb7bc2b3c62790af93",
+          "canonicalEnglish": "Thinly sliced carrot",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -3694,6 +4107,13 @@
         {
           "conceptId": "concept:food:2625ef8f4ec52ea97ccb",
           "canonicalEnglish": "Vinegar",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:0fe9372fd4b3974efed5",
+          "canonicalEnglish": "Onion",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -3732,8 +4152,36 @@
           "tokenJaccard": 0.5
         },
         {
+          "conceptId": "concept:food:a91a2937af94dd935fc9",
+          "canonicalEnglish": "Red pepper paste",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:72bc23f3664c1de8ad17",
+          "canonicalEnglish": "Red pepper sauce",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:1f68c7c55ffce876b34b",
+          "canonicalEnglish": "Red pepper purée",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
           "conceptId": "concept:food:104d35ace7158688298d",
           "canonicalEnglish": "Red chili pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:de302ca49112d875ed3d",
+          "canonicalEnglish": "Red bell pepper",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -3772,6 +4220,13 @@
         {
           "conceptId": "concept:food:4e23a96597a28cf77cf5",
           "canonicalEnglish": "Salt and pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:3eec801982d880a75d75",
+          "canonicalEnglish": "Pepper and salt",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -3871,6 +4326,13 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:c5bc83950c95ffc7a35c",
+          "canonicalEnglish": "Pepper paste",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
         }
       ]
     },
@@ -3896,13 +4358,6 @@
       "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_060.v1.json",
       "candidateTargets": [
         {
-          "conceptId": "concept:food:2ec95bc2fbcaa2c943bb",
-          "canonicalEnglish": "Celeriac, cut into 2 cm cubes",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.7143
-        },
-        {
           "conceptId": "concept:food:cb73502f7abfd7d8370b",
           "canonicalEnglish": "Potatoes, cut into 2 cm cubes",
           "classification": "food",
@@ -3910,8 +4365,8 @@
           "tokenJaccard": 0.7143
         },
         {
-          "conceptId": "concept:food:5a4a12801cb70ce5e4fa",
-          "canonicalEnglish": "Pumpkin, cut into 2 cm cubes",
+          "conceptId": "concept:food:2ec95bc2fbcaa2c943bb",
+          "canonicalEnglish": "Celeriac, cut into 2 cm cubes",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.7143
@@ -3919,6 +4374,13 @@
         {
           "conceptId": "concept:food:6db3fe68a52ea4aecfbd",
           "canonicalEnglish": "Pineapple, cut into 2 cm cubes",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.7143
+        },
+        {
+          "conceptId": "concept:food:5a4a12801cb70ce5e4fa",
+          "canonicalEnglish": "Pumpkin, cut into 2 cm cubes",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.7143
@@ -3936,6 +4398,13 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.7143
+        },
+        {
+          "conceptId": "concept:food:9ccc60bce12af32bdbc7",
+          "canonicalEnglish": "Firm tofu, cut into 2 cm cubes",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.625
         },
         {
           "conceptId": "concept:food:5518da273a517357d9af",
@@ -3957,6 +4426,13 @@
       "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_060.v1.json",
       "candidateTargets": [
         {
+          "conceptId": "concept:food:fafa2fb5ed357e0dfe87",
+          "canonicalEnglish": "Potatoes, peeled and diced",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.6
+        },
+        {
           "conceptId": "concept:food:f5bc73d424b0205b1adc",
           "canonicalEnglish": "Washed and diced zucchini",
           "classification": "food",
@@ -3964,8 +4440,22 @@
           "tokenJaccard": 0.6
         },
         {
-          "conceptId": "concept:food:fafa2fb5ed357e0dfe87",
-          "canonicalEnglish": "Potatoes, peeled and diced",
+          "conceptId": "concept:food:bd25aafb01a3e402f545",
+          "canonicalEnglish": "Cucumber, peeled and diced",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.6
+        },
+        {
+          "conceptId": "concept:food:a884797df80a35e76883",
+          "canonicalEnglish": "Zucchini, washed and diced",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.6
+        },
+        {
+          "conceptId": "concept:food:9c19dc520052ce045049",
+          "canonicalEnglish": "Celeriac, peeled and diced",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6
@@ -3978,8 +4468,15 @@
           "tokenJaccard": 0.6
         },
         {
-          "conceptId": "concept:food:bd25aafb01a3e402f545",
-          "canonicalEnglish": "Cucumber, peeled and diced",
+          "conceptId": "concept:food:f50577b5155290471d21",
+          "canonicalEnglish": "Pumpkin, peeled and diced",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.6
+        },
+        {
+          "conceptId": "concept:food:13633dd7c697815138c8",
+          "canonicalEnglish": "Carrots, peeled and diced",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6
@@ -4032,8 +4529,22 @@
           "tokenJaccard": 0.5
         },
         {
+          "conceptId": "concept:food:e0db9c5318cde733295c",
+          "canonicalEnglish": "Tomato, washed and cut into pieces",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
           "conceptId": "concept:food:b5adea04a231fe4c5012",
           "canonicalEnglish": "Carrot, peeled and cut into strips",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:8efaf656d1f6d6f6df3f",
+          "canonicalEnglish": "Zucchini, washed and sliced into rounds",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -4323,6 +4834,41 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6
+        },
+        {
+          "conceptId": "concept:food:3eec801982d880a75d75",
+          "canonicalEnglish": "Pepper and salt",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.6
+        },
+        {
+          "conceptId": "concept:food:81bab6cc357d40cf7d7b",
+          "canonicalEnglish": "Pecorino cheese with pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:6ab877df0cc2de54a692",
+          "canonicalEnglish": "Salt and cayenne pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:65e7aa98ca02b023e35a",
+          "canonicalEnglish": "Salt, pepper and nutmeg",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:e1893ccc5a2ba731a06f",
+          "canonicalEnglish": "Salt and black pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
         }
       ]
     },
@@ -4463,6 +5009,34 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6667
+        },
+        {
+          "conceptId": "concept:food:7ce03d05f34b2140983b",
+          "canonicalEnglish": "Parsley, washed and finely chopped",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
+        },
+        {
+          "conceptId": "concept:food:2e8e69079fd32ee282fa",
+          "canonicalEnglish": "Coriander or parsley, washed and chopped",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:2854c3321fe82f51b85d",
+          "canonicalEnglish": "Parsley leaves, washed and chopped (optional)",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:4ec5bd27f31176195dcb",
+          "canonicalEnglish": "Cup of parsley",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
         }
       ]
     },
@@ -4496,6 +5070,34 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6667
+        },
+        {
+          "conceptId": "concept:food:7ce03d05f34b2140983b",
+          "canonicalEnglish": "Parsley, washed and finely chopped",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
+        },
+        {
+          "conceptId": "concept:food:c5fa03e99933a6310e49",
+          "canonicalEnglish": "Cups of finely chopped parsley",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
+        },
+        {
+          "conceptId": "concept:food:2e8e69079fd32ee282fa",
+          "canonicalEnglish": "Coriander or parsley, washed and chopped",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:2854c3321fe82f51b85d",
+          "canonicalEnglish": "Parsley leaves, washed and chopped (optional)",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
         }
       ]
     },
@@ -4564,6 +5166,20 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6667
+        },
+        {
+          "conceptId": "concept:food:ad59797da0ef7ed5d744",
+          "canonicalEnglish": "Ground black pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:bd4a42997732ff670f2f",
+          "canonicalEnglish": "Salt, black pepper",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
         }
       ]
     },
@@ -4635,6 +5251,41 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.6667
+        },
+        {
+          "conceptId": "concept:food:4c3e5b2920977db24322",
+          "canonicalEnglish": "Fresh asparagus, washed and chopped",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667
+        },
+        {
+          "conceptId": "concept:food:9ce05451c80761ab40f3",
+          "canonicalEnglish": "Fresh mint, washed and finely chopped",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
+        },
+        {
+          "conceptId": "concept:food:49feec59404b80160aba",
+          "canonicalEnglish": "Fresh mint leaves, washed and chopped",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
+        },
+        {
+          "conceptId": "concept:food:d2d660b7ae97dc71899b",
+          "canonicalEnglish": "Washed and chopped fresh basil leaves",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
+        },
+        {
+          "conceptId": "concept:food:2c48c4e2e82d30f98b7d",
+          "canonicalEnglish": "Fresh basil leaves, washed and chopped",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
         }
       ]
     },
@@ -4672,6 +5323,48 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.75
+        },
+        {
+          "conceptId": "concept:food:8be8697f7cb8ca0a3531",
+          "canonicalEnglish": "Potatoes, peeled and cut into pieces",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.625
+        },
+        {
+          "conceptId": "concept:food:51e6307236b5f08983e5",
+          "canonicalEnglish": "Shallots, peeled and cut into pieces",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.625
+        },
+        {
+          "conceptId": "concept:food:2d20de8e963b5844bcb2",
+          "canonicalEnglish": "Tomatoes, peeled and cut into pieces",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.625
+        },
+        {
+          "conceptId": "concept:food:511aad8ea5371d29a599",
+          "canonicalEnglish": "Carrots, peeled and cut into sticks",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.625
+        },
+        {
+          "conceptId": "concept:food:99dedf5b7e9c15969055",
+          "canonicalEnglish": "Carrot, peeled and cut into pieces",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.625
+        },
+        {
+          "conceptId": "concept:food:a836b610d895e34ba498",
+          "canonicalEnglish": "Carrots, peeled and cut into thin strips",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5556
         }
       ]
     },
@@ -4757,6 +5450,34 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.7143
+        },
+        {
+          "conceptId": "concept:food:4e922cdf4af90d0141f4",
+          "canonicalEnglish": "Garlic, peeled, degermed and finely chopped",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.625
+        },
+        {
+          "conceptId": "concept:food:b4071810006839c0e453",
+          "canonicalEnglish": "Garlic cloves, peeled and germ removed",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.625
+        },
+        {
+          "conceptId": "concept:food:f92660c91518b337ec11",
+          "canonicalEnglish": "Garlic, peeled and chopped",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
+        },
+        {
+          "conceptId": "concept:food:a9bdc0782f19ce5c4c7b",
+          "canonicalEnglish": "Peeled and chopped garlic",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
         }
       ]
     },
@@ -4771,15 +5492,15 @@
       "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_075.v1.json",
       "candidateTargets": [
         {
-          "conceptId": "concept:food:a9bdc0782f19ce5c4c7b",
-          "canonicalEnglish": "Peeled and chopped garlic",
+          "conceptId": "concept:food:f92660c91518b337ec11",
+          "canonicalEnglish": "Garlic, peeled and chopped",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
         },
         {
-          "conceptId": "concept:food:f92660c91518b337ec11",
-          "canonicalEnglish": "Garlic, peeled and chopped",
+          "conceptId": "concept:food:a9bdc0782f19ce5c4c7b",
+          "canonicalEnglish": "Peeled and chopped garlic",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -5133,6 +5854,13 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:f625ad40884052b80330",
+          "canonicalEnglish": "Bell peppers (red, green, yellow), peeled and cut into long strips",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
         }
       ]
     },
@@ -5189,6 +5917,34 @@
         {
           "conceptId": "concept:food:3708e405c41b8206e84a",
           "canonicalEnglish": "Eggplants, cut into small cubes",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
+        },
+        {
+          "conceptId": "concept:food:dbedbb1b06d9a4c4c5c5",
+          "canonicalEnglish": "Zucchini cut into small cubes",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
+        },
+        {
+          "conceptId": "concept:food:c5aa488266bff177f779",
+          "canonicalEnglish": "Potatoes, cut into small cubes",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
+        },
+        {
+          "conceptId": "concept:food:8a61381c75552b1f6f43",
+          "canonicalEnglish": "Eggplant, cut into small cubes",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
+        },
+        {
+          "conceptId": "concept:food:32b337a577883b8bb236",
+          "canonicalEnglish": "Zucchini, cut into small cubes",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5714
@@ -5275,15 +6031,15 @@
           "tokenJaccard": 0.5
         },
         {
-          "conceptId": "concept:food:9ca22eef5c89643886ef",
-          "canonicalEnglish": "Carrot cut into pieces",
+          "conceptId": "concept:food:eb9415b27a49aad84d0c",
+          "canonicalEnglish": "Rabbit, cut into pieces",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
         },
         {
-          "conceptId": "concept:food:eb9415b27a49aad84d0c",
-          "canonicalEnglish": "Rabbit, cut into pieces",
+          "conceptId": "concept:food:9ca22eef5c89643886ef",
+          "canonicalEnglish": "Carrot cut into pieces",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -5308,11 +6064,53 @@
           "tokenJaccard": 0.7143
         },
         {
+          "conceptId": "concept:food:99dedf5b7e9c15969055",
+          "canonicalEnglish": "Carrot, peeled and cut into pieces",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.7143
+        },
+        {
           "conceptId": "concept:food:8be8697f7cb8ca0a3531",
           "canonicalEnglish": "Potatoes, peeled and cut into pieces",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.7143
+        },
+        {
+          "conceptId": "concept:food:51e6307236b5f08983e5",
+          "canonicalEnglish": "Shallots, peeled and cut into pieces",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.7143
+        },
+        {
+          "conceptId": "concept:food:2d20de8e963b5844bcb2",
+          "canonicalEnglish": "Tomatoes, peeled and cut into pieces",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.7143
+        },
+        {
+          "conceptId": "concept:food:7e4676c54e6d1bc4cdf3",
+          "canonicalEnglish": "Large potato, peeled and cut into pieces",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.625
+        },
+        {
+          "conceptId": "concept:food:659d62d178ec0a997eec",
+          "canonicalEnglish": "Turnip, peeled and cut into small pieces",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.625
+        },
+        {
+          "conceptId": "concept:food:cdc596d859257ff596c9",
+          "canonicalEnglish": "Bananas, peeled and cut into small pieces",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.625
         }
       ]
     },
@@ -5383,6 +6181,13 @@
         {
           "conceptId": "concept:food:8209efd71e2962bbf145",
           "canonicalEnglish": "Whipped cream (optional)",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:75be9480139fec428c68",
+          "canonicalEnglish": "*Whipped cream (optional)",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -5980,6 +6785,41 @@
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5714
+        },
+        {
+          "conceptId": "concept:food:a241d893dfe7548eff59",
+          "canonicalEnglish": "Water or vegetable stock",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
+        },
+        {
+          "conceptId": "concept:food:9d0744eff784ff5b28f4",
+          "canonicalEnglish": "Water (or vegetable stock)",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714
+        },
+        {
+          "conceptId": "concept:food:2ecd739c70cc11cb6327",
+          "canonicalEnglish": "Vegetable stock (or chicken stock or water)",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:7b1a3c4dc5729bd64f10",
+          "canonicalEnglish": "Water, meat stock or vegetable stock",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:b254e0b52ba26c780ca8",
+          "canonicalEnglish": "Vegetable stock (or seasoned water)",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
         }
       ]
     },
@@ -6039,15 +6879,22 @@
           "tokenJaccard": 0.6
         },
         {
-          "conceptId": "concept:food:9340b351be5d4d3374fc",
-          "canonicalEnglish": "Pepper (a little)",
+          "conceptId": "concept:food:d485b3f193ea14968df5",
+          "canonicalEnglish": "Nutmeg (a little)",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
         },
         {
-          "conceptId": "concept:food:d485b3f193ea14968df5",
-          "canonicalEnglish": "Nutmeg (a little)",
+          "conceptId": "concept:food:964e71e34865a6352799",
+          "canonicalEnglish": "Pepper, a little",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:9340b351be5d4d3374fc",
+          "canonicalEnglish": "Pepper (a little)",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -6060,8 +6907,22 @@
           "tokenJaccard": 0.5
         },
         {
-          "conceptId": "concept:food:964e71e34865a6352799",
-          "canonicalEnglish": "Pepper, a little",
+          "conceptId": "concept:food:bc0d343c881a4c68d4a9",
+          "canonicalEnglish": "Flour, a little",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:691954422f5eafc75b1e",
+          "canonicalEnglish": "Thyme, a little",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:08388cc765e776782c48",
+          "canonicalEnglish": "Sugar, a little",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -6213,15 +7074,15 @@
       "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_001.v1.json",
       "candidateTargets": [
         {
-          "conceptId": "concept:food:0a03f3d876d5a3d2ec0c",
-          "canonicalEnglish": "B- French-style stock granules",
+          "conceptId": "concept:food:ce56715e3c36fd05b37c",
+          "canonicalEnglish": "C- French-style stock granules",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.8
         },
         {
-          "conceptId": "concept:food:ce56715e3c36fd05b37c",
-          "canonicalEnglish": "C- French-style stock granules",
+          "conceptId": "concept:food:0a03f3d876d5a3d2ec0c",
+          "canonicalEnglish": "B- French-style stock granules",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.8
@@ -6295,15 +7156,15 @@
           "tokenJaccard": 0.6
         },
         {
-          "conceptId": "concept:food:1b429623307fc988e55b",
-          "canonicalEnglish": "Glutinous rice, unwashed",
+          "conceptId": "concept:food:9aacee30d1845f696b60",
+          "canonicalEnglish": "Sifted rice flour",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
         },
         {
-          "conceptId": "concept:food:9aacee30d1845f696b60",
-          "canonicalEnglish": "Sifted rice flour",
+          "conceptId": "concept:food:1b429623307fc988e55b",
+          "canonicalEnglish": "Glutinous rice, unwashed",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -6502,8 +7363,8 @@
           "tokenJaccard": 0.6
         },
         {
-          "conceptId": "concept:food:6885d373ae794fcc7fbf",
-          "canonicalEnglish": "Salt (a little)",
+          "conceptId": "concept:food:eff86549bd8c7c74daba",
+          "canonicalEnglish": "Sake, a little",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -6516,8 +7377,8 @@
           "tokenJaccard": 0.5
         },
         {
-          "conceptId": "concept:food:eff86549bd8c7c74daba",
-          "canonicalEnglish": "Sake, a little",
+          "conceptId": "concept:food:6885d373ae794fcc7fbf",
+          "canonicalEnglish": "Salt (a little)",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
@@ -6530,8 +7391,22 @@
           "tokenJaccard": 0.5
         },
         {
+          "conceptId": "concept:food:bc0d343c881a4c68d4a9",
+          "canonicalEnglish": "Flour, a little",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
           "conceptId": "concept:food:691954422f5eafc75b1e",
           "canonicalEnglish": "Thyme, a little",
+          "classification": "food",
+          "exactLooseText": false,
+          "tokenJaccard": 0.5
+        },
+        {
+          "conceptId": "concept:food:08388cc765e776782c48",
+          "canonicalEnglish": "Sugar, a little",
           "classification": "food",
           "exactLooseText": false,
           "tokenJaccard": 0.5
