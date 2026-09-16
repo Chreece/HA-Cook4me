@@ -572,6 +572,11 @@ def _meal_usage(rows: Any, ingredient: dict[str, Any]) -> list[dict[str, Any]]:
 )
 @websocket_api.async_response
 async def ws_ingredient_info(hass, connection, msg) -> None:
+    await async_ingredient_info(hass, connection, msg)
+
+
+async def async_ingredient_info(hass, connection, msg) -> None:
+    """Shared handler body; HA's decorated command schedules work and returns None."""
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         ingredient = dict(msg["ingredient"])

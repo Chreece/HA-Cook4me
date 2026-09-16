@@ -69,7 +69,7 @@ try{
  await dialog.locator('[data-v78-save]').click();await dialog.locator('.v78-success').waitFor();
  const saves=await page.evaluate(()=>window.calls.filter(r=>r.type.endsWith('/product_add')));
  assert.deepEqual(saves[0],saves[1]);assert.equal(saves[0].paid_price.amount,0);assert.equal(saves[0].paid_price.currency,'EUR');
- await dialog.locator('[data-v78-next]').click();await dialog.locator('[data-v78-mode=manual]').click();
+ await dialog.locator('[data-v78-next]').click();if(Number(version)<80)await dialog.locator('[data-v78-mode=manual]').click();
  await dialog.locator('[data-draft=quantity]').fill('100');await dialog.locator('[data-v78-ingredient]').selectOption('k:rice');
  await page.waitForFunction(()=>window.panel._v78Draft?.priceResult?.matchKind==='ingredient');
  assert.match(await dialog.locator('[data-v79-estimate]').innerText(),/Ingredient estimate/);

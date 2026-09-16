@@ -306,8 +306,8 @@ async def ws_ingredient_catalog(hass, connection, msg) -> None:
 })
 @websocket_api.async_response
 async def ws_ingredient_info(hass, connection, msg) -> None:
-    from .websocket_v18 import ws_ingredient_info as ingredient_info
-    await ingredient_info(hass, connection, msg)
+    from .websocket_v18 import async_ingredient_info
+    await async_ingredient_info(hass, connection, msg)
 
 
 @websocket_api.websocket_command({
