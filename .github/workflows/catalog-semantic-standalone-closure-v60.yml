@@ -33,6 +33,7 @@ jobs:
       - name: Wire conservative closure into semantic compiler and CI
         run: |
           set -Eeuo pipefail
+          python tools/fix_semantic_standalone_patch_helper_v60.py
           python tools/apply_semantic_standalone_closure_patch_v60.py
 
       - name: Run semantic closure regression suite
@@ -91,7 +92,8 @@ jobs:
           git config user.email '41898282+Chreece@users.noreply.github.com'
           git rm \
             .github/workflows/catalog-semantic-standalone-closure-v60.yml \
-            tools/apply_semantic_standalone_closure_patch_v60.py
+            tools/apply_semantic_standalone_closure_patch_v60.py \
+            tools/fix_semantic_standalone_patch_helper_v60.py
           git add \
             tools/compile_release_catalog_semantics_v60.py \
             tools/release_catalog_semantic_standalone_dispositions.v1.json \
