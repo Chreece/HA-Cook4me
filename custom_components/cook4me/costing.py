@@ -15,6 +15,7 @@ from .costs import (
 )
 from .inventory import convert_amount, inventory_identity, normalize_inventory
 from .price_measurements import price_options
+from .price_benchmarks import add_budget_estimates
 
 
 def _add(target: dict[str, float], currency: str, value: float | None) -> None:
@@ -211,7 +212,7 @@ def calculate_recipe_cost(
         for curr, value in totals.items()
         if servings and servings > 0
     }
-    return {
+    cost = {
         "totalsByCurrency": _rounded_currency(totals),
         "perServingByCurrency": per_serving,
         "servings": servings,
@@ -228,6 +229,8 @@ def calculate_recipe_cost(
         "targetCountry": wanted_country,
         "currencyConversionApplied": False,
     }
+
+    return add_budget_estimates(cost, recipe, store, country=wanted_country, currency=wanted_currency)
 
 
 def calculate_consumption_cost(

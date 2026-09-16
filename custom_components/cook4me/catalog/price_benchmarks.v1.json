@@ -1,0 +1,565 @@
+{
+  "schemaVersion": 1,
+  "modelVersion": 91,
+  "method": "Median of latest local product unit prices; min/max comparison spread, not a confidence interval. Fallbacks never become observed ingredient prices.",
+  "groups": [
+    {
+      "id": "vegetables",
+      "label": "Vegetables",
+      "categories": [
+        "en:onions",
+        "en:carrots",
+        "en:potatoes",
+        "en:white-potatoes",
+        "en:tomatoes",
+        "en:cherry-tomatoes",
+        "en:zucchini",
+        "en:aubergines",
+        "en:broccoli",
+        "en:cauliflowers",
+        "en:cucumbers",
+        "en:leeks",
+        "en:spinachs",
+        "en:garlics",
+        "en:garlic",
+        "en:peas",
+        "en:green-peas",
+        "en:green-beans",
+        "en:mushrooms",
+        "en:radishes",
+        "en:artichokes",
+        "en:artichoke-hearts",
+        "en:beetroot",
+        "en:beetroots",
+        "en:cabbages",
+        "en:asparagus",
+        "en:white-asparagus",
+        "en:green-asparagus",
+        "en:celery",
+        "en:celeriac",
+        "en:lettuces",
+        "en:iceberg-lettuces",
+        "en:rocket",
+        "en:red-cabbage",
+        "en:red-bell-peppers",
+        "en:parsnip",
+        "en:jerusalem-artichoke",
+        "en:squash",
+        "en:chinese-cabbage",
+        "en:kohlrabi",
+        "cook4me:raw-beetroot"
+      ],
+      "names": [
+        "asparagus",
+        "green asparagus",
+        "white asparagus",
+        "radish",
+        "radishes",
+        "fresh mushrooms",
+        "button mushroom",
+        "chestnut mushroom",
+        "turnip",
+        "swede",
+        "root vegetables",
+        "ginger"
+      ]
+    },
+    {
+      "id": "fruit",
+      "label": "Fruit",
+      "categories": [
+        "en:apples",
+        "en:bananas",
+        "en:oranges",
+        "en:lemons",
+        "en:limes",
+        "en:raspberries",
+        "en:strawberries",
+        "en:blueberries",
+        "en:cranberries",
+        "en:peaches",
+        "en:pears",
+        "en:plums",
+        "en:mangoes",
+        "en:pineapples",
+        "en:avocados",
+        "en:watermelons",
+        "en:melons",
+        "en:cherries",
+        "en:apricots",
+        "en:mandarins",
+        "en:clementines",
+        "en:figs",
+        "en:grapes",
+        "en:grapefruits"
+      ],
+      "names": [
+        "fruit",
+        "fresh fruit",
+        "berries"
+      ]
+    },
+    {
+      "id": "starches",
+      "label": "Dry grains, pasta and flour",
+      "categories": [
+        "en:rices",
+        "en:basmati-rices",
+        "en:jasmine-rice",
+        "en:long-grain-rices",
+        "en:brown-rices",
+        "en:arborio-rices",
+        "en:risotto-rices",
+        "en:carnaroli-rices",
+        "en:wheats",
+        "en:spelts",
+        "en:oats",
+        "en:rolled-oats",
+        "en:wheat-flours",
+        "en:flours",
+        "en:corn-flours",
+        "en:cornmeal",
+        "en:semolina",
+        "en:bulgur",
+        "en:couscous",
+        "en:barley",
+        "en:millet",
+        "en:quinoa",
+        "en:buckwheat",
+        "en:pastas",
+        "en:noodles",
+        "en:linguine",
+        "en:lasagna-sheets",
+        "en:rice-pasta",
+        "en:rice-vermicelli",
+        "en:corn-starch",
+        "en:potato-starches",
+        "en:rice-flours",
+        "cook4me:wholegrain-pasta"
+      ],
+      "names": [
+        "wheat pasta",
+        "whole-grain pasta",
+        "rice",
+        "risotto rice",
+        "pasta"
+      ]
+    },
+    {
+      "id": "pulses",
+      "label": "Beans and lentils",
+      "categories": [
+        "en:beans",
+        "en:white-beans",
+        "en:kidney-beans",
+        "en:red-kidney-beans",
+        "en:broad-beans",
+        "en:lentils",
+        "en:green-lentils",
+        "en:red-lentils",
+        "en:chickpeas",
+        "en:edamame",
+        "cook4me:cooked-flageolets"
+      ],
+      "names": [
+        "bean",
+        "beans",
+        "flageolet beans",
+        "cooked flageolet beans",
+        "canned beans",
+        "dry beans"
+      ]
+    },
+    {
+      "id": "nuts",
+      "label": "Nuts, seeds and dried fruit",
+      "categories": [
+        "en:almonds",
+        "en:ground-almonds",
+        "en:hazelnuts",
+        "en:cashew-nuts",
+        "en:walnuts",
+        "en:pistachios",
+        "en:peanuts",
+        "en:pine-nuts",
+        "en:sesame",
+        "en:pumpkin-seeds",
+        "en:sunflower-seeds",
+        "en:pecan-nuts",
+        "en:raisins",
+        "en:dates",
+        "en:dried-apricots",
+        "en:dried-fruits",
+        "en:coconuts",
+        "en:grated-coconut",
+        "en:chestnuts"
+      ],
+      "names": [
+        "chestnut",
+        "chestnuts",
+        "mixed nuts",
+        "sunflower seed",
+        "sesame seed"
+      ]
+    },
+    {
+      "id": "dairy",
+      "label": "Milk, yogurt and cream",
+      "categories": [
+        "en:milks",
+        "en:whole-milks",
+        "en:semi-skimmed-milks",
+        "en:goat-milks",
+        "en:yogurts",
+        "en:greek-yogurts",
+        "en:creams",
+        "en:whipped-creams",
+        "en:cremes-fraiches",
+        "en:coconut-milks",
+        "en:coconut-creams",
+        "en:soy-milks",
+        "en:oat-milks",
+        "en:almond-milks",
+        "en:skyrs",
+        "cook4me:almond-drink",
+        "cook4me:soy-cream",
+        "cook4me:soy-cooking-cream",
+        "cook4me:skyr"
+      ],
+      "names": [
+        "almond cream",
+        "oat cream",
+        "soy cream",
+        "milk",
+        "yogurt",
+        "plant cream"
+      ]
+    },
+    {
+      "id": "cheese",
+      "label": "Cheese",
+      "categories": [
+        "en:cheeses",
+        "en:grated-cheese",
+        "en:mozzarellas",
+        "en:parmigiano-reggiano",
+        "en:grana-padano",
+        "en:cheddars",
+        "en:emmentalers",
+        "en:cream-cheeses",
+        "en:fresh-goat-cheese",
+        "en:gorgonzolas",
+        "en:camemberts",
+        "en:feta",
+        "en:burrata",
+        "en:mascarpone",
+        "en:ricotta"
+      ],
+      "names": [
+        "cheese",
+        "parmesan",
+        "grated cheese",
+        "kaşar cheese"
+      ]
+    },
+    {
+      "id": "meat",
+      "label": "Meat and poultry",
+      "categories": [
+        "en:chickens",
+        "en:chicken-breasts",
+        "en:chicken-thighs",
+        "en:chicken-drumsticks",
+        "en:chicken-wings",
+        "en:beef",
+        "en:ground-beef-meats",
+        "en:pork",
+        "en:pork-tenderloin",
+        "en:pork-shoulder",
+        "en:pork-loin",
+        "en:lamb-meat",
+        "en:lambs",
+        "en:turkeys",
+        "en:ducks",
+        "en:rabbit-leg",
+        "en:veal-fillets",
+        "en:sausages",
+        "en:smoked-bacon",
+        "en:bacon",
+        "en:pancetta",
+        "en:chorizo",
+        "en:cured-hams",
+        "en:sausage-meat",
+        "cook4me:raw-poultry-fillet"
+      ],
+      "names": [
+        "poultry",
+        "poultry fillet",
+        "bone marrow",
+        "minced meat",
+        "meat",
+        "chicken thigh",
+        "beef",
+        "lamb"
+      ]
+    },
+    {
+      "id": "fish",
+      "label": "Fish and seafood",
+      "categories": [
+        "en:salmons",
+        "en:salmon-fillets",
+        "en:cods",
+        "en:cod-fillets",
+        "en:pollocks",
+        "en:pollock-fillets",
+        "en:trouts",
+        "en:tunas",
+        "en:prawns",
+        "en:shrimps",
+        "en:mussels",
+        "en:squid",
+        "en:clam",
+        "en:scallop",
+        "en:anchovy",
+        "en:mackerel",
+        "en:haddock",
+        "en:surimi"
+      ],
+      "names": [
+        "fish",
+        "seafood",
+        "white fish",
+        "pike",
+        "cod",
+        "salmon"
+      ]
+    },
+    {
+      "id": "spices",
+      "label": "Herbs and spices",
+      "categories": [
+        "en:paprika",
+        "en:cumin-seeds",
+        "en:ground-cumin-seeds",
+        "en:ground-turmeric",
+        "en:cinnamon",
+        "en:black-peppers",
+        "en:ground-black-peppers",
+        "en:ground-white-peppers",
+        "en:curry-powders",
+        "en:chili-powders",
+        "en:garam-masalas",
+        "en:allspices",
+        "en:cloves",
+        "en:cardamom",
+        "en:anise",
+        "en:star-anise",
+        "en:dried-herbs",
+        "en:herbes-de-provence",
+        "en:marjoram",
+        "en:oregano",
+        "en:thyme",
+        "en:rosemary",
+        "en:saffron",
+        "en:cinnamon-sticks"
+      ],
+      "names": [
+        "saffron",
+        "mixed herbs",
+        "herb bundle",
+        "spices",
+        "cumin",
+        "bay",
+        "bay leaf",
+        "basil",
+        "parsley",
+        "curry"
+      ]
+    },
+    {
+      "id": "condiments",
+      "label": "Sauces and condiments",
+      "categories": [
+        "en:tomato-sauces",
+        "en:tomato-pastes",
+        "en:tomato-pulps",
+        "en:strained-tomatoes",
+        "en:ketchup",
+        "en:tomato-ketchup",
+        "en:mustards",
+        "en:dijon-mustards",
+        "en:soy-sauces",
+        "en:oyster-sauces",
+        "en:nuoc-mam-sauce",
+        "en:teriyaki-sauces",
+        "en:barbecue-sauces",
+        "en:mayonnaises",
+        "en:pestos",
+        "en:red-pestos",
+        "en:curry-pastes",
+        "en:red-curry-pastes",
+        "en:misos",
+        "en:tahini",
+        "en:vinegars",
+        "en:cider-vinegars",
+        "en:balsamic-vinegars",
+        "en:rice-vinegars",
+        "en:wine-vinegars",
+        "en:worcestershire-sauces"
+      ],
+      "names": [
+        "sun-dried tomatoes (optional)",
+        "dried tomato",
+        "tomato concentrate",
+        "sauce",
+        "curry paste",
+        "stock concentrate"
+      ]
+    },
+    {
+      "id": "fats",
+      "label": "Oils, butter and fats",
+      "categories": [
+        "en:olive-oils",
+        "en:extra-virgin-olive-oils",
+        "en:sunflower-oils",
+        "en:rapeseed-oils",
+        "en:vegetable-oils",
+        "en:sesame-oils",
+        "en:coconut-oils",
+        "en:peanut-oils",
+        "en:hazelnut-oils",
+        "en:butters",
+        "en:margarines",
+        "en:ghee",
+        "en:lards"
+      ],
+      "names": [
+        "oil",
+        "fat",
+        "butter"
+      ]
+    },
+    {
+      "id": "sweets",
+      "label": "Sugar, chocolate and sweeteners",
+      "categories": [
+        "en:sugars",
+        "en:granulated-sugars",
+        "en:powdered-sugars",
+        "en:icing-sugars",
+        "en:vanilla-sugars",
+        "en:honeys",
+        "en:maple-syrups",
+        "en:agave-syrups",
+        "en:chocolates",
+        "en:dark-chocolates",
+        "en:white-chocolates",
+        "en:cocoa-powders",
+        "en:jams",
+        "en:caramels",
+        "en:condensed-milks"
+      ],
+      "names": [
+        "sugar",
+        "icing sugar",
+        "chocolate",
+        "syrup",
+        "honey"
+      ]
+    },
+    {
+      "id": "drinks",
+      "label": "Juices and cooking drinks",
+      "categories": [
+        "en:apple-juices",
+        "en:orange-juices",
+        "en:lemon-juice",
+        "en:lime-juices",
+        "en:tomato-juices",
+        "en:beers",
+        "en:white-wines",
+        "en:red-wines",
+        "en:ciders",
+        "en:rums",
+        "en:whiskies",
+        "en:cognacs",
+        "en:calvados",
+        "en:rice-wines",
+        "en:mirin",
+        "en:sake",
+        "xx:sake"
+      ],
+      "names": [
+        "juice",
+        "wine",
+        "sake"
+      ]
+    },
+    {
+      "id": "plant_protein",
+      "label": "Plant protein foods",
+      "categories": [
+        "en:tofus",
+        "en:seitans",
+        "en:vegetarian-sausages",
+        "en:tempeh"
+      ],
+      "names": [
+        "tofu",
+        "seitan",
+        "tempeh"
+      ]
+    },
+    {
+      "id": "bread",
+      "label": "Bread and baked goods",
+      "categories": [
+        "en:breads",
+        "en:white-breads",
+        "en:bread-crumbs",
+        "en:croutons",
+        "en:brioches",
+        "en:biscuits",
+        "en:shortbread",
+        "en:gingerbreads"
+      ],
+      "names": [
+        "bread",
+        "bread crumb",
+        "breadcrumbs",
+        "biscuit"
+      ]
+    },
+    {
+      "id": "eggs",
+      "label": "Eggs",
+      "categories": [
+        "en:eggs",
+        "en:egg-white",
+        "en:egg-yolks"
+      ],
+      "names": [
+        "egg",
+        "egg white",
+        "egg yolk"
+      ]
+    },
+    {
+      "id": "broth",
+      "label": "Prepared cooking stock",
+      "categories": [
+        "cook4me:vegetable-stock"
+      ],
+      "names": [
+        "stock",
+        "broth",
+        "chicken stock",
+        "beef stock",
+        "veal stock",
+        "vegetable stock"
+      ]
+    }
+  ]
+}

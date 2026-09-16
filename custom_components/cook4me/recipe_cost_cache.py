@@ -38,6 +38,8 @@ def _recipe_price_shape(recipe: Any) -> dict[str, Any]:
             "quantity": raw.get("quantity"),
             "unit": _text(raw.get("unit")),
             "canonicalName": _text(raw.get("canonicalName")),
+            "priceCatalogMatched": bool(raw.get("priceCatalogMatched")),
+            "priceCategory": _text(raw.get("priceCategory")),
             "unitKey": _text(raw.get("unitKey")),
             "weight": deepcopy(raw.get("weight")) if isinstance(raw.get("weight"), dict) else None,
         })
@@ -48,7 +50,7 @@ def _recipe_price_shape(recipe: Any) -> dict[str, Any]:
         "servings": recipe.get("servings") or recipe.get("groupSize"),
         "yield": deepcopy(recipe.get("yield")) if isinstance(recipe.get("yield"), dict) else None,
         "ingredients": ingredients,
-        "quantityEvidenceVersion": 90,
+        "quantityEvidenceVersion": 91,
     }
 
 
@@ -110,11 +112,12 @@ def _reference_shape(store: Any, identities: set[str]) -> list[dict[str, Any]]:
 def pricing_fingerprint(recipe: dict[str, Any], inventory: Any, store: Any) -> str:
     stock, identities = _relevant_inventory(recipe, inventory)
     return _canonical_hash({
-        "calculatorVersion": 84,
+        "calculatorVersion": 91,
         "priceDate": datetime.now(timezone.utc).date().isoformat(),
         "settings": {
             "currency": _text(getattr(store, "settings", {}).get("currency")),
             "country": _text(getattr(store, "settings", {}).get("country")),
+            "autoGlobalPrices": bool(getattr(store, "settings", {}).get("autoGlobalPrices", True)),
         },
         "stock": stock,
         "references": _reference_shape(store, identities),
@@ -207,7 +210,7 @@ async def preview_cache_token(bridge: Any) -> str:
     from .costs import cost_store_for_bridge
     store = await cost_store_for_bridge(bridge)
     return _canonical_hash({
-        "evidenceVersion": 90,
+        "evidenceVersion": 91,
         "date": datetime.now(timezone.utc).date().isoformat(),
         "settings": store.settings,
         "inventory": bridge.recipe_hub.profile.get("houseIngredients") or [],

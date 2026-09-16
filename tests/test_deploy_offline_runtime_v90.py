@@ -28,6 +28,10 @@ if name == "git":
         staged = pathlib.Path(args[1]) / "custom_components/cook4me"
         shutil.copytree(os.environ["DEPLOY_TEST_COMPONENT"], staged,
                         ignore=shutil.ignore_patterns("__pycache__", "frontend"))
+        # This historical installer validates the v90 evidence count.
+        path = staged / "catalog/price_portions.v1.json"
+        payload = json.loads(path.read_text()); payload["portions"] = payload["portions"][:87]
+        path.write_text(json.dumps(payload))
         (staged / "frontend").mkdir(parents=True)
         (staged / "frontend/cook4me-panel-v90-bundle.js").write_text("new panel\n")
         if scenario == "missing_prices":

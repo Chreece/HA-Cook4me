@@ -645,8 +645,18 @@ def canonical_recipe(recipe, catalog):
             continue
         rows.append(price_ingredient({**raw, **({'key': match.get('key') or match.get('ingredientId') or match.get('id') or key} if key else {}),
                      'name': raw.get('name') or raw.get('foodName') or match.get('name') or key,
-                     'canonicalName': match.get('canonicalName') or match.get('name') or raw.get('canonicalName') or raw.get('name') or raw.get('foodName')}))
+                     'canonicalName': match.get('canonicalName') or match.get('name') or raw.get('canonicalName') or raw.get('name') or raw.get('foodName'),
+                     'priceCatalogMatched': bool(match) and match.get('classification', 'food') == 'food'
+                         and not match.get('needsSemanticConfirmation', False),
+                     'priceCatalogExcluded': bool(match) and (match.get('classification', 'food') != 'food'
+                         or match.get('needsSemanticConfirmation', False))}))
     result['ingredients'] = [reviewed_recipe_ingredient(row, recipe) for row in rows]
+    for item in result['ingredients']:
+        category = category_for(item)
+        # Exact reviewed price names are also an ingredient match. Arbitrary
+        # client-supplied flags or category tags are never trusted.
+        item['priceCatalogMatched'] = bool((item.get('priceCatalogMatched') or category) and not item.get('priceCatalogExcluded'))
+        item['priceCategory'] = category[0] if category else ''
     return result
 
 
