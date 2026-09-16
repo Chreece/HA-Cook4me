@@ -1,6 +1,9 @@
 """Automatic country-scoped product and recipe prices."""
 from __future__ import annotations
 
+import asyncio
+import time
+
 import voluptuous as vol
 from homeassistant.components import websocket_api
 from homeassistant.core import callback
@@ -46,7 +49,10 @@ async def ws_product_price(hass, connection, msg):
         if msg.get('ingredient'):
             catalog = await v11._ingredient_catalog(hass, bridge, msg.get('language') or 'en', refresh=False)
             wanted = inventory_identity(msg['ingredient'])
-            ingredient = next((row for row in catalog.get('items', []) if inventory_identity(row) == wanted), None)
+            ingredient = next((row for row in catalog.get('items', [])
+                               if inventory_identity({**row, 'key': row.get('key') or row.get('foodKey')
+                                   or row.get('ingredientId') or row.get('id')}) == wanted
+                               or inventory_identity(row) == wanted), None)
             if ingredient is None:
                 raise ValueError('Choose an ingredient from the Cook4Me catalog')
             ingredient = {**ingredient, 'key': ingredient.get('key') or ingredient.get('ingredientId') or ingredient.get('id')}
@@ -71,7 +77,25 @@ async def ws_recipe_cost(hass, connection, msg):
         legacy._send_error(connection, msg, exc)
 
 
+@websocket_api.websocket_command({vol.Required('type'): 'cook4me/v34/recipe_cost_refresh',
+    vol.Required('entry_id'): str, vol.Required('recipes'): vol.All([dict], vol.Length(min=1, max=32))})
+@websocket_api.async_response
+async def ws_recipe_cost_refresh(hass, connection, msg):
+    try:
+        bridge = _authorized(hass, connection, msg)
+        recipes = msg['recipes']
+        if any(len(recipe.get('ingredients') or []) > 200 for recipe in recipes):
+            raise ValueError('This recipe has too many ingredients')
+        catalog = await v11._ingredient_catalog(hass, bridge, 'en', refresh=False)
+        since = time.monotonic()
+        costs = await asyncio.gather(*(recipe_price(bridge, recipe, catalog.get('items', []),
+                                      refresh_since=since) for recipe in recipes))
+        connection.send_result(msg['id'], {'costs': costs})
+    except Exception as exc:
+        legacy._send_error(connection, msg, exc)
+
+
 @callback
 def async_register(hass):
-    for command in (ws_price_settings, ws_product_price, ws_recipe_cost):
+    for command in (ws_price_settings, ws_product_price, ws_recipe_cost, ws_recipe_cost_refresh):
         websocket_api.async_register_command(hass, command)

@@ -271,12 +271,13 @@ class Cook4MeCostStore:
         if not rows:
             return None
 
-        def rank(row: dict[str, Any]) -> tuple[int, int, str]:
+        def rank(row: dict[str, Any]) -> tuple[int, int, str, str]:
             source = _text(row.get("source"))
             confidence = _text(row.get("confidence"))
             local = bool(wanted_country and _country(row.get("country")) == wanted_country)
             exact = confidence in {"exact_purchase", "user_entered"} or source == "manual"
-            return (2 if exact else 1, 1 if local else 0, _text(row.get("date") or row.get("updatedAt")))
+            return (2 if exact else 1, 1 if local else 0,
+                    _text(row.get("date") or row.get("updatedAt")), _text(row.get("updatedAt")))
 
         return deepcopy(max(rows, key=rank))
 
