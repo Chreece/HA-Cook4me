@@ -35,6 +35,7 @@ jobs:
           set -Eeuo pipefail
           python tools/fix_semantic_standalone_patch_helper_v60.py
           python tools/apply_semantic_standalone_closure_patch_v60.py
+          python tools/fix_semantic_standalone_regression_v60.py
 
       - name: Run semantic closure regression suite
         run: |
@@ -93,10 +94,12 @@ jobs:
           git rm \
             .github/workflows/catalog-semantic-standalone-closure-v60.yml \
             tools/apply_semantic_standalone_closure_patch_v60.py \
-            tools/fix_semantic_standalone_patch_helper_v60.py
+            tools/fix_semantic_standalone_patch_helper_v60.py \
+            tools/fix_semantic_standalone_regression_v60.py
           git add \
             tools/compile_release_catalog_semantics_v60.py \
             tools/release_catalog_semantic_standalone_dispositions.v1.json \
+            tests/test_compile_release_catalog_semantics_v60.py \
             tests/test_semantic_standalone_dispositions_v60.py \
             .github/workflows/catalog-semantic-confirmation-apply-v60.yml \
             .github/workflows/catalog-semantic-remaining-audit-v60.yml
