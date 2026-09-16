@@ -34,3 +34,26 @@ countdown. English, German and Greek labels are included.
 
 Active panel: `cook4me-recipe-hub-panel-v81`; cache URL: `2026.9.16.6`.
 No cooker commands, firmware writes or live household/device tests were performed.
+
+## Validation and delivery
+
+- Real Chromium checks pass for the single product button, fullscreen manual and
+  scan fields, all illustrated states, live updates in both locations, late
+  overview results, disconnect/reconnect, keyboard opening/Escape, reduced motion,
+  account/device changes and the device-page deep link. Mobile information dialogs
+  fit at 360 px in English, German and Greek; screenshots were inspected.
+- The existing unified-scanner/ingredient-click browser suite and automatic
+  product/recipe pricing suite pass against v81. Recognition and telemetry in
+  browser tests use controlled responses, not a physical device.
+- Five new backend tests cover initial telemetry, updates, allowlisted payloads,
+  read-only access, denied/inactive users, revoked permissions and cleanup.
+- All 14 existing announcement backend tests pass.
+- All four v81 pinned-installer tests pass, including backup/install, invalid config
+  mounts, missing source data and automatic rollback after activation failure.
+- Bundle, JavaScript/Python syntax, version, workflow parsing and diff checks pass.
+
+Runtime commit: `feaf043f429b812221db4d2c5a5033519b5f9c11`.
+Pinned installer: `tools/deploy_offline_runtime_v81.sh`.
+
+The complete Python regression suite passed: **1,436 tests** (296.747 seconds),
+including the new telemetry and pinned-installer checks.
