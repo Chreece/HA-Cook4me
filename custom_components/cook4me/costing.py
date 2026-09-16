@@ -57,6 +57,7 @@ def _lot_reference(
     *,
     currency: str,
     country: str,
+    unit: str = "",
 ) -> tuple[dict[str, Any] | None, str]:
     lot_id = _text(lot.get("id") or lot.get("lotId"))
     if lot_id:
@@ -67,7 +68,7 @@ def _lot_reference(
             return exact, "exact_purchase"
     barcode = _text(lot.get("barcode"))
     if barcode:
-        observed = store.best_reference(f"barcode:{barcode}", currency=currency, country=country)
+        observed = store.best_reference(f"barcode:{barcode}", currency=currency, country=country, unit=unit)
         if observed is not None:
             return observed, "global_barcode_estimate"
     return None, ""
@@ -133,7 +134,7 @@ def calculate_recipe_cost(
                     continue
                 take = min(remaining, available)
                 reference, kind = _lot_reference(
-                    store, lot, currency=wanted_currency, country=wanted_country
+                    store, lot, currency=wanted_currency, country=wanted_country, unit=unit
                 )
                 if reference is not None:
                     cost = _cost_for_amount(reference, take, unit)
@@ -152,7 +153,7 @@ def calculate_recipe_cost(
         # Unpriced stock can use an explicit ingredient estimate too.
         remaining = max(0.0, required - covered)
         if remaining > 1e-9:
-            reference = store.best_reference(ident, currency=wanted_currency, country=wanted_country)
+            reference = store.best_reference(ident, currency=wanted_currency, country=wanted_country, unit=unit)
             if reference is not None:
                 cost = _cost_for_amount(reference, remaining, unit)
                 curr = _currency(reference.get("currency"))

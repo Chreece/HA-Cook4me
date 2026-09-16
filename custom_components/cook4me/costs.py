@@ -9,6 +9,7 @@ from typing import Any
 import urllib.error
 import urllib.parse
 import urllib.request
+import time
 
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
@@ -228,7 +229,7 @@ class Cook4MeCostStore:
             "observationId": observation_id,
             "updatedAt": datetime.now(timezone.utc).isoformat(),
         }
-        key = _reference_key(identity, curr, row["country"], row["source"])
+        key = _reference_key(identity, curr, row["country"], row["source"]) + "|" + unit.casefold()
         async with self._lock:
             data = deepcopy(self._data)
             refs = data.setdefault("references", {})
@@ -256,8 +257,11 @@ class Cook4MeCostStore:
         *,
         currency: str = "",
         country: str = "",
+        unit: str = "",
     ) -> dict[str, Any] | None:
         rows = self._references_for(identity, currency=currency)
+        if unit:
+            rows = [row for row in rows if convert_amount(1, unit, row.get("basisUnit")) is not None]
         if not rows:
             return None
         wanted_country = _country(country)
@@ -282,13 +286,13 @@ class Cook4MeCostStore:
         return deepcopy(max(rows, key=rank))
 
     def barcode_reference(
-        self, barcode: str, *, currency: str = "", country: str = ""
+        self, barcode: str, *, currency: str = "", country: str = "", unit: str = ""
     ) -> dict[str, Any] | None:
         code = _text(barcode)
         if not code:
             return None
         return self.best_reference(
-            f"barcode:{code}", currency=currency, country=country
+            f"barcode:{code}", currency=currency, country=country, unit=unit
         )
 
 
@@ -305,12 +309,13 @@ async def cost_store_for_bridge(bridge: Any) -> Cook4MeCostStore:
 
 def lookup_open_prices(
     barcode: str = "", *, currency: str = "", country: str = "", timeout: int = 15,
-    category: str = "", category_type: str = "CATEGORY",
+    category: str = "", category_type: str = "CATEGORY", unit: str = "",
 ) -> dict[str, Any]:
     """Bounded, read-only observations, strictly checked against the requested market.
 
-    Open Prices has no country filter on /prices. Filter returned locations locally;
-    an empty result means no usable observation in this bounded sample, not free food.
+    Open Prices has no country filter on /prices. Filter returned locations locally,
+    trying up to five pages within one timeout budget. An empty result means no
+    usable observation in this bounded sample, not free food.
     PRODUCT rows use the documented package price (price_per may be null).
     CATEGORY rows explicitly use UNIT or KILOGRAM. Never infer a package weight.
     """
@@ -330,18 +335,52 @@ def lookup_open_prices(
         params["category_tag"] = category
     if curr:
         params["currency"] = curr
-    request = urllib.request.Request(f"{_OPEN_PRICES_URL}?{urllib.parse.urlencode(params)}",
-        headers={"Accept": "application/json", "User-Agent": _OPEN_PRICES_USER_AGENT})
-    try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:
-            data = response.read(2_000_001)
-        if len(data) > 2_000_000:
-            return {"ok": False, "reason": "response_too_large", "items": []}
-        payload = json.loads(data.decode("utf-8"))
-    except (OSError, ValueError) as exc:
-        return {"ok": False, "reason": type(exc).__name__, "items": []}
+    normalized, pages_checked, search_limited, error = [], 0, False, ""
+    deadline = time.monotonic() + timeout
+    # The provider has no country filter. Continue beyond the first worldwide
+    # page, but cap time, bytes and requests. Never follow a response-provided URL.
+    for page in range(1, 6):
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            search_limited = True
+            break
+        params["page"] = page
+        request = urllib.request.Request(f"{_OPEN_PRICES_URL}?{urllib.parse.urlencode(params)}",
+            headers={"Accept": "application/json", "User-Agent": _OPEN_PRICES_USER_AGENT})
+        try:
+            with urllib.request.urlopen(request, timeout=remaining) as response:
+                data = response.read(2_000_001)
+            if len(data) > 2_000_000:
+                error = "response_too_large"
+                break
+            payload = json.loads(data.decode("utf-8"))
+            if not isinstance(payload, dict) or not isinstance(payload.get("items"), list):
+                error = "invalid_response"
+                break
+        except (OSError, ValueError) as exc:
+            error = type(exc).__name__
+            break
+        pages_checked += 1
+        normalized.extend(_normalize_open_prices(payload["items"], code=code, curr=curr,
+            market=market, category=category, category_type=category_type, cutoff=cutoff, today=today))
+        if any(row["usable"] and (not unit or convert_amount(1, unit, row["basisUnit"]) is not None)
+               for row in normalized):
+            break
+        try:
+            has_more = page < int(payload.get("pages") or 1)
+        except (TypeError, ValueError):
+            has_more = False
+        if not has_more or not payload["items"]:
+            break
+        search_limited = page == 5
+    return {"ok": not bool(error), "reason": error, "barcode": code, "items": normalized,
+            "count": len(normalized), "usableCount": sum(bool(row["usable"]) for row in normalized),
+            "pagesChecked": pages_checked, "searchLimited": search_limited or bool(error)}
+
+
+def _normalize_open_prices(items, *, code, curr, market, category, category_type, cutoff, today):
     normalized = []
-    for row in (payload.get("items") or []) if isinstance(payload, dict) else []:
+    for row in items:
         if not isinstance(row, dict) or row.get("duplicate_of") or row.get("price_is_discounted"):
             continue
         if code and _text(row.get("product_code")) != code:
@@ -379,8 +418,7 @@ def lookup_open_prices(
             "country": row_country, "location": _text(location.get("osm_name") or location.get("osm_display_name")),
             "productName": _text(row.get("product_name") or product.get("product_name")),
             "source": "open_prices", "confidence": "external_observation", "category": category})
-    return {"ok": True, "barcode": code, "items": normalized, "count": len(normalized),
-            "usableCount": sum(bool(row["usable"]) for row in normalized)}
+    return normalized
 
 
 async def async_store_open_price_result(

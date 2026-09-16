@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import {fileURLToPath} from 'node:url';
+const version=process.env.COOK4ME_TEST_PANEL_VERSION||'83';
 const {chromium}=createRequire(import.meta.url)('playwright');
 const browser=await chromium.launch({headless:true,executablePath:process.env.COOK4ME_CHROMIUM_EXECUTABLE||undefined,args:['--no-sandbox','--disable-gpu','--disable-software-rasterizer','--use-gl=disabled']});
 try{
@@ -8,9 +9,9 @@ try{
  page.on('pageerror',error=>errors.push(error.message));
  await page.route('http://cook4me.test/**',r=>r.fulfill({contentType:'text/html',body:'<!doctype html><style>body{margin:0;font-family:Arial;--primary-color:#3d775d;--primary-text-color:#253b30;--primary-background-color:#f8faf8;--card-background-color:#fff;--secondary-background-color:#edf2ee;--secondary-text-color:#627468;--divider-color:#dce5df}</style><body></body>'}));
  await page.goto('http://cook4me.test/');
- await page.addScriptTag({path:fileURLToPath(new URL('../custom_components/cook4me/frontend/cook4me-panel-v83-bundle.js',import.meta.url))});
- await page.evaluate(()=>{
-  const p=window.panel=document.createElement('cook4me-recipe-hub-panel-v83');window.calls=[];window.subscriptions=[];window.connectionEvents={};window.saved={};window.priceAmount=2;window.savedManual=null;
+ await page.addScriptTag({path:fileURLToPath(new URL(`../custom_components/cook4me/frontend/cook4me-panel-v${version}-bundle.js`,import.meta.url))});
+ await page.evaluate(version=>{
+  const p=window.panel=document.createElement(`cook4me-recipe-hub-panel-v${version}`);window.calls=[];window.subscriptions=[];window.connectionEvents={};window.saved={};window.priceAmount=2;window.savedManual=null;
   for(const method of ['_restorePreferences','_loadOverview','_loadBookState','_requestSection','_loadRecipeNutrition','_loadNutritionSettings','_loadFoodState','_loadInventoryState','_loadIngredientCatalog','_loadTodayOptions'])p[method]=async()=>{};
   const connection={sendMessagePromise:async msg=>msg.preferences||{},subscribeMessage:async(callback,msg)=>{const r={callback,msg,removed:false};window.subscriptions.push(r);return()=>{r.removed=true;};},addEventListener:(type,cb)=>window.connectionEvents[type]=cb,removeEventListener:(type,cb)=>{if(window.connectionEvents[type]===cb)delete window.connectionEvents[type];}};
   p._hass={language:'en',user:{id:'alice'},states:{},config:{country:'DE'},connection};
@@ -18,7 +19,7 @@ try{
   p._ingredientCatalog=[{key:'rice',name:'Rice'}];p._ingredientCatalogLanguage='en';p._capabilities={ingredientCatalogLanguage:'en',deviceCatalogLanguage:'en',defaultAiTaskAvailable:true,languages:[{code:'en',name:'English'}]};p._inventoryLoadedEntry='one';p._houseEntryId='one';p._nutritionSettings={};p._foodState={history:[],summary:{}};
   const state={storageLocations:[{id:'pantry',name:'Pantry',kind:'pantry'}],houseIngredients:[],aiEntityId:'',aiChoices:[]};p._v78AcceptState(state);
   p._loadIngredientCatalog=async()=>{p._ingredientCatalog=[{key:'rice',name:'Rice'}];p._ingredientCatalogLanguage='en';const c=p.shadowRoot.querySelector('#content');if(c)p._renderManualCatalogChoices(c);};
-  Object.getPrototypeOf(Object.getPrototypeOf(p))._api=async(type,payload)=>{
+  let base=Object.getPrototypeOf(p);while(base.constructor.name!=='Cook4MeRecipeHubPanelV82')base=Object.getPrototypeOf(base);base._api=async(type,payload)=>{
    window.calls.push({type,...structuredClone(payload)});
    if(type.endsWith('/scanner_state'))return state;
    if(type.endsWith('/diet_profiles')){if(window.failProfiles){window.failProfiles=false;throw new Error('Save failed');}if(window.delayProfiles)return new Promise(resolve=>window.releaseProfiles=resolve);window.profiles=structuredClone(payload.profiles);for(const row of [window.profiles.household,...window.profiles.members])for(const key of ['calorieTarget','proteinTarget','carbsTarget','fatTarget','saturatedFatTarget','sugarsTarget','fiberTarget','saltTarget','sodiumTarget'])row[key]=row[key]===''||row[key]==null?null:Number(row[key]);return {profile:{...p._entry().profile,dietProfiles:window.profiles,householdMembers:payload.profiles.members.map(r=>r.name),preferences:payload.preferences}};}
@@ -46,8 +47,8 @@ try{
   const catalog=Array.from({length:3000},(_,i)=>({ingredientId:'food-'+i,key:'food-'+i,name:i===2999?'Tomato':i===0?'Rice':'Ingredient '+i,canonicalName:i===2999?'Tomato':i===0?'Rice':'Ingredient '+i,sourceIngredientIds:['food-'+i,'sibling-'+i]}));
   p._ingredientCatalog=catalog;p._houseEntryId='one';p._loadIngredientCatalog=async()=>{p._ingredientCatalog=catalog;};
   document.body.append(p);p._renderShell();p._renderTab();p._updateHeader();
- });
- const panel=page.locator('cook4me-recipe-hub-panel-v83');
+ },version);
+ const panel=page.locator(`cook4me-recipe-hub-panel-v${version}`);
  await panel.locator('[data-v78-pane=food]').click();
  assert.equal(await panel.locator('#allergies,#avoid,#householdMembers').count(),0);
  const household=panel.locator('[data-v83-profile=household]');

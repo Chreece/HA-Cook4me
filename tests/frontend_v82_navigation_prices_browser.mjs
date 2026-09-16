@@ -24,7 +24,7 @@ try{
    if(type.endsWith('/scanner_state'))return state;
    if(type==='cook4me/recipe_save'){window.savedManual=structuredClone(payload.recipe);p._entry().recipes.push({...payload.recipe,id:'manual-saved',source:'manual'});return p._entry().recipes.at(-1);}
    if(type.endsWith('/ai_create')){if(window.delayAi)return new Promise(resolve=>window.releaseAi=resolve);const recipe={id:'ai-saved',title:'AI rice supper',source:'ai',servings:2,ingredients:[{key:'rice',name:'Rice',quantity:100,unit:'g'}],steps:['Cook'],match:{safe:true,dietCheckVersion:76,diet:'vegetarian'}};p._entry().recipes.push(recipe);return {recipe};}
-   const cost=recipe=>({complete:recipe.ingredients?.length>0,totalsByCurrency:{EUR:window.priceAmount},perServingByCurrency:{EUR:window.priceAmount/2},estimated:true,targetCountry:'DE',checkedAt:new Date().toISOString(),ingredients:(recipe.ingredients||[]).map(item=>({name:item.name,coverage:1,costsByCurrency:{EUR:window.priceAmount}}))});
+   const cost=recipe=>({priceLookupPending:Boolean(window.pendingPrices),complete:recipe.ingredients?.length>0,totalsByCurrency:{EUR:window.priceAmount},perServingByCurrency:{EUR:window.priceAmount/2},estimated:true,targetCountry:'DE',checkedAt:new Date().toISOString(),ingredients:(recipe.ingredients||[]).map(item=>({name:item.name,coverage:1,costsByCurrency:{EUR:window.priceAmount}}))});
    if(type.endsWith('/recipe_cost')){if(window.delayAuto)return new Promise(resolve=>window.releaseAuto=resolve);return cost(payload.recipe);}
    if(type.endsWith('/recipe_cost_refresh')){if(window.failPrice){window.failPrice=false;throw new Error('Price service offline');}if(window.delayPrices)return new Promise(resolve=>window.releasePrices=()=>resolve({costs:payload.recipes.map(cost)}));return {costs:payload.recipes.map(cost)};}
 
@@ -98,6 +98,13 @@ try{
  await fullscreen.locator('[data-v82-refresh-prices]').click();await page.waitForFunction(()=>!window.panel._v82Refresh);
  assert.equal(await page.evaluate(()=>window.calls.filter(c=>c.type.endsWith('/recipe_cost_refresh')).at(-1).recipes.length),1);
  await fullscreen.locator('[data-modal-close]').click();
+ if(Number(version)>=84){
+  await page.evaluate(()=>window.pendingPrices=true);await panel.locator('#v82RefreshPrices').click();await page.waitForFunction(()=>!window.panel._v82Refresh);
+  assert.equal(await page.evaluate(()=>window.panel._v79CostState(window.panel._results[0]).cost.priceLookupPending),true);
+  await page.evaluate(()=>{window.pendingPrices=false;window.priceAmount=6;});
+  await page.waitForFunction(()=>window.panel._v79CostState(window.panel._results[0]).cost.totalsByCurrency.EUR===6);
+  assert.equal(await page.evaluate(()=>window.panel._v79CostState(window.panel._results[0]).cost.priceLookupPending),false);
+ }
  // A late response cannot paint another page/account.
  await page.evaluate(()=>window.delayPrices=true);await panel.locator('#v82RefreshPrices').click();await page.waitForFunction(()=>Boolean(window.releasePrices));
  await panel.locator('#tabs [data-tab=shopping]').click();await page.evaluate(()=>{window.releasePrices();window.delayPrices=false;});

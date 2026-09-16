@@ -33,11 +33,11 @@ class PriceRefreshTests(unittest.IsolatedAsyncioTestCase):
         with patch.object(self.prices, 'lookup_open_prices', return_value={'ok': True, 'items': []}) as lookup:
             await self.prices.recipe_price(self.bridge, self.recipe, [self.ingredient])
             await self.prices.recipe_price(self.bridge, self.recipe, [self.ingredient])
-            self.assertEqual(lookup.call_count, 1)
+            self.assertEqual(lookup.call_count, 2)
             store = await self.store(); await store.async_set_settings(auto_global_prices=False)
             lookup.return_value = {'ok': True, 'items': [self.observed()]}
             result = await self.prices.recipe_price(self.bridge, self.recipe, [self.ingredient], refresh_since=time.monotonic())
-            self.assertTrue(result['complete']); self.assertEqual(lookup.call_count, 2)
+            self.assertTrue(result['complete']); self.assertEqual(lookup.call_count, 3)
             self.assertFalse(store.settings['autoGlobalPrices'])
 
     async def test_batch_coalesces_duplicate_ingredients_and_authenticates_once(self):
