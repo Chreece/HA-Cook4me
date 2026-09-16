@@ -86,13 +86,21 @@ jobs:
           print(json.dumps(summary, ensure_ascii=False, indent=2))
           PY
 
-      - name: Commit tested closure and remove temporary patch machinery
+      - name: Commit tested non-workflow closure files
         run: |
           set -Eeuo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+Chreece@users.noreply.github.com'
+
+          cp .github/workflows/catalog-semantic-confirmation-apply-v60.yml \
+            tools/generated_catalog_semantic_confirmation_apply_v60.yml
+          cp .github/workflows/catalog-semantic-remaining-audit-v60.yml \
+            tools/generated_catalog_semantic_remaining_audit_v60.yml
+          git restore -- \
+            .github/workflows/catalog-semantic-confirmation-apply-v60.yml \
+            .github/workflows/catalog-semantic-remaining-audit-v60.yml
+
           git rm -f \
-            .github/workflows/catalog-semantic-standalone-closure-v60.yml \
             tools/apply_semantic_standalone_closure_patch_v60.py \
             tools/fix_semantic_standalone_patch_helper_v60.py \
             tools/fix_semantic_standalone_regression_v60.py
@@ -101,8 +109,8 @@ jobs:
             tools/release_catalog_semantic_standalone_dispositions.v1.json \
             tests/test_compile_release_catalog_semantics_v60.py \
             tests/test_semantic_standalone_dispositions_v60.py \
-            .github/workflows/catalog-semantic-confirmation-apply-v60.yml \
-            .github/workflows/catalog-semantic-remaining-audit-v60.yml
+            tools/generated_catalog_semantic_confirmation_apply_v60.yml \
+            tools/generated_catalog_semantic_remaining_audit_v60.yml
           git diff --cached --check
           git commit -m 'Close remaining ingredient semantics conservatively v60'
           git pull --rebase origin cook4me-ingredient-semantic-confirmation-v60
