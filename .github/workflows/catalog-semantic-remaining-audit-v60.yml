@@ -1,0 +1,65 @@
+name: Audit remaining ingredient semantics v60
+
+on:
+  push:
+    branches:
+      - cook4me-ingredient-semantic-confirmation-v60
+    paths:
+      - 'tools/audit_remaining_semantic_ingredients_v60.py'
+      - '.github/workflows/catalog-semantic-remaining-audit-v60.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit-remaining:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Build non-mutating semantic audit
+        run: |
+          set -Eeuo pipefail
+          python tools/audit_remaining_semantic_ingredients_v60.py \
+            --review-root tools \
+            --output tools/remaining_semantic_ingredient_audit_v60.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('tools/remaining_semantic_ingredient_audit_v60.json')
+          payload = json.loads(path.read_text(encoding='utf-8'))
+          summary = payload['summary']
+          if int(summary.get('remaining') or 0) != 330:
+              raise SystemExit(f"unexpected unresolved semantic count: {summary.get('remaining')}")
+          if payload.get('policy', {}).get('automaticApproval') is not False:
+              raise SystemExit('audit must not approve semantic mappings')
+          if payload.get('policy', {}).get('providerIdentityAssigned') is not False:
+              raise SystemExit('audit must not assign provider identities')
+          print(json.dumps(summary, ensure_ascii=False, indent=2))
+          PY
+      - name: Commit exact audit report
+        run: |
+          set -Eeuo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/remaining_semantic_ingredient_audit_v60.json
+          git diff --cached --check
+          if git diff --cached --quiet; then
+            echo 'audit report already current'
+            exit 0
+          fi
+          git commit -m "Audit remaining unresolved ingredient semantics v60"
+          git push origin HEAD:cook4me-ingredient-semantic-confirmation-v60
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: remaining-semantic-ingredient-audit-v60-${{ github.sha }}
+          path: tools/remaining_semantic_ingredient_audit_v60.json
+          if-no-files-found: error
+          retention-days: 7
