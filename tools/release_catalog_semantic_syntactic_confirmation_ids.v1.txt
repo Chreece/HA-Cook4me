@@ -1,5 +1,6 @@
 # Explicit source-local IDs approved for syntax-only semantic normalization.
 # No pattern in this file authorizes future rows; IDs are exact and manually reviewed.
+# Validation batch includes the focused punctuation-only regression tests.
 local:uk:a02361ef58546a7c1c5f
 local:zh:d6b57be431201d90f710
 local:uk:c26a968e5fbe462e2769
