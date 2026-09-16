@@ -1,0 +1,345 @@
+name: Apply semantic ingredient confirmations v60
+
+on:
+  push:
+    branches:
+      - cook4me-ingredient-semantic-confirmation-v60
+    paths:
+      - '.github/workflows/catalog-semantic-confirmation-apply-v60.yml'
+      - 'tools/compile_release_catalog_semantics_v60.py'
+      - 'tools/release_catalog_semantic_confirmations.v1.json'
+      - 'tests/test_compile_release_catalog_semantics_v60.py'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+env:
+  CAPTURE_RUN_ID: '34833842515'
+  CAPTURE_ARTIFACT: 'progressive-catalog-capture-diagnostic-v60-11f77b687aea2055e1ef2259e622718f2ec1ffc0'
+  EVIDENCE_RUN_ID: '34836387461'
+  EVIDENCE_ARTIFACT: 'failed-detail-evidence-v60-73a36270d0de9fdbbccbdadb7903dcd93aaaea5c'
+
+jobs:
+  apply-confirmations:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Compile and audit semantic confirmations
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-semantic-confirmation"
+          mkdir -p "$BUILD"
+          python tools/compile_release_catalog_semantics_v60.py \
+            --reviews-dir tools \
+            --output "$BUILD/release_catalog_semantic_ingredients_v60.json" \
+            | tee "$BUILD/semantic-compile-summary.json"
+          python - <<'PY'
+          import importlib.util
+          import json
+          from pathlib import Path
+
+          root = Path.cwd()
+          tools = root / 'tools'
+          spec = importlib.util.spec_from_file_location(
+              'cook4me_semantics_confirmation_audit',
+              tools / 'compile_release_catalog_semantics_v60.py',
+          )
+          mod = importlib.util.module_from_spec(spec)
+          assert spec.loader is not None
+          spec.loader.exec_module(mod)
+
+          confirmation = json.loads(
+              (tools / 'release_catalog_semantic_confirmations.v1.json').read_text(encoding='utf-8')
+          )
+          items = confirmation.get('items') or []
+          paths = mod._review_paths(tools)
+          payloads = [(path.name, mod._load_payload(path)) for path in paths]
+          before = mod.compile_semantic_concepts(payloads)
+          after = mod.compile_from_paths(paths)
+
+          before_pending = int(before['summary']['needsSemanticConfirmationSourceLabels'])
+          after_pending = int(after['summary']['needsSemanticConfirmationSourceLabels'])
+          confirmed = int(after['summary']['confirmedSourceLabels'])
+          if confirmed != len(items):
+              raise SystemExit(f'confirmation count mismatch: {confirmed} != {len(items)}')
+          if before_pending - after_pending != len(items):
+              raise SystemExit(
+                  f'pending semantic decrement mismatch: {before_pending} - {after_pending} != {len(items)}'
+              )
+          if int(before['summary']['semanticConcepts']) - int(after['summary']['semanticConcepts']) != len(items):
+              raise SystemExit('semantic concept merge count does not equal explicit confirmations')
+
+          concepts = {row['conceptId']: row for row in after.get('concepts') or []}
+          for item in items:
+              source_id = item['sourceIngredientId']
+              target_id = item['confirmedConceptId']
+              if after['sourceIdentityToConcept'].get(source_id) != target_id:
+                  raise SystemExit(f'confirmation did not bind exact source identity: {source_id}')
+              concept = concepts.get(target_id)
+              if not concept or concept.get('needsSemanticConfirmation') is True:
+                  raise SystemExit(f'confirmed target still needs semantic confirmation: {target_id}')
+              identity = next(
+                  (row for row in concept.get('sourceIdentities') or [] if row.get('ingredientId') == source_id),
+                  None,
+              )
+              if not identity or identity.get('semanticConfirmationMethod') != 'explicit-reviewed-english-classification':
+                  raise SystemExit(f'confirmation audit receipt missing: {source_id}')
+
+          audit = {
+              'confirmationCount': len(items),
+              'beforeNeedsSemanticConfirmation': before_pending,
+              'afterNeedsSemanticConfirmation': after_pending,
+              'beforeSemanticConcepts': before['summary']['semanticConcepts'],
+              'afterSemanticConcepts': after['summary']['semanticConcepts'],
+              'providerIdentityAssigned': False,
+          }
+          out = Path(__import__('os').environ['RUNNER_TEMP']) / 'cook4me-semantic-confirmation' / 'semantic-confirmation-audit.json'
+          out.write_text(json.dumps(audit, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(audit, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Download preserved provider capture and exact 404 evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-semantic-confirmation"
+          mkdir -p "$BUILD/capture" "$BUILD/evidence"
+          gh run download "$CAPTURE_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name "$CAPTURE_ARTIFACT" --dir "$BUILD/capture"
+          gh run download "$EVIDENCE_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name "$EVIDENCE_ARTIFACT" --dir "$BUILD/evidence"
+          test -f "$BUILD/capture/captured-semantic-catalog.v60.json"
+          test -f "$BUILD/evidence/failed-detail-evidence.v60.json"
+
+      - name: Repair only independently reproduced stale 404 rows
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-semantic-confirmation"
+          python tools/reconcile_release_catalog_failed_detail_evidence_v60.py \
+            --catalog "$BUILD/capture/captured-semantic-catalog.v60.json" \
+            --evidence "$BUILD/evidence/failed-detail-evidence.v60.json" \
+            --output "$BUILD/repaired-catalog.v60.json" \
+            | tee "$BUILD/reconciliation-summary.v60.json"
+
+      - name: Re-overlay current semantic and canonical reviews offline
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-semantic-confirmation"
+          python tools/reoverlay_captured_release_catalog_v60.py \
+            --catalog "$BUILD/repaired-catalog.v60.json" \
+            --output "$BUILD/reoverlay-catalog.v60.json" \
+            --review-root tools \
+            --catalog-version '2026-09-14-v60-progressive' \
+            | tee "$BUILD/reoverlay-summary.v60.json"
+
+      - name: Reattach only already-reviewed nutrition from current active catalog
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-semantic-confirmation"
+          python - <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          root = Path(os.environ['RUNNER_TEMP']) / 'cook4me-semantic-confirmation'
+          repo = Path.cwd()
+          sys.path.insert(0, str(repo / 'tools'))
+          import build_release_catalog_v60_reviewed as builder
+
+          active = json.loads(
+              (repo / 'custom_components/cook4me/catalog/merged_catalog.v1.json').read_text(encoding='utf-8')
+          )
+          overlay = json.loads((root / 'reoverlay-catalog.v60.json').read_text(encoding='utf-8'))
+          cache = {}
+          for row in active.get('ingredients') or []:
+              if not isinstance(row, dict) or not isinstance(row.get('nutrition'), dict):
+                  continue
+              ident = str(row.get('id') or row.get('ingredientId') or row.get('key') or '').strip()
+              if ident:
+                  cache[ident] = row['nutrition']
+          result = builder.apply_reviewed_nutrition(overlay, cache)
+          (root / 'reviewed-catalog.v60.json').write_text(
+              json.dumps(result, ensure_ascii=False, separators=(',', ':')) + '\n',
+              encoding='utf-8',
+          )
+          facts = {
+              'reviewedProfilesCarriedForward': len(cache),
+              'reviewedNutritionRequiredCount': int((result.get('source') or {}).get('reviewedNutritionRequiredCount') or 0),
+              'reviewedNutritionResolvedCount': int((result.get('source') or {}).get('reviewedNutritionResolvedCount') or 0),
+              'networkRequestsForNutrition': False,
+          }
+          (root / 'nutrition-carry-forward-summary.v60.json').write_text(
+              json.dumps(facts, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(facts, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Compact and validate final runtime catalog
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-semantic-confirmation"
+          python tools/compact_release_catalog_v60_runtime.py \
+            --catalog "$BUILD/reviewed-catalog.v60.json" \
+            --output "$BUILD/final-catalog.v60.json" \
+            --report "$BUILD/runtime-compaction.v60.json"
+          python tools/validate_release_catalog_v60.py "$BUILD/final-catalog.v60.json" \
+            | tee "$BUILD/final-validation.v60.json"
+
+      - name: Prove exact identity preservation and semantic gap reduction
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-semantic-confirmation"
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          repo = Path.cwd()
+          root = Path(os.environ['RUNNER_TEMP']) / 'cook4me-semantic-confirmation'
+          before = json.loads(
+              (repo / 'custom_components/cook4me/catalog/merged_catalog.v1.json').read_text(encoding='utf-8')
+          )
+          after = json.loads((root / 'final-catalog.v60.json').read_text(encoding='utf-8'))
+          confirmations = json.loads(
+              (repo / 'tools/release_catalog_semantic_confirmations.v1.json').read_text(encoding='utf-8')
+          ).get('items') or []
+
+          def ident(row):
+              return str(row.get('id') or row.get('ingredientId') or row.get('key') or row.get('foodKey') or '').strip()
+          def provider_ids(payload):
+              return {
+                  ident(row)
+                  for row in payload.get('ingredients') or []
+                  if isinstance(row, dict) and ident(row) and not ident(row).startswith('local:')
+              }
+          def local_ids(payload):
+              return {
+                  ident(row)
+                  for row in payload.get('ingredients') or []
+                  if isinstance(row, dict) and ident(row).startswith('local:')
+              }
+          def pending_semantics(payload):
+              return sum(
+                  1 for row in payload.get('ingredients') or []
+                  if isinstance(row, dict) and row.get('needsSemanticConfirmation') is True
+              )
+          def variants(payload):
+              return sum(
+                  len(row.get('variants') or [])
+                  for row in payload.get('recipes') or []
+                  if isinstance(row, dict)
+              )
+
+          if provider_ids(before) != provider_ids(after):
+              raise SystemExit('provider ingredient identity set changed')
+          if local_ids(before) != local_ids(after):
+              raise SystemExit('source-local ingredient identity set changed')
+          if len(before.get('recipes') or []) != len(after.get('recipes') or []):
+              raise SystemExit('recipe count changed')
+          if variants(before) != variants(after):
+              raise SystemExit('recipe variant count changed')
+
+          before_pending = pending_semantics(before)
+          after_pending = pending_semantics(after)
+          if before_pending - after_pending != len(confirmations):
+              raise SystemExit(
+                  f'active catalog semantic decrement mismatch: {before_pending} - {after_pending} != {len(confirmations)}'
+              )
+          after_by_id = {ident(row): row for row in after.get('ingredients') or [] if isinstance(row, dict) and ident(row)}
+          for item in confirmations:
+              row = after_by_id.get(item['sourceIngredientId'])
+              if not row:
+                  raise SystemExit(f'confirmed source identity missing from final catalog: {item["sourceIngredientId"]}')
+              if row.get('conceptId') != item['confirmedConceptId']:
+                  raise SystemExit(f'confirmed source mapped to wrong concept: {item["sourceIngredientId"]}')
+              if row.get('needsSemanticConfirmation') is True:
+                  raise SystemExit(f'confirmed source still pending: {item["sourceIngredientId"]}')
+
+          source = after.get('source') if isinstance(after.get('source'), dict) else {}
+          summary = {
+              'catalogVersion': after.get('catalogVersion'),
+              'complete': after.get('complete') is True,
+              'catalogBytes': (root / 'final-catalog.v60.json').stat().st_size,
+              'recipes': len(after.get('recipes') or []),
+              'variants': variants(after),
+              'ingredients': len(after.get('ingredients') or []),
+              'semanticConfirmationAppliedCount': len(confirmations),
+              'needsSemanticConfirmationBefore': before_pending,
+              'needsSemanticConfirmationCount': after_pending,
+              'providerIngredientIdentityCount': len(provider_ids(after)),
+              'sourceLocalIngredientIdentityCount': len(local_ids(after)),
+              'reviewedNutritionResolvedCount': int(source.get('reviewedNutritionResolvedCount') or 0),
+              'reviewedNutritionRequiredCount': int(source.get('reviewedNutritionRequiredCount') or 0),
+              'foodIntelligenceNutritionResolvedCount': int(source.get('foodIntelligenceNutritionResolvedCount') or 0),
+              'foodIntelligenceIngredientCount': int(source.get('foodIntelligenceIngredientCount') or 0),
+              'networkRequestsForSemanticOverlay': False,
+              'networkRequestsForNutrition': False,
+          }
+          if not summary['complete']:
+              raise SystemExit('final semantic-confirmed catalog is not capture-complete')
+          (root / 'semantic-confirmation-catalog-summary.v60.json').write_text(
+              json.dumps(summary, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(summary, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Verify generated artifacts contain no secrets
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-semantic-confirmation"
+          ! grep -Eiq 'access[_-]?token|refresh[_-]?token|authorization|bearer |password|api[_-]?key|client[_-]?secret' \
+            "$BUILD/final-catalog.v60.json" \
+            "$BUILD/release_catalog_semantic_ingredients_v60.json" \
+            "$BUILD/semantic-confirmation-catalog-summary.v60.json"
+
+      - name: Promote exact validated bytes onto confirmation branch
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-semantic-confirmation"
+          cp "$BUILD/release_catalog_semantic_ingredients_v60.json" \
+            tools/release_catalog_semantic_ingredients_v60.json
+          cp "$BUILD/final-catalog.v60.json" \
+            custom_components/cook4me/catalog/merged_catalog.v1.json
+          cp "$BUILD/semantic-confirmation-catalog-summary.v60.json" \
+            tools/progressive_catalog_activation_v60_summary.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            tools/release_catalog_semantic_ingredients_v60.json \
+            custom_components/cook4me/catalog/merged_catalog.v1.json \
+            tools/progressive_catalog_activation_v60_summary.json
+          git diff --cached --check
+          if git diff --cached --quiet; then
+            echo 'validated semantic confirmation bytes already promoted'
+            exit 0
+          fi
+          git commit -m 'Apply reviewed semantic ingredient confirmations v60'
+          git push origin HEAD:cook4me-ingredient-semantic-confirmation-v60
+
+      - name: Upload semantic confirmation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: semantic-confirmation-v60-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/cook4me-semantic-confirmation/semantic-compile-summary.json
+            ${{ runner.temp }}/cook4me-semantic-confirmation/semantic-confirmation-audit.json
+            ${{ runner.temp }}/cook4me-semantic-confirmation/reconciliation-summary.v60.json
+            ${{ runner.temp }}/cook4me-semantic-confirmation/reoverlay-summary.v60.json
+            ${{ runner.temp }}/cook4me-semantic-confirmation/nutrition-carry-forward-summary.v60.json
+            ${{ runner.temp }}/cook4me-semantic-confirmation/runtime-compaction.v60.json
+            ${{ runner.temp }}/cook4me-semantic-confirmation/final-validation.v60.json
+            ${{ runner.temp }}/cook4me-semantic-confirmation/semantic-confirmation-catalog-summary.v60.json
+          if-no-files-found: warn
+          retention-days: 7
