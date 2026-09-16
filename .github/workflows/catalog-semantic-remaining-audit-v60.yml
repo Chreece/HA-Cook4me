@@ -7,6 +7,7 @@ on:
     paths:
       - 'tools/audit_remaining_semantic_ingredients_v60.py'
       - 'tools/audit_standalone_semantic_merge_candidates_v60.py'
+      - 'tools/audit_standalone_metadata_exact_candidates_v60.py'
       - 'tools/extract_high_similarity_semantic_candidates_v60.py'
       - 'tools/audit_syntactic_semantic_candidates_v60.py'
       - 'tools/summarize_semantic_similarity_lane_v60.py'
@@ -55,6 +56,9 @@ jobs:
             --review-root tools \
             --output tools/standalone_semantic_merge_audit_v60.json \
             --high-output tools/standalone_semantic_high_priority_v60.json
+          python tools/audit_standalone_metadata_exact_candidates_v60.py \
+            --review-root tools \
+            --output tools/standalone_semantic_metadata_exact_candidates_v60.json
           python - <<'PY'
           import json
           from pathlib import Path
@@ -144,6 +148,28 @@ jobs:
           if high.get('policy', {}).get('automaticApproval') is not False:
               raise SystemExit('high-priority standalone lane must remain review-only')
 
+          metadata_exact = json.loads(
+              Path('tools/standalone_semantic_metadata_exact_candidates_v60.json').read_text(
+                  encoding='utf-8'
+              )
+          )
+          metadata_policy = metadata_exact.get('policy') or {}
+          if metadata_policy.get('automaticApproval') is not False:
+              raise SystemExit('metadata-exact standalone lane must remain review-only')
+          if metadata_policy.get('candidateSearchIsIdentityProof') is not False:
+              raise SystemExit('metadata-exact candidate search cannot be identity proof')
+          if metadata_policy.get('providerIdentityAssigned') is not False:
+              raise SystemExit('metadata-exact audit cannot assign provider identities')
+          if metadata_policy.get('standaloneLedgerMutated') is not False:
+              raise SystemExit('metadata-exact audit cannot mutate standalone ledger')
+          if metadata_policy.get('safetyEligibilityGranted') is not False:
+              raise SystemExit('metadata-exact audit cannot grant safety eligibility')
+          if metadata_policy.get('exactReviewedTargetAfterMetadataPreviewRequired') is not True:
+              raise SystemExit('metadata-exact audit must require exact reviewed target after preview')
+          metadata_summary = metadata_exact.get('summary') or {}
+          if int(metadata_summary.get('standaloneDispositionCount') or -1) != len(ledger_items):
+              raise SystemExit('metadata-exact audit standalone count is stale')
+
           for name in (
               'remaining_semantic_high_similarity_v60.json',
               'remaining_semantic_similarity_070_v60.json',
@@ -157,6 +183,7 @@ jobs:
           print('remaining', json.dumps(remaining_summary, ensure_ascii=False))
           print('standalone', json.dumps(standalone_summary, ensure_ascii=False))
           print('standalone-high', json.dumps(high.get('summary') or {}, ensure_ascii=False))
+          print('standalone-metadata-exact', json.dumps(metadata_summary, ensure_ascii=False))
           PY
       - name: Upload audit evidence
         uses: actions/upload-artifact@v4
@@ -171,5 +198,6 @@ jobs:
             tools/remaining_semantic_syntactic_candidates_v60.json
             tools/standalone_semantic_merge_audit_v60.json
             tools/standalone_semantic_high_priority_v60.json
+            tools/standalone_semantic_metadata_exact_candidates_v60.json
           if-no-files-found: error
           retention-days: 7
