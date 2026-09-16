@@ -94,3 +94,10 @@ The three checks returned respectively 20, 5 and 11 usable observations; these
 counts describe those requests, not nationwide coverage.
 
 No live Home Assistant instance or appliance was available for installation.
+
+Runtime commit: `7fb8a9558c9ce5f4c25139cde6a3f5d6f2ddcdb5`.
+Installer: `tools/deploy_offline_runtime_v85.sh`. It backs up the installed
+integration, runs the catalog and pricing preflight checks, installs atomically,
+restarts HA, and checks the served v84 panel plus the installed price snapshot.
+All five installer tests passed, including missing-price-data refusal and
+activation rollback: **124 focused tests passed in total**.
