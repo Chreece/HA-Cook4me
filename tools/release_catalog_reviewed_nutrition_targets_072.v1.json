@@ -1,0 +1,36 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-target-candidate-binding",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Glazed chestnuts, crushed",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Chestnuts",
+      "fdcId": 2707499,
+      "notes": "Manual semantic review binds Cook4Me 'Glazed chestnuts, crushed' to USDA FNDDS 'Chestnuts'. The same exact FDC record was already explicitly continued for Cook4Me 'Candied chestnuts for decorating' from the reviewed 'Candied chestnuts' identity; in this culinary context glazed chestnuts are the same candied/glazed chestnut product family, while crushing changes presentation only. This target's own pinned evidence independently contains the record at rank 1. Candidate rank and historical continuity are review aids only, not automatic identity proof. Confidence remains medium because USDA supplies only a generic chestnut profile: this binding does not model the sugar glaze, syrup concentration, candying yield, brand, chestnut species, piece size, or crushing loss.",
+      "reviewTargetId": "concept:food:4074d263172001672199",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "ddc258fe5c203ea105599711701d467a8fa184aa0e90d903e4114acb2530abc1",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "ea22e923a3c414f3f0fa704b46d500befedde80bdb0277e3e9a93ff26f04d250",
+      "sourceEvidenceTargetId": "concept:food:4074d263172001672199",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "reviewDecisionSha256": "f98d6f51ed17f630594e8c01c56304d645fd2aa83a84236966a5c14dbee779bd",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "ea22e923a3c414f3f0fa704b46d500befedde80bdb0277e3e9a93ff26f04d250"
+}

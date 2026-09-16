@@ -1,0 +1,68 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-target-candidate-binding",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Candied chestnuts for decorating",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Chestnuts",
+      "fdcId": 2707499,
+      "notes": "Manual semantic review binds Cook4Me 'Candied chestnuts for decorating' to USDA FNDDS 'Chestnuts'. The same exact FDC record was already explicitly reviewed for Cook4Me 'Candied chestnuts'; 'for decorating' is recipe-use wording only and does not change the ingredient identity. This target's own pinned evidence independently contains the record at rank 1. Candidate rank and historical reuse are review aids only, not identity proof. This generic chestnut profile does not infer sugar coating, syrup concentration, brand, glaze, serving size, or piece weight.",
+      "reviewTargetId": "concept:food:0f1785fac42c028eb525",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "5470d21652ce5993f7939f67797715f1e593026a35240af76e6aacc4a6093fdd",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "0ef29f04a1ec5fc63b133eb2475fca502adfb62a6b069d2de82dba437b3bafc5",
+      "sourceEvidenceTargetId": "concept:food:0f1785fac42c028eb525",
+      "usageCountAtReview": 2
+    },
+    {
+      "candidateEvidenceRank": 10,
+      "canonicalEnglishName": "Ichimi chili pepper (for sauce)",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Peppers, hot chili, red, raw",
+      "fdcId": 170106,
+      "notes": "Manual semantic review binds Cook4Me 'Ichimi chili pepper (for sauce)' to USDA SR Legacy 'Peppers, hot chili, red, raw'. The same exact FDC record was already explicitly reviewed for Cook4Me 'Ichimi chili pepper'; the parenthetical 'for sauce' describes recipe use and does not change the ingredient identity. This target's own pinned evidence independently contains the record at rank 10. Candidate rank and historical reuse are review aids only, not identity proof. This binding does not infer a specific cultivar beyond the reviewed generic hot-red-chili reference, sauce composition, brand, serving size, or quantity conversion.",
+      "reviewTargetId": "concept:food:e36eed81d017611560ef",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "7f889861140c939834ce185e64267e7891f18774241298e6fe0b13620ba07bd3",
+      "sourceEvidenceCandidateRank": 10,
+      "sourceEvidenceSha256": "0ef29f04a1ec5fc63b133eb2475fca502adfb62a6b069d2de82dba437b3bafc5",
+      "sourceEvidenceTargetId": "concept:food:e36eed81d017611560ef",
+      "usageCountAtReview": 1
+    },
+    {
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Slices of toasted rustic bread",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Bread, rye, toasted",
+      "fdcId": 172685,
+      "notes": "Manual semantic review binds Cook4Me 'Slices of toasted rustic bread' to USDA SR Legacy 'Bread, rye, toasted'. The same exact FDC record was already explicitly reviewed for Cook4Me 'Large slices of toasted rustic bread'; removing 'large' changes only presentation size, not the per-100-g food identity. This target's own pinned evidence independently contains the record at rank 9. Candidate rank and historical reuse are review aids only, not identity proof. This binding does not infer an exact rustic-loaf formula, brand, slice mass, hydration, crust ratio, grain blend, or serving size.",
+      "reviewTargetId": "concept:food:a58723a5ce67320ac7ad",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "9c36c3ebeeadea8df0c736dbfb647070743b969506f85efa3fe5af771b58b81d",
+      "sourceEvidenceCandidateRank": 9,
+      "sourceEvidenceSha256": "0ef29f04a1ec5fc63b133eb2475fca502adfb62a6b069d2de82dba437b3bafc5",
+      "sourceEvidenceTargetId": "concept:food:a58723a5ce67320ac7ad",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "reviewDecisionSha256": "e8ab40e1a6be4fd0973be238cefac0d2766648bf3aec8f8cb7bf1e38f46367f6",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "0ef29f04a1ec5fc63b133eb2475fca502adfb62a6b069d2de82dba437b3bafc5"
+}

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-nutrition-review-hold-release-decisions-v60",
+  "policy": {
+    "explicitRereviewPerformed": true,
+    "historicalHoldRegistryModified": false,
+    "historicalReviewsModified": false,
+    "candidateSearchIsIdentityProof": false,
+    "retainedReferenceCandidateRequired": true,
+    "exactTargetReleaseRequired": true
+  },
+  "items": [
+    {
+      "reviewTargetId": "concept:food:51b62939bbb0887b2b96",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Almond purée",
+      "heldReasonCode": "target_evidence_missing",
+      "heldFdcId": 2262074,
+      "approved": true,
+      "fdcId": 2262074,
+      "fdcDescription": "Almond butter, creamy",
+      "fdcDataType": "Foundation",
+      "confidence": "medium",
+      "sourceEvidenceSha256": "9775db36fdec8ef6ac129ab28b5fe9bbad31ea2cf4b46e212167518762250b71",
+      "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+      "sourceEvidenceTargetId": "concept:food:4c7e449504a03a4b449e",
+      "sourceEvidenceCandidateRank": 11,
+      "notes": "Explicit re-review releases only the historical provenance hold for Almond purée. The retained source candidate is USDA Foundation 'Almond butter, creamy' under another almond-cream target, proving the exact FDC row in immutable evidence even though the held destination was excluded from candidate re-search. Almond purée and plain creamy almond butter are treated as the same ground-almond food family for a bounded nutrition reference, but the record does not certify brand, added oil, sugar, salt, roast level, water content, cultivar, or processing details; confidence is medium. Nutrition remains the USDA per-100-g almond-butter reference with no serving or recipe conversion inferred. The original hold row and historical review remain unchanged for audit."
+    }
+  ]
+}

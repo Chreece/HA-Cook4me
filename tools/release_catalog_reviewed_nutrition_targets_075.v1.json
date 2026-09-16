@@ -1,0 +1,36 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-target-candidate-binding",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "candidateEvidenceRank": 3,
+      "canonicalEnglishName": "Glutinous rice (soak in lukewarm water for 1 hour, then drain)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Rice, white, glutinous, unenriched, uncooked",
+      "fdcId": 168883,
+      "notes": "Manual semantic review binds Cook4Me 'Glutinous rice (soak in lukewarm water for 1 hour, then drain)' to USDA SR Legacy 'Rice, white, glutinous, unenriched, uncooked'. The same exact FDC record was already explicitly reviewed for Cook4Me 'Glutinous rice'; the soak-and-drain wording is a recipe preparation instruction applied to that same rice rather than a different ingredient identity. This target's own pinned evidence independently contains the record at rank 3. Candidate rank and historical reuse are review aids only, not identity proof. Confidence remains medium because the USDA record is the uncooked rice reference and this continuation does not infer water absorption, drained weight, cooking yield, serving weight, or post-soak nutrient density.",
+      "reviewTargetId": "concept:food:636215975869db997ad7",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "e7821267486ec1a4db8ea1abd97c1ce6336b7dc4d999a6029f3bc5c1f28e9236",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "4a0a0971602feef9d8306587a6ec4c38098f9176eabbccde891cec67cd27fc0b",
+      "sourceEvidenceTargetId": "concept:food:636215975869db997ad7",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "reviewDecisionSha256": "094e879b21ac4eab5622e174bd63cdcd1207db451f7c8daf5e7403a1c92ebb50",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "4a0a0971602feef9d8306587a6ec4c38098f9176eabbccde891cec67cd27fc0b"
+}

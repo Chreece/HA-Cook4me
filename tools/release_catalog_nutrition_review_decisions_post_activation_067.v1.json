@@ -1,0 +1,29 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Kombu (3x3)",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Seaweed, kelp, raw",
+      "fdcId": 168457,
+      "notes": "Manual semantic review binds Cook4Me 'Kombu (3x3)' to USDA SR Legacy 'Seaweed, kelp, raw'. The same exact FDC record was already explicitly reviewed for Cook4Me 'Kombu'; the '(3x3)' text describes the piece dimensions and does not change the per-100-g ingredient identity. This target's own pinned evidence independently contains the record at rank 1 via the conservative discovery alias 'kelp'. The alias, candidate rank, and historical reuse are review aids only, not identity proof. This continuation preserves the existing reviewed generic kelp mapping and does not infer a particular Laminaria species, dried-versus-fresh commercial form, seasoning, brand, piece mass, serving size, or preparation yield.",
+      "reviewTargetId": "concept:food:77aa05191fd2541037f5",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "1979406cfbb6bb7bf738146a36be4307a19122ac13692b2859a0902a7d6ca37c"
+}

@@ -1,0 +1,57 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "evidenceBindingScope": "retained-reference-record",
+  "items": [
+    {
+      "approved": true,
+      "canonicalEnglishName": "Zucchini flowers",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Pumpkin flowers, raw",
+      "fdcId": 169270,
+      "notes": "Explicit destination review accepts USDA 'Pumpkin flowers, raw' as a bounded squash-blossom-family nutrition reference for raw zucchini flowers/blossoms. The USDA record identifies raw Cucurbita spp. flowers, matching the uncooked edible flower form, but it does not certify zucchini versus pumpkin cultivar/species equivalence, blossom sex, maturity, cultivar, trimming fraction, or agricultural origin; confidence is therefore medium. Nutrition remains the USDA per-100-g raw flower reference with no edible-part, serving-mass, stuffing, frying, boiling, or other cooking conversion inferred. This decision is limited to plain raw zucchini flowers/blossoms; stuffed, cooked, fried, pickled, or zucchini-fruit identities remain separate.",
+      "reviewTargetId": "concept:food:2af5aa8b333bbc8a8279",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:2af5aa8b333bbc8a8279"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Zucchini blossoms",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Pumpkin flowers, raw",
+      "fdcId": 169270,
+      "notes": "Explicit destination review accepts USDA 'Pumpkin flowers, raw' as a bounded squash-blossom-family nutrition reference for raw zucchini flowers/blossoms. The USDA record identifies raw Cucurbita spp. flowers, matching the uncooked edible flower form, but it does not certify zucchini versus pumpkin cultivar/species equivalence, blossom sex, maturity, cultivar, trimming fraction, or agricultural origin; confidence is therefore medium. Nutrition remains the USDA per-100-g raw flower reference with no edible-part, serving-mass, stuffing, frying, boiling, or other cooking conversion inferred. This decision is limited to plain raw zucchini flowers/blossoms; stuffed, cooked, fried, pickled, or zucchini-fruit identities remain separate.",
+      "reviewTargetId": "concept:food:2423fe11e04979dc2ab1",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:2af5aa8b333bbc8a8279"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Zucchini flower",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Pumpkin flowers, raw",
+      "fdcId": 169270,
+      "notes": "Explicit destination review accepts USDA 'Pumpkin flowers, raw' as a bounded squash-blossom-family nutrition reference for raw zucchini flowers/blossoms. The USDA record identifies raw Cucurbita spp. flowers, matching the uncooked edible flower form, but it does not certify zucchini versus pumpkin cultivar/species equivalence, blossom sex, maturity, cultivar, trimming fraction, or agricultural origin; confidence is therefore medium. Nutrition remains the USDA per-100-g raw flower reference with no edible-part, serving-mass, stuffing, frying, boiling, or other cooking conversion inferred. This decision is limited to plain raw zucchini flowers/blossoms; stuffed, cooked, fried, pickled, or zucchini-fruit identities remain separate.",
+      "reviewTargetId": "concept:food:fd41802fe6d5d23e0012",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:2af5aa8b333bbc8a8279"
+    }
+  ],
+  "kind": "cook4me-fdc-retained-reference-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "5b98ea0b699e314989dc3bd05719a78ff33fb66aaa352345a237733616b383d5"
+}

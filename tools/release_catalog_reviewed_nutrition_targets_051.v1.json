@@ -1,0 +1,78 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-retained-reference-binding",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Burdock root, julienned and soaked in water to remove bitterness",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Burdock root, raw",
+      "fdcId": 169974,
+      "notes": "Explicit destination review accepts raw burdock root as the bounded nutrition reference for burdock that is julienned and soaked in water only to reduce bitterness. The retained USDA record does not model leaching, absorbed rinse water, cultivar, peel fraction, or cut size. This binding is limited to burdock that remains uncooked after soaking; cooked, pickled, candied, or otherwise transformed burdock remains separate. Nutrition remains per 100 g raw root; no soaking-yield conversion is inferred.",
+      "reviewTargetId": "concept:food:bd47d4e867a32214c7e3",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "862327379863abe920236a55f6ace5ea74709c294fa39b6e35f03a3a8501ad38",
+      "sourceEvidenceCandidateRank": 10,
+      "sourceEvidenceSha256": "c26ca11a83b592737417181ca5fcbf4b092d2c176e98192334577ac8367bc46b",
+      "sourceEvidenceTargetId": "concept:food:bd47d4e867a32214c7e3",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Burdock, shaved and soaked in water",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Burdock root, raw",
+      "fdcId": 169974,
+      "notes": "Explicit destination review accepts raw burdock root as the bounded nutrition reference for shaved burdock soaked in water while still uncooked. The retained USDA record does not model leaching, absorbed rinse water, cultivar, peel fraction, or cut size. Cooked, pickled, candied, or otherwise transformed burdock remains separate. Nutrition remains per 100 g raw root; no soaking-yield conversion is inferred.",
+      "reviewTargetId": "concept:food:b1bbf56a7bbe8a2c0e94",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "862327379863abe920236a55f6ace5ea74709c294fa39b6e35f03a3a8501ad38",
+      "sourceEvidenceCandidateRank": 10,
+      "sourceEvidenceSha256": "c26ca11a83b592737417181ca5fcbf4b092d2c176e98192334577ac8367bc46b",
+      "sourceEvidenceTargetId": "concept:food:bd47d4e867a32214c7e3",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Okra, rubbed with salt, washed and cut 1 cm wide",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Okra, raw",
+      "fdcId": 169260,
+      "notes": "Explicit destination review accepts raw okra as the bounded nutrition reference for fresh okra that is rubbed with salt, washed, and cut while still uncooked. The retained USDA record does not certify residual surface salt, rinse-water uptake, cultivar, or trimming loss. Cooked, frozen, pickled, or dried okra remains separate. Nutrition remains per 100 g raw okra; no preparation-yield or sodium adjustment is inferred.",
+      "reviewTargetId": "concept:food:93e854fa4ea1e88b20d9",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "c3781b22a31267f5e26d9b0af494d8f6d51960e66251067f68b8e12dcb82a556",
+      "sourceEvidenceCandidateRank": 12,
+      "sourceEvidenceSha256": "c26ca11a83b592737417181ca5fcbf4b092d2c176e98192334577ac8367bc46b",
+      "sourceEvidenceTargetId": "concept:food:dae0936463c4499bf1ed",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "referenceReceipts": {
+    "169260": {
+      "sourceCandidateSha256": "c3781b22a31267f5e26d9b0af494d8f6d51960e66251067f68b8e12dcb82a556",
+      "sourceEvidenceCandidateRank": 12,
+      "sourceEvidenceTargetId": "concept:food:dae0936463c4499bf1ed"
+    },
+    "169974": {
+      "sourceCandidateSha256": "862327379863abe920236a55f6ace5ea74709c294fa39b6e35f03a3a8501ad38",
+      "sourceEvidenceCandidateRank": 10,
+      "sourceEvidenceTargetId": "concept:food:bd47d4e867a32214c7e3"
+    }
+  },
+  "reviewDecisionSha256": "1845d5801f67ed47ee4a59e382d0bbe6f9480841be14247304695ba237884b3e",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "c26ca11a83b592737417181ca5fcbf4b092d2c176e98192334577ac8367bc46b"
+}

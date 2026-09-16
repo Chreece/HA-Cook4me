@@ -1,0 +1,118 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-retained-reference-binding",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Fresh mint leaves, washed and chopped",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spearmint, fresh",
+      "fdcId": 173475,
+      "notes": "Explicit destination review accepts fresh spearmint as a bounded generic culinary-mint nutrition reference for washed/chopped fresh mint leaves. The retained USDA record does not certify that every Cook4Me 'mint' ingredient is Mentha spicata rather than peppermint or another culinary mint, nor does it certify cultivar, stem fraction, or residual wash water. This binding is limited to fresh leaf mint; peppermint essence, dried mint, composite herb mixtures, garnish alternatives, and non-food mint identities remain separate. Nutrition remains per 100 g fresh herb; no tablespoon mass or preparation-loss conversion is inferred.",
+      "reviewTargetId": "concept:food:49feec59404b80160aba",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "560696a1b96f9f04e571ba1e8b1bd932e00e523d878c5a70088e05cd13df0947",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "8beb71a92432c46c6b452f3ce75a92a51e5f15285357ed17898409c8ee597423",
+      "sourceEvidenceTargetId": "concept:food:4b0de88d911bf226b5b6",
+      "usageCountAtReview": 5
+    },
+    {
+      "canonicalEnglishName": "Fresh mint, washed and finely chopped",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spearmint, fresh",
+      "fdcId": 173475,
+      "notes": "Explicit destination review accepts fresh spearmint as a bounded generic culinary-mint nutrition reference for washed/chopped fresh mint leaves. The retained USDA record does not certify that every Cook4Me 'mint' ingredient is Mentha spicata rather than peppermint or another culinary mint, nor does it certify cultivar, stem fraction, or residual wash water. This binding is limited to fresh leaf mint; peppermint essence, dried mint, composite herb mixtures, garnish alternatives, and non-food mint identities remain separate. Nutrition remains per 100 g fresh herb; no tablespoon mass or preparation-loss conversion is inferred.",
+      "reviewTargetId": "concept:food:9ce05451c80761ab40f3",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "560696a1b96f9f04e571ba1e8b1bd932e00e523d878c5a70088e05cd13df0947",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "8beb71a92432c46c6b452f3ce75a92a51e5f15285357ed17898409c8ee597423",
+      "sourceEvidenceTargetId": "concept:food:4b0de88d911bf226b5b6",
+      "usageCountAtReview": 2
+    },
+    {
+      "canonicalEnglishName": "Fresh mint leaves, washed and finely chopped",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spearmint, fresh",
+      "fdcId": 173475,
+      "notes": "Explicit destination review accepts fresh spearmint as a bounded generic culinary-mint nutrition reference for washed/chopped fresh mint leaves. The retained USDA record does not certify that every Cook4Me 'mint' ingredient is Mentha spicata rather than peppermint or another culinary mint, nor does it certify cultivar, stem fraction, or residual wash water. This binding is limited to fresh leaf mint; peppermint essence, dried mint, composite herb mixtures, garnish alternatives, and non-food mint identities remain separate. Nutrition remains per 100 g fresh herb; no tablespoon mass or preparation-loss conversion is inferred.",
+      "reviewTargetId": "concept:food:c2e004e6eea675cd02cb",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "560696a1b96f9f04e571ba1e8b1bd932e00e523d878c5a70088e05cd13df0947",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "8beb71a92432c46c6b452f3ce75a92a51e5f15285357ed17898409c8ee597423",
+      "sourceEvidenceTargetId": "concept:food:4b0de88d911bf226b5b6",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Mint, washed and cut into pieces",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spearmint, fresh",
+      "fdcId": 173475,
+      "notes": "Explicit destination review accepts fresh spearmint as a bounded generic culinary-mint nutrition reference for washed/chopped fresh mint leaves. The retained USDA record does not certify that every Cook4Me 'mint' ingredient is Mentha spicata rather than peppermint or another culinary mint, nor does it certify cultivar, stem fraction, or residual wash water. This binding is limited to fresh leaf mint; peppermint essence, dried mint, composite herb mixtures, garnish alternatives, and non-food mint identities remain separate. Nutrition remains per 100 g fresh herb; no tablespoon mass or preparation-loss conversion is inferred.",
+      "reviewTargetId": "concept:food:57f677d50ec59f304d35",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "560696a1b96f9f04e571ba1e8b1bd932e00e523d878c5a70088e05cd13df0947",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "8beb71a92432c46c6b452f3ce75a92a51e5f15285357ed17898409c8ee597423",
+      "sourceEvidenceTargetId": "concept:food:4b0de88d911bf226b5b6",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Mint, washed and finely chopped",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spearmint, fresh",
+      "fdcId": 173475,
+      "notes": "Explicit destination review accepts fresh spearmint as a bounded generic culinary-mint nutrition reference for washed/chopped fresh mint leaves. The retained USDA record does not certify that every Cook4Me 'mint' ingredient is Mentha spicata rather than peppermint or another culinary mint, nor does it certify cultivar, stem fraction, or residual wash water. This binding is limited to fresh leaf mint; peppermint essence, dried mint, composite herb mixtures, garnish alternatives, and non-food mint identities remain separate. Nutrition remains per 100 g fresh herb; no tablespoon mass or preparation-loss conversion is inferred.",
+      "reviewTargetId": "concept:food:5e15d10b8f5ea8ffbbd8",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "560696a1b96f9f04e571ba1e8b1bd932e00e523d878c5a70088e05cd13df0947",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "8beb71a92432c46c6b452f3ce75a92a51e5f15285357ed17898409c8ee597423",
+      "sourceEvidenceTargetId": "concept:food:4b0de88d911bf226b5b6",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Tbsp fresh mint, washed and finely chopped",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spearmint, fresh",
+      "fdcId": 173475,
+      "notes": "Explicit destination review accepts fresh spearmint as a bounded generic culinary-mint nutrition reference for washed/chopped fresh mint leaves. The retained USDA record does not certify that every Cook4Me 'mint' ingredient is Mentha spicata rather than peppermint or another culinary mint, nor does it certify cultivar, stem fraction, or residual wash water. This binding is limited to fresh leaf mint; peppermint essence, dried mint, composite herb mixtures, garnish alternatives, and non-food mint identities remain separate. Nutrition remains per 100 g fresh herb; no tablespoon mass or preparation-loss conversion is inferred.",
+      "reviewTargetId": "concept:food:566df5bc8c2fb48b84da",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "560696a1b96f9f04e571ba1e8b1bd932e00e523d878c5a70088e05cd13df0947",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "8beb71a92432c46c6b452f3ce75a92a51e5f15285357ed17898409c8ee597423",
+      "sourceEvidenceTargetId": "concept:food:4b0de88d911bf226b5b6",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "056b9631ec63cafbf0302d19b2cccef4d0b50417b3f96ff2124f41709938d82b",
+  "referenceReceipts": {
+    "173475": {
+      "sourceCandidateSha256": "560696a1b96f9f04e571ba1e8b1bd932e00e523d878c5a70088e05cd13df0947",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:4b0de88d911bf226b5b6"
+    }
+  },
+  "reviewDecisionSha256": "712db1be137ff4003a4414d5d9183fbd8686575895ecc4856d260af04466362a",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "8beb71a92432c46c6b452f3ce75a92a51e5f15285357ed17898409c8ee597423"
+}

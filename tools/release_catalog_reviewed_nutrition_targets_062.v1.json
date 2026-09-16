@@ -1,0 +1,58 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-retained-reference-binding",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Mirin (for sauce)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Wine, rice",
+      "fdcId": 2710691,
+      "notes": "Manual semantic review binds Cook4Me 'Mirin (for sauce)' to the retained USDA FNDDS record 'Wine, rice' already explicitly reviewed for the quantity-decorated Mirin target in batch 61. The parenthetical 'for sauce' describes recipe use, not a different ingredient or preparation state. The retained source target/rank is only a locator receipt and is not identity proof. This binding does not infer brand, sweetness grade, seasoning, alcohol percentage, dilution, sauce composition, density, or a volume-to-mass conversion.",
+      "reviewTargetId": "concept:food:9aa3651e5f7cad92588f",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "5904c761b2651f0dc5a4e1a4fc77b07462ac14d8d68f2ce065b31d49a6b65660",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "9775d0481709236cc37f88f378bcc80d466e79f43de5918cdde1640998099276",
+      "sourceEvidenceTargetId": "concept:food:336707fa4bda9578d0fb",
+      "usageCountAtReview": 3
+    },
+    {
+      "canonicalEnglishName": "Tablespoon of mirin",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Wine, rice",
+      "fdcId": 2710691,
+      "notes": "Manual semantic review binds Cook4Me 'Tablespoon of mirin' to the retained USDA FNDDS record 'Wine, rice' already explicitly reviewed for the quantity-decorated Mirin target in batch 61. 'Tablespoon of' is quantity wording and does not change the per-100-g ingredient identity. The retained source target/rank is only a locator receipt and is not identity proof. This binding does not infer tablespoon mass, density, brand, sweetness grade, seasoning, alcohol percentage, dilution, or any volume-to-mass conversion.",
+      "reviewTargetId": "concept:food:bec03c001431512a3577",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "5904c761b2651f0dc5a4e1a4fc77b07462ac14d8d68f2ce065b31d49a6b65660",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "9775d0481709236cc37f88f378bcc80d466e79f43de5918cdde1640998099276",
+      "sourceEvidenceTargetId": "concept:food:336707fa4bda9578d0fb",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "referenceReceipts": {
+    "2710691": {
+      "sourceCandidateSha256": "5904c761b2651f0dc5a4e1a4fc77b07462ac14d8d68f2ce065b31d49a6b65660",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:336707fa4bda9578d0fb"
+    }
+  },
+  "reviewDecisionSha256": "a0fa80c908926cacf56e310e938c7bc5986e3c53efcdfd5468ed5cf13da42092",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "9775d0481709236cc37f88f378bcc80d466e79f43de5918cdde1640998099276"
+}

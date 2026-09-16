@@ -1,0 +1,44 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "evidenceBindingScope": "retained-reference-record",
+  "items": [
+    {
+      "approved": true,
+      "canonicalEnglishName": "Mirin (for sauce)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Wine, rice",
+      "fdcId": 2710691,
+      "notes": "Manual semantic review binds Cook4Me 'Mirin (for sauce)' to the retained USDA FNDDS record 'Wine, rice' already explicitly reviewed for the quantity-decorated Mirin target in batch 61. The parenthetical 'for sauce' describes recipe use, not a different ingredient or preparation state. The retained source target/rank is only a locator receipt and is not identity proof. This binding does not infer brand, sweetness grade, seasoning, alcohol percentage, dilution, sauce composition, density, or a volume-to-mass conversion.",
+      "reviewTargetId": "concept:food:9aa3651e5f7cad92588f",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:336707fa4bda9578d0fb"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Tablespoon of mirin",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Wine, rice",
+      "fdcId": 2710691,
+      "notes": "Manual semantic review binds Cook4Me 'Tablespoon of mirin' to the retained USDA FNDDS record 'Wine, rice' already explicitly reviewed for the quantity-decorated Mirin target in batch 61. 'Tablespoon of' is quantity wording and does not change the per-100-g ingredient identity. The retained source target/rank is only a locator receipt and is not identity proof. This binding does not infer tablespoon mass, density, brand, sweetness grade, seasoning, alcohol percentage, dilution, or any volume-to-mass conversion.",
+      "reviewTargetId": "concept:food:bec03c001431512a3577",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:336707fa4bda9578d0fb"
+    }
+  ],
+  "kind": "cook4me-fdc-retained-reference-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "9775d0481709236cc37f88f378bcc80d466e79f43de5918cdde1640998099276"
+}

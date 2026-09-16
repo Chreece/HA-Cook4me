@@ -1,0 +1,31 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "evidenceBindingScope": "retained-reference-record",
+  "items": [
+    {
+      "approved": true,
+      "canonicalEnglishName": "Crown daisy",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Chrysanthemum leaves, raw",
+      "fdcId": 168491,
+      "notes": "Manual semantic and botanical review binds Cook4Me 'Crown daisy' to USDA SR Legacy 'Chrysanthemum leaves, raw' (FDC 168491), whose pinned scientific name is 'Chrysanthemum coronarium'. Crown daisy is the food plant now accepted as Glebionis coronaria, with Chrysanthemum coronarium as a botanical synonym. The retained source target/rank is only a locator receipt for the exact USDA record and is not identity proof for the destination. This binding does not infer another Chrysanthemum/Glebionis species, cooked or blanched leaves, seasoning, cultivar, brand, added fat, or a mass conversion.",
+      "reviewTargetId": "concept:food:f789caf4d4be9d82d90a",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:d0535d906a3ac4dba21e"
+    }
+  ],
+  "kind": "cook4me-fdc-retained-reference-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "58944f9639e6585bde67517fc5fcae1cbb032a8df976644d775567e93bdd17a7"
+}

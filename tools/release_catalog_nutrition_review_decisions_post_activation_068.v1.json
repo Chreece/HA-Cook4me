@@ -1,0 +1,65 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Curry roux (adjust to taste)",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Curry sauce",
+      "fdcId": 2710178,
+      "notes": "Manual semantic review binds Cook4Me 'Curry roux (adjust to taste)' to USDA FNDDS 'Curry sauce'. The same exact FDC record was already explicitly reviewed for Cook4Me 'Curry roux'; 'adjust to taste' is recipe-use wording only and does not change the per-100-g ingredient identity. This target's own pinned evidence independently contains the record at rank 1. Candidate rank and historical reuse are review aids only, not identity proof. This continuation preserves the existing reviewed generic curry-sauce mapping and does not infer brand, roux-block formulation, spice blend, fat content, dilution, serving size, or preparation yield.",
+      "reviewTargetId": "concept:food:42c0e6d0a25dc81779b4",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Curry roux, finely chopped (for finishing)",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Curry sauce",
+      "fdcId": 2710178,
+      "notes": "Manual semantic review binds Cook4Me 'Curry roux, finely chopped (for finishing)' to USDA FNDDS 'Curry sauce'. The same exact FDC record was already explicitly reviewed for Cook4Me 'Curry roux'; finely chopping changes presentation only and 'for finishing' describes recipe use, neither changing the per-100-g ingredient identity. This target's own pinned evidence independently contains the record at rank 2. Candidate rank and historical reuse are review aids only, not identity proof. This continuation preserves the existing reviewed generic curry-sauce mapping and does not infer brand, roux-block formulation, spice blend, fat content, dilution, serving size, or preparation yield.",
+      "reviewTargetId": "concept:food:e2820283a68c9c0a3a39",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Curry roux, finely chopped",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Curry sauce",
+      "fdcId": 2710178,
+      "notes": "Manual semantic review binds Cook4Me 'Curry roux, finely chopped' to USDA FNDDS 'Curry sauce'. The same exact FDC record was already explicitly reviewed for Cook4Me 'Curry roux'; finely chopping changes presentation only and does not change the per-100-g ingredient identity. This target's own pinned evidence independently contains the record at rank 1. Candidate rank and historical reuse are review aids only, not identity proof. This continuation preserves the existing reviewed generic curry-sauce mapping and does not infer brand, roux-block formulation, spice blend, fat content, dilution, serving size, or preparation yield.",
+      "reviewTargetId": "concept:food:291e42e58dfadd683460",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Curry roux, finely chopped (for seasoning)",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Curry sauce",
+      "fdcId": 2710178,
+      "notes": "Manual semantic review binds Cook4Me 'Curry roux, finely chopped (for seasoning)' to USDA FNDDS 'Curry sauce'. The same exact FDC record was already explicitly reviewed for Cook4Me 'Curry roux'; finely chopping changes presentation only and 'for seasoning' describes recipe use, neither changing the per-100-g ingredient identity. This target's own pinned evidence independently contains the record at rank 2. Candidate rank and historical reuse are review aids only, not identity proof. This continuation preserves the existing reviewed generic curry-sauce mapping and does not infer brand, roux-block formulation, spice blend, fat content, dilution, serving size, or preparation yield.",
+      "reviewTargetId": "concept:food:ee4853ba3ff17f8faf59",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "1bea15f1639185eb4b2f26ce17ee4199455ad6be051d40ff8ab17f2614f40aae"
+}

@@ -1,0 +1,29 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 3,
+      "canonicalEnglishName": "Consommé granules, a little for finishing",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Soup, bouillon cubes and granules, low sodium, dry",
+      "fdcId": 171613,
+      "notes": "Manual semantic review binds Cook4Me 'Consommé granules, a little for finishing' to USDA SR Legacy 'Soup, bouillon cubes and granules, low sodium, dry'. The same exact FDC record was already explicitly reviewed for Cook4Me 'Consommé granules'; 'a little' is quantity wording and 'for finishing' is recipe-use wording, neither changes the dry granule ingredient identity. This target's own pinned evidence independently contains the record at rank 3. Candidate rank and historical reuse are review aids only, not identity proof. This continuation preserves the existing reviewed granule mapping and does not infer sodium level, stock base, brand, serving size, dilution, or prepared-broth yield.",
+      "reviewTargetId": "concept:food:b2ec6328802ecbf8f2f7",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "a6cb4c48588643369eff0b4b64ac640f581983fc1b9b19d2b5014df87d8e761d"
+}

@@ -1,0 +1,29 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 12,
+      "canonicalEnglishName": "Salted butter, melted with chocolate",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Butter, salted",
+      "fdcId": 173410,
+      "notes": "Manual review binds only the salted-butter ingredient identity to USDA 'Butter, salted'. 'Melted with chocolate' is a preparation/use instruction for the butter in the recipe rather than a claim that chocolate is part of the butter itself; chocolate nutrition remains separate. The binding does not infer brand, salt level, water loss, mixture ratio, serving mass, or any nutrition transfer from chocolate.",
+      "reviewTargetId": "concept:food:f1996cccd060ca556787",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "9775db36fdec8ef6ac129ab28b5fe9bbad31ea2cf4b46e212167518762250b71"
+}

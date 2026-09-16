@@ -1,0 +1,65 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 11,
+      "canonicalEnglishName": "Almond cream (organic food store)",
+      "confidence": "high",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Almond butter, creamy",
+      "fdcId": 2262074,
+      "notes": "Manual semantic review binds Cook4Me 'Almond cream (organic food store)' to USDA Foundation 'Almond butter, creamy'. The parenthetical purchase-location wording does not change the food identity, and the same FDC record was already explicitly reviewed for Cook4Me 'Almond cream'. This target's own pinned evidence independently contains the exact record at rank 11. Candidate rank and historical reuse are review aids only, not identity proof. This binding does not infer brand, sweetening, added oil, roast level, salt, flavoring, or serving size.",
+      "reviewTargetId": "concept:food:4c7e449504a03a4b449e",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 3,
+      "canonicalEnglishName": "Chocolate sauce, divided among the ramekins",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Chocolate syrup",
+      "fdcId": 2710276,
+      "notes": "Manual semantic review binds Cook4Me 'Chocolate sauce, divided among the ramekins' to USDA FNDDS 'Chocolate syrup'. The phrase 'divided among the ramekins' is recipe-use wording and does not change the food identity; the same FDC record was already explicitly reviewed for Cook4Me 'Chocolate sauce'. This target's own pinned evidence independently contains the exact record at rank 3. Candidate rank and historical reuse are review aids only, not identity proof. This binding does not infer brand, cocoa percentage, sugar concentration, viscosity, serving size, or ramekin quantity.",
+      "reviewTargetId": "concept:food:59cbe78b4d2ec3ead005",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 11,
+      "canonicalEnglishName": "Frozen peeled shrimp tails",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Shrimp, NFS",
+      "fdcId": 2706360,
+      "notes": "Manual semantic review binds Cook4Me 'Frozen peeled shrimp tails' to USDA FNDDS 'Shrimp, NFS'. The same generic shrimp record was already explicitly reviewed for Cook4Me 'Peeled shrimp tails', and this target's own pinned evidence independently contains it at rank 11. 'Frozen' describes storage state and does not introduce another species or prepared dish; the FNDDS record itself is nonspecific as to shrimp subtype. Candidate rank and historical reuse are review aids only, not identity proof. This binding does not infer species, size/count grade, glaze percentage, cooking method, seasoning, brand, or drained weight.",
+      "reviewTargetId": "concept:food:b40292708d039796f5c1",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Gnocchi (frozen acceptable)",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Gnocchi, potato",
+      "fdcId": 2708722,
+      "notes": "Manual semantic review binds Cook4Me 'Gnocchi (frozen acceptable)' to USDA FNDDS 'Gnocchi, potato'. The parenthetical only permits frozen gnocchi and does not change the base ingredient identity; the same FDC record was already explicitly reviewed for the generic Cook4Me target 'Gnocchi'. This target's own pinned evidence independently contains the exact record at rank 2. Candidate rank and historical reuse are review aids only, not identity proof. This binding does not infer brand, sauce, filling, package size, cooking method, or serving size.",
+      "reviewTargetId": "concept:food:7e20c635b0894dfeb4cf",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "346fec85f5e1d686ee91ab897209398468cffda8516019a3f3ed07c9cf2e9e9c"
+}

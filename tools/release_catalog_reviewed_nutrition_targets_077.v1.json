@@ -1,0 +1,36 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-target-candidate-binding",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Vanilla flavoring",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Vanilla extract",
+      "fdcId": 173471,
+      "notes": "Manual semantic review binds Cook4Me 'Vanilla flavoring' to USDA SR Legacy 'Vanilla extract'. This target's own pinned evidence independently contains vanilla extract at rank 1, and the current semantic-history proposal independently points to the same exact FDC record from prior reviewed Cook4Me 'Vanilla' (M_FOOD_484). Candidate rank and historical reuse are review aids only, not identity proof. Confidence remains medium because generic 'flavoring' does not prove that the ingredient is specifically natural vanilla extract; this continuation does not infer natural/artificial flavor composition, alcohol carrier, sugar, concentration, brand, or formulation.",
+      "reviewTargetId": "concept:food:7103024172cc2cb680f9",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "51ef01d303cd0d9a59c9c0a9879387fcc5fcdbf78bf1d7fa9c626f68006fb1b6",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "6f21b9e7cc95d726c5760053934c91e95cf6151e46acdc12b71e51994ed9b846",
+      "sourceEvidenceTargetId": "concept:food:7103024172cc2cb680f9",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "reviewDecisionSha256": "328616147333531e9421e0a19223f94fc4fbccf0b3225825853e20c4196fcbdf",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "6f21b9e7cc95d726c5760053934c91e95cf6151e46acdc12b71e51994ed9b846"
+}

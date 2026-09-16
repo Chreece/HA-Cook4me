@@ -1,0 +1,36 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-target-candidate-binding",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Sweet bean sauce",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Black bean sauce",
+      "fdcId": 2707404,
+      "notes": "Manual semantic review binds Cook4Me 'Sweet bean sauce' to USDA FNDDS 'Black bean sauce'. The same exact FDC record was already explicitly reviewed for Cook4Me 'B- sweet bean sauce'; the leading 'B-' is a recipe-section marker and does not change the ingredient identity. This target's own pinned evidence independently contains the record at rank 2. Candidate rank and historical reuse are review aids only, not identity proof. This continuation preserves the existing reviewed generic sauce mapping and does not infer bean cultivar, fermentation style, sweetness, brand, ingredient proportions, serving size, or dilution.",
+      "reviewTargetId": "concept:food:b346d38084cf40e7b42d",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "8701f71097a00d993170ee84fcdd16187d2648006953ae81f39a44a17c34ef48",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "530231bd1a6bb6605b0dd587d70ef928ebae98faad794151eab9a9c6b7aed168",
+      "sourceEvidenceTargetId": "concept:food:b346d38084cf40e7b42d",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "reviewDecisionSha256": "09bc9182dae675332c1ffcf2de86890d83ae4a2a7f3332d9a5b38b582b95ea6e",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "530231bd1a6bb6605b0dd587d70ef928ebae98faad794151eab9a9c6b7aed168"
+}

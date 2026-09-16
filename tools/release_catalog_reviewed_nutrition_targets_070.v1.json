@@ -1,0 +1,43 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-retained-reference-binding",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Crown daisy",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Chrysanthemum leaves, raw",
+      "fdcId": 168491,
+      "notes": "Manual semantic and botanical review binds Cook4Me 'Crown daisy' to USDA SR Legacy 'Chrysanthemum leaves, raw' (FDC 168491), whose pinned scientific name is 'Chrysanthemum coronarium'. Crown daisy is the food plant now accepted as Glebionis coronaria, with Chrysanthemum coronarium as a botanical synonym. The retained source target/rank is only a locator receipt for the exact USDA record and is not identity proof for the destination. This binding does not infer another Chrysanthemum/Glebionis species, cooked or blanched leaves, seasoning, cultivar, brand, added fat, or a mass conversion.",
+      "reviewTargetId": "concept:food:f789caf4d4be9d82d90a",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "e35e8f050c18fdbab34c97270502b4e954f7490e28e9840bdcbe9bfb718efb5c",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "58944f9639e6585bde67517fc5fcae1cbb032a8df976644d775567e93bdd17a7",
+      "sourceEvidenceTargetId": "concept:food:d0535d906a3ac4dba21e",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "referenceReceipts": {
+    "168491": {
+      "sourceCandidateSha256": "e35e8f050c18fdbab34c97270502b4e954f7490e28e9840bdcbe9bfb718efb5c",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:d0535d906a3ac4dba21e"
+    }
+  },
+  "reviewDecisionSha256": "6a751605f083df40ab81fc767610d864615c837fac0cbad9180b4fef799ef8c9",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "58944f9639e6585bde67517fc5fcae1cbb032a8df976644d775567e93bdd17a7"
+}
