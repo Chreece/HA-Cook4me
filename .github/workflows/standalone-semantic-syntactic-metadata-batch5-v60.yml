@@ -5,6 +5,7 @@ on:
     branches:
       - cook4me-ingredient-semantic-confirmation-v60
     paths:
+      - 'tools/apply_standalone_syntactic_metadata_batch5_v60.py'
       - '.github/workflows/standalone-semantic-syntactic-metadata-batch5-v60.yml'
   workflow_dispatch:
 
