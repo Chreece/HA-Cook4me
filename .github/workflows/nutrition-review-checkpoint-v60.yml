@@ -39,32 +39,8 @@ jobs:
         run: python -m venv "$RUNNER_TEMP/cook4me-venv"
       - name: Test checkpoint, reconciliation, and nutrition hold safeguards
         run: '"$RUNNER_TEMP/cook4me-venv/bin/python" -m unittest discover -s tests -p "test_nutrition_review_*v60.py" -v'
-      - name: Test frozen historical nutrition review batches
-        run: |
-          set -Eeuo pipefail
-          HISTORICAL_TMP="$RUNNER_TEMP/post-activation-review-files"
-          mkdir -p "$HISTORICAL_TMP"
-          restore_post_activation_reviews() {
-            shopt -s nullglob
-            for file in "$HISTORICAL_TMP"/*.json; do
-              mv "$file" tools/
-            done
-          }
-          trap restore_post_activation_reviews EXIT
-
-          # Batch-42..50 regressions intentionally freeze the review corpus that
-          # existed before post-activation enrichment. Keep later reviewed target
-          # files out of that historical view, then restore them before the full
-          # checkpoint snapshot below.
-          for number in $(seq 46 99); do
-            file=$(printf 'tools/release_catalog_reviewed_nutrition_targets_%03d.v1.json' "$number")
-            if [[ -f "$file" ]]; then
-              mv "$file" "$HISTORICAL_TMP/"
-            fi
-          done
-
-          "$RUNNER_TEMP/cook4me-venv/bin/python" -m unittest discover \
-            -s tests -p "test_release_catalog_nutrition_review_batch*_v60.py" -v
+      - name: Test all explicit nutrition review batches
+        run: '"$RUNNER_TEMP/cook4me-venv/bin/python" -m unittest discover -s tests -p "test_release_catalog_nutrition_review_batch*_v60.py" -v'
       - name: Snapshot every recorded binding at this exact source commit
         run: |
           "$RUNNER_TEMP/cook4me-venv/bin/python" tools/snapshot_nutrition_review_checkpoint_v60.py \
