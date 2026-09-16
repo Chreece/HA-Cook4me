@@ -7,6 +7,7 @@ on:
     paths:
       - 'tools/audit_remaining_semantic_ingredients_v60.py'
       - 'tools/extract_high_similarity_semantic_candidates_v60.py'
+      - 'tools/audit_syntactic_semantic_candidates_v60.py'
       - '.github/workflows/catalog-semantic-remaining-audit-v60.yml'
   workflow_dispatch:
 
@@ -41,6 +42,9 @@ jobs:
             --output tools/remaining_semantic_similarity_070_v60.json \
             --minimum-score 0.7 \
             --minimum-gap 0.15
+          python tools/audit_syntactic_semantic_candidates_v60.py \
+            --review-root tools \
+            --output tools/remaining_semantic_syntactic_candidates_v60.json
           python - <<'PY'
           import json
           from pathlib import Path
@@ -61,6 +65,7 @@ jobs:
           for name in (
               'remaining_semantic_high_similarity_v60.json',
               'remaining_semantic_similarity_070_v60.json',
+              'remaining_semantic_syntactic_candidates_v60.json',
           ):
               lane = json.loads(Path('tools', name).read_text(encoding='utf-8'))
               if lane.get('policy', {}).get('automaticApproval') is not False:
@@ -72,12 +77,13 @@ jobs:
         run: |
           set -Eeuo pipefail
           git config user.name "github-actions[bot]"
-          git config user.email "41898228+Chreece@users.noreply.github.com"
+          git config user.email "41898282+Chreece@users.noreply.github.com"
           git add \
             tools/remaining_semantic_ingredient_audit_v60.json \
             tools/remaining_semantic_exact_loose_v60.json \
             tools/remaining_semantic_high_similarity_v60.json \
-            tools/remaining_semantic_similarity_070_v60.json
+            tools/remaining_semantic_similarity_070_v60.json \
+            tools/remaining_semantic_syntactic_candidates_v60.json
           git diff --cached --check
           if git diff --cached --quiet; then
             echo 'audit reports already current'
@@ -94,5 +100,6 @@ jobs:
             tools/remaining_semantic_exact_loose_v60.json
             tools/remaining_semantic_high_similarity_v60.json
             tools/remaining_semantic_similarity_070_v60.json
+            tools/remaining_semantic_syntactic_candidates_v60.json
           if-no-files-found: error
           retention-days: 7
