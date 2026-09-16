@@ -26,7 +26,7 @@ class PriceCoverageTests(unittest.IsolatedAsyncioTestCase):
     def test_country_match_beyond_first_worldwide_page(self):
         with patch.object(self.costs.urllib.request, 'urlopen', side_effect=[
             self.response([self.raw(location={'osm_address_country_code': 'FR'})], 2),
-            self.response([self.raw()])]) as get:
+            self.response([self.raw()])]) as get, patch.object(self.costs, 'country_locations', return_value=[]):
             result = self.costs.lookup_open_prices('12345678', country='DE', currency='EUR', unit='g')
         self.assertEqual(result['usableCount'], 1)
         self.assertEqual(result['pagesChecked'], 2)

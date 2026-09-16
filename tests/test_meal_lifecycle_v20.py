@@ -39,7 +39,7 @@ def load_modules():
 
     package_name = "cook4me_lifecycle_test"
     package = types.ModuleType(package_name)
-    package.__path__ = []
+    package.__path__ = [str(ROOT / "custom_components/cook4me")]
     const = types.ModuleType(f"{package_name}.const")
     const.DOMAIN = "cook4me"
     sys.modules[package_name] = package

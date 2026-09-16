@@ -14,6 +14,8 @@ import time
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
 
+from .price_quantities import explicit_product_basis
+from .price_snapshot import country_locations, snapshot_observations
 from .const import DOMAIN
 from .inventory import convert_amount, inventory_identity, normalize_inventory
 
@@ -310,18 +312,26 @@ async def cost_store_for_bridge(bridge: Any) -> Cook4MeCostStore:
 def lookup_open_prices(
     barcode: str = "", *, currency: str = "", country: str = "", timeout: int = 15,
     category: str = "", category_type: str = "CATEGORY", unit: str = "",
+    prefer_snapshot: bool = False,
 ) -> dict[str, Any]:
     """Bounded, read-only observations, strictly checked against the requested market.
 
-    Open Prices has no country filter on /prices. Filter returned locations locally,
-    trying up to five pages within one timeout budget. An empty result means no
-    usable observation in this bounded sample, not free food.
+    Use observed offline evidence on first lookup, then country location IDs before
+    worldwide pagination. All searches share five requests and one timeout budget.
+    An empty result means no usable observation in this sample, not free food.
     PRODUCT rows use the documented package price (price_per may be null).
     CATEGORY rows explicitly use UNIT or KILOGRAM. Never infer a package weight.
     """
     code, curr, market = _text(barcode), _currency(currency), _country(country)
     if not code and not category:
         return {"ok": False, "reason": "empty_barcode", "items": []}
+    if prefer_snapshot:
+        items = snapshot_observations(barcode=code, category=category, country=market,
+                                      currency=curr, unit=unit)
+        if items:
+            return {"ok": True, "reason": "", "barcode": code, "items": items,
+                    "count": len(items), "usableCount": len(items), "pagesChecked": 0,
+                    "searchLimited": False, "offlineSnapshot": True}
     today = datetime.now(timezone.utc).date()
     cutoff = today - timedelta(days=180)
     params = {"type": "PRODUCT" if code else category_type, "duplicate_of__isnull": "true",
@@ -337,14 +347,24 @@ def lookup_open_prices(
         params["currency"] = curr
     normalized, pages_checked, search_limited, error = [], 0, False, ""
     deadline = time.monotonic() + timeout
-    # The provider has no country filter. Continue beyond the first worldwide
-    # page, but cap time, bytes and requests. Never follow a response-provided URL.
-    for page in range(1, 6):
+    # /prices has location_id__in, but no country filter. The bundled index is
+    # only a hint: include a worldwide scope for new/missing locations. Rotate
+    # scopes before deeper pages so one busy group cannot starve other stores.
+    locations = country_locations(market) if market else []
+    scopes = [','.join(map(str, locations[i:i + 300])) for i in range(0, len(locations), 300)]
+    pending = [(scope, 1) for scope in scopes] + [('', 1)]
+    for _ in range(5):
+        if not pending:
+            break
+        scope, page = pending.pop(0)
         remaining = deadline - time.monotonic()
         if remaining <= 0:
             search_limited = True
             break
         params["page"] = page
+        params.pop("location_id__in", None)
+        if scope:
+            params["location_id__in"] = scope
         request = urllib.request.Request(f"{_OPEN_PRICES_URL}?{urllib.parse.urlencode(params)}",
             headers={"Accept": "application/json", "User-Agent": _OPEN_PRICES_USER_AGENT})
         try:
@@ -365,14 +385,15 @@ def lookup_open_prices(
             market=market, category=category, category_type=category_type, cutoff=cutoff, today=today))
         if any(row["usable"] and (not unit or convert_amount(1, unit, row["basisUnit"]) is not None)
                for row in normalized):
+            search_limited = False
             break
         try:
             has_more = page < int(payload.get("pages") or 1)
         except (TypeError, ValueError):
             has_more = False
-        if not has_more or not payload["items"]:
-            break
-        search_limited = page == 5
+        if has_more and payload["items"]:
+            pending.append((scope, page + 1))
+        search_limited = bool(pending)
     return {"ok": not bool(error), "reason": error, "barcode": code, "items": normalized,
             "count": len(normalized), "usableCount": sum(bool(row["usable"]) for row in normalized),
             "pagesChecked": pages_checked, "searchLimited": search_limited or bool(error)}
@@ -407,7 +428,7 @@ def _normalize_open_prices(items, *, code, curr, market, category, category_type
         price_per = _text(row.get("price_per")).upper()
         basis, unit = None, ""
         if row.get("type") == "PRODUCT" and price_per in {"", "UNIT"}:
-            basis, unit = _number(product.get("product_quantity")), _text(product.get("product_quantity_unit"))
+            basis, unit = explicit_product_basis(product)
         elif price_per == "KILOGRAM":
             basis, unit = 1.0, "kg"
         elif row.get("type") == "CATEGORY" and price_per == "UNIT":
