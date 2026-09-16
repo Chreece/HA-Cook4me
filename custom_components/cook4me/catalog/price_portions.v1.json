@@ -845,6 +845,131 @@
       "portion": "tbsp",
       "sourceAmount": 2.0,
       "sourceGrams": 11.4
+    },
+    {
+      "names": [
+        "chives",
+        "fresh chives"
+      ],
+      "measure": "tbsp",
+      "grams": 3.0,
+      "fdcId": 169994,
+      "portionId": 85839,
+      "food": "Chives, raw",
+      "portion": "tbsp chopped",
+      "sourceAmount": 1.0,
+      "sourceGrams": 3.0
+    },
+    {
+      "names": [
+        "chives",
+        "fresh chives"
+      ],
+      "measure": "tsp",
+      "grams": 1.0,
+      "fdcId": 169994,
+      "portionId": 85840,
+      "food": "Chives, raw",
+      "portion": "tsp chopped",
+      "sourceAmount": 1.0,
+      "sourceGrams": 1.0
+    },
+    {
+      "names": [
+        "thyme",
+        "fresh thyme"
+      ],
+      "measure": "tsp",
+      "grams": 0.8,
+      "fdcId": 173470,
+      "portionId": 92601,
+      "food": "Thyme, fresh",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 0.8
+    },
+    {
+      "names": [
+        "rosemary",
+        "fresh rosemary"
+      ],
+      "measure": "tsp",
+      "grams": 0.7,
+      "fdcId": 173473,
+      "portionId": 92608,
+      "food": "Rosemary, fresh",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 0.7
+    },
+    {
+      "names": [
+        "rosemary",
+        "fresh rosemary"
+      ],
+      "measure": "tbsp",
+      "grams": 1.7,
+      "fdcId": 173473,
+      "portionId": 92609,
+      "food": "Rosemary, fresh",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 1.7
+    },
+    {
+      "names": [
+        "dried thyme"
+      ],
+      "measure": "tsp",
+      "grams": 1.0,
+      "fdcId": 170938,
+      "portionId": 87578,
+      "food": "Spices, thyme, dried",
+      "portion": "tsp, leaves",
+      "sourceAmount": 1.0,
+      "sourceGrams": 1.0
+    },
+    {
+      "names": [
+        "dried thyme"
+      ],
+      "measure": "tbsp",
+      "grams": 2.7,
+      "fdcId": 170938,
+      "portionId": 87579,
+      "food": "Spices, thyme, dried",
+      "portion": "tbsp, leaves",
+      "sourceAmount": 1.0,
+      "sourceGrams": 2.7
+    },
+    {
+      "names": [
+        "dried oregano"
+      ],
+      "measure": "tsp",
+      "grams": 1.0,
+      "fdcId": 171328,
+      "portionId": 88445,
+      "food": "Spices, oregano, dried",
+      "portion": "tsp, leaves",
+      "sourceAmount": 1.0,
+      "sourceGrams": 1.0
+    },
+    {
+      "names": [
+        "cocoa",
+        "cocoa powder",
+        "pure cocoa powder",
+        "unsweetened cocoa powder"
+      ],
+      "measure": "tbsp",
+      "grams": 5.4,
+      "fdcId": 169593,
+      "portionId": 85187,
+      "food": "Cocoa, dry powder, unsweetened",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 5.4
     }
   ]
 }

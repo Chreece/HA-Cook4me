@@ -537,6 +537,37 @@ for tag, kind, names in (
         _CATEGORIES[name] = (tag, kind)
 
 
+# v88: reviewed exact food forms with named retail references. Private tags
+# are snapshot-only; prepared stock is not interchangeable with dry bouillon.
+for tag, kind, names in (
+    ('en:scallions', 'CATEGORY', 'green onion|green onions'),
+    ('en:parsley', 'CATEGORY', 'fresh parsley'),
+    ('en:chives', 'CATEGORY', 'fresh chives'),
+    ('en:dill', 'CATEGORY', 'fresh dill'),
+    ('en:basils', 'CATEGORY', 'fresh basil'),
+    ('en:rosemary', 'CATEGORY', 'fresh rosemary'),
+    ('en:thyme', 'CATEGORY', 'fresh thyme'),
+    ('en:sage', 'CATEGORY', 'fresh sage'),
+    ('en:oregano', 'CATEGORY', 'fresh oregano'),
+    ('cook4me:dried-pasta', 'REFERENCE', 'dried pasta'),
+    ('cook4me:chopped-tomatoes', 'REFERENCE', 'chopped tomatoes'),
+    ('en:cocoa-powders', 'PRODUCT', 'cocoa|cocoa powder|pure cocoa powder|unsweetened cocoa powder'),
+    ('cook4me:chicken-stock', 'REFERENCE', 'chicken stock'),
+    ('cook4me:beef-stock', 'REFERENCE', 'beef stock'),
+    ('cook4me:veal-stock', 'REFERENCE', 'veal stock'),
+    ('cook4me:walnut-oil', 'REFERENCE', 'walnut oil'),
+    ('cook4me:nutritional-yeast-flakes', 'REFERENCE', 'nutritional yeast|nutritional yeast flakes'),
+    ('en:corn-semolinas-for-polenta', 'PRODUCT', 'polenta|dry polenta'),
+    ('cook4me:chickpea-flour', 'REFERENCE', 'chickpea flour'),
+    ('en:buckwheat-flours', 'PRODUCT', 'buckwheat flour'),
+    ('cook4me:spelt-semolina', 'REFERENCE', 'spelt semolina'),
+    ('cook4me:dried-oregano', 'REFERENCE', 'dried oregano'),
+    ('cook4me:dried-dates', 'REFERENCE', 'dried dates'),
+):
+    for name in names.split('|'):
+        _CATEGORIES[name] = (tag, kind)
+
+
 def country_currency(country):
     return next(iter(COUNTRY_CURRENCIES.get(country, [])), '')
 

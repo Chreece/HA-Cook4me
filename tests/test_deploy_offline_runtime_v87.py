@@ -30,6 +30,13 @@ if name == "git":
                         ignore=shutil.ignore_patterns("__pycache__", "frontend"))
         (staged / "frontend").mkdir(parents=True)
         (staged / "frontend/cook4me-panel-v87-bundle.js").write_text("new panel\n")
+        # Exercise the historical v87 evidence set with its original installer.
+        for filename, key, count in [("retail_prices.v1.json", "observations", 34),
+                                     ("price_portions.v1.json", "portions", 60)]:
+            evidence_path = staged / "catalog" / filename
+            evidence = json.loads(evidence_path.read_text())
+            evidence[key] = evidence[key][:count]
+            evidence_path.write_text(json.dumps(evidence))
         if scenario == "missing_prices":
             (staged / "catalog/observed_prices.v1.json").unlink()
         if scenario in ("invalid_prices", "truncated_prices"):

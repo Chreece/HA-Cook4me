@@ -63,7 +63,10 @@ def price_options(raw):
         measure = 'clove'
     elif unit == 'pcs':
         measure = 'piece'
-    if measure in {'tsp', 'tbsp'}:
+    # These stock names are used for both liquid and concentrated products in
+    # provider translations. A spoonful does not establish the prepared form.
+    prepared_stock = name in {'chicken stock', 'beef stock', 'veal stock'}
+    if measure in {'tsp', 'tbsp'} and not prepared_stock:
         ml = 5 if measure == 'tsp' else 15
         # A tablespoon has different conventions; this is a disclosed cooking estimate.
         options.append({'quantity': amount * ml, 'unit': 'ml', 'estimate': {

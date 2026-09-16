@@ -656,12 +656,13 @@
       "country": "DE",
       "location": "Knuspr · Berlin and surroundings",
       "categories": [
-        "en:durum-wheat-macaroni"
+        "en:durum-wheat-macaroni",
+        "cook4me:dried-pasta"
       ],
       "usable": true,
       "confidence": "external_observation",
       "barcode": "",
-      "note": "Regular listed price, without membership discount. Regional reference."
+      "note": "Regular listed price, without membership discount. Regional reference. Dry durum-wheat macaroni is the named reference for generic dried pasta; not fresh or cooked pasta."
     },
     {
       "id": "bwb-water-20260916",
@@ -682,6 +683,969 @@
       "confidence": "external_observation",
       "barcode": "",
       "note": "Regional benchmark, not your household tariff. Includes VAT; excludes fixed charges and wastewater."
+    },
+    {
+      "id": "knuspr-15110-petersilie-glatt-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/15110-petersilie-glatt",
+      "productName": "Fresh flat-leaf parsley",
+      "amount": 1.89,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:parsley"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb reference; not a price for dried herbs. Berlin-area listing, delivery excluded."
+    },
+    {
+      "id": "knuspr-849-schnittlauch-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/849-schnittlauch",
+      "productName": "Fresh chives",
+      "amount": 0.99,
+      "currency": "EUR",
+      "basisQuantity": 15,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:chives"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb reference; not a price for dried herbs. Berlin-area listing, delivery excluded."
+    },
+    {
+      "id": "knuspr-15100-dill-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/15100-dill",
+      "productName": "Fresh dill",
+      "amount": 1.99,
+      "currency": "EUR",
+      "basisQuantity": 100,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:dill"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb reference; not a price for dried herbs. Berlin-area listing, delivery excluded."
+    },
+    {
+      "id": "knuspr-15084-basilikum-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/15084-basilikum",
+      "productName": "Fresh basil",
+      "amount": 1.59,
+      "currency": "EUR",
+      "basisQuantity": 15,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:basils"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb reference; not a price for dried herbs. Berlin-area listing, delivery excluded."
+    },
+    {
+      "id": "knuspr-855-rosmarin-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/855-rosmarin",
+      "productName": "Fresh rosemary",
+      "amount": 1.29,
+      "currency": "EUR",
+      "basisQuantity": 15,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:rosemary"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb reference; not a price for dried herbs. Berlin-area listing, delivery excluded."
+    },
+    {
+      "id": "knuspr-857-thymian-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/857-thymian",
+      "productName": "Fresh thyme",
+      "amount": 1.29,
+      "currency": "EUR",
+      "basisQuantity": 15,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:thyme"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb reference; not a price for dried herbs. Berlin-area listing, delivery excluded."
+    },
+    {
+      "id": "knuspr-856-salbei-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/856-salbei",
+      "productName": "Fresh sage",
+      "amount": 1.29,
+      "currency": "EUR",
+      "basisQuantity": 15,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:sage"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb reference; not a price for dried herbs. Berlin-area listing, delivery excluded."
+    },
+    {
+      "id": "knuspr-854-oregano-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/854-oregano",
+      "productName": "Fresh oregano",
+      "amount": 1.29,
+      "currency": "EUR",
+      "basisQuantity": 15,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:oregano"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb reference; not a price for dried herbs. Berlin-area listing, delivery excluded."
+    },
+    {
+      "id": "knuspr-20751-bio-limette-1-stk-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/20751-bio-limette-1-stk",
+      "productName": "BIO lime",
+      "amount": 0.75,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "pcs",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:limes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed regular price; customer discount excluded. One whole lime, not lime juice."
+    },
+    {
+      "id": "knuspr-30087-sanlucar-limetten-4er-schale-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/30087-sanlucar-limetten-4er-schale",
+      "productName": "SanLucar limes, four-fruit tray",
+      "amount": 2.29,
+      "currency": "EUR",
+      "basisQuantity": 240,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:limes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-3366-suesskartoffel-1-stk-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/3366-suesskartoffel-1-stk",
+      "productName": "Sweet potato",
+      "amount": 3.99,
+      "currency": "EUR",
+      "basisQuantity": 1000,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:sweet-potatoes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed price per kilogram. Variable piece weights are not treated as a fixed package weight."
+    },
+    {
+      "id": "dallmayr-lauchzwiebel-2669BD-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dallmayr-versand.de/p/lauchzwiebel-2669BD/",
+      "productName": "Lauchzwiebel / spring onion",
+      "amount": 1.9,
+      "currency": "EUR",
+      "basisQuantity": 130,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Dallmayr · Munich delivery area · online listing",
+      "categories": [
+        "en:scallions"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed bunch weighs 130 g. Munich-only delivery; premium retailer reference, not a national average or price per onion."
+    },
+    {
+      "id": "dm-1714605-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1714605/dmbio-sesamoel",
+      "productName": "dmBio toasted sesame oil",
+      "amount": 3.75,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:sesame-oils"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1639876-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1639876/dmbio-reisessig-mild-saeuerlich",
+      "productName": "dmBio rice vinegar",
+      "amount": 2.25,
+      "currency": "EUR",
+      "basisQuantity": 145,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:rice-vinegars"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-3065041-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3065041/dmbio-walnussoel",
+      "productName": "dmBio walnut oil",
+      "amount": 5.45,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:walnut-oil"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1469719-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1469719/dmbio-ghee-geklaerte-butter",
+      "productName": "dmBio ghee / clarified butter",
+      "amount": 4.45,
+      "currency": "EUR",
+      "basisQuantity": 180,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:ghee"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1666918-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1666918/dmbio-ceylon-zimt",
+      "productName": "dmBio ground Ceylon cinnamon",
+      "amount": 1.85,
+      "currency": "EUR",
+      "basisQuantity": 50,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:cinnamon"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1666949-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1666949/dmbio-gewuerzmischung-italienische-kraeuter",
+      "productName": "dmBio dried Italian herb mix",
+      "amount": 1.85,
+      "currency": "EUR",
+      "basisQuantity": 35,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:mixed-herbs"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-3111758-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3111758/dmbio-hefeflocken-auf-weizenbasis",
+      "productName": "dmBio nutritional yeast flakes (wheat-based)",
+      "amount": 3.45,
+      "currency": "EUR",
+      "basisQuantity": 100,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:nutritional-yeast-flakes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1570746-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1570746/dmbio-quinoa",
+      "productName": "dmBio dry quinoa",
+      "amount": 2.85,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:quinoa"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1454920-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1454920/dmbio-bulgur",
+      "productName": "dmBio dry bulgur wheat",
+      "amount": 1.35,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:bulgur"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-3081979-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3081979/koawach-kakao-zum-backen",
+      "productName": "koawach unsweetened baking cocoa powder",
+      "amount": 2.95,
+      "currency": "EUR",
+      "basisQuantity": 100,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:cocoa-powders"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1446512-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1446512/dmbio-maisgriess-polenta",
+      "productName": "dmBio corn semolina / dry polenta",
+      "amount": 1.15,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:cornmeal",
+        "en:corn-semolinas-for-polenta"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1431385-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1431385/dmbio-reismehl-glutenfrei",
+      "productName": "dmBio gluten-free rice flour",
+      "amount": 2.75,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:rice-flours"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1590092-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1590092/dmbio-kichererbsenmehl",
+      "productName": "dmBio chickpea flour",
+      "amount": 1.75,
+      "currency": "EUR",
+      "basisQuantity": 300,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:chickpea-flour"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1446511-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1446511/dmbio-buchweizenmehl-vollkorn-glutenfrei",
+      "productName": "dmBio wholemeal buckwheat flour",
+      "amount": 1.75,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:buckwheat-flours"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1446486-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1446486/dmbio-dinkel-griess",
+      "productName": "dmBio spelt semolina",
+      "amount": 2.45,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:spelt-semolina"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1440255-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1440255/dmbio-tomatenstuecke-natur",
+      "productName": "dmBio plain chopped tomatoes in tomato juice",
+      "amount": 0.65,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:chopped-tomatoes",
+        "en:canned-tomatoes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1544928-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1544928/dmbio-kokosoel-nativ",
+      "productName": "dmBio virgin coconut oil",
+      "amount": 2.85,
+      "currency": "EUR",
+      "basisQuantity": 300,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:coconut-oils"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-3143620-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3143620/dmbio-aceto-balsamico-di-modena-igp",
+      "productName": "dmBio Aceto Balsamico di Modena IGP",
+      "amount": 2.45,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:balsamic-vinegars"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1470124-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1470124/dmbio-apfelessig",
+      "productName": "dmBio apple cider vinegar",
+      "amount": 1.55,
+      "currency": "EUR",
+      "basisQuantity": 750,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:cider-vinegars"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1435233-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1435233/dmbio-gewuerzmischung-garam-masala",
+      "productName": "dmBio garam masala",
+      "amount": 1.95,
+      "currency": "EUR",
+      "basisQuantity": 60,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:garam-masalas"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-3064302-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3064302/lebensbaum-gewuerzmischung-kraeuter-der-provence",
+      "productName": "LEBENSBAUM dried herbes de Provence",
+      "amount": 2.95,
+      "currency": "EUR",
+      "basisQuantity": 30,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:herbes-de-provence"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1694085-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1694085/dmbio-cashewbruch",
+      "productName": "dmBio plain broken cashew kernels",
+      "amount": 3.25,
+      "currency": "EUR",
+      "basisQuantity": 300,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:cashew-nuts"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1004138-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1004138/seeberger-walnusskerne",
+      "productName": "Seeberger walnut kernels",
+      "amount": 4.45,
+      "currency": "EUR",
+      "basisQuantity": 150,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:walnuts"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-2032341-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/2032341/lebensbaum-thymian-gerebelt",
+      "productName": "LEBENSBAUM dried thyme leaves",
+      "amount": 2.25,
+      "currency": "EUR",
+      "basisQuantity": 20,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:dried-thyme"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1922952-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1922952/lebensbaum-oregano-gerebelt",
+      "productName": "LEBENSBAUM dried oregano leaves",
+      "amount": 1.95,
+      "currency": "EUR",
+      "basisQuantity": 15,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:dried-oregano"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1447036-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1447036/dmbio-trockenfruechte-datteln-entsteint",
+      "productName": "dmBio dried pitted dates",
+      "amount": 1.65,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:pitted-dates",
+        "cook4me:dried-dates"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1440266-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1440266/dmbio-dinkelmehl-type-630",
+      "productName": "dmBio spelt flour type 630",
+      "amount": 1.25,
+      "currency": "EUR",
+      "basisQuantity": 1000,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:spelt-flours"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1601027-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1601027/dmbio-mandeln-gemahlen",
+      "productName": "dmBio ground almonds",
+      "amount": 3.45,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:ground-almonds"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed package price; online stock unavailable when checked. Reference estimate, not a promise of availability; not defatted almond flour."
+    },
+    {
+      "id": "dm-3095647-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3095647/dmbio-kapern",
+      "productName": "dmBio capers in wine vinegar",
+      "amount": 1.95,
+      "currency": "EUR",
+      "basisQuantity": 90,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:capers"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "90 g is the explicitly listed drained weight, excluding the liquid."
+    },
+    {
+      "id": "knuspr-7103-leimer-semmelbroesel-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/7103-leimer-semmelbroesel",
+      "productName": "Leimer plain breadcrumbs",
+      "amount": 1.39,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:bread-crumbs"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-2172-galbani-ricotta-40-fitr-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/2172-galbani-ricotta-40-fitr",
+      "productName": "Galbani Ricotta",
+      "amount": 2.99,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:ricotta"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed regular price; temporary promotional price excluded."
+    },
+    {
+      "id": "knuspr-16719-galbani-mascarpone-italienischer-frischkaese-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/16719-galbani-mascarpone-italienischer-frischkaese",
+      "productName": "Galbani Mascarpone",
+      "amount": 4.39,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:mascarpone"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-2178-galbani-gorgonzola-cremoso-48-fett-itr-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/2178-galbani-gorgonzola-cremoso-48-fett-itr",
+      "productName": "Galbani Gorgonzola Cremoso",
+      "amount": 3.79,
+      "currency": "EUR",
+      "basisQuantity": 150,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:gorgonzolas"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-4811-fuchs-gefluegel-fond-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/4811-fuchs-gefluegel-fond",
+      "productName": "Fuchs chicken / poultry stock",
+      "amount": 3.39,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:chicken-stock"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Prepared liquid stock. No conversion from powder, granules or cubes; reference brand and region may differ from your purchase."
+    },
+    {
+      "id": "knuspr-92913-fuchs-kalbs-fond-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/92913-fuchs-kalbs-fond",
+      "productName": "Fuchs veal stock",
+      "amount": 3.29,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:veal-stock"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Prepared liquid stock. No conversion from powder, granules or cubes; reference brand and region may differ from your purchase."
+    },
+    {
+      "id": "knuspr-4807-fuchs-rinder-fond-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/4807-fuchs-rinder-fond",
+      "productName": "Fuchs beef stock",
+      "amount": 3.39,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:beef-stock"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Prepared liquid stock. No conversion from powder, granules or cubes; reference brand and region may differ from your purchase."
     }
   ]
 }
