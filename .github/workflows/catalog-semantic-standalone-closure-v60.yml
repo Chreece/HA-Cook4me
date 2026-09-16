@@ -91,7 +91,7 @@ jobs:
           set -Eeuo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+Chreece@users.noreply.github.com'
-          git rm \
+          git rm -f \
             .github/workflows/catalog-semantic-standalone-closure-v60.yml \
             tools/apply_semantic_standalone_closure_patch_v60.py \
             tools/fix_semantic_standalone_patch_helper_v60.py \
