@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import {fileURLToPath} from 'node:url';
+const version=process.env.COOK4ME_TEST_PANEL_VERSION||'82';
 const {chromium}=createRequire(import.meta.url)('playwright');
 const browser=await chromium.launch({headless:true,executablePath:process.env.COOK4ME_CHROMIUM_EXECUTABLE||undefined,args:['--no-sandbox','--disable-gpu','--disable-software-rasterizer','--use-gl=disabled']});
 try{
@@ -8,9 +9,9 @@ try{
  page.on('pageerror',error=>errors.push(error.message));
  await page.route('http://cook4me.test/**',r=>r.fulfill({contentType:'text/html',body:'<!doctype html><style>body{margin:0;font-family:Arial;--primary-color:#3d775d;--primary-text-color:#253b30;--primary-background-color:#f8faf8;--card-background-color:#fff;--secondary-background-color:#edf2ee;--secondary-text-color:#627468;--divider-color:#dce5df}</style><body></body>'}));
  await page.goto('http://cook4me.test/');
- await page.addScriptTag({path:fileURLToPath(new URL('../custom_components/cook4me/frontend/cook4me-panel-v82-bundle.js',import.meta.url))});
- await page.evaluate(()=>{
-  const p=window.panel=document.createElement('cook4me-recipe-hub-panel-v82');window.calls=[];window.subscriptions=[];window.connectionEvents={};window.saved={};window.priceAmount=2;window.savedManual=null;
+ await page.addScriptTag({path:fileURLToPath(new URL(`../custom_components/cook4me/frontend/cook4me-panel-v${version}-bundle.js`,import.meta.url))});
+ await page.evaluate(version=>{
+  const p=window.panel=document.createElement(`cook4me-recipe-hub-panel-v${version}`);window.calls=[];window.subscriptions=[];window.connectionEvents={};window.saved={};window.priceAmount=2;window.savedManual=null;
   for(const method of ['_restorePreferences','_loadOverview','_loadBookState','_requestSection','_loadRecipeNutrition','_loadNutritionSettings','_loadFoodState','_loadInventoryState','_loadIngredientCatalog','_loadTodayOptions'])p[method]=async()=>{};
   const connection={subscribeMessage:async(callback,msg)=>{const r={callback,msg,removed:false};window.subscriptions.push(r);return()=>{r.removed=true;};},addEventListener:(type,cb)=>window.connectionEvents[type]=cb,removeEventListener:(type,cb)=>{if(window.connectionEvents[type]===cb)delete window.connectionEvents[type];}};
   p._hass={language:'en',user:{id:'alice'},states:{},config:{country:'DE'},connection};
@@ -39,8 +40,8 @@ try{
    sub.callback({entry_id:sub.msg.entry_id,accessible:true,connected,canAcceptRecipe:state.phase==='idle',loadedRecipe:null,state});
   };
   document.body.append(p);p._renderShell();p._renderTab();p._updateHeader();
- });
- const panel=page.locator('cook4me-recipe-hub-panel-v82');
+ },version);
+ const panel=page.locator(`cook4me-recipe-hub-panel-v${version}`);
  assert.deepEqual(await panel.locator('#tabs [data-tab]').evaluateAll(nodes=>nodes.map(n=>n.dataset.tab)),['today','week','official','book','mine','shopping','profile']);
  assert.deepEqual(await panel.locator('#tabs [data-tab]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('aria-label'))),['Today','Week','Search recipe','Cooking book','Recipe creator','Shopping list','My kitchen & preferences']);
  assert.ok(await panel.locator('#tabs [data-tab]').evaluateAll(nodes=>nodes.every(n=>n.innerText.trim()===''&&n.querySelector('ha-icon')&&n.title)),'Navigation is icons only with accessible labels: '+JSON.stringify(await panel.locator('#tabs [data-tab]').evaluateAll(nodes=>nodes.map(n=>n.outerHTML))));
@@ -72,7 +73,7 @@ try{
  await page.evaluate(()=>{const p=window.panel;p.shadowRoot.querySelectorAll('[data-v82-creator]').forEach(d=>d.open=false);document.scrollingElement.scrollTop=0;p.shadowRoot.querySelector('.wrap').scrollTop=0;p._updateHeader();});
  if(process.env.COOK4ME_SCREENSHOT_DIR)await page.screenshot({path:process.env.COOK4ME_SCREENSHOT_DIR+'/v82-creators.png'});
  // Use real cards; refresh only this rendered page, not the rest of a result set.
- await page.evaluate(()=>{
+ await page.evaluate(version=>{
   const p=window.panel;p._v66PreferLanguages=async()=>{};
   p._results=Array.from({length:10},(_,index)=>({id:'r'+index,displayVariantId:'r'+index,title:'Recipe '+index,source:'sebplatform_search',language:'en',servings:2,ingredients:[{key:'rice',name:'Rice',quantity:100+index,unit:'g'}],steps:['Cook'],match:{safe:true,dietCheckVersion:76,diet:'vegetarian'}}));
   p._tab='official';p._renderTabs();p._renderTab();

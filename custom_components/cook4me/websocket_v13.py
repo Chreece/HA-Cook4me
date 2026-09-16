@@ -62,12 +62,16 @@ def _rank_filtered(
     limit: int,
     unlimited: bool = False,
     progress=None,
+    diet_filters=None,
 ) -> list[dict[str, Any]]:
     """Rank recipes against exact stock quantities and soon-expiring batches."""
     profile = deepcopy(bridge.recipe_hub.profile)
     profile["habitTerms"] = bridge.recipe_hub.habit_terms
     if diet != "profile":
         profile["diet"] = diet
+    if diet_filters is not None:
+        from .diet_profiles import scoring_profile
+        profile = scoring_profile(profile, diet_filters)
     house = profile.get("houseIngredients") or []
     today = dt_util.now().date()
 

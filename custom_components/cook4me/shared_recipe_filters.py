@@ -4,6 +4,7 @@ import math
 
 from .today_logic import recipe_matches_meal_types, calorie_target_bonus, offline_meal_types
 from .food_intelligence import nutrition_goal_bonus
+from .diet_profiles import TARGETS, exclusions, text_list
 
 
 TABS = {"today", "week", "official", "book", "mine", "profile", "shopping", "ai"}
@@ -23,6 +24,13 @@ def normalize_filters(value):
     for key in ("languages", "mealTypes", "ingredients"):
         rows = data.get(key)
         result[key] = list(dict.fromkeys(str(x)[:160] for x in rows if isinstance(x, str)))[:200] if isinstance(rows, list) else []
+    if "dietProfile" in data:
+        source = str(data.get("dietProfile") or "manual")[:90]
+        result["dietProfile"] = source if source in {"manual", "household"} or source.startswith("member:") else "manual"
+        result["excludedIngredients"] = exclusions(data.get("excludedIngredients"))
+        result["excludedTerms"] = text_list(data.get("excludedTerms"))
+    for key, maximum in TARGETS.items():
+        result[key] = number(data.get(key), maximum)
     result["diet"] = data.get("diet") if data.get("diet") in {"profile", "omnivore", "pescatarian", "vegetarian", "vegan"} else "profile"
     result["nutritionGoal"] = str(data.get("nutritionGoal") or "balanced")[:40]
     for key, maximum in (("calorieTarget", 10000), ("proteinTarget", 1000), ("fiberTarget", 1000), ("maxCost", 10000), ("maxMissing", 20), ("avoidRecentDays", 90), ("calorieTolerance", 100)):
@@ -90,11 +98,18 @@ def apply_filters(rows, filters, *, ingredient_groups=None, cost=None, nutrition
         if score_targets:
             score += float(nutrition_goal_bonus(nutrients, settings["nutritionGoal"]).get("bonus") or 0)
             score += float(calorie_target_bonus(nutrients, settings["calorieTarget"], tolerance_fraction=(settings["calorieTolerance"] or 25)/100).get("bonus") or 0)
-        for key, target_key in (("protein", "proteinTarget"), ("fiber", "fiberTarget")):
+        for key, target_key in (("protein", "proteinTarget"), ("fiber", "fiberTarget"),
+                ("carbohydrates", "carbsTarget"), ("fat", "fatTarget"), ("saturatedFat", "saturatedFatTarget"),
+                ("sugars", "sugarsTarget"), ("salt", "saltTarget"), ("sodium", "sodiumTarget")):
             target = settings[target_key]
-            actual = number((nutrients.get("perServing") or {}).get(key), 1e6)
-            if target and actual is not None:
-                score += 10 * max(-1, 1 - abs(actual-target)/target)
+            aliases = {"protein": ("protein", "proteinG"), "fiber": ("fiber", "fiberG"),
+                "carbohydrates": ("carbohydrates", "carbs", "carbohydrateG"), "fat": ("fat", "fatG"),
+                "saturatedFat": ("saturatedFat", "saturatedFatG"), "sugars": ("sugars", "sugarsG", "sugarG"),
+                "salt": ("salt", "saltG"), "sodium": ("sodium", "sodiumG")}
+            actual = next((value for alias in aliases[key]
+                if (value := number((nutrients.get("perServing") or {}).get(alias), 1e6)) is not None), None)
+            if target is not None and actual is not None:
+                score += 10 * max(-1, 1 - abs(actual-target)/max(target, 1))
         match["score"] = round(score, 2)
         result.append(row)
     if progress:

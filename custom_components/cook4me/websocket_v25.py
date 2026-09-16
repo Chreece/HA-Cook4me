@@ -40,11 +40,12 @@ async def _send_one_exact(bridge, recipe: dict[str, Any]) -> dict[str, Any]:
     diet = recipe.get("sendDiet")
     if diet not in (None, "profile", "omnivore", "pescatarian", "vegetarian", "vegan"):
         return {"sent": False, "queued": False, "reason": "invalid_diet", "error": "Invalid Cook4Me diet selection"}
+    diet_filters = recipe.get("sendFilters") if isinstance(recipe.get("sendFilters"), dict) else None
     store = await recipe_book_store_for_bridge(bridge)
     previous = store.queued_send
     if bridge.available:
         try:
-            result = await v12._send_recipe_replaceable(bridge, variant, **({"diet": diet} if diet is not None else {}))
+            result = await v12._send_recipe_replaceable(bridge, variant, **({"diet": diet} if diet is not None else {}), **({"diet_filters": diet_filters} if diet_filters is not None else {}))
         except Cook4MeDietaryError as exc:
             return {"sent": False, "queued": False, "reason": "dietary_profile", "error": str(exc)}
         except Exception as exc:

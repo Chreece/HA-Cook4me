@@ -110,6 +110,7 @@ async def ws_official_search(hass, connection, msg) -> None:
     vol.Optional("ui_language", default=""): str,
     vol.Optional("include_instructions", default=False): bool,
     vol.Optional("diet", default="profile"): vol.In(("profile", "omnivore", "pescatarian", "vegetarian", "vegan")),
+    vol.Optional("shared_filters"): dict,
     vol.Optional("client_operation_id", default=""): str,
     vol.Optional("refresh", default=False): bool,
 })
@@ -174,6 +175,8 @@ async def ws_recipe_detail(hass: HomeAssistant, connection, msg) -> None:
                 )
         if msg.get("diet", "profile") != "profile":
             result = bridge.recipe_hub.annotate(result, diet=msg["diet"])
+        if "shared_filters" in msg:
+            result = bridge.recipe_hub.annotate(result, diet_filters=msg["shared_filters"])
         from .recipe_presentation import present_recipe
         result = present_recipe(result, _language(msg.get("ui_language")) or language)
     except Exception as exc:
@@ -187,6 +190,7 @@ async def ws_recipe_detail(hass: HomeAssistant, connection, msg) -> None:
     vol.Required("recipe"): dict,
     vol.Required("language"): str,
     vol.Optional("diet", default="profile"): vol.In(("profile", "omnivore", "pescatarian", "vegetarian", "vegan")),
+    vol.Optional("shared_filters"): dict,
 })
 @websocket_api.async_response
 async def ws_recipe_presentation(hass, connection, msg):
@@ -195,6 +199,8 @@ async def ws_recipe_presentation(hass, connection, msg):
         from .recipe_presentation import present_recipe
         annotated = (bridge.recipe_hub.annotate(msg["recipe"], diet=msg["diet"])
             if msg.get("diet", "profile") != "profile" else bridge.recipe_hub.annotate(msg["recipe"]))
+        if "shared_filters" in msg:
+            annotated = bridge.recipe_hub.annotate(msg["recipe"], diet_filters=msg["shared_filters"])
         result = await hass.async_add_executor_job(present_recipe, annotated, _language(msg["language"]))
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return

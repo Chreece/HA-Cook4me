@@ -131,6 +131,16 @@ class Cook4MeRecipeHub:
             dict.fromkeys(str(x).strip() for x in members if str(x).strip())
         )[:20]
 
+        from .diet_profiles import normalize_profiles
+        out["dietProfiles"] = normalize_profiles(profile)
+        if isinstance(profile.get("dietProfiles"), dict):
+            household = out["dietProfiles"]["household"]
+            out["diet"] = household["diet"]
+            out["allergies"] = []
+            out["avoid"] = list(dict.fromkeys([*household["excludedTerms"],
+                *(row["canonicalName"] for row in household["excludedIngredients"])]))
+            out["householdMembers"] = [row["name"] for row in out["dietProfiles"]["members"]]
+        out["excludedIngredients"] = out["dietProfiles"]["household"]["excludedIngredients"]
         house = normalize_inventory(profile.get("houseIngredients"))
         if not house:
             # Seamless migration from the old free-text pantry list.
@@ -212,6 +222,18 @@ class Cook4MeRecipeHub:
             merged = deepcopy(self._data["profile"])
             # Storage mutations need their own locked referential checks.
             merged.update({key: value for key, value in profile.items() if key != "storageLocations"})
+            if "dietProfiles" not in profile and any(key in profile for key in ("diet", "allergies", "avoid", "householdMembers")):
+                from .diet_profiles import normalize_profiles, normalize_diet, text_list
+                diets = normalize_profiles(merged)
+                if "diet" in profile:
+                    diets["household"]["diet"] = merged["diet"]
+                if "allergies" in profile or "avoid" in profile:
+                    diets["household"]["excludedTerms"] = list(dict.fromkeys([*text_list(merged.get("allergies")), *text_list(merged.get("avoid"))]))
+                if "householdMembers" in profile:
+                    old = {row["name"]: row for row in diets["members"]}
+                    migration = normalize_profiles({"diet": merged.get("diet"), "householdMembers": profile["householdMembers"]})
+                    diets["members"] = [old.get(row["name"], {**row, **normalize_diet(diets["household"])}) for row in migration["members"]]
+                merged["dietProfiles"] = diets
             self._data["profile"] = self._normalize_profile(merged)
             await self._save()
             return self.profile
@@ -473,12 +495,15 @@ class Cook4MeRecipeHub:
         profile["habitTerms"] = self._habit_terms()
         return profile
 
-    def annotate(self, recipe: dict[str, Any], *, diet: str | None = None) -> dict[str, Any]:
+    def annotate(self, recipe: dict[str, Any], *, diet: str | None = None, diet_filters: dict | None = None) -> dict[str, Any]:
         result = deepcopy(recipe)
         house = self._data["profile"].get("houseIngredients")
         profile = self._scoring_profile()
         if diet in {"omnivore", "pescatarian", "vegetarian", "vegan"}:
             profile["diet"] = diet
+        if diet_filters is not None:
+            from .diet_profiles import scoring_profile
+            profile = scoring_profile(profile, diet_filters)
         base_match = score_recipe(result, profile)
         match = enrich_match_with_house_keys(result, base_match, house)
         if match.get("safe"):

@@ -140,6 +140,7 @@ class Cook4MeRecipeBookStore:
             "queueId": str(uuid4()),
             "variantId": variant,
             "diet": recipe.get("sendDiet"),
+            **({"dietFilters": deepcopy(recipe["sendFilters"])} if isinstance(recipe.get("sendFilters"), dict) else {}),
             "title": str(recipe.get("title") or variant),
             "reason": str(reason or "waiting_for_device"),
             "queuedAt": datetime.now(timezone.utc).isoformat(),

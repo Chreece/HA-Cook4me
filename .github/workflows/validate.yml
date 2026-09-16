@@ -230,3 +230,14 @@ jobs:
           timeout 90s env COOK4ME_TEST_PANEL_VERSION=82 node tests/frontend_v79_prices_browser.mjs
       - name: Validate v82 pinned installer
         run: sudo "$(command -v python)" -m unittest discover -s tests -p test_deploy_offline_runtime_v82.py -v
+
+      - name: Verify v83 household profiles and shared toolbars
+        run: |
+          python tools/build_frontend_bundle_v83.py --check
+          bash -n tools/deploy_offline_runtime_v83.sh
+          timeout 120s node tests/frontend_v83_profiles_browser.mjs
+          timeout 120s env COOK4ME_TEST_PANEL_VERSION=83 node tests/frontend_v82_navigation_prices_browser.mjs
+          timeout 90s env COOK4ME_TEST_PANEL_VERSION=83 node tests/frontend_v80_unified_scanner_browser.mjs
+          timeout 90s env COOK4ME_TEST_PANEL_VERSION=83 node tests/frontend_v79_prices_browser.mjs
+      - name: Validate v83 pinned installer
+        run: sudo "$(command -v python)" -m unittest discover -s tests -p test_deploy_offline_runtime_v83.py -v

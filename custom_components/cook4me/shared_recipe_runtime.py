@@ -30,7 +30,8 @@ async def processor(bridge, filters, *, language="en", rank=True, score_targets=
     from .nutrition import nutrition_store_for_bridge
     from .nutrition_fefo import calculate_recipe_nutrition_fefo
     from .today_logic import recipe_identity
-    settings = normalize_filters(filters)
+    from .diet_profiles import resolve_filters
+    settings = resolve_filters(bridge.recipe_hub.profile, normalize_filters(filters))
     house = bridge.recipe_hub.profile.get("houseIngredients") or []
     costs = await cost_store_for_bridge(bridge) if settings["maxCost"] is not None else None
     nutrients = await nutrition_store_for_bridge(bridge)
@@ -40,8 +41,8 @@ async def processor(bridge, filters, *, language="en", rank=True, score_targets=
 
     def process(rows):
         rows = [row for row in rows if recipe_identity(row) not in recent]
-        if rank:
-            rows = v13._rank_filtered(bridge, rows, diet=settings["diet"], limit=max(1, len(rows)), unlimited=True,
+        if rank or "dietProfile" in settings:
+            rows = v13._rank_filtered(bridge, rows, diet=settings["diet"], limit=max(1, len(rows)), unlimited=True, diet_filters=settings if "dietProfile" in settings else None,
                 progress=(lambda done, total: progress("ranking", completed=done, total=total)) if progress else None)
         return apply_filters(rows, settings, ingredient_groups=aliases,
             cost=(lambda row: calculate_recipe_cost(row, house, costs)) if costs else None,

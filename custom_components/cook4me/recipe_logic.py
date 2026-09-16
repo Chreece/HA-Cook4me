@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import json
 import unicodedata
 from functools import lru_cache
 from typing import Any
@@ -383,6 +384,33 @@ def _diet_substitutions(recipe, profile, violations):
     return substitutions, complete
 
 
+def _profile_excluded_rows(profile):
+    value = profile.get("excludedIngredients")
+    rows = []
+    for row in value if isinstance(value, list) else []:
+        if not isinstance(row, dict):
+            continue
+        identity = str(row.get("ingredientId") or row.get("key") or row.get("id") or "")
+        aliases = row.get("sourceIngredientIds")
+        ids = {identity, *(str(x) for x in aliases if isinstance(x, str))} if isinstance(aliases, list) else {identity}
+        ids.discard("")
+        if ids:
+            rows.append((str(row.get("name") or identity), ids))
+    return rows
+
+
+def _profile_excluded_matches(recipe, profile):
+    identities = {str(row.get(key) or "") for row in recipe.get("ingredients") or [] if isinstance(row, dict)
+                  for key in ("ingredientId", "key", "foodKey", "id")}
+    return [name for name, aliases in _profile_excluded_rows(profile) if identities.intersection(aliases)]
+
+
+def _profile_rules_signature(profile):
+    ids = sorted({identity for _name, aliases in _profile_excluded_rows(profile) for identity in aliases})
+    terms = sorted({str(x).strip().lower() for x in [*(profile.get("allergies") or []), *(profile.get("avoid") or [])] if str(x).strip()})
+    return json.dumps([profile.get("diet") or "omnivore", ids, terms], ensure_ascii=False, separators=(",", ":"))
+
+
 def score_recipe(recipe: dict[str, Any], profile: dict[str, Any]) -> dict[str, Any]:
     """Score one recipe against explicit pantry/diet restrictions.
 
@@ -419,6 +447,7 @@ def score_recipe(recipe: dict[str, Any], profile: dict[str, Any]) -> dict[str, A
         if _matches_term(safety_text, term) or _matches_exclusion_key(term, exclusion_keys):
             violations.append(f"avoid:{term}")
 
+    violations.extend("excluded:" + name for name in _profile_excluded_matches(recipe, profile))
     pantry_norm = [normalize_text(x) for x in pantry if normalize_text(x)]
     staple_norm = {normalize_text(x) for x in _STAPLES if normalize_text(x)}
     matched: list[str] = []
@@ -451,6 +480,7 @@ def score_recipe(recipe: dict[str, Any], profile: dict[str, Any]) -> dict[str, A
         "safe": safe,
         "diet": diet,
         "dietCheckVersion": 76,
+        "dietRulesSignature": _profile_rules_signature(profile),
         "substitutions": substitutions,
         "eligibleWithSubstitutions": complete,
         "requiresSubstitutions": complete,

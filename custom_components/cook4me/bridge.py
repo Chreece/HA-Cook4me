@@ -439,12 +439,15 @@ class Cook4MeBridge:
             "loadedRecipe": self.loaded_recipe,
         }
 
-    def _profile_match_or_raise(self, meta: dict[str, Any], *, diet: str | None = None) -> dict[str, Any]:
+    def _profile_match_or_raise(self, meta: dict[str, Any], *, diet: str | None = None, diet_filters: dict | None = None) -> dict[str, Any]:
         if diet not in (None, "profile", "omnivore", "pescatarian", "vegetarian", "vegan"):
             raise Cook4MeDietaryError("Invalid Cook4Me diet selection")
         # Recompute from official ingredients; client match/substitution flags
-        # are never evidence. An override retains this device's allergies/avoid.
-        annotated = self.recipe_hub.annotate(meta, diet=diet)
+        # are never evidence. Saved member selections resolve against current rules.
+        try:
+            annotated = self.recipe_hub.annotate(meta, diet=diet, **({"diet_filters": diet_filters} if diet_filters is not None else {}))
+        except ValueError as exc:
+            raise Cook4MeDietaryError(str(exc)) from exc
         match = annotated.get("match") or {}
         adapted = (match.get("eligibleWithSubstitutions") is True
                    and match.get("requiresSubstitutions") is True
@@ -458,14 +461,14 @@ class Cook4MeBridge:
 
     async def _async_send_resolved(
         self, meta: dict[str, Any], *, still_current: Callable[[], bool] | None = None,
-        diet: str | None = None,
+        diet: str | None = None, diet_filters: dict | None = None,
     ) -> dict[str, Any]:
         async with self._send_lock:
             if still_current is not None and not still_current():
                 return {"cancelled": True}
-            return await self._async_send_resolved_locked(meta, diet=diet)
+            return await self._async_send_resolved_locked(meta, diet=diet, **({"diet_filters": diet_filters} if diet_filters is not None else {}))
 
-    async def _async_send_resolved_locked(self, meta: dict[str, Any], *, diet: str | None = None) -> dict[str, Any]:
+    async def _async_send_resolved_locked(self, meta: dict[str, Any], *, diet: str | None = None, diet_filters: dict | None = None) -> dict[str, Any]:
         grouping = str(meta.get("groupingFunctionalId") or "").strip()
         recipe = str(meta.get("recipeFunctionalId") or "").strip()
         if not grouping or not recipe:
@@ -478,7 +481,7 @@ class Cook4MeBridge:
             raise HomeAssistantError(
                 f"Cook4Me already has a loaded recipe/session ({loaded_title}). Exit the current recipe on the Cook4Me before sending another one."
             )
-        annotated = self._profile_match_or_raise(meta, **({"diet": diet} if diet is not None else {}))
+        annotated = self._profile_match_or_raise(meta, **({"diet": diet} if diet is not None else {}), **({"diet_filters": diet_filters} if diet_filters is not None else {}))
         result = await self._run_client_json("send-recipe", grouping, recipe, timeout=45)
         await self.recipe_hub.async_record_send(annotated)
         return {"accepted": result, "recipe": annotated}
@@ -517,10 +520,10 @@ class Cook4MeBridge:
 
     async def async_send_variant(
         self, variant_id: str, *, still_current: Callable[[], bool] | None = None,
-        diet: str | None = None,
+        diet: str | None = None, diet_filters: dict | None = None,
     ) -> dict[str, Any]:
         meta = await self.async_recipe_detail(variant_id)
-        return await self._async_send_resolved(meta, still_current=still_current, diet=diet)
+        return await self._async_send_resolved(meta, still_current=still_current, diet=diet, **({"diet_filters": diet_filters} if diet_filters is not None else {}))
 
 
 async def async_discover_appliances(hass: HomeAssistant, data: dict[str, Any]) -> list[dict[str, Any]]:
