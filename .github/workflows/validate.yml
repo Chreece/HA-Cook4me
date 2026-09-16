@@ -184,6 +184,7 @@ jobs:
 
       - name: Verify v78 fullscreen product capture
         run: |
+          bash -n tools/deploy_offline_runtime_v78.sh
           timeout 90s node tests/frontend_v78_product_capture_browser.mjs
           timeout 40s env COOK4ME_TEST_PANEL_VERSION=78 node tests/frontend_v77_diet_send_smoke.mjs
           timeout 40s env COOK4ME_TEST_PANEL_VERSION=78 node tests/frontend_v76_diet_substitutions_smoke.mjs

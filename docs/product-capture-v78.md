@@ -50,3 +50,23 @@ an edited unsaved draft asks whether to discard it.
 
 Validation is recorded with the installer delivery. No live HA deployment or real
 provider image recognition was performed in this workspace.
+
+## Validation and delivery
+
+- Full Python suite: **1,392 tests passed** (255.730 seconds), including 18 new
+  capture/storage regressions and the retained device-observer tests.
+- Chromium: fullscreen geometry at 1280, 390 and 360 px; manual save; barcode
+  preview without stock mutation; date/nutrition draft merging; explicit zeros;
+  duplicate retry payloads; location create/rename/delete; stock-lot editing;
+  camera permission cleanup; stale results; draft discard; preserved preferences;
+  and English/German/Greek mobile layouts.
+- Active v78 retains passing dietary substitution, original-program Send,
+  device-settings and asynchronous-navigation checks.
+- Bundle consistency, Python/JavaScript syntax, version and diff checks passed.
+- The pinned installer is tested separately for successful replacement/backup,
+  missing locale, wrong config mount and rollback after failed activation.
+
+Runtime commit: `0b0e3fcd0c8fd00b38d6b8fd5a0b63b6fb2f2138`.
+Installer: `tools/deploy_offline_runtime_v78.sh`.
+The existing draft PR #152 is updated; it is not merged. Installation still runs
+on the HA host using the supplied command, with preflight, backup and rollback.
