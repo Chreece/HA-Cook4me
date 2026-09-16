@@ -17,7 +17,7 @@ class Cook4MeRecipeHubPanelV62 extends BasePanel{
     if(/^cook4me\/v\d+\/ingredient_catalog$/.test(type))type="cook4me/v31/ingredient_catalog";
     if(type==="cook4me/v31/ingredient_catalog"||type==="cook4me/v31/ingredient_info"){
       if(!this._hass)throw new Error("Home Assistant unavailable");
-      return this._hass.connection.sendMessagePromise({...data,type});
+      return (this._v93SendJobRequest ? this._v93SendJobRequest({...data,type}) : this._hass.connection.sendMessagePromise({...data,type}));
     }
     return super._api(type,data);
   }

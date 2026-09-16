@@ -10,7 +10,7 @@ class Cook4MeRecipeHubPanelV79 extends BasePanel {
  _v79Money(values){return Object.entries(values||{}).map(([currency,amount])=>{try{return new Intl.NumberFormat(this._langCode(),{style:'currency',currency}).format(amount);}catch{return `${Number(amount).toFixed(2)} ${currency}`;}}).join(' + ')||'—';}
  async _api(type,data={}){
   // Automatic prices have their own inline status and never open a blocking job.
-  if(type.startsWith('cook4me/v34/'))return this._hass.connection.sendMessagePromise({type,...data});
+  if(type.startsWith('cook4me/v34/'))return (this._v93SendJobRequest ? this._v93SendJobRequest({type,...data}) : this._hass.connection.sendMessagePromise({type,...data}));
   const result=await super._api(type,data);
   if(/\/(product_add|inventory_add|inventory_update|inventory_remove|lot_cost_set|price_reference_set|cost_settings_set)$/.test(type))this._v79Revision=(this._v79Revision||0)+1;
   return result;

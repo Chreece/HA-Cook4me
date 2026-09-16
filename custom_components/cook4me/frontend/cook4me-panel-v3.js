@@ -68,7 +68,7 @@ class Cook4MeRecipeHubPanelV3 extends HTMLElement {
   _t(k){return this._language()[k]||LANG.en[k]||k;}
   _escape(value){return String(value??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));}
   _clean(value){return String(value??"").replace(/^\s*\*+\s*/,"").trim();}
-  async _api(type,data={}){if(!this._hass)throw new Error("Home Assistant unavailable");return this._hass.connection.sendMessagePromise({type,...data});}
+  async _api(type,data={}){if(!this._hass)throw new Error("Home Assistant unavailable");return (this._v93SendJobRequest ? this._v93SendJobRequest({type,...data}) : this._hass.connection.sendMessagePromise({type,...data}));}
   _entry(){return this._entries.find(e=>e.entry_id===this._entryId)||this._entries[0]||null;}
   _splitList(text){return [...new Set(String(text||"").replace(/,/g,"\n").split(/\r?\n/).map(x=>x.trim()).filter(Boolean))];}
   _recipeLanguage(r){return String(r?.language||"").toLowerCase().split(/[-_]/)[0];}

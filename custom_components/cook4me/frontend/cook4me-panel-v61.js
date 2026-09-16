@@ -92,7 +92,7 @@ class Cook4MeRecipeHubPanelV61 extends BasePanel{
     // Catalog and ingredient reads must not wait behind AI/cloud work.
     if(mapped==="cook4me/v19/ingredient_info"||mapped==="cook4me/v31/official_search"||(mapped==="cook4me/v31/recipe_detail"&&!data.refresh)){
       if(!this._hass)throw new Error("Home Assistant unavailable");
-      return this._hass.connection.sendMessagePromise({...data,type:mapped});
+      return (this._v93SendJobRequest ? this._v93SendJobRequest({...data,type:mapped}) : this._hass.connection.sendMessagePromise({...data,type:mapped}));
     }
     return super._api(type,data);
   }
