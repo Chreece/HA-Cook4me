@@ -6,6 +6,7 @@ on:
       - cook4me-ingredient-semantic-confirmation-v60
     paths:
       - 'tools/audit_remaining_semantic_ingredients_v60.py'
+      - 'tools/audit_standalone_semantic_merge_candidates_v60.py'
       - 'tools/extract_high_similarity_semantic_candidates_v60.py'
       - 'tools/audit_syntactic_semantic_candidates_v60.py'
       - 'tools/summarize_semantic_similarity_lane_v60.py'
@@ -28,7 +29,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Build non-mutating semantic audit
+      - name: Build non-mutating semantic audits
         run: |
           set -Eeuo pipefail
           python tools/audit_remaining_semantic_ingredients_v60.py \
@@ -51,9 +52,14 @@ jobs:
           python tools/audit_syntactic_semantic_candidates_v60.py \
             --review-root tools \
             --output tools/remaining_semantic_syntactic_candidates_v60.json
+          python tools/audit_standalone_semantic_merge_candidates_v60.py \
+            --review-root tools \
+            --output tools/standalone_semantic_merge_audit_v60.json \
+            --high-output tools/standalone_semantic_high_priority_v60.json
           python - <<'PY'
           import json
           from pathlib import Path
+
           path = Path('tools/remaining_semantic_ingredient_audit_v60.json')
           payload = json.loads(path.read_text(encoding='utf-8'))
           summary = payload['summary']
@@ -63,6 +69,7 @@ jobs:
               raise SystemExit('audit must not approve semantic mappings')
           if payload.get('policy', {}).get('providerIdentityAssigned') is not False:
               raise SystemExit('audit must not assign provider identities')
+
           exact = json.loads(
               Path('tools/remaining_semantic_exact_loose_v60.json').read_text(encoding='utf-8')
           )
@@ -73,6 +80,39 @@ jobs:
           )
           if int(syntactic.get('summary', {}).get('candidateCount') or 0) != 0:
               raise SystemExit('approved metadata-only rows unexpectedly remain unresolved')
+
+          standalone = json.loads(
+              Path('tools/standalone_semantic_merge_audit_v60.json').read_text(encoding='utf-8')
+          )
+          standalone_summary = standalone.get('summary') or {}
+          expected = {
+              'standaloneDispositionCount': 293,
+              'mergeableStandaloneCount': 265,
+              'reviewedAmbiguousCount': 28,
+          }
+          for key, value in expected.items():
+              if int(standalone_summary.get(key) or 0) != value:
+                  raise SystemExit(
+                      f'standalone audit {key}={standalone_summary.get(key)} != {value}'
+                  )
+          policy = standalone.get('policy') or {}
+          if policy.get('automaticApproval') is not False:
+              raise SystemExit('standalone audit must remain review-only')
+          if policy.get('candidateSearchIsIdentityProof') is not False:
+              raise SystemExit('standalone candidate search cannot be identity proof')
+          if policy.get('providerIdentityAssigned') is not False:
+              raise SystemExit('standalone audit cannot assign provider identities')
+          if policy.get('standaloneLedgerMutated') is not False:
+              raise SystemExit('standalone audit cannot mutate the disposition ledger')
+          if policy.get('ambiguousRowsExcludedFromMergeSuggestions') is not True:
+              raise SystemExit('ambiguous standalone rows must be excluded from merge suggestions')
+
+          high = json.loads(
+              Path('tools/standalone_semantic_high_priority_v60.json').read_text(encoding='utf-8')
+          )
+          if high.get('policy', {}).get('automaticApproval') is not False:
+              raise SystemExit('high-priority standalone lane must remain review-only')
+
           for name in (
               'remaining_semantic_high_similarity_v60.json',
               'remaining_semantic_similarity_070_v60.json',
@@ -83,26 +123,30 @@ jobs:
               if lane.get('policy', {}).get('automaticApproval') is not False:
                   raise SystemExit(f'{name} must remain review-only')
               print(name, json.dumps(lane.get('summary') or {}, ensure_ascii=False))
-          print(json.dumps(summary, ensure_ascii=False, indent=2))
+          print('remaining', json.dumps(summary, ensure_ascii=False))
+          print('standalone', json.dumps(standalone_summary, ensure_ascii=False))
+          print('standalone-high', json.dumps(high.get('summary') or {}, ensure_ascii=False))
           PY
-      - name: Commit exact audit reports
+      - name: Commit audit reports
         run: |
           set -Eeuo pipefail
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+Chreece@users.noreply.github.com"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
             tools/remaining_semantic_ingredient_audit_v60.json \
             tools/remaining_semantic_exact_loose_v60.json \
             tools/remaining_semantic_high_similarity_v60.json \
             tools/remaining_semantic_similarity_070_v60.json \
             tools/remaining_semantic_similarity_070_compact_v60.json \
-            tools/remaining_semantic_syntactic_candidates_v60.json
+            tools/remaining_semantic_syntactic_candidates_v60.json \
+            tools/standalone_semantic_merge_audit_v60.json \
+            tools/standalone_semantic_high_priority_v60.json
           git diff --cached --check
           if git diff --cached --quiet; then
             echo 'audit reports already current'
             exit 0
           fi
-          git commit -m "Refresh remaining unresolved ingredient semantics v60"
+          git commit -m "Refresh ingredient semantic resolution audit v60"
           git push origin HEAD:cook4me-ingredient-semantic-confirmation-v60
       - name: Upload audit evidence
         uses: actions/upload-artifact@v4
@@ -115,5 +159,7 @@ jobs:
             tools/remaining_semantic_similarity_070_v60.json
             tools/remaining_semantic_similarity_070_compact_v60.json
             tools/remaining_semantic_syntactic_candidates_v60.json
+            tools/standalone_semantic_merge_audit_v60.json
+            tools/standalone_semantic_high_priority_v60.json
           if-no-files-found: error
           retention-days: 7
