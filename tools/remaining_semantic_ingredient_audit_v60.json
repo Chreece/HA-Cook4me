@@ -8,19 +8,19 @@
     "sourceLocalIdentityPreserved": true
   },
   "summary": {
-    "remaining": 319,
+    "remaining": 308,
     "classificationCounts": {
       "ambiguous": 28,
       "equipment": 5,
-      "food": 284,
+      "food": 273,
       "other": 2
     },
     "confidenceCounts": {
-      "medium": 319
+      "medium": 308
     },
     "candidateLaneCounts": {
-      "none": 149,
-      "similar": 170
+      "none": 139,
+      "similar": 169
     }
   },
   "items": [
@@ -3956,17 +3956,6 @@
       "candidateTargets": []
     },
     {
-      "sourceIngredientId": "local:sk:466ac84ec5f2cd7b7563",
-      "conceptId": "concept:source:2f55d1498f5c052b250b",
-      "language": "sk",
-      "source": "Sol'",
-      "english": "Salt (source spelling)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_092.v1.json",
-      "candidateTargets": []
-    },
-    {
       "sourceIngredientId": "local:tr:d7620d6ec13685cd7dd7",
       "conceptId": "concept:source:0ee1e24ec6cfef66e885",
       "language": "tr",
@@ -4581,61 +4570,6 @@
       ]
     },
     {
-      "sourceIngredientId": "local:uk:7937c576bddd49faf442",
-      "conceptId": "concept:source:3680d4747d641daaedc0",
-      "language": "uk",
-      "source": "/2 ч.л. розпушувача тесту",
-      "english": "Baking powder (quantity fragment: /2 tsp)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_093.v1.json",
-      "candidateTargets": []
-    },
-    {
-      "sourceIngredientId": "local:uk:f7317b1e0b483a6d9c20",
-      "conceptId": "concept:source:054d75d2aefe8fef5a3e",
-      "language": "uk",
-      "source": "/2 ч.л. розпушувача тіста",
-      "english": "Baking powder (quantity fragment: /2 tsp)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_093.v1.json",
-      "candidateTargets": []
-    },
-    {
-      "sourceIngredientId": "local:uk:d28f61ed3c7daea463dc",
-      "conceptId": "concept:source:dc22f1c26ff9f5ffe318",
-      "language": "uk",
-      "source": "/3 ч.л. розпушувача тіста",
-      "english": "Baking powder (quantity fragment: /3 tsp)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_093.v1.json",
-      "candidateTargets": []
-    },
-    {
-      "sourceIngredientId": "local:uk:bf918de35e89cf5e2af1",
-      "conceptId": "concept:source:dc168f7350acc4137425",
-      "language": "uk",
-      "source": "/4 ч.л. розпушувача тіста",
-      "english": "Baking powder (quantity fragment: /4 tsp)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_093.v1.json",
-      "candidateTargets": []
-    },
-    {
-      "sourceIngredientId": "local:uk:7411aad8ecd32a6f5138",
-      "conceptId": "concept:source:5da4ae65387da31cb604",
-      "language": "uk",
-      "source": "/8 ч.л. розпушувача тесту",
-      "english": "Baking powder (quantity fragment: /8 tsp)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_093.v1.json",
-      "candidateTargets": []
-    },
-    {
       "sourceIngredientId": "local:uk:48a6f1a3c5b4e253d712",
       "conceptId": "concept:source:fd4d88282c6086e323f5",
       "language": "uk",
@@ -4870,17 +4804,6 @@
           "tokenJaccard": 0.5
         }
       ]
-    },
-    {
-      "sourceIngredientId": "local:uk:1b61dd075ad6cb9e5ff5",
-      "conceptId": "concept:source:235932e16b66a5a2449e",
-      "language": "uk",
-      "source": "/3 ч.л. порошку чилі",
-      "english": "Chili powder (quantity fragment: /3 tsp)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_075.v1.json",
-      "candidateTargets": []
     },
     {
       "sourceIngredientId": "local:uk:f78a44710b9f89188244",
@@ -5740,17 +5663,6 @@
       ]
     },
     {
-      "sourceIngredientId": "local:uk:eba9095bf0cbd7588f52",
-      "conceptId": "concept:source:2f122147c84436a45522",
-      "language": "uk",
-      "source": "/2 ст.л. устричного соусу",
-      "english": "Oyster sauce (quantity fragment: /2 tbsp)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_075.v1.json",
-      "candidateTargets": []
-    },
-    {
       "sourceIngredientId": "local:uk:1d37dfec227185bf750d",
       "conceptId": "concept:source:f32bff894dceaf36fed1",
       "language": "uk",
@@ -6192,43 +6104,6 @@
           "tokenJaccard": 0.5
         }
       ]
-    },
-    {
-      "sourceIngredientId": "local:uk:1f971ec8a26779faecc6",
-      "conceptId": "concept:source:eac1397f42856393da80",
-      "language": "uk",
-      "source": "/2 ст.л. cоєвого соусу",
-      "english": "Soy sauce (quantity fragment: /2 tbsp)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_092.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:food:80c6cf1d2fd8af80b152",
-          "canonicalEnglish": "2 tbsp soy sauce",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.6667
-        },
-        {
-          "conceptId": "concept:food:a624bf2cb7395258983f",
-          "canonicalEnglish": "tbsp soy sauce",
-          "classification": "food",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ]
-    },
-    {
-      "sourceIngredientId": "local:uk:865d7905fea8a1247b41",
-      "conceptId": "concept:source:e8edd67619ceb3359b95",
-      "language": "uk",
-      "source": "/2 ч.л. цукру",
-      "english": "Sugar (quantity fragment: /2 tsp)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_093.v1.json",
-      "candidateTargets": []
     },
     {
       "sourceIngredientId": "local:uk:1b30d8c2a1f8e317b6ea",
@@ -6718,17 +6593,6 @@
       "classification": "food",
       "confidence": "medium",
       "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json",
-      "candidateTargets": []
-    },
-    {
-      "sourceIngredientId": "local:uk:91fde15154a9d7c3ad14",
-      "conceptId": "concept:source:fa5c732b32e5eba4c6ff",
-      "language": "uk",
-      "source": "/3 стручка ванілі",
-      "english": "Vanilla pod (quantity fragment: /3)",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_075.v1.json",
       "candidateTargets": []
     },
     {

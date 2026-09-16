@@ -9,84 +9,9 @@
     "exactHighConfidenceTargetRequired": true
   },
   "summary": {
-    "candidateCount": 18
+    "candidateCount": 7
   },
   "items": [
-    {
-      "sourceIngredientId": "local:uk:7411aad8ecd32a6f5138",
-      "language": "uk",
-      "source": "/8 ч.л. розпушувача тесту",
-      "reviewedEnglish": "Baking powder (quantity fragment: /8 tsp)",
-      "normalizedEnglish": "Baking powder",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_093.v1.json",
-      "confirmedConceptIdCandidate": "concept:food:8d4f55dd1fd80c16dd05",
-      "highConfidenceEnglish": "Baking powder",
-      "normalizationReasons": [
-        "existing-safe-syntactic-normalization"
-      ]
-    },
-    {
-      "sourceIngredientId": "local:uk:7937c576bddd49faf442",
-      "language": "uk",
-      "source": "/2 ч.л. розпушувача тесту",
-      "reviewedEnglish": "Baking powder (quantity fragment: /2 tsp)",
-      "normalizedEnglish": "Baking powder",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_093.v1.json",
-      "confirmedConceptIdCandidate": "concept:food:8d4f55dd1fd80c16dd05",
-      "highConfidenceEnglish": "Baking powder",
-      "normalizationReasons": [
-        "existing-safe-syntactic-normalization"
-      ]
-    },
-    {
-      "sourceIngredientId": "local:uk:bf918de35e89cf5e2af1",
-      "language": "uk",
-      "source": "/4 ч.л. розпушувача тіста",
-      "reviewedEnglish": "Baking powder (quantity fragment: /4 tsp)",
-      "normalizedEnglish": "Baking powder",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_093.v1.json",
-      "confirmedConceptIdCandidate": "concept:food:8d4f55dd1fd80c16dd05",
-      "highConfidenceEnglish": "Baking powder",
-      "normalizationReasons": [
-        "existing-safe-syntactic-normalization"
-      ]
-    },
-    {
-      "sourceIngredientId": "local:uk:d28f61ed3c7daea463dc",
-      "language": "uk",
-      "source": "/3 ч.л. розпушувача тіста",
-      "reviewedEnglish": "Baking powder (quantity fragment: /3 tsp)",
-      "normalizedEnglish": "Baking powder",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_093.v1.json",
-      "confirmedConceptIdCandidate": "concept:food:8d4f55dd1fd80c16dd05",
-      "highConfidenceEnglish": "Baking powder",
-      "normalizationReasons": [
-        "existing-safe-syntactic-normalization"
-      ]
-    },
-    {
-      "sourceIngredientId": "local:uk:f7317b1e0b483a6d9c20",
-      "language": "uk",
-      "source": "/2 ч.л. розпушувача тіста",
-      "reviewedEnglish": "Baking powder (quantity fragment: /2 tsp)",
-      "normalizedEnglish": "Baking powder",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_093.v1.json",
-      "confirmedConceptIdCandidate": "concept:food:8d4f55dd1fd80c16dd05",
-      "highConfidenceEnglish": "Baking powder",
-      "normalizationReasons": [
-        "existing-safe-syntactic-normalization"
-      ]
-    },
     {
       "sourceIngredientId": "local:uk:f570284e6f38b35c21f1",
       "language": "uk",
@@ -100,21 +25,6 @@
       "highConfidenceEnglish": "Cheese tortellini",
       "normalizationReasons": [
         "remove-source-typo-review-annotation"
-      ]
-    },
-    {
-      "sourceIngredientId": "local:uk:1b61dd075ad6cb9e5ff5",
-      "language": "uk",
-      "source": "/3 ч.л. порошку чилі",
-      "reviewedEnglish": "Chili powder (quantity fragment: /3 tsp)",
-      "normalizedEnglish": "Chili powder",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_075.v1.json",
-      "confirmedConceptIdCandidate": "concept:food:fce5ce5385ab00eb41a4",
-      "highConfidenceEnglish": "Chili powder",
-      "normalizationReasons": [
-        "existing-safe-syntactic-normalization"
       ]
     },
     {
@@ -205,81 +115,6 @@
       "highConfidenceEnglish": "Octopus (pre-cook for 10 minutes in the bowl)",
       "normalizationReasons": [
         "remove-source-typo-review-annotation-preserve-qualifier"
-      ]
-    },
-    {
-      "sourceIngredientId": "local:uk:eba9095bf0cbd7588f52",
-      "language": "uk",
-      "source": "/2 ст.л. устричного соусу",
-      "reviewedEnglish": "Oyster sauce (quantity fragment: /2 tbsp)",
-      "normalizedEnglish": "Oyster sauce",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_075.v1.json",
-      "confirmedConceptIdCandidate": "concept:food:b90cf14beb6385211689",
-      "highConfidenceEnglish": "Oyster sauce",
-      "normalizationReasons": [
-        "existing-safe-syntactic-normalization"
-      ]
-    },
-    {
-      "sourceIngredientId": "local:sk:466ac84ec5f2cd7b7563",
-      "language": "sk",
-      "source": "Sol'",
-      "reviewedEnglish": "Salt (source spelling)",
-      "normalizedEnglish": "Salt",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_092.v1.json",
-      "confirmedConceptIdCandidate": "concept:food:6de8c0620c5a99d33180",
-      "highConfidenceEnglish": "Salt",
-      "normalizationReasons": [
-        "existing-safe-syntactic-normalization"
-      ]
-    },
-    {
-      "sourceIngredientId": "local:uk:1f971ec8a26779faecc6",
-      "language": "uk",
-      "source": "/2 ст.л. cоєвого соусу",
-      "reviewedEnglish": "Soy sauce (quantity fragment: /2 tbsp)",
-      "normalizedEnglish": "Soy sauce",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_092.v1.json",
-      "confirmedConceptIdCandidate": "concept:food:18c81c4b24cfc58639aa",
-      "highConfidenceEnglish": "Soy sauce",
-      "normalizationReasons": [
-        "existing-safe-syntactic-normalization"
-      ]
-    },
-    {
-      "sourceIngredientId": "local:uk:865d7905fea8a1247b41",
-      "language": "uk",
-      "source": "/2 ч.л. цукру",
-      "reviewedEnglish": "Sugar (quantity fragment: /2 tsp)",
-      "normalizedEnglish": "Sugar",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_093.v1.json",
-      "confirmedConceptIdCandidate": "concept:food:5041c19f6cc463284711",
-      "highConfidenceEnglish": "Sugar",
-      "normalizationReasons": [
-        "existing-safe-syntactic-normalization"
-      ]
-    },
-    {
-      "sourceIngredientId": "local:uk:91fde15154a9d7c3ad14",
-      "language": "uk",
-      "source": "/3 стручка ванілі",
-      "reviewedEnglish": "Vanilla pod (quantity fragment: /3)",
-      "normalizedEnglish": "Vanilla pod",
-      "classification": "food",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_075.v1.json",
-      "confirmedConceptIdCandidate": "concept:food:26ab366c0ae60bea7b7d",
-      "highConfidenceEnglish": "Vanilla pod",
-      "normalizationReasons": [
-        "existing-safe-syntactic-normalization"
       ]
     }
   ]
