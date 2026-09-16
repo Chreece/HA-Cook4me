@@ -8,18 +8,17 @@
     "sourceLocalIdentityPreserved": true
   },
   "summary": {
-    "remaining": 330,
+    "remaining": 319,
     "classificationCounts": {
       "ambiguous": 28,
       "equipment": 5,
       "food": 284,
-      "other": 13
+      "other": 2
     },
     "confidenceCounts": {
-      "medium": 330
+      "medium": 319
     },
     "candidateLaneCounts": {
-      "exact-loose": 11,
       "none": 149,
       "similar": 170
     }
@@ -7414,155 +7413,6 @@
       ]
     },
     {
-      "sourceIngredientId": "local:bg:73ef8fb0739a076357b8",
-      "conceptId": "concept:source:e49501ee5f8faf955f7d",
-      "language": "bg",
-      "source": "Пълнеж",
-      "english": "Filling",
-      "classification": "other",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_078.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:other:6cf9be6f00ea9fbd2676",
-          "canonicalEnglish": "Filling:",
-          "classification": "other",
-          "exactLooseText": true,
-          "tokenJaccard": 1.0
-        },
-        {
-          "conceptId": "concept:other:0ef1c66498c30ba20585",
-          "canonicalEnglish": "Mushroom filling:",
-          "classification": "other",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ]
-    },
-    {
-      "sourceIngredientId": "local:cs:a3d3077317c6d2802049",
-      "conceptId": "concept:source:06a5d7712fa0d22a9ed6",
-      "language": "cs",
-      "source": "Náplň",
-      "english": "Filling",
-      "classification": "other",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_079.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:other:6cf9be6f00ea9fbd2676",
-          "canonicalEnglish": "Filling:",
-          "classification": "other",
-          "exactLooseText": true,
-          "tokenJaccard": 1.0
-        },
-        {
-          "conceptId": "concept:other:0ef1c66498c30ba20585",
-          "canonicalEnglish": "Mushroom filling:",
-          "classification": "other",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ]
-    },
-    {
-      "sourceIngredientId": "local:de:f674451600611ed155cf",
-      "conceptId": "concept:source:c70b78aa76b265af9ba3",
-      "language": "de",
-      "source": "Füllung",
-      "english": "Filling",
-      "classification": "other",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_080.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:other:6cf9be6f00ea9fbd2676",
-          "canonicalEnglish": "Filling:",
-          "classification": "other",
-          "exactLooseText": true,
-          "tokenJaccard": 1.0
-        },
-        {
-          "conceptId": "concept:other:0ef1c66498c30ba20585",
-          "canonicalEnglish": "Mushroom filling:",
-          "classification": "other",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ]
-    },
-    {
-      "sourceIngredientId": "local:en:f7dab57eda522159b0f3",
-      "conceptId": "concept:source:568fa0f41dbf8a1197de",
-      "language": "en",
-      "source": "Stuffing",
-      "english": "Stuffing",
-      "classification": "other",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_080.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:other:0997385e9c5948f4424b",
-          "canonicalEnglish": "STUFFING:",
-          "classification": "other",
-          "exactLooseText": true,
-          "tokenJaccard": 1.0
-        }
-      ]
-    },
-    {
-      "sourceIngredientId": "local:fr:eac61fea56ef66ace03d",
-      "conceptId": "concept:source:c5851bfbcfa9dd9e4a73",
-      "language": "fr",
-      "source": "Farce",
-      "english": "Filling",
-      "classification": "other",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_081.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:other:6cf9be6f00ea9fbd2676",
-          "canonicalEnglish": "Filling:",
-          "classification": "other",
-          "exactLooseText": true,
-          "tokenJaccard": 1.0
-        },
-        {
-          "conceptId": "concept:other:0ef1c66498c30ba20585",
-          "canonicalEnglish": "Mushroom filling:",
-          "classification": "other",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ]
-    },
-    {
-      "sourceIngredientId": "local:hu:e37dd32fbadb6403f288",
-      "conceptId": "concept:source:8f14db19abd4b5bbe716",
-      "language": "hu",
-      "source": "Töltelék",
-      "english": "Filling",
-      "classification": "other",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_085.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:other:6cf9be6f00ea9fbd2676",
-          "canonicalEnglish": "Filling:",
-          "classification": "other",
-          "exactLooseText": true,
-          "tokenJaccard": 1.0
-        },
-        {
-          "conceptId": "concept:other:0ef1c66498c30ba20585",
-          "canonicalEnglish": "Mushroom filling:",
-          "classification": "other",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ]
-    },
-    {
       "sourceIngredientId": "local:hu:092db0424e917bb89644",
       "conceptId": "concept:source:1a95d8736b05fc534123",
       "language": "hu",
@@ -7574,32 +7424,6 @@
       "candidateTargets": []
     },
     {
-      "sourceIngredientId": "local:it:18c3f745b50600d8b3b4",
-      "conceptId": "concept:source:4cc6d6ed3d6be3b4cd8b",
-      "language": "it",
-      "source": "Ripieno",
-      "english": "Filling",
-      "classification": "other",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_085.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:other:6cf9be6f00ea9fbd2676",
-          "canonicalEnglish": "Filling:",
-          "classification": "other",
-          "exactLooseText": true,
-          "tokenJaccard": 1.0
-        },
-        {
-          "conceptId": "concept:other:0ef1c66498c30ba20585",
-          "canonicalEnglish": "Mushroom filling:",
-          "classification": "other",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ]
-    },
-    {
       "sourceIngredientId": "local:pl:25cc84a8430b17ad6a2e",
       "conceptId": "concept:source:c51408b07af0ac526a2a",
       "language": "pl",
@@ -7609,110 +7433,6 @@
       "confidence": "medium",
       "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_089.v1.json",
       "candidateTargets": []
-    },
-    {
-      "sourceIngredientId": "local:pt:8622e71895629cd62f62",
-      "conceptId": "concept:source:8fe54bd470a357439cd5",
-      "language": "pt",
-      "source": "Recheio",
-      "english": "Filling",
-      "classification": "other",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_090.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:other:6cf9be6f00ea9fbd2676",
-          "canonicalEnglish": "Filling:",
-          "classification": "other",
-          "exactLooseText": true,
-          "tokenJaccard": 1.0
-        },
-        {
-          "conceptId": "concept:other:0ef1c66498c30ba20585",
-          "canonicalEnglish": "Mushroom filling:",
-          "classification": "other",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ]
-    },
-    {
-      "sourceIngredientId": "local:ro:b6b2d8087f4331e2c5de",
-      "conceptId": "concept:source:e9bdd9c663071cde1851",
-      "language": "ro",
-      "source": "Umplutura",
-      "english": "Filling",
-      "classification": "other",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_091.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:other:6cf9be6f00ea9fbd2676",
-          "canonicalEnglish": "Filling:",
-          "classification": "other",
-          "exactLooseText": true,
-          "tokenJaccard": 1.0
-        },
-        {
-          "conceptId": "concept:other:0ef1c66498c30ba20585",
-          "canonicalEnglish": "Mushroom filling:",
-          "classification": "other",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ]
-    },
-    {
-      "sourceIngredientId": "local:ru:f655f0dce8a03dc8e94c",
-      "conceptId": "concept:source:5e3f3fd0edec87b990e4",
-      "language": "ru",
-      "source": "Начинка",
-      "english": "Filling",
-      "classification": "other",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_091.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:other:6cf9be6f00ea9fbd2676",
-          "canonicalEnglish": "Filling:",
-          "classification": "other",
-          "exactLooseText": true,
-          "tokenJaccard": 1.0
-        },
-        {
-          "conceptId": "concept:other:0ef1c66498c30ba20585",
-          "canonicalEnglish": "Mushroom filling:",
-          "classification": "other",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ]
-    },
-    {
-      "sourceIngredientId": "local:uk:072accef95391ed349c1",
-      "conceptId": "concept:source:30be9f7879a82b3e45c8",
-      "language": "uk",
-      "source": "Начинка",
-      "english": "Filling",
-      "classification": "other",
-      "confidence": "medium",
-      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_094.v1.json",
-      "candidateTargets": [
-        {
-          "conceptId": "concept:other:6cf9be6f00ea9fbd2676",
-          "canonicalEnglish": "Filling:",
-          "classification": "other",
-          "exactLooseText": true,
-          "tokenJaccard": 1.0
-        },
-        {
-          "conceptId": "concept:other:0ef1c66498c30ba20585",
-          "canonicalEnglish": "Mushroom filling:",
-          "classification": "other",
-          "exactLooseText": false,
-          "tokenJaccard": 0.5
-        }
-      ]
     }
   ]
 }
