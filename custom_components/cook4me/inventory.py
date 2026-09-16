@@ -167,7 +167,7 @@ def _lot_metadata(raw: Any, *, strict: bool = False) -> dict[str, Any]:
         raise ValueError("Use-within days must be between 1 and 3650")
     if use_days:
         out["useWithinDays"] = use_days
-    for key in ("barcode", "productName", "brand", "source", "nutritionSource"):
+    for key in ("barcode", "productName", "brand", "source", "nutritionSource", "storageLocationId"):
         value = _text(raw.get(key))
         if value:
             out[key] = value[:300]

@@ -77,6 +77,7 @@ jobs:
           python tools/build_frontend_bundle_v74.py --check
           python tools/build_frontend_bundle_v76.py --check
           python tools/build_frontend_bundle_v77.py --check
+          python tools/build_frontend_bundle_v78.py --check
           bash -n tools/deploy_offline_runtime_v75.sh
           python - <<'PY'
           import json
@@ -180,3 +181,11 @@ jobs:
           timeout 40s env COOK4ME_TEST_PANEL_VERSION=77 node tests/frontend_v71_card_interactions_smoke.mjs
           timeout 40s env COOK4ME_TEST_PANEL_VERSION=77 node tests/frontend_v74_async_navigation_smoke.mjs
           timeout 60s env COOK4ME_TEST_PANEL_VERSION=77 node tests/frontend_v73_photo_bounds_browser.mjs
+
+      - name: Verify v78 fullscreen product capture
+        run: |
+          timeout 90s node tests/frontend_v78_product_capture_browser.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=78 node tests/frontend_v77_diet_send_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=78 node tests/frontend_v76_diet_substitutions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=78 node tests/frontend_v72_device_settings_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=78 node tests/frontend_v74_async_navigation_smoke.mjs

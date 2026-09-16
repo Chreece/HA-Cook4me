@@ -21,10 +21,11 @@ from .websocket_v29 import async_register as async_register_websocket_v29
 from .websocket_v30 import async_register as async_register_websocket_v30
 from .websocket_v31 import async_register as async_register_websocket_v31
 from .websocket_v32 import async_register as async_register_websocket_v32
+from .websocket_v33 import async_register as async_register_websocket_v33
 
-_URL_BASE = "/cook4me_static/2026.9.16.2"
-_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v77"
-_PANEL_MODULE = "cook4me-panel-v77-bundle.js"
+_URL_BASE = "/cook4me_static/2026.9.16.3"
+_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v78"
+_PANEL_MODULE = "cook4me-panel-v78-bundle.js"
 _V20_REGISTERED = "websocket_v20_registered"
 _V21_REGISTERED = "websocket_v21_registered"
 _V22_REGISTERED = "websocket_v22_registered"
@@ -38,6 +39,7 @@ _V29_REGISTERED = "websocket_v29_registered"
 _V30_REGISTERED = "websocket_v30_registered"
 _V31_REGISTERED = "websocket_v31_registered"
 _V32_REGISTERED = "websocket_v32_registered"
+_V33_REGISTERED = "websocket_v33_registered"
 
 
 async def async_register_panel(hass: HomeAssistant) -> None:
@@ -68,6 +70,8 @@ async def async_register_panel(hass: HomeAssistant) -> None:
         async_register_websocket_v31(hass); domain_data[_V31_REGISTERED] = True
     if not domain_data.get(_V32_REGISTERED):
         async_register_websocket_v32(hass); domain_data[_V32_REGISTERED] = True
+    if not domain_data.get(_V33_REGISTERED):
+        async_register_websocket_v33(hass); domain_data[_V33_REGISTERED] = True
     if async_panel_exists(hass, DOMAIN):
         return
     frontend_dir = Path(__file__).parent / "frontend"
@@ -78,7 +82,7 @@ async def async_register_panel(hass: HomeAssistant) -> None:
         hass=hass,
         frontend_url_path=DOMAIN,
         webcomponent_name=_PANEL_ELEMENT,
-        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.16.2",
+        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.16.3",
         sidebar_title="Cook4Me",
         sidebar_icon="mdi:pot-steam",
         embed_iframe=False,

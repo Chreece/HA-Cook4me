@@ -1,2 +1,5 @@
 # Entity registration checks use the same URL parser as Home Assistant.
 yarl==1.24.5
+
+# Validate bounded scanner image decoding with Home Assistant's image library.
+Pillow==12.3.0

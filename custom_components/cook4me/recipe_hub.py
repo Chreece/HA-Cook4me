@@ -17,6 +17,7 @@ from .ingredient_catalog import enrich_match_with_house_keys
 from .inventory import (
     DEFAULT_EXPIRY_WARNING_DAYS,
     add_inventory_item,
+    inventory_identity,
     apply_consumption,
     normalize_inventory,
     recipe_consumption_items,
@@ -25,6 +26,7 @@ from .inventory import (
     update_inventory_item,
 )
 from .recipe_logic import normalize_manual_recipe, normalize_text, recipe_ingredient_names, score_recipe
+from .storage_locations import normalize_locations, edit_location, validate_location
 
 _STORAGE_VERSION = 1
 
@@ -83,6 +85,9 @@ class Cook4MeRecipeHub:
         saved = await self._store.async_load()
         if not isinstance(saved, dict):
             return
+        receipts = saved.get("scannerReceipts")
+        if isinstance(receipts, dict):
+            self._data["scannerReceipts"] = dict(list(receipts.items())[-200:])
         profile = saved.get("profile")
         if isinstance(profile, dict):
             merged = deepcopy(_DEFAULT_PROFILE)
@@ -132,6 +137,8 @@ class Cook4MeRecipeHub:
             house = normalize_inventory(profile.get("pantry"))
         out["houseIngredients"] = house
         out["pantry"] = [row["name"] for row in house]
+        out["storageLocations"] = normalize_locations(profile.get("storageLocations"))
+        out["scannerAiTaskEntityId"] = str(profile.get("scannerAiTaskEntityId") or "")[:160]
         return out
 
     @staticmethod
@@ -203,10 +210,49 @@ class Cook4MeRecipeHub:
     async def async_set_profile(self, profile: dict[str, Any]) -> dict[str, Any]:
         async with self._lock:
             merged = deepcopy(self._data["profile"])
-            merged.update(profile)
+            # Storage mutations need their own locked referential checks.
+            merged.update({key: value for key, value in profile.items() if key != "storageLocations"})
             self._data["profile"] = self._normalize_profile(merged)
             await self._save()
             return self.profile
+
+    async def async_storage_location(self, **change) -> dict[str, Any]:
+        async with self._lock:
+            data = deepcopy(self._data)
+            data["profile"] = self._normalize_profile(edit_location(data["profile"], **change))
+            await self._store.async_save(data)
+            self._data = data
+            return self.profile
+
+    async def async_scanner_add(self, request_id, ingredient, *, quantity, unit,
+                                best_before="", lot_metadata=None, fingerprint=""):
+        """Commit reviewed stock once, including across reconnect/restart retries."""
+        async with self._lock:
+            receipts = self._data.get("scannerReceipts") or {}
+            if request_id in receipts:
+                receipt = receipts[request_id]
+                if receipt.get("fingerprint") != fingerprint:
+                    raise ValueError("This product was already saved; start a new product")
+                return deepcopy(receipt)
+            data = deepcopy(self._data)
+            profile = data["profile"]
+            if any(row.get("unlimited") and inventory_identity(row) == inventory_identity(ingredient)
+                   for row in profile.get("houseIngredients") or []):
+                raise ValueError("This ingredient has unlimited stock. Switch it to a measured amount before adding packages")
+            metadata = validate_location(profile, lot_metadata)
+            metadata["id"] = str(uuid4())
+            profile["houseIngredients"] = add_inventory_item(
+                profile.get("houseIngredients"), ingredient, quantity=quantity, unit=unit,
+                unlimited=False, best_before=best_before, lot_metadata=metadata)
+            profile["pantry"] = [row["name"] for row in profile["houseIngredients"]]
+            data["profile"] = self._normalize_profile(profile)
+            if not any(lot.get("id") == metadata["id"] for row in data["profile"]["houseIngredients"] for lot in row.get("lots") or []):
+                raise ValueError("The stock list is full or the amount is invalid; the product was not added")
+            receipt = {"lotId": metadata["id"], "fingerprint": fingerprint}
+            data["scannerReceipts"] = dict(list({**receipts, request_id: receipt}.items())[-200:])
+            await self._store.async_save(data)
+            self._data = data
+            return deepcopy(receipt)
 
     async def async_inventory_add(
         self,
@@ -220,6 +266,7 @@ class Cook4MeRecipeHub:
     ) -> dict[str, Any]:
         async with self._lock:
             profile = deepcopy(self._data["profile"])
+            lot_metadata = validate_location(profile, lot_metadata)
             house = add_inventory_item(
                 profile.get("houseIngredients"),
                 ingredient,
@@ -251,7 +298,7 @@ class Cook4MeRecipeHub:
             if best_before is not None:
                 kwargs["best_before"] = best_before
             if lots is not None:
-                kwargs["lots"] = lots
+                kwargs["lots"] = [validate_location(profile, lot) for lot in lots]
             house = update_inventory_item(
                 profile.get("houseIngredients"),
                 identity,

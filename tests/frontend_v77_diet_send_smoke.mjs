@@ -5,8 +5,9 @@ for(const key of ['document','customElements','HTMLElement','Node','Event','Cust
 globalThis.window=window;globalThis.requestAnimationFrame=fn=>setTimeout(fn,0);globalThis.cancelAnimationFrame=clearTimeout;
 globalThis.ResizeObserver=class{observe(){} disconnect(){}};globalThis.CSS={escape:String};
 globalThis.localStorage={getItem:()=>null,setItem(){},removeItem(){}};
-await import('../custom_components/cook4me/frontend/cook4me-panel-v77-bundle.js');
-const panel=document.createElement('cook4me-recipe-hub-panel-v77'),calls=[],errors=[];
+const version=process.env.COOK4ME_TEST_PANEL_VERSION||'77';
+await import(`../custom_components/cook4me/frontend/cook4me-panel-v${version}-bundle.js`);
+const panel=document.createElement(`cook4me-recipe-hub-panel-v${version}`),calls=[],errors=[];
 const recipe={id:'r',title:'Duck and prawns',displayVariantId:'original-r',sendVariantId:'original-r',language:'en',
  ingredients:[{name:'Duck'},{name:'Prawns'}],steps:[{instruction:'Cook the duck and prawns'}],
  match:{diet:'vegetarian',dietCheckVersion:76,safe:false,eligibleWithSubstitutions:true,requiresSubstitutions:true,substitutions:[
