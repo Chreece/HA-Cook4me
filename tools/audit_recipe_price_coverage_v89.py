@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare actual offline eligibility against v86, including both snapshot files.
+"""Compare actual offline eligibility against v88, including both snapshot files.
 
 Counts are catalog language/serving variants, not distinct recipe families.
 Both sides execute their own quantity/category rules. No household prices.
@@ -19,8 +19,8 @@ import types
 
 ROOT = Path(__file__).resolve().parents[1]
 COMPONENT = ROOT / 'custom_components/cook4me'
-BASE = 'd62f438fd0d2b4352ed2a46818e7de748395a3bc'
-EXAMPLES = {'805952', '314558', '963752', '785571', '270881', '879742', '288189'}
+BASE = '38c044f5619af3c68dabaec92d2b0b2e61849a79'
+EXAMPLES = {'922611','331285','511709','301641','491186','374645','282073','287823','307808','826311','816820','862912','252627','834656'}
 
 
 def runtime(path, name):
@@ -98,10 +98,10 @@ def main():
     with tempfile.TemporaryDirectory() as directory:
         before = Path(directory); (before / 'catalog').mkdir()
         for filename in ['automatic_prices.py', 'price_measurements.py', 'price_units.py', 'inventory.py',
-                         'catalog/price_portions.v1.json', 'catalog/observed_prices.v1.json', 'catalog/retail_prices.v1.json']:
+                         'price_identity.py', 'catalog/price_densities.v1.json', 'catalog/price_portions.v1.json', 'catalog/observed_prices.v1.json', 'catalog/retail_prices.v1.json']:
             (before / filename).write_bytes(subprocess.check_output(['git', 'show', args.base + ':custom_components/cook4me/' + filename], cwd=ROOT))
         result = {'market': 'DE', 'currency': 'EUR', 'asOf': args.as_of, 'base': args.base, 'variantCounts': True,
-                  'results': {label: audit(path, '_audit87_' + label, catalog, date.fromisoformat(args.as_of))
+                  'results': {label: audit(path, '_audit89_' + label, catalog, date.fromisoformat(args.as_of))
                               for label, path in [('before', before), ('after', COMPONENT)]}}
     if args.output: args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')
     print(json.dumps({label: {lang: data['summary'][lang] for lang in ['all', 'de']} for label, data in result['results'].items()}, indent=2))

@@ -32,6 +32,8 @@ def runtime(path, name):
     if (path / 'price_identity.py').exists():
         identity = importlib.import_module(name + '.price_identity')
         namespace.update(pricing_name=identity.pricing_name, is_cost_heading=identity.is_cost_heading)
+        if hasattr(identity, 'reviewed_recipe_ingredient'):
+            namespace['reviewed_recipe_ingredient'] = identity.reviewed_recipe_ingredient
     tree = ast.parse((path / 'automatic_prices.py').read_text())
     tree.body = [n for n in tree.body if isinstance(n, ast.For)
                  or isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id == '_CATEGORIES' for t in n.targets)
@@ -55,7 +57,7 @@ def audit(path, package, catalog, today):
         for variant in recipe['variants']:
             covered = water = food = 0; gaps = []
             # Supplying canonical names here avoids rebuilding the full lookup for every recipe.
-            canonical = ns['canonical_recipe']({'ingredients': [
+            canonical = ns['canonical_recipe']({**variant, 'ingredients': [
                 {**raw, 'canonicalName': names.get(raw.get('ingredientId'), raw.get('name', ''))}
                 for raw in variant.get('ingredients', [])]}, [])
             rows = canonical['ingredients']

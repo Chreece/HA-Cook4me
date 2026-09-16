@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "note": "Published reference portions; food sizes and brands vary. Used only as disclosed cost estimates.",
+  "portions": [
+    {
+      "names": [
+        "curry paste",
+        "red curry paste"
+      ],
+      "measure": "tbsp",
+      "grams": 15,
+      "label": "Thai Kitchen red curry paste: 1 tbsp = 15 g; named-product estimate, other brands may differ",
+      "sourceUrl": "https://www.clubhouseforchefs.ca/en-ca/products/thai-kitchen/thai-kitchen-red-curry-paste"
+    },
+    {
+      "names": [
+        "shallot",
+        "shallots"
+      ],
+      "measure": "piece",
+      "grams": 30,
+      "label": "Alnatura recipe reference: 1 shallot = 30 g; actual bulb size varies",
+      "sourceUrl": "https://www.alnatura.de/de-de/rezepte/suche/crispy-chilioel-106501/"
+    }
+  ]
+}

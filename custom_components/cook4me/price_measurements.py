@@ -20,19 +20,31 @@ _COUNTS = {'egg', 'eggs', 'onion', 'onions', 'carrot', 'carrots', 'tomato', 'tom
            'courgettes', 'aubergine', 'aubergines', 'eggplant', 'red pepper', 'red bell pepper',
            'cucumber', 'cucumbers', 'leek', 'leeks', 'white potatoes', 'potato', 'potatoes',
            'lemon', 'lemons', 'lime', 'limes', 'orange', 'oranges', 'shallot', 'shallots',
-           'welsh onion', 'spring onion', 'spring onions', 'green onion', 'green onions'}
+           'welsh onion', 'spring onion', 'spring onions', 'green onion', 'green onions',
+           'banana', 'bananas', 'pear', 'pears', 'plum', 'plums', 'strawberry', 'strawberries',
+           'radish', 'radishes', 'date', 'dates', 'dried dates', 'pitted dates', 'medjool date', 'medjool dates'}
 
 
 @lru_cache(maxsize=1)
 def _portions():
     payload = json.loads((Path(__file__).with_name('catalog') / 'price_portions.v1.json').read_text())
-    return {(name, row['measure']): row for row in payload['portions'] for name in row['names']}
+    rows = payload['portions']
+    products = json.loads((Path(__file__).with_name('catalog') / 'price_reference_portions.v1.json').read_text())
+    return {(name, row['measure']): row for row in rows + products['portions'] for name in row['names']}
 
 
 @lru_cache(maxsize=1)
 def _densities():
     payload = json.loads((Path(__file__).with_name('catalog') / 'price_densities.v1.json').read_text())
     return {name: row for row in payload['densities'] for name in row['names']}
+
+
+def _portion_evidence(row):
+    if row.get('fdcId'):
+        return {'kind': 'food_portion', 'label': f"USDA {row['food']}: {row['portion']}",
+                'sourceUrl': f"https://fdc.nal.usda.gov/food-details/{row['fdcId']}/nutrients",
+                'fdcId': row['fdcId'], 'portionId': row['portionId']}
+    return {'kind': 'reference_portion', 'label': row['label'], 'sourceUrl': row['sourceUrl']}
 
 
 def price_options(raw):
@@ -85,9 +97,7 @@ def price_options(raw):
     if portion:
         grams = amount * portion['grams'] * factor
         options.append({'quantity': grams, 'unit': 'g', 'estimate': {
-            'kind': 'food_portion', 'label': f"USDA {portion['food']}: {portion['portion']}",
-            'sourceUrl': f"https://fdc.nal.usda.gov/food-details/{portion['fdcId']}/nutrients",
-            'fdcId': portion['fdcId'], 'portionId': portion['portionId'],
+            **_portion_evidence(portion),
             'sourceQuantity': amount, 'sourceUnit': measure, 'quantity': grams, 'unit': 'g',
             'assumedCount': not bool(target.get('unit') or key)}})
     # A sourced portion also lets a gram recipe use a per-piece price, and a
@@ -104,19 +114,26 @@ def price_options(raw):
             'sourceQuantity': amount, 'sourceUnit': unit, 'quantity': converted, 'unit': destination}})
     piece = _portions().get((name, 'piece'))
     spoon = _portions().get((name, 'tbsp')) or _portions().get((name, 'tsp'))
+    # A sourced spoon mass can also use a sourced whole-food yield (e.g. fresh
+    # coconut). Keep both portion facts in the estimate; never infer a pack size.
+    if grams is None and portion and piece and measure in {'tsp', 'tbsp'}:
+        count = amount * portion['grams'] * factor / piece['grams']
+        options.append({'quantity': count, 'unit': 'pcs', 'estimate': {
+            **_portion_evidence(piece),
+            'label': _portion_evidence(portion)['label'] + '; ' + _portion_evidence(piece)['label'],
+            'portionIds': [portion.get('portionId'), piece.get('portionId')],
+            'sourceQuantity': amount, 'sourceUnit': measure, 'quantity': count, 'unit': 'pcs'}})
     if grams is not None and piece:
         options.append({'quantity': grams / piece['grams'], 'unit': 'pcs', 'estimate': {
-            'kind': 'food_portion', 'label': f"USDA {piece['food']}: {piece['portion']}",
-            'sourceUrl': f"https://fdc.nal.usda.gov/food-details/{piece['fdcId']}/nutrients",
-            'fdcId': piece['fdcId'], 'portionId': piece['portionId'],
+            **_portion_evidence(piece),
             'sourceQuantity': amount, 'sourceUnit': unit, 'quantity': grams / piece['grams'], 'unit': 'pcs'}})
     if spoon and (grams is not None or millilitres is not None):
         volume = 15 if spoon['measure'] == 'tbsp' else 5
         converted = grams / spoon['grams'] * volume if grams is not None else millilitres / volume * spoon['grams']
         destination = 'ml' if grams is not None else 'g'
         options.append({'quantity': converted, 'unit': destination, 'estimate': {
-            'kind': 'food_density', 'label': f"USDA {spoon['food']}: {spoon['portion']}; approximate spoon volume",
-            'sourceUrl': f"https://fdc.nal.usda.gov/food-details/{spoon['fdcId']}/nutrients",
-            'volumeSourceUrl': _NIST, 'fdcId': spoon['fdcId'], 'portionId': spoon['portionId'],
+            **_portion_evidence(spoon), 'kind': 'food_density',
+            'label': _portion_evidence(spoon)['label'] + '; approximate spoon volume',
+            'volumeSourceUrl': _NIST,
             'sourceQuantity': amount, 'sourceUnit': unit, 'quantity': converted, 'unit': destination}})
     return options

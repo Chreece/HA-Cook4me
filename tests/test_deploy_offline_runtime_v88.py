@@ -28,6 +28,11 @@ if name == "git":
         staged = pathlib.Path(args[1]) / "custom_components/cook4me"
         shutil.copytree(os.environ["DEPLOY_TEST_COMPONENT"], staged,
                         ignore=shutil.ignore_patterns("__pycache__", "frontend"))
+        for filename, field, count in [("retail_prices.v1.json", "observations", 82), ("price_portions.v1.json", "portions", 69)]:
+            evidence_path = staged / "catalog" / filename
+            evidence = json.loads(evidence_path.read_text())
+            evidence[field] = evidence[field][:count]
+            evidence_path.write_text(json.dumps(evidence))
         (staged / "frontend").mkdir(parents=True)
         (staged / "frontend/cook4me-panel-v88-bundle.js").write_text("new panel\n")
         if scenario == "missing_prices":

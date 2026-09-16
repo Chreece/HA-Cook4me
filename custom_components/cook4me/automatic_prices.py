@@ -17,7 +17,7 @@ from .recipe_cost_cache import recipe_cost_cache_for_bridge
 from .price_units import price_ingredient
 from .price_measurements import price_options
 from .price_snapshot import snapshot_observations
-from .price_identity import pricing_name, is_cost_heading
+from .price_identity import pricing_name, is_cost_heading, reviewed_recipe_ingredient
 
 # Exact English catalog names only. Prepared/mixed foods are never collapsed into
 # a raw ingredient by fuzzy matching. Category matches remain estimates.
@@ -568,6 +568,26 @@ for tag, kind, names in (
         _CATEGORIES[name] = (tag, kind)
 
 
+# v89: exact ingredient names from the porridge/risotto screenshot. Generic
+# forms retain named-product estimates; no substring matching across foods.
+for tag, kind, names in (
+    ('cook4me:almond-drink', 'REFERENCE', 'almond milk|almond drink|unsweetened almond milk'),
+    ('cook4me:plain-skyr', 'REFERENCE', 'skyr|plain skyr'),
+    ('cook4me:kasar-cheese', 'REFERENCE', 'grated kaşar cheese|kaşar cheese|kasar cheese'),
+    ('cook4me:wheat-semolina', 'REFERENCE', 'semolina|wheat semolina'),
+    ('cook4me:soy-cooking-cream', 'REFERENCE', 'soy cream|soya cream|soy cooking cream|tofu cream'),
+    ('en:rolled-oats', 'PRODUCT', 'oats'),
+    ('en:almonds', 'CATEGORY', 'slivered almonds|sliced almonds|flaked almonds'),
+    ('en:hazelnuts', 'CATEGORY', 'hazelnuts|chopped hazelnuts|ground hazelnuts'),
+    ('en:dark-chocolates', 'PRODUCT', 'nestlé dark dessert chocolate'),
+    ('en:coconuts', 'CATEGORY', 'fresh coconut|raw coconut'),
+    ('en:curry-pastes', 'PRODUCT', 'curry paste|red curry paste'),
+    ('en:dates', 'CATEGORY', 'dates|medjool date|medjool dates'),
+):
+    for name in names.split('|'):
+        _CATEGORIES[name] = (tag, kind)
+
+
 def country_currency(country):
     return next(iter(COUNTRY_CURRENCIES.get(country, [])), '')
 
@@ -614,7 +634,7 @@ def canonical_recipe(recipe, catalog):
         rows.append(price_ingredient({**raw, **({'key': match.get('key') or match.get('ingredientId') or match.get('id') or key} if key else {}),
                      'name': raw.get('name') or raw.get('foodName') or match.get('name') or key,
                      'canonicalName': match.get('canonicalName') or match.get('name') or raw.get('canonicalName') or raw.get('name') or raw.get('foodName')}))
-    result['ingredients'] = rows
+    result['ingredients'] = [reviewed_recipe_ingredient(row, recipe) for row in rows]
     return result
 
 

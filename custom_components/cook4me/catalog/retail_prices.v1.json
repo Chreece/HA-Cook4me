@@ -1440,12 +1440,13 @@
       "location": "dm Germany · online listing",
       "categories": [
         "en:pitted-dates",
-        "cook4me:dried-dates"
+        "cook4me:dried-dates",
+        "en:dates"
       ],
       "usable": true,
       "confidence": "external_observation",
       "barcode": "",
-      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region. Generic dates use this dried pitted date reference; variety and fruit size may differ."
     },
     {
       "id": "dm-1440266-v88-20260916",
@@ -1646,6 +1647,226 @@
       "confidence": "external_observation",
       "barcode": "",
       "note": "Prepared liquid stock. No conversion from powder, granules or cubes; reference brand and region may differ from your purchase."
+    },
+    {
+      "id": "dm-1599340-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1599340/dmbio-pflanzendrink-mandel-drink",
+      "productName": "dmBio unsweetened almond drink",
+      "amount": 1.35,
+      "currency": "EUR",
+      "basisQuantity": 1000,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:almond-drink"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Almond drink, not dairy milk or almond cream. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1445499-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1445499/dmbio-ahornsirup-grad-a",
+      "productName": "dmBio maple syrup Grade A",
+      "amount": 3.75,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:maple-syrups"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-3106583-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3106583/dmbio-agavendicksaft",
+      "productName": "dmBio agave syrup",
+      "amount": 2.35,
+      "currency": "EUR",
+      "basisQuantity": 360,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:agave-syrups"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1457931-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1457931/dmbio-risottoreis-carnaroli",
+      "productName": "dmBio Carnaroli risotto rice",
+      "amount": 2.65,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:rices-for-risotto"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Dry Carnaroli rice; reference variety for generic risotto and Arborio rice estimates. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-5141-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/5141-arla-skyr-natur",
+      "productName": "Arla Skyr Natur",
+      "amount": 1.99,
+      "currency": "EUR",
+      "basisQuantity": 450,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:plain-skyr"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular price; promotional discount excluded. Plain skyr, not flavoured yogurt. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-88412-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/88412-gazi-kasar-peyniri-kashkaval",
+      "productName": "GAZI Kasar Peyniri Kashkaval",
+      "amount": 5.99,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:kasar-cheese"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Kasar cheese block; grating does not change the ingredient mass. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1446999-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1446999/dmbio-haselnusskerne",
+      "productName": "dmBio hazelnut kernels",
+      "amount": 3.65,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:hazelnuts"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Unsalted kernels; shell weight excluded. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-9819-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/9819-alnatura-bio-weizengriess",
+      "productName": "Alnatura Bio Weizengriess",
+      "amount": 1.79,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:wheat-semolina"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular price; promotional discount excluded. Dry wheat semolina, not prepared pudding. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-95666-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/95666-cock-brand-currypaste-rot",
+      "productName": "Cock Brand red curry paste",
+      "amount": 2.99,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:curry-pastes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Red curry paste is the named reference for an unspecified curry paste; brands and varieties differ. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1451212-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1451212/dmbio-soja-creme-cuisine",
+      "productName": "dmBio Soja Creme Cuisine",
+      "amount": 0.7,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:soy-cooking-cream"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Soy-based liquid cooking cream; not tofu, soy milk, or dairy cream. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "africshopping-000900374-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.africshopping.com/product/kokosnuss-ganze-preis-pro-stueck-000900374/",
+      "productName": "AfricShopping whole fresh coconut",
+      "amount": 3.99,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "pcs",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "AfricShopping Germany · online listing",
+      "categories": [
+        "en:coconuts"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Whole raw coconut sold per piece. Gram costs use the disclosed USDA edible-meat yield estimate, not the retail shell weight; not dried coconut. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
     }
   ]
 }

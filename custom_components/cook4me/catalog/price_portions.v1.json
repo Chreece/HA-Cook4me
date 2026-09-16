@@ -970,6 +970,243 @@
       "portion": "tbsp",
       "sourceAmount": 1.0,
       "sourceGrams": 5.4
+    },
+    {
+      "names": [
+        "banana",
+        "bananas"
+      ],
+      "measure": "piece",
+      "grams": 118.0,
+      "fdcId": 173944,
+      "portionId": 93515,
+      "food": "Bananas, raw",
+      "portion": "medium (7\" to 7-7/8\" long)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 118.0
+    },
+    {
+      "names": [
+        "pear",
+        "pears"
+      ],
+      "measure": "piece",
+      "grams": 178.0,
+      "fdcId": 169118,
+      "portionId": 84275,
+      "food": "Pears, raw",
+      "portion": "medium",
+      "sourceAmount": 1.0,
+      "sourceGrams": 178.0
+    },
+    {
+      "names": [
+        "orange",
+        "oranges"
+      ],
+      "measure": "piece",
+      "grams": 131.0,
+      "fdcId": 169097,
+      "portionId": 84230,
+      "food": "Oranges, raw, all commercial varieties",
+      "portion": "fruit (2-5/8\" dia)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 131.0
+    },
+    {
+      "names": [
+        "plum",
+        "plums"
+      ],
+      "measure": "piece",
+      "grams": 66.0,
+      "fdcId": 169949,
+      "portionId": 85735,
+      "food": "Plums, raw",
+      "portion": "fruit (2-1/8\" dia)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 66.0
+    },
+    {
+      "names": [
+        "strawberry",
+        "strawberries"
+      ],
+      "measure": "piece",
+      "grams": 12.0,
+      "fdcId": 167762,
+      "portionId": 81925,
+      "food": "Strawberries, raw",
+      "portion": "medium (1-1/4\" dia)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 12.0
+    },
+    {
+      "names": [
+        "radish",
+        "radishes"
+      ],
+      "measure": "piece",
+      "grams": 4.5,
+      "fdcId": 169276,
+      "portionId": 84584,
+      "food": "Radishes, raw",
+      "portion": "medium (3/4\" to 1\" dia)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 4.5
+    },
+    {
+      "names": [
+        "date",
+        "dates",
+        "dried dates",
+        "pitted dates"
+      ],
+      "measure": "piece",
+      "grams": 7.1,
+      "fdcId": 171726,
+      "portionId": 89265,
+      "food": "Dates, deglet noor",
+      "portion": "date, pitted",
+      "sourceAmount": 1.0,
+      "sourceGrams": 7.1
+    },
+    {
+      "names": [
+        "medjool date",
+        "medjool dates"
+      ],
+      "measure": "piece",
+      "grams": 24.0,
+      "fdcId": 168191,
+      "portionId": 82634,
+      "food": "Dates, medjool",
+      "portion": "date, pitted",
+      "sourceAmount": 1.0,
+      "sourceGrams": 24.0
+    },
+    {
+      "names": [
+        "maple syrup"
+      ],
+      "measure": "tbsp",
+      "grams": 20.0,
+      "fdcId": 169661,
+      "portionId": 85303,
+      "food": "Syrups, maple",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 20.0
+    },
+    {
+      "names": [
+        "agave syrup"
+      ],
+      "measure": "tsp",
+      "grams": 6.9,
+      "fdcId": 170277,
+      "portionId": 86359,
+      "food": "Sweetener, syrup, agave",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 6.9
+    },
+    {
+      "names": [
+        "hazelnut",
+        "hazelnuts"
+      ],
+      "measure": "tbsp",
+      "grams": 8.4375,
+      "fdcId": 170581,
+      "portionId": 86898,
+      "food": "Nuts, hazelnuts or filberts",
+      "portion": "cup, whole ÷ 16 tablespoons; food-specific kitchen estimate",
+      "sourceAmount": 1.0,
+      "sourceGrams": 135.0
+    },
+    {
+      "names": [
+        "chopped hazelnuts"
+      ],
+      "measure": "tbsp",
+      "grams": 7.1875,
+      "fdcId": 170581,
+      "portionId": 86896,
+      "food": "Nuts, hazelnuts or filberts",
+      "portion": "cup, chopped ÷ 16 tablespoons; food-specific kitchen estimate",
+      "sourceAmount": 1.0,
+      "sourceGrams": 115.0
+    },
+    {
+      "names": [
+        "ground hazelnuts"
+      ],
+      "measure": "tbsp",
+      "grams": 4.6875,
+      "fdcId": 170581,
+      "portionId": 86897,
+      "food": "Nuts, hazelnuts or filberts",
+      "portion": "cup, ground ÷ 16 tablespoons; food-specific kitchen estimate",
+      "sourceAmount": 1.0,
+      "sourceGrams": 75.0
+    },
+    {
+      "names": [
+        "slivered almonds"
+      ],
+      "measure": "tbsp",
+      "grams": 6.75,
+      "fdcId": 170567,
+      "portionId": 86865,
+      "food": "Nuts, almonds",
+      "portion": "cup, slivered ÷ 16 tablespoons; food-specific kitchen estimate",
+      "sourceAmount": 1.0,
+      "sourceGrams": 108.0
+    },
+    {
+      "names": [
+        "sliced almonds",
+        "flaked almonds"
+      ],
+      "measure": "tbsp",
+      "grams": 5.75,
+      "fdcId": 170567,
+      "portionId": 86864,
+      "food": "Nuts, almonds",
+      "portion": "cup, sliced ÷ 16 tablespoons; food-specific kitchen estimate",
+      "sourceAmount": 1.0,
+      "sourceGrams": 92.0
+    },
+    {
+      "names": [
+        "coconut",
+        "fresh coconut",
+        "raw coconut"
+      ],
+      "measure": "tbsp",
+      "grams": 5.0,
+      "fdcId": 170169,
+      "portionId": 86163,
+      "food": "Nuts, coconut meat, raw",
+      "portion": "cup, shredded ÷ 16 tablespoons; food-specific kitchen estimate",
+      "sourceAmount": 1.0,
+      "sourceGrams": 80.0
+    },
+    {
+      "names": [
+        "coconut",
+        "fresh coconut",
+        "raw coconut"
+      ],
+      "measure": "piece",
+      "grams": 397.0,
+      "fdcId": 170169,
+      "portionId": 86164,
+      "food": "Nuts, coconut meat, raw",
+      "portion": "medium",
+      "sourceAmount": 1.0,
+      "sourceGrams": 397.0
     }
   ]
 }

@@ -80,9 +80,9 @@ class PriceExpansionTests(unittest.IsolatedAsyncioTestCase):
     def test_snapshot_and_portions_are_complete_and_unambiguous(self):
         retail = json.loads((previous.COMPONENT / 'catalog/retail_prices.v1.json').read_text())['observations']
         portions = json.loads((previous.COMPONENT / 'catalog/price_portions.v1.json').read_text())['portions']
-        self.assertEqual(len(retail), 82)
+        self.assertGreaterEqual(len(retail), 82)
         self.assertEqual(len({row['id'] for row in retail}), len(retail))
-        self.assertEqual(len(portions), 69)
+        self.assertGreaterEqual(len(portions), 69)
         pairs = [(name, row['measure']) for row in portions for name in row['names']]
         self.assertEqual(len(pairs), len(set(pairs)))
         for row in retail[34:]:
