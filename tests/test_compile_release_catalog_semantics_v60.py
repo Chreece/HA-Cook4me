@@ -380,25 +380,38 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
             tools
             / "release_catalog_semantic_syntactic_confirmation_ids.v1.txt"
         )
-        exact_items = json.loads(
+        confirmation_items = json.loads(
             exact_path.read_text(encoding="utf-8")
         )["items"]
+        equivalence_items = [
+            row for row in confirmation_items
+            if row.get("manualSemanticEquivalence") is True
+        ]
+        exact_items = [
+            row for row in confirmation_items
+            if row.get("manualSemanticEquivalence") is not True
+        ]
         syntax_ids = mod._load_syntax_confirmation_ids(syntax_path)
         self.assertEqual(len(exact_items), 115)
+        self.assertEqual(len(equivalence_items), 7)
         self.assertTrue(syntax_ids)
         self.assertFalse(
-            {row["sourceIngredientId"] for row in exact_items} & syntax_ids
+            {row["sourceIngredientId"] for row in confirmation_items} & syntax_ids
         )
 
         paths = mod._review_paths(tools)
         payloads = [(path.name, mod._load_payload(path)) for path in paths]
         baseline = mod.compile_semantic_concepts(payloads)
         confirmed = mod.compile_from_paths(paths)
-        total = len(exact_items) + len(syntax_ids)
+        total = len(confirmation_items) + len(syntax_ids)
 
         self.assertEqual(
             confirmed["summary"]["exactConfirmedSourceLabels"],
             len(exact_items),
+        )
+        self.assertEqual(
+            confirmed["summary"]["semanticEquivalentConfirmedSourceLabels"],
+            len(equivalence_items),
         )
         self.assertEqual(
             confirmed["summary"]["syntacticConfirmedSourceLabels"],

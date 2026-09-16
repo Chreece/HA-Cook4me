@@ -348,35 +348,66 @@ def _exact_confirmation_map(
                 f"{source_row['classification']!r}: {source_id}"
             )
 
-        expected_concept = _semantic_concept_id(
-            source_row["classification"], source_row["english"]
-        )
-        if concept_id != expected_concept:
-            raise RuntimeError(
-                "semantic confirmation does not preserve exact reviewed "
-                f"English/classification for {source_id}: "
-                f"{concept_id} != {expected_concept}"
-            )
-
+        manual_equivalence = raw.get("manualSemanticEquivalence") is True
         target_row = high_concepts.get(concept_id)
         if target_row is None:
             raise RuntimeError(
                 "semantic confirmation target lacks high-confidence evidence: "
                 f"{concept_id}"
             )
-        if (
-            target_row["classification"] != source_row["classification"]
-            or _norm(target_row["english"]) != _norm(source_row["english"])
-        ):
-            raise RuntimeError(
-                f"semantic confirmation target meaning differs for {source_id}"
+
+        rationale = ""
+        if manual_equivalence:
+            if policy.get("manualSemanticEquivalenceAllowed") is not True:
+                raise RuntimeError(
+                    "manual semantic equivalence is not enabled by confirmation policy"
+                )
+            source_reviewed_english = _text(raw.get("sourceReviewedEnglish"))
+            target_canonical_english = _text(raw.get("targetCanonicalEnglish"))
+            rationale = _text(raw.get("rationale"))
+            if source_reviewed_english != source_row["english"]:
+                raise RuntimeError(
+                    f"manual semantic equivalence sourceReviewedEnglish differs for {source_id}"
+                )
+            if target_canonical_english != target_row["english"]:
+                raise RuntimeError(
+                    f"manual semantic equivalence targetCanonicalEnglish differs for {source_id}"
+                )
+            if target_row["classification"] != source_row["classification"]:
+                raise RuntimeError(
+                    f"manual semantic equivalence classification differs for {source_id}"
+                )
+            if len(rationale) < 20:
+                raise RuntimeError(
+                    f"manual semantic equivalence rationale is too short for {source_id}"
+                )
+            method = "explicit-manual-semantic-equivalence"
+        else:
+            expected_concept = _semantic_concept_id(
+                source_row["classification"], source_row["english"]
             )
+            if concept_id != expected_concept:
+                raise RuntimeError(
+                    "semantic confirmation does not preserve exact reviewed "
+                    f"English/classification for {source_id}: "
+                    f"{concept_id} != {expected_concept}"
+                )
+            if (
+                target_row["classification"] != source_row["classification"]
+                or _norm(target_row["english"]) != _norm(source_row["english"])
+            ):
+                raise RuntimeError(
+                    f"semantic confirmation target meaning differs for {source_id}"
+                )
+            method = "explicit-reviewed-english-classification"
 
         out[source_id] = {
             "confirmedConceptId": concept_id,
             "confirmationFile": confirmation_file or "<inline>",
-            "confirmationMethod": "explicit-reviewed-english-classification",
+            "confirmationMethod": method,
         }
+        if rationale:
+            out[source_id]["confirmationRationale"] = rationale
     return out
 
 
@@ -514,7 +545,7 @@ def _confirmation_map(
     confirmation_file: str = "",
     syntax_confirmation_ids: set[str] | None = None,
     syntax_confirmation_file: str = "",
-) -> tuple[dict[str, dict[str, str]], int, int]:
+) -> tuple[dict[str, dict[str, str]], int, int, int]:
     exact = _exact_confirmation_map(
         review_rows,
         confirmation_payload,
@@ -531,7 +562,17 @@ def _confirmation_map(
             "same source identity appears in exact and syntactic confirmations: "
             + ", ".join(sorted(overlap))
         )
-    return {**exact, **syntactic}, len(exact), len(syntactic)
+    equivalence_count = sum(
+        row.get("confirmationMethod") == "explicit-manual-semantic-equivalence"
+        for row in exact.values()
+    )
+    exact_count = len(exact) - equivalence_count
+    return (
+        {**exact, **syntactic},
+        exact_count,
+        equivalence_count,
+        len(syntactic),
+    )
 
 
 def compile_semantic_concepts(
@@ -547,7 +588,7 @@ def compile_semantic_concepts(
     source_identity_to_concept: dict[str, str] = {}
     review_rows = list(iter_review_rows(payloads))
     high_concepts = _high_confidence_concepts(review_rows)
-    confirmations, exact_count, syntactic_count = _confirmation_map(
+    confirmations, exact_count, equivalence_count, syntactic_count = _confirmation_map(
         review_rows,
         confirmation_payload,
         confirmation_file=confirmation_file,
@@ -638,6 +679,8 @@ def compile_semantic_concepts(
             identity["semanticConfirmationMethod"] = confirmation[
                 "confirmationMethod"
             ]
+            if rationale := confirmation.get("confirmationRationale"):
+                identity["semanticConfirmationRationale"] = rationale
         concept["sourceIdentities"].append(identity)
         source_identity_to_concept[source_id] = concept_id
 
@@ -696,6 +739,7 @@ def compile_semantic_concepts(
             ),
             "confirmedSourceLabels": len(confirmations),
             "exactConfirmedSourceLabels": exact_count,
+            "semanticEquivalentConfirmedSourceLabels": equivalence_count,
             "syntacticConfirmedSourceLabels": syntactic_count,
             "needsSemanticConfirmationSourceLabels": (
                 needs_confirmation_sources
