@@ -223,7 +223,7 @@ _ABBREVIATED_SOURCE = re.compile(
     re.IGNORECASE,
 )
 _RECIPE_USE_PAREN = re.compile(
-    r"\\s*\\((?:to|for)\\s+[^()]+\\)\\s*$",
+    r"\\s*\\((?:for\\s+dissolving(?:\\s+[^()]*)?|to\\s+pour(?:\\s+[^()]*)?)\\)\\s*$",
     re.IGNORECASE,
 )
 _MEASUREMENT_PREFIX = re.compile(
