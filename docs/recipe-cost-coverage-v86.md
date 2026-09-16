@@ -92,3 +92,5 @@ card preview concurrency, entry isolation, missing-cost explanations and quantit
 The v86 installer uses a pinned source commit, preflight tests, a backup, stop/start,
 served-panel verification and rollback. It installs the v86 panel at cache key
 `2026.9.16.10`. Run it as a standalone script, not by sourcing it in the SSH shell.
+
+Tested runtime commit: `849280cf7e6ee2e2af089f47532301a900f08900`.
