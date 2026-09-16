@@ -359,10 +359,16 @@ def marketing_food_items(payload: Any, language: str) -> list[dict[str, str]]:
 def enrich_match_with_house_keys(
     recipe: dict[str, Any], match: dict[str, Any], house_ingredients: Any
 ) -> dict[str, Any]:
+    """Reconcile pantry availability without crossing authoritative provider IDs."""
     result = deepcopy(match)
     house = normalize_house_ingredients(house_ingredients)
     house_keys = {row["key"] for row in house if row.get("key")}
     house_names = {_norm(row["name"]) for row in house if row.get("name")}
+    house_keyless_names = {
+        _norm(row["name"])
+        for row in house
+        if row.get("name") and not row.get("key")
+    }
     matched_names = {_norm(name) for name in result.get("matchedIngredients") or []}
     missing_names = {_norm(name) for name in result.get("missingIngredients") or []}
 
@@ -375,11 +381,27 @@ def enrich_match_with_house_keys(
         if not name:
             continue
         normalized = _norm(name)
-        if (key and key in house_keys) or normalized in house_names or normalized in matched_names:
+
+        if key:
+            # A provider-backed recipe ingredient may only match the same provider
+            # identity.  Name fallback is retained solely for legacy/keyless pantry
+            # rows that predate provider-key storage.
+            at_home = key in house_keys or normalized in house_keyless_names
+            contradicted_name_match = (
+                not at_home
+                and normalized in (house_names | matched_names | missing_names)
+            )
+        else:
+            # A keyless recipe ingredient has no stronger identity available, so the
+            # normalized name remains the best compatibility signal.
+            at_home = normalized in house_names or normalized in matched_names
+            contradicted_name_match = False
+
+        if at_home:
             status = "at_home"
             matched.append(name)
             relevant += 1
-        elif normalized in missing_names:
+        elif normalized in missing_names or contradicted_name_match:
             status = "missing"
             missing.append(name)
             relevant += 1

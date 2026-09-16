@@ -189,6 +189,67 @@ class IngredientCatalogTests(unittest.TestCase):
         self.assertEqual(cleaned[0]["key"], "M_FOOD_0")
         self.assertEqual(cleaned[-1]["key"], "M_FOOD_11999")
 
+    def test_keyed_recipe_does_not_match_different_provider_key_with_same_name(self):
+        recipe = {
+            "ingredients": [{"foodKey": "M_FOOD_742", "foodName": "Edamame"}]
+        }
+        match = {"matchedIngredients": ["Edamame"], "missingIngredients": []}
+        result = self.module.enrich_match_with_house_keys(
+            recipe,
+            match,
+            [{"key": "M_FOOD_589", "name": "Edamame"}],
+        )
+        self.assertEqual(result["matchedIngredients"], [])
+        self.assertEqual(result["missingIngredients"], ["Edamame"])
+        self.assertEqual(result["pantryCoverage"], 0.0)
+        self.assertEqual(
+            result["ingredientAvailability"],
+            [
+                {
+                    "key": "M_FOOD_742",
+                    "name": "Edamame",
+                    "status": "missing",
+                    "missing": True,
+                }
+            ],
+        )
+
+    def test_keyed_recipe_matches_exact_provider_key(self):
+        recipe = {
+            "ingredients": [{"foodKey": "M_FOOD_742", "foodName": "Edamame"}]
+        }
+        result = self.module.enrich_match_with_house_keys(
+            recipe,
+            {"matchedIngredients": [], "missingIngredients": ["Edamame"]},
+            [{"key": "M_FOOD_742", "name": "Edamame"}],
+        )
+        self.assertEqual(result["matchedIngredients"], ["Edamame"])
+        self.assertEqual(result["missingIngredients"], [])
+        self.assertEqual(result["pantryCoverage"], 1.0)
+        self.assertEqual(result["ingredientAvailability"][0]["status"], "at_home")
+
+    def test_keyed_recipe_allows_legacy_keyless_pantry_name_fallback(self):
+        recipe = {
+            "ingredients": [{"foodKey": "M_FOOD_742", "foodName": "Edamame"}]
+        }
+        result = self.module.enrich_match_with_house_keys(
+            recipe,
+            {"matchedIngredients": [], "missingIngredients": []},
+            [{"name": "Edamame"}],
+        )
+        self.assertEqual(result["matchedIngredients"], ["Edamame"])
+        self.assertEqual(result["ingredientAvailability"][0]["status"], "at_home")
+
+    def test_keyless_recipe_can_use_name_against_keyed_pantry_row(self):
+        recipe = {"ingredients": [{"foodName": "Edamame"}]}
+        result = self.module.enrich_match_with_house_keys(
+            recipe,
+            {"matchedIngredients": [], "missingIngredients": []},
+            [{"key": "M_FOOD_589", "name": "Edamame"}],
+        )
+        self.assertEqual(result["matchedIngredients"], ["Edamame"])
+        self.assertEqual(result["ingredientAvailability"][0]["status"], "at_home")
+
 
 if __name__ == "__main__":
     unittest.main()
