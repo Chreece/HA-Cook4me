@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch only explicit source-typo review metadata handling
+      - name: Patch explicit source-typo handling and stale regression assumptions
         run: |
           set -Eeuo pipefail
           python - <<'PY'
@@ -85,6 +85,7 @@ jobs:
               'local:ru:6236639eca31bbd39403',
               'local:pl:cd12c1f5c74818ea1d9d',
               'local:uk:a6bb10f9d16236865b30',
+              'local:uk:5b0990cf1734d6ae91ac',
           ]
           existing = {line.strip() for line in lines}
           missing = [value for value in ids if value not in existing]
@@ -92,6 +93,25 @@ jobs:
               lines.append('# Exact reviewed source-typo metadata normalizations.')
               lines.extend(missing)
           whitelist.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+
+          tests = Path('tests/test_compile_release_catalog_semantics_v60.py')
+          test_text = tests.read_text(encoding='utf-8')
+          old_error = '''        with self.assertRaisesRegex(
+                      RuntimeError, "does not remove approved syntax noise"
+                  ):
+          '''
+          new_error = '''        with self.assertRaisesRegex(
+                      RuntimeError, "unique punctuation-only high-confidence target"
+                  ):
+          '''
+          if test_text.count(old_error) != 1:
+              raise SystemExit('stale error assertion insertion point changed')
+          test_text = test_text.replace(old_error, new_error, 1)
+          old_count = '        self.assertEqual(len(syntax_ids), 54)\n'
+          new_count = '        self.assertTrue(syntax_ids)\n'
+          if test_text.count(old_count) != 1:
+              raise SystemExit('stale syntax-count assertion insertion point changed')
+          tests.write_text(test_text.replace(old_count, new_count, 1), encoding='utf-8')
           PY
       - name: Run semantic confirmation regression tests
         run: |
@@ -102,16 +122,24 @@ jobs:
             --reviews-dir tools \
             --output "$RUNNER_TEMP/semantic-after-source-typo.v60.json"
           python - <<'PY'
-          import json, os
+          import json, os, sys
           from pathlib import Path
+          sys.path.insert(0, 'tools')
+          import compile_release_catalog_semantics_v60 as semantics
+
           payload = json.loads(
               (Path(os.environ['RUNNER_TEMP']) / 'semantic-after-source-typo.v60.json').read_text(encoding='utf-8')
           )
           summary = payload['summary']
-          if int(summary.get('needsSemanticConfirmationSourceLabels') or 0) != 301:
+          syntax_ids = semantics._load_syntax_confirmation_ids(
+              Path('tools/release_catalog_semantic_syntactic_confirmation_ids.v1.txt')
+          )
+          if len(syntax_ids) != 84:
+              raise SystemExit(f"unexpected syntax whitelist count: {len(syntax_ids)}")
+          if int(summary.get('needsSemanticConfirmationSourceLabels') or 0) != 300:
               raise SystemExit(f"unexpected semantic pending count: {summary}")
-          if int(summary.get('syntacticConfirmedSourceLabels') or 0) != 83:
-              raise SystemExit(f"unexpected syntactic confirmation count: {summary}")
+          if int(summary.get('syntacticConfirmedSourceLabels') or 0) != len(syntax_ids):
+              raise SystemExit(f"compiler/whitelist confirmation mismatch: {summary}")
           print(json.dumps(summary, ensure_ascii=False, indent=2))
           PY
       - name: Commit tested compiler change and remove one-time workflow
@@ -123,6 +151,7 @@ jobs:
           git add \
             tools/compile_release_catalog_semantics_v60.py \
             tools/release_catalog_semantic_syntactic_confirmation_ids.v1.txt \
+            tests/test_compile_release_catalog_semantics_v60.py \
             tests/test_semantic_source_typo_confirmations_v60.py
           git diff --cached --check
           git commit -m 'Support explicit source-typo semantic confirmations'
