@@ -53,7 +53,9 @@ _STANDALONE_EQUIVALENCE_POLICY = {
     "providerIdentityAssigned": False,
     "sourceLocalIdentityPreserved": True,
     "targetRemainsStandalone": True,
-    "exactReviewedEnglishAndClassificationRequired": True,
+    "reviewedEnglishAndClassificationPinned": True,
+    "nonExactRequiresManualSemanticEquivalence": True,
+    "targetMayHaveMultipleEquivalentSources": True,
     "manualReviewRequired": True,
     "safetyEligibilityGranted": False,
 }
@@ -717,7 +719,8 @@ def _standalone_equivalence_map(
 
     rows_by_source_id = _rows_by_source_id(review_rows)
     out: dict[str, dict[str, str]] = {}
-    used_ids: set[str] = set()
+    source_ids: set[str] = set()
+    parsed_items: list[tuple[int, dict[str, Any], str, str]] = []
     for index, raw in enumerate(items, 1):
         if not isinstance(raw, dict):
             raise RuntimeError(f"standalone equivalence item {index}: expected object")
@@ -729,12 +732,22 @@ def _standalone_equivalence_map(
             or source_id == target_id
         ):
             raise RuntimeError(f"standalone equivalence item {index}: invalid source/target identity")
-        if source_id in used_ids or target_id in used_ids:
+        if source_id in source_ids:
             raise RuntimeError(
-                "standalone equivalence identities must form disjoint reviewed pairs: "
-                f"{source_id} -> {target_id}"
+                f"duplicate standalone equivalence source identity: {source_id}"
             )
-        used_ids.update((source_id, target_id))
+        source_ids.add(source_id)
+        parsed_items.append((index, raw, source_id, target_id))
+
+    target_ids = {target_id for _, _, _, target_id in parsed_items}
+    chained_ids = source_ids & target_ids
+    if chained_ids:
+        raise RuntimeError(
+            "standalone equivalence chains/cycles are forbidden; targets must remain roots: "
+            + ", ".join(sorted(chained_ids))
+        )
+
+    for index, raw, source_id, target_id in parsed_items:
         if source_id in standalone:
             raise RuntimeError(
                 f"standalone equivalence source must be removed from standalone ledger: {source_id}"
@@ -778,9 +791,17 @@ def _standalone_equivalence_map(
             raise RuntimeError(
                 f"standalone equivalence targetReviewedEnglish differs for {target_id}"
             )
-        if _norm(source_english) != _norm(target_english):
+        manual_value = raw.get("manualSemanticEquivalence")
+        if manual_value not in (None, False, True):
             raise RuntimeError(
-                f"standalone equivalence reviewed meanings differ: {source_id} -> {target_id}"
+                f"standalone equivalence manualSemanticEquivalence must be boolean: {source_id}"
+            )
+        manual_equivalence = manual_value is True
+        exact_reviewed_english = _norm(source_english) == _norm(target_english)
+        if not exact_reviewed_english and not manual_equivalence:
+            raise RuntimeError(
+                "standalone equivalence non-exact reviewed meanings require "
+                f"manualSemanticEquivalence=true: {source_id} -> {target_id}"
             )
         rationale = _text(raw.get("rationale"))
         if len(rationale) < 20:
@@ -794,6 +815,11 @@ def _standalone_equivalence_map(
             ),
             "targetCanonicalEnglish": target_row["english"],
             "equivalenceFile": equivalence_file or "<inline-standalone-equivalence>",
+            "equivalenceMethod": (
+                "explicit-manual-source-local-equivalence"
+                if manual_equivalence
+                else "exact-reviewed-source-local-equivalence"
+            ),
             "rationale": rationale,
         }
     return out
@@ -1010,6 +1036,9 @@ def compile_semantic_concepts(
             identity["semanticStandaloneEquivalenceTargetSourceIngredientId"] = (
                 standalone_equivalence["targetSourceIngredientId"]
             )
+            identity["semanticStandaloneEquivalenceMethod"] = standalone_equivalence[
+                "equivalenceMethod"
+            ]
             identity["semanticStandaloneEquivalenceRationale"] = standalone_equivalence[
                 "rationale"
             ]
@@ -1065,6 +1094,8 @@ def compile_semantic_concepts(
             "explicitSyntacticConfirmationMerge": True,
             "explicitStandaloneReviewClosure": True,
             "explicitStandaloneSemanticEquivalence": True,
+            "manualStandaloneSemanticEquivalence": True,
+            "standaloneSemanticEquivalenceTargetFanIn": True,
             "standaloneReviewClosureGrantsSafetyEligibility": False,
             "standaloneSemanticEquivalenceGrantsSafetyEligibility": False,
             "mediumConfidenceCrossLanguageMerge": False,
@@ -1222,7 +1253,7 @@ def main() -> int:
         "--standalone-equivalences",
         default="",
         help=(
-            "Optional exact reviewed source-local equivalence JSON. When omitted, "
+            "Optional manually reviewed source-local equivalence JSON. When omitted, "
             "release_catalog_semantic_standalone_equivalences.v1.json is loaded "
             "from the reviews directory when present."
         ),

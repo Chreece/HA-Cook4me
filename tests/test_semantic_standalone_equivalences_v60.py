@@ -72,7 +72,9 @@ class StandaloneSemanticEquivalenceTests(unittest.TestCase):
                 "providerIdentityAssigned": False,
                 "sourceLocalIdentityPreserved": True,
                 "targetRemainsStandalone": True,
-                "exactReviewedEnglishAndClassificationRequired": True,
+                "reviewedEnglishAndClassificationPinned": True,
+                "nonExactRequiresManualSemanticEquivalence": True,
+                "targetMayHaveMultipleEquivalentSources": True,
                 "manualReviewRequired": True,
                 "safetyEligibilityGranted": False,
             },
@@ -143,21 +145,25 @@ class StandaloneSemanticEquivalenceTests(unittest.TestCase):
                 standalone_equivalence_payload=self._equivalence(source_id, target_id),
             )
 
-    def test_repository_equivalence_ledger_is_exact_and_fail_closed(self):
+    def test_repository_equivalence_ledger_is_reviewed_and_fail_closed(self):
         tools = ROOT / "tools"
         ledger = json.loads(
             (tools / "release_catalog_semantic_standalone_equivalences.v1.json").read_text(
                 encoding="utf-8"
             )
         )
-        self.assertEqual(ledger["summary"]["equivalenceCount"], 7)
-        self.assertEqual(len(ledger["items"]), 7)
+        self.assertEqual(ledger["summary"]["equivalenceCount"], 14)
+        self.assertEqual(len(ledger["items"]), 14)
         self.assertEqual(
-            len({row["sourceIngredientId"] for row in ledger["items"]}), 7
+            len({row["sourceIngredientId"] for row in ledger["items"]}), 14
+        )
+        self.assertEqual(
+            sum(row.get("manualSemanticEquivalence") is True for row in ledger["items"]),
+            7,
         )
         result = mod.compile_from_paths(mod._review_paths(tools))
         self.assertEqual(result["summary"]["needsSemanticConfirmationSourceLabels"], 0)
-        self.assertEqual(result["summary"]["standaloneEquivalentSourceLabels"], 7)
+        self.assertEqual(result["summary"]["standaloneEquivalentSourceLabels"], 14)
         concepts = {row["conceptId"]: row for row in result["concepts"]}
         for row in ledger["items"]:
             source_id = row["sourceIngredientId"]
