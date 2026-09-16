@@ -34,6 +34,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Install Python test dependencies
+        run: python -m pip install -r requirements-test.txt
       - name: Validate version, JSON, Python, shell, and frontend syntax
         run: |
           python scripts/version.py validate
@@ -73,6 +75,7 @@ jobs:
           python tools/build_frontend_bundle_v72.py --check
           python tools/build_frontend_bundle_v73.py --check
           python tools/build_frontend_bundle_v74.py --check
+          bash -n tools/deploy_offline_runtime_v75.sh
           python - <<'PY'
           import json
           from pathlib import Path

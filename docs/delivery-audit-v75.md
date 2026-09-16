@@ -25,3 +25,12 @@ The v75 installer runs the new regression checks before replacing Cook4Me and
 keeps the existing backup, rollback and post-restart verification. The frontend
 remains the tested v74 build because this update changes backend behavior.
 Live appliance and speaker verification still needs the user's Home Assistant.
+
+Validation: all 1,340 Python tests passed locally. After pinning the installer to
+runtime commit `172f8bb16aea5b5b0a641d878314b4e6f6d5e3f8`, all four installation,
+backup and rollback tests passed again. The prior GitHub run passed its browser,
+dashboard and HACS checks but could not import the entity-registration test
+because `yarl` was absent. The workflow now installs that test dependency from
+`requirements-test.txt` before running validation.
+Installing only those dependencies into a fresh virtual environment also passed
+both entity-registration tests.
