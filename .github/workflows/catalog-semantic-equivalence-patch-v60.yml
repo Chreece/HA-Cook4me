@@ -1,0 +1,373 @@
+name: Apply reviewed manual ingredient equivalences v60
+
+on:
+  push:
+    branches:
+      - cook4me-ingredient-semantic-confirmation-v60
+    paths:
+      - '.github/workflows/catalog-semantic-equivalence-patch-v60.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-equivalence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Add fail-closed manual semantic-equivalence support
+        run: |
+          set -Eeuo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          compiler = Path('tools/compile_release_catalog_semantics_v60.py')
+          text = compiler.read_text(encoding='utf-8')
+
+          old_block = '''        expected_concept = _semantic_concept_id(
+              source_row["classification"], source_row["english"]
+          )
+          if concept_id != expected_concept:
+              raise RuntimeError(
+                  "semantic confirmation does not preserve exact reviewed "
+                  f"English/classification for {source_id}: "
+                  f"{concept_id} != {expected_concept}"
+              )
+
+          target_row = high_concepts.get(concept_id)
+          if target_row is None:
+              raise RuntimeError(
+                  "semantic confirmation target lacks high-confidence evidence: "
+                  f"{concept_id}"
+              )
+          if (
+              target_row["classification"] != source_row["classification"]
+              or _norm(target_row["english"]) != _norm(source_row["english"])
+          ):
+              raise RuntimeError(
+                  f"semantic confirmation target meaning differs for {source_id}"
+              )
+
+          out[source_id] = {
+              "confirmedConceptId": concept_id,
+              "confirmationFile": confirmation_file or "<inline>",
+              "confirmationMethod": "explicit-reviewed-english-classification",
+          }
+          '''
+          new_block = '''        manual_equivalence = raw.get("manualSemanticEquivalence") is True
+          target_row = high_concepts.get(concept_id)
+          if target_row is None:
+              raise RuntimeError(
+                  "semantic confirmation target lacks high-confidence evidence: "
+                  f"{concept_id}"
+              )
+
+          rationale = ""
+          if manual_equivalence:
+              if policy.get("manualSemanticEquivalenceAllowed") is not True:
+                  raise RuntimeError(
+                      "manual semantic equivalence is not enabled by confirmation policy"
+                  )
+              source_reviewed_english = _text(raw.get("sourceReviewedEnglish"))
+              target_canonical_english = _text(raw.get("targetCanonicalEnglish"))
+              rationale = _text(raw.get("rationale"))
+              if source_reviewed_english != source_row["english"]:
+                  raise RuntimeError(
+                      f"manual semantic equivalence sourceReviewedEnglish differs for {source_id}"
+                  )
+              if target_canonical_english != target_row["english"]:
+                  raise RuntimeError(
+                      f"manual semantic equivalence targetCanonicalEnglish differs for {source_id}"
+                  )
+              if target_row["classification"] != source_row["classification"]:
+                  raise RuntimeError(
+                      f"manual semantic equivalence classification differs for {source_id}"
+                  )
+              if len(rationale) < 20:
+                  raise RuntimeError(
+                      f"manual semantic equivalence rationale is too short for {source_id}"
+                  )
+              method = "explicit-manual-semantic-equivalence"
+          else:
+              expected_concept = _semantic_concept_id(
+                  source_row["classification"], source_row["english"]
+              )
+              if concept_id != expected_concept:
+                  raise RuntimeError(
+                      "semantic confirmation does not preserve exact reviewed "
+                      f"English/classification for {source_id}: "
+                      f"{concept_id} != {expected_concept}"
+                  )
+              if (
+                  target_row["classification"] != source_row["classification"]
+                  or _norm(target_row["english"]) != _norm(source_row["english"])
+              ):
+                  raise RuntimeError(
+                      f"semantic confirmation target meaning differs for {source_id}"
+                  )
+              method = "explicit-reviewed-english-classification"
+
+          out[source_id] = {
+              "confirmedConceptId": concept_id,
+              "confirmationFile": confirmation_file or "<inline>",
+              "confirmationMethod": method,
+          }
+          if rationale:
+              out[source_id]["confirmationRationale"] = rationale
+          '''
+          if text.count(old_block) != 1:
+              raise SystemExit('exact confirmation block changed')
+          text = text.replace(old_block, new_block, 1)
+
+          old_map = '''    ) -> tuple[dict[str, dict[str, str]], int, int]:
+              exact = _exact_confirmation_map(
+          '''
+          new_map = '''    ) -> tuple[dict[str, dict[str, str]], int, int, int]:
+              exact = _exact_confirmation_map(
+          '''
+          if text.count(old_map) != 1:
+              raise SystemExit('confirmation-map signature changed')
+          text = text.replace(old_map, new_map, 1)
+
+          old_return = '''    return {**exact, **syntactic}, len(exact), len(syntactic)
+          '''
+          new_return = '''    equivalence_count = sum(
+              row.get("confirmationMethod") == "explicit-manual-semantic-equivalence"
+              for row in exact.values()
+          )
+          exact_count = len(exact) - equivalence_count
+          return (
+              {**exact, **syntactic},
+              exact_count,
+              equivalence_count,
+              len(syntactic),
+          )
+          '''
+          if text.count(old_return) != 1:
+              raise SystemExit('confirmation-map return changed')
+          text = text.replace(old_return, new_return, 1)
+
+          old_assign = '''    confirmations, exact_count, syntactic_count = _confirmation_map(
+          '''
+          new_assign = '''    confirmations, exact_count, equivalence_count, syntactic_count = _confirmation_map(
+          '''
+          if text.count(old_assign) != 1:
+              raise SystemExit('confirmation count assignment changed')
+          text = text.replace(old_assign, new_assign, 1)
+
+          old_identity = '''        if confirmation is not None:
+              identity["semanticConfirmationFile"] = confirmation[
+                  "confirmationFile"
+              ]
+              identity["semanticConfirmationMethod"] = confirmation[
+                  "confirmationMethod"
+              ]
+          '''
+          new_identity = '''        if confirmation is not None:
+              identity["semanticConfirmationFile"] = confirmation[
+                  "confirmationFile"
+              ]
+              identity["semanticConfirmationMethod"] = confirmation[
+                  "confirmationMethod"
+              ]
+              if rationale := confirmation.get("confirmationRationale"):
+                  identity["semanticConfirmationRationale"] = rationale
+          '''
+          if text.count(old_identity) != 1:
+              raise SystemExit('confirmation identity annotation changed')
+          text = text.replace(old_identity, new_identity, 1)
+
+          old_summary = '''            "exactConfirmedSourceLabels": exact_count,
+              "syntacticConfirmedSourceLabels": syntactic_count,
+          '''
+          new_summary = '''            "exactConfirmedSourceLabels": exact_count,
+              "semanticEquivalentConfirmedSourceLabels": equivalence_count,
+              "syntacticConfirmedSourceLabels": syntactic_count,
+          '''
+          if text.count(old_summary) != 1:
+              raise SystemExit('confirmation summary block changed')
+          compiler.write_text(text.replace(old_summary, new_summary, 1), encoding='utf-8')
+
+          confirmation_path = Path('tools/release_catalog_semantic_confirmations.v1.json')
+          confirmation = json.loads(confirmation_path.read_text(encoding='utf-8'))
+          confirmation['policy']['manualSemanticEquivalenceAllowed'] = True
+          additions = [
+              {
+                  'sourceIngredientId': 'local:ja:19b86c6fe08208b7291b',
+                  'confirmedConceptId': 'concept:food:35f3eb4d93302e449378',
+                  'manualSemanticEquivalence': True,
+                  'sourceReviewedEnglish': 'A - Cream cheese (bring to room temperature)',
+                  'targetCanonicalEnglish': 'A- cream cheese, brought to room temperature',
+                  'rationale': 'Same cream-cheese ingredient and same room-temperature preparation; wording differs only in grammatical aspect.',
+              },
+              {
+                  'sourceIngredientId': 'local:ja:273c360223e6802a6cac',
+                  'confirmedConceptId': 'concept:food:35f3eb4d93302e449378',
+                  'manualSemanticEquivalence': True,
+                  'sourceReviewedEnglish': 'A - Cream cheese (bring to room temperature)',
+                  'targetCanonicalEnglish': 'A- cream cheese, brought to room temperature',
+                  'rationale': 'Same cream-cheese ingredient and same room-temperature preparation; wording differs only in grammatical aspect.',
+              },
+              {
+                  'sourceIngredientId': 'local:uk:01545719973c1f64b25f',
+                  'confirmedConceptId': 'concept:food:893dfa946d4f4c0212c2',
+                  'manualSemanticEquivalence': True,
+                  'sourceReviewedEnglish': 'g vinegar (not balsamic)',
+                  'targetCanonicalEnglish': 'Vinegar (not balsamic)',
+                  'rationale': 'The leading g is a captured unit fragment; both rows identify the same non-balsamic vinegar ingredient.',
+              },
+              {
+                  'sourceIngredientId': 'local:uk:7fa976aed35498c38072',
+                  'confirmedConceptId': 'concept:food:d32cf5542653f0205212',
+                  'manualSemanticEquivalence': True,
+                  'sourceReviewedEnglish': 'Candied lemons (without flesh, thinly sliced)',
+                  'targetCanonicalEnglish': 'Candied lemon (without flesh, thinly sliced)',
+                  'rationale': 'Singular versus plural wording does not change the candied-lemon ingredient or its preparation state.',
+              },
+              {
+                  'sourceIngredientId': 'local:zh:d6a88d18c712517f6f4c',
+                  'confirmedConceptId': 'concept:food:24b80a3cc9898f2fda64',
+                  'manualSemanticEquivalence': True,
+                  'sourceReviewedEnglish': 'Water (some for gelatin)',
+                  'targetCanonicalEnglish': 'Water (for gelatin)',
+                  'rationale': 'Some is quantity-allocation wording; both rows identify water reserved for the gelatin step.',
+              },
+              {
+                  'sourceIngredientId': 'local:zh:bb2bd75d09cbf88a5720',
+                  'confirmedConceptId': 'concept:food:bd8a4ba810181bebb7ac',
+                  'manualSemanticEquivalence': True,
+                  'sourceReviewedEnglish': 'Red pickled ginger (for seasoning), a little',
+                  'targetCanonicalEnglish': 'Red pickled ginger, a little for finishing',
+                  'rationale': 'Seasoning versus finishing describes recipe use, not a different red-pickled-ginger ingredient.',
+              },
+              {
+                  'sourceIngredientId': 'local:ko:2cefa14e4084e3715a38',
+                  'confirmedConceptId': 'concept:food:8d81eeb437fe51caa8ca',
+                  'manualSemanticEquivalence': True,
+                  'sourceReviewedEnglish': 'Soy sauce (garnish/seasoning)',
+                  'targetCanonicalEnglish': 'Soy sauce (seasoning)',
+                  'rationale': 'Garnish or seasoning is usage metadata; both rows identify the same soy-sauce ingredient without a subtype change.',
+              },
+          ]
+          by_id = {row['sourceIngredientId']: row for row in confirmation['items']}
+          for row in additions:
+              existing = by_id.get(row['sourceIngredientId'])
+              if existing is not None and existing != row:
+                  raise SystemExit(f"conflicting existing confirmation: {row['sourceIngredientId']}")
+              if existing is None:
+                  confirmation['items'].append(row)
+                  by_id[row['sourceIngredientId']] = row
+          confirmation_path.write_text(
+              json.dumps(confirmation, ensure_ascii=False, separators=(',', ':')) + '\n',
+              encoding='utf-8',
+          )
+
+          tests = Path('tests/test_compile_release_catalog_semantics_v60.py')
+          test_text = tests.read_text(encoding='utf-8')
+          old_setup = '''        exact_items = json.loads(
+              exact_path.read_text(encoding="utf-8")
+          )["items"]
+          syntax_ids = mod._load_syntax_confirmation_ids(syntax_path)
+          self.assertEqual(len(exact_items), 115)
+          self.assertTrue(syntax_ids)
+          self.assertFalse(
+              {row["sourceIngredientId"] for row in exact_items} & syntax_ids
+          )
+          '''
+          new_setup = '''        confirmation_items = json.loads(
+              exact_path.read_text(encoding="utf-8")
+          )["items"]
+          equivalence_items = [
+              row for row in confirmation_items
+              if row.get("manualSemanticEquivalence") is True
+          ]
+          exact_items = [
+              row for row in confirmation_items
+              if row.get("manualSemanticEquivalence") is not True
+          ]
+          syntax_ids = mod._load_syntax_confirmation_ids(syntax_path)
+          self.assertEqual(len(exact_items), 115)
+          self.assertEqual(len(equivalence_items), 7)
+          self.assertTrue(syntax_ids)
+          self.assertFalse(
+              {row["sourceIngredientId"] for row in confirmation_items} & syntax_ids
+          )
+          '''
+          if test_text.count(old_setup) != 1:
+              raise SystemExit('repository confirmation test setup changed')
+          test_text = test_text.replace(old_setup, new_setup, 1)
+
+          old_total = '''        total = len(exact_items) + len(syntax_ids)
+
+          self.assertEqual(
+              confirmed["summary"]["exactConfirmedSourceLabels"],
+              len(exact_items),
+          )
+          self.assertEqual(
+              confirmed["summary"]["syntacticConfirmedSourceLabels"],
+              len(syntax_ids),
+          )
+          '''
+          new_total = '''        total = len(confirmation_items) + len(syntax_ids)
+
+          self.assertEqual(
+              confirmed["summary"]["exactConfirmedSourceLabels"],
+              len(exact_items),
+          )
+          self.assertEqual(
+              confirmed["summary"]["semanticEquivalentConfirmedSourceLabels"],
+              len(equivalence_items),
+          )
+          self.assertEqual(
+              confirmed["summary"]["syntacticConfirmedSourceLabels"],
+              len(syntax_ids),
+          )
+          '''
+          if test_text.count(old_total) != 1:
+              raise SystemExit('repository confirmation total block changed')
+          tests.write_text(test_text.replace(old_total, new_total, 1), encoding='utf-8')
+          PY
+      - name: Run semantic-equivalence regression tests
+        run: |
+          set -Eeuo pipefail
+          python -m unittest discover -s tests -p 'test_semantic_*v60.py' -v
+          python -m unittest discover -s tests -p 'test_compile_release_catalog_semantics_v60.py' -v
+          python tools/compile_release_catalog_semantics_v60.py \
+            --reviews-dir tools \
+            --output "$RUNNER_TEMP/semantic-after-equivalence.v60.json"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          payload = json.loads(
+              (Path(os.environ['RUNNER_TEMP']) / 'semantic-after-equivalence.v60.json').read_text(encoding='utf-8')
+          )
+          summary = payload['summary']
+          if int(summary.get('semanticEquivalentConfirmedSourceLabels') or 0) != 7:
+              raise SystemExit(f"unexpected equivalence count: {summary}")
+          if int(summary.get('needsSemanticConfirmationSourceLabels') or 0) != 293:
+              raise SystemExit(f"unexpected semantic pending count: {summary}")
+          print(json.dumps(summary, ensure_ascii=False, indent=2))
+          PY
+      - name: Commit tested equivalence support and remove one-time workflow
+        run: |
+          set -Eeuo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+Chreece@users.noreply.github.com"
+          git rm .github/workflows/catalog-semantic-equivalence-patch-v60.yml
+          git add \
+            tools/compile_release_catalog_semantics_v60.py \
+            tools/release_catalog_semantic_confirmations.v1.json \
+            tests/test_compile_release_catalog_semantics_v60.py \
+            tests/test_semantic_manual_equivalence_confirmations_v60.py
+          git diff --cached --check
+          git commit -m 'Support reviewed manual ingredient equivalences'
+          git pull --rebase origin cook4me-ingredient-semantic-confirmation-v60
+          git push origin HEAD:cook4me-ingredient-semantic-confirmation-v60
