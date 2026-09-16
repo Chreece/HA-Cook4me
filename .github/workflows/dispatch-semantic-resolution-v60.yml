@@ -1,0 +1,29 @@
+name: Dispatch ingredient semantic rebuild v60
+
+on:
+  push:
+    branches:
+      - cook4me-ingredient-semantic-confirmation-v60
+    paths:
+      - '.github/workflows/dispatch-semantic-resolution-v60.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch full catalog rebuild and resolution audit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -Eeuo pipefail
+          gh workflow run catalog-semantic-confirmation-apply-v60.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref cook4me-ingredient-semantic-confirmation-v60
+          gh workflow run catalog-semantic-remaining-audit-v60.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref cook4me-ingredient-semantic-confirmation-v60
