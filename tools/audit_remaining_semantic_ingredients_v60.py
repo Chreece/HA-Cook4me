@@ -77,9 +77,6 @@ def audit(review_root: Path) -> dict[str, Any]:
     }
     mapping = compiled.get("sourceIdentityToConcept") or {}
 
-    # Deduplicate high-confidence targets by semantic concept first, then precompute
-    # comparison features and a token inverted index. This keeps the audit fast even
-    # with thousands of reviewed source labels while producing the same candidates.
     high_targets_by_class: dict[str, dict[str, dict[str, Any]]] = defaultdict(dict)
     for row in rows:
         if (
@@ -210,10 +207,38 @@ def audit(review_root: Path) -> dict[str, Any]:
     }
 
 
+def exact_loose_lane(result: dict[str, Any]) -> dict[str, Any]:
+    items: list[dict[str, Any]] = []
+    for row in result.get("items") or []:
+        if not isinstance(row, dict):
+            continue
+        exact_targets = [
+            candidate
+            for candidate in row.get("candidateTargets") or []
+            if isinstance(candidate, dict) and candidate.get("exactLooseText") is True
+        ]
+        if not exact_targets:
+            continue
+        items.append({**row, "candidateTargets": exact_targets})
+    return {
+        "schemaVersion": 1,
+        "kind": "cook4me-remaining-semantic-exact-loose-candidates-v60",
+        "policy": {
+            "candidateSearchIsIdentityProof": False,
+            "automaticApproval": False,
+            "manualSemanticReviewRequired": True,
+            "providerIdentityAssigned": False,
+        },
+        "summary": {"candidateCount": len(items)},
+        "items": items,
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--review-root", type=Path, default=TOOLS)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--exact-output", type=Path)
     args = parser.parse_args()
     result = audit(args.review_root)
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -221,6 +246,13 @@ def main() -> int:
         json.dumps(result, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    if args.exact_output:
+        exact = exact_loose_lane(result)
+        args.exact_output.parent.mkdir(parents=True, exist_ok=True)
+        args.exact_output.write_text(
+            json.dumps(exact, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
     print(json.dumps(result["summary"], ensure_ascii=False, indent=2))
     return 0
 
