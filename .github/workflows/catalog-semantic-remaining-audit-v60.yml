@@ -6,6 +6,7 @@ on:
       - cook4me-ingredient-semantic-confirmation-v60
     paths:
       - 'tools/audit_remaining_semantic_ingredients_v60.py'
+      - 'tools/extract_high_similarity_semantic_candidates_v60.py'
       - '.github/workflows/catalog-semantic-remaining-audit-v60.yml'
   workflow_dispatch:
 
@@ -30,13 +31,18 @@ jobs:
             --review-root tools \
             --output tools/remaining_semantic_ingredient_audit_v60.json \
             --exact-output tools/remaining_semantic_exact_loose_v60.json
+          python tools/extract_high_similarity_semantic_candidates_v60.py \
+            --audit tools/remaining_semantic_ingredient_audit_v60.json \
+            --output tools/remaining_semantic_high_similarity_v60.json \
+            --minimum-score 0.8 \
+            --minimum-gap 0.15
           python - <<'PY'
           import json
           from pathlib import Path
           path = Path('tools/remaining_semantic_ingredient_audit_v60.json')
           payload = json.loads(path.read_text(encoding='utf-8'))
           summary = payload['summary']
-          if int(summary.get('remaining') or 0) != 330:
+          if int(summary.get('remaining') or 0) != 319:
               raise SystemExit(f"unexpected unresolved semantic count: {summary.get('remaining')}")
           if payload.get('policy', {}).get('automaticApproval') is not False:
               raise SystemExit('audit must not approve semantic mappings')
@@ -45,26 +51,31 @@ jobs:
           exact = json.loads(
               Path('tools/remaining_semantic_exact_loose_v60.json').read_text(encoding='utf-8')
           )
-          if int(exact.get('summary', {}).get('candidateCount') or 0) != 11:
-              raise SystemExit('unexpected exact-loose candidate count')
-          if exact.get('policy', {}).get('automaticApproval') is not False:
-              raise SystemExit('exact-loose lane must remain review-only')
+          if int(exact.get('summary', {}).get('candidateCount') or 0) != 0:
+              raise SystemExit('approved exact-loose rows unexpectedly remain unresolved')
+          high = json.loads(
+              Path('tools/remaining_semantic_high_similarity_v60.json').read_text(encoding='utf-8')
+          )
+          if high.get('policy', {}).get('automaticApproval') is not False:
+              raise SystemExit('high-similarity lane must remain review-only')
           print(json.dumps(summary, ensure_ascii=False, indent=2))
+          print(json.dumps(high.get('summary') or {}, ensure_ascii=False, indent=2))
           PY
-      - name: Commit exact audit report
+      - name: Commit exact audit reports
         run: |
           set -Eeuo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
             tools/remaining_semantic_ingredient_audit_v60.json \
-            tools/remaining_semantic_exact_loose_v60.json
+            tools/remaining_semantic_exact_loose_v60.json \
+            tools/remaining_semantic_high_similarity_v60.json
           git diff --cached --check
           if git diff --cached --quiet; then
             echo 'audit reports already current'
             exit 0
           fi
-          git commit -m "Audit remaining unresolved ingredient semantics v60"
+          git commit -m "Refresh remaining unresolved ingredient semantics v60"
           git push origin HEAD:cook4me-ingredient-semantic-confirmation-v60
       - name: Upload audit evidence
         uses: actions/upload-artifact@v4
@@ -73,5 +84,6 @@ jobs:
           path: |
             tools/remaining_semantic_ingredient_audit_v60.json
             tools/remaining_semantic_exact_loose_v60.json
+            tools/remaining_semantic_high_similarity_v60.json
           if-no-files-found: error
           retention-days: 7
