@@ -404,6 +404,11 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
         baseline = mod.compile_semantic_concepts(payloads)
         confirmed = mod.compile_from_paths(paths)
         total = len(confirmation_items) + len(syntax_ids)
+        standalone = mod._load_standalone_payload(
+            tools / "release_catalog_semantic_standalone_dispositions.v1.json"
+        )
+        standalone_count = len(standalone.get("items") or [])
+        review_total = total + standalone_count
 
         self.assertEqual(
             confirmed["summary"]["exactConfirmedSourceLabels"],
@@ -417,11 +422,15 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
             confirmed["summary"]["syntacticConfirmedSourceLabels"],
             len(syntax_ids),
         )
+        self.assertEqual(
+            confirmed["summary"]["standaloneConfirmedSourceLabels"],
+            standalone_count,
+        )
         self.assertEqual(confirmed["summary"]["confirmedSourceLabels"], total)
         self.assertEqual(
             baseline["summary"]["needsSemanticConfirmationSourceLabels"]
             - confirmed["summary"]["needsSemanticConfirmationSourceLabels"],
-            total,
+            review_total,
         )
         self.assertEqual(
             baseline["summary"]["semanticConcepts"]
@@ -430,7 +439,7 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
         )
         self.assertEqual(
             confirmed["summary"]["needsSemanticConfirmationSourceLabels"],
-            baseline["summary"]["needsSemanticConfirmationSourceLabels"] - total,
+            baseline["summary"]["needsSemanticConfirmationSourceLabels"] - review_total,
         )
 
         concepts = {

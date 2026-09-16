@@ -30,6 +30,18 @@ CONFIRMATION_FILE = TOOLS / "release_catalog_semantic_confirmations.v1.json"
 SYNTAX_CONFIRMATION_FILE = (
     TOOLS / "release_catalog_semantic_syntactic_confirmation_ids.v1.txt"
 )
+STANDALONE_DISPOSITION_FILE = (
+    TOOLS / "release_catalog_semantic_standalone_dispositions.v1.json"
+)
+_STANDALONE_KIND = "cook4me-semantic-ingredient-standalone-dispositions"
+_STANDALONE_POLICY = {
+    "providerIdentityAssigned": False,
+    "sourceLocalIdentityPreserved": True,
+    "crossIdentityMergeAllowed": False,
+    "reviewDispositionOnly": True,
+    "exactReviewedEnglishAndClassificationRequired": True,
+    "safetyEligibilityGranted": False,
+}
 
 _ALLOWED_CLASSIFICATIONS = {"food", "equipment", "other", "ambiguous"}
 _MERGEABLE_CLASSIFICATIONS = {"food", "equipment", "other"}
@@ -204,6 +216,26 @@ def _load_syntax_confirmation_ids(path: Path) -> set[str]:
     if not seen:
         raise RuntimeError(f"{path}: no syntactic confirmation identities")
     return seen
+
+
+def _load_standalone_payload(path: Path) -> dict[str, Any]:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise RuntimeError(f"{path}: expected JSON object")
+    if value.get("schemaVersion") != 1:
+        raise RuntimeError(f"{path}: unsupported standalone schemaVersion")
+    if value.get("kind") != _STANDALONE_KIND:
+        raise RuntimeError(f"{path}: unexpected standalone disposition kind")
+    policy = value.get("policy")
+    if not isinstance(policy, dict) or any(
+        policy.get(key) is not expected
+        for key, expected in _STANDALONE_POLICY.items()
+    ):
+        raise RuntimeError(f"{path}: unsafe standalone disposition policy")
+    items = value.get("items")
+    if not isinstance(items, list):
+        raise RuntimeError(f"{path}: standalone disposition items must be a list")
+    return value
 
 
 def iter_review_rows(
@@ -538,6 +570,87 @@ def _syntactic_confirmation_map(
     return out
 
 
+def _standalone_disposition_map(
+    review_rows: list[dict[str, Any]],
+    standalone_payload: dict[str, Any] | None,
+    *,
+    standalone_file: str = "",
+) -> dict[str, dict[str, str]]:
+    if standalone_payload is None:
+        return {}
+    if standalone_payload.get("schemaVersion") != 1:
+        raise RuntimeError("unsupported standalone disposition schemaVersion")
+    if standalone_payload.get("kind") != _STANDALONE_KIND:
+        raise RuntimeError("unexpected standalone disposition kind")
+    policy = standalone_payload.get("policy")
+    if not isinstance(policy, dict) or any(
+        policy.get(key) is not expected
+        for key, expected in _STANDALONE_POLICY.items()
+    ):
+        raise RuntimeError("unsafe standalone disposition policy")
+    items = standalone_payload.get("items")
+    if not isinstance(items, list):
+        raise RuntimeError("standalone disposition items must be a list")
+
+    rows_by_source_id = _rows_by_source_id(review_rows)
+    out: dict[str, dict[str, str]] = {}
+    for index, raw in enumerate(items, 1):
+        if not isinstance(raw, dict):
+            raise RuntimeError(f"standalone disposition item {index}: expected object")
+        source_id = _text(raw.get("sourceIngredientId"))
+        if not source_id.startswith("local:"):
+            raise RuntimeError(f"standalone disposition item {index}: invalid source identity")
+        if source_id in out:
+            raise RuntimeError(f"duplicate standalone disposition for {source_id}")
+        source_row = rows_by_source_id.get(source_id)
+        if source_row is None:
+            raise RuntimeError(
+                "standalone disposition source is not a reviewed identity: "
+                f"{source_id}"
+            )
+        if source_row["confidence"] == "high":
+            raise RuntimeError(
+                "standalone disposition is redundant for high-confidence source: "
+                f"{source_id}"
+            )
+        reviewed_english = _text(raw.get("sourceReviewedEnglish"))
+        classification = _text(raw.get("classification")).lower()
+        disposition = _text(raw.get("disposition"))
+        rationale = _text(raw.get("rationale"))
+        if reviewed_english != source_row["english"]:
+            raise RuntimeError(
+                f"standalone disposition sourceReviewedEnglish differs for {source_id}"
+            )
+        if classification != source_row["classification"]:
+            raise RuntimeError(
+                f"standalone disposition classification differs for {source_id}"
+            )
+        expected_disposition = (
+            "reviewed-ambiguous-source-fragment"
+            if classification == "ambiguous"
+            else "reviewed-source-local-standalone"
+        )
+        if classification != "ambiguous" and classification not in _MERGEABLE_CLASSIFICATIONS:
+            raise RuntimeError(
+                f"standalone disposition unsupported classification {classification!r}: {source_id}"
+            )
+        if disposition != expected_disposition:
+            raise RuntimeError(
+                f"standalone disposition type differs for {source_id}: "
+                f"{disposition!r} != {expected_disposition!r}"
+            )
+        if len(rationale) < 20:
+            raise RuntimeError(
+                f"standalone disposition rationale is too short for {source_id}"
+            )
+        out[source_id] = {
+            "disposition": disposition,
+            "dispositionFile": standalone_file or "<inline-standalone>",
+            "rationale": rationale,
+        }
+    return out
+
+
 def _confirmation_map(
     review_rows: list[dict[str, Any]],
     confirmation_payload: dict[str, Any] | None,
@@ -582,6 +695,8 @@ def compile_semantic_concepts(
     confirmation_file: str = "",
     syntax_confirmation_ids: set[str] | None = None,
     syntax_confirmation_file: str = "",
+    standalone_payload: dict[str, Any] | None = None,
+    standalone_file: str = "",
 ) -> dict[str, Any]:
     """Compile review rows without promoting semantic equality to provider ID."""
     concepts: dict[str, dict[str, Any]] = {}
@@ -595,6 +710,17 @@ def compile_semantic_concepts(
         syntax_confirmation_ids=syntax_confirmation_ids,
         syntax_confirmation_file=syntax_confirmation_file,
     )
+    standalone = _standalone_disposition_map(
+        review_rows,
+        standalone_payload,
+        standalone_file=standalone_file,
+    )
+    overlap = set(confirmations) & set(standalone)
+    if overlap:
+        raise RuntimeError(
+            "same source identity appears in semantic confirmation and standalone disposition: "
+            + ", ".join(sorted(overlap))
+        )
 
     for row in review_rows:
         language = row["language"]
@@ -604,6 +730,7 @@ def compile_semantic_concepts(
         confidence = row["confidence"]
         source_id = source_local_ingredient_id(language, source)
         confirmation = confirmations.get(source_id)
+        standalone_disposition = standalone.get(source_id)
 
         mergeable = (
             confidence == "high"
@@ -621,10 +748,15 @@ def compile_semantic_concepts(
             canonical_english = english
 
         concept_mergeable = mergeable or explicitly_confirmed
-        merge_policy = (
-            "reviewed-high-exact-english"
-            if concept_mergeable
-            else "source-local-conservative"
+        review_closed = concept_mergeable or standalone_disposition is not None
+        if standalone_disposition is not None:
+            merge_policy = standalone_disposition["disposition"]
+        elif concept_mergeable:
+            merge_policy = "reviewed-high-exact-english"
+        else:
+            merge_policy = "source-local-conservative"
+        safety_eligible = (
+            classification == "food" and standalone_disposition is None
         )
 
         concept = concepts.setdefault(
@@ -635,10 +767,10 @@ def compile_semantic_concepts(
                 "classification": classification,
                 "mergePolicy": merge_policy,
                 "providerIdentityAssigned": False,
-                "nutritionEligible": classification == "food",
-                "dietEligible": classification == "food",
-                "allergenEligible": classification == "food",
-                "needsSemanticConfirmation": not concept_mergeable,
+                "nutritionEligible": safety_eligible,
+                "dietEligible": safety_eligible,
+                "allergenEligible": safety_eligible,
+                "needsSemanticConfirmation": not review_closed,
                 "aliases": {},
                 "sourceIdentities": [],
             },
@@ -681,6 +813,16 @@ def compile_semantic_concepts(
             ]
             if rationale := confirmation.get("confirmationRationale"):
                 identity["semanticConfirmationRationale"] = rationale
+        if standalone_disposition is not None:
+            identity["semanticReviewDispositionFile"] = standalone_disposition[
+                "dispositionFile"
+            ]
+            identity["semanticReviewDisposition"] = standalone_disposition[
+                "disposition"
+            ]
+            identity["semanticReviewDispositionRationale"] = standalone_disposition[
+                "rationale"
+            ]
         concept["sourceIdentities"].append(identity)
         source_identity_to_concept[source_id] = concept_id
 
@@ -716,6 +858,11 @@ def compile_semantic_concepts(
         for row in ordered
         if row.get("needsSemanticConfirmation") is True
     )
+    standalone_count = len(standalone)
+    reviewed_ambiguous_count = sum(
+        row.get("disposition") == "reviewed-ambiguous-source-fragment"
+        for row in standalone.values()
+    )
     return {
         "schemaVersion": 1,
         "kind": "cook4me-semantic-ingredient-concepts",
@@ -725,6 +872,8 @@ def compile_semantic_concepts(
             "highConfidenceExactEnglishMerge": True,
             "explicitSemanticConfirmationMerge": True,
             "explicitSyntacticConfirmationMerge": True,
+            "explicitStandaloneReviewClosure": True,
+            "standaloneReviewClosureGrantsSafetyEligibility": False,
             "mediumConfidenceCrossLanguageMerge": False,
             "mediumConfidenceAutomaticCrossLanguageMerge": False,
             "ambiguousCrossLanguageMerge": False,
@@ -741,6 +890,8 @@ def compile_semantic_concepts(
             "exactConfirmedSourceLabels": exact_count,
             "semanticEquivalentConfirmedSourceLabels": equivalence_count,
             "syntacticConfirmedSourceLabels": syntactic_count,
+            "standaloneConfirmedSourceLabels": standalone_count,
+            "reviewedAmbiguousSourceLabels": reviewed_ambiguous_count,
             "needsSemanticConfirmationSourceLabels": (
                 needs_confirmation_sources
             ),
@@ -761,6 +912,7 @@ def compile_from_paths(
     *,
     confirmation_path: Path | None = None,
     syntax_confirmation_path: Path | None = None,
+    standalone_path: Path | None = None,
 ) -> dict[str, Any]:
     path_list = list(paths)
     payloads = [(path.name, _load_payload(path)) for path in path_list]
@@ -781,6 +933,11 @@ def compile_from_paths(
         if candidate.exists():
             syntax_confirmation_path = candidate
 
+    if standalone_path is None and review_dir is not None:
+        candidate = review_dir / STANDALONE_DISPOSITION_FILE.name
+        if candidate.exists():
+            standalone_path = candidate
+
     confirmation_payload = None
     confirmation_file = ""
     if confirmation_path is not None:
@@ -795,12 +952,20 @@ def compile_from_paths(
         )
         syntax_confirmation_file = syntax_confirmation_path.name
 
+    standalone_payload = None
+    standalone_file = ""
+    if standalone_path is not None:
+        standalone_payload = _load_standalone_payload(standalone_path)
+        standalone_file = standalone_path.name
+
     return compile_semantic_concepts(
         payloads,
         confirmation_payload=confirmation_payload,
         confirmation_file=confirmation_file,
         syntax_confirmation_ids=syntax_confirmation_ids,
         syntax_confirmation_file=syntax_confirmation_file,
+        standalone_payload=standalone_payload,
+        standalone_file=standalone_file,
     )
 
 
@@ -834,6 +999,15 @@ def main() -> int:
             "loaded from the reviews directory when present."
         ),
     )
+    parser.add_argument(
+        "--standalone-dispositions",
+        default="",
+        help=(
+            "Optional conservative source-local review-disposition JSON. When omitted, "
+            "release_catalog_semantic_standalone_dispositions.v1.json is loaded "
+            "from the reviews directory when present."
+        ),
+    )
     args = parser.parse_args()
 
     review_dir = Path(args.reviews_dir).expanduser()
@@ -849,10 +1023,16 @@ def main() -> int:
         if args.syntax_confirmations
         else None
     )
+    standalone_path = (
+        Path(args.standalone_dispositions).expanduser()
+        if args.standalone_dispositions
+        else None
+    )
     payload = compile_from_paths(
         paths,
         confirmation_path=confirmation_path,
         syntax_confirmation_path=syntax_confirmation_path,
+        standalone_path=standalone_path,
     )
     output = Path(args.output).expanduser()
     output.parent.mkdir(parents=True, exist_ok=True)
