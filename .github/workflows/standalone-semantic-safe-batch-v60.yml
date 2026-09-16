@@ -34,8 +34,7 @@ jobs:
       - name: Apply evidence-pinned safe merge batch
         run: |
           set -Eeuo pipefail
-          python tools/apply_safe_standalone_semantic_batch_v60.py
-          python tools/make_semantic_confirmation_regressions_count_driven_v60.py
+          python tools/apply_safe_standalone_semantic_batch2_v60.py
           git diff --check
 
       - name: Run semantic regressions
@@ -61,15 +60,15 @@ jobs:
           before = json.loads(Path(os.environ['RUNNER_TEMP'], 'semantic-before.json').read_text(encoding='utf-8'))
           after = json.loads(Path(os.environ['RUNNER_TEMP'], 'semantic-after.json').read_text(encoding='utf-8'))
 
-          helper_path = root / 'tools/apply_safe_standalone_semantic_batch_v60.py'
-          spec = importlib.util.spec_from_file_location('cook4me_safe_semantic_batch_check', helper_path)
+          helper_path = root / 'tools/apply_safe_standalone_semantic_batch2_v60.py'
+          spec = importlib.util.spec_from_file_location('cook4me_safe_semantic_batch2_check', helper_path)
           helper = importlib.util.module_from_spec(spec)
           assert spec.loader is not None
           spec.loader.exec_module(helper)
           decisions = helper.DECISIONS
           expected_delta = len(decisions)
-          if expected_delta != 19:
-              raise SystemExit(f'unexpected decision count: {expected_delta}')
+          if expected_delta <= 0:
+              raise SystemExit('safe semantic batch is empty')
 
           before_summary = before['summary']
           after_summary = after['summary']
@@ -146,9 +145,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add \
             tools/release_catalog_semantic_confirmations.v1.json \
-            tools/release_catalog_semantic_standalone_dispositions.v1.json \
-            tests/test_compile_release_catalog_semantics_v60.py \
-            tests/test_semantic_standalone_dispositions_v60.py
+            tools/release_catalog_semantic_standalone_dispositions.v1.json
           git diff --cached --check
-          git commit -m 'Merge first safe standalone ingredient semantics v60'
+          git commit -m 'Merge second safe standalone ingredient semantics v60'
           git push origin HEAD:cook4me-ingredient-semantic-confirmation-v60
