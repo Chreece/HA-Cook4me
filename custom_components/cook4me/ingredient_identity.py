@@ -105,11 +105,30 @@ def legacy_identity(item: Any) -> str:
     return f"n:{name}" if name else ""
 
 
+def _strong_candidates(candidates: tuple[str, ...]) -> set[str]:
+    """Return identities that are stronger than the legacy normalized-name alias."""
+    return {candidate for candidate in candidates if not candidate.startswith("n:")}
+
+
 def same_ingredient(left: Any, right: Any) -> bool:
-    left_candidates = set(identity_candidates(left))
-    if not left_candidates:
+    """Compare ingredient identity without collapsing conflicting authoritative IDs.
+
+    Name aliases remain available to migrate old name-only pantry/nutrition/cost
+    records. However, when *both* sides carry a provider/concept/local/explicit
+    identity, those stronger identities must agree. A coincidentally equal display
+    name must never merge two distinct provider foods or reviewed concepts.
+    """
+    left_candidates = identity_candidates(left)
+    right_candidates = identity_candidates(right)
+    if not left_candidates or not right_candidates:
         return False
-    return bool(left_candidates & set(identity_candidates(right)))
+
+    left_strong = _strong_candidates(left_candidates)
+    right_strong = _strong_candidates(right_candidates)
+    if left_strong and right_strong:
+        return bool(left_strong & right_strong)
+
+    return bool(set(left_candidates) & set(right_candidates))
 
 
 def preferred_storage_identity(item: Any) -> str:
