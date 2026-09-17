@@ -1,0 +1,53 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Dried lime (loomi)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Lime, raw",
+      "fdcId": 2709170,
+      "notes": "Manual review: dried lime remains lime; raw lime is this target's pinned same-food proxy. Medium: dehydration changes water and nutrient concentration.",
+      "reviewTargetId": "concept:food:fb16d51998fdbef39034",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 7,
+      "canonicalEnglishName": "Cooked bell pepper",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Peppers, green, cooked",
+      "fdcId": 2709976,
+      "notes": "Manual review: target is cooked bell pepper; selected its pinned cooked green-pepper proxy. Medium: color and cooking method are unspecified.",
+      "reviewTargetId": "concept:food:0564dd89ffa36c98678b",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Dried lemon",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Lemon, raw",
+      "fdcId": 2709168,
+      "notes": "Manual review: dried lemon remains lemon; raw lemon is this target's pinned same-food proxy. Medium: dehydration changes water and nutrient concentration.",
+      "reviewTargetId": "concept:food:0f3418b374db52650543",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "68be12fec0504414417c42a9ebb33f743e2564aafd171cbcdcb538768a7b7125"
+}
