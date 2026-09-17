@@ -1,0 +1,171 @@
+name: Apply conflict-free high-confidence syntax aliases v60
+
+on:
+  push:
+    branches:
+      - cook4me-ingredient-semantic-confirmation-v60
+    paths:
+      - '.github/workflows/high-confidence-syntax-alias-apply-v60.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply-aliases:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Compile pre-alias semantic baseline
+        run: |
+          set -Eeuo pipefail
+          python tools/compile_release_catalog_semantics_v60.py \
+            --reviews-dir tools \
+            --output "$RUNNER_TEMP/semantic-before.json" \
+            > "$RUNNER_TEMP/semantic-before-summary.json"
+
+      - name: Patch compiler, nutrition loader, and alias regressions
+        run: |
+          set -Eeuo pipefail
+          python tools/patch_high_confidence_syntax_aliases_v60.py
+          git diff --check
+
+      - name: Run focused semantic and nutrition regressions
+        run: |
+          set -Eeuo pipefail
+          python -m unittest discover -s tests -p 'test_semantic_high_confidence_syntax_aliases_v60.py' -v
+          python -m unittest discover -s tests -p 'test_nutrition_semantic_syntax_aliases_v60.py' -v
+          python -m unittest discover -s tests -p 'test_compile_release_catalog_semantics_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_standalone_dispositions_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_standalone_equivalences_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_standalone_manual_equivalences_v60.py' -v
+          python -m unittest discover -s tests -p 'test_release_catalog_nutrition_review_targets_v60.py' -v
+          python -m unittest discover -s tests -p 'test_nutrition_review_checkpoint_v60.py' -v
+
+      - name: Prove exact conflict-free alias delta and nutrition migration
+        run: |
+          set -Eeuo pipefail
+          python tools/compile_release_catalog_semantics_v60.py \
+            --reviews-dir tools \
+            --output "$RUNNER_TEMP/semantic-after.json" \
+            > "$RUNNER_TEMP/semantic-after-summary.json"
+          python - <<'PY'
+          import importlib.util
+          import json
+          import os
+          from pathlib import Path
+          import sys
+
+          root = Path.cwd()
+          tools = root / 'tools'
+          if str(tools) not in sys.path:
+              sys.path.insert(0, str(tools))
+
+          before = json.loads(Path(os.environ['RUNNER_TEMP'], 'semantic-before.json').read_text(encoding='utf-8'))
+          after = json.loads(Path(os.environ['RUNNER_TEMP'], 'semantic-after.json').read_text(encoding='utf-8'))
+          aliases_doc = json.loads((tools / 'release_catalog_semantic_high_confidence_syntax_aliases.v1.json').read_text(encoding='utf-8'))
+          alias_items = aliases_doc['items']
+          alias_map = {row['oldConceptId']: row['canonicalConceptId'] for row in alias_items}
+          excluded = set(aliases_doc['excludedConflictTargetConceptIds'])
+
+          bs = before['summary']
+          a = after['summary']
+          if bs['needsSemanticConfirmationSourceLabels'] != 0 or a['needsSemanticConfirmationSourceLabels'] != 0:
+              raise SystemExit('high-confidence alias migration must preserve zero pending semantics')
+          if bs['semanticConcepts'] - a['semanticConcepts'] != 128:
+              raise SystemExit(
+                  f"semantic concept delta is not exactly 128: {bs['semanticConcepts']} -> {a['semanticConcepts']}"
+              )
+          if a.get('highConfidenceSyntaxAliasConcepts') != 128:
+              raise SystemExit('compiled alias concept count mismatch')
+          if a.get('highConfidenceSyntaxAliasSourceLabels') != 130:
+              raise SystemExit('compiled alias source-label count mismatch')
+          if len(before['sourceIdentityToConcept']) != len(after['sourceIdentityToConcept']):
+              raise SystemExit('raw semantic source identity count changed')
+          if set(before['sourceIdentityToConcept']) != set(after['sourceIdentityToConcept']):
+              raise SystemExit('raw semantic source identity set changed')
+          if a['reviewedAmbiguousSourceLabels'] != bs['reviewedAmbiguousSourceLabels']:
+              raise SystemExit('reviewed ambiguous closure count changed')
+          if a['standaloneConfirmedSourceLabels'] != bs['standaloneConfirmedSourceLabels']:
+              raise SystemExit('standalone closure count changed')
+          if a['standaloneEquivalentSourceLabels'] != bs['standaloneEquivalentSourceLabels']:
+              raise SystemExit('standalone equivalence count changed')
+
+          concept_ids = {row['conceptId'] for row in after['concepts']}
+          if set(alias_map) & concept_ids:
+              raise SystemExit('collapsed syntax-only concept still emitted')
+          if not set(alias_map.values()) <= concept_ids:
+              raise SystemExit('one or more canonical alias targets are absent')
+          if excluded & set(alias_map.values()):
+              raise SystemExit('FDC-conflict target was included in alias map')
+          if not excluded <= concept_ids:
+              raise SystemExit('one or more FDC-conflict canonical concepts disappeared')
+
+          for row in alias_items:
+              for source_id in row['sourceIngredientIds']:
+                  if after['sourceIdentityToConcept'].get(source_id) != row['canonicalConceptId']:
+                      raise SystemExit(f'alias source mapping mismatch: {source_id}')
+              concept = next(x for x in after['concepts'] if x['conceptId'] == row['canonicalConceptId'])
+              if row['classification'] == 'food':
+                  if any(concept.get(key) is not True for key in ('nutritionEligible','dietEligible','allergenEligible')):
+                      raise SystemExit(f'high-confidence food alias lost safety eligibility: {row["canonicalConceptId"]}')
+
+          resolver_spec = importlib.util.spec_from_file_location(
+              'cook4me_alias_proof_resolver',
+              tools / 'resolve_reviewed_release_catalog_nutrition_targets_v60.py',
+          )
+          resolver = importlib.util.module_from_spec(resolver_spec)
+          assert resolver_spec.loader is not None
+          resolver_spec.loader.exec_module(resolver)
+          reviews = resolver.load_reviews(tools)
+          old_review_ids = set(alias_map) & set(reviews)
+          if old_review_ids:
+              raise SystemExit('historical nutrition review IDs were not canonicalized: ' + ', '.join(sorted(old_review_ids)[:10]))
+
+          # The one known conflict-free semantic-confirmation target must now map
+          # through the canonical alias while the excluded icing-sugar conflict stays old.
+          soy_source = 'local:uk:7f55d17243fdf6f4ebe8'
+          soy_old = 'concept:food:5cb168ac6c17e3fa92c8'
+          soy_target = alias_map.get(soy_old)
+          if not soy_target or after['sourceIdentityToConcept'].get(soy_source) != soy_target:
+              raise SystemExit('semantic confirmation was not migrated through soy-sauce syntax alias')
+          icing_source = 'local:uk:25f49a3e22d7c768ed86'
+          icing_old = 'concept:food:4120b9d570ebce2e500d'
+          if icing_old in alias_map:
+              raise SystemExit('icing-sugar nutrition-conflict concept must remain unaliased')
+          if after['sourceIdentityToConcept'].get(icing_source) != icing_old:
+              raise SystemExit('excluded icing-sugar confirmation target changed')
+
+          print(json.dumps({
+              'aliasGroups': aliases_doc['summary']['groupCount'],
+              'aliasConcepts': len(alias_items),
+              'aliasSourceIdentities': aliases_doc['summary']['sourceIdentityCount'],
+              'excludedConflictGroups': aliases_doc['summary']['excludedConflictGroupCount'],
+              'semanticConceptsBefore': bs['semanticConcepts'],
+              'semanticConceptsAfter': a['semanticConcepts'],
+              'rawSourceIdentityCount': len(after['sourceIdentityToConcept']),
+              'nutritionReviewTargetCountAfterCanonicalization': len(reviews),
+              'pendingAfter': a['needsSemanticConfirmationSourceLabels'],
+          }, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Commit validated alias compiler and nutrition migration
+        run: |
+          set -Eeuo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            tools/compile_release_catalog_semantics_v60.py \
+            tools/resolve_reviewed_release_catalog_nutrition_targets_v60.py \
+            tests/test_semantic_high_confidence_syntax_aliases_v60.py \
+            tests/test_nutrition_semantic_syntax_aliases_v60.py
+          git diff --cached --check
+          git commit -m 'Apply conflict-free high-confidence syntax aliases v60'
+          git push origin HEAD:cook4me-ingredient-semantic-confirmation-v60
