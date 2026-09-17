@@ -1,0 +1,84 @@
+name: Repair canonical batch 6 semantic safety v60
+
+on:
+  push:
+    branches:
+      - cook4me-ingredient-semantic-confirmation-v60
+    paths:
+      - '.github/workflows/repair-canonical-batch6-safety-v60.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Compile current baseline
+        run: |
+          set -Eeuo pipefail
+          python tools/compile_release_catalog_semantics_v60.py --reviews-dir tools --output "$RUNNER_TEMP/before.json" > /dev/null
+      - name: Restore lossy batch 6 mappings
+        run: |
+          set -Eeuo pipefail
+          python tools/repair_canonical_batch6_safety_v60.py
+          git diff --check
+      - name: Run semantic safety regressions
+        run: |
+          set -Eeuo pipefail
+          python -m unittest discover -s tests -p 'test_compile_release_catalog_semantics_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_standalone_dispositions_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_standalone_equivalences_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_standalone_manual_equivalences_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_canonical_batch6_safety_v60.py' -v
+      - name: Prove exact repair delta
+        run: |
+          set -Eeuo pipefail
+          python tools/compile_release_catalog_semantics_v60.py --reviews-dir tools --output "$RUNNER_TEMP/after.json" > /dev/null
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          before=json.loads(Path(os.environ['RUNNER_TEMP'],'before.json').read_text())
+          after=json.loads(Path(os.environ['RUNNER_TEMP'],'after.json').read_text())
+          bs=before['summary']; a=after['summary']
+          if a['needsSemanticConfirmationSourceLabels'] != 0:
+              raise SystemExit('repair reopened pending semantics')
+          if a['reviewedAmbiguousSourceLabels'] != 28:
+              raise SystemExit('ambiguous closure count changed')
+          if a['standaloneConfirmedSourceLabels'] - bs['standaloneConfirmedSourceLabels'] != 4:
+              raise SystemExit('expected exactly four restored standalone sources')
+          if bs['semanticEquivalentConfirmedSourceLabels'] - a['semanticEquivalentConfirmedSourceLabels'] != 4:
+              raise SystemExit('expected exactly four removed high-confidence equivalences')
+          if a['semanticConcepts'] - bs['semanticConcepts'] != 4:
+              raise SystemExit('expected exactly four restored source-local concepts')
+          if set(after['sourceIdentityToConcept']) != set(before['sourceIdentityToConcept']):
+              raise SystemExit('raw source identity set changed')
+          if a['standaloneEquivalentSourceLabels'] != bs['standaloneEquivalentSourceLabels']:
+              raise SystemExit('source-local equivalence ledger changed')
+          print(json.dumps({
+              'restoredStandalone': 4,
+              'standaloneBefore': bs['standaloneConfirmedSourceLabels'],
+              'standaloneAfter': a['standaloneConfirmedSourceLabels'],
+              'semanticConceptsBefore': bs['semanticConcepts'],
+              'semanticConceptsAfter': a['semanticConcepts'],
+              'pendingAfter': a['needsSemanticConfirmationSourceLabels'],
+              'rawSourceIdentities': len(after['sourceIdentityToConcept']),
+          }, indent=2))
+          PY
+      - name: Commit validated safety repair
+        run: |
+          set -Eeuo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add tools/release_catalog_semantic_confirmations.v1.json tools/release_catalog_semantic_standalone_dispositions.v1.json
+          git diff --cached --check
+          git commit -m 'Restore lossy canonical batch 6 ingredient distinctions v60'
+          git push origin HEAD:cook4me-ingredient-semantic-confirmation-v60
