@@ -56,3 +56,7 @@ Validation:
 Browser barcode capabilities and the configured Home Assistant photo provider
 remain prerequisites for their respective scan modes. No live phone camera or
 Home Assistant host was available here for hardware verification.
+
+Published runtime commit: `d196e39bd676d5b991dd4ab653ebf1a478672eb2`.
+
+Verified runtime tree: `9df09c79c437f4be47da31c914baa7cfa5c2e31e`.
