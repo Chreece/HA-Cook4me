@@ -1,0 +1,89 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Seitan",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Vital wheat gluten",
+      "fdcId": 168147,
+      "notes": "Manual semantic review binds provider identity 'Seitan' to USDA SR Legacy 'Vital wheat gluten'. Seitan is made primarily from vital wheat gluten, and this target's own pinned evidence ranks that exact gluten record first. Confidence is high for the defining food identity, while hydration, seasoning, cooking, and added ingredients can alter the finished seitan nutrition; this review does not generalize to wheat bread, pasta, or other gluten-containing foods.",
+      "reviewTargetId": "M_FOOD_539",
+      "reviewTargetKind": "provider-identity"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Yakitori sauce",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Teriyaki sauce",
+      "fdcId": 2707445,
+      "notes": "Manual semantic review binds provider identity 'Yakitori sauce' to USDA FNDDS 'Teriyaki sauce'. Yakitori tare is a soy-based sweet-savory Japanese grilling sauce closely represented by teriyaki sauce, and this target's own pinned evidence ranks that sauce record first. Confidence remains medium because exact soy sauce, mirin, sake, sugar, reduction, and brand formulation vary; this is a sauce-form nutritional proxy, not an assertion that every yakitori tare is identical to teriyaki sauce.",
+      "reviewTargetId": "M_FOOD_536",
+      "reviewTargetKind": "provider-identity"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 8,
+      "canonicalEnglishName": "Stock cube",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Soup, bouillon cubes and granules, low sodium, dry",
+      "fdcId": 171613,
+      "notes": "Manual semantic review binds provider identity 'Stock cube' to USDA SR Legacy 'Soup, bouillon cubes and granules, low sodium, dry'. The target is explicitly a dry stock/bouillon cube, and its own pinned evidence contains this generic cube/granule record. The generic bouillon record is preferred over assuming chicken, beef, fish, or another stock type. Confidence remains medium because the USDA record is low-sodium and also includes granules, while the provider identity does not specify stock type or sodium formulation.",
+      "reviewTargetId": "M_FOOD_50",
+      "reviewTargetKind": "provider-identity"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Shaved chocolate (for topping), a little",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Topping, chocolate",
+      "fdcId": 2710285,
+      "notes": "Manual semantic review binds Cook4Me 'Shaved chocolate (for topping), a little' to USDA FNDDS 'Topping, chocolate'. The ingredient is explicitly chocolate used as a topping and its own pinned evidence ranks this exact chocolate-topping category first. Confidence is high for the food role and identity; exact cocoa percentage, milk content, sugar, and shaving thickness are unspecified, and the small quantity is handled by recipe amount rather than by changing the nutrition identity.",
+      "reviewTargetId": "concept:food:6dce87db468bc403c8f0",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Packet of organic freeze-dried instant tomato soup for 4 servings",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Soup, tomato",
+      "fdcId": 2709757,
+      "notes": "Manual semantic review binds Cook4Me 'Packet of organic freeze-dried instant tomato soup for 4 servings' to USDA FNDDS 'Soup, tomato'. The target is explicitly tomato soup and its own pinned evidence contains this generic tomato-soup record. Confidence remains medium because freeze-drying, organic formulation, reconstitution ratio, salt, sugar, fat, and serving preparation are not represented by the generic soup record; this review does not infer cream when the source does not state cream.",
+      "reviewTargetId": "concept:food:cc87c0123d00e3f01f03",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Beef leg bones",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Beef, neck bones",
+      "fdcId": 2705844,
+      "notes": "Manual semantic review binds Cook4Me 'Beef leg bones' to USDA FNDDS 'Beef, neck bones'. The target is explicitly beef bone and its own pinned evidence ranks this same-species bone record first. Confidence remains medium because leg and neck bones differ in marrow, connective tissue, attached meat, and fat, so this is a same-species bone nutritional proxy rather than an exact anatomical-cut match; it does not generalize to pork, lamb, or prepared broth.",
+      "reviewTargetId": "concept:food:809328cf71883dba9bb9",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "05b3f604f6a44d40b0183053747539f6957b4a22896377a012372cc67a1e1df0"
+}
