@@ -92,6 +92,7 @@ class ProductCaptureTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(self.bridge.recipe_hub.profile['houseIngredients'], [])
 
     def api(self):
+        self.hass.async_add_executor_job = AsyncMock(side_effect=lambda function, *args: function(*args))
         nutrition=importlib.import_module(runtime.PREFIX+'.nutrition')
         inventory=importlib.import_module(runtime.PREFIX+'.inventory')
         locations=importlib.import_module(runtime.PREFIX+'.storage_locations')
@@ -103,6 +104,7 @@ class ProductCaptureTests(unittest.IsolatedAsyncioTestCase):
             '_catalog':AsyncMock(return_value=[{'key':'rice','name':'Rice'}]),
             'normalize_barcode':lambda code:code,
             'suggest_catalog_matches':lambda *args:[],
+            'confident_match':lambda rows:None,
             'normalize_nutrition':nutrition.normalize_nutrition,
             'inventory_identity':inventory.inventory_identity,'_quantity':inventory._quantity,'_best_before':inventory._best_before,
             'v15':runtime.NS(_store=AsyncMock(return_value=self.mapping)),

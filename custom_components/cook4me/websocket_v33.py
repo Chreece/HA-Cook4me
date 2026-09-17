@@ -17,7 +17,7 @@ from homeassistant.core import callback
 from . import websocket as legacy
 from . import websocket_v5 as v5, websocket_v11 as v11, websocket_v15 as v15, websocket_v23 as v23
 from .websocket_v32 import _authorized
-from .barcode import normalize_barcode, suggest_catalog_matches
+from .barcode import normalize_barcode, suggest_catalog_matches, confident_match
 from .device_settings import can_use
 from .inventory import _best_before, _quantity, inventory_identity
 from .nutrition import normalize_nutrition, nutrition_store_for_bridge
@@ -49,6 +49,12 @@ def _state(hass, bridge, user):
 
 
 async def _catalog(hass, bridge, msg):
+    from . import release_catalog
+    if release_catalog.release_catalog_ready():
+        # Match and validate against exactly the complete picker shown in the
+        # UI, including all language aliases and stable IDs for keyless foods.
+        rows = await hass.async_add_executor_job(release_catalog.ingredient_choices, str(msg.get("language") or "en"))
+        return [{**row, "key": row.get("key") or row.get("ingredientId") or row.get("id")} for row in rows]
     result = await v11._ingredient_catalog(hass, bridge, str(msg.get("language") or v11._device_language(bridge)), refresh=False)
     return result.get("items") or []
 
@@ -132,8 +138,14 @@ async def ws_barcode_lookup(hass, connection, msg):
         except Exception:
             product = {"found": False}
         catalog = await _catalog(hass, bridge, msg)
+        suggestions = await hass.async_add_executor_job(suggest_catalog_matches, product, catalog)
+        if known and known.get("ingredient"):
+            key = known["ingredient"].get("key")
+            current = next((row for row in catalog if key and (row.get("key") == key or key in (row.get("sourceIngredientIds") or []))
+                            or inventory_identity(row) == inventory_identity(known["ingredient"])), None)
+            known = {**known, "ingredient": current} if current else {**known, "ingredient": None}
         connection.send_result(msg["id"], {"barcode": code, "product": product, "mapping": known,
-            "suggestions": suggest_catalog_matches(product, catalog), "status": "review"})
+            "suggestions": suggestions, "match": confident_match(suggestions), "status": "review"})
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
 
@@ -176,8 +188,10 @@ async def ws_recognize_photo(hass, connection, msg):
             draft.pop("nutrition", None)
             draft.pop("bestBefore", None)
         catalog = await _catalog(hass, bridge, msg) if msg["mode"] == "product" else []
-        connection.send_result(msg["id"], {"product": draft, "suggestions": suggest_catalog_matches(
-            {**draft, "genericName": draft.get("ingredientName", "")}, catalog), "status": "review"})
+        suggestions = await hass.async_add_executor_job(suggest_catalog_matches,
+            {**draft, "genericName": draft.get("ingredientName", "")}, catalog)
+        connection.send_result(msg["id"], {"product": draft, "suggestions": suggestions,
+            "match": confident_match(suggestions), "status": "review"})
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
     finally:

@@ -194,39 +194,57 @@ def suggest_catalog_matches(
         if not isinstance(row, dict):
             continue
         name = _text(row.get("name"))
-        candidate = _norm(name)
-        if not candidate:
+        if not name:
             continue
-        candidate_tokens = _tokens(candidate)
-        score = 0.0
-        reason = ""
-        if generic and candidate == generic:
-            score, reason = 1.0, "generic_exact"
-        elif generic_tokens and candidate_tokens and candidate_tokens <= generic_tokens:
-            score, reason = 0.98, "generic_tokens"
-        elif product_name and candidate == product_name:
-            score, reason = 0.97, "product_exact"
-        elif product_tokens and candidate_tokens and candidate_tokens <= product_tokens:
-            score, reason = 0.95, "product_tokens"
-        elif candidate in category_names:
-            score, reason = 0.94, "category_exact"
-        elif _near_token_set(candidate_tokens, generic_tokens) or _near_token_set(candidate_tokens, product_tokens):
-            score, reason = 0.93, "near_token"
-        elif product_tokens and candidate_tokens:
-            union = product_tokens | candidate_tokens
-            overlap = len(product_tokens & candidate_tokens) / len(union) if union else 0.0
-            if overlap >= 0.5:
-                score, reason = min(0.89, 0.72 + overlap * 0.17), "token_similarity"
+        # Search every reviewed language alias, while keeping the selected UI
+        # label and ingredient identity in the result. No translation service.
+        def strings(value):
+            if isinstance(value, str):
+                yield value
+            elif isinstance(value, dict):
+                for item in value.values():
+                    yield from strings(item)
+            elif isinstance(value, (list, tuple)):
+                for item in value:
+                    yield from strings(item)
+        aliases = {_norm(alias) for field in ("name", "canonicalName", "searchAliases", "aliases", "translations")
+                   for alias in strings(row.get(field)) if alias.strip()}
+        score, reason, matched_alias = 0.0, "", ""
+        for candidate in sorted(aliases):
+            if not candidate:
+                continue
+            candidate_tokens = _tokens(candidate)
+            value, why = 0.0, ""
+            if generic and candidate == generic:
+                value, why = 1.0, "generic_exact"
+            elif generic_tokens and candidate_tokens and candidate_tokens <= generic_tokens:
+                value, why = 0.98, "generic_tokens"
+            elif product_name and candidate == product_name:
+                value, why = 0.97, "product_exact"
+            elif product_tokens and candidate_tokens and candidate_tokens <= product_tokens:
+                value, why = 0.95, "product_tokens"
+            elif candidate in category_names:
+                value, why = 0.94, "category_exact"
+            elif _near_token_set(candidate_tokens, generic_tokens) or _near_token_set(candidate_tokens, product_tokens):
+                value, why = 0.93, "near_token"
+            elif product_tokens and candidate_tokens:
+                union = product_tokens | candidate_tokens
+                overlap = len(product_tokens & candidate_tokens) / len(union) if union else 0.0
+                if overlap >= 0.5:
+                    value, why = min(0.89, 0.72 + overlap * 0.17), "token_similarity"
+            if value > score:
+                score, reason, matched_alias = value, why, candidate
         if score <= 0:
             continue
         ranked.append(
             {
                 "ingredient": {
-                    **({"key": str(row["key"])} if row.get("key") else {}),
+                    **({"key": str(row.get("key") or row.get("ingredientId") or row["id"])} if row.get("key") or row.get("ingredientId") or row.get("id") else {}),
                     "name": name,
                 },
                 "score": round(score, 3),
                 "reason": reason,
+                "matchedAlias": matched_alias,
             }
         )
     ranked.sort(key=lambda item: (-float(item["score"]), _norm(item["ingredient"]["name"])))
