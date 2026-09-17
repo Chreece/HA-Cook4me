@@ -21,7 +21,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -Eeuo pipefail
-          # Dispatch checkpoint: promote validated manual source-local semantic equivalence batch 4.
+          # Dispatch checkpoint: promote validated provenance-only semantic batch 8.
           gh workflow run catalog-semantic-resolution-apply-v60.yml \
             --repo "$GITHUB_REPOSITORY" \
             --ref cook4me-ingredient-semantic-confirmation-v60
