@@ -1,0 +1,54 @@
+name: Audit high-confidence semantic syntax duplicates v60
+
+on:
+  push:
+    branches:
+      - cook4me-ingredient-semantic-confirmation-v60
+    paths:
+      - 'tools/audit_high_confidence_semantic_syntax_v60.py'
+      - '.github/workflows/high-confidence-semantic-syntax-audit-v60.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Build review-only high-confidence syntax audit
+        run: |
+          set -Eeuo pipefail
+          python tools/audit_high_confidence_semantic_syntax_v60.py \
+            --review-root tools \
+            --output "$RUNNER_TEMP/high-confidence-semantic-syntax-audit-v60.json" \
+            | tee "$RUNNER_TEMP/high-confidence-semantic-syntax-audit-v60-summary.json"
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          payload = json.loads(
+              Path(os.environ['RUNNER_TEMP'], 'high-confidence-semantic-syntax-audit-v60.json').read_text(encoding='utf-8')
+          )
+          policy = payload.get('policy') or {}
+          for key in ('automaticApproval','candidateSearchIsIdentityProof','providerIdentityAssigned','reviewRowsMutated','semanticMappingsMutated'):
+              if policy.get(key) is not False:
+                  raise SystemExit(f'unsafe audit policy: {key}={policy.get(key)!r}')
+          if policy.get('usesOnlyExistingSafeSyntacticNormalizer') is not True:
+              raise SystemExit('audit must use existing safe syntactic normalizer')
+          print('candidate-groups', payload.get('summary', {}).get('candidateGroupCount'))
+          PY
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: high-confidence-semantic-syntax-audit-v60-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/high-confidence-semantic-syntax-audit-v60.json
+            ${{ runner.temp }}/high-confidence-semantic-syntax-audit-v60-summary.json
+          if-no-files-found: error
+          retention-days: 7
