@@ -122,7 +122,58 @@ def audit(review_root: Path) -> dict[str, Any]:
     payloads = [(path.name, semantics._load_payload(path)) for path in review_paths]
     review_rows = list(semantics.iter_review_rows(payloads))
     rows_by_source = semantics._rows_by_source_id(review_rows)
-    high_concepts = semantics._high_confidence_concepts(review_rows)
+
+    # Candidate target IDs must come from the fully compiled semantic graph, not
+    # from raw reviewed-English concepts. High-confidence syntax aliases can
+    # collapse a raw concept ID into a canonical concept; surfacing the old ID
+    # here would create stale review proposals.
+    compiled = semantics.compile_from_paths(review_paths)
+    compiled_concepts = {
+        str(row.get("conceptId") or ""): row
+        for row in compiled.get("concepts") or []
+        if isinstance(row, dict) and row.get("conceptId")
+    }
+    alias_old_ids: set[str] = set()
+    alias_path = review_root / semantics.HIGH_CONFIDENCE_SYNTAX_ALIAS_FILE.name
+    if alias_path.exists():
+        alias_payload = semantics._load_high_confidence_syntax_alias_payload(alias_path)
+        alias_old_ids = {
+            str(row.get("oldConceptId") or "")
+            for row in alias_payload.get("items") or []
+            if isinstance(row, dict) and row.get("oldConceptId")
+        }
+
+    canonical_high_concepts: dict[str, dict[str, Any]] = {}
+    for concept_id, concept in compiled_concepts.items():
+        classification = _text(concept.get("classification")).lower()
+        if classification not in semantics._MERGEABLE_CLASSIFICATIONS:
+            continue
+        if concept.get("needsSemanticConfirmation") is True:
+            continue
+        high_sources = [
+            row
+            for row in concept.get("sourceIdentities") or []
+            if isinstance(row, dict) and _text(row.get("confidence")).lower() == "high"
+        ]
+        if not high_sources:
+            continue
+        if concept_id in alias_old_ids:
+            raise RuntimeError(
+                f"compiled semantic graph still emits collapsed alias concept: {concept_id}"
+            )
+        canonical_high_concepts[concept_id] = {
+            "conceptId": concept_id,
+            "canonicalEnglish": _text(concept.get("canonicalEnglish")),
+            "classification": classification,
+            "reviewFiles": sorted(
+                {
+                    _text(row.get("reviewFile"))
+                    for row in high_sources
+                    if _text(row.get("reviewFile"))
+                }
+            ),
+        }
+
     standalone = semantics._load_standalone_payload(
         review_root / semantics.STANDALONE_DISPOSITION_FILE.name
     )
@@ -167,15 +218,8 @@ def audit(review_root: Path) -> dict[str, Any]:
         standalone_rows.append(row)
 
     high_by_class: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for concept_id, reviewed in high_concepts.items():
-        high_by_class[reviewed["classification"]].append(
-            {
-                "conceptId": concept_id,
-                "canonicalEnglish": reviewed["english"],
-                "classification": reviewed["classification"],
-                "reviewFile": reviewed["reviewFile"],
-            }
-        )
+    for concept_id, reviewed in canonical_high_concepts.items():
+        high_by_class[reviewed["classification"]].append(reviewed)
 
     row_results: list[dict[str, Any]] = []
     high_priority_high_targets: list[dict[str, Any]] = []
@@ -189,7 +233,12 @@ def audit(review_root: Path) -> dict[str, Any]:
                 "targetType": "high-confidence-concept",
                 "targetConceptId": target["conceptId"],
                 "targetCanonicalEnglish": target["canonicalEnglish"],
-                "targetReviewFile": target["reviewFile"],
+                "targetReviewFiles": target["reviewFiles"],
+                **(
+                    {"targetReviewFile": target["reviewFiles"][0]}
+                    if target["reviewFiles"]
+                    else {}
+                ),
                 "metrics": metrics,
             }
             candidates.append(candidate)
@@ -279,11 +328,15 @@ def audit(review_root: Path) -> dict[str, Any]:
             "sourceLocalIdentityPreserved": True,
             "standaloneLedgerMutated": False,
             "ambiguousRowsExcludedFromMergeSuggestions": True,
+            "highConfidenceTargetsCanonicalizedThroughCompiledSemanticGraph": True,
+            "collapsedHighConfidenceAliasTargetsExcluded": True,
         },
         "summary": {
             "standaloneDispositionCount": len(ledger_items),
             "mergeableStandaloneCount": len(standalone_rows),
             "reviewedAmbiguousCount": len(ambiguous_rows),
+            "canonicalHighConfidenceTargetConceptCount": len(canonical_high_concepts),
+            "collapsedHighConfidenceAliasConceptCount": len(alias_old_ids),
             "mergeableClassificationCounts": dict(sorted(class_counts.items())),
             "rowsWithHighConfidenceCandidates": sum(
                 bool(row["candidateTargets"]) for row in row_results
