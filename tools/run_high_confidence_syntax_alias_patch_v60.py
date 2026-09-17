@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the one-shot high-confidence alias patch with one disambiguated anchor."""
+"""Run the one-shot high-confidence alias patch with precise guarded edits."""
 from __future__ import annotations
 
 import importlib.util
@@ -25,6 +25,13 @@ def _replace_once(text: str, old: str, new: str, label: str) -> str:
         if not marker:
             raise RuntimeError("identity high alias receipt anchor disappeared")
         return before + new + after
+    if label == "alias map insertion":
+        # Test fixtures legitimately use zero excluded conflict groups. Avoid the
+        # classic `0 or -1` truthiness bug while keeping missing values fail-closed.
+        new = new.replace(
+            'int(summary.get("excludedConflictGroupCount") or -1)',
+            'int(summary.get("excludedConflictGroupCount", -1))',
+        )
     return _original(text, old, new, label)
 
 
