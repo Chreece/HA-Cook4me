@@ -47,3 +47,13 @@ The announcement settings explain the behavior in English, German and Greek. Ori
 - Generated unit labels, bundle reproducibility, Python/JavaScript syntax and installer shell syntax are checked. The installer verifies unit data, retains the price/entity preflight tests and adds the new announcement tests before replacing any installed files.
 
 Use the pinned `tools/deploy_offline_runtime_v105.sh` from the published v105 branch. Publishing does not install it on the Home Assistant host; the standalone installer keeps its backup, activation checks and rollback path.
+
+## Completed publication checks
+
+- Published runtime: `cdd8545f9b9bfe9a9c292a9021e62c21733694f4` on `cook4me-ui-announcements-v105`.
+- The published runtime tree matches the locally tested tree exactly: `810dcd0c2d4b17c41592ac9b2dc1f8ccb9bcadf8`.
+- The v105 installer and its deployment fixtures now pin that runtime rather than the previous v104 source.
+- Final targeted run: 31 Python tests passed (6 fallback, 14 existing announcement/registry, 4 deployment, 5 pricing and 2 entity setup tests).
+- Both Chromium suites passed against v105: multilingual units and ingredient selection, plus the existing price/fullscreen controls. Screen widths include 360, 390, 1360 and 1600 px.
+- Unit-data and frontend bundle reproducibility, Python compilation, JavaScript syntax, shell syntax and whitespace checks passed.
+- Deployment tests use temporary directories and command stubs; browser tests use the real shipped catalog with simulated Home Assistant transport. Installation, appliance events and audible speaker delivery still require the user's Home Assistant host.
