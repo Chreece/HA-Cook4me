@@ -113,8 +113,8 @@ class DeviceSettings:
             raise ValueError("Select up to 32 media players")
         result["players"] = list(dict.fromkeys(result["players"]))
         options = choices(self.bridge.hass, user)
-        # An unavailable saved selection can be retained when disabling speech.
-        # Enabling it always requires current availability and permissions.
+        # TTS and speakers must be usable. An optional saved AI selection can
+        # remain unavailable: deterministic announcements continue without it.
         if result["enabled"]:
             if not result["players"] or not set(result["players"]) <= {p["id"] for p in options["players"]}:
                 raise ValueError("Select available media players you can control")
@@ -123,7 +123,8 @@ class DeviceSettings:
                 raise ValueError("Select a TTS entity and one of its supported languages")
             if result["voice"] and result["voice"] not in {v["id"] for v in tts["voices"].get(result["language"], [])}:
                 raise ValueError("The selected voice is unavailable for this language")
-            if result["ai"] and result["ai"] not in {a["id"] for a in options["ai"]}:
+            if (result["ai"] and result["ai"] not in {a["id"] for a in options["ai"]}
+                    and result["ai"] != self.for_user(user.id)["ai"]):
                 raise ValueError("The selected AI Task is unavailable")
         data = deepcopy(self.data)
         data["users"][user.id] = result

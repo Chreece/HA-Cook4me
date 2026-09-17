@@ -159,7 +159,7 @@ class Cook4MeRecipeHubPanelV24 extends BasePanel {
     const provenance=[lot?.productName,lot?.brand,lot?.barcode?`EAN ${lot.barcode}`:"",lot?.source].filter(Boolean).join(" · ");
     return `<div data-stock-lot="${index}" style="padding:9px 0;border-bottom:1px dashed var(--divider-color)">
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px;align-items:end">
-        <div class="field"><label>${this._escape(this._t("amount"))}${unit?` (${this._escape(unit)})`:""}</label><input data-stock-lot-amount type="number" min="0" step="any" value="${this._escape(amount)}"></div>
+        <div class="field"><label>${this._escape(this._t("amount"))}${unit?` (${this._escape(this._displayUnit(unit,amount))})`:""}</label><input data-stock-lot-amount type="number" min="0" step="any" value="${this._escape(amount)}"></div>
         <div class="field"><label>${this._escape(this._t("bestBefore"))}</label><div style="display:flex;gap:5px"><input data-stock-lot-date type="date" value="${this._escape(lot?.bestBefore||"")}" style="min-width:0;flex:1"><button type="button" class="btn secondary" data-stock-lot-scan-date title="${this._escape(this._t("scanExpiryHelp"))}">📷</button></div></div>
         <div class="field"><label>${this._escape(this._t("storage"))}</label><select data-stock-lot-storage>${this._storageOptions(String(lot?.storage||""))}</select></div>
         <div class="field"><label>${this._escape(this._t("purchaseDate"))}</label><input data-stock-lot-purchase type="date" value="${this._escape(lot?.purchaseDate||"")}"></div>

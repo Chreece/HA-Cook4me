@@ -180,15 +180,16 @@ class AnnouncementTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(calls[-1].args[2]['media_player_entity_id'],['media_player.living'])
         self.assertEqual(calls[-1].args[2]['message'],'Cooking')
 
-    async def test_selected_ai_translates_before_tts_with_cache_and_no_fallback(self):
+    async def test_selected_ai_translates_with_cache_and_preserves_original_on_invalid_translation(self):
         prefs=await self.save(ai='ai_task.local')
         await self.manager.speak(self.users['alice'],prefs,'Stir for 2 minutes')
         self.assertEqual(self.hass.services.async_call.call_args.args[2]['message'],'Ανακατέψτε για 2 λεπτά')
         self.assertEqual(self.generate.call_args.kwargs['entity_id'],'ai_task.local')
         await self.manager.speak(self.users['alice'],prefs,'Stir for 2 minutes');self.assertEqual(self.generate.await_count,1)
         self.generate.return_value=NS(data={'text':'Cook for 3 minutes'})
-        with self.assertRaises(ValueError):await self.manager.speak(self.users['alice'],prefs,'Cook for 2 minutes')
-        self.assertEqual(self.hass.services.async_call.await_count,2)
+        await self.manager.speak(self.users['alice'],prefs,'Cook for 2 minutes')
+        self.assertEqual(self.hass.services.async_call.await_count,3)
+        self.assertEqual(self.hass.services.async_call.call_args.args[2]['message'],'Cook for 2 minutes')
 
     async def test_stale_step_or_disabled_preferences_after_slow_ai_is_not_spoken(self):
         await self.save(ai='ai_task.local')

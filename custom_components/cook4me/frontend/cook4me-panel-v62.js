@@ -88,9 +88,9 @@ class Cook4MeRecipeHubPanelV62 extends BasePanel{
     if(entry!==this._entryId||(recipeDialog&&recipeDialog!==this._v63RecipeDialog))return;
     this._v62CloseIngredient?.();
     const overlay=document.createElement("div");overlay.className="rx-overlay";overlay.setAttribute("data-ingredient-dialog",BUILD);
-    const stock=info.stock||{},quantity=stock.unlimited?"∞":stock.quantity!==undefined?`${this._shownNumber(stock.quantity)} ${stock.unit||""}`:"—";
+    const stock=info.stock||{},quantity=stock.unlimited?"∞":stock.quantity!==undefined?this._displayAmount(stock.quantity,stock.unit):"—";
     const history=(info.history||[]).slice(0,8).map(row=>`<div class="rx-list-row"><strong>${this._escape(row.title||"")}</strong><div class="muted">${this._escape(String(row.timestamp||"").slice(0,16).replace("T"," "))}</div></div>`).join("");
-    const lots=(stock.lots||[]).map(row=>`<div class="rx-list-row">${this._escape(`${this._shownNumber(row.quantity)} ${stock.unit||""}`)}${row.productName?` · ${this._escape(row.productName)}`:""}${row.bestBefore?` · ${this._escape(this._t("bestBefore"))}: ${this._escape(row.bestBefore)}`:""}</div>`).join("");
+    const lots=(stock.lots||[]).map(row=>`<div class="rx-list-row">${this._escape(this._displayAmount(row.quantity,stock.unit))}${row.productName?` · ${this._escape(row.productName)}`:""}${row.bestBefore?` · ${this._escape(this._t("bestBefore"))}: ${this._escape(row.bestBefore)}`:""}</div>`).join("");
     const uses=[...(info.savedRecipeUsage||[]).map(row=>({...row,kind:"saved"})),...(info.officialRecipeUsage||[]).map(recipe=>({title:recipe.title,recipe,kind:"official"}))];
     overlay.innerHTML=`<div class="rx-dialog" role="dialog" aria-modal="true" aria-label="${this._escape(this._t("ingredientInfo"))}">
       <div class="detail-head"><h2>🥕 ${this._escape(info.ingredient?.name||this._ingredientName(source))}</h2><button class="btn secondary" data-close aria-label="${this._escape(this._t("closeDialog"))}">✕</button></div>

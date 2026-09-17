@@ -12,7 +12,7 @@ class Cook4MeRecipeHubPanelV86 extends BasePanel{
  _v79Reference(ref){
   if(ref?.source!=='retail_snapshot')return super._v79Reference(ref);
   const e=value=>this._escape(String(value??'')),url=/^https:\/\/www\.dm\.de\/p\/d\//.test(ref.sourceUrl||'')?ref.sourceUrl:'';
-  return `<small data-v86-retail>${e(ref.productName)} · ${e(ref.location)} · ${e(ref.date)} · ${e(this._v79Money({[ref.currency]:ref.amount}))} / ${e(ref.basisQuantity)} ${e(ref.basisUnit)}${url?` · <a href="${e(url)}" target="_blank" rel="noopener noreferrer">dm.de ↗</a>`:''}</small>`;
+  return `<small data-v86-retail>${e(ref.productName)} · ${e(ref.location)} · ${e(ref.date)} · ${e(this._v79Money({[ref.currency]:ref.amount}))} / ${e(this._displayAmount(ref.basisQuantity,ref.basisUnit))}${url?` · <a href="${e(url)}" target="_blank" rel="noopener noreferrer">dm.de ↗</a>`:''}</small>`;
  }
  _v79CostHtml(recipe,state){
   const html=super._v79CostHtml(recipe,state),cost=state.cost;if(!cost)return html;

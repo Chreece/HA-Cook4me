@@ -97,13 +97,13 @@ class Cook4MeRecipeHubPanelV44 extends BasePanel{
     const r=this._weekState?.reservations||{};
     const rows=r.items||[];
     if(!rows.length)return`<div class="muted">—</div>`;
-    return rows.map(row=>`<div class="rx-list-row"><strong>${this._escape(row.name||row.identity)}</strong> · ${this._escape(`${row.quantity} ${row.unit}`)} ${this._escape(this._t("required"))} · ${row.available===null?this._escape(this._t("unknownStock")):`${this._escape(`${row.available} ${row.unit}`)} ${this._escape(this._t("available"))}`}${Number(row.shortage)>0?` · <strong>${this._escape(`${row.shortage} ${row.unit}`)} ${this._escape(this._t("shortage"))}</strong>`:""}</div>`).join("");
+    return rows.map(row=>`<div class="rx-list-row"><strong>${this._escape(row.name||row.identity)}</strong> · ${this._escape(this._displayAmount(row.quantity,row.unit))} ${this._escape(this._t("required"))} · ${row.available===null?this._escape(this._t("unknownStock")):`${this._escape(this._displayAmount(row.available,row.unit))} ${this._escape(this._t("available"))}`}${Number(row.shortage)>0?` · <strong>${this._escape(this._displayAmount(row.shortage,row.unit))} ${this._escape(this._t("shortage"))}</strong>`:""}</div>`).join("");
   }
 
   _shoppingDeltaHtml(){
     const rows=this._weekState?.shoppingDelta||[];
     if(!rows.length)return`<div class="muted">—</div>`;
-    return rows.map(row=>`<div class="rx-list-row"><strong>${this._escape(row.name)}</strong> · ${this._escape(`${row.quantity} ${row.unit}`)}</div>`).join("");
+    return rows.map(row=>`<div class="rx-list-row"><strong>${this._escape(row.name)}</strong> · ${this._escape(this._displayAmount(row.quantity,row.unit))}</div>`).join("");
   }
 
   _leftoversHtml(){
@@ -128,10 +128,10 @@ class Cook4MeRecipeHubPanelV44 extends BasePanel{
     return inventory.map((row,rowIndex)=>{
       const lots=row.lots||[];
       const lotHtml=lots.map(lot=>`<div class="rx-price-row" data-lot-id="${this._escape(lot.id||"")}" data-barcode="${this._escape(lot.barcode||"")}">
-        <div><strong>${this._escape(lot.productName||row.name)}</strong><div class="muted">${this._escape(`${lot.quantity??"?"} ${row.unit||""}`)}${lot.barcode?` · ${this._escape(lot.barcode)}`:""}</div></div>
-        <input data-price type="number" min="0" step="0.01" placeholder="${this._escape(this._t("purchasePrice"))}"><input data-currency maxlength="3" value="${this._escape(defaultCurrency)}" placeholder="EUR"><input data-basis-qty type="number" min="0" step="any" value="${this._escape(lot.quantity??"")}" placeholder="${this._escape(this._t("purchaseAmount"))}"><input data-basis-unit value="${this._escape(row.unit||"")}" placeholder="g"><input data-country maxlength="2" value="${this._escape(defaultCountry)}" placeholder="DE"><input data-merchant placeholder="${this._escape(this._t("merchant"))}"><button class="btn secondary" data-save-lot>${this._escape(this._t("saveLotPrice"))}</button>${lot.barcode?`<button class="btn secondary" data-global-price>${this._escape(this._t("lookupGlobal"))}</button>`:""}
+        <div><strong>${this._escape(lot.productName||row.name)}</strong><div class="muted">${this._escape(this._displayAmount(lot.quantity??"?",row.unit))}${lot.barcode?` · ${this._escape(lot.barcode)}`:""}</div></div>
+        <input data-price type="number" min="0" step="0.01" placeholder="${this._escape(this._t("purchasePrice"))}"><input data-currency maxlength="3" value="${this._escape(defaultCurrency)}" placeholder="EUR"><input data-basis-qty type="number" min="0" step="any" value="${this._escape(lot.quantity??"")}" placeholder="${this._escape(this._t("purchaseAmount"))}">${this._unitInput(row.unit,'data-basis-unit')}<input data-country maxlength="2" value="${this._escape(defaultCountry)}" placeholder="DE"><input data-merchant placeholder="${this._escape(this._t("merchant"))}"><button class="btn secondary" data-save-lot>${this._escape(this._t("saveLotPrice"))}</button>${lot.barcode?`<button class="btn secondary" data-global-price>${this._escape(this._t("lookupGlobal"))}</button>`:""}
       </div>`).join("");
-      return `<div class="rx-ingredient-price"><h4>${this._escape(row.name)}</h4>${lotHtml}<div class="rx-reference-row" data-ingredient-index="${rowIndex}"><span class="muted">${this._escape(this._t("ingredientReference"))}</span><input data-ref-price type="number" min="0" step="0.01" placeholder="${this._escape(this._t("purchasePrice"))}"><input data-ref-currency maxlength="3" value="${this._escape(defaultCurrency)}" placeholder="EUR"><input data-ref-qty type="number" min="0" step="any" placeholder="100"><input data-ref-unit value="${this._escape(row.unit||"")}" placeholder="g"><button class="btn secondary" data-save-reference>${this._escape(this._t("saveReference"))}</button></div></div>`;
+      return `<div class="rx-ingredient-price"><h4>${this._escape(row.name)}</h4>${lotHtml}<div class="rx-reference-row" data-ingredient-index="${rowIndex}"><span class="muted">${this._escape(this._t("ingredientReference"))}</span><input data-ref-price type="number" min="0" step="0.01" placeholder="${this._escape(this._t("purchasePrice"))}"><input data-ref-currency maxlength="3" value="${this._escape(defaultCurrency)}" placeholder="EUR"><input data-ref-qty type="number" min="0" step="any" placeholder="100">${this._unitInput(row.unit,'data-ref-unit')}<button class="btn secondary" data-save-reference>${this._escape(this._t("saveReference"))}</button></div></div>`;
     }).join("");
   }
 
@@ -142,7 +142,7 @@ class Cook4MeRecipeHubPanelV44 extends BasePanel{
     return `<div>${rows.map((row,index)=>{
       const suggestions=row.suggestions||[];
       const mapping=row.ingredient?`<span>${this._escape(row.ingredient.name||row.name)}</span>`:suggestions.length?`<select data-reconcile-map>${suggestions.map((s,i)=>`<option value="${i}">${this._escape(s.ingredient?.name||s.name||`#${i+1}`)}</option>`).join("")}</select>`:`<span class="warn">${this._escape(row.status==="needs_mapping"?this._t("needsMapping"):this._t("needsQuantity"))}</span>`;
-      return `<div class="rx-reconcile-row" data-reconcile-index="${index}"><input type="checkbox" data-reconcile-check ${row.status==="ready"||suggestions.length?"checked":""} ${row.status==="needs_quantity_and_unit"?"disabled":""}><span>${this._escape(row.summary)}</span>${mapping}<input data-rec-best-before type="date"><input data-rec-price type="number" min="0" step="0.01" placeholder="${this._escape(this._t("purchasePrice"))}"><input data-rec-currency maxlength="3" value="${this._escape(this._weekState?.costSettings?.currency||"")}" placeholder="EUR"><input data-rec-purchase-qty type="number" min="0" step="any" value="${this._escape(row.quantity??"")}"><input data-rec-purchase-unit value="${this._escape(row.unit||"")}"></div>`;
+      return `<div class="rx-reconcile-row" data-reconcile-index="${index}"><input type="checkbox" data-reconcile-check ${row.status==="ready"||suggestions.length?"checked":""} ${row.status==="needs_quantity_and_unit"?"disabled":""}><span>${this._escape(row.summary)}</span>${mapping}<input data-rec-best-before type="date"><input data-rec-price type="number" min="0" step="0.01" placeholder="${this._escape(this._t("purchasePrice"))}"><input data-rec-currency maxlength="3" value="${this._escape(this._weekState?.costSettings?.currency||"")}" placeholder="EUR"><input data-rec-purchase-qty type="number" min="0" step="any" value="${this._escape(row.quantity??"")}">${this._unitInput(row.unit,'data-rec-purchase-unit')}</div>`;
     }).join("")}</div><button id="importPurchases" class="btn">${this._escape(this._t("importSelected"))}</button>`;
   }
 

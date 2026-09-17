@@ -122,7 +122,7 @@ class Cook4MeRecipeHubPanelV19 extends BasePanel {
       ${this._scanPickerHtml()}
       <div class="formgrid" style="margin-top:10px">
         <div class="field"><label>${this._escape(this._t("packageAmount"))}</label><input id="scanPackageAmount" type="number" min="0" step="any" value="${this._escape(quantity)}"></div>
-        <div class="field"><label>${this._escape(this._t("unit"))}</label><input id="scanPackageUnit" value="${this._escape(unit)}" list="cook4meStockUnits"></div>
+        <div class="field"><label>${this._escape(this._t("unit"))}</label>${this._unitInput(unit,'id="scanPackageUnit"')}</div>
       </div>
       <button id="scanMapAdd" type="button" class="btn" style="margin-top:8px">${this._escape(this._t("mapAndAdd"))}</button>
     </div>`;

@@ -14,7 +14,7 @@ class Cook4MeRecipeHubPanelV87 extends BasePanel{
  _v79Reference(ref){
   if(!['retail_snapshot','utility_snapshot'].includes(ref?.source))return super._v79Reference(ref);
   const e=value=>this._escape(String(value??'')),url=evidenceUrl(ref.sourceUrl);
-  return `<small data-v87-reference>${e(ref.productName)} · ${e(ref.location)} · ${e(ref.date)} · ${e(this._v79Money({[ref.currency]:ref.amount}))} / ${e(ref.basisQuantity)} ${e(ref.basisUnit)}${url?` · <a href="${e(url.href)}" target="_blank" rel="noopener noreferrer">${e(url.hostname)} ↗</a>`:''}${ref.note?`<br>${e(ref.note)}`:''}</small>`;
+  return `<small data-v87-reference>${e(ref.productName)} · ${e(ref.location)} · ${e(ref.date)} · ${e(this._v79Money({[ref.currency]:ref.amount}))} / ${e(this._displayAmount(ref.basisQuantity,ref.basisUnit))}${url?` · <a href="${e(url.href)}" target="_blank" rel="noopener noreferrer">${e(url.hostname)} ↗</a>`:''}${ref.note?`<br>${e(ref.note)}`:''}</small>`;
  }
  _v79CostHtml(recipe,state){
   const node=this._v67Dom(super._v79CostHtml(recipe,state));

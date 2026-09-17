@@ -152,7 +152,7 @@ class Cook4MeRecipeHubPanelV61 extends BasePanel{
       if(!chips)return "";
       const quantity=number(profile.basisQuantity);
       const basis=quantity!==null&&quantity>0&&profile.basisUnit
-        ?this._t("nutrientBasis").replace("{quantity}",format.format(quantity)).replace("{unit}",profile.basisUnit)
+        ?this._t("nutrientBasis").replace("{quantity}",format.format(quantity)).replace("{unit}",this._displayUnit(profile.basisUnit,quantity))
         :this._t("nutrientBasisUnknown");
       return `<div data-ingredient-nutrition="${kind}" style="margin:8px 0"><strong>${this._escape(title)}</strong><div class="muted">${this._escape(basis)}${profile.estimated?` · ${this._escape(this._t("estimatedNutrition"))}`:""}</div><div class="chips">${chips}</div></div>`;
     };

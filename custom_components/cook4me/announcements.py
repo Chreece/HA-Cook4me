@@ -182,17 +182,17 @@ class Announcements:
             raise ValueError("AI did not return a complete translation")
         numbers = lambda value: sorted(re.findall(r"\d+(?:[.,]\d+)?", value.replace(",", ".")))
         if numbers(text) != numbers(translated):
-            raise ValueError("AI changed cooking quantities; announcement skipped")
+            raise ValueError("AI changed cooking quantities")
         if len(self.cache) >= 128:
             self.cache.pop(next(iter(self.cache)))
         self.cache[key] = translated.strip()
         return translated.strip()
 
-    async def speak(self, user, settings, text, *, still_current=lambda: True, delivered=None):
+    async def speak(self, user, settings, text, *, still_current=lambda: True, delivered=None, translate=True):
         async with self.delivery_lock:
-            return await self._speak(user, settings, text, still_current=still_current, delivered=delivered)
+            return await self._speak(user, settings, text, still_current=still_current, delivered=delivered, translate=translate)
 
-    async def _speak(self, user, settings, text, *, still_current, delivered):
+    async def _speak(self, user, settings, text, *, still_current, delivered, translate):
         if self.closed or not still_current():
             self.report(user.id, "skipped")
             return
@@ -201,10 +201,18 @@ class Announcements:
         players = [p for p in settings["players"] if p in {r["id"] for r in options["players"]}]
         if not tts or settings["language"] not in tts["languages"] or not players:
             raise ValueError("Selected TTS, language or media players are unavailable")
-        if settings["ai"] and settings["ai"] not in {a["id"] for a in options["ai"]}:
-            raise ValueError("Selected AI Task is unavailable")
-        self.report(user.id, "translating" if settings["ai"] else "speaking")
-        translated = await self.translate(text, settings, user)
+        # AI is optional enrichment. Fixed messages are already localized;
+        # recipe text can always use the deterministic, unaltered original.
+        use_ai = translate and settings["ai"] in {a["id"] for a in options["ai"]}
+        translated = text
+        if use_ai:
+            self.report(user.id, "translating")
+            try:
+                translated = await self.translate(text, settings, user)
+            except Exception as exc:
+                # CancelledError is deliberately not caught: unloading or a
+                # cancelled job must never start a fallback announcement.
+                _LOGGER.debug("Cook4Me translation unavailable; using original text: %s", type(exc).__name__)
         # AI may be slow: recheck user permissions, saved preferences and live step.
         user = await self.hass.auth.async_get_user(user.id)
         if self.closed or not user or not device_access(self.hass, self.bridge, user) or not still_current():
@@ -244,6 +252,7 @@ class Announcements:
                     continue
                 try:
                     await self.speak(user, settings, text, delivered=delivered,
+                        translate=any(kind in {"recipe", "steps"} and value and settings.get(kind) for kind, value in events),
                         still_current=lambda: self.current(data, events, created) and self.settings.for_user(user_id) == settings)
                 except Exception as exc:
                     self.report(user_id, "error", str(exc))
@@ -263,6 +272,7 @@ class Announcements:
             raise ValueError("Save and enable announcements before testing")
         try:
             await self.speak(user, settings, message_for([("test", "test")], {}, settings),
+                             translate=False,
                              still_current=lambda: self.settings.for_user(user.id) == settings)
         except Exception as exc:
             self.report(user.id, "error", str(exc))

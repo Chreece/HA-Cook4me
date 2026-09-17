@@ -3,6 +3,7 @@ import {readFileSync} from 'node:fs';
 import {createRequire} from 'node:module';
 import {fileURLToPath} from 'node:url';
 const root=fileURLToPath(new URL('..',import.meta.url));
+const build=process.env.COOK4ME_TEST_BUILD||'104';
 const mint=JSON.parse(readFileSync(root+'/docs/price-fixes-v104-preview.json','utf8'));
 const fixture=[...JSON.parse(readFileSync(root+'/docs/price-confidence-v99-preview.json','utf8')),mint];
 const {chromium}=createRequire(import.meta.url)('playwright');
@@ -11,10 +12,10 @@ try{
  const page=await browser.newPage({viewport:{width:1600,height:1000}}),errors=[];
  page.on('pageerror',error=>errors.push(error.message));
  await page.route('http://cook4me.test/**',r=>r.fulfill({contentType:'text/html',body:'<!doctype html><body style="margin:0;font:16px Arial;--primary-color:#397b58;--card-background-color:#fff;--primary-background-color:#f5f7f5;--primary-text-color:#183526;--secondary-text-color:#596f63;--divider-color:#d7dfd9;--secondary-background-color:#edf2ee"></body>'}));
- await page.goto('http://cook4me.test/');await page.addScriptTag({path:root+'/custom_components/cook4me/frontend/cook4me-panel-v104-bundle.js'});
- await page.evaluate(fixture=>{
+ await page.goto('http://cook4me.test/');await page.addScriptTag({path:root+`/custom_components/cook4me/frontend/cook4me-panel-v${build}-bundle.js`});
+ await page.evaluate(({fixture,build})=>{
   window.fixture=fixture;
-  globalThis.customElements.define('cook4me-v104-test',class extends globalThis.customElements.get('cook4me-recipe-hub-panel-v104'){connectedCallback(){} disconnectedCallback(){}});
+  globalThis.customElements.define('cook4me-v104-test',class extends globalThis.customElements.get(`cook4me-recipe-hub-panel-v${build}`){connectedCallback(){} disconnectedCallback(){}});
   const p=window.panel=document.createElement('cook4me-v104-test');
   p._hass={language:'en',user:{id:'alice'},states:{},config:{country:'DE',time_zone:'Europe/Berlin'},connection:{sendMessagePromise:async()=>({}),subscribeMessage:async()=>()=>{},addEventListener(){},removeEventListener(){}}};
   for(const method of ['_restorePreferences','_loadOverview','_requestSection','_loadRecipeNutrition','_loadIngredientCatalog','_loadTodayOptions'])p[method]=async()=>{};
@@ -35,7 +36,7 @@ try{
    for(const {recipe,cost} of fixture){recipe.cost=cost;Object.assign(p._v79CostState(recipe),{cost,loading:false});}
    p._renderTab();
   };render();
- },fixture);
+ },{fixture,build});
  const p=page.locator('cook4me-v104-test');
  for(const language of ['en','de','el']){
   for(const width of [360,390,1600]){

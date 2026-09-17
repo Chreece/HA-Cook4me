@@ -35,11 +35,11 @@ class Cook4MeRecipeHubPanelV91 extends BasePanel{
    const amount=element.querySelector('span');if(amount)amount.textContent=`≈ ${this._v79Money(amounts)} · ${this._v91Text('fallback')}`;
    element.querySelector('.v82-price-reasons')?.remove();
    const detail=document.createElement('p');detail.dataset.v91Fallback='';
-   detail.textContent=`${this._v91Text(estimate.level==='food_group'?'group':'basket')}: ${estimate.groupLabel} · ${estimate.sampleCount} ${this._v91Text('sources')} · ${estimate.quantity.toFixed(2)} ${estimate.unit}. ${this._v91Text('spread')}: ${this._v79Money({[estimate.currency]:estimate.low})}–${this._v79Money({[estimate.currency]:estimate.high})}.`;
+   detail.textContent=`${this._v91Text(estimate.level==='food_group'?'group':'basket')}: ${estimate.groupLabel} · ${estimate.sampleCount} ${this._v91Text('sources')} · ${this._displayAmount(estimate.quantity,estimate.unit)}. ${this._v91Text('spread')}: ${this._v79Money({[estimate.currency]:estimate.low})}–${this._v79Money({[estimate.currency]:estimate.high})}.`;
    element.append(detail);
    if(estimate.quantityEstimate){const q=document.createElement('small');q.textContent=`${this._v86Text('estimatedAmount')}: ${estimate.quantityEstimate.label}`;element.append(q);}
    const sources=document.createElement('details'),summary=document.createElement('summary');summary.textContent=`${this._v91Text('sources')} (${estimate.sources?.length||0}/${estimate.sampleCount})`;sources.append(summary);
-   for(const source of estimate.sources||[]){const line=document.createElement('div');line.textContent=`${source.name} · ${source.date} · ${this._v79Money({[estimate.currency]:source.rate*(source.unit==='pcs'?1:1000)})} / ${source.unit==='pcs'?'pcs':source.unit==='g'?'kg':'l'}`;
+   for(const source of estimate.sources||[]){const line=document.createElement('div');line.textContent=`${source.name} · ${source.date} · ${this._v79Money({[estimate.currency]:source.rate*(source.unit==='pcs'?1:1000)})} / ${this._displayUnit(source.unit==='pcs'?'pcs':source.unit==='g'?'kg':'l')}`;
     try{const url=new URL(source.sourceUrl);if(url.protocol==='https:'&&!url.username&&!url.password&&!url.port&&['prices.openfoodfacts.org','www.dm.de','www.aldi-sued.de','www.knuspr.de','ludwigs.shop','www.gourmet-versand.com','www.dallmayr-versand.de','www.africshopping.com'].includes(url.hostname)){const a=document.createElement('a');a.href=url.href;a.target='_blank';a.rel='noopener noreferrer';a.textContent=' ↗';line.append(a);}}catch{}
     sources.append(line);
    }element.append(sources);
