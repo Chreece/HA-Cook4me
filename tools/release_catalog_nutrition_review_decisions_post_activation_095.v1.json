@@ -1,0 +1,77 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 11,
+      "canonicalEnglishName": "Smoked pancetta",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Pork bacon, smoked or cured, cooked",
+      "fdcId": 2705889,
+      "notes": "Manual semantic review binds Cook4Me 'Smoked pancetta' to USDA FNDDS 'Pork bacon, smoked or cured, cooked'. Pancetta and bacon are both cured pork belly products, and this target's own pinned evidence contains the smoked-or-cured pork-bacon record. Confidence remains medium because pancetta may be unsmoked, fat content and curing differ, and cooking state is not explicit in the source; this review does not generalize to ham, sausage, or non-pork smoked foods.",
+      "reviewTargetId": "concept:food:2cc60981270458ef094e",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 12,
+      "canonicalEnglishName": "Caramel biscuits",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Biscuits, plain or buttermilk, prepared from recipe",
+      "fdcId": 172670,
+      "notes": "Manual semantic review binds Cook4Me 'Caramel biscuits' to USDA SR Legacy 'Biscuits, plain or buttermilk, prepared from recipe'. The target is explicitly a biscuit and its own pinned evidence contains this generic prepared-biscuit record. Confidence remains medium because caramel, sugar, fat, and exact biscuit style are not represented; this review does not generalize to crackers, wafers, filled cookies, or caramel confectionery.",
+      "reviewTargetId": "concept:food:11ff2ae3d20f58de42f1",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Store-bought biscuits (for Mont Blanc base)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Biscuits, plain or buttermilk, frozen, baked",
+      "fdcId": 172667,
+      "notes": "Manual semantic review binds Cook4Me 'Store-bought biscuits (for Mont Blanc base)' to USDA SR Legacy 'Biscuits, plain or buttermilk, frozen, baked'. The target is explicitly a prepared biscuit used as a base and its own pinned evidence ranks this baked-biscuit record first. Confidence remains medium because the exact store-bought biscuit style, sweetness, fat, and formulation are unspecified; this review does not generalize to cookies, crackers, wafers, or filled biscuits.",
+      "reviewTargetId": "concept:food:e12ed794698f35206b68",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Bone marrow",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Caribou, bone marrow, raw (Alaska Native)",
+      "fdcId": 169800,
+      "notes": "Manual semantic review binds provider identity 'Bone marrow' to USDA SR Legacy 'Caribou, bone marrow, raw (Alaska Native)'. The target is explicitly bone marrow and its own pinned evidence ranks this actual bone-marrow food record first. Confidence remains medium because the provider identity does not specify animal species and the USDA record is caribou-specific; this is a bone-marrow nutritional proxy and does not imply caribou provenance or generalize to bone-in meat or broth.",
+      "reviewTargetId": "M_FOOD_317",
+      "reviewTargetKind": "provider-identity"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Guinea fowl",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Guinea hen, meat only, raw",
+      "fdcId": 174471,
+      "notes": "Manual semantic review binds provider identity 'Guinea fowl' to USDA SR Legacy 'Guinea hen, meat only, raw'. Guinea fowl and guinea hen refer to the same poultry species group, and this target's own pinned evidence ranks this exact species meat record first. Confidence is high for food identity; the record is raw meat only, so recipes using skin or cooked meat may require preparation-level adjustment separately.",
+      "reviewTargetId": "M_FOOD_379",
+      "reviewTargetKind": "provider-identity"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "966590eab39d12750ca31972318229b2446dd33f5e31b0058a274c8ae7e9d561"
+}
