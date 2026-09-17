@@ -23,3 +23,5 @@ A broader legacy announcement test (`test_slow_state_announcement_is_skipped_aft
 Cloud and appliance transport are simulated in these tests. Loading on the user's physical device still needs a live attempt after installation.
 
 Use the pinned v107 installer. It includes dietary-guidance and cross-language tests in preflight, retains the deployment backup and rollback, and checks that Home Assistant serves the exact installed v107 bundle.
+
+Published runtime: `9b3039799d210f8450aa3d53b3dbe28702320b8c` on `cook4me-dietary-guidance-v107`. Its tree matches the tested local source: `260f46a7c3a90bd4fbab1e73b9d25d7ac7efb639`.
