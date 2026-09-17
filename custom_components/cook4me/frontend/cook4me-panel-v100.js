@@ -32,9 +32,10 @@ class Cook4MeRecipeHubPanelV100 extends BasePanel{
  _buttonIcon(button){return button.id==='v82RefreshPrices'||button.hasAttribute('data-v82-refresh-prices')?null:super._buttonIcon(button);}
  _v82RefreshButton(){
   super._v82RefreshButton();
+  const glyph=this._v104PriceRefreshIcon?.()||'mdi:refresh';
   for(const button of this.shadowRoot?.querySelectorAll('#v82RefreshPrices,[data-v82-refresh-prices]')||[]){
-   if(button.childNodes.length!==1||button.firstElementChild?.getAttribute('icon')!=='mdi:refresh'){
-    const icon=document.createElement('ha-icon');icon.setAttribute('icon','mdi:refresh');icon.setAttribute('aria-hidden','true');button.replaceChildren(icon);
+   if(button.childNodes.length!==1||button.firstElementChild?.getAttribute('icon')!==glyph){
+    const icon=document.createElement('ha-icon');icon.setAttribute('icon',glyph);icon.setAttribute('aria-hidden','true');button.replaceChildren(icon);
    }
   }
  }

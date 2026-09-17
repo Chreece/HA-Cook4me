@@ -1,0 +1,728 @@
+{
+  "recipe": {
+    "groupingFunctionalId": "973754",
+    "recipeFunctionalId": "314559",
+    "variantFunctionalId": "314559",
+    "searchVariantId": "314559",
+    "displayVariantId": "314559",
+    "title": "Legume și mozzarella la abur",
+    "originalTitle": "Legume și mozzarella la abur",
+    "originalLanguage": "ro",
+    "canonicalName": "Steamed vegetables with mozzarella",
+    "cover": "https://sebplatform.api.groupe-seb.com/statics/thumb/f8414638-e3b9-4f4c-b0df-2527a44f68b6.png",
+    "language": "ro",
+    "market": "GS_RO",
+    "groupSize": 4.0,
+    "yield": {
+      "quantity": 4.0,
+      "quantityDisplay": "4",
+      "unit": "pers",
+      "unitKey": "UNIT_1"
+    },
+    "durations": {
+      "prepTime": 15,
+      "cookingTime": 10,
+      "offApplianceCookingTime": 0,
+      "restingTime": 0,
+      "totalTime": 25,
+      "isQuickRecipe": false
+    },
+    "difficulty": 25,
+    "ingredients": [
+      {
+        "ingredientId": "M_FOOD_478",
+        "key": "M_FOOD_478",
+        "foodKey": "M_FOOD_478",
+        "name": "Tomato",
+        "foodName": "Tomato",
+        "canonicalName": "Tomato",
+        "quantity": 200.0,
+        "unit": "g",
+        "unitKey": "UNIT_27"
+      },
+      {
+        "ingredientId": "M_FOOD_23",
+        "key": "M_FOOD_23",
+        "foodKey": "M_FOOD_23",
+        "name": "Aubergine",
+        "foodName": "Aubergine",
+        "canonicalName": "Aubergine",
+        "quantity": 200.0,
+        "unit": "g",
+        "unitKey": "UNIT_27"
+      },
+      {
+        "ingredientId": "M_FOOD_147",
+        "key": "M_FOOD_147",
+        "foodKey": "M_FOOD_147",
+        "name": "Zucchini",
+        "foodName": "Zucchini",
+        "canonicalName": "Zucchini",
+        "quantity": 200.0,
+        "unit": "g",
+        "unitKey": "UNIT_27"
+      },
+      {
+        "ingredientId": "M_FOOD_325",
+        "key": "M_FOOD_325",
+        "foodKey": "M_FOOD_325",
+        "name": "Mozzarella",
+        "foodName": "Mozzarella",
+        "canonicalName": "Mozzarella",
+        "quantity": 165.0,
+        "unit": "g",
+        "unitKey": "UNIT_27"
+      },
+      {
+        "ingredientId": "M_FOOD_457",
+        "key": "M_FOOD_457",
+        "foodKey": "M_FOOD_457",
+        "name": "Salt",
+        "foodName": "Salt",
+        "canonicalName": "Salt"
+      },
+      {
+        "ingredientId": "M_FOOD_308",
+        "key": "M_FOOD_308",
+        "foodKey": "M_FOOD_308",
+        "name": "Mint",
+        "foodName": "Mint",
+        "canonicalName": "Mint",
+        "quantity": 20.0,
+        "unit": "buc",
+        "unitKey": "UNIT_41"
+      },
+      {
+        "ingredientId": "M_FOOD_246",
+        "key": "M_FOOD_246",
+        "foodKey": "M_FOOD_246",
+        "name": "Olive oil",
+        "foodName": "Olive oil",
+        "canonicalName": "Olive oil",
+        "quantity": 1.0,
+        "unit": "Lgt",
+        "unitKey": "UNIT_11"
+      },
+      {
+        "ingredientId": "M_FOOD_165",
+        "key": "M_FOOD_165",
+        "foodKey": "M_FOOD_165",
+        "name": "Water",
+        "foodName": "Water",
+        "canonicalName": "Water",
+        "quantity": 200.0,
+        "unit": "ml",
+        "unitKey": "UNIT_35"
+      }
+    ],
+    "source": "cook4me_release_catalog",
+    "releaseCatalogVersion": "2026-09-14-v60-progressive",
+    "sendable": false,
+    "variants": [
+      {
+        "variantId": "314558",
+        "recipeFunctionalId": "314558",
+        "groupingFunctionalId": "973754",
+        "title": "Legume și mozzarella la abur",
+        "originalTitle": "Legume și mozzarella la abur",
+        "language": "ro",
+        "originalLanguage": "ro",
+        "market": "GS_RO",
+        "servings": 2.0,
+        "yield": {
+          "quantity": 2.0,
+          "quantityDisplay": "2",
+          "unit": "pers",
+          "unitKey": "UNIT_1"
+        },
+        "cover": "https://sebplatform.api.groupe-seb.com/statics/thumb/f8414638-e3b9-4f4c-b0df-2527a44f68b6.png"
+      },
+      {
+        "variantId": "314559",
+        "recipeFunctionalId": "314559",
+        "groupingFunctionalId": "973754",
+        "title": "Legume și mozzarella la abur",
+        "originalTitle": "Legume și mozzarella la abur",
+        "language": "ro",
+        "originalLanguage": "ro",
+        "market": "GS_RO",
+        "servings": 4.0,
+        "yield": {
+          "quantity": 4.0,
+          "quantityDisplay": "4",
+          "unit": "pers",
+          "unitKey": "UNIT_1"
+        },
+        "cover": "https://sebplatform.api.groupe-seb.com/statics/thumb/f8414638-e3b9-4f4c-b0df-2527a44f68b6.png"
+      },
+      {
+        "variantId": "314560",
+        "recipeFunctionalId": "314560",
+        "groupingFunctionalId": "973754",
+        "title": "Legume și mozzarella la abur",
+        "originalTitle": "Legume și mozzarella la abur",
+        "language": "ro",
+        "originalLanguage": "ro",
+        "market": "GS_RO",
+        "servings": 6.0,
+        "yield": {
+          "quantity": 6.0,
+          "quantityDisplay": "6",
+          "unit": "pers",
+          "unitKey": "UNIT_1"
+        },
+        "cover": "https://sebplatform.api.groupe-seb.com/statics/thumb/f8414638-e3b9-4f4c-b0df-2527a44f68b6.png"
+      }
+    ],
+    "availableServings": [
+      2.0,
+      4.0,
+      6.0
+    ],
+    "calculatedNutritionV60": {
+      "totals": {
+        "energyKcal": 614.6,
+        "energyKJ": 2569.2304,
+        "protein": 44.869,
+        "carbohydrates": 32.426,
+        "sugars": 13.2465,
+        "salt": 2.9456,
+        "sodium": 1.1781
+      },
+      "perServing": {
+        "energyKcal": 153.65,
+        "energyKJ": 642.3076,
+        "protein": 11.2172,
+        "carbohydrates": 8.1065,
+        "sugars": 3.3116,
+        "salt": 0.7364,
+        "sodium": 0.2945
+      },
+      "servings": 4.0,
+      "coverage": 0.5,
+      "fullyCovered": false,
+      "ingredientCoverage": [
+        {
+          "identity": "k:M_FOOD_478",
+          "covered": true
+        },
+        {
+          "identity": "k:M_FOOD_23",
+          "covered": true
+        },
+        {
+          "identity": "k:M_FOOD_147",
+          "covered": true
+        },
+        {
+          "identity": "k:M_FOOD_325",
+          "covered": true
+        },
+        {
+          "identity": "k:M_FOOD_457",
+          "covered": false
+        },
+        {
+          "identity": "k:M_FOOD_308",
+          "covered": false
+        },
+        {
+          "identity": "k:M_FOOD_246",
+          "covered": false
+        },
+        {
+          "identity": "k:M_FOOD_165",
+          "covered": false
+        }
+      ],
+      "calculation": "identity-indexed-vector-sum-v1",
+      "estimated": true,
+      "sourceKinds": [
+        "reviewed_release_per100g"
+      ]
+    },
+    "nutrition": {
+      "totals": {
+        "energyKcal": 614.6,
+        "energyKJ": 2569.2304,
+        "protein": 44.869,
+        "carbohydrates": 32.426,
+        "sugars": 13.2465,
+        "salt": 2.9456,
+        "sodium": 1.1781
+      },
+      "perServing": {
+        "energyKcal": 153.65,
+        "energyKJ": 642.3076,
+        "protein": 11.2172,
+        "carbohydrates": 8.1065,
+        "sugars": 3.3116,
+        "salt": 0.7364,
+        "sodium": 0.2945
+      },
+      "servings": 4.0,
+      "coverage": 0.5,
+      "fullyCovered": false,
+      "ingredientCoverage": [
+        {
+          "identity": "k:M_FOOD_478",
+          "covered": true
+        },
+        {
+          "identity": "k:M_FOOD_23",
+          "covered": true
+        },
+        {
+          "identity": "k:M_FOOD_147",
+          "covered": true
+        },
+        {
+          "identity": "k:M_FOOD_325",
+          "covered": true
+        },
+        {
+          "identity": "k:M_FOOD_457",
+          "covered": false
+        },
+        {
+          "identity": "k:M_FOOD_308",
+          "covered": false
+        },
+        {
+          "identity": "k:M_FOOD_246",
+          "covered": false
+        },
+        {
+          "identity": "k:M_FOOD_165",
+          "covered": false
+        }
+      ],
+      "calculation": "identity-indexed-vector-sum-v1",
+      "estimated": true,
+      "sourceKinds": [
+        "reviewed_release_per100g"
+      ]
+    },
+    "catalogNutrition": {
+      "totals": {
+        "energyKcal": 614.6,
+        "energyKJ": 2569.2304,
+        "protein": 44.869,
+        "carbohydrates": 32.426,
+        "sugars": 13.2465,
+        "salt": 2.9456,
+        "sodium": 1.1781
+      },
+      "perServing": {
+        "energyKcal": 153.65,
+        "energyKJ": 642.3076,
+        "protein": 11.2172,
+        "carbohydrates": 8.1065,
+        "sugars": 3.3116,
+        "salt": 0.7364,
+        "sodium": 0.2945
+      },
+      "servings": 4.0,
+      "coverage": 0.5,
+      "fullyCovered": false,
+      "ingredientCoverage": [
+        {
+          "identity": "k:M_FOOD_478",
+          "covered": true
+        },
+        {
+          "identity": "k:M_FOOD_23",
+          "covered": true
+        },
+        {
+          "identity": "k:M_FOOD_147",
+          "covered": true
+        },
+        {
+          "identity": "k:M_FOOD_325",
+          "covered": true
+        },
+        {
+          "identity": "k:M_FOOD_457",
+          "covered": false
+        },
+        {
+          "identity": "k:M_FOOD_308",
+          "covered": false
+        },
+        {
+          "identity": "k:M_FOOD_246",
+          "covered": false
+        },
+        {
+          "identity": "k:M_FOOD_165",
+          "covered": false
+        }
+      ],
+      "calculation": "identity-indexed-vector-sum-v1",
+      "estimated": true,
+      "sourceKinds": [
+        "reviewed_release_per100g"
+      ]
+    }
+  },
+  "cost": {
+    "totalsByCurrency": {
+      "EUR": 2.12
+    },
+    "perServingByCurrency": {
+      "EUR": 0.53
+    },
+    "servings": 4.0,
+    "ingredients": [
+      {
+        "identity": "k:M_FOOD_478",
+        "name": "Tomato",
+        "quantity": 200.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.6
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": 323724,
+            "barcode": "8436557138934",
+            "amount": 0.75,
+            "currency": "EUR",
+            "basisQuantity": 250.0,
+            "basisUnit": "g",
+            "pricePer": "",
+            "usable": true,
+            "date": "2026-08-31",
+            "country": "DE",
+            "location": "Penny",
+            "productName": "Cherry-Roma Tomaten Klasse 1",
+            "source": "open_prices_category",
+            "confidence": "external_observation",
+            "categories": [
+              "en:cherry-tomatoes",
+              "en:tomatoes"
+            ],
+            "category": "en:tomatoes",
+            "identity": "k:M_FOOD_478",
+            "observationId": 323724,
+            "updatedAt": "2026-08-31"
+          }
+        ],
+        "quantityEstimate": null
+      },
+      {
+        "identity": "k:M_FOOD_23",
+        "name": "Aubergine",
+        "quantity": 200.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.32
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": 304775,
+            "barcode": "",
+            "amount": 0.89,
+            "currency": "EUR",
+            "basisQuantity": 1.0,
+            "basisUnit": "pcs",
+            "pricePer": "UNIT",
+            "usable": true,
+            "date": "2026-08-06",
+            "country": "DE",
+            "location": "Aldi Süd",
+            "productName": "Auberginen Stk",
+            "source": "open_prices_category",
+            "confidence": "external_observation",
+            "categories": [
+              "en:aubergines"
+            ],
+            "category": "en:aubergines",
+            "identity": "k:M_FOOD_23",
+            "observationId": 304775,
+            "updatedAt": "2026-08-06"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_portion",
+          "label": "USDA Eggplant, raw: eggplant, unpeeled (approx 1-1/4 lb)",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/169228/nutrients",
+          "fdcId": 169228,
+          "portionId": 84476,
+          "sourceQuantity": 200.0,
+          "sourceUnit": "g",
+          "quantity": 0.36496350364963503,
+          "unit": "pcs"
+        }
+      },
+      {
+        "identity": "k:M_FOOD_147",
+        "name": "Zucchini",
+        "quantity": 200.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.2
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": 326239,
+            "barcode": "",
+            "amount": 0.99,
+            "currency": "EUR",
+            "basisQuantity": 1.0,
+            "basisUnit": "kg",
+            "pricePer": "KILOGRAM",
+            "usable": true,
+            "date": "2026-09-07",
+            "country": "DE",
+            "location": "Lidl",
+            "productName": "Zucchini",
+            "source": "open_prices_category",
+            "confidence": "external_observation",
+            "categories": [
+              "en:zucchini"
+            ],
+            "category": "en:zucchini",
+            "identity": "k:M_FOOD_147",
+            "observationId": 326239,
+            "updatedAt": "2026-09-07"
+          }
+        ],
+        "quantityEstimate": null
+      },
+      {
+        "identity": "k:M_FOOD_325",
+        "name": "Mozzarella",
+        "quantity": 165.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.7
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": 314966,
+            "barcode": "4337256454629",
+            "amount": 0.85,
+            "currency": "EUR",
+            "basisQuantity": 200.0,
+            "basisUnit": "g",
+            "pricePer": "",
+            "usable": true,
+            "date": "2026-08-21",
+            "country": "DE",
+            "location": "REWE",
+            "productName": "MOZZARELLA 45%",
+            "source": "open_prices_category",
+            "confidence": "external_observation",
+            "categories": [
+              "en:mozzarella"
+            ],
+            "category": "en:mozzarella",
+            "identity": "k:M_FOOD_325",
+            "observationId": 314966,
+            "updatedAt": "2026-08-21"
+          }
+        ],
+        "quantityEstimate": null
+      },
+      {
+        "identity": "k:M_FOOD_457",
+        "name": "Salt",
+        "quantity": null,
+        "unit": "",
+        "priced": false,
+        "coverage": 0.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.0
+        },
+        "sourceKinds": [],
+        "reason": "recipe_amount_unknown",
+        "zeroCostAllowance": {
+          "kind": "unmeasured_basic_zero",
+          "policy": "unmeasured-basics-v99",
+          "canonicalName": "salt",
+          "amount": 0.0,
+          "currency": "EUR",
+          "confidence": "assumption",
+          "quantityInferred": false
+        },
+        "budgetCoverage": 1.0,
+        "priceStatus": "unmeasured_basic_zero"
+      },
+      {
+        "identity": "k:M_FOOD_308",
+        "name": "Mint",
+        "quantity": 20.0,
+        "unit": "pcs",
+        "priced": false,
+        "coverage": 0.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {},
+        "sourceKinds": [],
+        "references": [],
+        "quantityEstimate": null,
+        "priceStatus": "offline_price_missing"
+      },
+      {
+        "identity": "k:M_FOOD_246",
+        "name": "Olive oil",
+        "quantity": 1.0,
+        "unit": "Lgt",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.3
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": 323452,
+            "barcode": "4270005399300",
+            "amount": 14.99,
+            "currency": "EUR",
+            "basisQuantity": 250.0,
+            "basisUnit": "ml",
+            "pricePer": "",
+            "usable": true,
+            "date": "2026-08-30",
+            "country": "DE",
+            "location": "Offenbacher Wochenmarkt",
+            "productName": "RIFYON natives Olivenöl extra",
+            "source": "open_prices_category",
+            "confidence": "external_observation",
+            "categories": [
+              "en:extra-virgin-olive-oils",
+              "en:olive-oils"
+            ],
+            "category": "en:olive-oils",
+            "identity": "k:M_FOOD_246",
+            "observationId": 323452,
+            "updatedAt": "2026-08-30"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "spoon_volume",
+          "label": "1 tsp ≈ 5 ml",
+          "sourceUrl": "https://www.nist.gov/pml/owm/metric-si/metric-kitchen/metric-kitchen-cooking-measurement-equivalencies",
+          "sourceQuantity": 1.0,
+          "sourceUnit": "tsp",
+          "quantity": 5.0,
+          "unit": "ml"
+        }
+      },
+      {
+        "identity": "k:M_FOOD_165",
+        "name": "Water",
+        "quantity": 200.0,
+        "unit": "ml",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.0
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "bwb-water-20260916",
+            "source": "utility_snapshot",
+            "sourceUrl": "https://www.bwb.de/de/gebuehren.php",
+            "productName": "Berlin tap-water usage tariff",
+            "amount": 1.813,
+            "currency": "EUR",
+            "basisQuantity": 1000,
+            "basisUnit": "l",
+            "date": "2026-09-16",
+            "country": "DE",
+            "location": "Berliner Wasserbetriebe · Berlin",
+            "categories": [
+              "cook4me:tap-water"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Regional benchmark, not your household tariff. Includes VAT; excludes fixed charges and wastewater.",
+            "category": "cook4me:tap-water",
+            "identity": "k:M_FOOD_165",
+            "observationId": "bwb-water-20260916",
+            "updatedAt": "2026-09-16"
+          }
+        ],
+        "quantityEstimate": null
+      }
+    ],
+    "coverage": 0.75,
+    "complete": false,
+    "missingIngredientCount": 2,
+    "exactPurchaseCoverage": 0.0,
+    "estimated": true,
+    "targetCurrency": "EUR",
+    "targetCountry": "DE",
+    "currencyConversionApplied": false,
+    "zeroCostIngredientCount": 1,
+    "budgetEstimated": true,
+    "budgetTotalsByCurrency": {
+      "EUR": 2.12
+    },
+    "budgetRangeByCurrency": {
+      "EUR": {
+        "low": 2.12,
+        "high": 2.12
+      }
+    },
+    "budgetPerServingByCurrency": {
+      "EUR": 0.53
+    },
+    "budgetIngredientCount": 7,
+    "budgetComplete": false,
+    "budgetMissingIngredientCount": 1,
+    "budgetMethod": "mass-volume-benchmark-v104+unmeasured-basics-v99",
+    "priceConfidence": "partial",
+    "costCacheHit": false,
+    "pricingFingerprint": "4cbc44633c8a4df5a9b92e02bd771cf55ae166763fce94257cb0f7a85e115fd5",
+    "recipePriceFingerprint": "7105eac167447b650596d692b585c06b4bf59c8537d766e69e2e3bb8717ed567",
+    "costCacheContract": "price-evidence-fingerprint-v1",
+    "settings": {
+      "currency": "EUR",
+      "country": "DE",
+      "autoGlobalPrices": true
+    },
+    "offlinePreview": true,
+    "priceLookupPending": false,
+    "checkedAt": "2026-09-17T10:23:30.727346+00:00",
+    "foodIngredientCount": 7,
+    "pricedFoodIngredientCount": 5,
+    "waterOnlyEstimate": false
+  }
+}

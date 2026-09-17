@@ -2,7 +2,9 @@
 
 A comparable-food median is a planning assumption, never an observed price of
 this ingredient. If no peer group has a compatible unit, use the broader local
-food basket and label it explicitly. Never convert currency or invent amounts.
+food basket and label it explicitly. Only mass and volume are comparable across
+foods: a leaf, clove, slice and whole vegetable are not interchangeable pieces.
+Never convert currency or invent amounts.
 """
 from copy import deepcopy
 from datetime import date, datetime, timedelta, timezone
@@ -57,7 +59,7 @@ def _pools(country, currency, today):
                 continue
         except (KeyError, TypeError, ValueError):
             continue
-        unit = next((u for u in ('g', 'ml', 'pcs') if convert_amount(1, row.get('basisUnit'), u) is not None), None)
+        unit = next((u for u in ('g', 'ml') if convert_amount(1, row.get('basisUnit'), u) is not None), None)
         if not unit:
             continue
         basis = convert_amount(quantity, row['basisUnit'], unit)
@@ -84,10 +86,11 @@ def fallback_estimate(item, *, country, currency, fraction=1.0):
     pools = _pools(country, currency, datetime.now(timezone.utc).date())
     group = _group(item)
     options = price_options(item)
-    # Prefer a sourced edible mass over unlike per-piece produce comparisons.
+    # A sourced piece-to-mass conversion is usable; a cross-food piece price is
+    # not. In particular, 20 mint leaves must not become 20 supermarket items.
     candidates = []
     for option in options:
-        for index, unit in enumerate(('g', 'ml', 'pcs')):
+        for index, unit in enumerate(('g', 'ml')):
             amount = convert_amount(option['quantity'], option['unit'], unit)
             if amount is None or amount <= 0:
                 continue
@@ -167,5 +170,5 @@ def add_budget_estimates(cost, recipe, store, *, country, currency):
         budgetRangeByCurrency={k: {'low': round(low[k], 2), 'high': round(high[k], 2)} for k in totals},
         budgetPerServingByCurrency={k: round(v/servings, 2) for k,v in totals.items()} if servings and servings > 0 else {},
         budgetIngredientCount=covered, budgetComplete=bool(rows) and covered == len(rows),
-        budgetMissingIngredientCount=len(rows)-covered, budgetMethod='local-food-benchmark-v91+unmeasured-basics-v99' if zero_count else 'local-food-benchmark-v91')
+        budgetMissingIngredientCount=len(rows)-covered, budgetMethod='mass-volume-benchmark-v104+unmeasured-basics-v99' if zero_count else 'mass-volume-benchmark-v104')
     return cost

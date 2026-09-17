@@ -317,8 +317,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         _register_completion_listener(bridge)
         update_expiry_notification(bridge)
         bridge._expiry_listener_unsub = register_daily_expiry_check(bridge)
-        await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+        # Restore registry defaults before platforms decide which entities load.
         await bridge.device_settings.async_consolidate_entities()
+        await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
         bridge.announcements = Announcements(bridge, bridge.device_settings)
         bridge.announcements.start()
     except BaseException:

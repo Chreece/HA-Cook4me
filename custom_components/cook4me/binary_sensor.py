@@ -32,7 +32,7 @@ class Cook4MeUpdating(Cook4MeEntity, BinarySensorEntity):
     _attr_name = "Updating"
     _attr_device_class = BinarySensorDeviceClass.UPDATE
     _attr_icon = "mdi:update"
-    _attr_entity_registry_enabled_default = False
+    _attr_entity_registry_enabled_default = True
 
     def __init__(self, bridge):
         super().__init__(bridge, "updating")

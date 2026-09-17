@@ -49,6 +49,10 @@ class EntityRegistrationTests(unittest.IsolatedAsyncioTestCase):
             self.assertIn(url.scheme,{'http','https','homeassistant'})
             self.assertTrue(url.host)
             self.assertEqual(url.host,'cook4me');self.assertEqual(url.query['device'],'01ENTRY')
+        self.assertEqual(len(entities),17)
+        for entity in entities:
+            description=getattr(entity,'entity_description',None)
+            self.assertTrue(description.entity_registry_enabled_default if description else getattr(entity,'_attr_entity_registry_enabled_default',True))
         summary=next(e for e in entities if e.key=='summary')
         connected=next(e for e in entities if e.key=='connected')
         self.assertTrue(summary.entity_description.entity_registry_enabled_default)
@@ -59,7 +63,7 @@ class EntityRegistrationTests(unittest.IsolatedAsyncioTestCase):
         self.bridge.available=False;self.bridge.data['connected']=False
         self.assertEqual(summary.native_value,'offline');self.assertFalse(connected.is_on)
 
-    async def test_setup_migrates_only_after_platforms_finish(self):
+    async def test_setup_restores_registry_before_platforms_load(self):
         sequence=[]
         async def load():sequence.append('load')
         async def start():sequence.append('start')
@@ -77,7 +81,8 @@ class EntityRegistrationTests(unittest.IsolatedAsyncioTestCase):
         with patch.dict(sys.modules,{PREFIX+'.device_settings':NS(DeviceSettings=lambda b:settings),PREFIX+'.announcements':NS(Announcements=lambda *a:announcements)}):
             exec(compile(ast.Module(body=[node],type_ignores=[]),'actual setup','exec'),ns)
             self.assertTrue(await ns['async_setup_entry'](hass,bridge.entry))
-        self.assertLess(sequence.index('entities'),sequence.index('migrate'))
+        self.assertLess(sequence.index('load'),sequence.index('migrate'))
+        self.assertLess(sequence.index('migrate'),sequence.index('entities'))
 
 
 if __name__=='__main__':unittest.main()

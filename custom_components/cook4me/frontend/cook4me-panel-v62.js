@@ -70,6 +70,7 @@ class Cook4MeRecipeHubPanelV62 extends BasePanel{
   }
 
   async _showIngredientInfo(ingredient,recipe){
+    const restore=this.shadowRoot?.activeElement,recipeDialog=this._v63RecipeDialog;
     let source=ingredient;
     if(!source||typeof source!=="object"){
       const displayed=recipe?.ingredients,originals=recipe?._nutritionIngredients;
@@ -84,7 +85,7 @@ class Cook4MeRecipeHubPanelV62 extends BasePanel{
       if(info?.ingredientInfoContract!=="offline-ingredient-info-v62")throw new Error("Cook4Me ingredient update is not active; restart Home Assistant and reload this page.");
     }catch(error){this._message(`${this._t("error")}: ${error.message||error}`,true);return;}
     finally{this._processEnd(operation);}
-    if(entry!==this._entryId)return;
+    if(entry!==this._entryId||(recipeDialog&&recipeDialog!==this._v63RecipeDialog))return;
     this._v62CloseIngredient?.();
     const overlay=document.createElement("div");overlay.className="rx-overlay";overlay.setAttribute("data-ingredient-dialog",BUILD);
     const stock=info.stock||{},quantity=stock.unlimited?"∞":stock.quantity!==undefined?`${this._shownNumber(stock.quantity)} ${stock.unit||""}`:"—";
@@ -100,9 +101,16 @@ class Cook4MeRecipeHubPanelV62 extends BasePanel{
       <section><h3>${this._escape(this._t("stockCoverage"))}</h3>${lots||"—"}</section>
       <section><h3>${this._escape(this._t("usedIn"))}</h3>${uses.length?uses.slice(0,16).map((row,index)=>`<button class="btn secondary" data-use="${index}" style="margin:3px">${this._escape(row.title||row.recipe?.title||"")}</button>`).join(""):"—"}</section>
     </div>`;
-    const close=()=>{document.removeEventListener("keydown",escape);overlay.remove();this._v62CloseIngredient=null;};
+    const wasInert=recipeDialog?.inert;
+    if(recipeDialog)recipeDialog.inert=true;
+    const close=()=>{
+      document.removeEventListener("keydown",escape);overlay.remove();
+      if(this._v62CloseIngredient===close)this._v62CloseIngredient=null;
+      if(recipeDialog)recipeDialog.inert=wasInert;
+      if(restore?.isConnected)restore.focus();else recipeDialog?.querySelector('[data-modal-close]')?.focus();
+    };
     this._v62CloseIngredient=close;
-    const escape=event=>{if(event.key==="Escape")close();};
+    const escape=event=>{if(event.key==="Escape"){event.preventDefault();close();}else this._trapFocus?.(event,overlay);};
     document.addEventListener("keydown",escape);
     overlay.querySelector("[data-close]").addEventListener("click",close);
     overlay.addEventListener("click",event=>{if(event.target===overlay)close();});

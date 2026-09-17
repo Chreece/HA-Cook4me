@@ -105,45 +105,41 @@ class AnnouncementTests(unittest.IsolatedAsyncioTestCase):
         result=await self.save(enabled=False,players=['media_player.offline'])
         self.assertFalse(result['enabled'])
 
-    async def test_migration_once_keeps_summary_connection_other_device_and_manual_reenable(self):
-        def row(key,entry='entry1',disabled=None):return NS(entry_id=entry,entity_id='sensor.'+key+entry,unique_id='device1_'+key,platform='cook4me',disabled_by=disabled)
-        self.registry.rows.extend([row('phase'),row('instruction'),row('connected'),row('step',disabled='user'),row('status',entry='other')])
-        for row in self.registry.rows:
-            if row.unique_id in {'device1_summary','device1_connected'}:
-                self.states[row.entity_id]=NS(state='idle' if row.unique_id.endswith('summary') else 'on',attributes={})
+    async def test_restore_integration_disabled_entities_preserves_user_and_other_devices(self):
+        def row(key,entry='entry1',device='device1',platform='cook4me',disabled='integration'):
+            return NS(entry_id=entry,entity_id='sensor.'+device+'_'+key+entry+platform,
+                      unique_id=device+'_'+key,platform=platform,disabled_by=disabled)
+        self.registry.rows.extend([row('phase'),row('instruction'),row('updating'),
+            row('step',disabled='user'),row('status',entry='other'),row('status',device='device2'),
+            row('status',platform='other'),row('progress',disabled=None),row('unknown')])
+        self.settings.data['entitiesConsolidated']=True
         await self.settings.async_consolidate_entities()
-        self.assertEqual([r.disabled_by for r in self.registry.rows],[None,'integration','integration',None,'user',None])
-        self.registry.rows[1].disabled_by=None
-        await self.settings.async_consolidate_entities()
-        self.assertIsNone(self.registry.rows[1].disabled_by)
+        self.assertEqual([r.disabled_by for r in self.registry.rows],
+            [None,None,None,None,'user','integration','integration','integration',None,'integration'])
+        self.assertTrue(self.settings.data['entitiesRestoredV104'])
+        self.assertTrue(self.settings.store.async_save.call_args.args[0]['entitiesRestoredV104'])
 
-    async def test_migration_waits_for_both_live_primary_entities_before_disabling_legacy(self):
-        legacy=NS(entry_id='entry1',entity_id='sensor.phase',unique_id='device1_phase',platform='cook4me',disabled_by=None)
-        connected=NS(entry_id='entry1',entity_id='binary_sensor.connected',unique_id='device1_connected',platform='cook4me',disabled_by=None)
-        self.registry.rows.extend([legacy,connected])
-        for summary_state,connection_state in [(None,None),('idle',None),('unavailable','on'),('idle','unknown')]:
-            self.states.pop('sensor.cook4me_state',None);self.states.pop('binary_sensor.connected',None)
-            if summary_state:self.states['sensor.cook4me_state']=NS(state=summary_state,attributes={})
-            if connection_state:self.states['binary_sensor.connected']=NS(state=connection_state,attributes={})
-            await self.settings.async_consolidate_entities()
-            self.assertIsNone(legacy.disabled_by)
-            self.assertFalse(self.settings.data['entitiesConsolidated'])
-        # A legitimately offline device still has two loaded primary entities.
-        self.states['sensor.cook4me_state']=NS(state='offline',attributes={})
-        self.states['binary_sensor.connected']=NS(state='off',attributes={})
+    async def test_restoration_is_once_and_later_manual_disable_is_respected(self):
+        row=NS(entry_id='entry1',entity_id='sensor.phase',unique_id='device1_phase',platform='cook4me',disabled_by='integration')
+        self.registry.rows.append(row)
         await self.settings.async_consolidate_entities()
-        self.assertEqual(legacy.disabled_by,'integration')
-        self.assertTrue(self.settings.data['entitiesConsolidated'])
+        self.assertIsNone(row.disabled_by)
+        row.disabled_by='user'
+        await self.settings.async_consolidate_entities()
+        self.assertEqual(row.disabled_by,'user')
+        self.assertEqual(self.settings.store.async_save.await_count,1)
 
-    async def test_restored_state_is_not_proof_of_successful_entity_registration(self):
-        self.registry.rows.extend([
-            NS(entry_id='entry1',entity_id='sensor.phase',unique_id='device1_phase',platform='cook4me',disabled_by=None),
-            NS(entry_id='entry1',entity_id='binary_sensor.connected',unique_id='device1_connected',platform='cook4me',disabled_by=None)])
-        self.states['sensor.cook4me_state']=NS(state='idle',attributes={'restored':True})
-        self.states['binary_sensor.connected']=NS(state='on',attributes={})
+    async def test_restoration_does_not_require_loaded_primary_states_and_retries_failed_save(self):
+        row=NS(entry_id='entry1',entity_id='sensor.phase',unique_id='device1_phase',platform='cook4me',disabled_by='integration')
+        self.registry.rows.append(row)
+        self.states.clear()
+        self.settings.store.async_save.side_effect=OSError('disk unavailable')
+        with self.assertRaises(OSError):await self.settings.async_consolidate_entities()
+        self.assertFalse(self.settings.data.get('entitiesRestoredV104'))
+        self.assertIsNone(row.disabled_by)
+        self.settings.store.async_save.side_effect=None
         await self.settings.async_consolidate_entities()
-        self.assertIsNone(self.registry.rows[1].disabled_by)
-        self.assertFalse(self.settings.data['entitiesConsolidated'])
+        self.assertTrue(self.settings.data['entitiesRestoredV104'])
 
     def test_startup_metadata_and_reconnect_do_not_replay_steps(self):
         live=self.data(active=True,phase='cooking',variantFunctionalId='r',stepFunctionalId='s1',stepIndex=0)

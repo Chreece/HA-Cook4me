@@ -16,27 +16,27 @@ class Cook4MeSensorDescription(SensorEntityDescription):
     timestamp_ms: bool = False
 
 
-# v0.3.0 exposes one summary entity by default. Legacy entities remain available
-# but are disabled by default for backwards compatibility / opt-in automations.
+# Telemetry shares the bridge subscription and is available to automations by
+# default. Explicit user-disabled registry entries remain disabled.
 DESCRIPTIONS = (
     Cook4MeSensorDescription(
         key="summary", name="State", data_key="phase", icon="mdi:pot-steam",
         entity_registry_enabled_default=True,
     ),
-    Cook4MeSensorDescription(key="phase", name="Cooking phase", data_key="phase", icon="mdi:pot-steam", entity_registry_enabled_default=False),
-    Cook4MeSensorDescription(key="status", name="Cooking status", data_key="status", icon="mdi:state-machine", entity_registry_enabled_default=False),
-    Cook4MeSensorDescription(key="recipe", name="Recipe", data_key="recipeTitle", icon="mdi:book-open-variant", entity_registry_enabled_default=False),
-    Cook4MeSensorDescription(key="step", name="Step", data_key="stepIndex", icon="mdi:format-list-numbered", entity_registry_enabled_default=False),
-    Cook4MeSensorDescription(key="instruction", name="Current instruction", data_key="currentInstruction", icon="mdi:format-text", entity_registry_enabled_default=False),
-    Cook4MeSensorDescription(key="step_type", name="Step type", data_key="stepTypeKey", icon="mdi:format-list-bulleted-type", entity_registry_enabled_default=False),
-    Cook4MeSensorDescription(key="program", name="Program", data_key="programKey", icon="mdi:chef-hat", entity_registry_enabled_default=False),
-    Cook4MeSensorDescription(key="progress", name="Phase progress", data_key="progress", native_unit_of_measurement="%", icon="mdi:progress-clock", entity_registry_enabled_default=False),
-    Cook4MeSensorDescription(key="remaining_time", name="Remaining time", data_key="remainingTime", native_unit_of_measurement=UnitOfTime.SECONDS, device_class=SensorDeviceClass.DURATION, icon="mdi:timer-sand", entity_registry_enabled_default=False),
-    Cook4MeSensorDescription(key="elapsed_time", name="Elapsed time", data_key="elapsedTime", native_unit_of_measurement=UnitOfTime.SECONDS, device_class=SensorDeviceClass.DURATION, icon="mdi:timer-outline", entity_registry_enabled_default=False),
-    Cook4MeSensorDescription(key="last_connection", name="Last connection", data_key="lastConnection", device_class=SensorDeviceClass.TIMESTAMP, timestamp_ms=True, icon="mdi:lan-connect", entity_registry_enabled_default=False),
-    Cook4MeSensorDescription(key="last_disconnection", name="Last disconnection", data_key="lastDisconnection", device_class=SensorDeviceClass.TIMESTAMP, timestamp_ms=True, icon="mdi:lan-disconnect", entity_registry_enabled_default=False),
-    Cook4MeSensorDescription(key="ui_firmware", name="UI firmware", data_key="uiFirmware", icon="mdi:chip", entity_registry_enabled_default=False),
-    Cook4MeSensorDescription(key="wifi_firmware", name="Wi-Fi firmware", data_key="wifiFirmware", icon="mdi:wifi-cog", entity_registry_enabled_default=False),
+    Cook4MeSensorDescription(key="phase", name="Cooking phase", data_key="phase", icon="mdi:pot-steam", entity_registry_enabled_default=True),
+    Cook4MeSensorDescription(key="status", name="Cooking status", data_key="status", icon="mdi:state-machine", entity_registry_enabled_default=True),
+    Cook4MeSensorDescription(key="recipe", name="Recipe", data_key="recipeTitle", icon="mdi:book-open-variant", entity_registry_enabled_default=True),
+    Cook4MeSensorDescription(key="step", name="Step", data_key="stepIndex", icon="mdi:format-list-numbered", entity_registry_enabled_default=True),
+    Cook4MeSensorDescription(key="instruction", name="Current instruction", data_key="currentInstruction", icon="mdi:format-text", entity_registry_enabled_default=True),
+    Cook4MeSensorDescription(key="step_type", name="Step type", data_key="stepTypeKey", icon="mdi:format-list-bulleted-type", entity_registry_enabled_default=True),
+    Cook4MeSensorDescription(key="program", name="Program", data_key="programKey", icon="mdi:chef-hat", entity_registry_enabled_default=True),
+    Cook4MeSensorDescription(key="progress", name="Phase progress", data_key="progress", native_unit_of_measurement="%", icon="mdi:progress-clock", entity_registry_enabled_default=True),
+    Cook4MeSensorDescription(key="remaining_time", name="Remaining time", data_key="remainingTime", native_unit_of_measurement=UnitOfTime.SECONDS, device_class=SensorDeviceClass.DURATION, icon="mdi:timer-sand", entity_registry_enabled_default=True),
+    Cook4MeSensorDescription(key="elapsed_time", name="Elapsed time", data_key="elapsedTime", native_unit_of_measurement=UnitOfTime.SECONDS, device_class=SensorDeviceClass.DURATION, icon="mdi:timer-outline", entity_registry_enabled_default=True),
+    Cook4MeSensorDescription(key="last_connection", name="Last connection", data_key="lastConnection", device_class=SensorDeviceClass.TIMESTAMP, timestamp_ms=True, icon="mdi:lan-connect", entity_registry_enabled_default=True),
+    Cook4MeSensorDescription(key="last_disconnection", name="Last disconnection", data_key="lastDisconnection", device_class=SensorDeviceClass.TIMESTAMP, timestamp_ms=True, icon="mdi:lan-disconnect", entity_registry_enabled_default=True),
+    Cook4MeSensorDescription(key="ui_firmware", name="UI firmware", data_key="uiFirmware", icon="mdi:chip", entity_registry_enabled_default=True),
+    Cook4MeSensorDescription(key="wifi_firmware", name="Wi-Fi firmware", data_key="wifiFirmware", icon="mdi:wifi-cog", entity_registry_enabled_default=True),
 )
 
 
