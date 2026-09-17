@@ -1,0 +1,26 @@
+name: Retry high-confidence syntax alias migration v60
+
+on:
+  push:
+    branches:
+      - cook4me-ingredient-semantic-confirmation-v60
+    paths:
+      - '.github/workflows/retry-high-confidence-syntax-alias-v60.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch latest alias migration
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -Eeuo pipefail
+          gh workflow run high-confidence-syntax-alias-apply-v60.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref cook4me-ingredient-semantic-confirmation-v60
