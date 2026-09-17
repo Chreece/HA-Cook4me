@@ -31,6 +31,35 @@ jobs:
             --output "$RUNNER_TEMP/semantic-before.json" \
             > "$RUNNER_TEMP/semantic-before-summary.json"
 
+      - name: Regenerate exact conflict-free alias overlay
+        run: |
+          set -Eeuo pipefail
+          python tools/build_conflict_free_high_confidence_syntax_aliases_v60.py \
+            --review-root tools \
+            --output tools/release_catalog_semantic_high_confidence_syntax_aliases.v1.json \
+            | tee "$RUNNER_TEMP/high-confidence-syntax-alias-build-summary.json"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          payload = json.loads(
+              Path('tools/release_catalog_semantic_high_confidence_syntax_aliases.v1.json').read_text(encoding='utf-8')
+          )
+          summary = payload['summary']
+          expected = {
+              'aliasConceptCount': 128,
+              'groupCount': 112,
+              'sourceIdentityCount': 130,
+              'excludedConflictGroupCount': 11,
+          }
+          if summary != expected:
+              raise SystemExit(f'generated alias overlay summary drift: {summary} != {expected}')
+          if len(payload.get('items') or []) != 128:
+              raise SystemExit('generated alias overlay item count is not 128')
+          if len(payload.get('excludedConflictTargetConceptIds') or []) != 11:
+              raise SystemExit('generated alias overlay conflict exclusion count is not 11')
+          PY
+          git diff --check
+
       - name: Patch compiler, nutrition loader, and alias regressions
         run: |
           set -Eeuo pipefail
@@ -160,6 +189,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add \
+            tools/release_catalog_semantic_high_confidence_syntax_aliases.v1.json \
             tools/compile_release_catalog_semantics_v60.py \
             tools/resolve_reviewed_release_catalog_nutrition_targets_v60.py \
             tests/test_semantic_high_confidence_syntax_aliases_v60.py \
