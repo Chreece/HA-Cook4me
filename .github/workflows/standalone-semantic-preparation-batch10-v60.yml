@@ -1,0 +1,154 @@
+name: Merge preparation-equivalent ingredient semantic batch 10 v60
+
+on:
+  push:
+    branches:
+      - cook4me-ingredient-semantic-confirmation-v60
+    paths:
+      - '.github/workflows/standalone-semantic-preparation-batch10-v60.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  merge-preparation-batch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Compile reviewed semantic baseline
+        run: |
+          set -Eeuo pipefail
+          python tools/compile_release_catalog_semantics_v60.py \
+            --reviews-dir tools \
+            --output "$RUNNER_TEMP/semantic-before.json" \
+            > "$RUNNER_TEMP/semantic-before-summary.json"
+
+      - name: Apply evidence-pinned cauliflower equivalence
+        run: |
+          set -Eeuo pipefail
+          python tools/apply_preparation_equivalence_batch10_v60.py
+          git diff --check
+
+      - name: Run semantic and food-intelligence regressions
+        run: |
+          set -Eeuo pipefail
+          python -m unittest discover -s tests -p 'test_compile_release_catalog_semantics_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_standalone_dispositions_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_standalone_equivalences_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_standalone_manual_equivalences_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_high_confidence_syntax_aliases_v60.py' -v
+          python -m unittest discover -s tests -p 'test_nutrition_semantic_syntax_aliases_v60.py' -v
+
+      - name: Prove exact preparation-equivalence delta
+        run: |
+          set -Eeuo pipefail
+          python tools/compile_release_catalog_semantics_v60.py \
+            --reviews-dir tools \
+            --output "$RUNNER_TEMP/semantic-after.json" \
+            > "$RUNNER_TEMP/semantic-after-summary.json"
+          python - <<'PY'
+          import importlib.util
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path.cwd()
+          before = json.loads(Path(os.environ['RUNNER_TEMP'], 'semantic-before.json').read_text(encoding='utf-8'))
+          after = json.loads(Path(os.environ['RUNNER_TEMP'], 'semantic-after.json').read_text(encoding='utf-8'))
+          helper_path = root / 'tools/apply_preparation_equivalence_batch10_v60.py'
+          spec = importlib.util.spec_from_file_location('cook4me_batch10_proof', helper_path)
+          helper = importlib.util.module_from_spec(spec)
+          assert spec.loader is not None
+          spec.loader.exec_module(helper)
+          decision = helper.DECISION
+
+          bs = before['summary']
+          a = after['summary']
+          if bs['needsSemanticConfirmationSourceLabels'] != 0 or a['needsSemanticConfirmationSourceLabels'] != 0:
+              raise SystemExit('batch 10 must preserve zero semantic pending work')
+          if bs['standaloneConfirmedSourceLabels'] != 201 or a['standaloneConfirmedSourceLabels'] != 200:
+              raise SystemExit('batch 10 standalone count must be exactly 201 -> 200')
+          if a['semanticEquivalentConfirmedSourceLabels'] - bs['semanticEquivalentConfirmedSourceLabels'] != 1:
+              raise SystemExit('batch 10 manual semantic-equivalence increment mismatch')
+          if a['standaloneEquivalentSourceLabels'] != bs['standaloneEquivalentSourceLabels']:
+              raise SystemExit('batch 10 changed conservative source-local equivalence count')
+          if bs['semanticConcepts'] - a['semanticConcepts'] != 1:
+              raise SystemExit('batch 10 semantic concept consolidation mismatch')
+          if a['reviewedAmbiguousSourceLabels'] != 28 or bs['reviewedAmbiguousSourceLabels'] != 28:
+              raise SystemExit('batch 10 changed reviewed ambiguous closure count')
+          if set(after['sourceIdentityToConcept']) != set(before['sourceIdentityToConcept']):
+              raise SystemExit('batch 10 changed raw source identity set')
+
+          source_id = decision['sourceIngredientId']
+          standalone = json.loads((root / 'tools/release_catalog_semantic_standalone_dispositions.v1.json').read_text(encoding='utf-8'))
+          confirmations = json.loads((root / 'tools/release_catalog_semantic_confirmations.v1.json').read_text(encoding='utf-8'))
+          standalone_ids = {
+              row['sourceIngredientId'] for row in standalone.get('items') or []
+              if isinstance(row, dict)
+          }
+          if source_id in standalone_ids:
+              raise SystemExit('batch 10 source still standalone')
+          if int(standalone['summary']['standaloneDispositionCount']) != 200:
+              raise SystemExit('batch 10 standalone ledger summary mismatch')
+
+          receipt = next(
+              (
+                  row for row in confirmations.get('items') or []
+                  if isinstance(row, dict) and row.get('sourceIngredientId') == source_id
+              ),
+              None,
+          )
+          if receipt is None or receipt.get('manualSemanticEquivalence') is not True:
+              raise SystemExit('batch 10 manual-equivalence receipt missing')
+          for key in ('confirmedConceptId','sourceReviewedEnglish','targetCanonicalEnglish'):
+              expected = {
+                  'confirmedConceptId': decision['confirmedConceptId'],
+                  'sourceReviewedEnglish': decision['sourceReviewedEnglish'],
+                  'targetCanonicalEnglish': decision['targetCanonicalEnglish'],
+              }[key]
+              if receipt.get(key) != expected:
+                  raise SystemExit(f'batch 10 receipt drift: {key}')
+
+          mapping = after['sourceIdentityToConcept']
+          if mapping.get(source_id) != decision['confirmedConceptId']:
+              raise SystemExit('batch 10 source mapped to wrong concept')
+          concepts = {row['conceptId']: row for row in after.get('concepts') or []}
+          concept = concepts[decision['confirmedConceptId']]
+          if concept.get('canonicalEnglish') != decision['targetCanonicalEnglish']:
+              raise SystemExit('batch 10 target canonical English changed')
+          if any(concept.get(key) is not True for key in ('nutritionEligible','dietEligible','allergenEligible')):
+              raise SystemExit('batch 10 target lost food-intelligence eligibility')
+
+          print(json.dumps({
+              'resolved': 1,
+              'sourceIngredientId': source_id,
+              'targetConceptId': decision['confirmedConceptId'],
+              'standaloneBefore': bs['standaloneConfirmedSourceLabels'],
+              'standaloneAfter': a['standaloneConfirmedSourceLabels'],
+              'semanticConceptsBefore': bs['semanticConcepts'],
+              'semanticConceptsAfter': a['semanticConcepts'],
+              'ambiguousAfter': a['reviewedAmbiguousSourceLabels'],
+              'pendingAfter': a['needsSemanticConfirmationSourceLabels'],
+              'rawIdentityCount': len(after['sourceIdentityToConcept']),
+          }, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Commit validated preparation-equivalent resolution
+        run: |
+          set -Eeuo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            tools/release_catalog_semantic_confirmations.v1.json \
+            tools/release_catalog_semantic_standalone_dispositions.v1.json
+          git diff --cached --check
+          git commit -m 'Merge cauliflower preparation semantics batch 10 v60'
+          git push origin HEAD:cook4me-ingredient-semantic-confirmation-v60
