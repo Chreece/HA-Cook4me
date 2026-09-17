@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import importlib.util
 from pathlib import Path
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 PATCHER = ROOT / "tools/patch_high_confidence_syntax_aliases_v60.py"
@@ -56,4 +57,12 @@ def _patch_aggregate_test() -> None:
 mod.replace_once = _replace_once
 result = mod.main()
 _patch_aggregate_test()
+# The workflow's later explicit git-add list predates this aggregate test change.
+# Stage it here so the compiler and its accounting contract are committed atomically.
+subprocess.run(
+    ["git", "add", str(AGGREGATE_TEST.relative_to(ROOT))],
+    cwd=ROOT,
+    check=True,
+)
+subprocess.run(["git", "diff", "--cached", "--check"], cwd=ROOT, check=True)
 raise SystemExit(result)
