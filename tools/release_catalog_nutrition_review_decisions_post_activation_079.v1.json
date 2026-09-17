@@ -1,0 +1,89 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 10,
+      "canonicalEnglishName": "Frozen purple gnocchi",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Gnocchi, potato",
+      "fdcId": 2708722,
+      "notes": "Manual semantic review binds Cook4Me 'Frozen purple gnocchi' to USDA FNDDS 'Gnocchi, potato'. Freezing is a storage state and the target remains a gnocchi product; purple gnocchi are commonly a potato-based colored or purple-potato variant. The target's own pinned evidence contains this exact FDC record. Confidence remains medium because the purple ingredient or coloring and exact formulation are unspecified; this review does not generalize to cheese-only gnocchi or unrelated frozen pasta products.",
+      "reviewTargetId": "concept:food:5dccad3d0148d1f703ad",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 5,
+      "canonicalEnglishName": "Ginger paste",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Ginger root, raw",
+      "fdcId": 169231,
+      "notes": "Manual semantic review binds Cook4Me 'Ginger paste' to USDA SR Legacy 'Ginger root, raw'. Pure ginger paste is ground ginger and therefore preserves the underlying food identity while changing physical form, and the target's own pinned evidence contains this exact FDC record. Confidence remains medium because the catalog wording does not prove whether a commercial paste contains minor water, oil, salt, acid, or preservatives; this review does not generalize to ginger-garlic paste, sweetened ginger, pickled ginger, or ginger sauce.",
+      "reviewTargetId": "concept:food:b59f77de66241ed65633",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 11,
+      "canonicalEnglishName": "Lemon and a little chopped zest",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Lemons, raw, without peel",
+      "fdcId": 167746,
+      "notes": "Manual semantic review binds Cook4Me 'Lemon and a little chopped zest' to USDA SR Legacy 'Lemons, raw, without peel'. The ingredient is fundamentally lemon and the wording says only a little zest, so the flesh/juice portion is represented by the selected whole-lemon-without-peel record. The target's own pinned evidence contains this exact FDC record. Confidence remains medium because the small zest portion is not represented separately; this review does not generalize to candied peel, lemon concentrate, lemonade, or sweetened lemon products.",
+      "reviewTargetId": "concept:food:01dccf8c52553e83619f",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 11,
+      "canonicalEnglishName": "Long red pepper, seeded and chopped",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Peppers, sweet, red, raw",
+      "fdcId": 170108,
+      "notes": "Manual semantic review binds Cook4Me 'Long red pepper, seeded and chopped' to USDA SR Legacy 'Peppers, sweet, red, raw'. Seeding and chopping are preparation-only changes, and the catalog wording uses pepper rather than chili. The target's own pinned evidence contains this exact FDC record. Confidence remains medium because the exact long-red-pepper cultivar is not stated and some long red peppers can be hot; this review does not generalize to chili peppers, cooked peppers, canned peppers, or pickled peppers.",
+      "reviewTargetId": "concept:food:247bd9891dfbcf75ebbf",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 5,
+      "canonicalEnglishName": "Nanohana greens, boiled and chopped (for garnish), a little",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Mustard greens, cooked, boiled, drained, with salt",
+      "fdcId": 170503,
+      "notes": "Manual semantic review binds Cook4Me 'Nanohana greens, boiled and chopped (for garnish), a little' to USDA SR Legacy 'Mustard greens, cooked, boiled, drained, with salt'. Nanohana are tender Brassica rapeseed flowering greens and mustard greens are the closest reviewed USDA brassica-green proxy here, while the cooking state is also matched. The target's own pinned evidence contains this exact FDC record. Confidence remains medium because this is a botanical/nutritional proxy rather than the identical cultivar; it does not generalize to raw greens or unrelated leafy vegetables.",
+      "reviewTargetId": "concept:food:d4d024c84449f1286b07",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 11,
+      "canonicalEnglishName": "Shallot, or small onion",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Shallots, raw",
+      "fdcId": 170499,
+      "notes": "Manual semantic review binds Cook4Me 'Shallot, or small onion' to USDA SR Legacy 'Shallots, raw'. Shallot is the primary named ingredient and a small onion is an explicitly permitted close substitution in the source wording. The target's own pinned evidence contains this exact FDC record. This review does not generalize to spring onions, cooked onions, fried onions, pickled onions, or onion-based sauces.",
+      "reviewTargetId": "concept:food:af724df29529958c6bdd",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "d7bf517c2660d2f2e90f8a8b6c7f23eb9f28df665d50f0f6d009de4cfe683004"
+}
