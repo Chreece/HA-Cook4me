@@ -21,6 +21,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -Eeuo pipefail
+          # Retry checkpoint: aggregate semantic-concept accounting includes aliases.
           gh workflow run high-confidence-syntax-alias-apply-v60.yml \
             --repo "$GITHUB_REPOSITORY" \
             --ref cook4me-ingredient-semantic-confirmation-v60
