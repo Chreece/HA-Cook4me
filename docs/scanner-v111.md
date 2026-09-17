@@ -52,3 +52,7 @@ Validation:
 
 No live Home Assistant host, phone camera, barcode provider or AI provider was
 available for end-to-end hardware verification in this environment.
+
+Published runtime commit: `5c53f8b7299d1692b8a461cd7d642dcae038fc26`.
+
+Verified runtime tree: `68be73b8cbced170cbba8635ffd690d04f1a54e4`.
