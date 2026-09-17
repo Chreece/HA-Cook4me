@@ -6,9 +6,9 @@ const SECTIONS=new Set(["today","week","official","book","mine","profile","shopp
 const MEALS=["breakfast","starter","salad","soup","main","side","dessert","snack"];
 const FILTERS=[["diet","leaf","diet"],["meals","silverware-fork-knife","mealTypes"],["languages","translate","officialCatalogs"],["ingredients","food-apple-outline","preferredIngredients"],["home","home-outline","onlyHome"],["nutrition","bullseye-arrow","servingTargets"],["cost","cash-multiple","costSettings"]];
 const TEXT={
-  en:{sharedFilters:"Recipe filters",servingTargets:"Nutrition targets per serving",targetHelp:"Recipes with known nutrients are ranked closer to these targets. Missing values stay unknown.",maxCost:"Maximum cost per serving",costFilterHelp:"A cost limit includes only recipes with complete price coverage in the selected currency.",preferencesPending:"Preferences saved on this device; Home Assistant sync will retry when connected.",apply:"Apply",recipeUnavailable:"The original recipe is unavailable for this leftover.",sourceText:"Recipe text follows the selected recipe language.",weeklyOptions:"Weekly schedule"},
-  el:{sharedFilters:"Φίλτρα συνταγών",servingTargets:"Διατροφικοί στόχοι ανά μερίδα",targetHelp:"Οι συνταγές με γνωστά θρεπτικά στοιχεία κατατάσσονται με βάση την εγγύτητα στους στόχους. Οι ελλιπείς τιμές παραμένουν άγνωστες.",maxCost:"Μέγιστο κόστος ανά μερίδα",costFilterHelp:"Το όριο κόστους περιλαμβάνει μόνο συνταγές με πλήρη κάλυψη τιμών στο επιλεγμένο νόμισμα.",preferencesPending:"Οι προτιμήσεις αποθηκεύτηκαν στη συσκευή. Ο συγχρονισμός με το Home Assistant θα επαναληφθεί όταν συνδεθεί.",apply:"Εφαρμογή",recipeUnavailable:"Η αρχική συνταγή για αυτό το περίσσευμα δεν είναι διαθέσιμη.",sourceText:"Το κείμενο της συνταγής ακολουθεί την επιλεγμένη γλώσσα συνταγής.",weeklyOptions:"Εβδομαδιαίο πρόγραμμα"},
-  de:{sharedFilters:"Rezeptfilter",servingTargets:"Nährwertziele pro Portion",targetHelp:"Rezepte mit bekannten Nährwerten werden nach Nähe zu diesen Zielen sortiert. Fehlende Werte bleiben unbekannt.",maxCost:"Maximale Kosten pro Portion",costFilterHelp:"Ein Kostenlimit berücksichtigt nur Rezepte mit vollständiger Preisabdeckung in der gewählten Währung.",preferencesPending:"Einstellungen auf diesem Gerät gespeichert; Home Assistant wird bei Verbindung erneut synchronisiert.",apply:"Anwenden",recipeUnavailable:"Das ursprüngliche Rezept für diese Reste ist nicht verfügbar.",sourceText:"Der Rezepttext folgt der gewählten Rezeptsprache.",weeklyOptions:"Wochenplan"},
+  en:{sharedFilters:"Recipe filters",servingTargets:"Nutrition targets per serving",targetHelp:"Recipes with known nutrients are ranked closer to these targets. Missing values stay unknown.",maxCost:"Maximum cost per serving",costFilterHelp:"A cost limit includes only recipes with complete price coverage in the selected currency.",preferencesPending:"Preferences saved on this device; Home Assistant sync will retry when connected.",apply:"Apply",recipeUnavailable:"The original recipe is unavailable for this leftover.",sourceText:"Recipe text follows the selected recipe language."},
+  el:{sharedFilters:"Φίλτρα συνταγών",servingTargets:"Διατροφικοί στόχοι ανά μερίδα",targetHelp:"Οι συνταγές με γνωστά θρεπτικά στοιχεία κατατάσσονται με βάση την εγγύτητα στους στόχους. Οι ελλιπείς τιμές παραμένουν άγνωστες.",maxCost:"Μέγιστο κόστος ανά μερίδα",costFilterHelp:"Το όριο κόστους περιλαμβάνει μόνο συνταγές με πλήρη κάλυψη τιμών στο επιλεγμένο νόμισμα.",preferencesPending:"Οι προτιμήσεις αποθηκεύτηκαν στη συσκευή. Ο συγχρονισμός με το Home Assistant θα επαναληφθεί όταν συνδεθεί.",apply:"Εφαρμογή",recipeUnavailable:"Η αρχική συνταγή για αυτό το περίσσευμα δεν είναι διαθέσιμη.",sourceText:"Το κείμενο της συνταγής ακολουθεί την επιλεγμένη γλώσσα συνταγής."},
+  de:{sharedFilters:"Rezeptfilter",servingTargets:"Nährwertziele pro Portion",targetHelp:"Rezepte mit bekannten Nährwerten werden nach Nähe zu diesen Zielen sortiert. Fehlende Werte bleiben unbekannt.",maxCost:"Maximale Kosten pro Portion",costFilterHelp:"Ein Kostenlimit berücksichtigt nur Rezepte mit vollständiger Preisabdeckung in der gewählten Währung.",preferencesPending:"Einstellungen auf diesem Gerät gespeichert; Home Assistant wird bei Verbindung erneut synchronisiert.",apply:"Anwenden",recipeUnavailable:"Das ursprüngliche Rezept für diese Reste ist nicht verfügbar.",sourceText:"Der Rezepttext folgt der gewählten Rezeptsprache."},
 };
 
 class Cook4MeRecipeHubPanelV63 extends BasePanel{
@@ -159,10 +159,6 @@ class Cook4MeRecipeHubPanelV63 extends BasePanel{
   _renderOfficial(c){super._renderOfficial(c);c.querySelector("#officialCatalogLanguages")?.remove();this._mountFilters(c);}
   _renderWeek(c){
     super._renderWeek(c);
-    const settings=c.querySelector("#savePlanner")?.closest(".two");
-    if(settings){this._v63WeekSettings=settings;settings.remove();}
-    const generate=c.querySelector("#generateWeek");
-    if(generate&&settings){const button=document.createElement("button");button.className="btn secondary";button.title=this._t("weeklyOptions");button.setAttribute("aria-label",button.title);button.innerHTML='<ha-icon icon="mdi:calendar-cog" aria-hidden="true"></ha-icon>';button.addEventListener("click",()=>this._showFilter("weeklyOptions"));generate.after(button);}
     this._mountFilters(c);
     c.querySelectorAll(".rx-week-slot").forEach(node=>{
       const slot=this._weekState?.slots?.find(row=>String(row.id)===node.dataset.slotId);
@@ -206,9 +202,6 @@ class Cook4MeRecipeHubPanelV63 extends BasePanel{
       const fold=value=>String(value).normalize("NFD").replace(/\p{M}/gu,"").toLowerCase();
       overlay.querySelectorAll("[data-ingredient-choices] label").forEach(label=>{label.style.display=fold(label.textContent).includes(fold(event.target.value))?"":"none";});
     });
-    if(this._v63WeekSettings&&key==="weeklyOptions"){
-      overlay.querySelector("footer").before(this._v63WeekSettings.cloneNode(true));overlay.querySelector("footer").remove();this._bindWeek(overlay);
-    }
     this.shadowRoot.appendChild(overlay);overlay.querySelector("[data-close]").focus();
     if(key==="ingredients"&&!this._ingredientCatalog?.length&&!this._ingredientCatalogLoading){
       const entry=this._entryId;void this._loadIngredientCatalog().then(()=>{if(entry===this._entryId&&overlay.isConnected)this._showFilter(key);});

@@ -65,7 +65,7 @@ class WeeklyVarietyTests(unittest.TestCase):
         exec(compile(ast.fix_missing_locations(ast.Module(body=[future,node],type_ignores=[])),str(path),'exec'),namespace)
         search=AsyncMock(return_value={'items':candidates})
         with patch.dict(sys.modules,{f'{PREFIX}.shared_recipe_runtime':types.SimpleNamespace(search_filtered=search)}):
-            asyncio.run(namespace['_generate_week'](None,bridge,lifecycle,week_start='2026-09-15',languages=['de','fr','en'],diet='vegetarian',query='',refresh=False,shared_filters={'nutritionGoal':'balanced'},replace_slot_id=replace))
+            asyncio.run(namespace['_generate_week'](None,bridge,lifecycle,week_start='2026-09-15',languages=['de','fr','en'],diet='vegetarian',query='',refresh=False,shared_filters={'nutritionGoal':'balanced','mealTypes':['breakfast']},replace_slot_id=replace))
         return lifecycle.slots
 
     def candidates(self):

@@ -3,6 +3,7 @@ import {readFileSync} from 'node:fs';
 import {createRequire} from 'node:module';
 import {fileURLToPath} from 'node:url';
 const root=fileURLToPath(new URL('..',import.meta.url));
+const build=process.env.COOK4ME_TEST_BUILD||'100';
 const fixture=JSON.parse(readFileSync(root+'/docs/price-confidence-v99-preview.json','utf8'));
 const {chromium}=createRequire(import.meta.url)('playwright');
 const browser=await chromium.launch({headless:true,executablePath:process.env.COOK4ME_CHROMIUM_EXECUTABLE||undefined,args:['--no-sandbox','--disable-gpu']});
@@ -21,10 +22,10 @@ try{
    this.shadowRoot.innerHTML=`<style>:host{display:inline-flex;width:var(--mdc-icon-size,24px);height:var(--mdc-icon-size,24px);align-items:center;justify-content:center;vertical-align:middle;flex-shrink:0}span{font:24px/1 Arial;color:inherit}</style><span aria-hidden="true">${symbols[name]||'◇'}</span>`;
   }
  }));
- await page.addScriptTag({path:root+'/custom_components/cook4me/frontend/cook4me-panel-v100-bundle.js'});
- await page.evaluate(fixture=>{
+ await page.addScriptTag({path:root+`/custom_components/cook4me/frontend/cook4me-panel-v${build}-bundle.js`});
+ await page.evaluate(({fixture,build})=>{
   window.fixture=fixture;window.requests=[];window.subscriptions=[];
-  globalThis.customElements.define('cook4me-v100-test',class extends globalThis.customElements.get('cook4me-recipe-hub-panel-v100'){connectedCallback(){}});
+  globalThis.customElements.define('cook4me-v100-test',class extends globalThis.customElements.get('cook4me-recipe-hub-panel-v'+build){connectedCallback(){}});
   const p=window.panel=document.createElement('cook4me-v100-test');
   p._hass={language:'el',user:{id:'alice'},states:{},config:{country:'DE',time_zone:'Europe/Berlin'},connection:{
    sendMessagePromise:async message=>{const request=message.request||message;requests.push(request);if(request.type.endsWith('/currency_set'))return {currency:request.currency||'EUR',defaultCurrency:'EUR',mode:request.mode,currencies:['EUR','USD','GBP']};return {};},
@@ -38,7 +39,7 @@ try{
   p._todayResults=fixture.slice(0,2).map(row=>({...row.recipe,match:{diet:'vegetarian',dietCheckVersion:76,safe:true}}));
   p._v67WeekLoaded=`${p._prefKey()}:${p._v67Today()}`;p._v93Now=()=>new Date('2026-09-17T08:07:00Z');
   p._renderShell();document.body.append(p);p._renderEntrySelect();p._updateHeader();p._renderTab();
- },fixture);
+ },{fixture,build});
  const p=page.locator('cook4me-v100-test');
  await page.waitForTimeout(150);
  assert.equal(await page.evaluate(()=>panel._cook4meUiGuardTripped),false,'initial header must settle without a DOM loop');

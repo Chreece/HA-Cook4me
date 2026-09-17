@@ -698,12 +698,13 @@ def category_for(ingredient):
     return _CATEGORIES.get(name)
 
 
-def canonical_recipe(recipe, catalog):
-    lookup = {}
-    for row in catalog:
-        for key in (row.get('key'), row.get('foodKey'), row.get('id'), row.get('ingredientId')):
-            if key:
-                lookup[str(key)] = row
+def canonical_recipe(recipe, catalog, *, lookup=None):
+    if lookup is None:
+        lookup = {}
+        for row in catalog:
+            for key in (row.get('key'), row.get('foodKey'), row.get('id'), row.get('ingredientId')):
+                if key:
+                    lookup[str(key)] = row
     result = deepcopy(recipe)
     rows = []
     for raw in recipe.get('ingredients') or []:
@@ -990,18 +991,12 @@ async def recipe_price(bridge, recipe, catalog, *, refresh_since=None):
     return cost
 
 
-async def offline_recipe_price(bridge, recipe, catalog):
-    """Immediate card preview from local evidence, without provider requests.
-
-    Use an ephemeral reference set: scrolling through cards must not rewrite the
-    user's price store or turn a generic product into a confirmed barcode link.
-    """
+def offline_price_inputs(recipe, catalog, saved, settings, *, catalog_lookup=None):
+    """Share local price evidence between recipe cards and synchronous filters."""
     from copy import copy
-    settings = await price_settings(bridge)
-    saved = await cost_store_for_bridge(bridge)
     store = copy(saved)
     store._data = deepcopy(saved._data)
-    recipe = canonical_recipe(recipe, catalog)
+    recipe = canonical_recipe(recipe, catalog, lookup=catalog_lookup)
     if settings.get('autoGlobalPrices'):
         for item in recipe.get('ingredients', []):
             category = category_for(item)
@@ -1018,6 +1013,14 @@ async def offline_recipe_price(bridge, recipe, catalog):
                     store._data['references']['preview:' + identity + ':' + option['unit']] = {
                         **row, 'identity': identity, 'source': row['source'] if row.get('source') in {'retail_snapshot', 'utility_snapshot'} else 'open_prices_category',
                         'observationId': row['id'], 'updatedAt': row.get('date', '')}
+    return recipe, store
+
+
+async def offline_recipe_price(bridge, recipe, catalog):
+    """Immediate card preview without provider requests or saved-price writes."""
+    settings = await price_settings(bridge)
+    saved = await cost_store_for_bridge(bridge)
+    recipe, store = offline_price_inputs(recipe, catalog, saved, settings)
     cache = await recipe_cost_cache_for_bridge(bridge)
     cost = await cache.async_cost(recipe, bridge.recipe_hub.profile.get('houseIngredients') or [], store,
         country=settings['country'], currency=settings['currency'])

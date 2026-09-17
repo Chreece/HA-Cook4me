@@ -230,6 +230,7 @@ async def _week_candidates(
     diet: str,
     query: str,
     refresh: bool,
+    avoid_recent_days: int | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, str]]]:
     page_count = v19._catalog_page_count(bridge, diet=diet, query=query)
     candidates, errors, _fetched = await v19._search_catalogs_paginated(
@@ -243,7 +244,7 @@ async def _week_candidates(
     )
     history = await meal_history_store_for_bridge(bridge)
     recent = v18._recent_identities(
-        history.recent(200), days=int(lifecycle.settings.get("avoidRecentDays", 7))
+        history.recent(200), days=int(lifecycle.settings.get("avoidRecentDays", 7) if avoid_recent_days is None else avoid_recent_days)
     )
     if recent:
         candidates = [row for row in candidates if recipe_identity(row) not in recent]
@@ -269,6 +270,7 @@ async def _generate_week(
 ) -> dict[str, Any]:
     from . import release_catalog
     from .weekly_variety import signature, already_planned
+    from .weekly_plan import meal_slots
     if replace_slot_id and not any(row.get("id") == replace_slot_id and
             week_start <= _text(row.get("date")) <= (date.fromisoformat(week_start) + timedelta(days=6)).isoformat()
             for row in lifecycle.slots):
@@ -281,6 +283,7 @@ async def _generate_week(
         candidates, errors = await _week_candidates(
             hass, bridge, lifecycle,
             languages=languages, diet=diet, query=query, refresh=refresh,
+            avoid_recent_days=int(shared_filters.get("avoidRecentDays") or 0) if shared_filters is not None else None,
         )
         if shared_filters is not None:
             from .shared_recipe_runtime import processor
@@ -294,7 +297,7 @@ async def _generate_week(
     )
     start = date.fromisoformat(week_start)
     settings = lifecycle.settings
-    meal_types = settings.get("mealTypes") or ["breakfast", "lunch", "dinner"]
+    meal_types = meal_slots(shared_filters, settings.get("mealTypes"))
     existing = lifecycle.slots if replace_slot_id else []
     replace_target = next((row for row in existing if row.get("id") == replace_slot_id), None)
     if replace_slot_id:
@@ -347,7 +350,7 @@ async def _generate_week(
                 used_recipes.append(signature(leftover["recipe"]))
             continue
 
-        wanted_taxonomy = ["breakfast"] if meal_type == "breakfast" else ["main"]
+        wanted_taxonomy = ["breakfast"] if meal_type == "breakfast" else ["snack", "dessert"] if meal_type == "snack" else ["main", "starter", "salad", "soup", "side"]
         pool = [
             row for row in candidates
             if not already_planned(candidate_signatures[id(row)], used_recipes)
@@ -428,25 +431,19 @@ def _leftover_recipe(leftover, meals):
     return deepcopy(meal.get("recipe") or {key: meal[key] for key in ("title", "groupingFunctionalId", "variantFunctionalId") if meal.get(key)})
 
 
-async def _state(hass: HomeAssistant, bridge, *, history_days: int = 30) -> dict[str, Any]:
+async def _state(hass: HomeAssistant, bridge, *, history_days: int = 30, shared_filters=None, ui_language="en") -> dict[str, Any]:
     lifecycle = await meal_lifecycle_store_for_bridge(bridge)
     cost_store = await cost_store_for_bridge(bridge)
     inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
     state = lifecycle.snapshot(inventory, start_date=dt_util.now().date())
-    weekly_cost: dict[str, float] = {}
-    for slot in state["slots"]:
-        cost = slot.get("cost") if isinstance(slot.get("cost"), dict) else {}
-        if not cost and slot.get("recipe"):
-            cost = _recipe_cost_with_store(bridge, slot["recipe"], cost_store)
-            slot["cost"] = cost
-        _currency_map_add(weekly_cost, cost.get("totalsByCurrency"))
     history = await meal_history_store_for_bridge(bridge)
     recent = history.recent(200)
     meals = {row.get("id"): row for row in recent}
     for leftover in state.get("leftovers", []):
         leftover["recipe"] = _leftover_recipe(leftover, meals)
+    from .weekly_plan import refresh_plan
+    await refresh_plan(bridge, state, filters=shared_filters, language=ui_language)
     state.update({
-        "weeklyCostByCurrency": _currency_map(weekly_cost),
         "costSettings": cost_store.settings,
         "costReferenceCount": cost_store.snapshot()["referenceCount"],
         "nutritionDashboard": _nutrition_dashboard(
@@ -613,6 +610,8 @@ def async_register(hass: HomeAssistant) -> None:
 
 @websocket_api.websocket_command({
     vol.Required("type"): "cook4me/v20/week_state",
+    vol.Optional("shared_filters"): dict,
+    vol.Optional("ui_language", default="en"): str,
     vol.Optional("entry_id"): str,
     vol.Optional("history_days", default=30): vol.All(vol.Coerce(int), vol.Range(min=7, max=90)),
 })
@@ -620,7 +619,8 @@ def async_register(hass: HomeAssistant) -> None:
 async def ws_week_state(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
-        result = await _state(hass, bridge, history_days=int(msg.get("history_days", 30)))
+        result = await _state(hass, bridge, history_days=int(msg.get("history_days", 30)),
+                              shared_filters=msg.get("shared_filters"), ui_language=msg.get("ui_language", "en"))
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)
@@ -681,7 +681,7 @@ async def ws_week_generate(hass, connection, msg) -> None:
             shared_filters=msg.get("shared_filters"),
             ui_language=msg.get("ui_language", "en"),
         )
-        result = {**generation, **await _state(hass, bridge)}
+        result = {**generation, **await _state(hass, bridge, shared_filters=msg.get("shared_filters"), ui_language=msg.get("ui_language", "en"))}
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)
@@ -706,6 +706,7 @@ async def ws_week_slot_clear(hass, connection, msg) -> None:
 
 @websocket_api.websocket_command({
     vol.Required("type"): "cook4me/v20/week_add_shopping",
+    vol.Optional("shared_filters"): dict,
     vol.Optional("entry_id"): str,
     vol.Optional("ui_language"): str,
 })
@@ -716,6 +717,8 @@ async def ws_week_add_shopping(hass, connection, msg) -> None:
         lifecycle = await meal_lifecycle_store_for_bridge(bridge)
         snapshot = lifecycle.snapshot(bridge.recipe_hub.profile.get("houseIngredients") or [],
             start_date=dt_util.now().date())
+        if msg.get("shared_filters") is not None:
+            snapshot = await _state(hass, bridge, shared_filters=msg["shared_filters"], ui_language=msg.get("ui_language", "en"))
         if any((((slot.get("recipe") or {}).get("match") or {}).get("requiresSubstitutions")) for slot in snapshot["slots"]):
             raise ValueError("Some planned recipes still need ingredient replacements. Resolve those recipes before adding the week to shopping.")
         rows = snapshot["shoppingDelta"]

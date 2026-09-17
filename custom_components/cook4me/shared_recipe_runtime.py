@@ -21,7 +21,7 @@ async def search_filtered(bridge, *, query, languages, language, filters, progre
         catalog_languages=languages, group_families=True, all_results=True, filter_rows=process, progress=report))
 
 
-async def processor(bridge, filters, *, language="en", rank=True, score_targets=True, progress=None):
+async def processor(bridge, filters, *, language="en", rank=True, score_targets=True, progress=None, cost_calculator=None):
     from . import websocket_v13 as v13
     from . import websocket_v18 as v18
     from .costs import cost_store_for_bridge
@@ -38,6 +38,17 @@ async def processor(bridge, filters, *, language="en", rank=True, score_targets=
     history = await meal_history_store_for_bridge(bridge)
     recent = v18._recent_identities(history.recent(200), days=int(settings["avoidRecentDays"] or 0))
     aliases = await bridge.hass.async_add_executor_job(ingredient_aliases, language) if settings["ingredients"] else {}
+    if costs is not None and cost_calculator is None:
+        from .automatic_prices import offline_price_inputs, price_settings
+        from .release_catalog import async_warm_release_catalog
+        market = await price_settings(bridge)
+        catalog = await async_warm_release_catalog(bridge.hass)
+        lookup = {str(row[key]): row for row in catalog["ingredients"]
+                  for key in ("key", "foodKey", "id", "ingredientId") if row.get(key)}
+
+        def cost_calculator(row):
+            recipe, references = offline_price_inputs(row, [], costs, market, catalog_lookup=lookup)
+            return calculate_recipe_cost(recipe, house, references, country=market["country"], currency=market["currency"])
 
     def process(rows):
         rows = [row for row in rows if recipe_identity(row) not in recent]
@@ -45,7 +56,7 @@ async def processor(bridge, filters, *, language="en", rank=True, score_targets=
             rows = v13._rank_filtered(bridge, rows, diet=settings["diet"], limit=max(1, len(rows)), unlimited=True, diet_filters=settings if "dietProfile" in settings else None,
                 progress=(lambda done, total: progress("ranking", completed=done, total=total)) if progress else None)
         return apply_filters(rows, settings, ingredient_groups=aliases,
-            cost=(lambda row: calculate_recipe_cost(row, house, costs)) if costs else None,
+            cost=cost_calculator,
             nutrition=lambda row: calculate_recipe_nutrition_fefo(row, house, generic=nutrients.generic, stock_lots=nutrients.stock_lots),
             score_targets=score_targets, progress=progress)
     return process
