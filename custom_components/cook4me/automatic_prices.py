@@ -614,6 +614,21 @@ for tag, kind, names in (
         _CATEGORIES[name] = (tag, kind)
 
 
+# v96: form-specific names prevent dried herbs and whole spices borrowing
+# incompatible quantity conversions or fresh-food references.
+for tag, kind, names in (
+    ('en:tarragon', 'CATEGORY', 'fresh tarragon'),
+    ('cook4me:dried-tarragon', 'REFERENCE', 'dried tarragon'),
+    ('cook4me:dried-dill', 'REFERENCE', 'dried dill'),
+    ('cook4me:ground-nutmeg', 'REFERENCE', 'ground nutmeg|grated nutmeg'),
+    ('cook4me:whole-nutmeg', 'REFERENCE', 'whole nutmeg'),
+    ('cook4me:dried-farfalle', 'REFERENCE', 'dried farfalle pasta|dried farfalle'),
+    ('en:salmon-fillets', 'PRODUCT', 'salmon fillet|salmon fillets'),
+):
+    for name in names.split('|'):
+        _CATEGORIES[name] = (tag, kind)
+
+
 def country_currency(country):
     return next(iter(COUNTRY_CURRENCIES.get(country, [])), '')
 

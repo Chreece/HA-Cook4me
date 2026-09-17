@@ -2450,6 +2450,229 @@
       "confidence": "external_observation",
       "barcode": "",
       "note": "Organic Mairüben reference, not swede/rutabaga. Out-of-stock listing when checked. Per kg, not a bunch. Seasonal and store prices vary; VAT included, delivery excluded."
+    },
+    {
+      "id": "knuspr-851-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/851-estragon",
+      "productName": "Fresh tarragon",
+      "amount": 1.49,
+      "currency": "EUR",
+      "basisQuantity": 15,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:tarragon"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb; dried tarragon has its own reference. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-31988-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/31988-ostmann-estragon-gerebelt",
+      "productName": "Ostmann dried tarragon leaves",
+      "amount": 2.49,
+      "currency": "EUR",
+      "basisQuantity": 9,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:dried-tarragon"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Rubbed dried leaves, not powdered or fresh tarragon. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-4786-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/4786-ostmann-muskatnuss-gemahlen",
+      "productName": "Ostmann ground nutmeg",
+      "amount": 2.99,
+      "currency": "EUR",
+      "basisQuantity": 35,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:nutmeg",
+        "cook4me:ground-nutmeg"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Direct product listing price. Ground reference for mass or spoon amounts; no whole-nut weight inferred. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-4787-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/4787-ostmann-muskatnuesse",
+      "productName": "Ostmann whole nutmegs, two pieces",
+      "amount": 2.29,
+      "currency": "EUR",
+      "basisQuantity": 2,
+      "basisUnit": "pcs",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:nutmeg",
+        "cook4me:whole-nutmeg"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Pack explicitly contains two whole nuts. No mass per nut inferred. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-17455-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/en-DE/17455-picandou-ziegenfrischkaese",
+      "productName": "Picandou plain fresh goat cheese",
+      "amount": 4.79,
+      "currency": "EUR",
+      "basisQuantity": 80,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:fresh-goat-cheese"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh goat milk cheese; not a reference for aged or hard goat cheese. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-31998-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/31998-ostmann-piment-ganz",
+      "productName": "Ostmann whole allspice",
+      "amount": 2.49,
+      "currency": "EUR",
+      "basisQuantity": 25,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:allspices"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Whole spice mass reference; no ground-spoon or per-berry conversion. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "asia4friends-fishsauce-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://asia4friends.de/fischsauce-38n-thanh-ha-500ml",
+      "productName": "Thanh Ha 38N fish sauce",
+      "amount": 7.79,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Asia4Friends Germany, Dresden · online listing",
+      "categories": [
+        "en:nuoc-mam-sauce"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Ready-to-use fish sauce; not stock, concentrate or fish paste. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "asia4friends-green-lentils-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://asia4friends.de/gruene-linsen-trs-500g",
+      "productName": "TRS dry green lentils",
+      "amount": 2.49,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Asia4Friends Germany, Dresden · online listing",
+      "categories": [
+        "en:green-lentils"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Dry lentils only; cooked and canned lentils do not inherit this reference. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "aldi-salmon-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/golden-seafood-lachsfilets-250-g-000000000000191385",
+      "productName": "GOLDEN SEAFOOD frozen plain salmon fillets",
+      "amount": 4.99,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:salmons",
+        "en:salmon-fillets"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Frozen plain salmon fillets; not smoked salmon. No standard fillet weight inferred. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "aldi-farfalle-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/barilla-collezione-farfalle-500-g-000000000000543569",
+      "productName": "Barilla Collezione dried farfalle",
+      "amount": 1.49,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "cook4me:dried-farfalle"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Promotional listing from 2026-08-28, regional and limited stock. Dried pasta only. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-4806-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/en-DE/4806-ostmann-dill-tips",
+      "productName": "Ostmann dried dill tips",
+      "amount": 2.79,
+      "currency": "EUR",
+      "basisQuantity": 25,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:dried-dill"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Shelf-stored dried dill; fresh dill has a separate reference. VAT included; shipping excluded. Regional prices and availability vary."
     }
   ]
 }

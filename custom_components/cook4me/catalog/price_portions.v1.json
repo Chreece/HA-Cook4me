@@ -1526,6 +1526,101 @@
       "portion": "tbsp, crumbled",
       "sourceAmount": 1.0,
       "sourceGrams": 1.8
+    },
+    {
+      "names": [
+        "dried tarragon"
+      ],
+      "measure": "tsp",
+      "grams": 0.6,
+      "fdcId": 170937,
+      "portionId": 87574,
+      "food": "Spices, tarragon, dried",
+      "portion": "tsp, leaves",
+      "sourceAmount": 1.0,
+      "sourceGrams": 0.6
+    },
+    {
+      "names": [
+        "dried tarragon"
+      ],
+      "measure": "tbsp",
+      "grams": 1.8,
+      "fdcId": 170937,
+      "portionId": 87575,
+      "food": "Spices, tarragon, dried",
+      "portion": "tbsp, leaves",
+      "sourceAmount": 1.0,
+      "sourceGrams": 1.8
+    },
+    {
+      "names": [
+        "dried dill"
+      ],
+      "measure": "tsp",
+      "grams": 1.0,
+      "fdcId": 171322,
+      "portionId": 88433,
+      "food": "Spices, dill weed, dried",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 1.0
+    },
+    {
+      "names": [
+        "dried dill"
+      ],
+      "measure": "tbsp",
+      "grams": 3.1,
+      "fdcId": 171322,
+      "portionId": 88434,
+      "food": "Spices, dill weed, dried",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 3.1
+    },
+    {
+      "names": [
+        "nutmeg",
+        "ground nutmeg",
+        "grated nutmeg"
+      ],
+      "measure": "tsp",
+      "grams": 2.2,
+      "fdcId": 171326,
+      "portionId": 88441,
+      "food": "Spices, nutmeg, ground",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 2.2
+    },
+    {
+      "names": [
+        "nutmeg",
+        "ground nutmeg",
+        "grated nutmeg"
+      ],
+      "measure": "tbsp",
+      "grams": 7.0,
+      "fdcId": 171326,
+      "portionId": 88442,
+      "food": "Spices, nutmeg, ground",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 7.0
+    },
+    {
+      "names": [
+        "fish sauce"
+      ],
+      "measure": "tbsp",
+      "grams": 18.0,
+      "fdcId": 174531,
+      "portionId": 94526,
+      "food": "Sauce, fish, ready-to-serve",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 18.0
     }
   ]
 }

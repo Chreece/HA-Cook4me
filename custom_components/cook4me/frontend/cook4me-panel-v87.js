@@ -6,7 +6,7 @@ const TEXT={
  el:{total:'Σύνολο',priced:'υλικά με κόστος',subtotal:'Μερικό σύνολο',estimate:'Εκτίμηση',missing:'Εκκρεμούν'}
 };
 function evidenceUrl(value){
- try{const url=new URL(value);return url.protocol==='https:'&&!url.username&&!url.password&&!url.port&&['www.dm.de','www.aldi-sued.de','www.knuspr.de','www.bwb.de','www.fao.org','fdc.nal.usda.gov','www.nist.gov'].includes(url.hostname)?url:null;}catch{return null;}
+ try{const url=new URL(value);return url.protocol==='https:'&&!url.username&&!url.password&&!url.port&&['www.dm.de','www.aldi-sued.de','www.knuspr.de','asia4friends.de','www.bwb.de','www.fao.org','fdc.nal.usda.gov','www.nist.gov'].includes(url.hostname)?url:null;}catch{return null;}
 }
 class Cook4MeRecipeHubPanelV87 extends BasePanel{
  _v87Text(key){return TEXT[this._uiIngredientLanguage()]?.[key]||TEXT.en[key]||key;}
