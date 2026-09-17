@@ -25,6 +25,7 @@ jobs:
       - name: Reconstruct exact batch 6 decisions
         run: |
           set -Eeuo pipefail
+          # Batch 6 itself contains nine canonical decisions; earlier reductions are separate.
           python tools/audit_canonical_batch6_v60.py
       - name: Upload exact decision evidence
         uses: actions/upload-artifact@v4
