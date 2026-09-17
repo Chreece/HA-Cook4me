@@ -33,6 +33,7 @@ if str(TOOLS) not in sys.path:
 import resolve_reviewed_release_catalog_nutrition_v60 as exact_resolver  # type: ignore  # noqa: E402
 import reviewed_nutrition_v60 as reviewed_nutrition  # type: ignore  # noqa: E402
 import snapshot_nutrition_review_checkpoint_v60 as checkpoint  # noqa: E402
+import compile_release_catalog_semantics_v60 as semantic_compiler  # noqa: E402
 
 
 def _text(value: Any) -> str:
@@ -54,7 +55,28 @@ def _review_paths(root: Path = TOOLS) -> list[Path]:
     return sorted(root.glob("release_catalog_reviewed_nutrition_targets*.v1.json"))
 
 
+def _semantic_syntax_aliases(root: Path) -> tuple[dict[str, dict[str, Any]], str]:
+    alias_path = root / semantic_compiler.HIGH_CONFIDENCE_SYNTAX_ALIAS_FILE.name
+    if not alias_path.exists():
+        return {}, ""
+    review_paths = semantic_compiler._review_paths(root)
+    if not review_paths:
+        raise RuntimeError(
+            "high-confidence syntax alias overlay exists without semantic review corpus"
+        )
+    review_payloads = [
+        (path.name, semantic_compiler._load_payload(path)) for path in review_paths
+    ]
+    review_rows = list(semantic_compiler.iter_review_rows(review_payloads))
+    payload = semantic_compiler._load_high_confidence_syntax_alias_payload(alias_path)
+    aliases = semantic_compiler._high_confidence_syntax_alias_map(
+        review_rows, payload, alias_file=alias_path.name
+    )
+    return aliases, alias_path.name
+
+
 def load_reviews(root: Path = TOOLS) -> dict[str, dict[str, Any]]:
+    aliases, alias_file = _semantic_syntax_aliases(root)
     out: dict[str, dict[str, Any]] = {}
     for path in _review_paths(root):
         value = _load(path, {})
@@ -83,7 +105,11 @@ def load_reviews(root: Path = TOOLS) -> dict[str, dict[str, Any]]:
         for raw in value.get("items") or []:
             if not isinstance(raw, dict):
                 continue
-            target_id = _text(raw.get("reviewTargetId"))
+            original_target_id = _text(raw.get("reviewTargetId"))
+            alias = aliases.get(original_target_id)
+            target_id = (
+                alias["canonicalConceptId"] if alias is not None else original_target_id
+            )
             try:
                 fdc_id = int(raw.get("fdcId"))
             except (TypeError, ValueError):
@@ -95,6 +121,14 @@ def load_reviews(root: Path = TOOLS) -> dict[str, dict[str, Any]]:
             normalized["fdcId"] = fdc_id
             normalized["reviewFile"] = path.name
             normalized.update(checkpoint.retained_reference_receipt(value, raw, path.name))
+            if alias is not None:
+                normalized["semanticSyntaxAliasOriginalReviewTargetId"] = original_target_id
+                normalized["semanticSyntaxAliasOriginalCanonicalEnglishName"] = _text(
+                    raw.get("canonicalEnglishName")
+                )
+                normalized["canonicalEnglishName"] = alias["canonicalEnglish"]
+                normalized["semanticSyntaxAliasFile"] = alias_file
+                normalized["semanticSyntaxAliasMethod"] = alias["method"]
             existing = out.get(target_id)
             if existing and int(existing["fdcId"]) != fdc_id:
                 raise RuntimeError(

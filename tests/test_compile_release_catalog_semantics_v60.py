@@ -439,6 +439,14 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
         standalone_equivalence_count = len(
             standalone_equivalences.get("items") or []
         )
+        high_confidence_syntax_aliases = (
+            mod._load_high_confidence_syntax_alias_payload(
+                tools / "release_catalog_semantic_high_confidence_syntax_aliases.v1.json"
+            )
+        )
+        high_confidence_syntax_alias_count = len(
+            high_confidence_syntax_aliases.get("items") or []
+        )
         review_total = total + standalone_count + standalone_equivalence_count
 
         self.assertEqual(
@@ -463,6 +471,10 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
         )
         self.assertEqual(confirmed["summary"]["confirmedSourceLabels"], total)
         self.assertEqual(
+            confirmed["summary"]["highConfidenceSyntaxAliasConcepts"],
+            high_confidence_syntax_alias_count,
+        )
+        self.assertEqual(
             baseline["summary"]["needsSemanticConfirmationSourceLabels"]
             - confirmed["summary"]["needsSemanticConfirmationSourceLabels"],
             review_total,
@@ -470,7 +482,9 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
         self.assertEqual(
             baseline["summary"]["semanticConcepts"]
             - confirmed["summary"]["semanticConcepts"],
-            total + standalone_equivalence_count,
+            total
+            + standalone_equivalence_count
+            + high_confidence_syntax_alias_count,
         )
         self.assertEqual(
             confirmed["summary"]["needsSemanticConfirmationSourceLabels"],

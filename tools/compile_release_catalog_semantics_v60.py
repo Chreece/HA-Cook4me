@@ -36,6 +36,9 @@ STANDALONE_DISPOSITION_FILE = (
 STANDALONE_EQUIVALENCE_FILE = (
     TOOLS / "release_catalog_semantic_standalone_equivalences.v1.json"
 )
+HIGH_CONFIDENCE_SYNTAX_ALIAS_FILE = (
+    TOOLS / "release_catalog_semantic_high_confidence_syntax_aliases.v1.json"
+)
 _STANDALONE_KIND = "cook4me-semantic-ingredient-standalone-dispositions"
 _STANDALONE_POLICY = {
     "providerIdentityAssigned": False,
@@ -58,6 +61,19 @@ _STANDALONE_EQUIVALENCE_POLICY = {
     "targetMayHaveMultipleEquivalentSources": True,
     "manualReviewRequired": True,
     "safetyEligibilityGranted": False,
+}
+
+_HIGH_CONFIDENCE_SYNTAX_ALIAS_KIND = (
+    "cook4me-semantic-high-confidence-syntax-aliases"
+)
+_HIGH_CONFIDENCE_SYNTAX_ALIAS_POLICY = {
+    "providerIdentityAssigned": False,
+    "sourceLocalIdentityPreserved": True,
+    "highConfidenceOnly": True,
+    "safeSyntacticNormalizerRequired": True,
+    "cleanCanonicalTargetRequired": True,
+    "nutritionConflictTargetsExcluded": True,
+    "historicalReviewFilesMutated": False,
 }
 
 _ALLOWED_CLASSIFICATIONS = {"food", "equipment", "other", "ambiguous"}
@@ -300,6 +316,29 @@ def _load_standalone_equivalence_payload(path: Path) -> dict[str, Any]:
     return value
 
 
+def _load_high_confidence_syntax_alias_payload(path: Path) -> dict[str, Any]:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise RuntimeError(f"{path}: expected JSON object")
+    if value.get("schemaVersion") != 1:
+        raise RuntimeError(f"{path}: unsupported high-confidence syntax alias schemaVersion")
+    if value.get("kind") != _HIGH_CONFIDENCE_SYNTAX_ALIAS_KIND:
+        raise RuntimeError(f"{path}: unexpected high-confidence syntax alias kind")
+    policy = value.get("policy")
+    if not isinstance(policy, dict) or any(
+        policy.get(key) is not expected
+        for key, expected in _HIGH_CONFIDENCE_SYNTAX_ALIAS_POLICY.items()
+    ):
+        raise RuntimeError(f"{path}: unsafe high-confidence syntax alias policy")
+    items = value.get("items")
+    if not isinstance(items, list):
+        raise RuntimeError(f"{path}: high-confidence syntax alias items must be a list")
+    summary = value.get("summary") or {}
+    if int(summary.get("aliasConceptCount") or -1) != len(items):
+        raise RuntimeError(f"{path}: stale high-confidence syntax alias count")
+    return value
+
+
 def iter_review_rows(
     payloads: Iterable[tuple[str, dict[str, Any]]]
 ) -> Iterable[dict[str, Any]]:
@@ -383,6 +422,133 @@ def _high_confidence_concepts(
             )
         concepts.setdefault(concept_id, row)
     return concepts
+
+
+def _high_confidence_syntax_alias_map(
+    review_rows: list[dict[str, Any]],
+    alias_payload: dict[str, Any] | None,
+    *,
+    alias_file: str = "",
+) -> dict[str, dict[str, Any]]:
+    if alias_payload is None:
+        return {}
+    if alias_payload.get("schemaVersion") != 1:
+        raise RuntimeError("unsupported high-confidence syntax alias schemaVersion")
+    if alias_payload.get("kind") != _HIGH_CONFIDENCE_SYNTAX_ALIAS_KIND:
+        raise RuntimeError("unexpected high-confidence syntax alias kind")
+    policy = alias_payload.get("policy")
+    if not isinstance(policy, dict) or any(
+        policy.get(key) is not expected
+        for key, expected in _HIGH_CONFIDENCE_SYNTAX_ALIAS_POLICY.items()
+    ):
+        raise RuntimeError("unsafe high-confidence syntax alias policy")
+    items = alias_payload.get("items")
+    if not isinstance(items, list):
+        raise RuntimeError("high-confidence syntax alias items must be a list")
+    summary = alias_payload.get("summary") or {}
+    if int(summary.get("aliasConceptCount") or -1) != len(items):
+        raise RuntimeError("stale high-confidence syntax alias count")
+
+    high_concepts = _high_confidence_concepts(review_rows)
+    source_ids_by_concept: dict[str, set[str]] = defaultdict(set)
+    for row in review_rows:
+        if (
+            row["confidence"] == "high"
+            and row["classification"] in _MERGEABLE_CLASSIFICATIONS
+        ):
+            concept_id = _semantic_concept_id(row["classification"], row["english"])
+            source_ids_by_concept[concept_id].add(
+                source_local_ingredient_id(row["language"], row["source"])
+            )
+
+    excluded = {
+        _text(value) for value in alias_payload.get("excludedConflictTargetConceptIds") or []
+        if _text(value)
+    }
+    if int(summary.get("excludedConflictGroupCount", -1)) != len(excluded):
+        raise RuntimeError("stale high-confidence syntax conflict-exclusion count")
+
+    out: dict[str, dict[str, Any]] = {}
+    target_ids: set[str] = set()
+    source_count = 0
+    group_keys: set[tuple[str, str]] = set()
+    for index, raw in enumerate(items, 1):
+        if not isinstance(raw, dict):
+            raise RuntimeError(f"high-confidence syntax alias item {index}: expected object")
+        old_id = _text(raw.get("oldConceptId"))
+        target_id = _text(raw.get("canonicalConceptId"))
+        if (
+            not old_id.startswith("concept:")
+            or not target_id.startswith("concept:")
+            or old_id == target_id
+        ):
+            raise RuntimeError(f"high-confidence syntax alias item {index}: invalid identity")
+        if old_id in out:
+            raise RuntimeError(f"duplicate high-confidence syntax alias: {old_id}")
+        if target_id in excluded:
+            raise RuntimeError(
+                f"nutrition-conflict target cannot receive syntax alias: {target_id}"
+            )
+        old_row = high_concepts.get(old_id)
+        target_row = high_concepts.get(target_id)
+        if old_row is None or target_row is None:
+            raise RuntimeError(
+                f"high-confidence syntax alias lacks reviewed high evidence: {old_id} -> {target_id}"
+            )
+        classification = _text(raw.get("classification")).lower()
+        old_english = _text(raw.get("oldCanonicalEnglish"))
+        target_english = _text(raw.get("canonicalEnglish"))
+        if (
+            classification not in _MERGEABLE_CLASSIFICATIONS
+            or old_row["classification"] != classification
+            or target_row["classification"] != classification
+        ):
+            raise RuntimeError(f"high-confidence syntax alias classification drift: {old_id}")
+        if old_english != old_row["english"]:
+            raise RuntimeError(f"high-confidence syntax alias old English drift: {old_id}")
+        if target_english != target_row["english"]:
+            raise RuntimeError(f"high-confidence syntax alias target English drift: {target_id}")
+        old_safe = _safe_syntactic_english(old_english)
+        target_safe = _safe_syntactic_english(target_english)
+        if _norm(old_safe) == _norm(old_english):
+            raise RuntimeError(f"high-confidence syntax alias old meaning is not syntax-changed: {old_id}")
+        if _norm(target_safe) != _norm(target_english):
+            raise RuntimeError(f"high-confidence syntax alias target is not clean canonical: {target_id}")
+        if _norm(old_safe) != _norm(target_english):
+            raise RuntimeError(f"high-confidence syntax alias normalizer mismatch: {old_id}")
+        expected_sources = source_ids_by_concept.get(old_id, set())
+        source_ids = {
+            _text(value) for value in raw.get("sourceIngredientIds") or [] if _text(value)
+        }
+        if source_ids != expected_sources:
+            raise RuntimeError(f"high-confidence syntax alias source set drift: {old_id}")
+        if raw.get("method") != "existing-safe-syntactic-normalizer":
+            raise RuntimeError(f"high-confidence syntax alias method drift: {old_id}")
+        rationale = _text(raw.get("rationale"))
+        if len(rationale) < 40:
+            raise RuntimeError(f"high-confidence syntax alias rationale too short: {old_id}")
+        source_count += len(source_ids)
+        group_keys.add((target_id, classification))
+        target_ids.add(target_id)
+        out[old_id] = {
+            "oldConceptId": old_id,
+            "canonicalConceptId": target_id,
+            "oldCanonicalEnglish": old_english,
+            "canonicalEnglish": target_english,
+            "classification": classification,
+            "sourceIngredientIds": sorted(source_ids),
+            "aliasFile": alias_file or "<inline-high-confidence-syntax-alias>",
+            "method": "explicit-reviewed-high-confidence-safe-syntax",
+            "rationale": rationale,
+        }
+
+    if set(out) & target_ids:
+        raise RuntimeError("high-confidence syntax aliases cannot form chains")
+    if int(summary.get("sourceIdentityCount") or -1) != source_count:
+        raise RuntimeError("stale high-confidence syntax alias source-identity count")
+    if int(summary.get("groupCount") or -1) != len(group_keys):
+        raise RuntimeError("stale high-confidence syntax alias group count")
+    return out
 
 
 def _exact_confirmation_map(
@@ -900,12 +1066,19 @@ def compile_semantic_concepts(
     standalone_file: str = "",
     standalone_equivalence_payload: dict[str, Any] | None = None,
     standalone_equivalence_file: str = "",
+    high_confidence_syntax_alias_payload: dict[str, Any] | None = None,
+    high_confidence_syntax_alias_file: str = "",
 ) -> dict[str, Any]:
     """Compile review rows without promoting semantic equality to provider ID."""
     concepts: dict[str, dict[str, Any]] = {}
     source_identity_to_concept: dict[str, str] = {}
     review_rows = list(iter_review_rows(payloads))
     high_concepts = _high_confidence_concepts(review_rows)
+    high_confidence_syntax_aliases = _high_confidence_syntax_alias_map(
+        review_rows,
+        high_confidence_syntax_alias_payload,
+        alias_file=high_confidence_syntax_alias_file,
+    )
     confirmations, exact_count, equivalence_count, syntactic_count = _confirmation_map(
         review_rows,
         confirmation_payload,
@@ -913,6 +1086,15 @@ def compile_semantic_concepts(
         syntax_confirmation_ids=syntax_confirmation_ids,
         syntax_confirmation_file=syntax_confirmation_file,
     )
+    for confirmation in confirmations.values():
+        original = confirmation["confirmedConceptId"]
+        alias = high_confidence_syntax_aliases.get(original)
+        if alias is not None:
+            confirmation["originalConfirmedConceptId"] = original
+            confirmation["confirmedConceptId"] = alias["canonicalConceptId"]
+            confirmation["highConfidenceSyntaxAliasFile"] = alias["aliasFile"]
+            confirmation["highConfidenceSyntaxAliasMethod"] = alias["method"]
+
     standalone = _standalone_disposition_map(
         review_rows,
         standalone_payload,
@@ -959,14 +1141,23 @@ def compile_semantic_concepts(
             and classification in _MERGEABLE_CLASSIFICATIONS
         )
         explicitly_confirmed = confirmation is not None
+        raw_high_concept_id = (
+            _semantic_concept_id(classification, english) if mergeable else ""
+        )
+        high_confidence_syntax_alias = high_confidence_syntax_aliases.get(
+            raw_high_concept_id
+        )
         if explicitly_confirmed:
             concept_id = confirmation["confirmedConceptId"]
             canonical_english = high_concepts[concept_id]["english"]
         elif standalone_equivalence is not None:
             concept_id = standalone_equivalence["targetConceptId"]
             canonical_english = standalone_equivalence["targetCanonicalEnglish"]
+        elif high_confidence_syntax_alias is not None:
+            concept_id = high_confidence_syntax_alias["canonicalConceptId"]
+            canonical_english = high_confidence_syntax_alias["canonicalEnglish"]
         elif mergeable:
-            concept_id = _semantic_concept_id(classification, english)
+            concept_id = raw_high_concept_id
             canonical_english = english
         else:
             concept_id = _source_concept_id(language, source)
@@ -982,6 +1173,8 @@ def compile_semantic_concepts(
             merge_policy = standalone_disposition["disposition"]
         elif standalone_equivalence is not None:
             merge_policy = "reviewed-source-local-standalone"
+        elif high_confidence_syntax_alias is not None:
+            merge_policy = "reviewed-high-syntactic-alias"
         elif concept_mergeable:
             merge_policy = "reviewed-high-exact-english"
         else:
@@ -1046,6 +1239,27 @@ def compile_semantic_concepts(
             ]
             if rationale := confirmation.get("confirmationRationale"):
                 identity["semanticConfirmationRationale"] = rationale
+            if original := confirmation.get("originalConfirmedConceptId"):
+                identity["semanticConfirmationOriginalConceptId"] = original
+                identity["semanticConfirmationCanonicalConceptId"] = confirmation[
+                    "confirmedConceptId"
+                ]
+                identity["semanticConfirmationHighConfidenceSyntaxAliasFile"] = (
+                    confirmation["highConfidenceSyntaxAliasFile"]
+                )
+        if high_confidence_syntax_alias is not None:
+            identity["semanticHighConfidenceSyntaxAliasFile"] = (
+                high_confidence_syntax_alias["aliasFile"]
+            )
+            identity["semanticHighConfidenceSyntaxAliasOriginalConceptId"] = (
+                high_confidence_syntax_alias["oldConceptId"]
+            )
+            identity["semanticHighConfidenceSyntaxAliasCanonicalConceptId"] = (
+                high_confidence_syntax_alias["canonicalConceptId"]
+            )
+            identity["semanticHighConfidenceSyntaxAliasMethod"] = (
+                high_confidence_syntax_alias["method"]
+            )
         if standalone_disposition is not None:
             identity["semanticReviewDispositionFile"] = standalone_disposition[
                 "dispositionFile"
@@ -1117,6 +1331,9 @@ def compile_semantic_concepts(
             "providerIdentityAssigned": False,
             "sourceLocalIdentityPreserved": True,
             "highConfidenceExactEnglishMerge": True,
+            "explicitHighConfidenceSyntacticAlias": True,
+            "highConfidenceSyntacticAliasRequiresCleanCanonicalTarget": True,
+            "highConfidenceSyntacticAliasPreservesSafetyEligibility": True,
             "explicitSemanticConfirmationMerge": True,
             "explicitSyntacticConfirmationMerge": True,
             "explicitStandaloneReviewClosure": True,
@@ -1141,6 +1358,11 @@ def compile_semantic_concepts(
             "exactConfirmedSourceLabels": exact_count,
             "semanticEquivalentConfirmedSourceLabels": equivalence_count,
             "syntacticConfirmedSourceLabels": syntactic_count,
+            "highConfidenceSyntaxAliasConcepts": len(high_confidence_syntax_aliases),
+            "highConfidenceSyntaxAliasSourceLabels": sum(
+                len(row["sourceIngredientIds"])
+                for row in high_confidence_syntax_aliases.values()
+            ),
             "standaloneConfirmedSourceLabels": standalone_count,
             "standaloneEquivalentSourceLabels": standalone_equivalence_count,
             "reviewedAmbiguousSourceLabels": reviewed_ambiguous_count,
@@ -1166,6 +1388,7 @@ def compile_from_paths(
     syntax_confirmation_path: Path | None = None,
     standalone_path: Path | None = None,
     standalone_equivalence_path: Path | None = None,
+    high_confidence_syntax_alias_path: Path | None = None,
 ) -> dict[str, Any]:
     path_list = list(paths)
     payloads = [(path.name, _load_payload(path)) for path in path_list]
@@ -1196,6 +1419,11 @@ def compile_from_paths(
         if candidate.exists():
             standalone_equivalence_path = candidate
 
+    if high_confidence_syntax_alias_path is None and review_dir is not None:
+        candidate = review_dir / HIGH_CONFIDENCE_SYNTAX_ALIAS_FILE.name
+        if candidate.exists():
+            high_confidence_syntax_alias_path = candidate
+
     confirmation_payload = None
     confirmation_file = ""
     if confirmation_path is not None:
@@ -1224,6 +1452,16 @@ def compile_from_paths(
         )
         standalone_equivalence_file = standalone_equivalence_path.name
 
+    high_confidence_syntax_alias_payload = None
+    high_confidence_syntax_alias_file = ""
+    if high_confidence_syntax_alias_path is not None:
+        high_confidence_syntax_alias_payload = (
+            _load_high_confidence_syntax_alias_payload(
+                high_confidence_syntax_alias_path
+            )
+        )
+        high_confidence_syntax_alias_file = high_confidence_syntax_alias_path.name
+
     return compile_semantic_concepts(
         payloads,
         confirmation_payload=confirmation_payload,
@@ -1234,6 +1472,8 @@ def compile_from_paths(
         standalone_file=standalone_file,
         standalone_equivalence_payload=standalone_equivalence_payload,
         standalone_equivalence_file=standalone_equivalence_file,
+        high_confidence_syntax_alias_payload=high_confidence_syntax_alias_payload,
+        high_confidence_syntax_alias_file=high_confidence_syntax_alias_file,
     )
 
 
@@ -1277,6 +1517,15 @@ def main() -> int:
         ),
     )
     parser.add_argument(
+        "--high-confidence-syntax-aliases",
+        default="",
+        help=(
+            "Optional explicit high-confidence safe-syntax alias JSON. When omitted, "
+            "release_catalog_semantic_high_confidence_syntax_aliases.v1.json is loaded "
+            "from the reviews directory when present."
+        ),
+    )
+    parser.add_argument(
         "--standalone-equivalences",
         default="",
         help=(
@@ -1310,12 +1559,18 @@ def main() -> int:
         if args.standalone_equivalences
         else None
     )
+    high_confidence_syntax_alias_path = (
+        Path(args.high_confidence_syntax_aliases).expanduser()
+        if args.high_confidence_syntax_aliases
+        else None
+    )
     payload = compile_from_paths(
         paths,
         confirmation_path=confirmation_path,
         syntax_confirmation_path=syntax_confirmation_path,
         standalone_path=standalone_path,
         standalone_equivalence_path=standalone_equivalence_path,
+        high_confidence_syntax_alias_path=high_confidence_syntax_alias_path,
     )
     output = Path(args.output).expanduser()
     output.parent.mkdir(parents=True, exist_ok=True)
