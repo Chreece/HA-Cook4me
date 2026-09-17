@@ -247,7 +247,7 @@ class Cook4MeRecipeHub:
             return self.profile
 
     async def async_scanner_add(self, request_id, ingredient, *, quantity, unit,
-                                best_before="", lot_metadata=None, fingerprint=""):
+                                best_before="", lot_metadata=None, fingerprint="", package_count=1):
         """Commit reviewed stock once, including across reconnect/restart retries."""
         async with self._lock:
             receipts = self._data.get("scannerReceipts") or {}
@@ -262,19 +262,84 @@ class Cook4MeRecipeHub:
                    for row in profile.get("houseIngredients") or []):
                 raise ValueError("This ingredient has unlimited stock. Switch it to a measured amount before adding packages")
             metadata = validate_location(profile, lot_metadata)
-            metadata["id"] = str(uuid4())
-            profile["houseIngredients"] = add_inventory_item(
-                profile.get("houseIngredients"), ingredient, quantity=quantity, unit=unit,
-                unlimited=False, best_before=best_before, lot_metadata=metadata)
+            if isinstance(package_count, bool) or not isinstance(package_count, int) or not 1 <= package_count <= 100:
+                raise ValueError("Choose between 1 and 100 packages")
+            lot_ids = []
+            for _ in range(package_count):
+                metadata["id"] = str(uuid4())
+                lot_ids.append(metadata["id"])
+                profile["houseIngredients"] = add_inventory_item(
+                    profile.get("houseIngredients"), ingredient, quantity=quantity, unit=unit,
+                    unlimited=False, best_before=best_before, lot_metadata=metadata)
             profile["pantry"] = [row["name"] for row in profile["houseIngredients"]]
             data["profile"] = self._normalize_profile(profile)
-            if not any(lot.get("id") == metadata["id"] for row in data["profile"]["houseIngredients"] for lot in row.get("lots") or []):
+            saved_ids = {lot.get("id") for row in data["profile"]["houseIngredients"] for lot in row.get("lots") or []}
+            if not all(lot_id in saved_ids for lot_id in lot_ids):
                 raise ValueError("The stock list is full or the amount is invalid; the product was not added")
-            receipt = {"lotId": metadata["id"], "fingerprint": fingerprint}
+            receipt = {"lotId": lot_ids[0], "lotIds": lot_ids, "fingerprint": fingerprint}
             data["scannerReceipts"] = dict(list({**receipts, request_id: receipt}.items())[-200:])
             await self._store.async_save(data)
             self._data = data
             return deepcopy(receipt)
+
+    async def async_scanner_update(self, request_id, ingredient, *, lot_id, expected_version,
+                                   quantity, unit, best_before="", lot_metadata=None, fingerprint=""):
+        """Edit one stable package without overwriting its siblings or newer edits."""
+        from .product_packages import find_package, package_version
+        async with self._lock:
+            data = deepcopy(self._data)
+            profile = data["profile"]
+            house = profile.get("houseIngredients") or []
+            row, lot = find_package(house, lot_id)
+            receipts = data.get("scannerReceipts") or {}
+            previous = receipts.get(request_id)
+            if previous:
+                if previous.get("fingerprint") != fingerprint or previous.get("version") != package_version(row, lot):
+                    raise ValueError("This package changed after saving; reload it before editing again")
+                return deepcopy(previous)
+            if expected_version != package_version(row, lot):
+                raise ValueError("This package changed while you were editing it; reload it before saving")
+            if any(item.get("unlimited") and inventory_identity(item) == inventory_identity(ingredient) for item in house):
+                raise ValueError("Switch unlimited stock to a measured amount before moving packages here")
+            metadata = validate_location(profile, lot_metadata)
+            metadata.update(id=lot_id, addedAt=lot.get("addedAt"), revision=str(uuid4()))
+            remaining = [item for item in row.get("lots") or [] if item.get("id") != lot_id]
+            if remaining:
+                house = update_inventory_item(house, inventory_identity(row), unit=row.get("unit", ""), lots=remaining)
+            else:
+                house = remove_inventory_item(house, inventory_identity(row))
+            house = add_inventory_item(house, ingredient, quantity=quantity, unit=unit,
+                                       best_before=best_before, lot_metadata=metadata)
+            profile["houseIngredients"] = house
+            profile["pantry"] = [item["name"] for item in house]
+            data["profile"] = self._normalize_profile(profile)
+            current, saved = find_package(data["profile"]["houseIngredients"], lot_id)
+            receipt = {"lotId": lot_id, "fingerprint": fingerprint, "version": package_version(current, saved)}
+            data["scannerReceipts"] = dict(list({**receipts, request_id: receipt}.items())[-200:])
+            await self._store.async_save(data)
+            self._data = data
+            return deepcopy(receipt)
+
+    async def async_package_remove(self, lot_id, expected_version):
+        from .product_packages import find_package, package_version
+        async with self._lock:
+            data = deepcopy(self._data)
+            profile = data["profile"]
+            house = profile.get("houseIngredients") or []
+            try:
+                row, lot = find_package(house, lot_id)
+            except ValueError:
+                return self.profile  # The same removal can be retried safely.
+            if expected_version != package_version(row, lot):
+                raise ValueError("This package changed; reload it before removing it")
+            remaining = [item for item in row.get("lots") or [] if item.get("id") != lot_id]
+            profile["houseIngredients"] = (update_inventory_item(house, inventory_identity(row), unit=row.get("unit", ""), lots=remaining)
+                                            if remaining else remove_inventory_item(house, inventory_identity(row)))
+            profile["pantry"] = [item["name"] for item in profile["houseIngredients"]]
+            data["profile"] = self._normalize_profile(profile)
+            await self._store.async_save(data)
+            self._data = data
+            return self.profile
 
     async def async_inventory_add(
         self,

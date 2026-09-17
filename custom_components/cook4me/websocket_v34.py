@@ -15,6 +15,7 @@ from .barcode import normalize_barcode
 from .costs import _country, _currency, cost_store_for_bridge
 from .inventory import inventory_identity
 from .recipe_cost_cache import preview_cache_token
+from .websocket_v33 import _catalog as scanner_catalog
 
 
 @websocket_api.websocket_command({vol.Required('type'): 'cook4me/v34/price_settings', vol.Required('entry_id'): str,
@@ -48,9 +49,9 @@ async def ws_product_price(hass, connection, msg):
         barcode = normalize_barcode(msg['barcode']) if msg.get('barcode') else ''
         ingredient = None
         if msg.get('ingredient'):
-            catalog = await v11._ingredient_catalog(hass, bridge, msg.get('language') or 'en', refresh=False)
+            catalog = await scanner_catalog(hass, bridge, msg)
             wanted = inventory_identity(msg['ingredient'])
-            ingredient = next((row for row in catalog.get('items', [])
+            ingredient = next((row for row in catalog
                                if inventory_identity({**row, 'key': row.get('key') or row.get('foodKey')
                                    or row.get('ingredientId') or row.get('id')}) == wanted
                                or inventory_identity(row) == wanted), None)

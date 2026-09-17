@@ -26,6 +26,8 @@ from .nutrition_inventory import async_reconcile_nutrition_inventory
 from .storage_locations import normalize_locations
 from .expiry import update_expiry_notification
 from .automatic_prices import validate_paid_price, save_product_prices
+from .costs import cost_store_for_bridge
+from .product_packages import find_package, package_version, replace_package_nutrition
 
 
 def _ai_choices(hass, user):
@@ -199,12 +201,57 @@ async def ws_recognize_photo(hass, connection, msg):
             await hass.async_add_executor_job(path.unlink, True)
 
 
+@websocket_api.websocket_command({vol.Required("type"): "cook4me/v33/product_details", vol.Required("entry_id"): str,
+                                  vol.Required("lot_id"): str, vol.Optional("language", default="en"): str})
+@websocket_api.async_response
+async def ws_product_details(hass, connection, msg):
+    try:
+        bridge = _authorized(hass, connection, msg)
+        row, lot = find_package(bridge.recipe_hub.profile.get("houseIngredients"), msg["lot_id"])
+        catalog = await _catalog(hass, bridge, msg)
+        ingredient = next((item for item in catalog if inventory_identity(item) == inventory_identity(row)
+                           or row.get("key") in (item.get("sourceIngredientIds") or [])), row)
+        nutrition_store = await nutrition_store_for_bridge(bridge)
+        nutrition = next((record.get("nutrition") for records in nutrition_store.stock_lots.values()
+                          for record in records if record.get("inventoryLotId") == lot["id"]), None)
+        cost_store = await cost_store_for_bridge(bridge)
+        prices = [ref for ref in cost_store._references_for("lot:" + lot["id"]) if ref.get("source") == "purchase"]
+        paid = max(prices, key=lambda ref: str(ref.get("updatedAt") or ""), default=None)
+        connection.send_result(msg["id"], {"lot": lot, "unit": row.get("unit", ""),
+            "ingredient": {"key": ingredient.get("key") or ingredient.get("ingredientId") or ingredient.get("id"), "name": ingredient["name"]},
+            "nutrition": nutrition, "paidPrice": paid, "version": package_version(row, lot)})
+    except Exception as exc:
+        legacy._send_error(connection, msg, exc)
+
+
+@websocket_api.websocket_command({vol.Required("type"): "cook4me/v33/product_remove", vol.Required("entry_id"): str,
+                                  vol.Required("lot_id"): str, vol.Required("expected_version"): str})
+@websocket_api.async_response
+async def ws_product_remove(hass, connection, msg):
+    try:
+        bridge = _authorized(hass, connection, msg)
+        if not hasattr(bridge, "_scanner_save_lock"):
+            bridge._scanner_save_lock = asyncio.Lock()
+        async with bridge._scanner_save_lock:
+            await bridge.recipe_hub.async_package_remove(msg["lot_id"], msg["expected_version"])
+            store = await nutrition_store_for_bridge(bridge)
+            await replace_package_nutrition(store, bridge.recipe_hub.profile["houseIngredients"], msg["lot_id"], None)
+            costs = await cost_store_for_bridge(bridge)
+            await costs.async_remove_reference("lot:" + msg["lot_id"])
+            update_expiry_notification(bridge)
+            connection.send_result(msg["id"], _state(hass, bridge, connection.user))
+    except Exception as exc:
+        legacy._send_error(connection, msg, exc)
+
+
 @websocket_api.websocket_command({vol.Required("type"): "cook4me/v33/product_add", vol.Required("entry_id"): str,
                                   vol.Required("request_id"): vol.All(str, vol.Length(min=16, max=80)),
                                   vol.Required("ingredient"): dict, vol.Required("quantity"): vol.Any(int, float, str),
                                   vol.Required("unit"): str, vol.Optional("language"): str,
                                   vol.Optional("best_before", default=""): str, vol.Optional("lot_metadata", default={}): dict,
-                                  vol.Optional("nutrition"): dict, vol.Optional("paid_price"): dict})
+                                  vol.Optional("nutrition"): dict, vol.Optional("paid_price"): dict,
+                                  vol.Optional("package_count", default=1): vol.All(int, vol.Range(min=1, max=100)),
+                                  vol.Optional("edit_lot_id"): str, vol.Optional("expected_version"): str})
 @websocket_api.async_response
 async def ws_product_add(hass, connection, msg):
     committed = False
@@ -219,6 +266,9 @@ async def ws_product_add(hass, connection, msg):
         # Validate paid amounts before committing stock. Observation estimates are
         # never accepted as paid prices from the browser.
         validate_paid_price(msg.get("paid_price"))
+        count = msg.get("package_count", 1)
+        if isinstance(count, bool) or not isinstance(count, int) or not 1 <= count <= 100 or msg.get("edit_lot_id") and count != 1:
+            raise ValueError("Choose between 1 and 100 packages; an existing package is edited individually")
         ingredient = {**ingredient, "key": ingredient.get("key") or ingredient.get("ingredientId") or ingredient.get("id")}
         metadata = {key: value for key, value in msg.get("lot_metadata", {}).items() if key in {
             "barcode", "productName", "brand", "storageLocationId", "purchaseDate", "openedAt", "useWithinDays"}}
@@ -240,15 +290,25 @@ async def ws_product_add(hass, connection, msg):
         if not hasattr(bridge, "_scanner_save_lock"):
             bridge._scanner_save_lock = asyncio.Lock()
         async with bridge._scanner_save_lock:
-            receipt = await bridge.recipe_hub.async_scanner_add(msg["request_id"], ingredient, quantity=msg["quantity"],
-                unit=msg["unit"], best_before=msg.get("best_before", ""), lot_metadata=metadata, fingerprint=fingerprint)
+            if msg.get("edit_lot_id"):
+                receipt = await bridge.recipe_hub.async_scanner_update(msg["request_id"], ingredient,
+                    lot_id=msg["edit_lot_id"], expected_version=msg.get("expected_version", ""), quantity=msg["quantity"],
+                    unit=msg["unit"], best_before=msg.get("best_before", ""), lot_metadata=metadata, fingerprint=fingerprint)
+            else:
+                receipt = await bridge.recipe_hub.async_scanner_add(msg["request_id"], ingredient, quantity=msg["quantity"],
+                    unit=msg["unit"], best_before=msg.get("best_before", ""), lot_metadata=metadata, fingerprint=fingerprint,
+                    package_count=count)
             committed = True
             warnings = []
-            if nutrition:
+            if nutrition or msg.get("edit_lot_id"):
                 try:
                     store = await nutrition_store_for_bridge(bridge)
-                    await async_save_lot_nutrition(store, bridge.recipe_hub.profile["houseIngredients"],
-                        lot_id=receipt["lotId"], nutrition=nutrition, manually_edited=True)
+                    if msg.get("edit_lot_id"):
+                        await replace_package_nutrition(store, bridge.recipe_hub.profile["houseIngredients"], receipt["lotId"], nutrition)
+                    else:
+                        for lot_id in receipt.get("lotIds") or [receipt["lotId"]]:
+                            await async_save_lot_nutrition(store, bridge.recipe_hub.profile["houseIngredients"],
+                                lot_id=lot_id, nutrition=nutrition, manually_edited=True)
                     await async_reconcile_nutrition_inventory(store, bridge.recipe_hub.profile["houseIngredients"])
                 except Exception:
                     warnings.append("Stock saved, but nutrition could not be saved. Retry this save to finish without adding stock again.")
@@ -260,11 +320,13 @@ async def ws_product_add(hass, connection, msg):
             except Exception:
                 warnings.append("Stock saved, but the barcode mapping could not be remembered.")
             try:
-                await save_product_prices(bridge, ingredient, receipt["lotId"], msg, metadata)
+                for lot_id in receipt.get("lotIds") or [receipt["lotId"]]:
+                    await save_product_prices(bridge, ingredient, lot_id, msg, metadata)
             except Exception:
                 warnings.append("Stock saved, but prices could not be saved. Retry this save to finish without adding stock again.")
             update_expiry_notification(bridge)
-            connection.send_result(msg["id"], {"status": "added", "lotId": receipt["lotId"], "warnings": warnings,
+            connection.send_result(msg["id"], {"status": "added", "lotId": receipt["lotId"],
+                "lotIds": receipt.get("lotIds") or [receipt["lotId"]], "warnings": warnings,
                 **_state(hass, bridge, connection.user)})
     except Exception as exc:
         if isinstance(exc, ValueError) and not committed:
@@ -275,5 +337,5 @@ async def ws_product_add(hass, connection, msg):
 
 @callback
 def async_register(hass):
-    for command in (ws_scanner_state, ws_storage_location, ws_barcode_lookup, ws_recognize_photo, ws_product_add):
+    for command in (ws_scanner_state, ws_storage_location, ws_barcode_lookup, ws_recognize_photo, ws_product_add, ws_product_details, ws_product_remove):
         websocket_api.async_register_command(hass, command)

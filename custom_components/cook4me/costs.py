@@ -219,6 +219,7 @@ class Cook4MeCostStore:
         source_url: str = "",
         product_name: str = "",
         note: str = "",
+        replace_identity: bool = False,
     ) -> dict[str, Any]:
         identity = _text(identity)
         amount_value = _number(amount)
@@ -249,12 +250,24 @@ class Cook4MeCostStore:
         async with self._lock:
             data = deepcopy(self._data)
             refs = data.setdefault("references", {})
+            if replace_identity:
+                for old_key in list(refs):
+                    if refs[old_key].get("identity") == identity:
+                        del refs[old_key]
             refs[key] = row
             while len(refs) > _MAX_REFERENCES:
                 refs.pop(next(iter(refs)), None)
             await self._store.async_save(data)
             self._data = data
         return deepcopy(row)
+
+    async def async_remove_reference(self, identity: str) -> None:
+        async with self._lock:
+            data = deepcopy(self._data)
+            data["references"] = {key: row for key, row in data.get("references", {}).items()
+                                  if row.get("identity") != identity}
+            await self._store.async_save(data)
+            self._data = data
 
     def _references_for(self, identity: str, *, currency: str = "") -> list[dict[str, Any]]:
         wanted_currency = _currency(currency)

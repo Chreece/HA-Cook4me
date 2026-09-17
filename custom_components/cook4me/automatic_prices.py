@@ -871,8 +871,15 @@ def validate_paid_price(raw):
     currency = _currency(raw.get('currency'))
     if amount is None or currency not in CURRENCIES:
         raise ValueError('Enter a non-negative price and a three-letter currency')
+    basis = {}
+    if 'basisQuantity' in raw or 'basisUnit' in raw:
+        quantity = _number(raw.get('basisQuantity'))
+        unit = str(raw.get('basisUnit') or '').strip()
+        if quantity is None or quantity <= 0 or not unit:
+            raise ValueError('Enter a positive price basis and its unit')
+        basis = {'basisQuantity': quantity, 'basisUnit': unit}
     return {'amount': amount, 'currency': currency, 'country': _country(raw.get('country')),
-            'location': str(raw.get('location') or '')[:300]}
+            'location': str(raw.get('location') or '')[:300], **basis}
 
 
 async def save_product_prices(bridge, ingredient, lot_id, msg, metadata):
@@ -882,12 +889,15 @@ async def save_product_prices(bridge, ingredient, lot_id, msg, metadata):
     paid = validate_paid_price(msg.get('paid_price'))
     identity = inventory_identity(ingredient)
     if paid:
-        args = dict(amount=paid['amount'], currency=paid['currency'], basis_quantity=msg['quantity'],
-            basis_unit=msg['unit'], country=paid['country'] or settings['country'], location=paid['location'],
+        args = dict(amount=paid['amount'], currency=paid['currency'], basis_quantity=paid.get('basisQuantity', msg['quantity']),
+            basis_unit=paid.get('basisUnit', msg['unit']), country=paid['country'] or settings['country'], location=paid['location'],
             date=metadata.get('purchaseDate') or datetime.now(timezone.utc).date().isoformat(), barcode=metadata.get('barcode', ''))
-        await store.async_set_reference('lot:' + lot_id, **args, source='purchase', confidence='exact_purchase')
+        await store.async_set_reference('lot:' + lot_id, **args, source='purchase', confidence='exact_purchase',
+                                       replace_identity=bool(msg.get('edit_lot_id')))
         # The same purchase is an estimate for future quantities, not another paid lot.
         await store.async_set_reference(identity, **args, source='purchase_reference', confidence='user_entered')
+    elif msg.get('edit_lot_id'):
+        await store.async_remove_reference('lot:' + lot_id)
     elif metadata.get('barcode'):
         reference = store.barcode_reference(metadata['barcode'], country=settings['country'], currency=settings['currency'])
         if reference:
