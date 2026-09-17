@@ -46,3 +46,7 @@ Validation:
   failure was reproduced with the baseline inventory and costing modules.
 - Installer checks exercise a simulated host, backups and rollback. No live
   phone camera or Home Assistant host was available for hardware verification.
+
+Published runtime commit: `e9dce522b93680589d61796cb59f8d92ca80a43d`.
+
+Verified runtime tree: `3ad9f5c775dc00fd862e17b85e6ba0d00e5529b4`.
