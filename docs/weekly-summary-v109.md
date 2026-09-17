@@ -23,3 +23,5 @@ Eight focused Python tests cover actual catalog card/weekly price agreement, edi
 Chromium exercises the real shared-filter Apply button, Generate, clearing a meal, delayed responses, retry recovery, live price updates, missing/partial/zero nutrient values and Greek/German/English mobile and desktop layouts. Screenshots of the summary were reviewed. The header/navigation and foreign-language Send checks run against the v109 bundle.
 
 The installer includes the new weekly tests, retains its backup/rollback behavior and verifies the exact served frontend bundle. Home Assistant and cloud calls are simulated in automated checks; this work does not change v108's unresolved firmware-crash status.
+
+Published runtime: `b2b1fd26e4d4c6ce27551856a539dd4493d55450` on `cook4me-weekly-summary-v109`. The published tree matches the tested local source: `a851dd1e1ae999bf2da4663204adf0725c2c96b4`.
