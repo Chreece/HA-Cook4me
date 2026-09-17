@@ -52,8 +52,8 @@ def main() -> int:
         raise RuntimeError(
             f"batch6 confirmation/standalone delta mismatch: added={len(added_ids)} removed={len(removed_ids)}"
         )
-    if len(added_ids) != 19:
-        raise RuntimeError(f"expected 19 batch6 decisions, got {len(added_ids)}")
+    if len(added_ids) != 9:
+        raise RuntimeError(f"expected 9 batch6 decisions, got {len(added_ids)}")
 
     review_payloads = [
         (path.name, mod._load_payload(path))
