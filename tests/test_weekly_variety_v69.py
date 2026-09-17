@@ -45,7 +45,7 @@ class WeeklyVarietyTests(unittest.TestCase):
         self.assertTrue(self.variety.similar(self.variety.signature(simple),self.variety.signature({**simple,'id':'rice-fr','title':'Riz','cover':'different.jpg'})))
         self.assertTrue(self.variety.similar(self.variety.signature({**base,'displayFamilyId':'family:1'}),self.variety.signature({**different,'displayFamilyId':'family:1'})))
 
-    def generate(self,candidates,slots=(),replace=''):
+    def generate(self,candidates,slots=(),replace='',*,replace_ids=None,during_search=None,return_result=False):
         lifecycle=types.SimpleNamespace(slots=deepcopy(list(slots)),leftovers=[],settings={'mealTypes':['breakfast'],'leftoversFirst':False})
         async def save(start,rows): lifecycle.slots=deepcopy(rows)
         lifecycle.async_replace_week=save
@@ -63,10 +63,13 @@ class WeeklyVarietyTests(unittest.TestCase):
         node=next(n for n in tree.body if isinstance(n,ast.AsyncFunctionDef) and n.name=='_generate_week')
         future=ast.ImportFrom(module='__future__',names=[ast.alias(name='annotations')],level=0)
         exec(compile(ast.fix_missing_locations(ast.Module(body=[future,node],type_ignores=[])),str(path),'exec'),namespace)
-        search=AsyncMock(return_value={'items':candidates})
+        async def search_result(*args,**kwargs):
+            if during_search: during_search(lifecycle)
+            return {'items':candidates}
+        search=AsyncMock(side_effect=search_result)
         with patch.dict(sys.modules,{f'{PREFIX}.shared_recipe_runtime':types.SimpleNamespace(search_filtered=search)}):
-            asyncio.run(namespace['_generate_week'](None,bridge,lifecycle,week_start='2026-09-15',languages=['de','fr','en'],diet='vegetarian',query='',refresh=False,shared_filters={'nutritionGoal':'balanced','mealTypes':['breakfast']},replace_slot_id=replace))
-        return lifecycle.slots
+            result=asyncio.run(namespace['_generate_week'](None,bridge,lifecycle,week_start='2026-09-15',languages=['de','fr','en'],diet='vegetarian',query='',refresh=False,shared_filters={'nutritionGoal':'balanced','mealTypes':['breakfast']},replace_slot_id=replace,replace_slot_ids=replace_ids))
+        return (lifecycle.slots,result) if return_result else lifecycle.slots
 
     def candidates(self):
         rows=deepcopy(self.real)

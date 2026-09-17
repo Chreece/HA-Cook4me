@@ -52,8 +52,10 @@ async def refresh_plan(bridge, state, *, filters=None, language="en"):
     state["reservations"] = reservation_status(visible, inventory)
     state["shoppingDelta"] = shopping_delta(visible, inventory)
     totals = {}
-    complete = bool(visible)
-    for slot in visible:
+    selected_slots = [slot for slot in visible if slot.get("selected") is not False]
+    state["selectedSlotCount"] = len(selected_slots)
+    complete = bool(selected_slots)
+    for slot in selected_slots:
         cost = slot.get("cost") or {}
         values = cost.get("budgetTotalsByCurrency", cost.get("totalsByCurrency", {}))
         for currency, value in values.items():

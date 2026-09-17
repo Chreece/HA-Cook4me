@@ -91,6 +91,7 @@ def _slot(raw: Any) -> dict[str, Any] | None:
         "id": _text(raw.get("id")) or f"{stamp}:{meal_type}",
         "date": stamp,
         "mealType": meal_type,
+        "selected": raw.get("selected") is not False,
         "recipe": recipe,
         "leftoverId": leftover_id,
         "createdAt": _text(raw.get("createdAt")) or datetime.now(timezone.utc).isoformat(),
@@ -129,7 +130,7 @@ def planned_requirements(slots: Any) -> list[dict[str, Any]]:
     by_identity: dict[str, list[int]] = {}
     for raw_slot in slots if isinstance(slots, list) else []:
         slot = _slot(raw_slot)
-        if slot is None or slot.get("leftoverId"):
+        if slot is None or not slot["selected"] or slot.get("leftoverId"):
             continue
         if ((slot.get("recipe") or {}).get("match") or {}).get("requiresSubstitutions"):
             # Replacement quantities are advisory; do not reserve or purchase
@@ -179,7 +180,9 @@ def reservation_status(slots: Any, inventory: Any) -> dict[str, Any]:
         )
         required = float(requirement["quantity"])
         unlimited = bool(row and row.get("unlimited"))
-        available: float | None = required if unlimited else None
+        # An absent ingredient is out of stock. An existing row with an
+        # unknown amount or incompatible unit remains explicitly unknown.
+        available: float | None = required if unlimited else (0.0 if row is None else None)
         if row and not unlimited:
             converted = convert_amount(
                 row.get("quantity"), row.get("unit", ""), requirement["unit"]
@@ -399,6 +402,15 @@ class Cook4MeMealLifecycleStore:
         if changed:
             await self._save()
         return changed
+
+    async def async_select_slots(self, slot_ids: list[str], selected: bool) -> None:
+        ids = set(slot_ids)
+        if not ids.issubset({row["id"] for row in self._data["slots"]}):
+            raise ValueError("Some meals are no longer in the plan. Refresh the plan and try again.")
+        for row in self._data["slots"]:
+            if row["id"] in ids:
+                row["selected"] = selected
+        await self._save()
 
     def feedback_for(self, recipe: Any) -> dict[str, Any] | None:
         key = recipe_identity(recipe) if isinstance(recipe, dict) else _text(recipe)

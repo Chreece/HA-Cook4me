@@ -265,15 +265,19 @@ async def _generate_week(
     query: str,
     refresh: bool,
     replace_slot_id: str = "",
+    replace_slot_ids: list[str] | None = None,
     shared_filters: dict | None = None,
     ui_language: str = "en",
 ) -> dict[str, Any]:
     from . import release_catalog
     from .weekly_variety import signature, already_planned
     from .weekly_plan import meal_slots
-    if replace_slot_id and not any(row.get("id") == replace_slot_id and
-            week_start <= _text(row.get("date")) <= (date.fromisoformat(week_start) + timedelta(days=6)).isoformat()
-            for row in lifecycle.slots):
+    original_slots = deepcopy(lifecycle.slots)
+    replacing = bool(replace_slot_id) or replace_slot_ids is not None
+    target_ids = set(replace_slot_ids or ([replace_slot_id] if replace_slot_id else []))
+    end = (date.fromisoformat(week_start) + timedelta(days=6)).isoformat()
+    eligible_ids = {row["id"] for row in original_slots if week_start <= _text(row.get("date")) <= end}
+    if replacing and (not target_ids or not target_ids.issubset(eligible_ids)):
         raise ValueError("The selected meal is no longer in the next seven days")
     if shared_filters is not None and release_catalog.release_catalog_ready():
         from .shared_recipe_runtime import search_filtered
@@ -298,28 +302,25 @@ async def _generate_week(
     start = date.fromisoformat(week_start)
     settings = lifecycle.settings
     meal_types = meal_slots(shared_filters, settings.get("mealTypes"))
-    existing = lifecycle.slots if replace_slot_id else []
-    replace_target = next((row for row in existing if row.get("id") == replace_slot_id), None)
-    if replace_slot_id:
-        existing = [row for row in existing if row.get("id") != replace_slot_id]
+    targets = [row for row in original_slots if row["id"] in target_ids]
+    existing = [row for row in original_slots if row["id"] not in target_ids] if replacing else []
 
-    desired: list[tuple[str, str]] = []
-    if replace_target:
-        desired = [(_text(replace_target.get("date")), _text(replace_target.get("mealType")))]
+    desired = []
+    if replacing:
+        desired = [(_text(row.get("date")), _text(row.get("mealType")), row) for row in targets]
     else:
         for offset in range(7):
             stamp = (start + timedelta(days=offset)).isoformat()
             for meal_type in meal_types:
-                desired.append((stamp, _text(meal_type)))
+                desired.append((stamp, _text(meal_type), None))
 
     planned = list(existing)
     end = (start + timedelta(days=6)).isoformat()
     used_recipes = [signature(row.get("recipe")) for row in planned
         if week_start <= _text(row.get("date")) <= end and row.get("recipe")]
-    if replace_target and replace_target.get("recipe"):
-        used_recipes.append(signature(replace_target["recipe"]))
+    used_recipes.extend(signature(row["recipe"]) for row in targets if row.get("recipe"))
     candidate_signatures = {id(row): signature(row) for row in candidates}
-    used_leftovers = {_text(row.get("leftoverId")) for row in planned if row.get("leftoverId")}
+    used_leftovers = {_text(row.get("leftoverId")) for row in planned + targets if row.get("leftoverId")}
     leftovers = [row for row in lifecycle.leftovers if _text(row.get("id")) not in used_leftovers]
     if shared_filters is not None:
         history = await meal_history_store_for_bridge(bridge)
@@ -330,7 +331,10 @@ async def _generate_week(
             leftover["recipe"] = _leftover_recipe(leftover, meals)
         leftovers = [row for row in leftovers if recipe_identity(row["recipe"]) in allowed]
 
-    for stamp, meal_type in desired:
+    unchanged = []
+    for stamp, meal_type, target in desired:
+        slot_id = target["id"] if target else f"{stamp}:{meal_type}"
+        is_selected = target.get("selected") is not False if target else True
         if (
             settings.get("leftoversFirst")
             and meal_type != "breakfast"
@@ -338,7 +342,8 @@ async def _generate_week(
         ):
             leftover = leftovers.pop(0)
             planned.append({
-                "id": f"{stamp}:{meal_type}",
+                "id": slot_id,
+                "selected": is_selected,
                 "date": stamp,
                 "mealType": meal_type,
                 "leftoverId": leftover.get("id"),
@@ -361,6 +366,9 @@ async def _generate_week(
             pool = [row for row in candidates if not already_planned(candidate_signatures[id(row)], used_recipes)]
             taxonomy_fallback = True
         if not pool:
+            if target:
+                planned.append(target)
+                unchanged.append(slot_id)
             continue
 
         best: dict[str, Any] | None = None
@@ -379,7 +387,8 @@ async def _generate_week(
                 nutrition = deepcopy(candidate.get("catalogNutrition") or candidate.get("nutrition") or nutrition)
             nutrition_hint = nutrition_goal_bonus(nutrition, goal)
             candidate_slot = {
-                "id": f"{stamp}:{meal_type}",
+                "id": slot_id,
+                "selected": is_selected,
                 "date": stamp,
                 "mealType": meal_type,
                 "recipe": candidate,
@@ -398,6 +407,9 @@ async def _generate_week(
             best_cost = _recipe_cost_with_store(bridge, candidate, cost_store)
             best_penalty = penalty
         if best is None:
+            if target:
+                planned.append(target)
+                unchanged.append(slot_id)
             continue
         selected = deepcopy(best)
         selected_match = selected.setdefault("match", {})
@@ -407,7 +419,8 @@ async def _generate_week(
         selected["nutrition"] = best_nutrition
         selected["cost"] = best_cost
         planned.append({
-            "id": f"{stamp}:{meal_type}",
+            "id": slot_id,
+            "selected": is_selected,
             "date": stamp,
             "mealType": meal_type,
             "recipe": selected,
@@ -417,11 +430,12 @@ async def _generate_week(
         used_recipes.append(candidate_signatures[id(best)])
 
     planned.sort(key=lambda row: (row.get("date") or "", row.get("mealType") or ""))
-    if replace_slot_id:
-        await lifecycle.async_replace_week(week_start, planned)
-    else:
-        await lifecycle.async_replace_week(week_start, planned)
-    return {"catalogErrors": errors, "slotCount": len(planned)}
+    # Candidate search can take time. Never overwrite a selection or edit made
+    # by another client while this generation was in flight.
+    if lifecycle.slots != original_slots:
+        raise ValueError("The weekly plan changed during generation. Refresh it and try again.")
+    await lifecycle.async_replace_week(week_start, planned)
+    return {"catalogErrors": errors, "slotCount": len(planned), "unchangedSlotIds": unchanged}
 
 
 def _leftover_recipe(leftover, meals):
@@ -598,7 +612,7 @@ async def _ai_substitutions(hass: HomeAssistant, bridge, ingredient: dict[str, A
 @callback
 def async_register(hass: HomeAssistant) -> None:
     for command in (
-        ws_week_state, ws_week_settings_set, ws_week_generate, ws_week_slot_clear,
+        ws_week_state, ws_week_settings_set, ws_week_generate, ws_week_slot_clear, ws_week_select,
         ws_week_add_shopping, ws_recipe_cost, ws_cost_settings_set,
         ws_lot_cost_set, ws_price_reference_set, ws_global_price_lookup,
         ws_feedback_set, ws_leftover_consume, ws_substitution_suggest,
@@ -662,6 +676,7 @@ async def ws_week_settings_set(hass, connection, msg) -> None:
     vol.Optional("query", default=""): str,
     vol.Optional("refresh", default=False): bool,
     vol.Optional("replace_slot_id", default=""): str,
+    vol.Optional("replace_slot_ids"): vol.All([str], vol.Length(min=1, max=42)),
 })
 @websocket_api.async_response
 async def ws_week_generate(hass, connection, msg) -> None:
@@ -678,6 +693,7 @@ async def ws_week_generate(hass, connection, msg) -> None:
             query=_text(msg.get("query")),
             refresh=bool(msg.get("refresh")),
             replace_slot_id=_text(msg.get("replace_slot_id")),
+            replace_slot_ids=msg.get("replace_slot_ids"),
             shared_filters=msg.get("shared_filters"),
             ui_language=msg.get("ui_language", "en"),
         )
@@ -705,6 +721,29 @@ async def ws_week_slot_clear(hass, connection, msg) -> None:
 
 
 @websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/v20/week_select",
+    vol.Optional("entry_id"): str,
+    vol.Required("slot_ids"): vol.All([str], vol.Length(min=1, max=42)),
+    vol.Required("selected"): bool,
+    vol.Optional("shared_filters"): dict,
+    vol.Optional("ui_language", default="en"): str,
+})
+@websocket_api.async_response
+async def ws_week_select(hass, connection, msg) -> None:
+    try:
+        bridge = legacy._bridge(hass, msg.get("entry_id"))
+        lifecycle = await meal_lifecycle_store_for_bridge(bridge)
+        current = lifecycle.snapshot(start_date=dt_util.now().date())
+        if not set(msg["slot_ids"]).issubset({row["id"] for row in current["slots"]}):
+            raise ValueError("The selected meals are no longer in the next seven days")
+        await lifecycle.async_select_slots(msg["slot_ids"], msg["selected"])
+        result = await _state(hass, bridge, shared_filters=msg.get("shared_filters"), ui_language=msg["ui_language"])
+    except Exception as exc:
+        legacy._send_error(connection, msg, exc); return
+    connection.send_result(msg["id"], result)
+
+
+@websocket_api.websocket_command({
     vol.Required("type"): "cook4me/v20/week_add_shopping",
     vol.Optional("shared_filters"): dict,
     vol.Optional("entry_id"): str,
@@ -719,14 +758,14 @@ async def ws_week_add_shopping(hass, connection, msg) -> None:
             start_date=dt_util.now().date())
         if msg.get("shared_filters") is not None:
             snapshot = await _state(hass, bridge, shared_filters=msg["shared_filters"], ui_language=msg.get("ui_language", "en"))
-        if any((((slot.get("recipe") or {}).get("match") or {}).get("requiresSubstitutions")) for slot in snapshot["slots"]):
+        if any((((slot.get("recipe") or {}).get("match") or {}).get("requiresSubstitutions")) for slot in snapshot["slots"] if slot.get("selected") is not False):
             raise ValueError("Some planned recipes still need ingredient replacements. Resolve those recipes before adding the week to shopping.")
         rows = snapshot["shoppingDelta"]
         if msg.get("ui_language"):
             from .shopping_presentation import shopping_rows
             rows = await hass.async_add_executor_job(shopping_rows, rows,
                 msg["ui_language"], getattr(hass.config, "country", ""),
-                [item for slot in snapshot["slots"] for item in (slot.get("recipe") or {}).get("ingredients") or []])
+                [item for slot in snapshot["slots"] if slot.get("selected") is not False for item in (slot.get("recipe") or {}).get("ingredients") or []])
         result = await _shopping_add(hass, rows)
         result["shoppingDelta"] = rows
     except Exception as exc:
