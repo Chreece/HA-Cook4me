@@ -14,6 +14,8 @@ on:
       - 'tools/compile_release_catalog_semantics_v60.py'
       - 'tools/release_catalog_semantic_standalone_dispositions.v1.json'
       - 'tools/release_catalog_semantic_standalone_equivalences.v1.json'
+      - 'tools/release_catalog_semantic_high_confidence_syntax_aliases.v1.json'
+      - 'tests/test_audit_standalone_semantic_merge_candidates_v60.py'
       - '.github/workflows/catalog-semantic-remaining-audit-v60.yml'
   workflow_dispatch:
 
@@ -32,6 +34,7 @@ jobs:
       - name: Build non-mutating semantic audits
         run: |
           set -Eeuo pipefail
+          python -m unittest discover -s tests -p 'test_audit_standalone_semantic_merge_candidates_v60.py' -v
           python tools/audit_remaining_semantic_ingredients_v60.py \
             --review-root tools \
             --output tools/remaining_semantic_ingredient_audit_v60.json \
@@ -139,6 +142,17 @@ jobs:
               raise SystemExit('standalone audit cannot mutate the disposition ledger')
           if policy.get('ambiguousRowsExcludedFromMergeSuggestions') is not True:
               raise SystemExit('ambiguous standalone rows must be excluded from merge suggestions')
+          if policy.get('highConfidenceTargetsCanonicalizedThroughCompiledSemanticGraph') is not True:
+              raise SystemExit('standalone audit must use compiled canonical target concepts')
+          if policy.get('collapsedHighConfidenceAliasTargetsExcluded') is not True:
+              raise SystemExit('standalone audit must exclude collapsed alias target IDs')
+          alias_doc = json.loads(
+              Path('tools/release_catalog_semantic_high_confidence_syntax_aliases.v1.json').read_text(
+                  encoding='utf-8'
+              )
+          )
+          if int(standalone_summary.get('collapsedHighConfidenceAliasConceptCount') or -1) != int(alias_doc['summary']['aliasConceptCount']):
+              raise SystemExit('standalone audit alias-exclusion count is stale')
 
           high = json.loads(
               Path('tools/standalone_semantic_high_priority_v60.json').read_text(
