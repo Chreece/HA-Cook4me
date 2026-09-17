@@ -629,6 +629,19 @@ for tag, kind, names in (
         _CATEGORIES[name] = (tag, kind)
 
 
+# v97: exact prepared-food and countable-sheet references.
+for tag, kind, names in (
+    ('cook4me:gelatine-sheets', 'REFERENCE', 'leaf gelatine|gelatine sheet|gelatine sheets|gelatin sheet|gelatin sheets'),
+    ('cook4me:raw-swede', 'REFERENCE', 'swede|rutabaga'),
+    ('cook4me:wasabi-paste', 'REFERENCE', 'wasabi|wasabi paste'),
+    ('en:capers', 'PRODUCT', 'capers'),
+    ('en:peanut-butters', 'PRODUCT', 'smooth peanut butter'),
+    ('en:vanilla-pods', 'PRODUCT', 'vanilla pods'),
+):
+    for name in names.split('|'):
+        _CATEGORIES[name] = (tag, kind)
+
+
 def country_currency(country):
     return next(iter(COUNTRY_CURRENCIES.get(country, [])), '')
 

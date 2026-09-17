@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-09-16",
+  "checkedAt": "2026-09-17",
   "note": "Public package-price facts, checked on the linked German retail listings. VAT included; shipping excluded. Generic category estimates use the named product variety, not a national average.",
   "observations": [
     {
@@ -2673,6 +2673,106 @@
       "confidence": "external_observation",
       "barcode": "",
       "note": "Shelf-stored dried dill; fresh dill has a separate reference. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "piccantino-gelatine-v97-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.piccantino.de/dr-oetker/blattgelatine-12er",
+      "productName": "Dr. Oetker leaf gelatine, 12 sheets",
+      "amount": 2.89,
+      "currency": "EUR",
+      "basisQuantity": 12,
+      "basisUnit": "pcs",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Piccantino Germany · online listing",
+      "categories": [
+        "cook4me:gelatine-sheets"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Twelve individual pork-gelatine sheets per pack. No packet or gram equivalence inferred; sheet sizes and bloom strength vary. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "asia4friends-junmai-v97-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://asia4friends.de/japanischer-sake-junmai-kizakura-180ml",
+      "productName": "Kizakura Junmai Japanese sake",
+      "amount": 4.29,
+      "currency": "EUR",
+      "basisQuantity": 180,
+      "basisUnit": "ml",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Asia4Friends, Dresden · online listing",
+      "categories": [
+        "xx:sake"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Japanese rice wine, 15% ABV; named small-bottle reference, not a national average or a mirin substitute. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "asia4friends-hon-mirin-v97-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://asia4friends.de/hon-mirin-14-vol-hinode-400ml",
+      "productName": "Hinode Hon Mirin, 14% ABV",
+      "amount": 4.19,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "ml",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Asia4Friends, Dresden · online listing",
+      "categories": [
+        "en:mirin"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "The product title specifies a 400 ml bottle. The shop also displays a kg-based summary; that is not used to infer density. No alcohol-free or mirin-style substitute is assumed. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "asia4friends-wasabi-v97-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://asia4friends.de/wasabi-paste-sb-43g",
+      "productName": "S&B prepared wasabi paste",
+      "amount": 1.79,
+      "currency": "EUR",
+      "basisQuantity": 43,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Asia4Friends, Dresden · online listing",
+      "categories": [
+        "cook4me:wasabi-paste"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "43 g tube per product title; the shop rounds its weight summary to 0.04 kg. Prepared horseradish/wasabi paste, not fresh wasabi root or dry powder. No spoon or centimetre weight inferred. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "greenist-swede-v97-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.greenist.de/frischesortiment-bio-steckrueben-1-kg.html",
+      "productName": "Fresh organic swede (rutabaga)",
+      "amount": 3.69,
+      "currency": "EUR",
+      "basisQuantity": 1000,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "greenist Germany · online listing",
+      "categories": [
+        "cook4me:raw-swede"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh raw root sold by kilogram; not turnip or prepared swede. Seasonal stock. VAT included; shipping excluded. Regional prices and availability vary."
     }
   ]
 }

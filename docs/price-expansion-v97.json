@@ -1,0 +1,319 @@
+{
+  "market": "DE",
+  "currency": "EUR",
+  "asOf": "2026-09-17",
+  "baselineCommit": "6e0937fba024575ab7c6c9917aa8a459ce6e6029",
+  "method": "Counts are language/serving variants and ingredient occurrences; no household prices. Each build uses its own identities, conversions, source-form filters and dated references.",
+  "before": {
+    "summary": {
+      "variants": 32163,
+      "ingredients": 230483,
+      "known": 131659,
+      "fallback": 44091,
+      "covered": 175750,
+      "knownComplete": 5425,
+      "budgetComplete": 11268,
+      "noKnownCost": 1535,
+      "noBudgetCost": 82
+    }
+  },
+  "after": {
+    "summary": {
+      "variants": 32163,
+      "ingredients": 230483,
+      "known": 132921,
+      "fallback": 43460,
+      "covered": 176381,
+      "knownComplete": 5575,
+      "budgetComplete": 11465,
+      "noKnownCost": 1512,
+      "noBudgetCost": 82
+    }
+  },
+  "changes": [
+    {
+      "ingredient": "Leaf gelatine",
+      "additionalPriceReferences": 386,
+      "before": {
+        "known": 0,
+        "fallback": 95,
+        "missing": 339
+      },
+      "after": {
+        "known": 386,
+        "fallback": 30,
+        "missing": 18
+      }
+    },
+    {
+      "ingredient": "Sake",
+      "additionalPriceReferences": 157,
+      "before": {
+        "known": 0,
+        "fallback": 157,
+        "missing": 407
+      },
+      "after": {
+        "known": 157,
+        "fallback": 0,
+        "missing": 407
+      }
+    },
+    {
+      "ingredient": "Swede",
+      "additionalPriceReferences": 144,
+      "before": {
+        "known": 0,
+        "fallback": 108,
+        "missing": 36
+      },
+      "after": {
+        "known": 144,
+        "fallback": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Caper",
+      "additionalPriceReferences": 142,
+      "before": {
+        "known": 28,
+        "fallback": 145,
+        "missing": 26
+      },
+      "after": {
+        "known": 170,
+        "fallback": 3,
+        "missing": 26
+      }
+    },
+    {
+      "ingredient": "Mayonnaise",
+      "additionalPriceReferences": 121,
+      "before": {
+        "known": 108,
+        "fallback": 121,
+        "missing": 61
+      },
+      "after": {
+        "known": 229,
+        "fallback": 0,
+        "missing": 61
+      }
+    },
+    {
+      "ingredient": "Peanut butter",
+      "additionalPriceReferences": 101,
+      "before": {
+        "known": 53,
+        "fallback": 101,
+        "missing": 7
+      },
+      "after": {
+        "known": 154,
+        "fallback": 0,
+        "missing": 7
+      }
+    },
+    {
+      "ingredient": "Mirin",
+      "additionalPriceReferences": 95,
+      "before": {
+        "known": 0,
+        "fallback": 95,
+        "missing": 329
+      },
+      "after": {
+        "known": 95,
+        "fallback": 0,
+        "missing": 329
+      }
+    },
+    {
+      "ingredient": "Wasabi",
+      "additionalPriceReferences": 91,
+      "before": {
+        "known": 0,
+        "fallback": 135,
+        "missing": 45
+      },
+      "after": {
+        "known": 91,
+        "fallback": 44,
+        "missing": 45
+      }
+    },
+    {
+      "ingredient": "Gelatin sheets",
+      "additionalPriceReferences": 15,
+      "before": {
+        "known": 0,
+        "fallback": 7,
+        "missing": 12
+      },
+      "after": {
+        "known": 15,
+        "fallback": 4,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Wasabi paste",
+      "additionalPriceReferences": 7,
+      "before": {
+        "known": 0,
+        "fallback": 7,
+        "missing": 0
+      },
+      "after": {
+        "known": 7,
+        "fallback": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Capers",
+      "additionalPriceReferences": 1,
+      "before": {
+        "known": 0,
+        "fallback": 1,
+        "missing": 5
+      },
+      "after": {
+        "known": 1,
+        "fallback": 0,
+        "missing": 5
+      }
+    },
+    {
+      "ingredient": "Rutabaga",
+      "additionalPriceReferences": 1,
+      "before": {
+        "known": 0,
+        "fallback": 1,
+        "missing": 0
+      },
+      "after": {
+        "known": 1,
+        "fallback": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Tablespoon of mirin",
+      "additionalPriceReferences": 1,
+      "before": {
+        "known": 0,
+        "fallback": 1,
+        "missing": 0
+      },
+      "after": {
+        "known": 1,
+        "fallback": 0,
+        "missing": 0
+      }
+    }
+  ],
+  "largestRemainingGaps": [
+    {
+      "ingredient": "Salt",
+      "missing": 9219
+    },
+    {
+      "ingredient": "Pepper",
+      "missing": 3276
+    },
+    {
+      "ingredient": "Salt and pepper",
+      "missing": 2228
+    },
+    {
+      "ingredient": "Garlic",
+      "missing": 1573
+    },
+    {
+      "ingredient": "Olive oil",
+      "missing": 738
+    },
+    {
+      "ingredient": "Parsley",
+      "missing": 728
+    },
+    {
+      "ingredient": "Sugar",
+      "missing": 711
+    },
+    {
+      "ingredient": "Ginger",
+      "missing": 702
+    },
+    {
+      "ingredient": "Oil",
+      "missing": 697
+    },
+    {
+      "ingredient": "Soy sauce",
+      "missing": 605
+    },
+    {
+      "ingredient": "Water",
+      "missing": 582
+    },
+    {
+      "ingredient": "Bay",
+      "missing": 445
+    },
+    {
+      "ingredient": "Egg yolk",
+      "missing": 425
+    },
+    {
+      "ingredient": "Sake",
+      "missing": 407
+    },
+    {
+      "ingredient": "Mixed herbs",
+      "missing": 386
+    },
+    {
+      "ingredient": "Salted Butter & Unsalted butter",
+      "missing": 361
+    },
+    {
+      "ingredient": "Carrot",
+      "missing": 348
+    },
+    {
+      "ingredient": "Thyme",
+      "missing": 346
+    },
+    {
+      "ingredient": "Basil",
+      "missing": 344
+    },
+    {
+      "ingredient": "Mirin",
+      "missing": 329
+    },
+    {
+      "ingredient": "Celery",
+      "missing": 312
+    },
+    {
+      "ingredient": "Mint",
+      "missing": 299
+    },
+    {
+      "ingredient": "Coriander",
+      "missing": 295
+    },
+    {
+      "ingredient": "Nutmeg",
+      "missing": 295
+    },
+    {
+      "ingredient": "Saffron",
+      "missing": 274
+    }
+  ]
+}

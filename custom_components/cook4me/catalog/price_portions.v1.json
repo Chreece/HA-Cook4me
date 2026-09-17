@@ -1621,6 +1621,61 @@
       "portion": "tbsp",
       "sourceAmount": 1.0,
       "sourceGrams": 18.0
+    },
+    {
+      "names": [
+        "swede",
+        "rutabaga"
+      ],
+      "measure": "piece",
+      "grams": 386.0,
+      "fdcId": 168454,
+      "portionId": 83121,
+      "food": "Rutabagas, raw",
+      "portion": "medium",
+      "sourceAmount": 1.0,
+      "sourceGrams": 386.0
+    },
+    {
+      "names": [
+        "mayonnaise"
+      ],
+      "measure": "tbsp",
+      "grams": 13.8,
+      "fdcId": 171009,
+      "portionId": 87758,
+      "food": "Salad dressing, mayonnaise, regular",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 13.8
+    },
+    {
+      "names": [
+        "caper",
+        "capers"
+      ],
+      "measure": "tbsp",
+      "grams": 8.6,
+      "fdcId": 172238,
+      "portionId": 90139,
+      "food": "Capers, canned",
+      "portion": "tbsp, drained",
+      "sourceAmount": 1.0,
+      "sourceGrams": 8.6
+    },
+    {
+      "names": [
+        "peanut butter",
+        "smooth peanut butter"
+      ],
+      "measure": "tbsp",
+      "grams": 16.0,
+      "fdcId": 172470,
+      "portionId": 90673,
+      "food": "Peanut butter, smooth style, without salt",
+      "portion": "tbsp",
+      "sourceAmount": 2.0,
+      "sourceGrams": 32.0
     }
   ]
 }

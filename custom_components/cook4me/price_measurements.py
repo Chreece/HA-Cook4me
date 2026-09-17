@@ -23,7 +23,11 @@ _COUNTS = {'egg', 'eggs', 'onion', 'onions', 'carrot', 'carrots', 'tomato', 'tom
            'welsh onion', 'spring onion', 'spring onions', 'green onion', 'green onions',
            'raw beetroot', 'parsnip', 'parsnips', 'banana', 'bananas', 'pear', 'pears', 'plum', 'plums', 'strawberry', 'strawberries',
            'radish', 'radishes', 'date', 'dates', 'dried dates', 'pitted dates', 'medjool date', 'medjool dates', 'small pumpkin', 'small hokkaido pumpkin',
-           'asparagus', 'green asparagus', 'fennel', 'turnip', 'green pepper', 'green bell pepper'}
+           'asparagus', 'green asparagus', 'fennel', 'turnip', 'green pepper', 'green bell pepper',
+           'swede', 'rutabaga'}
+
+_GELATINE_SHEETS = {'leaf gelatine', 'gelatine sheet', 'gelatine sheets', 'gelatin sheet', 'gelatin sheets'}
+_VANILLA_PODS = {'vanilla pod', 'vanilla pods'}
 
 
 @lru_cache(maxsize=1)
@@ -66,6 +70,23 @@ def price_options(raw):
     if key in {'UNIT_138', 'UNIT_50'}:
         unit = 'pcs'
         options = [{'quantity': amount, 'unit': unit}]
+    # The food identity establishes what is being counted. UNIT_28 is also
+    # labelled "gousse"/"clove" for vanilla pods in translated provider data.
+    # This changes pricing only; never interpret a packet, seed or gram as a pod.
+    implicit = not unit and not key and amount <= 20
+    sheet = name in _GELATINE_SHEETS and (implicit or unit == 'pcs' or key in {'UNIT_24', 'UNIT_98', 'UNIT_50', 'UNIT_138'}
+        or (not key and unit.casefold() in {'leaf', 'leaves', 'sheet', 'sheets'}))
+    pod = name in _VANILLA_PODS and (implicit or unit == 'pcs' or key in {'UNIT_28', 'UNIT_50', 'UNIT_138'}
+        or (not key and unit.casefold() in {'pod', 'pods'}))
+    if sheet or pod:
+        count_unit = 'sheet' if sheet else 'pod'
+        estimate = {'kind': 'ingredient_count', 'label': f'{name}: count of individual {count_unit}s; no package-size or weight assumption',
+            'sourceQuantity': amount, 'sourceUnit': '' if implicit else count_unit,
+            'quantity': amount, 'unit': 'pcs', 'assumedCount': implicit}
+        # Use one count option, retaining its explanation even for native pcs.
+        options = [option for option in options if option['unit'] != 'pcs']
+        options.append({'quantity': amount, 'unit': 'pcs', 'estimate': estimate})
+        unit = 'pcs'
     if not unit and not key and name in _COUNTS and amount <= 20:
         unit = 'pcs'
         options.append({'quantity': amount, 'unit': unit, 'estimate': {
