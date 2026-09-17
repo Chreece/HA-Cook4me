@@ -28,7 +28,7 @@ DECISION: dict[str, str] = {
     "sourceIngredientId": "local:uk:fa883397da2ff4357aeb",
     "sourceReviewedEnglish": "Cauliflower, washed and divided into florets",
     "classification": "food",
-    "confirmedConceptId": "concept:food:8c08f5f04320a4ae4cdf",
+    "confirmedConceptId": "concept:food:be16900cdca70fb2c1ad",
     "targetCanonicalEnglish": "Cauliflower, washed and cut into florets",
     "rationale": "Divided into florets and cut into florets describe the same reviewed cauliflower preparation state. Both preserve washed cauliflower separated into florets and introduce no different size, variety, cooking state, composition, or alternative ingredient.",
 }
