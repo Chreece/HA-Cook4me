@@ -25,3 +25,7 @@ Original-language attempts require an online cooker and are not automatically qu
 - Tests simulate cloud/device transport. Acceptance by the user's firmware and its displayed language require a live Send attempt after installation. An unconfirmed load does not prove a language rejection: the device could also be slow, disconnected or awaiting an on-screen interaction.
 
 Use the pinned v106 installer. It retains the backup, 120-second Home Assistant stop timeout, activation check and rollback behavior, and adds the original-language delivery tests to preflight.
+
+Published runtime: `dd8c369d0eae3bcd287631b25fc228bbfd162a43` on `cook4me-original-language-v106`. Its tree matches the tested local source: `0e174df746f71abf13f300d660fe8ea4ed692033`.
+
+The four v106 installer tests also pass, covering successful backup/activation, invalid or missing staged data, and rollback after activation failures. Total focused Python validation: **51 passing tests**, plus the Chromium send-flow suite. No live appliance send was performed during development.
