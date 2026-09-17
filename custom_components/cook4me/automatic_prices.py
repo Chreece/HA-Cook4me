@@ -600,6 +600,20 @@ for tag, kind, names in (
         _CATEGORIES[name] = (tag, kind)
 
 
+# v95: named-product references for additional pantry and vegetable identities.
+# Exact names keep fresh, dried, concentrated and prepared foods separate.
+for tag, kind, names in (
+    ('cook4me:baking-soda', 'REFERENCE', 'bicarbonate of soda|baking soda|sodium bicarbonate'),
+    ('cook4me:bay-leaf', 'REFERENCE', 'bay|bay leaf|dried bay leaf'),
+    ('cook4me:chicory', 'REFERENCE', 'chicory|belgian endive'),
+    ('cook4me:green-bell-pepper', 'REFERENCE', 'green pepper|green bell pepper'),
+    ('cook4me:plain-fresh-cheese', 'REFERENCE', 'fromage frais'),
+    ('cook4me:tomato-coulis', 'REFERENCE', 'tomato coulis'),
+):
+    for name in names.split('|'):
+        _CATEGORIES[name] = (tag, kind)
+
+
 def country_currency(country):
     return next(iter(COUNTRY_CURRENCIES.get(country, [])), '')
 

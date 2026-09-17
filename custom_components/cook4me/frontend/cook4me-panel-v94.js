@@ -5,7 +5,7 @@ const TEXT={
  de:{source:'Originalrezept',allowance:'Salz und Pfeffer: Richtmenge aus dem Rezept',estimate:'Geschätzte Menge',quantityMissing:'Rezeptmenge fehlt',priceMissing:'Kein passender Preis',pantry:'Im Vorrat'},
  el:{source:'Αρχική συνταγή',allowance:'Αλάτι και πιπέρι: ποσότητα αναφοράς',estimate:'Εκτιμώμενη ποσότητα',quantityMissing:'Λείπει ποσότητα στη συνταγή',priceMissing:'Δεν υπάρχει συμβατή τιμή',pantry:'Στο ντουλάπι'},
 };
-function sourceUrl(value){try{const url=new URL(value);return url.protocol==='https:'&&!url.username&&!url.password&&!url.port&&['www.tefal.pl','www.alnatura.de','fdc.nal.usda.gov','www.fao.org','www.nist.gov','www.clubhouseforchefs.ca'].includes(url.hostname)?url:null;}catch{return null;}}
+function sourceUrl(value){try{const url=new URL(value);return url.protocol==='https:'&&!url.username&&!url.password&&!url.port&&['www.tefal.pl','www.alnatura.de','fdc.nal.usda.gov','www.fao.org','www.nist.gov','www.clubhouseforchefs.ca','new.milk.org'].includes(url.hostname)?url:null;}catch{return null;}}
 class Cook4MeRecipeHubPanelV94 extends BasePanel{
  _v94Text(key){return TEXT[this._uiIngredientLanguage()]?.[key]||TEXT.en[key]||key;}
  _renderTab(){const result=super._renderTab();this.setAttribute('data-cook4me-build','2026.9.16.18');return result;}

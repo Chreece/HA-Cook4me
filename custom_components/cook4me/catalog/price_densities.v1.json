@@ -20,6 +20,26 @@
       "gramsPerMl": 0.92,
       "label": "FAO rapeseed oil at 20 °C: approximately 0.92 g/ml; temperature and product vary",
       "sourceUrl": "https://www.fao.org/4/ap815e/ap815e.pdf"
+    },
+    {
+      "names": [
+        "yogurt",
+        "yoghurt",
+        "plain yogurt",
+        "plain yoghurt"
+      ],
+      "gramsPerMl": 1.031,
+      "label": "FAO plain unsweetened yoghurt (DK): approximately 1.031 g/ml; product and temperature vary",
+      "sourceUrl": "https://www.fao.org/4/ap815e/ap815e.pdf"
+    },
+    {
+      "names": [
+        "groundnut oil",
+        "peanut oil"
+      ],
+      "gramsPerMl": 0.92,
+      "label": "FAO peanut oil at 15.6 °C (CSG): approximately 0.92 g/ml; product and temperature vary",
+      "sourceUrl": "https://www.fao.org/4/ap815e/ap815e.pdf"
     }
   ]
 }

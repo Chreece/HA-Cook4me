@@ -1261,6 +1261,271 @@
       "portion": "tsp",
       "sourceAmount": 1.0,
       "sourceGrams": 5.3
+    },
+    {
+      "names": [
+        "asparagus",
+        "green asparagus"
+      ],
+      "measure": "piece",
+      "grams": 16.0,
+      "fdcId": 168389,
+      "portionId": 83014,
+      "food": "Asparagus, raw",
+      "portion": "spear, medium (5-1/4\" to 7\" long)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 16.0
+    },
+    {
+      "names": [
+        "fennel"
+      ],
+      "measure": "piece",
+      "grams": 234.0,
+      "fdcId": 169385,
+      "portionId": 84767,
+      "food": "Fennel, bulb, raw",
+      "portion": "bulb",
+      "sourceAmount": 1.0,
+      "sourceGrams": 234.0
+    },
+    {
+      "names": [
+        "turnip"
+      ],
+      "measure": "piece",
+      "grams": 122.0,
+      "fdcId": 170465,
+      "portionId": 86710,
+      "food": "Turnips, raw",
+      "portion": "medium",
+      "sourceAmount": 1.0,
+      "sourceGrams": 122.0
+    },
+    {
+      "names": [
+        "green pepper",
+        "green bell pepper"
+      ],
+      "measure": "piece",
+      "grams": 119.0,
+      "fdcId": 170427,
+      "portionId": 86627,
+      "food": "Peppers, sweet, green, raw",
+      "portion": "medium (approx 2-3/4\" long, 2-1/2\" dia)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 119.0
+    },
+    {
+      "names": [
+        "icing sugar",
+        "powdered sugar"
+      ],
+      "measure": "tbsp",
+      "grams": 8.0,
+      "fdcId": 169656,
+      "portionId": 85292,
+      "food": "Sugars, powdered",
+      "portion": "tbsp unsifted",
+      "sourceAmount": 1.0,
+      "sourceGrams": 8.0
+    },
+    {
+      "names": [
+        "icing sugar",
+        "powdered sugar"
+      ],
+      "measure": "tsp",
+      "grams": 2.5,
+      "fdcId": 169656,
+      "portionId": 85293,
+      "food": "Sugars, powdered",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 2.5
+    },
+    {
+      "names": [
+        "sesame seed",
+        "sesame seeds"
+      ],
+      "measure": "tbsp",
+      "grams": 9.0,
+      "fdcId": 170150,
+      "portionId": 86136,
+      "food": "Seeds, sesame seeds, whole, dried",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 9.0
+    },
+    {
+      "names": [
+        "tahini"
+      ],
+      "measure": "tbsp",
+      "grams": 15.0,
+      "fdcId": 170189,
+      "portionId": 86209,
+      "food": "Seeds, sesame butter, tahini, from roasted and toasted kernels (most common type)",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 15.0
+    },
+    {
+      "names": [
+        "sour cream"
+      ],
+      "measure": "tbsp",
+      "grams": 12.0,
+      "fdcId": 171257,
+      "portionId": 88296,
+      "food": "Cream, sour, cultured",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 12.0
+    },
+    {
+      "names": [
+        "cream cheese",
+        "fromage frais"
+      ],
+      "measure": "tbsp",
+      "grams": 14.5,
+      "fdcId": 173418,
+      "portionId": 92481,
+      "food": "Cheese, cream",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 14.5
+    },
+    {
+      "names": [
+        "bicarbonate of soda",
+        "baking soda",
+        "sodium bicarbonate"
+      ],
+      "measure": "tsp",
+      "grams": 4.6,
+      "fdcId": 175040,
+      "portionId": 95484,
+      "food": "Leavening agents, baking soda",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 4.6
+    },
+    {
+      "names": [
+        "parsley",
+        "fresh parsley"
+      ],
+      "measure": "sprig",
+      "grams": 1.0,
+      "fdcId": 170416,
+      "portionId": 86609,
+      "food": "Parsley, fresh",
+      "portion": "sprigs",
+      "sourceAmount": 10.0,
+      "sourceGrams": 10.0
+    },
+    {
+      "names": [
+        "basil",
+        "fresh basil"
+      ],
+      "measure": "leaf",
+      "grams": 0.5,
+      "fdcId": 172232,
+      "portionId": 90125,
+      "food": "Basil, fresh",
+      "portion": "leaves",
+      "sourceAmount": 5.0,
+      "sourceGrams": 2.5
+    },
+    {
+      "names": [
+        "dill",
+        "fresh dill"
+      ],
+      "measure": "sprig",
+      "grams": 0.2,
+      "fdcId": 172233,
+      "portionId": 90128,
+      "food": "Dill weed, fresh",
+      "portion": "sprigs",
+      "sourceAmount": 5.0,
+      "sourceGrams": 1.0
+    },
+    {
+      "names": [
+        "coriander",
+        "fresh coriander",
+        "cilantro"
+      ],
+      "measure": "sprig",
+      "grams": 2.2222222222222223,
+      "fdcId": 169997,
+      "portionId": 85845,
+      "food": "Coriander (cilantro) leaves, raw",
+      "portion": "sprigs",
+      "sourceAmount": 9.0,
+      "sourceGrams": 20.0
+    },
+    {
+      "names": [
+        "peppermint"
+      ],
+      "measure": "leaf",
+      "grams": 0.05,
+      "fdcId": 173474,
+      "portionId": 92610,
+      "food": "Peppermint, fresh",
+      "portion": "leaves",
+      "sourceAmount": 2.0,
+      "sourceGrams": 0.1
+    },
+    {
+      "names": [
+        "mint",
+        "spearmint"
+      ],
+      "measure": "leaf",
+      "grams": 0.15,
+      "fdcId": 173475,
+      "portionId": 92612,
+      "food": "Spearmint, fresh",
+      "portion": "leaves",
+      "sourceAmount": 2.0,
+      "sourceGrams": 0.3
+    },
+    {
+      "names": [
+        "bay",
+        "bay leaf",
+        "dried bay leaf"
+      ],
+      "measure": "tsp",
+      "grams": 0.6,
+      "fdcId": 170917,
+      "portionId": 87532,
+      "food": "Spices, bay leaf",
+      "portion": "tsp, crumbled",
+      "sourceAmount": 1.0,
+      "sourceGrams": 0.6
+    },
+    {
+      "names": [
+        "bay",
+        "bay leaf",
+        "dried bay leaf"
+      ],
+      "measure": "tbsp",
+      "grams": 1.8,
+      "fdcId": 170917,
+      "portionId": 87533,
+      "food": "Spices, bay leaf",
+      "portion": "tbsp, crumbled",
+      "sourceAmount": 1.0,
+      "sourceGrams": 1.8
     }
   ]
 }

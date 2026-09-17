@@ -22,7 +22,8 @@ _COUNTS = {'egg', 'eggs', 'onion', 'onions', 'carrot', 'carrots', 'tomato', 'tom
            'lemon', 'lemons', 'lime', 'limes', 'orange', 'oranges', 'shallot', 'shallots',
            'welsh onion', 'spring onion', 'spring onions', 'green onion', 'green onions',
            'raw beetroot', 'parsnip', 'parsnips', 'banana', 'bananas', 'pear', 'pears', 'plum', 'plums', 'strawberry', 'strawberries',
-           'radish', 'radishes', 'date', 'dates', 'dried dates', 'pitted dates', 'medjool date', 'medjool dates', 'small pumpkin', 'small hokkaido pumpkin'}
+           'radish', 'radishes', 'date', 'dates', 'dried dates', 'pitted dates', 'medjool date', 'medjool dates', 'small pumpkin', 'small hokkaido pumpkin',
+           'asparagus', 'green asparagus', 'fennel', 'turnip', 'green pepper', 'green bell pepper'}
 
 
 @lru_cache(maxsize=1)
@@ -75,6 +76,12 @@ def price_options(raw):
         measure = 'clove'
     elif unit == 'pcs':
         measure = 'piece'
+    # Only food-specific published portions can convert a leaf or sprig. A
+    # bunch/packet remains unresolved; these unit IDs never imply a pack size.
+    elif key == 'UNIT_24' or unit.casefold() in {'leaf', 'leaves'}:
+        measure = 'leaf'
+    elif key == 'UNIT_10' or unit.casefold() in {'sprig', 'sprigs'}:
+        measure = 'sprig'
     # These stock names are used for both liquid and concentrated products in
     # provider translations. A spoonful does not establish the prepared form.
     prepared_stock = name in {'chicken stock', 'beef stock', 'veal stock'}

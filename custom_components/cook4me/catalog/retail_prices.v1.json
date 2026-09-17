@@ -2047,6 +2047,409 @@
       "confidence": "external_observation",
       "barcode": "",
       "note": "Listed unit price per kg; not a fixed piece price. Out of stock when checked. Named Hokkaido reference, variety and actual shop prices vary."
+    },
+    {
+      "id": "dm-3064622-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3064622/dmbio-sesammus-tahin",
+      "productName": "dmBio roasted sesame tahini",
+      "amount": 3.25,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:tahini"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Pure sesame paste; named-product reference. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "dm-1454969-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1454969/dmbio-getreide-buchweizen",
+      "productName": "dmBio dry buckwheat",
+      "amount": 1.85,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:buckwheat"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Dry grain, not flour or cooked weight. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "dm-1454947-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1454947/dmbio-getreide-hirse",
+      "productName": "dmBio dry millet",
+      "amount": 2.95,
+      "currency": "EUR",
+      "basisQuantity": 1000,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:millet"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Dry grain, not cooked weight. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "dm-3119123-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3119123/la-baleine-natron-pulver",
+      "productName": "La Baleine food-grade sodium bicarbonate",
+      "amount": 2.95,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:baking-soda"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Pure sodium bicarbonate, not baking powder or washing soda. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "dm-1447541-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1447541/dmbio-sesam-ungeschaelt",
+      "productName": "dmBio unhulled sesame seeds",
+      "amount": 2.25,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:sesame"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Whole dry sesame seeds, not oil or tahini. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-543-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/543-diamant-puderzucker",
+      "productName": "Diamant icing sugar",
+      "amount": 0.75,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:powdered-sugars"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Finely powdered sugar, not granulated sugar. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-78004-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/78004-fenchel-1-stk",
+      "productName": "Fresh fennel bulb",
+      "amount": 3.49,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:fennel"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed price per kg, not per bulb. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-16068-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/16068-knollensellerie-1-stk",
+      "productName": "Fresh celeriac",
+      "amount": 1.69,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:celeriac"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed price per kg, not per root; not stalk celery. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-81-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/81-butternut-kuerbis-1-stk",
+      "productName": "Fresh butternut squash",
+      "amount": 2.09,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:butternut-squashes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed unit price, not per piece. Product unavailable when checked; seasonal reference. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-32804-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/32804-wirsing-1-stk",
+      "productName": "Fresh savoy cabbage",
+      "amount": 1.89,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:green-cabbage",
+        "en:savoy-cabbages"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Savoy/green cabbage reference, not kale or cooked cabbage; per kg, not per head. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-3368-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/3368-rosenkohl-beutel",
+      "productName": "Fresh Brussels sprouts",
+      "amount": 1.99,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:brussels-sprouts"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Whole raw sprouts; product unavailable when checked; seasonal reference. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-4773-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/4773-ostmann-lorbeerblaetter",
+      "productName": "Ostmann dried bay leaves",
+      "amount": 1.99,
+      "currency": "EUR",
+      "basisQuantity": 5,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:bay-leaf"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Dried bay leaves, not bay-leaf oil or seasoning blends. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "frifro-1447149-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://frifro.de/lebensmittel_shop_4/fette_oele/fette_oele/mazola_erdnussoel_500ml.html",
+      "productName": "Mazola peanut oil",
+      "amount": 4.19,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "FriFro Germany · online listing",
+      "categories": [
+        "en:peanut-oils"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Bottle volume basis; added vitamin E. Not peanut butter. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-10-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/10-chicoree-beutel",
+      "productName": "Fresh chicory",
+      "amount": 2.69,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:chicory"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Raw Belgian endive/chicory heads, not chicory syrup or coffee. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-89293-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/89293-watzkendorf-s-bio-mangold-bunt-wiegeware",
+      "productName": "Watzkendorf organic rainbow chard",
+      "amount": 6.5,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:chards"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed 2.60 EUR per approximately 400 g, normalized to kg; excludes the personal 10% offer. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-86-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/86-paprika-gruen-1-stk",
+      "productName": "Fresh green bell pepper",
+      "amount": 5.99,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:green-bell-pepper"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Sweet green bell pepper, not peppercorn or hot chilli. Product unavailable when checked; per kg, not piece. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-32789-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/32789-philadelphia-doppelrahmstufe",
+      "productName": "Philadelphia plain cream cheese",
+      "amount": 2.39,
+      "currency": "EUR",
+      "basisQuantity": 195,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:cream-cheeses",
+        "cook4me:plain-fresh-cheese"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Plain spreadable fresh-cheese reference; fat content varies. Not aged, herb-flavoured or cottage cheese. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "dm-1446418-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1446418/dmbio-tomaten-fein-passiert-passata",
+      "productName": "dmBio plain tomato passata",
+      "amount": 1.05,
+      "currency": "EUR",
+      "basisQuantity": 690,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:strained-tomatoes",
+        "cook4me:tomato-coulis"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "99.8% tomatoes and salt. Plain strained tomato/coulis reference, not concentrated paste or flavoured sauce. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "dm-1454951-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1454951/dmbio-basmatireis-aus-vollkorn",
+      "productName": "dmBio dry wholegrain basmati rice",
+      "amount": 2.35,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:brown-rices"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named wholegrain basmati reference for dry brown rice; variety and store prices vary. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "truebenecker-turnip-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.truebenecker.de/products/bio-mairuben-ohne-blatter-1kg",
+      "productName": "Trübenecker organic white turnips without leaves",
+      "amount": 8.99,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Trübenecker Germany · online listing",
+      "categories": [
+        "en:turnip"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Organic Mairüben reference, not swede/rutabaga. Out-of-stock listing when checked. Per kg, not a bunch. Seasonal and store prices vary; VAT included, delivery excluded."
     }
   ]
 }
