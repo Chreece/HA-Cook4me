@@ -23,3 +23,7 @@ English/Greek labels, 360/390/1280 px layouts, three packages sharing the date,
 and immutable retries after an uncertain save. The existing product-review and
 package-editing browser checks also run against v113. Installer success and
 rollback checks use a simulated host; no live phone or HA host was available.
+
+Published runtime commit: `6e49f88fb2e4d596d812210130da78bfe3161c40`.
+
+Verified runtime tree: `c63995c2c5cb8b9f527e0ecfb8f5d24d5f31da3d`.
