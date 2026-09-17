@@ -16,6 +16,7 @@ from statistics import median
 from .inventory import convert_amount
 from .price_identity import pricing_name
 from .price_measurements import price_options
+from .price_allowances import zero_cost_allowance
 from .price_snapshot import _load, category_observation_allowed
 
 
@@ -117,24 +118,33 @@ def fallback_estimate(item, *, country, currency, fraction=1.0):
 
 def add_budget_estimates(cost, recipe, store, *, country, currency):
     """Keep known totals/coverage intact; add a separate estimated budget."""
-    if not store.settings.get('autoGlobalPrices', True):
-        return cost
     from .inventory import inventory_identity
     ingredients = defaultdict(deque)
     for item in recipe.get('ingredients', []):
+        if isinstance(item, str):
+            item = {'name': item}
         if isinstance(item, dict):
             ingredients[inventory_identity(item)].append(item)
     totals = dict(cost.get('totalsByCurrency') or {})
     low, high = dict(totals), dict(totals)
-    count = 0
+    count = zero_count = 0
     for row in cost.get('ingredients', []):
         matches = ingredients.get(row.get('identity'))
         item = matches.popleft() if matches else None
         coverage = row.get('coverage', 0)
         if coverage >= 1:
             continue
+        allowance = zero_cost_allowance(item, currency)
+        if allowance:
+            row['zeroCostAllowance'] = allowance
+            row['costsByCurrency'] = {currency: 0.0}
+            row['budgetCoverage'] = 1.0
+            zero_count += 1
+            for target in (totals, low, high):
+                target.setdefault(currency, 0.0)
+            continue
         # Do not infer an amount for a row rejected by the actual calculator.
-        if not item or row.get('reason') == 'recipe_amount_unknown':
+        if not item or row.get('reason') == 'recipe_amount_unknown' or not store.settings.get('autoGlobalPrices', True):
             continue
         estimate = fallback_estimate(item, country=country, currency=currency, fraction=1-coverage)
         if estimate is None:
@@ -144,14 +154,18 @@ def add_budget_estimates(cost, recipe, store, *, country, currency):
         count += 1
         for target, field in ((totals, 'amount'), (low, 'low'), (high, 'high')):
             target[currency] = target.get(currency, 0) + estimate[field]
-    if not count:
+    if not count and not zero_count:
         return cost
     rows = cost['ingredients']
     covered = sum(row.get('coverage') == 1 or row.get('budgetCoverage') == 1 for row in rows)
     servings = cost.get('servings')
-    cost.update(budgetEstimated=True, fallbackIngredientCount=count, budgetTotalsByCurrency={k: round(v, 2) for k,v in totals.items()},
+    if count:
+        cost['fallbackIngredientCount'] = count
+    if zero_count:
+        cost['zeroCostIngredientCount'] = zero_count
+    cost.update(budgetEstimated=True, budgetTotalsByCurrency={k: round(v, 2) for k,v in totals.items()},
         budgetRangeByCurrency={k: {'low': round(low[k], 2), 'high': round(high[k], 2)} for k in totals},
         budgetPerServingByCurrency={k: round(v/servings, 2) for k,v in totals.items()} if servings and servings > 0 else {},
         budgetIngredientCount=covered, budgetComplete=bool(rows) and covered == len(rows),
-        budgetMissingIngredientCount=len(rows)-covered, budgetMethod='local-food-benchmark-v91')
+        budgetMissingIngredientCount=len(rows)-covered, budgetMethod='local-food-benchmark-v91+unmeasured-basics-v99' if zero_count else 'local-food-benchmark-v91')
     return cost

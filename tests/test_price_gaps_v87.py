@@ -50,7 +50,7 @@ class PriceGapTests(unittest.IsolatedAsyncioTestCase):
                     self.assertTrue(result['totalsByCurrency']['EUR'] > 0)
                     self.assertEqual(variant, original)
                     if key == '288189':
-                        self.assertEqual([r['priceStatus'] for r in rows if r['coverage'] < 1], ['recipe_amount_unknown'])
+                        self.assertEqual([r['priceStatus'] for r in rows if r['coverage'] < 1], ['unmeasured_basic_zero'])
                     if key == '963752':
                         self.assertEqual(len([r for r in rows if any('en:parmigiano-reggiano' in ref.get('categories', []) for ref in r['references'])]), 2,
                                          'Distinct source rows must not be silently deduplicated')

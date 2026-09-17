@@ -950,7 +950,7 @@ async def recipe_price(bridge, recipe, catalog, *, refresh_since=None):
     cost = await cache.async_cost(recipe, inventory, store, country=settings['country'], currency=settings['currency'], force=refresh_since is not None)
     for row in cost.get('ingredients', []):
         if row.get('coverage', 0) < 1:
-            row['priceStatus'] = ('recipe_amount_unknown' if row.get('reason') == 'recipe_amount_unknown'
+            row['priceStatus'] = ('unmeasured_basic_zero' if row.get('zeroCostAllowance') else 'recipe_amount_unknown' if row.get('reason') == 'recipe_amount_unknown'
                                   else lookup_status.get(row['identity']) or ('source_unavailable' if failures else 'no_observation'))
     cost.update(settings=settings, priceLookupIncomplete=bool(failures), priceLookupPending=bool(pending), priceSource='Public price observations',
                 originalIngredients=True, ingredientLimitReached=skipped,
@@ -994,7 +994,7 @@ async def offline_recipe_price(bridge, recipe, catalog):
         country=settings['country'], currency=settings['currency'])
     for row in cost.get('ingredients', []):
         if row.get('coverage', 0) < 1:
-            row['priceStatus'] = 'recipe_amount_unknown' if row.get('reason') == 'recipe_amount_unknown' else 'offline_price_missing'
+            row['priceStatus'] = 'unmeasured_basic_zero' if row.get('zeroCostAllowance') else 'recipe_amount_unknown' if row.get('reason') == 'recipe_amount_unknown' else 'offline_price_missing'
     cost.update(settings=settings, offlinePreview=True, priceLookupPending=False,
                 checkedAt=datetime.now(timezone.utc).isoformat())
     _mark_food_coverage(cost, recipe)

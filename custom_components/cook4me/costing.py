@@ -16,6 +16,7 @@ from .costs import (
 from .inventory import convert_amount, inventory_identity, normalize_inventory
 from .price_measurements import price_options
 from .price_benchmarks import add_budget_estimates
+from .price_allowances import price_confidence
 
 
 def _add(target: dict[str, float], currency: str, value: float | None) -> None:
@@ -230,7 +231,9 @@ def calculate_recipe_cost(
         "currencyConversionApplied": False,
     }
 
-    return add_budget_estimates(cost, recipe, store, country=wanted_country, currency=wanted_currency)
+    cost = add_budget_estimates(cost, recipe, store, country=wanted_country, currency=wanted_currency)
+    cost['priceConfidence'] = price_confidence(cost)
+    return cost
 
 
 def calculate_consumption_cost(

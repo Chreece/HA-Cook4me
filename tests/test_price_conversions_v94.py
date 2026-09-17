@@ -86,14 +86,14 @@ class PriceConversionTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(retained['ingredients'][7]['quantity'],3)
         self.assertEqual(retained['ingredients'][7]['canonicalName'],'Salt')
 
-    async def test_saved_user_price_wins_and_unknown_salt_stays_unknown(self):
+    async def test_saved_user_price_wins_and_unknown_salt_uses_zero_allowance(self):
         store = await self.store()
         await store.async_set_reference('n:rapeseed oil', amount=4,currency='EUR',basis_quantity=100,basis_unit='g',country='DE',source='manual')
         result = await self.prices.offline_recipe_price(self.bridge, {'ingredients':[{'name':'Rapeseed oil','quantity':40,'unit':'g'}]}, [])
         self.assertEqual(result['totalsByCurrency'],{'EUR':1.6})
         self.assertIsNone(result['ingredients'][0]['quantityEstimate'])
         result = await self.prices.offline_recipe_price(self.bridge, {'ingredients':[{'name':'Salt'}]}, [])
-        self.assertEqual(result['ingredients'][0]['priceStatus'],'recipe_amount_unknown')
+        self.assertEqual(result['ingredients'][0]['priceStatus'],'unmeasured_basic_zero')
         self.assertNotIn('fallbackIngredientCount',result)
 
     async def test_market_scope_and_persisted_cache(self):

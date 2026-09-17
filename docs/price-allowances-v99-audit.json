@@ -1,0 +1,401 @@
+{
+  "market": "DE",
+  "currency": "EUR",
+  "asOf": "2026-09-17",
+  "baselineCommit": "c7bfaaf51c5db1e3cbd35ddce3d5b782d02b6d95",
+  "method": "Language/serving variants and ingredient occurrences, without household prices. Known price evidence is unchanged. Zero allowances count only toward estimated budgets; no amount or observed price is invented.",
+  "summary": {
+    "variants": 32163,
+    "ingredients": 230483,
+    "known": 132921,
+    "fallback": 43460,
+    "zeroAllowance": 13462,
+    "covered": 189843,
+    "knownComplete": 5575,
+    "budgetCompleteBeforeAllowance": 11465,
+    "budgetComplete": 15252,
+    "variantsWithAllowance": 11679,
+    "noKnownCost": 1512,
+    "noBudgetCost": 61
+  },
+  "allowances": [
+    {
+      "ingredient": "Salt",
+      "occurrences": 8153
+    },
+    {
+      "ingredient": "Salt and pepper",
+      "occurrences": 2217
+    },
+    {
+      "ingredient": "Pepper",
+      "occurrences": 2206
+    },
+    {
+      "ingredient": "Black pepper",
+      "occurrences": 121
+    },
+    {
+      "ingredient": "Ground black pepper",
+      "occurrences": 114
+    },
+    {
+      "ingredient": "Salt and black pepper",
+      "occurrences": 97
+    },
+    {
+      "ingredient": "Pepper salt (a little)",
+      "occurrences": 91
+    },
+    {
+      "ingredient": "Water",
+      "occurrences": 71
+    },
+    {
+      "ingredient": "Salt and pepper, to taste",
+      "occurrences": 48
+    },
+    {
+      "ingredient": "Salt and pepper (for finishing)",
+      "occurrences": 44
+    },
+    {
+      "ingredient": "Pepper (a little)",
+      "occurrences": 27
+    },
+    {
+      "ingredient": "Salt (a little)",
+      "occurrences": 27
+    },
+    {
+      "ingredient": "Black pepper (for finishing)",
+      "occurrences": 24
+    },
+    {
+      "ingredient": "Salt and pepper to taste",
+      "occurrences": 16
+    },
+    {
+      "ingredient": "Sea salt",
+      "occurrences": 11
+    },
+    {
+      "ingredient": "Black pepper (a little)",
+      "occurrences": 11
+    },
+    {
+      "ingredient": "Coarsely ground black pepper",
+      "occurrences": 11
+    },
+    {
+      "ingredient": "Coarsely ground black pepper (for finishing)",
+      "occurrences": 9
+    },
+    {
+      "ingredient": "Salt (for finishing)",
+      "occurrences": 9
+    },
+    {
+      "ingredient": "Pepper (seasoning)",
+      "occurrences": 9
+    },
+    {
+      "ingredient": "Black pepper (for seasoning)",
+      "occurrences": 7
+    },
+    {
+      "ingredient": "White pepper and salt",
+      "occurrences": 6
+    },
+    {
+      "ingredient": "Coarsely ground black pepper (a little)",
+      "occurrences": 6
+    },
+    {
+      "ingredient": "Pepper (for finishing)",
+      "occurrences": 6
+    },
+    {
+      "ingredient": "Salt and pepper (for sauce)",
+      "occurrences": 6
+    },
+    {
+      "ingredient": "Pepper salt (for sauce)",
+      "occurrences": 6
+    },
+    {
+      "ingredient": "Coarsely ground pepper, a little",
+      "occurrences": 6
+    },
+    {
+      "ingredient": "Black pepper, a little",
+      "occurrences": 5
+    },
+    {
+      "ingredient": "White pepper",
+      "occurrences": 4
+    },
+    {
+      "ingredient": "A- black pepper, a little",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Salt and pepper (for meat), a little",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Water, enough to cover the ingredients",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Salt and pepper for seasoning",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Salt and black pepper, if needed",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Water (enough to cover)",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Salt and pepper, to season",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Salt & pepper",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Salt and pepper, for seasoning",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Salt, freshly ground pepper",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Coarsely ground black pepper, a little for sauce",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Pepper, a little",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Pepper (for finishing), a little",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Salt and pepper, a little",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Salt, a little for sauce",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Pepper, a little for marinating",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Boiling water, as needed for pouring over mackerel",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "C- pepper salt, a little",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Salt (for sauce), a little",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "A- pepper salt",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Coarse pepper salt (for seasoning), a little",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Pepper salt (for seasoning), a little",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "Coarsely ground salt and pepper, a little for finishing",
+      "occurrences": 3
+    },
+    {
+      "ingredient": "A- salt and pepper, as needed",
+      "occurrences": 2
+    },
+    {
+      "ingredient": "Coarse salt (for finishing), a little",
+      "occurrences": 2
+    },
+    {
+      "ingredient": "Coarsely ground pepper (for finishing), a little",
+      "occurrences": 2
+    },
+    {
+      "ingredient": "White pepper (for garnish), as needed",
+      "occurrences": 2
+    },
+    {
+      "ingredient": "Salt, a little (for pre-seasoning)",
+      "occurrences": 2
+    },
+    {
+      "ingredient": "Salt and pepper, as needed",
+      "occurrences": 2
+    },
+    {
+      "ingredient": "B- coarsely ground black pepper, a little",
+      "occurrences": 2
+    },
+    {
+      "ingredient": "Pepper (for seasoning), a little",
+      "occurrences": 2
+    },
+    {
+      "ingredient": "Cold water for soaking the gelatin",
+      "occurrences": 1
+    },
+    {
+      "ingredient": "Pepper and salt",
+      "occurrences": 1
+    },
+    {
+      "ingredient": "Salt and pepper (to taste)",
+      "occurrences": 1
+    },
+    {
+      "ingredient": "Salt and black pepper (to taste)",
+      "occurrences": 1
+    },
+    {
+      "ingredient": "Pepper and salt to taste",
+      "occurrences": 1
+    },
+    {
+      "ingredient": "Salt and freshly ground pepper to taste",
+      "occurrences": 1
+    },
+    {
+      "ingredient": "Salt and pepper to taste (depending on the seasoning of the stock)",
+      "occurrences": 1
+    },
+    {
+      "ingredient": "Salt (fleur de sel recommended)",
+      "occurrences": 1
+    },
+    {
+      "ingredient": "Coarsely ground black pepper (for finishing), a little",
+      "occurrences": 1
+    }
+  ],
+  "largestRemainingGaps": [
+    {
+      "ingredient": "Garlic",
+      "occurrences": 1573
+    },
+    {
+      "ingredient": "Pepper",
+      "occurrences": 1070
+    },
+    {
+      "ingredient": "Salt",
+      "occurrences": 1066
+    },
+    {
+      "ingredient": "Olive oil",
+      "occurrences": 738
+    },
+    {
+      "ingredient": "Parsley",
+      "occurrences": 728
+    },
+    {
+      "ingredient": "Sugar",
+      "occurrences": 711
+    },
+    {
+      "ingredient": "Ginger",
+      "occurrences": 702
+    },
+    {
+      "ingredient": "Oil",
+      "occurrences": 697
+    },
+    {
+      "ingredient": "Soy sauce",
+      "occurrences": 605
+    },
+    {
+      "ingredient": "Water",
+      "occurrences": 511
+    },
+    {
+      "ingredient": "Bay",
+      "occurrences": 445
+    },
+    {
+      "ingredient": "Egg yolk",
+      "occurrences": 425
+    },
+    {
+      "ingredient": "Sake",
+      "occurrences": 407
+    },
+    {
+      "ingredient": "Mixed herbs",
+      "occurrences": 386
+    },
+    {
+      "ingredient": "Salted Butter & Unsalted butter",
+      "occurrences": 361
+    },
+    {
+      "ingredient": "Carrot",
+      "occurrences": 348
+    },
+    {
+      "ingredient": "Thyme",
+      "occurrences": 346
+    },
+    {
+      "ingredient": "Basil",
+      "occurrences": 344
+    },
+    {
+      "ingredient": "Mirin",
+      "occurrences": 329
+    },
+    {
+      "ingredient": "Celery",
+      "occurrences": 312
+    },
+    {
+      "ingredient": "Mint",
+      "occurrences": 299
+    },
+    {
+      "ingredient": "Coriander",
+      "occurrences": 295
+    },
+    {
+      "ingredient": "Nutmeg",
+      "occurrences": 295
+    },
+    {
+      "ingredient": "Saffron",
+      "occurrences": 274
+    },
+    {
+      "ingredient": "Vegetable oil",
+      "occurrences": 261
+    }
+  ]
+}
