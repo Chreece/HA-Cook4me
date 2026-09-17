@@ -1,0 +1,35 @@
+name: Audit canonical standalone batch 6 v60
+
+on:
+  push:
+    branches:
+      - cook4me-ingredient-semantic-confirmation-v60
+    paths:
+      - '.github/workflows/audit-canonical-batch6-v60.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Reconstruct exact batch 6 decisions
+        run: |
+          set -Eeuo pipefail
+          python tools/audit_canonical_batch6_v60.py
+      - name: Upload exact decision evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: batch6-canonical-safety-audit-v60-${{ github.sha }}
+          path: batch6-canonical-safety-audit-v60.json
+          if-no-files-found: error
+          retention-days: 7
