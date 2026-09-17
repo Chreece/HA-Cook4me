@@ -5,6 +5,7 @@ import json
 
 from .inventory import inventory_identity
 from .nutrition_label import async_save_lot_nutrition
+from .nutrition import serialize_nutrition_mutation
 
 
 def find_package(inventory, lot_id):
@@ -20,6 +21,7 @@ def package_version(row, lot):
                                      sort_keys=True).encode()).hexdigest()
 
 
+@serialize_nutrition_mutation
 async def replace_package_nutrition(store, inventory, lot_id, nutrition):
     # Prepare the complete replacement before saving, including when the package
     # has moved to another ingredient or its nutrition has explicitly been cleared.

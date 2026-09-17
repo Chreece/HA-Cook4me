@@ -139,14 +139,17 @@ class AnnouncementAudit(unittest.IsolatedAsyncioTestCase):
             with self.subTest(change=change):
                 self.hass.services.async_call.reset_mock()
                 self.bridge.data = self.data(active=True, phase='cooking', variantFunctionalId='old')
-                async def generate(*args, **kwargs):
-                    self.bridge.data.update(change)
-                    return speech.NS(data={'text': 'Cooking'})
-                self.generate.side_effect = generate
-                self.manager.cache.clear()
                 self.manager.queue.append(([('state', 'cooking')], deepcopy(self.bridge.data), time.monotonic()))
-                await self.manager.run()
+                # Fixed state messages no longer call AI (v105). Simulate a
+                # real delay while another announcement owns the delivery lock.
+                async with self.manager.delivery_lock:
+                    pending = asyncio.create_task(self.manager.run())
+                    await asyncio.sleep(0)
+                    self.assertFalse(pending.done())
+                    self.bridge.data.update(change)
+                await asyncio.wait_for(pending, 1)
                 self.hass.services.async_call.assert_not_awaited()
+                self.generate.assert_not_awaited()
 
     async def test_entity_migration_cannot_overwrite_concurrent_speech_preferences(self):
         self.registry.rows.append(speech.NS(entry_id='entry1', entity_id='binary_sensor.connected',

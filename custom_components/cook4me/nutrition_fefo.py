@@ -4,7 +4,8 @@ from copy import deepcopy
 import math
 from typing import Any
 
-from .inventory import stock_for_ingredient, reserve_lot, inventory_identity, normalize_inventory
+from .stock_allocation import allocate_stock
+from .inventory import stock_for_ingredient, inventory_identity, normalize_inventory
 from .nutrition import (
     convert_amount,
     ingredient_identity,
@@ -103,17 +104,17 @@ def calculate_recipe_nutrition_fefo(
 ) -> dict[str, Any]:
     """Predict meal nutrition from the same inventory batch order used for FEFO consumption."""
     stock = normalize_inventory(inventory)
-    used = {}
     generic = generic or {}
-    stock_lots = stock_lots or {}
+    stock_lots = deepcopy(stock_lots or {})
     totals: dict[str, float] = {}
     details: list[dict[str, Any]] = []
     fractions: list[float] = []
     kinds: set[str] = set()
 
-    for ingredient in recipe.get("ingredients") or []:
-        if not isinstance(ingredient, dict):
-            continue
+    ingredients = [item for item in recipe.get("ingredients") or [] if isinstance(item, dict)]
+    requests = [{**item, "identity": ingredient_identity(item), "quantity": _recipe_amount(item)[0],
+                 "unit": _recipe_amount(item)[1]} for item in ingredients]
+    for ingredient, current in zip(ingredients, allocate_stock(stock, requests)):
         identity = ingredient_identity(ingredient)
         name = _text(ingredient.get("foodName") or ingredient.get("name"))
         amount, unit = _recipe_amount(ingredient)
@@ -123,11 +124,10 @@ def calculate_recipe_nutrition_fefo(
             details.append(detail)
             continue
 
-        current = _find_inventory(stock, ingredient, used)
         required_remaining = amount
         covered = 0.0
         lot_ids = {lot.get("id") for lot in (current or {}).get("lots") or []}
-        exact_pool = [deepcopy(row) for owner, records in stock_lots.items() for row in records if isinstance(row, dict) and (owner == identity or row.get("inventoryLotId") in lot_ids)] if isinstance(stock_lots, dict) else []
+        exact_pool = [row for owner, records in stock_lots.items() for row in records if isinstance(row, dict) and (owner == identity or row.get("inventoryLotId") in lot_ids)] if isinstance(stock_lots, dict) else []
         generic_profile = _generic_profile(generic, identity)
 
         if current and not current.get("unlimited"):
@@ -195,7 +195,6 @@ def calculate_recipe_nutrition_fefo(
                                 covered += generic_as_recipe
                                 kinds.add("generic_reference")
                                 detail["sources"].append({"type": "generic_reference", "quantity": round(generic_as_recipe, 6), "unit": unit})
-                    reserve_lot(used, inv_lot, take_stock, stock_unit)
                     remaining_stock -= take_stock
                 required_remaining = max(0.0, amount - min(amount, covered))
 

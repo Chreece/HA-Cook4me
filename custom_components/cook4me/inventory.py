@@ -636,6 +636,7 @@ def recipe_expiry_priority(
     horizon = max(0, int(within_days))
     stock = normalize_inventory(inventory)
     seen: set[str] = set()
+    seen_lots: set[str] = set()
     matches: list[dict[str, Any]] = []
     priority = 0.0
     for ingredient in recipe.get("ingredients") or []:
@@ -655,6 +656,8 @@ def recipe_expiry_priority(
             candidates.extend(current.get("lots") or [])
         qualifying: list[tuple[int, dict[str, Any], str]] = []
         for lot in candidates:
+            if lot.get("id") in seen_lots:
+                continue
             stamp = _effective_best_before(lot)
             if not stamp:
                 continue
@@ -665,6 +668,8 @@ def recipe_expiry_priority(
             continue
         days_remaining, lot, stamp = min(qualifying, key=lambda item: item[0])
         seen.add(ident)
+        if lot.get("id"):
+            seen_lots.add(lot["id"])
         urgency = (horizon + 1 - days_remaining) / (horizon + 1)
         priority += urgency
         match = {
@@ -895,11 +900,10 @@ def apply_consumption(inventory, consumptions):
     if not any(lot.get("ingredientLinks") for row in rows for lot in row.get("lots") or []):
         return _apply_primary_consumption(rows, consumptions)
     report = {key: [] for key in ("deducted", "deductedLots", "skipped", "depleted")}
-    for request in consumptions:
-        if not isinstance(request, dict) or not request.get("consume", True):
-            continue
+    from .stock_allocation import allocate_stock
+    requests = [request for request in consumptions if isinstance(request, dict) and request.get("consume", True)]
+    for request, view in zip(requests, allocate_stock(rows, requests)):
         identity = request.get("identity") or inventory_identity(request)
-        view = stock_for_ingredient(rows, identity)
         remaining = _quantity(request.get("quantity"))
         if not view or view.get("unlimited") or remaining is None or convert_amount(remaining, request.get("unit", ""), view.get("unit", "")) is None or not view.get("lots"):
             _, skipped = _apply_primary_consumption(rows, [request])

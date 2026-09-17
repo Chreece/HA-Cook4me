@@ -122,7 +122,7 @@ class Cook4MeRecipeHubPanelV111 extends BasePanel{
    if(!this._v78Alive(c)||this._v78CameraToken!==token)return;
    const current=this._v78Draft;if(current?.scanPhase==='idle')current.scanPhase='scanning';this._v78SetStatus('');
    if(current?.mode==='barcode'&&current.scanPhase==='scanning')void this._v80BarcodeLoop(c);
-  }catch(error){if(this._v78Alive(c)&&this._v78CameraToken===token){this._v78StopCamera();d.scanNote=`${this._v78Text('cameraHelp')} ${error.message||error}`;d.scanPhase='error';}}
+  }catch(error){if(this._v78Alive(c)&&this._v78CameraToken===token){this._v78StopCamera();const current=this._v78Draft;if(current){current.scanNote=`${this._v78Text('cameraHelp')} ${error.message||error}`;current.scanPhase='error';}}}
   finally{if(this._v78CameraToken===token)this._v80CameraPending=false;this._v111Paint();}
  }
  async _v80Scan(mode){

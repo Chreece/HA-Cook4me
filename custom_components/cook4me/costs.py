@@ -18,7 +18,8 @@ from .price_quantities import explicit_product_basis
 from .price_food_forms import compatible_food_form, category_unit_basis, compatible_category_basis, consistent_package_basis
 from .price_snapshot import country_locations, snapshot_observations
 from .const import DOMAIN
-from .inventory import stock_for_ingredient, reserve_lot, convert_amount, inventory_identity, normalize_inventory
+from .stock_allocation import allocate_stock
+from .inventory import stock_for_ingredient, convert_amount, inventory_identity, normalize_inventory
 
 _STORAGE_VERSION = 1
 _MAX_REFERENCES = 5000
@@ -542,7 +543,6 @@ def calculate_recipe_cost(
     country: str = "",
 ) -> dict[str, Any]:
     stock = normalize_inventory(inventory)
-    used = {}
     target_currency = _currency(currency) or _currency(store.settings.get("currency"))
     target_country = _country(country) or _country(store.settings.get("country"))
     ingredient_costs: list[dict[str, Any]] = []
@@ -551,10 +551,8 @@ def calculate_recipe_cost(
     priced_amount = 0.0
     required_amount = 0.0
 
-    for raw in recipe.get("ingredients") or []:
-        ingredient = _recipe_ingredient(raw)
-        if ingredient is None:
-            continue
+    ingredients = [item for raw in recipe.get("ingredients") or [] if (item := _recipe_ingredient(raw)) is not None]
+    for ingredient, allocated in zip(ingredients, allocate_stock(stock, ingredients)):
         quantity = ingredient.get("quantity")
         unit = ingredient.get("unit") or ""
         ident = inventory_identity(ingredient)
@@ -574,7 +572,7 @@ def calculate_recipe_cost(
 
         required_amount += float(quantity)
         remaining = float(quantity)
-        row = _inventory_row(stock, ingredient, used)
+        row = allocated
         row_unit = _text((row or {}).get("unit")) or unit
         costs: dict[str, float] = {}
         sources: list[str] = []
@@ -610,7 +608,6 @@ def calculate_recipe_cost(
                             exact_covered += take
                         if source_kind and source_kind not in sources:
                             sources.append(source_kind)
-                reserve_lot(used, lot, take, unit)
                 remaining -= take
 
         if remaining > 1e-9:

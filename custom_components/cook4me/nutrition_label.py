@@ -6,12 +6,14 @@ from typing import Any
 
 from .inventory import inventory_identity, normalize_inventory
 from .nutrition import normalize_nutrition
+from .nutrition import serialize_nutrition_mutation
 
 
 def _text(value: Any) -> str:
     return str(value or "").strip()
 
 
+@serialize_nutrition_mutation
 async def async_save_lot_nutrition(
     store: Any,
     inventory: Any,

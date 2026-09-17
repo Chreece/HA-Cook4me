@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import asyncio
 import json
 import math
 import re
@@ -273,6 +274,7 @@ class Cook4MeBarcodeMappingStore:
             hass, _STORAGE_VERSION, f"{DOMAIN}.{entry_id}.barcode_mappings"
         )
         self._data: dict[str, dict[str, Any]] = {}
+        self._write_lock = asyncio.Lock()
 
     async def async_load(self) -> None:
         saved = await self._store.async_load()
@@ -288,6 +290,10 @@ class Cook4MeBarcodeMappingStore:
         return deepcopy(row) if isinstance(row, dict) else None
 
     async def async_set(self, code: str, mapping: dict[str, Any]) -> dict[str, Any]:
+        async with self._write_lock:
+            return await self._save_mapping(code, mapping)
+
+    async def _save_mapping(self, code: str, mapping: dict[str, Any]) -> dict[str, Any]:
         code = normalize_barcode(code)
         ingredient = mapping.get("ingredient") if isinstance(mapping.get("ingredient"), dict) else {}
         name = _text(ingredient.get("name"))
@@ -310,13 +316,15 @@ class Cook4MeBarcodeMappingStore:
         nutrition = normalize_nutrition(mapping.get("nutrition"))
         if nutrition is not None:
             row["nutrition"] = nutrition
-        self._data[code] = row
-        if len(self._data) > _MAX_MAPPINGS:
+        data = deepcopy(self._data)
+        data[code] = row
+        if len(data) > _MAX_MAPPINGS:
             oldest = sorted(
-                self._data,
-                key=lambda key: float(self._data[key].get("updatedAt") or 0),
-            )[: len(self._data) - _MAX_MAPPINGS]
+                data,
+                key=lambda key: float(data[key].get("updatedAt") or 0),
+            )[: len(data) - _MAX_MAPPINGS]
             for key in oldest:
-                self._data.pop(key, None)
-        await self._store.async_save(deepcopy(self._data))
+                data.pop(key, None)
+        await self._store.async_save(data)
+        self._data = data
         return deepcopy(row)

@@ -13,7 +13,8 @@ from .costs import (
     _text,
     lookup_open_prices,
 )
-from .inventory import stock_for_ingredient, reserve_lot, convert_amount, inventory_identity, normalize_inventory
+from .stock_allocation import allocate_stock
+from .inventory import stock_for_ingredient, convert_amount, inventory_identity, normalize_inventory
 from .price_measurements import price_options
 from .price_benchmarks import add_budget_estimates
 from .price_allowances import price_confidence
@@ -94,16 +95,13 @@ def calculate_recipe_cost(
     Currency values are never converted or combined across currencies.
     """
     stock = normalize_inventory(inventory)
-    used = {}
     wanted_currency = _currency(currency) or _currency(store.settings.get("currency"))
     wanted_country = _country(country) or _country(store.settings.get("country"))
     totals: dict[str, float] = {}
     rows: list[dict[str, Any]] = []
 
-    for raw in recipe.get("ingredients") or []:
-        ingredient = _ingredient(raw)
-        if ingredient is None:
-            continue
+    ingredients = [item for raw in recipe.get("ingredients") or [] if (item := _ingredient(raw)) is not None]
+    for ingredient, allocated in zip(ingredients, allocate_stock(stock, ingredients)):
         ident = inventory_identity(ingredient)
         amount = ingredient.get("quantity")
         unit = _text(ingredient.get("unit"))
@@ -131,7 +129,7 @@ def calculate_recipe_cost(
         evidence: list[dict[str, Any]] = []
         quantity_estimate = (ingredient["priceOptions"][0].get("estimate")
                              if ingredient.get("priceOptions") else None)
-        stock_row = _stock_row(stock, ingredient, used)
+        stock_row = allocated
         stock_unit = _text((stock_row or {}).get("unit")) or unit
 
         if stock_row and not stock_row.get("unlimited"):
@@ -157,7 +155,6 @@ def calculate_recipe_cost(
                             exact += take
                         if kind not in kinds:
                             kinds.append(kind)
-                reserve_lot(used, lot, take, unit)
                 remaining -= take
 
         # Unpriced stock can use an explicit ingredient estimate too.
