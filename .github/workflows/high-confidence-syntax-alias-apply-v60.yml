@@ -34,7 +34,7 @@ jobs:
       - name: Patch compiler, nutrition loader, and alias regressions
         run: |
           set -Eeuo pipefail
-          python tools/patch_high_confidence_syntax_aliases_v60.py
+          python tools/run_high_confidence_syntax_alias_patch_v60.py
           git diff --check
 
       - name: Run focused semantic and nutrition regressions
@@ -129,8 +129,6 @@ jobs:
           if old_review_ids:
               raise SystemExit('historical nutrition review IDs were not canonicalized: ' + ', '.join(sorted(old_review_ids)[:10]))
 
-          # The one known conflict-free semantic-confirmation target must now map
-          # through the canonical alias while the excluded icing-sugar conflict stays old.
           soy_source = 'local:uk:7f55d17243fdf6f4ebe8'
           soy_old = 'concept:food:5cb168ac6c17e3fa92c8'
           soy_target = alias_map.get(soy_old)
