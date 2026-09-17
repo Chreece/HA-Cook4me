@@ -1,0 +1,60 @@
+name: Audit high-confidence semantic syntax impact v60
+
+on:
+  push:
+    branches:
+      - cook4me-ingredient-semantic-confirmation-v60
+    paths:
+      - 'tools/audit_high_confidence_semantic_syntax_impact_v60.py'
+      - '.github/workflows/high-confidence-semantic-syntax-impact-v60.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit-impact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Build review-only ledger impact audit
+        run: |
+          set -Eeuo pipefail
+          python tools/audit_high_confidence_semantic_syntax_impact_v60.py \
+            --review-root tools \
+            --output "$RUNNER_TEMP/high-confidence-semantic-syntax-impact-v60.json" \
+            | tee "$RUNNER_TEMP/high-confidence-semantic-syntax-impact-v60-summary.json"
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          payload = json.loads(
+              Path(os.environ['RUNNER_TEMP'], 'high-confidence-semantic-syntax-impact-v60.json').read_text(encoding='utf-8')
+          )
+          policy = payload.get('policy') or {}
+          for key in ('automaticApproval','repositoryMutated','providerIdentityAssigned','nutritionBindingsMutated'):
+              if policy.get(key) is not False:
+                  raise SystemExit(f'unsafe impact audit policy: {key}={policy.get(key)!r}')
+          summary = payload.get('summary') or {}
+          if int(summary.get('candidateGroupCount') or 0) != 123:
+              raise SystemExit(f"unexpected clean-target syntax group count: {summary.get('candidateGroupCount')}")
+          if int(summary.get('collapsedConceptCount') or 0) != 142:
+              raise SystemExit(f"unexpected syntax concept collapse count: {summary.get('collapsedConceptCount')}")
+          print('references', summary.get('referencedCollapsedConceptCount'))
+          print('semantic-confirmations', summary.get('semanticConfirmationReferenceCount'))
+          print('nutrition-reviews', summary.get('nutritionReviewReferenceCount'))
+          print('nutrition-conflicts', summary.get('nutritionConflictCount'))
+          PY
+      - name: Upload impact evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: high-confidence-semantic-syntax-impact-v60-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/high-confidence-semantic-syntax-impact-v60.json
+            ${{ runner.temp }}/high-confidence-semantic-syntax-impact-v60-summary.json
+          if-no-files-found: error
+          retention-days: 7
