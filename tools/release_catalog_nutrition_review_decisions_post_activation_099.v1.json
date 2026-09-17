@@ -1,0 +1,77 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Lychees in syrup",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Lychee",
+      "fdcId": 2709240,
+      "notes": "Manual semantic review binds Cook4Me 'Lychees in syrup' to USDA FNDDS 'Lychee'. The target is explicitly lychee fruit and its own pinned evidence ranks the lychee record first. Confidence remains medium because the USDA row does not include syrup, so added sugar and liquid dilution are not represented; this review does not generalize to other canned fruit or fruit cocktails.",
+      "reviewTargetId": "concept:food:ea0a417e9234a381d024",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Marsala wine",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Wine, red",
+      "fdcId": 2710688,
+      "notes": "Manual semantic review binds Cook4Me 'Marsala wine' to USDA FNDDS 'Wine, red'. Marsala is a fortified grape wine and the target's own pinned evidence contains this generic red-wine record. Confidence remains medium because Marsala can be dry or sweet and is fortified, so alcohol, sugar, and residual-solids composition can differ from generic red wine; this review does not generalize to vinegar or nonalcoholic wine.",
+      "reviewTargetId": "concept:food:68402011616a1fb3b994",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Fruit mousse",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Mousse",
+      "fdcId": 2705698,
+      "notes": "Manual semantic review binds Cook4Me 'Fruit mousse' to USDA FNDDS 'Mousse'. The target is explicitly a mousse preparation and its own pinned evidence ranks the generic mousse record first. Confidence remains medium because fruit type, dairy/egg content, sugar, and aeration are unspecified; this review is a preparation-form proxy and does not generalize to smoothies, fruit butter, or fruit cake.",
+      "reviewTargetId": "concept:food:35ebdd928cd008d9b273",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Vanilla pod",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Vanilla extract",
+      "fdcId": 173471,
+      "notes": "Manual semantic review binds provider identity 'Vanilla pod' to USDA SR Legacy 'Vanilla extract'. Vanilla is the defining flavor source and the target's own pinned evidence ranks vanilla extract first. Confidence remains medium because a whole pod and an extract differ substantially in solvent, water, sugar, and concentration; this review is a vanilla-flavor proxy and does not imply identical composition.",
+      "reviewTargetId": "M_FOOD_223",
+      "reviewTargetKind": "provider-identity"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Foie gras marinated in milk and patted dry",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Pate de foie gras, canned (goose liver pate), smoked",
+      "fdcId": 171100,
+      "notes": "Manual semantic review binds Cook4Me 'Foie gras marinated in milk and patted dry' to USDA SR Legacy 'Pate de foie gras, canned (goose liver pate), smoked'. The target is explicitly foie gras and its own pinned evidence ranks this foie-gras record first. Confidence remains medium because pâté processing, smoking, canning, seasoning, and milk marination differ from the source preparation; this review is a same-food-family nutritional proxy and does not generalize to ordinary liver.",
+      "reviewTargetId": "concept:food:7ed359d82fb2f7861ee2",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "d28049eb946a10ba90e42973b05cbde5a66a500061fadde1d936bcc0771f8f1b"
+}
