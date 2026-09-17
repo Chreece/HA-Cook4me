@@ -47,3 +47,7 @@ Validation:
 Home Assistant and appliance access are unavailable here; installation and live
 device operation must be verified on the user's host. This change does not claim
 to fix the previously reported appliance firmware exception.
+
+Published runtime commit: `e531b21563d8749e75e34c7970a20aeecf3d043d`.
+
+Verified runtime tree: `9fda382978ff2b0146b180d578b58ac044184e61`.
