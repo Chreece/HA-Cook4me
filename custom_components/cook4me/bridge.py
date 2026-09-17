@@ -35,7 +35,7 @@ class Cook4MeInternalError(HomeAssistantError):
     pass
 
 class Cook4MeDietaryError(HomeAssistantError):
-    """The official ingredients cannot satisfy the requested dietary rules."""
+    """The requested dietary selection is invalid or no longer exists."""
 
 class Cook4MeBridge:
     def __init__(self, hass: HomeAssistant, entry: ConfigEntry) -> None:
@@ -440,6 +440,7 @@ class Cook4MeBridge:
         }
 
     def _profile_match_or_raise(self, meta: dict[str, Any], *, diet: str | None = None, diet_filters: dict | None = None) -> dict[str, Any]:
+        """Validate the selection and annotate guidance; food rules never gate delivery."""
         if diet not in (None, "profile", "omnivore", "pescatarian", "vegetarian", "vegan"):
             raise Cook4MeDietaryError("Invalid Cook4Me diet selection")
         # Recompute from official ingredients; client match/substitution flags
@@ -448,15 +449,6 @@ class Cook4MeBridge:
             annotated = self.recipe_hub.annotate(meta, diet=diet, **({"diet_filters": diet_filters} if diet_filters is not None else {}))
         except ValueError as exc:
             raise Cook4MeDietaryError(str(exc)) from exc
-        match = annotated.get("match") or {}
-        adapted = (match.get("eligibleWithSubstitutions") is True
-                   and match.get("requiresSubstitutions") is True
-                   and bool(match.get("substitutions")))
-        if match.get("safe") is not True and not adapted:
-            violations = ", ".join(match.get("violations") or []) or "dietary profile"
-            raise Cook4MeDietaryError(
-                f"Recipe is blocked by the Cook4Me dietary/allergy profile: {violations}"
-            )
         return annotated
 
     async def _async_send_resolved(
@@ -495,7 +487,7 @@ class Cook4MeBridge:
         title: str | None = None,
     ) -> dict[str, Any]:
         # Exact-ID service calls are still resolved through official recipe detail
-        # so dietary/allergy rules cannot be bypassed by skipping the dashboard.
+        # so identity and ingredient guidance also apply outside the dashboard.
         grouping_functional_id = str(grouping_functional_id).strip()
         recipe_functional_id = str(recipe_functional_id).strip()
         if not grouping_functional_id or not recipe_functional_id:

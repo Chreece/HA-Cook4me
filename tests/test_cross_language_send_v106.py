@@ -90,14 +90,18 @@ class OriginalLanguageSendTests(unittest.IsolatedAsyncioTestCase):
         self.assertIn('identity', result['error'])
         self.bridge._run_client_json.assert_not_awaited()
 
-    async def test_dietary_checks_remain_server_authoritative(self):
+    async def test_dietary_guidance_remains_authoritative_without_blocking_original_language(self):
         await self.prepare()
-        self.bridge._profile_match_or_raise = Mock(side_effect=self.mod.Cook4MeDietaryError('Blocked allergy'))
-        self.request.update(match={'safe': True}, ingredients=['forged safe food'])
+        self.meta['ingredients'] = ['duck', 'gelatin']
+        self.request.update(sendDiet='vegetarian', match={'safe': True}, ingredients=['forged safe food'])
         result = await self.send(self.bridge, self.request)
-        self.assertEqual(result['reason'], 'dietary_profile')
-        self.bridge._profile_match_or_raise.assert_called_once_with(self.meta, diet='omnivore')
-        self.bridge._run_client_json.assert_not_awaited()
+        self.assertTrue(result['sent'])
+        self.assertTrue(result['result']['verified'])
+        sent = result['result']['recipe']
+        self.assertEqual(sent['ingredients'], ['duck', 'gelatin'])
+        self.assertFalse(sent['match']['safe'])
+        self.assertEqual(len(sent['match']['ingredientChanges']), 2)
+        self.bridge._run_client_json.assert_awaited_once_with('send-recipe', self.meta['groupingFunctionalId'], self.variant, timeout=45)
 
     async def test_cloud_rejection_is_reported_without_an_automatic_retry(self):
         await self.prepare()

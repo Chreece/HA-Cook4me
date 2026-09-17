@@ -411,10 +411,34 @@ def _profile_rules_signature(profile):
     return json.dumps([profile.get("diet") or "omnivore", ids, terms], ensure_ascii=False, separators=(",", ":"))
 
 
+def _ingredient_changes(recipe, profile, substitutions):
+    """Identify concrete incompatible rows for cooking, including unresolved ones."""
+    diet = str(profile.get("diet") or "omnivore").lower()
+    group = {"pescatarian": 0, "vegetarian": 1, "vegan": 2}.get(diet)
+    suggested = {row["ingredientIndex"]: row for row in substitutions}
+    changes = []
+    for index, item in enumerate(recipe.get("ingredients") or []):
+        text = _ingredient_text(item)
+        reasons = []
+        if group is not None and (_diet_hits(text)[group] or _explicit_diet_conflict(item, diet)):
+            reasons.append("diet:" + diet)
+        for kind, key in (("allergy", "allergies"), ("avoid", "avoid")):
+            reasons.extend(f"{kind}:{term}" for term in profile.get(key) or []
+                           if str(term).strip() and _matches_term(text, str(term)))
+        reasons.extend("excluded:" + name for name in _profile_excluded_matches({"ingredients": [item]}, profile))
+        if not reasons:
+            continue
+        names = recipe_ingredient_names({"ingredients": [item]})
+        changes.append({"ingredientIndex": index, "original": names[0] if names else text,
+                        "reasons": reasons, "replacement": suggested.get(index, {}).get("replacement"),
+                        "advisory": True})
+    return changes
+
+
 def score_recipe(recipe: dict[str, Any], profile: dict[str, Any]) -> dict[str, Any]:
     """Score one recipe against explicit pantry/diet restrictions.
 
-    Diet/allergy exclusions are hard gates; pantry matching is a ranking signal.
+    Diet/allergy exclusions filter discovery; they do not gate device delivery.
     The result explicitly labels locally inferred decisions.
     """
     diet = str(profile.get("diet") or "omnivore").lower()
@@ -482,6 +506,7 @@ def score_recipe(recipe: dict[str, Any], profile: dict[str, Any]) -> dict[str, A
         "dietCheckVersion": 76,
         "dietRulesSignature": _profile_rules_signature(profile),
         "substitutions": substitutions,
+        "ingredientChanges": _ingredient_changes(recipe, profile, substitutions),
         "eligibleWithSubstitutions": complete,
         "requiresSubstitutions": complete,
         "score": round(score, 1),

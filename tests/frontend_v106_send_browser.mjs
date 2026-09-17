@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import {fileURLToPath} from 'node:url';
 import {execFileSync} from 'node:child_process';
+const build=process.env.COOK4ME_TEST_BUILD||'106';
 const root=fileURLToPath(new URL('..',import.meta.url));
 const fixture=JSON.parse(execFileSync(process.env.PYTHON||'python3',['tests/build_cross_language_fixture_v106.py'],{cwd:root,maxBuffer:5_000_000}));
 const {chromium}=createRequire(import.meta.url)('playwright');
@@ -9,10 +10,10 @@ const browser=await chromium.launch({headless:true,executablePath:process.env.CO
 try{
  const page=await browser.newPage(),browserErrors=[];page.on('pageerror',e=>browserErrors.push(e.message));
  await page.route('http://cook4me.test/**',r=>r.fulfill({contentType:'text/html',body:'<!doctype html><body></body>'}));
- await page.goto('http://cook4me.test/');await page.addScriptTag({path:root+'/custom_components/cook4me/frontend/cook4me-panel-v106-bundle.js'});
- await page.evaluate(fixture=>{
+ await page.goto('http://cook4me.test/');await page.addScriptTag({path:root+`/custom_components/cook4me/frontend/cook4me-panel-v${build}-bundle.js`});
+ await page.evaluate(({fixture,build})=>{
   window.fixture=fixture;window.calls=[];window.errors=[];window.messages=[];window.finished=0;
-  globalThis.customElements.define('cook4me-v106-test',class extends globalThis.customElements.get('cook4me-recipe-hub-panel-v106'){connectedCallback(){} disconnectedCallback(){}});
+  globalThis.customElements.define('cook4me-v106-test',class extends globalThis.customElements.get(`cook4me-recipe-hub-panel-v${build}`){connectedCallback(){} disconnectedCallback(){}});
   const p=window.panel=document.createElement('cook4me-v106-test');
   p._entryId='one';p._hass={language:'el',user:{id:'alice'},config:{country:'DE'},states:{},connection:{sendMessagePromise:async msg=>{
    calls.push(structuredClone(msg));
@@ -31,7 +32,7 @@ try{
    const body=p._v67Dom(p._v66Body(recipe,false,{sections:new Set(),device:'one'}));
    p.shadowRoot.replaceChildren(body);p._v66BindRecipe(body,recipe,false);
   };
- },fixture);
+ },{fixture,build});
  for(let index=0;index<fixture.length;index++){
   await page.evaluate(index=>prepare(index),index);
   const original=await page.evaluate(()=>JSON.stringify(recipe));
@@ -68,7 +69,7 @@ try{
  const blocked=await page.evaluate(async()=>{
   prepare(0);window.detail=async()=>({...structuredClone(recipe),match:{safe:false}});await panel._v66Send(recipe,'one');
   return {calls,errors};
- });assert.equal(blocked.calls.some(r=>r.type.endsWith('/send_multi')),false);assert.equal(blocked.errors.length,1);
+ });assert.equal(blocked.calls.some(r=>r.type.endsWith('/send_multi')),Number(build)>=107);assert.equal(blocked.errors.length,Number(build)<107?1:0);
  const mismatched=await page.evaluate(async()=>{
   prepare(0);window.detail=async()=>({...structuredClone(recipe),displayVariantId:'another-serving'});await panel._v66Send(recipe,'one');return {calls,errors};
  });assert.equal(mismatched.calls.some(r=>r.type.endsWith('/send_multi')),false);assert.equal(mismatched.errors.length,1);
@@ -76,5 +77,5 @@ try{
   prepare(0);window.detail=async()=>{panel._v63Filters.diet='vegan';return structuredClone(recipe);};await panel._v66Send(recipe,'one');return {calls,errors};
  });assert.equal(stale.calls.some(r=>r.type.endsWith('/send_multi')),false);assert.equal(stale.errors.length,1);
  assert.deepEqual(browserErrors,[]);
- console.log('v106: Send clicks for four real foreign editions, exact IDs/servings, preferred device-language mapping, existing queue path, target/filter scoping, stale and blocked requests, and localized unconfirmed-load errors passed');
+ console.log(`v${build}: Send clicks for four real foreign editions, exact IDs/servings, preferred device-language mapping, existing queue path, target/filter scoping, stale requests, dietary delivery policy, and localized unconfirmed-load errors passed`);
 }finally{await browser.close();}

@@ -46,7 +46,7 @@ def _compact_match(value: Any) -> dict[str, Any] | None:
         "nutritionGoalCoverage", "calorieTarget", "caloriePerServing",
         "calorieDelta", "calorieTargetBonus", "todayBaseScore",
         "safe", "diet", "dietCheckVersion", "dietRulesSignature", "dietary", "violations",
-        "requiresSubstitutions", "eligibleWithSubstitutions", "substitutions",
+        "requiresSubstitutions", "eligibleWithSubstitutions", "substitutions", "ingredientChanges",
         "missingIngredientCount", "quantityShortageCount",
     )
     out = {key: deepcopy(value[key]) for key in keys if key in value}

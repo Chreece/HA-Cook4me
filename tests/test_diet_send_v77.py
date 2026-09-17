@@ -1,4 +1,4 @@
-"""Exercise original-program delivery with server-checked diet replacements."""
+"""Exercise original-program delivery with advisory dietary guidance."""
 import asyncio
 from copy import deepcopy
 import unittest
@@ -48,33 +48,33 @@ class DietSendTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual([row["ingredientIndex"] for row in sent["match"]["substitutions"]], [0, 1])
         self.assertEqual(self.bridge.recipe_hub.profile["diet"], "omnivore")
 
-    async def test_partial_or_forged_replacements_never_send_or_replace_an_existing_queue(self):
+    async def test_incomplete_replacements_send_but_client_flags_cannot_rewrite_guidance(self):
         await self.prepare(["duck", "gelatin"])
-        await self.store.async_queue_send({"sendVariantId": "previous"}, reason="busy")
-        previous = self.store.queued_send
-        # Neither submitted ingredients nor fabricated match flags may waive
-        # the official gelatin ingredient's unresolved replacement.
         result = await self.send(self.bridge, {"sendVariantId": "original-variant", "sendDiet": "vegetarian",
             "ingredients": ["rice"], "match": {"safe": True, "eligibleWithSubstitutions": True}})
-        self.assertFalse(result["sent"])
+        self.assertTrue(result["sent"])
         self.assertFalse(result["queued"])
-        self.assertEqual(result["reason"], "dietary_profile")
-        self.assertEqual(self.store.queued_send, previous)
-        self.bridge._run_client_json.assert_not_awaited()
+        sent = result["result"]["recipe"]
+        self.assertEqual(sent["ingredients"], ["duck", "gelatin"])
+        self.assertFalse(sent["match"]["safe"])
+        self.assertFalse(sent["match"]["eligibleWithSubstitutions"])
+        self.assertEqual([r["ingredientIndex"] for r in sent["match"]["ingredientChanges"]], [0, 1])
+        self.assertIsNone(sent["match"]["ingredientChanges"][1]["replacement"])
+        self.bridge._run_client_json.assert_awaited_once_with("send-recipe", "original-group", "original-variant", timeout=45)
 
-    async def test_selected_diet_keeps_target_allergies_and_avoid_rules(self):
+    async def test_selected_diet_keeps_allergy_and_avoid_guidance_without_delivery_gate(self):
         await self.prepare()
         self.bridge.recipe_hub._data["profile"]["allergies"] = ["shellfish"]
         result = await self.send(self.bridge, {"sendVariantId": "original-variant", "sendDiet": "vegetarian"})
-        self.assertFalse(result["sent"])
-        self.assertFalse(result["queued"])
-        self.bridge._run_client_json.assert_not_awaited()
+        self.assertTrue(result["sent"])
+        self.assertIn("allergy:shellfish", result["result"]["recipe"]["match"]["violations"])
         self.bridge.recipe_hub._data["profile"].update(allergies=["soy"], avoid=["mushrooms", "chickpeas"])
-        with self.assertRaises(self.mod.Cook4MeDietaryError):
-            await self.bridge.async_send_variant("original-variant", diet="vegetarian")
-        self.bridge._run_client_json.assert_not_awaited()
+        direct = await self.bridge.async_send_variant("original-variant", diet="vegetarian")
+        self.assertEqual(direct["recipe"]["match"]["substitutions"], [])
+        self.assertTrue(all(row["replacement"] is None for row in direct["recipe"]["match"]["ingredientChanges"]))
+        self.assertEqual(self.bridge._run_client_json.await_count, 2)
 
-    async def test_queue_persists_selected_diet_and_rechecks_current_allergies(self):
+    async def test_queue_persists_diet_and_refreshes_current_allergy_guidance(self):
         await self.prepare()
         self.bridge.data = {"connected": False}
         result = await self.send(self.bridge, {"sendVariantId": "original-variant", "sendDiet": "vegetarian"})
@@ -83,13 +83,10 @@ class DietSendTests(unittest.IsolatedAsyncioTestCase):
         self.bridge.data = {"connected": True}
         self.bridge.recipe_hub._data["profile"]["allergies"] = ["shellfish"]
         await self.flush(self.bridge)
-        self.bridge._run_client_json.assert_not_awaited()
-        self.assertIsNotNone(self.store.queued_send)
-        self.bridge.recipe_hub._data["profile"]["allergies"] = []
-        await self.flush(self.bridge)
         self.bridge._run_client_json.assert_awaited_once_with("send-recipe", "original-group", "original-variant", timeout=45)
         checked = self.bridge.recipe_hub.async_record_send.await_args.args[0]
         self.assertEqual(checked["match"]["diet"], "vegetarian")
+        self.assertIn("allergy:shellfish", checked["match"]["violations"])
         self.assertEqual(len(checked["match"]["substitutions"]), 2)
         self.assertIsNone(self.store.queued_send)
 

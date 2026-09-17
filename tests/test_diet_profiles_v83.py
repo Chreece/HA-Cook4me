@@ -117,17 +117,21 @@ class DietProfileTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(rows[0]['match']['diet'],'vegan')
         self.assertIn('dietRulesSignature',rows[0]['match'])
 
-    async def test_send_and_queue_recheck_the_current_member_rules(self):
+    async def test_send_and_queue_refresh_current_member_guidance_without_blocking(self):
         await self.prepare([{'ingredientId':'rice','name':'Rice'}]); await self.save()
-        blocked=await self.send(self.bridge,{'sendVariantId':'original-variant','sendFilters':{'dietProfile':'member:alex'}})
-        self.assertFalse(blocked['sent']);self.assertFalse(blocked['queued']);self.bridge._run_client_json.assert_not_awaited()
+        sent=await self.send(self.bridge,{'sendVariantId':'original-variant','sendFilters':{'dietProfile':'member:alex'}})
+        self.assertTrue(sent['sent']);self.assertFalse(sent['queued'])
+        self.assertIn('excluded:Rice',sent['result']['recipe']['match']['violations'])
+        self.bridge._run_client_json.reset_mock()
         self.profiles['members'][0]['excludedIngredients']=[];await self.save();self.bridge.data={'connected':False}
         queued=await self.send(self.bridge,{'sendVariantId':'original-variant','sendFilters':{'dietProfile':'member:alex'}})
         self.assertTrue(queued['queued']);self.assertEqual(self.store.queued_send['dietFilters']['dietProfile'],'member:alex')
         self.profiles['members'][0]['excludedIngredients']=[{'ingredientId':'rice','name':'Rice'}];await self.save();self.bridge.data={'connected':True}
-        await self.flush(self.bridge);self.bridge._run_client_json.assert_not_awaited();self.assertIsNotNone(self.store.queued_send)
-        self.profiles['members'][0]['excludedIngredients']=[];await self.save();await self.flush(self.bridge)
+        await self.flush(self.bridge)
         self.bridge._run_client_json.assert_awaited_once();self.assertIsNone(self.store.queued_send)
+        checked=self.bridge.recipe_hub.async_record_send.await_args.args[0]
+        self.assertIn('excluded:Rice',checked['match']['violations'])
+        self.assertEqual(checked['match']['ingredientChanges'][0]['ingredientIndex'],0)
 
     async def test_deleted_member_cannot_silently_send_as_household(self):
         await self.prepare(['rice']);await self.save()
