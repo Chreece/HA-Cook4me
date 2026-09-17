@@ -18,7 +18,7 @@ from .price_quantities import explicit_product_basis
 from .price_food_forms import compatible_food_form, category_unit_basis, compatible_category_basis, consistent_package_basis
 from .price_snapshot import country_locations, snapshot_observations
 from .const import DOMAIN
-from .inventory import convert_amount, inventory_identity, normalize_inventory
+from .inventory import stock_for_ingredient, reserve_lot, convert_amount, inventory_identity, normalize_inventory
 
 _STORAGE_VERSION = 1
 _MAX_REFERENCES = 5000
@@ -510,12 +510,8 @@ async def async_store_open_price_result(
     )
 
 
-def _inventory_row(inventory: list[dict[str, Any]], ingredient: dict[str, Any]) -> dict[str, Any] | None:
-    ident = inventory_identity(ingredient)
-    for row in inventory:
-        if inventory_identity(row) == ident:
-            return row
-    return None
+def _inventory_row(inventory, ingredient, used=None):
+    return stock_for_ingredient(inventory, ingredient, used)
 
 
 def _reference_for_lot(
@@ -546,6 +542,7 @@ def calculate_recipe_cost(
     country: str = "",
 ) -> dict[str, Any]:
     stock = normalize_inventory(inventory)
+    used = {}
     target_currency = _currency(currency) or _currency(store.settings.get("currency"))
     target_country = _country(country) or _country(store.settings.get("country"))
     ingredient_costs: list[dict[str, Any]] = []
@@ -577,7 +574,7 @@ def calculate_recipe_cost(
 
         required_amount += float(quantity)
         remaining = float(quantity)
-        row = _inventory_row(stock, ingredient)
+        row = _inventory_row(stock, ingredient, used)
         row_unit = _text((row or {}).get("unit")) or unit
         costs: dict[str, float] = {}
         sources: list[str] = []
@@ -613,6 +610,7 @@ def calculate_recipe_cost(
                             exact_covered += take
                         if source_kind and source_kind not in sources:
                             sources.append(source_kind)
+                reserve_lot(used, lot, take, unit)
                 remaining -= take
 
         if remaining > 1e-9:

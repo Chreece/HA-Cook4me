@@ -13,7 +13,7 @@ from .costs import (
     _text,
     lookup_open_prices,
 )
-from .inventory import convert_amount, inventory_identity, normalize_inventory
+from .inventory import stock_for_ingredient, reserve_lot, convert_amount, inventory_identity, normalize_inventory
 from .price_measurements import price_options
 from .price_benchmarks import add_budget_estimates
 from .price_allowances import price_confidence
@@ -53,9 +53,8 @@ def _ingredient(item: Any) -> dict[str, Any] | None:
     return out
 
 
-def _stock_row(stock: list[dict[str, Any]], ingredient: dict[str, Any]) -> dict[str, Any] | None:
-    wanted = inventory_identity(ingredient)
-    return next((row for row in stock if inventory_identity(row) == wanted), None)
+def _stock_row(stock, ingredient, used=None):
+    return stock_for_ingredient(stock, ingredient, used)
 
 
 def _lot_reference(
@@ -95,6 +94,7 @@ def calculate_recipe_cost(
     Currency values are never converted or combined across currencies.
     """
     stock = normalize_inventory(inventory)
+    used = {}
     wanted_currency = _currency(currency) or _currency(store.settings.get("currency"))
     wanted_country = _country(country) or _country(store.settings.get("country"))
     totals: dict[str, float] = {}
@@ -131,7 +131,7 @@ def calculate_recipe_cost(
         evidence: list[dict[str, Any]] = []
         quantity_estimate = (ingredient["priceOptions"][0].get("estimate")
                              if ingredient.get("priceOptions") else None)
-        stock_row = _stock_row(stock, ingredient)
+        stock_row = _stock_row(stock, ingredient, used)
         stock_unit = _text((stock_row or {}).get("unit")) or unit
 
         if stock_row and not stock_row.get("unlimited"):
@@ -157,6 +157,7 @@ def calculate_recipe_cost(
                             exact += take
                         if kind not in kinds:
                             kinds.append(kind)
+                reserve_lot(used, lot, take, unit)
                 remaining -= take
 
         # Unpriced stock can use an explicit ingredient estimate too.

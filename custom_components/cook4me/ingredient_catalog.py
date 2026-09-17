@@ -353,6 +353,9 @@ def enrich_match_with_house_keys(
 ) -> dict[str, Any]:
     result = deepcopy(match)
     house = normalize_house_ingredients(house_ingredients)
+    for row in house_ingredients if isinstance(house_ingredients, list) else []:
+        if isinstance(row, dict):
+            house.extend(link for lot in row.get("lots") or [] for link in lot.get("ingredientLinks") or [] if isinstance(link, dict))
     house_keys = {row["key"] for row in house if row.get("key")}
     house_names = {_norm(row["name"]) for row in house if row.get("name")}
     matched_names = {_norm(name) for name in result.get("matchedIngredients") or []}

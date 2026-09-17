@@ -146,6 +146,9 @@ async def ws_barcode_lookup(hass, connection, msg):
             current = next((row for row in catalog if key and (row.get("key") == key or key in (row.get("sourceIngredientIds") or []))
                             or inventory_identity(row) == inventory_identity(known["ingredient"])), None)
             known = {**known, "ingredient": current} if current else {**known, "ingredient": None}
+        if known:
+            from .product_packages import resolve_ingredient_links
+            known["ingredientLinks"] = resolve_ingredient_links(known.get("ingredientLinks") or [known.get("ingredient")], catalog)
         connection.send_result(msg["id"], {"barcode": code, "product": product, "mapping": known,
             "suggestions": suggestions, "match": confident_match(suggestions), "status": "review"})
     except Exception as exc:
@@ -208,9 +211,12 @@ async def ws_product_details(hass, connection, msg):
     try:
         bridge = _authorized(hass, connection, msg)
         row, lot = find_package(bridge.recipe_hub.profile.get("houseIngredients"), msg["lot_id"])
+        version = package_version(row, lot)
         catalog = await _catalog(hass, bridge, msg)
         ingredient = next((item for item in catalog if inventory_identity(item) == inventory_identity(row)
                            or row.get("key") in (item.get("sourceIngredientIds") or [])), row)
+        from .product_packages import resolve_ingredient_links
+        lot = {**lot, "ingredientLinks": resolve_ingredient_links(lot.get("ingredientLinks") or [ingredient], catalog)}
         nutrition_store = await nutrition_store_for_bridge(bridge)
         nutrition = next((record.get("nutrition") for records in nutrition_store.stock_lots.values()
                           for record in records if record.get("inventoryLotId") == lot["id"]), None)
@@ -219,7 +225,7 @@ async def ws_product_details(hass, connection, msg):
         paid = max(prices, key=lambda ref: str(ref.get("updatedAt") or ""), default=None)
         connection.send_result(msg["id"], {"lot": lot, "unit": row.get("unit", ""),
             "ingredient": {"key": ingredient.get("key") or ingredient.get("ingredientId") or ingredient.get("id"), "name": ingredient["name"]},
-            "nutrition": nutrition, "paidPrice": paid, "version": package_version(row, lot)})
+            "nutrition": nutrition, "paidPrice": paid, "version": version})
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
 
@@ -250,6 +256,7 @@ async def ws_product_remove(hass, connection, msg):
                                   vol.Required("unit"): str, vol.Optional("language"): str,
                                   vol.Optional("best_before", default=""): str, vol.Optional("lot_metadata", default={}): dict,
                                   vol.Optional("nutrition"): dict, vol.Optional("paid_price"): dict,
+                                  vol.Optional("ingredient_links"): [dict],
                                   vol.Optional("package_count", default=1): vol.All(int, vol.Range(min=1, max=100)),
                                   vol.Optional("edit_lot_id"): str, vol.Optional("expected_version"): str})
 @websocket_api.async_response
@@ -257,8 +264,11 @@ async def ws_product_add(hass, connection, msg):
     committed = False
     try:
         bridge = _authorized(hass, connection, msg)
+        from .product_packages import resolve_ingredient_links
+        catalog = await _catalog(hass, bridge, msg)
+        links = resolve_ingredient_links([msg["ingredient"], *msg.get("ingredient_links", [])], catalog, strict=True)
         ingredient_id = inventory_identity(msg["ingredient"])
-        ingredient = next((row for row in await _catalog(hass, bridge, msg) if inventory_identity(row) == ingredient_id), None)
+        ingredient = next((row for row in catalog if inventory_identity(row) == ingredient_id), None)
         if ingredient is None:
             raise ValueError("Choose an ingredient from the Cook4Me catalog")
         if not _quantity(msg["quantity"]) or not msg["unit"].strip():
@@ -277,6 +287,7 @@ async def ws_product_add(hass, connection, msg):
         if metadata.get("barcode"):
             metadata["barcode"] = normalize_barcode(metadata["barcode"])
         metadata["source"] = "reviewed_product"
+        metadata["ingredientLinks"] = links
         nutrition = None
         if "nutrition" in msg:
             raw = msg["nutrition"]
@@ -315,7 +326,7 @@ async def ws_product_add(hass, connection, msg):
             try:
                 if metadata.get("barcode"):
                     store = await v15._store(bridge)
-                    await store.async_set(metadata["barcode"], {"ingredient": ingredient, "quantity": msg["quantity"], "unit": msg["unit"],
+                    await store.async_set(metadata["barcode"], {"ingredient": ingredient, "ingredientLinks": links, "quantity": msg["quantity"], "unit": msg["unit"],
                         "productName": metadata.get("productName"), "brand": metadata.get("brand"), "nutrition": nutrition})
             except Exception:
                 warnings.append("Stock saved, but the barcode mapping could not be remembered.")

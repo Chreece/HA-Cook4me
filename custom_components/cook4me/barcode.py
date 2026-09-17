@@ -305,6 +305,8 @@ class Cook4MeBarcodeMappingStore:
             "brand": _text(mapping.get("brand")),
             "updatedAt": time.time(),
         }
+        from .inventory import normalize_ingredient_links
+        row["ingredientLinks"] = normalize_ingredient_links(mapping.get("ingredientLinks") or [ingredient])
         nutrition = normalize_nutrition(mapping.get("nutrition"))
         if nutrition is not None:
             row["nutrition"] = nutrition

@@ -10,7 +10,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
 
 from .const import DOMAIN
-from .inventory import convert_amount, inventory_identity, normalize_inventory
+from .inventory import stock_for_ingredient, reserve_requirement, convert_amount, inventory_identity, normalize_inventory
 from .today_logic import recipe_identity
 
 _STORAGE_VERSION = 1
@@ -172,12 +172,10 @@ def planned_requirements(slots: Any) -> list[dict[str, Any]]:
 
 def reservation_status(slots: Any, inventory: Any) -> dict[str, Any]:
     stock = normalize_inventory(inventory)
+    used = {}
     items: list[dict[str, Any]] = []
     for requirement in planned_requirements(slots):
-        row = next(
-            (item for item in stock if inventory_identity(item) == requirement["identity"]),
-            None,
-        )
+        row = stock_for_ingredient(stock, requirement, used)
         required = float(requirement["quantity"])
         unlimited = bool(row and row.get("unlimited"))
         # An absent ingredient is out of stock. An existing row with an
@@ -190,6 +188,8 @@ def reservation_status(slots: Any, inventory: Any) -> dict[str, Any]:
             if converted is not None:
                 available = max(0.0, float(converted))
         shortage = None if available is None else max(0.0, required - available)
+        if available is not None:
+            reserve_requirement(used, row, min(required, available), requirement["unit"])
         items.append({
             **requirement,
             "available": round(available, 9) if available is not None else None,

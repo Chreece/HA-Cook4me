@@ -64,7 +64,8 @@ def _relevant_inventory(recipe: dict[str, Any], inventory: Any) -> tuple[list[di
     reference_identities = set(wanted)
     for row in normalize_inventory(inventory):
         ident = inventory_identity(row)
-        if not ident or ident not in wanted:
+        linked = {inventory_identity(link) for lot in row.get("lots") or [] for link in lot.get("ingredientLinks") or []}
+        if not ident or not ({ident} | linked) & wanted:
             continue
         lots = []
         for raw in row.get("lots") or []:
@@ -78,6 +79,7 @@ def _relevant_inventory(recipe: dict[str, Any], inventory: Any) -> tuple[list[di
                 reference_identities.add(f"barcode:{barcode}")
             lots.append({
                 "id": lot_id,
+                "ingredientLinks": raw.get("ingredientLinks") or [],
                 "barcode": barcode,
                 "quantity": raw.get("quantity"),
                 "price": raw.get("price"),
@@ -112,7 +114,7 @@ def _reference_shape(store: Any, identities: set[str]) -> list[dict[str, Any]]:
 def pricing_fingerprint(recipe: dict[str, Any], inventory: Any, store: Any) -> str:
     stock, identities = _relevant_inventory(recipe, inventory)
     return _canonical_hash({
-        "calculatorVersion": 104,
+        "calculatorVersion": 114,
         "priceDate": datetime.now(timezone.utc).date().isoformat(),
         "settings": {
             "currency": _text(getattr(store, "settings", {}).get("currency")),

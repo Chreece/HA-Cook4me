@@ -99,7 +99,7 @@ class ProductCaptureTests(unittest.IsolatedAsyncioTestCase):
         self.results=[];self.errors=[]
         self.connection=runtime.NS(user=runtime.NS(id='user'),send_result=lambda _id,r:self.results.append(r),send_error=lambda _id,code,error:self.errors.append((code,error)))
         self.mapping=runtime.NS(get=lambda code:{'ingredient':{'key':'rice','name':'Rice'},'quantity':500,'unit':'g'},async_set=AsyncMock())
-        ns={'asyncio':asyncio,'hashlib':hashlib,'json':json,'base64':base64,'io':io,'Path':Path,'tempfile':tempfile,
+        ns={'__package__':runtime.PREFIX,'__name__':runtime.PREFIX+'.websocket_v33','asyncio':asyncio,'hashlib':hashlib,'json':json,'base64':base64,'io':io,'Path':Path,'tempfile':tempfile,
             '_authorized':lambda *args:self.bridge,
             '_catalog':AsyncMock(return_value=[{'key':'rice','name':'Rice'}]),
             'normalize_barcode':lambda code:code,

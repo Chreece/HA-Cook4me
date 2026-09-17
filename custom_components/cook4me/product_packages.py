@@ -42,3 +42,20 @@ async def replace_package_nutrition(store, inventory, lot_id, nutrition):
     # A failed write must not change the in-memory package label.
     await store._store.async_save(data)
     store._data = data
+
+
+def resolve_ingredient_links(values, catalog, *, strict=False):
+    from .inventory import normalize_ingredient_links
+    lookup = {}
+    for row in catalog:
+        lookup[inventory_identity(row)] = row
+        for key in row.get("sourceIngredientIds") or []:
+            lookup['k:' + key] = row
+    resolved = []
+    for item in values:
+        current = lookup.get(inventory_identity(item))
+        if current:
+            resolved.append(current)
+        elif strict:
+            raise ValueError("Choose every linked ingredient from the Cook4Me catalog")
+    return normalize_ingredient_links(resolved)

@@ -6,7 +6,7 @@ import re
 import unicodedata
 from typing import Any
 
-from .inventory import convert_amount, inventory_identity, normalize_inventory
+from .inventory import stock_for_ingredient, reserve_requirement, convert_amount, inventory_identity, normalize_inventory
 
 _NUTRITION_GOALS = {
     "balanced",
@@ -63,16 +63,13 @@ def _recipe_amount(item: dict[str, Any]) -> tuple[float | None, str]:
     return _number(weight.get("quantity")), _text(weight.get("unit"))
 
 
-def _find_stock(stock: list[dict[str, Any]], ingredient: dict[str, Any]) -> dict[str, Any] | None:
-    wanted = inventory_identity(ingredient)
-    if wanted:
-        row = next((row for row in stock if inventory_identity(row) == wanted), None)
-        if row is not None:
-            return row
+def _find_stock(stock, ingredient, used=None):
+    current = stock_for_ingredient(stock, ingredient, used)
+    if current is not None:
+        return current
     name = _norm(_ingredient_name(ingredient))
-    if not name:
-        return None
-    return next((row for row in stock if _norm(row.get("name")) == name), None)
+    fallback = next((row for row in stock if name and _norm(row.get("name")) == name), None)
+    return stock_for_ingredient(stock, fallback, used) if fallback else None
 
 
 def _availability_status(
@@ -104,6 +101,7 @@ def recipe_quantity_feasibility(
     that presence means enough stock exists.
     """
     stock = normalize_inventory(inventory)
+    used = {}
     availability_rows = availability if isinstance(availability, list) else []
     rows: list[dict[str, Any]] = []
     known_fractions: list[float] = []
@@ -128,7 +126,7 @@ def recipe_quantity_feasibility(
             continue
 
         required, required_unit = _recipe_amount(ingredient)
-        current = _find_stock(stock, ingredient)
+        current = _find_stock(stock, ingredient, used)
         ident = inventory_identity(current or ingredient)
         base: dict[str, Any] = {
             "identity": ident,
@@ -227,6 +225,7 @@ def recipe_quantity_feasibility(
         }
         rows.append(row)
         known_fractions.append(fraction)
+        reserve_requirement(used, current, min(available, required), required_unit)
         if missing > 1e-9:
             shortages.append(deepcopy(row))
 
