@@ -1,0 +1,413 @@
+{
+  "market": "DE",
+  "currency": "EUR",
+  "asOf": "2026-09-17",
+  "baselineCommit": "b7fd2c9f122fb7c9c009e018a5349fb0df40b05b",
+  "method": "Counts are language/serving variants and ingredient occurrences, without household prices. Each build uses its own identities, quantities and eligible dated references. Rough budgets and unmeasured zero allowances are separate from reference coverage.",
+  "before": {
+    "variants": 32163,
+    "ingredients": 230483,
+    "known": 134124,
+    "fallback": 42278,
+    "zeroAllowance": 13462,
+    "covered": 189864,
+    "knownComplete": 5749,
+    "budgetCompleteBeforeAllowance": 11465,
+    "budgetComplete": 15261,
+    "variantsWithAllowance": 11679,
+    "noKnownCost": 1509,
+    "noBudgetCost": 61
+  },
+  "after": {
+    "variants": 32163,
+    "ingredients": 230483,
+    "known": 134661,
+    "fallback": 41772,
+    "zeroAllowance": 13462,
+    "covered": 189895,
+    "knownComplete": 5764,
+    "budgetCompleteBeforeAllowance": 11465,
+    "budgetComplete": 15261,
+    "variantsWithAllowance": 11679,
+    "noKnownCost": 1503,
+    "noBudgetCost": 61
+  },
+  "delta": {
+    "variants": 0,
+    "ingredients": 0,
+    "known": 537,
+    "fallback": -506,
+    "zeroAllowance": 0,
+    "covered": 31,
+    "knownComplete": 15,
+    "budgetCompleteBeforeAllowance": 0,
+    "budgetComplete": 0,
+    "variantsWithAllowance": 0,
+    "noKnownCost": -6,
+    "noBudgetCost": 0
+  },
+  "changedIngredients": [
+    {
+      "ingredient": "Radish",
+      "before": {
+        "known": 0,
+        "fallback": 150,
+        "zeroAllowance": 0,
+        "missing": 5
+      },
+      "after": {
+        "known": 141,
+        "fallback": 0,
+        "zeroAllowance": 0,
+        "missing": 2
+      },
+      "delta": {
+        "known": 141,
+        "fallback": -150,
+        "zeroAllowance": 0,
+        "missing": -3
+      }
+    },
+    {
+      "ingredient": "Shiitake mushroom",
+      "before": {
+        "known": 0,
+        "fallback": 110,
+        "zeroAllowance": 0,
+        "missing": 70
+      },
+      "after": {
+        "known": 129,
+        "fallback": 12,
+        "zeroAllowance": 0,
+        "missing": 39
+      },
+      "delta": {
+        "known": 129,
+        "fallback": -98,
+        "zeroAllowance": 0,
+        "missing": -31
+      }
+    },
+    {
+      "ingredient": "Coconut cream",
+      "before": {
+        "known": 0,
+        "fallback": 127,
+        "zeroAllowance": 0,
+        "missing": 1
+      },
+      "after": {
+        "known": 127,
+        "fallback": 0,
+        "zeroAllowance": 0,
+        "missing": 1
+      },
+      "delta": {
+        "known": 127,
+        "fallback": -127,
+        "zeroAllowance": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Split pea",
+      "before": {
+        "known": 0,
+        "fallback": 105,
+        "zeroAllowance": 0,
+        "missing": 0
+      },
+      "after": {
+        "known": 105,
+        "fallback": 0,
+        "zeroAllowance": 0,
+        "missing": 0
+      },
+      "delta": {
+        "known": 105,
+        "fallback": -105,
+        "zeroAllowance": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Fresh shiitake mushrooms",
+      "before": {
+        "known": 0,
+        "fallback": 14,
+        "zeroAllowance": 0,
+        "missing": 0
+      },
+      "after": {
+        "known": 14,
+        "fallback": 0,
+        "zeroAllowance": 0,
+        "missing": 0
+      },
+      "delta": {
+        "known": 14,
+        "fallback": -14,
+        "zeroAllowance": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Split peas",
+      "before": {
+        "known": 0,
+        "fallback": 7,
+        "zeroAllowance": 0,
+        "missing": 0
+      },
+      "after": {
+        "known": 7,
+        "fallback": 0,
+        "zeroAllowance": 0,
+        "missing": 0
+      },
+      "delta": {
+        "known": 7,
+        "fallback": -7,
+        "zeroAllowance": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Shiitake mushrooms",
+      "before": {
+        "known": 0,
+        "fallback": 7,
+        "zeroAllowance": 0,
+        "missing": 0
+      },
+      "after": {
+        "known": 7,
+        "fallback": 0,
+        "zeroAllowance": 0,
+        "missing": 0
+      },
+      "delta": {
+        "known": 7,
+        "fallback": -7,
+        "zeroAllowance": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Dried split peas",
+      "before": {
+        "known": 0,
+        "fallback": 6,
+        "zeroAllowance": 0,
+        "missing": 0
+      },
+      "after": {
+        "known": 6,
+        "fallback": 0,
+        "zeroAllowance": 0,
+        "missing": 0
+      },
+      "delta": {
+        "known": 6,
+        "fallback": -6,
+        "zeroAllowance": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Radishes",
+      "before": {
+        "known": 0,
+        "fallback": 1,
+        "zeroAllowance": 0,
+        "missing": 0
+      },
+      "after": {
+        "known": 1,
+        "fallback": 0,
+        "zeroAllowance": 0,
+        "missing": 0
+      },
+      "delta": {
+        "known": 1,
+        "fallback": -1,
+        "zeroAllowance": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "daikon radish",
+      "before": {
+        "known": 0,
+        "fallback": 0,
+        "zeroAllowance": 0,
+        "missing": 0
+      },
+      "after": {
+        "known": 0,
+        "fallback": 9,
+        "zeroAllowance": 0,
+        "missing": 3
+      },
+      "delta": {
+        "known": 0,
+        "fallback": 9,
+        "zeroAllowance": 0,
+        "missing": 3
+      }
+    }
+  ],
+  "nextReferenceGaps": [
+    {
+      "ingredient": "Beef",
+      "fallback": 928,
+      "missing": 26
+    },
+    {
+      "ingredient": "Garlic",
+      "fallback": 784,
+      "missing": 1573
+    },
+    {
+      "ingredient": "Pepper",
+      "fallback": 689,
+      "missing": 1070
+    },
+    {
+      "ingredient": "Stock",
+      "fallback": 638,
+      "missing": 62
+    },
+    {
+      "ingredient": "Spices",
+      "fallback": 581,
+      "missing": 224
+    },
+    {
+      "ingredient": "Veal",
+      "fallback": 438,
+      "missing": 30
+    },
+    {
+      "ingredient": "Lamb",
+      "fallback": 438,
+      "missing": 17
+    },
+    {
+      "ingredient": "White Fish",
+      "fallback": 423,
+      "missing": 7
+    },
+    {
+      "ingredient": "Chicken thigh",
+      "fallback": 366,
+      "missing": 186
+    },
+    {
+      "ingredient": "Bean",
+      "fallback": 315,
+      "missing": 2
+    },
+    {
+      "ingredient": "Bay",
+      "fallback": 280,
+      "missing": 445
+    },
+    {
+      "ingredient": "Mussels",
+      "fallback": 277,
+      "missing": 3
+    },
+    {
+      "ingredient": "Beetroot",
+      "fallback": 271,
+      "missing": 25
+    },
+    {
+      "ingredient": "Streaky bacon",
+      "fallback": 240,
+      "missing": 13
+    },
+    {
+      "ingredient": "Pineapple",
+      "fallback": 235,
+      "missing": 57
+    },
+    {
+      "ingredient": "Chilli",
+      "fallback": 216,
+      "missing": 224
+    },
+    {
+      "ingredient": "Bacon lardon",
+      "fallback": 211,
+      "missing": 15
+    },
+    {
+      "ingredient": "Poultry",
+      "fallback": 202,
+      "missing": 20
+    },
+    {
+      "ingredient": "Fish stock",
+      "fallback": 199,
+      "missing": 30
+    },
+    {
+      "ingredient": "Dill",
+      "fallback": 197,
+      "missing": 140
+    },
+    {
+      "ingredient": "Egg yolk",
+      "fallback": 194,
+      "missing": 425
+    },
+    {
+      "ingredient": "Oregano",
+      "fallback": 179,
+      "missing": 40
+    },
+    {
+      "ingredient": "Chestnut",
+      "fallback": 176,
+      "missing": 15
+    },
+    {
+      "ingredient": "Scallops",
+      "fallback": 175,
+      "missing": 33
+    },
+    {
+      "ingredient": "Oil",
+      "fallback": 174,
+      "missing": 697
+    },
+    {
+      "ingredient": "Pine nut",
+      "fallback": 167,
+      "missing": 21
+    },
+    {
+      "ingredient": "Tarragon",
+      "fallback": 167,
+      "missing": 6
+    },
+    {
+      "ingredient": "Dashi stock",
+      "fallback": 163,
+      "missing": 1
+    },
+    {
+      "ingredient": "Tomato purée",
+      "fallback": 158,
+      "missing": 71
+    },
+    {
+      "ingredient": "Tomato coulis",
+      "fallback": 153,
+      "missing": 2
+    }
+  ]
+}

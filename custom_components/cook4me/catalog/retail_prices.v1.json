@@ -2873,6 +2873,86 @@
       "confidence": "external_observation",
       "barcode": "",
       "note": "Separate 50 g whole-pod refill pack, for explicit mass quantities only. The advertised approximate pod count is not converted to a unit weight. Not powder, seeds or extract. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary."
+    },
+    {
+      "id": "bamboogarden-coconut-cream-v102-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://fuchsgruppe.shop/bamboogarden/produkte/kokoscreme-400ml-0.4-liter-dose/",
+      "productName": "Bamboo Garden coconut cream, 20–22% fat",
+      "amount": 2.69,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "ml",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Fuchs Gruppe Germany · online listing",
+      "categories": [
+        "en:coconut-creams"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Unsweetened coconut cream: 91% coconut extract and water. Price from the product page and its matching productPrice structured field; the package is 400 ml. Not sweetened cream of coconut, coconut butter or powder. VAT included; shipping excluded. Representative retail estimate; prices vary."
+    },
+    {
+      "id": "davert-split-peas-v102-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.davert.de/produkte/halbe-gruene-schaelerbsen-500g",
+      "productName": "Davert organic dried green split peas",
+      "amount": 2.99,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Davert Germany · online listing",
+      "categories": [
+        "cook4me:dried-split-peas"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Dry, shelled, halved green peas. Generic split peas use this named green variety. No cooked-to-dry conversion; not fresh whole peas, lentils or prepared soup. VAT included; shipping excluded. Representative retail estimate; prices vary."
+    },
+    {
+      "id": "asianbrand-shiitake-v102-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://asianbrand.de/products/frische-shiitake-pilze-150g",
+      "productName": "Asian Brand fresh shiitake mushrooms",
+      "amount": 2.49,
+      "currency": "EUR",
+      "basisQuantity": 150,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Asian Brand Germany · online listing",
+      "categories": [
+        "en:shiitake-mushrooms"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh mushrooms in a 150 g pack, not dried shiitake or mushroom powder. Listing was marked sold out when checked; retained as dated price evidence, not an availability promise. VAT included; shipping excluded. Representative retail estimate; prices vary."
+    },
+    {
+      "id": "frischekontor-radishes-v102-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://frische-kontor.de/products/radieschen?variant=51135429935444",
+      "productName": "Frische Kontor fresh radishes without greens, 500 g",
+      "amount": 1.9,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Frische Kontor Germany · online listing",
+      "categories": [
+        "en:radishes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Selected 500 g food package, confirmed by product variant 51135429935444 and its EUR offer. The 590 g shipping weight is not used. Named red-radish product, not daikon, pickled radish or radish greens. VAT included; shipping excluded. Representative retail estimate; prices vary."
     }
   ]
 }

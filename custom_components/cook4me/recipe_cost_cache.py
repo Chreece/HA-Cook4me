@@ -50,7 +50,7 @@ def _recipe_price_shape(recipe: Any) -> dict[str, Any]:
         "servings": recipe.get("servings") or recipe.get("groupSize"),
         "yield": deepcopy(recipe.get("yield")) if isinstance(recipe.get("yield"), dict) else None,
         "ingredients": ingredients,
-        "quantityEvidenceVersion": 101,
+        "quantityEvidenceVersion": 102,
     }
 
 
@@ -112,7 +112,7 @@ def _reference_shape(store: Any, identities: set[str]) -> list[dict[str, Any]]:
 def pricing_fingerprint(recipe: dict[str, Any], inventory: Any, store: Any) -> str:
     stock, identities = _relevant_inventory(recipe, inventory)
     return _canonical_hash({
-        "calculatorVersion": 101,
+        "calculatorVersion": 102,
         "priceDate": datetime.now(timezone.utc).date().isoformat(),
         "settings": {
             "currency": _text(getattr(store, "settings", {}).get("currency")),
@@ -210,7 +210,7 @@ async def preview_cache_token(bridge: Any) -> str:
     from .costs import cost_store_for_bridge
     store = await cost_store_for_bridge(bridge)
     return _canonical_hash({
-        "evidenceVersion": 101,
+        "evidenceVersion": 102,
         "date": datetime.now(timezone.utc).date().isoformat(),
         "settings": store.settings,
         "inventory": bridge.recipe_hub.profile.get("houseIngredients") or [],

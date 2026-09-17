@@ -651,6 +651,17 @@ for tag, kind, names in (
         _CATEGORIES[name] = (tag, kind)
 
 
+# v102: exact vegetarian product forms.
+for tag, kind, names in (
+    ('cook4me:dried-split-peas', 'REFERENCE', 'split pea|split peas|dried split peas|dried green split peas'),
+    ('en:shiitake-mushrooms', 'CATEGORY', 'shiitake mushrooms|fresh shiitake mushroom|fresh shiitake mushrooms'),
+    ('en:radishes', 'CATEGORY', 'radishes|red radish|red radishes'),
+    ('en:coconut-creams', 'PRODUCT', 'unsweetened coconut cream'),
+):
+    for name in names.split('|'):
+        _CATEGORIES[name] = (tag, kind)
+
+
 def country_currency(country):
     return next(iter(COUNTRY_CURRENCIES.get(country, [])), '')
 

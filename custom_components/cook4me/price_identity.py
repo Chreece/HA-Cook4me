@@ -87,6 +87,14 @@ def reviewed_recipe_ingredient(item, recipe):
     variant = str(recipe.get('variantId') or recipe.get('variantFunctionalId')
                   or recipe.get('recipeFunctionalId') or recipe.get('id') or '')
     key = str(item.get('key') or item.get('ingredientId') or '')
+    # The provider reuses M_FOOD_412 for red radish and daikon. These source
+    # variants use the catalog's Japanese 大根 / Chinese 白蘿蔔 identity.
+    # Scope by original variant, so changing the display language cannot give
+    # daikon the red-radish reference or its much smaller piece weight.
+    if variant in {'803230', '803231', '549806', '549805', '549801', '873706',
+                   '873708', '873707', '549973', '549962', '549970', '776826'} and key == 'M_FOOD_412':
+        return {**item, 'key': 'cook4me:recipe-daikon-radish',
+                'name': 'Daikon radish', 'canonicalName': 'daikon radish'}
     if (variant in {'287823', '287824', '287825', '317074', '317075', '317076'} and key == 'M_FOOD_477'
             and (item.get('unitKey') == 'UNIT_35' or item.get('unit') == 'ml')):
         return {**item, 'key': 'cook4me:recipe-tofu-cream', 'name': 'Tofu cream',

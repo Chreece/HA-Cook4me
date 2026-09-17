@@ -24,7 +24,8 @@ _COUNTS = {'egg', 'eggs', 'onion', 'onions', 'carrot', 'carrots', 'tomato', 'tom
            'raw beetroot', 'parsnip', 'parsnips', 'banana', 'bananas', 'pear', 'pears', 'plum', 'plums', 'strawberry', 'strawberries',
            'radish', 'radishes', 'date', 'dates', 'dried dates', 'pitted dates', 'medjool date', 'medjool dates', 'small pumpkin', 'small hokkaido pumpkin',
            'asparagus', 'green asparagus', 'fennel', 'turnip', 'green pepper', 'green bell pepper',
-           'swede', 'rutabaga'}
+           'swede', 'rutabaga', 'shiitake mushroom', 'shiitake mushrooms',
+           'fresh shiitake mushroom', 'fresh shiitake mushrooms'}
 
 _GELATINE_SHEETS = {'leaf gelatine', 'gelatine sheet', 'gelatine sheets', 'gelatin sheet', 'gelatin sheets'}
 _VANILLA_PODS = {'vanilla pod', 'vanilla pods'}

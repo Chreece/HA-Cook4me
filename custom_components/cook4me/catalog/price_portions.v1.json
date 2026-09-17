@@ -1676,6 +1676,36 @@
       "portion": "tbsp",
       "sourceAmount": 2.0,
       "sourceGrams": 32.0
+    },
+    {
+      "names": [
+        "shiitake mushroom",
+        "shiitake mushrooms",
+        "fresh shiitake mushroom",
+        "fresh shiitake mushrooms"
+      ],
+      "measure": "piece",
+      "grams": 19.0,
+      "fdcId": 169242,
+      "portionId": 84500,
+      "food": "Mushrooms, shiitake, raw",
+      "portion": "piece whole",
+      "sourceAmount": 1.0,
+      "sourceGrams": 19.0
+    },
+    {
+      "names": [
+        "coconut cream",
+        "unsweetened coconut cream"
+      ],
+      "measure": "tbsp",
+      "grams": 15.0,
+      "fdcId": 170580,
+      "portionId": 86894,
+      "food": "Nuts, coconut cream, raw (liquid expressed from grated meat)",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 15.0
     }
   ]
 }
