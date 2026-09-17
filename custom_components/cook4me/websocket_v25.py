@@ -68,6 +68,9 @@ async def _send_one_exact(bridge, recipe: dict[str, Any]) -> dict[str, Any]:
                 "queuedSend": queued,
                 "error": str(exc)[:300],
             }
+        if result.get("confirmation") == "unconfirmed":
+            return {"sent": False, "queued": False, "accepted": True,
+                    "reason": "device_confirmation_unavailable", "result": result}
         if original_language and result.get("verified") is not True:
             return {"sent": False, "queued": False, "reason": "original_language_not_loaded", "result": result}
         store = await recipe_book_store_for_bridge(bridge)
@@ -206,6 +209,7 @@ async def ws_send_multi(hass, connection, msg) -> None:
             "targetCount": len(results),
             "sentCount": sum(bool(row.get("sent")) for row in results),
             "queuedCount": sum(bool(row.get("queued")) for row in results),
+            "acceptedCount": sum(bool(row.get("accepted")) for row in results),
         }
     except Exception as exc:
         legacy._send_error(connection, msg, exc)

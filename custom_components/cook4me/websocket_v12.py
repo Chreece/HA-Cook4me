@@ -140,15 +140,9 @@ def _loaded_variant(bridge) -> str:
     return str(bridge.data.get("variantFunctionalId") or "").strip()
 
 
-async def _wait_for_loaded_variant(bridge, variant_id: str, timeout: float = 10.0) -> bool:
-    target = str(variant_id).strip()
-    loop = asyncio.get_running_loop()
-    deadline = loop.time() + max(0.5, float(timeout))
-    while loop.time() < deadline:
-        if _loaded_variant(bridge) == target:
-            return True
-        await asyncio.sleep(0.5)
-    return _loaded_variant(bridge) == target
+async def _wait_for_loaded_variant(bridge, variant_id: str, timeout: float = 90.0) -> bool:
+    from .delivery_confirmation import wait_for_recipe
+    return await wait_for_recipe(bridge, variant_id, timeout=timeout)
 
 
 async def _send_recipe_replaceable(bridge, variant_id: str, *, diet: str | None = None, diet_filters: dict | None = None, verify_loaded: bool = False) -> dict[str, Any]:
@@ -156,7 +150,18 @@ async def _send_recipe_replaceable(bridge, variant_id: str, *, diet: str | None 
     if lock is None:
         lock = bridge._send_lock = asyncio.Lock()
     async with lock:
-        return await _send_recipe_replaceable_locked(bridge, variant_id, diet=diet, verify_loaded=verify_loaded, **({"diet_filters": diet_filters} if diet_filters is not None else {}))
+        record = getattr(bridge, "record_recipe_delivery", lambda *args: None)
+        record("resolving", variant_id)
+        try:
+            result = await _send_recipe_replaceable_locked(bridge, variant_id, diet=diet, verify_loaded=verify_loaded, **({"diet_filters": diet_filters} if diet_filters is not None else {}))
+        except asyncio.CancelledError:
+            record("cancelled", variant_id)
+            raise
+        except Exception:
+            record("failed", variant_id)
+            raise
+        record("unconfirmed" if result.get("confirmation") == "unconfirmed" else "completed", variant_id)
+        return result
 
 
 async def _send_recipe_replaceable_locked(bridge, variant_id: str, *, diet: str | None = None, diet_filters: dict | None = None, verify_loaded: bool = False) -> dict[str, Any]:
@@ -174,6 +179,8 @@ async def _send_recipe_replaceable_locked(bridge, variant_id: str, *, diet: str 
         raise HomeAssistantError("Recipe variant ID is required")
 
     meta = await bridge.async_recipe_detail(variant_id)
+    record = getattr(bridge, "record_recipe_delivery", lambda *args: None)
+    record("resolved", variant_id, meta)
     grouping = str(meta.get("groupingFunctionalId") or "").strip()
     recipe = str(meta.get("recipeFunctionalId") or "").strip()
     if not grouping or not recipe:
@@ -207,30 +214,20 @@ async def _send_recipe_replaceable_locked(bridge, variant_id: str, *, diet: str 
             )
         replacing = True
 
+    record("sending", variant_id)
     accepted = await bridge._run_client_json("send-recipe", grouping, recipe, timeout=45)
+    record("cloud_accepted", variant_id)
 
     verified = True
     if replacing or verify_loaded:
-        verified = await _wait_for_loaded_variant(bridge, recipe, timeout=10)
+        verified = await _wait_for_loaded_variant(bridge, recipe, timeout=90)
         if not verified:
-            try:
-                fresh = await bridge._run_client_json("state", timeout=35)
-            except Exception:
-                fresh = None
-            if isinstance(fresh, dict) and str(fresh.get("variantFunctionalId") or "").strip() == recipe:
-                bridge._publish(fresh)
-                verified = True
-        if not verified:
-            if verify_loaded:
-                # An accepted shadow write is not appliance-load evidence.
-                # Do not record or automatically repeat an unconfirmed send.
-                return {"accepted": accepted, "recipe": annotated,
-                        "replacedLoadedRecipe": replacing, "verified": False,
-                        "reason": "original_language_not_loaded"}
-            raise HomeAssistantError(
-                "Cook4Me accepted the cloud recipe update but kept the previously loaded recipe. "
-                "Exit the old recipe on the appliance before retrying."
-            )
+            # Silence is not rejection: the cooker may load after the deadline.
+            # Do not record a verified send or queue/repeat an accepted write.
+            return {"accepted": accepted, "recipe": annotated,
+                    "replacedLoadedRecipe": replacing, "verified": False,
+                    "confirmation": "unconfirmed", "confirmationTimeout": 90,
+                    "reason": "device_confirmation_unavailable"}
 
     await bridge.recipe_hub.async_record_send(annotated)
     return {

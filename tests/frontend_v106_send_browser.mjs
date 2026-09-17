@@ -23,7 +23,7 @@ try{
   }}};
   p._entries=[{entry_id:'one',title:'Cook4Me',connected:true,profile:{diet:'omnivore'}},{entry_id:'two',title:'Other',connected:true,profile:{diet:'omnivore'}}];p._tab='today';
   p._v63FilterKey=p._prefKey();p._v63Filters={diet:'omnivore',languages:[],mealTypes:[],ingredients:[]};
-  p._processStart=()=>1;p._processEnd=()=>{window.finished++;};p._v59FailProcess=(_job,error)=>errors.push(error);
+  p._processStart=()=>({});p._processEnd=()=>{window.finished++;};p._v59FailProcess=(_job,error)=>errors.push(error);
   p._loadOverview=async()=>{};p._message=text=>messages.push(text);p._renderTab=()=>{};p._renderRecipeDialog=()=>{};
   document.body.append(p);
   window.prepare=index=>{

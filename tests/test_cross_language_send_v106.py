@@ -48,12 +48,16 @@ class OriginalLanguageSendTests(unittest.IsolatedAsyncioTestCase):
                 self.assertTrue(result['result']['verified'])
                 self.bridge.async_recipe_detail.assert_awaited_once_with(self.variant)
                 self.bridge._run_client_json.assert_awaited_once_with('send-recipe', recipe['groupingFunctionalId'], self.variant, timeout=45)
-                self.wait.assert_awaited_once_with(self.bridge, self.variant, timeout=10)
+                self.wait.assert_awaited_once_with(self.bridge, self.variant, timeout=90)
                 self.assertEqual(self.meta, before)
                 self.bridge.recipe_hub.async_record_send.assert_awaited_once()
 
     async def test_fresh_cooking_status_can_confirm_loading_after_delayed_watch(self):
         await self.prepare(loaded=False)
+        from test_delivery_confirmation_v108 import confirmation
+        async def real_wait(bridge, variant, timeout):
+            return await confirmation.wait_for_recipe(bridge, variant, timeout=.2, poll_interval=.01, check_interval=.002)
+        self.wait.side_effect = real_wait
         self.bridge._run_client_json.side_effect = [{'accepted': True}, {'connected': True, 'variantFunctionalId': self.variant}]
         result = await self.send(self.bridge, self.request)
         self.assertTrue(result['sent'])
@@ -64,9 +68,21 @@ class OriginalLanguageSendTests(unittest.IsolatedAsyncioTestCase):
         previous = (await self.store.async_queue_send({'sendVariantId': 'unrelated'}, reason='device_busy'))['queued']
         self.bridge._run_client_json.side_effect = [{'accepted': True}, {'variantFunctionalId': 'other', 'desired': {'variantFunctionalId': self.variant}}]
         result = await self.send(self.bridge, self.request)
-        self.assertEqual(result['reason'], 'original_language_not_loaded')
+        self.assertEqual(result['reason'], 'device_confirmation_unavailable')
+        self.assertTrue(result['accepted'])
         self.assertFalse(result['sent']); self.assertFalse(result['queued'])
         self.assertEqual(self.store.queued_send, previous)
+        self.bridge.recipe_hub.async_record_send.assert_not_awaited()
+
+    async def test_unconfirmed_mapped_replacement_is_not_queued_or_repeated(self):
+        await self.prepare(loaded=False)
+        self.bridge.data.update(recipeFunctionalId='old-group', variantFunctionalId='old', phase='preparation')
+        self.request.pop('sendOriginalLanguage')
+        result = await self.send(self.bridge, self.request)
+        self.assertEqual(result['reason'], 'device_confirmation_unavailable')
+        self.assertTrue(result['accepted']); self.assertFalse(result['sent']); self.assertFalse(result['queued'])
+        self.assertIsNone(self.store.queued_send)
+        self.bridge._run_client_json.assert_awaited_once_with('send-recipe', self.meta['groupingFunctionalId'], self.variant, timeout=45)
         self.bridge.recipe_hub.async_record_send.assert_not_awaited()
 
     async def test_offline_request_does_not_queue_an_unverified_language_override(self):

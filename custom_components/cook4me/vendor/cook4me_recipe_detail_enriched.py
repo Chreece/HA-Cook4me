@@ -8,9 +8,11 @@ from typing import Any
 try:
     from . import cook4me_recipe_catalog as catalog
     from .cook4me_official_nutrition import extract_official_nutrition
+    from .cook4me_recipe_definition import definition_summary
 except ImportError:  # direct vendor-directory execution
     import cook4me_recipe_catalog as catalog
     from cook4me_official_nutrition import extract_official_nutrition
+    from cook4me_recipe_definition import definition_summary
 
 
 def recipe_detail(
@@ -94,6 +96,7 @@ def recipe_detail(
         "market": catalog._clean_text(root.get("market")),
         "groupSize": root.get("groupSize"),
         "officialNutrition": extract_official_nutrition(root),
+        "deliveryDefinition": definition_summary(root),
         "isAutomaticallyGenerated": bool(root.get("isAutomaticallyGenerated")),
         "isPremium": bool(root.get("isPremium")),
         "sendable": bool(grouping_id and recipe_id),

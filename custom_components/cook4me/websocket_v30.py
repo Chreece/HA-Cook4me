@@ -183,7 +183,7 @@ async def _recipe_detail(hass: HomeAssistant, bridge, *, variant_id: str, langua
     key = stable_cache_key("release-detail-v1", catalog_version, _text(variant_id), _text(language).lower())
     cached = cache.get("detail", key)
     cache_hit = isinstance(cached, dict)
-    if cache_hit and not refresh:
+    if cache_hit and not refresh and "deliveryDefinition" in cached:
         coordinator.progress(operation, "detail_cache", completed=1, total=1, message="Loaded cached recipe")
         raw = deepcopy(cached)
     else:
@@ -204,6 +204,8 @@ async def _recipe_detail(hass: HomeAssistant, bridge, *, variant_id: str, langua
             await cache.async_set("detail", key, raw)
             cache_hit = False
         coordinator.progress(operation, "detail_normalize", completed=1, total=1, message="Recipe cached locally")
+    from .delivery_diagnostics import recipe_snapshot
+    bridge._last_inspected_recipe = recipe_snapshot(raw)
     result = bridge.recipe_hub.annotate(raw)
     result["deviceCanAccept"] = bridge.can_accept_recipe
     result["cacheHit"] = cache_hit

@@ -383,6 +383,10 @@ class Cook4MeBridge:
     def can_accept_recipe(self) -> bool:
         return self.available and self.loaded_recipe is None
 
+    def record_recipe_delivery(self, phase, variant_id, meta=None):
+        from .delivery_diagnostics import record
+        record(self, phase, variant_id, meta)
+
     async def async_recipe_detail(self, variant_id: str, *, refresh: bool = False) -> dict[str, Any]:
         variant_id = str(variant_id).strip()
         if not variant_id:
@@ -391,6 +395,8 @@ class Cook4MeBridge:
             return dict(self._recipe_cache[variant_id])
         meta = await self._run_client_json("recipe-metadata", "", variant_id, timeout=60)
         self._recipe_cache[variant_id] = meta
+        from .delivery_diagnostics import recipe_snapshot
+        self._last_inspected_recipe = recipe_snapshot(meta)
         return dict(meta)
 
     async def async_search_recipes(
