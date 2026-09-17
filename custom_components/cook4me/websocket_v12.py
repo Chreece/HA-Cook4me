@@ -151,15 +151,15 @@ async def _wait_for_loaded_variant(bridge, variant_id: str, timeout: float = 10.
     return _loaded_variant(bridge) == target
 
 
-async def _send_recipe_replaceable(bridge, variant_id: str, *, diet: str | None = None, diet_filters: dict | None = None) -> dict[str, Any]:
+async def _send_recipe_replaceable(bridge, variant_id: str, *, diet: str | None = None, diet_filters: dict | None = None, verify_loaded: bool = False) -> dict[str, Any]:
     lock = getattr(bridge, "_send_lock", None)
     if lock is None:
         lock = bridge._send_lock = asyncio.Lock()
     async with lock:
-        return await _send_recipe_replaceable_locked(bridge, variant_id, diet=diet, **({"diet_filters": diet_filters} if diet_filters is not None else {}))
+        return await _send_recipe_replaceable_locked(bridge, variant_id, diet=diet, verify_loaded=verify_loaded, **({"diet_filters": diet_filters} if diet_filters is not None else {}))
 
 
-async def _send_recipe_replaceable_locked(bridge, variant_id: str, *, diet: str | None = None, diet_filters: dict | None = None) -> dict[str, Any]:
+async def _send_recipe_replaceable_locked(bridge, variant_id: str, *, diet: str | None = None, diet_filters: dict | None = None, verify_loaded: bool = False) -> dict[str, Any]:
     """Send a recipe, replacing only a safely pre-cook loaded recipe.
 
     The proven cloud route writes a new recipe reference into the appliance
@@ -180,6 +180,8 @@ async def _send_recipe_replaceable_locked(bridge, variant_id: str, *, diet: str 
         raise HomeAssistantError(
             "Official recipe does not contain the SEB IDs required for Cook4Me delivery"
         )
+    if verify_loaded and recipe != variant_id:
+        raise HomeAssistantError("Official recipe identity does not match the selected original edition")
     if not bridge.available:
         raise HomeAssistantError("Cook4Me is not connected to the cloud")
 
@@ -208,7 +210,7 @@ async def _send_recipe_replaceable_locked(bridge, variant_id: str, *, diet: str 
     accepted = await bridge._run_client_json("send-recipe", grouping, recipe, timeout=45)
 
     verified = True
-    if replacing:
+    if replacing or verify_loaded:
         verified = await _wait_for_loaded_variant(bridge, recipe, timeout=10)
         if not verified:
             try:
@@ -219,6 +221,12 @@ async def _send_recipe_replaceable_locked(bridge, variant_id: str, *, diet: str 
                 bridge._publish(fresh)
                 verified = True
         if not verified:
+            if verify_loaded:
+                # An accepted shadow write is not appliance-load evidence.
+                # Do not record or automatically repeat an unconfirmed send.
+                return {"accepted": accepted, "recipe": annotated,
+                        "replacedLoadedRecipe": replacing, "verified": False,
+                        "reason": "original_language_not_loaded"}
             raise HomeAssistantError(
                 "Cook4Me accepted the cloud recipe update but kept the previously loaded recipe. "
                 "Exit the old recipe on the appliance before retrying."

@@ -21,6 +21,7 @@ def _text(value: Any) -> str:
 
 
 async def _send_one_exact(bridge, recipe: dict[str, Any]) -> dict[str, Any]:
+    original_language = recipe.get("sendOriginalLanguage") is True
     variant = _text(
         recipe.get("sendVariantId")
         or recipe.get("selectedSendVariantId")
@@ -43,12 +44,18 @@ async def _send_one_exact(bridge, recipe: dict[str, Any]) -> dict[str, Any]:
     diet_filters = recipe.get("sendFilters") if isinstance(recipe.get("sendFilters"), dict) else None
     store = await recipe_book_store_for_bridge(bridge)
     previous = store.queued_send
+    if original_language and not bridge.available:
+        return {"sent": False, "queued": False, "reason": "original_language_offline"}
     if bridge.available:
         try:
-            result = await v12._send_recipe_replaceable(bridge, variant, **({"diet": diet} if diet is not None else {}), **({"diet_filters": diet_filters} if diet_filters is not None else {}))
+            result = await v12._send_recipe_replaceable(bridge, variant, **({"verify_loaded": True} if original_language else {}), **({"diet": diet} if diet is not None else {}), **({"diet_filters": diet_filters} if diet_filters is not None else {}))
         except Cook4MeDietaryError as exc:
             return {"sent": False, "queued": False, "reason": "dietary_profile", "error": str(exc)}
         except Exception as exc:
+            if original_language:
+                # A foreign edition needs an observed appliance result. Keep
+                # unrelated queued work intact and let the user retry explicitly.
+                return {"sent": False, "queued": False, "reason": "original_language_send_failed", "error": str(exc)[:300]}
             reason = "device_busy" if bridge.available else "device_offline"
             store = await recipe_book_store_for_bridge(bridge)
             queued = await store.async_queue_send(recipe, reason=reason, expected=previous)
@@ -61,6 +68,8 @@ async def _send_one_exact(bridge, recipe: dict[str, Any]) -> dict[str, Any]:
                 "queuedSend": queued,
                 "error": str(exc)[:300],
             }
+        if original_language and result.get("verified") is not True:
+            return {"sent": False, "queued": False, "reason": "original_language_not_loaded", "result": result}
         store = await recipe_book_store_for_bridge(bridge)
         if previous is not None:
             await store.async_clear_queue(expected=previous)
