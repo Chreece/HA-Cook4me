@@ -20,6 +20,7 @@ spec.loader.exec_module(audit_mod)
 
 
 def build_impact(review_root: Path) -> dict[str, Any]:
+    review_root = review_root.resolve()
     audit = audit_mod.build_audit(review_root)
     collapse_map: dict[str, str] = {}
     groups: list[dict[str, Any]] = []
@@ -66,7 +67,6 @@ def build_impact(review_root: Path) -> dict[str, Any]:
     for path in sorted(review_root.rglob("*")):
         if not path.is_file() or path.suffix not in suffixes or path.name in excluded_names:
             continue
-        # Review source files generate the concepts but do not refer to concept IDs.
         if path.name.startswith("release_catalog_reviewed_keyless_ingredients"):
             continue
         try:
@@ -118,13 +118,14 @@ def build_impact(review_root: Path) -> dict[str, Any]:
                 )
 
     target_fdc: dict[str, set[str]] = {}
+    target_ids = set(collapse_map.values())
     for path in sorted(review_root.glob("release_catalog_reviewed_nutrition_targets*.v1.json")):
         doc = json.loads(path.read_text(encoding="utf-8"))
         for row in doc.get("items") or []:
             if not isinstance(row, dict):
                 continue
             rid = str(row.get("reviewTargetId") or "")
-            if rid in set(collapse_map.values()) and row.get("fdcId") not in (None, ""):
+            if rid in target_ids and row.get("fdcId") not in (None, ""):
                 target_fdc.setdefault(rid, set()).add(str(row["fdcId"]))
 
     conflicts: list[dict[str, Any]] = []
