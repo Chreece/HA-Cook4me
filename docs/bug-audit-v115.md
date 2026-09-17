@@ -48,6 +48,18 @@ The recipe price cache version changes so old allocations are recalculated.
   AI hook no longer ran because fixed state messages have been deterministic
   since v105. No speech behavior was changed.
 - Frontend bundle freshness, JavaScript syntax and whitespace checks pass.
+- Final validation: 139 backend audit/dependency tests and 108 related preflight
+  tests passed. Both Chromium suites passed against the v115 bundle. The pinned
+  installer's four test methods covered 14 success, rejection and rollback
+  scenarios without contacting or restarting a real Home Assistant instance.
+
+## Deployment
+
+`tools/deploy_offline_runtime_v115.sh` pins runtime commit
+`7d99d82d935bc00b21fe47744292fbec829657d4`. It runs the new audit regressions
+before stopping Home Assistant, keeps the previous integration as a backup,
+preserves `.storage`, and verifies that the restarted server serves the exact
+v115 bundle. Startup, file-swap and post-install probe failures trigger rollback.
 
 This is a focused audit of the recent scanner and shared-stock changes plus
 their dependent calculations and relevant delivery regressions. It is not a
