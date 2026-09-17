@@ -662,6 +662,15 @@ for tag, kind, names in (
         _CATEGORIES[name] = (tag, kind)
 
 
+# v103: plain miso paste and fresh shimeji; prepared/dried forms stay separate.
+for category, kind, names in [
+    ('en:misos', 'PRODUCT', 'miso paste|white miso|white miso paste|shiro miso'),
+    ('cook4me:fresh-shimeji', 'REFERENCE', 'shimeji mushroom|shimeji mushrooms|fresh shimeji mushroom|fresh shimeji mushrooms|brown shimeji mushrooms'),
+]:
+    for name in names.split('|'):
+        _CATEGORIES[name] = (category, kind)
+
+
 def country_currency(country):
     return next(iter(COUNTRY_CURRENCIES.get(country, [])), '')
 

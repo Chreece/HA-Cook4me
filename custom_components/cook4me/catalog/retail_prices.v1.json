@@ -2953,6 +2953,46 @@
       "confidence": "external_observation",
       "barcode": "",
       "note": "Selected 500 g food package, confirmed by product variant 51135429935444 and its EUR offer. The 590 g shipping weight is not used. Named red-radish product, not daikon, pickled radish or radish greens. VAT included; shipping excluded. Representative retail estimate; prices vary."
+    },
+    {
+      "id": "hikari-miso-v103-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://asianbrand.de/products/miso-japanisch-weiss-savoury-white-hikari-300g",
+      "productName": "Hikari Savoury White plain miso paste",
+      "amount": 3.49,
+      "currency": "EUR",
+      "basisQuantity": 300,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Asian Brand Germany · online listing",
+      "categories": [
+        "en:misos"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Plain soy/rice miso paste: water, soybeans, rice, salt and alcohol; no fish-stock ingredients listed. Generic miso uses this named white variety. Not prepared miso soup, powder or dashi-seasoned paste. The 300 g food package is used, not its 340 g shipping weight. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary."
+    },
+    {
+      "id": "asianbrand-shimeji-v103-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://asianbrand.de/products/braune-pilze-shimeji-mushroom-frisch-150g?variant=55554228355420",
+      "productName": "Asian Brand fresh brown shimeji mushrooms",
+      "amount": 1.79,
+      "currency": "EUR",
+      "basisQuantity": 150,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Asian Brand Germany · online listing",
+      "categories": [
+        "cook4me:fresh-shimeji"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh brown shimeji, 150 g food pack; no dried-mushroom or individual-count equivalence. Live product variant 55554228355420, SKU C039, and matching visible price/JSON-LD confirm EUR 1.79; older indexed pages showed EUR 1.99. The 160 g shipping weight is not used. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary."
     }
   ]
 }

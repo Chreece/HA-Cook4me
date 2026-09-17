@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "source": "FAO/INFOODS Density Database v2 (2012), PDF pages 13–14",
+  "source": "FAO/INFOODS Density Database v2 (2012), PDF pages 13–14, and USDA FoodData Central SR Legacy (2018); per-row sources",
   "densities": [
     {
       "names": [
@@ -40,6 +40,20 @@
       "gramsPerMl": 0.92,
       "label": "FAO peanut oil at 15.6 °C (CSG): approximately 0.92 g/ml; product and temperature vary",
       "sourceUrl": "https://www.fao.org/4/ap815e/ap815e.pdf"
+    },
+    {
+      "names": [
+        "water",
+        "tap water"
+      ],
+      "gramsPerMl": 1.0,
+      "label": "USDA drinking tap water: 1 litre = 1000 g; approximately 1 g/ml for costing",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/173647/nutrients",
+      "fdcId": 173647,
+      "portionId": 93025,
+      "sourceAmount": 1.0,
+      "sourceUnit": "liter",
+      "sourceGrams": 1000.0
     }
   ]
 }

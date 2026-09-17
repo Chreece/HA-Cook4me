@@ -1706,6 +1706,25 @@
       "portion": "tbsp",
       "sourceAmount": 1.0,
       "sourceGrams": 15.0
+    },
+    {
+      "names": [
+        "miso",
+        "miso paste",
+        "white miso",
+        "white miso paste",
+        "shiro miso"
+      ],
+      "measure": "tbsp",
+      "grams": 17.0,
+      "fdcId": 172442,
+      "portionId": 90629,
+      "food": "Miso",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 17.0,
+      "densityConversion": false,
+      "note": "Spoon mass only. Generic volume-labelled miso in this catalog may be prepared soup, so this portion must not imply a paste density for ml/l quantities."
     }
   ]
 }

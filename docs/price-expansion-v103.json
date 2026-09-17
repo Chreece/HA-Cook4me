@@ -1,0 +1,287 @@
+{
+  "market": "DE",
+  "currency": "EUR",
+  "asOf": "2026-09-17",
+  "baselineCommit": "8a61b66263635df350a26e63eefe6079adacdcf7",
+  "method": "Counts are language/serving variants and ingredient occurrences, without household prices. Each build uses its own identities, quantities and eligible dated references. Rough budgets and unmeasured zero allowances are separate from reference coverage.",
+  "before": {
+    "variants": 32163,
+    "ingredients": 230483,
+    "known": 134661,
+    "fallback": 41772,
+    "zeroAllowance": 13462,
+    "covered": 189895,
+    "knownComplete": 5764,
+    "budgetCompleteBeforeAllowance": 11465,
+    "budgetComplete": 15261,
+    "variantsWithAllowance": 11679,
+    "noKnownCost": 1503,
+    "noBudgetCost": 61
+  },
+  "after": {
+    "variants": 32163,
+    "ingredients": 230483,
+    "known": 134964,
+    "fallback": 41616,
+    "zeroAllowance": 13462,
+    "covered": 190042,
+    "knownComplete": 5779,
+    "budgetCompleteBeforeAllowance": 11500,
+    "budgetComplete": 15311,
+    "variantsWithAllowance": 11679,
+    "noKnownCost": 1494,
+    "noBudgetCost": 61
+  },
+  "delta": {
+    "variants": 0,
+    "ingredients": 0,
+    "known": 303,
+    "fallback": -156,
+    "zeroAllowance": 0,
+    "covered": 147,
+    "knownComplete": 15,
+    "budgetCompleteBeforeAllowance": 35,
+    "budgetComplete": 50,
+    "variantsWithAllowance": 0,
+    "noKnownCost": -9,
+    "noBudgetCost": 0
+  },
+  "changedIngredients": [
+    {
+      "ingredient": "Water",
+      "before": {
+        "known": 14748,
+        "fallback": 0,
+        "zeroAllowance": 71,
+        "missing": 511
+      },
+      "after": {
+        "known": 14895,
+        "fallback": 0,
+        "zeroAllowance": 71,
+        "missing": 364
+      },
+      "delta": {
+        "known": 147,
+        "fallback": 0,
+        "zeroAllowance": 0,
+        "missing": -147
+      }
+    },
+    {
+      "ingredient": "Miso",
+      "before": {
+        "known": 0,
+        "fallback": 113,
+        "zeroAllowance": 0,
+        "missing": 63
+      },
+      "after": {
+        "known": 68,
+        "fallback": 45,
+        "zeroAllowance": 0,
+        "missing": 63
+      },
+      "delta": {
+        "known": 68,
+        "fallback": -68,
+        "zeroAllowance": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Shimeji mushrooms",
+      "before": {
+        "known": 0,
+        "fallback": 66,
+        "zeroAllowance": 0,
+        "missing": 50
+      },
+      "after": {
+        "known": 65,
+        "fallback": 1,
+        "zeroAllowance": 0,
+        "missing": 50
+      },
+      "delta": {
+        "known": 65,
+        "fallback": -65,
+        "zeroAllowance": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Miso paste",
+      "before": {
+        "known": 0,
+        "fallback": 23,
+        "zeroAllowance": 0,
+        "missing": 1
+      },
+      "after": {
+        "known": 23,
+        "fallback": 0,
+        "zeroAllowance": 0,
+        "missing": 1
+      },
+      "delta": {
+        "known": 23,
+        "fallback": -23,
+        "zeroAllowance": 0,
+        "missing": 0
+      }
+    }
+  ],
+  "nextReferenceGaps": [
+    {
+      "ingredient": "Beef",
+      "fallback": 928,
+      "missing": 26
+    },
+    {
+      "ingredient": "Garlic",
+      "fallback": 784,
+      "missing": 1573
+    },
+    {
+      "ingredient": "Pepper",
+      "fallback": 689,
+      "missing": 1070
+    },
+    {
+      "ingredient": "Stock",
+      "fallback": 638,
+      "missing": 62
+    },
+    {
+      "ingredient": "Spices",
+      "fallback": 581,
+      "missing": 224
+    },
+    {
+      "ingredient": "Veal",
+      "fallback": 438,
+      "missing": 30
+    },
+    {
+      "ingredient": "Lamb",
+      "fallback": 438,
+      "missing": 17
+    },
+    {
+      "ingredient": "White Fish",
+      "fallback": 423,
+      "missing": 7
+    },
+    {
+      "ingredient": "Chicken thigh",
+      "fallback": 366,
+      "missing": 186
+    },
+    {
+      "ingredient": "Bean",
+      "fallback": 315,
+      "missing": 2
+    },
+    {
+      "ingredient": "Bay",
+      "fallback": 280,
+      "missing": 445
+    },
+    {
+      "ingredient": "Mussels",
+      "fallback": 277,
+      "missing": 3
+    },
+    {
+      "ingredient": "Beetroot",
+      "fallback": 271,
+      "missing": 25
+    },
+    {
+      "ingredient": "Streaky bacon",
+      "fallback": 240,
+      "missing": 13
+    },
+    {
+      "ingredient": "Pineapple",
+      "fallback": 235,
+      "missing": 57
+    },
+    {
+      "ingredient": "Chilli",
+      "fallback": 216,
+      "missing": 224
+    },
+    {
+      "ingredient": "Bacon lardon",
+      "fallback": 211,
+      "missing": 15
+    },
+    {
+      "ingredient": "Poultry",
+      "fallback": 202,
+      "missing": 20
+    },
+    {
+      "ingredient": "Fish stock",
+      "fallback": 199,
+      "missing": 30
+    },
+    {
+      "ingredient": "Dill",
+      "fallback": 197,
+      "missing": 140
+    },
+    {
+      "ingredient": "Egg yolk",
+      "fallback": 194,
+      "missing": 425
+    },
+    {
+      "ingredient": "Oregano",
+      "fallback": 179,
+      "missing": 40
+    },
+    {
+      "ingredient": "Chestnut",
+      "fallback": 176,
+      "missing": 15
+    },
+    {
+      "ingredient": "Scallops",
+      "fallback": 175,
+      "missing": 33
+    },
+    {
+      "ingredient": "Oil",
+      "fallback": 174,
+      "missing": 697
+    },
+    {
+      "ingredient": "Pine nut",
+      "fallback": 167,
+      "missing": 21
+    },
+    {
+      "ingredient": "Tarragon",
+      "fallback": 167,
+      "missing": 6
+    },
+    {
+      "ingredient": "Dashi stock",
+      "fallback": 163,
+      "missing": 1
+    },
+    {
+      "ingredient": "Tomato purée",
+      "fallback": 158,
+      "missing": 71
+    },
+    {
+      "ingredient": "Tomato coulis",
+      "fallback": 153,
+      "missing": 2
+    }
+  ]
+}

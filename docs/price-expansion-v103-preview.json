@@ -1,0 +1,251 @@
+{
+  "recipe": {
+    "id": "v103-evidence",
+    "title": "Price reference examples",
+    "servings": 2,
+    "ingredients": [
+      {
+        "name": "Miso",
+        "quantity": 300,
+        "unit": "g"
+      },
+      {
+        "name": "Miso paste",
+        "quantity": 1,
+        "unit": "tbsp"
+      },
+      {
+        "name": "Shimeji mushrooms",
+        "quantity": 150,
+        "unit": "g"
+      },
+      {
+        "name": "Water",
+        "quantity": 1000,
+        "unit": "g"
+      }
+    ]
+  },
+  "cost": {
+    "totalsByCurrency": {
+      "EUR": 5.48
+    },
+    "perServingByCurrency": {
+      "EUR": 2.74
+    },
+    "servings": 2.0,
+    "ingredients": [
+      {
+        "identity": "n:miso",
+        "name": "Miso",
+        "quantity": 300.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 3.49
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "hikari-miso-v103-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://asianbrand.de/products/miso-japanisch-weiss-savoury-white-hikari-300g",
+            "productName": "Hikari Savoury White plain miso paste",
+            "amount": 3.49,
+            "currency": "EUR",
+            "basisQuantity": 300,
+            "basisUnit": "g",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "Asian Brand Germany · online listing",
+            "categories": [
+              "en:misos"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Plain soy/rice miso paste: water, soybeans, rice, salt and alcohol; no fish-stock ingredients listed. Generic miso uses this named white variety. Not prepared miso soup, powder or dashi-seasoned paste. The 300 g food package is used, not its 340 g shipping weight. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary.",
+            "category": "en:misos",
+            "identity": "n:miso",
+            "observationId": "hikari-miso-v103-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": null
+      },
+      {
+        "identity": "n:miso paste",
+        "name": "Miso paste",
+        "quantity": 1.0,
+        "unit": "tbsp",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.2
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "hikari-miso-v103-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://asianbrand.de/products/miso-japanisch-weiss-savoury-white-hikari-300g",
+            "productName": "Hikari Savoury White plain miso paste",
+            "amount": 3.49,
+            "currency": "EUR",
+            "basisQuantity": 300,
+            "basisUnit": "g",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "Asian Brand Germany · online listing",
+            "categories": [
+              "en:misos"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Plain soy/rice miso paste: water, soybeans, rice, salt and alcohol; no fish-stock ingredients listed. Generic miso uses this named white variety. Not prepared miso soup, powder or dashi-seasoned paste. The 300 g food package is used, not its 340 g shipping weight. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary.",
+            "category": "en:misos",
+            "identity": "n:miso paste",
+            "observationId": "hikari-miso-v103-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_portion",
+          "label": "USDA Miso: tbsp",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/172442/nutrients",
+          "fdcId": 172442,
+          "portionId": 90629,
+          "sourceQuantity": 1.0,
+          "sourceUnit": "tbsp",
+          "quantity": 17.0,
+          "unit": "g",
+          "assumedCount": false
+        }
+      },
+      {
+        "identity": "n:shimeji mushrooms",
+        "name": "Shimeji mushrooms",
+        "quantity": 150.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 1.79
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "asianbrand-shimeji-v103-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://asianbrand.de/products/braune-pilze-shimeji-mushroom-frisch-150g?variant=55554228355420",
+            "productName": "Asian Brand fresh brown shimeji mushrooms",
+            "amount": 1.79,
+            "currency": "EUR",
+            "basisQuantity": 150,
+            "basisUnit": "g",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "Asian Brand Germany · online listing",
+            "categories": [
+              "cook4me:fresh-shimeji"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Fresh brown shimeji, 150 g food pack; no dried-mushroom or individual-count equivalence. Live product variant 55554228355420, SKU C039, and matching visible price/JSON-LD confirm EUR 1.79; older indexed pages showed EUR 1.99. The 160 g shipping weight is not used. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary.",
+            "category": "cook4me:fresh-shimeji",
+            "identity": "n:shimeji mushrooms",
+            "observationId": "asianbrand-shimeji-v103-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": null
+      },
+      {
+        "identity": "n:water",
+        "name": "Water",
+        "quantity": 1000.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.0
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "bwb-water-20260916",
+            "source": "utility_snapshot",
+            "sourceUrl": "https://www.bwb.de/de/gebuehren.php",
+            "productName": "Berlin tap-water usage tariff",
+            "amount": 1.813,
+            "currency": "EUR",
+            "basisQuantity": 1000,
+            "basisUnit": "l",
+            "date": "2026-09-16",
+            "country": "DE",
+            "location": "Berliner Wasserbetriebe · Berlin",
+            "categories": [
+              "cook4me:tap-water"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Regional benchmark, not your household tariff. Includes VAT; excludes fixed charges and wastewater.",
+            "category": "cook4me:tap-water",
+            "identity": "n:water",
+            "observationId": "bwb-water-20260916",
+            "updatedAt": "2026-09-16"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_density",
+          "label": "USDA drinking tap water: 1 litre = 1000 g; approximately 1 g/ml for costing",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/173647/nutrients",
+          "sourceQuantity": 1000.0,
+          "sourceUnit": "g",
+          "quantity": 1000.0,
+          "unit": "ml"
+        }
+      }
+    ],
+    "coverage": 1.0,
+    "complete": true,
+    "missingIngredientCount": 0,
+    "exactPurchaseCoverage": 0.0,
+    "estimated": true,
+    "targetCurrency": "EUR",
+    "targetCountry": "DE",
+    "currencyConversionApplied": false,
+    "priceConfidence": "reference",
+    "costCacheHit": false,
+    "pricingFingerprint": "da2aebf2f78c25264d6f1959b8aa413e5649c84d2ef268de9cc1233bb5915d88",
+    "recipePriceFingerprint": "be18127bf722176e2992e0234e8b025a45c6893c8bb4abde86db4dddf5477382",
+    "costCacheContract": "price-evidence-fingerprint-v1",
+    "settings": {
+      "currency": "EUR",
+      "country": "DE",
+      "autoGlobalPrices": true
+    },
+    "offlinePreview": true,
+    "priceLookupPending": false,
+    "checkedAt": "2026-09-17T09:29:17.459875+00:00",
+    "foodIngredientCount": 3,
+    "pricedFoodIngredientCount": 3,
+    "waterOnlyEstimate": false
+  }
+}

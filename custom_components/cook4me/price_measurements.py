@@ -156,7 +156,9 @@ def price_options(raw):
         options.append({'quantity': grams / piece['grams'], 'unit': 'pcs', 'estimate': {
             **_portion_evidence(piece),
             'sourceQuantity': amount, 'sourceUnit': unit, 'quantity': grams / piece['grams'], 'unit': 'pcs'}})
-    if spoon and (grams is not None or millilitres is not None):
+    # Some identities (notably miso) also label prepared liquids. A reviewed
+    # spoon portion can be valid without establishing density for ml/l rows.
+    if spoon and spoon.get('densityConversion', True) and (grams is not None or millilitres is not None):
         volume = 15 if spoon['measure'] == 'tbsp' else 5
         converted = grams / spoon['grams'] * volume if grams is not None else millilitres / volume * spoon['grams']
         destination = 'ml' if grams is not None else 'g'
