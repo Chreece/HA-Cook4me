@@ -1,0 +1,165 @@
+name: Merge exact quantity-only standalone semantics batch 7 v60
+
+on:
+  push:
+    branches:
+      - cook4me-ingredient-semantic-confirmation-v60
+    paths:
+      - '.github/workflows/standalone-semantic-exact-quantity-batch7-v60.yml'
+      - 'tools/apply_exact_quantity_semantic_batch7_v60.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  merge-exact-quantity-batch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Compile canonical baseline
+        run: |
+          set -Eeuo pipefail
+          python tools/compile_release_catalog_semantics_v60.py \
+            --reviews-dir tools \
+            --output "$RUNNER_TEMP/semantic-before.json" \
+            > "$RUNNER_TEMP/semantic-before-summary.json"
+
+      - name: Apply exact quantity-only canonical batch
+        run: |
+          set -Eeuo pipefail
+          python tools/apply_exact_quantity_semantic_batch7_v60.py \
+            --max-items 12 \
+            --receipt "$RUNNER_TEMP/batch7-receipt.json"
+          git diff --check
+
+      - name: Run semantic and nutrient regressions
+        run: |
+          set -Eeuo pipefail
+          python -m unittest discover -s tests -p 'test_compile_release_catalog_semantics_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_standalone_dispositions_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_standalone_equivalences_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_standalone_manual_equivalences_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_high_confidence_syntax_aliases_v60.py' -v
+          python -m unittest discover -s tests -p 'test_nutrition_semantic_syntax_aliases_v60.py' -v
+
+      - name: Prove exact canonical semantic delta
+        run: |
+          set -Eeuo pipefail
+          python tools/compile_release_catalog_semantics_v60.py \
+            --reviews-dir tools \
+            --output "$RUNNER_TEMP/semantic-after.json" \
+            > "$RUNNER_TEMP/semantic-after-summary.json"
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path.cwd()
+          before = json.loads(Path(os.environ['RUNNER_TEMP'], 'semantic-before.json').read_text(encoding='utf-8'))
+          after = json.loads(Path(os.environ['RUNNER_TEMP'], 'semantic-after.json').read_text(encoding='utf-8'))
+          receipt = json.loads(Path(os.environ['RUNNER_TEMP'], 'batch7-receipt.json').read_text(encoding='utf-8'))
+          delta = int(receipt.get('selectedCount') or 0)
+          bs = before['summary']
+          a = after['summary']
+
+          if bs['needsSemanticConfirmationSourceLabels'] != 0 or a['needsSemanticConfirmationSourceLabels'] != 0:
+              raise SystemExit('batch 7 must preserve zero pending semantics')
+          if a['reviewedAmbiguousSourceLabels'] != bs['reviewedAmbiguousSourceLabels']:
+              raise SystemExit('reviewed ambiguous count changed')
+          if len(after['sourceIdentityToConcept']) != len(before['sourceIdentityToConcept']):
+              raise SystemExit('raw source identity count changed')
+          if set(after['sourceIdentityToConcept']) != set(before['sourceIdentityToConcept']):
+              raise SystemExit('raw source identity set changed')
+
+          if delta:
+              if bs['standaloneConfirmedSourceLabels'] - a['standaloneConfirmedSourceLabels'] != delta:
+                  raise SystemExit('standalone decrement mismatch')
+              if a['semanticEquivalentConfirmedSourceLabels'] - bs['semanticEquivalentConfirmedSourceLabels'] != delta:
+                  raise SystemExit('manual semantic equivalence increment mismatch')
+              if bs['semanticConcepts'] - a['semanticConcepts'] != delta:
+                  raise SystemExit('semantic concept consolidation mismatch')
+
+          standalone = json.loads((root / 'tools/release_catalog_semantic_standalone_dispositions.v1.json').read_text(encoding='utf-8'))
+          confirmations = json.loads((root / 'tools/release_catalog_semantic_confirmations.v1.json').read_text(encoding='utf-8'))
+          equivalences = json.loads((root / 'tools/release_catalog_semantic_standalone_equivalences.v1.json').read_text(encoding='utf-8'))
+          standalone_ids = {row['sourceIngredientId'] for row in standalone.get('items') or [] if isinstance(row, dict)}
+          confirmation_rows = {row['sourceIngredientId']: row for row in confirmations.get('items') or [] if isinstance(row, dict) and row.get('sourceIngredientId')}
+          mapping = after['sourceIdentityToConcept']
+          concepts = {row['conceptId']: row for row in after.get('concepts') or []}
+
+          safety_restored = {
+              'local:uk:03b0818b595c5d09761c',
+              'local:uk:97553c4a23b39c4f285d',
+              'local:uk:eef3cdfcd9a6230db7e6',
+              'local:uk:953617d433fc7f71ea28',
+          }
+          if not safety_restored <= standalone_ids:
+              raise SystemExit('a batch-6 safety-restored distinction was merged again')
+          if any(source_id in confirmation_rows for source_id in safety_restored):
+              raise SystemExit('a batch-6 safety-restored distinction was reconfirmed')
+
+          equivalence_roots = {
+              str(row.get('targetSourceIngredientId') or '')
+              for row in equivalences.get('items') or [] if isinstance(row, dict)
+          } - {''}
+          if not equivalence_roots <= standalone_ids:
+              raise SystemExit('standalone equivalence root was removed')
+
+          for decision in receipt.get('items') or []:
+              source_id = decision['sourceIngredientId']
+              concept_id = decision['confirmedConceptId']
+              if source_id in standalone_ids:
+                  raise SystemExit(f'batch-7 source still standalone: {source_id}')
+              if mapping.get(source_id) != concept_id:
+                  raise SystemExit(f'batch-7 source mapped to wrong concept: {source_id}')
+              row = confirmation_rows.get(source_id)
+              if not row or row.get('manualSemanticEquivalence') is not True:
+                  raise SystemExit(f'manual confirmation receipt missing: {source_id}')
+              if row.get('sourceReviewedEnglish') != decision['sourceReviewedEnglish']:
+                  raise SystemExit(f'source reviewed-English receipt drift: {source_id}')
+              if row.get('targetCanonicalEnglish') != decision['targetCanonicalEnglish']:
+                  raise SystemExit(f'target canonical-English receipt drift: {source_id}')
+              concept = concepts[concept_id]
+              if any(concept.get(key) is not True for key in ('nutritionEligible','dietEligible','allergenEligible')):
+                  raise SystemExit(f'batch-7 target lost food-intelligence eligibility: {concept_id}')
+
+          if int(standalone['summary']['reviewedAmbiguousCount']) != 28:
+              raise SystemExit('reviewed ambiguous count must remain 28')
+          print(json.dumps({
+              'mergedFromStandalone': delta,
+              'standaloneBefore': bs['standaloneConfirmedSourceLabels'],
+              'standaloneAfter': a['standaloneConfirmedSourceLabels'],
+              'manualEquivalenceBefore': bs['semanticEquivalentConfirmedSourceLabels'],
+              'manualEquivalenceAfter': a['semanticEquivalentConfirmedSourceLabels'],
+              'semanticConceptsBefore': bs['semanticConcepts'],
+              'semanticConceptsAfter': a['semanticConcepts'],
+              'ambiguousAfter': a['reviewedAmbiguousSourceLabels'],
+              'pendingAfter': a['needsSemanticConfirmationSourceLabels'],
+          }, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Commit validated exact quantity-only merges
+        run: |
+          set -Eeuo pipefail
+          if git diff --quiet -- \
+            tools/release_catalog_semantic_confirmations.v1.json \
+            tools/release_catalog_semantic_standalone_dispositions.v1.json; then
+            echo 'No exact quantity-only batch 7 candidates remain.'
+          else
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add \
+              tools/release_catalog_semantic_confirmations.v1.json \
+              tools/release_catalog_semantic_standalone_dispositions.v1.json
+            git diff --cached --check
+            git commit -m 'Merge exact quantity-only ingredient semantics batch 7 v60'
+            git push origin HEAD:cook4me-ingredient-semantic-confirmation-v60
+          fi
