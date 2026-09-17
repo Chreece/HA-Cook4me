@@ -1,0 +1,175 @@
+name: Merge provenance-only ingredient semantics batch 8 v60
+
+on:
+  push:
+    branches:
+      - cook4me-ingredient-semantic-confirmation-v60
+    paths:
+      - '.github/workflows/standalone-semantic-provenance-batch8-v60.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  merge-provenance-batch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Compile promoted semantic baseline
+        run: |
+          set -Eeuo pipefail
+          python tools/compile_release_catalog_semantics_v60.py \
+            --reviews-dir tools \
+            --output "$RUNNER_TEMP/semantic-before.json" \
+            > "$RUNNER_TEMP/semantic-before-summary.json"
+
+      - name: Apply evidence-pinned provenance-only batch
+        run: |
+          set -Eeuo pipefail
+          python tools/apply_provenance_only_semantics_batch8_v60.py
+          git diff --check
+
+      - name: Run semantic and food-intelligence regressions
+        run: |
+          set -Eeuo pipefail
+          python -m unittest discover -s tests -p 'test_compile_release_catalog_semantics_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_standalone_dispositions_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_standalone_equivalences_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_standalone_manual_equivalences_v60.py' -v
+          python -m unittest discover -s tests -p 'test_semantic_high_confidence_syntax_aliases_v60.py' -v
+          python -m unittest discover -s tests -p 'test_nutrition_semantic_syntax_aliases_v60.py' -v
+
+      - name: Prove exact mixed-resolution delta
+        run: |
+          set -Eeuo pipefail
+          python tools/compile_release_catalog_semantics_v60.py \
+            --reviews-dir tools \
+            --output "$RUNNER_TEMP/semantic-after.json" \
+            > "$RUNNER_TEMP/semantic-after-summary.json"
+          python - <<'PY'
+          import importlib.util
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path.cwd()
+          before = json.loads(Path(os.environ['RUNNER_TEMP'], 'semantic-before.json').read_text(encoding='utf-8'))
+          after = json.loads(Path(os.environ['RUNNER_TEMP'], 'semantic-after.json').read_text(encoding='utf-8'))
+
+          helper_path = root / 'tools/apply_provenance_only_semantics_batch8_v60.py'
+          spec = importlib.util.spec_from_file_location('cook4me_batch8_proof', helper_path)
+          helper = importlib.util.module_from_spec(spec)
+          assert spec.loader is not None
+          spec.loader.exec_module(helper)
+
+          bs = before['summary']
+          a = after['summary']
+          if bs['needsSemanticConfirmationSourceLabels'] != 0 or a['needsSemanticConfirmationSourceLabels'] != 0:
+              raise SystemExit('batch 8 must preserve zero semantic pending work')
+          if bs['standaloneConfirmedSourceLabels'] - a['standaloneConfirmedSourceLabels'] != 4:
+              raise SystemExit('batch 8 standalone decrement mismatch')
+          if a['semanticEquivalentConfirmedSourceLabels'] - bs['semanticEquivalentConfirmedSourceLabels'] != 3:
+              raise SystemExit('batch 8 high-confidence manual-equivalence increment mismatch')
+          if a['standaloneEquivalentSourceLabels'] - bs['standaloneEquivalentSourceLabels'] != 1:
+              raise SystemExit('batch 8 source-local equivalence increment mismatch')
+          if bs['semanticConcepts'] - a['semanticConcepts'] != 4:
+              raise SystemExit('batch 8 semantic concept consolidation mismatch')
+          if a['reviewedAmbiguousSourceLabels'] != bs['reviewedAmbiguousSourceLabels'] or a['reviewedAmbiguousSourceLabels'] != 28:
+              raise SystemExit('batch 8 changed reviewed ambiguous closure count')
+          if set(after['sourceIdentityToConcept']) != set(before['sourceIdentityToConcept']):
+              raise SystemExit('batch 8 changed raw source identity set')
+
+          standalone = json.loads((root / 'tools/release_catalog_semantic_standalone_dispositions.v1.json').read_text(encoding='utf-8'))
+          confirmations = json.loads((root / 'tools/release_catalog_semantic_confirmations.v1.json').read_text(encoding='utf-8'))
+          equivalences = json.loads((root / 'tools/release_catalog_semantic_standalone_equivalences.v1.json').read_text(encoding='utf-8'))
+          standalone_ids = {
+              row['sourceIngredientId'] for row in standalone.get('items') or []
+              if isinstance(row, dict)
+          }
+          confirmation_rows = {
+              row['sourceIngredientId']: row for row in confirmations.get('items') or []
+              if isinstance(row, dict) and row.get('sourceIngredientId')
+          }
+          equivalence_rows = {
+              row['sourceIngredientId']: row for row in equivalences.get('items') or []
+              if isinstance(row, dict) and row.get('sourceIngredientId')
+          }
+          mapping = after['sourceIdentityToConcept']
+          concepts = {row['conceptId']: row for row in after.get('concepts') or []}
+
+          for decision in helper.HIGH_CONFIDENCE_DECISIONS:
+              source_id = decision['sourceIngredientId']
+              concept_id = decision['confirmedConceptId']
+              if source_id in standalone_ids:
+                  raise SystemExit(f'high-confidence provenance source still standalone: {source_id}')
+              if mapping.get(source_id) != concept_id:
+                  raise SystemExit(f'high-confidence provenance source mapped incorrectly: {source_id}')
+              receipt = confirmation_rows.get(source_id)
+              if not receipt or receipt.get('manualSemanticEquivalence') is not True:
+                  raise SystemExit(f'high-confidence manual-equivalence receipt missing: {source_id}')
+              if receipt.get('sourceReviewedEnglish') != decision['sourceReviewedEnglish']:
+                  raise SystemExit(f'high-confidence source text receipt drift: {source_id}')
+              if receipt.get('targetCanonicalEnglish') != decision['targetCanonicalEnglish']:
+                  raise SystemExit(f'high-confidence target text receipt drift: {source_id}')
+              concept = concepts[concept_id]
+              if any(concept.get(key) is not True for key in ('nutritionEligible','dietEligible','allergenEligible')):
+                  raise SystemExit(f'high-confidence provenance target lost food-intelligence eligibility: {concept_id}')
+
+          decision = helper.SOURCE_LOCAL_DECISION
+          source_id = decision['sourceIngredientId']
+          target_id = decision['targetSourceIngredientId']
+          if source_id in standalone_ids:
+              raise SystemExit('garden-bean provenance source still standalone')
+          if target_id not in standalone_ids:
+              raise SystemExit('garden-bean source-local target lost standalone root')
+          if mapping.get(source_id) != mapping.get(target_id):
+              raise SystemExit('garden-bean provenance source did not join target source-local concept')
+          receipt = equivalence_rows.get(source_id)
+          if not receipt or receipt.get('manualSemanticEquivalence') is not True:
+              raise SystemExit('garden-bean source-local manual-equivalence receipt missing')
+          concept = concepts[mapping[source_id]]
+          if not concept['conceptId'].startswith('concept:source:'):
+              raise SystemExit('garden-bean provenance source escaped conservative source-local concept')
+          if any(concept.get(key) is not False for key in ('nutritionEligible','dietEligible','allergenEligible')):
+              raise SystemExit('garden-bean provenance source gained safety eligibility')
+
+          if int(standalone['summary']['standaloneDispositionCount']) != 202:
+              raise SystemExit('batch 8 standalone ledger count must be 202')
+          if int(equivalences['summary']['equivalenceCount']) != 15:
+              raise SystemExit('batch 8 standalone equivalence ledger count must be 15')
+
+          print(json.dumps({
+              'resolved': 4,
+              'highConfidenceMerges': 3,
+              'sourceLocalEquivalences': 1,
+              'standaloneBefore': bs['standaloneConfirmedSourceLabels'],
+              'standaloneAfter': a['standaloneConfirmedSourceLabels'],
+              'semanticConceptsBefore': bs['semanticConcepts'],
+              'semanticConceptsAfter': a['semanticConcepts'],
+              'ambiguousAfter': a['reviewedAmbiguousSourceLabels'],
+              'pendingAfter': a['needsSemanticConfirmationSourceLabels'],
+              'rawIdentityCount': len(after['sourceIdentityToConcept']),
+          }, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Commit validated provenance-only resolutions
+        run: |
+          set -Eeuo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            tools/release_catalog_semantic_confirmations.v1.json \
+            tools/release_catalog_semantic_standalone_dispositions.v1.json \
+            tools/release_catalog_semantic_standalone_equivalences.v1.json \
+            tests/test_semantic_standalone_equivalences_v60.py
+          git diff --cached --check
+          git commit -m 'Merge provenance-only ingredient semantics batch 8 v60'
+          git push origin HEAD:cook4me-ingredient-semantic-confirmation-v60
