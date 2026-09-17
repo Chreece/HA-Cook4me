@@ -2773,6 +2773,106 @@
       "confidence": "external_observation",
       "barcode": "",
       "note": "Fresh raw root sold by kilogram; not turnip or prepared swede. Seasonal stock. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "ludwig-ground-beef-v101-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.der-ludwig.de/rinderhackfleisch",
+      "productName": "Der Ludwig Simmental ground beef, shock-frozen",
+      "amount": 16.95,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Der Ludwig Germany · online listing",
+      "categories": [
+        "en:ground-beef-meats"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "100% beef, raw and shock-frozen. Named butcher product, not a supermarket or national average. Not mixed mince, cooked meat or whole beef cuts. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary."
+    },
+    {
+      "id": "sendafish-cod-v101-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.send-a-fish.de/kabeljaufilet-frisch-ohne-haut/",
+      "productName": "Send-a-Fish fresh skinless cod fillets",
+      "amount": 22.9,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Send-a-Fish Germany · online listing",
+      "categories": [
+        "en:cods"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh skinless cod fillets in a 500 g vacuum pack. Generic cod uses this named fillet reference. No piece weight is inferred; salted, dried and breaded cod remain separate. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary."
+    },
+    {
+      "id": "naturata-demerara-v101-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.naturata-shop.de/Demerara-Rohrohrzucker-500-g/NAT-034035",
+      "productName": "Naturata organic Demerara raw cane sugar",
+      "amount": 3.59,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Naturata Germany · online listing",
+      "categories": [
+        "cook4me:demerara-sugar"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Single-pack price, without the six-pack discount. Coarse Demerara crystals; not generic brown sugar, muscovado, icing sugar or syrup. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary."
+    },
+    {
+      "id": "vanillekiste-pods-v101-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://shop.vanillekiste.de/shop/echte-bourbon-vanilleschoten-aus-madagaskar/?attribute_groesse=Drei+St%C3%BCck+im+Reagenzglas",
+      "productName": "Vanillekiste organic Fairtrade Bourbon vanilla, three whole pods",
+      "amount": 10,
+      "currency": "EUR",
+      "basisQuantity": 3,
+      "basisUnit": "pcs",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Vanillekiste Germany · online listing",
+      "categories": [
+        "en:vanilla-pods"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Three individual whole pods in a tube. Pod counts use this package directly. No mass, seed, extract or packet equivalence is inferred. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary."
+    },
+    {
+      "id": "vanillekiste-pods-mass-v101-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://shop.vanillekiste.de/shop/echte-bourbon-vanilleschoten-aus-madagaskar/?attribute_groesse=50g+im+Standbodenbeutel",
+      "productName": "Vanillekiste organic Fairtrade Bourbon whole vanilla pods, 50 g refill",
+      "amount": 25,
+      "currency": "EUR",
+      "basisQuantity": 50,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Vanillekiste Germany · online listing",
+      "categories": [
+        "en:vanilla-pods"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Separate 50 g whole-pod refill pack, for explicit mass quantities only. The advertised approximate pod count is not converted to a unit weight. Not powder, seeds or extract. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary."
     }
   ]
 }

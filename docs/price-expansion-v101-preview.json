@@ -1,0 +1,287 @@
+{
+  "recipe": {
+    "id": "v101-evidence",
+    "title": "Price reference examples",
+    "servings": 2,
+    "ingredients": [
+      {
+        "name": "Minced beef",
+        "quantity": 200,
+        "unit": "g"
+      },
+      {
+        "name": "Cod",
+        "quantity": 250,
+        "unit": "g"
+      },
+      {
+        "name": "Demerara sugar",
+        "quantity": 100,
+        "unit": "g"
+      },
+      {
+        "name": "Vanilla pod",
+        "quantity": 1,
+        "unit": "pcs"
+      },
+      {
+        "name": "Vanilla pod",
+        "quantity": 2,
+        "unit": "g"
+      }
+    ]
+  },
+  "cost": {
+    "totalsByCurrency": {
+      "EUR": 23.28
+    },
+    "perServingByCurrency": {
+      "EUR": 11.64
+    },
+    "servings": 2.0,
+    "ingredients": [
+      {
+        "identity": "n:minced beef",
+        "name": "Minced beef",
+        "quantity": 200.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 6.78
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "ludwig-ground-beef-v101-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.der-ludwig.de/rinderhackfleisch",
+            "productName": "Der Ludwig Simmental ground beef, shock-frozen",
+            "amount": 16.95,
+            "currency": "EUR",
+            "basisQuantity": 500,
+            "basisUnit": "g",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "Der Ludwig Germany · online listing",
+            "categories": [
+              "en:ground-beef-meats"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "100% beef, raw and shock-frozen. Named butcher product, not a supermarket or national average. Not mixed mince, cooked meat or whole beef cuts. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary.",
+            "category": "en:ground-beef-meats",
+            "identity": "n:minced beef",
+            "observationId": "ludwig-ground-beef-v101-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": null
+      },
+      {
+        "identity": "n:cod",
+        "name": "Cod",
+        "quantity": 250.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 11.45
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "sendafish-cod-v101-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.send-a-fish.de/kabeljaufilet-frisch-ohne-haut/",
+            "productName": "Send-a-Fish fresh skinless cod fillets",
+            "amount": 22.9,
+            "currency": "EUR",
+            "basisQuantity": 500,
+            "basisUnit": "g",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "Send-a-Fish Germany · online listing",
+            "categories": [
+              "en:cods"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Fresh skinless cod fillets in a 500 g vacuum pack. Generic cod uses this named fillet reference. No piece weight is inferred; salted, dried and breaded cod remain separate. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary.",
+            "category": "en:cods",
+            "identity": "n:cod",
+            "observationId": "sendafish-cod-v101-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": null
+      },
+      {
+        "identity": "n:demerara sugar",
+        "name": "Demerara sugar",
+        "quantity": 100.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.72
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "naturata-demerara-v101-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.naturata-shop.de/Demerara-Rohrohrzucker-500-g/NAT-034035",
+            "productName": "Naturata organic Demerara raw cane sugar",
+            "amount": 3.59,
+            "currency": "EUR",
+            "basisQuantity": 500,
+            "basisUnit": "g",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "Naturata Germany · online listing",
+            "categories": [
+              "cook4me:demerara-sugar"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Single-pack price, without the six-pack discount. Coarse Demerara crystals; not generic brown sugar, muscovado, icing sugar or syrup. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary.",
+            "category": "cook4me:demerara-sugar",
+            "identity": "n:demerara sugar",
+            "observationId": "naturata-demerara-v101-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": null
+      },
+      {
+        "identity": "n:vanilla pod",
+        "name": "Vanilla pod",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 3.33
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "vanillekiste-pods-v101-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://shop.vanillekiste.de/shop/echte-bourbon-vanilleschoten-aus-madagaskar/?attribute_groesse=Drei+St%C3%BCck+im+Reagenzglas",
+            "productName": "Vanillekiste organic Fairtrade Bourbon vanilla, three whole pods",
+            "amount": 10,
+            "currency": "EUR",
+            "basisQuantity": 3,
+            "basisUnit": "pcs",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "Vanillekiste Germany · online listing",
+            "categories": [
+              "en:vanilla-pods"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Three individual whole pods in a tube. Pod counts use this package directly. No mass, seed, extract or packet equivalence is inferred. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary.",
+            "category": "en:vanilla-pods",
+            "identity": "n:vanilla pod",
+            "observationId": "vanillekiste-pods-v101-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "ingredient_count",
+          "label": "vanilla pod: count of individual pods; no package-size or weight assumption",
+          "sourceQuantity": 1.0,
+          "sourceUnit": "pod",
+          "quantity": 1.0,
+          "unit": "pcs",
+          "assumedCount": false
+        }
+      },
+      {
+        "identity": "n:vanilla pod",
+        "name": "Vanilla pod",
+        "quantity": 2.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 1.0
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "vanillekiste-pods-mass-v101-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://shop.vanillekiste.de/shop/echte-bourbon-vanilleschoten-aus-madagaskar/?attribute_groesse=50g+im+Standbodenbeutel",
+            "productName": "Vanillekiste organic Fairtrade Bourbon whole vanilla pods, 50 g refill",
+            "amount": 25,
+            "currency": "EUR",
+            "basisQuantity": 50,
+            "basisUnit": "g",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "Vanillekiste Germany · online listing",
+            "categories": [
+              "en:vanilla-pods"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Separate 50 g whole-pod refill pack, for explicit mass quantities only. The advertised approximate pod count is not converted to a unit weight. Not powder, seeds or extract. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary.",
+            "category": "en:vanilla-pods",
+            "identity": "n:vanilla pod",
+            "observationId": "vanillekiste-pods-mass-v101-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": null
+      }
+    ],
+    "coverage": 1.0,
+    "complete": true,
+    "missingIngredientCount": 0,
+    "exactPurchaseCoverage": 0.0,
+    "estimated": true,
+    "targetCurrency": "EUR",
+    "targetCountry": "DE",
+    "currencyConversionApplied": false,
+    "priceConfidence": "reference",
+    "costCacheHit": false,
+    "pricingFingerprint": "8b67348b6557a81995e73c404b114b84b2df2247da761172fa55c048d9585d68",
+    "recipePriceFingerprint": "9dced49733b76faae58f8b1fe4fc72dd6b0dd0a858a7dd4184780bbd83e6331b",
+    "costCacheContract": "price-evidence-fingerprint-v1",
+    "settings": {
+      "currency": "EUR",
+      "country": "DE",
+      "autoGlobalPrices": true
+    },
+    "offlinePreview": true,
+    "priceLookupPending": false,
+    "checkedAt": "2026-09-17T08:54:02.467946+00:00",
+    "foodIngredientCount": 5,
+    "pricedFoodIngredientCount": 5,
+    "waterOnlyEstimate": false
+  }
+}

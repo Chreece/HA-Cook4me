@@ -642,6 +642,15 @@ for tag, kind, names in (
         _CATEGORIES[name] = (tag, kind)
 
 
+# v101: exact product forms; avoid broad brown-sugar or fish substitutions.
+for tag, kind, names in (
+    ('cook4me:demerara-sugar', 'REFERENCE', 'demerara sugar|demerara'),
+    ('en:cods', 'PRODUCT', 'cod fillet|cod fillets'),
+):
+    for name in names.split('|'):
+        _CATEGORIES[name] = (tag, kind)
+
+
 def country_currency(country):
     return next(iter(COUNTRY_CURRENCIES.get(country, [])), '')
 
