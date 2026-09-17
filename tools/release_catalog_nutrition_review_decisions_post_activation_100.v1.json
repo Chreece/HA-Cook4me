@@ -1,0 +1,77 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Vanilla powder",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Vanilla extract",
+      "fdcId": 173471,
+      "notes": "Manual semantic review binds Cook4Me 'Vanilla powder' to USDA SR Legacy 'Vanilla extract'. Vanilla is the defining ingredient identity and the target's own pinned evidence ranks this exact vanilla record first. Confidence remains medium because powder and extract differ in carrier, solvent, water, sugar, and concentration; this review is a vanilla-source nutritional proxy and does not imply identical formulation.",
+      "reviewTargetId": "concept:food:b1db2532487be0eb2468",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Vanilla pod",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Vanilla extract",
+      "fdcId": 173471,
+      "notes": "Manual semantic review binds Cook4Me 'Vanilla pod' to USDA SR Legacy 'Vanilla extract'. Vanilla is the defining food identity and the target's own pinned evidence ranks this vanilla record first. Confidence remains medium because a whole pod and extract differ in solvent, moisture, and concentration; this review is a vanilla-source proxy and does not generalize to vanilla-flavored desserts.",
+      "reviewTargetId": "concept:food:26ab366c0ae60bea7b7d",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Vanilla bean",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Vanilla extract",
+      "fdcId": 173471,
+      "notes": "Manual semantic review binds Cook4Me 'Vanilla bean' to USDA SR Legacy 'Vanilla extract'. The target is explicitly vanilla and its own pinned evidence ranks vanilla extract first. Confidence remains medium because whole vanilla bean and extract differ in moisture, solvent, and concentration; this is a same-flavor-source proxy rather than an exact physical-form match.",
+      "reviewTargetId": "concept:food:e0191deeebc05a4bcb5d",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Wonton dumplings",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Wonton, dumpling or pot sticker, fried",
+      "fdcId": 2708705,
+      "notes": "Manual semantic review binds Cook4Me 'Wonton dumplings' to USDA FNDDS 'Wonton, dumpling or pot sticker, fried'. The target is explicitly a wonton/dumpling product and its own pinned evidence ranks this whole-wonton category first. Confidence remains medium because the source does not specify fried versus steamed preparation, filling, meat content, or absorbed oil; this review does not generalize to wonton soup or unrelated dumplings.",
+      "reviewTargetId": "concept:food:29690e14b2bc5d14703b",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 4,
+      "canonicalEnglishName": "Chocolate-coated candied fruit",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Fruit, chocolate covered",
+      "fdcId": 2709295,
+      "notes": "Manual semantic review binds Cook4Me 'Chocolate-coated candied fruit' to USDA FNDDS 'Fruit, chocolate covered'. The target is explicitly fruit with a chocolate coating and its own pinned evidence contains this whole-product category. Confidence remains medium because the USDA row does not specify candied fruit, fruit species, chocolate type, or coating ratio; this review does not generalize to plain candied fruit or chocolate-coated non-fruit snacks.",
+      "reviewTargetId": "concept:food:61ed8994ec075f380f7d",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "1f5b7ecfe7e3ce615e443a749d2134cf3c10c890103fe8d24d1823e3c7163506"
+}
