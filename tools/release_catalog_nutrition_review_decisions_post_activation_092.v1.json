@@ -1,0 +1,89 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 11,
+      "canonicalEnglishName": "Smoked duck",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Duck, cooked, skin eaten",
+      "fdcId": 2706137,
+      "notes": "Manual semantic review binds Cook4Me 'Smoked duck' to USDA FNDDS 'Duck, cooked, skin eaten'. The target is explicitly duck and its own pinned evidence contains this exact cooked-duck record. Smoking is a cooking/preservation treatment and does not change the underlying species identity. Confidence remains medium because the USDA record is generically cooked rather than smoked and includes skin, so smoke curing, sodium, moisture loss, and exact cut are not represented; this review does not generalize to duck sauce, duck egg, or non-duck smoked foods.",
+      "reviewTargetId": "concept:food:f6e8fd8fcb1f09b28263",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 12,
+      "canonicalEnglishName": "Cooked bell peppers, cut into pieces",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Peppers, sweet, red, cooked, boiled, drained, with salt",
+      "fdcId": 170515,
+      "notes": "Manual semantic review binds Cook4Me 'Cooked bell peppers, cut into pieces' to USDA SR Legacy 'Peppers, sweet, red, cooked, boiled, drained, with salt'. Bell peppers are sweet peppers and the target's own pinned evidence contains this exact cooked sweet-pepper record. Cutting into pieces does not alter food identity. Confidence remains medium because the target does not specify pepper color, boiling versus another cooking method, draining, or added salt; this review does not generalize to hot peppers or pepper sauces.",
+      "reviewTargetId": "concept:food:964492f8870fca05ad09",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Liquid cream, 15%",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Cream, light",
+      "fdcId": 2705593,
+      "notes": "Manual semantic review binds Cook4Me 'Liquid cream, 15%' to USDA FNDDS 'Cream, light'. The target is explicitly liquid dairy cream and its own pinned evidence contains this light-cream record. Confidence remains medium because the USDA category does not guarantee exactly 15% fat and regional cream standards vary; this review does not generalize to cream substitute, sour cream, cream cheese, coconut cream, or liqueur.",
+      "reviewTargetId": "concept:food:ab597662573bee8b5811",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 4,
+      "canonicalEnglishName": "Fermented cucumber brine",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Pickles, cucumber, sour",
+      "fdcId": 169379,
+      "notes": "Manual semantic review binds Cook4Me 'Fermented cucumber brine' to USDA SR Legacy 'Pickles, cucumber, sour'. Fermented cucumber brine is the liquid phase of sour fermented/pickled cucumbers, and the target's own pinned evidence contains this exact sour-cucumber-pickle record. Confidence remains medium because brine differs from whole pickles in vegetable solids, fibre, sodium, acidity, and water distribution; this is a same-food fermentation proxy and does not generalize to raw cucumber or unrelated pickle brines.",
+      "reviewTargetId": "concept:food:aba16d101378faf3d368",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 4,
+      "canonicalEnglishName": "Yuzu juice (for finishing)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Fruit juice, NFS",
+      "fdcId": 2709315,
+      "notes": "Manual semantic review binds Cook4Me 'Yuzu juice (for finishing)' to USDA FNDDS 'Fruit juice, NFS'. Yuzu is a citrus fruit and the target is explicitly its juice; the target's own pinned evidence contains this generic 100%-fruit-juice category. Confidence remains medium because the USDA record does not preserve yuzu species, pulp level, concentration, or finishing quantity; this review does not generalize to sweetened fruit-juice drinks, orange juice specifically, or non-fruit juices.",
+      "reviewTargetId": "concept:food:5469938bc41c2ead63f9",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Fried onion",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Fried onion rings",
+      "fdcId": 2710055,
+      "notes": "Manual semantic review binds Cook4Me 'Fried onion' to USDA FNDDS 'Fried onion rings'. The target is explicitly fried onion and its own pinned evidence ranks this fried-onion record first. Confidence remains medium because the USDA category typically implies ring shape and may include breading and absorbed frying fat, while the Cook4Me wording does not specify breading, shape, oil, or frying method; this review does not generalize to raw onion, French onion soup, or onion bread.",
+      "reviewTargetId": "concept:food:af44ada91047a53f22af",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "58ccf18b4d489b07e6f91373a38ed71c63d14b4a607f0eed893d8570e77edb67"
+}
