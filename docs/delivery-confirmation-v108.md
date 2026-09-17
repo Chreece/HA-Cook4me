@@ -27,3 +27,5 @@ Opening any recipe's detail page collects this evidence without sending it to th
 - The frontend bundle is reproducible. Installer preflight includes the new confirmation/diagnostic suite and retains backup, rollback and installed-bundle verification.
 
 Transport is simulated in the automated tests. A physical firmware crash remains unresolved until its definition/device evidence can be examined; increasing the timeout alone cannot repair a native exception.
+
+Published runtime: `8e4fdd9356da85fdfeb8a8509147b3d196d475c3` on `cook4me-delivery-confirmation-v108`. Its tree matches the tested local source: `b5587d53e5ba3164b6f7c8885985fe741689569b`. The v108 installer pins this runtime and passed four deployment/rollback tests.
