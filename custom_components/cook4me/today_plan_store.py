@@ -45,7 +45,7 @@ def _compact_match(value: Any) -> dict[str, Any] | None:
         "expiryBonus", "nutritionGoal", "nutritionGoalBonus",
         "nutritionGoalCoverage", "calorieTarget", "caloriePerServing",
         "calorieDelta", "calorieTargetBonus", "todayBaseScore",
-        "safe", "diet", "dietCheckVersion", "dietary", "violations",
+        "safe", "diet", "dietCheckVersion", "dietRulesSignature", "dietary", "violations",
         "requiresSubstitutions", "eligibleWithSubstitutions", "substitutions",
         "missingIngredientCount", "quantityShortageCount",
     )
@@ -92,15 +92,13 @@ def compact_today_recipe(value: Any) -> dict[str, Any] | None:
 
 
 def compact_today_result(result: Any) -> dict[str, Any] | None:
-    if not isinstance(result, dict):
+    if not isinstance(result, dict) or not isinstance(result.get("items"), list):
         return None
     items = [
         compact
         for raw in (result.get("items") or [])[:_MAX_ITEMS]
         if (compact := compact_today_recipe(raw)) is not None
     ]
-    if not items:
-        return None
     out: dict[str, Any] = {"date": _text(result.get("date")), "items": items}
     for key in (
         "candidateCount", "rankedCount", "catalogCandidateCounts",
@@ -109,6 +107,8 @@ def compact_today_result(result: Any) -> dict[str, Any] | None:
     ):
         if key in result:
             out[key] = deepcopy(result[key])
+    from .today_multilang import compact_suggestion_history
+    out["suggestionHistory"] = compact_suggestion_history(result.get("suggestionHistory"))
     return out
 
 

@@ -267,7 +267,9 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
         store = await today_plan_store_for_bridge(bridge)
         if msg.get("group_by_meal_type"):
             from .today_multilang import select_today_categories
-            selected = await hass.async_add_executor_job(select_today_categories, rows, filters["mealTypes"], languages, (store.snapshot or {}).get("items", []))
+            saved = store.snapshot or {}
+            selected = await hass.async_add_executor_job(select_today_categories, rows, filters["mealTypes"], languages,
+                saved.get("items", []), saved.get("suggestionHistory", []))
         else:
             selected = {"items": select_catalog_balanced(rows, int(msg.get("meal_count", 1)), languages, diversity=bool(msg.get("variety", True)))}
         result = {"date": dt_util.now().date().isoformat(), **selected, "candidateCount": len(rows), "rankedCount": len(rows), "catalogErrors": [], "catalogMode": "release_offline", "filters": filters}
