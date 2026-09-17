@@ -1,0 +1,89 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Grated Gruyère (or Emmental or Comté)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Cheese, gruyere",
+      "fdcId": 171242,
+      "notes": "Manual review: Gruyère is explicitly one of the permitted cheeses and the target's pinned evidence contains an exact USDA Gruyère record. Medium: the source also permits Emmental or Comté, and grating itself is not represented separately.",
+      "reviewTargetId": "concept:food:fcd67726fa05c26ffc32",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 4,
+      "canonicalEnglishName": "Toasted almond",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Nuts, almonds",
+      "fdcId": 170567,
+      "notes": "Manual review: toasted almond remains almond; selected the target's pinned USDA almond record. Medium: the record does not preserve the toasting method, moisture loss, oil use, or salt.",
+      "reviewTargetId": "concept:food:4450403ae2f382be7f0b",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 3,
+      "canonicalEnglishName": "Pickle brine",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Pickles, NFS",
+      "fdcId": 2710097,
+      "notes": "Manual review: pickle brine is the liquid phase of pickles; selected the target's pinned generic pickle record as a same-food proxy. Medium: brine differs from whole pickles in solids, fibre, sodium, and water distribution.",
+      "reviewTargetId": "concept:food:f6ce2c89ce47baeca72d",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Hazelnut cream, without added sugar (or butter)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Nuts, hazelnuts or filberts, dry roasted, without salt added",
+      "fdcId": 170583,
+      "notes": "Manual review: the primary named option is unsweetened hazelnut cream; selected the target's pinned dry-roasted hazelnut record. Medium: texture, added fat, and the explicitly permitted butter alternative are not represented by the nut record.",
+      "reviewTargetId": "concept:food:2cc603bef7bb98105d25",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Chestnut spread",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Chestnuts",
+      "fdcId": 2707499,
+      "notes": "Manual review: chestnut spread is chestnut-based and the target's pinned evidence contains a plain chestnut record. Medium: spread hydration and possible sugar or other additions are unspecified.",
+      "reviewTargetId": "concept:food:e22f2f1a4e4b9c92b61c",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 6,
+      "canonicalEnglishName": "Pistachio cream",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Nuts, pistachio nuts, raw",
+      "fdcId": 2515379,
+      "notes": "Manual review: pistachio cream is pistachio-based and the target's pinned evidence contains a plain pistachio record. Medium: cream/spread formulation may add sugar, oil, milk, salt, or other ingredients not represented by the nut record.",
+      "reviewTargetId": "concept:food:b7c0a51e0d0a252fe6eb",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "6204590fedf1dc4bedd9aba34f08c294949efdac94f76ad99c722ee009210e5f"
+}
