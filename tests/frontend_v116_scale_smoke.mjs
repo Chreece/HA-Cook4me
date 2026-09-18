@@ -69,7 +69,7 @@ root.querySelector("#v116Tare").click();
 await new Promise(resolve=>setTimeout(resolve,0));
 assert.deepEqual(calls.at(-1),{domain:"button",service:"press",data:{entity_id:"button.cosori_tare"}});
 
-const recipe={title:"Rice",functionalId:"RICE",displayVariantId:"RICE-2",servings:2,ingredients:[{key:"M_FOOD_RICE",name:"Rice",quantity:250,unit:"g"}],steps:[{text:"Cook"}]};
+const recipe={title:"Rice",functionalId:"RICE",displayVariantId:"RICE-2",sendVariantId:"RICE-2",language:"en",selectedLanguage:"en",servings:2,ingredients:[{key:"M_FOOD_RICE",name:"Rice",quantity:250,unit:"g"}],steps:[{text:"Cook"}]};
 panel._opened=recipe;
 panel._v63RecipeDialog=document.createElement("div");
 panel._v63RecipeDialog.setAttribute("data-recipe-dialog","test");
