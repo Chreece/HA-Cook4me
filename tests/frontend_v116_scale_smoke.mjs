@@ -69,10 +69,16 @@ root.querySelector("#v116Tare").click();
 await new Promise(resolve=>setTimeout(resolve,0));
 assert.deepEqual(calls.at(-1),{domain:"button",service:"press",data:{entity_id:"button.cosori_tare"}});
 
-const recipe={title:"Rice",functionalId:"RICE",servings:2,ingredients:[{key:"M_FOOD_RICE",name:"Rice",quantity:250,unit:"g"}],steps:[{text:"Cook"}]};
-const detail=panel._detailHtml(recipe);
-assert.match(detail,/data-v116-recipe/);
-assert.match(detail,/250 g/);
+const recipe={title:"Rice",functionalId:"RICE",displayVariantId:"RICE-2",servings:2,ingredients:[{key:"M_FOOD_RICE",name:"Rice",quantity:250,unit:"g"}],steps:[{text:"Cook"}]};
+panel._opened=recipe;
+panel._v63RecipeDialog=document.createElement("div");
+panel._v63RecipeDialog.setAttribute("data-recipe-dialog","test");
+root.append(panel._v63RecipeDialog);
+panel._renderRecipeDialog();
+await new Promise(resolve=>setTimeout(resolve,20));
+assert.ok(panel._v63RecipeDialog.querySelector("[data-v116-recipe]"),"Scale controls are injected into the current fullscreen recipe dialog");
+assert.match(panel._v63RecipeDialog.querySelector("[data-v116-recipe]").textContent,/250 g/);
+assert.equal(panel._v63RecipeDialog.querySelector("[data-v116-live]").textContent,"125.4 g");
 
 panel._v116Scale=structuredClone(scaleState);
 panel._v116Scale.reading.stableEntityId="binary_sensor.cosori_stable";
