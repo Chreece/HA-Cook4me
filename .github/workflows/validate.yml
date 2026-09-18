@@ -75,8 +75,8 @@ jobs:
           print('JSON OK')
           PY
           for f in custom_components/cook4me/frontend/cook4me-panel-v*.js; do node --check "$f"; done
-      - name: Check installer backup and rollback with isolated command stubs
-        run: sudo "$(command -v python)" -m unittest discover -s tests -p 'test_deploy_offline_runtime_v*.py' -v
+      - name: Check active v115 installer backup and rollback
+        run: sudo "$(command -v python)" -m unittest discover -s tests -p 'test_deploy_offline_runtime_v115.py' -v
       - name: Instantiate Recipe Hub in a DOM runtime
         run: |
           npm install --no-save --package-lock=false linkedom@0.18.12
