@@ -106,8 +106,13 @@ async def _handle_recipe_completed(bridge: Cook4MeBridge, completed_state=None) 
         recipe.setdefault("title", completed_state.get("recipeTitle"))
         recipe.setdefault("variantFunctionalId", variant)
 
-    scale_store = await smart_scale_store_for_bridge(bridge)
-    scale_session = scale_store.session_for(recipe)
+    # Smart-scale data is optional. A storage/read failure must never suppress
+    # the ordinary post-cook stock confirmation path.
+    try:
+        scale_store = await smart_scale_store_for_bridge(bridge)
+        scale_session = scale_store.session_for(recipe)
+    except Exception:
+        scale_session = None
     if scale_session:
         recipe = apply_recipe_measurements(recipe, scale_session)
 
