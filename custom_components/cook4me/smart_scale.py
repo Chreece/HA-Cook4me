@@ -84,18 +84,105 @@ def grams_to_mass(value: Any, unit: Any) -> float | None:
     return grams / factor
 
 
+def _entity_registry(hass: HomeAssistant) -> Any | None:
+    """Return the HA entity registry without making it a hard import-time dependency."""
+    try:
+        from homeassistant.helpers import entity_registry as er
+    except Exception:
+        return None
+    try:
+        return er.async_get(hass)
+    except Exception:
+        return None
+
+
+def _vesync_scale_controls(hass: HomeAssistant, entity_id: str) -> dict[str, str]:
+    """Resolve VeSync Local BT sibling entities for one measurement sensor.
+
+    The COSORI scale sleeps aggressively, so its live measurement entity can be
+    unavailable (and have no unit) while it is still a perfectly valid scale.
+    Resolve it from the entity registry instead of relying only on current state.
+    """
+    registry = _entity_registry(hass)
+    if registry is None:
+        return {}
+    try:
+        entry = registry.async_get(_text(entity_id))
+    except Exception:
+        entry = None
+    if entry is None or _text(getattr(entry, "platform", "")) != "ha_vesync_bt":
+        return {}
+    device_id = _text(getattr(entry, "device_id", ""))
+    if not device_id:
+        return {}
+
+    result: dict[str, str] = {"adapter": "vesync_local_bt"}
+    try:
+        entries = tuple(registry.entities.values())
+    except Exception:
+        entries = ()
+    for sibling in entries:
+        if (
+            _text(getattr(sibling, "platform", "")) != "ha_vesync_bt"
+            or _text(getattr(sibling, "device_id", "")) != device_id
+        ):
+            continue
+        sibling_id = _text(getattr(sibling, "entity_id", ""))
+        unique_id = _text(getattr(sibling, "unique_id", ""))
+        if sibling_id.startswith("sensor.") and unique_id.endswith("_measurement"):
+            result["measurementEntityId"] = sibling_id
+        elif sibling_id.startswith("binary_sensor.") and unique_id.endswith("_stable"):
+            result["stableEntityId"] = sibling_id
+        elif sibling_id.startswith("binary_sensor.") and unique_id.endswith("_connected"):
+            result["connectedEntityId"] = sibling_id
+        elif sibling_id.startswith("button.") and unique_id.endswith("_tare"):
+            result["tareButtonEntityId"] = sibling_id
+        elif sibling_id.startswith("select.") and unique_id.endswith("_unit"):
+            result["unitSelectEntityId"] = sibling_id
+    return result
+
+
+def _entity_bool(hass: HomeAssistant, entity_id: str) -> bool | None:
+    if not entity_id:
+        return None
+    state = hass.states.get(entity_id)
+    if state is None:
+        return None
+    value = str(state.state).strip().casefold()
+    if value == "on":
+        return True
+    if value == "off":
+        return False
+    return None
+
+
 def scale_reading(hass: HomeAssistant, entity_id: str) -> dict[str, Any]:
     """Return one Home Assistant weight sensor as a normalized gram reading."""
     wanted = _text(entity_id)
     if not wanted:
         return {"entityId": "", "available": False, "reason": "not_configured"}
+    controls = _vesync_scale_controls(hass, wanted)
     state = hass.states.get(wanted)
     if state is None:
-        return {"entityId": wanted, "available": False, "reason": "entity_not_found"}
+        return {
+            "entityId": wanted,
+            "available": False,
+            "reason": "entity_not_found",
+            **controls,
+        }
     unit = _text(state.attributes.get("unit_of_measurement"))
     grams = mass_to_grams(state.state, unit)
-    available = grams is not None and str(state.state).lower() not in {"unknown", "unavailable"}
-    return {
+    state_unavailable = str(state.state).lower() in {"unknown", "unavailable"}
+    available = grams is not None and not state_unavailable
+    reason = ""
+    if not available:
+        if controls and state_unavailable:
+            reason = "scale_sleeping_or_disconnected"
+        elif unit and _MASS_TO_GRAMS.get(_unit_token(unit)) is None:
+            reason = "unsupported_unit"
+        else:
+            reason = "unsupported_or_unavailable"
+    result = {
         "entityId": wanted,
         "name": _text(state.attributes.get("friendly_name")) or wanted,
         "available": bool(available),
@@ -104,13 +191,21 @@ def scale_reading(hass: HomeAssistant, entity_id: str) -> dict[str, Any]:
         "grams": round(float(grams), 6) if grams is not None else None,
         "deviceClass": _text(state.attributes.get("device_class")),
         "lastChanged": state.last_changed.isoformat() if getattr(state, "last_changed", None) else "",
-        **({} if available else {"reason": "unsupported_or_unavailable"}),
+        **controls,
     }
+    if controls:
+        result["provider"] = "VeSync Local BT"
+        result["stable"] = _entity_bool(hass, controls.get("stableEntityId", ""))
+        result["connected"] = _entity_bool(hass, controls.get("connectedEntityId", ""))
+        result["nativeTare"] = bool(controls.get("tareButtonEntityId"))
+    if not available:
+        result["reason"] = reason
+    return result
 
 
 def scale_entity_candidates(hass: HomeAssistant) -> list[dict[str, Any]]:
-    """List numeric sensor entities whose unit is explicitly a mass unit."""
-    rows: list[dict[str, Any]] = []
+    """List supported HA mass sensors, including sleeping smart-scale adapters."""
+    rows_by_id: dict[str, dict[str, Any]] = {}
     for state in hass.states.async_all():
         entity_id = str(getattr(state, "entity_id", "") or "")
         if not entity_id.startswith("sensor."):
@@ -119,21 +214,62 @@ def scale_entity_candidates(hass: HomeAssistant) -> list[dict[str, Any]]:
         if _MASS_TO_GRAMS.get(_unit_token(unit)) is None:
             continue
         numeric = _number(state.state)
-        rows.append(
-            {
+        reading = scale_reading(hass, entity_id)
+        rows_by_id[entity_id] = {
+            "entityId": entity_id,
+            "name": _text(state.attributes.get("friendly_name")) or entity_id,
+            "unit": unit,
+            "deviceClass": _text(state.attributes.get("device_class")),
+            "available": numeric is not None and str(state.state).lower() not in {"unknown", "unavailable"},
+            "grams": round(float(mass_to_grams(numeric, unit) or 0.0), 6)
+            if numeric is not None
+            else None,
+            **({"provider": reading["provider"]} if reading.get("provider") else {}),
+            **({"adapter": reading["adapter"]} if reading.get("adapter") else {}),
+        }
+
+    # HA-VeSync-BT exposes the COSORI measurement sensor as unavailable while the
+    # scale sleeps. It must still be selectable so Cook4me can automatically
+    # resume live weighing as soon as the scale wakes.
+    registry = _entity_registry(hass)
+    if registry is not None:
+        try:
+            entries = tuple(registry.entities.values())
+        except Exception:
+            entries = ()
+        for entry in entries:
+            entity_id = _text(getattr(entry, "entity_id", ""))
+            unique_id = _text(getattr(entry, "unique_id", ""))
+            if (
+                not entity_id.startswith("sensor.")
+                or _text(getattr(entry, "platform", "")) != "ha_vesync_bt"
+                or not unique_id.endswith("_measurement")
+            ):
+                continue
+            reading = scale_reading(hass, entity_id)
+            state = hass.states.get(entity_id)
+            name = (
+                _text(state.attributes.get("friendly_name"))
+                if state is not None
+                else ""
+            ) or "COSORI Nutrition Scale"
+            rows_by_id[entity_id] = {
                 "entityId": entity_id,
-                "name": _text(state.attributes.get("friendly_name")) or entity_id,
-                "unit": unit,
-                "deviceClass": _text(state.attributes.get("device_class")),
-                "available": numeric is not None and str(state.state).lower() not in {"unknown", "unavailable"},
-                "grams": round(float(mass_to_grams(numeric, unit) or 0.0), 6)
-                if numeric is not None
-                else None,
+                "name": name,
+                "unit": _text(state.attributes.get("unit_of_measurement")) if state is not None else "",
+                "deviceClass": _text(state.attributes.get("device_class")) if state is not None else "",
+                "available": bool(reading.get("available")),
+                "grams": reading.get("grams"),
+                "provider": "VeSync Local BT",
+                "adapter": "vesync_local_bt",
+                "nativeTare": bool(reading.get("nativeTare")),
+                "connected": reading.get("connected"),
+                "stable": reading.get("stable"),
             }
-        )
+
+    rows = list(rows_by_id.values())
     rows.sort(key=lambda row: (not bool(row["available"]), row["name"].casefold(), row["entityId"]))
     return rows
-
 
 def recipe_aliases(recipe: Any) -> list[str]:
     if not isinstance(recipe, dict):
