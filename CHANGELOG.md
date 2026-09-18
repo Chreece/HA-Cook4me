@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026.9.18.4
+
+- In fullscreen recipe mode, move live weighing into its own folded disclosure directly after Ingredients, matching the existing Information/Ingredients section style.
+- Move the complete existing recipe price block into Information without changing its contents, refresh button, per-serving amount or evidence details.
+- Keep weighing state, price live updates and existing listeners intact while moving the existing DOM nodes instead of recreating them.
+
 ## 2026.9.18.3
 
 - Move Smart scale out of the top of My Kitchen and into the existing kitchen navigation, directly beside Storage locations.
