@@ -1,0 +1,13 @@
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+const root=new URL("../",import.meta.url);
+const source=readFileSync(new URL("custom_components/cook4me/frontend/cook4me-panel-v118.js",root),"utf8");
+const bundle=readFileSync(new URL("custom_components/cook4me/frontend/cook4me-panel-v118-bundle.js",root),"utf8");
+assert.match(source,/data-v66-section="info"/);
+assert.match(source,/\.v79-recipe-price/);
+assert.match(source,/infoBody\.append\(price\)/);
+assert.match(source,/details\.dataset\.v66Section='weighing'/);
+assert.match(source,/ingredients\.after\(details\)/);
+assert.match(source,/data-v118-weighing/);
+assert.match(bundle,/cook4me-recipe-hub-panel-v118/);
+console.log("minimal v118 fullscreen layout contract passed");
