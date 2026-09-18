@@ -8,6 +8,7 @@ globalThis.requestAnimationFrame=callback=>setTimeout(callback,0);
 globalThis.cancelAnimationFrame=clearTimeout;
 globalThis.ResizeObserver=class{observe(){} disconnect(){}};
 globalThis.CSS={escape:String};
+globalThis.Option=globalThis.Option||function(text="",value=""){const option=document.createElement("option");option.textContent=text;option.value=value;return option;};
 const storage=new Map();
 globalThis.localStorage={getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
 
