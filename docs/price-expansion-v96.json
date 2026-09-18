@@ -1,0 +1,277 @@
+{
+  "market": "DE",
+  "currency": "EUR",
+  "asOf": "2026-09-16",
+  "baselineCommit": "02f32ba39784453819547aef0eace031f0e22d02",
+  "method": "Counts are language/serving variants and ingredient occurrences; no household prices. Each build uses its own identities, conversions, source-form filters and dated references.",
+  "before": {
+    "summary": {
+      "variants": 32163,
+      "ingredients": 230483,
+      "known": 130546,
+      "fallback": 45204,
+      "covered": 175750,
+      "knownComplete": 5359,
+      "budgetComplete": 11268,
+      "noKnownCost": 1538,
+      "noBudgetCost": 82
+    }
+  },
+  "after": {
+    "summary": {
+      "variants": 32163,
+      "ingredients": 230483,
+      "known": 131659,
+      "fallback": 44091,
+      "covered": 175750,
+      "knownComplete": 5425,
+      "budgetComplete": 11268,
+      "noKnownCost": 1535,
+      "noBudgetCost": 82
+    }
+  },
+  "changes": [
+    {
+      "ingredient": "Fish sauce",
+      "additionalPriceReferences": 325,
+      "before": {
+        "known": 0,
+        "fallback": 325,
+        "missing": 43
+      },
+      "after": {
+        "known": 325,
+        "fallback": 0,
+        "missing": 43
+      }
+    },
+    {
+      "ingredient": "Salmon",
+      "additionalPriceReferences": 293,
+      "before": {
+        "known": 0,
+        "fallback": 329,
+        "missing": 184
+      },
+      "after": {
+        "known": 293,
+        "fallback": 36,
+        "missing": 184
+      }
+    },
+    {
+      "ingredient": "Green lentil",
+      "additionalPriceReferences": 136,
+      "before": {
+        "known": 0,
+        "fallback": 136,
+        "missing": 1
+      },
+      "after": {
+        "known": 136,
+        "fallback": 0,
+        "missing": 1
+      }
+    },
+    {
+      "ingredient": "Fresh goat cheese",
+      "additionalPriceReferences": 134,
+      "before": {
+        "known": 0,
+        "fallback": 134,
+        "missing": 7
+      },
+      "after": {
+        "known": 134,
+        "fallback": 0,
+        "missing": 7
+      }
+    },
+    {
+      "ingredient": "Dried farfalle pasta",
+      "additionalPriceReferences": 92,
+      "before": {
+        "known": 0,
+        "fallback": 92,
+        "missing": 0
+      },
+      "after": {
+        "known": 92,
+        "fallback": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Nutmeg",
+      "additionalPriceReferences": 90,
+      "before": {
+        "known": 0,
+        "fallback": 90,
+        "missing": 295
+      },
+      "after": {
+        "known": 90,
+        "fallback": 0,
+        "missing": 295
+      }
+    },
+    {
+      "ingredient": "Allspice",
+      "additionalPriceReferences": 21,
+      "before": {
+        "known": 0,
+        "fallback": 165,
+        "missing": 52
+      },
+      "after": {
+        "known": 21,
+        "fallback": 144,
+        "missing": 52
+      }
+    },
+    {
+      "ingredient": "Salmon fillet",
+      "additionalPriceReferences": 10,
+      "before": {
+        "known": 0,
+        "fallback": 13,
+        "missing": 5
+      },
+      "after": {
+        "known": 10,
+        "fallback": 3,
+        "missing": 5
+      }
+    },
+    {
+      "ingredient": "Green lentils",
+      "additionalPriceReferences": 6,
+      "before": {
+        "known": 0,
+        "fallback": 6,
+        "missing": 6
+      },
+      "after": {
+        "known": 6,
+        "fallback": 0,
+        "missing": 6
+      }
+    },
+    {
+      "ingredient": "Ground nutmeg",
+      "additionalPriceReferences": 6,
+      "before": {
+        "known": 0,
+        "fallback": 6,
+        "missing": 4
+      },
+      "after": {
+        "known": 6,
+        "fallback": 0,
+        "missing": 4
+      }
+    }
+  ],
+  "largestRemainingGaps": [
+    {
+      "ingredient": "Salt",
+      "missing": 9219
+    },
+    {
+      "ingredient": "Pepper",
+      "missing": 3276
+    },
+    {
+      "ingredient": "Salt and pepper",
+      "missing": 2228
+    },
+    {
+      "ingredient": "Garlic",
+      "missing": 1573
+    },
+    {
+      "ingredient": "Olive oil",
+      "missing": 738
+    },
+    {
+      "ingredient": "Parsley",
+      "missing": 728
+    },
+    {
+      "ingredient": "Sugar",
+      "missing": 711
+    },
+    {
+      "ingredient": "Ginger",
+      "missing": 702
+    },
+    {
+      "ingredient": "Oil",
+      "missing": 697
+    },
+    {
+      "ingredient": "Soy sauce",
+      "missing": 605
+    },
+    {
+      "ingredient": "Water",
+      "missing": 582
+    },
+    {
+      "ingredient": "Bay",
+      "missing": 445
+    },
+    {
+      "ingredient": "Egg yolk",
+      "missing": 425
+    },
+    {
+      "ingredient": "Sake",
+      "missing": 407
+    },
+    {
+      "ingredient": "Mixed herbs",
+      "missing": 386
+    },
+    {
+      "ingredient": "Salted Butter & Unsalted butter",
+      "missing": 361
+    },
+    {
+      "ingredient": "Carrot",
+      "missing": 348
+    },
+    {
+      "ingredient": "Thyme",
+      "missing": 346
+    },
+    {
+      "ingredient": "Basil",
+      "missing": 344
+    },
+    {
+      "ingredient": "Leaf gelatine",
+      "missing": 339
+    },
+    {
+      "ingredient": "Mirin",
+      "missing": 329
+    },
+    {
+      "ingredient": "Celery",
+      "missing": 312
+    },
+    {
+      "ingredient": "Mint",
+      "missing": 299
+    },
+    {
+      "ingredient": "Vanilla pod",
+      "missing": 297
+    },
+    {
+      "ingredient": "Coriander",
+      "missing": 295
+    }
+  ]
+}

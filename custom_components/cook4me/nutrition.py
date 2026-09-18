@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from copy import deepcopy
 from datetime import datetime, timezone
+import asyncio
+from functools import wraps
 import json
 import math
 import re
@@ -532,6 +534,23 @@ def calculate_recipe_nutrition(
     }
 
 
+def serialize_nutrition_mutation(function):
+    """Keep read/modify/save operations on the same store in one sequence.
+
+    All mutation entry points must share this lock; locking only the final
+    write permits an older staged snapshot to overwrite a newer change.
+    Wrapped functions must not call another wrapped function on the same store.
+    """
+    @wraps(function)
+    async def serialized(store, *args, **kwargs):
+        lock = getattr(store, '_mutation_lock', None)
+        if lock is None:
+            lock = store._mutation_lock = asyncio.Lock()
+        async with lock:
+            return await function(store, *args, **kwargs)
+    return serialized
+
+
 class Cook4MeNutritionStore:
     def __init__(self, hass: HomeAssistant, entry_id: str) -> None:
         self.hass = hass
@@ -571,6 +590,7 @@ class Cook4MeNutritionStore:
         row = (self._data.get("generic") or {}).get(identity)
         return deepcopy(row) if isinstance(row, dict) else None
 
+    @serialize_nutrition_mutation
     async def async_set_generic(
         self,
         identity: str,
@@ -601,6 +621,7 @@ class Cook4MeNutritionStore:
         await self._save()
         return deepcopy(row)
 
+    @serialize_nutrition_mutation
     async def async_add_stock_lot(
         self,
         ingredient: dict[str, Any],
@@ -663,6 +684,7 @@ class Cook4MeNutritionStore:
                 capacities[_text(row.get("bestBefore"))] = amount
         return unit, capacities
 
+    @serialize_nutrition_mutation
     async def async_reconcile_inventory(self, inventory: Any) -> None:
         by_identity = {
             ingredient_identity(row): row
@@ -706,6 +728,7 @@ class Cook4MeNutritionStore:
         if changed:
             await self._save()
 
+    @serialize_nutrition_mutation
     async def async_consume_report(self, report: Any) -> dict[str, Any]:
         deducted = report.get("deductedLots") if isinstance(report, dict) else None
         if not isinstance(deducted, list):
@@ -778,12 +801,14 @@ class Cook4MeNutritionStore:
 
 
 async def nutrition_store_for_bridge(bridge: Any) -> Cook4MeNutritionStore:
-    store = getattr(bridge, "_nutrition_store", None)
-    if store is None:
-        store = Cook4MeNutritionStore(bridge.hass, bridge.entry.entry_id)
-        await store.async_load()
-        bridge._nutrition_store = store
-    return store
+    from .store_helpers import store_load_lock
+    async with store_load_lock(bridge, 'nutrition'):
+        store = getattr(bridge, "_nutrition_store", None)
+        if store is None:
+            store = Cook4MeNutritionStore(bridge.hass, bridge.entry.entry_id)
+            await store.async_load()
+            bridge._nutrition_store = store
+        return store
 
 
 DEMO_KEY = _DEMO_KEY

@@ -19,10 +19,16 @@ from .websocket_v27 import async_register as async_register_websocket_v27
 from .websocket_v28 import async_register as async_register_websocket_v28
 from .websocket_v29 import async_register as async_register_websocket_v29
 from .websocket_v30 import async_register as async_register_websocket_v30
+from .websocket_v31 import async_register as async_register_websocket_v31
+from .websocket_v32 import async_register as async_register_websocket_v32
+from .websocket_v33 import async_register as async_register_websocket_v33
+from .websocket_v34 import async_register as async_register_websocket_v34
+from .websocket_v35 import async_register as async_register_websocket_v35
+from .websocket_v36 import async_register as async_register_websocket_v36
 
-_URL_BASE = "/cook4me_static"
-_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v59"
-_PANEL_MODULE = "cook4me-panel-v59.js"
+_URL_BASE = "/cook4me_static/2026.9.17.19"
+_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v115"
+_PANEL_MODULE = "cook4me-panel-v115-bundle.js"
 _V20_REGISTERED = "websocket_v20_registered"
 _V21_REGISTERED = "websocket_v21_registered"
 _V22_REGISTERED = "websocket_v22_registered"
@@ -34,43 +40,50 @@ _V27_REGISTERED = "websocket_v27_registered"
 _V28_REGISTERED = "websocket_v28_registered"
 _V29_REGISTERED = "websocket_v29_registered"
 _V30_REGISTERED = "websocket_v30_registered"
+_V31_REGISTERED = "websocket_v31_registered"
+_V32_REGISTERED = "websocket_v32_registered"
+_V33_REGISTERED = "websocket_v33_registered"
+_V34_REGISTERED = "websocket_v34_registered"
+_V35_REGISTERED = "websocket_v35_registered"
+_V36_REGISTERED = "websocket_v36_registered"
 
 
 async def async_register_panel(hass: HomeAssistant) -> None:
     domain_data = hass.data.setdefault(DOMAIN, {})
     if not domain_data.get(_V20_REGISTERED):
-        async_register_websocket_v20(hass)
-        domain_data[_V20_REGISTERED] = True
+        async_register_websocket_v20(hass); domain_data[_V20_REGISTERED] = True
     if not domain_data.get(_V21_REGISTERED):
-        async_register_websocket_v21(hass)
-        domain_data[_V21_REGISTERED] = True
+        async_register_websocket_v21(hass); domain_data[_V21_REGISTERED] = True
     if not domain_data.get(_V22_REGISTERED):
-        async_register_websocket_v22(hass)
-        domain_data[_V22_REGISTERED] = True
+        async_register_websocket_v22(hass); domain_data[_V22_REGISTERED] = True
     if not domain_data.get(_V23_REGISTERED):
-        async_register_websocket_v23(hass)
-        domain_data[_V23_REGISTERED] = True
+        async_register_websocket_v23(hass); domain_data[_V23_REGISTERED] = True
     if not domain_data.get(_V24_REGISTERED):
-        async_register_websocket_v24(hass)
-        domain_data[_V24_REGISTERED] = True
+        async_register_websocket_v24(hass); domain_data[_V24_REGISTERED] = True
     if not domain_data.get(_V25_REGISTERED):
-        async_register_websocket_v25(hass)
-        domain_data[_V25_REGISTERED] = True
+        async_register_websocket_v25(hass); domain_data[_V25_REGISTERED] = True
     if not domain_data.get(_V26_REGISTERED):
-        async_register_websocket_v26(hass)
-        domain_data[_V26_REGISTERED] = True
+        async_register_websocket_v26(hass); domain_data[_V26_REGISTERED] = True
     if not domain_data.get(_V27_REGISTERED):
-        async_register_websocket_v27(hass)
-        domain_data[_V27_REGISTERED] = True
+        async_register_websocket_v27(hass); domain_data[_V27_REGISTERED] = True
     if not domain_data.get(_V28_REGISTERED):
-        async_register_websocket_v28(hass)
-        domain_data[_V28_REGISTERED] = True
+        async_register_websocket_v28(hass); domain_data[_V28_REGISTERED] = True
     if not domain_data.get(_V29_REGISTERED):
-        async_register_websocket_v29(hass)
-        domain_data[_V29_REGISTERED] = True
+        async_register_websocket_v29(hass); domain_data[_V29_REGISTERED] = True
     if not domain_data.get(_V30_REGISTERED):
-        async_register_websocket_v30(hass)
-        domain_data[_V30_REGISTERED] = True
+        async_register_websocket_v30(hass); domain_data[_V30_REGISTERED] = True
+    if not domain_data.get(_V31_REGISTERED):
+        async_register_websocket_v31(hass); domain_data[_V31_REGISTERED] = True
+    if not domain_data.get(_V32_REGISTERED):
+        async_register_websocket_v32(hass); domain_data[_V32_REGISTERED] = True
+    if not domain_data.get(_V33_REGISTERED):
+        async_register_websocket_v33(hass); domain_data[_V33_REGISTERED] = True
+    if not domain_data.get(_V34_REGISTERED):
+        async_register_websocket_v34(hass); domain_data[_V34_REGISTERED] = True
+    if not domain_data.get(_V35_REGISTERED):
+        async_register_websocket_v35(hass); domain_data[_V35_REGISTERED] = True
+    if not domain_data.get(_V36_REGISTERED):
+        async_register_websocket_v36(hass); domain_data[_V36_REGISTERED] = True
     if async_panel_exists(hass, DOMAIN):
         return
     frontend_dir = Path(__file__).parent / "frontend"
@@ -81,7 +94,7 @@ async def async_register_panel(hass: HomeAssistant) -> None:
         hass=hass,
         frontend_url_path=DOMAIN,
         webcomponent_name=_PANEL_ELEMENT,
-        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.9.2",
+        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.17.9",
         sidebar_title="Cook4Me",
         sidebar_icon="mdi:pot-steam",
         embed_iframe=False,

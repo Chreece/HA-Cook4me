@@ -1,0 +1,450 @@
+{
+  "recipe": {
+    "title": "v95 price units",
+    "servings": 2,
+    "ingredients": [
+      {
+        "name": "Cumin",
+        "quantity": 1,
+        "unit": "tsp",
+        "unitKey": "UNIT_11"
+      },
+      {
+        "name": "Tahini",
+        "quantity": 2,
+        "unit": "tbsp",
+        "unitKey": "UNIT_12"
+      },
+      {
+        "name": "Asparagus",
+        "quantity": 4,
+        "unit": "",
+        "unitKey": ""
+      },
+      {
+        "name": "Fennel",
+        "quantity": 1,
+        "unit": "",
+        "unitKey": ""
+      },
+      {
+        "name": "Parsley",
+        "quantity": 2,
+        "unit": "sprig",
+        "unitKey": "UNIT_10"
+      },
+      {
+        "name": "Basil",
+        "quantity": 5,
+        "unit": "leaf",
+        "unitKey": "UNIT_24"
+      },
+      {
+        "name": "Yoghurt",
+        "quantity": 100,
+        "unit": "ml",
+        "unitKey": "UNIT_35"
+      }
+    ]
+  },
+  "cost": {
+    "totalsByCurrency": {
+      "EUR": 2.77
+    },
+    "perServingByCurrency": {
+      "EUR": 1.39
+    },
+    "servings": 2.0,
+    "ingredients": [
+      {
+        "identity": "n:cumin",
+        "name": "Cumin",
+        "quantity": 1.0,
+        "unit": "tsp",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.17
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "dm-3064564-20260916",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.dm.de/p/d/3064564/lebensbaum-kreuzkuemmel-gemahlen",
+            "productName": "LEBENSBAUM ground cumin",
+            "amount": 3.45,
+            "currency": "EUR",
+            "basisQuantity": 40,
+            "basisUnit": "g",
+            "date": "2026-09-16",
+            "country": "DE",
+            "location": "dm Germany · online listing",
+            "categories": [
+              "en:cumin",
+              "en:ground-cumin-seeds",
+              "en:cumin-powders"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "",
+            "category": "en:cumin",
+            "identity": "n:cumin",
+            "observationId": "dm-3064564-20260916",
+            "updatedAt": "2026-09-16"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "reference_portion",
+          "label": "Dairy Farmers of Ontario recipe reference, ground cumin: 1/2 tsp = 1 g; spice grind and packing vary",
+          "sourceUrl": "https://new.milk.org/discover-dairy/recipes/winter-comfort-butter-chicken/",
+          "sourceQuantity": 1.0,
+          "sourceUnit": "tsp",
+          "quantity": 2.0,
+          "unit": "g",
+          "assumedCount": false
+        }
+      },
+      {
+        "identity": "n:tahini",
+        "name": "Tahini",
+        "quantity": 2.0,
+        "unit": "tbsp",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.39
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "dm-3064622-v95-20260916",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.dm.de/p/d/3064622/dmbio-sesammus-tahin",
+            "productName": "dmBio roasted sesame tahini",
+            "amount": 3.25,
+            "currency": "EUR",
+            "basisQuantity": 250,
+            "basisUnit": "g",
+            "date": "2026-09-16",
+            "country": "DE",
+            "location": "dm Germany · online listing",
+            "categories": [
+              "en:tahini"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Pure sesame paste; named-product reference. VAT included; delivery excluded. Regional prices and availability vary.",
+            "category": "en:tahini",
+            "identity": "n:tahini",
+            "observationId": "dm-3064622-v95-20260916",
+            "updatedAt": "2026-09-16"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_portion",
+          "label": "USDA Seeds, sesame butter, tahini, from roasted and toasted kernels (most common type): tbsp",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/170189/nutrients",
+          "fdcId": 170189,
+          "portionId": 86209,
+          "sourceQuantity": 2.0,
+          "sourceUnit": "tbsp",
+          "quantity": 30.0,
+          "unit": "g",
+          "assumedCount": false
+        }
+      },
+      {
+        "identity": "n:asparagus",
+        "name": "Asparagus",
+        "quantity": 4.0,
+        "unit": "pcs",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.91
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": 273646,
+            "barcode": "4028549406035",
+            "amount": 4.99,
+            "currency": "EUR",
+            "basisQuantity": 350.0,
+            "basisUnit": "g",
+            "pricePer": "",
+            "usable": true,
+            "date": "2026-05-09",
+            "country": "DE",
+            "location": "Bayern",
+            "productName": "Geschälter Spargel küchenfertig",
+            "source": "open_prices_category",
+            "confidence": "external_observation",
+            "categories": [
+              "en:asparagus",
+              "en:white-asparagus"
+            ],
+            "category": "en:asparagus",
+            "identity": "n:asparagus",
+            "observationId": 273646,
+            "updatedAt": "2026-05-09"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_portion",
+          "label": "USDA Asparagus, raw: spear, medium (5-1/4\" to 7\" long)",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/168389/nutrients",
+          "fdcId": 168389,
+          "portionId": 83014,
+          "sourceQuantity": 4.0,
+          "sourceUnit": "piece",
+          "quantity": 64.0,
+          "unit": "g",
+          "assumedCount": true
+        }
+      },
+      {
+        "identity": "n:fennel",
+        "name": "Fennel",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.82
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "knuspr-78004-v95-20260916",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.knuspr.de/78004-fenchel-1-stk",
+            "productName": "Fresh fennel bulb",
+            "amount": 3.49,
+            "currency": "EUR",
+            "basisQuantity": 1,
+            "basisUnit": "kg",
+            "date": "2026-09-16",
+            "country": "DE",
+            "location": "Knuspr Berlin and surroundings · online listing",
+            "categories": [
+              "en:fennel"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Listed price per kg, not per bulb. VAT included; delivery excluded. Regional prices and availability vary.",
+            "category": "en:fennel",
+            "identity": "n:fennel",
+            "observationId": "knuspr-78004-v95-20260916",
+            "updatedAt": "2026-09-16"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_portion",
+          "label": "USDA Fennel, bulb, raw: bulb",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/169385/nutrients",
+          "fdcId": 169385,
+          "portionId": 84767,
+          "sourceQuantity": 1.0,
+          "sourceUnit": "piece",
+          "quantity": 234.0,
+          "unit": "g",
+          "assumedCount": true
+        }
+      },
+      {
+        "identity": "n:parsley",
+        "name": "Parsley",
+        "quantity": 2.0,
+        "unit": "sprig",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.01
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": 290154,
+            "barcode": "",
+            "amount": 5.99,
+            "currency": "EUR",
+            "basisQuantity": 1.0,
+            "basisUnit": "kg",
+            "pricePer": "KILOGRAM",
+            "usable": true,
+            "date": "2026-07-01",
+            "country": "DE",
+            "location": "Bereket Market",
+            "productName": "Petersilie kg",
+            "source": "open_prices_category",
+            "confidence": "external_observation",
+            "categories": [
+              "en:parsley"
+            ],
+            "category": "en:parsley",
+            "identity": "n:parsley",
+            "observationId": 290154,
+            "updatedAt": "2026-07-01"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_portion",
+          "label": "USDA Parsley, fresh: sprigs",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/170416/nutrients",
+          "fdcId": 170416,
+          "portionId": 86609,
+          "sourceQuantity": 2.0,
+          "sourceUnit": "sprig",
+          "quantity": 2.0,
+          "unit": "g",
+          "assumedCount": false
+        }
+      },
+      {
+        "identity": "n:basil",
+        "name": "Basil",
+        "quantity": 5.0,
+        "unit": "leaf",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.27
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "knuspr-15084-basilikum-v88-20260916",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.knuspr.de/15084-basilikum",
+            "productName": "Fresh basil",
+            "amount": 1.59,
+            "currency": "EUR",
+            "basisQuantity": 15,
+            "basisUnit": "g",
+            "date": "2026-09-16",
+            "country": "DE",
+            "location": "Knuspr · Berlin and surroundings · online listing",
+            "categories": [
+              "en:basils"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Fresh herb reference; not a price for dried herbs. Berlin-area listing, delivery excluded.",
+            "category": "en:basils",
+            "identity": "n:basil",
+            "observationId": "knuspr-15084-basilikum-v88-20260916",
+            "updatedAt": "2026-09-16"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_portion",
+          "label": "USDA Basil, fresh: leaves",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/172232/nutrients",
+          "fdcId": 172232,
+          "portionId": 90125,
+          "sourceQuantity": 5.0,
+          "sourceUnit": "leaf",
+          "quantity": 2.5,
+          "unit": "g",
+          "assumedCount": false
+        }
+      },
+      {
+        "identity": "n:yoghurt",
+        "name": "Yoghurt",
+        "quantity": 100.0,
+        "unit": "ml",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.21
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": 330110,
+            "barcode": "4070308121130",
+            "amount": 1.99,
+            "currency": "EUR",
+            "basisQuantity": 1000.0,
+            "basisUnit": "g",
+            "pricePer": "",
+            "usable": true,
+            "date": "2026-09-11",
+            "country": "DE",
+            "location": "Feneberg",
+            "productName": "Fettarmer Joghurt mild, 1,5% Fett",
+            "source": "open_prices_category",
+            "confidence": "external_observation",
+            "categories": [
+              "en:yogurts"
+            ],
+            "category": "en:yogurts",
+            "identity": "n:yoghurt",
+            "observationId": 330110,
+            "updatedAt": "2026-09-11"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_density",
+          "label": "FAO plain unsweetened yoghurt (DK): approximately 1.031 g/ml; product and temperature vary",
+          "sourceUrl": "https://www.fao.org/4/ap815e/ap815e.pdf",
+          "sourceQuantity": 100.0,
+          "sourceUnit": "ml",
+          "quantity": 103.1,
+          "unit": "g"
+        }
+      }
+    ],
+    "coverage": 1.0,
+    "complete": true,
+    "missingIngredientCount": 0,
+    "exactPurchaseCoverage": 0.0,
+    "estimated": true,
+    "targetCurrency": "EUR",
+    "targetCountry": "DE",
+    "currencyConversionApplied": false,
+    "costCacheHit": false,
+    "pricingFingerprint": "23bd3023e87edf13a086c5fbce3918a43353e0061d5059add75a3dcf9aa4af13",
+    "recipePriceFingerprint": "589fd494d92bf1e71f0bc3792b33d42703eed576dcffa098a1c0f19714e8635b",
+    "costCacheContract": "price-evidence-fingerprint-v1",
+    "settings": {
+      "currency": "EUR",
+      "country": "DE",
+      "autoGlobalPrices": true
+    },
+    "offlinePreview": true,
+    "priceLookupPending": false,
+    "checkedAt": "2026-09-16T19:18:51.499219+00:00",
+    "foodIngredientCount": 7,
+    "pricedFoodIngredientCount": 7,
+    "waterOnlyEstimate": false
+  }
+}

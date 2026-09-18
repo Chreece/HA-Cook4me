@@ -1,0 +1,1146 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Presentation labels only; no quantity, price, inventory or cooker conversions.",
+  "labels": {
+    "pcs": {
+      "en": [
+        "pcs"
+      ],
+      "de": [
+        "Stück"
+      ],
+      "el": [
+        "τεμ."
+      ]
+    },
+    "tsp": {
+      "en": [
+        "tsp"
+      ],
+      "de": [
+        "TL"
+      ],
+      "el": [
+        "κ.γ."
+      ]
+    },
+    "tbsp": {
+      "en": [
+        "tbsp"
+      ],
+      "de": [
+        "EL"
+      ],
+      "el": [
+        "κ.σ."
+      ]
+    },
+    "pinch": {
+      "en": [
+        "pinch",
+        "pinches"
+      ],
+      "de": [
+        "Prise",
+        "Prisen"
+      ],
+      "el": [
+        "πρέζα",
+        "πρέζες"
+      ]
+    },
+    "sprig": {
+      "en": [
+        "sprig",
+        "sprigs"
+      ],
+      "de": [
+        "Zweig",
+        "Zweige"
+      ],
+      "el": [
+        "κλωνάρι",
+        "κλωνάρια"
+      ]
+    },
+    "leaf": {
+      "en": [
+        "leaf",
+        "leaves"
+      ],
+      "de": [
+        "Blatt",
+        "Blätter"
+      ],
+      "el": [
+        "φύλλο",
+        "φύλλα"
+      ]
+    },
+    "sheet": {
+      "en": [
+        "sheet",
+        "sheets"
+      ],
+      "de": [
+        "Blatt",
+        "Blätter"
+      ],
+      "el": [
+        "φύλλο",
+        "φύλλα"
+      ]
+    },
+    "clove": {
+      "en": [
+        "clove",
+        "cloves"
+      ],
+      "de": [
+        "Zehe",
+        "Zehen"
+      ],
+      "el": [
+        "σκελίδα",
+        "σκελίδες"
+      ]
+    },
+    "pod": {
+      "en": [
+        "pod",
+        "pods"
+      ],
+      "de": [
+        "Schote",
+        "Schoten"
+      ],
+      "el": [
+        "λοβός",
+        "λοβοί"
+      ]
+    },
+    "slice": {
+      "en": [
+        "slice",
+        "slices"
+      ],
+      "de": [
+        "Scheibe",
+        "Scheiben"
+      ],
+      "el": [
+        "φέτα",
+        "φέτες"
+      ]
+    },
+    "stick": {
+      "en": [
+        "stick",
+        "sticks"
+      ],
+      "de": [
+        "Stange",
+        "Stangen"
+      ],
+      "el": [
+        "μπαστουνάκι",
+        "μπαστουνάκια"
+      ]
+    },
+    "jar": {
+      "en": [
+        "jar",
+        "jars"
+      ],
+      "de": [
+        "Glas",
+        "Gläser"
+      ],
+      "el": [
+        "βάζο",
+        "βάζα"
+      ]
+    },
+    "can": {
+      "en": [
+        "can",
+        "cans"
+      ],
+      "de": [
+        "Dose",
+        "Dosen"
+      ],
+      "el": [
+        "κονσέρβα",
+        "κονσέρβες"
+      ]
+    },
+    "bunch": {
+      "en": [
+        "bunch",
+        "bunches"
+      ],
+      "de": [
+        "Bund",
+        "Bunde"
+      ],
+      "el": [
+        "ματσάκι",
+        "ματσάκια"
+      ]
+    },
+    "scoop": {
+      "en": [
+        "scoop",
+        "scoops"
+      ],
+      "de": [
+        "Kugel",
+        "Kugeln"
+      ],
+      "el": [
+        "μπάλα",
+        "μπάλες"
+      ]
+    },
+    "shaving": {
+      "en": [
+        "shaving",
+        "shavings"
+      ],
+      "de": [
+        "Span",
+        "Späne"
+      ],
+      "el": [
+        "νιφάδα",
+        "νιφάδες"
+      ]
+    },
+    "cup": {
+      "en": [
+        "cup",
+        "cups"
+      ],
+      "de": [
+        "Tasse",
+        "Tassen"
+      ],
+      "el": [
+        "φλιτζάνι",
+        "φλιτζάνια"
+      ]
+    },
+    "cube": {
+      "en": [
+        "cube",
+        "cubes"
+      ],
+      "de": [
+        "Würfel"
+      ],
+      "el": [
+        "κύβος",
+        "κύβοι"
+      ]
+    },
+    "spoon": {
+      "en": [
+        "spoonful",
+        "spoonfuls"
+      ],
+      "de": [
+        "Löffel"
+      ],
+      "el": [
+        "κουταλιά",
+        "κουταλιές"
+      ]
+    },
+    "dose": {
+      "en": [
+        "dose",
+        "doses"
+      ],
+      "de": [
+        "Dosis",
+        "Dosen"
+      ],
+      "el": [
+        "δόση",
+        "δόσεις"
+      ]
+    },
+    "fillet": {
+      "en": [
+        "fillet",
+        "fillets"
+      ],
+      "de": [
+        "Filet",
+        "Filets"
+      ],
+      "el": [
+        "φιλέτο",
+        "φιλέτα"
+      ]
+    },
+    "vial": {
+      "en": [
+        "vial",
+        "vials"
+      ],
+      "de": [
+        "Ampulle",
+        "Ampullen"
+      ],
+      "el": [
+        "αμπούλα",
+        "αμπούλες"
+      ]
+    },
+    "drop": {
+      "en": [
+        "drop",
+        "drops"
+      ],
+      "de": [
+        "Tropfen"
+      ],
+      "el": [
+        "σταγόνα",
+        "σταγόνες"
+      ]
+    },
+    "seed": {
+      "en": [
+        "seed",
+        "seeds"
+      ],
+      "de": [
+        "Samen"
+      ],
+      "el": [
+        "σπόρος",
+        "σπόροι"
+      ]
+    },
+    "strip": {
+      "en": [
+        "strip",
+        "strips"
+      ],
+      "de": [
+        "Streifen"
+      ],
+      "el": [
+        "λωρίδα",
+        "λωρίδες"
+      ]
+    },
+    "chunk": {
+      "en": [
+        "piece",
+        "pieces"
+      ],
+      "de": [
+        "Stück",
+        "Stücke"
+      ],
+      "el": [
+        "κομμάτι",
+        "κομμάτια"
+      ]
+    },
+    "knob": {
+      "en": [
+        "knob",
+        "knobs"
+      ],
+      "de": [
+        "Flöckchen"
+      ],
+      "el": [
+        "μικρό κομμάτι",
+        "μικρά κομμάτια"
+      ]
+    },
+    "pat": {
+      "en": [
+        "pat",
+        "pats"
+      ],
+      "de": [
+        "Stückchen"
+      ],
+      "el": [
+        "κομματάκι",
+        "κομματάκια"
+      ]
+    },
+    "pack": {
+      "en": [
+        "pack",
+        "packs"
+      ],
+      "de": [
+        "Packung",
+        "Packungen"
+      ],
+      "el": [
+        "πακέτο",
+        "πακέτα"
+      ]
+    },
+    "handful": {
+      "en": [
+        "handful",
+        "handfuls"
+      ],
+      "de": [
+        "Handvoll"
+      ],
+      "el": [
+        "χούφτα",
+        "χούφτες"
+      ]
+    },
+    "portion": {
+      "en": [
+        "portion",
+        "portions"
+      ],
+      "de": [
+        "Portion",
+        "Portionen"
+      ],
+      "el": [
+        "μερίδα",
+        "μερίδες"
+      ]
+    },
+    "pot": {
+      "en": [
+        "pot",
+        "pots"
+      ],
+      "de": [
+        "Becher"
+      ],
+      "el": [
+        "κεσεδάκι",
+        "κεσεδάκια"
+      ]
+    },
+    "sachet": {
+      "en": [
+        "sachet",
+        "sachets"
+      ],
+      "de": [
+        "Beutel"
+      ],
+      "el": [
+        "φακελάκι",
+        "φακελάκια"
+      ]
+    },
+    "coffeeCup": {
+      "en": [
+        "coffee cup",
+        "coffee cups"
+      ],
+      "de": [
+        "Kaffeetasse",
+        "Kaffeetassen"
+      ],
+      "el": [
+        "φλιτζανάκι",
+        "φλιτζανάκια"
+      ]
+    },
+    "glass": {
+      "en": [
+        "glass",
+        "glasses"
+      ],
+      "de": [
+        "Glas",
+        "Gläser"
+      ],
+      "el": [
+        "ποτήρι",
+        "ποτήρια"
+      ]
+    },
+    "zest": {
+      "en": [
+        "zest"
+      ],
+      "de": [
+        "Abrieb"
+      ],
+      "el": [
+        "ξύσμα"
+      ]
+    },
+    "stalk": {
+      "en": [
+        "stalk",
+        "stalks"
+      ],
+      "de": [
+        "Stängel"
+      ],
+      "el": [
+        "κοτσάνι",
+        "κοτσάνια"
+      ]
+    },
+    "tray": {
+      "en": [
+        "tray",
+        "trays"
+      ],
+      "de": [
+        "Schale",
+        "Schalen"
+      ],
+      "el": [
+        "σκαφάκι",
+        "σκαφάκια"
+      ]
+    },
+    "bar": {
+      "en": [
+        "bar",
+        "bars"
+      ],
+      "de": [
+        "Riegel"
+      ],
+      "el": [
+        "μπάρα",
+        "μπάρες"
+      ]
+    },
+    "ball": {
+      "en": [
+        "ball",
+        "balls"
+      ],
+      "de": [
+        "Kugel",
+        "Kugeln"
+      ],
+      "el": [
+        "μπαλάκι",
+        "μπαλάκια"
+      ]
+    },
+    "block": {
+      "en": [
+        "block",
+        "blocks"
+      ],
+      "de": [
+        "Block",
+        "Blöcke"
+      ],
+      "el": [
+        "πλάκα",
+        "πλάκες"
+      ]
+    },
+    "capsule": {
+      "en": [
+        "capsule",
+        "capsules"
+      ],
+      "de": [
+        "Kapsel",
+        "Kapseln"
+      ],
+      "el": [
+        "κάψουλα",
+        "κάψουλες"
+      ]
+    },
+    "square": {
+      "en": [
+        "square",
+        "squares"
+      ],
+      "de": [
+        "Quadrat",
+        "Quadrate"
+      ],
+      "el": [
+        "τετραγωνάκι",
+        "τετραγωνάκια"
+      ]
+    },
+    "dessertSpoon": {
+      "en": [
+        "dessert spoon",
+        "dessert spoons"
+      ],
+      "de": [
+        "Dessertlöffel"
+      ],
+      "el": [
+        "κουταλάκι γλυκού",
+        "κουταλάκια γλυκού"
+      ]
+    },
+    "mochaSpoon": {
+      "en": [
+        "mocha spoon",
+        "mocha spoons"
+      ],
+      "de": [
+        "Mokkalöffel"
+      ],
+      "el": [
+        "κουταλάκι μόκας",
+        "κουταλάκια μόκας"
+      ]
+    },
+    "measure": {
+      "en": [
+        "measure",
+        "measures"
+      ],
+      "de": [
+        "Maß",
+        "Maße"
+      ],
+      "el": [
+        "μεζούρα",
+        "μεζούρες"
+      ]
+    },
+    "drizzle": {
+      "en": [
+        "drizzle",
+        "drizzles"
+      ],
+      "de": [
+        "Schuss",
+        "Schüsse"
+      ],
+      "el": [
+        "λίγο",
+        "λίγο"
+      ]
+    },
+    "ladle": {
+      "en": [
+        "ladleful",
+        "ladlefuls"
+      ],
+      "de": [
+        "Kelle",
+        "Kellen"
+      ],
+      "el": [
+        "κουτάλα",
+        "κουτάλες"
+      ]
+    },
+    "little": {
+      "en": [
+        "a little"
+      ],
+      "de": [
+        "etwas"
+      ],
+      "el": [
+        "λίγο"
+      ]
+    },
+    "shot": {
+      "en": [
+        "shot",
+        "shots"
+      ],
+      "de": [
+        "Schnapsglas",
+        "Schnapsgläser"
+      ],
+      "el": [
+        "σφηνάκι",
+        "σφηνάκια"
+      ]
+    },
+    "liqueurGlass": {
+      "en": [
+        "liqueur glass",
+        "liqueur glasses"
+      ],
+      "de": [
+        "Likörglas",
+        "Likörgläser"
+      ],
+      "el": [
+        "ποτηράκι λικέρ",
+        "ποτηράκια λικέρ"
+      ]
+    },
+    "teaGlass": {
+      "en": [
+        "tea glass",
+        "tea glasses"
+      ],
+      "de": [
+        "Teeglas",
+        "Teegläser"
+      ],
+      "el": [
+        "ποτηράκι τσαγιού",
+        "ποτηράκια τσαγιού"
+      ]
+    },
+    "bulb": {
+      "en": [
+        "bulb",
+        "bulbs"
+      ],
+      "de": [
+        "Knolle",
+        "Knollen"
+      ],
+      "el": [
+        "βολβός",
+        "βολβοί"
+      ]
+    },
+    "inch": {
+      "en": [
+        "inch",
+        "inches"
+      ],
+      "de": [
+        "Zoll"
+      ],
+      "el": [
+        "ίντσα",
+        "ίντσες"
+      ]
+    },
+    "knifeTip": {
+      "en": [
+        "knife tip",
+        "knife tips"
+      ],
+      "de": [
+        "Messerspitze",
+        "Messerspitzen"
+      ],
+      "el": [
+        "μύτη μαχαιριού",
+        "μύτες μαχαιριού"
+      ]
+    },
+    "head": {
+      "en": [
+        "head",
+        "heads"
+      ],
+      "de": [
+        "Kopf",
+        "Köpfe"
+      ],
+      "el": [
+        "κεφάλι",
+        "κεφάλια"
+      ]
+    },
+    "riceCup": {
+      "en": [
+        "rice cup (gō)",
+        "rice cups (gō)"
+      ],
+      "de": [
+        "Reisbecher (Gō)"
+      ],
+      "el": [
+        "φλιτζάνι ρυζιού (gō)",
+        "φλιτζάνια ρυζιού (gō)"
+      ]
+    },
+    "bowl": {
+      "en": [
+        "bowl",
+        "bowls"
+      ],
+      "de": [
+        "Schale",
+        "Schalen"
+      ],
+      "el": [
+        "μπολ"
+      ]
+    },
+    "bottle": {
+      "en": [
+        "bottle",
+        "bottles"
+      ],
+      "de": [
+        "Flasche",
+        "Flaschen"
+      ],
+      "el": [
+        "μπουκάλι",
+        "μπουκάλια"
+      ]
+    },
+    "root": {
+      "en": [
+        "root",
+        "roots"
+      ],
+      "de": [
+        "Wurzel",
+        "Wurzeln"
+      ],
+      "el": [
+        "ρίζα",
+        "ρίζες"
+      ]
+    },
+    "fewLeaves": {
+      "en": [
+        "a few leaves"
+      ],
+      "de": [
+        "einige Blätter"
+      ],
+      "el": [
+        "λίγα φύλλα"
+      ]
+    },
+    "g": {
+      "en": [
+        "g"
+      ],
+      "de": [
+        "g"
+      ],
+      "el": [
+        "γρ."
+      ]
+    },
+    "kg": {
+      "en": [
+        "kg"
+      ],
+      "de": [
+        "kg"
+      ],
+      "el": [
+        "κιλό",
+        "κιλά"
+      ]
+    },
+    "mg": {
+      "en": [
+        "mg"
+      ],
+      "de": [
+        "mg"
+      ],
+      "el": [
+        "mg"
+      ]
+    },
+    "ml": {
+      "en": [
+        "ml"
+      ],
+      "de": [
+        "ml"
+      ],
+      "el": [
+        "ml"
+      ]
+    },
+    "cl": {
+      "en": [
+        "cl"
+      ],
+      "de": [
+        "cl"
+      ],
+      "el": [
+        "cl"
+      ]
+    },
+    "dl": {
+      "en": [
+        "dl"
+      ],
+      "de": [
+        "dl"
+      ],
+      "el": [
+        "dl"
+      ]
+    },
+    "l": {
+      "en": [
+        "l"
+      ],
+      "de": [
+        "l"
+      ],
+      "el": [
+        "λίτρο",
+        "λίτρα"
+      ]
+    },
+    "ul": {
+      "en": [
+        "µl"
+      ],
+      "de": [
+        "µl"
+      ],
+      "el": [
+        "µl"
+      ]
+    },
+    "cm": {
+      "en": [
+        "cm"
+      ],
+      "de": [
+        "cm"
+      ],
+      "el": [
+        "εκ."
+      ]
+    },
+    "m": {
+      "en": [
+        "m"
+      ],
+      "de": [
+        "m"
+      ],
+      "el": [
+        "μ."
+      ]
+    },
+    "mm": {
+      "en": [
+        "mm"
+      ],
+      "de": [
+        "mm"
+      ],
+      "el": [
+        "χιλ."
+      ]
+    },
+    "s": {
+      "en": [
+        "s"
+      ],
+      "de": [
+        "s"
+      ],
+      "el": [
+        "δευτ."
+      ]
+    },
+    "h": {
+      "en": [
+        "h"
+      ],
+      "de": [
+        "Std."
+      ],
+      "el": [
+        "ώρα",
+        "ώρες"
+      ]
+    },
+    "min": {
+      "en": [
+        "min"
+      ],
+      "de": [
+        "Min."
+      ],
+      "el": [
+        "λεπτό",
+        "λεπτά"
+      ]
+    },
+    "kcal": {
+      "en": [
+        "kcal"
+      ],
+      "de": [
+        "kcal"
+      ],
+      "el": [
+        "kcal"
+      ]
+    },
+    "piecePerGram": {
+      "en": [
+        "pcs/g"
+      ],
+      "de": [
+        "Stück/g"
+      ],
+      "el": [
+        "τεμ./γρ."
+      ]
+    }
+  },
+  "unitKeys": {
+    "UNIT_1": "portion",
+    "UNIT_2": "stick",
+    "UNIT_3": "stick",
+    "UNIT_4": "jar",
+    "UNIT_5": "can",
+    "UNIT_6": "bunch",
+    "UNIT_7": "scoop",
+    "UNIT_8": "bunch",
+    "UNIT_9": "sprig",
+    "UNIT_10": "sprig",
+    "UNIT_11": "tsp",
+    "UNIT_12": "tbsp",
+    "UNIT_14": "cl",
+    "UNIT_15": "shaving",
+    "UNIT_16": "cup",
+    "UNIT_17": "cube",
+    "UNIT_18": "spoon",
+    "UNIT_20": "spoon",
+    "UNIT_21": "cube",
+    "UNIT_22": "dl",
+    "UNIT_23": "dose",
+    "UNIT_24": "leaf",
+    "UNIT_25": "fillet",
+    "UNIT_26": "vial",
+    "UNIT_27": "g",
+    "UNIT_28": "clove",
+    "UNIT_29": "drop",
+    "UNIT_30": "seed",
+    "UNIT_31": "bunch",
+    "UNIT_32": "l",
+    "UNIT_33": "strip",
+    "UNIT_35": "ml",
+    "UNIT_36": "chunk",
+    "UNIT_37": "knob",
+    "UNIT_38": "pat",
+    "UNIT_40": "pack",
+    "UNIT_41": "pcs",
+    "UNIT_42": "pinch",
+    "UNIT_43": "handful",
+    "UNIT_44": "portion",
+    "UNIT_45": "pot",
+    "UNIT_46": "sachet",
+    "UNIT_47": "coffeeCup",
+    "UNIT_48": "cup",
+    "UNIT_49": "slice",
+    "UNIT_50": "pcs",
+    "UNIT_51": "glass",
+    "UNIT_52": "zest",
+    "UNIT_54": "mg",
+    "UNIT_55": "kcal",
+    "UNIT_56": "kg",
+    "UNIT_57": "cm",
+    "UNIT_59": "stalk",
+    "UNIT_60": "s",
+    "UNIT_61": "tray",
+    "UNIT_62": "bar",
+    "UNIT_63": "ball",
+    "UNIT_64": "block",
+    "UNIT_69": "can",
+    "UNIT_70": "capsule",
+    "UNIT_72": "square",
+    "UNIT_76": "dessertSpoon",
+    "UNIT_77": "mochaSpoon",
+    "UNIT_78": "tsp",
+    "UNIT_82": "dose",
+    "UNIT_85": "drizzle",
+    "UNIT_86": "pot",
+    "UNIT_87": "h",
+    "UNIT_88": "little",
+    "UNIT_89": "ladle",
+    "UNIT_90": "measure",
+    "UNIT_91": "m",
+    "UNIT_93": "mm",
+    "UNIT_98": "sheet",
+    "UNIT_100": "sachet",
+    "UNIT_102": "shot",
+    "UNIT_104": "bar",
+    "UNIT_105": "tsp",
+    "UNIT_107": "little",
+    "UNIT_108": "liqueurGlass",
+    "UNIT_110": "teaGlass",
+    "UNIT_111": "bulb",
+    "UNIT_112": "pcs",
+    "UNIT_113": "inch",
+    "UNIT_114": "pcs",
+    "UNIT_116": "knifeTip",
+    "UNIT_117": "bunch",
+    "UNIT_118": "pcs",
+    "UNIT_119": "slice",
+    "UNIT_120": "block",
+    "UNIT_121": "riceCup",
+    "UNIT_122": "bowl",
+    "UNIT_123": "seed",
+    "UNIT_124": "ball",
+    "UNIT_125": "bunch",
+    "UNIT_126": "portion",
+    "UNIT_127": "pcs",
+    "UNIT_128": "slice",
+    "UNIT_133": "pcs",
+    "UNIT_135": "bottle",
+    "UNIT_136": "root",
+    "UNIT_138": "pcs",
+    "UNIT_510017": "pcs",
+    "unite:Piece_G": "piecePerGram"
+  },
+  "labelOverrides": {
+    "einige blatter": "fewLeaves",
+    "lžička": "tsp",
+    "čajová lžička": "tsp",
+    "gota": "drop",
+    "чуть-чуть": "little"
+  },
+  "aliases": {
+    "pc": "pcs",
+    "piece": "pcs",
+    "pieces": "pcs",
+    "unit": "pcs",
+    "units": "pcs",
+    "x": "pcs",
+    "teaspoon": "tsp",
+    "teaspoons": "tsp",
+    "tablespoon": "tbsp",
+    "tablespoons": "tbsp",
+    "leaf": "leaf",
+    "leaves": "leaf",
+    "sprigs": "sprig",
+    "sheets": "sheet",
+    "pods": "pod",
+    "pinches": "pinch",
+    "cups": "cup",
+    "slices": "slice",
+    "cloves": "clove",
+    "grams": "g",
+    "gram": "g",
+    "liter": "l",
+    "litre": "l",
+    "litres": "l",
+    "milliliter": "ml",
+    "millilitres": "ml"
+  }
+}

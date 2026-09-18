@@ -6,7 +6,8 @@ import re
 import unicodedata
 from typing import Any
 
-from .inventory import convert_amount, inventory_identity, normalize_inventory
+from .stock_allocation import allocate_stock
+from .inventory import stock_for_ingredient, convert_amount, inventory_identity, normalize_inventory
 
 _NUTRITION_GOALS = {
     "balanced",
@@ -63,16 +64,13 @@ def _recipe_amount(item: dict[str, Any]) -> tuple[float | None, str]:
     return _number(weight.get("quantity")), _text(weight.get("unit"))
 
 
-def _find_stock(stock: list[dict[str, Any]], ingredient: dict[str, Any]) -> dict[str, Any] | None:
-    wanted = inventory_identity(ingredient)
-    if wanted:
-        row = next((row for row in stock if inventory_identity(row) == wanted), None)
-        if row is not None:
-            return row
+def _find_stock(stock, ingredient, used=None):
+    current = stock_for_ingredient(stock, ingredient, used)
+    if current is not None:
+        return current
     name = _norm(_ingredient_name(ingredient))
-    if not name:
-        return None
-    return next((row for row in stock if _norm(row.get("name")) == name), None)
+    fallback = next((row for row in stock if name and _norm(row.get("name")) == name), None)
+    return stock_for_ingredient(stock, fallback, used) if fallback else None
 
 
 def _availability_status(
@@ -110,9 +108,12 @@ def recipe_quantity_feasibility(
     shortages: list[dict[str, Any]] = []
     unknown: list[dict[str, Any]] = []
 
-    for ingredient in recipe.get("ingredients") or []:
-        if not isinstance(ingredient, dict):
-            continue
+    ingredients = [item for item in recipe.get("ingredients") or [] if isinstance(item, dict)]
+    requests = [{**item, "identity": inventory_identity(_find_stock(stock, item) or item),
+                 "quantity": _recipe_amount(item)[0], "unit": _recipe_amount(item)[1],
+                 "consume": bool(_ingredient_name(item)) and _availability_status(item, availability_rows) != "staple"}
+                for item in ingredients]
+    for ingredient, current in zip(ingredients, allocate_stock(stock, requests)):
         name = _ingredient_name(ingredient)
         if not name:
             continue
@@ -128,7 +129,6 @@ def recipe_quantity_feasibility(
             continue
 
         required, required_unit = _recipe_amount(ingredient)
-        current = _find_stock(stock, ingredient)
         ident = inventory_identity(current or ingredient)
         base: dict[str, Any] = {
             "identity": ident,

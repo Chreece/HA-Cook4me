@@ -17,6 +17,7 @@ from .ingredient_catalog import enrich_match_with_house_keys
 from .inventory import (
     DEFAULT_EXPIRY_WARNING_DAYS,
     add_inventory_item,
+    inventory_identity,
     apply_consumption,
     normalize_inventory,
     recipe_consumption_items,
@@ -25,6 +26,7 @@ from .inventory import (
     update_inventory_item,
 )
 from .recipe_logic import normalize_manual_recipe, normalize_text, recipe_ingredient_names, score_recipe
+from .storage_locations import normalize_locations, edit_location, validate_location
 
 _STORAGE_VERSION = 1
 
@@ -75,6 +77,7 @@ class Cook4MeRecipeHub:
             "recipes": [],
             "history": [],
             "uiPreferences": deepcopy(_DEFAULT_UI_PREFERENCES),
+            "userUiPreferences": {},
             "pendingConsumption": None,
         }
 
@@ -82,6 +85,9 @@ class Cook4MeRecipeHub:
         saved = await self._store.async_load()
         if not isinstance(saved, dict):
             return
+        receipts = saved.get("scannerReceipts")
+        if isinstance(receipts, dict):
+            self._data["scannerReceipts"] = dict(list(receipts.items())[-200:])
         profile = saved.get("profile")
         if isinstance(profile, dict):
             merged = deepcopy(_DEFAULT_PROFILE)
@@ -99,6 +105,10 @@ class Cook4MeRecipeHub:
             merged_ui.update(ui_preferences)
             self._data["uiPreferences"] = self._normalize_ui_preferences(merged_ui)
         pending = saved.get("pendingConsumption")
+        from .shared_recipe_filters import normalize_preferences
+        users = saved.get("userUiPreferences")
+        if isinstance(users, dict):
+            self._data["userUiPreferences"] = {str(key): normalize_preferences(value) for key, value in users.items()}
         if isinstance(pending, dict) and isinstance(pending.get("ingredients"), list):
             self._data["pendingConsumption"] = deepcopy(pending)
 
@@ -121,12 +131,24 @@ class Cook4MeRecipeHub:
             dict.fromkeys(str(x).strip() for x in members if str(x).strip())
         )[:20]
 
+        from .diet_profiles import normalize_profiles
+        out["dietProfiles"] = normalize_profiles(profile)
+        if isinstance(profile.get("dietProfiles"), dict):
+            household = out["dietProfiles"]["household"]
+            out["diet"] = household["diet"]
+            out["allergies"] = []
+            out["avoid"] = list(dict.fromkeys([*household["excludedTerms"],
+                *(row["canonicalName"] for row in household["excludedIngredients"])]))
+            out["householdMembers"] = [row["name"] for row in out["dietProfiles"]["members"]]
+        out["excludedIngredients"] = out["dietProfiles"]["household"]["excludedIngredients"]
         house = normalize_inventory(profile.get("houseIngredients"))
         if not house:
             # Seamless migration from the old free-text pantry list.
             house = normalize_inventory(profile.get("pantry"))
         out["houseIngredients"] = house
         out["pantry"] = [row["name"] for row in house]
+        out["storageLocations"] = normalize_locations(profile.get("storageLocations"))
+        out["scannerAiTaskEntityId"] = str(profile.get("scannerAiTaskEntityId") or "")[:160]
         return out
 
     @staticmethod
@@ -198,9 +220,125 @@ class Cook4MeRecipeHub:
     async def async_set_profile(self, profile: dict[str, Any]) -> dict[str, Any]:
         async with self._lock:
             merged = deepcopy(self._data["profile"])
-            merged.update(profile)
+            # Storage mutations need their own locked referential checks.
+            merged.update({key: value for key, value in profile.items() if key != "storageLocations"})
+            if "dietProfiles" not in profile and any(key in profile for key in ("diet", "allergies", "avoid", "householdMembers")):
+                from .diet_profiles import normalize_profiles, normalize_diet, text_list
+                diets = normalize_profiles(merged)
+                if "diet" in profile:
+                    diets["household"]["diet"] = merged["diet"]
+                if "allergies" in profile or "avoid" in profile:
+                    diets["household"]["excludedTerms"] = list(dict.fromkeys([*text_list(merged.get("allergies")), *text_list(merged.get("avoid"))]))
+                if "householdMembers" in profile:
+                    old = {row["name"]: row for row in diets["members"]}
+                    migration = normalize_profiles({"diet": merged.get("diet"), "householdMembers": profile["householdMembers"]})
+                    diets["members"] = [old.get(row["name"], {**row, **normalize_diet(diets["household"])}) for row in migration["members"]]
+                merged["dietProfiles"] = diets
             self._data["profile"] = self._normalize_profile(merged)
             await self._save()
+            return self.profile
+
+    async def async_storage_location(self, **change) -> dict[str, Any]:
+        async with self._lock:
+            data = deepcopy(self._data)
+            data["profile"] = self._normalize_profile(edit_location(data["profile"], **change))
+            await self._store.async_save(data)
+            self._data = data
+            return self.profile
+
+    async def async_scanner_add(self, request_id, ingredient, *, quantity, unit,
+                                best_before="", lot_metadata=None, fingerprint="", package_count=1):
+        """Commit reviewed stock once, including across reconnect/restart retries."""
+        async with self._lock:
+            receipts = self._data.get("scannerReceipts") or {}
+            if request_id in receipts:
+                receipt = receipts[request_id]
+                if receipt.get("fingerprint") != fingerprint:
+                    raise ValueError("This product was already saved; start a new product")
+                return deepcopy(receipt)
+            data = deepcopy(self._data)
+            profile = data["profile"]
+            if any(row.get("unlimited") and inventory_identity(row) == inventory_identity(ingredient)
+                   for row in profile.get("houseIngredients") or []):
+                raise ValueError("This ingredient has unlimited stock. Switch it to a measured amount before adding packages")
+            metadata = validate_location(profile, lot_metadata)
+            if isinstance(package_count, bool) or not isinstance(package_count, int) or not 1 <= package_count <= 100:
+                raise ValueError("Choose between 1 and 100 packages")
+            lot_ids = []
+            for _ in range(package_count):
+                metadata["id"] = str(uuid4())
+                lot_ids.append(metadata["id"])
+                profile["houseIngredients"] = add_inventory_item(
+                    profile.get("houseIngredients"), ingredient, quantity=quantity, unit=unit,
+                    unlimited=False, best_before=best_before, lot_metadata=metadata)
+            profile["pantry"] = [row["name"] for row in profile["houseIngredients"]]
+            data["profile"] = self._normalize_profile(profile)
+            saved_ids = {lot.get("id") for row in data["profile"]["houseIngredients"] for lot in row.get("lots") or []}
+            if not all(lot_id in saved_ids for lot_id in lot_ids):
+                raise ValueError("The stock list is full or the amount is invalid; the product was not added")
+            receipt = {"lotId": lot_ids[0], "lotIds": lot_ids, "fingerprint": fingerprint}
+            data["scannerReceipts"] = dict(list({**receipts, request_id: receipt}.items())[-200:])
+            await self._store.async_save(data)
+            self._data = data
+            return deepcopy(receipt)
+
+    async def async_scanner_update(self, request_id, ingredient, *, lot_id, expected_version,
+                                   quantity, unit, best_before="", lot_metadata=None, fingerprint=""):
+        """Edit one stable package without overwriting its siblings or newer edits."""
+        from .product_packages import find_package, package_version
+        async with self._lock:
+            data = deepcopy(self._data)
+            profile = data["profile"]
+            house = profile.get("houseIngredients") or []
+            row, lot = find_package(house, lot_id)
+            receipts = data.get("scannerReceipts") or {}
+            previous = receipts.get(request_id)
+            if previous:
+                if previous.get("fingerprint") != fingerprint or previous.get("version") != package_version(row, lot):
+                    raise ValueError("This package changed after saving; reload it before editing again")
+                return deepcopy(previous)
+            if expected_version != package_version(row, lot):
+                raise ValueError("This package changed while you were editing it; reload it before saving")
+            if any(item.get("unlimited") and inventory_identity(item) == inventory_identity(ingredient) for item in house):
+                raise ValueError("Switch unlimited stock to a measured amount before moving packages here")
+            metadata = validate_location(profile, lot_metadata)
+            metadata.update(id=lot_id, addedAt=lot.get("addedAt"), revision=str(uuid4()))
+            remaining = [item for item in row.get("lots") or [] if item.get("id") != lot_id]
+            if remaining:
+                house = update_inventory_item(house, inventory_identity(row), unit=row.get("unit", ""), lots=remaining)
+            else:
+                house = remove_inventory_item(house, inventory_identity(row))
+            house = add_inventory_item(house, ingredient, quantity=quantity, unit=unit,
+                                       best_before=best_before, lot_metadata=metadata)
+            profile["houseIngredients"] = house
+            profile["pantry"] = [item["name"] for item in house]
+            data["profile"] = self._normalize_profile(profile)
+            current, saved = find_package(data["profile"]["houseIngredients"], lot_id)
+            receipt = {"lotId": lot_id, "fingerprint": fingerprint, "version": package_version(current, saved)}
+            data["scannerReceipts"] = dict(list({**receipts, request_id: receipt}.items())[-200:])
+            await self._store.async_save(data)
+            self._data = data
+            return deepcopy(receipt)
+
+    async def async_package_remove(self, lot_id, expected_version):
+        from .product_packages import find_package, package_version
+        async with self._lock:
+            data = deepcopy(self._data)
+            profile = data["profile"]
+            house = profile.get("houseIngredients") or []
+            try:
+                row, lot = find_package(house, lot_id)
+            except ValueError:
+                return self.profile  # The same removal can be retried safely.
+            if expected_version != package_version(row, lot):
+                raise ValueError("This package changed; reload it before removing it")
+            remaining = [item for item in row.get("lots") or [] if item.get("id") != lot_id]
+            profile["houseIngredients"] = (update_inventory_item(house, inventory_identity(row), unit=row.get("unit", ""), lots=remaining)
+                                            if remaining else remove_inventory_item(house, inventory_identity(row)))
+            profile["pantry"] = [item["name"] for item in profile["houseIngredients"]]
+            data["profile"] = self._normalize_profile(profile)
+            await self._store.async_save(data)
+            self._data = data
             return self.profile
 
     async def async_inventory_add(
@@ -215,6 +353,7 @@ class Cook4MeRecipeHub:
     ) -> dict[str, Any]:
         async with self._lock:
             profile = deepcopy(self._data["profile"])
+            lot_metadata = validate_location(profile, lot_metadata)
             house = add_inventory_item(
                 profile.get("houseIngredients"),
                 ingredient,
@@ -246,7 +385,7 @@ class Cook4MeRecipeHub:
             if best_before is not None:
                 kwargs["best_before"] = best_before
             if lots is not None:
-                kwargs["lots"] = lots
+                kwargs["lots"] = [validate_location(profile, lot) for lot in lots]
             house = update_inventory_item(
                 profile.get("houseIngredients"),
                 identity,
@@ -322,6 +461,17 @@ class Cook4MeRecipeHub:
             self._data["pendingConsumption"] = None
             await self._save()
             return True
+
+    def user_ui_preferences(self, user_id: str) -> dict[str, Any]:
+        return deepcopy(self._data.get("userUiPreferences", {}).get(user_id, {}))
+
+    async def async_set_user_ui_preferences(self, user_id: str, preferences: dict[str, Any]) -> dict[str, Any]:
+        from .shared_recipe_filters import normalize_preferences
+        async with self._lock:
+            users = self._data.setdefault("userUiPreferences", {})
+            users[user_id] = {**users.get(user_id, {}), **normalize_preferences(preferences)}
+            await self._save()
+            return self.user_ui_preferences(user_id)
 
     async def async_set_ui_preferences(self, preferences: dict[str, Any]) -> dict[str, Any]:
         """Persist Recipe Hub display controls without touching dietary profile data."""
@@ -410,10 +560,16 @@ class Cook4MeRecipeHub:
         profile["habitTerms"] = self._habit_terms()
         return profile
 
-    def annotate(self, recipe: dict[str, Any]) -> dict[str, Any]:
+    def annotate(self, recipe: dict[str, Any], *, diet: str | None = None, diet_filters: dict | None = None) -> dict[str, Any]:
         result = deepcopy(recipe)
         house = self._data["profile"].get("houseIngredients")
-        base_match = score_recipe(result, self._scoring_profile())
+        profile = self._scoring_profile()
+        if diet in {"omnivore", "pescatarian", "vegetarian", "vegan"}:
+            profile["diet"] = diet
+        if diet_filters is not None:
+            from .diet_profiles import scoring_profile
+            profile = scoring_profile(profile, diet_filters)
+        base_match = score_recipe(result, profile)
         match = enrich_match_with_house_keys(result, base_match, house)
         if match.get("safe"):
             quantity = recipe_quantity_feasibility(
@@ -449,6 +605,6 @@ class Cook4MeRecipeHub:
 
     def rank(self, recipes: list[dict[str, Any]], limit: int = 12) -> list[dict[str, Any]]:
         scored = [self.annotate(x) for x in recipes if isinstance(x, dict)]
-        safe = [x for x in scored if x.get("match", {}).get("safe")]
+        safe = [x for x in scored if x.get("match", {}).get("safe") or x.get("match", {}).get("eligibleWithSubstitutions")]
         safe.sort(key=lambda x: x.get("match", {}).get("score", -1000), reverse=True)
         return safe[: max(1, min(int(limit), 50))]

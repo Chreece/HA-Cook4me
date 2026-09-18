@@ -147,6 +147,9 @@ def _lot_metadata(raw: Any, *, strict: bool = False) -> dict[str, Any]:
     if not isinstance(raw, dict):
         return {}
     out: dict[str, Any] = {}
+    links = normalize_ingredient_links(raw.get("ingredientLinks"))
+    if links:
+        out["ingredientLinks"] = links
     lot_id = _text(raw.get("id") or raw.get("lotId"))
     if lot_id:
         out["id"] = lot_id[:160]
@@ -167,7 +170,7 @@ def _lot_metadata(raw: Any, *, strict: bool = False) -> dict[str, Any]:
         raise ValueError("Use-within days must be between 1 and 3650")
     if use_days:
         out["useWithinDays"] = use_days
-    for key in ("barcode", "productName", "brand", "source", "nutritionSource"):
+    for key in ("barcode", "productName", "brand", "source", "nutritionSource", "storageLocationId", "revision"):
         value = _text(raw.get(key))
         if value:
             out[key] = value[:300]
@@ -604,6 +607,9 @@ def _recipe_amount(item: dict[str, Any]) -> tuple[float | None, str]:
 
 
 def _find_stock(inventory: list[dict[str, Any]], ingredient: dict[str, Any]) -> dict[str, Any] | None:
+    linked = stock_for_ingredient(inventory, ingredient)
+    if linked is not None:
+        return linked
     key = _text(ingredient.get("foodKey") or ingredient.get("key"))
     if key:
         wanted = f"k:{key}"
@@ -630,6 +636,7 @@ def recipe_expiry_priority(
     horizon = max(0, int(within_days))
     stock = normalize_inventory(inventory)
     seen: set[str] = set()
+    seen_lots: set[str] = set()
     matches: list[dict[str, Any]] = []
     priority = 0.0
     for ingredient in recipe.get("ingredients") or []:
@@ -649,6 +656,8 @@ def recipe_expiry_priority(
             candidates.extend(current.get("lots") or [])
         qualifying: list[tuple[int, dict[str, Any], str]] = []
         for lot in candidates:
+            if lot.get("id") in seen_lots:
+                continue
             stamp = _effective_best_before(lot)
             if not stamp:
                 continue
@@ -659,6 +668,8 @@ def recipe_expiry_priority(
             continue
         days_remaining, lot, stamp = min(qualifying, key=lambda item: item[0])
         seen.add(ident)
+        if lot.get("id"):
+            seen_lots.add(lot["id"])
         urgency = (horizon + 1 - days_remaining) / (horizon + 1)
         priority += urgency
         match = {
@@ -722,7 +733,7 @@ def recipe_consumption_items(recipe: dict[str, Any], inventory: Any) -> list[dic
     return out
 
 
-def apply_consumption(
+def _apply_primary_consumption(
     inventory: Any, consumptions: list[dict[str, Any]]
 ) -> tuple[list[dict[str, Any]], dict[str, list[dict[str, Any]]]]:
     """Deduct finite stock FEFO using effective expiry, then undated batches."""
@@ -760,7 +771,7 @@ def apply_consumption(
             lot_amount = float(lot.get("quantity") or 0.0)
             if lot_amount <= 0:
                 continue
-            take = min(lot_amount, remaining_request) if remaining_request > 1e-12 else 0.0
+            take = min(lot_amount, remaining_request) if remaining_request > 1e-12 and (not request.get("lotId") or request["lotId"] == lot.get("id")) else 0.0
             left = lot_amount - take
             if take > 1e-12:
                 lot_report = {
@@ -808,3 +819,105 @@ def format_stock(row: dict[str, Any]) -> str:
     shown = str(int(amount)) if float(amount).is_integer() else f"{amount:g}"
     unit = _text(row.get("unit"))
     return f"{shown} {unit}".strip()
+
+
+def normalize_ingredient_links(value):
+    """Persist stable catalogue identities, never another copy of the stock."""
+    result, seen = [], set()
+    for raw in value if isinstance(value, list) else []:
+        if not isinstance(raw, dict):
+            continue
+        row = {"key": _text(raw.get("key") or raw.get("ingredientId") or raw.get("id")),
+               "name": _text(raw.get("name") or raw.get("foodName"))}
+        identity = inventory_identity(row)
+        if row["name"] and identity not in seen:
+            result.append(row)
+            seen.add(identity)
+    return result
+
+
+def stock_for_ingredient(stock, ingredient, used=None):
+    """Read a product through any of its links, subtracting shared lot reservations."""
+    wanted = ingredient if isinstance(ingredient, str) else ingredient.get("identity") or inventory_identity(ingredient)
+    candidates, fallback = [], None
+    for row in stock:
+        primary = inventory_identity(row) == wanted
+        if primary and row.get("unlimited"):
+            return deepcopy(row)
+        if primary:
+            fallback = row
+        for lot in row.get("lots") or []:
+            if primary or wanted in {inventory_identity(link) for link in lot.get("ingredientLinks") or []}:
+                candidates.append((row, lot))
+    if not candidates:
+        return deepcopy(fallback) if fallback else None
+    target = next((row.get("unit", "") for row, _ in candidates), "")
+    requested_unit = ingredient.get("unit") if isinstance(ingredient, dict) else None
+    if requested_unit and any(convert_amount(1, row.get("unit", ""), requested_unit) is not None for row, _ in candidates):
+        target = requested_unit
+    lots = []
+    for row, lot in candidates:
+        amount = convert_amount(lot.get("quantity"), row.get("unit", ""), target)
+        if amount is None:
+            continue
+        taken = (used or {}).get(lot.get("id"))
+        if taken:
+            amount -= convert_amount(taken[0], taken[1], target) or 0
+        lots.append({**deepcopy(lot), "quantity": max(0.0, amount), "sourceIdentity": inventory_identity(row)})
+    lots.sort(key=_lot_sort_key)
+    identity = {"key": wanted[2:]} if wanted.startswith("k:") else {}
+    name = (ingredient.get("name") or ingredient.get("foodName")) if isinstance(ingredient, dict) else wanted[2:]
+    dates = {key: min((lot[key] for lot in lots if lot.get(key)), default="") for key in ("bestBefore", "effectiveBestBefore")}
+    return {**identity, "name": name or wanted[2:], "unit": target,
+            "quantity": round(sum(lot["quantity"] for lot in lots), 9), "lots": lots, **dates}
+
+
+def reserve_lot(used, lot, quantity, unit):
+    previous = used.get(lot.get("id"))
+    total = float(quantity)
+    if previous:
+        total += convert_amount(previous[0], previous[1], unit) or 0
+    used[lot["id"]] = (total, unit)
+
+
+def reserve_requirement(used, row, quantity, unit):
+    if not row or row.get("unlimited"):
+        return
+    remaining = convert_amount(quantity, unit, row.get("unit", ""))
+    if remaining is None:
+        return
+    for lot in row.get("lots") or []:
+        take = min(remaining, float(lot.get("quantity") or 0))
+        reserve_lot(used, lot, take, row.get("unit", ""))
+        remaining -= take
+        if remaining <= 1e-9:
+            break
+
+
+def apply_consumption(inventory, consumptions):
+    """Consume linked products once, retaining the owner's lot IDs and FEFO order."""
+    rows = normalize_inventory(inventory)
+    if not any(lot.get("ingredientLinks") for row in rows for lot in row.get("lots") or []):
+        return _apply_primary_consumption(rows, consumptions)
+    report = {key: [] for key in ("deducted", "deductedLots", "skipped", "depleted")}
+    from .stock_allocation import allocate_stock
+    requests = [request for request in consumptions if isinstance(request, dict) and request.get("consume", True)]
+    for request, view in zip(requests, allocate_stock(rows, requests)):
+        identity = request.get("identity") or inventory_identity(request)
+        remaining = _quantity(request.get("quantity"))
+        if not view or view.get("unlimited") or remaining is None or convert_amount(remaining, request.get("unit", ""), view.get("unit", "")) is None or not view.get("lots"):
+            _, skipped = _apply_primary_consumption(rows, [request])
+            report["skipped"].extend(skipped["skipped"])
+            continue
+        for lot in view["lots"]:
+            amount = convert_amount(lot["quantity"], view["unit"], request.get("unit", ""))
+            take = min(remaining, amount or 0)
+            if take <= 1e-9 or request.get("lotId") and request["lotId"] != lot["id"]:
+                continue
+            rows, partial = _apply_primary_consumption(rows, [{**request, "identity": lot["sourceIdentity"], "lotId": lot["id"], "quantity": take}])
+            for key in report:
+                report[key].extend(partial[key])
+            remaining -= take
+            if remaining <= 1e-9:
+                break
+    return rows, report

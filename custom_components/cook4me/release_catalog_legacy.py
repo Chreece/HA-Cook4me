@@ -235,6 +235,7 @@ def _choose_variant(
     language: str,
     configured_language: str,
     country: str,
+    variant_id: str = "",
 ) -> tuple[dict[str, Any] | None, dict[str, Any] | None]:
     """Choose a display variant and a *proven device-language* send variant.
 
@@ -266,8 +267,14 @@ def _choose_variant(
             1 if row.get("cover") else 0,
         )
 
-    display = max(variants, key=display_score)
+    display = next((row for row in variants if _text(row.get("variantId") or row.get("searchVariantId")) == variant_id), None) if variant_id else None
+    display = display or max(variants, key=display_score)
     send_candidates = [row for row in variants if _variant_language(row) == configured]
+    if variant_id:
+        # Selecting a quantity must never send a different quantity to the cooker.
+        basis = display.get("yield") or {}
+        if basis.get("quantity") is not None:
+            send_candidates = [row for row in send_candidates if (row.get("yield") or {}).get("quantity") == basis["quantity"] and (row.get("yield") or {}).get("unitKey", (row.get("yield") or {}).get("unit")) == basis.get("unitKey", basis.get("unit"))]
     send = max(send_candidates, key=send_score) if send_candidates else None
     return display, send
 
@@ -354,12 +361,14 @@ def _recipe_row(
     language: str,
     configured_language: str,
     country: str,
+    variant_id: str = "",
 ) -> dict[str, Any] | None:
     display, send = _choose_variant(
         recipe,
         language=language,
         configured_language=configured_language,
         country=country,
+        variant_id=variant_id,
     )
     if not display:
         return None
@@ -405,6 +414,9 @@ def _recipe_row(
         ],
         "nutrition": deepcopy(display.get("nutrition") or recipe.get("nutrition")),
         "catalogNutrition": deepcopy(display.get("nutrition") or recipe.get("nutrition")),
+        **{field: deepcopy(display.get(field, recipe.get(field)))
+           for field in ("mealTypes", "courses", "occasions", "recipeType", "excludedFoods", "detectedExcludedFoods")
+           if field in display or field in recipe},
         "source": "cook4me_release_catalog",
         "releaseCatalogVersion": _text(load_release_catalog().get("catalogVersion")),
         "sendable": bool(send and send_grouping and send_variant and send_recipe),

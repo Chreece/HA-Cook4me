@@ -1,0 +1,615 @@
+{
+  "baselineCommit": "598c4d57cbd459eda0e91d1ec1dfd0dd0b4e9ff5",
+  "method": "Compare v91 display-catalog pricing with v92 authoritative-identity pricing, using each build’s own quantities and snapshot. Counts are language/serving variants, not distinct recipes. Actual WebSocket tests separately cover all 14 screenshot variants.",
+  "before": {
+    "market": "DE",
+    "currency": "EUR",
+    "asOf": "2026-09-16",
+    "variantCounts": true,
+    "summary": {
+      "variants": 32163,
+      "ingredients": 230483,
+      "known": 123489,
+      "fallback": 40458,
+      "covered": 163947,
+      "matchedWithUsableAmount": 164094,
+      "knownComplete": 3677,
+      "budgetComplete": 9951,
+      "noKnownCost": 1902,
+      "noBudgetCost": 146
+    },
+    "remainingReasons": {
+      "quantity/unit unavailable": 66389,
+      "water requires compatible tariff unit": 147
+    },
+    "unavailableWithUsableAmount": {
+      "Water": 147
+    },
+    "examples": [
+      {
+        "id": "331197",
+        "title": "Chicken and cauliflower stew",
+        "known": 4,
+        "fallback": 0,
+        "covered": 4,
+        "total": 7,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Poultry",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Mixed herbs",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "826311",
+        "title": "Curry de tofu et brocolis",
+        "known": 5,
+        "fallback": 0,
+        "covered": 5,
+        "total": 6,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "252627",
+        "title": "Mushroom risotto",
+        "known": 5,
+        "fallback": 1,
+        "covered": 6,
+        "total": 6,
+        "estimates": [
+          {
+            "name": "Chestnut",
+            "kind": "food_group",
+            "group": "nuts",
+            "amount": 2.6533,
+            "samples": 17
+          }
+        ],
+        "missing": []
+      },
+      {
+        "id": "487446",
+        "title": "Nouilles curry rouge",
+        "known": 6,
+        "fallback": 0,
+        "covered": 6,
+        "total": 7,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Curry",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "357993",
+        "title": "Okruglice u umaku od rajčice",
+        "known": 4,
+        "fallback": 0,
+        "covered": 4,
+        "total": 10,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Pike dumplings",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Sun-dried tomatoes (optional)",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Mixed herbs",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Ketchup",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Sugar",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Oil",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "317075",
+        "title": "One-pot-Pasta mit ger. Tofu",
+        "known": 6,
+        "fallback": 0,
+        "covered": 6,
+        "total": 7,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "307808",
+        "title": "Pear and honey couscous",
+        "known": 4,
+        "fallback": 0,
+        "covered": 4,
+        "total": 5,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Cinnamon",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "734674",
+        "title": "Poulet au curry sucré salé",
+        "known": 7,
+        "fallback": 0,
+        "covered": 7,
+        "total": 8,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "816820",
+        "title": "Risotto alla milanese",
+        "known": 3,
+        "fallback": 1,
+        "covered": 4,
+        "total": 8,
+        "estimates": [
+          {
+            "name": "Stock",
+            "kind": "food_group",
+            "group": "broth",
+            "amount": 0.2125,
+            "samples": 1
+          }
+        ],
+        "missing": [
+          {
+            "name": "Saffron",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Bone marrow",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Parmesan",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "834652",
+        "title": "Risotto aux asperges",
+        "known": 6,
+        "fallback": 1,
+        "covered": 7,
+        "total": 8,
+        "estimates": [
+          {
+            "name": "Green asparagus",
+            "kind": "food_group",
+            "group": "vegetables",
+            "amount": 0.2511,
+            "samples": 24
+          }
+        ],
+        "missing": [
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "834656",
+        "title": "Risotto aux champignons",
+        "known": 7,
+        "fallback": 0,
+        "covered": 7,
+        "total": 8,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "287823",
+        "title": "Směs těstovin s uzeným tofu",
+        "known": 6,
+        "fallback": 0,
+        "covered": 6,
+        "total": 7,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "862912",
+        "title": "Къри със зеленчуци",
+        "known": 5,
+        "fallback": 1,
+        "covered": 6,
+        "total": 7,
+        "estimates": [
+          {
+            "name": "Radish",
+            "kind": "food_group",
+            "group": "vegetables",
+            "amount": 0.0646,
+            "samples": 24
+          }
+        ],
+        "missing": [
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "341615",
+        "title": "طاجن الخضراوات الجذرية",
+        "known": 6,
+        "fallback": 0,
+        "covered": 6,
+        "total": 9,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Raw red beetroot",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Herb bundle",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Cinnamon",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      }
+    ]
+  },
+  "after": {
+    "market": "DE",
+    "currency": "EUR",
+    "asOf": "2026-09-16",
+    "variantCounts": true,
+    "summary": {
+      "variants": 32163,
+      "ingredients": 230483,
+      "known": 123657,
+      "fallback": 51238,
+      "covered": 174895,
+      "matchedWithUsableAmount": 174855,
+      "knownComplete": 3680,
+      "budgetComplete": 11194,
+      "noKnownCost": 1899,
+      "noBudgetCost": 82
+    },
+    "remainingReasons": {
+      "quantity/unit unavailable": 55441,
+      "water requires compatible tariff unit": 147
+    },
+    "unavailableWithUsableAmount": {
+      "Water": 147
+    },
+    "examples": [
+      {
+        "id": "331197",
+        "title": "Chicken and cauliflower stew",
+        "known": 4,
+        "fallback": 0,
+        "covered": 4,
+        "total": 7,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Poultry",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Mixed herbs",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "826311",
+        "title": "Curry de tofu et brocolis",
+        "known": 5,
+        "fallback": 0,
+        "covered": 5,
+        "total": 6,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "252627",
+        "title": "Mushroom risotto",
+        "known": 5,
+        "fallback": 1,
+        "covered": 6,
+        "total": 6,
+        "estimates": [
+          {
+            "name": "Chestnut",
+            "kind": "food_group",
+            "group": "nuts",
+            "amount": 2.6533,
+            "samples": 17
+          }
+        ],
+        "missing": []
+      },
+      {
+        "id": "487446",
+        "title": "Nouilles curry rouge",
+        "known": 7,
+        "fallback": 0,
+        "covered": 7,
+        "total": 7,
+        "estimates": [],
+        "missing": []
+      },
+      {
+        "id": "357993",
+        "title": "Okruglice u umaku od rajčice",
+        "known": 4,
+        "fallback": 1,
+        "covered": 5,
+        "total": 10,
+        "estimates": [
+          {
+            "name": "Sun-dried tomatoes (optional)",
+            "kind": "food_group",
+            "group": "condiments",
+            "amount": 0.0487,
+            "samples": 12
+          }
+        ],
+        "missing": [
+          {
+            "name": "Pike dumplings",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Mixed herbs",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Ketchup",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Sugar",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Oil",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "317075",
+        "title": "One-pot-Pasta mit ger. Tofu",
+        "known": 6,
+        "fallback": 0,
+        "covered": 6,
+        "total": 7,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "307808",
+        "title": "Pear and honey couscous",
+        "known": 4,
+        "fallback": 0,
+        "covered": 4,
+        "total": 5,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Cinnamon",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "734674",
+        "title": "Poulet au curry sucré salé",
+        "known": 7,
+        "fallback": 0,
+        "covered": 7,
+        "total": 8,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "816820",
+        "title": "Risotto alla milanese",
+        "known": 3,
+        "fallback": 1,
+        "covered": 4,
+        "total": 8,
+        "estimates": [
+          {
+            "name": "Stock",
+            "kind": "food_group",
+            "group": "broth",
+            "amount": 0.2125,
+            "samples": 1
+          }
+        ],
+        "missing": [
+          {
+            "name": "Saffron",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Bone marrow",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Parmesan",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "834652",
+        "title": "Risotto aux asperges",
+        "known": 7,
+        "fallback": 0,
+        "covered": 7,
+        "total": 8,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "834656",
+        "title": "Risotto aux champignons",
+        "known": 7,
+        "fallback": 0,
+        "covered": 7,
+        "total": 8,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "287823",
+        "title": "Směs těstovin s uzeným tofu",
+        "known": 6,
+        "fallback": 0,
+        "covered": 6,
+        "total": 7,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "862912",
+        "title": "Къри със зеленчуци",
+        "known": 5,
+        "fallback": 1,
+        "covered": 6,
+        "total": 7,
+        "estimates": [
+          {
+            "name": "Radish",
+            "kind": "food_group",
+            "group": "vegetables",
+            "amount": 0.0646,
+            "samples": 25
+          }
+        ],
+        "missing": [
+          {
+            "name": "Salt",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      },
+      {
+        "id": "341615",
+        "title": "طاجن الخضراوات الجذرية",
+        "known": 7,
+        "fallback": 0,
+        "covered": 7,
+        "total": 9,
+        "estimates": [],
+        "missing": [
+          {
+            "name": "Herb bundle",
+            "reason": "quantity/unit unavailable"
+          },
+          {
+            "name": "Cinnamon",
+            "reason": "quantity/unit unavailable"
+          }
+        ]
+      }
+    ]
+  }
+}

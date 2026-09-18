@@ -95,7 +95,7 @@ def normalize_meal_types(value: Any) -> list[str]:
 
 def _taxonomy_values(recipe: dict[str, Any]) -> list[str]:
     values: list[str] = []
-    for field in ("courses", "occasions"):
+    for field in ("mealTypes", "courses", "occasions"):
         rows = recipe.get(field)
         if not isinstance(rows, list):
             continue
@@ -116,13 +116,42 @@ def _taxonomy_values(recipe: dict[str, Any]) -> list[str]:
     return values
 
 
+def offline_meal_types(recipe: dict[str, Any]) -> list[str]:
+    """Conservative dish-name fallback for releases without provider courses.
+
+    Use the reviewed English canonical title, never ingredient words (a cake
+    containing rice is not a main). Unknown dishes remain unclassified. These
+    are UI suggestions, not invented SEB taxonomy.
+    """
+    if recipe.get("source") != "cook4me_release_catalog":
+        return []
+    title = " " + _norm(recipe.get("canonicalName")) + " "
+    if not title.strip():
+        return []
+    terms = {
+        "breakfast": ("breakfast", "porridge", "oatmeal", "granola", "muesli"),
+        "dessert": ("cake", "cakes", "cheesecake", "brownie", "brownies", "pudding", "custard", "compote", "crumble", "tiramisu", "ice cream", "sorbet", "chocolate mousse", "rice pudding"),
+        "salad": ("salad", "salads", "tabbouleh"),
+        "soup": ("soup", "soups", "ramen", "broth", "bisque", "minestrone", "gazpacho", "pho"),
+        "starter": ("starter", "appetizer", "appetiser", "hummus", "bruschetta", "pate"),
+        "side": ("side dish", "mashed potatoes", "mashed potato", "steamed rice", "plain rice", "steamed vegetables"),
+        "snack": ("snack", "popcorn", "energy balls", "granola bars", "cookies", "biscuits"),
+        "main": ("main course", "risotto", "pasta", "spaghetti", "lasagne", "lasagna", "penne", "macaroni", "tagliatelle", "curry", "stew", "goulash", "chili", "chilli", "paella", "pilaf", "biryani", "casserole", "meatballs", "ragout", "ragu", "stroganoff", "couscous", "tajine", "tagine", "ratatouille"),
+    }
+    # More specific dish classes take priority over overlapping main keywords.
+    for category, words in terms.items():
+        if any(" " + word + " " in title for word in words):
+            return [category]
+    return []
+
+
 def recipe_matches_meal_types(recipe: dict[str, Any], selected: Any) -> bool:
     wanted = normalize_meal_types(selected)
-    if not wanted:
+    if not wanted or set(wanted) == set(MEAL_TYPES):
         return True
     haystack = " | ".join(_taxonomy_values(recipe))
     if not haystack:
-        return False
+        return bool(set(wanted).intersection(offline_meal_types(recipe)))
     normalized = _norm(haystack)
     compact = normalized.replace(" ", "")
     for meal_type in wanted:

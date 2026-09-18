@@ -1,0 +1,1730 @@
+{
+  "schemaVersion": 1,
+  "source": "USDA FoodData Central SR Legacy, April 2018",
+  "sourceUrl": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip",
+  "license": "Public domain",
+  "portions": [
+    {
+      "names": [
+        "onion",
+        "onions"
+      ],
+      "measure": "piece",
+      "grams": 110.0,
+      "fdcId": 170000,
+      "portionId": 85860,
+      "food": "Onions, raw",
+      "portion": "medium (2-1/2\" dia)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 110.0
+    },
+    {
+      "names": [
+        "onion",
+        "onions"
+      ],
+      "measure": "tbsp",
+      "grams": 10.0,
+      "fdcId": 170000,
+      "portionId": 85857,
+      "food": "Onions, raw",
+      "portion": "tbsp chopped",
+      "sourceAmount": 1.0,
+      "sourceGrams": 10.0
+    },
+    {
+      "names": [
+        "carrot",
+        "carrots"
+      ],
+      "measure": "piece",
+      "grams": 61.0,
+      "fdcId": 170393,
+      "portionId": 86559,
+      "food": "Carrots, raw",
+      "portion": "medium",
+      "sourceAmount": 1.0,
+      "sourceGrams": 61.0
+    },
+    {
+      "names": [
+        "white potatoes",
+        "potato",
+        "potatoes"
+      ],
+      "measure": "piece",
+      "grams": 213.0,
+      "fdcId": 170028,
+      "portionId": 85927,
+      "food": "Potatoes, white, flesh and skin, raw",
+      "portion": "medium (2+-1/4\" to 3-1/4\" dia.)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 213.0
+    },
+    {
+      "names": [
+        "garlic"
+      ],
+      "measure": "clove",
+      "grams": 3.0,
+      "fdcId": 169230,
+      "portionId": 84480,
+      "food": "Garlic, raw",
+      "portion": "clove",
+      "sourceAmount": 1.0,
+      "sourceGrams": 3.0
+    },
+    {
+      "names": [
+        "garlic"
+      ],
+      "measure": "tsp",
+      "grams": 2.8,
+      "fdcId": 169230,
+      "portionId": 84479,
+      "food": "Garlic, raw",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 2.8
+    },
+    {
+      "names": [
+        "tomato",
+        "tomatoes"
+      ],
+      "measure": "piece",
+      "grams": 123.0,
+      "fdcId": 170457,
+      "portionId": 86686,
+      "food": "Tomatoes, red, ripe, raw, year round average",
+      "portion": "medium whole (2-3/5\" dia)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 123.0
+    },
+    {
+      "names": [
+        "cherry tomato",
+        "cherry tomatoes"
+      ],
+      "measure": "piece",
+      "grams": 17.0,
+      "fdcId": 170457,
+      "portionId": 86684,
+      "food": "Tomatoes, red, ripe, raw, year round average",
+      "portion": "cherry",
+      "sourceAmount": 1.0,
+      "sourceGrams": 17.0
+    },
+    {
+      "names": [
+        "apple",
+        "apples"
+      ],
+      "measure": "piece",
+      "grams": 182.0,
+      "fdcId": 171688,
+      "portionId": 89193,
+      "food": "Apples, raw, with skin (Includes foods for USDA's Food Distribution Program)",
+      "portion": "medium (3\" dia)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 182.0
+    },
+    {
+      "names": [
+        "zucchini",
+        "courgette",
+        "courgettes"
+      ],
+      "measure": "piece",
+      "grams": 196.0,
+      "fdcId": 169291,
+      "portionId": 84610,
+      "food": "Squash, summer, zucchini, includes skin, raw",
+      "portion": "medium",
+      "sourceAmount": 1.0,
+      "sourceGrams": 196.0
+    },
+    {
+      "names": [
+        "aubergine",
+        "aubergines",
+        "eggplant"
+      ],
+      "measure": "piece",
+      "grams": 548.0,
+      "fdcId": 169228,
+      "portionId": 84476,
+      "food": "Eggplant, raw",
+      "portion": "eggplant, unpeeled (approx 1-1/4 lb)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 548.0
+    },
+    {
+      "names": [
+        "red pepper",
+        "red bell pepper"
+      ],
+      "measure": "piece",
+      "grams": 119.0,
+      "fdcId": 170108,
+      "portionId": 86066,
+      "food": "Peppers, sweet, red, raw",
+      "portion": "medium (approx 2-3/4\" long, 2-1/2 dia.)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 119.0
+    },
+    {
+      "names": [
+        "red pepper",
+        "red bell pepper"
+      ],
+      "measure": "tbsp",
+      "grams": 9.3,
+      "fdcId": 170108,
+      "portionId": 86064,
+      "food": "Peppers, sweet, red, raw",
+      "portion": "tablespoon",
+      "sourceAmount": 1.0,
+      "sourceGrams": 9.3
+    },
+    {
+      "names": [
+        "cucumber",
+        "cucumbers"
+      ],
+      "measure": "piece",
+      "grams": 301.0,
+      "fdcId": 168409,
+      "portionId": 83050,
+      "food": "Cucumber, with peel, raw",
+      "portion": "cucumber (8-1/4\")",
+      "sourceAmount": 1.0,
+      "sourceGrams": 301.0
+    },
+    {
+      "names": [
+        "leek",
+        "leeks"
+      ],
+      "measure": "piece",
+      "grams": 89.0,
+      "fdcId": 169246,
+      "portionId": 84504,
+      "food": "Leeks, (bulb and lower leaf-portion), raw",
+      "portion": "leek",
+      "sourceAmount": 1.0,
+      "sourceGrams": 89.0
+    },
+    {
+      "names": [
+        "spring onions",
+        "spring onion",
+        "green onion",
+        "welsh onion"
+      ],
+      "measure": "piece",
+      "grams": 15.0,
+      "fdcId": 170005,
+      "portionId": 85881,
+      "food": "Onions, spring or scallions (includes tops and bulb), raw",
+      "portion": "medium (4-1/8\" long)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 15.0
+    },
+    {
+      "names": [
+        "spring onions",
+        "spring onion",
+        "green onion",
+        "welsh onion"
+      ],
+      "measure": "tbsp",
+      "grams": 6.0,
+      "fdcId": 170005,
+      "portionId": 85879,
+      "food": "Onions, spring or scallions (includes tops and bulb), raw",
+      "portion": "tbsp chopped",
+      "sourceAmount": 1.0,
+      "sourceGrams": 6.0
+    },
+    {
+      "names": [
+        "shallot",
+        "shallots"
+      ],
+      "measure": "tbsp",
+      "grams": 10.0,
+      "fdcId": 170499,
+      "portionId": 86767,
+      "food": "Shallots, raw",
+      "portion": "tbsp chopped",
+      "sourceAmount": 1.0,
+      "sourceGrams": 10.0
+    },
+    {
+      "names": [
+        "butter",
+        "salted butter",
+        "unsalted butter",
+        "salted butter & unsalted butter"
+      ],
+      "measure": "tbsp",
+      "grams": 14.2,
+      "fdcId": 173410,
+      "portionId": 92457,
+      "food": "Butter, salted",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 14.2
+    },
+    {
+      "names": [
+        "sugar",
+        "white sugar",
+        "caster sugar"
+      ],
+      "measure": "tsp",
+      "grams": 4.2,
+      "fdcId": 169655,
+      "portionId": 85287,
+      "food": "Sugars, granulated",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 4.2
+    },
+    {
+      "names": [
+        "olive oil"
+      ],
+      "measure": "tbsp",
+      "grams": 13.5,
+      "fdcId": 171413,
+      "portionId": 88667,
+      "food": "Oil, olive, salad or cooking",
+      "portion": "tablespoon",
+      "sourceAmount": 1.0,
+      "sourceGrams": 13.5
+    },
+    {
+      "names": [
+        "olive oil"
+      ],
+      "measure": "tsp",
+      "grams": 4.5,
+      "fdcId": 171413,
+      "portionId": 88669,
+      "food": "Oil, olive, salad or cooking",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 4.5
+    },
+    {
+      "names": [
+        "sunflower oil"
+      ],
+      "measure": "tbsp",
+      "grams": 13.6,
+      "fdcId": 171017,
+      "portionId": 87780,
+      "food": "Oil, sunflower, linoleic (less than 60%)",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 13.6
+    },
+    {
+      "names": [
+        "sunflower oil"
+      ],
+      "measure": "tsp",
+      "grams": 4.5,
+      "fdcId": 171017,
+      "portionId": 87782,
+      "food": "Oil, sunflower, linoleic (less than 60%)",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 4.5
+    },
+    {
+      "names": [
+        "honey"
+      ],
+      "measure": "tbsp",
+      "grams": 21.0,
+      "fdcId": 169640,
+      "portionId": 85265,
+      "food": "Honey",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 21.0
+    },
+    {
+      "names": [
+        "salt"
+      ],
+      "measure": "tsp",
+      "grams": 6.0,
+      "fdcId": 173468,
+      "portionId": 92594,
+      "food": "Salt, table",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 6.0
+    },
+    {
+      "names": [
+        "salt"
+      ],
+      "measure": "tbsp",
+      "grams": 18.0,
+      "fdcId": 173468,
+      "portionId": 92595,
+      "food": "Salt, table",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 18.0
+    },
+    {
+      "names": [
+        "black pepper",
+        "ground black pepper"
+      ],
+      "measure": "tsp",
+      "grams": 2.3,
+      "fdcId": 170931,
+      "portionId": 87560,
+      "food": "Spices, pepper, black",
+      "portion": "tsp, ground",
+      "sourceAmount": 1.0,
+      "sourceGrams": 2.3
+    },
+    {
+      "names": [
+        "black pepper",
+        "ground black pepper"
+      ],
+      "measure": "tbsp",
+      "grams": 6.9,
+      "fdcId": 170931,
+      "portionId": 87561,
+      "food": "Spices, pepper, black",
+      "portion": "tbsp, ground",
+      "sourceAmount": 1.0,
+      "sourceGrams": 6.9
+    },
+    {
+      "names": [
+        "ginger"
+      ],
+      "measure": "tsp",
+      "grams": 2.0,
+      "fdcId": 169231,
+      "portionId": 84482,
+      "food": "Ginger root, raw",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 2.0
+    },
+    {
+      "names": [
+        "parsley"
+      ],
+      "measure": "tbsp",
+      "grams": 3.8,
+      "fdcId": 170416,
+      "portionId": 86608,
+      "food": "Parsley, fresh",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 3.8
+    },
+    {
+      "names": [
+        "basil",
+        "fresh basil"
+      ],
+      "measure": "tbsp",
+      "grams": 2.65,
+      "fdcId": 172232,
+      "portionId": 90126,
+      "food": "Basil, fresh",
+      "portion": "tbsp, chopped",
+      "sourceAmount": 2.0,
+      "sourceGrams": 5.3
+    },
+    {
+      "names": [
+        "cinnamon",
+        "ground cinnamon"
+      ],
+      "measure": "tsp",
+      "grams": 2.6,
+      "fdcId": 171320,
+      "portionId": 88429,
+      "food": "Spices, cinnamon, ground",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 2.6
+    },
+    {
+      "names": [
+        "cinnamon",
+        "ground cinnamon"
+      ],
+      "measure": "tbsp",
+      "grams": 7.8,
+      "fdcId": 171320,
+      "portionId": 88430,
+      "food": "Spices, cinnamon, ground",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 7.8
+    },
+    {
+      "names": [
+        "paprika",
+        "ground paprika"
+      ],
+      "measure": "tsp",
+      "grams": 2.3,
+      "fdcId": 171329,
+      "portionId": 88447,
+      "food": "Spices, paprika",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 2.3
+    },
+    {
+      "names": [
+        "paprika",
+        "ground paprika"
+      ],
+      "measure": "tbsp",
+      "grams": 6.8,
+      "fdcId": 171329,
+      "portionId": 88448,
+      "food": "Spices, paprika",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 6.8
+    },
+    {
+      "names": [
+        "turmeric",
+        "ground turmeric"
+      ],
+      "measure": "tsp",
+      "grams": 3.0,
+      "fdcId": 172231,
+      "portionId": 90123,
+      "food": "Spices, turmeric, ground",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 3.0
+    },
+    {
+      "names": [
+        "turmeric",
+        "ground turmeric"
+      ],
+      "measure": "tbsp",
+      "grams": 9.4,
+      "fdcId": 172231,
+      "portionId": 90124,
+      "food": "Spices, turmeric, ground",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 9.4
+    },
+    {
+      "names": [
+        "mustard"
+      ],
+      "measure": "tsp",
+      "grams": 5.0,
+      "fdcId": 172234,
+      "portionId": 90130,
+      "food": "Mustard, prepared, yellow",
+      "portion": "tsp or 1 packet",
+      "sourceAmount": 1.0,
+      "sourceGrams": 5.0
+    },
+    {
+      "names": [
+        "tomato paste"
+      ],
+      "measure": "tbsp",
+      "grams": 16.0,
+      "fdcId": 170459,
+      "portionId": 86698,
+      "food": "Tomato products, canned, paste, without salt added (Includes foods for USDA's Food Distribution Program)",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 16.0
+    },
+    {
+      "names": [
+        "milk",
+        "whole milk"
+      ],
+      "measure": "tbsp",
+      "grams": 15.0,
+      "fdcId": 172217,
+      "portionId": 90102,
+      "food": "Milk, whole, 3.25% milkfat, without added vitamin A and vitamin D",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 15.0
+    },
+    {
+      "names": [
+        "heavy cream"
+      ],
+      "measure": "tbsp",
+      "grams": 15.0,
+      "fdcId": 170859,
+      "portionId": 87434,
+      "food": "Cream, fluid, heavy whipping",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 15.0
+    },
+    {
+      "names": [
+        "soy sauce"
+      ],
+      "measure": "tbsp",
+      "grams": 16.0,
+      "fdcId": 174277,
+      "portionId": 94068,
+      "food": "Soy sauce made from soy and wheat (shoyu)",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 16.0
+    },
+    {
+      "names": [
+        "soy sauce"
+      ],
+      "measure": "tsp",
+      "grams": 5.3,
+      "fdcId": 174277,
+      "portionId": 94069,
+      "food": "Soy sauce made from soy and wheat (shoyu)",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 5.3
+    },
+    {
+      "names": [
+        "grated parmesan",
+        "parmesan"
+      ],
+      "measure": "tbsp",
+      "grams": 5.0,
+      "fdcId": 171247,
+      "portionId": 88262,
+      "food": "Cheese, parmesan, grated",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 5.0
+    },
+    {
+      "names": [
+        "flour",
+        "wheat flour",
+        "plain flour",
+        "all-purpose flour"
+      ],
+      "measure": "tbsp",
+      "grams": 7.8125,
+      "fdcId": 169761,
+      "portionId": 85466,
+      "food": "Wheat flour, white, all-purpose, unenriched",
+      "portion": "cup / 16 tablespoons",
+      "sourceAmount": 1.0,
+      "sourceGrams": 125.0,
+      "derivation": "USDA cup divided by 16 approximate 15 ml tablespoons"
+    },
+    {
+      "names": [
+        "breadcrumbs",
+        "bread crumbs"
+      ],
+      "measure": "tbsp",
+      "grams": 6.75,
+      "fdcId": 174928,
+      "portionId": 95194,
+      "food": "Bread, crumbs, dry, grated, plain",
+      "portion": "cup / 16 tablespoons",
+      "sourceAmount": 1.0,
+      "sourceGrams": 108.0,
+      "derivation": "USDA cup divided by 16 approximate 15 ml tablespoons"
+    },
+    {
+      "names": [
+        "ground almonds"
+      ],
+      "measure": "tbsp",
+      "grams": 5.9375,
+      "fdcId": 170567,
+      "portionId": 86866,
+      "food": "Nuts, almonds",
+      "portion": "cup, ground / 16 tablespoons",
+      "sourceAmount": 1.0,
+      "sourceGrams": 95.0,
+      "derivation": "USDA cup divided by 16 approximate 15 ml tablespoons"
+    },
+    {
+      "names": [
+        "baking powder"
+      ],
+      "measure": "tsp",
+      "grams": 4.6,
+      "fdcId": 172804,
+      "portionId": 91439,
+      "food": "Leavening agents, baking powder, double-acting, straight phosphate",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 4.6
+    },
+    {
+      "names": [
+        "dry yeast",
+        "dried yeast",
+        "active dry yeast",
+        "dried baker's yeast"
+      ],
+      "measure": "tsp",
+      "grams": 4.0,
+      "fdcId": 175043,
+      "portionId": 95489,
+      "food": "Leavening agents, yeast, baker's, active dry",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 4.0
+    },
+    {
+      "names": [
+        "cornstarch",
+        "corn starch",
+        "cornflour"
+      ],
+      "measure": "tbsp",
+      "grams": 8.0,
+      "fdcId": 169698,
+      "portionId": 85370,
+      "food": "Cornstarch",
+      "portion": "cup / 16 tablespoons",
+      "sourceAmount": 1.0,
+      "sourceGrams": 128.0
+    },
+    {
+      "names": [
+        "brown sugar"
+      ],
+      "measure": "tsp",
+      "grams": 3.0,
+      "fdcId": 168833,
+      "portionId": 83854,
+      "food": "Sugars, brown",
+      "portion": "tsp unpacked",
+      "sourceAmount": 1.0,
+      "sourceGrams": 3.0
+    },
+    {
+      "names": [
+        "lemon",
+        "lemons"
+      ],
+      "measure": "piece",
+      "grams": 58.0,
+      "fdcId": 167746,
+      "portionId": 81883,
+      "food": "Lemons, raw, without peel",
+      "portion": "fruit (2-1/8\" dia)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 58.0
+    },
+    {
+      "names": [
+        "lime",
+        "limes"
+      ],
+      "measure": "piece",
+      "grams": 67.0,
+      "fdcId": 168155,
+      "portionId": 82570,
+      "food": "Limes, raw",
+      "portion": "fruit (2\" dia)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 67.0
+    },
+    {
+      "names": [
+        "coriander",
+        "fresh coriander",
+        "coriander leaves"
+      ],
+      "measure": "tbsp",
+      "grams": 1.0,
+      "fdcId": 169997,
+      "portionId": 85844,
+      "food": "Coriander (cilantro) leaves, raw",
+      "portion": "cup",
+      "sourceAmount": 0.25,
+      "sourceGrams": 4.0
+    },
+    {
+      "names": [
+        "curry",
+        "curry powder"
+      ],
+      "measure": "tsp",
+      "grams": 2.0,
+      "fdcId": 170924,
+      "portionId": 87546,
+      "food": "Spices, curry powder",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 2.0
+    },
+    {
+      "names": [
+        "curry",
+        "curry powder"
+      ],
+      "measure": "tbsp",
+      "grams": 6.3,
+      "fdcId": 170924,
+      "portionId": 87547,
+      "food": "Spices, curry powder",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 6.3
+    },
+    {
+      "names": [
+        "poppy seed",
+        "poppy seeds",
+        "ground poppy seeds"
+      ],
+      "measure": "tsp",
+      "grams": 2.8,
+      "fdcId": 171330,
+      "portionId": 88449,
+      "food": "Spices, poppy seed",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 2.8
+    },
+    {
+      "names": [
+        "poppy seed",
+        "poppy seeds",
+        "ground poppy seeds"
+      ],
+      "measure": "tbsp",
+      "grams": 8.8,
+      "fdcId": 171330,
+      "portionId": 88450,
+      "food": "Spices, poppy seed",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 8.8
+    },
+    {
+      "names": [
+        "mint",
+        "fresh mint"
+      ],
+      "measure": "tbsp",
+      "grams": 5.7,
+      "fdcId": 173475,
+      "portionId": 92613,
+      "food": "Spearmint, fresh",
+      "portion": "tbsp",
+      "sourceAmount": 2.0,
+      "sourceGrams": 11.4
+    },
+    {
+      "names": [
+        "chives",
+        "fresh chives"
+      ],
+      "measure": "tbsp",
+      "grams": 3.0,
+      "fdcId": 169994,
+      "portionId": 85839,
+      "food": "Chives, raw",
+      "portion": "tbsp chopped",
+      "sourceAmount": 1.0,
+      "sourceGrams": 3.0
+    },
+    {
+      "names": [
+        "chives",
+        "fresh chives"
+      ],
+      "measure": "tsp",
+      "grams": 1.0,
+      "fdcId": 169994,
+      "portionId": 85840,
+      "food": "Chives, raw",
+      "portion": "tsp chopped",
+      "sourceAmount": 1.0,
+      "sourceGrams": 1.0
+    },
+    {
+      "names": [
+        "thyme",
+        "fresh thyme"
+      ],
+      "measure": "tsp",
+      "grams": 0.8,
+      "fdcId": 173470,
+      "portionId": 92601,
+      "food": "Thyme, fresh",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 0.8
+    },
+    {
+      "names": [
+        "rosemary",
+        "fresh rosemary"
+      ],
+      "measure": "tsp",
+      "grams": 0.7,
+      "fdcId": 173473,
+      "portionId": 92608,
+      "food": "Rosemary, fresh",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 0.7
+    },
+    {
+      "names": [
+        "rosemary",
+        "fresh rosemary"
+      ],
+      "measure": "tbsp",
+      "grams": 1.7,
+      "fdcId": 173473,
+      "portionId": 92609,
+      "food": "Rosemary, fresh",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 1.7
+    },
+    {
+      "names": [
+        "dried thyme"
+      ],
+      "measure": "tsp",
+      "grams": 1.0,
+      "fdcId": 170938,
+      "portionId": 87578,
+      "food": "Spices, thyme, dried",
+      "portion": "tsp, leaves",
+      "sourceAmount": 1.0,
+      "sourceGrams": 1.0
+    },
+    {
+      "names": [
+        "dried thyme"
+      ],
+      "measure": "tbsp",
+      "grams": 2.7,
+      "fdcId": 170938,
+      "portionId": 87579,
+      "food": "Spices, thyme, dried",
+      "portion": "tbsp, leaves",
+      "sourceAmount": 1.0,
+      "sourceGrams": 2.7
+    },
+    {
+      "names": [
+        "dried oregano"
+      ],
+      "measure": "tsp",
+      "grams": 1.0,
+      "fdcId": 171328,
+      "portionId": 88445,
+      "food": "Spices, oregano, dried",
+      "portion": "tsp, leaves",
+      "sourceAmount": 1.0,
+      "sourceGrams": 1.0
+    },
+    {
+      "names": [
+        "cocoa",
+        "cocoa powder",
+        "pure cocoa powder",
+        "unsweetened cocoa powder"
+      ],
+      "measure": "tbsp",
+      "grams": 5.4,
+      "fdcId": 169593,
+      "portionId": 85187,
+      "food": "Cocoa, dry powder, unsweetened",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 5.4
+    },
+    {
+      "names": [
+        "banana",
+        "bananas"
+      ],
+      "measure": "piece",
+      "grams": 118.0,
+      "fdcId": 173944,
+      "portionId": 93515,
+      "food": "Bananas, raw",
+      "portion": "medium (7\" to 7-7/8\" long)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 118.0
+    },
+    {
+      "names": [
+        "pear",
+        "pears"
+      ],
+      "measure": "piece",
+      "grams": 178.0,
+      "fdcId": 169118,
+      "portionId": 84275,
+      "food": "Pears, raw",
+      "portion": "medium",
+      "sourceAmount": 1.0,
+      "sourceGrams": 178.0
+    },
+    {
+      "names": [
+        "orange",
+        "oranges"
+      ],
+      "measure": "piece",
+      "grams": 131.0,
+      "fdcId": 169097,
+      "portionId": 84230,
+      "food": "Oranges, raw, all commercial varieties",
+      "portion": "fruit (2-5/8\" dia)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 131.0
+    },
+    {
+      "names": [
+        "plum",
+        "plums"
+      ],
+      "measure": "piece",
+      "grams": 66.0,
+      "fdcId": 169949,
+      "portionId": 85735,
+      "food": "Plums, raw",
+      "portion": "fruit (2-1/8\" dia)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 66.0
+    },
+    {
+      "names": [
+        "strawberry",
+        "strawberries"
+      ],
+      "measure": "piece",
+      "grams": 12.0,
+      "fdcId": 167762,
+      "portionId": 81925,
+      "food": "Strawberries, raw",
+      "portion": "medium (1-1/4\" dia)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 12.0
+    },
+    {
+      "names": [
+        "radish",
+        "radishes"
+      ],
+      "measure": "piece",
+      "grams": 4.5,
+      "fdcId": 169276,
+      "portionId": 84584,
+      "food": "Radishes, raw",
+      "portion": "medium (3/4\" to 1\" dia)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 4.5
+    },
+    {
+      "names": [
+        "date",
+        "dates",
+        "dried dates",
+        "pitted dates"
+      ],
+      "measure": "piece",
+      "grams": 7.1,
+      "fdcId": 171726,
+      "portionId": 89265,
+      "food": "Dates, deglet noor",
+      "portion": "date, pitted",
+      "sourceAmount": 1.0,
+      "sourceGrams": 7.1
+    },
+    {
+      "names": [
+        "medjool date",
+        "medjool dates"
+      ],
+      "measure": "piece",
+      "grams": 24.0,
+      "fdcId": 168191,
+      "portionId": 82634,
+      "food": "Dates, medjool",
+      "portion": "date, pitted",
+      "sourceAmount": 1.0,
+      "sourceGrams": 24.0
+    },
+    {
+      "names": [
+        "maple syrup"
+      ],
+      "measure": "tbsp",
+      "grams": 20.0,
+      "fdcId": 169661,
+      "portionId": 85303,
+      "food": "Syrups, maple",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 20.0
+    },
+    {
+      "names": [
+        "agave syrup"
+      ],
+      "measure": "tsp",
+      "grams": 6.9,
+      "fdcId": 170277,
+      "portionId": 86359,
+      "food": "Sweetener, syrup, agave",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 6.9
+    },
+    {
+      "names": [
+        "hazelnut",
+        "hazelnuts"
+      ],
+      "measure": "tbsp",
+      "grams": 8.4375,
+      "fdcId": 170581,
+      "portionId": 86898,
+      "food": "Nuts, hazelnuts or filberts",
+      "portion": "cup, whole ÷ 16 tablespoons; food-specific kitchen estimate",
+      "sourceAmount": 1.0,
+      "sourceGrams": 135.0
+    },
+    {
+      "names": [
+        "chopped hazelnuts"
+      ],
+      "measure": "tbsp",
+      "grams": 7.1875,
+      "fdcId": 170581,
+      "portionId": 86896,
+      "food": "Nuts, hazelnuts or filberts",
+      "portion": "cup, chopped ÷ 16 tablespoons; food-specific kitchen estimate",
+      "sourceAmount": 1.0,
+      "sourceGrams": 115.0
+    },
+    {
+      "names": [
+        "ground hazelnuts"
+      ],
+      "measure": "tbsp",
+      "grams": 4.6875,
+      "fdcId": 170581,
+      "portionId": 86897,
+      "food": "Nuts, hazelnuts or filberts",
+      "portion": "cup, ground ÷ 16 tablespoons; food-specific kitchen estimate",
+      "sourceAmount": 1.0,
+      "sourceGrams": 75.0
+    },
+    {
+      "names": [
+        "slivered almonds"
+      ],
+      "measure": "tbsp",
+      "grams": 6.75,
+      "fdcId": 170567,
+      "portionId": 86865,
+      "food": "Nuts, almonds",
+      "portion": "cup, slivered ÷ 16 tablespoons; food-specific kitchen estimate",
+      "sourceAmount": 1.0,
+      "sourceGrams": 108.0
+    },
+    {
+      "names": [
+        "sliced almonds",
+        "flaked almonds"
+      ],
+      "measure": "tbsp",
+      "grams": 5.75,
+      "fdcId": 170567,
+      "portionId": 86864,
+      "food": "Nuts, almonds",
+      "portion": "cup, sliced ÷ 16 tablespoons; food-specific kitchen estimate",
+      "sourceAmount": 1.0,
+      "sourceGrams": 92.0
+    },
+    {
+      "names": [
+        "coconut",
+        "fresh coconut",
+        "raw coconut"
+      ],
+      "measure": "tbsp",
+      "grams": 5.0,
+      "fdcId": 170169,
+      "portionId": 86163,
+      "food": "Nuts, coconut meat, raw",
+      "portion": "cup, shredded ÷ 16 tablespoons; food-specific kitchen estimate",
+      "sourceAmount": 1.0,
+      "sourceGrams": 80.0
+    },
+    {
+      "names": [
+        "coconut",
+        "fresh coconut",
+        "raw coconut"
+      ],
+      "measure": "piece",
+      "grams": 397.0,
+      "fdcId": 170169,
+      "portionId": 86164,
+      "food": "Nuts, coconut meat, raw",
+      "portion": "medium",
+      "sourceAmount": 1.0,
+      "sourceGrams": 397.0
+    },
+    {
+      "names": [
+        "raw beetroot"
+      ],
+      "measure": "piece",
+      "grams": 82,
+      "fdcId": 169145,
+      "portionId": 84326,
+      "food": "Beets, raw",
+      "portion": "beet (2 inch diameter)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 82.0
+    },
+    {
+      "names": [
+        "sun-dried tomatoes (optional)",
+        "sun-dried tomato",
+        "sun-dried tomatoes"
+      ],
+      "measure": "piece",
+      "grams": 2,
+      "fdcId": 168567,
+      "portionId": 83340,
+      "food": "Tomatoes, sun-dried",
+      "portion": "piece",
+      "sourceAmount": 1.0,
+      "sourceGrams": 2.0
+    },
+    {
+      "names": [
+        "balsamic vinegar"
+      ],
+      "measure": "tbsp",
+      "grams": 16.0,
+      "fdcId": 172241,
+      "portionId": 90145,
+      "food": "Vinegar, balsamic",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 16.0
+    },
+    {
+      "names": [
+        "balsamic vinegar"
+      ],
+      "measure": "tsp",
+      "grams": 5.3,
+      "fdcId": 172241,
+      "portionId": 90147,
+      "food": "Vinegar, balsamic",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 5.3
+    },
+    {
+      "names": [
+        "asparagus",
+        "green asparagus"
+      ],
+      "measure": "piece",
+      "grams": 16.0,
+      "fdcId": 168389,
+      "portionId": 83014,
+      "food": "Asparagus, raw",
+      "portion": "spear, medium (5-1/4\" to 7\" long)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 16.0
+    },
+    {
+      "names": [
+        "fennel"
+      ],
+      "measure": "piece",
+      "grams": 234.0,
+      "fdcId": 169385,
+      "portionId": 84767,
+      "food": "Fennel, bulb, raw",
+      "portion": "bulb",
+      "sourceAmount": 1.0,
+      "sourceGrams": 234.0
+    },
+    {
+      "names": [
+        "turnip"
+      ],
+      "measure": "piece",
+      "grams": 122.0,
+      "fdcId": 170465,
+      "portionId": 86710,
+      "food": "Turnips, raw",
+      "portion": "medium",
+      "sourceAmount": 1.0,
+      "sourceGrams": 122.0
+    },
+    {
+      "names": [
+        "green pepper",
+        "green bell pepper"
+      ],
+      "measure": "piece",
+      "grams": 119.0,
+      "fdcId": 170427,
+      "portionId": 86627,
+      "food": "Peppers, sweet, green, raw",
+      "portion": "medium (approx 2-3/4\" long, 2-1/2\" dia)",
+      "sourceAmount": 1.0,
+      "sourceGrams": 119.0
+    },
+    {
+      "names": [
+        "icing sugar",
+        "powdered sugar"
+      ],
+      "measure": "tbsp",
+      "grams": 8.0,
+      "fdcId": 169656,
+      "portionId": 85292,
+      "food": "Sugars, powdered",
+      "portion": "tbsp unsifted",
+      "sourceAmount": 1.0,
+      "sourceGrams": 8.0
+    },
+    {
+      "names": [
+        "icing sugar",
+        "powdered sugar"
+      ],
+      "measure": "tsp",
+      "grams": 2.5,
+      "fdcId": 169656,
+      "portionId": 85293,
+      "food": "Sugars, powdered",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 2.5
+    },
+    {
+      "names": [
+        "sesame seed",
+        "sesame seeds"
+      ],
+      "measure": "tbsp",
+      "grams": 9.0,
+      "fdcId": 170150,
+      "portionId": 86136,
+      "food": "Seeds, sesame seeds, whole, dried",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 9.0
+    },
+    {
+      "names": [
+        "tahini"
+      ],
+      "measure": "tbsp",
+      "grams": 15.0,
+      "fdcId": 170189,
+      "portionId": 86209,
+      "food": "Seeds, sesame butter, tahini, from roasted and toasted kernels (most common type)",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 15.0
+    },
+    {
+      "names": [
+        "sour cream"
+      ],
+      "measure": "tbsp",
+      "grams": 12.0,
+      "fdcId": 171257,
+      "portionId": 88296,
+      "food": "Cream, sour, cultured",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 12.0
+    },
+    {
+      "names": [
+        "cream cheese",
+        "fromage frais"
+      ],
+      "measure": "tbsp",
+      "grams": 14.5,
+      "fdcId": 173418,
+      "portionId": 92481,
+      "food": "Cheese, cream",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 14.5
+    },
+    {
+      "names": [
+        "bicarbonate of soda",
+        "baking soda",
+        "sodium bicarbonate"
+      ],
+      "measure": "tsp",
+      "grams": 4.6,
+      "fdcId": 175040,
+      "portionId": 95484,
+      "food": "Leavening agents, baking soda",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 4.6
+    },
+    {
+      "names": [
+        "parsley",
+        "fresh parsley"
+      ],
+      "measure": "sprig",
+      "grams": 1.0,
+      "fdcId": 170416,
+      "portionId": 86609,
+      "food": "Parsley, fresh",
+      "portion": "sprigs",
+      "sourceAmount": 10.0,
+      "sourceGrams": 10.0
+    },
+    {
+      "names": [
+        "basil",
+        "fresh basil"
+      ],
+      "measure": "leaf",
+      "grams": 0.5,
+      "fdcId": 172232,
+      "portionId": 90125,
+      "food": "Basil, fresh",
+      "portion": "leaves",
+      "sourceAmount": 5.0,
+      "sourceGrams": 2.5
+    },
+    {
+      "names": [
+        "dill",
+        "fresh dill"
+      ],
+      "measure": "sprig",
+      "grams": 0.2,
+      "fdcId": 172233,
+      "portionId": 90128,
+      "food": "Dill weed, fresh",
+      "portion": "sprigs",
+      "sourceAmount": 5.0,
+      "sourceGrams": 1.0
+    },
+    {
+      "names": [
+        "coriander",
+        "fresh coriander",
+        "cilantro"
+      ],
+      "measure": "sprig",
+      "grams": 2.2222222222222223,
+      "fdcId": 169997,
+      "portionId": 85845,
+      "food": "Coriander (cilantro) leaves, raw",
+      "portion": "sprigs",
+      "sourceAmount": 9.0,
+      "sourceGrams": 20.0
+    },
+    {
+      "names": [
+        "peppermint"
+      ],
+      "measure": "leaf",
+      "grams": 0.05,
+      "fdcId": 173474,
+      "portionId": 92610,
+      "food": "Peppermint, fresh",
+      "portion": "leaves",
+      "sourceAmount": 2.0,
+      "sourceGrams": 0.1
+    },
+    {
+      "names": [
+        "mint",
+        "spearmint"
+      ],
+      "measure": "leaf",
+      "grams": 0.15,
+      "fdcId": 173475,
+      "portionId": 92612,
+      "food": "Spearmint, fresh",
+      "portion": "leaves",
+      "sourceAmount": 2.0,
+      "sourceGrams": 0.3
+    },
+    {
+      "names": [
+        "bay",
+        "bay leaf",
+        "dried bay leaf"
+      ],
+      "measure": "tsp",
+      "grams": 0.6,
+      "fdcId": 170917,
+      "portionId": 87532,
+      "food": "Spices, bay leaf",
+      "portion": "tsp, crumbled",
+      "sourceAmount": 1.0,
+      "sourceGrams": 0.6
+    },
+    {
+      "names": [
+        "bay",
+        "bay leaf",
+        "dried bay leaf"
+      ],
+      "measure": "tbsp",
+      "grams": 1.8,
+      "fdcId": 170917,
+      "portionId": 87533,
+      "food": "Spices, bay leaf",
+      "portion": "tbsp, crumbled",
+      "sourceAmount": 1.0,
+      "sourceGrams": 1.8
+    },
+    {
+      "names": [
+        "dried tarragon"
+      ],
+      "measure": "tsp",
+      "grams": 0.6,
+      "fdcId": 170937,
+      "portionId": 87574,
+      "food": "Spices, tarragon, dried",
+      "portion": "tsp, leaves",
+      "sourceAmount": 1.0,
+      "sourceGrams": 0.6
+    },
+    {
+      "names": [
+        "dried tarragon"
+      ],
+      "measure": "tbsp",
+      "grams": 1.8,
+      "fdcId": 170937,
+      "portionId": 87575,
+      "food": "Spices, tarragon, dried",
+      "portion": "tbsp, leaves",
+      "sourceAmount": 1.0,
+      "sourceGrams": 1.8
+    },
+    {
+      "names": [
+        "dried dill"
+      ],
+      "measure": "tsp",
+      "grams": 1.0,
+      "fdcId": 171322,
+      "portionId": 88433,
+      "food": "Spices, dill weed, dried",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 1.0
+    },
+    {
+      "names": [
+        "dried dill"
+      ],
+      "measure": "tbsp",
+      "grams": 3.1,
+      "fdcId": 171322,
+      "portionId": 88434,
+      "food": "Spices, dill weed, dried",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 3.1
+    },
+    {
+      "names": [
+        "nutmeg",
+        "ground nutmeg",
+        "grated nutmeg"
+      ],
+      "measure": "tsp",
+      "grams": 2.2,
+      "fdcId": 171326,
+      "portionId": 88441,
+      "food": "Spices, nutmeg, ground",
+      "portion": "tsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 2.2
+    },
+    {
+      "names": [
+        "nutmeg",
+        "ground nutmeg",
+        "grated nutmeg"
+      ],
+      "measure": "tbsp",
+      "grams": 7.0,
+      "fdcId": 171326,
+      "portionId": 88442,
+      "food": "Spices, nutmeg, ground",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 7.0
+    },
+    {
+      "names": [
+        "fish sauce"
+      ],
+      "measure": "tbsp",
+      "grams": 18.0,
+      "fdcId": 174531,
+      "portionId": 94526,
+      "food": "Sauce, fish, ready-to-serve",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 18.0
+    },
+    {
+      "names": [
+        "swede",
+        "rutabaga"
+      ],
+      "measure": "piece",
+      "grams": 386.0,
+      "fdcId": 168454,
+      "portionId": 83121,
+      "food": "Rutabagas, raw",
+      "portion": "medium",
+      "sourceAmount": 1.0,
+      "sourceGrams": 386.0
+    },
+    {
+      "names": [
+        "mayonnaise"
+      ],
+      "measure": "tbsp",
+      "grams": 13.8,
+      "fdcId": 171009,
+      "portionId": 87758,
+      "food": "Salad dressing, mayonnaise, regular",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 13.8
+    },
+    {
+      "names": [
+        "caper",
+        "capers"
+      ],
+      "measure": "tbsp",
+      "grams": 8.6,
+      "fdcId": 172238,
+      "portionId": 90139,
+      "food": "Capers, canned",
+      "portion": "tbsp, drained",
+      "sourceAmount": 1.0,
+      "sourceGrams": 8.6
+    },
+    {
+      "names": [
+        "peanut butter",
+        "smooth peanut butter"
+      ],
+      "measure": "tbsp",
+      "grams": 16.0,
+      "fdcId": 172470,
+      "portionId": 90673,
+      "food": "Peanut butter, smooth style, without salt",
+      "portion": "tbsp",
+      "sourceAmount": 2.0,
+      "sourceGrams": 32.0
+    },
+    {
+      "names": [
+        "shiitake mushroom",
+        "shiitake mushrooms",
+        "fresh shiitake mushroom",
+        "fresh shiitake mushrooms"
+      ],
+      "measure": "piece",
+      "grams": 19.0,
+      "fdcId": 169242,
+      "portionId": 84500,
+      "food": "Mushrooms, shiitake, raw",
+      "portion": "piece whole",
+      "sourceAmount": 1.0,
+      "sourceGrams": 19.0
+    },
+    {
+      "names": [
+        "coconut cream",
+        "unsweetened coconut cream"
+      ],
+      "measure": "tbsp",
+      "grams": 15.0,
+      "fdcId": 170580,
+      "portionId": 86894,
+      "food": "Nuts, coconut cream, raw (liquid expressed from grated meat)",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 15.0
+    },
+    {
+      "names": [
+        "miso",
+        "miso paste",
+        "white miso",
+        "white miso paste",
+        "shiro miso"
+      ],
+      "measure": "tbsp",
+      "grams": 17.0,
+      "fdcId": 172442,
+      "portionId": 90629,
+      "food": "Miso",
+      "portion": "tbsp",
+      "sourceAmount": 1.0,
+      "sourceGrams": 17.0,
+      "densityConversion": false,
+      "note": "Spoon mass only. Generic volume-labelled miso in this catalog may be prepared soup, so this portion must not imply a paste density for ml/l quantities."
+    }
+  ]
+}

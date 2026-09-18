@@ -1,0 +1,725 @@
+{
+  "market": "DE",
+  "currency": "EUR",
+  "asOf": "2026-09-16",
+  "baselineCommit": "978f4e5511f7d648e4c17909746b3d8973f74ef4",
+  "method": "Counts are language/serving variants and ingredient occurrences; no household prices. Each build uses its own identities, conversions, source-form filters and dated references.",
+  "before": {
+    "summary": {
+      "variants": 32163,
+      "ingredients": 230483,
+      "known": 124005,
+      "fallback": 50892,
+      "covered": 174897,
+      "knownComplete": 3799,
+      "budgetComplete": 11195,
+      "noKnownCost": 1883,
+      "noBudgetCost": 82
+    }
+  },
+  "after": {
+    "summary": {
+      "variants": 32163,
+      "ingredients": 230483,
+      "known": 130546,
+      "fallback": 45204,
+      "covered": 175750,
+      "knownComplete": 5359,
+      "budgetComplete": 11268,
+      "noKnownCost": 1538,
+      "noBudgetCost": 82
+    }
+  },
+  "changes": [
+    {
+      "ingredient": "Cumin",
+      "additionalPriceReferences": 833,
+      "before": {
+        "known": 7,
+        "fallback": 833,
+        "missing": 49
+      },
+      "after": {
+        "known": 840,
+        "fallback": 0,
+        "missing": 49
+      }
+    },
+    {
+      "ingredient": "Asparagus",
+      "additionalPriceReferences": 473,
+      "before": {
+        "known": 39,
+        "fallback": 366,
+        "missing": 136
+      },
+      "after": {
+        "known": 512,
+        "fallback": 0,
+        "missing": 29
+      }
+    },
+    {
+      "ingredient": "Icing sugar",
+      "additionalPriceReferences": 420,
+      "before": {
+        "known": 0,
+        "fallback": 420,
+        "missing": 109
+      },
+      "after": {
+        "known": 420,
+        "fallback": 0,
+        "missing": 109
+      }
+    },
+    {
+      "ingredient": "Fennel",
+      "additionalPriceReferences": 391,
+      "before": {
+        "known": 0,
+        "fallback": 336,
+        "missing": 114
+      },
+      "after": {
+        "known": 391,
+        "fallback": 18,
+        "missing": 41
+      }
+    },
+    {
+      "ingredient": "Turnip",
+      "additionalPriceReferences": 391,
+      "before": {
+        "known": 0,
+        "fallback": 296,
+        "missing": 96
+      },
+      "after": {
+        "known": 391,
+        "fallback": 0,
+        "missing": 1
+      }
+    },
+    {
+      "ingredient": "Sesame seed",
+      "additionalPriceReferences": 323,
+      "before": {
+        "known": 14,
+        "fallback": 323,
+        "missing": 21
+      },
+      "after": {
+        "known": 337,
+        "fallback": 0,
+        "missing": 21
+      }
+    },
+    {
+      "ingredient": "Fromage frais",
+      "additionalPriceReferences": 309,
+      "before": {
+        "known": 0,
+        "fallback": 312,
+        "missing": 30
+      },
+      "after": {
+        "known": 309,
+        "fallback": 3,
+        "missing": 30
+      }
+    },
+    {
+      "ingredient": "Groundnut oil",
+      "additionalPriceReferences": 224,
+      "before": {
+        "known": 0,
+        "fallback": 224,
+        "missing": 2
+      },
+      "after": {
+        "known": 224,
+        "fallback": 0,
+        "missing": 2
+      }
+    },
+    {
+      "ingredient": "Green pepper",
+      "additionalPriceReferences": 223,
+      "before": {
+        "known": 0,
+        "fallback": 180,
+        "missing": 62
+      },
+      "after": {
+        "known": 223,
+        "fallback": 6,
+        "missing": 13
+      }
+    },
+    {
+      "ingredient": "Green cabbage",
+      "additionalPriceReferences": 209,
+      "before": {
+        "known": 0,
+        "fallback": 216,
+        "missing": 18
+      },
+      "after": {
+        "known": 209,
+        "fallback": 7,
+        "missing": 18
+      }
+    },
+    {
+      "ingredient": "Sour cream",
+      "additionalPriceReferences": 186,
+      "before": {
+        "known": 65,
+        "fallback": 186,
+        "missing": 37
+      },
+      "after": {
+        "known": 251,
+        "fallback": 0,
+        "missing": 37
+      }
+    },
+    {
+      "ingredient": "Celeriac",
+      "additionalPriceReferences": 177,
+      "before": {
+        "known": 0,
+        "fallback": 187,
+        "missing": 52
+      },
+      "after": {
+        "known": 177,
+        "fallback": 10,
+        "missing": 52
+      }
+    },
+    {
+      "ingredient": "Butternut squash",
+      "additionalPriceReferences": 176,
+      "before": {
+        "known": 0,
+        "fallback": 179,
+        "missing": 5
+      },
+      "after": {
+        "known": 176,
+        "fallback": 3,
+        "missing": 5
+      }
+    },
+    {
+      "ingredient": "Yoghurt",
+      "additionalPriceReferences": 151,
+      "before": {
+        "known": 331,
+        "fallback": 159,
+        "missing": 107
+      },
+      "after": {
+        "known": 482,
+        "fallback": 8,
+        "missing": 107
+      }
+    },
+    {
+      "ingredient": "Tahini",
+      "additionalPriceReferences": 149,
+      "before": {
+        "known": 0,
+        "fallback": 146,
+        "missing": 4
+      },
+      "after": {
+        "known": 149,
+        "fallback": 0,
+        "missing": 1
+      }
+    },
+    {
+      "ingredient": "Brussels sprouts",
+      "additionalPriceReferences": 147,
+      "before": {
+        "known": 0,
+        "fallback": 153,
+        "missing": 13
+      },
+      "after": {
+        "known": 147,
+        "fallback": 6,
+        "missing": 13
+      }
+    },
+    {
+      "ingredient": "Chard",
+      "additionalPriceReferences": 145,
+      "before": {
+        "known": 0,
+        "fallback": 145,
+        "missing": 0
+      },
+      "after": {
+        "known": 145,
+        "fallback": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Bicarbonate of soda",
+      "additionalPriceReferences": 144,
+      "before": {
+        "known": 0,
+        "fallback": 144,
+        "missing": 50
+      },
+      "after": {
+        "known": 144,
+        "fallback": 0,
+        "missing": 50
+      }
+    },
+    {
+      "ingredient": "Buckwheat",
+      "additionalPriceReferences": 142,
+      "before": {
+        "known": 0,
+        "fallback": 148,
+        "missing": 4
+      },
+      "after": {
+        "known": 142,
+        "fallback": 6,
+        "missing": 4
+      }
+    },
+    {
+      "ingredient": "Tomato coulis",
+      "additionalPriceReferences": 138,
+      "before": {
+        "known": 0,
+        "fallback": 291,
+        "missing": 2
+      },
+      "after": {
+        "known": 138,
+        "fallback": 153,
+        "missing": 2
+      }
+    },
+    {
+      "ingredient": "Parsley",
+      "additionalPriceReferences": 122,
+      "before": {
+        "known": 1209,
+        "fallback": 83,
+        "missing": 850
+      },
+      "after": {
+        "known": 1331,
+        "fallback": 83,
+        "missing": 728
+      }
+    },
+    {
+      "ingredient": "Basil",
+      "additionalPriceReferences": 117,
+      "before": {
+        "known": 322,
+        "fallback": 78,
+        "missing": 461
+      },
+      "after": {
+        "known": 439,
+        "fallback": 78,
+        "missing": 344
+      }
+    },
+    {
+      "ingredient": "Chicory",
+      "additionalPriceReferences": 115,
+      "before": {
+        "known": 0,
+        "fallback": 161,
+        "missing": 17
+      },
+      "after": {
+        "known": 115,
+        "fallback": 46,
+        "missing": 17
+      }
+    },
+    {
+      "ingredient": "Garam masala",
+      "additionalPriceReferences": 113,
+      "before": {
+        "known": 1,
+        "fallback": 113,
+        "missing": 9
+      },
+      "after": {
+        "known": 114,
+        "fallback": 0,
+        "missing": 9
+      }
+    },
+    {
+      "ingredient": "Coriander",
+      "additionalPriceReferences": 108,
+      "before": {
+        "known": 801,
+        "fallback": 18,
+        "missing": 403
+      },
+      "after": {
+        "known": 909,
+        "fallback": 18,
+        "missing": 295
+      }
+    },
+    {
+      "ingredient": "Green asparagus",
+      "additionalPriceReferences": 106,
+      "before": {
+        "known": 34,
+        "fallback": 34,
+        "missing": 115
+      },
+      "after": {
+        "known": 140,
+        "fallback": 0,
+        "missing": 43
+      }
+    },
+    {
+      "ingredient": "Brown rice",
+      "additionalPriceReferences": 101,
+      "before": {
+        "known": 0,
+        "fallback": 101,
+        "missing": 3
+      },
+      "after": {
+        "known": 101,
+        "fallback": 0,
+        "missing": 3
+      }
+    },
+    {
+      "ingredient": "Millet",
+      "additionalPriceReferences": 100,
+      "before": {
+        "known": 0,
+        "fallback": 103,
+        "missing": 1
+      },
+      "after": {
+        "known": 100,
+        "fallback": 3,
+        "missing": 1
+      }
+    },
+    {
+      "ingredient": "Mint",
+      "additionalPriceReferences": 84,
+      "before": {
+        "known": 205,
+        "fallback": 100,
+        "missing": 383
+      },
+      "after": {
+        "known": 289,
+        "fallback": 100,
+        "missing": 299
+      }
+    },
+    {
+      "ingredient": "Sesame seeds",
+      "additionalPriceReferences": 52,
+      "before": {
+        "known": 34,
+        "fallback": 52,
+        "missing": 40
+      },
+      "after": {
+        "known": 86,
+        "fallback": 0,
+        "missing": 40
+      }
+    },
+    {
+      "ingredient": "Ground cumin",
+      "additionalPriceReferences": 50,
+      "before": {
+        "known": 45,
+        "fallback": 50,
+        "missing": 14
+      },
+      "after": {
+        "known": 95,
+        "fallback": 0,
+        "missing": 14
+      }
+    },
+    {
+      "ingredient": "Peanut oil",
+      "additionalPriceReferences": 30,
+      "before": {
+        "known": 0,
+        "fallback": 30,
+        "missing": 8
+      },
+      "after": {
+        "known": 30,
+        "fallback": 0,
+        "missing": 8
+      }
+    },
+    {
+      "ingredient": "Baking soda",
+      "additionalPriceReferences": 24,
+      "before": {
+        "known": 0,
+        "fallback": 24,
+        "missing": 9
+      },
+      "after": {
+        "known": 24,
+        "fallback": 0,
+        "missing": 9
+      }
+    },
+    {
+      "ingredient": "Dill",
+      "additionalPriceReferences": 16,
+      "before": {
+        "known": 12,
+        "fallback": 197,
+        "missing": 156
+      },
+      "after": {
+        "known": 28,
+        "fallback": 197,
+        "missing": 140
+      }
+    },
+    {
+      "ingredient": "Yogurt",
+      "additionalPriceReferences": 15,
+      "before": {
+        "known": 46,
+        "fallback": 15,
+        "missing": 3
+      },
+      "after": {
+        "known": 61,
+        "fallback": 0,
+        "missing": 3
+      }
+    },
+    {
+      "ingredient": "Green bell pepper",
+      "additionalPriceReferences": 8,
+      "before": {
+        "known": 0,
+        "fallback": 4,
+        "missing": 4
+      },
+      "after": {
+        "known": 8,
+        "fallback": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Cream cheese",
+      "additionalPriceReferences": 6,
+      "before": {
+        "known": 97,
+        "fallback": 6,
+        "missing": 12
+      },
+      "after": {
+        "known": 103,
+        "fallback": 0,
+        "missing": 12
+      }
+    },
+    {
+      "ingredient": "Cumin powder",
+      "additionalPriceReferences": 6,
+      "before": {
+        "known": 0,
+        "fallback": 6,
+        "missing": 9
+      },
+      "after": {
+        "known": 6,
+        "fallback": 0,
+        "missing": 9
+      }
+    },
+    {
+      "ingredient": "Plain yogurt",
+      "additionalPriceReferences": 6,
+      "before": {
+        "known": 6,
+        "fallback": 6,
+        "missing": 4
+      },
+      "after": {
+        "known": 12,
+        "fallback": 0,
+        "missing": 4
+      }
+    },
+    {
+      "ingredient": "Powdered sugar",
+      "additionalPriceReferences": 6,
+      "before": {
+        "known": 0,
+        "fallback": 6,
+        "missing": 1
+      },
+      "after": {
+        "known": 6,
+        "fallback": 0,
+        "missing": 1
+      }
+    },
+    {
+      "ingredient": "Fresh coriander",
+      "additionalPriceReferences": 3,
+      "before": {
+        "known": 0,
+        "fallback": 0,
+        "missing": 15
+      },
+      "after": {
+        "known": 3,
+        "fallback": 0,
+        "missing": 12
+      }
+    },
+    {
+      "ingredient": "Tablespoons of icing sugar",
+      "additionalPriceReferences": 2,
+      "before": {
+        "known": 0,
+        "fallback": 2,
+        "missing": 0
+      },
+      "after": {
+        "known": 2,
+        "fallback": 0,
+        "missing": 0
+      }
+    }
+  ],
+  "largestRemainingGaps": [
+    {
+      "ingredient": "Salt",
+      "missing": 9219
+    },
+    {
+      "ingredient": "Pepper",
+      "missing": 3276
+    },
+    {
+      "ingredient": "Salt and pepper",
+      "missing": 2228
+    },
+    {
+      "ingredient": "Garlic",
+      "missing": 1573
+    },
+    {
+      "ingredient": "Olive oil",
+      "missing": 738
+    },
+    {
+      "ingredient": "Parsley",
+      "missing": 728
+    },
+    {
+      "ingredient": "Sugar",
+      "missing": 711
+    },
+    {
+      "ingredient": "Ginger",
+      "missing": 702
+    },
+    {
+      "ingredient": "Oil",
+      "missing": 697
+    },
+    {
+      "ingredient": "Soy sauce",
+      "missing": 605
+    },
+    {
+      "ingredient": "Water",
+      "missing": 582
+    },
+    {
+      "ingredient": "Bay",
+      "missing": 445
+    },
+    {
+      "ingredient": "Egg yolk",
+      "missing": 425
+    },
+    {
+      "ingredient": "Sake",
+      "missing": 407
+    },
+    {
+      "ingredient": "Mixed herbs",
+      "missing": 386
+    },
+    {
+      "ingredient": "Salted Butter & Unsalted butter",
+      "missing": 361
+    },
+    {
+      "ingredient": "Carrot",
+      "missing": 348
+    },
+    {
+      "ingredient": "Thyme",
+      "missing": 346
+    },
+    {
+      "ingredient": "Basil",
+      "missing": 344
+    },
+    {
+      "ingredient": "Leaf gelatine",
+      "missing": 339
+    },
+    {
+      "ingredient": "Mirin",
+      "missing": 329
+    },
+    {
+      "ingredient": "Celery",
+      "missing": 312
+    },
+    {
+      "ingredient": "Mint",
+      "missing": 299
+    },
+    {
+      "ingredient": "Vanilla pod",
+      "missing": 297
+    },
+    {
+      "ingredient": "Nutmeg",
+      "missing": 295
+    }
+  ]
+}

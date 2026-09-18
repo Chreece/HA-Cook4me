@@ -1,0 +1,350 @@
+{
+  "market": "DE",
+  "currency": "EUR",
+  "asOf": "2026-09-17",
+  "baselineCommit": "1e1ca9937322da3c9c824f24cf5955e57292b93f",
+  "method": "Counts are language/serving variants and ingredient occurrences, without household prices. Each build uses its own identities, quantities and eligible dated references. Rough budgets and unmeasured zero allowances are separate from reference coverage.",
+  "before": {
+    "variants": 32163,
+    "ingredients": 230483,
+    "known": 132921,
+    "fallback": 43460,
+    "zeroAllowance": 13462,
+    "covered": 189843,
+    "knownComplete": 5575,
+    "budgetCompleteBeforeAllowance": 11465,
+    "budgetComplete": 15252,
+    "variantsWithAllowance": 11679,
+    "noKnownCost": 1512,
+    "noBudgetCost": 61
+  },
+  "after": {
+    "variants": 32163,
+    "ingredients": 230483,
+    "known": 134124,
+    "fallback": 42278,
+    "zeroAllowance": 13462,
+    "covered": 189864,
+    "knownComplete": 5749,
+    "budgetCompleteBeforeAllowance": 11465,
+    "budgetComplete": 15261,
+    "variantsWithAllowance": 11679,
+    "noKnownCost": 1509,
+    "noBudgetCost": 61
+  },
+  "delta": {
+    "variants": 0,
+    "ingredients": 0,
+    "known": 1203,
+    "fallback": -1182,
+    "zeroAllowance": 0,
+    "covered": 21,
+    "knownComplete": 174,
+    "budgetCompleteBeforeAllowance": 0,
+    "budgetComplete": 9,
+    "variantsWithAllowance": 0,
+    "noKnownCost": -3,
+    "noBudgetCost": 0
+  },
+  "changedIngredients": [
+    {
+      "ingredient": "Minced beef",
+      "before": {
+        "known": 0,
+        "fallback": 367,
+        "zeroAllowance": 0,
+        "missing": 8
+      },
+      "after": {
+        "known": 367,
+        "fallback": 0,
+        "zeroAllowance": 0,
+        "missing": 8
+      },
+      "delta": {
+        "known": 367,
+        "fallback": -367,
+        "zeroAllowance": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Cod",
+      "before": {
+        "known": 0,
+        "fallback": 346,
+        "zeroAllowance": 0,
+        "missing": 141
+      },
+      "after": {
+        "known": 322,
+        "fallback": 24,
+        "zeroAllowance": 0,
+        "missing": 141
+      },
+      "delta": {
+        "known": 322,
+        "fallback": -322,
+        "zeroAllowance": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Vanilla pod",
+      "before": {
+        "known": 0,
+        "fallback": 301,
+        "zeroAllowance": 0,
+        "missing": 37
+      },
+      "after": {
+        "known": 298,
+        "fallback": 3,
+        "zeroAllowance": 0,
+        "missing": 37
+      },
+      "delta": {
+        "known": 298,
+        "fallback": -298,
+        "zeroAllowance": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Ground beef",
+      "before": {
+        "known": 0,
+        "fallback": 114,
+        "zeroAllowance": 0,
+        "missing": 28
+      },
+      "after": {
+        "known": 132,
+        "fallback": 3,
+        "zeroAllowance": 0,
+        "missing": 7
+      },
+      "delta": {
+        "known": 132,
+        "fallback": -111,
+        "zeroAllowance": 0,
+        "missing": -21
+      }
+    },
+    {
+      "ingredient": "Demerara sugar",
+      "before": {
+        "known": 0,
+        "fallback": 114,
+        "zeroAllowance": 0,
+        "missing": 7
+      },
+      "after": {
+        "known": 74,
+        "fallback": 40,
+        "zeroAllowance": 0,
+        "missing": 7
+      },
+      "delta": {
+        "known": 74,
+        "fallback": -74,
+        "zeroAllowance": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Cod fillet",
+      "before": {
+        "known": 0,
+        "fallback": 8,
+        "zeroAllowance": 0,
+        "missing": 1
+      },
+      "after": {
+        "known": 8,
+        "fallback": 0,
+        "zeroAllowance": 0,
+        "missing": 1
+      },
+      "delta": {
+        "known": 8,
+        "fallback": -8,
+        "zeroAllowance": 0,
+        "missing": 0
+      }
+    },
+    {
+      "ingredient": "Vanilla pods",
+      "before": {
+        "known": 0,
+        "fallback": 2,
+        "zeroAllowance": 0,
+        "missing": 0
+      },
+      "after": {
+        "known": 2,
+        "fallback": 0,
+        "zeroAllowance": 0,
+        "missing": 0
+      },
+      "delta": {
+        "known": 2,
+        "fallback": -2,
+        "zeroAllowance": 0,
+        "missing": 0
+      }
+    }
+  ],
+  "nextReferenceGaps": [
+    {
+      "ingredient": "Beef",
+      "fallback": 928,
+      "missing": 26
+    },
+    {
+      "ingredient": "Garlic",
+      "fallback": 784,
+      "missing": 1573
+    },
+    {
+      "ingredient": "Pepper",
+      "fallback": 689,
+      "missing": 1070
+    },
+    {
+      "ingredient": "Stock",
+      "fallback": 638,
+      "missing": 62
+    },
+    {
+      "ingredient": "Spices",
+      "fallback": 581,
+      "missing": 224
+    },
+    {
+      "ingredient": "Veal",
+      "fallback": 438,
+      "missing": 30
+    },
+    {
+      "ingredient": "Lamb",
+      "fallback": 438,
+      "missing": 17
+    },
+    {
+      "ingredient": "White Fish",
+      "fallback": 423,
+      "missing": 7
+    },
+    {
+      "ingredient": "Chicken thigh",
+      "fallback": 366,
+      "missing": 186
+    },
+    {
+      "ingredient": "Bean",
+      "fallback": 315,
+      "missing": 2
+    },
+    {
+      "ingredient": "Bay",
+      "fallback": 280,
+      "missing": 445
+    },
+    {
+      "ingredient": "Mussels",
+      "fallback": 277,
+      "missing": 3
+    },
+    {
+      "ingredient": "Beetroot",
+      "fallback": 271,
+      "missing": 25
+    },
+    {
+      "ingredient": "Streaky bacon",
+      "fallback": 240,
+      "missing": 13
+    },
+    {
+      "ingredient": "Pineapple",
+      "fallback": 235,
+      "missing": 57
+    },
+    {
+      "ingredient": "Chilli",
+      "fallback": 216,
+      "missing": 224
+    },
+    {
+      "ingredient": "Bacon lardon",
+      "fallback": 211,
+      "missing": 15
+    },
+    {
+      "ingredient": "Poultry",
+      "fallback": 202,
+      "missing": 20
+    },
+    {
+      "ingredient": "Fish stock",
+      "fallback": 199,
+      "missing": 30
+    },
+    {
+      "ingredient": "Dill",
+      "fallback": 197,
+      "missing": 140
+    },
+    {
+      "ingredient": "Egg yolk",
+      "fallback": 194,
+      "missing": 425
+    },
+    {
+      "ingredient": "Oregano",
+      "fallback": 179,
+      "missing": 40
+    },
+    {
+      "ingredient": "Chestnut",
+      "fallback": 176,
+      "missing": 15
+    },
+    {
+      "ingredient": "Scallops",
+      "fallback": 175,
+      "missing": 33
+    },
+    {
+      "ingredient": "Oil",
+      "fallback": 174,
+      "missing": 697
+    },
+    {
+      "ingredient": "Pine nut",
+      "fallback": 167,
+      "missing": 21
+    },
+    {
+      "ingredient": "Tarragon",
+      "fallback": 167,
+      "missing": 6
+    },
+    {
+      "ingredient": "Dashi stock",
+      "fallback": 163,
+      "missing": 1
+    },
+    {
+      "ingredient": "Tomato purée",
+      "fallback": 158,
+      "missing": 71
+    },
+    {
+      "ingredient": "Tomato coulis",
+      "fallback": 153,
+      "missing": 2
+    }
+  ]
+}

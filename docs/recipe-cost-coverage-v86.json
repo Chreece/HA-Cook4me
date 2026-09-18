@@ -1,0 +1,475 @@
+{
+  "market": "DE",
+  "currency": "EUR",
+  "base": "b21d95d2f095af50e691e76997073770e8774c6d",
+  "variantCounts": true,
+  "results": {
+    "before": {
+      "summary": {
+        "all": {
+          "partial": 22943,
+          "pricedIngredients": 51068,
+          "totalIngredients": 230486,
+          "noCost": 8439,
+          "complete": 781
+        },
+        "ja": {
+          "partial": 919,
+          "pricedIngredients": 1727,
+          "totalIngredients": 14090,
+          "noCost": 460
+        },
+        "zh": {
+          "partial": 462,
+          "pricedIngredients": 685,
+          "totalIngredients": 4896,
+          "noCost": 321,
+          "complete": 27
+        },
+        "en": {
+          "partial": 1358,
+          "pricedIngredients": 2780,
+          "totalIngredients": 12660,
+          "noCost": 574,
+          "complete": 65
+        },
+        "hu": {
+          "partial": 1621,
+          "pricedIngredients": 3798,
+          "totalIngredients": 15069,
+          "noCost": 357,
+          "complete": 43
+        },
+        "de": {
+          "partial": 1813,
+          "pricedIngredients": 4117,
+          "totalIngredients": 16855,
+          "noCost": 528,
+          "complete": 73
+        },
+        "hr": {
+          "noCost": 25,
+          "pricedIngredients": 263,
+          "totalIngredients": 1351,
+          "partial": 120
+        },
+        "pt": {
+          "noCost": 445,
+          "pricedIngredients": 1082,
+          "totalIngredients": 5432,
+          "partial": 568,
+          "complete": 70
+        },
+        "es": {
+          "noCost": 352,
+          "pricedIngredients": 2758,
+          "totalIngredients": 9515,
+          "partial": 1039,
+          "complete": 81
+        },
+        "fr": {
+          "noCost": 695,
+          "pricedIngredients": 4829,
+          "totalIngredients": 22093,
+          "partial": 2218,
+          "complete": 68
+        },
+        "it": {
+          "noCost": 717,
+          "pricedIngredients": 3908,
+          "totalIngredients": 18008,
+          "partial": 1834,
+          "complete": 65
+        },
+        "tr": {
+          "noCost": 271,
+          "pricedIngredients": 299,
+          "totalIngredients": 3732,
+          "partial": 179
+        },
+        "pl": {
+          "partial": 2611,
+          "pricedIngredients": 6407,
+          "totalIngredients": 26638,
+          "noCost": 728,
+          "complete": 69
+        },
+        "cs": {
+          "partial": 1605,
+          "pricedIngredients": 3556,
+          "totalIngredients": 15206,
+          "noCost": 374,
+          "complete": 41
+        },
+        "sk": {
+          "partial": 1624,
+          "pricedIngredients": 3528,
+          "totalIngredients": 15320,
+          "noCost": 388,
+          "complete": 38
+        },
+        "ro": {
+          "noCost": 289,
+          "pricedIngredients": 3224,
+          "totalIngredients": 11468,
+          "partial": 1281,
+          "complete": 35
+        },
+        "sl": {
+          "partial": 9,
+          "pricedIngredients": 23,
+          "totalIngredients": 71,
+          "noCost": 1
+        },
+        "ru": {
+          "partial": 803,
+          "pricedIngredients": 2455,
+          "totalIngredients": 7128,
+          "noCost": 39,
+          "complete": 6
+        },
+        "bg": {
+          "noCost": 586,
+          "pricedIngredients": 1716,
+          "totalIngredients": 10918,
+          "partial": 912,
+          "complete": 35
+        },
+        "uk": {
+          "partial": 1017,
+          "pricedIngredients": 2216,
+          "totalIngredients": 10389,
+          "noCost": 595,
+          "complete": 65
+        },
+        "ar": {
+          "partial": 643,
+          "pricedIngredients": 1207,
+          "totalIngredients": 6511,
+          "noCost": 449
+        },
+        "ko": {
+          "noCost": 245,
+          "pricedIngredients": 490,
+          "totalIngredients": 3136,
+          "partial": 307
+        }
+      },
+      "largestMissing": [
+        [
+          "Water",
+          15330
+        ],
+        [
+          "Salt",
+          10005
+        ],
+        [
+          "Garlic",
+          5106
+        ],
+        [
+          "Olive oil",
+          4874
+        ],
+        [
+          "Pepper",
+          4152
+        ],
+        [
+          "Onion",
+          3842
+        ],
+        [
+          "Oil",
+          3656
+        ],
+        [
+          "Egg",
+          3096
+        ],
+        [
+          "Salt and pepper",
+          2253
+        ],
+        [
+          "Parsley",
+          2028
+        ],
+        [
+          "Vegetable stock",
+          1996
+        ],
+        [
+          "Sugar",
+          1807
+        ],
+        [
+          "Soy sauce",
+          1671
+        ],
+        [
+          "Ginger",
+          1643
+        ],
+        [
+          "Lemon",
+          1360
+        ],
+        [
+          "Carrot",
+          1234
+        ],
+        [
+          "Coriander",
+          1222
+        ],
+        [
+          "Shallot",
+          1196
+        ],
+        [
+          "Honey",
+          1172
+        ],
+        [
+          "Tomato pur\u00e9e",
+          1110
+        ]
+      ]
+    },
+    "after": {
+      "summary": {
+        "all": {
+          "partial": 25236,
+          "pricedIngredients": 78396,
+          "totalIngredients": 230486,
+          "noCost": 6465,
+          "complete": 462
+        },
+        "ja": {
+          "partial": 1028,
+          "pricedIngredients": 2349,
+          "totalIngredients": 14090,
+          "noCost": 351
+        },
+        "zh": {
+          "partial": 493,
+          "pricedIngredients": 910,
+          "totalIngredients": 4896,
+          "noCost": 299,
+          "complete": 18
+        },
+        "en": {
+          "partial": 1501,
+          "pricedIngredients": 4707,
+          "totalIngredients": 12660,
+          "noCost": 471,
+          "complete": 25
+        },
+        "hu": {
+          "partial": 1713,
+          "pricedIngredients": 5159,
+          "totalIngredients": 15069,
+          "noCost": 278,
+          "complete": 30
+        },
+        "de": {
+          "partial": 1944,
+          "pricedIngredients": 6473,
+          "totalIngredients": 16855,
+          "noCost": 430,
+          "complete": 40
+        },
+        "hr": {
+          "partial": 133,
+          "pricedIngredients": 319,
+          "totalIngredients": 1351,
+          "noCost": 12
+        },
+        "pt": {
+          "noCost": 402,
+          "pricedIngredients": 1687,
+          "totalIngredients": 5432,
+          "partial": 651,
+          "complete": 30
+        },
+        "es": {
+          "noCost": 365,
+          "pricedIngredients": 3576,
+          "totalIngredients": 9515,
+          "partial": 1069,
+          "complete": 38
+        },
+        "fr": {
+          "noCost": 426,
+          "pricedIngredients": 8726,
+          "totalIngredients": 22093,
+          "partial": 2500,
+          "complete": 55
+        },
+        "it": {
+          "noCost": 553,
+          "pricedIngredients": 5852,
+          "totalIngredients": 18008,
+          "partial": 2033,
+          "complete": 30
+        },
+        "tr": {
+          "partial": 384,
+          "pricedIngredients": 836,
+          "totalIngredients": 3732,
+          "noCost": 66
+        },
+        "pl": {
+          "partial": 2839,
+          "pricedIngredients": 10107,
+          "totalIngredients": 26638,
+          "noCost": 530,
+          "complete": 39
+        },
+        "cs": {
+          "partial": 1729,
+          "pricedIngredients": 5920,
+          "totalIngredients": 15206,
+          "noCost": 257,
+          "complete": 34
+        },
+        "sk": {
+          "partial": 1762,
+          "pricedIngredients": 5978,
+          "totalIngredients": 15320,
+          "noCost": 254,
+          "complete": 34
+        },
+        "ro": {
+          "noCost": 240,
+          "pricedIngredients": 4392,
+          "totalIngredients": 11468,
+          "partial": 1346,
+          "complete": 19
+        },
+        "sl": {
+          "partial": 10,
+          "pricedIngredients": 32,
+          "totalIngredients": 71
+        },
+        "ru": {
+          "partial": 825,
+          "pricedIngredients": 3140,
+          "totalIngredients": 7128,
+          "noCost": 8,
+          "complete": 15
+        },
+        "bg": {
+          "partial": 1186,
+          "pricedIngredients": 3048,
+          "totalIngredients": 10918,
+          "noCost": 325,
+          "complete": 22
+        },
+        "uk": {
+          "partial": 1073,
+          "pricedIngredients": 3048,
+          "totalIngredients": 10389,
+          "noCost": 571,
+          "complete": 33
+        },
+        "ar": {
+          "partial": 663,
+          "pricedIngredients": 1360,
+          "totalIngredients": 6511,
+          "noCost": 429
+        },
+        "ko": {
+          "partial": 354,
+          "pricedIngredients": 777,
+          "totalIngredients": 3136,
+          "noCost": 198
+        }
+      },
+      "largestMissing": [
+        [
+          "Water",
+          15330
+        ],
+        [
+          "Salt",
+          9228
+        ],
+        [
+          "Pepper",
+          4152
+        ],
+        [
+          "Oil",
+          3656
+        ],
+        [
+          "Garlic",
+          2357
+        ],
+        [
+          "Salt and pepper",
+          2253
+        ],
+        [
+          "Vegetable stock",
+          1996
+        ],
+        [
+          "Lemon",
+          1360
+        ],
+        [
+          "Coriander",
+          1222
+        ],
+        [
+          "Shallot",
+          1196
+        ],
+        [
+          "Tomato pur\u00e9e",
+          1110
+        ],
+        [
+          "Parmesan",
+          1106
+        ],
+        [
+          "Chicken stock",
+          1040
+        ],
+        [
+          "Beef",
+          954
+        ],
+        [
+          "Welsh onion",
+          952
+        ],
+        [
+          "Parsley",
+          933
+        ],
+        [
+          "Cr\u00e8me fra\u00eeche",
+          929
+        ],
+        [
+          "Peas",
+          918
+        ],
+        [
+          "Cumin",
+          889
+        ],
+        [
+          "Basil",
+          861
+        ]
+      ]
+    }
+  }
+}

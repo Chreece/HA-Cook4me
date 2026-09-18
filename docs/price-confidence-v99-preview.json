@@ -1,0 +1,840 @@
+[
+  {
+    "key": "reference",
+    "recipe": {
+      "id": "v99-reference",
+      "title": "Rice · price references",
+      "servings": 2,
+      "language": "en",
+      "ingredients": [
+        {
+          "name": "Rice",
+          "quantity": 250,
+          "unit": "g"
+        }
+      ],
+      "mealTypes": [
+        "main"
+      ]
+    },
+    "cost": {
+      "totalsByCurrency": {
+        "EUR": 0.99
+      },
+      "perServingByCurrency": {
+        "EUR": 0.5
+      },
+      "servings": 2.0,
+      "ingredients": [
+        {
+          "identity": "n:rice",
+          "name": "Rice",
+          "quantity": 250.0,
+          "unit": "g",
+          "priced": true,
+          "coverage": 1.0,
+          "exactCoverage": 0.0,
+          "costsByCurrency": {
+            "EUR": 0.99
+          },
+          "sourceKinds": [
+            "ingredient_reference"
+          ],
+          "references": [
+            {
+              "id": 323231,
+              "barcode": "4316268733052",
+              "amount": 1.99,
+              "currency": "EUR",
+              "basisQuantity": 500.0,
+              "basisUnit": "g",
+              "pricePer": "",
+              "usable": true,
+              "date": "2026-08-29",
+              "country": "DE",
+              "location": "Netto Marken-Discount",
+              "productName": "Echter Basmati",
+              "source": "open_prices_category",
+              "confidence": "external_observation",
+              "categories": [
+                "en:basmati-rices",
+                "en:long-grain-rices",
+                "en:rices",
+                "en:white-rices"
+              ],
+              "category": "en:rices",
+              "identity": "n:rice",
+              "observationId": 323231,
+              "updatedAt": "2026-08-29"
+            }
+          ],
+          "quantityEstimate": null
+        }
+      ],
+      "coverage": 1.0,
+      "complete": true,
+      "missingIngredientCount": 0,
+      "exactPurchaseCoverage": 0.0,
+      "estimated": true,
+      "targetCurrency": "EUR",
+      "targetCountry": "DE",
+      "currencyConversionApplied": false,
+      "priceConfidence": "reference",
+      "costCacheHit": false,
+      "pricingFingerprint": "9b9c24848df00ab54cf959f47fdbcd7aa55c6514b82a6d528c6d02752a55cffe",
+      "recipePriceFingerprint": "e7ec54ac2d30bafed1ab52664f2ee0d50a24a667d76fc8e098fe348cfa3d9d06",
+      "costCacheContract": "price-evidence-fingerprint-v1",
+      "settings": {
+        "currency": "EUR",
+        "country": "DE",
+        "autoGlobalPrices": true
+      },
+      "offlinePreview": true,
+      "priceLookupPending": false,
+      "checkedAt": "2026-09-17T07:24:24.260995+00:00",
+      "foodIngredientCount": 1,
+      "pricedFoodIngredientCount": 1,
+      "waterOnlyEstimate": false
+    }
+  },
+  {
+    "key": "personal",
+    "recipe": {
+      "id": "v99-personal",
+      "title": "Rice · saved price",
+      "servings": 2,
+      "language": "en",
+      "ingredients": [
+        {
+          "name": "Rice",
+          "quantity": 250,
+          "unit": "g"
+        }
+      ],
+      "mealTypes": [
+        "main"
+      ]
+    },
+    "cost": {
+      "totalsByCurrency": {
+        "EUR": 2.5
+      },
+      "perServingByCurrency": {
+        "EUR": 1.25
+      },
+      "servings": 2.0,
+      "ingredients": [
+        {
+          "identity": "n:rice",
+          "name": "Rice",
+          "quantity": 250.0,
+          "unit": "g",
+          "priced": true,
+          "coverage": 1.0,
+          "exactCoverage": 0.0,
+          "costsByCurrency": {
+            "EUR": 2.5
+          },
+          "sourceKinds": [
+            "manual_reference"
+          ],
+          "references": [
+            {
+              "identity": "n:rice",
+              "amount": 1.0,
+              "currency": "EUR",
+              "basisQuantity": 100.0,
+              "basisUnit": "g",
+              "source": "manual",
+              "confidence": "user_entered",
+              "country": "DE",
+              "location": "",
+              "date": "",
+              "barcode": "",
+              "observationId": null,
+              "sourceUrl": "",
+              "productName": "",
+              "note": "",
+              "updatedAt": "2026-09-17T07:24:24.261041+00:00"
+            }
+          ],
+          "quantityEstimate": null
+        }
+      ],
+      "coverage": 1.0,
+      "complete": true,
+      "missingIngredientCount": 0,
+      "exactPurchaseCoverage": 0.0,
+      "estimated": true,
+      "targetCurrency": "EUR",
+      "targetCountry": "DE",
+      "currencyConversionApplied": false,
+      "priceConfidence": "personal",
+      "costCacheHit": false,
+      "pricingFingerprint": "6024037fa872b02a6172e31db56f9f62f3cb2f6fcd6a87fdc7359f461d8ad3d4",
+      "recipePriceFingerprint": "e7ec54ac2d30bafed1ab52664f2ee0d50a24a667d76fc8e098fe348cfa3d9d06",
+      "costCacheContract": "price-evidence-fingerprint-v1",
+      "settings": {
+        "currency": "EUR",
+        "country": "DE",
+        "autoGlobalPrices": true
+      },
+      "offlinePreview": true,
+      "priceLookupPending": false,
+      "checkedAt": "2026-09-17T07:24:24.261436+00:00",
+      "foodIngredientCount": 1,
+      "pricedFoodIngredientCount": 1,
+      "waterOnlyEstimate": false
+    }
+  },
+  {
+    "key": "assumed",
+    "recipe": {
+      "id": "v99-assumed",
+      "title": "Seasoned rice · basic allowances",
+      "servings": 2,
+      "language": "en",
+      "ingredients": [
+        {
+          "name": "Rice",
+          "quantity": 250,
+          "unit": "g"
+        },
+        {
+          "name": "Salt"
+        },
+        {
+          "name": "Pepper"
+        },
+        {
+          "name": "Water"
+        }
+      ],
+      "mealTypes": [
+        "main"
+      ],
+      "match": {
+        "requiresSubstitutions": true,
+        "substitutions": [
+          {
+            "ingredientIndex": 0,
+            "original": "Rice",
+            "replacement": {
+              "key": "chickpeas",
+              "name": "Chickpeas"
+            }
+          }
+        ]
+      }
+    },
+    "cost": {
+      "totalsByCurrency": {
+        "EUR": 2.5
+      },
+      "perServingByCurrency": {
+        "EUR": 1.25
+      },
+      "servings": 2.0,
+      "ingredients": [
+        {
+          "identity": "n:rice",
+          "name": "Rice",
+          "quantity": 250.0,
+          "unit": "g",
+          "priced": true,
+          "coverage": 1.0,
+          "exactCoverage": 0.0,
+          "costsByCurrency": {
+            "EUR": 2.5
+          },
+          "sourceKinds": [
+            "manual_reference"
+          ],
+          "references": [
+            {
+              "identity": "n:rice",
+              "amount": 1.0,
+              "currency": "EUR",
+              "basisQuantity": 100.0,
+              "basisUnit": "g",
+              "source": "manual",
+              "confidence": "user_entered",
+              "country": "DE",
+              "location": "",
+              "date": "",
+              "barcode": "",
+              "observationId": null,
+              "sourceUrl": "",
+              "productName": "",
+              "note": "",
+              "updatedAt": "2026-09-17T07:24:24.261041+00:00"
+            }
+          ],
+          "quantityEstimate": null
+        },
+        {
+          "identity": "n:salt",
+          "name": "Salt",
+          "quantity": null,
+          "unit": "",
+          "priced": false,
+          "coverage": 0.0,
+          "exactCoverage": 0.0,
+          "costsByCurrency": {
+            "EUR": 0.0
+          },
+          "sourceKinds": [],
+          "reason": "recipe_amount_unknown",
+          "zeroCostAllowance": {
+            "kind": "unmeasured_basic_zero",
+            "policy": "unmeasured-basics-v99",
+            "canonicalName": "salt",
+            "amount": 0.0,
+            "currency": "EUR",
+            "confidence": "assumption",
+            "quantityInferred": false
+          },
+          "budgetCoverage": 1.0,
+          "priceStatus": "unmeasured_basic_zero"
+        },
+        {
+          "identity": "n:pepper",
+          "name": "Pepper",
+          "quantity": null,
+          "unit": "",
+          "priced": false,
+          "coverage": 0.0,
+          "exactCoverage": 0.0,
+          "costsByCurrency": {
+            "EUR": 0.0
+          },
+          "sourceKinds": [],
+          "reason": "recipe_amount_unknown",
+          "zeroCostAllowance": {
+            "kind": "unmeasured_basic_zero",
+            "policy": "unmeasured-basics-v99",
+            "canonicalName": "pepper",
+            "amount": 0.0,
+            "currency": "EUR",
+            "confidence": "assumption",
+            "quantityInferred": false
+          },
+          "budgetCoverage": 1.0,
+          "priceStatus": "unmeasured_basic_zero"
+        },
+        {
+          "identity": "n:water",
+          "name": "Water",
+          "quantity": null,
+          "unit": "",
+          "priced": false,
+          "coverage": 0.0,
+          "exactCoverage": 0.0,
+          "costsByCurrency": {
+            "EUR": 0.0
+          },
+          "sourceKinds": [],
+          "reason": "recipe_amount_unknown",
+          "zeroCostAllowance": {
+            "kind": "unmeasured_basic_zero",
+            "policy": "unmeasured-basics-v99",
+            "canonicalName": "water",
+            "amount": 0.0,
+            "currency": "EUR",
+            "confidence": "assumption",
+            "quantityInferred": false
+          },
+          "budgetCoverage": 1.0,
+          "priceStatus": "unmeasured_basic_zero"
+        }
+      ],
+      "coverage": 0.25,
+      "complete": false,
+      "missingIngredientCount": 3,
+      "exactPurchaseCoverage": 0.0,
+      "estimated": true,
+      "targetCurrency": "EUR",
+      "targetCountry": "DE",
+      "currencyConversionApplied": false,
+      "zeroCostIngredientCount": 3,
+      "budgetEstimated": true,
+      "budgetTotalsByCurrency": {
+        "EUR": 2.5
+      },
+      "budgetRangeByCurrency": {
+        "EUR": {
+          "low": 2.5,
+          "high": 2.5
+        }
+      },
+      "budgetPerServingByCurrency": {
+        "EUR": 1.25
+      },
+      "budgetIngredientCount": 4,
+      "budgetComplete": true,
+      "budgetMissingIngredientCount": 0,
+      "budgetMethod": "local-food-benchmark-v91+unmeasured-basics-v99",
+      "priceConfidence": "assumed",
+      "costCacheHit": false,
+      "pricingFingerprint": "6024037fa872b02a6172e31db56f9f62f3cb2f6fcd6a87fdc7359f461d8ad3d4",
+      "recipePriceFingerprint": "b342c5e60c01a0674cf45147e96db15e37fd328c71de4c61581ee2001e70b0d0",
+      "costCacheContract": "price-evidence-fingerprint-v1",
+      "settings": {
+        "currency": "EUR",
+        "country": "DE",
+        "autoGlobalPrices": true
+      },
+      "offlinePreview": true,
+      "priceLookupPending": false,
+      "checkedAt": "2026-09-17T07:24:24.262155+00:00",
+      "foodIngredientCount": 3,
+      "pricedFoodIngredientCount": 1,
+      "waterOnlyEstimate": false
+    }
+  },
+  {
+    "key": "partial",
+    "recipe": {
+      "id": "v99-partial",
+      "title": "Saffron rice · quantity missing",
+      "servings": 2,
+      "language": "en",
+      "ingredients": [
+        {
+          "name": "Rice",
+          "quantity": 250,
+          "unit": "g"
+        },
+        {
+          "name": "Saffron"
+        }
+      ],
+      "mealTypes": [
+        "main"
+      ]
+    },
+    "cost": {
+      "totalsByCurrency": {
+        "EUR": 2.5
+      },
+      "perServingByCurrency": {
+        "EUR": 1.25
+      },
+      "servings": 2.0,
+      "ingredients": [
+        {
+          "identity": "n:rice",
+          "name": "Rice",
+          "quantity": 250.0,
+          "unit": "g",
+          "priced": true,
+          "coverage": 1.0,
+          "exactCoverage": 0.0,
+          "costsByCurrency": {
+            "EUR": 2.5
+          },
+          "sourceKinds": [
+            "manual_reference"
+          ],
+          "references": [
+            {
+              "identity": "n:rice",
+              "amount": 1.0,
+              "currency": "EUR",
+              "basisQuantity": 100.0,
+              "basisUnit": "g",
+              "source": "manual",
+              "confidence": "user_entered",
+              "country": "DE",
+              "location": "",
+              "date": "",
+              "barcode": "",
+              "observationId": null,
+              "sourceUrl": "",
+              "productName": "",
+              "note": "",
+              "updatedAt": "2026-09-17T07:24:24.261041+00:00"
+            }
+          ],
+          "quantityEstimate": null
+        },
+        {
+          "identity": "n:saffron",
+          "name": "Saffron",
+          "quantity": null,
+          "unit": "",
+          "priced": false,
+          "coverage": 0.0,
+          "exactCoverage": 0.0,
+          "costsByCurrency": {},
+          "sourceKinds": [],
+          "reason": "recipe_amount_unknown",
+          "priceStatus": "recipe_amount_unknown"
+        }
+      ],
+      "coverage": 0.5,
+      "complete": false,
+      "missingIngredientCount": 1,
+      "exactPurchaseCoverage": 0.0,
+      "estimated": true,
+      "targetCurrency": "EUR",
+      "targetCountry": "DE",
+      "currencyConversionApplied": false,
+      "priceConfidence": "partial",
+      "costCacheHit": false,
+      "pricingFingerprint": "6024037fa872b02a6172e31db56f9f62f3cb2f6fcd6a87fdc7359f461d8ad3d4",
+      "recipePriceFingerprint": "232f2f9c44feffa65c90455f7538fe9d5631b1755b3a428598b3fca3abf05301",
+      "costCacheContract": "price-evidence-fingerprint-v1",
+      "settings": {
+        "currency": "EUR",
+        "country": "DE",
+        "autoGlobalPrices": true
+      },
+      "offlinePreview": true,
+      "priceLookupPending": false,
+      "checkedAt": "2026-09-17T07:24:24.262942+00:00",
+      "foodIngredientCount": 2,
+      "pricedFoodIngredientCount": 1,
+      "waterOnlyEstimate": false
+    }
+  },
+  {
+    "key": "unavailable",
+    "recipe": {
+      "id": "v99-unavailable",
+      "title": "Saffron · no quantity",
+      "servings": 2,
+      "language": "en",
+      "ingredients": [
+        {
+          "name": "Saffron"
+        }
+      ],
+      "mealTypes": [
+        "main"
+      ]
+    },
+    "cost": {
+      "totalsByCurrency": {},
+      "perServingByCurrency": {},
+      "servings": 2.0,
+      "ingredients": [
+        {
+          "identity": "n:saffron",
+          "name": "Saffron",
+          "quantity": null,
+          "unit": "",
+          "priced": false,
+          "coverage": 0.0,
+          "exactCoverage": 0.0,
+          "costsByCurrency": {},
+          "sourceKinds": [],
+          "reason": "recipe_amount_unknown",
+          "priceStatus": "recipe_amount_unknown"
+        }
+      ],
+      "coverage": 0.0,
+      "complete": false,
+      "missingIngredientCount": 1,
+      "exactPurchaseCoverage": 0.0,
+      "estimated": false,
+      "targetCurrency": "EUR",
+      "targetCountry": "DE",
+      "currencyConversionApplied": false,
+      "priceConfidence": "unavailable",
+      "costCacheHit": false,
+      "pricingFingerprint": "48f19ca8e6a27cc6c0e44fc8cebcbc0479147a3c0319687dd28ea10c3fd2e485",
+      "recipePriceFingerprint": "0fb1c278cf6e206d3b016390822f54416df0b4bb7559ac4dace636d091809cfb",
+      "costCacheContract": "price-evidence-fingerprint-v1",
+      "settings": {
+        "currency": "EUR",
+        "country": "DE",
+        "autoGlobalPrices": true
+      },
+      "offlinePreview": true,
+      "priceLookupPending": false,
+      "checkedAt": "2026-09-17T07:24:24.263422+00:00",
+      "foodIngredientCount": 1,
+      "pricedFoodIngredientCount": 0,
+      "waterOnlyEstimate": false
+    }
+  },
+  {
+    "key": "rough",
+    "recipe": {
+      "id": "v99-rough",
+      "title": "Radish · comparable food estimate",
+      "servings": 2,
+      "language": "en",
+      "ingredients": [
+        {
+          "name": "Radish",
+          "quantity": 70,
+          "unit": "g"
+        }
+      ],
+      "mealTypes": [
+        "main"
+      ]
+    },
+    "cost": {
+      "totalsByCurrency": {},
+      "perServingByCurrency": {},
+      "servings": 2.0,
+      "ingredients": [
+        {
+          "identity": "n:radish",
+          "name": "Radish",
+          "quantity": 70.0,
+          "unit": "g",
+          "priced": false,
+          "coverage": 0.0,
+          "exactCoverage": 0.0,
+          "costsByCurrency": {},
+          "sourceKinds": [],
+          "references": [],
+          "quantityEstimate": null,
+          "fallbackEstimate": {
+            "kind": "budget_benchmark",
+            "level": "food_group",
+            "confidence": "low",
+            "group": "vegetables",
+            "groupLabel": "Vegetables",
+            "country": "DE",
+            "currency": "EUR",
+            "quantity": 70.0,
+            "unit": "g",
+            "amount": 0.2511,
+            "low": 0.0693,
+            "high": 1.8424,
+            "unitPrice": 0.0035866666666666664,
+            "sampleCount": 27,
+            "method": "median",
+            "rangeKind": "observed_peer_spread",
+            "oldestDate": "2026-03-31",
+            "newestDate": "2026-09-16",
+            "quantityEstimate": null,
+            "sourceIds": [
+              318476,
+              326239,
+              331325,
+              318477,
+              315664,
+              "knuspr-16068-v95-20260916",
+              257434,
+              "knuspr-1032-v94-20260916",
+              314329,
+              292102,
+              323052,
+              323724,
+              266589,
+              "aldi-000000000584724001-20260916",
+              "aldi-000000000584724002-20260916",
+              "aldi-000000000584753002-20260916",
+              "aldi-000000000584753003-20260916",
+              "aldi-000000000584753004-20260916",
+              "knuspr-90417-v90-20260916",
+              "ludwig-pastinake-v90-20260916",
+              "ludwig-topinambur-v90-20260916",
+              282689,
+              323023,
+              315804,
+              "knuspr-12094-v92-20260916",
+              273646,
+              323202
+            ],
+            "sources": [
+              {
+                "id": 318476,
+                "name": "Zwiebeln rot",
+                "sourceUrl": "https://prices.openfoodfacts.org/prices/318476",
+                "date": "2026-08-25",
+                "rate": 0.00099,
+                "unit": "g"
+              },
+              {
+                "id": "aldi-000000000584724001-20260916",
+                "name": "BIO BIO frozen green beans",
+                "sourceUrl": "https://www.aldi-sued.de/produkt/bio-bio-gemuesesortiment-750-g-junge-bohnen-000000000584724001",
+                "date": "2026-09-16",
+                "rate": 0.0035866666666666664,
+                "unit": "g"
+              },
+              {
+                "id": 323202,
+                "name": "Kräuterseitlinge",
+                "sourceUrl": "https://prices.openfoodfacts.org/prices/323202",
+                "date": "2026-08-29",
+                "rate": 0.02632,
+                "unit": "g"
+              }
+            ]
+          },
+          "budgetCoverage": 1.0,
+          "priceStatus": "offline_price_missing"
+        }
+      ],
+      "coverage": 0.0,
+      "complete": false,
+      "missingIngredientCount": 1,
+      "exactPurchaseCoverage": 0.0,
+      "estimated": false,
+      "targetCurrency": "EUR",
+      "targetCountry": "DE",
+      "currencyConversionApplied": false,
+      "fallbackIngredientCount": 1,
+      "budgetEstimated": true,
+      "budgetTotalsByCurrency": {
+        "EUR": 0.25
+      },
+      "budgetRangeByCurrency": {
+        "EUR": {
+          "low": 0.07,
+          "high": 1.84
+        }
+      },
+      "budgetPerServingByCurrency": {
+        "EUR": 0.13
+      },
+      "budgetIngredientCount": 1,
+      "budgetComplete": true,
+      "budgetMissingIngredientCount": 0,
+      "budgetMethod": "local-food-benchmark-v91",
+      "priceConfidence": "assumed",
+      "costCacheHit": false,
+      "pricingFingerprint": "48f19ca8e6a27cc6c0e44fc8cebcbc0479147a3c0319687dd28ea10c3fd2e485",
+      "recipePriceFingerprint": "aa2de8572efe8b723041cca93af8241332cb8f84a453fd3286b1517b0c1f8365",
+      "costCacheContract": "price-evidence-fingerprint-v1",
+      "settings": {
+        "currency": "EUR",
+        "country": "DE",
+        "autoGlobalPrices": true
+      },
+      "offlinePreview": true,
+      "priceLookupPending": false,
+      "checkedAt": "2026-09-17T07:24:24.268788+00:00",
+      "foodIngredientCount": 1,
+      "pricedFoodIngredientCount": 0,
+      "waterOnlyEstimate": false
+    }
+  },
+  {
+    "key": "zero",
+    "recipe": {
+      "id": "v99-zero",
+      "title": "Salt and water · zero allowance",
+      "servings": 2,
+      "language": "en",
+      "ingredients": [
+        {
+          "name": "Salt"
+        },
+        {
+          "name": "Water"
+        }
+      ],
+      "mealTypes": [
+        "main"
+      ]
+    },
+    "cost": {
+      "totalsByCurrency": {},
+      "perServingByCurrency": {},
+      "servings": 2.0,
+      "ingredients": [
+        {
+          "identity": "n:salt",
+          "name": "Salt",
+          "quantity": null,
+          "unit": "",
+          "priced": false,
+          "coverage": 0.0,
+          "exactCoverage": 0.0,
+          "costsByCurrency": {
+            "EUR": 0.0
+          },
+          "sourceKinds": [],
+          "reason": "recipe_amount_unknown",
+          "zeroCostAllowance": {
+            "kind": "unmeasured_basic_zero",
+            "policy": "unmeasured-basics-v99",
+            "canonicalName": "salt",
+            "amount": 0.0,
+            "currency": "EUR",
+            "confidence": "assumption",
+            "quantityInferred": false
+          },
+          "budgetCoverage": 1.0,
+          "priceStatus": "unmeasured_basic_zero"
+        },
+        {
+          "identity": "n:water",
+          "name": "Water",
+          "quantity": null,
+          "unit": "",
+          "priced": false,
+          "coverage": 0.0,
+          "exactCoverage": 0.0,
+          "costsByCurrency": {
+            "EUR": 0.0
+          },
+          "sourceKinds": [],
+          "reason": "recipe_amount_unknown",
+          "zeroCostAllowance": {
+            "kind": "unmeasured_basic_zero",
+            "policy": "unmeasured-basics-v99",
+            "canonicalName": "water",
+            "amount": 0.0,
+            "currency": "EUR",
+            "confidence": "assumption",
+            "quantityInferred": false
+          },
+          "budgetCoverage": 1.0,
+          "priceStatus": "unmeasured_basic_zero"
+        }
+      ],
+      "coverage": 0.0,
+      "complete": false,
+      "missingIngredientCount": 2,
+      "exactPurchaseCoverage": 0.0,
+      "estimated": false,
+      "targetCurrency": "EUR",
+      "targetCountry": "DE",
+      "currencyConversionApplied": false,
+      "zeroCostIngredientCount": 2,
+      "budgetEstimated": true,
+      "budgetTotalsByCurrency": {
+        "EUR": 0.0
+      },
+      "budgetRangeByCurrency": {
+        "EUR": {
+          "low": 0.0,
+          "high": 0.0
+        }
+      },
+      "budgetPerServingByCurrency": {
+        "EUR": 0.0
+      },
+      "budgetIngredientCount": 2,
+      "budgetComplete": true,
+      "budgetMissingIngredientCount": 0,
+      "budgetMethod": "local-food-benchmark-v91+unmeasured-basics-v99",
+      "priceConfidence": "assumed",
+      "costCacheHit": false,
+      "pricingFingerprint": "48f19ca8e6a27cc6c0e44fc8cebcbc0479147a3c0319687dd28ea10c3fd2e485",
+      "recipePriceFingerprint": "de4eb8061ae439a278c9307f104ed6fc8324a40648635990257388ecdd8ca629",
+      "costCacheContract": "price-evidence-fingerprint-v1",
+      "settings": {
+        "currency": "EUR",
+        "country": "DE",
+        "autoGlobalPrices": true
+      },
+      "offlinePreview": true,
+      "priceLookupPending": false,
+      "checkedAt": "2026-09-17T07:24:24.269589+00:00",
+      "foodIngredientCount": 1,
+      "pricedFoodIngredientCount": 0,
+      "waterOnlyEstimate": false
+    }
+  }
+]

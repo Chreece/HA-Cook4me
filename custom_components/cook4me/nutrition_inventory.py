@@ -5,6 +5,7 @@ import math
 from typing import Any
 
 from .inventory import inventory_identity, normalize_inventory
+from .nutrition import serialize_nutrition_mutation
 from .nutrition import (
     convert_amount,
     ingredient_identity,
@@ -47,6 +48,7 @@ def _generic_profile(store, identity: str) -> dict[str, Any] | None:
     return normalize_nutrition(row)
 
 
+@serialize_nutrition_mutation
 async def async_link_latest_stock_nutrition(
     store,
     ingredient: dict[str, Any],
@@ -71,6 +73,7 @@ async def async_link_latest_stock_nutrition(
     return False
 
 
+@serialize_nutrition_mutation
 async def async_reconcile_nutrition_inventory(store, inventory: Any) -> None:
     """Keep exact nutrition quantities aligned with inventory lots by stable lot id.
 
@@ -80,7 +83,8 @@ async def async_reconcile_nutrition_inventory(store, inventory: Any) -> None:
     """
     stock = normalize_inventory(inventory)
     by_identity = {inventory_identity(row): row for row in stock if inventory_identity(row)}
-    exact = store._data.setdefault("stockLots", {})
+    data = deepcopy(store._data)
+    exact = data.setdefault("stockLots", {})
     changed = False
 
     for identity in list(exact):
@@ -98,19 +102,26 @@ async def async_reconcile_nutrition_inventory(store, inventory: Any) -> None:
             amount = _number(lot.get("quantity")) or 0.0
             legacy_capacity[stamp] = legacy_capacity.get(stamp, 0.0) + amount
 
+        capacities = {lot_id: _number(lot.get("quantity")) or 0.0 for lot_id, lot in by_lot_id.items()}
         kept: list[dict[str, Any]] = []
-        for record in exact.get(identity) or []:
-            if not isinstance(record, dict):
-                continue
+        records = sorted((record for record in exact.get(identity) or [] if isinstance(record, dict)),
+                         key=lambda record: not bool(record.get("inventoryLotId")))
+        for record in records:
             lot_id = _text(record.get("inventoryLotId"))
             inv_lot = by_lot_id.get(lot_id) if lot_id else None
+            if lot_id and inv_lot is None:
+                changed = True
+                continue
             if inv_lot is not None:
-                capacity = _number(inv_lot.get("quantity")) or 0.0
+                capacity = capacities[lot_id]
                 converted = convert_amount(record.get("quantity"), record.get("unit"), target_unit)
                 if converted is None or converted <= 0 or capacity <= 0:
                     changed = True
                     continue
                 keep_amount = min(converted, capacity)
+                capacities[lot_id] -= keep_amount
+                stamp = _text(inv_lot.get("bestBefore"))
+                legacy_capacity[stamp] = max(0.0, legacy_capacity.get(stamp, 0.0) - keep_amount)
                 next_record = deepcopy(record)
                 next_record["quantity"] = round(keep_amount, 9)
                 next_record["unit"] = target_unit
@@ -144,13 +155,14 @@ async def async_reconcile_nutrition_inventory(store, inventory: Any) -> None:
             changed = True
 
     if changed:
-        await store._save()
+        await _save_staged(store, data)
 
 
 def _record_score(request: dict[str, Any], record: dict[str, Any]) -> int:
     lot_id = _text(request.get("lotId"))
-    if lot_id and lot_id == _text(record.get("inventoryLotId")):
-        return 100
+    record_id = _text(record.get("inventoryLotId"))
+    if lot_id and record_id:
+        return 100 if lot_id == record_id else 0
     score = 0
     barcode = _text(request.get("barcode"))
     if barcode and barcode == _text(record.get("barcode")):
@@ -164,6 +176,7 @@ def _record_score(request: dict[str, Any], record: dict[str, Any]) -> int:
     return score
 
 
+@serialize_nutrition_mutation
 async def async_consume_nutrition_report(store, report: Any) -> dict[str, Any]:
     """Calculate confirmed meal nutrition from the exact lots actually deducted."""
     requests = report.get("deductedLots") if isinstance(report, dict) else None
@@ -172,7 +185,8 @@ async def async_consume_nutrition_report(store, report: Any) -> dict[str, Any]:
     totals: dict[str, float] = {}
     fractions: list[float] = []
     source_kinds: set[str] = set()
-    exact = store._data.setdefault("stockLots", {})
+    data = deepcopy(store._data)
+    exact = data.setdefault("stockLots", {})
     changed = False
 
     for request in requests:
@@ -244,7 +258,7 @@ async def async_consume_nutrition_report(store, report: Any) -> dict[str, Any]:
         fractions.append(min(1.0, (exact_covered + generic_covered) / amount))
 
     if changed:
-        await store._save()
+        await _save_staged(store, data)
     coverage = sum(fractions) / len(fractions) if fractions else 0.0
     return {
         "totals": _rounded(totals),
@@ -253,3 +267,18 @@ async def async_consume_nutrition_report(store, report: Any) -> dict[str, Any]:
         "estimated": "generic_reference" in source_kinds or coverage < 0.999,
         "sourceKinds": sorted(source_kinds),
     }
+
+
+async def _save_staged(store, data):
+    """A failed write must leave both quantities and exact labels unchanged in memory."""
+    if hasattr(store, "_store"):
+        await store._store.async_save(data)
+        store._data = data
+    else:
+        previous = store._data
+        store._data = data
+        try:
+            await store._save()
+        except BaseException:
+            store._data = previous
+            raise

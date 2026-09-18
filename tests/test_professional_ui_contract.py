@@ -140,8 +140,8 @@ def test_v36_loaded_recipe_replacement_is_precook_only_and_verified():
     assert '_REPLACEABLE_RECIPE_PHASES = {"idle", "stopped", "preparation", "add_ingredient", "done"}' in backend
     assert 'phase not in _REPLACEABLE_RECIPE_PHASES' in backend
     assert '_wait_for_loaded_variant' in backend
-    assert 'kept the previously loaded recipe' in backend
-    assert 'bridge._run_client_json("state", timeout=35)' in backend
+    assert 'confirmationTimeout": 90' in backend
+    assert 'device_confirmation_unavailable' in backend
 
 
 def test_v19_broadens_restricted_diet_catalog_before_rotation():

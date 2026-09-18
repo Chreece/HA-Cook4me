@@ -13,7 +13,11 @@ from .costs import (
     _text,
     lookup_open_prices,
 )
-from .inventory import convert_amount, inventory_identity, normalize_inventory
+from .stock_allocation import allocate_stock
+from .inventory import stock_for_ingredient, convert_amount, inventory_identity, normalize_inventory
+from .price_measurements import price_options
+from .price_benchmarks import add_budget_estimates
+from .price_allowances import price_confidence
 
 
 def _add(target: dict[str, float], currency: str, value: float | None) -> None:
@@ -31,22 +35,27 @@ def _recipe_amount(item: dict[str, Any]) -> tuple[float | None, str]:
 
 
 def _ingredient(item: Any) -> dict[str, Any] | None:
+    if isinstance(item, str):
+        item = {"name": item}
     if not isinstance(item, dict):
         return None
     name = _text(item.get("name") or item.get("foodName"))
-    key = _text(item.get("key") or item.get("foodKey"))
+    key = _text(item.get("key") or item.get("foodKey") or item.get("ingredientId"))
     if not name and not key:
         return None
+    options = price_options(item)
     amount, unit = _recipe_amount(item)
+    if options:
+        amount, unit = options[0]['quantity'], options[0]['unit']
     out: dict[str, Any] = {"name": name or key, "quantity": amount, "unit": unit}
+    out["priceOptions"] = options
     if key:
         out["key"] = key
     return out
 
 
-def _stock_row(stock: list[dict[str, Any]], ingredient: dict[str, Any]) -> dict[str, Any] | None:
-    wanted = inventory_identity(ingredient)
-    return next((row for row in stock if inventory_identity(row) == wanted), None)
+def _stock_row(stock, ingredient, used=None):
+    return stock_for_ingredient(stock, ingredient, used)
 
 
 def _lot_reference(
@@ -55,6 +64,7 @@ def _lot_reference(
     *,
     currency: str,
     country: str,
+    unit: str = "",
 ) -> tuple[dict[str, Any] | None, str]:
     lot_id = _text(lot.get("id") or lot.get("lotId"))
     if lot_id:
@@ -65,7 +75,7 @@ def _lot_reference(
             return exact, "exact_purchase"
     barcode = _text(lot.get("barcode"))
     if barcode:
-        observed = store.best_reference(f"barcode:{barcode}", currency=currency, country=country)
+        observed = store.best_reference(f"barcode:{barcode}", currency=currency, country=country, unit=unit)
         if observed is not None:
             return observed, "global_barcode_estimate"
     return None, ""
@@ -90,10 +100,8 @@ def calculate_recipe_cost(
     totals: dict[str, float] = {}
     rows: list[dict[str, Any]] = []
 
-    for raw in recipe.get("ingredients") or []:
-        ingredient = _ingredient(raw)
-        if ingredient is None:
-            continue
+    ingredients = [item for raw in recipe.get("ingredients") or [] if (item := _ingredient(raw)) is not None]
+    for ingredient, allocated in zip(ingredients, allocate_stock(stock, ingredients)):
         ident = inventory_identity(ingredient)
         amount = ingredient.get("quantity")
         unit = _text(ingredient.get("unit"))
@@ -118,7 +126,10 @@ def calculate_recipe_cost(
         exact = 0.0
         costs: dict[str, float] = {}
         kinds: list[str] = []
-        stock_row = _stock_row(stock, ingredient)
+        evidence: list[dict[str, Any]] = []
+        quantity_estimate = (ingredient["priceOptions"][0].get("estimate")
+                             if ingredient.get("priceOptions") else None)
+        stock_row = allocated
         stock_unit = _text((stock_row or {}).get("unit")) or unit
 
         if stock_row and not stock_row.get("unlimited"):
@@ -130,7 +141,7 @@ def calculate_recipe_cost(
                     continue
                 take = min(remaining, available)
                 reference, kind = _lot_reference(
-                    store, lot, currency=wanted_currency, country=wanted_country
+                    store, lot, currency=wanted_currency, country=wanted_country, unit=unit
                 )
                 if reference is not None:
                     cost = _cost_for_amount(reference, take, unit)
@@ -138,6 +149,7 @@ def calculate_recipe_cost(
                     if cost is not None and curr:
                         _add(costs, curr, cost)
                         _add(totals, curr, cost)
+                        evidence.append(reference)
                         covered += take
                         if kind == "exact_purchase":
                             exact += take
@@ -145,21 +157,27 @@ def calculate_recipe_cost(
                             kinds.append(kind)
                 remaining -= take
 
-        # Price any quantity not represented by a known stock lot only from an
-        # explicit ingredient-level reference. Never infer a barcode/product.
+        # Unpriced stock can use an explicit ingredient estimate too.
+        remaining = max(0.0, required - covered)
         if remaining > 1e-9:
-            reference = store.best_reference(ident, currency=wanted_currency, country=wanted_country)
-            if reference is not None:
-                cost = _cost_for_amount(reference, remaining, unit)
+            for option in ingredient.get("priceOptions") or [{"quantity": required, "unit": unit}]:
+                reference = store.best_reference(ident, currency=wanted_currency,
+                                                 country=wanted_country, unit=option['unit'])
+                if reference is None:
+                    continue
+                cost = _cost_for_amount(reference, remaining / required * option['quantity'], option['unit'])
                 curr = _currency(reference.get("currency"))
                 if cost is not None and curr:
                     _add(costs, curr, cost)
                     _add(totals, curr, cost)
+                    evidence.append(reference)
                     covered += remaining
+                    quantity_estimate = option.get('estimate') or quantity_estimate
                     source = _text(reference.get("source"))
                     kind = "manual_reference" if source == "manual" else "ingredient_reference"
                     if kind not in kinds:
                         kinds.append(kind)
+                    break
 
         rows.append({
             "identity": ident,
@@ -171,9 +189,11 @@ def calculate_recipe_cost(
             "exactCoverage": round(min(1.0, exact / required), 4) if required > 0 else 0.0,
             "costsByCurrency": _rounded_currency(costs),
             "sourceKinds": kinds,
+            "references": evidence,
+            "quantityEstimate": quantity_estimate if costs else None,
         })
 
-    known_rows = [row for row in rows if row.get("quantity") is not None and row.get("unit")]
+    known_rows = rows
     coverage = (
         sum(float(row.get("coverage") or 0.0) for row in known_rows) / len(known_rows)
         if known_rows else 0.0
@@ -191,21 +211,27 @@ def calculate_recipe_cost(
         for curr, value in totals.items()
         if servings and servings > 0
     }
-    return {
+    cost = {
         "totalsByCurrency": _rounded_currency(totals),
         "perServingByCurrency": per_serving,
         "servings": servings,
         "ingredients": rows,
         "coverage": round(coverage, 4),
+        "complete": bool(rows) and all(row.get("coverage") == 1 for row in rows),
+        "missingIngredientCount": sum(row.get("coverage", 0) < 1 for row in rows),
         "exactPurchaseCoverage": round(exact_coverage, 4),
         "estimated": any(
-            any(kind != "exact_purchase" for kind in row.get("sourceKinds") or [])
+            bool(row.get("quantityEstimate")) or any(kind != "exact_purchase" for kind in row.get("sourceKinds") or [])
             for row in rows
         ),
         "targetCurrency": wanted_currency,
         "targetCountry": wanted_country,
         "currencyConversionApplied": False,
     }
+
+    cost = add_budget_estimates(cost, recipe, store, country=wanted_country, currency=wanted_currency)
+    cost['priceConfidence'] = price_confidence(cost)
+    return cost
 
 
 def calculate_consumption_cost(
@@ -259,7 +285,7 @@ def lookup_open_prices_safe(
     country: str = "",
     timeout: int = 15,
 ) -> dict[str, Any]:
-    """Return Open Prices observations but cost-enable only explicit UNIT/package rows."""
+    """Return only normalized observations with a documented price basis."""
     result = lookup_open_prices(
         barcode, currency=currency, country=country, timeout=timeout
     )
@@ -269,7 +295,8 @@ def lookup_open_prices_safe(
             continue
         row = dict(raw)
         proven_basis = (
-            _text(row.get("pricePer")).upper() == "UNIT"
+            bool(row.get("usable"))
+            and _text(row.get("pricePer")).upper() in {"", "UNIT", "KILOGRAM"}
             and _number(row.get("basisQuantity")) is not None
             and bool(_text(row.get("basisUnit")))
         )
@@ -296,9 +323,7 @@ async def store_best_open_price(
     if wanted_currency:
         candidates = [row for row in candidates if _currency(row.get("currency")) == wanted_currency]
     if wanted_country:
-        local = [row for row in candidates if _country(row.get("country")) == wanted_country]
-        if local:
-            candidates = local
+        candidates = [row for row in candidates if _country(row.get("country")) == wanted_country]
     if not candidates:
         return None
     candidates.sort(key=lambda row: _text(row.get("date")), reverse=True)

@@ -109,7 +109,7 @@ class CatalogSearchQueryLocalizationV60Tests(unittest.TestCase):
         self.assertEqual(result["indices"], [0])
         self.assertEqual(result["total"], 1)
 
-    def test_equivalence_is_language_scoped_not_global_fuzzy_transliteration(self):
+    def test_query_script_is_independent_of_ui_language_without_fuzzy_guessing(self):
         german = mod.search_index(
             self.index,
             "ριζότο",
@@ -124,7 +124,7 @@ class CatalogSearchQueryLocalizationV60Tests(unittest.TestCase):
             strict_language=False,
             size=10,
         )
-        self.assertEqual(german["indices"], [])
+        self.assertEqual(german["indices"], [0, 1])
         self.assertEqual(misspelling["indices"], [])
 
 

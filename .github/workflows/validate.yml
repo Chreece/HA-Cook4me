@@ -34,6 +34,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Install Python test dependencies
+        run: python -m pip install -r requirements-test.txt
       - name: Validate version, JSON, Python, shell, and frontend syntax
         run: |
           python scripts/version.py validate
@@ -49,6 +51,22 @@ jobs:
           bash -n tools/run_release_catalog_local_translation.sh
           bash -n tools/run_release_catalog_taxonomy_capture.sh
           bash -n tools/run_release_catalog_fdc_offline_review_prep_v60.sh
+          bash -n tools/deploy_offline_runtime_v61.sh
+          bash -n tools/deploy_offline_runtime_v62.sh
+          bash -n tools/deploy_offline_runtime_v63.sh
+          bash -n tools/deploy_offline_runtime_v64.sh
+          bash -n tools/deploy_offline_runtime_v65.sh
+          bash -n tools/deploy_offline_runtime_v66.sh
+          bash -n tools/deploy_offline_runtime_v67.sh
+          bash -n tools/deploy_offline_runtime_v68.sh
+          bash -n tools/deploy_offline_runtime_v69.sh
+          bash -n tools/deploy_offline_runtime_v70.sh
+          bash -n tools/deploy_offline_runtime_v71.sh
+          bash -n tools/deploy_offline_runtime_v75.sh
+          # Historical bundles are immutable deployment artifacts; validate the
+          # current source chain only against the active v115 bundle.
+          python tools/build_frontend_bundle_v115.py --check
+          bash -n tools/deploy_offline_runtime_v115.sh
           python - <<'PY'
           import json
           from pathlib import Path
@@ -57,6 +75,8 @@ jobs:
           print('JSON OK')
           PY
           for f in custom_components/cook4me/frontend/cook4me-panel-v*.js; do node --check "$f"; done
+      - name: Check active v115 installer backup and rollback
+        run: sudo "$(command -v python)" -m unittest discover -s tests -p 'test_deploy_offline_runtime_v115.py' -v
       - name: Instantiate Recipe Hub in a DOM runtime
         run: |
           npm install --no-save --package-lock=false linkedom@0.18.12
@@ -69,5 +89,149 @@ jobs:
           timeout 20s node --experimental-default-type=module tests/frontend_server_seed_ui_smoke.mjs
           timeout 20s node --experimental-default-type=module tests/frontend_v58_regression_smoke.mjs
           timeout 20s node --experimental-default-type=module tests/frontend_v59_regression_smoke.mjs
+          timeout 20s node --experimental-default-type=module tests/frontend_v61_regression_smoke.mjs
+          timeout 20s node --experimental-default-type=module tests/frontend_v62_regression_smoke.mjs
+          timeout 20s node --experimental-default-type=module tests/frontend_v63_shared_ui_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=64 timeout 20s node --experimental-default-type=module tests/frontend_v63_shared_ui_smoke.mjs
+          timeout 180s node --experimental-default-type=module tests/frontend_v64_catalog_flow_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=65 timeout 20s node --experimental-default-type=module tests/frontend_v63_shared_ui_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=65 timeout 180s node --experimental-default-type=module tests/frontend_v64_catalog_flow_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=66 timeout 20s node --experimental-default-type=module tests/frontend_v63_shared_ui_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=66 timeout 180s node --experimental-default-type=module tests/frontend_v64_catalog_flow_smoke.mjs
+          timeout 20s node --experimental-default-type=module tests/frontend_v66_recipe_cards_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=67 timeout 20s node --experimental-default-type=module tests/frontend_v63_shared_ui_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=67 timeout 180s node --experimental-default-type=module tests/frontend_v64_catalog_flow_smoke.mjs
+          timeout 20s node --experimental-default-type=module tests/frontend_v67_recipe_layout_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=68 timeout 20s node tests/frontend_v63_shared_ui_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=68 timeout 180s node tests/frontend_v64_catalog_flow_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=68 timeout 20s node tests/frontend_v67_recipe_layout_smoke.mjs
+          timeout 40s node tests/frontend_v68_recipe_actions_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=69 timeout 20s node tests/frontend_v63_shared_ui_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=69 timeout 180s node tests/frontend_v64_catalog_flow_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=69 timeout 20s node tests/frontend_v67_recipe_layout_smoke.mjs
+          COOK4ME_TEST_PANEL_VERSION=69 timeout 40s node tests/frontend_v68_recipe_actions_smoke.mjs
+          timeout 40s node tests/frontend_v69_photo_overlay_smoke.mjs
+      - name: Fullscreen translation and active v70 panel
+        run: |
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=70 node tests/frontend_v63_shared_ui_smoke.mjs
+          timeout 180s env COOK4ME_TEST_PANEL_VERSION=70 node tests/frontend_v64_catalog_flow_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=70 node tests/frontend_v67_recipe_layout_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=70 node tests/frontend_v68_recipe_actions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=70 node tests/frontend_v69_photo_overlay_smoke.mjs
+          timeout 40s node tests/frontend_v70_fullscreen_translation_smoke.mjs
+      - name: Recipe card layout and removal on active v71 panel
+        run: |
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=71 node tests/frontend_v63_shared_ui_smoke.mjs
+          timeout 180s env COOK4ME_TEST_PANEL_VERSION=71 node tests/frontend_v64_catalog_flow_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=71 node tests/frontend_v67_recipe_layout_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=71 node tests/frontend_v68_recipe_actions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=71 node tests/frontend_v69_photo_overlay_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=71 node tests/frontend_v70_fullscreen_translation_smoke.mjs
+          timeout 40s node tests/frontend_v71_card_interactions_smoke.mjs
+      - name: Device settings and announcements on active v72 panel
+        run: |
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v63_shared_ui_smoke.mjs
+          timeout 180s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v64_catalog_flow_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v67_recipe_layout_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v68_recipe_actions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v69_photo_overlay_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v70_fullscreen_translation_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=72 node tests/frontend_v71_card_interactions_smoke.mjs
+          timeout 40s node tests/frontend_v72_device_settings_smoke.mjs
+      - name: Verify photo bounds in a real browser
+        run: |
+          npm install --no-save --package-lock=false linkedom@0.18.12 playwright@1.62.1
+          npx playwright install --with-deps chromium
+          timeout 60s node tests/frontend_v73_photo_bounds_browser.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=73 node tests/frontend_v71_card_interactions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=73 node tests/frontend_v72_device_settings_smoke.mjs
+      - name: Verify v74 audited dashboard flows
+        run: |
+          timeout 40s node tests/frontend_v74_async_navigation_smoke.mjs
+          timeout 60s env COOK4ME_TEST_PANEL_VERSION=74 node tests/frontend_v73_photo_bounds_browser.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=74 node tests/frontend_v71_card_interactions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=74 node tests/frontend_v72_device_settings_smoke.mjs
       - name: Run focused tests
         run: python -m unittest discover -s tests -v
+      - name: Verify v76 diet substitutions and active dashboard
+        run: |
+          bash -n tools/deploy_offline_runtime_v76.sh
+          timeout 40s node tests/frontend_v76_diet_substitutions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=76 node tests/frontend_v71_card_interactions_smoke.mjs
+          timeout 60s env COOK4ME_TEST_PANEL_VERSION=76 node tests/frontend_v73_photo_bounds_browser.mjs
+      - name: Validate v76 installer
+        run: sudo "$(command -v python)" -m unittest discover -s tests -p test_deploy_offline_runtime_v76.py -v
+      - name: Verify v77 sending with ingredient replacements
+        run: |
+          bash -n tools/deploy_offline_runtime_v77.sh
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=77 node tests/frontend_v76_diet_substitutions_smoke.mjs
+          timeout 40s node tests/frontend_v77_diet_send_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=77 node tests/frontend_v71_card_interactions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=77 node tests/frontend_v74_async_navigation_smoke.mjs
+          timeout 60s env COOK4ME_TEST_PANEL_VERSION=77 node tests/frontend_v73_photo_bounds_browser.mjs
+
+      - name: Verify v78 fullscreen product capture
+        run: |
+          bash -n tools/deploy_offline_runtime_v78.sh
+          timeout 90s node tests/frontend_v78_product_capture_browser.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=78 node tests/frontend_v77_diet_send_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=78 node tests/frontend_v76_diet_substitutions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=78 node tests/frontend_v72_device_settings_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=78 node tests/frontend_v74_async_navigation_smoke.mjs
+
+      - name: Verify v79 automatic product and recipe prices
+        run: |
+          bash -n tools/deploy_offline_runtime_v79.sh
+          timeout 90s node tests/frontend_v79_prices_browser.mjs
+          timeout 90s env COOK4ME_TEST_PANEL_VERSION=79 node tests/frontend_v78_product_capture_browser.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=79 node tests/frontend_v77_diet_send_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=79 node tests/frontend_v76_diet_substitutions_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=79 node tests/frontend_v72_device_settings_smoke.mjs
+          timeout 40s env COOK4ME_TEST_PANEL_VERSION=79 node tests/frontend_v74_async_navigation_smoke.mjs
+
+      - name: Verify v80 unified scanner and ingredient clicks
+        run: |
+          bash -n tools/deploy_offline_runtime_v80.sh
+          timeout 90s node tests/frontend_v80_unified_scanner_browser.mjs
+          timeout 90s env COOK4ME_TEST_PANEL_VERSION=80 node tests/frontend_v79_prices_browser.mjs
+      - name: Validate v80 pinned installer
+        run: sudo "$(command -v python)" -m unittest discover -s tests -p test_deploy_offline_runtime_v80.py -v
+
+      - name: Verify v81 device information and announcements
+        run: |
+          bash -n tools/deploy_offline_runtime_v81.sh
+          timeout 90s node tests/frontend_v81_device_browser.mjs
+          timeout 90s env COOK4ME_TEST_PANEL_VERSION=81 node tests/frontend_v80_unified_scanner_browser.mjs
+          timeout 90s env COOK4ME_TEST_PANEL_VERSION=81 node tests/frontend_v79_prices_browser.mjs
+      - name: Validate v81 pinned installer
+        run: sudo "$(command -v python)" -m unittest discover -s tests -p test_deploy_offline_runtime_v81.py -v
+
+      - name: Verify v82 navigation, creators and price refresh
+        run: |
+          bash -n tools/deploy_offline_runtime_v82.sh
+          timeout 120s node tests/frontend_v82_navigation_prices_browser.mjs
+          timeout 90s env COOK4ME_TEST_PANEL_VERSION=82 node tests/frontend_v80_unified_scanner_browser.mjs
+          timeout 90s env COOK4ME_TEST_PANEL_VERSION=82 node tests/frontend_v79_prices_browser.mjs
+      - name: Validate v82 pinned installer
+        run: sudo "$(command -v python)" -m unittest discover -s tests -p test_deploy_offline_runtime_v82.py -v
+
+      - name: Verify v83 household profiles and shared toolbars
+        run: |
+          bash -n tools/deploy_offline_runtime_v83.sh
+          timeout 120s node tests/frontend_v83_profiles_browser.mjs
+          timeout 120s env COOK4ME_TEST_PANEL_VERSION=83 node tests/frontend_v82_navigation_prices_browser.mjs
+          timeout 90s env COOK4ME_TEST_PANEL_VERSION=83 node tests/frontend_v80_unified_scanner_browser.mjs
+          timeout 90s env COOK4ME_TEST_PANEL_VERSION=83 node tests/frontend_v79_prices_browser.mjs
+      - name: Validate v83 pinned installer
+        run: sudo "$(command -v python)" -m unittest discover -s tests -p test_deploy_offline_runtime_v83.py -v
+
+      - name: Verify v84 offline ingredient catalog and price coverage
+        run: |
+          bash -n tools/deploy_offline_runtime_v84.sh
+          timeout 120s node tests/frontend_v84_catalog_browser.mjs
+          timeout 120s env COOK4ME_TEST_PANEL_VERSION=84 node tests/frontend_v83_profiles_browser.mjs
+          timeout 120s env COOK4ME_TEST_PANEL_VERSION=84 node tests/frontend_v82_navigation_prices_browser.mjs
+          timeout 90s env COOK4ME_TEST_PANEL_VERSION=84 node tests/frontend_v80_unified_scanner_browser.mjs
+          timeout 90s env COOK4ME_TEST_PANEL_VERSION=84 node tests/frontend_v79_prices_browser.mjs
+      - name: Validate v84 pinned installer
+        run: sudo "$(command -v python)" -m unittest discover -s tests -p test_deploy_offline_runtime_v84.py -v

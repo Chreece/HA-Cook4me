@@ -42,14 +42,14 @@ class Cook4MeRecipeHubPanelV22 extends BasePanel {
       return row?.bestBefore?`∞ · ${this._t("nextBestBefore")}: ${row.bestBefore}`:"∞";
     }
     const amount=row?.quantity===undefined||row?.quantity===null?this._t("stockUnknown"):this._shownNumber(row.quantity);
-    const total=`${amount}${row?.unit?` ${row.unit}`:""}`;
+    const total=`${amount}${row?.unit?` ${this._displayUnit(row.unit,row.quantity)}`:""}`;
     return row?.bestBefore?`${total} · ${this._t("nextBestBefore")}: ${row.bestBefore}`:total;
   }
 
   _lotRowHtml(lot,index,unit){
     const amount=lot?.quantity===undefined||lot?.quantity===null?"":lot.quantity;
     return `<div data-stock-lot="${index}" style="display:grid;grid-template-columns:minmax(110px,1fr) minmax(150px,1fr) auto;gap:8px;align-items:end;padding:7px 0">
-      <div class="field"><label>${this._escape(this._t("amount"))}${unit?` (${this._escape(unit)})`:""}</label><input data-stock-lot-amount type="number" min="0" step="any" value="${this._escape(amount)}"></div>
+      <div class="field"><label>${this._escape(this._t("amount"))}${unit?` (${this._escape(this._displayUnit(unit,amount))})`:""}</label><input data-stock-lot-amount type="number" min="0" step="any" value="${this._escape(amount)}"></div>
       <div class="field"><label>${this._escape(this._t("bestBefore"))}</label><input data-stock-lot-date type="date" value="${this._escape(lot?.bestBefore||"")}"></div>
       <button type="button" class="btn secondary" data-stock-lot-remove style="min-height:42px">${this._escape(this._t("removeBatch"))}</button>
     </div>`;
@@ -65,7 +65,7 @@ class Cook4MeRecipeHubPanelV22 extends BasePanel {
         <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap">
           <div><strong>${this._escape(row.name||"")}</strong><div class="muted">${this._escape(this._t("totalStock"))}: ${this._escape(this._stockText(row))}</div></div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:end">
-            <div class="field" style="min-width:100px"><label>${this._escape(this._t("unit"))}</label><input data-stock-unit value="${this._escape(row.unit||"")}" list="cook4meStockUnits"></div>
+            <div class="field" style="min-width:100px"><label>${this._escape(this._t("unit"))}</label>${this._unitInput(row.unit,'data-stock-unit')}</div>
             ${unlimited?`<div class="field" style="min-width:160px"><label>${this._escape(this._t("bestBefore"))}</label><input data-stock-unlimited-date type="date" value="${this._escape(row.bestBefore||"")}"></div>`:""}
             <label style="display:flex;align-items:center;gap:6px;min-height:42px"><input data-stock-unlimited type="checkbox" ${unlimited?"checked":""}> ${this._escape(this._t("unlimited"))}</label>
           </div>

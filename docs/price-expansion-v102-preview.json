@@ -1,0 +1,301 @@
+{
+  "recipe": {
+    "id": "v102-evidence",
+    "title": "Price reference examples",
+    "servings": 2,
+    "ingredients": [
+      {
+        "name": "Coconut cream",
+        "quantity": 400,
+        "unit": "ml"
+      },
+      {
+        "name": "Split pea",
+        "quantity": 100,
+        "unit": "g"
+      },
+      {
+        "name": "Shiitake mushroom",
+        "quantity": 2,
+        "unit": "pcs"
+      },
+      {
+        "name": "Radish",
+        "quantity": 100,
+        "unit": "g"
+      },
+      {
+        "name": "Coconut cream",
+        "quantity": 15,
+        "unit": "g"
+      }
+    ]
+  },
+  "cost": {
+    "totalsByCurrency": {
+      "EUR": 4.4
+    },
+    "perServingByCurrency": {
+      "EUR": 2.2
+    },
+    "servings": 2.0,
+    "ingredients": [
+      {
+        "identity": "n:coconut cream",
+        "name": "Coconut cream",
+        "quantity": 400.0,
+        "unit": "ml",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 2.69
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "bamboogarden-coconut-cream-v102-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://fuchsgruppe.shop/bamboogarden/produkte/kokoscreme-400ml-0.4-liter-dose/",
+            "productName": "Bamboo Garden coconut cream, 20–22% fat",
+            "amount": 2.69,
+            "currency": "EUR",
+            "basisQuantity": 400,
+            "basisUnit": "ml",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "Fuchs Gruppe Germany · online listing",
+            "categories": [
+              "en:coconut-creams"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Unsweetened coconut cream: 91% coconut extract and water. Price from the product page and its matching productPrice structured field; the package is 400 ml. Not sweetened cream of coconut, coconut butter or powder. VAT included; shipping excluded. Representative retail estimate; prices vary.",
+            "category": "en:coconut-creams",
+            "identity": "n:coconut cream",
+            "observationId": "bamboogarden-coconut-cream-v102-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": null
+      },
+      {
+        "identity": "n:split pea",
+        "name": "Split pea",
+        "quantity": 100.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.6
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "davert-split-peas-v102-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.davert.de/produkte/halbe-gruene-schaelerbsen-500g",
+            "productName": "Davert organic dried green split peas",
+            "amount": 2.99,
+            "currency": "EUR",
+            "basisQuantity": 500,
+            "basisUnit": "g",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "Davert Germany · online listing",
+            "categories": [
+              "cook4me:dried-split-peas"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Dry, shelled, halved green peas. Generic split peas use this named green variety. No cooked-to-dry conversion; not fresh whole peas, lentils or prepared soup. VAT included; shipping excluded. Representative retail estimate; prices vary.",
+            "category": "cook4me:dried-split-peas",
+            "identity": "n:split pea",
+            "observationId": "davert-split-peas-v102-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": null
+      },
+      {
+        "identity": "n:shiitake mushroom",
+        "name": "Shiitake mushroom",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.63
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "asianbrand-shiitake-v102-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://asianbrand.de/products/frische-shiitake-pilze-150g",
+            "productName": "Asian Brand fresh shiitake mushrooms",
+            "amount": 2.49,
+            "currency": "EUR",
+            "basisQuantity": 150,
+            "basisUnit": "g",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "Asian Brand Germany · online listing",
+            "categories": [
+              "en:shiitake-mushrooms"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Fresh mushrooms in a 150 g pack, not dried shiitake or mushroom powder. Listing was marked sold out when checked; retained as dated price evidence, not an availability promise. VAT included; shipping excluded. Representative retail estimate; prices vary.",
+            "category": "en:shiitake-mushrooms",
+            "identity": "n:shiitake mushroom",
+            "observationId": "asianbrand-shiitake-v102-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_portion",
+          "label": "USDA Mushrooms, shiitake, raw: piece whole",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/169242/nutrients",
+          "fdcId": 169242,
+          "portionId": 84500,
+          "sourceQuantity": 2.0,
+          "sourceUnit": "piece",
+          "quantity": 38.0,
+          "unit": "g",
+          "assumedCount": false
+        }
+      },
+      {
+        "identity": "n:radish",
+        "name": "Radish",
+        "quantity": 100.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.38
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "frischekontor-radishes-v102-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://frische-kontor.de/products/radieschen?variant=51135429935444",
+            "productName": "Frische Kontor fresh radishes without greens, 500 g",
+            "amount": 1.9,
+            "currency": "EUR",
+            "basisQuantity": 500,
+            "basisUnit": "g",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "Frische Kontor Germany · online listing",
+            "categories": [
+              "en:radishes"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Selected 500 g food package, confirmed by product variant 51135429935444 and its EUR offer. The 590 g shipping weight is not used. Named red-radish product, not daikon, pickled radish or radish greens. VAT included; shipping excluded. Representative retail estimate; prices vary.",
+            "category": "en:radishes",
+            "identity": "n:radish",
+            "observationId": "frischekontor-radishes-v102-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": null
+      },
+      {
+        "identity": "n:coconut cream",
+        "name": "Coconut cream",
+        "quantity": 15.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.1
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "bamboogarden-coconut-cream-v102-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://fuchsgruppe.shop/bamboogarden/produkte/kokoscreme-400ml-0.4-liter-dose/",
+            "productName": "Bamboo Garden coconut cream, 20–22% fat",
+            "amount": 2.69,
+            "currency": "EUR",
+            "basisQuantity": 400,
+            "basisUnit": "ml",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "Fuchs Gruppe Germany · online listing",
+            "categories": [
+              "en:coconut-creams"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Unsweetened coconut cream: 91% coconut extract and water. Price from the product page and its matching productPrice structured field; the package is 400 ml. Not sweetened cream of coconut, coconut butter or powder. VAT included; shipping excluded. Representative retail estimate; prices vary.",
+            "category": "en:coconut-creams",
+            "identity": "n:coconut cream",
+            "observationId": "bamboogarden-coconut-cream-v102-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_density",
+          "label": "USDA Nuts, coconut cream, raw (liquid expressed from grated meat): tbsp; approximate spoon volume",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/170580/nutrients",
+          "fdcId": 170580,
+          "portionId": 86894,
+          "volumeSourceUrl": "https://www.nist.gov/pml/owm/metric-si/metric-kitchen/metric-kitchen-cooking-measurement-equivalencies",
+          "sourceQuantity": 15.0,
+          "sourceUnit": "g",
+          "quantity": 15.0,
+          "unit": "ml"
+        }
+      }
+    ],
+    "coverage": 1.0,
+    "complete": true,
+    "missingIngredientCount": 0,
+    "exactPurchaseCoverage": 0.0,
+    "estimated": true,
+    "targetCurrency": "EUR",
+    "targetCountry": "DE",
+    "currencyConversionApplied": false,
+    "priceConfidence": "reference",
+    "costCacheHit": false,
+    "pricingFingerprint": "ed97765b5074d77df4389a6dfaa86ca625fa59a67a377a4cfe9eb56cbac86588",
+    "recipePriceFingerprint": "3e51991d0b6b86838198f5aca666d73250992301249ba04cd3264e80a2ea3c04",
+    "costCacheContract": "price-evidence-fingerprint-v1",
+    "settings": {
+      "currency": "EUR",
+      "country": "DE",
+      "autoGlobalPrices": true
+    },
+    "offlinePreview": true,
+    "priceLookupPending": false,
+    "checkedAt": "2026-09-17T09:12:10.271467+00:00",
+    "foodIngredientCount": 5,
+    "pricedFoodIngredientCount": 5,
+    "waterOnlyEstimate": false
+  }
+}

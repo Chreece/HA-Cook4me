@@ -11,7 +11,6 @@ TOOLS = ROOT / "tools"
 sys.path.insert(0, str(TOOLS))
 
 import classify_nutrition_review_queue_v60 as classifier  # noqa: E402
-import nutrition_review_history_v60 as history  # noqa: E402
 import snapshot_nutrition_review_checkpoint_v60 as cp  # noqa: E402
 
 FIXTURE = ROOT / "tests/fixtures/nutrition-batch50-formulated-dashi-triage-v60.json"
@@ -82,8 +81,12 @@ class Batch50FormulatedDashiTriageTests(unittest.TestCase):
         self.assertEqual(self.fixture["bindingsCreatedByBatch50"], 0)
 
     def test_triage_only_does_not_change_recorded_bindings(self):
-        checkpoint = history.historical_checkpoint(cp.build_checkpoint(TOOLS))
-        self.assertEqual(checkpoint["summary"]["recordedReviewTargetCount"], 5080)
+        checkpoint = cp.build_checkpoint(TOOLS)
+        # Triage used the batch42 checkpoint; subsequent explicit reviews
+        # must not be counted as bindings created by this historical batch.
+        historical = [row for row in checkpoint["recordedBindings"]
+                      if row["reviewFile"] <= "release_catalog_reviewed_nutrition_targets_045.v1.json"]
+        self.assertEqual(len(historical), 5080)
         self.assertEqual(self.fixture["bindingsCreatedByBatch50"], 0)
 
 

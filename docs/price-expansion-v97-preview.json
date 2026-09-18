@@ -1,0 +1,484 @@
+{
+  "recipe": {
+    "title": "v97 offline price preview",
+    "servings": 2,
+    "ingredients": [
+      {
+        "name": "Leaf gelatine",
+        "quantity": 2,
+        "unit": "leaf",
+        "unitKey": "UNIT_24"
+      },
+      {
+        "name": "Peanut butter",
+        "quantity": 1,
+        "unit": "tbsp",
+        "unitKey": "UNIT_12"
+      },
+      {
+        "name": "Caper",
+        "quantity": 1,
+        "unit": "tbsp",
+        "unitKey": "UNIT_12"
+      },
+      {
+        "name": "Mayonnaise",
+        "quantity": 13.8,
+        "unit": "g",
+        "unitKey": "UNIT_27"
+      },
+      {
+        "name": "Swede",
+        "quantity": 1,
+        "unit": "",
+        "unitKey": ""
+      },
+      {
+        "name": "Sake",
+        "quantity": 15,
+        "unit": "ml",
+        "unitKey": "UNIT_35"
+      },
+      {
+        "name": "Mirin",
+        "quantity": 2,
+        "unit": "tbsp",
+        "unitKey": "UNIT_12"
+      },
+      {
+        "name": "Wasabi",
+        "quantity": 5,
+        "unit": "g",
+        "unitKey": "UNIT_27"
+      }
+    ]
+  },
+  "cost": {
+    "totalsByCurrency": {
+      "EUR": 3.25
+    },
+    "perServingByCurrency": {
+      "EUR": 1.62
+    },
+    "servings": 2.0,
+    "ingredients": [
+      {
+        "identity": "n:leaf gelatine",
+        "name": "Leaf gelatine",
+        "quantity": 2.0,
+        "unit": "leaf",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.48
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "piccantino-gelatine-v97-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.piccantino.de/dr-oetker/blattgelatine-12er",
+            "productName": "Dr. Oetker leaf gelatine, 12 sheets",
+            "amount": 2.89,
+            "currency": "EUR",
+            "basisQuantity": 12,
+            "basisUnit": "pcs",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "Piccantino Germany · online listing",
+            "categories": [
+              "cook4me:gelatine-sheets"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Twelve individual pork-gelatine sheets per pack. No packet or gram equivalence inferred; sheet sizes and bloom strength vary. VAT included; shipping excluded. Regional prices and availability vary.",
+            "category": "cook4me:gelatine-sheets",
+            "identity": "n:leaf gelatine",
+            "observationId": "piccantino-gelatine-v97-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "ingredient_count",
+          "label": "leaf gelatine: count of individual sheets; no package-size or weight assumption",
+          "sourceQuantity": 2.0,
+          "sourceUnit": "sheet",
+          "quantity": 2.0,
+          "unit": "pcs",
+          "assumedCount": false
+        }
+      },
+      {
+        "identity": "n:peanut butter",
+        "name": "Peanut butter",
+        "quantity": 1.0,
+        "unit": "tbsp",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.19
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": 326044,
+            "barcode": "4260335836354",
+            "amount": 5.99,
+            "currency": "EUR",
+            "basisQuantity": 500.0,
+            "basisUnit": "g",
+            "pricePer": "",
+            "usable": true,
+            "date": "2026-09-04",
+            "country": "DE",
+            "location": "REWE",
+            "productName": "Bio Erdnussmus",
+            "source": "open_prices_category",
+            "confidence": "external_observation",
+            "categories": [
+              "en:peanut-butters"
+            ],
+            "category": "en:peanut-butters",
+            "identity": "n:peanut butter",
+            "observationId": 326044,
+            "updatedAt": "2026-09-04"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_portion",
+          "label": "USDA Peanut butter, smooth style, without salt: tbsp",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/172470/nutrients",
+          "fdcId": 172470,
+          "portionId": 90673,
+          "sourceQuantity": 1.0,
+          "sourceUnit": "tbsp",
+          "quantity": 16.0,
+          "unit": "g",
+          "assumedCount": false
+        }
+      },
+      {
+        "identity": "n:caper",
+        "name": "Caper",
+        "quantity": 1.0,
+        "unit": "tbsp",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.19
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "dm-3095647-v88-20260916",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.dm.de/p/d/3095647/dmbio-kapern",
+            "productName": "dmBio capers in wine vinegar",
+            "amount": 1.95,
+            "currency": "EUR",
+            "basisQuantity": 90,
+            "basisUnit": "g",
+            "date": "2026-09-16",
+            "country": "DE",
+            "location": "dm Germany · online listing",
+            "categories": [
+              "en:capers"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "90 g is the explicitly listed drained weight, excluding the liquid.",
+            "category": "en:capers",
+            "identity": "n:caper",
+            "observationId": "dm-3095647-v88-20260916",
+            "updatedAt": "2026-09-16"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_portion",
+          "label": "USDA Capers, canned: tbsp, drained",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/172238/nutrients",
+          "fdcId": 172238,
+          "portionId": 90139,
+          "sourceQuantity": 1.0,
+          "sourceUnit": "tbsp",
+          "quantity": 8.6,
+          "unit": "g",
+          "assumedCount": false
+        }
+      },
+      {
+        "identity": "n:mayonnaise",
+        "name": "Mayonnaise",
+        "quantity": 13.8,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.08
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": 326451,
+            "barcode": "4311596046737",
+            "amount": 2.79,
+            "currency": "EUR",
+            "basisQuantity": 500.0,
+            "basisUnit": "ml",
+            "pricePer": "",
+            "usable": true,
+            "date": "2026-09-08",
+            "country": "DE",
+            "location": "Netto Marken-Discount",
+            "productName": "Mayonnaise",
+            "source": "open_prices_category",
+            "confidence": "external_observation",
+            "categories": [
+              "en:mayonnaises"
+            ],
+            "category": "en:mayonnaises",
+            "identity": "n:mayonnaise",
+            "observationId": 326451,
+            "updatedAt": "2026-09-08"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_density",
+          "label": "USDA Salad dressing, mayonnaise, regular: tbsp; approximate spoon volume",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/171009/nutrients",
+          "fdcId": 171009,
+          "portionId": 87758,
+          "volumeSourceUrl": "https://www.nist.gov/pml/owm/metric-si/metric-kitchen/metric-kitchen-cooking-measurement-equivalencies",
+          "sourceQuantity": 13.8,
+          "sourceUnit": "g",
+          "quantity": 15.0,
+          "unit": "ml"
+        }
+      },
+      {
+        "identity": "n:swede",
+        "name": "Swede",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 1.42
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "greenist-swede-v97-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.greenist.de/frischesortiment-bio-steckrueben-1-kg.html",
+            "productName": "Fresh organic swede (rutabaga)",
+            "amount": 3.69,
+            "currency": "EUR",
+            "basisQuantity": 1000,
+            "basisUnit": "g",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "greenist Germany · online listing",
+            "categories": [
+              "cook4me:raw-swede"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Fresh raw root sold by kilogram; not turnip or prepared swede. Seasonal stock. VAT included; shipping excluded. Regional prices and availability vary.",
+            "category": "cook4me:raw-swede",
+            "identity": "n:swede",
+            "observationId": "greenist-swede-v97-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_portion",
+          "label": "USDA Rutabagas, raw: medium",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/168454/nutrients",
+          "fdcId": 168454,
+          "portionId": 83121,
+          "sourceQuantity": 1.0,
+          "sourceUnit": "piece",
+          "quantity": 386.0,
+          "unit": "g",
+          "assumedCount": true
+        }
+      },
+      {
+        "identity": "n:sake",
+        "name": "Sake",
+        "quantity": 15.0,
+        "unit": "ml",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.36
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "asia4friends-junmai-v97-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://asia4friends.de/japanischer-sake-junmai-kizakura-180ml",
+            "productName": "Kizakura Junmai Japanese sake",
+            "amount": 4.29,
+            "currency": "EUR",
+            "basisQuantity": 180,
+            "basisUnit": "ml",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "Asia4Friends, Dresden · online listing",
+            "categories": [
+              "xx:sake"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Japanese rice wine, 15% ABV; named small-bottle reference, not a national average or a mirin substitute. VAT included; shipping excluded. Regional prices and availability vary.",
+            "category": "xx:sake",
+            "identity": "n:sake",
+            "observationId": "asia4friends-junmai-v97-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": null
+      },
+      {
+        "identity": "n:mirin",
+        "name": "Mirin",
+        "quantity": 2.0,
+        "unit": "tbsp",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.31
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "asia4friends-hon-mirin-v97-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://asia4friends.de/hon-mirin-14-vol-hinode-400ml",
+            "productName": "Hinode Hon Mirin, 14% ABV",
+            "amount": 4.19,
+            "currency": "EUR",
+            "basisQuantity": 400,
+            "basisUnit": "ml",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "Asia4Friends, Dresden · online listing",
+            "categories": [
+              "en:mirin"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "The product title specifies a 400 ml bottle. The shop also displays a kg-based summary; that is not used to infer density. No alcohol-free or mirin-style substitute is assumed. VAT included; shipping excluded. Regional prices and availability vary.",
+            "category": "en:mirin",
+            "identity": "n:mirin",
+            "observationId": "asia4friends-hon-mirin-v97-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "spoon_volume",
+          "label": "1 tbsp ≈ 15 ml",
+          "sourceUrl": "https://www.nist.gov/pml/owm/metric-si/metric-kitchen/metric-kitchen-cooking-measurement-equivalencies",
+          "sourceQuantity": 2.0,
+          "sourceUnit": "tbsp",
+          "quantity": 30.0,
+          "unit": "ml"
+        }
+      },
+      {
+        "identity": "n:wasabi",
+        "name": "Wasabi",
+        "quantity": 5.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.21
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "asia4friends-wasabi-v97-20260917",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://asia4friends.de/wasabi-paste-sb-43g",
+            "productName": "S&B prepared wasabi paste",
+            "amount": 1.79,
+            "currency": "EUR",
+            "basisQuantity": 43,
+            "basisUnit": "g",
+            "date": "2026-09-17",
+            "country": "DE",
+            "location": "Asia4Friends, Dresden · online listing",
+            "categories": [
+              "cook4me:wasabi-paste"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "43 g tube per product title; the shop rounds its weight summary to 0.04 kg. Prepared horseradish/wasabi paste, not fresh wasabi root or dry powder. No spoon or centimetre weight inferred. VAT included; shipping excluded. Regional prices and availability vary.",
+            "category": "cook4me:wasabi-paste",
+            "identity": "n:wasabi",
+            "observationId": "asia4friends-wasabi-v97-20260917",
+            "updatedAt": "2026-09-17"
+          }
+        ],
+        "quantityEstimate": null
+      }
+    ],
+    "coverage": 1.0,
+    "complete": true,
+    "missingIngredientCount": 0,
+    "exactPurchaseCoverage": 0.0,
+    "estimated": true,
+    "targetCurrency": "EUR",
+    "targetCountry": "DE",
+    "currencyConversionApplied": false,
+    "costCacheHit": false,
+    "pricingFingerprint": "44c73a8da629809712c36d1692f493f7697c88c221063f9fa57a2e0a595ec4b1",
+    "recipePriceFingerprint": "462509ca3f3dc2f1eace1c724bbe9f6da03af0e0028f9e8611d05d75ce05f343",
+    "costCacheContract": "price-evidence-fingerprint-v1",
+    "settings": {
+      "currency": "EUR",
+      "country": "DE",
+      "autoGlobalPrices": true
+    },
+    "offlinePreview": true,
+    "priceLookupPending": false,
+    "checkedAt": "2026-09-17T03:58:14.916925+00:00",
+    "foodIngredientCount": 8,
+    "pricedFoodIngredientCount": 8,
+    "waterOnlyEstimate": false
+  }
+}

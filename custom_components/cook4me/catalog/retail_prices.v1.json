@@ -1,0 +1,2998 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-17",
+  "note": "Public package-price facts, checked on the linked German retail listings. VAT included; shipping excluded. Generic category estimates use the named product variety, not a national average.",
+  "observations": [
+    {
+      "id": "dm-1454994-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1454994/dmbio-vollrohrzucker",
+      "productName": "dmBio whole cane sugar",
+      "amount": 2.45,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:sugars",
+        "en:brown-sugars"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": ""
+    },
+    {
+      "id": "dm-1713047-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1713047/dmbio-backpulver-mit-reinweinstein-4x17-g",
+      "productName": "dmBio cream-of-tartar baking powder",
+      "amount": 0.7,
+      "currency": "EUR",
+      "basisQuantity": 68,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:baking-powders"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": ""
+    },
+    {
+      "id": "dm-1713048-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1713048/dmbio-backhefe-2er-pack",
+      "productName": "dmBio dried baking yeast",
+      "amount": 0.8,
+      "currency": "EUR",
+      "basisQuantity": 14,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:dried-yeasts"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": ""
+    },
+    {
+      "id": "dm-1601903-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1601903/dmbio-speisestaerke-reine-maisstaerke",
+      "productName": "dmBio corn starch",
+      "amount": 1.75,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:corn-starch"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": ""
+    },
+    {
+      "id": "dm-1465655-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1465655/dmbio-vanillezucker-mit-bourbon-vanille-4x8g",
+      "productName": "dmBio vanilla sugar",
+      "amount": 1.85,
+      "currency": "EUR",
+      "basisQuantity": 32,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:vanilla-sugars"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": ""
+    },
+    {
+      "id": "dm-1461618-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1461618/dmbio-bourbon-vanille-gemahlen",
+      "productName": "dmBio ground vanilla",
+      "amount": 2.95,
+      "currency": "EUR",
+      "basisQuantity": 5,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:vanilla"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": ""
+    },
+    {
+      "id": "dm-3064564-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3064564/lebensbaum-kreuzkuemmel-gemahlen",
+      "productName": "LEBENSBAUM ground cumin",
+      "amount": 3.45,
+      "currency": "EUR",
+      "basisQuantity": 40,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:cumin",
+        "en:ground-cumin-seeds",
+        "en:cumin-powders"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "dm-1665593-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1665593/dmbio-kurkuma-gemahlen",
+      "productName": "dmBio ground turmeric",
+      "amount": 1.85,
+      "currency": "EUR",
+      "basisQuantity": 60,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:turmeric"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "dm-1666804-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1666804/dmbio-curry-mild",
+      "productName": "dmBio mild curry powder",
+      "amount": 1.85,
+      "currency": "EUR",
+      "basisQuantity": 60,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:curry-powders"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "dm-1446420-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1446420/dmbio-tomatenmark",
+      "productName": "dmBio double-concentrated tomato paste",
+      "amount": 0.95,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:tomato-pastes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "dm-1490263-pcs-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1490263/dmbio-gemuesebruehwuerfel",
+      "productName": "dmBio vegetable stock · 6 × 11 g cubes",
+      "amount": 0.75,
+      "currency": "EUR",
+      "basisQuantity": 6,
+      "basisUnit": "pcs",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:vegetable-stock"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Package directions: one 11 g cube per 500 ml water. Prepared-broth reference excludes water; cube sizes vary."
+    },
+    {
+      "id": "dm-1490263-ml-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1490263/dmbio-gemuesebruehwuerfel",
+      "productName": "dmBio vegetable stock · 3 litres prepared broth",
+      "amount": 0.75,
+      "currency": "EUR",
+      "basisQuantity": 3000,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:vegetable-stock"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Package directions: one 11 g cube per 500 ml water. Prepared-broth reference excludes water; cube sizes vary."
+    },
+    {
+      "id": "aldi-000000000000474280-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/hofburger-gouda-250-g-gerieben-000000000000474280",
+      "productName": "HOFBURGER Gouda, grated",
+      "amount": 1.79,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "cook4me:cheese",
+        "en:gouda"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Generic cheese estimate uses this named Gouda variety; other cheeses differ."
+    },
+    {
+      "id": "aldi-000000000000194677-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/bellasan-natives-rapsoel-500-ml-000000000000194677",
+      "productName": "BELLASAN virgin rapeseed oil",
+      "amount": 1.39,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:vegetable-oils",
+        "en:rapeseed-oils"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Generic cooking oil estimate uses rapeseed oil."
+    },
+    {
+      "id": "aldi-000000000000194341-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/le-gusto-schwarzer-pfeffer-gemahlen-50-g-000000000000194341",
+      "productName": "LE GUSTO ground black pepper",
+      "amount": 0.85,
+      "currency": "EUR",
+      "basisQuantity": 50,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:ground-black-peppers"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "aldi-000000000000194339-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/le-gusto-paprika-edelsuess-gemahlen-50-g-000000000000194339",
+      "productName": "LE GUSTO sweet paprika powder",
+      "amount": 0.75,
+      "currency": "EUR",
+      "basisQuantity": 50,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:paprika"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "aldi-000000000000194379-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/le-gusto-jodsalz-500-g-000000000000194379",
+      "productName": "LE GUSTO iodised salt",
+      "amount": 0.29,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:salts"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "aldi-000000000584724001-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/bio-bio-gemuesesortiment-750-g-junge-bohnen-000000000584724001",
+      "productName": "BIO BIO frozen green beans",
+      "amount": 2.69,
+      "currency": "EUR",
+      "basisQuantity": 750,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:green-beans"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Unseasoned frozen vegetable reference; fresh-market prices may differ."
+    },
+    {
+      "id": "aldi-000000000584724002-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/bio-bio-gemuesesortiment-750-g-broccoli-000000000584724002",
+      "productName": "BIO BIO frozen broccoli",
+      "amount": 2.69,
+      "currency": "EUR",
+      "basisQuantity": 750,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:broccoli"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Unseasoned frozen vegetable reference; fresh-market prices may differ."
+    },
+    {
+      "id": "aldi-000000000584753002-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/bio-bio-gemuesesortiment-750-g-blattspinat-000000000584753002",
+      "productName": "BIO BIO frozen leaf spinach",
+      "amount": 2.69,
+      "currency": "EUR",
+      "basisQuantity": 750,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:spinachs"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Unseasoned frozen vegetable reference; fresh-market prices may differ."
+    },
+    {
+      "id": "aldi-000000000584753003-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/bio-bio-gemuesesortiment-750-g-junge-erbsen-000000000584753003",
+      "productName": "BIO BIO frozen peas",
+      "amount": 2.69,
+      "currency": "EUR",
+      "basisQuantity": 750,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:peas",
+        "en:frozen-green-peas"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Unseasoned frozen vegetable reference; fresh-market prices may differ."
+    },
+    {
+      "id": "aldi-000000000584753004-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/bio-bio-gemuesesortiment-750-g-blumenkohl-000000000584753004",
+      "productName": "BIO BIO frozen cauliflower",
+      "amount": 2.69,
+      "currency": "EUR",
+      "basisQuantity": 750,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:cauliflowers"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Unseasoned frozen vegetable reference; fresh-market prices may differ."
+    },
+    {
+      "id": "aldi-000000000194190004-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/bio-bio-huelsenfruechte-500-g-rote-linsen-000000000194190004",
+      "productName": "BIO BIO dried red lentils",
+      "amount": 1.45,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:red-lentils"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "aldi-000000000194190005-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/bio-bio-huelsenfruechte-500-g-berglinsen-000000000194190005",
+      "productName": "BIO BIO dried mountain lentils",
+      "amount": 1.45,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:lentils"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": ""
+    },
+    {
+      "id": "aldi-cheddar-press-20260415",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/newsroom/alle-pressemitteilungen/marke-und-produkte/2026/aldi-macht-kaese-guenstiger--bis-zu-30-cent-weniger-pro-packung",
+      "productName": "ALDI SÜD Cheddar",
+      "amount": 2.19,
+      "currency": "EUR",
+      "basisQuantity": 175,
+      "basisUnit": "g",
+      "date": "2026-04-15",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · price announcement",
+      "categories": [
+        "en:cheddar-cheese"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Published 15 April 2026; automatically excluded after the 180-day evidence window."
+    },
+    {
+      "id": "knuspr-94489-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/94489-miil-parmigiano-reggiano-dop-24-gereift",
+      "productName": "MIIL Parmigiano Reggiano DOP, 24 months",
+      "amount": 4.99,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "en:parmigiano-reggiano"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed price, without membership discount. Regional reference."
+    },
+    {
+      "id": "knuspr-3374-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/3374-schalotten-lang-netz",
+      "productName": "Long shallots",
+      "amount": 1.39,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "en:shallots"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed price, without membership discount. Regional reference."
+    },
+    {
+      "id": "knuspr-89672-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/89672-lauch-porree-1-stk",
+      "productName": "Leek",
+      "amount": 0.84,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "pcs",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "en:leeks"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed price, without membership discount. Regional reference. Per whole leek; a USDA edible portion estimate may be used for gram quantities."
+    },
+    {
+      "id": "knuspr-72159-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/72159-kitchin-mohnsamen-gemahlen",
+      "productName": "KITCHIN ground poppy seeds",
+      "amount": 2.09,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "cook4me:poppy-seeds"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed price, without membership discount. Regional reference. Plain seeds; not sweetened poppy filling."
+    },
+    {
+      "id": "knuspr-15104-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/15104-koriander",
+      "productName": "Herrmann Kräuter fresh coriander",
+      "amount": 1.99,
+      "currency": "EUR",
+      "basisQuantity": 100,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "en:fresh-coriander-leaves"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed price, without membership discount. Regional reference."
+    },
+    {
+      "id": "knuspr-15108-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/15108-minze",
+      "productName": "Herrmann Kräuter fresh mint",
+      "amount": 1.99,
+      "currency": "EUR",
+      "basisQuantity": 100,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "en:mint"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed price, without membership discount. Regional reference."
+    },
+    {
+      "id": "knuspr-1317-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/1317-dr-oetker-bourbon-vanille-extrakt",
+      "productName": "Dr. Oetker Bourbon vanilla extract",
+      "amount": 2.99,
+      "currency": "EUR",
+      "basisQuantity": 35,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "en:vanilla"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed price, without membership discount. Regional reference. Volume-based vanilla estimate uses liquid extract; gram-based vanilla keeps the ground-vanilla reference."
+    },
+    {
+      "id": "knuspr-30952-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/30952-kitchin-chifferi-no-132",
+      "productName": "KITCHIN Chifferi No. 132 durum-wheat macaroni",
+      "amount": 0.69,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "en:durum-wheat-macaroni",
+        "cook4me:dried-pasta"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed price, without membership discount. Regional reference. Dry durum-wheat macaroni is the named reference for generic dried pasta; not fresh or cooked pasta."
+    },
+    {
+      "id": "bwb-water-20260916",
+      "source": "utility_snapshot",
+      "sourceUrl": "https://www.bwb.de/de/gebuehren.php",
+      "productName": "Berlin tap-water usage tariff",
+      "amount": 1.813,
+      "currency": "EUR",
+      "basisQuantity": 1000,
+      "basisUnit": "l",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Berliner Wasserbetriebe · Berlin",
+      "categories": [
+        "cook4me:tap-water"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regional benchmark, not your household tariff. Includes VAT; excludes fixed charges and wastewater."
+    },
+    {
+      "id": "knuspr-15110-petersilie-glatt-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/15110-petersilie-glatt",
+      "productName": "Fresh flat-leaf parsley",
+      "amount": 1.89,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:parsley"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb reference; not a price for dried herbs. Berlin-area listing, delivery excluded."
+    },
+    {
+      "id": "knuspr-849-schnittlauch-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/849-schnittlauch",
+      "productName": "Fresh chives",
+      "amount": 0.99,
+      "currency": "EUR",
+      "basisQuantity": 15,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:chives"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb reference; not a price for dried herbs. Berlin-area listing, delivery excluded."
+    },
+    {
+      "id": "knuspr-15100-dill-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/15100-dill",
+      "productName": "Fresh dill",
+      "amount": 1.99,
+      "currency": "EUR",
+      "basisQuantity": 100,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:dill"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb reference; not a price for dried herbs. Berlin-area listing, delivery excluded."
+    },
+    {
+      "id": "knuspr-15084-basilikum-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/15084-basilikum",
+      "productName": "Fresh basil",
+      "amount": 1.59,
+      "currency": "EUR",
+      "basisQuantity": 15,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:basils"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb reference; not a price for dried herbs. Berlin-area listing, delivery excluded."
+    },
+    {
+      "id": "knuspr-855-rosmarin-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/855-rosmarin",
+      "productName": "Fresh rosemary",
+      "amount": 1.29,
+      "currency": "EUR",
+      "basisQuantity": 15,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:rosemary"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb reference; not a price for dried herbs. Berlin-area listing, delivery excluded."
+    },
+    {
+      "id": "knuspr-857-thymian-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/857-thymian",
+      "productName": "Fresh thyme",
+      "amount": 1.29,
+      "currency": "EUR",
+      "basisQuantity": 15,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:thyme"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb reference; not a price for dried herbs. Berlin-area listing, delivery excluded."
+    },
+    {
+      "id": "knuspr-856-salbei-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/856-salbei",
+      "productName": "Fresh sage",
+      "amount": 1.29,
+      "currency": "EUR",
+      "basisQuantity": 15,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:sage"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb reference; not a price for dried herbs. Berlin-area listing, delivery excluded."
+    },
+    {
+      "id": "knuspr-854-oregano-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/854-oregano",
+      "productName": "Fresh oregano",
+      "amount": 1.29,
+      "currency": "EUR",
+      "basisQuantity": 15,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:oregano"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb reference; not a price for dried herbs. Berlin-area listing, delivery excluded."
+    },
+    {
+      "id": "knuspr-20751-bio-limette-1-stk-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/20751-bio-limette-1-stk",
+      "productName": "BIO lime",
+      "amount": 0.75,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "pcs",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:limes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed regular price; customer discount excluded. One whole lime, not lime juice."
+    },
+    {
+      "id": "knuspr-30087-sanlucar-limetten-4er-schale-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/30087-sanlucar-limetten-4er-schale",
+      "productName": "SanLucar limes, four-fruit tray",
+      "amount": 2.29,
+      "currency": "EUR",
+      "basisQuantity": 240,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:limes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-3366-suesskartoffel-1-stk-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/3366-suesskartoffel-1-stk",
+      "productName": "Sweet potato",
+      "amount": 3.99,
+      "currency": "EUR",
+      "basisQuantity": 1000,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:sweet-potatoes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed price per kilogram. Variable piece weights are not treated as a fixed package weight."
+    },
+    {
+      "id": "dallmayr-lauchzwiebel-2669BD-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dallmayr-versand.de/p/lauchzwiebel-2669BD/",
+      "productName": "Lauchzwiebel / spring onion",
+      "amount": 1.9,
+      "currency": "EUR",
+      "basisQuantity": 130,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Dallmayr · Munich delivery area · online listing",
+      "categories": [
+        "en:scallions"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed bunch weighs 130 g. Munich-only delivery; premium retailer reference, not a national average or price per onion."
+    },
+    {
+      "id": "dm-1714605-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1714605/dmbio-sesamoel",
+      "productName": "dmBio toasted sesame oil",
+      "amount": 3.75,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:sesame-oils"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1639876-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1639876/dmbio-reisessig-mild-saeuerlich",
+      "productName": "dmBio rice vinegar",
+      "amount": 2.25,
+      "currency": "EUR",
+      "basisQuantity": 145,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:rice-vinegars"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-3065041-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3065041/dmbio-walnussoel",
+      "productName": "dmBio walnut oil",
+      "amount": 5.45,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:walnut-oil"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1469719-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1469719/dmbio-ghee-geklaerte-butter",
+      "productName": "dmBio ghee / clarified butter",
+      "amount": 4.45,
+      "currency": "EUR",
+      "basisQuantity": 180,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:ghee"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1666918-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1666918/dmbio-ceylon-zimt",
+      "productName": "dmBio ground Ceylon cinnamon",
+      "amount": 1.85,
+      "currency": "EUR",
+      "basisQuantity": 50,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:cinnamon"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1666949-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1666949/dmbio-gewuerzmischung-italienische-kraeuter",
+      "productName": "dmBio dried Italian herb mix",
+      "amount": 1.85,
+      "currency": "EUR",
+      "basisQuantity": 35,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:mixed-herbs"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-3111758-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3111758/dmbio-hefeflocken-auf-weizenbasis",
+      "productName": "dmBio nutritional yeast flakes (wheat-based)",
+      "amount": 3.45,
+      "currency": "EUR",
+      "basisQuantity": 100,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:nutritional-yeast-flakes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1570746-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1570746/dmbio-quinoa",
+      "productName": "dmBio dry quinoa",
+      "amount": 2.85,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:quinoa"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1454920-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1454920/dmbio-bulgur",
+      "productName": "dmBio dry bulgur wheat",
+      "amount": 1.35,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:bulgur"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-3081979-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3081979/koawach-kakao-zum-backen",
+      "productName": "koawach unsweetened baking cocoa powder",
+      "amount": 2.95,
+      "currency": "EUR",
+      "basisQuantity": 100,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:cocoa-powders"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1446512-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1446512/dmbio-maisgriess-polenta",
+      "productName": "dmBio corn semolina / dry polenta",
+      "amount": 1.15,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:cornmeal",
+        "en:corn-semolinas-for-polenta"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1431385-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1431385/dmbio-reismehl-glutenfrei",
+      "productName": "dmBio gluten-free rice flour",
+      "amount": 2.75,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:rice-flours"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1590092-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1590092/dmbio-kichererbsenmehl",
+      "productName": "dmBio chickpea flour",
+      "amount": 1.75,
+      "currency": "EUR",
+      "basisQuantity": 300,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:chickpea-flour"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1446511-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1446511/dmbio-buchweizenmehl-vollkorn-glutenfrei",
+      "productName": "dmBio wholemeal buckwheat flour",
+      "amount": 1.75,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:buckwheat-flours"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1446486-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1446486/dmbio-dinkel-griess",
+      "productName": "dmBio spelt semolina",
+      "amount": 2.45,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:spelt-semolina"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1440255-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1440255/dmbio-tomatenstuecke-natur",
+      "productName": "dmBio plain chopped tomatoes in tomato juice",
+      "amount": 0.65,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:chopped-tomatoes",
+        "en:canned-tomatoes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1544928-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1544928/dmbio-kokosoel-nativ",
+      "productName": "dmBio virgin coconut oil",
+      "amount": 2.85,
+      "currency": "EUR",
+      "basisQuantity": 300,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:coconut-oils"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-3143620-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3143620/dmbio-aceto-balsamico-di-modena-igp",
+      "productName": "dmBio Aceto Balsamico di Modena IGP",
+      "amount": 2.45,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:balsamic-vinegars"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1470124-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1470124/dmbio-apfelessig",
+      "productName": "dmBio apple cider vinegar",
+      "amount": 1.55,
+      "currency": "EUR",
+      "basisQuantity": 750,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:cider-vinegars"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1435233-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1435233/dmbio-gewuerzmischung-garam-masala",
+      "productName": "dmBio garam masala",
+      "amount": 1.95,
+      "currency": "EUR",
+      "basisQuantity": 60,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:garam-masalas"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-3064302-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3064302/lebensbaum-gewuerzmischung-kraeuter-der-provence",
+      "productName": "LEBENSBAUM dried herbes de Provence",
+      "amount": 2.95,
+      "currency": "EUR",
+      "basisQuantity": 30,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:herbes-de-provence"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1694085-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1694085/dmbio-cashewbruch",
+      "productName": "dmBio plain broken cashew kernels",
+      "amount": 3.25,
+      "currency": "EUR",
+      "basisQuantity": 300,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:cashew-nuts"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1004138-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1004138/seeberger-walnusskerne",
+      "productName": "Seeberger walnut kernels",
+      "amount": 4.45,
+      "currency": "EUR",
+      "basisQuantity": 150,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:walnuts"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-2032341-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/2032341/lebensbaum-thymian-gerebelt",
+      "productName": "LEBENSBAUM dried thyme leaves",
+      "amount": 2.25,
+      "currency": "EUR",
+      "basisQuantity": 20,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:dried-thyme"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1922952-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1922952/lebensbaum-oregano-gerebelt",
+      "productName": "LEBENSBAUM dried oregano leaves",
+      "amount": 1.95,
+      "currency": "EUR",
+      "basisQuantity": 15,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:dried-oregano"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1447036-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1447036/dmbio-trockenfruechte-datteln-entsteint",
+      "productName": "dmBio dried pitted dates",
+      "amount": 1.65,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:pitted-dates",
+        "cook4me:dried-dates",
+        "en:dates"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region. Generic dates use this dried pitted date reference; variety and fruit size may differ."
+    },
+    {
+      "id": "dm-1440266-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1440266/dmbio-dinkelmehl-type-630",
+      "productName": "dmBio spelt flour type 630",
+      "amount": 1.25,
+      "currency": "EUR",
+      "basisQuantity": 1000,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:spelt-flours"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1601027-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1601027/dmbio-mandeln-gemahlen",
+      "productName": "dmBio ground almonds",
+      "amount": 3.45,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:ground-almonds"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed package price; online stock unavailable when checked. Reference estimate, not a promise of availability; not defatted almond flour."
+    },
+    {
+      "id": "dm-3095647-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3095647/dmbio-kapern",
+      "productName": "dmBio capers in wine vinegar",
+      "amount": 1.95,
+      "currency": "EUR",
+      "basisQuantity": 90,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:capers"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "90 g is the explicitly listed drained weight, excluding the liquid."
+    },
+    {
+      "id": "knuspr-7103-leimer-semmelbroesel-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/7103-leimer-semmelbroesel",
+      "productName": "Leimer plain breadcrumbs",
+      "amount": 1.39,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:bread-crumbs"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-2172-galbani-ricotta-40-fitr-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/2172-galbani-ricotta-40-fitr",
+      "productName": "Galbani Ricotta",
+      "amount": 2.99,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:ricotta"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed regular price; temporary promotional price excluded."
+    },
+    {
+      "id": "knuspr-16719-galbani-mascarpone-italienischer-frischkaese-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/16719-galbani-mascarpone-italienischer-frischkaese",
+      "productName": "Galbani Mascarpone",
+      "amount": 4.39,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:mascarpone"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-2178-galbani-gorgonzola-cremoso-48-fett-itr-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/2178-galbani-gorgonzola-cremoso-48-fett-itr",
+      "productName": "Galbani Gorgonzola Cremoso",
+      "amount": 3.79,
+      "currency": "EUR",
+      "basisQuantity": 150,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:gorgonzolas"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-4811-fuchs-gefluegel-fond-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/4811-fuchs-gefluegel-fond",
+      "productName": "Fuchs chicken / poultry stock",
+      "amount": 3.39,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:chicken-stock"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Prepared liquid stock. No conversion from powder, granules or cubes; reference brand and region may differ from your purchase."
+    },
+    {
+      "id": "knuspr-92913-fuchs-kalbs-fond-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/92913-fuchs-kalbs-fond",
+      "productName": "Fuchs veal stock",
+      "amount": 3.29,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:veal-stock"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Prepared liquid stock. No conversion from powder, granules or cubes; reference brand and region may differ from your purchase."
+    },
+    {
+      "id": "knuspr-4807-fuchs-rinder-fond-v88-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/4807-fuchs-rinder-fond",
+      "productName": "Fuchs beef stock",
+      "amount": 3.39,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:beef-stock"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Prepared liquid stock. No conversion from powder, granules or cubes; reference brand and region may differ from your purchase."
+    },
+    {
+      "id": "dm-1599340-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1599340/dmbio-pflanzendrink-mandel-drink",
+      "productName": "dmBio unsweetened almond drink",
+      "amount": 1.35,
+      "currency": "EUR",
+      "basisQuantity": 1000,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:almond-drink"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Almond drink, not dairy milk or almond cream. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1445499-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1445499/dmbio-ahornsirup-grad-a",
+      "productName": "dmBio maple syrup Grade A",
+      "amount": 3.75,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:maple-syrups"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-3106583-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3106583/dmbio-agavendicksaft",
+      "productName": "dmBio agave syrup",
+      "amount": 2.35,
+      "currency": "EUR",
+      "basisQuantity": 360,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:agave-syrups"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1457931-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1457931/dmbio-risottoreis-carnaroli",
+      "productName": "dmBio Carnaroli risotto rice",
+      "amount": 2.65,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:rices-for-risotto"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Dry Carnaroli rice; reference variety for generic risotto and Arborio rice estimates. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-5141-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/5141-arla-skyr-natur",
+      "productName": "Arla Skyr Natur",
+      "amount": 1.99,
+      "currency": "EUR",
+      "basisQuantity": 450,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:plain-skyr"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular price; promotional discount excluded. Plain skyr, not flavoured yogurt. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-88412-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/88412-gazi-kasar-peyniri-kashkaval",
+      "productName": "GAZI Kasar Peyniri Kashkaval",
+      "amount": 5.99,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:kasar-cheese"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Kasar cheese block; grating does not change the ingredient mass. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1446999-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1446999/dmbio-haselnusskerne",
+      "productName": "dmBio hazelnut kernels",
+      "amount": 3.65,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:hazelnuts"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Unsalted kernels; shell weight excluded. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-9819-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/9819-alnatura-bio-weizengriess",
+      "productName": "Alnatura Bio Weizengriess",
+      "amount": 1.79,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:wheat-semolina"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular price; promotional discount excluded. Dry wheat semolina, not prepared pudding. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-95666-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/95666-cock-brand-currypaste-rot",
+      "productName": "Cock Brand red curry paste",
+      "amount": 2.99,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:curry-pastes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Red curry paste is the named reference for an unspecified curry paste; brands and varieties differ. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1451212-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1451212/dmbio-soja-creme-cuisine",
+      "productName": "dmBio Soja Creme Cuisine",
+      "amount": 0.7,
+      "currency": "EUR",
+      "basisQuantity": 200,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:soy-cooking-cream"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Soy-based liquid cooking cream; not tofu, soy milk, or dairy cream. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "africshopping-000900374-v89-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.africshopping.com/product/kokosnuss-ganze-preis-pro-stueck-000900374/",
+      "productName": "AfricShopping whole fresh coconut",
+      "amount": 3.99,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "pcs",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "AfricShopping Germany · online listing",
+      "categories": [
+        "en:coconuts"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Whole raw coconut sold per piece. Gram costs use the disclosed USDA edible-meat yield estimate, not the retail shell weight; not dried coconut. Named reference product; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "dm-1447524-v90-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1447524/dmbio-trockenfruechte-rosinen",
+      "productName": "dmBio raisins",
+      "amount": 2.95,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany",
+      "categories": [
+        "en:raisins"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Dried grapes, not fresh grapes. Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-30958-v90-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/en-DE/30958-kitchin-organic-durum-whole-wheat-semolina-pasta",
+      "productName": "KITCHIN organic whole-wheat fusilli",
+      "amount": 0.85,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "cook4me:wholegrain-pasta"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Dry whole-wheat pasta reference; regular price excludes member discounts. Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "gourmet-24235-v90-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.gourmet-versand.com/de/article24235/flageolets-bohnenkerne-gegart-800-g.html",
+      "productName": "Avril cooked flageolet beans",
+      "amount": 4.12,
+      "currency": "EUR",
+      "basisQuantity": 530,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "GOURMET VERSAND Germany",
+      "categories": [
+        "cook4me:cooked-flageolets"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "800 g can, 530 g drained beans. Price uses drained edible weight. Cooked beans, not dried beans. Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-90417-v90-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/90417-watzkendorf-bio-rote-bete-wiegeware",
+      "productName": "Watzkendorf organic raw beetroot",
+      "amount": 3.79,
+      "currency": "EUR",
+      "basisQuantity": 1000,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings",
+      "categories": [
+        "cook4me:raw-beetroot"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular weighed price excludes the 10% personal discount. Raw beetroot, not cooked vacuum-packed beetroot. Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "ludwig-topinambur-v90-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://ludwigs.shop/produkt/topinambur/",
+      "productName": "Ludwig fresh Jerusalem artichoke",
+      "amount": 0.69,
+      "currency": "EUR",
+      "basisQuantity": 100,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Ludwig Obst- und Gemüsebau · Griesheim, Germany",
+      "categories": [
+        "en:jerusalem-artichoke"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh tubers, not powder, syrup or ordinary artichoke. Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "ludwig-pastinake-v90-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://ludwigs.shop/product-category/gemuese/",
+      "productName": "Ludwig fresh parsnips",
+      "amount": 1.99,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Ludwig Obst- und Gemüsebau · Griesheim, Germany",
+      "categories": [
+        "en:parsnip"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Pastinake listing: fresh roots, 500 g. Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "aldi-211427-v90-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/meine-metzgerei-haehnchen-brustfilet-600-g-000000000000211427",
+      "productName": "MEINE METZGEREI raw chicken breast fillet",
+      "amount": 6.79,
+      "currency": "EUR",
+      "basisQuantity": 600,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany",
+      "categories": [
+        "cook4me:raw-poultry-fillet"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named raw chicken-breast benchmark for poultry fillets. Species and cut can affect price; not prepared slices, bone-in pieces or a whole bird. Named product reference; VAT included, delivery excluded. Prices vary by shop and region."
+    },
+    {
+      "id": "knuspr-12094-v92-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/12094-spargel-gruen-bund",
+      "productName": "EATME fresh green asparagus, 450 g",
+      "amount": 5.99,
+      "currency": "EUR",
+      "basisQuantity": 450,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr · Berlin and surroundings · online listing",
+      "categories": [
+        "en:green-asparagus"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh green asparagus only. Named reference product; VAT included, delivery excluded. Seasonal prices and region may differ."
+    },
+    {
+      "id": "knuspr-1032-v94-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/1032-bio-hokkaido-kuerbis-1-stk",
+      "productName": "BIO Hokkaido pumpkin, whole",
+      "amount": 2.15,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:pumpkins"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed unit price per kg; not a fixed piece price. Out of stock when checked. Named Hokkaido reference, variety and actual shop prices vary."
+    },
+    {
+      "id": "dm-3064622-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3064622/dmbio-sesammus-tahin",
+      "productName": "dmBio roasted sesame tahini",
+      "amount": 3.25,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:tahini"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Pure sesame paste; named-product reference. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "dm-1454969-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1454969/dmbio-getreide-buchweizen",
+      "productName": "dmBio dry buckwheat",
+      "amount": 1.85,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:buckwheat"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Dry grain, not flour or cooked weight. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "dm-1454947-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1454947/dmbio-getreide-hirse",
+      "productName": "dmBio dry millet",
+      "amount": 2.95,
+      "currency": "EUR",
+      "basisQuantity": 1000,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:millet"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Dry grain, not cooked weight. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "dm-3119123-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/3119123/la-baleine-natron-pulver",
+      "productName": "La Baleine food-grade sodium bicarbonate",
+      "amount": 2.95,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "cook4me:baking-soda"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Pure sodium bicarbonate, not baking powder or washing soda. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "dm-1447541-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1447541/dmbio-sesam-ungeschaelt",
+      "productName": "dmBio unhulled sesame seeds",
+      "amount": 2.25,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:sesame"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Whole dry sesame seeds, not oil or tahini. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-543-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/543-diamant-puderzucker",
+      "productName": "Diamant icing sugar",
+      "amount": 0.75,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:powdered-sugars"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Finely powdered sugar, not granulated sugar. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-78004-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/78004-fenchel-1-stk",
+      "productName": "Fresh fennel bulb",
+      "amount": 3.49,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:fennel"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed price per kg, not per bulb. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-16068-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/16068-knollensellerie-1-stk",
+      "productName": "Fresh celeriac",
+      "amount": 1.69,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:celeriac"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed price per kg, not per root; not stalk celery. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-81-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/81-butternut-kuerbis-1-stk",
+      "productName": "Fresh butternut squash",
+      "amount": 2.09,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:butternut-squashes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Listed unit price, not per piece. Product unavailable when checked; seasonal reference. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-32804-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/32804-wirsing-1-stk",
+      "productName": "Fresh savoy cabbage",
+      "amount": 1.89,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:green-cabbage",
+        "en:savoy-cabbages"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Savoy/green cabbage reference, not kale or cooked cabbage; per kg, not per head. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-3368-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/3368-rosenkohl-beutel",
+      "productName": "Fresh Brussels sprouts",
+      "amount": 1.99,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:brussels-sprouts"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Whole raw sprouts; product unavailable when checked; seasonal reference. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-4773-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/4773-ostmann-lorbeerblaetter",
+      "productName": "Ostmann dried bay leaves",
+      "amount": 1.99,
+      "currency": "EUR",
+      "basisQuantity": 5,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:bay-leaf"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Dried bay leaves, not bay-leaf oil or seasoning blends. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "frifro-1447149-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://frifro.de/lebensmittel_shop_4/fette_oele/fette_oele/mazola_erdnussoel_500ml.html",
+      "productName": "Mazola peanut oil",
+      "amount": 4.19,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "FriFro Germany · online listing",
+      "categories": [
+        "en:peanut-oils"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Bottle volume basis; added vitamin E. Not peanut butter. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-10-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/10-chicoree-beutel",
+      "productName": "Fresh chicory",
+      "amount": 2.69,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:chicory"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Raw Belgian endive/chicory heads, not chicory syrup or coffee. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-89293-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/89293-watzkendorf-s-bio-mangold-bunt-wiegeware",
+      "productName": "Watzkendorf organic rainbow chard",
+      "amount": 6.5,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:chards"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Regular listed 2.60 EUR per approximately 400 g, normalized to kg; excludes the personal 10% offer. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-86-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/86-paprika-gruen-1-stk",
+      "productName": "Fresh green bell pepper",
+      "amount": 5.99,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:green-bell-pepper"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Sweet green bell pepper, not peppercorn or hot chilli. Product unavailable when checked; per kg, not piece. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-32789-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/32789-philadelphia-doppelrahmstufe",
+      "productName": "Philadelphia plain cream cheese",
+      "amount": 2.39,
+      "currency": "EUR",
+      "basisQuantity": 195,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:cream-cheeses",
+        "cook4me:plain-fresh-cheese"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Plain spreadable fresh-cheese reference; fat content varies. Not aged, herb-flavoured or cottage cheese. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "dm-1446418-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1446418/dmbio-tomaten-fein-passiert-passata",
+      "productName": "dmBio plain tomato passata",
+      "amount": 1.05,
+      "currency": "EUR",
+      "basisQuantity": 690,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:strained-tomatoes",
+        "cook4me:tomato-coulis"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "99.8% tomatoes and salt. Plain strained tomato/coulis reference, not concentrated paste or flavoured sauce. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "dm-1454951-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.dm.de/p/d/1454951/dmbio-basmatireis-aus-vollkorn",
+      "productName": "dmBio dry wholegrain basmati rice",
+      "amount": 2.35,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "dm Germany · online listing",
+      "categories": [
+        "en:brown-rices"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Named wholegrain basmati reference for dry brown rice; variety and store prices vary. VAT included; delivery excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "truebenecker-turnip-v95-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.truebenecker.de/products/bio-mairuben-ohne-blatter-1kg",
+      "productName": "Trübenecker organic white turnips without leaves",
+      "amount": 8.99,
+      "currency": "EUR",
+      "basisQuantity": 1,
+      "basisUnit": "kg",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Trübenecker Germany · online listing",
+      "categories": [
+        "en:turnip"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Organic Mairüben reference, not swede/rutabaga. Out-of-stock listing when checked. Per kg, not a bunch. Seasonal and store prices vary; VAT included, delivery excluded."
+    },
+    {
+      "id": "knuspr-851-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/851-estragon",
+      "productName": "Fresh tarragon",
+      "amount": 1.49,
+      "currency": "EUR",
+      "basisQuantity": 15,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:tarragon"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh herb; dried tarragon has its own reference. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-31988-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/31988-ostmann-estragon-gerebelt",
+      "productName": "Ostmann dried tarragon leaves",
+      "amount": 2.49,
+      "currency": "EUR",
+      "basisQuantity": 9,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:dried-tarragon"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Rubbed dried leaves, not powdered or fresh tarragon. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-4786-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/4786-ostmann-muskatnuss-gemahlen",
+      "productName": "Ostmann ground nutmeg",
+      "amount": 2.99,
+      "currency": "EUR",
+      "basisQuantity": 35,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:nutmeg",
+        "cook4me:ground-nutmeg"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Direct product listing price. Ground reference for mass or spoon amounts; no whole-nut weight inferred. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-4787-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/4787-ostmann-muskatnuesse",
+      "productName": "Ostmann whole nutmegs, two pieces",
+      "amount": 2.29,
+      "currency": "EUR",
+      "basisQuantity": 2,
+      "basisUnit": "pcs",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:nutmeg",
+        "cook4me:whole-nutmeg"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Pack explicitly contains two whole nuts. No mass per nut inferred. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-17455-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/en-DE/17455-picandou-ziegenfrischkaese",
+      "productName": "Picandou plain fresh goat cheese",
+      "amount": 4.79,
+      "currency": "EUR",
+      "basisQuantity": 80,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:fresh-goat-cheese"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh goat milk cheese; not a reference for aged or hard goat cheese. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-31998-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/31998-ostmann-piment-ganz",
+      "productName": "Ostmann whole allspice",
+      "amount": 2.49,
+      "currency": "EUR",
+      "basisQuantity": 25,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "en:allspices"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Whole spice mass reference; no ground-spoon or per-berry conversion. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "asia4friends-fishsauce-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://asia4friends.de/fischsauce-38n-thanh-ha-500ml",
+      "productName": "Thanh Ha 38N fish sauce",
+      "amount": 7.79,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "ml",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Asia4Friends Germany, Dresden · online listing",
+      "categories": [
+        "en:nuoc-mam-sauce"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Ready-to-use fish sauce; not stock, concentrate or fish paste. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "asia4friends-green-lentils-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://asia4friends.de/gruene-linsen-trs-500g",
+      "productName": "TRS dry green lentils",
+      "amount": 2.49,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Asia4Friends Germany, Dresden · online listing",
+      "categories": [
+        "en:green-lentils"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Dry lentils only; cooked and canned lentils do not inherit this reference. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "aldi-salmon-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/golden-seafood-lachsfilets-250-g-000000000000191385",
+      "productName": "GOLDEN SEAFOOD frozen plain salmon fillets",
+      "amount": 4.99,
+      "currency": "EUR",
+      "basisQuantity": 250,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "en:salmons",
+        "en:salmon-fillets"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Frozen plain salmon fillets; not smoked salmon. No standard fillet weight inferred. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "aldi-farfalle-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.aldi-sued.de/produkt/barilla-collezione-farfalle-500-g-000000000000543569",
+      "productName": "Barilla Collezione dried farfalle",
+      "amount": 1.49,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "ALDI SÜD Germany · online listing",
+      "categories": [
+        "cook4me:dried-farfalle"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Promotional listing from 2026-08-28, regional and limited stock. Dried pasta only. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "knuspr-4806-v96-20260916",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.knuspr.de/en-DE/4806-ostmann-dill-tips",
+      "productName": "Ostmann dried dill tips",
+      "amount": 2.79,
+      "currency": "EUR",
+      "basisQuantity": 25,
+      "basisUnit": "g",
+      "date": "2026-09-16",
+      "country": "DE",
+      "location": "Knuspr Berlin and surroundings · online listing",
+      "categories": [
+        "cook4me:dried-dill"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Shelf-stored dried dill; fresh dill has a separate reference. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "piccantino-gelatine-v97-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.piccantino.de/dr-oetker/blattgelatine-12er",
+      "productName": "Dr. Oetker leaf gelatine, 12 sheets",
+      "amount": 2.89,
+      "currency": "EUR",
+      "basisQuantity": 12,
+      "basisUnit": "pcs",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Piccantino Germany · online listing",
+      "categories": [
+        "cook4me:gelatine-sheets"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Twelve individual pork-gelatine sheets per pack. No packet or gram equivalence inferred; sheet sizes and bloom strength vary. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "asia4friends-junmai-v97-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://asia4friends.de/japanischer-sake-junmai-kizakura-180ml",
+      "productName": "Kizakura Junmai Japanese sake",
+      "amount": 4.29,
+      "currency": "EUR",
+      "basisQuantity": 180,
+      "basisUnit": "ml",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Asia4Friends, Dresden · online listing",
+      "categories": [
+        "xx:sake"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Japanese rice wine, 15% ABV; named small-bottle reference, not a national average or a mirin substitute. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "asia4friends-hon-mirin-v97-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://asia4friends.de/hon-mirin-14-vol-hinode-400ml",
+      "productName": "Hinode Hon Mirin, 14% ABV",
+      "amount": 4.19,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "ml",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Asia4Friends, Dresden · online listing",
+      "categories": [
+        "en:mirin"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "The product title specifies a 400 ml bottle. The shop also displays a kg-based summary; that is not used to infer density. No alcohol-free or mirin-style substitute is assumed. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "asia4friends-wasabi-v97-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://asia4friends.de/wasabi-paste-sb-43g",
+      "productName": "S&B prepared wasabi paste",
+      "amount": 1.79,
+      "currency": "EUR",
+      "basisQuantity": 43,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Asia4Friends, Dresden · online listing",
+      "categories": [
+        "cook4me:wasabi-paste"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "43 g tube per product title; the shop rounds its weight summary to 0.04 kg. Prepared horseradish/wasabi paste, not fresh wasabi root or dry powder. No spoon or centimetre weight inferred. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "greenist-swede-v97-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.greenist.de/frischesortiment-bio-steckrueben-1-kg.html",
+      "productName": "Fresh organic swede (rutabaga)",
+      "amount": 3.69,
+      "currency": "EUR",
+      "basisQuantity": 1000,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "greenist Germany · online listing",
+      "categories": [
+        "cook4me:raw-swede"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh raw root sold by kilogram; not turnip or prepared swede. Seasonal stock. VAT included; shipping excluded. Regional prices and availability vary."
+    },
+    {
+      "id": "ludwig-ground-beef-v101-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.der-ludwig.de/rinderhackfleisch",
+      "productName": "Der Ludwig Simmental ground beef, shock-frozen",
+      "amount": 16.95,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Der Ludwig Germany · online listing",
+      "categories": [
+        "en:ground-beef-meats"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "100% beef, raw and shock-frozen. Named butcher product, not a supermarket or national average. Not mixed mince, cooked meat or whole beef cuts. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary."
+    },
+    {
+      "id": "sendafish-cod-v101-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.send-a-fish.de/kabeljaufilet-frisch-ohne-haut/",
+      "productName": "Send-a-Fish fresh skinless cod fillets",
+      "amount": 22.9,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Send-a-Fish Germany · online listing",
+      "categories": [
+        "en:cods"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh skinless cod fillets in a 500 g vacuum pack. Generic cod uses this named fillet reference. No piece weight is inferred; salted, dried and breaded cod remain separate. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary."
+    },
+    {
+      "id": "naturata-demerara-v101-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.naturata-shop.de/Demerara-Rohrohrzucker-500-g/NAT-034035",
+      "productName": "Naturata organic Demerara raw cane sugar",
+      "amount": 3.59,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Naturata Germany · online listing",
+      "categories": [
+        "cook4me:demerara-sugar"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Single-pack price, without the six-pack discount. Coarse Demerara crystals; not generic brown sugar, muscovado, icing sugar or syrup. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary."
+    },
+    {
+      "id": "vanillekiste-pods-v101-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://shop.vanillekiste.de/shop/echte-bourbon-vanilleschoten-aus-madagaskar/?attribute_groesse=Drei+St%C3%BCck+im+Reagenzglas",
+      "productName": "Vanillekiste organic Fairtrade Bourbon vanilla, three whole pods",
+      "amount": 10,
+      "currency": "EUR",
+      "basisQuantity": 3,
+      "basisUnit": "pcs",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Vanillekiste Germany · online listing",
+      "categories": [
+        "en:vanilla-pods"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Three individual whole pods in a tube. Pod counts use this package directly. No mass, seed, extract or packet equivalence is inferred. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary."
+    },
+    {
+      "id": "vanillekiste-pods-mass-v101-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://shop.vanillekiste.de/shop/echte-bourbon-vanilleschoten-aus-madagaskar/?attribute_groesse=50g+im+Standbodenbeutel",
+      "productName": "Vanillekiste organic Fairtrade Bourbon whole vanilla pods, 50 g refill",
+      "amount": 25,
+      "currency": "EUR",
+      "basisQuantity": 50,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Vanillekiste Germany · online listing",
+      "categories": [
+        "en:vanilla-pods"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Separate 50 g whole-pod refill pack, for explicit mass quantities only. The advertised approximate pod count is not converted to a unit weight. Not powder, seeds or extract. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary."
+    },
+    {
+      "id": "bamboogarden-coconut-cream-v102-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://fuchsgruppe.shop/bamboogarden/produkte/kokoscreme-400ml-0.4-liter-dose/",
+      "productName": "Bamboo Garden coconut cream, 20–22% fat",
+      "amount": 2.69,
+      "currency": "EUR",
+      "basisQuantity": 400,
+      "basisUnit": "ml",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Fuchs Gruppe Germany · online listing",
+      "categories": [
+        "en:coconut-creams"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Unsweetened coconut cream: 91% coconut extract and water. Price from the product page and its matching productPrice structured field; the package is 400 ml. Not sweetened cream of coconut, coconut butter or powder. VAT included; shipping excluded. Representative retail estimate; prices vary."
+    },
+    {
+      "id": "davert-split-peas-v102-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://www.davert.de/produkte/halbe-gruene-schaelerbsen-500g",
+      "productName": "Davert organic dried green split peas",
+      "amount": 2.99,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Davert Germany · online listing",
+      "categories": [
+        "cook4me:dried-split-peas"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Dry, shelled, halved green peas. Generic split peas use this named green variety. No cooked-to-dry conversion; not fresh whole peas, lentils or prepared soup. VAT included; shipping excluded. Representative retail estimate; prices vary."
+    },
+    {
+      "id": "asianbrand-shiitake-v102-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://asianbrand.de/products/frische-shiitake-pilze-150g",
+      "productName": "Asian Brand fresh shiitake mushrooms",
+      "amount": 2.49,
+      "currency": "EUR",
+      "basisQuantity": 150,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Asian Brand Germany · online listing",
+      "categories": [
+        "en:shiitake-mushrooms"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh mushrooms in a 150 g pack, not dried shiitake or mushroom powder. Listing was marked sold out when checked; retained as dated price evidence, not an availability promise. VAT included; shipping excluded. Representative retail estimate; prices vary."
+    },
+    {
+      "id": "frischekontor-radishes-v102-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://frische-kontor.de/products/radieschen?variant=51135429935444",
+      "productName": "Frische Kontor fresh radishes without greens, 500 g",
+      "amount": 1.9,
+      "currency": "EUR",
+      "basisQuantity": 500,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Frische Kontor Germany · online listing",
+      "categories": [
+        "en:radishes"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Selected 500 g food package, confirmed by product variant 51135429935444 and its EUR offer. The 590 g shipping weight is not used. Named red-radish product, not daikon, pickled radish or radish greens. VAT included; shipping excluded. Representative retail estimate; prices vary."
+    },
+    {
+      "id": "hikari-miso-v103-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://asianbrand.de/products/miso-japanisch-weiss-savoury-white-hikari-300g",
+      "productName": "Hikari Savoury White plain miso paste",
+      "amount": 3.49,
+      "currency": "EUR",
+      "basisQuantity": 300,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Asian Brand Germany · online listing",
+      "categories": [
+        "en:misos"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Plain soy/rice miso paste: water, soybeans, rice, salt and alcohol; no fish-stock ingredients listed. Generic miso uses this named white variety. Not prepared miso soup, powder or dashi-seasoned paste. The 300 g food package is used, not its 340 g shipping weight. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary."
+    },
+    {
+      "id": "asianbrand-shimeji-v103-20260917",
+      "source": "retail_snapshot",
+      "sourceUrl": "https://asianbrand.de/products/braune-pilze-shimeji-mushroom-frisch-150g?variant=55554228355420",
+      "productName": "Asian Brand fresh brown shimeji mushrooms",
+      "amount": 1.79,
+      "currency": "EUR",
+      "basisQuantity": 150,
+      "basisUnit": "g",
+      "date": "2026-09-17",
+      "country": "DE",
+      "location": "Asian Brand Germany · online listing",
+      "categories": [
+        "cook4me:fresh-shimeji"
+      ],
+      "usable": true,
+      "confidence": "external_observation",
+      "barcode": "",
+      "note": "Fresh brown shimeji, 150 g food pack; no dried-mushroom or individual-count equivalence. Live product variant 55554228355420, SKU C039, and matching visible price/JSON-LD confirm EUR 1.79; older indexed pages showed EUR 1.99. The 160 g shipping weight is not used. VAT included; shipping excluded. Dated representative retail estimate; prices and availability vary."
+    }
+  ]
+}

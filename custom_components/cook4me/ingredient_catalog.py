@@ -362,6 +362,14 @@ def enrich_match_with_house_keys(
     """Reconcile pantry availability without crossing authoritative provider IDs."""
     result = deepcopy(match)
     house = normalize_house_ingredients(house_ingredients)
+    for row in house_ingredients if isinstance(house_ingredients, list) else []:
+        if isinstance(row, dict):
+            house.extend(
+                link
+                for lot in row.get("lots") or []
+                for link in lot.get("ingredientLinks") or []
+                if isinstance(link, dict)
+            )
     house_keys = {row["key"] for row in house if row.get("key")}
     house_names = {_norm(row["name"]) for row in house if row.get("name")}
     house_keyless_names = {
@@ -383,17 +391,14 @@ def enrich_match_with_house_keys(
         normalized = _norm(name)
 
         if key:
-            # A provider-backed recipe ingredient may only match the same provider
-            # identity.  Name fallback is retained solely for legacy/keyless pantry
-            # rows that predate provider-key storage.
+            # Provider-backed ingredients may only match the same provider identity.
+            # Name fallback is retained solely for old keyless pantry rows.
             at_home = key in house_keys or normalized in house_keyless_names
             contradicted_name_match = (
                 not at_home
                 and normalized in (house_names | matched_names | missing_names)
             )
         else:
-            # A keyless recipe ingredient has no stronger identity available, so the
-            # normalized name remains the best compatibility signal.
             at_home = normalized in house_names or normalized in matched_names
             contradicted_name_match = False
 

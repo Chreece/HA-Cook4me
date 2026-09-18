@@ -9,10 +9,14 @@ from typing import Any, Iterable
 try:
     from . import release_catalog_legacy as _legacy
     from . import recipe_metrics_v60 as _metrics
+    from . import catalog_presentation as _presentation
     from .catalog_search_index import (
         compile_search_index,
         prepare_search_index,
         search_index,
+        resolved_query_text,
+        normalize_search_text,
+        prepare_catalog_query_aliases,
     )
 except ImportError:  # Standalone unit-test import via spec_from_file_location.
     def _load_sibling(module_name: str, filename: str):
@@ -31,12 +35,16 @@ except ImportError:  # Standalone unit-test import via spec_from_file_location.
     _metrics = _load_sibling(
         "cook4me_recipe_metrics_runtime_test", "recipe_metrics_v60.py"
     )
+    _presentation = _load_sibling("cook4me_catalog_presentation", "catalog_presentation.py")
     _search_module = _load_sibling(
         "cook4me_catalog_search_index_runtime_test", "catalog_search_index.py"
     )
     compile_search_index = _search_module.compile_search_index
     prepare_search_index = _search_module.prepare_search_index
     search_index = _search_module.search_index
+    resolved_query_text = _search_module.resolved_query_text
+    normalize_search_text = _search_module.normalize_search_text
+    prepare_catalog_query_aliases = _search_module.prepare_catalog_query_aliases
 
 
 _SCHEMA_VERSION = _legacy._SCHEMA_VERSION
@@ -84,6 +92,7 @@ def _prepare_fast_indexes(payload: dict[str, Any]) -> None:
         # release builds should ship searchIndex so this work stays build-time.
         compiled = compile_search_index(payload)
     payload["_runtimeSearchIndex"] = prepare_search_index(compiled)
+    payload["_runtimeSearchIndex"]["catalogQueryAliases"] = prepare_catalog_query_aliases(payload, _presentation.labels())
     payload["_runtimeSearchPrecompiled"] = precompiled
 
     variants: dict[str, int] = {}
@@ -117,6 +126,7 @@ def _prepare_fast_indexes(payload: dict[str, Any]) -> None:
     # Recipe totals are cheap to calculate for the handful of rows materialized
     # by a page request, avoiding one large duplicated vector per variant.
     payload["_runtimeNutritionIndex"] = _metrics.build_nutrition_index(ingredient_rows)
+    _presentation.prepare_families(payload)
 
 
 def _global_ingredient(payload: dict[str, Any], row: Any) -> dict[str, Any] | None:
@@ -150,6 +160,25 @@ def _enrich_display_ingredient(
         if source.get(field) not in (None, "", {}, []):
             out[field] = deepcopy(source[field])
     return out
+
+
+def ingredient_nutrition_profile(ingredient: Any) -> dict[str, Any] | None:
+    """Read one catalog profile by explicit ingredient identity, never by name.
+
+    Recipe/picker rows intentionally omit nutrient blobs. Resolve the selected
+    row against the immutable global table without copying the full catalog or
+    borrowing evidence from a similarly named food or a semantic sibling.
+    """
+    source = _global_ingredient(load_release_catalog(), ingredient)
+    if not source or source.get("nutritionEligible") is False:
+        return None
+    if _text(source.get("classification")).lower() in _NON_FOOD_CLASSIFICATIONS:
+        return None
+    profile = _metrics.normalize_nutrition_profile(source.get("nutrition"))
+    if profile is not None:
+        profile["ingredientId"] = _text(source.get("id") or source.get("ingredientId") or source.get("key"))
+        profile["estimated"] = True
+    return profile
 
 
 def _enrich_recipe_row(
@@ -423,6 +452,7 @@ def recipe_by_variant(
             language=language,
             configured_language=configured_language,
             country=country,
+            variant_id=wanted,
         ),
     )
 

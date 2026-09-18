@@ -147,7 +147,7 @@ class Cook4MeRecipeHubPanelV16 extends BasePanel {
         <label style="display:flex;align-items:center;gap:6px;min-height:42px"><input data-consume-check type="checkbox" checked ${unlimited?"disabled":""}> ${this._escape(this._t("consume"))}</label>
         <div><strong>${this._escape(row.name||"")}</strong><div class="muted">${this._escape(this._t("currentStock"))}: ${this._escape(unlimited?"∞":`${row.stockQuantity??"?"}${row.stockUnit?` ${row.stockUnit}`:""}`)}</div></div>
         <div class="field"><label>${this._escape(this._t("recipeAmount"))}</label><input data-consume-amount type="number" min="0" step="any" value="${this._escape(amount)}" ${unlimited?"disabled":""}></div>
-        <div class="field"><label>${this._escape(this._t("unit"))}</label><input data-consume-unit value="${this._escape(row.unit||"")}" list="cook4meStockUnits" ${unlimited?"disabled":""}></div>
+        <div class="field"><label>${this._escape(this._t("unit"))}</label>${this._unitInput(row.unit,`data-consume-unit ${unlimited?"disabled":""}`)}</div>
       </div>`;
     }).join("");
     return `<section class="card" style="border-left:4px solid var(--primary-color)"><h2 style="margin-top:0">${this._escape(this._t("consumeTitle"))}</h2><div class="muted"><strong>${this._escape(pending.recipeTitle||"")}</strong> · ${this._escape(this._t("consumeHelp"))}</div><div style="margin-top:10px">${rows}</div><div class="toolbar" style="margin-top:12px"><button id="confirmConsumption" class="btn">${this._escape(this._t("confirmConsumption"))}</button><button id="clearConsumption" class="btn secondary">${this._escape(this._t("nothingConsumed"))}</button></div></section>`;
@@ -189,7 +189,7 @@ class Cook4MeRecipeHubPanelV16 extends BasePanel {
       <div class="field"><label>${this._escape(this._t("ingredientSearch"))}</label><input id="houseSearch" value="${this._escape(this._houseFilter)}" placeholder="${this._escape(this._t("ingredientSearch"))}"></div>
       <div class="field wide"><select id="houseCatalog" size="8" style="min-height:180px"></select></div>
       <div class="field"><label>${this._escape(this._t("amount"))}</label><input id="stockAddAmount" type="number" min="0" step="any"></div>
-      <div class="field"><label>${this._escape(this._t("unit"))}</label><input id="stockAddUnit" list="cook4meStockUnits"><datalist id="cook4meStockUnits"><option value="g"><option value="kg"><option value="ml"><option value="l"><option value="pcs"></datalist></div>
+      <div class="field"><label>${this._escape(this._t("unit"))}</label>${this._unitInput('','id="stockAddUnit"')}<datalist id="cook4meStockUnits"><option value="g"><option value="kg"><option value="ml"><option value="l"><option value="pcs"></datalist></div>
       <div class="field wide"><label style="display:flex;align-items:center;gap:8px"><input id="stockAddUnlimited" type="checkbox"> ${this._escape(this._t("unlimited"))}</label><button id="houseAdd" type="button" class="btn secondary" style="margin-top:8px">${this._escape(this._t("addStock"))}</button>${this._ingredientCatalogLoading?`<span class="muted">${this._escape(this._t("catalogLoading"))}</span>`:""}</div>
       <div class="field"><label>${this._t("allergies")}</label><textarea id="allergies">${this._escape(join(p.allergies))}</textarea></div>
       <div class="field"><label>${this._t("avoid")}</label><textarea id="avoid">${this._escape(join(p.avoid))}</textarea></div>

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Any
+from copy import deepcopy
 
 import voluptuous as vol
 from homeassistant.components import persistent_notification
@@ -76,9 +77,10 @@ def _format_recipe_amount(row: dict[str, Any]) -> str:
     return f"{shown} {unit}".strip()
 
 
-async def _handle_recipe_completed(bridge: Cook4MeBridge) -> None:
+async def _handle_recipe_completed(bridge: Cook4MeBridge, completed_state=None) -> None:
     """Create a stock-consumption confirmation only for an explicit done phase."""
-    variant = str(bridge.data.get("variantFunctionalId") or "").strip()
+    completed_state = deepcopy(bridge.data if completed_state is None else completed_state)
+    variant = str(completed_state.get("variantFunctionalId") or "").strip()
     recipe: dict[str, Any] | None = None
     if variant:
         cached = bridge._recipe_cache.get(variant)
@@ -92,15 +94,15 @@ async def _handle_recipe_completed(bridge: Cook4MeBridge) -> None:
 
     if recipe is None:
         recipe = {
-            "title": bridge.data.get("recipeTitle"),
-            "groupingFunctionalId": bridge.data.get("groupingFunctionalId")
-            or bridge.data.get("recipeFunctionalId"),
-            "variantFunctionalId": bridge.data.get("variantFunctionalId"),
-            "recipeFunctionalId": bridge.data.get("variantFunctionalId"),
-            "ingredients": bridge.data.get("recipeIngredients") or [],
+            "title": completed_state.get("recipeTitle"),
+            "groupingFunctionalId": completed_state.get("groupingFunctionalId")
+            or completed_state.get("recipeFunctionalId"),
+            "variantFunctionalId": completed_state.get("variantFunctionalId"),
+            "recipeFunctionalId": completed_state.get("variantFunctionalId"),
+            "ingredients": completed_state.get("recipeIngredients") or [],
         }
     else:
-        recipe.setdefault("title", bridge.data.get("recipeTitle"))
+        recipe.setdefault("title", completed_state.get("recipeTitle"))
         recipe.setdefault("variantFunctionalId", variant)
 
     pending = await bridge.recipe_hub.async_prepare_consumption(recipe)
@@ -150,7 +152,8 @@ def _register_completion_listener(bridge: Cook4MeBridge) -> None:
             and state["completed_session"] != state["session"]
         ):
             state["completed_session"] = state["session"]
-            bridge.hass.async_create_task(_handle_recipe_completed(bridge))
+            bridge.async_create_task(_handle_recipe_completed(bridge, deepcopy(bridge.data)),
+                                     "Cook4Me completed recipe")
         state["phase"] = phase
         state["active"] = active
 
@@ -166,6 +169,11 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     # first panel/search request never pays a synchronous JSON parse on the
     # event loop. load_release_catalog() is LRU-cached after this warm-up.
     await async_warm_release_catalog(hass)
+    from .price_measurements import _portions, _densities
+    from .price_snapshot import _load as load_price_snapshot
+    await hass.async_add_executor_job(_portions)
+    await hass.async_add_executor_job(_densities)
+    await hass.async_add_executor_job(load_price_snapshot)
 
     async def handle_send_recipe(call: ServiceCall) -> dict[str, Any] | None:
         bridge = _get_bridge(hass, call.data.get("entry_id"))
@@ -297,27 +305,47 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    from .device_settings import DeviceSettings
+    from .announcements import Announcements
     bridge = Cook4MeBridge(hass, entry)
-    await bridge.async_start()
-    entry.runtime_data = bridge
-    hass.data.setdefault(DOMAIN, {}).setdefault(DATA_BRIDGES, {})[entry.entry_id] = bridge
-    _register_completion_listener(bridge)
-    update_expiry_notification(bridge)
-    bridge._expiry_listener_unsub = register_daily_expiry_check(bridge)
-    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    bridge.device_settings = DeviceSettings(bridge)
+    try:
+        await bridge.device_settings.async_load()
+        await bridge.async_start()
+        entry.runtime_data = bridge
+        hass.data.setdefault(DOMAIN, {}).setdefault(DATA_BRIDGES, {})[entry.entry_id] = bridge
+        _register_completion_listener(bridge)
+        update_expiry_notification(bridge)
+        bridge._expiry_listener_unsub = register_daily_expiry_check(bridge)
+        # Restore registry defaults before platforms decide which entities load.
+        await bridge.device_settings.async_consolidate_entities()
+        await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+        bridge.announcements = Announcements(bridge, bridge.device_settings)
+        bridge.announcements.start()
+    except BaseException:
+        await _async_cleanup_bridge(bridge)
+        raise
     return True
+
+
+async def _async_cleanup_bridge(bridge: Cook4MeBridge) -> None:
+    # Remove the entry first so the queue watcher cannot schedule new sends.
+    bridge._stopping = True
+    bridge.hass.data.get(DOMAIN, {}).get(DATA_BRIDGES, {}).pop(bridge.entry.entry_id, None)
+    announcements = getattr(bridge, "announcements", None)
+    if announcements is not None:
+        await announcements.close()
+    for name in ("_completion_listener_unsub", "_expiry_listener_unsub"):
+        unsubscribe = getattr(bridge, name, None)
+        if callable(unsubscribe):
+            unsubscribe()
+            setattr(bridge, name, None)
+    dismiss_expiry_notification(bridge)
+    await bridge.async_stop()
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     if ok:
-        completion_unsub = getattr(entry.runtime_data, "_completion_listener_unsub", None)
-        if callable(completion_unsub):
-            completion_unsub()
-        expiry_unsub = getattr(entry.runtime_data, "_expiry_listener_unsub", None)
-        if callable(expiry_unsub):
-            expiry_unsub()
-        dismiss_expiry_notification(entry.runtime_data)
-        await entry.runtime_data.async_stop()
-        hass.data.get(DOMAIN, {}).get(DATA_BRIDGES, {}).pop(entry.entry_id, None)
+        await _async_cleanup_bridge(entry.runtime_data)
     return ok

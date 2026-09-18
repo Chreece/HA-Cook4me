@@ -134,6 +134,7 @@ def _today_options(bridge) -> dict[str, Any]:
 
 
 def _capabilities(hass: HomeAssistant, bridge) -> dict[str, Any]:
+    from .local_ai import translation_capabilities
     device_language = v11._device_language(bridge)
     ai_task = v5._default_ai_task_entity_id(hass)
     return {
@@ -142,6 +143,7 @@ def _capabilities(hass: HomeAssistant, bridge) -> dict[str, Any]:
         "ingredientCatalogLanguage": device_language,
         "defaultAiTaskAvailable": ai_task is not None,
         "defaultAiTaskEntityId": ai_task,
+        **translation_capabilities(hass),
         "preferences": bridge.recipe_hub.ui_preferences,
     }
 

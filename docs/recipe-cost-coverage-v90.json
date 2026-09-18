@@ -1,0 +1,1138 @@
+{
+  "market": "DE",
+  "currency": "EUR",
+  "asOf": "2026-09-16",
+  "base": "9346ea913a7b1c68a5888161b0a277803f1fd9a3",
+  "variantCounts": true,
+  "results": {
+    "before": {
+      "summary": {
+        "all": {
+          "partial": 26533,
+          "pricedIngredients": 121610,
+          "pricedFoodIngredients": 106862,
+          "pricedWaterIngredients": 14748,
+          "totalIngredients": 230483,
+          "noCost": 1944,
+          "complete": 3686
+        },
+        "ja": {
+          "partial": 1239,
+          "pricedIngredients": 3494,
+          "pricedFoodIngredients": 2664,
+          "pricedWaterIngredients": 830,
+          "totalIngredients": 14090,
+          "noCost": 140
+        },
+        "zh": {
+          "partial": 493,
+          "pricedIngredients": 1425,
+          "pricedFoodIngredients": 1088,
+          "pricedWaterIngredients": 337,
+          "totalIngredients": 4896,
+          "noCost": 163,
+          "complete": 154
+        },
+        "en": {
+          "partial": 1593,
+          "pricedIngredients": 7664,
+          "pricedFoodIngredients": 6657,
+          "pricedWaterIngredients": 1007,
+          "totalIngredients": 12660,
+          "complete": 277,
+          "noCost": 127
+        },
+        "hu": {
+          "partial": 1742,
+          "pricedIngredients": 8376,
+          "pricedFoodIngredients": 7546,
+          "pricedWaterIngredients": 830,
+          "totalIngredients": 15069,
+          "complete": 204,
+          "noCost": 75
+        },
+        "de": {
+          "partial": 1998,
+          "pricedIngredients": 10183,
+          "pricedFoodIngredients": 9194,
+          "pricedWaterIngredients": 989,
+          "totalIngredients": 16855,
+          "complete": 273,
+          "noCost": 143
+        },
+        "hr": {
+          "partial": 142,
+          "pricedIngredients": 464,
+          "pricedFoodIngredients": 395,
+          "pricedWaterIngredients": 69,
+          "totalIngredients": 1351,
+          "noCost": 3
+        },
+        "pt": {
+          "partial": 696,
+          "pricedIngredients": 2801,
+          "pricedFoodIngredients": 2267,
+          "pricedWaterIngredients": 534,
+          "totalIngredients": 5432,
+          "complete": 231,
+          "noCost": 156
+        },
+        "es": {
+          "partial": 1114,
+          "pricedIngredients": 5541,
+          "pricedFoodIngredients": 4858,
+          "pricedWaterIngredients": 683,
+          "totalIngredients": 9515,
+          "noCost": 131,
+          "complete": 227
+        },
+        "fr": {
+          "noCost": 130,
+          "pricedIngredients": 13676,
+          "pricedFoodIngredients": 12296,
+          "pricedWaterIngredients": 1380,
+          "totalIngredients": 22093,
+          "partial": 2520,
+          "complete": 331
+        },
+        "it": {
+          "noCost": 158,
+          "pricedIngredients": 8825,
+          "pricedFoodIngredients": 7827,
+          "pricedWaterIngredients": 998,
+          "totalIngredients": 18008,
+          "partial": 2203,
+          "complete": 255
+        },
+        "tr": {
+          "partial": 432,
+          "pricedIngredients": 1188,
+          "pricedFoodIngredients": 1068,
+          "pricedWaterIngredients": 120,
+          "totalIngredients": 3732,
+          "noCost": 18
+        },
+        "pl": {
+          "partial": 2890,
+          "pricedIngredients": 15368,
+          "pricedFoodIngredients": 13905,
+          "pricedWaterIngredients": 1463,
+          "totalIngredients": 26635,
+          "complete": 358,
+          "noCost": 160
+        },
+        "cs": {
+          "partial": 1742,
+          "pricedIngredients": 8662,
+          "pricedFoodIngredients": 7857,
+          "pricedWaterIngredients": 805,
+          "totalIngredients": 15206,
+          "complete": 203,
+          "noCost": 75
+        },
+        "sk": {
+          "partial": 1769,
+          "pricedIngredients": 8777,
+          "pricedFoodIngredients": 7969,
+          "pricedWaterIngredients": 808,
+          "totalIngredients": 15320,
+          "complete": 207,
+          "noCost": 74
+        },
+        "ro": {
+          "partial": 1354,
+          "pricedIngredients": 6813,
+          "pricedFoodIngredients": 5889,
+          "pricedWaterIngredients": 924,
+          "totalIngredients": 11468,
+          "complete": 185,
+          "noCost": 66
+        },
+        "sl": {
+          "partial": 10,
+          "pricedIngredients": 43,
+          "pricedFoodIngredients": 41,
+          "pricedWaterIngredients": 2,
+          "totalIngredients": 71
+        },
+        "ru": {
+          "partial": 802,
+          "pricedIngredients": 4531,
+          "pricedFoodIngredients": 4192,
+          "pricedWaterIngredients": 339,
+          "totalIngredients": 7128,
+          "complete": 45,
+          "noCost": 1
+        },
+        "bg": {
+          "partial": 1289,
+          "pricedIngredients": 5006,
+          "pricedFoodIngredients": 4239,
+          "pricedWaterIngredients": 767,
+          "totalIngredients": 10918,
+          "noCost": 74,
+          "complete": 170
+        },
+        "uk": {
+          "partial": 1228,
+          "pricedIngredients": 4679,
+          "pricedFoodIngredients": 3953,
+          "pricedWaterIngredients": 726,
+          "totalIngredients": 10389,
+          "complete": 249,
+          "noCost": 200
+        },
+        "ar": {
+          "partial": 857,
+          "pricedIngredients": 2634,
+          "pricedFoodIngredients": 1988,
+          "pricedWaterIngredients": 646,
+          "totalIngredients": 6511,
+          "complete": 195,
+          "noCost": 40
+        },
+        "ko": {
+          "complete": 122,
+          "pricedIngredients": 1460,
+          "pricedFoodIngredients": 969,
+          "pricedWaterIngredients": 491,
+          "totalIngredients": 3136,
+          "partial": 420,
+          "noCost": 10
+        }
+      },
+      "largestMissing": [
+        [
+          "Salt",
+          9228
+        ],
+        [
+          "Pepper",
+          3965
+        ],
+        [
+          "Garlic",
+          2357
+        ],
+        [
+          "Salt and pepper",
+          2253
+        ],
+        [
+          "Beef",
+          954
+        ],
+        [
+          "Parsley",
+          933
+        ],
+        [
+          "Cumin",
+          882
+        ],
+        [
+          "Oil",
+          871
+        ],
+        [
+          "Spices",
+          805
+        ],
+        [
+          "Sugar",
+          742
+        ],
+        [
+          "Ginger",
+          741
+        ],
+        [
+          "Olive oil",
+          739
+        ],
+        [
+          "Bay",
+          725
+        ],
+        [
+          "Stock",
+          700
+        ],
+        [
+          "Egg yolk",
+          619
+        ],
+        [
+          "Soy sauce",
+          608
+        ],
+        [
+          "Water",
+          582
+        ],
+        [
+          "Sake",
+          564
+        ],
+        [
+          "Chicken thigh",
+          552
+        ],
+        [
+          "Basil",
+          539
+        ],
+        [
+          "Icing sugar",
+          529
+        ],
+        [
+          "Salmon",
+          513
+        ],
+        [
+          "Mixed herbs",
+          507
+        ],
+        [
+          "Asparagus",
+          502
+        ],
+        [
+          "Cod",
+          487
+        ]
+      ],
+      "examples": [
+        {
+          "id": "331197",
+          "title": "Chicken and cauliflower stew",
+          "priced": 4,
+          "total": 7,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Poultry",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Mixed herbs",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "826311",
+          "title": "Curry de tofu et brocolis",
+          "priced": 5,
+          "total": 6,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "252627",
+          "title": "Mushroom risotto",
+          "priced": 5,
+          "total": 6,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Chestnut",
+              "reason": "price/unit missing"
+            }
+          ]
+        },
+        {
+          "id": "487446",
+          "title": "Nouilles curry rouge",
+          "priced": 5,
+          "total": 7,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Curry",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Wheat pasta",
+              "reason": "price/unit missing"
+            }
+          ]
+        },
+        {
+          "id": "357993",
+          "title": "Okruglice u umaku od rajčice",
+          "priced": 4,
+          "total": 10,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Pike dumplings",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Sun-dried tomatoes (optional)",
+              "reason": "price/unit missing"
+            },
+            {
+              "name": "Mixed herbs",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Ketchup",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Sugar",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Oil",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "317075",
+          "title": "One-pot-Pasta mit ger. Tofu",
+          "priced": 3,
+          "total": 7,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Whole-grain pasta",
+              "reason": "price/unit missing"
+            },
+            {
+              "name": "Flageolet beans",
+              "reason": "price/unit missing"
+            },
+            {
+              "name": "Tofu",
+              "reason": "price/unit missing"
+            },
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "307808",
+          "title": "Pear and honey couscous",
+          "priced": 4,
+          "total": 5,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Cinnamon",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "734674",
+          "title": "Poulet au curry sucré salé",
+          "priced": 5,
+          "total": 8,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Poultry fillet",
+              "reason": "price/unit missing"
+            },
+            {
+              "name": "Raisin",
+              "reason": "price/unit missing"
+            },
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "816820",
+          "title": "Risotto alla milanese",
+          "priced": 3,
+          "total": 8,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Stock",
+              "reason": "price/unit missing"
+            },
+            {
+              "name": "Saffron",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Bone marrow",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Parmesan",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "834652",
+          "title": "Risotto aux asperges",
+          "priced": 6,
+          "total": 8,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Green asparagus",
+              "reason": "price/unit missing"
+            },
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "834656",
+          "title": "Risotto aux champignons",
+          "priced": 7,
+          "total": 8,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "287823",
+          "title": "Směs těstovin s uzeným tofu",
+          "priced": 5,
+          "total": 7,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Bean",
+              "reason": "price/unit missing"
+            },
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "862912",
+          "title": "Къри със зеленчуци",
+          "priced": 5,
+          "total": 7,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Radish",
+              "reason": "price/unit missing"
+            },
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "341615",
+          "title": "طاجن الخضراوات الجذرية",
+          "priced": 1,
+          "total": 9,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Onion, peeled and finely chopped",
+              "reason": "price/unit missing"
+            },
+            {
+              "name": "Raw red beetroot, peeled and cut into long strips",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Carrots, peeled and sliced into rounds",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Parsnip, peeled and sliced into rounds",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Jerusalem artichoke, peeled and diced",
+              "reason": "price/unit missing"
+            },
+            {
+              "name": "Herb bundle",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Cinnamon",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Tablespoon of olive oil",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "summary": {
+        "all": {
+          "partial": 26584,
+          "pricedIngredients": 123465,
+          "pricedFoodIngredients": 108717,
+          "pricedWaterIngredients": 14748,
+          "totalIngredients": 230483,
+          "noCost": 1902,
+          "complete": 3677
+        },
+        "ja": {
+          "partial": 1239,
+          "pricedIngredients": 3497,
+          "pricedFoodIngredients": 2667,
+          "pricedWaterIngredients": 830,
+          "totalIngredients": 14090,
+          "noCost": 140
+        },
+        "zh": {
+          "partial": 504,
+          "pricedIngredients": 1425,
+          "pricedFoodIngredients": 1088,
+          "pricedWaterIngredients": 337,
+          "totalIngredients": 4896,
+          "noCost": 167,
+          "complete": 139
+        },
+        "en": {
+          "partial": 1590,
+          "pricedIngredients": 7733,
+          "pricedFoodIngredients": 6726,
+          "pricedWaterIngredients": 1007,
+          "totalIngredients": 12660,
+          "complete": 280,
+          "noCost": 127
+        },
+        "hu": {
+          "partial": 1743,
+          "pricedIngredients": 8446,
+          "pricedFoodIngredients": 7616,
+          "pricedWaterIngredients": 830,
+          "totalIngredients": 15069,
+          "complete": 204,
+          "noCost": 74
+        },
+        "de": {
+          "partial": 1998,
+          "pricedIngredients": 10257,
+          "pricedFoodIngredients": 9268,
+          "pricedWaterIngredients": 989,
+          "totalIngredients": 16855,
+          "complete": 273,
+          "noCost": 143
+        },
+        "hr": {
+          "partial": 142,
+          "pricedIngredients": 473,
+          "pricedFoodIngredients": 404,
+          "pricedWaterIngredients": 69,
+          "totalIngredients": 1351,
+          "noCost": 3
+        },
+        "pt": {
+          "partial": 703,
+          "pricedIngredients": 2876,
+          "pricedFoodIngredients": 2342,
+          "pricedWaterIngredients": 534,
+          "totalIngredients": 5432,
+          "complete": 231,
+          "noCost": 149
+        },
+        "es": {
+          "partial": 1113,
+          "pricedIngredients": 5596,
+          "pricedFoodIngredients": 4913,
+          "pricedWaterIngredients": 683,
+          "totalIngredients": 9515,
+          "noCost": 131,
+          "complete": 228
+        },
+        "fr": {
+          "noCost": 130,
+          "pricedIngredients": 13834,
+          "pricedFoodIngredients": 12454,
+          "pricedWaterIngredients": 1380,
+          "totalIngredients": 22093,
+          "partial": 2518,
+          "complete": 333
+        },
+        "it": {
+          "noCost": 157,
+          "pricedIngredients": 8845,
+          "pricedFoodIngredients": 7847,
+          "pricedWaterIngredients": 998,
+          "totalIngredients": 18008,
+          "partial": 2204,
+          "complete": 255
+        },
+        "tr": {
+          "partial": 432,
+          "pricedIngredients": 1403,
+          "pricedFoodIngredients": 1283,
+          "pricedWaterIngredients": 120,
+          "totalIngredients": 3732,
+          "noCost": 18
+        },
+        "pl": {
+          "partial": 2890,
+          "pricedIngredients": 15442,
+          "pricedFoodIngredients": 13979,
+          "pricedWaterIngredients": 1463,
+          "totalIngredients": 26635,
+          "complete": 358,
+          "noCost": 160
+        },
+        "cs": {
+          "partial": 1742,
+          "pricedIngredients": 8741,
+          "pricedFoodIngredients": 7936,
+          "pricedWaterIngredients": 805,
+          "totalIngredients": 15206,
+          "complete": 203,
+          "noCost": 75
+        },
+        "sk": {
+          "partial": 1769,
+          "pricedIngredients": 8856,
+          "pricedFoodIngredients": 8048,
+          "pricedWaterIngredients": 808,
+          "totalIngredients": 15320,
+          "complete": 207,
+          "noCost": 74
+        },
+        "ro": {
+          "partial": 1354,
+          "pricedIngredients": 6890,
+          "pricedFoodIngredients": 5966,
+          "pricedWaterIngredients": 924,
+          "totalIngredients": 11468,
+          "complete": 185,
+          "noCost": 66
+        },
+        "sl": {
+          "partial": 10,
+          "pricedIngredients": 44,
+          "pricedFoodIngredients": 42,
+          "pricedWaterIngredients": 2,
+          "totalIngredients": 71
+        },
+        "ru": {
+          "partial": 803,
+          "pricedIngredients": 4583,
+          "pricedFoodIngredients": 4244,
+          "pricedWaterIngredients": 339,
+          "totalIngredients": 7128,
+          "complete": 45
+        },
+        "bg": {
+          "partial": 1293,
+          "pricedIngredients": 5215,
+          "pricedFoodIngredients": 4448,
+          "pricedWaterIngredients": 767,
+          "totalIngredients": 10918,
+          "noCost": 70,
+          "complete": 170
+        },
+        "uk": {
+          "partial": 1257,
+          "pricedIngredients": 4854,
+          "pricedFoodIngredients": 4128,
+          "pricedWaterIngredients": 726,
+          "totalIngredients": 10389,
+          "complete": 249,
+          "noCost": 171
+        },
+        "ar": {
+          "partial": 860,
+          "pricedIngredients": 2904,
+          "pricedFoodIngredients": 2258,
+          "pricedWaterIngredients": 646,
+          "totalIngredients": 6511,
+          "complete": 195,
+          "noCost": 37
+        },
+        "ko": {
+          "complete": 122,
+          "pricedIngredients": 1551,
+          "pricedFoodIngredients": 1060,
+          "pricedWaterIngredients": 491,
+          "totalIngredients": 3136,
+          "partial": 420,
+          "noCost": 10
+        }
+      },
+      "largestMissing": [
+        [
+          "Salt",
+          9228
+        ],
+        [
+          "Pepper",
+          3965
+        ],
+        [
+          "Garlic",
+          2357
+        ],
+        [
+          "Salt and pepper",
+          2253
+        ],
+        [
+          "Beef",
+          954
+        ],
+        [
+          "Parsley",
+          933
+        ],
+        [
+          "Cumin",
+          882
+        ],
+        [
+          "Oil",
+          871
+        ],
+        [
+          "Spices",
+          805
+        ],
+        [
+          "Sugar",
+          742
+        ],
+        [
+          "Ginger",
+          741
+        ],
+        [
+          "Olive oil",
+          739
+        ],
+        [
+          "Bay",
+          725
+        ],
+        [
+          "Stock",
+          700
+        ],
+        [
+          "Egg yolk",
+          619
+        ],
+        [
+          "Soy sauce",
+          608
+        ],
+        [
+          "Water",
+          582
+        ],
+        [
+          "Sake",
+          564
+        ],
+        [
+          "Chicken thigh",
+          552
+        ],
+        [
+          "Basil",
+          539
+        ],
+        [
+          "Icing sugar",
+          529
+        ],
+        [
+          "Salmon",
+          513
+        ],
+        [
+          "Mixed herbs",
+          507
+        ],
+        [
+          "Asparagus",
+          502
+        ],
+        [
+          "Cod",
+          487
+        ]
+      ],
+      "examples": [
+        {
+          "id": "331197",
+          "title": "Chicken and cauliflower stew",
+          "priced": 4,
+          "total": 7,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Poultry",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Mixed herbs",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "826311",
+          "title": "Curry de tofu et brocolis",
+          "priced": 5,
+          "total": 6,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "252627",
+          "title": "Mushroom risotto",
+          "priced": 5,
+          "total": 6,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Chestnut",
+              "reason": "price/unit missing"
+            }
+          ]
+        },
+        {
+          "id": "487446",
+          "title": "Nouilles curry rouge",
+          "priced": 6,
+          "total": 7,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Curry",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "357993",
+          "title": "Okruglice u umaku od rajčice",
+          "priced": 4,
+          "total": 10,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Pike dumplings",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Sun-dried tomatoes (optional)",
+              "reason": "price/unit missing"
+            },
+            {
+              "name": "Mixed herbs",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Ketchup",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Sugar",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Oil",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "317075",
+          "title": "One-pot-Pasta mit ger. Tofu",
+          "priced": 6,
+          "total": 7,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "307808",
+          "title": "Pear and honey couscous",
+          "priced": 4,
+          "total": 5,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Cinnamon",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "734674",
+          "title": "Poulet au curry sucré salé",
+          "priced": 7,
+          "total": 8,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "816820",
+          "title": "Risotto alla milanese",
+          "priced": 3,
+          "total": 8,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Stock",
+              "reason": "price/unit missing"
+            },
+            {
+              "name": "Saffron",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Bone marrow",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Parmesan",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "834652",
+          "title": "Risotto aux asperges",
+          "priced": 6,
+          "total": 8,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Green asparagus",
+              "reason": "price/unit missing"
+            },
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "834656",
+          "title": "Risotto aux champignons",
+          "priced": 7,
+          "total": 8,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "287823",
+          "title": "Směs těstovin s uzeným tofu",
+          "priced": 6,
+          "total": 7,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "862912",
+          "title": "Къри със зеленчуци",
+          "priced": 5,
+          "total": 7,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Radish",
+              "reason": "price/unit missing"
+            },
+            {
+              "name": "Salt",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        },
+        {
+          "id": "341615",
+          "title": "طاجن الخضراوات الجذرية",
+          "priced": 7,
+          "total": 9,
+          "status": "partial",
+          "missing": [
+            {
+              "name": "Herb bundle",
+              "reason": "amount missing/unsupported"
+            },
+            {
+              "name": "Cinnamon",
+              "reason": "amount missing/unsupported"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

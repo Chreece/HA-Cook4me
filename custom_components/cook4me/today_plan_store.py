@@ -45,6 +45,9 @@ def _compact_match(value: Any) -> dict[str, Any] | None:
         "expiryBonus", "nutritionGoal", "nutritionGoalBonus",
         "nutritionGoalCoverage", "calorieTarget", "caloriePerServing",
         "calorieDelta", "calorieTargetBonus", "todayBaseScore",
+        "safe", "diet", "dietCheckVersion", "dietRulesSignature", "dietary", "violations",
+        "requiresSubstitutions", "eligibleWithSubstitutions", "substitutions", "ingredientChanges",
+        "missingIngredientCount", "quantityShortageCount",
     )
     out = {key: deepcopy(value[key]) for key in keys if key in value}
     shortages = value.get("quantityShortages")
@@ -67,7 +70,7 @@ def compact_today_recipe(value: Any) -> dict[str, Any] | None:
         "sendGroupingFunctionalId", "sendRecipeFunctionalId", "title",
         "canonicalName", "cover", "language", "market", "groupSize",
         "todayCatalogLanguage", "source", "releaseCatalogVersion",
-        "deviceCanAccept", "sendable",
+        "deviceCanAccept", "sendable", "todayMealType", "displayFamilyId", "mealTypeSource",
     )
     for key in scalar_keys:
         if key in value and value[key] not in (None, ""):
@@ -89,23 +92,23 @@ def compact_today_recipe(value: Any) -> dict[str, Any] | None:
 
 
 def compact_today_result(result: Any) -> dict[str, Any] | None:
-    if not isinstance(result, dict):
+    if not isinstance(result, dict) or not isinstance(result.get("items"), list):
         return None
     items = [
         compact
         for raw in (result.get("items") or [])[:_MAX_ITEMS]
         if (compact := compact_today_recipe(raw)) is not None
     ]
-    if not items:
-        return None
     out: dict[str, Any] = {"date": _text(result.get("date")), "items": items}
     for key in (
         "candidateCount", "rankedCount", "catalogCandidateCounts",
         "catalogRankedCounts", "catalogSelectedCounts", "catalogLanguagesUsed",
-        "filters", "catalogMode", "catalogVersion",
+        "filters", "catalogMode", "catalogVersion", "categoryCounts", "emptyMealTypes",
     ):
         if key in result:
             out[key] = deepcopy(result[key])
+    from .today_multilang import compact_suggestion_history
+    out["suggestionHistory"] = compact_suggestion_history(result.get("suggestionHistory"))
     return out
 
 
@@ -147,9 +150,11 @@ class Cook4MeTodayPlanStore:
 
 
 async def today_plan_store_for_bridge(bridge: Any) -> Cook4MeTodayPlanStore:
-    store = getattr(bridge, "_today_plan_store", None)
-    if not isinstance(store, Cook4MeTodayPlanStore):
-        store = Cook4MeTodayPlanStore(bridge)
-        await store.async_load()
-        bridge._today_plan_store = store
-    return store
+    from .store_helpers import store_load_lock
+    async with store_load_lock(bridge, 'today_plan_store'):
+        store = getattr(bridge, "_today_plan_store", None)
+        if not isinstance(store, Cook4MeTodayPlanStore):
+            store = Cook4MeTodayPlanStore(bridge)
+            await store.async_load()
+            bridge._today_plan_store = store
+        return store

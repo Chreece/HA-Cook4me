@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import Counter
 from copy import deepcopy
 from typing import Any
 
@@ -143,3 +144,50 @@ def select_catalog_balanced(
         chosen.append(picked)
 
     return chosen
+
+
+def select_today_categories(rows, categories, languages, previous=(), history=()):
+    """Rotate eligible families across requests, then balance their catalogs.
+
+    History affects selection only after diet, pantry and other filters have
+    run. Exhausted categories reuse the least recently suggested family; a
+    translation or serving edition never counts as a new recipe.
+    """
+    from .today_logic import normalize_meal_types, recipe_matches_meal_types
+    identity = lambda row: row.get("displayFamilyId") or recipe_identity(row)
+    recent = compact_suggestion_history(history)
+    if not recent:
+        recent = [{"familyId": str(identity(row)), "language": _language(row)}
+                  for row in previous if isinstance(row, dict) and identity(row)]
+    last_seen = {row["familyId"]: index for index, row in enumerate(recent)}
+    language_counts = Counter(row["language"] for row in recent)
+    chosen, seen, counts = [], set(), {}
+    for category in normalize_meal_types(categories):
+        matching = [row for row in rows if recipe_matches_meal_types(row, [category])]
+        counts[category] = len({identity(row) for row in matching})
+        pool = [row for row in matching if identity(row) not in seen]
+        if not pool:
+            continue
+        oldest = min(last_seen.get(str(identity(row)), -1) for row in pool)
+        pool = [row for row in pool if last_seen.get(str(identity(row)), -1) == oldest]
+        least_used = min(language_counts[_language(row)] for row in pool)
+        pool = [row for row in pool if language_counts[_language(row)] == least_used]
+        selected = select_catalog_balanced(pool, 1, languages)
+        if selected:
+            row = selected[0]
+            row["todayMealType"] = category
+            seen.add(identity(row))
+            chosen.append(row)
+            language_counts[_language(row)] += 1
+    recent.extend({"familyId": str(identity(row)), "language": _language(row)} for row in chosen)
+    return {"items": chosen, "categoryCounts": counts,
+        "suggestionHistory": compact_suggestion_history(recent),
+        "emptyMealTypes": [category for category in counts if not any(row["todayMealType"] == category for row in chosen)]}
+
+
+def compact_suggestion_history(value):
+    """A bounded record of suggested families, separate from meals cooked."""
+    if not isinstance(value, (list, tuple)):
+        return []
+    return [{"familyId": str(row["familyId"])[:200], "language": str(row.get("language") or "")[:16]}
+            for row in value[-256:] if isinstance(row, dict) and row.get("familyId")]

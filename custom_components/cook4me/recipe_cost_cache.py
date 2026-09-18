@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+from datetime import datetime, timezone
 from hashlib import sha256
 import json
 from typing import Any
@@ -36,6 +37,10 @@ def _recipe_price_shape(recipe: Any) -> dict[str, Any]:
             "key": _text(raw.get("key") or raw.get("foodKey")),
             "quantity": raw.get("quantity"),
             "unit": _text(raw.get("unit")),
+            "canonicalName": _text(raw.get("canonicalName")),
+            "priceCatalogMatched": bool(raw.get("priceCatalogMatched")),
+            "priceCategory": _text(raw.get("priceCategory")),
+            "unitKey": _text(raw.get("unitKey")),
             "weight": deepcopy(raw.get("weight")) if isinstance(raw.get("weight"), dict) else None,
         })
     return {
@@ -45,6 +50,7 @@ def _recipe_price_shape(recipe: Any) -> dict[str, Any]:
         "servings": recipe.get("servings") or recipe.get("groupSize"),
         "yield": deepcopy(recipe.get("yield")) if isinstance(recipe.get("yield"), dict) else None,
         "ingredients": ingredients,
+        "quantityEvidenceVersion": 104,
     }
 
 
@@ -58,7 +64,8 @@ def _relevant_inventory(recipe: dict[str, Any], inventory: Any) -> tuple[list[di
     reference_identities = set(wanted)
     for row in normalize_inventory(inventory):
         ident = inventory_identity(row)
-        if not ident or ident not in wanted:
+        linked = {inventory_identity(link) for lot in row.get("lots") or [] for link in lot.get("ingredientLinks") or []}
+        if not ident or not ({ident} | linked) & wanted:
             continue
         lots = []
         for raw in row.get("lots") or []:
@@ -72,6 +79,7 @@ def _relevant_inventory(recipe: dict[str, Any], inventory: Any) -> tuple[list[di
                 reference_identities.add(f"barcode:{barcode}")
             lots.append({
                 "id": lot_id,
+                "ingredientLinks": raw.get("ingredientLinks") or [],
                 "barcode": barcode,
                 "quantity": raw.get("quantity"),
                 "price": raw.get("price"),
@@ -94,23 +102,11 @@ def _reference_shape(store: Any, identities: set[str]) -> list[dict[str, Any]]:
     data = getattr(store, "_data", {})
     raw_refs = data.get("references") if isinstance(data, dict) else {}
     rows: list[dict[str, Any]] = []
-    for ident in sorted(identities):
-        for raw in (raw_refs.get(ident) if isinstance(raw_refs, dict) else []) or []:
-            if not isinstance(raw, dict):
-                continue
-            rows.append({
-                "identity": ident,
-                "amount": raw.get("amount"),
-                "currency": _text(raw.get("currency")),
-                "basisQuantity": raw.get("basisQuantity"),
-                "basisUnit": _text(raw.get("basisUnit")),
-                "source": _text(raw.get("source")),
-                "confidence": _text(raw.get("confidence")),
-                "country": _text(raw.get("country")),
-                "barcode": _text(raw.get("barcode")),
-                "observationId": _text(raw.get("observationId")),
-                "date": _text(raw.get("date")),
-            })
+    for raw in (raw_refs.values() if isinstance(raw_refs, dict) else []):
+        # Current storage is composite-key -> row, not identity -> list.
+        if not isinstance(raw, dict) or raw.get("identity") not in identities:
+            continue
+        rows.append(deepcopy(raw))
     rows.sort(key=lambda row: json.dumps(row, sort_keys=True, default=str))
     return rows
 
@@ -118,9 +114,12 @@ def _reference_shape(store: Any, identities: set[str]) -> list[dict[str, Any]]:
 def pricing_fingerprint(recipe: dict[str, Any], inventory: Any, store: Any) -> str:
     stock, identities = _relevant_inventory(recipe, inventory)
     return _canonical_hash({
+        "calculatorVersion": 115,
+        "priceDate": datetime.now(timezone.utc).date().isoformat(),
         "settings": {
             "currency": _text(getattr(store, "settings", {}).get("currency")),
             "country": _text(getattr(store, "settings", {}).get("country")),
+            "autoGlobalPrices": bool(getattr(store, "settings", {}).get("autoGlobalPrices", True)),
         },
         "stock": stock,
         "references": _reference_shape(store, identities),
@@ -206,3 +205,16 @@ async def recipe_cost_cache_for_bridge(bridge: Any) -> Cook4MeRecipeCostCache:
         await cache.async_load()
         bridge._recipe_cost_cache_v1 = cache
     return cache
+
+
+async def preview_cache_token(bridge: Any) -> str:
+    """Validate browser previews without recalculating individual recipes."""
+    from .costs import cost_store_for_bridge
+    store = await cost_store_for_bridge(bridge)
+    return _canonical_hash({
+        "evidenceVersion": 104,
+        "date": datetime.now(timezone.utc).date().isoformat(),
+        "settings": store.settings,
+        "inventory": bridge.recipe_hub.profile.get("houseIngredients") or [],
+        "references": store._data.get("references", {}),
+    })

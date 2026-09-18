@@ -68,12 +68,15 @@ class Cook4MeRecipeHubPanelV3 extends HTMLElement {
   _t(k){return this._language()[k]||LANG.en[k]||k;}
   _escape(value){return String(value??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));}
   _clean(value){return String(value??"").replace(/^\s*\*+\s*/,"").trim();}
-  async _api(type,data={}){if(!this._hass)throw new Error("Home Assistant unavailable");return this._hass.connection.sendMessagePromise({type,...data});}
+  async _api(type,data={}){if(!this._hass)throw new Error("Home Assistant unavailable");return (this._v93SendJobRequest ? this._v93SendJobRequest({type,...data}) : this._hass.connection.sendMessagePromise({type,...data}));}
   _entry(){return this._entries.find(e=>e.entry_id===this._entryId)||this._entries[0]||null;}
   _splitList(text){return [...new Set(String(text||"").replace(/,/g,"\n").split(/\r?\n/).map(x=>x.trim()).filter(Boolean))];}
   _recipeLanguage(r){return String(r?.language||"").toLowerCase().split(/[-_]/)[0];}
   _servings(r){const y=r?.yield||{};return y.quantityDisplay??y.quantity??r?.groupSize??null;}
   _ingredientName(x){return this._clean(typeof x==="string"?x:(x?.name||x?.foodName||x?.applicationDescription||x?.applianceDescription||""));}
+  _displayUnit(unit){return String(unit||'');}
+  _displayAmount(quantity,unit='',unitKey='',item=null){return [quantity,this._displayUnit(unit,quantity,unitKey,item)].filter(value=>value!==undefined&&value!==null&&value!=='').join(' ');}
+  _unitInput(unit,attributes=''){return `<input ${attributes} value="${this._escape(unit||'')}">`;}
   _ingredientText(x){
     if(typeof x==="string")return this._clean(x);
     const name=this._ingredientName(x); const parts=[];

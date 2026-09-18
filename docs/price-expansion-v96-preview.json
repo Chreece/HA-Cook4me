@@ -1,0 +1,375 @@
+{
+  "recipe": {
+    "title": "v96 offline price preview",
+    "servings": 2,
+    "ingredients": [
+      {
+        "name": "Dried tarragon",
+        "quantity": 1,
+        "unit": "tsp",
+        "unitKey": "UNIT_11"
+      },
+      {
+        "name": "Dried dill",
+        "quantity": 1,
+        "unit": "tbsp",
+        "unitKey": "UNIT_12"
+      },
+      {
+        "name": "Nutmeg",
+        "quantity": 1,
+        "unit": "tsp",
+        "unitKey": "UNIT_11"
+      },
+      {
+        "name": "Fish sauce",
+        "quantity": 18,
+        "unit": "g",
+        "unitKey": "UNIT_27"
+      },
+      {
+        "name": "Whole nutmeg",
+        "quantity": 1,
+        "unit": "pcs"
+      },
+      {
+        "name": "Green lentils",
+        "quantity": 75,
+        "unit": "g",
+        "unitKey": "UNIT_27"
+      }
+    ]
+  },
+  "cost": {
+    "totalsByCurrency": {
+      "EUR": 2.45
+    },
+    "perServingByCurrency": {
+      "EUR": 1.23
+    },
+    "servings": 2.0,
+    "ingredients": [
+      {
+        "identity": "n:dried tarragon",
+        "name": "Dried tarragon",
+        "quantity": 1.0,
+        "unit": "tsp",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.17
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "knuspr-31988-v96-20260916",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.knuspr.de/31988-ostmann-estragon-gerebelt",
+            "productName": "Ostmann dried tarragon leaves",
+            "amount": 2.49,
+            "currency": "EUR",
+            "basisQuantity": 9,
+            "basisUnit": "g",
+            "date": "2026-09-16",
+            "country": "DE",
+            "location": "Knuspr Berlin and surroundings · online listing",
+            "categories": [
+              "cook4me:dried-tarragon"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Rubbed dried leaves, not powdered or fresh tarragon. VAT included; shipping excluded. Regional prices and availability vary.",
+            "category": "cook4me:dried-tarragon",
+            "identity": "n:dried tarragon",
+            "observationId": "knuspr-31988-v96-20260916",
+            "updatedAt": "2026-09-16"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_portion",
+          "label": "USDA Spices, tarragon, dried: tsp, leaves",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/170937/nutrients",
+          "fdcId": 170937,
+          "portionId": 87574,
+          "sourceQuantity": 1.0,
+          "sourceUnit": "tsp",
+          "quantity": 0.6,
+          "unit": "g",
+          "assumedCount": false
+        }
+      },
+      {
+        "identity": "n:dried dill",
+        "name": "Dried dill",
+        "quantity": 1.0,
+        "unit": "tbsp",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.35
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "knuspr-4806-v96-20260916",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.knuspr.de/en-DE/4806-ostmann-dill-tips",
+            "productName": "Ostmann dried dill tips",
+            "amount": 2.79,
+            "currency": "EUR",
+            "basisQuantity": 25,
+            "basisUnit": "g",
+            "date": "2026-09-16",
+            "country": "DE",
+            "location": "Knuspr Berlin and surroundings · online listing",
+            "categories": [
+              "cook4me:dried-dill"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Shelf-stored dried dill; fresh dill has a separate reference. VAT included; shipping excluded. Regional prices and availability vary.",
+            "category": "cook4me:dried-dill",
+            "identity": "n:dried dill",
+            "observationId": "knuspr-4806-v96-20260916",
+            "updatedAt": "2026-09-16"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_portion",
+          "label": "USDA Spices, dill weed, dried: tbsp",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/171322/nutrients",
+          "fdcId": 171322,
+          "portionId": 88434,
+          "sourceQuantity": 1.0,
+          "sourceUnit": "tbsp",
+          "quantity": 3.1,
+          "unit": "g",
+          "assumedCount": false
+        }
+      },
+      {
+        "identity": "n:nutmeg",
+        "name": "Nutmeg",
+        "quantity": 1.0,
+        "unit": "tsp",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.19
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "knuspr-4786-v96-20260916",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.knuspr.de/4786-ostmann-muskatnuss-gemahlen",
+            "productName": "Ostmann ground nutmeg",
+            "amount": 2.99,
+            "currency": "EUR",
+            "basisQuantity": 35,
+            "basisUnit": "g",
+            "date": "2026-09-16",
+            "country": "DE",
+            "location": "Knuspr Berlin and surroundings · online listing",
+            "categories": [
+              "en:nutmeg",
+              "cook4me:ground-nutmeg"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Direct product listing price. Ground reference for mass or spoon amounts; no whole-nut weight inferred. VAT included; shipping excluded. Regional prices and availability vary.",
+            "category": "en:nutmeg",
+            "identity": "n:nutmeg",
+            "observationId": "knuspr-4786-v96-20260916",
+            "updatedAt": "2026-09-16"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_portion",
+          "label": "USDA Spices, nutmeg, ground: tsp",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/171326/nutrients",
+          "fdcId": 171326,
+          "portionId": 88441,
+          "sourceQuantity": 1.0,
+          "sourceUnit": "tsp",
+          "quantity": 2.2,
+          "unit": "g",
+          "assumedCount": false
+        }
+      },
+      {
+        "identity": "n:fish sauce",
+        "name": "Fish sauce",
+        "quantity": 18.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.23
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "asia4friends-fishsauce-v96-20260916",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://asia4friends.de/fischsauce-38n-thanh-ha-500ml",
+            "productName": "Thanh Ha 38N fish sauce",
+            "amount": 7.79,
+            "currency": "EUR",
+            "basisQuantity": 500,
+            "basisUnit": "ml",
+            "date": "2026-09-16",
+            "country": "DE",
+            "location": "Asia4Friends Germany, Dresden · online listing",
+            "categories": [
+              "en:nuoc-mam-sauce"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Ready-to-use fish sauce; not stock, concentrate or fish paste. VAT included; shipping excluded. Regional prices and availability vary.",
+            "category": "en:nuoc-mam-sauce",
+            "identity": "n:fish sauce",
+            "observationId": "asia4friends-fishsauce-v96-20260916",
+            "updatedAt": "2026-09-16"
+          }
+        ],
+        "quantityEstimate": {
+          "kind": "food_density",
+          "label": "USDA Sauce, fish, ready-to-serve: tbsp; approximate spoon volume",
+          "sourceUrl": "https://fdc.nal.usda.gov/food-details/174531/nutrients",
+          "fdcId": 174531,
+          "portionId": 94526,
+          "volumeSourceUrl": "https://www.nist.gov/pml/owm/metric-si/metric-kitchen/metric-kitchen-cooking-measurement-equivalencies",
+          "sourceQuantity": 18.0,
+          "sourceUnit": "g",
+          "quantity": 15.0,
+          "unit": "ml"
+        }
+      },
+      {
+        "identity": "n:whole nutmeg",
+        "name": "Whole nutmeg",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 1.15
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "knuspr-4787-v96-20260916",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://www.knuspr.de/4787-ostmann-muskatnuesse",
+            "productName": "Ostmann whole nutmegs, two pieces",
+            "amount": 2.29,
+            "currency": "EUR",
+            "basisQuantity": 2,
+            "basisUnit": "pcs",
+            "date": "2026-09-16",
+            "country": "DE",
+            "location": "Knuspr Berlin and surroundings · online listing",
+            "categories": [
+              "en:nutmeg",
+              "cook4me:whole-nutmeg"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Pack explicitly contains two whole nuts. No mass per nut inferred. VAT included; shipping excluded. Regional prices and availability vary.",
+            "category": "cook4me:whole-nutmeg",
+            "identity": "n:whole nutmeg",
+            "observationId": "knuspr-4787-v96-20260916",
+            "updatedAt": "2026-09-16"
+          }
+        ],
+        "quantityEstimate": null
+      },
+      {
+        "identity": "n:green lentils",
+        "name": "Green lentils",
+        "quantity": 75.0,
+        "unit": "g",
+        "priced": true,
+        "coverage": 1.0,
+        "exactCoverage": 0.0,
+        "costsByCurrency": {
+          "EUR": 0.37
+        },
+        "sourceKinds": [
+          "ingredient_reference"
+        ],
+        "references": [
+          {
+            "id": "asia4friends-green-lentils-v96-20260916",
+            "source": "retail_snapshot",
+            "sourceUrl": "https://asia4friends.de/gruene-linsen-trs-500g",
+            "productName": "TRS dry green lentils",
+            "amount": 2.49,
+            "currency": "EUR",
+            "basisQuantity": 500,
+            "basisUnit": "g",
+            "date": "2026-09-16",
+            "country": "DE",
+            "location": "Asia4Friends Germany, Dresden · online listing",
+            "categories": [
+              "en:green-lentils"
+            ],
+            "usable": true,
+            "confidence": "external_observation",
+            "barcode": "",
+            "note": "Dry lentils only; cooked and canned lentils do not inherit this reference. VAT included; shipping excluded. Regional prices and availability vary.",
+            "category": "en:green-lentils",
+            "identity": "n:green lentils",
+            "observationId": "asia4friends-green-lentils-v96-20260916",
+            "updatedAt": "2026-09-16"
+          }
+        ],
+        "quantityEstimate": null
+      }
+    ],
+    "coverage": 1.0,
+    "complete": true,
+    "missingIngredientCount": 0,
+    "exactPurchaseCoverage": 0.0,
+    "estimated": true,
+    "targetCurrency": "EUR",
+    "targetCountry": "DE",
+    "currencyConversionApplied": false,
+    "costCacheHit": false,
+    "pricingFingerprint": "034f5b002ba5a09e03fa4fff36304d46ae1549b5abc650e5b06559bb75cda94f",
+    "recipePriceFingerprint": "bb3db192f9dd8290b1d508f81ad16362ef7e9c004b1590c79bb35d974b475c4d",
+    "costCacheContract": "price-evidence-fingerprint-v1",
+    "settings": {
+      "currency": "EUR",
+      "country": "DE",
+      "autoGlobalPrices": true
+    },
+    "offlinePreview": true,
+    "priceLookupPending": false,
+    "checkedAt": "2026-09-16T20:18:06.512975+00:00",
+    "foodIngredientCount": 6,
+    "pricedFoodIngredientCount": 6,
+    "waterOnlyEstimate": false
+  }
+}

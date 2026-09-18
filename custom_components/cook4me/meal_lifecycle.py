@@ -10,6 +10,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
 
 from .const import DOMAIN
+from .stock_allocation import allocate_stock
 from .inventory import convert_amount, inventory_identity, normalize_inventory
 from .today_logic import recipe_identity
 
@@ -51,6 +52,11 @@ def week_monday(value: date | datetime | None = None) -> str:
     return (current - timedelta(days=current.weekday())).isoformat()
 
 
+def rolling_week_start(value: str | None, today: date) -> str:
+    """Keep an explicit future start, but never generate an expired plan."""
+    return max(date.fromisoformat(value) if value else today, today).isoformat()
+
+
 def _meal_type(value: Any) -> str:
     token = _text(value).lower()
     return token if token in _VALID_MEAL_TYPES else "dinner"
@@ -66,6 +72,7 @@ def _recipe_snapshot(recipe: Any) -> dict[str, Any]:
         "servings", "groupSize", "yield", "ingredients", "steps", "cover",
         "image", "imageUrl", "courses", "occasions", "mealTypes", "meal_types",
         "nutrition", "officialNutrition", "match", "cost",
+        "displayFamilyId", "catalogNutrition", "sendGroupingFunctionalId", "sendRecipeFunctionalId",
     )
     return {key: deepcopy(recipe[key]) for key in keep if key in recipe}
 
@@ -85,6 +92,7 @@ def _slot(raw: Any) -> dict[str, Any] | None:
         "id": _text(raw.get("id")) or f"{stamp}:{meal_type}",
         "date": stamp,
         "mealType": meal_type,
+        "selected": raw.get("selected") is not False,
         "recipe": recipe,
         "leftoverId": leftover_id,
         "createdAt": _text(raw.get("createdAt")) or datetime.now(timezone.utc).isoformat(),
@@ -123,7 +131,11 @@ def planned_requirements(slots: Any) -> list[dict[str, Any]]:
     by_identity: dict[str, list[int]] = {}
     for raw_slot in slots if isinstance(slots, list) else []:
         slot = _slot(raw_slot)
-        if slot is None or slot.get("leftoverId"):
+        if slot is None or not slot["selected"] or slot.get("leftoverId"):
+            continue
+        if ((slot.get("recipe") or {}).get("match") or {}).get("requiresSubstitutions"):
+            # Replacement quantities are advisory; do not reserve or purchase
+            # the incompatible original ingredients for an unfinished adaptation.
             continue
         for raw in (slot.get("recipe") or {}).get("ingredients") or []:
             ingredient = _ingredient(raw)
@@ -162,17 +174,16 @@ def planned_requirements(slots: Any) -> list[dict[str, Any]]:
 def reservation_status(slots: Any, inventory: Any) -> dict[str, Any]:
     stock = normalize_inventory(inventory)
     items: list[dict[str, Any]] = []
-    for requirement in planned_requirements(slots):
-        row = next(
-            (item for item in stock if inventory_identity(item) == requirement["identity"]),
-            None,
-        )
+    requirements = planned_requirements(slots)
+    for requirement, row in zip(requirements, allocate_stock(stock, requirements)):
         required = float(requirement["quantity"])
         unlimited = bool(row and row.get("unlimited"))
-        available: float | None = required if unlimited else None
+        # An absent ingredient is out of stock. An existing row with an
+        # unknown amount or incompatible unit remains explicitly unknown.
+        available: float | None = required if unlimited else (0.0 if row is None else None)
         if row and not unlimited:
             converted = convert_amount(
-                row.get("quantity"), row.get("unit", ""), requirement["unit"]
+                row.get("availableQuantity", row.get("quantity")), row.get("unit", ""), requirement["unit"]
             )
             if converted is not None:
                 available = max(0.0, float(converted))
@@ -314,7 +325,7 @@ class Cook4MeMealLifecycleStore:
     def settings(self) -> dict[str, Any]:
         return deepcopy(self._data["settings"])
 
-    def snapshot(self, inventory: Any = None) -> dict[str, Any]:
+    def snapshot(self, inventory: Any = None, *, start_date: date | None = None) -> dict[str, Any]:
         result = {
             "weekStart": self._data["weekStart"],
             "slots": self.slots,
@@ -323,6 +334,11 @@ class Cook4MeMealLifecycleStore:
             "substitutions": deepcopy(self._data["substitutions"]),
             "settings": self.settings,
         }
+        if start_date is not None:
+            first, last = start_date.isoformat(), (start_date + timedelta(days=6)).isoformat()
+            result["weekStart"] = first
+            result["weekEnd"] = last
+            result["slots"] = [slot for slot in result["slots"] if first <= slot["date"] <= last]
         if inventory is not None:
             result["reservations"] = reservation_status(result["slots"], inventory)
             result["shoppingDelta"] = shopping_delta(result["slots"], inventory)
@@ -384,6 +400,15 @@ class Cook4MeMealLifecycleStore:
         if changed:
             await self._save()
         return changed
+
+    async def async_select_slots(self, slot_ids: list[str], selected: bool) -> None:
+        ids = set(slot_ids)
+        if not ids.issubset({row["id"] for row in self._data["slots"]}):
+            raise ValueError("Some meals are no longer in the plan. Refresh the plan and try again.")
+        for row in self._data["slots"]:
+            if row["id"] in ids:
+                row["selected"] = selected
+        await self._save()
 
     def feedback_for(self, recipe: Any) -> dict[str, Any] | None:
         key = recipe_identity(recipe) if isinstance(recipe, dict) else _text(recipe)
@@ -472,6 +497,7 @@ class Cook4MeMealLifecycleStore:
         row = {
             "id": str(uuid4()),
             "mealHistoryId": _text(meal.get("id")),
+            "recipe": _recipe_snapshot(meal.get("recipe") or {key: meal[key] for key in ("title", "groupingFunctionalId", "variantFunctionalId") if meal.get(key)}),
             "title": _text(meal.get("title")) or "Cook4Me leftovers",
             "servings": remaining,
             "originalServings": servings,
@@ -564,9 +590,11 @@ class Cook4MeMealLifecycleStore:
 
 
 async def meal_lifecycle_store_for_bridge(bridge: Any) -> Cook4MeMealLifecycleStore:
-    store = getattr(bridge, "_meal_lifecycle_store", None)
-    if store is None:
-        store = Cook4MeMealLifecycleStore(bridge.hass, bridge.entry.entry_id)
-        await store.async_load()
-        bridge._meal_lifecycle_store = store
-    return store
+    from .store_helpers import store_load_lock
+    async with store_load_lock(bridge, 'meal_lifecycle'):
+        store = getattr(bridge, "_meal_lifecycle_store", None)
+        if store is None:
+            store = Cook4MeMealLifecycleStore(bridge.hass, bridge.entry.entry_id)
+            await store.async_load()
+            bridge._meal_lifecycle_store = store
+        return store

@@ -22,12 +22,17 @@ class Cook4MeConnected(Cook4MeEntity, BinarySensorEntity):
     def is_on(self):
         return self.bridge.data.get("connected") is True
 
+    @property
+    def extra_state_attributes(self):
+        return {key: self.bridge.data.get(key) for key in
+                ("lastConnection", "lastDisconnection", "uiFirmware", "wifiFirmware", "updating")}
+
 
 class Cook4MeUpdating(Cook4MeEntity, BinarySensorEntity):
     _attr_name = "Updating"
     _attr_device_class = BinarySensorDeviceClass.UPDATE
     _attr_icon = "mdi:update"
-    _attr_entity_registry_enabled_default = False
+    _attr_entity_registry_enabled_default = True
 
     def __init__(self, bridge):
         super().__init__(bridge, "updating")

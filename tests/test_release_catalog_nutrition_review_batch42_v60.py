@@ -4,7 +4,6 @@ from pathlib import Path
 import sys
 ROOT=Path(__file__).resolve().parents[1]; TOOLS=ROOT/'tools'; sys.path.insert(0,str(TOOLS))
 import classify_nutrition_review_queue_v60 as classifier
-import nutrition_review_history_v60 as history
 import nutrition_review_holds_v60 as holds
 import resolve_reviewed_release_catalog_nutrition_targets_v60 as resolver
 import snapshot_nutrition_review_checkpoint_v60 as cp
@@ -22,7 +21,7 @@ class Batch42ExplicitReviews(unittest.TestCase):
  def setUpClass(cls):
   cls.doc=json.loads(SOURCE.read_text()); cls.items=cls.doc['items']
   cls.fixture=json.loads(FIXTURE.read_text())
-  cls.checkpoint=history.historical_checkpoint(cp.build_checkpoint(TOOLS))
+  cls.checkpoint=cp.build_checkpoint(TOOLS)
   cls.records=[r for r in cls.checkpoint['recordedBindings'] if r['reviewFile']==SOURCE.name]
   cls.targets={r['reviewTargetId']:r for r in cls.fixture['targets']}
   cls.sources={r['reviewTargetId']:{'reviewTargetId':r['reviewTargetId'],'candidates':[r['candidate']]} for r in cls.fixture['sourceCandidates']}
@@ -32,14 +31,15 @@ class Batch42ExplicitReviews(unittest.TestCase):
   self.assertEqual(hashlib.sha256(FIXTURE.read_bytes()).hexdigest(),FIXTURE_SHA)
   self.assertEqual(len(self.items),9); self.assertEqual(len({r['reviewTargetId'] for r in self.items}),9)
   self.assertEqual(sum(r['usageCountAtReview'] for r in self.items),16)
-  prior_files=[r for r in self.checkpoint['reviewFiles'] if r['path']!=SOURCE.name]
+  prior_files=[r for r in self.checkpoint['reviewFiles'] if r['path']<SOURCE.name]
   prior_names={r['path'] for r in prior_files}
   prior_bindings=[r for r in self.checkpoint['recordedBindings'] if r['reviewFile'] in prior_names]
   self.assertEqual(len(prior_files),260); self.assertEqual(len(prior_bindings),5071)
   self.assertEqual(cp._digest(cp._encoded(prior_files)),BASE_REVIEW_SHA)
   self.assertEqual(cp._digest(cp._encoded(prior_bindings)),BASE_BINDINGS_SHA)
-  self.assertEqual(self.checkpoint['summary']['reviewFileCount'],261)
-  self.assertEqual(self.checkpoint['summary']['recordedReviewTargetCount'],5080)
+  # This is the batch42 checkpoint; later explicit reviews are separate work.
+  self.assertEqual(sum(r['path']<=SOURCE.name for r in self.checkpoint['reviewFiles']),261)
+  self.assertEqual(sum(r['reviewFile']<=SOURCE.name for r in self.checkpoint['recordedBindings']),5080)
 
  def test_destination_identity_usage_and_holds(self):
   held=holds.load_holds(); self.assertEqual(len(held['targets']),12)

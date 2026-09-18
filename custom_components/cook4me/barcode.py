@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import asyncio
 import json
 import math
 import re
@@ -194,39 +195,57 @@ def suggest_catalog_matches(
         if not isinstance(row, dict):
             continue
         name = _text(row.get("name"))
-        candidate = _norm(name)
-        if not candidate:
+        if not name:
             continue
-        candidate_tokens = _tokens(candidate)
-        score = 0.0
-        reason = ""
-        if generic and candidate == generic:
-            score, reason = 1.0, "generic_exact"
-        elif generic_tokens and candidate_tokens and candidate_tokens <= generic_tokens:
-            score, reason = 0.98, "generic_tokens"
-        elif product_name and candidate == product_name:
-            score, reason = 0.97, "product_exact"
-        elif product_tokens and candidate_tokens and candidate_tokens <= product_tokens:
-            score, reason = 0.95, "product_tokens"
-        elif candidate in category_names:
-            score, reason = 0.94, "category_exact"
-        elif _near_token_set(candidate_tokens, generic_tokens) or _near_token_set(candidate_tokens, product_tokens):
-            score, reason = 0.93, "near_token"
-        elif product_tokens and candidate_tokens:
-            union = product_tokens | candidate_tokens
-            overlap = len(product_tokens & candidate_tokens) / len(union) if union else 0.0
-            if overlap >= 0.5:
-                score, reason = min(0.89, 0.72 + overlap * 0.17), "token_similarity"
+        # Search every reviewed language alias, while keeping the selected UI
+        # label and ingredient identity in the result. No translation service.
+        def strings(value):
+            if isinstance(value, str):
+                yield value
+            elif isinstance(value, dict):
+                for item in value.values():
+                    yield from strings(item)
+            elif isinstance(value, (list, tuple)):
+                for item in value:
+                    yield from strings(item)
+        aliases = {_norm(alias) for field in ("name", "canonicalName", "searchAliases", "aliases", "translations")
+                   for alias in strings(row.get(field)) if alias.strip()}
+        score, reason, matched_alias = 0.0, "", ""
+        for candidate in sorted(aliases):
+            if not candidate:
+                continue
+            candidate_tokens = _tokens(candidate)
+            value, why = 0.0, ""
+            if generic and candidate == generic:
+                value, why = 1.0, "generic_exact"
+            elif generic_tokens and candidate_tokens and candidate_tokens <= generic_tokens:
+                value, why = 0.98, "generic_tokens"
+            elif product_name and candidate == product_name:
+                value, why = 0.97, "product_exact"
+            elif product_tokens and candidate_tokens and candidate_tokens <= product_tokens:
+                value, why = 0.95, "product_tokens"
+            elif candidate in category_names:
+                value, why = 0.94, "category_exact"
+            elif _near_token_set(candidate_tokens, generic_tokens) or _near_token_set(candidate_tokens, product_tokens):
+                value, why = 0.93, "near_token"
+            elif product_tokens and candidate_tokens:
+                union = product_tokens | candidate_tokens
+                overlap = len(product_tokens & candidate_tokens) / len(union) if union else 0.0
+                if overlap >= 0.5:
+                    value, why = min(0.89, 0.72 + overlap * 0.17), "token_similarity"
+            if value > score:
+                score, reason, matched_alias = value, why, candidate
         if score <= 0:
             continue
         ranked.append(
             {
                 "ingredient": {
-                    **({"key": str(row["key"])} if row.get("key") else {}),
+                    **({"key": str(row.get("key") or row.get("ingredientId") or row["id"])} if row.get("key") or row.get("ingredientId") or row.get("id") else {}),
                     "name": name,
                 },
                 "score": round(score, 3),
                 "reason": reason,
+                "matchedAlias": matched_alias,
             }
         )
     ranked.sort(key=lambda item: (-float(item["score"]), _norm(item["ingredient"]["name"])))
@@ -255,6 +274,7 @@ class Cook4MeBarcodeMappingStore:
             hass, _STORAGE_VERSION, f"{DOMAIN}.{entry_id}.barcode_mappings"
         )
         self._data: dict[str, dict[str, Any]] = {}
+        self._write_lock = asyncio.Lock()
 
     async def async_load(self) -> None:
         saved = await self._store.async_load()
@@ -270,6 +290,10 @@ class Cook4MeBarcodeMappingStore:
         return deepcopy(row) if isinstance(row, dict) else None
 
     async def async_set(self, code: str, mapping: dict[str, Any]) -> dict[str, Any]:
+        async with self._write_lock:
+            return await self._save_mapping(code, mapping)
+
+    async def _save_mapping(self, code: str, mapping: dict[str, Any]) -> dict[str, Any]:
         code = normalize_barcode(code)
         ingredient = mapping.get("ingredient") if isinstance(mapping.get("ingredient"), dict) else {}
         name = _text(ingredient.get("name"))
@@ -287,16 +311,20 @@ class Cook4MeBarcodeMappingStore:
             "brand": _text(mapping.get("brand")),
             "updatedAt": time.time(),
         }
+        from .inventory import normalize_ingredient_links
+        row["ingredientLinks"] = normalize_ingredient_links(mapping.get("ingredientLinks") or [ingredient])
         nutrition = normalize_nutrition(mapping.get("nutrition"))
         if nutrition is not None:
             row["nutrition"] = nutrition
-        self._data[code] = row
-        if len(self._data) > _MAX_MAPPINGS:
+        data = deepcopy(self._data)
+        data[code] = row
+        if len(data) > _MAX_MAPPINGS:
             oldest = sorted(
-                self._data,
-                key=lambda key: float(self._data[key].get("updatedAt") or 0),
-            )[: len(self._data) - _MAX_MAPPINGS]
+                data,
+                key=lambda key: float(data[key].get("updatedAt") or 0),
+            )[: len(data) - _MAX_MAPPINGS]
             for key in oldest:
-                self._data.pop(key, None)
-        await self._store.async_save(deepcopy(self._data))
+                data.pop(key, None)
+        await self._store.async_save(data)
+        self._data = data
         return deepcopy(row)

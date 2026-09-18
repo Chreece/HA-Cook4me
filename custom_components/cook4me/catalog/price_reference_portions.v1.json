@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "note": "Published reference portions; food sizes and brands vary. Used only as disclosed cost estimates.",
+  "portions": [
+    {
+      "names": [
+        "curry paste",
+        "red curry paste"
+      ],
+      "measure": "tbsp",
+      "grams": 15,
+      "label": "Thai Kitchen red curry paste: 1 tbsp = 15 g; named-product estimate, other brands may differ",
+      "sourceUrl": "https://www.clubhouseforchefs.ca/en-ca/products/thai-kitchen/thai-kitchen-red-curry-paste"
+    },
+    {
+      "names": [
+        "shallot",
+        "shallots"
+      ],
+      "measure": "piece",
+      "grams": 30,
+      "label": "Alnatura recipe reference: 1 shallot = 30 g; actual bulb size varies",
+      "sourceUrl": "https://www.alnatura.de/de-de/rezepte/suche/crispy-chilioel-106501/"
+    },
+    {
+      "names": [
+        "parsnip",
+        "parsnips"
+      ],
+      "measure": "piece",
+      "grams": 80,
+      "label": "Alnatura recipe reference: 1 parsnip = 80 g; actual root size varies",
+      "sourceUrl": "https://www.alnatura.de/de-de/rezepte/suche/linsen-wurzelgemuese-braten-106601/"
+    },
+    {
+      "names": [
+        "small pumpkin",
+        "small hokkaido pumpkin"
+      ],
+      "measure": "piece",
+      "grams": 400,
+      "label": "Alnatura small Hokkaido recipe reference: 1 small pumpkin ≈ 400 g; variety and actual size vary",
+      "sourceUrl": "https://www.alnatura.de/de-de/rezepte/suche/hokkaido-suppe-105064/"
+    },
+    {
+      "names": [
+        "cumin",
+        "ground cumin",
+        "cumin powder"
+      ],
+      "measure": "tsp",
+      "grams": 2,
+      "label": "Dairy Farmers of Ontario recipe reference, ground cumin: 1/2 tsp = 1 g; spice grind and packing vary",
+      "sourceUrl": "https://new.milk.org/discover-dairy/recipes/winter-comfort-butter-chicken/"
+    },
+    {
+      "names": [
+        "garam masala"
+      ],
+      "measure": "tsp",
+      "grams": 2,
+      "label": "Dairy Farmers of Ontario recipe reference, garam masala: 2 tsp = 4 g; spice grind and packing vary",
+      "sourceUrl": "https://new.milk.org/discover-dairy/recipes/winter-comfort-butter-chicken/"
+    }
+  ]
+}

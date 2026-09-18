@@ -11,14 +11,14 @@ from homeassistant.components import ai_task, websocket_api
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.util import dt as dt_util
 
-from . import recipe_languages
+from . import recipe_languages, release_catalog
 from . import websocket as legacy
 from . import websocket_v5 as v5
 from . import websocket_v10 as v10
 from . import websocket_v11 as v11
 from . import websocket_v13 as v13
 from .barcode import confident_match, suggest_catalog_matches
-from .const import DATA_BRIDGES, DOMAIN
+from .const import CONF_COUNTRY, DEFAULT_COUNTRY, DATA_BRIDGES, DOMAIN
 from .food_intelligence import nutrition_goal_bonus, normalize_nutrition_goal
 from .inventory import inventory_identity
 from .meal_history import meal_history_store_for_bridge
@@ -136,24 +136,28 @@ async def _search_catalogs(
 async def _flush_one_queued_send(bridge) -> None:
     if getattr(bridge, "_cook4me_queued_send_running", False):
         return
-    if not bridge.can_accept_recipe:
-        return
-    store = await recipe_book_store_for_bridge(bridge)
-    queued = store.queued_send
-    if not queued:
-        return
-    variant = str(queued.get("variantId") or "").strip()
-    if not variant:
-        await store.async_clear_queue()
+    if not bridge.can_accept_recipe or getattr(bridge, "_stopping", False):
         return
     bridge._cook4me_queued_send_running = True
     try:
-        await bridge.async_send_variant(variant)
+        store = await recipe_book_store_for_bridge(bridge)
+        queued = store.queued_send
+        if not queued or not bridge.can_accept_recipe or getattr(bridge, "_stopping", False):
+            return
+        variant = str(queued.get("variantId") or "").strip()
+        if not variant:
+            await store.async_clear_queue(expected=queued)
+            return
+        # Detail retrieval and waiting behind another send can outlive a queue
+        # cancellation/replacement. Check again under the device send lock.
+        diet_args = {"diet": queued["diet"]} if queued.get("diet") is not None else {}
+        if isinstance(queued.get("dietFilters"), dict):
+            diet_args["diet_filters"] = queued["dietFilters"]
+        await bridge.async_send_variant(variant, still_current=lambda: store.queued_send == queued, **diet_args)
+        await store.async_clear_queue(expected=queued)
     except Exception:
         # Keep the request cached. Device state and cloud credentials can recover later.
         return
-    else:
-        await store.async_clear_queue()
     finally:
         bridge._cook4me_queued_send_running = False
 
@@ -165,8 +169,8 @@ async def _send_queue_watch_loop(hass: HomeAssistant) -> None:
                 hass.data.get(DOMAIN, {}).get(DATA_BRIDGES, {}).values()
             )
             for bridge in bridges:
-                if bridge.can_accept_recipe:
-                    hass.async_create_task(_flush_one_queued_send(bridge))
+                if bridge.can_accept_recipe and not getattr(bridge, "_stopping", False):
+                    bridge.async_create_task(_flush_one_queued_send(bridge), "Cook4Me queued recipe")
         except asyncio.CancelledError:
             raise
         except Exception:
@@ -421,6 +425,7 @@ async def ws_recipe_book_state(hass, connection, msg) -> None:
         vol.Optional("entry_id"): str,
         vol.Required("collection"): vol.In(["favorites", "recipeList"]),
         vol.Required("recipe"): dict,
+        vol.Optional("remove", default=False): bool,
     }
 )
 @websocket_api.async_response
@@ -428,7 +433,7 @@ async def ws_recipe_book_toggle(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         store = await recipe_book_store_for_bridge(bridge)
-        result = await store.async_toggle(str(msg["collection"]), dict(msg["recipe"]))
+        result = await store.async_toggle(str(msg["collection"]), dict(msg["recipe"]), remove=bool(msg.get("remove")))
         connection.send_result(msg["id"], result)
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
@@ -464,9 +469,11 @@ async def ws_send_or_queue(hass, connection, msg) -> None:
             )
             return
         if bridge.can_accept_recipe:
-            result = await bridge.async_send_variant(variant)
             store = await recipe_book_store_for_bridge(bridge)
-            await store.async_clear_queue()
+            previous = store.queued_send
+            result = await bridge.async_send_variant(variant)
+            if previous is not None:
+                await store.async_clear_queue(expected=previous)
             connection.send_result(
                 msg["id"], {"sent": True, "queued": False, "result": result}
             )
@@ -567,6 +574,11 @@ def _meal_usage(rows: Any, ingredient: dict[str, Any]) -> list[dict[str, Any]]:
 )
 @websocket_api.async_response
 async def ws_ingredient_info(hass, connection, msg) -> None:
+    await async_ingredient_info(hass, connection, msg)
+
+
+async def async_ingredient_info(hass, connection, msg) -> None:
+    """Shared handler body; HA's decorated command schedules work and returns None."""
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         ingredient = dict(msg["ingredient"])
@@ -576,6 +588,7 @@ async def ws_ingredient_info(hass, connection, msg) -> None:
         identity = inventory_identity(stock or ingredient)
         nutrition_store = await nutrition_store_for_bridge(bridge)
         generic = nutrition_store.get_generic(identity) if identity else None
+        catalog_nutrition = release_catalog.ingredient_nutrition_profile(ingredient)
         exact_lots = (
             nutrition_store.stock_lots.get(identity, []) if identity else []
         )
@@ -589,21 +602,36 @@ async def ws_ingredient_info(hass, connection, msg) -> None:
             + list(book_state.get("recipeList") or []),
             stock or ingredient,
         )
+        reference_language = msg.get("language") or "en"
+        references = (
+            await hass.async_add_executor_job(release_catalog.ingredient_nutrition_references, ingredient, reference_language)
+            if hass is not None else release_catalog.ingredient_nutrition_references(ingredient, reference_language)
+        )
 
         official: list[dict[str, Any]] = []
         if name and bool(msg.get("include_official_usage", True)):
             language = str(msg.get("language") or v11._device_language(bridge))
             try:
-                search = await v10._search_with_diagnostic(
-                    hass,
-                    bridge,
-                    query=name,
-                    page=0,
-                    size=12,
-                    language=language,
-                    strict_language=False,
-                    refresh=False,
-                )
+                if release_catalog.release_catalog_ready():
+                    search = release_catalog.search_release_recipes(
+                        name,
+                        language=language,
+                        configured_language=v11._device_language(bridge),
+                        country=str(bridge.entry.data.get(CONF_COUNTRY, DEFAULT_COUNTRY)),
+                        size=12,
+                        group_families=True,
+                    )
+                else:
+                    search = await v10._search_with_diagnostic(
+                        hass,
+                        bridge,
+                        query=name,
+                        page=0,
+                        size=12,
+                        language=language,
+                        strict_language=False,
+                        refresh=False,
+                    )
                 if search.get("ok", True):
                     official = [
                         row
@@ -619,10 +647,13 @@ async def ws_ingredient_info(hass, connection, msg) -> None:
                 "identity": identity,
                 "ingredient": {
                     **({"key": stock.get("key")} if stock and stock.get("key") else {}),
-                    "name": name or (stock or {}).get("name") or "Ingredient",
+                    "name": release_catalog.ingredient_display_name(ingredient, msg.get("language") or "en") or name or (stock or {}).get("name") or "Ingredient",
                 },
                 "stock": stock,
                 "genericNutrition": generic,
+                "catalogNutrition": catalog_nutrition,
+                "ingredientInfoContract": "offline-ingredient-info-v62",
+                "nutritionReferences": references,
                 "exactNutritionLots": exact_lots,
                 "history": history,
                 "historyCount": len(history),
