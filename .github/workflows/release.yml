@@ -20,7 +20,7 @@ jobs:
         run: |
           python scripts/version.py validate --tag "${GITHUB_REF_NAME}"
           python -m compileall -q custom_components/cook4me
-          python tools/build_frontend_bundle_v118.py --check
+          python tools/build_frontend_bundle_v119.py --check
       - name: Build HACS release archive
         run: |
           rm -rf release
