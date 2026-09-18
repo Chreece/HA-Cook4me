@@ -105,11 +105,29 @@ def legacy_identity(item: Any) -> str:
     return f"n:{name}" if name else ""
 
 
+def _strong_candidates(candidates: tuple[str, ...]) -> set[str]:
+    """Return identities stronger than the legacy normalized-name alias."""
+    return {candidate for candidate in candidates if not candidate.startswith("n:")}
+
+
 def same_ingredient(left: Any, right: Any) -> bool:
-    left_candidates = set(identity_candidates(left))
-    if not left_candidates:
+    """Compare identity without collapsing conflicting authoritative IDs.
+
+    Name aliases remain available for legacy name-only records. When both sides
+    carry provider/concept/local/explicit identities, those stronger identities
+    must agree; an equal display name is not enough.
+    """
+    left_candidates = identity_candidates(left)
+    right_candidates = identity_candidates(right)
+    if not left_candidates or not right_candidates:
         return False
-    return bool(left_candidates & set(identity_candidates(right)))
+
+    left_strong = _strong_candidates(left_candidates)
+    right_strong = _strong_candidates(right_candidates)
+    if left_strong and right_strong:
+        return bool(left_strong & right_strong)
+
+    return bool(set(left_candidates) & set(right_candidates))
 
 
 def preferred_storage_identity(item: Any) -> str:
