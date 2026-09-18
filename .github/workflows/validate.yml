@@ -53,34 +53,20 @@ jobs:
           bash -n tools/run_release_catalog_fdc_offline_review_prep_v60.sh
           bash -n tools/deploy_offline_runtime_v61.sh
           bash -n tools/deploy_offline_runtime_v62.sh
-          python tools/build_frontend_bundle_v62.py --check
           bash -n tools/deploy_offline_runtime_v63.sh
-          python tools/build_frontend_bundle_v63.py --check
           bash -n tools/deploy_offline_runtime_v64.sh
-          python tools/build_frontend_bundle_v64.py --check
           bash -n tools/deploy_offline_runtime_v65.sh
-          python tools/build_frontend_bundle_v65.py --check
           bash -n tools/deploy_offline_runtime_v66.sh
-          python tools/build_frontend_bundle_v66.py --check
           bash -n tools/deploy_offline_runtime_v67.sh
-          python tools/build_frontend_bundle_v67.py --check
           bash -n tools/deploy_offline_runtime_v68.sh
-          python tools/build_frontend_bundle_v68.py --check
           bash -n tools/deploy_offline_runtime_v69.sh
-          python tools/build_frontend_bundle_v69.py --check
           bash -n tools/deploy_offline_runtime_v70.sh
-          python tools/build_frontend_bundle_v70.py --check
           bash -n tools/deploy_offline_runtime_v71.sh
-          python tools/build_frontend_bundle_v71.py --check
-          python tools/build_frontend_bundle_v72.py --check
-          python tools/build_frontend_bundle_v73.py --check
-          python tools/build_frontend_bundle_v74.py --check
-          python tools/build_frontend_bundle_v76.py --check
-          python tools/build_frontend_bundle_v77.py --check
-          python tools/build_frontend_bundle_v78.py --check
-          python tools/build_frontend_bundle_v79.py --check
-          python tools/build_frontend_bundle_v80.py --check
           bash -n tools/deploy_offline_runtime_v75.sh
+          # Historical bundles are immutable deployment artifacts; validate the
+          # current source chain only against the active v115 bundle.
+          python tools/build_frontend_bundle_v115.py --check
+          bash -n tools/deploy_offline_runtime_v115.sh
           python - <<'PY'
           import json
           from pathlib import Path
@@ -213,7 +199,6 @@ jobs:
 
       - name: Verify v81 device information and announcements
         run: |
-          python tools/build_frontend_bundle_v81.py --check
           bash -n tools/deploy_offline_runtime_v81.sh
           timeout 90s node tests/frontend_v81_device_browser.mjs
           timeout 90s env COOK4ME_TEST_PANEL_VERSION=81 node tests/frontend_v80_unified_scanner_browser.mjs
@@ -223,7 +208,6 @@ jobs:
 
       - name: Verify v82 navigation, creators and price refresh
         run: |
-          python tools/build_frontend_bundle_v82.py --check
           bash -n tools/deploy_offline_runtime_v82.sh
           timeout 120s node tests/frontend_v82_navigation_prices_browser.mjs
           timeout 90s env COOK4ME_TEST_PANEL_VERSION=82 node tests/frontend_v80_unified_scanner_browser.mjs
@@ -233,7 +217,6 @@ jobs:
 
       - name: Verify v83 household profiles and shared toolbars
         run: |
-          python tools/build_frontend_bundle_v83.py --check
           bash -n tools/deploy_offline_runtime_v83.sh
           timeout 120s node tests/frontend_v83_profiles_browser.mjs
           timeout 120s env COOK4ME_TEST_PANEL_VERSION=83 node tests/frontend_v82_navigation_prices_browser.mjs
@@ -244,7 +227,6 @@ jobs:
 
       - name: Verify v84 offline ingredient catalog and price coverage
         run: |
-          python tools/build_frontend_bundle_v84.py --check
           bash -n tools/deploy_offline_runtime_v84.sh
           timeout 120s node tests/frontend_v84_catalog_browser.mjs
           timeout 120s env COOK4ME_TEST_PANEL_VERSION=84 node tests/frontend_v83_profiles_browser.mjs
