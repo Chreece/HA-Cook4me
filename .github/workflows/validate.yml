@@ -25,6 +25,6 @@ jobs:
           json.loads(Path("custom_components/cook4me/manifest.json").read_text())
           print("manifest JSON OK")
           PY
-          python tools/build_frontend_bundle_v120.py --check
-          node --check custom_components/cook4me/frontend/cook4me-panel-v120.js
-          node --check custom_components/cook4me/frontend/cook4me-panel-v120-bundle.js
+          python tools/build_frontend_bundle_v121.py --check
+          node --check custom_components/cook4me/frontend/cook4me-panel-v121.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v121-bundle.js
