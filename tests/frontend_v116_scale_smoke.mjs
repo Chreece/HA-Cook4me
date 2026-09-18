@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import {parseHTML} from "linkedom";
 
 const {window}=parseHTML("<!doctype html><html><body></body></html>");
-for(const key of ["document","customElements","HTMLElement","Node","Event","CustomEvent","MutationObserver","Element","ShadowRoot","HTMLInputElement","HTMLSelectElement"])if(window[key])globalThis[key]=window[key];
+for(const key of ["document","customElements","HTMLElement","Node","Event","CustomEvent","MutationObserver","Element","ShadowRoot","HTMLInputElement","HTMLSelectElement","Option"])if(window[key])globalThis[key]=window[key];
 globalThis.window=window;
 globalThis.requestAnimationFrame=callback=>setTimeout(callback,0);
 globalThis.cancelAnimationFrame=clearTimeout;
