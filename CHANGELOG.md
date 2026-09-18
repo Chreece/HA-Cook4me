@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026.9.18.6
+
+- Remove the Android/native barcode-scanner handoff from the Cook4Me capture UI. Barcode mode now stays inside Cook4Me instead of launching the external phone scanner that can fail or take over camera ownership.
+- Add an icon-only flashlight control to the live camera. It is shown only while the selected camera exposes a real `torch` capability, toggles the rear-camera light without leaving the scanner, and disappears automatically on unsupported devices/WebViews.
+- Turn the torch off when the camera is stopped or the capture dialog closes, and hide the control for the session if a WebView advertises torch support but rejects the constraint.
+
 ## 2026.9.18.5
 
 - Make the smart-scale action in product capture icon-only and show it only when the current product unit is a supported mass unit.
