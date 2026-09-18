@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026.9.18.1
+
+- Add an optional generic **Smart scale** layer backed by any Home Assistant mass sensor, with live grams, software tare, saved container tare profiles and safe mass-unit normalization.
+- Add live recipe ingredient weighing. Actual measured ingredient amounts are saved per recipe session and become the default post-cook stock deduction instead of blindly assuming the nominal recipe quantity.
+- Add display-only proportional recipe scaling from a weighed anchor ingredient while preserving official Cook4Me recipe identities and the recipe sent to the appliance.
+- Add scale-assisted manual/barcode stock intake and batch-aware stock re-weighing. Multi-batch inventory requires an explicit batch choice and refuses mass-to-volume/count guesses.
+- Add cooked-batch weighing and weighed portion nutrition calculated from the measured fraction of the cooked batch.
+- Add physical leftover weights, re-weighing and weighed leftover consumption with proportional servings, nutrition and cost history.
+- Carry cooked batch weight into automatically generated leftovers and clear recipe weighing sessions after post-cook confirmation/cancellation.
+- Ship Recipe Hub v60 plus v31 scale WebSocket APIs, English/German/Greek UI copy and focused smart-scale regressions.
+
 ## 2026.9.7.6
 
 - Make recipe feasibility quantity-aware. Cook4Me now compares recipe requirements with real house-stock totals using safe unit conversions and reports exact partial shortages such as `500 g required / 180 g at home / 320 g missing`; incompatible or unknown quantities remain explicitly uncertain instead of being guessed.
