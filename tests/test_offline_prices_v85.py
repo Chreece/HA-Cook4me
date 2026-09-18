@@ -155,7 +155,8 @@ class OfflinePriceTests(unittest.IsolatedAsyncioTestCase):
         self.assertGreaterEqual(len(data['observations']),350)
         self.assertGreaterEqual(len([r for r in data['observations'] if r['country']=='DE']),170)
         for row in data['observations']:
-            self.assertTrue(set(row['categories'])<=tags)
+            missing_categories = set(row['categories']) - tags
+            self.assertFalse(missing_categories, (row.get('id'), sorted(missing_categories)))
             self.assertGreater(row['amount'],0);self.assertGreater(row['basisQuantity'],0)
             self.assertNotIn('owner',row);self.assertNotIn('proof',row)
         self.assertEqual(data['license'],'ODbL-1.0')
