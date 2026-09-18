@@ -160,8 +160,12 @@ class OfflinePriceTests(unittest.IsolatedAsyncioTestCase):
             self.assertGreater(row['amount'],0);self.assertGreater(row['basisQuantity'],0)
             self.assertNotIn('owner',row);self.assertNotIn('proof',row)
         self.assertEqual(data['license'],'ODbL-1.0')
-        for name in ['Pepper','Green pepper','Salt and pepper','Rice pudding','Cooked rice']:
+        for name in ['Pepper','Salt and pepper','Rice pudding','Cooked rice']:
             self.assertIsNone(self.prices.category_for({'canonicalName':name}))
+        self.assertEqual(
+            self.prices.category_for({'canonicalName':'Green pepper'}),
+            ('cook4me:green-bell-pepper', 'REFERENCE'),
+        )
         for name in ['Coconut cream','Seitan','Ghee','Cream cheese','Rapeseed oil','Frozen green peas','Dried penne pasta']:
             self.assertIsNotNone(self.prices.category_for({'canonicalName':name}))
 
