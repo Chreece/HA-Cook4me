@@ -40,13 +40,13 @@ class Cook4MeRecipeHubPanelV117 extends BasePanel{
   if(!section){
    section=document.createElement('div');section.dataset.v78Section='scale';
    const integration=layout.querySelector('[data-v78-section="integration"]');
-   integration?.before(section)??layout.append(section);
+   if(integration)integration.before(section);else layout.append(section);
   }
   const nav=layout.querySelector('.v78-nav');
   let button=nav?.querySelector('[data-v78-pane="scale"]');
   if(nav&&!button){
    button=document.createElement('button');button.type='button';button.dataset.v78Pane='scale';button.textContent=this._v117Text('tab');
-   const places=nav.querySelector('[data-v78-pane="places"]');places?.after(button)??nav.append(button);
+   const places=nav.querySelector('[data-v78-pane="places"]');if(places)places.after(button);else nav.append(button);
    button.onclick=()=>{
     this._v78Pane='scale';
     layout.querySelectorAll('[data-v78-section]').forEach(node=>node.hidden=node.dataset.v78Section!=='scale');
