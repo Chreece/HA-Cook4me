@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026.9.19.1
+
+- Show the flashlight control for an active rear-camera track even when Android WebView omits the WebRTC `torch` capability flag. This fixes phones with a physical camera flash where the scanner previously hid the button.
+- When the capability flag is missing, attempt the normal advanced torch constraint first and then the direct torch constraint used by some WebViews. If both are rejected, hide the flashlight for that camera session and show a short unsupported-browser message.
+- Keep the single camera enable/disable control and mobile Back behavior from v121 unchanged.
+
 ## 2026.9.18.7
 
 - Make Android/browser Back close the fullscreen Cook4Me scanner instead of navigating out of the integration. Scanner opening now adds a same-route history entry and consumes that entry when the scanner closes.
