@@ -15,7 +15,6 @@ from .const import DOMAIN
 _STORAGE_VERSION = 1
 _TTL = 24 * 60 * 60
 _MAX_LANGUAGES = 8
-_MAX_ITEMS = 5000
 RECIPE_FALLBACK_SOURCE = "hydrated_official_recipes_fallback:v3_food_identity"
 
 _VULGAR_FRACTIONS = "¼½¾⅐⅑⅒⅓⅔⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞"
@@ -221,19 +220,30 @@ def normalize_house_ingredients(value: Any) -> list[dict[str, str]]:
 
 
 def _dedupe_catalog_names(rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    """Drop redundant keyless aliases without collapsing authoritative identities.
+
+    Different provider keys are distinct identities even when their localized display
+    names are equal. A keyless row with the same normalized name as any keyed row is
+    only a weaker alias and can be omitted. Identical keyless names are also collapsed.
+    """
+    keyed_names = {
+        _norm(row.get("name"))
+        for row in rows
+        if row.get("key") and _norm(row.get("name"))
+    }
     out: list[dict[str, str]] = []
-    by_name: dict[str, int] = {}
+    seen_keyless_names: set[str] = set()
     for row in rows:
         normalized = _norm(row.get("name"))
         if not normalized:
             continue
-        existing_index = by_name.get(normalized)
-        if existing_index is None:
-            by_name[normalized] = len(out)
+        if row.get("key"):
             out.append(row)
             continue
-        if not out[existing_index].get("key") and row.get("key"):
-            out[existing_index] = row
+        if normalized in keyed_names or normalized in seen_keyless_names:
+            continue
+        seen_keyless_names.add(normalized)
+        out.append(row)
     return out
 
 
@@ -256,10 +266,8 @@ def _clean_catalog_rows(rows: list[Any]) -> list[dict[str, str]]:
         if key:
             row["key"] = key
         out.append(row)
-        if len(out) >= _MAX_ITEMS:
-            break
     out = _dedupe_catalog_names(out)
-    return sorted(out, key=lambda row: _norm(row["name"]))
+    return sorted(out, key=lambda row: (_norm(row["name"]), row.get("key", "")))
 
 
 def catalog_items_from_recipes(recipes: list[dict[str, Any]]) -> list[dict[str, str]]:
@@ -351,13 +359,24 @@ def marketing_food_items(payload: Any, language: str) -> list[dict[str, str]]:
 def enrich_match_with_house_keys(
     recipe: dict[str, Any], match: dict[str, Any], house_ingredients: Any
 ) -> dict[str, Any]:
+    """Reconcile pantry availability without crossing authoritative provider IDs."""
     result = deepcopy(match)
     house = normalize_house_ingredients(house_ingredients)
     for row in house_ingredients if isinstance(house_ingredients, list) else []:
         if isinstance(row, dict):
-            house.extend(link for lot in row.get("lots") or [] for link in lot.get("ingredientLinks") or [] if isinstance(link, dict))
+            house.extend(
+                link
+                for lot in row.get("lots") or []
+                for link in lot.get("ingredientLinks") or []
+                if isinstance(link, dict)
+            )
     house_keys = {row["key"] for row in house if row.get("key")}
     house_names = {_norm(row["name"]) for row in house if row.get("name")}
+    house_keyless_names = {
+        _norm(row["name"])
+        for row in house
+        if row.get("name") and not row.get("key")
+    }
     matched_names = {_norm(name) for name in result.get("matchedIngredients") or []}
     missing_names = {_norm(name) for name in result.get("missingIngredients") or []}
 
@@ -370,11 +389,24 @@ def enrich_match_with_house_keys(
         if not name:
             continue
         normalized = _norm(name)
-        if (key and key in house_keys) or normalized in house_names or normalized in matched_names:
+
+        if key:
+            # Provider-backed ingredients may only match the same provider identity.
+            # Name fallback is retained solely for old keyless pantry rows.
+            at_home = key in house_keys or normalized in house_keyless_names
+            contradicted_name_match = (
+                not at_home
+                and normalized in (house_names | matched_names | missing_names)
+            )
+        else:
+            at_home = normalized in house_names or normalized in matched_names
+            contradicted_name_match = False
+
+        if at_home:
             status = "at_home"
             matched.append(name)
             relevant += 1
-        elif normalized in missing_names:
+        elif normalized in missing_names or contradicted_name_match:
             status = "missing"
             missing.append(name)
             relevant += 1
