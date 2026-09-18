@@ -15636,8 +15636,8 @@ class Cook4MeRecipeHubPanelV119 extends BasePanel{
   if(!input)return;
   const value=String(input.value??'');
   const chars=Math.max(minChars,value.length||minChars);
-  input.style.width=`calc(${chars}ch + 2.65rem)`;
-  input.style.maxWidth='100%';
+  input.style.setProperty('width',`calc(${chars}ch + 2.65rem)`,'important');
+  input.style.setProperty('max-width','100%','important');
   const label=input.closest('label');
   if(label){
    label.classList.add('v119-compact-field');
@@ -15666,6 +15666,8 @@ class Cook4MeRecipeHubPanelV119 extends BasePanel{
    button.setAttribute('aria-label',this._v116Text('use'));
    button.innerHTML='<ha-icon icon="mdi:scale-balance" aria-hidden="true"></ha-icon>';
   }
+
+  const restart=frame.querySelector('[data-v113-restart]');if(restart)restart.disabled=!!this._v78Busy;
 
   for(const unit of c.querySelectorAll('[data-v111-unit],main [data-draft="unit"]')){
    if(unit.dataset.v119WeightBound)continue;
@@ -15710,7 +15712,7 @@ class Cook4MeRecipeHubPanelV119 extends BasePanel{
   await this._v78CaptureFrame();
  }
  _v113CanRestart(){
-  return !!this._v78Draft&&!this._v78Busy;
+  return !!this._v78Draft;
  }
  async _v113Restart(){
   const old=this._v78Draft;if(!old||this._v78Busy)return;
