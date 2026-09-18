@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026.9.19.2
+
+- Stop presenting a non-working flashlight control when Android WebView exposes a physical rear camera but does not expose the WebRTC `torch` capability. A physical LED alone is not enough for browser control.
+- Only show the scanner flashlight when the active camera track explicitly reports `getCapabilities().torch === true`. When supported, toggle it with the standard advanced torch constraint and hide it for the session if that call fails.
+- Remove the v122 experimental direct/basic torch fallback because unsupported WebViews may silently accept and ignore unknown constraints, making the UI look enabled while the LED never turns on.
+
 ## 2026.9.19.1
 
 - Show the flashlight control for an active rear-camera track even when Android WebView omits the WebRTC `torch` capability flag. This fixes phones with a physical camera flash where the scanner previously hid the button.
