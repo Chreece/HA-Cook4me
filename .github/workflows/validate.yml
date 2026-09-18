@@ -80,6 +80,7 @@ jobs:
       - name: Instantiate Recipe Hub in a DOM runtime
         run: |
           npm install --no-save --package-lock=false linkedom@0.18.12
+          timeout 30s node tests/frontend_v116_scale_smoke.mjs
           node --experimental-default-type=module tests/frontend_panel_smoke.mjs
           node --experimental-default-type=module tests/frontend_menu_smoke.mjs
           timeout 15s node --experimental-default-type=module tests/frontend_startup_stability_smoke.mjs
