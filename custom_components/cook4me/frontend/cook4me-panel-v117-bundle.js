@@ -15408,8 +15408,8 @@ const BasePanel=customElements.get('cook4me-recipe-hub-panel-v116');
 const WORDS={
  en:{
   tab:'Smart scale',title:'Smart scale',help:'Use a Home Assistant weight sensor for recipes, scanned products, stock, portions and leftovers.',
-  sensor:'Weight sensor',status:'Scale status',tare:'Tare scale',clear:'Clear tare',
-  containers:'Containers',containersHelp:'Save the empty weight of bowls, jars or other containers once. When you use one, Cook4me subtracts that saved tare from the live scale weight automatically.',
+  sensor:'Weight sensor',status:'Scale status',tare:'Tare scale',clear:'Clear saved/software tare',
+  containers:'Containers',containersHelp:'Save the empty weight of bowls, jars or other containers once, without taring the scale first. When you use one, Cook4me subtracts that saved tare from the live scale weight automatically.',
   noContainers:'No saved containers yet.',active:'Active',use:'Use',edit:'Edit',delete:'Delete',
   addContainer:'Add container',editContainer:'Edit container',containerName:'Container name',emptyWeight:'Empty container weight',readScale:'Read current scale weight',
   save:'Save container',cancel:'Cancel editing',nameRequired:'Enter a container name.',weightRequired:'Enter the empty container weight or place the empty container on the scale and press “Read current scale weight”.',
@@ -15417,8 +15417,8 @@ const WORDS={
  },
  de:{
   tab:'Smart-Waage',title:'Smart-Waage',help:'Home-Assistant-Gewichtssensor für Rezepte, gescannte Produkte, Vorrat, Portionen und Reste.',
-  sensor:'Gewichtssensor',status:'Waagenstatus',tare:'Waage tarieren',clear:'Tara löschen',
-  containers:'Behälter',containersHelp:'Speichere das Leergewicht von Schüsseln, Gläsern oder anderen Behältern einmal. Bei „Verwenden“ zieht Cook4me diese Tara automatisch vom Live-Gewicht ab.',
+  sensor:'Gewichtssensor',status:'Waagenstatus',tare:'Waage tarieren',clear:'Gespeicherte/Software-Tara löschen',
+  containers:'Behälter',containersHelp:'Speichere das Leergewicht von Schüsseln, Gläsern oder anderen Behältern einmal, ohne die Waage vorher zu tarieren. Bei „Verwenden“ zieht Cook4me diese Tara automatisch vom Live-Gewicht ab.',
   noContainers:'Noch keine Behälter gespeichert.',active:'Aktiv',use:'Verwenden',edit:'Bearbeiten',delete:'Löschen',
   addContainer:'Behälter hinzufügen',editContainer:'Behälter bearbeiten',containerName:'Behältername',emptyWeight:'Leergewicht des Behälters',readScale:'Aktuelles Waagengewicht übernehmen',
   save:'Behälter speichern',cancel:'Bearbeitung abbrechen',nameRequired:'Gib einen Behälternamen ein.',weightRequired:'Gib das Leergewicht ein oder stelle den leeren Behälter auf die Waage und wähle „Aktuelles Waagengewicht übernehmen“.',
@@ -15426,8 +15426,8 @@ const WORDS={
  },
  el:{
   tab:'Έξυπνη ζυγαριά',title:'Έξυπνη ζυγαριά',help:'Χρησιμοποίησε αισθητήρα βάρους του Home Assistant για συνταγές, σαρωμένα προϊόντα, απόθεμα, μερίδες και περισσεύματα.',
-  sensor:'Αισθητήρας βάρους',status:'Κατάσταση ζυγαριάς',tare:'Απόβαρο ζυγαριάς',clear:'Καθαρισμός απόβαρου',
-  containers:'Δοχεία',containersHelp:'Αποθήκευσε μία φορά το βάρος του άδειου μπολ, βάζου ή άλλου δοχείου. Όταν πατήσεις «Χρήση», το Cook4me αφαιρεί αυτόματα το αποθηκευμένο απόβαρο από το ζωντανό βάρος.',
+  sensor:'Αισθητήρας βάρους',status:'Κατάσταση ζυγαριάς',tare:'Απόβαρο ζυγαριάς',clear:'Καθαρισμός αποθηκευμένου/λογισμικού απόβαρου',
+  containers:'Δοχεία',containersHelp:'Αποθήκευσε μία φορά το βάρος του άδειου μπολ, βάζου ή άλλου δοχείου, χωρίς να κάνεις πρώτα απόβαρο στη ζυγαριά. Όταν πατήσεις «Χρήση», το Cook4me αφαιρεί αυτόματα το αποθηκευμένο απόβαρο από το ζωντανό βάρος.',
   noContainers:'Δεν υπάρχουν ακόμη αποθηκευμένα δοχεία.',active:'Ενεργό',use:'Χρήση',edit:'Επεξεργασία',delete:'Διαγραφή',
   addContainer:'Προσθήκη δοχείου',editContainer:'Επεξεργασία δοχείου',containerName:'Όνομα δοχείου',emptyWeight:'Βάρος άδειου δοχείου',readScale:'Χρήση τωρινού βάρους ζυγαριάς',
   save:'Αποθήκευση δοχείου',cancel:'Ακύρωση επεξεργασίας',nameRequired:'Δώσε όνομα στο δοχείο.',weightRequired:'Δώσε το βάρος του άδειου δοχείου ή βάλε το άδειο δοχείο στη ζυγαριά και πάτησε «Χρήση τωρινού βάρους ζυγαριάς».',
@@ -15497,7 +15497,7 @@ class Cook4MeRecipeHubPanelV117 extends BasePanel{
  _v117EditorHtml(){
   const row=(this._v116Scale?.containers||[]).find(item=>String(item.id)===String(this._v117EditingContainerId));
   const edit=!!row;
-  return `<section class="v117-container-editor"><h3>${this._escape(this._v117Text(edit?'editContainer':'addContainer'))}</h3><div class="v78-fields"><label class="field">${this._escape(this._v117Text('containerName'))}<input id="v117ContainerName" maxlength="120" value="${this._escape(row?.name||'')}"></label><label class="field">${this._escape(this._v117Text('emptyWeight'))} (g)<input id="v117ContainerWeight" type="number" min="0" step="0.1" inputmode="decimal" value="${row?this._v116Num(row.tareGrams,3):''}"></label></div><div class="v78-actions"><button type="button" class="btn secondary" id="v117ReadWeight">⚖ ${this._escape(this._v117Text('readScale'))}</button><button type="button" class="btn" id="v117SaveContainer">${this._escape(this._v117Text('save'))}</button>${edit?`<button type="button" class="btn secondary" id="v117CancelContainer">${this._escape(this._v117Text('cancel'))}</button>`:''}</div><p class="muted" id="v117ContainerStatus" role="status"></p></section>`;
+  return `<section class="v117-container-editor"><h3>${this._escape(this._v117Text(edit?'editContainer':'addContainer'))}</h3><div class="v78-fields"><label class="field">${this._escape(this._v117Text('containerName'))}<input id="v117ContainerName" maxlength="120" value="${this._escape(row?.name||'')}"></label><label class="field">${this._escape(this._v117Text('emptyWeight'))} (g)<input id="v117ContainerWeight" type="number" min="0.1" step="0.1" inputmode="decimal" value="${row?this._v116Num(row.tareGrams,3):''}"></label></div><div class="v78-actions"><button type="button" class="btn secondary" id="v117ReadWeight">⚖ ${this._escape(this._v117Text('readScale'))}</button><button type="button" class="btn" id="v117SaveContainer">${this._escape(this._v117Text('save'))}</button>${edit?`<button type="button" class="btn secondary" id="v117CancelContainer">${this._escape(this._v117Text('cancel'))}</button>`:''}</div><p class="muted" id="v117ContainerStatus" role="status"></p></section>`;
  }
  _v116Card(content){
   const section=this._v117EnsureScalePane(content)||content;if(!section)return;
@@ -15519,7 +15519,7 @@ class Cook4MeRecipeHubPanelV117 extends BasePanel{
   card.querySelector('#v117SaveContainer').onclick=async()=>{
    const label=String(name.value||'').trim(),grams=Number(String(weight.value||'').replace(',','.'));
    if(!label){status.textContent=this._v117Text('nameRequired');name.focus();return;}
-   if(!Number.isFinite(grams)||grams<0){status.textContent=this._v117Text('weightRequired');weight.focus();return;}
+   if(!Number.isFinite(grams)||grams<=0){status.textContent=this._v117Text('weightRequired');weight.focus();return;}
    try{
     const editing=this._v117EditingContainerId;
     const result=await this._api('cook4me/v37/container_save',{entry_id:this._entryId,name:label,tare_grams:grams,...(editing?{container_id:editing}:{})});
