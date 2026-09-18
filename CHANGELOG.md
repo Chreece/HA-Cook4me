@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026.9.18.5
+
+- Make the smart-scale action in product capture icon-only and show it only when the current product unit is a supported mass unit.
+- Make package-count and quantity fields compact by default (2 and 4 characters respectively) and expand them automatically as the entered value grows.
+- In AI product, best-before and nutrition modes, clicking inside the camera guide box now captures that section for AI recognition; clicking elsewhere in the camera area opens manual entry for that same section.
+- Make Restart available throughout the capture flow. It discards the current section state and restarts the same section; date/nutrition restarts retain the recognised product context, while editing an existing lot reloads the saved lot.
+
 ## 2026.9.18.4
 
 - In fullscreen recipe mode, move live weighing into its own folded disclosure directly after Ingredients, matching the existing Information/Ingredients section style.
