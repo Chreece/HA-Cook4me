@@ -156,8 +156,11 @@ if(!panel.shadowRoot.querySelector('[data-tab="week"]'))throw new Error("v45 inh
 if(!panel.shadowRoot.querySelector("#generateWeek"))throw new Error("v45 weekly planner controls missing");
 if(!panel.shadowRoot.querySelector("#addPlanShopping"))throw new Error("v45 consolidated shopping control missing");
 const weekText=panel.shadowRoot.getElementById("content").textContent;
-for(const required of ["Tomato stew","100 g","3.60 GBP","Yesterday's soup","Nutrition dashboard","ECB reference rates"]){
+for(const required of ["Tomato stew","100 g","3.60 GBP","Yesterday's soup","Nutrition dashboard"]){
   if(!weekText.includes(required))throw new Error(`v45 lifecycle/currency UI missing ${required}`);
+}
+if(!currencySelect.title.includes("ECB reference rates")||!currencySelect.title.includes("2026-09-07")){
+  throw new Error(`v45 currency control lost ECB reference-rate provenance: ${currencySelect.title}`);
 }
 panel._rememberSection("week");
 if(store.get(lastSectionKey)!=="week")throw new Error("v45 Week section was not remembered");
