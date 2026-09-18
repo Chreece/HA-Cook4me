@@ -65,7 +65,7 @@ jobs:
           bash -n tools/deploy_offline_runtime_v75.sh
           # Historical bundles are immutable deployment artifacts; validate the
           # current source chain only against the active v115 bundle.
-          python tools/build_frontend_bundle_v115.py --check
+          python tools/build_frontend_bundle_v116.py --check
           bash -n tools/deploy_offline_runtime_v115.sh
           python - <<'PY'
           import json
