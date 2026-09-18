@@ -524,6 +524,72 @@ class Cook4MeMealLifecycleStore:
             return consumed
         raise ValueError("Leftover meal was not found")
 
+    async def async_set_leftover_weight(self, leftover_id: str, grams: Any) -> dict[str, Any]:
+        """Attach a physical net weight to the current leftover amount."""
+        wanted = _text(leftover_id)
+        amount = _number(grams)
+        if amount is None or amount <= 0:
+            raise ValueError("Leftover weight must be greater than zero")
+        for row in self._data["leftovers"]:
+            if _text(row.get("id")) != wanted:
+                continue
+            row["weightGrams"] = round(amount, 3)
+            if _number(row.get("originalWeightGrams")) is None:
+                row["originalWeightGrams"] = round(amount, 3)
+            row["weighedAt"] = datetime.now(timezone.utc).isoformat()
+            await self._save()
+            return deepcopy(row)
+        raise ValueError("Leftover meal was not found")
+
+    async def async_consume_leftover_weight(
+        self, leftover_id: str, grams: Any
+    ) -> dict[str, Any]:
+        """Consume a weighed part of leftovers and scale nutrition/cost proportionally."""
+        wanted = _text(leftover_id)
+        amount = _number(grams)
+        if amount is None or amount <= 0:
+            raise ValueError("Consumed leftover weight must be greater than zero")
+        for index, row in enumerate(self._data["leftovers"]):
+            if _text(row.get("id")) != wanted:
+                continue
+            available_weight = _number(row.get("weightGrams"))
+            if available_weight is None or available_weight <= 0:
+                raise ValueError("Weigh the remaining leftovers before consuming by weight")
+            take_weight = min(available_weight, amount)
+            fraction = take_weight / available_weight
+            available_servings = _number(row.get("servings")) or 0.0
+            take_servings = available_servings * fraction
+            consumed = {
+                "id": row.get("id"),
+                "title": row.get("title"),
+                "grams": round(take_weight, 3),
+                "servings": round(take_servings, 3),
+                "nutrition": {"totals": _scale_numeric_map(
+                    _nutrition_totals(row.get("nutrition")), fraction
+                )},
+                "costByCurrency": _scale_numeric_map(row.get("costByCurrency"), fraction),
+            }
+            left_weight = available_weight - take_weight
+            left_servings = max(0.0, available_servings - take_servings)
+            if left_weight <= 1e-9 or left_servings <= 1e-9:
+                self._data["leftovers"].pop(index)
+            else:
+                remaining_fraction = left_weight / available_weight
+                row["weightGrams"] = round(left_weight, 3)
+                row["servings"] = round(left_servings, 3)
+                row["nutrition"] = {"totals": _scale_numeric_map(
+                    _nutrition_totals(row.get("nutrition")), remaining_fraction
+                )}
+                row["costByCurrency"] = _scale_numeric_map(
+                    row.get("costByCurrency"), remaining_fraction
+                )
+                row["weighedAt"] = datetime.now(timezone.utc).isoformat()
+            await self._save()
+            consumed["remainingGrams"] = round(max(0.0, left_weight), 3)
+            consumed["remainingServings"] = round(max(0.0, left_servings), 3)
+            return consumed
+        raise ValueError("Leftover meal was not found")
+
     def approved_substitutions(self, ingredient: dict[str, Any]) -> list[dict[str, Any]]:
         identity = inventory_identity(ingredient)
         row = self._data["substitutions"].get(identity)
