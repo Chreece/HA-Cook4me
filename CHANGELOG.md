@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026.9.18.2
+
+- Build the smart-scale feature on the consolidated Recipe Hub v115 runtime instead of the obsolete v60/main baseline. Recipe Hub v116 keeps all v73-v115 scanner, pricing, product, dietary, weekly-plan, announcement, linked-stock and audit work intact.
+- Add an optional generic Home Assistant mass-sensor layer for live ingredient weighing, actual post-cook stock deduction, scanned/manual product amounts, stock/package re-weighing, cooked batch weight, weighed portions and physical leftover tracking.
+- Add dedicated local support for sleeping VeSync Local BT scales such as the COSORI CNS-R002S-S by discovering their measurement entity through the Home Assistant entity registry even while unavailable. Connected/stable state and the native tare button are detected from sibling entities.
+- Use the COSORI native tare action when available, keep software/container tare as the generic fallback, and require a stable reading only when the selected scale actually exposes a stable-state signal.
+- Keep all mass conversion dimensionally strict: supported mass units are normalized to grams, while volume and count units are never silently converted without proven density or item-mass evidence.
+- Add Recipe Hub v116, WebSocket API v37, persistent scale/container/session state, and focused smart-scale regressions.
+
 ## 2026.9.7.6
 
 - Make recipe feasibility quantity-aware. Cook4Me now compares recipe requirements with real house-stock totals using safe unit conversions and reports exact partial shortages such as `500 g required / 180 g at home / 320 g missing`; incompatible or unknown quantities remain explicitly uncertain instead of being guessed.
