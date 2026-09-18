@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026.9.18.7
+
+- Make Android/browser Back close the fullscreen Cook4Me scanner instead of navigating out of the integration. Scanner opening now adds a same-route history entry and consumes that entry when the scanner closes.
+- Keep only one camera enable/disable control visible. The inherited top camera-power button is hidden and the bottom camera button is moved to the far left, remains visible while the camera is running, and toggles between camera-on and camera-off states.
+- Keep the hardware flashlight beside the lower camera control when supported; all existing barcode, photo, manual-entry and AI capture controls remain available.
+
 ## 2026.9.18.6
 
 - Remove the Android/native barcode-scanner handoff from the Cook4Me capture UI. Barcode mode now stays inside Cook4Me instead of launching the external phone scanner that can fail or take over camera ownership.
