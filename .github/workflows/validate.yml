@@ -77,6 +77,8 @@ jobs:
           for f in custom_components/cook4me/frontend/cook4me-panel-v*.js; do node --check "$f"; done
       - name: Check active v115 installer backup and rollback
         run: sudo "$(command -v python)" -m unittest discover -s tests -p 'test_deploy_offline_runtime_v115.py' -v
+      - name: Run full Python suite
+        run: timeout 180s python -m unittest discover -s tests -v
       - name: Instantiate Recipe Hub in a DOM runtime
         run: |
           npm install --no-save --package-lock=false linkedom@0.18.12
@@ -152,8 +154,6 @@ jobs:
           timeout 60s env COOK4ME_TEST_PANEL_VERSION=74 node tests/frontend_v73_photo_bounds_browser.mjs
           timeout 40s env COOK4ME_TEST_PANEL_VERSION=74 node tests/frontend_v71_card_interactions_smoke.mjs
           timeout 40s env COOK4ME_TEST_PANEL_VERSION=74 node tests/frontend_v72_device_settings_smoke.mjs
-      - name: Run focused tests
-        run: python -m unittest discover -s tests -v
       - name: Verify v76 diet substitutions and active dashboard
         run: |
           bash -n tools/deploy_offline_runtime_v76.sh
