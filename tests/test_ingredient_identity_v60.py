@@ -71,12 +71,27 @@ class IngredientIdentityV60Tests(unittest.TestCase):
         }
         self.assertFalse(mod.same_ingredient(de, en))
 
+    def test_different_provider_ids_with_same_label_do_not_merge(self):
+        first = {"foodKey": "M_FOOD_589", "name": "Edamame"}
+        second = {"foodKey": "M_FOOD_742", "name": "Edamame"}
+        self.assertFalse(mod.same_ingredient(first, second))
+
+    def test_different_reviewed_concepts_with_same_label_do_not_merge(self):
+        first = {"conceptId": "concept:food:first", "canonicalName": "Pepper"}
+        second = {"conceptId": "concept:food:second", "canonicalName": "Pepper"}
+        self.assertFalse(mod.same_ingredient(first, second))
+
     def test_existing_name_only_records_still_match_reviewed_concept_alias_when_name_matches(self):
         old = {"name": "Tomato"}
         new = {
             "conceptId": "concept:food:tomato",
             "canonicalName": "Tomato",
         }
+        self.assertTrue(mod.same_ingredient(old, new))
+
+    def test_existing_name_only_records_still_match_provider_alias_when_name_matches(self):
+        old = {"name": "Edamame"}
+        new = {"foodKey": "M_FOOD_589", "name": "Edamame"}
         self.assertTrue(mod.same_ingredient(old, new))
 
     def test_string_legacy_identity_is_preserved(self):
