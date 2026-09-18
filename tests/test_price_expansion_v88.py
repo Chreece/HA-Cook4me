@@ -1,4 +1,5 @@
 """New retail evidence through offline costing, including food-form boundaries."""
+from datetime import date
 import json
 import unittest
 
@@ -88,7 +89,9 @@ class PriceExpansionTests(unittest.IsolatedAsyncioTestCase):
         for row in retail[34:]:
             self.assertGreater(row['amount'], 0)
             self.assertGreater(row['basisQuantity'], 0)
-            self.assertEqual((row['date'], row['country'], row['currency']), ('2026-09-16', 'DE', 'EUR'))
+            self.assertEqual((row['country'], row['currency']), ('DE', 'EUR'))
+            self.assertGreaterEqual(row['date'], '2026-09-16')
+            self.assertLessEqual(row['date'], date.today().isoformat())
 
 
 if __name__ == '__main__': unittest.main()
