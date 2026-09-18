@@ -17,6 +17,7 @@ from .nutrition_inventory import (
     async_consume_nutrition_report,
     async_reconcile_nutrition_inventory,
 )
+from .smart_scale import smart_scale_store_for_bridge
 
 
 def _notification_id(entry_id: str) -> str:
@@ -181,6 +182,23 @@ async def ws_consumption_confirm(hass, connection, msg) -> None:
             meal_record, cost=meal_cost
         )
 
+        scale_store = await smart_scale_store_for_bridge(bridge)
+        scale_session = scale_store.session_for(completed) or {}
+        batch_weight = scale_session.get("batchWeightGrams")
+        leftover = result.get("leftover")
+        if isinstance(leftover, dict) and batch_weight not in (None, ""):
+            try:
+                remaining = float(leftover.get("servings") or 0)
+                original = float(leftover.get("originalServings") or 0)
+                if remaining > 0 and original > 0:
+                    result["leftover"] = await lifecycle.async_set_leftover_weight(
+                        str(leftover.get("id") or ""),
+                        float(batch_weight) * min(1.0, remaining / original),
+                    )
+            except (TypeError, ValueError):
+                pass
+        await scale_store.async_clear_session(completed)
+
         persistent_notification.async_dismiss(hass, _notification_id(bridge.entry.entry_id))
         update_expiry_notification(bridge)
         result.update(_state(bridge))
@@ -198,8 +216,13 @@ async def ws_consumption_confirm(hass, connection, msg) -> None:
 async def ws_consumption_clear(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
+        pending = bridge.recipe_hub.pending_consumption
         cleared = await bridge.recipe_hub.async_clear_pending_consumption(str(msg["pending_id"]))
-        if cleared: persistent_notification.async_dismiss(hass, _notification_id(bridge.entry.entry_id))
+        if cleared:
+            persistent_notification.async_dismiss(hass, _notification_id(bridge.entry.entry_id))
+            if isinstance(pending, dict):
+                scale_store = await smart_scale_store_for_bridge(bridge)
+                await scale_store.async_clear_session(pending)
         result = {"cleared": cleared, **_state(bridge)}
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return
