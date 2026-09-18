@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026.9.18.3
+
+- Move Smart scale out of the top of My Kitchen and into the existing kitchen navigation, directly beside Storage locations.
+- Replace the unclear container dropdown/name-field workflow with explicit saved-container management: add, use, edit and delete each container.
+- Add an empty-container editor with a clear name field, tare-weight field and a button that reads the current live scale weight.
+- Explain container tare behavior in the UI: save an empty bowl/jar once, then apply it to subtract that weight automatically from live measurements.
+- Keep native COSORI tare, software tare fallback, live scale status and all recipe/stock/portion/leftover scale workflows unchanged.
+
 ## 2026.9.18.2
 
 - Build the smart-scale feature on the consolidated Recipe Hub v115 runtime instead of the obsolete v60/main baseline. Recipe Hub v116 keeps all v73-v115 scanner, pricing, product, dietary, weekly-plan, announcement, linked-stock and audit work intact.
