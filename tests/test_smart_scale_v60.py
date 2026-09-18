@@ -191,10 +191,12 @@ class SmartScaleArchitectureContractTests(unittest.TestCase):
             setup,
         )
 
-    def test_backend_refuses_density_guess_for_stock_reweigh(self):
+    def test_backend_refuses_implicit_volume_or_count_reweigh(self):
         source = (INTEGRATION / "smart_scale.py").read_text(encoding="utf-8")
         self.assertIn("Stock unit {unit or 'unitless'} is not a mass unit", source)
-        self.assertNotIn("density", source.casefold())
+        self.assertIn('"kg": 1000.0', source)
+        self.assertNotIn('"ml":', source)
+        self.assertNotIn('"pcs":', source)
 
 
 if __name__ == "__main__":
