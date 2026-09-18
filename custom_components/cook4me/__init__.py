@@ -25,6 +25,7 @@ from .expiry import (
 )
 from .panel import async_register_panel
 from .release_catalog import async_warm_release_catalog
+from .smart_scale import apply_recipe_measurements, smart_scale_store_for_bridge
 from .websocket import async_register as async_register_websocket
 from .websocket_v5 import async_register as async_register_websocket_v5
 from .websocket_v7 import async_register as async_register_websocket_v7
@@ -102,6 +103,11 @@ async def _handle_recipe_completed(bridge: Cook4MeBridge) -> None:
     else:
         recipe.setdefault("title", bridge.data.get("recipeTitle"))
         recipe.setdefault("variantFunctionalId", variant)
+
+    scale_store = await smart_scale_store_for_bridge(bridge)
+    scale_session = scale_store.session_for(recipe)
+    if scale_session:
+        recipe = apply_recipe_measurements(recipe, scale_session)
 
     pending = await bridge.recipe_hub.async_prepare_consumption(recipe)
     if not pending:
