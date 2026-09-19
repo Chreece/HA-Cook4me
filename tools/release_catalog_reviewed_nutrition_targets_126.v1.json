@@ -1,0 +1,43 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-retained-reference-binding",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Vinaigrette",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Salad dressing, home recipe, vinegar and oil",
+      "fdcId": 171417,
+      "notes": "Manual semantic review binds Cook4Me 'Vinaigrette' to USDA SR Legacy 'Salad dressing, home recipe, vinegar and oil' through a retained exact evidence record. A vinaigrette is fundamentally an oil-and-vinegar dressing, so this USDA record matches the core ingredient identity without relying on the target's noisy local candidate search. Confidence remains medium because vinaigrette recipes vary in oil-to-acid ratio and may include mustard, herbs, sweetener, salt, or pepper; this decision does not generalize to creamy dressings, flavored commercial dressings, or unspecified 'preferred dressing'.",
+      "reviewTargetId": "concept:food:ac00244a6324f73b24a2",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "6465c57b7e4257b41099cdb69e76adf43390862c36964d54511e02e5290a7f8f",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceSha256": "80bf2778e8082941f113dc829d81d292220d521b64ce3432fe6a9e9f25562ffc",
+      "sourceEvidenceTargetId": "concept:food:481f7ecd8d4734fe213b",
+      "usageCountAtReview": 4
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "referenceReceipts": {
+    "171417": {
+      "sourceCandidateSha256": "6465c57b7e4257b41099cdb69e76adf43390862c36964d54511e02e5290a7f8f",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceTargetId": "concept:food:481f7ecd8d4734fe213b"
+    }
+  },
+  "reviewDecisionSha256": "2a034435a4fdf94e1910d2017cb12e96e9a57b196ed153bdf980a26ec5957258",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "80bf2778e8082941f113dc829d81d292220d521b64ce3432fe6a9e9f25562ffc"
+}
