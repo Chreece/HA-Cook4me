@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       source_sha:
-        description: Exact verified review-batch commit SHA; empty activates the selected branch state manually
+        description: Exact verified nutrition-input commit SHA; empty activates the selected branch state manually
         required: false
         type: string
 
@@ -73,14 +73,22 @@ jobs:
                   ['git', 'diff', '--name-only', 'HEAD^', 'HEAD'], text=True
               ).splitlines()
               changed = sorted(set(changed))
-              reviewed_target_changed = any(
-                  path.startswith('tools/release_catalog_reviewed_nutrition_targets_')
-                  and path.endswith('.v1.json')
+              activation_input_changed = any(
+                  (
+                      path.startswith('tools/release_catalog_reviewed_nutrition_targets_')
+                      and path.endswith('.v1.json')
+                  )
+                  or path == 'tools/release_catalog_nutrition_review_holds.v1.json'
+                  or path == 'tools/release_catalog_nutrition_review_hold_releases.v1.json'
+                  or (
+                      path.startswith('tools/release_catalog_reviewed_supplemental_nutrition_targets_')
+                      and path.endswith('.v1.json')
+                  )
                   for path in changed
               )
-              if not reviewed_target_changed:
+              if not activation_input_changed:
                   raise SystemExit(
-                      'verified activation source contains no reviewed nutrition target batch'
+                      'verified activation source contains no recognized nutrition input'
                   )
           elif event_name == 'push':
               event = json.loads(
