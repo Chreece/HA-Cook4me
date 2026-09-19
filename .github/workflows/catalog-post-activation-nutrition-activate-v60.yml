@@ -86,9 +86,38 @@ jobs:
                   )
                   for path in changed
               )
-              if not activation_input_changed:
+
+              pending_release_activation = False
+              release_path = Path(
+                  'tools/release_catalog_nutrition_review_hold_releases.v1.json'
+              )
+              catalog_path = Path(
+                  'custom_components/cook4me/catalog/merged_catalog.v1.json'
+              )
+              if release_path.exists() and catalog_path.exists():
+                  release = json.loads(release_path.read_text(encoding='utf-8'))
+                  catalog = json.loads(catalog_path.read_text(encoding='utf-8'))
+                  ingredients = {
+                      str(row.get('id') or row.get('ingredientId') or row.get('key') or ''): row
+                      for row in catalog.get('ingredients') or []
+                      if isinstance(row, dict)
+                  }
+                  released_members = {
+                      str(member)
+                      for item in release.get('items') or []
+                      if isinstance(item, dict) and item.get('approved') is True
+                      for member in item.get('memberIngredientIds') or []
+                      if str(member)
+                  }
+                  pending_release_activation = bool(released_members) and any(
+                      not isinstance(ingredients.get(member, {}).get('nutrition'), dict)
+                      for member in released_members
+                  )
+
+              if not activation_input_changed and not pending_release_activation:
                   raise SystemExit(
-                      'verified activation source contains no recognized nutrition input'
+                      'verified activation source contains no recognized nutrition input '
+                      'and no pending compiled hold release'
                   )
           elif event_name == 'push':
               event = json.loads(
