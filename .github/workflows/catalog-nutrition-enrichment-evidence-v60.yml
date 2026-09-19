@@ -13,6 +13,8 @@ on:
       - tools/fdc_reference_data_v60.py
       - tools/prepare_fdc_reference_data_v60.py
       - tools/prepare_post_activation_nutrition_review_targets_v60.py
+      - tools/validate_release_catalog_nutrition_unresolved_v60.py
+      - tools/release_catalog_nutrition_unresolved.v1.json
       - tests/test_capture_release_catalog_fdc_candidate_evidence_offline_v60.py
       - tests/test_fdc_candidate_reference_data_v60.py
       - tests/test_prepare_fdc_reference_manifest_v60.py
@@ -223,6 +225,19 @@ jobs:
           print(json.dumps(facts, ensure_ascii=False, indent=2))
           PY
 
+      - name: Validate terminal unresolved nutrition registry
+        id: unresolved
+        run: |
+          set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-nutrition-enrichment-v60"
+          python tools/validate_release_catalog_nutrition_unresolved_v60.py \
+            --evidence "$BUILD/fdc-candidate-evidence.v60.json" \
+            --registry tools/release_catalog_nutrition_unresolved.v1.json \
+            --review-root tools \
+            --output "$BUILD/nutrition-unresolved-summary.v60.json"
+          cat "$BUILD/nutrition-unresolved-summary.v60.json"
+          echo "classified=true" >> "$GITHUB_OUTPUT"
+
       - name: Archive immutable candidate evidence
         run: |
           set -Eeuo pipefail
@@ -261,21 +276,20 @@ jobs:
             ${{ runner.temp }}/cook4me-nutrition-enrichment-v60/fdc-candidate-triage.v60.json
             ${{ runner.temp }}/cook4me-nutrition-enrichment-v60/fdc-candidate-triage-summary.v60.json
             ${{ runner.temp }}/cook4me-nutrition-enrichment-v60/nutrition-enrichment-facts.v60.json
+            ${{ runner.temp }}/cook4me-nutrition-enrichment-v60/nutrition-unresolved-summary.v60.json
           if-no-files-found: error
           compression-level: 9
           retention-days: 7
 
-      - name: Dispatch reviewers for this exact evidence snapshot
+      - name: Dispatch reviewers only when unresolved registry is incomplete
         run: |
           set -Eeuo pipefail
+          BUILD="$RUNNER_TEMP/cook4me-nutrition-enrichment-v60"
+          if python -c 'import json,sys; v=json.load(open(sys.argv[1],encoding="utf-8")); raise SystemExit(0 if v.get("allRemainingTargetsClassified") is True else 1)' "$BUILD/nutrition-unresolved-summary.v60.json"; then
+            echo "All remaining nutrition targets are explicitly classified; reviewer dispatch is complete."
+            exit 0
+          fi
           BRANCH="cook4me-nutrition-enrichment-post-activation-v60"
-          echo "Dispatching reviewer workflows for exact evidence head $GITHUB_SHA"
-          for WORKFLOW in \
-            catalog-nutrition-review-reuse-post-activation-v60.yml \
-            catalog-nutrition-review-semantic-reuse-post-activation-v60.yml
-          do
-            gh workflow run "$WORKFLOW" \
-              --repo "$GITHUB_REPOSITORY" \
-              --ref "$BRANCH" \
-              -f evidence_head_sha="$GITHUB_SHA"
+          for WORKFLOW in catalog-nutrition-review-reuse-post-activation-v60.yml catalog-nutrition-review-semantic-reuse-post-activation-v60.yml; do
+            gh workflow run "$WORKFLOW" --repo "$GITHUB_REPOSITORY" --ref "$BRANCH" -f evidence_head_sha="$GITHUB_SHA"
           done

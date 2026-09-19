@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-nutrition-unresolved-v60",
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "evidenceSha256": "fa9aa182c04a874a5bf6be082cfba2a4fa456c281bf10cb8a60a9c40e754ac8c",
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "policy": {
+    "exactEvidenceRequired": true,
+    "automaticBindingAllowed": false,
+    "externalFallbackApproved": false,
+    "providerIdentityInference": false,
+    "unresolvedDoesNotReduceRequiredCount": true
+  },
+  "items": [
+    {
+      "reviewTargetId": "concept:food:bf319e28a87373efbe4a",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Mastic",
+      "status": "unresolved",
+      "reasonCode": "no_pinned_usda_reference_candidate",
+      "reason": "The pinned Foundation, SR Legacy, and FNDDS reference corpus yields no candidate for mastic. No external nutrient source is approved for v60.",
+      "memberIngredientIds": [
+        "local:ar:da000e9e09c65c2563d5"
+      ],
+      "usageCountAtReview": 2,
+      "expectedCandidateCount": 0
+    },
+    {
+      "reviewTargetId": "concept:food:6e7ef7c7e15c50a5372e",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Psyllium husks",
+      "status": "unresolved",
+      "reasonCode": "no_pinned_usda_reference_candidate",
+      "reason": "The pinned Foundation, SR Legacy, and FNDDS reference corpus yields no candidate for psyllium husks. No external nutrient source is approved for v60.",
+      "memberIngredientIds": [
+        "local:pl:689d81de9b8a8d52f1cb"
+      ],
+      "usageCountAtReview": 1,
+      "expectedCandidateCount": 0
+    },
+    {
+      "reviewTargetId": "M_FOOD_609",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Konjac",
+      "status": "unresolved",
+      "reasonCode": "no_pinned_usda_reference_candidate",
+      "reason": "The exact Cook4Me provider identity has no candidate in the pinned USDA reference corpus. Provider identity inference is disabled.",
+      "memberIngredientIds": [
+        "M_FOOD_609"
+      ],
+      "usageCountAtReview": 0,
+      "expectedCandidateCount": 0
+    },
+    {
+      "reviewTargetId": "M_FOOD_553",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Sweet",
+      "status": "unresolved",
+      "reasonCode": "ambiguous_provider_identity",
+      "reason": "The provider label is semantically incomplete. Lexical candidates such as sweet potato and sweet-and-sour foods do not establish the intended food identity, and provider identity inference is disabled.",
+      "memberIngredientIds": [
+        "M_FOOD_553"
+      ],
+      "usageCountAtReview": 0,
+      "expectedCandidateCount": 12
+    },
+    {
+      "reviewTargetId": "M_FOOD_672",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Yuka",
+      "status": "unresolved",
+      "reasonCode": "provider_identity_unproven",
+      "reason": "The provider label has no candidate in the pinned USDA corpus. It is not safe to infer that the label means yuca/cassava without source identity evidence.",
+      "memberIngredientIds": [
+        "M_FOOD_672"
+      ],
+      "usageCountAtReview": 0,
+      "expectedCandidateCount": 0
+    }
+  ]
+}
