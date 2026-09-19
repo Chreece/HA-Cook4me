@@ -68,7 +68,7 @@ for tid,fid,conf,kind in PLAN:
     r=byid[tid]
     _,rank,src,c=fdc[fid]
     name=r["canonicalEnglishName"]
-    note=(f"Manual semantic review binds Cook4Me '{name}' to retained USDA '{c['description']}' as a target-specific nutrient-profile proxy because it is {WHY[kind]}. "
+    note=(f"Manual semantic review binds Cook4Me '{name}' to retained USDA '{c['description']}' as a target-specific nutrient-profile proxy because it is {WHY.get(kind, kind)}. "
           f"Confidence is {conf}; this approval creates no culinary substitution rule and does not authorize automatic reuse for other ingredients.")
     items.append({"approved":True,"reviewTargetId":tid,"reviewTargetKind":r["reviewTargetKind"],"canonicalEnglishName":name,"fdcId":fid,"confidence":conf,"fdcDescription":c["description"],"fdcDataType":c["dataType"],"sourceEvidenceTargetId":src,"sourceEvidenceCandidateRank":rank,"notes":note})
 decision={"schemaVersion":1,"kind":"cook4me-fdc-retained-reference-review-decisions-v60","catalogVersion":e["catalogVersion"],"referenceManifestSha256":e["referenceManifestSha256"],"sourceEvidenceSha256":esha,"evidenceBindingScope":"retained-reference-record","policy":{"manualSemanticReviewPerformed":True,"candidateSearchIsIdentityProof":False,"searchResultAutoAccepted":False,"automaticSelectionPerformed":False,"exactFdcBindingRequired":True,"providerIdentityInference":False},"items":items}
