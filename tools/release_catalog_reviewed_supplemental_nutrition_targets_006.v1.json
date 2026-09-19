@@ -34,16 +34,17 @@
       "scientificName": "Pistacia lentiscus L. var. Chia",
       "basis": "per100g",
       "values": {
-        "energyKcal": 365.0,
-        "energyKJ": 1544.0,
+        "energyKcal": 365,
+        "energyKJ": 1544,
         "protein": 0.15,
         "carbohydrates": 82.9,
-        "fiber": 16.0,
+        "fiber": 16,
         "sodium": 0.00103,
         "salt": 0.002575
       },
       "sourceEvidenceSha256": "d6922f0af1597739dc43f28af2dc3d8ce05d5552ab177820c4440b67cad42f1e",
-      "notes": "Exact primary composition review for authentic Chios Gum Mastic / Chios Mastiha from the Chios Gum Mastic Growers Association laboratory specification. The source reports 365 kcal, 1544 kJ, 0.15% protein, 82.9% carbohydrate, dietary fibre 16±2%, and sodium 1.03 mg/100 g. Values reported only as upper bounds (<0.1% fat, <1% sugars, <0.1% polyols) are deliberately not converted into exact catalog values. Salt is derived from sodium using the established 2.5 factor. No nutrition reuse is authorized for mastic-flavoured products or other plant resins."
+      "notes": "Exact primary composition review for authentic Chios Gum Mastic / Chios Mastiha from the Chios Gum Mastic Growers Association laboratory specification. The source reports 365 kcal, 1544 kJ, 0.15% protein, 82.9% carbohydrate, dietary fibre 16±2%, and sodium 1.03 mg/100 g. Values reported only as upper bounds (<0.1% fat, <1% sugars, <0.1% polyols) are deliberately not converted into exact catalog values. Salt is derived from sodium using the established 2.5 factor. No nutrition reuse is authorized for mastic-flavoured products or other plant resins.",
+      "reviewPass": 2
     }
   ]
 }
