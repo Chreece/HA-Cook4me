@@ -110,81 +110,9 @@ jobs:
           echo "decision_count=$COUNT" >> "$GITHUB_OUTPUT"
           if [ "$COUNT" -eq 0 ]; then
             : > /tmp/nutrition-review-evidence-shas.txt
-            echo "No review batch changed; global corpus checks are sufficient."
             exit 0
           fi
-          python -c 'import json,re,sys; from pathlib import Path; root=Path(sys.argv[1]); shas=sorted({str(json.loads(p.read_text(encoding="utf-8")).get("sourceEvidenceSha256") or "").strip() for p in root.glob("release_catalog_nutrition_review_decisions_post_activation_*.v1.json")}); bad=[x for x in shas if not re.fullmatch(r"[0-9a-f]{64}",x)]; assert not bad,bad; Path("/tmp/nutrition-review-evidence-shas.txt").write_text("".join(x+"\n" for x in shas),encoding="utf-8"); print("required immutable evidence snapshots:",len(shas))' "$DECISION_ROOT"
-          cat /tmp/nutrition-review-evidence-shas.txt
-
-      - name: Download only required immutable evidence snapshots
-        if: steps.subset.outputs.decision_count != '0'
-        run: |
-          set -Eeuo pipefail
-          DEST=/tmp/nutrition-review-evidence
-          mkdir -p "$DEST"
-          test "$(gh release view "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq '.isDraft')" = "true"
-          while IFS= read -r SHA; do
-            test -n "$SHA"
-            ASSET="fdc-candidate-evidence-v60-${SHA}.json.gz"
-            JSON="$DEST/fdc-candidate-evidence-v60-${SHA}.json"
-            gh release download "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --dir "$DEST" --pattern "$ASSET"
-            gzip -cd "$DEST/$ASSET" > "$JSON"
-            test "$(sha256sum "$JSON" | awk '{print $1}')" = "$SHA"
-          done < /tmp/nutrition-review-evidence-shas.txt
-
-      - name: Recompile and verify selected review batches
-        if: steps.subset.outputs.decision_count != '0'
-        run: |
-          set -Eeuo pipefail
-          DEST=/tmp/nutrition-review-evidence
-          ARGS=()
-          while IFS= read -r SHA; do
-            ARGS+=(--evidence "$DEST/fdc-candidate-evidence-v60-${SHA}.json")
-          done < /tmp/nutrition-review-evidence-shas.txt
-          python tools/verify_post_activation_nutrition_review_decisions_v60.py "${ARGS[@]}" --decision-root /tmp/nutrition-review-decisions --review-root /tmp/nutrition-review-files --output /tmp/post-activation-review-verification.v60.json
-          cat /tmp/post-activation-review-verification.v60.json
-
-      - name: Dispatch activation only for verified changed review batches
-        if: steps.scope.outputs.activation_required == 'true'
-        run: |
-          set -Eeuo pipefail
-          test -n "$GITHUB_SHA"
-          gh workflow run catalog-post-activation-nutrition-activate-v60.yml --repo "$GITHUB_REPOSITORY" --ref "$ACTIVATION_BRANCH" -f source_sha="$GITHUB_SHA"
-          echo "Dispatched nutrition activation for verified review-batch SHA $GITHUB_SHA"
- || [ "$REQUEST_CHANGED" = true ]; then
-            echo "activation_required=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "activation_required=false" >> "$GITHUB_OUTPUT"
-          fi
-          echo "changed batches:"
-          cat /tmp/changed-batches.txt || true
-
-      - name: Prepare decision subset and evidence list
-        id: subset
-        run: |
-          set -Eeuo pipefail
-          MODE="${{ steps.scope.outputs.mode }}"
-          DECISION_ROOT=/tmp/nutrition-review-decisions
-          REVIEW_ROOT=/tmp/nutrition-review-files
-          mkdir -p "$DECISION_ROOT" "$REVIEW_ROOT"
-          if [ "$MODE" = "full" ]; then
-            cp tools/release_catalog_nutrition_review_decisions_post_activation_*.v1.json "$DECISION_ROOT/"
-            cp tools/release_catalog_reviewed_nutrition_targets*.v1.json "$REVIEW_ROOT/"
-          else
-            while IFS= read -r BATCH; do
-              test -n "$BATCH"
-              cp "tools/release_catalog_nutrition_review_decisions_post_activation_${BATCH}.v1.json" "$DECISION_ROOT/"
-              cp "tools/release_catalog_reviewed_nutrition_targets_${BATCH}.v1.json" "$REVIEW_ROOT/"
-            done < /tmp/changed-batches.txt
-          fi
-          COUNT="$(find "$DECISION_ROOT" -maxdepth 1 -type f -name 'release_catalog_nutrition_review_decisions_post_activation_*.v1.json' | wc -l)"
-          echo "decision_count=$COUNT" >> "$GITHUB_OUTPUT"
-          if [ "$COUNT" -eq 0 ]; then
-            : > /tmp/nutrition-review-evidence-shas.txt
-            echo "No review batch changed; global corpus checks are sufficient."
-            exit 0
-          fi
-          python -c 'import json,re,sys; from pathlib import Path; root=Path(sys.argv[1]); shas=sorted({str(json.loads(p.read_text(encoding="utf-8")).get("sourceEvidenceSha256") or "").strip() for p in root.glob("release_catalog_nutrition_review_decisions_post_activation_*.v1.json")}); bad=[x for x in shas if not re.fullmatch(r"[0-9a-f]{64}",x)]; assert not bad,bad; Path("/tmp/nutrition-review-evidence-shas.txt").write_text("".join(x+"\n" for x in shas),encoding="utf-8"); print("required immutable evidence snapshots:",len(shas))' "$DECISION_ROOT"
+          python -c 'import json,re,sys; from pathlib import Path; root=Path(sys.argv[1]); shas=sorted({str(json.loads(p.read_text(encoding="utf-8")).get("sourceEvidenceSha256") or "").strip() for p in root.glob("release_catalog_nutrition_review_decisions_post_activation_*.v1.json")}); bad=[x for x in shas if not re.fullmatch(r"[0-9a-f]{64}",x)]; assert not bad,bad; Path("/tmp/nutrition-review-evidence-shas.txt").write_text("".join(x+"\\n" for x in shas),encoding="utf-8"); print("required immutable evidence snapshots:",len(shas))' "$DECISION_ROOT"
           cat /tmp/nutrition-review-evidence-shas.txt
 
       - name: Download only required immutable evidence snapshots
