@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026.9.19.3
+
+- Compact the checkbox rows in Cook4Me filter lists so meal, language and ingredient choices use much less vertical space.
+- Add localized Select all / Deselect all controls whenever a filter contains more than one list checkbox, including Greek and German labels.
+- Keep independent boolean filter switches unchanged; the bulk controls only operate on true multi-choice filter lists.
+
 ## 2026.9.19.2
 
 - Stop presenting a non-working flashlight control when Android WebView exposes a physical rear camera but does not expose the WebRTC `torch` capability. A physical LED alone is not enough for browser control.
