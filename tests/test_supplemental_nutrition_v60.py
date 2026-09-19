@@ -73,6 +73,59 @@ class SupplementalNutritionV60Tests(unittest.TestCase):
         self.assertEqual(summary["applicableSupplementalReviewTargetCount"], 0)
         self.assertEqual(summary["supplementalResolvedNowIdentities"], 0)
 
+
+    def test_montbeliard_official_table_replaces_only_exact_holds(self):
+        reviews = supplemental.load_reviews(TOOLS)
+        cases = [
+            ("M_FOOD_447", ["M_FOOD_447"], "Montbéliard sausage"),
+            (
+                "concept:food:5ba728d548d5b048a95c",
+                ["local:hr:b7365ee791f2d1b91b1b"],
+                "Montbéliard sausages",
+            ),
+        ]
+        for target_id, members, canonical in cases:
+            with self.subTest(target_id=target_id):
+                review = reviews[target_id]
+                self.assertTrue(review["replacesHeldNutritionBinding"])
+                self.assertEqual(review["sourceId"], "FR-CIQUAL:30105")
+                self.assertEqual(review["sourceFoodName"], "Saucisse de Montbéliard")
+                target_kind = review["reviewTargetKind"]
+                target = {
+                    "reviewTargetId": target_id,
+                    "reviewTargetKind": target_kind,
+                    "canonicalEnglishName": canonical,
+                    "memberIngredientIds": members,
+                }
+                if target_kind == "semantic-concept":
+                    target["semanticConceptId"] = target_id
+                cache, summary = supplemental.seed_cache(
+                    {
+                        "kind": "cook4me-release-catalog-nutrition-review-targets-v60",
+                        "targets": [target],
+                    },
+                    {},
+                    review_root=TOOLS,
+                )
+                self.assertEqual(summary["supplementalResolvedNowReviewTargets"], 1)
+                self.assertEqual(summary["supplementalResolvedNowIdentities"], len(members))
+                for ingredient_id in members:
+                    profile = cache[ingredient_id]
+                    self.assertTrue(profile["nutritionHoldReplacementApproved"])
+                    self.assertEqual(profile["nutritionHoldReplacementTargetId"], target_id)
+                    self.assertIsNone(
+                        reviewed_nutrition.holds.profile_hold(
+                            profile, ingredient_id=ingredient_id
+                        )
+                    )
+                    self.assertTrue(
+                        reviewed_nutrition.is_reviewed_profile(
+                            profile,
+                            ingredient_id=ingredient_id,
+                            canonical_name=canonical,
+                        )
+                    )
+
     def test_source_fingerprint_drift_is_rejected(self):
         source = TOOLS / "release_catalog_reviewed_supplemental_nutrition_targets_001.v1.json"
         value = json.loads(source.read_text(encoding="utf-8"))
