@@ -40,74 +40,50 @@ jobs:
           git fetch origin "$BRANCH"
           git reset --hard "origin/$BRANCH"
 
-      - name: Recompile batches 138 through 140 from exact archived evidence
+      - name: Recompile batches 138 through 140
         run: |
           set -Eeuo pipefail
           mkdir -p /tmp/nutrition-recompile
           test "$(gh release view "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq '.isDraft')" = "true"
-
           for BATCH in 138 139 140; do
             DECISION="tools/release_catalog_nutrition_review_decisions_post_activation_${BATCH}.v1.json"
             REVIEW="tools/release_catalog_reviewed_nutrition_targets_${BATCH}.v1.json"
-            test -f "$DECISION"
-
-            read -r SHA KIND <<EOF
-$(python - "$DECISION" <<'PY'
-import json, sys
-from pathlib import Path
-p=Path(sys.argv[1])
-v=json.loads(p.read_text(encoding='utf-8'))
-print(v['sourceEvidenceSha256'], v['kind'])
-PY
-)
-EOF
+            SHA="$(python -c 'import json,sys; print(json.load(open(sys.argv[1],encoding="utf-8"))["sourceEvidenceSha256"])' "$DECISION")"
+            KIND="$(python -c 'import json,sys; print(json.load(open(sys.argv[1],encoding="utf-8"))["kind"])' "$DECISION")"
             ASSET="fdc-candidate-evidence-v60-${SHA}.json.gz"
             EVIDENCE="/tmp/nutrition-recompile/evidence-${SHA}.json"
             if [ ! -f "$EVIDENCE" ]; then
-              gh release download "$ARCHIVE_TAG"                 --repo "$GITHUB_REPOSITORY"                 --dir /tmp/nutrition-recompile                 --pattern "$ASSET"
+              gh release download "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --dir /tmp/nutrition-recompile --pattern "$ASSET"
               gzip -cd "/tmp/nutrition-recompile/$ASSET" > "$EVIDENCE"
               test "$(sha256sum "$EVIDENCE" | awk '{print $1}')" = "$SHA"
             fi
-
             OUT="/tmp/nutrition-recompile/review-${BATCH}.json"
             SUMMARY="/tmp/nutrition-recompile/summary-${BATCH}.json"
             rm -f "$OUT" "$SUMMARY"
-            case "$KIND" in
-              cook4me-fdc-review-decisions-v60)
-                COMPILER=tools/compile_release_catalog_fdc_review_decisions_v60.py
-                ;;
-              cook4me-fdc-retained-reference-review-decisions-v60)
-                COMPILER=tools/compile_release_catalog_fdc_retained_review_decisions_v60.py
-                ;;
-              *)
-                echo "Unsupported decision kind: $KIND" >&2
-                exit 1
-                ;;
-            esac
-
-            python "$COMPILER"               --evidence "$EVIDENCE"               --decisions "$DECISION"               --output "$OUT"               --summary-output "$SUMMARY"
+            if [ "$KIND" = "cook4me-fdc-review-decisions-v60" ]; then
+              COMPILER=tools/compile_release_catalog_fdc_review_decisions_v60.py
+            elif [ "$KIND" = "cook4me-fdc-retained-reference-review-decisions-v60" ]; then
+              COMPILER=tools/compile_release_catalog_fdc_retained_review_decisions_v60.py
+            else
+              echo "Unsupported decision kind: $KIND" >&2
+              exit 1
+            fi
+            python "$COMPILER" --evidence "$EVIDENCE" --decisions "$DECISION" --output "$OUT" --summary-output "$SUMMARY"
             cp "$OUT" "$REVIEW"
             cat "$SUMMARY"
           done
 
-      - name: Prove exact recompilation and corpus uniqueness
+      - name: Prove corpus uniqueness
         run: |
           set -Eeuo pipefail
-          python - <<'PY'
-from pathlib import Path
-import sys
-sys.path.insert(0, 'tools')
-import snapshot_nutrition_review_checkpoint_v60 as checkpoint
-result=checkpoint.build_checkpoint(Path('tools'))
-print(result['summary'])
-PY
+          python -c 'from pathlib import Path; import sys; sys.path.insert(0,"tools"); import snapshot_nutrition_review_checkpoint_v60 as c; print(c.build_checkpoint(Path("tools"))["summary"])'
 
       - name: Commit exact compiler outputs
         run: |
           set -Eeuo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add             tools/release_catalog_reviewed_nutrition_targets_138.v1.json             tools/release_catalog_reviewed_nutrition_targets_139.v1.json             tools/release_catalog_reviewed_nutrition_targets_140.v1.json
+          git add tools/release_catalog_reviewed_nutrition_targets_138.v1.json tools/release_catalog_reviewed_nutrition_targets_139.v1.json tools/release_catalog_reviewed_nutrition_targets_140.v1.json
           if git diff --cached --quiet; then
             echo "Review files already match compiler output."
           else
@@ -118,4 +94,4 @@ PY
       - name: Dispatch fail-closed validator
         run: |
           set -Eeuo pipefail
-          gh workflow run catalog-nutrition-review-decisions-v60.yml             --repo "$GITHUB_REPOSITORY"             --ref "$BRANCH"
+          gh workflow run catalog-nutrition-review-decisions-v60.yml --repo "$GITHUB_REPOSITORY" --ref "$BRANCH"
