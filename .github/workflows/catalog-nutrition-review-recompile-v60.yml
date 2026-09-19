@@ -1,4 +1,4 @@
-name: Recompile accelerated nutrition reviews v60
+name: Compile post-activation nutrition review decisions v60
 
 on:
   push:
@@ -6,18 +6,18 @@ on:
       - cook4me-nutrition-enrichment-post-activation-v60
     paths:
       - .github/workflows/catalog-nutrition-review-recompile-v60.yml
+      - tools/release_catalog_nutrition_review_decisions_post_activation_*.v1.json
   workflow_dispatch:
 
 concurrency:
-  group: catalog-nutrition-review-recompile-v60
+  group: catalog-nutrition-review-compile-v60
   cancel-in-progress: true
 
 permissions:
   contents: write
-  actions: write
 
 jobs:
-  recompile:
+  compile:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
@@ -28,37 +28,47 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: cook4me-nutrition-enrichment-post-activation-v60
-          fetch-depth: 0
+          fetch-depth: 2
 
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
 
-      - name: Fast-forward to latest nutrition head
+      - name: Select changed decision batches
+        id: scope
         run: |
           set -Eeuo pipefail
-          git fetch origin "$BRANCH"
-          git reset --hard "origin/$BRANCH"
+          CHANGED="$(git diff --name-only HEAD^ HEAD || true)"
+          printf '%s
+' "$CHANGED"
+          printf '%s
+' "$CHANGED" | sed -nE 's#^tools/release_catalog_nutrition_review_decisions_post_activation_([0-9]+)\.v1\.json$#\1#p' | sort -nu > /tmp/compile-batches.txt
+          COUNT="$(wc -l < /tmp/compile-batches.txt)"
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+          echo "batches to compile:"
+          cat /tmp/compile-batches.txt || true
 
-      - name: Recompile batches 138 through 140
+      - name: Compile exact review files
+        if: steps.scope.outputs.count != '0'
         run: |
           set -Eeuo pipefail
-          mkdir -p /tmp/nutrition-recompile
+          mkdir -p /tmp/nutrition-compile
           test "$(gh release view "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq '.isDraft')" = "true"
-          for BATCH in 138 139 140; do
+          while IFS= read -r BATCH; do
+            test -n "$BATCH"
             DECISION="tools/release_catalog_nutrition_review_decisions_post_activation_${BATCH}.v1.json"
             REVIEW="tools/release_catalog_reviewed_nutrition_targets_${BATCH}.v1.json"
             SHA="$(python -c 'import json,sys; print(json.load(open(sys.argv[1],encoding="utf-8"))["sourceEvidenceSha256"])' "$DECISION")"
             KIND="$(python -c 'import json,sys; print(json.load(open(sys.argv[1],encoding="utf-8"))["kind"])' "$DECISION")"
             ASSET="fdc-candidate-evidence-v60-${SHA}.json.gz"
-            EVIDENCE="/tmp/nutrition-recompile/evidence-${SHA}.json"
+            EVIDENCE="/tmp/nutrition-compile/evidence-${SHA}.json"
             if [ ! -f "$EVIDENCE" ]; then
-              gh release download "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --dir /tmp/nutrition-recompile --pattern "$ASSET"
-              gzip -cd "/tmp/nutrition-recompile/$ASSET" > "$EVIDENCE"
+              gh release download "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --dir /tmp/nutrition-compile --pattern "$ASSET"
+              gzip -cd "/tmp/nutrition-compile/$ASSET" > "$EVIDENCE"
               test "$(sha256sum "$EVIDENCE" | awk '{print $1}')" = "$SHA"
             fi
-            OUT="/tmp/nutrition-recompile/review-${BATCH}.json"
-            SUMMARY="/tmp/nutrition-recompile/summary-${BATCH}.json"
+            OUT="/tmp/nutrition-compile/review-${BATCH}.json"
+            SUMMARY="/tmp/nutrition-compile/summary-${BATCH}.json"
             rm -f "$OUT" "$SUMMARY"
             if [ "$KIND" = "cook4me-fdc-review-decisions-v60" ]; then
               COMPILER=tools/compile_release_catalog_fdc_review_decisions_v60.py
@@ -71,27 +81,28 @@ jobs:
             python "$COMPILER" --evidence "$EVIDENCE" --decisions "$DECISION" --output "$OUT" --summary-output "$SUMMARY"
             cp "$OUT" "$REVIEW"
             cat "$SUMMARY"
-          done
+          done < /tmp/compile-batches.txt
 
-      - name: Prove corpus uniqueness
+      - name: Prove complete review corpus uniqueness
+        if: steps.scope.outputs.count != '0'
         run: |
           set -Eeuo pipefail
           python -c 'from pathlib import Path; import sys; sys.path.insert(0,"tools"); import snapshot_nutrition_review_checkpoint_v60 as c; print(c.build_checkpoint(Path("tools"))["summary"])'
 
-      - name: Commit exact compiler outputs
+      - name: Commit compiler-generated review files
+        if: steps.scope.outputs.count != '0'
         run: |
           set -Eeuo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/release_catalog_reviewed_nutrition_targets_138.v1.json tools/release_catalog_reviewed_nutrition_targets_139.v1.json tools/release_catalog_reviewed_nutrition_targets_140.v1.json
+          while IFS= read -r BATCH; do
+            test -n "$BATCH"
+            git add "tools/release_catalog_reviewed_nutrition_targets_${BATCH}.v1.json"
+          done < /tmp/compile-batches.txt
+          git diff --cached --check
           if git diff --cached --quiet; then
-            echo "Review files already match compiler output."
+            echo "All selected reviews already match compiler output."
           else
-            git commit -m "Recompile accelerated nutrition batches 138-140"
+            git commit -m "Compile post-activation nutrition review files"
             git push origin "HEAD:$BRANCH"
           fi
-
-      - name: Dispatch fail-closed validator
-        run: |
-          set -Eeuo pipefail
-          gh workflow run catalog-nutrition-review-decisions-v60.yml --repo "$GITHUB_REPOSITORY" --ref "$BRANCH"
