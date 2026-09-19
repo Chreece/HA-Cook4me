@@ -80,10 +80,18 @@ def load_reviews(review_root: Path) -> dict[str, dict[str, Any]]:
             "networkRequestsPerformedAtRuntime": False,
             "exactReviewTargetRequired": True,
             "exactMemberIdentityRequired": True,
-            "officialFoodCompositionSourceRequired": True,
             "sourceValuesPinnedInRepository": True,
         }
+        source_policy_ok = (
+            policy.get("officialFoodCompositionSourceRequired") is True
+            or (
+                policy.get("authoritativePrimaryCompositionSourceRequired") is True
+                and policy.get("exactPrimaryProductIdentityRequired") is True
+            )
+        )
         bad = [key for key, expected in required_policy.items() if policy.get(key) is not expected]
+        if not source_policy_ok:
+            bad.append("sourceAuthorityPolicy")
         if bad:
             raise RuntimeError(
                 f"unsafe supplemental nutrition policy {path.name}: " + ", ".join(bad)
@@ -109,8 +117,22 @@ def load_reviews(review_root: Path) -> dict[str, dict[str, Any]]:
                     raise RuntimeError(f"{target_id}: invalid supplemental semantic concept")
             else:
                 raise RuntimeError(f"{target_id}: unsupported supplemental review target kind")
-            if _text(raw.get("source")).casefold() != "official_food_table":
-                raise RuntimeError(f"{target_id}: supplemental source is not an official food table")
+            source_kind = _text(raw.get("source")).casefold()
+            if source_kind == "official_food_table":
+                if policy.get("officialFoodCompositionSourceRequired") is not True:
+                    raise RuntimeError(
+                        f"{target_id}: official-table source lacks official-source policy"
+                    )
+            elif source_kind == "authoritative_primary_composition":
+                if (
+                    policy.get("authoritativePrimaryCompositionSourceRequired") is not True
+                    or policy.get("exactPrimaryProductIdentityRequired") is not True
+                ):
+                    raise RuntimeError(
+                        f"{target_id}: primary composition source lacks exact-primary policy"
+                    )
+            else:
+                raise RuntimeError(f"{target_id}: unsupported supplemental source kind")
             for key in (
                 "sourceAuthority",
                 "sourceDataset",
