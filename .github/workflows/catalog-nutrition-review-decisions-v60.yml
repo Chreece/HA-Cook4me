@@ -147,6 +147,13 @@ jobs:
         if: steps.scope.outputs.activation_required == 'true'
         run: |
           set -Eeuo pipefail
-          test -n "$GITHUB_SHA"
-          gh workflow run catalog-post-activation-nutrition-activate-v60.yml --repo "$GITHUB_REPOSITORY" --ref "$ACTIVATION_BRANCH" -f source_sha="$GITHUB_SHA"
-          echo "Dispatched nutrition activation for verified review-batch SHA $GITHUB_SHA"
+          SOURCE_SHA="$GITHUB_SHA"
+          if git diff --name-only HEAD^ HEAD | grep -Fxq 'tools/nutrition_review_validation_request.v1.json'; then
+            REQUEST_SHA="$(jq -r '.activationSourceSha // empty' tools/nutrition_review_validation_request.v1.json)"
+            if [ -n "$REQUEST_SHA" ]; then
+              SOURCE_SHA="$REQUEST_SHA"
+            fi
+          fi
+          test -n "$SOURCE_SHA"
+          gh workflow run catalog-post-activation-nutrition-activate-v60.yml --repo "$GITHUB_REPOSITORY" --ref "$ACTIVATION_BRANCH" -f source_sha="$SOURCE_SHA"
+          echo "Dispatched nutrition activation for verified review-batch SHA $SOURCE_SHA"
