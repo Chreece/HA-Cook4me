@@ -1,470 +1,200 @@
 [
   [
-    "concept:food:1165240011b18aa5017b",
-    2706838,
+    "concept:food:66163a79ded7e03c2ac7",
+    2710602,
     "low",
-    "seafood salad preserves a cooked seafood/shellfish family while mussel-only identity and packing medium are not represented"
+    "horchata made with water preserves a sweet non-alcoholic cereal/rice-drink profile while amazake is fermented rice and has different sugars and solids"
   ],
   [
-    "concept:food:2510f9cbbeb755df70e3",
-    169231,
+    "concept:food:8e5d0e8659bbc160025d",
+    2710282,
     "low",
-    "raw ginger preserves a fresh medicinal/aromatic root-rhizome profile while dong quai is botanically and nutritionally different"
+    "agave liquid sweetener preserves the concentrated sweet syrup-like liquid of mostarda while mustard aromatics and fruit syrup composition differ"
   ],
   [
-    "concept:food:d20e1091740fd1feba8e",
-    169231,
-    "low",
-    "raw ginger preserves a fresh aromatic medicinal root profile while ginseng is botanically and nutritionally different"
+    "concept:food:0763839072420e98fb57",
+    2707136,
+    "medium",
+    "hot-and-sour soup preserves a sour savory soup profile while żurek uses fermented rye starter, sausage and a distinct Polish formulation"
   ],
   [
-    "concept:food:de33847c4a5f4a836677",
+    "concept:food:ca6dbeaed27d9e2ca959",
+    2709224,
+    "low",
+    "raw banana preserves the banana plant identity while peel tissue has much more fibre and less available carbohydrate than the pulp"
+  ],
+  [
+    "concept:food:b88d5e68048da0bc37aa",
+    2709168,
+    "high",
+    "raw lemon directly preserves the whole lemon food identity; seeding and slicing do not materially change the nutrient profile"
+  ],
+  [
+    "concept:food:5a0bca5b746c32d7b479",
+    171183,
+    "medium",
+    "Thai coconut curry soup directly preserves one explicitly allowed Thai packet-soup family while packet concentration and brand formulation vary"
+  ],
+  [
+    "concept:food:b01643ce48a861f414de",
+    173470,
+    "medium",
+    "fresh thyme preserves one explicitly named fresh herb and the aromatic-herb nutrient form while parsley and bay leaf are not represented"
+  ],
+  [
+    "concept:food:80e04d421409748a838e",
+    2708827,
+    "medium",
+    "plain pasta with vegetables preserves the cooked wheat-pasta form while farfalle/mini-shell shape and the added vegetables differ"
+  ],
+  [
+    "concept:food:55ec2cd8e5c7346fee7d",
+    2710254,
+    "low",
+    "raw spinach used as a sandwich leaf preserves a fresh leafy-garnish profile while perilla is a different aromatic leaf"
+  ],
+  [
+    "concept:food:dbcd351e9fa0357c6601",
+    2707588,
+    "medium",
+    "flax seeds preserve an oil-rich edible seed profile reasonably close to perilla seed while fatty-acid proportions and grinding differ"
+  ],
+  [
+    "concept:food:a311745522b5a12dcc0d",
+    167749,
+    "low",
+    "raw lemon peel preserves a concentrated citrus-rind profile while dried lime includes dried pulp, rind and a different citrus species"
+  ],
+  [
+    "concept:food:0ac71b67c0f17c8a7fd7",
+    2708728,
+    "low",
+    "meat/poultry-filled pastry preserves a ready-filled poultry preparation while roulade meat, wrapping and filling composition differ"
+  ],
+  [
+    "concept:food:fdf4eeced5c8c623eed4",
+    172240,
+    "medium",
+    "red-wine vinegar directly preserves the explicitly allowed vinegar alternative when borscht concentrate is unavailable, while beet concentrate is not represented"
+  ],
+  [
+    "concept:food:3c75e9a55fb2308d1cce",
+    168034,
+    "low",
+    "broad whitefish preserves a raw lean fish profile and includes head/soft-bone tissues, while red mullet species and fillet composition differ"
+  ],
+  [
+    "concept:food:14ec8f3b3d170768559d",
+    2346390,
+    "low",
+    "raw red-leaf lettuce preserves a red leafy-salad vegetable profile while radicchio, chicory and leek have different species and composition"
+  ],
+  [
+    "concept:food:e75182bdb41e516aa48d",
+    171183,
+    "low",
+    "Thai coconut curry soup preserves a Southeast-Asian coconut-curry spice family while rendang paste is much more concentrated and meat-oriented"
+  ],
+  [
+    "concept:food:8824dbeccdf44424ee92",
+    174597,
+    "low",
+    "roast-beef spread preserves a cooked shredded/spreadable meat preparation while rillettes are fattier and typically pork or duck"
+  ],
+  [
+    "concept:food:6a85b34455fc9933ba45",
+    174597,
+    "low",
+    "roast-beef spread preserves the spreadable cooked-meat food form while rillettes are fattier and species/formulation can differ"
+  ],
+  [
+    "concept:food:7ce7d6ba7f677d5b61fa",
+    2706155,
+    "medium",
+    "liver paste or pâté directly preserves the pâté alternative and a rich spreadable meat profile while rillettes use shredded meat and fat"
+  ],
+  [
+    "concept:food:7d427530adea2a797881",
+    168034,
+    "low",
+    "broad whitefish preserves the fish base of sakura denbu while sugar, salt, coloring and flaked/dried preparation are not represented"
+  ],
+  [
+    "concept:food:d5b22a6a78262ad92ff3",
+    2709931,
+    "low",
+    "cooked edible flowers/blossoms preserve blossom tissue while cherry blossoms are salt-pickled and aromatic rather than conventionally cooked"
+  ],
+  [
+    "concept:food:0d957f1793aae3c6ca8f",
+    2709931,
+    "low",
+    "cooked edible flowers/blossoms preserve blossom tissue while desalination, cherry species and pickling are not represented"
+  ],
+  [
+    "concept:food:ee8fbdcdb820a8c6e878",
+    2709931,
+    "low",
+    "cooked edible flowers/blossoms preserve blossom tissue while desalination, cherry species and pickling are not represented"
+  ],
+  [
+    "concept:food:5e150d26c3a8afe82b38",
+    169288,
+    "low",
+    "cooked drained spinach preserves a desalted cooked-leaf profile while cherry leaf is a different aromatic tree leaf"
+  ],
+  [
+    "concept:food:9569ed692b0944b7ef4b",
     2710100,
     "low",
-    "pickled seaweed preserves a salty marine-vegetable profile while samphire is a succulent coastal plant rather than seaweed"
+    "pickled seaweed preserves a salty coastal vegetable/sea-plant profile while samphire is a succulent flowering plant rather than seaweed"
   ],
   [
-    "concept:food:4f293def0213fd22e747",
-    170917,
-    "medium",
-    "bay leaf directly preserves one of the explicitly named whole spices while cardamom and cinnamon are not represented"
-  ],
-  [
-    "concept:food:dc25251bad337fda794e",
-    2705970,
+    "concept:food:9701202b0b7f272e2a8e",
+    2709690,
     "low",
-    "grilled chicken with sauce preserves chicken plus sauce while canned yakitori tare sweetness, cut and packing medium differ"
+    "peas and carrots cooked with fat preserve a cooked vegetable-with-fat base while classic soffritto uses onion, celery and carrot"
   ],
   [
-    "concept:food:9ebe9bab825aeee054dc",
-    2710689,
+    "concept:food:27466b4bf72434e52a03",
+    2709690,
     "low",
-    "white wine preserves an alcoholic beverage nutrient profile while awamori is a distilled rice spirit with much higher alcohol concentration"
+    "peas and carrots cooked with fat preserve a sautéed vegetable-with-fat profile while celery and onion are missing and peas are extra"
   ],
   [
-    "concept:food:e44cec05964d7b2a4416",
-    167567,
-    "medium",
-    "liquid unsweetened baking chocolate preserves the melted chocolate component while added butter is not represented"
-  ],
-  [
-    "concept:food:c88d1e4812ea77f99750",
-    167747,
+    "concept:food:5001a875616d03d5a889",
+    168573,
     "low",
-    "raw lemon juice preserves an acidic citrus-food profile while isolated citric acid is far more concentrated and contains essentially no macronutrients"
+    "raw lemongrass preserves a fresh lemon-scented culinary herb profile while verbena is a different aromatic plant"
   ],
   [
-    "concept:food:039e78023eb74e669e4b",
-    2708827,
+    "concept:food:5d9948ee4bfe5043fee3",
+    170480,
     "low",
-    "plain pasta with vegetables preserves a cooked pasta food form while moghrabieh is a dried pearl pasta/couscous product and vegetables are extra"
+    "pickled beets canned with solids and liquids preserve beet-derived liquid plus water while the target uses only diluted beet liquid"
   ],
   [
-    "concept:food:ff1706d670ed5bee1ff5",
-    2747654,
+    "concept:food:ac244ebd563bc4ef769c",
+    168479,
     "low",
-    "Pacific/Alaskan cod preserves a lean white-fish family close to pollock while drying and strip form are not represented"
+    "canned succotash with whole-kernel corn and packing liquid preserves corn-derived liquid while lima beans and solids are extra"
   ],
   [
-    "concept:food:273f420ad555017baef1",
-    2709942,
-    "medium",
-    "cooked mushrooms preserve the mushroom food family while bay bolete species and drying/rehydration are not represented"
-  ],
-  [
-    "concept:food:dc507966d373aed439da",
-    2706155,
+    "concept:food:af2c2e3d58b2c14725a3",
+    170097,
     "low",
-    "liver paste or pâté preserves a spreadable cooked-meat preparation while rillettes use shredded meat/fat and the requested product is lower fat"
+    "cooked shiitake preserves the nutrient source of the soaking liquid while dilution into water and discarded mushroom solids are not represented"
   ],
   [
-    "concept:food:278433d0128746b85760",
-    170926,
+    "concept:food:f87e0c6dd0de2fbd1ba8",
+    168832,
     "low",
-    "ground ginger preserves a dry ground-spice form while fenugreek is a different seed spice"
+    "lemon pudding prepared with sugar and egg yolk preserves a sweet egg-yolk thickened dessert profile while zabaglione uses wine and no lemon pudding base"
   ],
   [
-    "concept:food:5f5b026027f8d86cd04f",
-    170926,
+    "M_FOOD_697",
+    168573,
     "low",
-    "ground ginger preserves a dry ground-spice form while fenugreek is a different seed spice"
-  ],
-  [
-    "concept:food:fea46ea6b4660271c7bf",
-    2706155,
-    "low",
-    "liver paste or pâté preserves a spreadable cooked-meat preparation while rillettes use shredded meat/fat and the requested product is lower fat"
-  ],
-  [
-    "concept:food:b39151b644d0832bddad",
-    2709745,
-    "medium",
-    "spaghetti sauce preserves a tomato-based pasta-sauce family while homemade Bolognese meat content and recipe proportions vary"
-  ],
-  [
-    "concept:food:d4a3617f043f67d3cf9c",
-    2706838,
-    "low",
-    "seafood salad preserves a cooked seafood family while peeled king prawns are a single crustacean and uncombined"
-  ],
-  [
-    "concept:food:f3b95c0403d3c1e4242a",
-    2709609,
-    "low",
-    "cooked mustard greens preserve a blanched leafy brassica profile while Savoy cabbage leaf structure and cultivar differ"
-  ],
-  [
-    "concept:food:394a546eeed2718ad326",
-    2707435,
-    "low",
-    "soybean curd preserves the soy-protein base while the commercial soy/wheat strips are extruded, seasoned and include wheat"
-  ],
-  [
-    "concept:food:c8ceb6277dbd1ef1979c",
-    2727584,
-    "high",
-    "raw leeks directly preserve the primary explicitly named leek option; onion is an allowed alternative"
-  ],
-  [
-    "concept:food:92eb1f12d1bb0b324499",
-    2708827,
-    "medium",
-    "plain pasta preserves the linguine/tagliatelle wheat-pasta family while the retained record includes vegetables"
-  ],
-  [
-    "concept:food:c88ab6efded3dcc7a991",
-    167629,
-    "medium",
-    "banana melon preserves raw melon flesh identity while melon cultivar differs"
-  ],
-  [
-    "concept:food:8e046c981c6aaa3249bb",
-    2705854,
-    "high",
-    "ground beef directly preserves one explicitly allowed minced-meat option while veal is the alternative"
-  ],
-  [
-    "concept:food:d1b42fb541e5179478e9",
-    2512379,
-    "low",
-    "whole millet grain preserves a whole-cereal-grain profile while the target is an unspecified grain mixture"
-  ],
-  [
-    "concept:food:14131ca990d4dabe8319",
-    169249,
-    "medium",
-    "raw green-leaf lettuce preserves a mixed salad-leaf profile while the exact leaf blend varies"
-  ],
-  [
-    "concept:food:c2f5bcdc4205d5573071",
-    2747654,
-    "low",
-    "Pacific/Alaskan cod preserves a lean white-fish fillet profile while monkfish species and flour dusting are not represented"
-  ],
-  [
-    "concept:food:7dde96eb75f7bc883595",
-    2705717,
-    "low",
-    "Gouda/Edam preserves a semi-soft cow-milk cheese profile while Mont d'Or is a soft-ripened washed-rind cheese"
-  ],
-  [
-    "concept:food:63aea2adc62480342de8",
-    172508,
-    "medium",
-    "raw lamb shoulder/leg stew cubes preserve a raw small-ruminant shoulder-type meat profile close to mutton shoulder while age and fat differ"
-  ],
-  [
-    "concept:food:b89f458528ac64f1b66e",
-    169250,
-    "low",
-    "raw lotus root preserves a starchy root/rhizome vegetable profile while nagaimo is a yam with different starch and mucilage"
-  ],
-  [
-    "concept:food:a9a79a69bc55d244a6c6",
-    2709595,
-    "medium",
-    "generic cooked greens preserve the cooked leafy-green garnish form while nanohana is specifically rapeseed greens"
-  ],
-  [
-    "concept:food:80a0c4b28df04a913a6c",
-    2709609,
-    "medium",
-    "cooked mustard greens preserve the parboiled brassica-green preparation while nanohana species differs"
-  ],
-  [
-    "concept:food:c91f7629c21385fd46b4",
-    169256,
-    "medium",
-    "raw mustard greens preserve a pungent raw brassica-leaf profile while nanohana is rapeseed greens"
-  ],
-  [
-    "concept:food:c9558aac54d8a52abf8d",
-    2707589,
-    "low",
-    "mixed seeds preserve a dry edible-seed nutrient profile while nigella is a distinct aromatic seed"
-  ],
-  [
-    "concept:food:7e4039b2d8c39f7671c8",
-    170100,
-    "medium",
-    "cooked onion preserves the dominant onion ingredient while inserted cloves are not represented"
-  ],
-  [
-    "concept:food:bb382614c5c8cadf1d0d",
-    170100,
-    "medium",
-    "cooked onion preserves the dominant onion ingredient while inserted cloves are not represented"
-  ],
-  [
-    "concept:food:31df82657f2f9f9ca74f",
-    173470,
-    "low",
-    "fresh thyme preserves a fresh aromatic-leaf seasoning profile while sansho leaves are a different plant"
-  ],
-  [
-    "concept:food:83563a56f1a1abdfc3c2",
-    170933,
-    "low",
-    "white pepper preserves a dry pepper-spice nutrient form while sansho pepper is botanically different and citrus-like"
-  ],
-  [
-    "concept:food:a6e2f7182c1538955f2b",
-    2706366,
-    "low",
-    "dried shrimp preserves a dried seafood profile while semi-dried pollock is a lean fish rather than shellfish"
-  ],
-  [
-    "concept:food:0c3c325cf0d106ab9529",
-    174904,
-    "low",
-    "refrigerated biscuit dough preserves a ready-to-bake wheat-and-fat dough form while pizza dough is leaner and yeast-leavened"
-  ],
-  [
-    "concept:food:e2208b814152507d76d1",
-    171319,
-    "medium",
-    "chili powder preserves the dominant dried-chili spice family of shichimi while sesame, citrus peel and other spices are omitted"
-  ],
-  [
-    "concept:food:6b15d50299436b925439",
-    2707875,
-    "low",
-    "fruit cake preserves a sweet spiced cake form while ginger cake formulation and dominant flavor differ"
-  ],
-  [
-    "concept:food:dccd8c3c964edc2a9c9f",
-    173470,
-    "low",
-    "fresh thyme preserves a fresh aromatic herb profile while wild fennel has a different species and anise-like composition"
-  ],
-  [
-    "concept:food:24217184a974e15697bc",
-    172955,
-    "low",
-    "smoked sausage with cheddar preserves smoked meat plus cheese but not a standalone smoked cheese profile"
-  ],
-  [
-    "concept:food:d1217f701a565da88d79",
-    2709942,
-    "medium",
-    "cooked mushrooms preserve the mushroom family while bay bolete species and soaking/rehydration are not represented"
-  ],
-  [
-    "concept:food:26b151693dcb900d1004",
-    173470,
-    "low",
-    "fresh thyme preserves a fresh aromatic-leaf herb profile while lemon verbena is a different species"
-  ],
-  [
-    "concept:food:d929b8e835080e7ff40b",
-    170600,
-    "medium",
-    "thinly sliced formed beef steak preserves a tender sliced meat/fillet presentation while species/cut and processing may differ"
-  ],
-  [
-    "concept:food:31c3bbd0a1c451f21d42",
-    2710054,
-    "low",
-    "fried okra preserves okra identity while dried ground okra has far less water and no frying oil"
-  ],
-  [
-    "concept:food:e059531891d484ac5c96",
-    168101,
-    "low",
-    "low-fat beef bologna preserves a pale processed-sausage/meat-pudding family while white pudding commonly contains cereal and different meats"
-  ],
-  [
-    "concept:food:7eafc91a9637da3317cb",
-    168101,
-    "low",
-    "low-fat beef bologna preserves a sliced processed-sausage family while white pudding commonly contains cereal and different meats"
-  ],
-  [
-    "concept:food:9b48d00eff4f58e44d52",
-    2706721,
-    "low",
-    "generic stew preserves the finished stew family while white stew roux is a concentrated thickening base rather than the finished dish"
-  ],
-  [
-    "concept:food:d249eab963f003b3c76b",
-    2003586,
-    "low",
-    "00 flour preserves refined wheat flour identity while T130 wholemeal flour has much higher ash/fibre and a different extraction rate"
-  ],
-  [
-    "M_FOOD_779",
-    169231,
-    "low",
-    "raw ginger preserves an aromatic medicinal-root profile while astragalus is botanically different"
-  ],
-  [
-    "M_FOOD_772",
-    2706366,
-    "low",
-    "dried shrimp preserves a dried seafood profile while bonito flakes are dried smoked fish rather than shellfish"
-  ],
-  [
-    "M_FOOD_623",
-    2709752,
-    "medium",
-    "steak sauce preserves a concentrated savory brown sauce role close to demi-glace while stock reduction and gelatin concentration differ"
-  ],
-  [
-    "M_FOOD_783",
-    2707435,
-    "low",
-    "soybean curd preserves the soybean base while crispy soybean crumbs are drier, textured and potentially fried"
-  ],
-  [
-    "M_FOOD_781",
-    2706366,
-    "low",
-    "dried shrimp preserves a dried seafood nutrient family while flatfish is a lean fish rather than shellfish"
-  ],
-  [
-    "M_FOOD_784",
-    2709942,
-    "low",
-    "cooked mushrooms preserve an edible-fungus profile while dried tremella is a different fungus and much lower in water"
-  ],
-  [
-    "M_FOOD_734",
-    172450,
-    "medium",
-    "dried-frozen tofu preserves dried tofu identity while five-spice seasoning is not represented"
-  ],
-  [
-    "M_FOOD_213",
-    172223,
-    "medium",
-    "fresh queso-style cheese preserves a high-moisture fresh-cheese profile while fromage frais can be leaner and more cultured"
-  ],
-  [
-    "M_FOOD_649",
-    169231,
-    "low",
-    "raw ginger preserves the ginger-family aromatic rhizome profile while myoga uses flower buds/shoots and differs in composition"
-  ],
-  [
-    "M_FOOD_372",
-    172223,
-    "medium",
-    "fresh queso-style cheese preserves a high-moisture fresh-cheese profile while petit-suisse is richer and creamier"
-  ],
-  [
-    "M_FOOD_138",
-    2709821,
-    "medium",
-    "cucumber salad with vinegar preserves cucumber plus acidic pickling treatment while gherkin brine/salt concentration differs"
-  ],
-  [
-    "M_FOOD_768",
-    2709280,
-    "low",
-    "cranberry sauce preserves a berry-based preserved sauce form while cordia berry species and seasoning differ"
-  ],
-  [
-    "M_FOOD_408",
-    167780,
-    "low",
-    "prune purée preserves a generic fruit-purée preparation while the target does not specify fruit type"
-  ],
-  [
-    "M_FOOD_770",
-    174277,
-    "low",
-    "shoyu preserves a fermented savory sauce family while red-yeast-rice sauce is rice-fermented and composition differs"
-  ],
-  [
-    "M_FOOD_510",
-    2706838,
-    "medium",
-    "seafood salad preserves the generic seafood food family while dressing and mixed preparation are extra"
-  ],
-  [
-    "M_FOOD_576",
-    2710178,
-    "low",
-    "curry sauce preserves a spicy savory sauce family while the unspecified spicy sauce could use a different base"
-  ],
-  [
-    "M_FOOD_578",
-    172967,
-    "low",
-    "truffle-flavored pâté preserves truffle flavor/aroma while the pâté matrix dominates the retained nutrient profile"
-  ],
-  [
-    "M_FOOD_571",
-    169256,
-    "low",
-    "raw mustard greens preserve a tart leafy-green vegetable profile while sorrel is a different species with higher oxalate acidity"
-  ],
-  [
-    "M_FOOD_702",
-    173470,
-    "low",
-    "fresh thyme preserves a fresh aromatic-herb profile while verbena is botanically different"
-  ],
-  [
-    "M_FOOD_11",
-    2710689,
-    "low",
-    "white wine preserves alcoholic beverage energy and water while amaretto is a sweeter distilled liqueur"
-  ],
-  [
-    "M_FOOD_71",
-    2710689,
-    "low",
-    "white wine preserves alcoholic beverage energy and water while Calvados is a stronger distilled apple brandy"
-  ],
-  [
-    "M_FOOD_127",
-    2710689,
-    "low",
-    "white wine preserves alcoholic beverage energy and water while Cointreau is a stronger sweet orange liqueur"
-  ],
-  [
-    "M_FOOD_260",
-    2710689,
-    "low",
-    "white wine preserves alcoholic beverage energy and water while Kirsch is a stronger distilled cherry spirit"
-  ],
-  [
-    "M_FOOD_488",
-    2710689,
-    "low",
-    "white wine preserves an alcoholic wine profile while vermouth is fortified and aromatized"
-  ],
-  [
-    "M_FOOD_790",
-    2747654,
-    "low",
-    "Pacific/Alaskan cod preserves a lean white-fish nutrient profile while barramundi is a different species"
-  ],
-  [
-    "M_FOOD_142",
-    2709280,
-    "low",
-    "cranberry sauce preserves a smooth fruit-sauce/coulis preparation while fruit type, seeds and added sugar vary"
+    "raw lemongrass preserves a fresh lemon-scented herb profile while lemon balm is a different herb species with different leaf composition"
   ]
 ]
