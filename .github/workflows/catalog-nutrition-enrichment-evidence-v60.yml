@@ -13,7 +13,6 @@ on:
       - tools/fdc_reference_data_v60.py
       - tools/prepare_fdc_reference_data_v60.py
       - tools/prepare_post_activation_nutrition_review_targets_v60.py
-      - tools/release_catalog_reviewed_nutrition_targets_*.v1.json
       - tests/test_capture_release_catalog_fdc_candidate_evidence_offline_v60.py
       - tests/test_fdc_candidate_reference_data_v60.py
       - tests/test_prepare_fdc_reference_manifest_v60.py
