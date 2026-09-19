@@ -1,0 +1,58 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-retained-reference-binding",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Double cream (45% fat or more)",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Cream, heavy",
+      "fdcId": 2346386,
+      "notes": "Manual semantic review binds Cook4Me 'Double cream (45% fat or more)' to USDA Foundation 'Cream, heavy' through a retained exact evidence record. The destination explicitly identifies double cream, a high-fat fluid dairy cream, so heavy cream is the appropriate reviewed USDA family rather than light cream, sour cream, cream cheese, or a cream-based prepared dish. Confidence remains medium because British/European double cream is typically around 45–48% fat while USDA heavy cream is commonly lower in fat, so the record is a close nutrient-profile approximation within the same plain high-fat cream family; this decision does not generalize to vague thick cream, cooking cream, crème fraîche, plant-based cream, or flavored cream.",
+      "reviewTargetId": "concept:food:2832a122f523e0969d10",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "ac467fd785955d2c4a74992f5606e8acf1b1270f2e1689f04c016b8ecaaf2945",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "f77e4547166bd93edd57034ba9e6a7ad5aaa670df5e8137be68017dec1e25ff9",
+      "sourceEvidenceTargetId": "concept:food:2538a9bc2093adbe8813",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Double cream, poured over the butter-chocolate mixture",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Cream, heavy",
+      "fdcId": 2346386,
+      "notes": "Manual semantic review binds Cook4Me 'Double cream, poured over the butter-chocolate mixture' to USDA Foundation 'Cream, heavy' through a retained exact evidence record. The destination explicitly identifies double cream, a high-fat fluid dairy cream, so heavy cream is the appropriate reviewed USDA family rather than light cream, sour cream, cream cheese, or a cream-based prepared dish. Confidence remains medium because British/European double cream is typically around 45–48% fat while USDA heavy cream is commonly lower in fat, so the record is a close nutrient-profile approximation within the same plain high-fat cream family; this decision does not generalize to vague thick cream, cooking cream, crème fraîche, plant-based cream, or flavored cream.",
+      "reviewTargetId": "concept:food:dd6da8034542361df077",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "ac467fd785955d2c4a74992f5606e8acf1b1270f2e1689f04c016b8ecaaf2945",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "f77e4547166bd93edd57034ba9e6a7ad5aaa670df5e8137be68017dec1e25ff9",
+      "sourceEvidenceTargetId": "concept:food:2538a9bc2093adbe8813",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "referenceReceipts": {
+    "2346386": {
+      "sourceCandidateSha256": "ac467fd785955d2c4a74992f5606e8acf1b1270f2e1689f04c016b8ecaaf2945",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:2538a9bc2093adbe8813"
+    }
+  },
+  "reviewDecisionSha256": "bf49a4134721efa9d77ede2e79ebe19c2b3cdd9063a7a277c54d0e16cfb753d6",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "f77e4547166bd93edd57034ba9e6a7ad5aaa670df5e8137be68017dec1e25ff9"
+}
