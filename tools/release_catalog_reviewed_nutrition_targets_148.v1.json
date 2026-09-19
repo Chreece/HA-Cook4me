@@ -1,0 +1,103 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-retained-reference-binding",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Oysters, washed in salt water and drained",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Oysters, raw",
+      "fdcId": 2706351,
+      "notes": "Manual semantic review binds Cook4Me 'Oysters, washed in salt water and drained' to retained USDA 'Oysters, raw' as a target-specific nutrient-profile proxy because it is raw oysters directly preserve the oyster identity; washing in salt water and draining are preparation steps that do not materially change the underlying food. Confidence is high; this approval creates no culinary substitution rule and does not authorize automatic reuse for other ingredients.",
+      "reviewTargetId": "concept:food:769c3566166f3539b4f6",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "8405ea442e0689da1a25f1c53e661a6e860f45a4c5132235c87d956ba7244946",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "fc9b48e241a2c2dfd54696bdf10fb3c03132ad9990ac264e94a3e2b8445208d6",
+      "sourceEvidenceTargetId": "concept:food:769c3566166f3539b4f6",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Packet of Bourbon vanilla sugar",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Sugars, granulated",
+      "fdcId": 746784,
+      "notes": "Manual semantic review binds Cook4Me 'Packet of Bourbon vanilla sugar' to retained USDA 'Sugars, granulated' as a target-specific nutrient-profile proxy because it is granulated sugar preserves the dominant nutrient profile of vanilla sugar while the small Bourbon-vanilla flavoring fraction is not represented. Confidence is medium; this approval creates no culinary substitution rule and does not authorize automatic reuse for other ingredients.",
+      "reviewTargetId": "concept:food:9448a3d86c749673009f",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "f873831b5e579f9b752d48357f796693ca5348aa51067516f41de5749d729ada",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "fc9b48e241a2c2dfd54696bdf10fb3c03132ad9990ac264e94a3e2b8445208d6",
+      "sourceEvidenceTargetId": "concept:food:9448a3d86c749673009f",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Pumpkin (wrap and microwave at 600 W for 5 minutes)",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Pumpkin, cooked",
+      "fdcId": 2709692,
+      "notes": "Manual semantic review binds Cook4Me 'Pumpkin (wrap and microwave at 600 W for 5 minutes)' to retained USDA 'Pumpkin, cooked' as a target-specific nutrient-profile proxy because it is cooked pumpkin directly preserves the pumpkin identity and cooked state after microwave heating. Confidence is high; this approval creates no culinary substitution rule and does not authorize automatic reuse for other ingredients.",
+      "reviewTargetId": "concept:food:b650e0ea7fd60bc39f95",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "eea896d1c41483e375adc6615170271d542758b091afd705e46152fd95be37be",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "fc9b48e241a2c2dfd54696bdf10fb3c03132ad9990ac264e94a3e2b8445208d6",
+      "sourceEvidenceTargetId": "concept:food:b650e0ea7fd60bc39f95",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Vanilla beans, a little",
+      "confidence": "low",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Vanilla extract",
+      "fdcId": 173471,
+      "notes": "Manual semantic review binds Cook4Me 'Vanilla beans, a little' to retained USDA 'Vanilla extract' as a target-specific nutrient-profile proxy because it is vanilla extract preserves the vanilla flavor-source family while whole vanilla bean is more concentrated and lacks the extract carrier. Confidence is low; this approval creates no culinary substitution rule and does not authorize automatic reuse for other ingredients.",
+      "reviewTargetId": "concept:food:8e3f5db32887a8169cce",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "e9db52db2b819f14ba996fe67ca592989215a3141b1242db2b062f3f5544040c",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "fc9b48e241a2c2dfd54696bdf10fb3c03132ad9990ac264e94a3e2b8445208d6",
+      "sourceEvidenceTargetId": "concept:food:8e3f5db32887a8169cce",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "referenceReceipts": {
+    "173471": {
+      "sourceCandidateSha256": "e9db52db2b819f14ba996fe67ca592989215a3141b1242db2b062f3f5544040c",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:8e3f5db32887a8169cce"
+    },
+    "2706351": {
+      "sourceCandidateSha256": "8405ea442e0689da1a25f1c53e661a6e860f45a4c5132235c87d956ba7244946",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:769c3566166f3539b4f6"
+    },
+    "2709692": {
+      "sourceCandidateSha256": "eea896d1c41483e375adc6615170271d542758b091afd705e46152fd95be37be",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:b650e0ea7fd60bc39f95"
+    },
+    "746784": {
+      "sourceCandidateSha256": "f873831b5e579f9b752d48357f796693ca5348aa51067516f41de5749d729ada",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:9448a3d86c749673009f"
+    }
+  },
+  "reviewDecisionSha256": "44a70a4095ab56618503c96cfc5cb9f093004a3346cf314c7604ffcce3675524",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "fc9b48e241a2c2dfd54696bdf10fb3c03132ad9990ac264e94a3e2b8445208d6"
+}
