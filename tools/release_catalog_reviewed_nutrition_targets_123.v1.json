@@ -1,0 +1,36 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-target-candidate-binding",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Tsp Madras curry blend",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, curry powder",
+      "fdcId": 170924,
+      "notes": "Manual semantic review binds Cook4Me 'Tsp Madras curry blend' to USDA SR Legacy 'Spices, curry powder'. The destination explicitly identifies a Madras curry spice blend, and the target's own immutable candidate evidence contains the USDA curry-powder record at rank 9. Confidence remains medium because Madras curry blends vary in the proportions of turmeric, coriander, cumin, chili, fenugreek, and other spices; this binding represents the closest standardized curry-powder nutrient profile and does not generalize to curry paste, curry sauce, curry roux, garam masala, or generic 'Curry'.",
+      "reviewTargetId": "concept:food:84850cabb91f73e47ea8",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "e9f5ead77a57c3f124dd1925e924f09686276fbf40b473112fac557210c5c545",
+      "sourceEvidenceCandidateRank": 9,
+      "sourceEvidenceSha256": "817f78c338584a77e29a592bc011d8cf6de4c37e6167b7ef4e5adbe8c4a29029",
+      "sourceEvidenceTargetId": "concept:food:84850cabb91f73e47ea8",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "reviewDecisionSha256": "b4edf0df55e5e3a8769478500adcddc3884fe81a854ddd1bc7ab893212224783",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "817f78c338584a77e29a592bc011d8cf6de4c37e6167b7ef4e5adbe8c4a29029"
+}
