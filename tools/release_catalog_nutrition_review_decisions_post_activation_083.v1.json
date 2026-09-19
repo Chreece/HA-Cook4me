@@ -1,0 +1,89 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Soaked salt cod",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Fish, cod, NFS",
+      "fdcId": 2706240,
+      "notes": "Manual semantic review binds Cook4Me 'Soaked salt cod' to USDA FNDDS 'Fish, cod, NFS'. The target is explicitly cod and its own pinned evidence contains this exact cod record. Soaking/desalting changes sodium and water content but not the underlying fish identity. Confidence remains medium because the generic FNDDS cod record does not preserve the cured/salted starting state, residual sodium, species subtype, or exact hydration after soaking; this review does not generalize to cod liver oil, breaded cod, or non-cod fish.",
+      "reviewTargetId": "concept:food:3844ed7b1f4234be6834",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Desalted salt cod",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Fish, cod, NFS",
+      "fdcId": 2706240,
+      "notes": "Manual semantic review binds Cook4Me 'Desalted salt cod' to USDA FNDDS 'Fish, cod, NFS'. The target is explicitly cod after salt removal and its own pinned evidence contains this exact cod record. Desalting preserves fish identity while changing sodium and hydration. Confidence remains medium because the generic FNDDS record does not encode residual salt, cured texture, species subtype, or water uptake; this review does not generalize to cod liver oil, breaded cod, or non-cod fish.",
+      "reviewTargetId": "concept:food:e8a1a8dc9b63dd5ef406",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 10,
+      "canonicalEnglishName": "Clarified butter (or vegetable oil)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Ghee, clarified butter",
+      "fdcId": 2710168,
+      "notes": "Manual semantic review binds Cook4Me 'Clarified butter (or vegetable oil)' to USDA FNDDS 'Ghee, clarified butter'. Clarified butter is the primary named ingredient and ghee is the exact clarified-butter food form; the target's own pinned evidence contains this exact record. Confidence remains medium because the source explicitly permits vegetable oil as an alternative and does not state which alternative was used in every recipe instance; this review does not generalize to butter-oil spreads, margarine, or unspecified vegetable oils.",
+      "reviewTargetId": "concept:food:0c9138f02de1576d85ec",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 8,
+      "canonicalEnglishName": "Stock cube",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Soup, bouillon cubes and granules, low sodium, dry",
+      "fdcId": 171613,
+      "notes": "Manual semantic review binds Cook4Me 'Stock cube' to USDA SR Legacy 'Soup, bouillon cubes and granules, low sodium, dry'. The target is explicitly a dry stock/bouillon cube, and its own pinned evidence contains this generic cube/granule record. The generic bouillon record is preferred over assuming chicken, beef, fish, or another stock type. Confidence remains medium because the USDA record is low-sodium and also includes granules, while the source does not identify stock type or sodium formulation; this review does not generalize to prepared liquid stock.",
+      "reviewTargetId": "concept:food:31889dfa1ba21fcf04e5",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "B- Chinese-style stock granules",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Soup, bouillon cubes and granules, low sodium, dry",
+      "fdcId": 171613,
+      "notes": "Manual semantic review binds Cook4Me 'B- Chinese-style stock granules' to USDA SR Legacy 'Soup, bouillon cubes and granules, low sodium, dry'. The target is explicitly dry stock granules and its own pinned evidence ranks this exact cube/granule record first. Confidence remains medium because the source's Chinese-style flavor base and sodium formulation are unspecified and the USDA record is generic low-sodium bouillon; this review does not infer chicken, beef, seafood, MSG, spice, or brand formulation.",
+      "reviewTargetId": "concept:food:108c8015b6cd5a4dfb91",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Iriko dashi granules",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Soup, bouillon cubes and granules, low sodium, dry",
+      "fdcId": 171613,
+      "notes": "Manual semantic review binds Cook4Me 'Iriko dashi granules' to USDA SR Legacy 'Soup, bouillon cubes and granules, low sodium, dry'. The target is explicitly a dry stock granule product and its own pinned evidence ranks this exact cube/granule record first. Confidence remains medium because iriko dashi is a fish-based Japanese stock seasoning while the USDA record is generic low-sodium bouillon; this is a preparation-form proxy and does not infer dried-anchovy proportion, salt, MSG, sugar, or brand formulation.",
+      "reviewTargetId": "concept:food:30ffd30f2bf6ca9413b3",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "a5b6e0804daed3f858d0fd651c6a46c0858baab898944d80f55ebc799b924faa"
+}

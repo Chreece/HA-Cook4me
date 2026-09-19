@@ -1,0 +1,77 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 5,
+      "canonicalEnglishName": "Oil, salt and black pepper",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, black",
+      "fdcId": 170931,
+      "notes": "Manual semantic review binds Cook4Me 'Oil, salt and black pepper' to USDA SR Legacy 'Spices, pepper, black'. Black pepper is an explicit component, and the reviewed corpus already binds the near-identical 'Salt and black pepper' and 'Salt, black pepper' targets to this exact FDC record. The target's own pinned evidence contains the same black-pepper record. Confidence remains medium because the selected profile does not represent the oil or salt components or their proportions.",
+      "reviewTargetId": "concept:food:ec5931a81eff26d0d390",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Allspice and black pepper",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, black",
+      "fdcId": 170931,
+      "notes": "Manual semantic review binds Cook4Me 'Allspice and black pepper' to USDA SR Legacy 'Spices, pepper, black'. Black pepper is an explicit component, the reviewed corpus already binds plain and ground black pepper to this exact FDC record, and the target's own pinned evidence ranks it first. Confidence remains medium because allspice is a separate spice and its contribution and blend ratio are not represented by the selected black-pepper profile.",
+      "reviewTargetId": "concept:food:9cf7b3025780c6af22ca",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Ginger-garlic paste",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Garlic, raw",
+      "fdcId": 1104647,
+      "notes": "Manual semantic review binds Cook4Me 'Ginger-garlic paste' to USDA Foundation 'Garlic, raw'. Garlic is an explicit defining component, the reviewed corpus already binds 'Garlic paste' and 'Garlic' to the same garlic identity, and this target's own pinned evidence contains the Foundation garlic record. Confidence remains medium because the paste also contains ginger and may have a formulation or ratio not represented by raw garlic; this is a garlic-component nutritional proxy.",
+      "reviewTargetId": "concept:food:52304bcc504d130cbb27",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Salt, pepper, bay leaf",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, bay leaf",
+      "fdcId": 170917,
+      "notes": "Manual semantic review binds Cook4Me 'Salt, pepper, bay leaf' to USDA SR Legacy 'Spices, bay leaf'. Bay leaf is an explicit component, the reviewed corpus already binds 'Bay leaf' to this exact FDC record, and this target's own pinned evidence ranks the bay-leaf record first. Confidence remains medium because salt and pepper are separate components whose amounts and nutrients are not represented by the selected bay-leaf profile.",
+      "reviewTargetId": "concept:food:7d0f0249b43566dc1353",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 3,
+      "canonicalEnglishName": "Salt, pepper and bay leaf",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, bay leaf",
+      "fdcId": 170917,
+      "notes": "Manual semantic review binds Cook4Me 'Salt, pepper and bay leaf' to USDA SR Legacy 'Spices, bay leaf'. Bay leaf is an explicit component, the reviewed corpus already binds 'Bay leaf' to this exact FDC record, and this target's own pinned evidence contains the bay-leaf record. Confidence remains medium because the selected profile does not represent the salt and pepper components or their proportions.",
+      "reviewTargetId": "concept:food:c9f247335e5bea0f2c60",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "51618b29bcf22edc32620f125c1da0721b65e97ec54d436ddf378c624c3ca6d3"
+}

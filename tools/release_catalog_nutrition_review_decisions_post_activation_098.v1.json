@@ -1,0 +1,89 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 3,
+      "canonicalEnglishName": "Oxtail, blood soaked out",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Beef, oxtails",
+      "fdcId": 2705843,
+      "notes": "Manual semantic review binds Cook4Me 'Oxtail, blood soaked out' to USDA FNDDS 'Beef, oxtails'. The target is explicitly oxtail and its own pinned evidence contains the exact beef-oxtail record. Soaking out blood changes handling and may slightly alter water-soluble components, but it does not change the defining food identity. Confidence is high for identity; this review does not generalize to other beef cuts, stocks, or prepared oxtail dishes.",
+      "reviewTargetId": "concept:food:33f70ea6ddc2f5a0c6d3",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Takuan pickled daikon (finely shredded, for garnish), a little",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Turnip, pickled",
+      "fdcId": 2710102,
+      "notes": "Manual semantic review binds Cook4Me 'Takuan pickled daikon (finely shredded, for garnish), a little' to USDA FNDDS 'Turnip, pickled'. The target is explicitly a pickled root vegetable and its own pinned evidence ranks this pickled-root record first. Confidence remains medium because daikon radish and turnip are different species and takuan curing, sugar, salt, water loss, and seasoning vary; this is a preparation-form nutritional proxy and does not imply botanical identity.",
+      "reviewTargetId": "concept:food:75ab37192c79e12c0162",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 5,
+      "canonicalEnglishName": "Meatball",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Meatballs, frozen, Italian style",
+      "fdcId": 171638,
+      "notes": "Manual semantic review binds provider identity 'Meatball' to USDA SR Legacy 'Meatballs, frozen, Italian style'. The target is explicitly a meatball and its own pinned evidence contains this whole-meatball record; previously reviewed Cook4Me meatball targets also support this USDA food as a usable meatball proxy. Confidence remains medium because meat type, breading, seasoning, fat level, frozen state, and Italian-style formulation are unspecified; this review does not generalize to meatless meatballs, sandwiches, soups, or sauced meals.",
+      "reviewTargetId": "M_FOOD_525",
+      "reviewTargetKind": "provider-identity"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 10,
+      "canonicalEnglishName": "Poultry fillet",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Chicken fillet, grilled",
+      "fdcId": 2706090,
+      "notes": "Manual semantic review binds provider identity 'Poultry fillet' to USDA FNDDS 'Chicken fillet, grilled'. The target is explicitly a poultry fillet and its own pinned evidence contains a whole chicken-fillet record, preferred over vegetarian fillets, poultry gravy, and breaded fillets. Confidence remains medium because poultry species, cooking state, added fat, seasoning, and raw-versus-cooked weight basis are unspecified; this review does not generalize to breaded fillets or poultry dishes.",
+      "reviewTargetId": "M_FOOD_201",
+      "reviewTargetKind": "provider-identity"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 7,
+      "canonicalEnglishName": "Satay sauce",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Peanut sauce",
+      "fdcId": 2707546,
+      "notes": "Manual semantic review binds provider identity 'Satay sauce' to USDA FNDDS 'Peanut sauce'. Satay sauce is commonly a peanut-based savory sauce and this target's own pinned evidence contains the peanut-sauce record. Confidence remains medium because regional and commercial satay sauces vary in peanut content, coconut milk, soy, sugar, oil, spices, and water; this is a sauce-form nutritional proxy rather than an assertion of an exact recipe.",
+      "reviewTargetId": "M_FOOD_534",
+      "reviewTargetKind": "provider-identity"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Seed mix",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Mixed seeds",
+      "fdcId": 2707589,
+      "notes": "Manual semantic review binds provider identity 'Seed mix' to USDA FNDDS 'Mixed seeds'. The target is explicitly a mixed-seed ingredient and its own pinned evidence contains the generic mixed-seeds record. Confidence is high for the food identity while the exact seed proportions remain unspecified; this review does not generalize to trail mix, snack mix, dressings, or single-seed products.",
+      "reviewTargetId": "M_FOOD_712",
+      "reviewTargetKind": "provider-identity"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "65b2bb7ebe0960173203e0fe18e8fbf30b989f630e9933f0018a29fb0eb18b03"
+}

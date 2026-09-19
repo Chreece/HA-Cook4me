@@ -1,0 +1,89 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 4,
+      "canonicalEnglishName": "Pepper",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Peppers, raw, NFS",
+      "fdcId": 2709799,
+      "notes": "Manual semantic review binds Cook4Me 'Pepper' to USDA FNDDS 'Peppers, raw, NFS'. The source wording is generic and does not name a cultivar, color, or heat level, so the not-further-specified raw pepper record is deliberately preferred over hot, jalapeño, banana, red-cooked, or dried pepper records. The target's own pinned evidence contains this exact FDC record. Confidence remains medium because the one-word source could theoretically refer to another pepper sense; this review does not generalize to black/white pepper spice, pepper steak, pickled peppers, or cooked peppers.",
+      "reviewTargetId": "concept:food:752e7ef0a5932d3a3c38",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Marrow bone",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Caribou, bone marrow, raw (Alaska Native)",
+      "fdcId": 169800,
+      "notes": "Manual semantic review binds Cook4Me 'Marrow bone' to USDA SR Legacy 'Caribou, bone marrow, raw (Alaska Native)'. The edible component identified by the target is bone marrow, and the target's own pinned evidence contains this as the only actual marrow-food record at rank 1. Prior reviewed Cook4Me 'Bone marrow' independently corroborates the same FDC record; historical reuse is review evidence only, not identity proof. Confidence remains medium because the source does not identify animal species and the USDA record is caribou-specific; this is a marrow nutritional proxy and does not imply caribou provenance.",
+      "reviewTargetId": "concept:food:08067b0d6e4b075e2813",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 5,
+      "canonicalEnglishName": "Broad beans",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Beans, NFS",
+      "fdcId": 2707347,
+      "notes": "Manual semantic review binds Cook4Me 'Broad beans' to USDA FNDDS 'Beans, NFS'. Broad/fava beans are unambiguously beans, while the target gives no preparation state. The target's own pinned evidence contains this generic bean record; it is chosen instead of asserting baked, refried, black, lima, pinto, kidney, green, or another specific preparation or bean type. Confidence remains medium because FNDDS does not preserve the exact broad/fava cultivar in this generic record.",
+      "reviewTargetId": "concept:food:731cbce15cffce73e4ec",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 12,
+      "canonicalEnglishName": "Fresh broad beans",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Fava beans, cooked",
+      "fdcId": 2707367,
+      "notes": "Manual semantic review binds Cook4Me 'Fresh broad beans' to USDA FNDDS 'Fava beans, cooked'. Broad beans and fava beans are the same food identity, and the target's own pinned evidence contains this exact fava-bean record. Confidence remains medium because the source says fresh while the available exact-species FNDDS record is cooked, so hydration and per-100-g nutrient density can differ; this review prefers species identity over incorrectly mapping broad beans to green, lima, black, pinto, or generic prepared beans.",
+      "reviewTargetId": "concept:food:9f46b500fa6c61114c6f",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 10,
+      "canonicalEnglishName": "Salted and peppered fish stock",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Soup, stock, fish, home-prepared",
+      "fdcId": 172885,
+      "notes": "Manual semantic review binds Cook4Me 'Salted and peppered fish stock' to USDA SR Legacy 'Soup, stock, fish, home-prepared'. The target is explicitly fish stock and its own pinned evidence contains the exact home-prepared fish-stock record. Salt and pepper are seasoning modifiers rather than a different base food. Confidence remains medium because the exact salt and pepper amounts are unknown and therefore their sodium/spice contribution is not represented separately; this review does not generalize to fish soup, bouillon powder, seafood solids, or cream sauces.",
+      "reviewTargetId": "concept:food:b991b6d5f1de1d1d8f6e",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 10,
+      "canonicalEnglishName": "Lobster stock",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Soup, stock, fish, home-prepared",
+      "fdcId": 172885,
+      "notes": "Manual semantic review binds Cook4Me 'Lobster stock' to USDA SR Legacy 'Soup, stock, fish, home-prepared'. The target is a seafood stock, and its own pinned evidence contains this stock record alongside lobster solids and prepared lobster dishes. The stock-form record is deliberately preferred because preparation form matters more here than using whole lobster nutrition. Confidence remains medium because USDA does not provide a lobster-stock-specific record and fish stock is therefore a seafood-stock proxy; this review does not imply lobster flesh composition.",
+      "reviewTargetId": "concept:food:f3b5b76c3abe5e6360a6",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "b2480bb93f90b1f90a49e6a6fc6a3a900823aeacc40ce0e7719ca5e9f1d740f7"
+}

@@ -1,0 +1,89 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 10,
+      "canonicalEnglishName": "Herring or smoked salmon, cut into pieces",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Fish, salmon, smoked",
+      "fdcId": 2706292,
+      "notes": "Manual semantic review binds Cook4Me 'Herring or smoked salmon, cut into pieces' to USDA FNDDS 'Fish, salmon, smoked'. Smoked salmon is explicitly one of the two permitted source alternatives, and the target's own pinned evidence contains this exact smoked-salmon record. Confidence remains medium because the source also permits herring and does not identify which alternative is used in every recipe instance; this review does not infer herring nutrition, species subtype, curing salt, oil, or additional seasoning.",
+      "reviewTargetId": "concept:food:56243d0f7758194eefd8",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 3,
+      "canonicalEnglishName": "Chopped marinated garlic",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Garlic, raw",
+      "fdcId": 1104647,
+      "notes": "Manual semantic review binds Cook4Me 'Chopped marinated garlic' to USDA Foundation 'Garlic, raw'. Chopping and marination preserve the underlying garlic identity, and the target's own pinned evidence contains this exact garlic record. Confidence remains medium because the marinade composition and uptake are unspecified, so added oil, acid, salt, sugar, herbs, or water are not represented separately; this review does not generalize to garlic sauce, roasted garlic, or garlic bread.",
+      "reviewTargetId": "concept:food:3e0e9ae065ae37c62297",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Sauerkraut juice",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Sauerkraut",
+      "fdcId": 2709982,
+      "notes": "Manual semantic review binds Cook4Me 'Sauerkraut juice' to USDA FNDDS 'Sauerkraut'. The juice is the fermented brine/liquid phase produced by the same sauerkraut food, and the target's own pinned evidence ranks this exact sauerkraut record first. Confidence remains medium because liquid brine can have a different solids, fibre, sodium, and water distribution than whole sauerkraut; this review is a same-food proxy and does not generalize to unrelated vegetable juices or plain brine.",
+      "reviewTargetId": "concept:food:4c540b5589e909acdf75",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Kimchi brine",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Kimchi",
+      "fdcId": 2710077,
+      "notes": "Manual semantic review binds Cook4Me 'Kimchi brine' to USDA FNDDS 'Kimchi'. The brine is the fermented liquid phase of kimchi and the target's own pinned evidence ranks this exact kimchi record first. Confidence remains medium because brine can differ from whole kimchi in vegetable solids, fibre, sodium, and water distribution; this is a same-food proxy and does not generalize to plain cabbage, pickle brine, or unrelated fermented sauces.",
+      "reviewTargetId": "concept:food:9ff7a77efb9e86eb7a54",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 10,
+      "canonicalEnglishName": "Onsen egg (for finishing)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Egg, whole, raw, fresh",
+      "fdcId": 171287,
+      "notes": "Manual semantic review binds Cook4Me 'Onsen egg (for finishing)' to USDA SR Legacy 'Egg, whole, raw, fresh'. An onsen egg remains a whole egg with only gentle low-temperature cooking, and the target's own pinned evidence contains this exact whole fresh egg record. Confidence remains medium because the selected USDA record is raw rather than softly cooked and therefore does not capture cooking-related water/protein changes; this review does not generalize to fried eggs, egg dishes, pasteurized frozen egg, or egg substitutes.",
+      "reviewTargetId": "concept:food:7daeabdfd2603efd92d8",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Apricot compote",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Apricot, canned",
+      "fdcId": 2709222,
+      "notes": "Manual semantic review binds Cook4Me 'Apricot compote' to USDA FNDDS 'Apricot, canned'. Compote is a hydrated preserved/cooked apricot preparation, and the target's own pinned evidence contains this canned-apricot record ahead of raw apricot. Confidence remains medium because the exact syrup, added sugar, cooking loss, draining state, and fruit-to-liquid ratio are unspecified; this review does not generalize to dried apricots, nectar, jam, or raw apricot.",
+      "reviewTargetId": "concept:food:c559a8d32deb86aa9c54",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "3b112504f9557b6bdc8e29e13b11f5aa34aeb75b24089c0e10ae3b287dd9d251"
+}
