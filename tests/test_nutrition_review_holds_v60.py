@@ -58,7 +58,7 @@ def held_queue(rows: list[dict]) -> dict:
 class NutritionReviewHoldTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.index = holds.load_holds()
+        cls.index = holds.load_holds(release_path=None)
         cls.rows = list(cls.index["targets"].values())
         cls.base_checkpoint = holds.checkpoint.build_checkpoint(holds.TOOLS)
         cls.base_semantics = holds.semantics.compile_from_paths(holds.semantics._review_paths())
@@ -71,15 +71,20 @@ class NutritionReviewHoldTests(unittest.TestCase):
         self.root = Path(self.tmp.name)
         self.path = self.root / "holds.json"
         self.registry = json.loads(holds.REGISTRY.read_text(encoding="utf-8"))
+        # Existing hold-contract tests intentionally exercise the immutable
+        # historical registry independent of any runtime release receipt.
+        self.active_patch = patch.object(holds, "_active", return_value=self.index)
+        self.active_patch.start()
+        self.addCleanup(self.active_patch.stop)
 
-    def load(self):
+    def load(self, release_path=None):
         self.path.write_text(json.dumps(self.registry), encoding="utf-8")
         # Validation unit cases reuse immutable fixtures. The separate source-byte
         # drift and repository-contract tests exercise real source reads.
         with patch.object(holds.checkpoint, "build_checkpoint", return_value=self.base_checkpoint), patch.object(
             holds.semantics, "compile_from_paths", return_value=self.base_semantics
         ):
-            return holds.load_holds(self.path)
+            return holds.load_holds(self.path, release_path=release_path)
 
     def test_twelve_holds_pin_original_bindings_and_twenty_two_member_ids(self):
         self.assertEqual(len(self.rows), 12)
@@ -93,6 +98,81 @@ class NutritionReviewHoldTests(unittest.TestCase):
             self.assertEqual(holds.find_hold(row["reviewTargetId"])["fdcId"], row["fdcId"])
             for member in row["memberIngredientIds"]:
                 self.assertEqual(holds.find_hold(member)["reviewTargetId"], row["reviewTargetId"])
+
+
+    def _release_payload(self, row):
+        return {
+            "schemaVersion": 1,
+            "kind": holds.RELEASE_KIND,
+            "holdRegistrySha256": self.index["registrySha256"],
+            "releaseDecisionSha256": "d" * 64,
+            "policy": dict(holds.RELEASE_POLICY),
+            "items": [
+                {
+                    "reviewTargetId": row["reviewTargetId"],
+                    "reviewTargetKind": row["reviewTargetKind"],
+                    "canonicalEnglishName": row["canonicalEnglishName"],
+                    "memberIngredientIds": sorted(row["memberIngredientIds"]),
+                    "heldReasonCode": row["reasonCode"],
+                    "heldFdcId": row["fdcId"],
+                    "heldReviewFile": row["reviewFile"],
+                    "heldReviewFileSha256": row["reviewFileSha256"],
+                    "approved": True,
+                    "fdcId": row["fdcId"],
+                    "confidence": "medium",
+                    "fdcDescription": row["fdcDescription"],
+                    "fdcDataType": row["fdcDataType"],
+                    "notes": "Explicit test re-review of the exact held binding.",
+                    "reviewFile": holds.RELEASES.name,
+                    "evidenceBindingScope": "retained-reference-record",
+                    "sourceEvidenceSha256": "a" * 64,
+                    "referenceManifestSha256": self.registry["referenceManifestSha256"],
+                    "sourceEvidenceTargetId": "concept:food:test-source",
+                    "sourceEvidenceCandidateRank": 1,
+                    "sourceCandidateSha256": "b" * 64,
+                }
+            ],
+        }
+
+    def test_compiled_release_deactivates_only_the_exact_held_target(self):
+        row = self.index["targets"]["concept:food:51b62939bbb0887b2b96"]
+        release_path = self.root / holds.RELEASES.name
+        release_path.write_text(json.dumps(self._release_payload(row)), encoding="utf-8")
+        released = self.load(release_path=release_path)
+        self.assertIn(row["reviewTargetId"], released["releasedTargets"])
+        self.assertNotIn(row["reviewTargetId"], released["activeTargets"])
+        for member in row["memberIngredientIds"]:
+            self.assertNotIn(member, released["identityToTarget"])
+
+        other = self.powder
+        self.assertIn(other["reviewTargetId"], released["activeTargets"])
+        self.active_patch.stop()
+        with patch.object(holds, "_active", return_value=released):
+            self.assertIsNone(holds.find_hold(row["reviewTargetId"]))
+            self.assertIsNone(holds.find_hold(row["memberIngredientIds"][0]))
+            self.assertIsNotNone(holds.find_hold(other["reviewTargetId"]))
+            self.assertTrue(
+                provenance.is_reviewed_profile(
+                    old_profile(row, row["memberIngredientIds"][0]),
+                    ingredient_id=row["memberIngredientIds"][0],
+                )
+            )
+        self.active_patch.start()
+
+    def test_release_receipt_registry_drift_and_replacement_fdc_fail_closed(self):
+        row = self.index["targets"]["concept:food:51b62939bbb0887b2b96"]
+        release_path = self.root / holds.RELEASES.name
+        value = self._release_payload(row)
+        value["holdRegistrySha256"] = "e" * 64
+        release_path.write_text(json.dumps(value), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "registry SHA drift"):
+            self.load(release_path=release_path)
+
+        value = self._release_payload(row)
+        value["items"][0]["fdcId"] = row["fdcId"] + 1
+        release_path.write_text(json.dumps(value), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "replacement-binding integration"):
+            self.load(release_path=release_path)
 
     def test_historical_review_corpus_is_unchanged(self):
         cp = holds.checkpoint.build_checkpoint(holds.TOOLS)
