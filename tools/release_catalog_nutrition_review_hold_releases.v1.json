@@ -1,0 +1,48 @@
+{
+  "holdRegistrySha256": "903e90d750a73cd9246f674abf5f32d467954d203117a9f748059f86d5a7a65e",
+  "items": [
+    {
+      "approved": true,
+      "canonicalEnglishName": "Almond purée",
+      "confidence": "medium",
+      "evidenceBindingScope": "retained-reference-record",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Almond butter, creamy",
+      "fdcId": 2262074,
+      "heldFdcId": 2262074,
+      "heldReasonCode": "target_evidence_missing",
+      "heldReviewFile": "release_catalog_reviewed_nutrition_targets_032.v1.json",
+      "heldReviewFileSha256": "a1099f07583bf0a377f1fdd0caa2318eea3b8ee3a7dba6d34b1d9aad25f53526",
+      "memberIngredientIds": [
+        "local:cs:ff9305c837f75a2506ca",
+        "local:hr:efca65587e04b2ed5b6a",
+        "local:hu:6ec1ae5a219b4ef42f71",
+        "local:pt:07b20ab2633acc2b7e6b",
+        "local:ro:6adece608dab0942c58c",
+        "local:sk:90bc327f0db34dc7b71f",
+        "local:uk:4544f53d40866e7430b3"
+      ],
+      "notes": "Explicit re-review releases only the historical provenance hold for Almond purée. The retained source candidate is USDA Foundation 'Almond butter, creamy' under another almond-cream target, proving the exact FDC row in immutable evidence even though the held destination was excluded from candidate re-search. Almond purée and plain creamy almond butter are treated as the same ground-almond food family for a bounded nutrition reference, but the record does not certify brand, added oil, sugar, salt, roast level, water content, cultivar, or processing details; confidence is medium. Nutrition remains the USDA per-100-g almond-butter reference with no serving or recipe conversion inferred. The original hold row and historical review remain unchanged for audit.",
+      "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+      "reviewFile": "release_catalog_nutrition_review_hold_releases.v1.json",
+      "reviewTargetId": "concept:food:51b62939bbb0887b2b96",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "6068293c4cc13247bcce70bee8968e3680c6acbceba4f5d9c39c03c77b4b554e",
+      "sourceEvidenceCandidateRank": 11,
+      "sourceEvidenceSha256": "9775db36fdec8ef6ac129ab28b5fe9bbad31ea2cf4b46e212167518762250b71",
+      "sourceEvidenceTargetId": "concept:food:4c7e449504a03a4b449e"
+    }
+  ],
+  "kind": "cook4me-nutrition-review-hold-releases-v60",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactTargetReleaseRequired": true,
+    "explicitRereviewPerformed": true,
+    "historicalHoldRegistryModified": false,
+    "historicalReviewsModified": false,
+    "releaseAppliesByExactReviewTargetId": true,
+    "retainedReferenceCandidateRequired": true
+  },
+  "releaseDecisionSha256": "857d20c31bb56273a2c6b7e503bf3b22d51b770703ec7dddbd35480c3bd8ccca",
+  "schemaVersion": 1
+}
