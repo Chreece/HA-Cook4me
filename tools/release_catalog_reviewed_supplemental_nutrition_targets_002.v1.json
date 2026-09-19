@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-supplemental-nutrition-source-v60",
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "policy": {
+    "manualSemanticReviewPerformed": true,
+    "automaticSelectionPerformed": false,
+    "searchResultAutoAccepted": false,
+    "networkRequestsPerformedAtRuntime": false,
+    "exactReviewTargetRequired": true,
+    "exactMemberIdentityRequired": true,
+    "officialFoodCompositionSourceRequired": true,
+    "sourceValuesPinnedInRepository": true
+  },
+  "items": [
+    {
+      "reviewTargetId": "M_FOOD_447",
+      "reviewTargetKind": "provider-identity",
+      "canonicalEnglishName": "Montbéliard sausage",
+      "memberIngredientIds": [
+        "M_FOOD_447"
+      ],
+      "confidence": "high",
+      "replacesHeldNutritionBinding": true,
+      "source": "official_food_table",
+      "sourceAuthority": "ANSES (Agence nationale de sécurité sanitaire de l’alimentation, de l’environnement et du travail)",
+      "sourceDataset": "Ciqual French food composition table 2025",
+      "sourceRecordId": "30105",
+      "sourceId": "FR-CIQUAL:30105",
+      "dataType": "Ciqual 2025",
+      "sourceUrl": "https://doi.org/10.5281/zenodo.17550133",
+      "sourceRetrievedDate": "2026-09-19",
+      "sourceFoodName": "Saucisse de Montbéliard",
+      "basis": "per100g",
+      "values": {
+        "energyKcal": 319.0,
+        "protein": 17.3,
+        "carbohydrates": 1.0,
+        "sugars": 0.75,
+        "fat": 27.3,
+        "saturatedFat": 10.5,
+        "sodium": 0.931,
+        "salt": 2.3275
+      },
+      "sourceEvidenceSha256": "5e1e52576dc4d8c940fb60a51aa49f8186d4d5ff7d7e0a9fd94add80892c74bd",
+      "notes": "Explicit manual re-review replaces the held generic USDA pork-sausage proxy only for Cook4Me provider identity M_FOOD_447. ANSES/Ciqual identifies Saucisse de Montbéliard as food code 30105. The pinned per-100-g values are from the Ciqual composition record; this does not authorize reuse for generic pork sausage or any other sausage identity."
+    },
+    {
+      "reviewTargetId": "concept:food:5ba728d548d5b048a95c",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Montbéliard sausages",
+      "memberIngredientIds": [
+        "local:hr:b7365ee791f2d1b91b1b"
+      ],
+      "confidence": "high",
+      "replacesHeldNutritionBinding": true,
+      "source": "official_food_table",
+      "sourceAuthority": "ANSES (Agence nationale de sécurité sanitaire de l’alimentation, de l’environnement et du travail)",
+      "sourceDataset": "Ciqual French food composition table 2025",
+      "sourceRecordId": "30105",
+      "sourceId": "FR-CIQUAL:30105",
+      "dataType": "Ciqual 2025",
+      "sourceUrl": "https://doi.org/10.5281/zenodo.17550133",
+      "sourceRetrievedDate": "2026-09-19",
+      "sourceFoodName": "Saucisse de Montbéliard",
+      "basis": "per100g",
+      "values": {
+        "energyKcal": 319.0,
+        "protein": 17.3,
+        "carbohydrates": 1.0,
+        "sugars": 0.75,
+        "fat": 27.3,
+        "saturatedFat": 10.5,
+        "sodium": 0.931,
+        "salt": 2.3275
+      },
+      "sourceEvidenceSha256": "5e1e52576dc4d8c940fb60a51aa49f8186d4d5ff7d7e0a9fd94add80892c74bd",
+      "notes": "Explicit manual re-review replaces the held generic USDA pork-sausage proxy only for this exact reviewed Montbéliard-sausages semantic concept. ANSES/Ciqual identifies Saucisse de Montbéliard as food code 30105. The pinned per-100-g values are from the Ciqual composition record; no broader sausage substitution rule is created."
+    }
+  ]
+}
