@@ -53,6 +53,8 @@ def _source_fingerprint(row: dict[str, Any]) -> str:
         "sourceUrl": row.get("sourceUrl"),
         "values": row.get("values"),
     }
+    if _text(row.get("sourceFoodName")):
+        payload["sourceFoodName"] = _text(row.get("sourceFoodName"))
     raw = json.dumps(
         payload,
         ensure_ascii=False,
@@ -116,10 +118,19 @@ def load_reviews(review_root: Path) -> dict[str, dict[str, Any]]:
                 "sourceId",
                 "dataType",
                 "sourceUrl",
-                "scientificName",
             ):
                 if not _text(raw.get(key)):
                     raise RuntimeError(f"{target_id}: missing supplemental source field {key}")
+            if not _text(raw.get("scientificName")) and not _text(raw.get("sourceFoodName")):
+                raise RuntimeError(
+                    f"{target_id}: supplemental source needs scientificName or sourceFoodName"
+                )
+            if raw.get("replacesHeldNutritionBinding") is True:
+                hold = reviewed_nutrition.holds.find_hold(target_id, *members)
+                if not isinstance(hold, dict) or _text(hold.get("reviewTargetId")) != target_id:
+                    raise RuntimeError(
+                        f"{target_id}: supplemental held-binding replacement has no exact active hold"
+                    )
             if _text(raw.get("basis")) != "per100g" or not _numeric_values(raw.get("values")):
                 raise RuntimeError(f"{target_id}: invalid supplemental nutrient profile")
             expected_sha = _text(raw.get("sourceEvidenceSha256"))
@@ -227,7 +238,12 @@ def seed_cache(
                 "sourceUrl": _text(review.get("sourceUrl")),
                 "sourceRetrievedDate": _text(review.get("sourceRetrievedDate")),
                 "scientificName": _text(review.get("scientificName")),
+                "sourceFoodName": _text(review.get("sourceFoodName")),
                 "sourceEvidenceSha256": _text(review.get("sourceEvidenceSha256")),
+                "nutritionHoldReplacementApproved": review.get("replacesHeldNutritionBinding") is True,
+                "nutritionHoldReplacementTargetId": (
+                    target_id if review.get("replacesHeldNutritionBinding") is True else ""
+                ),
                 "reviewNotes": _text(review.get("notes")),
             }
             if target_kind == "semantic-concept":
