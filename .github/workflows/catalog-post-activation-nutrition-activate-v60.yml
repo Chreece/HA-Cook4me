@@ -5,15 +5,9 @@ on:
     branches:
       - cook4me-nutrition-enrichment-post-activation-v60
     paths:
-      - .github/workflows/catalog-post-activation-nutrition-activate-v60.yml
       - tools/release_catalog_nutrition_review_holds.v1.json
       - tools/release_catalog_nutrition_review_hold_releases.v1.json
-      - tools/nutrition_review_holds_v60.py
       - tools/release_catalog_reviewed_supplemental_nutrition_targets_*.v1.json
-      - tools/supplemental_nutrition_v60.py
-      - tools/reviewed_nutrition_v60.py
-      - tools/activate_post_activation_reviewed_nutrition_v60.py
-      - tests/test_supplemental_nutrition_v60.py
   workflow_dispatch:
     inputs:
       source_sha:
@@ -106,18 +100,12 @@ jobs:
               )
               changed = sorted(set(changed))
               activation_input_changed = any(
-                  path == '.github/workflows/catalog-post-activation-nutrition-activate-v60.yml'
-                  or path == 'tools/release_catalog_nutrition_review_holds.v1.json'
+                  path == 'tools/release_catalog_nutrition_review_holds.v1.json'
                   or path == 'tools/release_catalog_nutrition_review_hold_releases.v1.json'
-                  or path == 'tools/nutrition_review_holds_v60.py'
                   or (
                       path.startswith('tools/release_catalog_reviewed_supplemental_nutrition_targets_')
                       and path.endswith('.v1.json')
                   )
-                  or path == 'tools/supplemental_nutrition_v60.py'
-                  or path == 'tools/reviewed_nutrition_v60.py'
-                  or path == 'tools/activate_post_activation_reviewed_nutrition_v60.py'
-                  or path == 'tests/test_supplemental_nutrition_v60.py'
                   for path in changed
               )
               if not activation_input_changed:
