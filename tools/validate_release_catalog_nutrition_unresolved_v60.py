@@ -16,6 +16,7 @@ if str(TOOLS) not in sys.path:
     sys.path.insert(0, str(TOOLS))
 
 import snapshot_nutrition_review_checkpoint_v60 as checkpoint  # type: ignore  # noqa: E402
+import supplemental_nutrition_v60 as supplemental  # type: ignore  # noqa: E402
 
 KIND = "cook4me-nutrition-unresolved-v60"
 EVIDENCE_KIND = "cook4me-fdc-review-target-candidate-evidence-offline-v60"
@@ -45,6 +46,7 @@ def validate(evidence_path: Path, registry_path: Path, review_root: Path) -> dic
         "exactEvidenceRequired": True,
         "automaticBindingAllowed": False,
         "externalFallbackApproved": False,
+        "supplementalResolutionMayReduceEvidenceSet": supplemental_reduction_allowed,
         "providerIdentityInference": False,
         "unresolvedDoesNotReduceRequiredCount": True,
     }
@@ -56,10 +58,7 @@ def validate(evidence_path: Path, registry_path: Path, review_root: Path) -> dic
         if not isinstance(value, str) or not HEX256.fullmatch(value):
             raise ValueError(f"invalid unresolved registry {key}")
 
-    if registry["evidenceSha256"] != evidence_sha:
-        raise ValueError(
-            f"unresolved registry evidence drift: expected={registry['evidenceSha256']} actual={evidence_sha}"
-        )
+    evidence_sha_matches_registry = registry["evidenceSha256"] == evidence_sha
     if registry.get("catalogVersion") != evidence.get("catalogVersion"):
         raise ValueError("unresolved registry catalogVersion drift")
     if registry.get("referenceManifestSha256") != evidence.get("referenceManifestSha256"):
@@ -76,6 +75,12 @@ def validate(evidence_path: Path, registry_path: Path, review_root: Path) -> dic
         if target in by_id:
             raise ValueError(f"duplicate unresolved evidence target: {target}")
         by_id[target] = row
+
+    supplemental_reviews = supplemental.load_reviews(review_root)
+    supplemental_ids = set(supplemental_reviews)
+    supplemental_reduction_allowed = (
+        policy.get("supplementalResolutionMayReduceEvidenceSet") is True
+    )
 
     registry_ids: set[str] = set()
     unresolved_identity_count = 0
@@ -94,12 +99,6 @@ def validate(evidence_path: Path, registry_path: Path, review_root: Path) -> dic
         reason_code = checkpoint._text(raw, "reasonCode", target)
         checkpoint._text(raw, "reason", target)
 
-        row = by_id.get(target)
-        if row is None:
-            raise ValueError(f"{target}: unresolved target is absent from exact evidence")
-        if checkpoint._identity(row, target) != (target, kind, name):
-            raise ValueError(f"{target}: unresolved identity drift")
-
         members = raw.get("memberIngredientIds")
         if (
             not isinstance(members, list)
@@ -108,11 +107,26 @@ def validate(evidence_path: Path, registry_path: Path, review_root: Path) -> dic
             or len(members) != len(set(members))
         ):
             raise ValueError(f"{target}: invalid unresolved memberIngredientIds")
+        if kind == "provider-identity" and members != [target]:
+            raise ValueError(f"{target}: provider unresolved identity must be exact")
+
+        row = by_id.get(target)
+        if row is None:
+            review = supplemental_reviews.get(target)
+            if not supplemental_reduction_allowed or review is None:
+                raise ValueError(f"{target}: unresolved target is absent from exact evidence")
+            if checkpoint._identity(review, target) != (target, kind, name):
+                raise ValueError(f"{target}: supplemental resolved identity drift")
+            review_members = review.get("memberIngredientIds")
+            if sorted(members) != sorted(review_members or []):
+                raise ValueError(f"{target}: supplemental resolved membership drift")
+            continue
+
+        if checkpoint._identity(row, target) != (target, kind, name):
+            raise ValueError(f"{target}: unresolved identity drift")
         evidence_members = row.get("memberIngredientIds")
         if sorted(members) != sorted(evidence_members or []):
             raise ValueError(f"{target}: unresolved semantic membership drift")
-        if kind == "provider-identity" and members != [target]:
-            raise ValueError(f"{target}: provider unresolved identity must be exact")
 
         usage = max(0, int(row.get("usageCountSum") or 0))
         if int(raw.get("usageCountAtReview") or 0) != usage:
@@ -147,14 +161,27 @@ def validate(evidence_path: Path, registry_path: Path, review_root: Path) -> dic
             used_target_count += 1
         usage_count_sum += usage
 
-    if set(by_id) != registry_ids:
-        extra = sorted(set(by_id) - registry_ids)
-        missing = sorted(registry_ids - set(by_id))
-        raise ValueError(f"unresolved registry is not exhaustive: extra={extra} missing={missing}")
+    evidence_ids = set(by_id)
+    unexpected_evidence = sorted(evidence_ids - registry_ids)
+    registry_only = sorted(registry_ids - evidence_ids)
+    unapproved_registry_only = sorted(set(registry_only) - supplemental_ids)
+    if unexpected_evidence or unapproved_registry_only:
+        raise ValueError(
+            "unresolved registry is not exhaustive: "
+            f"extra={unexpected_evidence} missing={unapproved_registry_only}"
+        )
+    if registry_only and not supplemental_reduction_allowed:
+        raise ValueError(
+            "supplemental resolution reduced the evidence set without explicit policy"
+        )
+    if not evidence_sha_matches_registry and not registry_only:
+        raise ValueError(
+            f"unresolved registry evidence drift: expected={registry['evidenceSha256']} actual={evidence_sha}"
+        )
 
     checkpoint_value = checkpoint.build_checkpoint(review_root)
     reviewed_ids = {row["reviewTargetId"] for row in checkpoint_value["recordedBindings"]}
-    overlap = sorted(registry_ids & reviewed_ids)
+    overlap = sorted(evidence_ids & reviewed_ids)
     if overlap:
         raise ValueError(f"unresolved targets already have reviewed bindings: {overlap}")
 
@@ -164,7 +191,8 @@ def validate(evidence_path: Path, registry_path: Path, review_root: Path) -> dic
         "catalogVersion": registry["catalogVersion"],
         "referenceManifestSha256": registry["referenceManifestSha256"],
         "evidenceSha256": evidence_sha,
-        "unresolvedReviewTargetCount": len(registry_ids),
+        "unresolvedReviewTargetCount": len(evidence_ids),
+        "supplementalResolvedRegistryTargetCount": len(registry_ids - evidence_ids),
         "unresolvedIngredientIdentityCount": unresolved_identity_count,
         "usedUnresolvedTargetCount": used_target_count,
         "unresolvedUsageCountSum": usage_count_sum,
