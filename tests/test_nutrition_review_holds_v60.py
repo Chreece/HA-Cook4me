@@ -104,7 +104,9 @@ class NutritionReviewHoldTests(unittest.TestCase):
         return {
             "schemaVersion": 1,
             "kind": holds.RELEASE_KIND,
-            "holdRegistrySha256": self.index["registrySha256"],
+            "holdRegistrySha256": holds.checkpoint._digest(
+                json.dumps(self.registry).encode("utf-8")
+            ),
             "releaseDecisionSha256": "d" * 64,
             "policy": dict(holds.RELEASE_POLICY),
             "items": [
