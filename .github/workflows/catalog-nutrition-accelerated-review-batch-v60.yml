@@ -124,4 +124,9 @@ jobs:
           git add             "tools/release_catalog_nutrition_review_decisions_post_activation_${BATCH}.v1.json"             "tools/release_catalog_reviewed_nutrition_targets_${BATCH}.v1.json"
           git commit -m "Review accelerated post-activation nutrition batch ${BATCH}"
           git push origin "HEAD:$BRANCH"
-# accelerator trigger
+# accelerator trigger\n\n      - name: Dispatch fail-closed review validator
+        run: |
+          set -Eeuo pipefail
+          gh workflow run catalog-nutrition-review-decisions-v60.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref "$BRANCH"
