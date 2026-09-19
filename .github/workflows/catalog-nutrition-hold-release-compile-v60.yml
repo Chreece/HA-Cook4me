@@ -12,6 +12,7 @@ on:
       - tools/nutrition_review_holds_v60.py
       - tests/test_compile_release_catalog_nutrition_hold_release_v60.py
       - tests/test_nutrition_review_holds_v60.py
+      - tests/fixtures/nutrition-hold-evidence-subset-v60.json.gz
   workflow_dispatch:
 
 concurrency:
@@ -71,12 +72,20 @@ jobs:
           set -Eeuo pipefail
           DEST=/tmp/hold-release-evidence
           mkdir -p "$DEST"
+          FIXTURE="tests/fixtures/nutrition-hold-evidence-subset-v60.json.gz"
+          FIXTURE_JSON="$DEST/nutrition-hold-evidence-subset-v60.json"
+          gzip -cd "$FIXTURE" > "$FIXTURE_JSON"
+          FIXTURE_SHA="$(sha256sum "$FIXTURE_JSON" | awk '{print $1}')"
           test "$(gh release view "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq '.isDraft')" = "true"
           while IFS= read -r SHA; do
             ASSET="fdc-candidate-evidence-v60-${SHA}.json.gz"
             JSON="$DEST/fdc-candidate-evidence-v60-${SHA}.json"
-            gh release download "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --dir "$DEST" --pattern "$ASSET"
-            gzip -cd "$DEST/$ASSET" > "$JSON"
+            if test "$SHA" = "$FIXTURE_SHA"; then
+              cp "$FIXTURE_JSON" "$JSON"
+            else
+              gh release download "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --dir "$DEST" --pattern "$ASSET"
+              gzip -cd "$DEST/$ASSET" > "$JSON"
+            fi
             test "$(sha256sum "$JSON" | awk '{print $1}')" = "$SHA"
           done < /tmp/hold-release-evidence-shas.txt
 
