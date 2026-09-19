@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026.9.19.5
+
+- Remove the empty strip below sticky action footers across Cook4Me modal menu cards, not just the filter dialogs.
+- Apply the same edge-to-edge footer treatment to device settings and other overlay cards whose footer is the final direct action area, while keeping the scanner's internal form footer unchanged.
+- Preserve the compact checkbox spacing and Select all / Deselect all controls from v124.
+
 ## 2026.9.19.4
 
 - Make the sticky Apply footer in filter dialogs extend all the way to the rounded bottom edge of the menu card instead of leaving a visible gap below it.
