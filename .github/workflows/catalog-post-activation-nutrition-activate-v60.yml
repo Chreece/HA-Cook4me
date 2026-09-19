@@ -99,6 +99,11 @@ jobs:
               )
               for key in ('added', 'modified', 'removed'):
                   changed.extend(str(path) for path in head_commit.get(key) or [])
+              changed.extend(
+                  subprocess.check_output(
+                      ['git', 'diff', '--name-only', 'HEAD^', 'HEAD'], text=True
+                  ).splitlines()
+              )
               changed = sorted(set(changed))
               activation_input_changed = any(
                   path == '.github/workflows/catalog-post-activation-nutrition-activate-v60.yml'
@@ -116,7 +121,7 @@ jobs:
                   for path in changed
               )
               if not activation_input_changed:
-                  raise SystemExit('push activation contains no nutrition hold input change')
+                  raise SystemExit('push activation contains no recognized nutrition activation input change')
 
           with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as handle:
               handle.write(f"allow_zero_delta={'true' if allow_zero_delta else 'false'}\n")
