@@ -127,7 +127,7 @@ jobs:
           git add "$OUTPUT"
           git diff --cached --check
           if git diff --cached --quiet; then
-            PROMOTED_SHA="$(git log -1 --format=%H -- "$OUTPUT")"
+            PROMOTED_SHA="$(git rev-parse HEAD)"
             echo "promoted_sha=$PROMOTED_SHA" >> "$GITHUB_OUTPUT"
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
