@@ -442,7 +442,7 @@ class NutritionReviewHoldTests(unittest.TestCase):
         path.write_bytes(holds.checkpoint._encoded(value))
         self.registry["evidenceSha256"] = holds.checkpoint._digest(path.read_bytes())
         self.path.write_bytes(holds.checkpoint._encoded(self.registry))
-        result = holds.audit(path, registry_path=self.path)
+        result = holds.audit(path, registry_path=self.path, release_path=None)
         self.assertFalse(result["readyForUnheldManualReview"])
         self.assertEqual(result["summary"]["unheldProvenanceMismatchCount"], 1)
 
