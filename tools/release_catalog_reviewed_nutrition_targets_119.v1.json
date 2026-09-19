@@ -1,0 +1,143 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-retained-reference-binding",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Sushi rice, well rinsed",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Rice, white, short-grain, raw, unenriched",
+      "fdcId": 168931,
+      "notes": "Manual semantic review binds Cook4Me 'Sushi rice, well rinsed' to USDA SR Legacy 'Rice, white, short-grain, raw, unenriched' through a retained exact evidence record. Sushi rice is a short-grain Japanese-style white rice; rinsing is a preparation step and does not change the underlying dry rice identity. Confidence remains medium because sushi cultivars can also be categorized as medium-grain and rinsing/soaking can change water content if the recipe quantity is measured after preparation.",
+      "reviewTargetId": "concept:food:2c578b54d8a9c5d3a9f3",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "08acb7c775f860186f4c6e78b9fc8a94ac866b2e33b22ca22409097e5e5c2b37",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceSha256": "513969efb7b4a173d7ac0ae5f2cb091f5fd8848bc4f962df8dc7076f50cc8b4f",
+      "sourceEvidenceTargetId": "concept:food:f1fa477f3a54abd65967",
+      "usageCountAtReview": 2
+    },
+    {
+      "canonicalEnglishName": "Basmati rice, soaked",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Rice, white, long grain, unenriched, raw",
+      "fdcId": 2512381,
+      "notes": "Manual semantic review binds Cook4Me 'Basmati rice, soaked' to USDA Foundation 'Rice, white, long grain, unenriched, raw' through a retained exact evidence record. Basmati is a long-grain rice and the source label does not specify brown basmati, so the white long-grain raw record is used; soaking is treated as recipe preparation rather than a different food identity. Confidence remains medium because the label does not explicitly state white/enriched status and soaking can change water content if the quantity is measured after soaking.",
+      "reviewTargetId": "concept:food:447b0ee666b7a6bcf007",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "ff5d0791774e02fbced83620665ad6b47d788fd5fd3d2eda25a67615ec5db5eb",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "513969efb7b4a173d7ac0ae5f2cb091f5fd8848bc4f962df8dc7076f50cc8b4f",
+      "sourceEvidenceTargetId": "concept:food:f1fa477f3a54abd65967",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Brown rice, washed, soaked for 60 minutes and drained",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Rice, brown, long grain, unenriched, raw",
+      "fdcId": 2512380,
+      "notes": "Manual semantic review binds Cook4Me 'Brown rice, washed, soaked for 60 minutes and drained' to USDA Foundation 'Rice, brown, long grain, unenriched, raw' through a retained exact evidence record. The destination explicitly identifies brown rice; washing and soaking are preparation steps rather than a different grain identity. Confidence remains medium because grain length is not specified and soaking can change water content if the recipe quantity is measured after soaking.",
+      "reviewTargetId": "concept:food:458d329ed1976a2616ef",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "d57796d80a30ff12c1a33163cbb88798223a639efda664524361af05498140fc",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "513969efb7b4a173d7ac0ae5f2cb091f5fd8848bc4f962df8dc7076f50cc8b4f",
+      "sourceEvidenceTargetId": "concept:food:f1fa477f3a54abd65967",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Japanese rice (sushi rice), well rinsed",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Rice, white, short-grain, raw, unenriched",
+      "fdcId": 168931,
+      "notes": "Manual semantic review binds Cook4Me 'Japanese rice (sushi rice), well rinsed' to USDA SR Legacy 'Rice, white, short-grain, raw, unenriched' through a retained exact evidence record. The label explicitly identifies Japanese sushi rice, for which short-grain white rice is the appropriate reviewed dry-rice identity; rinsing is a preparation step. Confidence remains medium because Japanese sushi cultivars can be categorized as short- or medium-grain and rinsing can change water content if measured after preparation.",
+      "reviewTargetId": "concept:food:23dbefa4808067c30175",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "08acb7c775f860186f4c6e78b9fc8a94ac866b2e33b22ca22409097e5e5c2b37",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceSha256": "513969efb7b4a173d7ac0ae5f2cb091f5fd8848bc4f962df8dc7076f50cc8b4f",
+      "sourceEvidenceTargetId": "concept:food:f1fa477f3a54abd65967",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Sushi rice, rinsed",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Rice, white, short-grain, raw, unenriched",
+      "fdcId": 168931,
+      "notes": "Manual semantic review binds Cook4Me 'Sushi rice, rinsed' to USDA SR Legacy 'Rice, white, short-grain, raw, unenriched' through a retained exact evidence record. Sushi rice is a short-grain Japanese-style white rice; rinsing is a preparation step and does not change the underlying dry rice identity. Confidence remains medium because sushi cultivars can also be categorized as medium-grain and rinsing can change water content if the recipe quantity is measured after preparation.",
+      "reviewTargetId": "concept:food:cbb31194f4fa9469d643",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "08acb7c775f860186f4c6e78b9fc8a94ac866b2e33b22ca22409097e5e5c2b37",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceSha256": "513969efb7b4a173d7ac0ae5f2cb091f5fd8848bc4f962df8dc7076f50cc8b4f",
+      "sourceEvidenceTargetId": "concept:food:f1fa477f3a54abd65967",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Thai rice, briefly rinsed and drained",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Rice, white, long grain, unenriched, raw",
+      "fdcId": 2512381,
+      "notes": "Manual semantic review binds Cook4Me 'Thai rice, briefly rinsed and drained' to USDA Foundation 'Rice, white, long grain, unenriched, raw' through a retained exact evidence record. In this recipe context 'Thai rice' is treated as the common long-grain white rice/jasmine-rice category; rinsing and draining are preparation steps. Confidence remains medium because the label does not explicitly name jasmine, white, or enrichment status.",
+      "reviewTargetId": "concept:food:8003a5c3e82c9a180f84",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "ff5d0791774e02fbced83620665ad6b47d788fd5fd3d2eda25a67615ec5db5eb",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "513969efb7b4a173d7ac0ae5f2cb091f5fd8848bc4f962df8dc7076f50cc8b4f",
+      "sourceEvidenceTargetId": "concept:food:f1fa477f3a54abd65967",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "White rice, washed, soaked for 30 minutes and drained",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Rice, white, long grain, unenriched, raw",
+      "fdcId": 2512381,
+      "notes": "Manual semantic review binds Cook4Me 'White rice, washed, soaked for 30 minutes and drained' to USDA Foundation 'Rice, white, long grain, unenriched, raw' through a retained exact evidence record. The destination explicitly identifies white rice; washing and soaking are preparation steps rather than a different grain identity. Confidence remains medium because grain length and enrichment status are not specified and soaking can change water content if the recipe quantity is measured after soaking.",
+      "reviewTargetId": "concept:food:0e870744122b8fc18b8f",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "ff5d0791774e02fbced83620665ad6b47d788fd5fd3d2eda25a67615ec5db5eb",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "513969efb7b4a173d7ac0ae5f2cb091f5fd8848bc4f962df8dc7076f50cc8b4f",
+      "sourceEvidenceTargetId": "concept:food:f1fa477f3a54abd65967",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "referenceReceipts": {
+    "168931": {
+      "sourceCandidateSha256": "08acb7c775f860186f4c6e78b9fc8a94ac866b2e33b22ca22409097e5e5c2b37",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceTargetId": "concept:food:f1fa477f3a54abd65967"
+    },
+    "2512380": {
+      "sourceCandidateSha256": "d57796d80a30ff12c1a33163cbb88798223a639efda664524361af05498140fc",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:f1fa477f3a54abd65967"
+    },
+    "2512381": {
+      "sourceCandidateSha256": "ff5d0791774e02fbced83620665ad6b47d788fd5fd3d2eda25a67615ec5db5eb",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:f1fa477f3a54abd65967"
+    }
+  },
+  "reviewDecisionSha256": "2690ac30aade37bb9a7d3f89bb6bafda53feb1fd857e66a6134c7c0142f4f480",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "513969efb7b4a173d7ac0ae5f2cb091f5fd8848bc4f962df8dc7076f50cc8b4f"
+}
