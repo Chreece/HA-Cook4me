@@ -1,0 +1,77 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Salt and black pepper",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, black",
+      "fdcId": 170931,
+      "notes": "Manual semantic review binds Cook4Me 'Salt and black pepper' to USDA SR Legacy 'Spices, pepper, black'. Black pepper is the distinctive food identity in this two-seasoning label; the reviewed corpus already binds both 'Black pepper' and 'Ground black pepper' to FDC 170931, and this target's own pinned evidence contains that exact black-pepper record at rank 2. Confidence remains medium because the USDA row does not include the unspecified added-salt quantity, so sodium can be underrepresented.",
+      "reviewTargetId": "concept:food:e1893ccc5a2ba731a06f",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Salt, black pepper",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, black",
+      "fdcId": 170931,
+      "notes": "Manual semantic review binds Cook4Me 'Salt, black pepper' to USDA SR Legacy 'Spices, pepper, black'. The label explicitly contains black pepper, the reviewed corpus binds 'Black pepper' to FDC 170931, and this target's own pinned evidence ranks that exact black-pepper record first. Confidence remains medium because the paired salt quantity is unspecified and is not represented by the pepper-only USDA row.",
+      "reviewTargetId": "concept:food:bd4a42997732ff670f2f",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Salt and ground black pepper",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, black",
+      "fdcId": 170931,
+      "notes": "Manual semantic review binds Cook4Me 'Salt and ground black pepper' to USDA SR Legacy 'Spices, pepper, black'. The reviewed corpus explicitly binds both 'Black pepper' and 'Ground black pepper' to FDC 170931, and this target's own pinned evidence contains the exact black-pepper record at rank 2. Confidence remains medium because the accompanying salt amount is unspecified and therefore not represented by the selected pepper profile.",
+      "reviewTargetId": "concept:food:294e9115badc9b4c48a5",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 3,
+      "canonicalEnglishName": "Salt and black pepper, if needed",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, black",
+      "fdcId": 170931,
+      "notes": "Manual semantic review binds Cook4Me 'Salt and black pepper, if needed' to USDA SR Legacy 'Spices, pepper, black'. The conditional wording does not change the black-pepper identity; prior reviewed targets bind black pepper to FDC 170931, and this target's own pinned evidence contains that exact record at rank 3. Confidence remains medium because the selected profile does not account for an unspecified amount of added salt.",
+      "reviewTargetId": "concept:food:190cc37965872f5d3d57",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 4,
+      "canonicalEnglishName": "Salt and black pepper (to taste)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, black",
+      "fdcId": 170931,
+      "notes": "Manual semantic review binds Cook4Me 'Salt and black pepper (to taste)' to USDA SR Legacy 'Spices, pepper, black'. 'To taste' changes quantity rather than ingredient identity; prior reviewed targets bind black pepper to FDC 170931, and this target's own pinned evidence contains that exact record at rank 4. Confidence remains medium because the salt component and its variable sodium contribution are not represented by the pepper-only USDA row.",
+      "reviewTargetId": "concept:food:2652eabf40d7e8175a66",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "313785f53ecdffbfb58853dc9d74429eec7f03ac4216c626e7111082c1903ac4"
+}
