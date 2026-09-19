@@ -252,10 +252,22 @@ def find_hold(*identities: Any) -> dict[str, Any] | None:
 
 def profile_hold(value: Any, *, ingredient_id: Any = "") -> dict[str, Any] | None:
     row = value if isinstance(value, dict) else {}
-    return find_hold(ingredient_id, *(row.get(k) for k in (
+    hold = find_hold(ingredient_id, *(row.get(k) for k in (
         "ingredientId", "nutritionReviewTargetId", "semanticConceptId",
         "conceptId", "reviewTargetId",
     )))
+    if hold is None:
+        return None
+    replacement_target = str(row.get("nutritionHoldReplacementTargetId") or "").strip()
+    if (
+        row.get("nutritionHoldReplacementApproved") is True
+        and replacement_target == hold.get("reviewTargetId")
+        and str(row.get("nutritionReviewTargetId") or "").strip() == replacement_target
+        and str(ingredient_id or row.get("ingredientId") or "").strip()
+        in set(hold.get("memberIngredientIds") or [])
+    ):
+        return None
+    return hold
 
 
 def filter_cache(cache: dict[str, Any]) -> tuple[dict[str, Any], int]:
