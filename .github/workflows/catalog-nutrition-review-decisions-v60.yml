@@ -13,6 +13,7 @@ on:
       - tools/resolve_reviewed_release_catalog_nutrition_targets_v60.py
       - tools/release_catalog_nutrition_review_decisions_post_activation_*.v1.json
       - tools/release_catalog_reviewed_nutrition_targets_*.v1.json
+      - tools/nutrition_review_validation_request.v1.json
       - tests/test_compile_release_catalog_fdc_review_decisions_v60.py
       - tests/test_compile_release_catalog_fdc_retained_review_decisions_v60.py
       - tests/test_verify_post_activation_nutrition_review_decisions_v60.py
