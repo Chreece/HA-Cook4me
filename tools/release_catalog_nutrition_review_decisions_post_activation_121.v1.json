@@ -1,0 +1,57 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "evidenceBindingScope": "retained-reference-record",
+  "items": [
+    {
+      "approved": true,
+      "canonicalEnglishName": "Béchamel sauce",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "White sauce or gravy",
+      "fdcId": 2705703,
+      "notes": "Manual semantic review binds Cook4Me 'Béchamel sauce' to USDA FNDDS 'White sauce or gravy' through a retained exact evidence record. Béchamel is a classic white sauce based on milk thickened with a white roux, so the USDA white-sauce record is the appropriate reviewed identity. The '(carton)' wording describes packaging and does not change the food identity. Confidence remains medium because the USDA record groups white sauce with gravy and recipes can vary in butter, flour, milk fat, and seasoning; this decision does not generalize to cheese sauce, cream sauce, or flavored béchamel.",
+      "reviewTargetId": "concept:food:55b94eacaf94a18eb09c",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 9,
+      "sourceEvidenceTargetId": "concept:food:9b48d00eff4f58e44d52"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Béchamel (carton)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "White sauce or gravy",
+      "fdcId": 2705703,
+      "notes": "Manual semantic review binds Cook4Me 'Béchamel (carton)' to USDA FNDDS 'White sauce or gravy' through a retained exact evidence record. Béchamel is a classic white sauce based on milk thickened with a white roux, so the USDA white-sauce record is the appropriate reviewed identity. The '(carton)' wording describes packaging and does not change the food identity. Confidence remains medium because the USDA record groups white sauce with gravy and recipes can vary in butter, flour, milk fat, and seasoning; this decision does not generalize to cheese sauce, cream sauce, or flavored béchamel.",
+      "reviewTargetId": "concept:food:86022e08a50088e00edd",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 9,
+      "sourceEvidenceTargetId": "concept:food:9b48d00eff4f58e44d52"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Béchamel sauce (carton)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "White sauce or gravy",
+      "fdcId": 2705703,
+      "notes": "Manual semantic review binds Cook4Me 'Béchamel sauce (carton)' to USDA FNDDS 'White sauce or gravy' through a retained exact evidence record. Béchamel is a classic white sauce based on milk thickened with a white roux, so the USDA white-sauce record is the appropriate reviewed identity. The '(carton)' wording describes packaging and does not change the food identity. Confidence remains medium because the USDA record groups white sauce with gravy and recipes can vary in butter, flour, milk fat, and seasoning; this decision does not generalize to cheese sauce, cream sauce, or flavored béchamel.",
+      "reviewTargetId": "concept:food:0e4a64f3da85ab81c979",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 9,
+      "sourceEvidenceTargetId": "concept:food:9b48d00eff4f58e44d52"
+    }
+  ],
+  "kind": "cook4me-fdc-retained-reference-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "05f39581086b1f8a224b5eab1cbd9bcf4898c7b191c7e68ef80e4024f6399f90"
+}
