@@ -1,0 +1,109 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "evidenceBindingScope": "retained-reference-record",
+  "items": [
+    {
+      "approved": true,
+      "canonicalEnglishName": "Crème fraîche",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Cream, sour, full fat",
+      "fdcId": 2346387,
+      "notes": "Manual semantic review binds Cook4Me 'Crème fraîche' to USDA Foundation 'Cream, sour, full fat' through a retained exact evidence record. Crème fraîche is a cultured high-fat cream and full-fat sour cream is the closest pinned USDA cultured-cream identity available in the offline reference corpus. The words 'thick' and 'full-fat' describe texture/fat level rather than a different ingredient family. Confidence remains medium because crème fraîche is typically richer and less tangy than U.S. sour cream, so the selected record is a nutrient-profile approximation within the same cultured-cream family; this decision does not generalize to cooking cream, heavy cream, yogurt, quark, or cream cheese.",
+      "reviewTargetId": "concept:food:030f6d6ec1602b0758a1",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:2faa52f3931f4aa9816f"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Thick crème fraîche",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Cream, sour, full fat",
+      "fdcId": 2346387,
+      "notes": "Manual semantic review binds Cook4Me 'Thick crème fraîche' to USDA Foundation 'Cream, sour, full fat' through a retained exact evidence record. Crème fraîche is a cultured high-fat cream and full-fat sour cream is the closest pinned USDA cultured-cream identity available in the offline reference corpus. The words 'thick' and 'full-fat' describe texture/fat level rather than a different ingredient family. Confidence remains medium because crème fraîche is typically richer and less tangy than U.S. sour cream, so the selected record is a nutrient-profile approximation within the same cultured-cream family; this decision does not generalize to cooking cream, heavy cream, yogurt, quark, or cream cheese.",
+      "reviewTargetId": "concept:food:386ba14b068ccab172f6",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:2faa52f3931f4aa9816f"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Full-fat crème fraîche",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Cream, sour, full fat",
+      "fdcId": 2346387,
+      "notes": "Manual semantic review binds Cook4Me 'Full-fat crème fraîche' to USDA Foundation 'Cream, sour, full fat' through a retained exact evidence record. Crème fraîche is a cultured high-fat cream and full-fat sour cream is the closest pinned USDA cultured-cream identity available in the offline reference corpus. The words 'thick' and 'full-fat' describe texture/fat level rather than a different ingredient family. Confidence remains medium because crème fraîche is typically richer and less tangy than U.S. sour cream, so the selected record is a nutrient-profile approximation within the same cultured-cream family; this decision does not generalize to cooking cream, heavy cream, yogurt, quark, or cream cheese.",
+      "reviewTargetId": "concept:food:2faa52f3931f4aa9816f",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:2faa52f3931f4aa9816f"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Thick full-fat crème fraîche",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Cream, sour, full fat",
+      "fdcId": 2346387,
+      "notes": "Manual semantic review binds Cook4Me 'Thick full-fat crème fraîche' to USDA Foundation 'Cream, sour, full fat' through a retained exact evidence record. Crème fraîche is a cultured high-fat cream and full-fat sour cream is the closest pinned USDA cultured-cream identity available in the offline reference corpus. The words 'thick' and 'full-fat' describe texture/fat level rather than a different ingredient family. Confidence remains medium because crème fraîche is typically richer and less tangy than U.S. sour cream, so the selected record is a nutrient-profile approximation within the same cultured-cream family; this decision does not generalize to cooking cream, heavy cream, yogurt, quark, or cream cheese.",
+      "reviewTargetId": "concept:food:48d5fe549c44992e34db",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:2faa52f3931f4aa9816f"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Thick, full-fat crème fraîche",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Cream, sour, full fat",
+      "fdcId": 2346387,
+      "notes": "Manual semantic review binds Cook4Me 'Thick, full-fat crème fraîche' to USDA Foundation 'Cream, sour, full fat' through a retained exact evidence record. Crème fraîche is a cultured high-fat cream and full-fat sour cream is the closest pinned USDA cultured-cream identity available in the offline reference corpus. The words 'thick' and 'full-fat' describe texture/fat level rather than a different ingredient family. Confidence remains medium because crème fraîche is typically richer and less tangy than U.S. sour cream, so the selected record is a nutrient-profile approximation within the same cultured-cream family; this decision does not generalize to cooking cream, heavy cream, yogurt, quark, or cream cheese.",
+      "reviewTargetId": "concept:food:d4de0d8928205d812fcd",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:2faa52f3931f4aa9816f"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Crème fraîche",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Cream, sour, full fat",
+      "fdcId": 2346387,
+      "notes": "Manual semantic review binds Cook4Me 'Crème fraîche' to USDA Foundation 'Cream, sour, full fat' through a retained exact evidence record. Crème fraîche is a cultured high-fat cream and full-fat sour cream is the closest pinned USDA cultured-cream identity available in the offline reference corpus. The words 'thick' and 'full-fat' describe texture/fat level rather than a different ingredient family. Confidence remains medium because crème fraîche is typically richer and less tangy than U.S. sour cream, so the selected record is a nutrient-profile approximation within the same cultured-cream family; this decision does not generalize to cooking cream, heavy cream, yogurt, quark, or cream cheese.",
+      "reviewTargetId": "M_FOOD_150",
+      "reviewTargetKind": "provider-identity",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:2faa52f3931f4aa9816f"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Thick crème fraîche",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Cream, sour, full fat",
+      "fdcId": 2346387,
+      "notes": "Manual semantic review binds Cook4Me 'Thick crème fraîche' to USDA Foundation 'Cream, sour, full fat' through a retained exact evidence record. Crème fraîche is a cultured high-fat cream and full-fat sour cream is the closest pinned USDA cultured-cream identity available in the offline reference corpus. The words 'thick' and 'full-fat' describe texture/fat level rather than a different ingredient family. Confidence remains medium because crème fraîche is typically richer and less tangy than U.S. sour cream, so the selected record is a nutrient-profile approximation within the same cultured-cream family; this decision does not generalize to cooking cream, heavy cream, yogurt, quark, or cream cheese.",
+      "reviewTargetId": "M_FOOD_151",
+      "reviewTargetKind": "provider-identity",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:2faa52f3931f4aa9816f"
+    }
+  ],
+  "kind": "cook4me-fdc-retained-reference-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "5b396ae44d1fdeacadb6c5d0231ca51934e780bd037e93a804b5a506fd270646"
+}
