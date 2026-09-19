@@ -1,5 +1,35 @@
 # Changelog
 
+## 2026.9.19.3
+
+- Compact the checkbox rows in Cook4Me filter lists so meal, language and ingredient choices use much less vertical space.
+- Add localized Select all / Deselect all controls whenever a filter contains more than one list checkbox, including Greek and German labels.
+- Keep independent boolean filter switches unchanged; the bulk controls only operate on true multi-choice filter lists.
+
+## 2026.9.19.2
+
+- Stop presenting a non-working flashlight control when Android WebView exposes a physical rear camera but does not expose the WebRTC `torch` capability. A physical LED alone is not enough for browser control.
+- Only show the scanner flashlight when the active camera track explicitly reports `getCapabilities().torch === true`. When supported, toggle it with the standard advanced torch constraint and hide it for the session if that call fails.
+- Remove the v122 experimental direct/basic torch fallback because unsupported WebViews may silently accept and ignore unknown constraints, making the UI look enabled while the LED never turns on.
+
+## 2026.9.19.1
+
+- Show the flashlight control for an active rear-camera track even when Android WebView omits the WebRTC `torch` capability flag. This fixes phones with a physical camera flash where the scanner previously hid the button.
+- When the capability flag is missing, attempt the normal advanced torch constraint first and then the direct torch constraint used by some WebViews. If both are rejected, hide the flashlight for that camera session and show a short unsupported-browser message.
+- Keep the single camera enable/disable control and mobile Back behavior from v121 unchanged.
+
+## 2026.9.18.7
+
+- Make Android/browser Back close the fullscreen Cook4Me scanner instead of navigating out of the integration. Scanner opening now adds a same-route history entry and consumes that entry when the scanner closes.
+- Keep only one camera enable/disable control visible. The inherited top camera-power button is hidden and the bottom camera button is moved to the far left, remains visible while the camera is running, and toggles between camera-on and camera-off states.
+- Keep the hardware flashlight beside the lower camera control when supported; all existing barcode, photo, manual-entry and AI capture controls remain available.
+
+## 2026.9.18.6
+
+- Remove the Android/native barcode-scanner handoff from the Cook4Me capture UI. Barcode mode now stays inside Cook4Me instead of launching the external phone scanner that can fail or take over camera ownership.
+- Add an icon-only flashlight control to the live camera. It is shown only while the selected camera exposes a real `torch` capability, toggles the rear-camera light without leaving the scanner, and disappears automatically on unsupported devices/WebViews.
+- Turn the torch off when the camera is stopped or the capture dialog closes, and hide the control for the session if a WebView advertises torch support but rejects the constraint.
+
 ## 2026.9.18.5
 
 - Make the smart-scale action in product capture icon-only and show it only when the current product unit is a supported mass unit.
