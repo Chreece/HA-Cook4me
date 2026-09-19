@@ -39,10 +39,8 @@ jobs:
         run: |
           set -Eeuo pipefail
           CHANGED="$(git diff --name-only HEAD^ HEAD || true)"
-          printf '%s
-' "$CHANGED"
-          printf '%s
-' "$CHANGED" | sed -nE 's#^tools/release_catalog_nutrition_review_decisions_post_activation_([0-9]+)\.v1\.json$#\1#p' | sort -nu > /tmp/compile-batches.txt
+          echo "$CHANGED"
+          echo "$CHANGED" | sed -nE 's#^tools/release_catalog_nutrition_review_decisions_post_activation_([0-9]+)\.v1\.json$#\1#p' | sort -nu > /tmp/compile-batches.txt
           COUNT="$(wc -l < /tmp/compile-batches.txt)"
           echo "count=$COUNT" >> "$GITHUB_OUTPUT"
           echo "batches to compile:"
