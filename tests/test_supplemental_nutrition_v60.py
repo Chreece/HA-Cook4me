@@ -13,6 +13,7 @@ if str(TOOLS) not in sys.path:
 
 import reviewed_nutrition_v60 as reviewed_nutrition  # noqa: E402
 import supplemental_nutrition_v60 as supplemental  # noqa: E402
+import resolve_reviewed_release_catalog_nutrition_targets_v60 as target_resolver  # noqa: E402
 
 
 TARGET_ID = "concept:food:6e7ef7c7e15c50a5372e"
@@ -139,6 +140,47 @@ class SupplementalNutritionV60Tests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "source evidence drift"):
                 supplemental.load_reviews(Path(tmp))
 
+
+
+    def test_target_resolver_counts_exact_hold_replacement_as_resolved(self):
+        target_id = "M_FOOD_447"
+        ingredient_id = "M_FOOD_447"
+        queue_value = {
+            "kind": "cook4me-release-catalog-nutrition-review-targets-v60",
+            "policy": {
+                "exactIngredientIdentityCompletenessPreserved": True,
+                "providerIdentityInference": False,
+                "providerIdentityReviewGrouped": False,
+                "sourceLocalGroupingRequiresSemanticConcept": True,
+                "sourceLocalGroupingRequiresHighConfidence": True,
+                "sourceLocalGroupingRequiresExactCanonicalEnglish": True,
+                "reviewedExactFdcProvenanceRequired": True,
+                "searchResultAutoAccepted": False,
+            },
+            "targets": [
+                {
+                    "reviewTargetId": target_id,
+                    "reviewTargetKind": "provider-identity",
+                    "canonicalEnglishName": "Montbéliard sausage",
+                    "memberIngredientIds": [ingredient_id],
+                }
+            ],
+        }
+        cache, seed_summary = supplemental.seed_cache(
+            queue_value, {}, review_root=TOOLS
+        )
+        self.assertEqual(seed_summary["supplementalResolvedNowReviewTargets"], 1)
+        resolved, pending = target_resolver.resolve(
+            queue_value,
+            cache,
+            {},
+            fetcher=lambda _fdc_id: self.fail("replacement cache must not fetch USDA"),
+        )
+        self.assertIn(ingredient_id, resolved)
+        self.assertEqual(pending["summary"]["alreadyResolvedReviewTargets"], 1)
+        self.assertEqual(pending["summary"]["alreadyResolvedIdentities"], 1)
+        self.assertEqual(pending["summary"]["heldReviewTargets"], 0)
+        self.assertEqual(pending["summary"]["pendingReviewTargetCount"], 0)
 
     def test_mastic_exact_primary_composition_profile(self):
         reviews = supplemental.load_reviews(TOOLS)
