@@ -1,0 +1,73 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-retained-reference-binding",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Vegetable stock (or water)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Soup, vegetable broth, ready to serve",
+      "fdcId": 171583,
+      "notes": "Manual semantic review binds Cook4Me 'Vegetable stock (or water)' to USDA SR Legacy 'Soup, vegetable broth, ready to serve' through a retained exact evidence record. The destination label names vegetable stock as the primary ingredient; the parenthetical water wording is a recipe substitution/preparation alternative rather than a different stock identity. USDA's ready-to-serve vegetable broth is used as the closest exact reviewed stock/broth record. Confidence remains medium because water/salted-water/seasoned-water alternatives can have materially different sodium and nutrient values, so this binding represents the vegetable-stock branch only.",
+      "reviewTargetId": "concept:food:a4003f3481464f3e5961",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "047311cc617fb9ab1eee13c011a96d80175519a3c7e0eb91b593466057a9b3dc",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "4213388f9ec824003458075e354f142647c6219fc8191243c4c53d0f5ba289c4",
+      "sourceEvidenceTargetId": "concept:food:481d8a5571601c6f7848",
+      "usageCountAtReview": 15
+    },
+    {
+      "canonicalEnglishName": "Vegetable stock (or salted water)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Soup, vegetable broth, ready to serve",
+      "fdcId": 171583,
+      "notes": "Manual semantic review binds Cook4Me 'Vegetable stock (or salted water)' to USDA SR Legacy 'Soup, vegetable broth, ready to serve' through a retained exact evidence record. The destination label names vegetable stock as the primary ingredient; the parenthetical water wording is a recipe substitution/preparation alternative rather than a different stock identity. USDA's ready-to-serve vegetable broth is used as the closest exact reviewed stock/broth record. Confidence remains medium because water/salted-water/seasoned-water alternatives can have materially different sodium and nutrient values, so this binding represents the vegetable-stock branch only.",
+      "reviewTargetId": "concept:food:df0e7bb61897b9c51e7b",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "047311cc617fb9ab1eee13c011a96d80175519a3c7e0eb91b593466057a9b3dc",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "4213388f9ec824003458075e354f142647c6219fc8191243c4c53d0f5ba289c4",
+      "sourceEvidenceTargetId": "concept:food:481d8a5571601c6f7848",
+      "usageCountAtReview": 6
+    },
+    {
+      "canonicalEnglishName": "Vegetable stock (or seasoned water)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Soup, vegetable broth, ready to serve",
+      "fdcId": 171583,
+      "notes": "Manual semantic review binds Cook4Me 'Vegetable stock (or seasoned water)' to USDA SR Legacy 'Soup, vegetable broth, ready to serve' through a retained exact evidence record. The destination label names vegetable stock as the primary ingredient; the parenthetical water wording is a recipe substitution/preparation alternative rather than a different stock identity. USDA's ready-to-serve vegetable broth is used as the closest exact reviewed stock/broth record. Confidence remains medium because water/salted-water/seasoned-water alternatives can have materially different sodium and nutrient values, so this binding represents the vegetable-stock branch only.",
+      "reviewTargetId": "concept:food:b254e0b52ba26c780ca8",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "047311cc617fb9ab1eee13c011a96d80175519a3c7e0eb91b593466057a9b3dc",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "4213388f9ec824003458075e354f142647c6219fc8191243c4c53d0f5ba289c4",
+      "sourceEvidenceTargetId": "concept:food:481d8a5571601c6f7848",
+      "usageCountAtReview": 6
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "referenceReceipts": {
+    "171583": {
+      "sourceCandidateSha256": "047311cc617fb9ab1eee13c011a96d80175519a3c7e0eb91b593466057a9b3dc",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:481d8a5571601c6f7848"
+    }
+  },
+  "reviewDecisionSha256": "0746759e7ea3631953db0c70039e4e56705a1b1729864772dc4d7f94dd3a82db",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "4213388f9ec824003458075e354f142647c6219fc8191243c4c53d0f5ba289c4"
+}
