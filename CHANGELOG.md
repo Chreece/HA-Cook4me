@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026.9.19.4
+
+- Make the sticky Apply footer in filter dialogs extend all the way to the rounded bottom edge of the menu card instead of leaving a visible gap below it.
+- Preserve the compact checkbox spacing and Select all / Deselect all controls from v124.
+
 ## 2026.9.19.3
 
 - Compact the checkbox rows in Cook4Me filter lists so meal, language and ingredient choices use much less vertical space.
