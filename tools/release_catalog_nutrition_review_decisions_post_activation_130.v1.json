@@ -1,0 +1,109 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "evidenceBindingScope": "retained-reference-record",
+  "items": [
+    {
+      "approved": true,
+      "canonicalEnglishName": "Mini jokbal (pig's trotters)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Pork, pig's feet",
+      "fdcId": 2705898,
+      "notes": "Manual semantic review binds Cook4Me 'Mini jokbal (pig's trotters)' to USDA FNDDS 'Pork, pig's feet' through an exact retained record in the same immutable evidence snapshot. The destination is explicitly a pig-trotter preparation, so the pig's-feet profile preserves the correct species and body part. Confidence remains medium because jokbal is normally braised and seasoned, which can materially change sodium, sugar, and water content; this decision does not generalize to pickled pig's feet, other pork cuts, or unrelated stewed pork.",
+      "reviewTargetId": "concept:food:6a357b682ff8e6523288",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:6a357b682ff8e6523288"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Raw marzipan paste",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Almond paste",
+      "fdcId": 2707535,
+      "notes": "Manual semantic review binds Cook4Me 'Raw marzipan paste' to USDA FNDDS 'Almond paste' through an exact retained record in the same immutable evidence snapshot. Both are almond-and-sugar pastes, and the destination explicitly identifies the raw/base paste rather than a finished decorated confection. Confidence remains medium because regional marzipan formulations vary substantially in almond-to-sugar ratio; this decision does not generalize to finished high-sugar marzipan, frangipane, almond butter, or almond flour.",
+      "reviewTargetId": "concept:food:1e63fada7cd7310a9ae1",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:1e63fada7cd7310a9ae1"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Yellow turnip, cut into 2 cm pieces",
+      "confidence": "high",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Rutabaga, peeled, raw",
+      "fdcId": 2727580,
+      "notes": "Manual semantic review binds Cook4Me 'Yellow turnip, cut into 2 cm pieces' to USDA Foundation 'Rutabaga, peeled, raw' through an exact retained record in the same immutable evidence snapshot. Yellow turnip is a common name for rutabaga/swede, and cutting into pieces does not change the ingredient identity. Confidence is high because the food identity and raw peeled state align; this decision does not generalize to white turnip, turnip greens, cooked rutabaga, or pickled turnip.",
+      "reviewTargetId": "concept:food:ae815fc94a526ad24684",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:a4337e7e7aa53a6c7b69"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Spring green",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Cabbage, green, raw",
+      "fdcId": 2346407,
+      "notes": "Manual semantic review binds Cook4Me 'Spring green' to USDA Foundation 'Cabbage, green, raw' through an exact retained record in the same immutable evidence snapshot. Spring greens are loose-leaf Brassica oleracea greens closely related to cabbage, and the destination does not specify a cooked state. Confidence remains medium because spring-green cultivars have a different leaf structure and nutrient profile from headed green cabbage; this decision does not generalize to kale, mustard greens, turnip greens, or cooked cabbage.",
+      "reviewTargetId": "concept:food:647eac2174f0efdbbc30",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:647eac2174f0efdbbc30"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Spring greens",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Cabbage, green, raw",
+      "fdcId": 2346407,
+      "notes": "Manual semantic review binds Cook4Me 'Spring greens' to USDA Foundation 'Cabbage, green, raw' through an exact retained record in the same immutable evidence snapshot. The plural destination denotes the same loose-leaf cabbage-family vegetable represented by the reviewed 'Spring green' target, so raw green cabbage is the closest pinned profile available. Confidence remains medium because cultivar and leaf morphology differ; this decision does not generalize to mustard greens, turnip greens, kale, or cooked cabbage.",
+      "reviewTargetId": "concept:food:17a628616b9bba9eba2b",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:647eac2174f0efdbbc30"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Whole albacore tuna drained, broken into pieces",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Fish, tuna, white, canned in water, drained solids",
+      "fdcId": 175158,
+      "notes": "Manual semantic review binds Cook4Me 'Whole albacore tuna drained, broken into pieces' to USDA SR Legacy 'Fish, tuna, white, canned in water, drained solids' through an exact retained record in the same immutable evidence snapshot. Albacore is white tuna and the destination explicitly specifies a drained preserved product. Confidence remains medium because the packing medium is not stated and oil-packed tuna would have a different fat profile; this decision does not generalize to light tuna, fresh tuna, tuna in oil, or tuna salad.",
+      "reviewTargetId": "concept:food:f5c3016da918b0f63f61",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:7c660481dc7749fca1b4"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Poussin",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Chicken, broilers or fryers, meat and skin, raw",
+      "fdcId": 171447,
+      "notes": "Manual semantic review binds Cook4Me provider identity 'Poussin' to USDA SR Legacy 'Chicken, broilers or fryers, meat and skin, raw' through an exact retained record in the same immutable evidence snapshot. Poussin is a very young chicken, so a raw young-chicken meat-and-skin profile preserves species and edible form. Confidence remains medium because poussin age and carcass size can shift fat and moisture relative to a standard broiler/fryer; this decision does not generalize to capon, mature rooster, hen, cooked chicken, or skinless chicken meat.",
+      "reviewTargetId": "M_FOOD_402",
+      "reviewTargetKind": "provider-identity",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceTargetId": "concept:food:cc53a76ea5366250cfe4"
+    }
+  ],
+  "kind": "cook4me-fdc-retained-reference-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "67617afeabb28431aeacf1ec24967c9cd2f2e51140646c2bb4bcc25c13dcd6ee"
+}
