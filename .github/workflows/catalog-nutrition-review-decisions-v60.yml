@@ -70,7 +70,6 @@ jobs:
           CORE_RE='^(tools/(compile_release_catalog_fdc_review_decisions_v60.py|compile_release_catalog_fdc_retained_review_decisions_v60.py|verify_post_activation_nutrition_review_decisions_v60.py|snapshot_nutrition_review_checkpoint_v60.py|resolve_reviewed_release_catalog_nutrition_targets_v60.py)|tests/test_(compile_release_catalog_fdc_review_decisions_v60|compile_release_catalog_fdc_retained_review_decisions_v60|verify_post_activation_nutrition_review_decisions_v60|nutrition_review_checkpoint_v60).py)$'
           if printf '%s\n' "$CHANGED" | grep -Eq "$CORE_RE"; then
             echo "mode=full" >> "$GITHUB_OUTPUT"
-            echo "full verifier replay required because core verifier/compiler code changed"
           else
             echo "mode=incremental" >> "$GITHUB_OUTPUT"
           fi
@@ -78,11 +77,14 @@ jobs:
           REQUEST_CHANGED=false
           if printf '%s\n' "$CHANGED" | grep -Fxq 'tools/nutrition_review_validation_request.v1.json'; then
             REQUEST_CHANGED=true
-            python -c 'import json; from pathlib import Path; v=json.loads(Path("tools/nutrition_review_validation_request.v1.json").read_text(encoding="utf-8")); p=Path("/tmp/request-batches.txt"); p.write_text("".join(str(x)+"\\n" for x in sorted({int(x) for x in v.get("batches",[]) if int(x)>0})),encoding="utf-8")'
-            cat /tmp/request-batches.txt >> /tmp/changed-batches.txt
+            jq -r '.batches[]' tools/nutrition_review_validation_request.v1.json >> /tmp/changed-batches.txt
             sort -nu /tmp/changed-batches.txt -o /tmp/changed-batches.txt
           fi
-          if printf '%s\n' "$CHANGED" | grep -Eq '^tools/release_catalog_reviewed_nutrition_targets_[0-9]+\.v1\.json
+          if printf '%s\n' "$CHANGED" | grep -Eq '^tools/release_catalog_reviewed_nutrition_targets_[0-9]+\.v1\.json$' || [ "$REQUEST_CHANGED" = true ]; then
+            echo "activation_required=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "activation_required=false" >> "$GITHUB_OUTPUT"
+          fi
           echo "changed batches:"
           cat /tmp/changed-batches.txt || true
 
