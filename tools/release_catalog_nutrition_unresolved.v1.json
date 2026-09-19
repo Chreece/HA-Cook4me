@@ -9,7 +9,8 @@
     "automaticBindingAllowed": false,
     "externalFallbackApproved": false,
     "providerIdentityInference": false,
-    "unresolvedDoesNotReduceRequiredCount": true
+    "unresolvedDoesNotReduceRequiredCount": true,
+    "supplementalResolutionMayReduceEvidenceSet": true
   },
   "items": [
     {
