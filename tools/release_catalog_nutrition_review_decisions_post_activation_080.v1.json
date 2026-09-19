@@ -1,0 +1,89 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 5,
+      "canonicalEnglishName": "Beef meatballs",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Meatballs, frozen, Italian style",
+      "fdcId": 171638,
+      "notes": "Manual semantic review binds Cook4Me 'Beef meatballs' to USDA SR Legacy 'Meatballs, frozen, Italian style'. The target is explicitly a meatball product, its own pinned evidence contains this exact FDC record, and prior reviewed Cook4Me 'Frozen beef meatballs' independently used the same USDA record. Historical reuse is corroboration only, not identity proof. Confidence remains medium because the current target does not specify frozen state, seasoning, bread content, fat level, or Italian-style formulation; this review does not generalize to meatless meatballs, sauced meatballs, or mixed prepared meals.",
+      "reviewTargetId": "concept:food:021078d4d965cdf33092",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 8,
+      "canonicalEnglishName": "Pistachio paste",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Nuts, pistachio nuts, raw",
+      "fdcId": 2515379,
+      "notes": "Manual semantic review binds Cook4Me 'Pistachio paste' to USDA Foundation 'Nuts, pistachio nuts, raw'. A plain pistachio paste is the same nut food after grinding, and the target's own pinned evidence contains this exact FDC record; prior reviewed Cook4Me 'Pistachio' independently points to the same record. Historical reuse is corroboration only, not identity proof. Confidence remains medium because the catalog wording does not prove whether the paste contains added sugar, oil, milk, salt, or flavorings; this review does not generalize to pistachio cream, praline, spread, or flavored filling.",
+      "reviewTargetId": "concept:food:4eae7ae70f89cf6b995f",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Cucumber juice",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Cucumber, raw",
+      "fdcId": 2709784,
+      "notes": "Manual semantic review binds Cook4Me 'Cucumber juice' to USDA FNDDS 'Cucumber, raw'. The juice is derived from the same cucumber food, the target's own pinned evidence contains this exact FDC record, and prior reviewed Cook4Me 'Cucumber' supports the same underlying identity. Historical reuse is corroboration only, not identity proof. Confidence remains medium because juicing can change fibre and water distribution and the catalog does not state whether the juice is strained, concentrated, seasoned, or diluted; this review does not generalize to cucumber drinks, pickles, or flavored beverages.",
+      "reviewTargetId": "concept:food:33df7fb444e659a483fe",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 11,
+      "canonicalEnglishName": "Dried borlotti beans, soaked overnight",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Beans, from dried, NS as to type, no added fat",
+      "fdcId": 2707349,
+      "notes": "Manual semantic review binds Cook4Me 'Dried borlotti beans, soaked overnight' to USDA FNDDS 'Beans, from dried, NS as to type, no added fat'. The target explicitly identifies dried beans that are rehydrated without added fat, and its own pinned evidence contains this generic dried-bean record. The generic type-unspecified record is chosen deliberately instead of asserting that borlotti are white, black, pinto, kidney, or another USDA subtype. Confidence remains medium because soaking and subsequent cooking state can change water content and the catalog does not specify the weight basis after soaking; this review does not generalize to canned beans or beans cooked with added fat.",
+      "reviewTargetId": "concept:food:7e97d6a9fc7b7cd4278c",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 11,
+      "canonicalEnglishName": "Ebly wheat",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Wheat, durum",
+      "fdcId": 169721,
+      "notes": "Manual semantic review binds Cook4Me 'Ebly wheat' to USDA SR Legacy 'Wheat, durum'. The target explicitly identifies a wheat grain product and its own pinned evidence contains this exact durum-wheat record; prior reviewed Cook4Me 'Wheat' provides independent same-grain corroboration. Historical reuse is corroboration only, not identity proof. Confidence remains medium because the catalog does not encode the product's exact parboiling, hydration, brand formulation, or cooked-versus-dry weight state; this review does not generalize to wheat bread, bran, germ, flour, or baked products.",
+      "reviewTargetId": "concept:food:6039497777ac29341f60",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Frozen plums, halved",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Plums, raw",
+      "fdcId": 169949,
+      "notes": "Manual semantic review binds Cook4Me 'Frozen plums, halved' to USDA SR Legacy 'Plums, raw'. Freezing and halving preserve the underlying plum identity, and the target's own pinned evidence ranks this exact plum record first. Confidence remains medium because the USDA record is unfrozen and the catalog does not state whether the fruit was blanched, sweetened, or packed with syrup before freezing; this review does not generalize to prunes, canned plums, preserves, or sweetened plum products.",
+      "reviewTargetId": "concept:food:0dd6b064e56a0e8468f1",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "552ba62692728dc536ed0ee8627296a7156089be428057acf606658c6224cc96"
+}

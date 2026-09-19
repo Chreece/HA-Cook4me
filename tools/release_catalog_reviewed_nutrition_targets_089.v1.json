@@ -1,0 +1,68 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-target-candidate-binding",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Dried lime (loomi)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Lime, raw",
+      "fdcId": 2709170,
+      "notes": "Manual review: dried lime remains lime; raw lime is this target's pinned same-food proxy. Medium: dehydration changes water and nutrient concentration.",
+      "reviewTargetId": "concept:food:fb16d51998fdbef39034",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "207d048ff193223693450050233336fb36a9a13ff05465ca53f624d032ad2bdd",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "68be12fec0504414417c42a9ebb33f743e2564aafd171cbcdcb538768a7b7125",
+      "sourceEvidenceTargetId": "concept:food:fb16d51998fdbef39034",
+      "usageCountAtReview": 2
+    },
+    {
+      "candidateEvidenceRank": 7,
+      "canonicalEnglishName": "Cooked bell pepper",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Peppers, green, cooked",
+      "fdcId": 2709976,
+      "notes": "Manual review: target is cooked bell pepper; selected its pinned cooked green-pepper proxy. Medium: color and cooking method are unspecified.",
+      "reviewTargetId": "concept:food:0564dd89ffa36c98678b",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "122eda5ccebd7f1d4a00fd732cf880850d395b430a2d0e8e89cc044163663afe",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "68be12fec0504414417c42a9ebb33f743e2564aafd171cbcdcb538768a7b7125",
+      "sourceEvidenceTargetId": "concept:food:0564dd89ffa36c98678b",
+      "usageCountAtReview": 1
+    },
+    {
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Dried lemon",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Lemon, raw",
+      "fdcId": 2709168,
+      "notes": "Manual review: dried lemon remains lemon; raw lemon is this target's pinned same-food proxy. Medium: dehydration changes water and nutrient concentration.",
+      "reviewTargetId": "concept:food:0f3418b374db52650543",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "1182a154bd28b8d392e36d271a7a9a288c38bb3223c8f5894050919fc99da631",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "68be12fec0504414417c42a9ebb33f743e2564aafd171cbcdcb538768a7b7125",
+      "sourceEvidenceTargetId": "concept:food:0f3418b374db52650543",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "reviewDecisionSha256": "62b4f0ca910b1e22a5ad8a7a7fcbe43d0ab814c94036a50fc148e717408d583c",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "68be12fec0504414417c42a9ebb33f743e2564aafd171cbcdcb538768a7b7125"
+}

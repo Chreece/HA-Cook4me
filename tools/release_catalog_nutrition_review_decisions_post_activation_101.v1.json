@@ -1,0 +1,89 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "B- vanilla pod",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Vanilla extract",
+      "fdcId": 173471,
+      "notes": "Manual semantic review binds Cook4Me 'B- vanilla pod' to USDA SR Legacy 'Vanilla extract'. Vanilla is the defining ingredient identity and this target's own pinned evidence contains the exact vanilla record. Confidence remains medium because a whole vanilla pod and extract differ in moisture, solvent, concentration, and usable solids; this is a same-vanilla-source nutritional proxy, not an exact physical-form match.",
+      "reviewTargetId": "concept:food:2e32ada15d54dbcba17f",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 4,
+      "canonicalEnglishName": "Scraped vanilla pod",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Vanilla extract",
+      "fdcId": 173471,
+      "notes": "Manual semantic review binds Cook4Me 'Scraped vanilla pod' to USDA SR Legacy 'Vanilla extract'. Vanilla remains the defining ingredient identity after scraping and the target's own pinned evidence contains this exact vanilla record. Confidence remains medium because a scraped whole pod and extract differ in moisture, solvent, concentration, and remaining pod solids; this is a same-vanilla-source nutritional proxy.",
+      "reviewTargetId": "concept:food:e582993179a979ea663f",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Vanilla pod, split and scraped",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Vanilla extract",
+      "fdcId": 173471,
+      "notes": "Manual semantic review binds Cook4Me 'Vanilla pod, split and scraped' to USDA SR Legacy 'Vanilla extract'. Splitting and scraping do not change the vanilla source identity and the target's own pinned evidence contains this exact vanilla record. Confidence remains medium because the whole pod and extract differ in solvent, moisture, concentration, and edible solids.",
+      "reviewTargetId": "concept:food:58099245efef07d17c7c",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Vanilla pod, scraped and halved",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Vanilla extract",
+      "fdcId": 173471,
+      "notes": "Manual semantic review binds Cook4Me 'Vanilla pod, scraped and halved' to USDA SR Legacy 'Vanilla extract'. Scraping and halving preserve the vanilla source identity and the target's own pinned evidence contains this exact vanilla record. Confidence remains medium because whole pod material and extract differ in moisture, solvent, concentration, and edible solids.",
+      "reviewTargetId": "concept:food:1a69300d92a1fb6f6a0d",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Vanilla pod, split lengthwise and scraped",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Vanilla extract",
+      "fdcId": 173471,
+      "notes": "Manual semantic review binds Cook4Me 'Vanilla pod, split lengthwise and scraped' to USDA SR Legacy 'Vanilla extract'. Splitting lengthwise and scraping preserve the vanilla source identity and the target's own pinned evidence contains this exact vanilla record. Confidence remains medium because whole pod material and extract differ in moisture, solvent, concentration, and edible solids.",
+      "reviewTargetId": "concept:food:fd9ef021294a06f79e56",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Vanilla pod, scraped and split lengthwise",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Vanilla extract",
+      "fdcId": 173471,
+      "notes": "Manual semantic review binds Cook4Me 'Vanilla pod, scraped and split lengthwise' to USDA SR Legacy 'Vanilla extract'. Scraping and splitting lengthwise preserve the vanilla source identity and the target's own pinned evidence contains this exact vanilla record. Confidence remains medium because whole pod material and extract differ in moisture, solvent, concentration, and edible solids.",
+      "reviewTargetId": "concept:food:9ac8b615de49ac5e4849",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "ce5c3d50114ba3d3817d5592c40d98556eef53126cc214b594f5cafaf5f78922"
+}

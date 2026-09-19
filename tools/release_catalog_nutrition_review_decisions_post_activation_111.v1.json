@@ -1,0 +1,77 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Pepper (a little)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Peppers, raw, NFS",
+      "fdcId": 2709799,
+      "notes": "Manual semantic review binds Cook4Me 'Pepper (a little)' to USDA FNDDS 'Peppers, raw, NFS'. The quantity wording does not change the reviewed food label: the corpus already binds both 'Pepper' and '*Pepper' to this exact FDC record, and this target's own pinned evidence contains that same record at rank 9. Confidence remains medium because the English word 'pepper' can also mean peppercorn spice; this approval follows the catalog's already-reviewed vegetable-pepper identity for this exact label family and does not generalize to black or white pepper.",
+      "reviewTargetId": "concept:food:9340b351be5d4d3374fc",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "*Salt, pepper",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Salt, table",
+      "fdcId": 173468,
+      "notes": "Manual semantic review binds Cook4Me '*Salt, pepper' to USDA SR Legacy 'Salt, table'. The leading asterisk is presentation markup and salt is an explicit component; the reviewed corpus already binds 'Pepper salt (a little)' and plain salt targets to this exact FDC record, and this target's own pinned evidence contains table salt at rank 9. Confidence remains medium because the pepper component and blend ratio are not represented by the salt-only profile.",
+      "reviewTargetId": "concept:food:0640b8a830e5789e759d",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 10,
+      "canonicalEnglishName": "C- pepper salt, a little",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Salt, table",
+      "fdcId": 173468,
+      "notes": "Manual semantic review binds Cook4Me 'C- pepper salt, a little' to USDA SR Legacy 'Salt, table'. The 'C-' prefix is recipe-role markup and the reviewed corpus already binds the near-identical target 'Pepper salt (a little)' to this exact FDC record; this target's own pinned evidence contains table salt at rank 10. Confidence remains medium because the pepper component and unspecified blend ratio are not represented by the salt-only profile.",
+      "reviewTargetId": "concept:food:67eed2dd57f114884830",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Pepper, a little",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Peppers, raw, NFS",
+      "fdcId": 2709799,
+      "notes": "Manual semantic review binds Cook4Me 'Pepper, a little' to USDA FNDDS 'Peppers, raw, NFS'. The quantity wording does not change the reviewed food label: the corpus already binds both 'Pepper' and '*Pepper' to this exact FDC record, and this target's own pinned evidence contains the same record at rank 9. Confidence remains medium because the English word 'pepper' can also denote peppercorn spice; this approval follows the catalog's already-reviewed vegetable-pepper identity for this exact label family.",
+      "reviewTargetId": "concept:food:964e71e34865a6352799",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Salt & pepper",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Salt, table",
+      "fdcId": 173468,
+      "notes": "Manual semantic review binds Cook4Me 'Salt & pepper' to USDA SR Legacy 'Salt, table'. Salt is an explicit component, the reviewed corpus already binds 'Pepper salt (a little)' and plain salt targets to this exact FDC record, and this target's own pinned evidence contains table salt at rank 9. Confidence remains medium because the pepper component and blend ratio are not represented by the salt-only profile.",
+      "reviewTargetId": "concept:food:dc095bbcd168adf4977c",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "ad7fca53dad7edb2ced464a1ade8a4821ccf9c25acff95e38347cc7a51fa4bcc"
+}

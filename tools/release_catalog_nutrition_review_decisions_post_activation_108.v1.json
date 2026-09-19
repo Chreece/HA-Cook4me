@@ -1,0 +1,77 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 8,
+      "canonicalEnglishName": "Garlic and ginger paste",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Garlic, raw",
+      "fdcId": 1104647,
+      "notes": "Manual semantic review binds Cook4Me 'Garlic and ginger paste' to USDA Foundation 'Garlic, raw'. The reviewed corpus already binds the same three-token ingredient family as 'Ginger-garlic paste' to this exact FDC record, and this target's own pinned evidence contains the same garlic record. Confidence remains medium because the paste also contains ginger and its ingredient ratio or formulation is not represented by raw garlic; this is a garlic-component nutritional proxy.",
+      "reviewTargetId": "concept:food:127c7bf25ba55f978d48",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 8,
+      "canonicalEnglishName": "*Garlic and ginger paste",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Garlic, raw",
+      "fdcId": 1104647,
+      "notes": "Manual semantic review binds Cook4Me '*Garlic and ginger paste' to USDA Foundation 'Garlic, raw'. The leading asterisk is presentation markup; the reviewed corpus already binds 'Ginger-garlic paste' to this exact FDC record, and this target's own pinned evidence contains the same garlic record. Confidence remains medium because the paste also contains ginger and its ingredient ratio or formulation is not represented by raw garlic; this is a garlic-component nutritional proxy.",
+      "reviewTargetId": "concept:food:670fcf18c52dec63e450",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 7,
+      "canonicalEnglishName": "*Ginger and garlic paste",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Garlic, raw",
+      "fdcId": 1104647,
+      "notes": "Manual semantic review binds Cook4Me '*Ginger and garlic paste' to USDA Foundation 'Garlic, raw'. The leading asterisk and word order do not change the ingredient family; the reviewed corpus already binds 'Ginger-garlic paste' to this exact FDC record, and this target's own pinned evidence contains the same garlic record. Confidence remains medium because the paste also contains ginger and its ingredient ratio or formulation is not represented by raw garlic; this is a garlic-component nutritional proxy.",
+      "reviewTargetId": "concept:food:9eafa8680eb155e32ae0",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Chili paste",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Chili, NFS",
+      "fdcId": 2706373,
+      "notes": "Manual semantic review binds Cook4Me 'Chili paste' to USDA FNDDS 'Chili, NFS'. Chili is the defining ingredient identity, the reviewed corpus already binds 'Chili' to this exact FDC record, and this target's own pinned evidence contains that record. Confidence remains medium because a paste can contain salt, oil, vinegar, sugar, or other ingredients and can be more concentrated than generic chili; this is a same-chili-source nutritional proxy.",
+      "reviewTargetId": "concept:food:2dda9c4784ff42656bfe",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Chili purée",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Chili, NFS",
+      "fdcId": 2706373,
+      "notes": "Manual semantic review binds Cook4Me 'Chili purée' to USDA FNDDS 'Chili, NFS'. Chili is the defining ingredient identity, the reviewed corpus already binds 'Chili' to this exact FDC record, and this target's own pinned evidence contains that record. Confidence remains medium because purée processing changes water concentration and may include other ingredients; this is a same-chili-source nutritional proxy rather than an exact formulation match.",
+      "reviewTargetId": "concept:food:1ca97004d285be847f81",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "65fadb830facfe2b557e9f51b285fd0ecca8253b61bd3edc05583f0de9455f76"
+}

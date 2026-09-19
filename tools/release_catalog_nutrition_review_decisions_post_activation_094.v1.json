@@ -1,0 +1,89 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Chestnut cream",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Chestnuts",
+      "fdcId": 2707499,
+      "notes": "Manual semantic review binds Cook4Me 'Chestnut cream' to USDA FNDDS 'Chestnuts'. Chestnut is the defining food identity and the target's own pinned evidence contains this exact chestnut record. Confidence remains medium because a chestnut cream may contain sugar, water, dairy, vanilla, or other additions and the selected USDA row represents chestnuts themselves; this review does not generalize to chestnut flour, cakes, or low-chestnut sweetened spreads.",
+      "reviewTargetId": "concept:food:eb51e8236d1c09b098ae",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Dried baby sardines",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Fish, sardines, canned",
+      "fdcId": 2706293,
+      "notes": "Manual semantic review binds Cook4Me 'Dried baby sardines' to USDA FNDDS 'Fish, sardines, canned'. The target is explicitly sardines and its own pinned evidence ranks this same-fish sardine record first. Confidence remains medium because drying versus canning changes moisture, sodium, oil, and nutrient concentration and the exact baby-sardine species is unspecified; this review does not generalize to sardine oil, sandwiches, or non-sardine fish.",
+      "reviewTargetId": "concept:food:2c1e81deba9f676ce0e4",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Chestnut cream",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Chestnuts",
+      "fdcId": 2707499,
+      "notes": "Manual semantic review binds provider identity 'Chestnut cream' to USDA FNDDS 'Chestnuts'. Chestnut is the defining food identity and this provider target's own pinned evidence contains the exact chestnut record. Confidence remains medium because the provider label does not encode sugar, water, dairy, flavorings, or chestnut concentration; this is a same-food nutritional proxy rather than an exact commercial cream formulation.",
+      "reviewTargetId": "M_FOOD_149",
+      "reviewTargetKind": "provider-identity"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 4,
+      "canonicalEnglishName": "Cooked vegetables",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Classic mixed vegetables, NS as to form, cooked",
+      "fdcId": 2710015,
+      "notes": "Manual semantic review binds provider identity 'Cooked vegetables' to USDA FNDDS 'Classic mixed vegetables, NS as to form, cooked'. The target is generic cooked vegetables and its own pinned evidence contains this generic cooked mixed-vegetable record. Confidence remains medium because the exact vegetable blend, cooking method, added fat, salt, and form are unspecified; this review does not generalize to vegetable dishes with sauce or identifiable single vegetables.",
+      "reviewTargetId": "M_FOOD_514",
+      "reviewTargetKind": "provider-identity"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 4,
+      "canonicalEnglishName": "Mixed vegetables",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Classic mixed vegetables, NS as to form, cooked",
+      "fdcId": 2710015,
+      "notes": "Manual semantic review binds provider identity 'Mixed vegetables' to USDA FNDDS 'Classic mixed vegetables, NS as to form, cooked'. The target is explicitly a generic mixed-vegetable identity and its own pinned evidence contains the form-unspecified cooked mixed-vegetable record. Confidence remains medium because the exact mix, raw-versus-cooked source weight, added fat, salt, and package form are unspecified.",
+      "reviewTargetId": "M_FOOD_515",
+      "reviewTargetKind": "provider-identity"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 4,
+      "canonicalEnglishName": "Mixed vegetables",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Classic mixed vegetables, NS as to form, cooked",
+      "fdcId": 2710015,
+      "notes": "Manual semantic review binds provider identity 'Mixed vegetables' to USDA FNDDS 'Classic mixed vegetables, NS as to form, cooked'. The target is explicitly a generic mixed-vegetable identity and its own pinned evidence contains the form-unspecified cooked mixed-vegetable record. Confidence remains medium because the exact mix, raw-versus-cooked source weight, added fat, salt, and package form are unspecified.",
+      "reviewTargetId": "M_FOOD_824",
+      "reviewTargetKind": "provider-identity"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "afe93cb82c9c95825946d5d26f217b63adcbc79c7d77a9766f8cb4fbcd1cc9ae"
+}

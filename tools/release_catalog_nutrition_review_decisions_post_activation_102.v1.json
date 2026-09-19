@@ -1,0 +1,65 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Seed mix",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Mixed seeds",
+      "fdcId": 2707589,
+      "notes": "Manual semantic review binds Cook4Me 'Seed mix' to USDA FNDDS 'Mixed seeds'. An earlier reviewed target with the exact canonical name 'Seed mix' is bound to this same FDC record, and this target's own pinned evidence contains 'Mixed seeds' as candidate rank 9. Confidence remains medium because the target does not specify which seeds or their proportions, so this is a generic mixed-seed nutritional profile rather than a formulation-specific match.",
+      "reviewTargetId": "concept:food:bca8f8c13ea5ecee4676",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 8,
+      "canonicalEnglishName": "Salt and white pepper",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, white",
+      "fdcId": 170933,
+      "notes": "Manual semantic review binds Cook4Me 'Salt and white pepper' to USDA SR Legacy 'Spices, pepper, white'. The reviewed history contains 'White pepper and salt' with the same ingredient tokens and the same FDC binding, and this target's own pinned evidence contains the white-pepper record at rank 8. Confidence remains medium because the USDA row represents white pepper rather than the unspecified salt-plus-pepper ratio, so sodium from added salt may be underrepresented.",
+      "reviewTargetId": "concept:food:77608f794d3d48de957f",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 8,
+      "canonicalEnglishName": "*Salt and white pepper",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, white",
+      "fdcId": 170933,
+      "notes": "Manual semantic review binds Cook4Me '*Salt and white pepper' to USDA SR Legacy 'Spices, pepper, white'. The leading asterisk is presentation markup; the reviewed history contains 'White pepper and salt' with the same food tokens and the same FDC binding, and this target's own pinned evidence contains the white-pepper record at rank 8. Confidence remains medium because the USDA row does not represent the unspecified added-salt quantity.",
+      "reviewTargetId": "concept:food:b9eda800a0a1c63b8e32",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Tianmianjiang sweet bean sauce",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Black bean sauce",
+      "fdcId": 2707404,
+      "notes": "Manual semantic review binds Cook4Me 'Tianmianjiang sweet bean sauce' to USDA FNDDS 'Black bean sauce'. Tianmianjiang is explicitly identified here as sweet bean sauce; reviewed history already binds 'Sweet bean sauce' to this same FDC record, and the target's own pinned evidence contains it at rank 2. Confidence remains medium because FNDDS black bean sauce is not an exact tianmianjiang formulation and sweetness, fermentation base, wheat/soy ratio, and sodium can differ.",
+      "reviewTargetId": "concept:food:3ed94c380f3b18e4c14d",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "e7ba025fa768728f78e4d67be4ed39267eff68f83d0de880fffeb50ee6abd0bf"
+}

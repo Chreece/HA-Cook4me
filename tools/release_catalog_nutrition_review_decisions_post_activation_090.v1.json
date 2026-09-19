@@ -1,0 +1,89 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 11,
+      "canonicalEnglishName": "Dried black lime (loomi)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Lime, raw",
+      "fdcId": 2709170,
+      "notes": "Manual review: dried black lime remains lime; selected the target's pinned raw-lime proxy. Medium: dehydration and whole-fruit drying change water and nutrient concentration.",
+      "reviewTargetId": "concept:food:b1aca701ca0aaab99f30",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Dried carrot, rehydrated as directed",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Carrots, cooked, as ingredient",
+      "fdcId": 2710793,
+      "notes": "Manual review: rehydrated dried carrot remains carrot and is used as a cooked ingredient; selected the target's pinned cooked-carrot record. Medium: dehydration/rehydration changes water content and the exact post-rehydration weight basis is unspecified.",
+      "reviewTargetId": "concept:food:f1a6aadbeaf2e7fb5153",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Dried chokeberries",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Dried, fruit, NFS",
+      "fdcId": 2709195,
+      "notes": "Manual review: chokeberries are dried fruit; selected the target's pinned generic dried-fruit record rather than misclassifying them as another named fruit. Medium: the USDA row is fruit-type-unspecified and does not preserve chokeberry-specific composition.",
+      "reviewTargetId": "concept:food:4e27b2c10b2b544420d9",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Cuttlefish ink",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Mollusks, cuttlefish, mixed species, raw",
+      "fdcId": 174215,
+      "notes": "Manual review: cuttlefish ink is a cuttlefish-derived food ingredient; selected the target's pinned cuttlefish record as a same-animal proxy. Medium: ink differs from whole cuttlefish in solids, minerals, and macronutrient distribution.",
+      "reviewTargetId": "concept:food:78cca9bc78f3be3b2615",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Ground smoked duck breast",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Duck, wild, breast, meat only, raw",
+      "fdcId": 174469,
+      "notes": "Manual review: the target is duck breast; selected the target's pinned duck-breast record. Medium: smoking, grinding, species, skin state, salt, and cooking state are not preserved by the raw wild-duck proxy.",
+      "reviewTargetId": "concept:food:45d75b34caf16e868708",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 5,
+      "canonicalEnglishName": "Paprika paste",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, paprika",
+      "fdcId": 171329,
+      "notes": "Manual review: paprika paste is paprika-based and the target's pinned evidence contains the paprika spice record. Medium: paste hydration and possible oil, salt, or other additions are unspecified.",
+      "reviewTargetId": "concept:food:a67639bc5feea56e40e4",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "da6baceeb4d89b2a201c894ced660275eb1d600928705e50303bca90edf21287"
+}

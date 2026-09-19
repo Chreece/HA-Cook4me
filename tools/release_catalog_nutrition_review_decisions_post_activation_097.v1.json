@@ -1,0 +1,89 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Commercial sukiyaki sauce",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Teriyaki sauce",
+      "fdcId": 2707445,
+      "notes": "Manual semantic review binds Cook4Me 'Commercial sukiyaki sauce' to USDA FNDDS 'Teriyaki sauce'. Sukiyaki tare and teriyaki are both soy-based sweet-savory Japanese sauces, and this target's own pinned evidence ranks the teriyaki-sauce record first. Confidence remains medium because sukiyaki sauce can differ in soy sauce, sugar, mirin, sake, dashi, reduction, and brand formulation; this is a sauce-form nutritional proxy rather than an assertion that the recipes are identical.",
+      "reviewTargetId": "concept:food:c2bdcefbc02e3f586d7a",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Seitan",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Vital wheat gluten",
+      "fdcId": 168147,
+      "notes": "Manual semantic review binds Cook4Me 'Seitan' to USDA SR Legacy 'Vital wheat gluten'. Seitan is made primarily from vital wheat gluten, and this target's own pinned evidence ranks that defining gluten record first. Confidence is high for the food identity, while hydration, seasoning, cooking, and added ingredients can change finished seitan nutrition; this review does not generalize to wheat bread, pasta, or other gluten-containing foods.",
+      "reviewTargetId": "concept:food:2ba40aa3d8b1aa7fc8da",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Yakitori sauce",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Teriyaki sauce",
+      "fdcId": 2707445,
+      "notes": "Manual semantic review binds Cook4Me 'Yakitori sauce' to USDA FNDDS 'Teriyaki sauce'. Yakitori tare is a soy-based sweet-savory Japanese grilling sauce closely represented by teriyaki sauce, and this target's own pinned evidence ranks that sauce record first. Confidence remains medium because exact soy sauce, mirin, sake, sugar, reduction, and brand formulation vary; this is a sauce-form nutritional proxy rather than an assertion that every yakitori tare is identical to teriyaki sauce.",
+      "reviewTargetId": "concept:food:fd98b3466eb580ba11e4",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Gosari bracken fern",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Fiddlehead ferns, raw",
+      "fdcId": 169405,
+      "notes": "Manual semantic review binds Cook4Me 'Gosari bracken fern' to USDA SR Legacy 'Fiddlehead ferns, raw'. Gosari is an edible fern-shoot ingredient and this target's own pinned evidence ranks the fiddlehead-fern record first. Confidence remains medium because bracken and fiddlehead records may represent different fern species and gosari is commonly dried, soaked, or cooked before use; this is an edible-fern nutritional proxy and does not generalize to unrelated leafy vegetables.",
+      "reviewTargetId": "concept:food:35f05dc7d2330dcc7602",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Takuan pickled daikon, julienned",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Turnip, pickled",
+      "fdcId": 2710102,
+      "notes": "Manual semantic review binds Cook4Me 'Takuan pickled daikon, julienned' to USDA FNDDS 'Turnip, pickled'. The target is a pickled root vegetable and its own pinned evidence ranks this pickled-root record first. Confidence remains medium because daikon radish and turnip are different species and takuan curing, sugar, salt, water loss, and seasoning vary; this is a preparation-form nutritional proxy and does not imply botanical identity.",
+      "reviewTargetId": "concept:food:38634ebdf760aafe32a4",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 10,
+      "canonicalEnglishName": "Poultry drumsticks",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Turkey, drumstick, cooked, skin eaten",
+      "fdcId": 2706122,
+      "notes": "Manual semantic review binds provider identity 'Poultry drumsticks' to USDA FNDDS 'Turkey, drumstick, cooked, skin eaten'. The target is explicitly a poultry drumstick and its own pinned evidence contains this whole-drumstick poultry record, preferred over higher-ranked chicken-skin-only candidates. Confidence remains medium because poultry species, cooking method, skin consumption, trimming, and seasoning are unspecified; this review does not generalize to poultry skin alone or non-drumstick cuts.",
+      "reviewTargetId": "M_FOOD_376",
+      "reviewTargetKind": "provider-identity"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "a198f702e8f5c98596dc6e54f391fd5b8f4ca7905d0627f9fcfb2ccef6c834ef"
+}

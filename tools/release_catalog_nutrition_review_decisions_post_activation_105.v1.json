@@ -1,0 +1,77 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "Full-fat cream (30% fat)",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Cream, sour, full fat",
+      "fdcId": 2346387,
+      "notes": "Manual semantic review binds Cook4Me 'Full-fat cream (30% fat)' to USDA Foundation 'Cream, sour, full fat'. The reviewed corpus already binds the near-identical target 'Full-fat cream' to this exact FDC record, and this target's own pinned evidence ranks it first. Confidence remains medium because the Cook4Me label does not explicitly say sour cream and a 30% cream can differ in acidity and formulation; this is an established full-fat-cream nutritional proxy rather than an exact formulation claim.",
+      "reviewTargetId": "concept:food:41dbb963d3f75ede1291",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 3,
+      "canonicalEnglishName": "Pistachio flavoring",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Nuts, pistachio nuts, raw",
+      "fdcId": 2515379,
+      "notes": "Manual semantic review binds Cook4Me 'Pistachio flavoring' to USDA Foundation 'Nuts, pistachio nuts, raw'. Pistachio is the defining source identity, the reviewed corpus already binds 'Pistachio' to this exact FDC record, and this target's own pinned evidence contains that record at rank 3. Confidence remains medium because a flavoring can be an extract, paste, concentrate, or formulation whose sugar, fat, carrier, and pistachio concentration differ from raw nuts; this is a pistachio-source proxy.",
+      "reviewTargetId": "concept:food:d58ef9ba95d571c9255f",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 3,
+      "canonicalEnglishName": "Pistachio flavouring",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Nuts, pistachio nuts, raw",
+      "fdcId": 2515379,
+      "notes": "Manual semantic review binds Cook4Me 'Pistachio flavouring' to USDA Foundation 'Nuts, pistachio nuts, raw'. This spelling variant has the same defining pistachio source identity as the already reviewed 'Pistachio' target, and its own pinned evidence contains the same FDC record at rank 3. Confidence remains medium because a flavouring can be an extract, paste, concentrate, or formulation whose carrier and nutrient concentration differ from raw nuts; this is a pistachio-source proxy.",
+      "reviewTargetId": "concept:food:cef9e2cc7b97e2ff3fba",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 6,
+      "canonicalEnglishName": "Crystallized ginger",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Ginger root, raw",
+      "fdcId": 169231,
+      "notes": "Manual semantic review binds Cook4Me 'Crystallized ginger' to USDA SR Legacy 'Ginger root, raw'. Ginger is the defining ingredient identity, the reviewed corpus already binds 'Ginger' to this exact FDC record, and this target's own pinned evidence contains it at rank 6. Confidence remains medium because crystallized ginger is normally candied and can contain substantial added sugar with lower water content than raw root; this is a same-ginger-source proxy and does not represent the added sugar.",
+      "reviewTargetId": "concept:food:d206c6482c86856d63ee",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 5,
+      "canonicalEnglishName": "Poppy seed filling (canned)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, poppy seed",
+      "fdcId": 171330,
+      "notes": "Manual semantic review binds Cook4Me 'Poppy seed filling (canned)' to USDA SR Legacy 'Spices, poppy seed'. The reviewed history already contains the closely matching target 'Cans of poppy seed filling' and this target's own pinned evidence contains the exact poppy-seed record at rank 5. Confidence remains medium because prepared canned filling commonly includes sugar and other ingredients not represented by plain poppy seed; this is a poppy-seed-source proxy rather than a full formulation match.",
+      "reviewTargetId": "concept:food:ae04cbb94d9a2f4669fb",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "e36b751d1d522e6b0275a659a94d43d5e22115ff47afb84986771d26a0abeed9"
+}

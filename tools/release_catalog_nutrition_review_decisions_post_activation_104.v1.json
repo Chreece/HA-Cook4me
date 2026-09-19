@@ -1,0 +1,77 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "3 g black pepper, salt",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, black",
+      "fdcId": 170931,
+      "notes": "Manual semantic review binds Cook4Me '3 g black pepper, salt' to USDA SR Legacy 'Spices, pepper, black'. The target explicitly quantifies black pepper, its own pinned evidence ranks the exact black-pepper record first, and the reviewed corpus already binds the same salt-and-black-pepper combination to this FDC ID. Confidence remains medium because the accompanying salt quantity is unspecified and is not represented by the pepper-only nutrient profile.",
+      "reviewTargetId": "concept:food:0ef1eb59ab9058ee81b3",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "6 g black pepper, salt",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, black",
+      "fdcId": 170931,
+      "notes": "Manual semantic review binds Cook4Me '6 g black pepper, salt' to USDA SR Legacy 'Spices, pepper, black'. The target explicitly quantifies black pepper, its own pinned evidence ranks the exact black-pepper record first, and the reviewed corpus already binds the same salt-and-black-pepper combination to this FDC ID. Confidence remains medium because the accompanying salt quantity is unspecified and is not represented by the pepper-only nutrient profile.",
+      "reviewTargetId": "concept:food:cada33e7845cdc88f243",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 1,
+      "canonicalEnglishName": "9 g black pepper, salt",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, black",
+      "fdcId": 170931,
+      "notes": "Manual semantic review binds Cook4Me '9 g black pepper, salt' to USDA SR Legacy 'Spices, pepper, black'. The target explicitly quantifies black pepper, its own pinned evidence ranks the exact black-pepper record first, and the reviewed corpus already binds the same salt-and-black-pepper combination to this FDC ID. Confidence remains medium because the accompanying salt quantity is unspecified and is not represented by the pepper-only nutrient profile.",
+      "reviewTargetId": "concept:food:4f8096d341146542e703",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 11,
+      "canonicalEnglishName": "Vanilla pods",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Vanilla extract",
+      "fdcId": 173471,
+      "notes": "Manual semantic review binds Cook4Me 'Vanilla pods' to USDA SR Legacy 'Vanilla extract'. The reviewed corpus already binds 'Vanilla pod', 'Vanilla bean', and multiple scraped/split vanilla-pod variants to the same FDC record, while this target's own pinned evidence contains that exact vanilla record at rank 11. Confidence remains medium because whole pods and extract differ in solvent, moisture, concentration, and edible solids; this is a same-vanilla-source nutritional proxy.",
+      "reviewTargetId": "concept:food:a0316b20c7071e7bbc0b",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 2,
+      "canonicalEnglishName": "Sweet bean sauce (tianmianjiang)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Black bean sauce",
+      "fdcId": 2707404,
+      "notes": "Manual semantic review binds provider identity 'Sweet bean sauce (tianmianjiang)' to USDA FNDDS 'Black bean sauce'. The reviewed corpus already binds the semantically equivalent Cook4Me target 'Tianmianjiang sweet bean sauce' to this exact FDC record, and this provider target's own pinned evidence contains it at rank 2. Confidence remains medium because FNDDS black bean sauce is not an exact tianmianjiang formulation and sweetness, fermentation base, wheat/soy ratio, and sodium can differ.",
+      "reviewTargetId": "M_FOOD_766",
+      "reviewTargetKind": "provider-identity"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "d9810a2cc75fbb48dbbb59971c7a053a68ca004f4b1e5c9c7227a7f049e336b0"
+}

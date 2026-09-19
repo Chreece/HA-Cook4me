@@ -1,0 +1,77 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 10,
+      "canonicalEnglishName": "Pepper salt (a little)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Salt, table",
+      "fdcId": 173468,
+      "notes": "Manual semantic review binds Cook4Me 'Pepper salt (a little)' to USDA SR Legacy 'Salt, table'. The target is a salt-and-pepper seasoning blend; the reviewed corpus already binds 'Salt (a little)' and plain salt targets to this exact FDC record, and this target's own pinned evidence contains that salt record at rank 10. Confidence remains medium because the pepper component and the blend ratio are unspecified, so the selected profile primarily represents the salt contribution.",
+      "reviewTargetId": "concept:food:dd91750089d5c7149b1d",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 4,
+      "canonicalEnglishName": "B- Korean chili paste",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Chili, NFS",
+      "fdcId": 2706373,
+      "notes": "Manual semantic review binds Cook4Me 'B- Korean chili paste' to USDA FNDDS 'Chili, NFS'. The 'B-' prefix is recipe-role markup and the reviewed corpus already binds 'Chili paste' to this exact FDC record; this target's own pinned evidence contains the same chili record at rank 4. Confidence remains medium because Korean chili paste can include fermented grain or soy, salt, sugar, and other ingredients not represented by generic chili.",
+      "reviewTargetId": "concept:food:6b00edc0070f65296d34",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 5,
+      "canonicalEnglishName": "Dried crushed chili (to taste)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Chili, NFS",
+      "fdcId": 2706373,
+      "notes": "Manual semantic review binds Cook4Me 'Dried crushed chili (to taste)' to USDA FNDDS 'Chili, NFS'. Chili is the defining food identity, the reviewed corpus already binds 'Dried chili' to this exact FDC record, and this target's own pinned evidence contains it at rank 5. Confidence remains medium because drying lowers water and concentrates nutrients relative to a generic chili entry; this is a same-chili-source proxy rather than an exact dried-form composition.",
+      "reviewTargetId": "concept:food:4d75c1cef9ac8dbaa3ac",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 4,
+      "canonicalEnglishName": "Korean chili paste",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Chili, NFS",
+      "fdcId": 2706373,
+      "notes": "Manual semantic review binds Cook4Me 'Korean chili paste' to USDA FNDDS 'Chili, NFS'. Chili is the defining ingredient identity, the reviewed corpus already binds 'Chili paste' and 'Tbsp chili paste' to this exact FDC record, and this target's own pinned evidence contains it at rank 4. Confidence remains medium because Korean chili paste may contain fermented grain or soy, salt, sugar, and other ingredients not represented by generic chili.",
+      "reviewTargetId": "concept:food:a55d8831411896d61d6e",
+      "reviewTargetKind": "semantic-concept"
+    },
+    {
+      "approved": true,
+      "candidateEvidenceRank": 12,
+      "canonicalEnglishName": "Sour cream and dill for garnish",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Sour cream, regular",
+      "fdcId": 2705614,
+      "notes": "Manual semantic review binds Cook4Me 'Sour cream and dill for garnish' to USDA FNDDS 'Sour cream, regular'. Sour cream is the dominant named base, the reviewed corpus already binds the exact food identity 'Sour cream' to this FDC record, and this target's own pinned evidence contains it at rank 12. Confidence remains medium because the dill garnish is a separate component whose proportion is not represented by the sour-cream profile.",
+      "reviewTargetId": "concept:food:50e66ed009b0bc11cfb4",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "1898666270b4b564ec052fb483140f32c72c1465e4f96d4fa077eabdb040c34e"
+}
