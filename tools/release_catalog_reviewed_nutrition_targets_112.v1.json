@@ -1,0 +1,36 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-target-candidate-binding",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Salt, pepper",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Salt, table",
+      "fdcId": 173468,
+      "notes": "Manual semantic review binds Cook4Me 'Salt, pepper' to USDA SR Legacy 'Salt, table'. The reviewed corpus already binds the presentation-equivalent labels '*Salt, pepper' and 'Salt & pepper' to this exact FDC record, and this target's own pinned evidence contains table salt at rank 9. Confidence remains medium because the pepper component and blend ratio are not represented by the salt-only profile.",
+      "reviewTargetId": "concept:food:cfb3e3bd767b93d6d439",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "08ca0ed1d029914135cdaca0075285719aedac7d61626cdab51b4ef0d91cc624",
+      "sourceEvidenceCandidateRank": 9,
+      "sourceEvidenceSha256": "4c16b38033b26a1a89248901689a7952e849f83e2afe87d1268950323561c225",
+      "sourceEvidenceTargetId": "concept:food:cfb3e3bd767b93d6d439",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "reviewDecisionSha256": "8290b7f60bbb1a58716e94ea6792214ddefcdd0caf7eed688a04a0e1cf9fa41f",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "4c16b38033b26a1a89248901689a7952e849f83e2afe87d1268950323561c225"
+}
