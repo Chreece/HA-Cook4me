@@ -46,7 +46,6 @@ def validate(evidence_path: Path, registry_path: Path, review_root: Path) -> dic
         "exactEvidenceRequired": True,
         "automaticBindingAllowed": False,
         "externalFallbackApproved": False,
-        "supplementalResolutionMayReduceEvidenceSet": supplemental_reduction_allowed,
         "providerIdentityInference": False,
         "unresolvedDoesNotReduceRequiredCount": True,
     }
