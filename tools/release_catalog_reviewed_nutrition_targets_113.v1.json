@@ -1,0 +1,36 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-target-candidate-binding",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "candidateEvidenceRank": 4,
+      "canonicalEnglishName": "Pepper (for finishing)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Peppers, raw, NFS",
+      "fdcId": 2709799,
+      "notes": "Manual semantic review binds Cook4Me 'Pepper (for finishing)' to USDA FNDDS 'Peppers, raw, NFS'. 'For finishing' is a recipe-role modifier and does not change the reviewed ingredient identity. The reviewed corpus already binds 'Pepper', '*Pepper', 'Pepper (a little)', and 'Pepper, a little' to this exact FDC record, and this target's own pinned evidence contains that same record at rank 4. Confidence remains medium because generic 'pepper' can also denote peppercorn spice; this approval follows the catalog's established vegetable-pepper identity for this label family and does not generalize to black or white pepper.",
+      "reviewTargetId": "concept:food:f326d6a95a50f2c5e294",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "69eec3d708a79ff37976dbf0bf409ee8c19cf88ef7fe254f687d92d49ba7c68e",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceSha256": "cfb94157920c2442f4a857d28cfd11ee1ac994bb1bf0c7da2cb538185e6f5684",
+      "sourceEvidenceTargetId": "concept:food:f326d6a95a50f2c5e294",
+      "usageCountAtReview": 3
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "reviewDecisionSha256": "10b67ca7ef08fb6f0a60d67b64df85fc815b0ad9d3f83ac680edad8dad8a3573",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "cfb94157920c2442f4a857d28cfd11ee1ac994bb1bf0c7da2cb538185e6f5684"
+}
