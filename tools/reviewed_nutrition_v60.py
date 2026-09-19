@@ -62,7 +62,7 @@ def is_reviewed_profile(
     if source == "usda_fdc":
         if _positive_int(value.get("sourceId")) is None:
             return False
-    elif source == "official_food_table":
+    elif source in {"official_food_table", "authoritative_primary_composition"}:
         source_id = text(value.get("sourceId"))
         data_type = text(value.get("dataType"))
         if not source_id or ":" not in source_id or not data_type:
