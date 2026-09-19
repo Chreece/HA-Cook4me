@@ -112,7 +112,7 @@ jobs:
             : > /tmp/nutrition-review-evidence-shas.txt
             exit 0
           fi
-          python -c 'import json,re,sys; from pathlib import Path; root=Path(sys.argv[1]); shas=sorted({str(json.loads(p.read_text(encoding="utf-8")).get("sourceEvidenceSha256") or "").strip() for p in root.glob("release_catalog_nutrition_review_decisions_post_activation_*.v1.json")}); bad=[x for x in shas if not re.fullmatch(r"[0-9a-f]{64}",x)]; assert not bad,bad; Path("/tmp/nutrition-review-evidence-shas.txt").write_text("".join(x+"\\n" for x in shas),encoding="utf-8"); print("required immutable evidence snapshots:",len(shas))' "$DECISION_ROOT"
+          python -c 'import json,re,sys; from pathlib import Path; root=Path(sys.argv[1]); shas=sorted({str(json.loads(p.read_text(encoding="utf-8")).get("sourceEvidenceSha256") or "").strip() for p in root.glob("release_catalog_nutrition_review_decisions_post_activation_*.v1.json")}); bad=[x for x in shas if not re.fullmatch(r"[0-9a-f]{64}",x)]; assert not bad,bad; Path("/tmp/nutrition-review-evidence-shas.txt").write_text("".join(x+chr(10) for x in shas),encoding="utf-8"); print("required immutable evidence snapshots:",len(shas))' "$DECISION_ROOT"
           cat /tmp/nutrition-review-evidence-shas.txt
 
       - name: Download only required immutable evidence snapshots
