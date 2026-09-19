@@ -205,6 +205,23 @@ def resolve(
 
         hold = reviewed_nutrition.holds.find_hold(target_id, *members)
         if hold is not None:
+            replacement_members = [
+                ingredient_id
+                for ingredient_id in members
+                if reviewed_nutrition.is_reviewed_profile(
+                    output.get(ingredient_id),
+                    ingredient_id=ingredient_id,
+                    canonical_name=canonical,
+                )
+                and isinstance(output.get(ingredient_id), dict)
+                and output[ingredient_id].get("nutritionHoldReplacementApproved") is True
+                and _text(output[ingredient_id].get("nutritionHoldReplacementTargetId"))
+                == target_id
+            ]
+            if len(replacement_members) == len(members):
+                already_resolved_targets += 1
+                already_resolved_identities += len(members)
+                continue
             held_targets += 1
             held_identities += len(members)
             for ingredient_id in members:
