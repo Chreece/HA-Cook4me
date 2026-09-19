@@ -114,6 +114,7 @@ jobs:
 
 
       - name: Promote exact compiled hold-release receipt
+        id: promote
         run: |
           set -Eeuo pipefail
           BRANCH="cook4me-nutrition-enrichment-post-activation-v60"
@@ -124,11 +125,18 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "$OUTPUT"
           git diff --cached --check
-          git diff --cached --quiet && exit 0
+          if git diff --cached --quiet; then
+            PROMOTED_SHA="$(git log -1 --format=%H -- "$OUTPUT")"
+            echo "promoted_sha=$PROMOTED_SHA" >> "$GITHUB_OUTPUT"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           git commit -m "Compile nutrition hold releases v60"
 
           for attempt in 1 2 3; do
             if git push origin "HEAD:$BRANCH"; then
+              echo "promoted_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+              echo "changed=true" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             test "$attempt" -lt 3
@@ -141,3 +149,70 @@ jobs:
           done
           echo "Unable to promote compiled hold release after bounded retries." >&2
           exit 1
+
+
+      - name: Determine whether compiled release still needs activation
+        id: activation
+        env:
+          PROMOTED_SHA: ${{ steps.promote.outputs.promoted_sha }}
+        run: |
+          set -Eeuo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          release = json.loads(
+              Path("tools/release_catalog_nutrition_review_hold_releases.v1.json").read_text(
+                  encoding="utf-8"
+              )
+          )
+          catalog = json.loads(
+              Path("custom_components/cook4me/catalog/merged_catalog.v1.json").read_text(
+                  encoding="utf-8"
+              )
+          )
+          ingredients = {
+              str(row.get("id") or row.get("ingredientId") or row.get("key") or ""): row
+              for row in catalog.get("ingredients") or []
+              if isinstance(row, dict)
+          }
+          members = sorted(
+              {
+                  str(member)
+                  for item in release.get("items") or []
+                  if isinstance(item, dict) and item.get("approved") is True
+                  for member in item.get("memberIngredientIds") or []
+                  if str(member)
+              }
+          )
+          missing = [
+              member
+              for member in members
+              if not isinstance(ingredients.get(member, {}).get("nutrition"), dict)
+          ]
+          output = Path(os.environ["GITHUB_OUTPUT"])
+          with output.open("a", encoding="utf-8") as handle:
+              handle.write(f"needs_activation={'true' if missing else 'false'}\n")
+              handle.write(f"source_sha={os.environ.get('PROMOTED_SHA', '').strip()}\n")
+          print(json.dumps({
+              "releasedMemberCount": len(members),
+              "missingReleasedNutritionCount": len(missing),
+              "missingMembers": missing,
+              "sourceSha": os.environ.get("PROMOTED_SHA", "").strip(),
+          }, ensure_ascii=False))
+          PY
+
+      - name: Activate newly released held nutrition
+        if: steps.activation.outputs.needs_activation == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ steps.activation.outputs.source_sha }}
+          BRANCH: cook4me-nutrition-enrichment-post-activation-v60
+        run: |
+          set -Eeuo pipefail
+          test -n "$SOURCE_SHA"
+          gh workflow run catalog-post-activation-nutrition-activate-v60.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref "$BRANCH" \
+            -f source_sha="$SOURCE_SHA"
