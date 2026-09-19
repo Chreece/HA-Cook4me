@@ -1,0 +1,126 @@
+name: Build accelerated reviewed nutrition batch v60
+
+on:
+  push:
+    branches:
+      - cook4me-nutrition-enrichment-post-activation-v60
+    paths:
+      - tools/build_reviewed_nutrition_accel_batch_v60.py
+      - .github/workflows/catalog-nutrition-accelerated-review-batch-v60.yml
+  workflow_dispatch:
+
+concurrency:
+  group: catalog-nutrition-accelerated-review-batch-v60
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  build-reviewed-batch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      BRANCH: cook4me-nutrition-enrichment-post-activation-v60
+      ARCHIVE_TAG: nutrition-evidence-v60-archive
+      EVIDENCE_SHA: 73b0f5fe5537322d1ee0a6c4bed096513bcd5d083e06a1819b38797745dafab3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: cook4me-nutrition-enrichment-post-activation-v60
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Fast-forward to latest nutrition head
+        run: |
+          set -Eeuo pipefail
+          git fetch origin "$BRANCH"
+          git reset --hard "origin/$BRANCH"
+
+      - name: Download exact immutable evidence
+        run: |
+          set -Eeuo pipefail
+          mkdir -p /tmp/nutrition-accel
+          ASSET="fdc-candidate-evidence-v60-${EVIDENCE_SHA}.json.gz"
+          test "$(gh release view "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq '.isDraft')" = "true"
+          gh release download "$ARCHIVE_TAG" --repo "$GITHUB_REPOSITORY" --dir /tmp/nutrition-accel --pattern "$ASSET"
+          gzip -cd "/tmp/nutrition-accel/$ASSET" > /tmp/nutrition-accel/evidence.json
+          test "$(sha256sum /tmp/nutrition-accel/evidence.json | awk '{print $1}')" = "$EVIDENCE_SHA"
+
+      - name: Build explicit reviewed decisions
+        run: |
+          set -Eeuo pipefail
+          python tools/build_reviewed_nutrition_accel_batch_v60.py             --evidence /tmp/nutrition-accel/evidence.json             --decision-output /tmp/nutrition-accel/decision.json             --review-output /tmp/nutrition-accel/precompiled-review.json
+
+      - name: Drop targets already reviewed by concurrent batches
+        run: |
+          set -Eeuo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          decision = Path('/tmp/nutrition-accel/decision.json')
+          payload = json.loads(decision.read_text(encoding='utf-8'))
+          existing = set()
+          for path in sorted(Path('tools').glob('release_catalog_reviewed_nutrition_targets*.v1.json')):
+              value = json.loads(path.read_text(encoding='utf-8'))
+              for row in value.get('items') or []:
+                  if isinstance(row, dict) and row.get('reviewTargetId'):
+                      existing.add(str(row['reviewTargetId']))
+          before = len(payload['items'])
+          payload['items'] = [row for row in payload['items'] if row['reviewTargetId'] not in existing]
+          after = len(payload['items'])
+          if after <= 0:
+              raise SystemExit('accelerated batch has no new targets after concurrent-review filtering')
+          decision.write_text(json.dumps(payload, ensure_ascii=False, sort_keys=True, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps({'before': before, 'alreadyReviewed': before-after, 'newTargets': after}))
+          PY
+
+      - name: Compile review file with trusted retained-reference compiler
+        run: |
+          set -Eeuo pipefail
+          rm -f /tmp/nutrition-accel/review.json /tmp/nutrition-accel/compile-summary.json
+          python tools/compile_release_catalog_fdc_retained_review_decisions_v60.py             --evidence /tmp/nutrition-accel/evidence.json             --decisions /tmp/nutrition-accel/decision.json             --output /tmp/nutrition-accel/review.json             --summary-output /tmp/nutrition-accel/compile-summary.json
+          cat /tmp/nutrition-accel/compile-summary.json
+
+      - name: Allocate next free batch number and install files
+        run: |
+          set -Eeuo pipefail
+          BATCH="$(python - <<'PY'
+          from pathlib import Path
+          import re
+          nums=[]
+          for p in Path('tools').glob('release_catalog_nutrition_review_decisions_post_activation_*.v1.json'):
+              m=re.fullmatch(r'release_catalog_nutrition_review_decisions_post_activation_(\d+)\.v1\.json', p.name)
+              if m: nums.append(int(m.group(1)))
+          print(max(nums, default=0)+1)
+          PY
+          )"
+          echo "BATCH=$BATCH" >> "$GITHUB_ENV"
+          cp /tmp/nutrition-accel/decision.json "tools/release_catalog_nutrition_review_decisions_post_activation_${BATCH}.v1.json"
+          cp /tmp/nutrition-accel/review.json "tools/release_catalog_reviewed_nutrition_targets_${BATCH}.v1.json"
+
+      - name: Prove corpus uniqueness before commit
+        run: |
+          set -Eeuo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+          sys.path.insert(0, 'tools')
+          import snapshot_nutrition_review_checkpoint_v60 as c
+          x=c.build_checkpoint(Path('tools'))
+          print(x['summary'])
+          PY
+
+      - name: Commit accelerated reviewed batch
+        run: |
+          set -Eeuo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             "tools/release_catalog_nutrition_review_decisions_post_activation_${BATCH}.v1.json"             "tools/release_catalog_reviewed_nutrition_targets_${BATCH}.v1.json"
+          git commit -m "Review accelerated post-activation nutrition batch ${BATCH}"
+          git push origin "HEAD:$BRANCH"
