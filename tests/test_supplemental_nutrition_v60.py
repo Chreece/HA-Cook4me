@@ -139,6 +139,42 @@ class SupplementalNutritionV60Tests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "source evidence drift"):
                 supplemental.load_reviews(Path(tmp))
 
+
+    def test_mastic_exact_primary_composition_profile(self):
+        reviews = supplemental.load_reviews(TOOLS)
+        target_id = "concept:food:bf319e28a87373efbe4a"
+        ingredient_id = "local:ar:da000e9e09c65c2563d5"
+        review = reviews[target_id]
+        self.assertEqual(review["source"], "authoritative_primary_composition")
+        self.assertEqual(review["sourceId"], "CHIOS-MASTIC:2013-NUTRITION")
+        self.assertEqual(review["scientificName"], "Pistacia lentiscus L. var. Chia")
+        self.assertEqual(review["values"]["energyKcal"], 365.0)
+        self.assertEqual(review["values"]["fiber"], 16.0)
+        cache, summary = supplemental.seed_cache(
+            {
+                "kind": "cook4me-release-catalog-nutrition-review-targets-v60",
+                "targets": [
+                    {
+                        "reviewTargetId": target_id,
+                        "reviewTargetKind": "semantic-concept",
+                        "canonicalEnglishName": "Mastic",
+                        "semanticConceptId": target_id,
+                        "memberIngredientIds": [ingredient_id],
+                    }
+                ],
+            },
+            {},
+            review_root=TOOLS,
+        )
+        self.assertEqual(summary["supplementalResolvedNowIdentities"], 1)
+        self.assertTrue(
+            reviewed_nutrition.is_reviewed_profile(
+                cache[ingredient_id],
+                ingredient_id=ingredient_id,
+                canonical_name="Mastic",
+            )
+        )
+
     def test_unreviewed_official_food_table_shape_is_not_enough(self):
         profile = {
             "basis": "per100g",
