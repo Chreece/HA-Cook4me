@@ -1,0 +1,123 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-retained-reference-binding",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Frozen peeled king prawns",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Shrimp, NFS",
+      "fdcId": 2706360,
+      "notes": "Manual semantic review binds Cook4Me 'Frozen peeled king prawns' to USDA FNDDS 'Shrimp, NFS' through an exact retained record in the same immutable evidence snapshot. King prawns are culinary shrimp/prawns, and peeling/freezing preserve the underlying crustacean identity. Confidence remains medium because the USDA NFS profile does not preserve species, size, raw-versus-cooked state, or glazing; this decision does not generalize to breaded shrimp, dried shrimp, shrimp dishes, or other shellfish.",
+      "reviewTargetId": "concept:food:a4337e7e7aa53a6c7b69",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "3f77f02cfc64272e80ae0fcea48d3a8d8ae92068962ad6b50a725f2d156fb941",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceSha256": "86ed1df9613c68527d0b4f739791d8ab2c064a01b248fa9866d371ec52330a53",
+      "sourceEvidenceTargetId": "concept:food:8f62c4bfc609ac27cba2",
+      "usageCountAtReview": 3
+    },
+    {
+      "canonicalEnglishName": "Rooster",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Chicken, stewing, meat and skin, raw",
+      "fdcId": 172400,
+      "notes": "Manual semantic review binds Cook4Me 'Rooster' to USDA SR Legacy 'Chicken, stewing, meat and skin, raw' through an exact retained record in the same immutable evidence snapshot. A rooster is a mature male chicken, and stewing chicken is the closest pinned mature-chicken profile available while preserving raw meat-and-skin form. Confidence remains medium because sex, age, breed, and carcass composition can shift fat and moisture; this decision does not generalize to broiler chicken, capon, hen meat-only, or cooked chicken.",
+      "reviewTargetId": "concept:food:9c4079a7eb91ed790549",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "d6d1acd3e391fdbcda73025f6ed790e3d66f3fd6831a1b06aace684a9aa35dda",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "86ed1df9613c68527d0b4f739791d8ab2c064a01b248fa9866d371ec52330a53",
+      "sourceEvidenceTargetId": "concept:food:c528519d1b62230372f1",
+      "usageCountAtReview": 2
+    },
+    {
+      "canonicalEnglishName": "Spare ribs (seasoned with salt and pepper)",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Pork, ribs",
+      "fdcId": 2705894,
+      "notes": "Manual semantic review binds Cook4Me 'Spare ribs (seasoned with salt and pepper)' to USDA FNDDS 'Pork, ribs' through an exact retained record in the same immutable evidence snapshot. The destination explicitly identifies pork spare ribs; salt and pepper are recipe-level seasoning qualifiers and do not change the underlying meat-cut identity. Confidence is high at the food-identity level, while added salt and cooking method can change the final nutrient profile; this decision does not generalize to beef ribs, boneless pork, barbecue-sauced ribs, or cooked ribs with unspecified preparation.",
+      "reviewTargetId": "concept:food:08288a4637d64b7c898c",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "f97794a1392a9c5fcbaefb8d0ae346722c312eee55dd3b6a7fae8f543bfe7ce3",
+      "sourceEvidenceCandidateRank": 10,
+      "sourceEvidenceSha256": "86ed1df9613c68527d0b4f739791d8ab2c064a01b248fa9866d371ec52330a53",
+      "sourceEvidenceTargetId": "concept:food:7cf7d650b9e32d29282f",
+      "usageCountAtReview": 2
+    },
+    {
+      "canonicalEnglishName": "Frozen mushroom ravioli",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Ravioli, NS as to filling, no sauce",
+      "fdcId": 2708760,
+      "notes": "Manual semantic review binds Cook4Me 'Frozen mushroom ravioli' to USDA FNDDS 'Ravioli, NS as to filling, no sauce' through an exact retained record in the same immutable evidence snapshot. The destination is an un-sauced ravioli product and the retained generic ravioli record preserves the prepared pasta identity when a mushroom-specific record is unavailable. Confidence remains medium because filling composition and frozen/raw-versus-cooked state vary; this decision does not generalize to ravioli with sauce, cheese-only ravioli, tortellini, or plain mushrooms.",
+      "reviewTargetId": "concept:food:064e85a56152b7ed5008",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "603fd006d42d33d1b8186a7fb6abb4dde1b1a17826c45b5618dc5c28495e3be8",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "86ed1df9613c68527d0b4f739791d8ab2c064a01b248fa9866d371ec52330a53",
+      "sourceEvidenceTargetId": "concept:food:875b77a4cad1705c628d",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Ladyfinger biscuits or wafers",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Cookies, ladyfingers, without lemon juice and rind",
+      "fdcId": 172821,
+      "notes": "Manual semantic review binds Cook4Me 'Ladyfinger biscuits or wafers' to USDA SR Legacy 'Cookies, ladyfingers, without lemon juice and rind' through an exact retained record in the same immutable evidence snapshot. Ladyfingers are explicitly one of the destination alternatives and the retained record matches that biscuit form directly. Confidence remains medium because the recipe also permits wafers and commercial ladyfinger formulations vary in sugar and moisture; this decision does not generalize to vanilla wafers, sponge cake, filled wafers, or other biscuits.",
+      "reviewTargetId": "concept:food:daae10f4828a2dc06dc9",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "d11cc09e236edf511b4714070dae6e3d99639050015b0caa2fa6ef475ad83a2e",
+      "sourceEvidenceCandidateRank": 12,
+      "sourceEvidenceSha256": "86ed1df9613c68527d0b4f739791d8ab2c064a01b248fa9866d371ec52330a53",
+      "sourceEvidenceTargetId": "concept:food:d3076b5ee2a53be52444",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "referenceReceipts": {
+    "172400": {
+      "sourceCandidateSha256": "d6d1acd3e391fdbcda73025f6ed790e3d66f3fd6831a1b06aace684a9aa35dda",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:c528519d1b62230372f1"
+    },
+    "172821": {
+      "sourceCandidateSha256": "d11cc09e236edf511b4714070dae6e3d99639050015b0caa2fa6ef475ad83a2e",
+      "sourceEvidenceCandidateRank": 12,
+      "sourceEvidenceTargetId": "concept:food:d3076b5ee2a53be52444"
+    },
+    "2705894": {
+      "sourceCandidateSha256": "f97794a1392a9c5fcbaefb8d0ae346722c312eee55dd3b6a7fae8f543bfe7ce3",
+      "sourceEvidenceCandidateRank": 10,
+      "sourceEvidenceTargetId": "concept:food:7cf7d650b9e32d29282f"
+    },
+    "2706360": {
+      "sourceCandidateSha256": "3f77f02cfc64272e80ae0fcea48d3a8d8ae92068962ad6b50a725f2d156fb941",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceTargetId": "concept:food:8f62c4bfc609ac27cba2"
+    },
+    "2708760": {
+      "sourceCandidateSha256": "603fd006d42d33d1b8186a7fb6abb4dde1b1a17826c45b5618dc5c28495e3be8",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:875b77a4cad1705c628d"
+    }
+  },
+  "reviewDecisionSha256": "a0d3b32da6ef477f2ac3a84c01b30ecfd5e3e967606926a82a1cab93079d0eab",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "86ed1df9613c68527d0b4f739791d8ab2c064a01b248fa9866d371ec52330a53"
+}
