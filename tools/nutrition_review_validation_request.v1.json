@@ -1,4 +1,5 @@
 {
   "batches": [138, 139, 140],
-  "reason": "targeted validation after evidence-list serialization fix"
+  "activationSourceSha": "0a84710ec409dc5b4aa0481777e8a2986b513dfa",
+  "reason": "targeted validation and activation after exact compiler recompilation"
 }
