@@ -26,7 +26,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       BRANCH: cook4me-nutrition-enrichment-post-activation-v60
       ARCHIVE_TAG: nutrition-evidence-v60-archive
-      EVIDENCE_SHA: 40186b48de374b3e46d2030db5972c238e9459e258a193c914ec022dab5b9ea8
+      EVIDENCE_SHA: 6388117d1c612a262d64fb4f639452e2f0edc50d997fe7d3ff35571428314648
     steps:
       - uses: actions/checkout@v4
         with:
