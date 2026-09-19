@@ -271,10 +271,15 @@ def pending_hold(row: dict[str, Any], hold: dict[str, Any]) -> dict[str, Any]:
             "nutritionReviewHoldReason": hold["reasonCode"]}
 
 
-def audit(evidence_path: Path, *, review_root: Path = TOOLS,
-          registry_path: Path = REGISTRY) -> dict[str, Any]:
+def audit(
+    evidence_path: Path,
+    *,
+    review_root: Path = TOOLS,
+    registry_path: Path = REGISTRY,
+    release_path: Path | None = RELEASES,
+) -> dict[str, Any]:
     """Report raw discrepancies and a separate, unheld candidate-review gate."""
-    index = load_holds(registry_path, review_root)
+    index = load_holds(registry_path, review_root, release_path=release_path)
     recorded = checkpoint.build_checkpoint(review_root)
     resume = checkpoint.reconcile_evidence(recorded, evidence_path)
     registry = index["registry"]
