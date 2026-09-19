@@ -17,19 +17,6 @@
     },
     {
       "approved": true,
-      "canonicalEnglishName": "Rooster",
-      "confidence": "medium",
-      "fdcDataType": "SR Legacy",
-      "fdcDescription": "Chicken, stewing, meat and skin, raw",
-      "fdcId": 172400,
-      "notes": "Manual semantic review binds Cook4Me 'Rooster' to USDA SR Legacy 'Chicken, stewing, meat and skin, raw' through an exact retained record in the same immutable evidence snapshot. A rooster is a mature male chicken, and stewing chicken is the closest pinned mature-chicken profile available while preserving raw meat-and-skin form. Confidence remains medium because sex, age, breed, and carcass composition can shift fat and moisture; this decision does not generalize to broiler chicken, capon, hen meat-only, or cooked chicken.",
-      "reviewTargetId": "concept:food:9c4079a7eb91ed790549",
-      "reviewTargetKind": "semantic-concept",
-      "sourceEvidenceCandidateRank": 7,
-      "sourceEvidenceTargetId": "concept:food:c528519d1b62230372f1"
-    },
-    {
-      "approved": true,
       "canonicalEnglishName": "Spare ribs (seasoned with salt and pepper)",
       "confidence": "high",
       "fdcDataType": "Survey (FNDDS)",

@@ -20,21 +20,6 @@
       "usageCountAtReview": 3
     },
     {
-      "canonicalEnglishName": "Rooster",
-      "confidence": "medium",
-      "fdcDataType": "SR Legacy",
-      "fdcDescription": "Chicken, stewing, meat and skin, raw",
-      "fdcId": 172400,
-      "notes": "Manual semantic review binds Cook4Me 'Rooster' to USDA SR Legacy 'Chicken, stewing, meat and skin, raw' through an exact retained record in the same immutable evidence snapshot. A rooster is a mature male chicken, and stewing chicken is the closest pinned mature-chicken profile available while preserving raw meat-and-skin form. Confidence remains medium because sex, age, breed, and carcass composition can shift fat and moisture; this decision does not generalize to broiler chicken, capon, hen meat-only, or cooked chicken.",
-      "reviewTargetId": "concept:food:9c4079a7eb91ed790549",
-      "reviewTargetKind": "semantic-concept",
-      "sourceCandidateSha256": "d6d1acd3e391fdbcda73025f6ed790e3d66f3fd6831a1b06aace684a9aa35dda",
-      "sourceEvidenceCandidateRank": 7,
-      "sourceEvidenceSha256": "86ed1df9613c68527d0b4f739791d8ab2c064a01b248fa9866d371ec52330a53",
-      "sourceEvidenceTargetId": "concept:food:c528519d1b62230372f1",
-      "usageCountAtReview": 2
-    },
-    {
       "canonicalEnglishName": "Spare ribs (seasoned with salt and pepper)",
       "confidence": "high",
       "fdcDataType": "Survey (FNDDS)",
@@ -90,11 +75,6 @@
   },
   "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
   "referenceReceipts": {
-    "172400": {
-      "sourceCandidateSha256": "d6d1acd3e391fdbcda73025f6ed790e3d66f3fd6831a1b06aace684a9aa35dda",
-      "sourceEvidenceCandidateRank": 7,
-      "sourceEvidenceTargetId": "concept:food:c528519d1b62230372f1"
-    },
     "172821": {
       "sourceCandidateSha256": "d11cc09e236edf511b4714070dae6e3d99639050015b0caa2fa6ef475ad83a2e",
       "sourceEvidenceCandidateRank": 12,
@@ -116,7 +96,7 @@
       "sourceEvidenceTargetId": "concept:food:875b77a4cad1705c628d"
     }
   },
-  "reviewDecisionSha256": "a0d3b32da6ef477f2ac3a84c01b30ecfd5e3e967606926a82a1cab93079d0eab",
+  "reviewDecisionSha256": "7009328170dad073467451946b8c7db2d4083a45170d4fc71a13a8d5475f2ab4",
   "schemaVersion": 1,
   "selectionMethod": "explicit-semantic-review",
   "sourceEvidenceSha256": "86ed1df9613c68527d0b4f739791d8ab2c064a01b248fa9866d371ec52330a53"
