@@ -121,6 +121,8 @@ async def ws_history_update(hass, connection, msg) -> None:
                 )
             raise
 
+        lifecycle = await meal_lifecycle_store_for_bridge(bridge)
+        meal_cost = lifecycle.meal_cost(str(meal.get("id") or "")) or {}
         if "ingredients" in msg:
             nutrition_store = await nutrition_store_for_bridge(bridge)
             await async_reconcile_nutrition_inventory(
@@ -129,10 +131,12 @@ async def ws_history_update(hass, connection, msg) -> None:
             )
             cost_store = await cost_store_for_bridge(bridge)
             meal_cost = calculate_consumption_cost(new_report, cost_store)
-            lifecycle = await meal_lifecycle_store_for_bridge(bridge)
             await lifecycle.async_record_meal_cost(
                 str(meal.get("id") or ""), meal_cost
             )
+        leftover = await lifecycle.async_sync_leftover_from_meal(
+            meal, cost=meal_cost
+        )
         update_expiry_notification(bridge)
         state = await _food_state(bridge, history, limit=30)
         connection.send_result(
@@ -142,6 +146,7 @@ async def ws_history_update(hass, connection, msg) -> None:
                 "mealHistoryRecord": meal,
                 "report": new_report,
                 "restored": (revision or {}).get("restored"),
+                "leftover": leftover,
             },
         )
     except Exception as exc:
