@@ -29,5 +29,7 @@ jobs:
           node --check custom_components/cook4me/frontend/cook4me-panel-v126.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v126-bundle.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v127.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v128.js
           python tests/test_menu_footer_v126.py
           python tests/test_announcement_settings_v127.py
+          python tests/test_nutrient_scopes_v128.py
