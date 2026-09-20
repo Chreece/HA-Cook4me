@@ -19,6 +19,7 @@ from . import websocket_v11 as v11
 from . import websocket_v13 as v13
 from .barcode import confident_match, suggest_catalog_matches
 from .const import CONF_COUNTRY, DEFAULT_COUNTRY, DATA_BRIDGES, DOMAIN
+from .delivery_queue import queued_recipe_received
 from .food_intelligence import nutrition_goal_bonus, normalize_nutrition_goal
 from .inventory import inventory_identity
 from .meal_history import meal_history_store_for_bridge
@@ -133,33 +134,86 @@ async def _search_catalogs(
     return v13._dedupe_recipes(candidates), errors
 
 
+async def _reconcile_queued_send(bridge, store=None) -> dict[str, Any] | None:
+    """Clear a pending delivery as soon as the appliance reports that exact variant."""
+    if getattr(bridge, "_stopping", False):
+        return None
+    store = store or await recipe_book_store_for_bridge(bridge)
+    queued = store.queued_send
+    if not queued:
+        return None
+    state = dict(getattr(bridge, "data", {}) or {})
+    loaded = bridge.loaded_recipe
+    if loaded:
+        state["loadedRecipe"] = loaded
+    if not queued_recipe_received(queued, state):
+        return None
+    return await store.async_clear_queue(expected=queued)
+
+
 async def _flush_one_queued_send(bridge) -> None:
     if getattr(bridge, "_cook4me_queued_send_running", False):
         return
-    if not bridge.can_accept_recipe or getattr(bridge, "_stopping", False):
+    if getattr(bridge, "_stopping", False):
+        return
+    store = await recipe_book_store_for_bridge(bridge)
+    if await _reconcile_queued_send(bridge, store):
+        return
+    queued = store.queued_send
+    if not queued:
+        return
+    # A successful cloud submission is not sent again while we wait for the
+    # appliance watcher to prove that the exact variant arrived.
+    if queued.get("submittedAt"):
+        return
+    if not bridge.can_accept_recipe:
         return
     bridge._cook4me_queued_send_running = True
     try:
-        store = await recipe_book_store_for_bridge(bridge)
         queued = store.queued_send
-        if not queued or not bridge.can_accept_recipe or getattr(bridge, "_stopping", False):
+        if not queued or queued.get("submittedAt") or not bridge.can_accept_recipe:
             return
         variant = str(queued.get("variantId") or "").strip()
         if not variant:
             await store.async_clear_queue(expected=queued)
             return
-        # Detail retrieval and waiting behind another send can outlive a queue
-        # cancellation/replacement. Check again under the device send lock.
         diet_args = {"diet": queued["diet"]} if queued.get("diet") is not None else {}
         if isinstance(queued.get("dietFilters"), dict):
             diet_args["diet_filters"] = queued["dietFilters"]
-        await bridge.async_send_variant(variant, still_current=lambda: store.queued_send == queued, **diet_args)
-        await store.async_clear_queue(expected=queued)
+        result = await bridge.async_send_variant(
+            variant,
+            still_current=lambda: store.queued_send == queued,
+            **diet_args,
+        )
+        if isinstance(result, dict) and result.get("cancelled"):
+            return
+        submitted = await store.async_mark_queue_submitted(expected=queued)
+        if submitted is not None:
+            await _reconcile_queued_send(bridge, store)
     except Exception:
-        # Keep the request cached. Device state and cloud credentials can recover later.
+        # Keep an unsubmitted request retryable. Device/cloud state may recover.
+        await _reconcile_queued_send(bridge, store)
         return
     finally:
         bridge._cook4me_queued_send_running = False
+
+
+def register_send_queue_listener(bridge) -> None:
+    """Reconcile pending delivery on every appliance state update."""
+    previous = getattr(bridge, "_send_queue_listener_unsub", None)
+    if callable(previous):
+        previous()
+
+    def listener() -> None:
+        if getattr(bridge, "_stopping", False):
+            return
+        bridge.async_create_task(
+            _reconcile_queued_send(bridge),
+            "Cook4Me reconcile pending recipe delivery",
+        )
+
+    bridge._send_queue_listener_unsub = bridge.async_add_listener(listener)
+    listener()
 
 
 async def _send_queue_watch_loop(hass: HomeAssistant) -> None:
@@ -169,7 +223,7 @@ async def _send_queue_watch_loop(hass: HomeAssistant) -> None:
                 hass.data.get(DOMAIN, {}).get(DATA_BRIDGES, {}).values()
             )
             for bridge in bridges:
-                if bridge.can_accept_recipe and not getattr(bridge, "_stopping", False):
+                if not getattr(bridge, "_stopping", False):
                     bridge.async_create_task(_flush_one_queued_send(bridge), "Cook4Me queued recipe")
         except asyncio.CancelledError:
             raise
@@ -405,6 +459,7 @@ async def ws_recipe_book_state(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         store = await recipe_book_store_for_bridge(bridge)
+        await _reconcile_queued_send(bridge, store)
         connection.send_result(
             msg["id"],
             {
@@ -468,27 +523,30 @@ async def ws_send_or_queue(hass, connection, msg) -> None:
                 },
             )
             return
-        if bridge.can_accept_recipe:
-            store = await recipe_book_store_for_bridge(bridge)
-            previous = store.queued_send
-            result = await bridge.async_send_variant(variant)
-            if previous is not None:
-                await store.async_clear_queue(expected=previous)
-            connection.send_result(
-                msg["id"], {"sent": True, "queued": False, "result": result}
-            )
-            return
-        reason = "device_offline" if not bridge.available else "device_busy"
         store = await recipe_book_store_for_bridge(bridge)
+        await _reconcile_queued_send(bridge, store)
+        reason = (
+            "device_offline"
+            if not bridge.available
+            else "device_busy"
+            if not bridge.can_accept_recipe
+            else "sending"
+        )
         queued = await store.async_queue_send(recipe, reason=reason)
+        if bridge.can_accept_recipe:
+            bridge.async_create_task(
+                _flush_one_queued_send(bridge),
+                "Cook4Me send pending recipe",
+            )
         connection.send_result(
             msg["id"],
             {
                 "sent": False,
-                "queued": True,
+                "queued": queued.get("queued"),
                 "sendable": True,
+                "deliveryPending": True,
                 "reason": reason,
-                **queued,
+                "replaced": queued.get("replaced"),
             },
         )
     except Exception as exc:
