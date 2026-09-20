@@ -150,6 +150,20 @@ class Cook4MeRecipeBookStore:
         return {"queued": deepcopy(self._data["queuedSend"]), "replaced": previous}
 
     @_serialized
+    async def async_mark_queue_submitted(self, *, expected: dict[str, Any]) -> dict[str, Any] | None:
+        """Keep a delivery pending after cloud submission until the appliance confirms it."""
+        if self._data.get("queuedSend") != expected:
+            return None
+        data = deepcopy(self._data)
+        queued = data.get("queuedSend")
+        if not isinstance(queued, dict):
+            return None
+        queued["reason"] = "waiting_for_device"
+        queued["submittedAt"] = datetime.now(timezone.utc).isoformat()
+        await self._save(data)
+        return deepcopy(queued)
+
+    @_serialized
     async def async_clear_queue(self, *, expected=None) -> dict[str, Any] | None:
         if expected is not None and self._data.get("queuedSend") != expected:
             return None
