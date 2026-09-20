@@ -31,6 +31,8 @@ import build_release_catalog_v60_reviewed as builder  # type: ignore  # noqa: E4
 import compact_release_catalog_runtime_v60 as compactor  # type: ignore  # noqa: E402
 import compile_release_catalog_semantics_v60 as semantics  # type: ignore  # noqa: E402
 
+PROVIDER_ELIGIBILITY = TOOLS / "release_catalog_reviewed_provider_nutrition_eligibility.v1.json"
+
 
 def _text(value: Any) -> str:
     return " ".join(str(value or "").strip().split())
@@ -50,6 +52,52 @@ def _source(payload: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise RuntimeError("catalog source metadata is missing")
     return value
+
+
+def _provider_override_rows(path: Path = PROVIDER_ELIGIBILITY) -> dict[str, dict[str, Any]]:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if (
+        not isinstance(value, dict)
+        or value.get("kind") != "cook4me-reviewed-provider-nutrition-eligibility-v60"
+        or int(value.get("schemaVersion") or 0) != 1
+    ):
+        raise RuntimeError("invalid provider nutrition eligibility registry")
+    policy = value.get("policy") if isinstance(value.get("policy"), dict) else {}
+    required = {
+        "manualReviewPerformed": True,
+        "exactProviderIdentityRequired": True,
+        "providerIdentityInference": False,
+        "usageCountMustBeZero": True,
+        "nutritionProfileInvented": False,
+        "classificationChanged": False,
+    }
+    if any(policy.get(k) is not v for k, v in required.items()):
+        raise RuntimeError("unsafe provider nutrition eligibility policy")
+    out: dict[str, dict[str, Any]] = {}
+    for raw in value.get("items") or []:
+        if not isinstance(raw, dict):
+            continue
+        ingredient_id = _text(raw.get("ingredientId"))
+        canonical = _text(raw.get("canonicalEnglishName"))
+        reason = _text(raw.get("reason"))
+        if (
+            not ingredient_id.startswith("M_FOOD_")
+            or not canonical
+            or raw.get("nutritionEligible") is not False
+            or int(raw.get("usageCountAtReview") or -1) != 0
+            or not reason
+        ):
+            raise RuntimeError(f"invalid provider nutrition eligibility row: {ingredient_id}")
+        row = {
+            "ingredientId": ingredient_id,
+            "canonicalEnglishName": canonical,
+            "reason": reason,
+            "reviewFile": path.name,
+        }
+        if ingredient_id in out:
+            raise RuntimeError(f"duplicate provider nutrition eligibility override: {ingredient_id}")
+        out[ingredient_id] = row
+    return out
 
 
 def _override_rows(review_root: Path) -> dict[str, dict[str, Any]]:
@@ -109,8 +157,12 @@ def apply(
         raise RuntimeError("eligibility overlay requires semanticCoverageComplete=true")
 
     overrides = _override_rows(review_root)
-    if not overrides:
-        raise RuntimeError("semantic review corpus contains no nutrition eligibility exclusions")
+    provider_overrides = _provider_override_rows()
+    all_overrides = {**overrides, **provider_overrides}
+    if len(all_overrides) != len(overrides) + len(provider_overrides):
+        raise RuntimeError("nutrition eligibility override identity collision")
+    if not all_overrides:
+        raise RuntimeError("review corpus contains no nutrition eligibility exclusions")
 
     result = deepcopy(catalog)
     before_counts = _counts(result)
@@ -131,22 +183,28 @@ def apply(
 
     changed: list[str] = []
     already_applied: list[str] = []
-    for ingredient_id, override in sorted(overrides.items()):
+    for ingredient_id, override in sorted(all_overrides.items()):
         row = ingredients.get(ingredient_id)
         if not isinstance(row, dict):
             raise RuntimeError(f"reviewed eligibility identity missing from catalog: {ingredient_id}")
-        if not (
-            bool(row.get("sourceLocalIdentity"))
-            and ingredient_id.startswith("local:")
-            and row.get("providerIdentityAssigned") is False
-        ):
-            raise RuntimeError(f"eligibility override is not source-local: {ingredient_id}")
-        if _text(row.get("conceptId")) != override["conceptId"]:
-            raise RuntimeError(f"eligibility override concept drift: {ingredient_id}")
+        source_local = bool(row.get("sourceLocalIdentity")) or ingredient_id.startswith("local:")
+        if source_local:
+            if not (
+                ingredient_id.startswith("local:")
+                and row.get("providerIdentityAssigned") is False
+            ):
+                raise RuntimeError(f"invalid source-local eligibility identity: {ingredient_id}")
+            if _text(row.get("conceptId")) != override["conceptId"]:
+                raise RuntimeError(f"eligibility override concept drift: {ingredient_id}")
+            if _text(row.get("classification")).lower() != "food":
+                raise RuntimeError(f"eligibility override no longer targets food: {ingredient_id}")
+        else:
+            if ingredient_id not in provider_overrides:
+                raise RuntimeError(f"unexpected provider eligibility identity: {ingredient_id}")
+            if _text(row.get("id") or row.get("ingredientId") or row.get("key")) != ingredient_id:
+                raise RuntimeError(f"provider eligibility identity drift: {ingredient_id}")
         if _text(row.get("canonicalName")).casefold() != override["canonicalEnglishName"].casefold():
             raise RuntimeError(f"eligibility override canonical-name drift: {ingredient_id}")
-        if _text(row.get("classification")).lower() != "food":
-            raise RuntimeError(f"eligibility override no longer targets food: {ingredient_id}")
         if isinstance(row.get("nutrition"), dict) and row["nutrition"]:
             raise RuntimeError(
                 f"refusing to remove existing reviewed nutrition for {ingredient_id}"
