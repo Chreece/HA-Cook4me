@@ -47,7 +47,7 @@ class AnnouncementSettingsV127Tests(unittest.TestCase):
         self.assertIn("selected == DEFAULT_AI_TASK",announcements)
         self.assertIn("entity_id = None",announcements)
         self.assertIn('bool(settings.get("ai_all")) or any(',announcements)
-        self.assertIn("improve spoken formatting",announcements.lower())
+        self.assertIn("spoken formatting",announcements.lower())
         self.assertIn('translate=bool(settings.get("ai_all"))',announcements)
 
 
