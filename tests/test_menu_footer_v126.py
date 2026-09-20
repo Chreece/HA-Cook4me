@@ -10,7 +10,7 @@ class MenuFooterV126Tests(unittest.TestCase):
         ui=(FRONTEND/"cook4me-panel-v126.js").read_text(encoding="utf-8")
         panel=PANEL.read_text(encoding="utf-8")
         self.assertIn("cook4me-recipe-hub-panel-v134", panel)
-        self.assertIn("cook4me-panel-v133.js", panel)
+        self.assertIn("cook4me-panel-v134.js", panel)
         self.assertIn(".rx-overlay>.rx-dialog:has(>footer)", ui)
         self.assertIn(".rx-overlay>.rx-dialog:has(>form>footer)", ui)
         self.assertIn(".rx-overlay>.rx-dialog>form>footer", ui)
