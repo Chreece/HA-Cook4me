@@ -218,8 +218,11 @@ def apply(
                 raise RuntimeError(f"existing eligibility override provenance drift: {ingredient_id}")
             already_applied.append(ingredient_id)
             continue
-        if row.get("nutritionEligible") is not True:
-            raise RuntimeError(f"unexpected nutrition eligibility state: {ingredient_id}")
+        if source_local:
+            if row.get("nutritionEligible") is not True:
+                raise RuntimeError(f"unexpected source-local nutrition eligibility state: {ingredient_id}")
+        elif row.get("nutritionEligible") not in (None, True):
+            raise RuntimeError(f"unexpected provider nutrition eligibility state: {ingredient_id}")
 
         row["nutritionEligible"] = False
         row["nutritionEligibilityReviewed"] = True
