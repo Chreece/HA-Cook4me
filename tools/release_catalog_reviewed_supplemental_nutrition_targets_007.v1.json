@@ -34,17 +34,18 @@
       "sourceFoodName": "Nestlé Dessert Noir",
       "basis": "per100g",
       "values": {
-        "energyKcal": 548.0,
-        "energyKJ": 2283.0,
-        "protein": 6.0,
+        "energyKcal": 548,
+        "energyKJ": 2283,
+        "protein": 6,
         "carbohydrates": 50.7,
         "sugars": 46.4,
-        "fat": 34.0,
+        "fat": 34,
         "saturatedFat": 20.2,
         "fiber": 7.3
       },
       "sourceEvidenceSha256": "da24c05d9d9e951a4e4fdc59ee7717d32da49d694ad38d29d317fb35483bd473",
-      "notes": "Exact primary manufacturer composition review for the standard Nestlé Dessert Noir product. Nestlé's 2025 nutrition brochure separately lists Dessert Noir, Dessert Noir 70% Absolu and Corsé, establishing that this record is the standard Noir product. The salt declaration is <0.01 g/100 g and is deliberately omitted rather than converted into an exact zero. This replacement applies only to the exact reviewed Nestlé dark dessert chocolate concept."
+      "notes": "Exact primary manufacturer composition review for the standard Nestlé Dessert Noir product. Nestlé's 2025 nutrition brochure separately lists Dessert Noir, Dessert Noir 70% Absolu and Corsé, establishing that this record is the standard Noir product. The salt declaration is <0.01 g/100 g and is deliberately omitted rather than converted into an exact zero. This replacement applies only to the exact reviewed Nestlé dark dessert chocolate concept.",
+      "reviewPass": 2
     }
   ]
 }
