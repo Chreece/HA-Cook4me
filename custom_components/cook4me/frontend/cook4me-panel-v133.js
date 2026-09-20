@@ -14,6 +14,32 @@ class Cook4MeRecipeHubPanelV133 extends BasePanel{
   const lang=this._uiIngredientLanguage?.()||this._langCode?.()||'en';
   return (V133_TEXT[lang]||V133_TEXT.en)[key]||V133_TEXT.en[key]||key;
  }
+ _nutritionChips(values,compact=false){
+  const html=super._nutritionChips(values,compact);
+  if(!html)return html;
+  const template=document.createElement('template');
+  template.innerHTML=String(html);
+  template.content.querySelectorAll('.v131-nutrient-gap').forEach(node=>node.remove());
+  template.content.querySelectorAll('.chip').forEach(chip=>{
+   const walker=document.createTreeWalker(chip,NodeFilter.SHOW_TEXT);
+   let node;
+   while((node=walker.nextNode())){
+    const match=String(node.nodeValue||'').match(/-?\d+(?:[.,]\d+)?/);
+    if(!match||match.index==null)continue;
+    const index=match.index;
+    const before=String(node.nodeValue||'').slice(0,index).replace(/\s+$/,'');
+    const after=String(node.nodeValue||'').slice(index).replace(/^\s+/,'');
+    const spacer=document.createElement('span');
+    spacer.className='v133-nutrient-spacer';
+    spacer.setAttribute('aria-hidden','true');
+    node.nodeValue=before;
+    node.parentNode?.insertBefore(spacer,node.nextSibling);
+    node.parentNode?.insertBefore(document.createTextNode(after),spacer.nextSibling);
+    break;
+   }
+  });
+  return template.innerHTML;
+ }
  _v132FixDeviceAsset(){
   const root=this.shadowRoot;
   const image=root?.querySelector('.v130-model-photo');
@@ -78,6 +104,7 @@ class Cook4MeRecipeHubPanelV133 extends BasePanel{
   const style=document.createElement('style');
   style.id='v133Styles';
   style.textContent=`
+   .v133-nutrient-spacer{display:inline-block;width:7px;flex:0 0 7px}
    .v130-model{
     isolation:isolate;
     background:radial-gradient(circle at 50% 43%,rgba(105,112,113,.42) 0%,rgba(46,50,51,.34) 42%,rgba(16,18,19,.16) 72%,transparent 85%);
