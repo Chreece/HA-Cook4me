@@ -106,6 +106,34 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
         self.assertFalse(concept["allergenEligible"])
         self.assertTrue(concept["needsSemanticConfirmation"])
 
+    def test_food_review_can_disable_nutrition_without_disabling_safety_semantics(self):
+        payload = self._payload(
+            [
+                {
+                    "language": "hr",
+                    "source": "Tradicionalni senf i crème fraîche",
+                    "english": "Traditional mustard and crème fraîche",
+                    "classification": "food",
+                    "confidence": "high",
+                    "nutritionEligible": False,
+                    "nutritionEligibilityReason": "Unquantified serving accompaniments",
+                }
+            ]
+        )
+        result = mod.compile_semantic_concepts([("batch.json", payload)])
+        concept = result["concepts"][0]
+        self.assertEqual(concept["classification"], "food")
+        self.assertFalse(concept["nutritionEligible"])
+        self.assertTrue(concept["dietEligible"])
+        self.assertTrue(concept["allergenEligible"])
+        self.assertFalse(concept["needsSemanticConfirmation"])
+        identity = concept["sourceIdentities"][0]
+        self.assertFalse(identity["nutritionEligible"])
+        self.assertEqual(
+            identity["nutritionEligibilityReason"],
+            "Unquantified serving accompaniments",
+        )
+
     def test_source_local_identity_matches_v2_contract_and_is_stable(self):
         first = mod.source_local_ingredient_id("de", "Tomate")
         second = mod.source_local_ingredient_id("de", "Tomate")
