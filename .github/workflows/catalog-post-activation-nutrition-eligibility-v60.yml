@@ -62,10 +62,14 @@ jobs:
         run: |
           BUILD="$RUNNER_TEMP/cook4me-nutrition-eligibility-v60"
           python - <<'PY'
-          import json, os
+          import json, os, sys
           from pathlib import Path
 
           root = Path(os.environ['RUNNER_TEMP']) / 'cook4me-nutrition-eligibility-v60'
+          repo = Path.cwd()
+          sys.path.insert(0, str(repo / 'tools'))
+          import compile_release_catalog_semantics_v60 as semantics
+
           before = json.loads(
               Path('custom_components/cook4me/catalog/merged_catalog.v1.json')
               .read_text(encoding='utf-8')
@@ -74,6 +78,33 @@ jobs:
           summary = json.loads((root / 'summary.v60.json').read_text(encoding='utf-8'))
           before_source = before.get('source') if isinstance(before.get('source'), dict) else {}
           after_source = after.get('source') if isinstance(after.get('source'), dict) else {}
+
+          compiled = semantics.compile_from_paths(semantics._review_paths(repo / 'tools'))
+          expected_excluded = sorted({
+              str(identity.get('ingredientId') or '').strip()
+              for concept in compiled.get('concepts') or []
+              if isinstance(concept, dict)
+              and concept.get('classification') == 'food'
+              and concept.get('nutritionEligible') is False
+              for identity in concept.get('sourceIdentities') or []
+              if isinstance(identity, dict)
+              and identity.get('nutritionEligible') is False
+              and str(identity.get('ingredientId') or '').strip()
+          })
+          before_excluded = sorted(set(
+              before_source.get('postActivationNutritionEligibilityExcludedIdentities') or []
+          ))
+          after_excluded = sorted(set(
+              after_source.get('postActivationNutritionEligibilityExcludedIdentities') or []
+          ))
+          expected_newly = len(set(expected_excluded) - set(before_excluded))
+          original_required = int(
+              before_source.get('postActivationNutritionEligibilityOriginalRequiredCount')
+              or (
+                  int(before_source.get('reviewedNutritionRequiredCount') or 0)
+                  + len(before_excluded)
+              )
+          )
 
           counts = lambda value: (
               len(value.get('recipes') or []),
@@ -84,9 +115,6 @@ jobs:
               ),
               len(value.get('ingredients') or []),
           )
-          excluded = list(
-              after_source.get('postActivationNutritionEligibilityExcludedIdentities') or []
-          )
           facts = {
               'complete': after.get('complete') is True,
               'countsBefore': counts(before),
@@ -95,30 +123,37 @@ jobs:
               'requiredAfter': int(after_source.get('reviewedNutritionRequiredCount') or 0),
               'resolvedBefore': int(before_source.get('reviewedNutritionResolvedCount') or 0),
               'resolvedAfter': int(after_source.get('reviewedNutritionResolvedCount') or 0),
+              'originalRequired': original_required,
+              'expectedExcludedIdentities': expected_excluded,
+              'beforeExcludedIdentities': before_excluded,
+              'afterExcludedIdentities': after_excluded,
+              'expectedNewlyExcluded': expected_newly,
               'newlyExcluded': int(summary.get('newlyExcludedIdentityCount') or 0),
               'totalExcluded': int(
                   after_source.get('postActivationNutritionEligibilityExcludedIdentityCount') or 0
               ),
-              'excludedIdentities': excluded,
               'pendingAfter': int(summary.get('pendingIdentityCountAfter') or 0),
               'networkRequestsPerformed': bool(summary.get('networkRequestsPerformed')),
               'runtimeCatalogCompacted': after_source.get('runtimeCatalogCompacted') is True,
               'runtimeRecipeNutritionOnDemand': after_source.get('runtimeRecipeNutritionOnDemand') is True,
               'catalogBytes': (root / 'catalog.v60.json').stat().st_size,
           }
-          expected_identity = 'local:hr:da102385b2887953f1dd'
           if not facts['complete']:
               raise SystemExit(f"eligibility overlay lost complete=true: {facts}")
           if facts['countsBefore'] != facts['countsAfter'] or facts['countsAfter'] != (16952, 32163, 11748):
               raise SystemExit(f"eligibility overlay changed identity counts: {facts}")
-          if facts['newlyExcluded'] != 1:
-              raise SystemExit(f"expected exactly one newly reviewed exclusion: {facts}")
-          if facts['requiredAfter'] != facts['requiredBefore'] - facts['newlyExcluded']:
-              raise SystemExit(f"eligibility denominator delta is not exact: {facts}")
+          if facts['afterExcludedIdentities'] != facts['expectedExcludedIdentities']:
+              raise SystemExit(f"eligibility exclusions differ from reviewed semantic corpus: {facts}")
+          if facts['newlyExcluded'] != facts['expectedNewlyExcluded']:
+              raise SystemExit(f"new eligibility exclusion delta is not exact: {facts}")
+          if facts['totalExcluded'] != len(facts['expectedExcludedIdentities']):
+              raise SystemExit(f"eligibility exclusion count is inconsistent: {facts}")
+          if facts['requiredBefore'] != facts['originalRequired'] - len(facts['beforeExcludedIdentities']):
+              raise SystemExit(f"pre-overlay denominator lacks explicit provenance: {facts}")
+          if facts['requiredAfter'] != facts['originalRequired'] - len(facts['expectedExcludedIdentities']):
+              raise SystemExit(f"post-overlay denominator delta is not exact: {facts}")
           if facts['resolvedAfter'] != facts['resolvedBefore']:
               raise SystemExit(f"eligibility overlay changed resolved nutrition: {facts}")
-          if expected_identity not in facts['excludedIdentities']:
-              raise SystemExit(f"expected reviewed composite is not excluded: {facts}")
           if facts['pendingAfter'] != facts['requiredAfter'] - facts['resolvedAfter']:
               raise SystemExit(f"eligibility pending accounting mismatch: {facts}")
           if facts['networkRequestsPerformed']:
