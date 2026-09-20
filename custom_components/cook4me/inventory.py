@@ -783,6 +783,7 @@ def _apply_primary_consumption(
                     "bestBefore": lot.get("bestBefore"),
                     "effectiveBestBefore": _effective_best_before(lot),
                     "storage": lot.get("storage"),
+                    "storageLocationId": lot.get("storageLocationId"),
                     "barcode": lot.get("barcode"),
                     "productName": lot.get("productName"),
                     "brand": lot.get("brand"),
@@ -963,7 +964,7 @@ def restore_consumption(inventory, report):
     restored: list[dict[str, Any]] = []
     skipped: list[dict[str, Any]] = []
     metadata_keys = (
-        "bestBefore", "storage", "barcode", "productName", "brand", "source",
+        "bestBefore", "storage", "storageLocationId", "barcode", "productName", "brand", "source",
         "nutritionSource", "purchaseDate", "openedAt", "useWithinDays",
         "addedAt", "revision", "ingredientLinks",
     )
