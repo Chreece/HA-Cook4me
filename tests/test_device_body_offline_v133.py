@@ -56,6 +56,7 @@ class DeviceBodyOfflineV133Tests(unittest.TestCase):
     def test_v133_inherits_hard_refresh_recovery(self):
         v132=(FRONTEND/"cook4me-panel-v132.js").read_text(encoding="utf-8")
         v133=(FRONTEND/"cook4me-panel-v133.js").read_text(encoding="utf-8")
+        v134=(FRONTEND/"cook4me-panel-v134.js").read_text(encoding="utf-8")
         self.assertIn("this._v132UpgradeProperty('hass')",v132)
         self.assertIn(
             "if(!customElements.get(V132))await import('./cook4me-panel-v132.js?v=2026.9.20.6')",
@@ -65,11 +66,11 @@ class DeviceBodyOfflineV133Tests(unittest.TestCase):
     def test_v133_is_active_and_versioned(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v133",panel)
-        self.assertIn("cook4me-panel-v133.js",panel)
-        self.assertIn("/cook4me_static/2026.9.20.7",panel)
+        self.assertIn("cook4me-recipe-hub-panel-v134",panel)
+        self.assertIn("cook4me-panel-v134.js",panel)
+        self.assertIn("/cook4me_static/2026.9.20.8",panel)
         self.assertIn("?v=2026.9.20.7",panel)
-        self.assertIn('"version": "2026.9.20.7"',manifest)
+        self.assertIn('"version": "2026.9.20.8"',manifest)
 
 
 if __name__=="__main__":
