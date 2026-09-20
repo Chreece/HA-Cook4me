@@ -143,13 +143,16 @@ async def ws_inventory_remove(hass, connection, msg) -> None:
     vol.Required("pending_id"): str,
     vol.Required("ingredients"): [dict],
     vol.Optional("allocations"): [dict],
+    vol.Optional("strict", default=False): bool,
 })
 @websocket_api.async_response
 async def ws_consumption_confirm(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         result = await bridge.recipe_hub.async_confirm_consumption(
-            str(msg["pending_id"]), list(msg.get("ingredients") or [])
+            str(msg["pending_id"]),
+            list(msg.get("ingredients") or []),
+            strict=bool(msg.get("strict")),
         )
         nutrition_store = await nutrition_store_for_bridge(bridge)
         consumed_nutrition = await async_consume_nutrition_report(
