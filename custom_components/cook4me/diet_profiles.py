@@ -4,10 +4,9 @@ import math
 import re
 from uuid import uuid5, NAMESPACE_URL
 
+from .nutrient_targets import TARGETS, normalize_scoped_targets
+
 DIETS = {"omnivore", "pescatarian", "vegetarian", "vegan"}
-TARGETS = {"calorieTarget": 10000, "proteinTarget": 1000, "carbsTarget": 2000,
-           "fatTarget": 1000, "saturatedFatTarget": 1000, "sugarsTarget": 1000,
-           "fiberTarget": 1000, "saltTarget": 100, "sodiumTarget": 100}
 ICONS = {"account", "account-outline", "face-man", "face-woman", "face-man-outline",
          "face-woman-outline", "human-child", "baby-face-outline", "chef-hat", "flower", "star", "heart"}
 
@@ -45,6 +44,9 @@ def normalize_diet(value, fallback=None):
             result[key] = number if not isinstance(data.get(key), bool) and math.isfinite(number) and 0 <= number <= maximum else None
         except (ValueError, TypeError):
             result[key] = None
+    scoped = normalize_scoped_targets(data.get("nutrientTargets"))
+    if scoped is not None:
+        result["nutrientTargets"] = scoped
     return result
 
 
@@ -83,6 +85,10 @@ def resolve_filters(profile, filters):
     if selected is None:
         raise ValueError("This household member no longer exists. Choose a diet profile again.")
     result.update({key: deepcopy(selected[key]) for key in ("diet", "nutritionGoal", "excludedIngredients", "excludedTerms", *TARGETS)})
+    if "nutrientTargets" in selected:
+        result["nutrientTargets"] = deepcopy(selected["nutrientTargets"])
+    else:
+        result.pop("nutrientTargets", None)
     return result
 
 
