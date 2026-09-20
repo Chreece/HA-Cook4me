@@ -9,7 +9,10 @@ on:
       - tools/apply_post_activation_nutrition_eligibility_overrides_v60.py
       - tools/compile_release_catalog_semantics_v60.py
       - tools/release_catalog_reviewed_keyless_ingredients_*.v1.json
+      - tools/release_catalog_reviewed_provider_nutrition_eligibility.v1.json
+      - tools/build_release_catalog_v60.py
       - tests/test_compile_release_catalog_semantics_v60.py
+      - tests/test_provider_nutrition_eligibility_v60.py
   workflow_dispatch:
 
 concurrency:
@@ -40,7 +43,9 @@ jobs:
           python -m py_compile \
             tools/apply_post_activation_nutrition_eligibility_overrides_v60.py \
             tools/compile_release_catalog_semantics_v60.py
-          python -m unittest tests.test_compile_release_catalog_semantics_v60 -v
+          python -m unittest \
+            tests.test_compile_release_catalog_semantics_v60 \
+            tests.test_provider_nutrition_eligibility_v60 -v
 
       - name: Apply reviewed eligibility overlay offline
         run: |
@@ -80,7 +85,7 @@ jobs:
           after_source = after.get('source') if isinstance(after.get('source'), dict) else {}
 
           compiled = semantics.compile_from_paths(semantics._review_paths(repo / 'tools'))
-          expected_excluded = sorted({
+          semantic_excluded = {
               str(identity.get('ingredientId') or '').strip()
               for concept in compiled.get('concepts') or []
               if isinstance(concept, dict)
@@ -90,7 +95,20 @@ jobs:
               if isinstance(identity, dict)
               and identity.get('nutritionEligible') is False
               and str(identity.get('ingredientId') or '').strip()
-          })
+          }
+          provider_registry = json.loads(
+              Path('tools/release_catalog_reviewed_provider_nutrition_eligibility.v1.json')
+              .read_text(encoding='utf-8')
+          )
+          provider_excluded = {
+              str(row.get('ingredientId') or '').strip()
+              for row in provider_registry.get('items') or []
+              if isinstance(row, dict)
+              and row.get('nutritionEligible') is False
+              and int(row.get('usageCountAtReview') or -1) == 0
+              and str(row.get('ingredientId') or '').strip()
+          }
+          expected_excluded = sorted(semantic_excluded | provider_excluded)
           before_excluded = sorted(set(
               before_source.get('postActivationNutritionEligibilityExcludedIdentities') or []
           ))
@@ -217,6 +235,8 @@ jobs:
               "$SUMMARY" \
               'tools/compile_release_catalog_semantics_v60.py' \
               'tools/apply_post_activation_nutrition_eligibility_overrides_v60.py' \
+              'tools/build_release_catalog_v60.py' \
+              'tools/release_catalog_reviewed_provider_nutrition_eligibility.v1.json' \
               ':(glob)tools/release_catalog_reviewed_keyless_ingredients_*.v1.json'; then
               echo "Remote branch advanced outside eligibility inputs; rebasing."
             else
