@@ -33,8 +33,15 @@ class DeviceBodyOfflineV133Tests(unittest.TestCase):
         )
         self.assertIn("image.src=DEVICE_ASSET_V133",ui)
         self.assertIn("mix-blend-mode:multiply",ui)
-        self.assertIn("filter:brightness(1.32) contrast(1.08)",ui)
+        self.assertIn("filter:brightness(1.08) contrast(1.1)",ui)
         self.assertIn("opacity:1!important",ui)
+
+    def test_nutrient_spacing_is_structural_not_regex_dependent(self):
+        ui=(FRONTEND/"cook4me-panel-v133.js").read_text(encoding="utf-8")
+        self.assertIn("document.createTreeWalker(chip,NodeFilter.SHOW_TEXT)",ui)
+        self.assertIn("v133-nutrient-spacer",ui)
+        self.assertIn("width:7px",ui)
+        self.assertIn("querySelectorAll('.v131-nutrient-gap').forEach(node=>node.remove())",ui)
 
     def test_offline_screen_never_falls_back_to_ready(self):
         ui=(FRONTEND/"cook4me-panel-v133.js").read_text(encoding="utf-8")
