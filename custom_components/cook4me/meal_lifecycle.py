@@ -513,6 +513,127 @@ class Cook4MeMealLifecycleStore:
         await self._save()
         return deepcopy(row)
 
+    async def async_sync_leftover_from_meal(
+        self,
+        meal: dict[str, Any],
+        *,
+        cost: Any = None,
+    ) -> dict[str, Any] | None:
+        """Keep the leftover row aligned when historical servings are edited."""
+        meal_id = _text(meal.get("id"))
+        remaining = _number(meal.get("remainingServings"))
+        servings = _number(meal.get("servings"))
+        matches = [
+            (index, row)
+            for index, row in enumerate(self._data["leftovers"])
+            if _text(row.get("mealHistoryId")) == meal_id
+        ]
+        if remaining is None or remaining <= 0 or servings is None or servings <= 0:
+            if matches:
+                self._data["leftovers"] = [
+                    row
+                    for row in self._data["leftovers"]
+                    if _text(row.get("mealHistoryId")) != meal_id
+                ]
+                await self._save()
+            return None
+
+        fraction = min(1.0, remaining / servings)
+        nutrition = _nutrition_totals(
+            meal.get("cookedNutrition") or meal.get("nutrition")
+        )
+        cost_totals = (
+            cost.get("totalsByCurrency")
+            if isinstance(cost, dict)
+            and isinstance(cost.get("totalsByCurrency"), dict)
+            else {}
+        )
+        if matches:
+            first_index, existing = matches[0]
+            old_servings = _number(existing.get("servings")) or remaining
+            old_weight = _number(existing.get("weightGrams"))
+            existing.update(
+                {
+                    "mealHistoryId": meal_id,
+                    "recipe": _recipe_snapshot(
+                        meal.get("recipe")
+                        or {
+                            key: meal[key]
+                            for key in (
+                                "title",
+                                "groupingFunctionalId",
+                                "variantFunctionalId",
+                            )
+                            if meal.get(key)
+                        }
+                    ),
+                    "title": _text(meal.get("title")) or existing.get("title") or "Cook4Me leftovers",
+                    "servings": remaining,
+                    "originalServings": servings,
+                    "nutrition": {
+                        "totals": _scale_numeric_map(nutrition, fraction)
+                    },
+                    "nutritionPerServing": _scale_numeric_map(
+                        nutrition, 1.0 / servings
+                    ),
+                    "costByCurrency": _scale_numeric_map(
+                        cost_totals, fraction
+                    ),
+                    "costPerServingByCurrency": _scale_numeric_map(
+                        cost_totals, 1.0 / servings
+                    ),
+                }
+            )
+            if old_weight is not None and old_servings > 0:
+                existing["weightGrams"] = round(
+                    old_weight * remaining / old_servings, 3
+                )
+            self._data["leftovers"][first_index] = existing
+            self._data["leftovers"] = [
+                row
+                for index, row in enumerate(self._data["leftovers"])
+                if index == first_index
+                or _text(row.get("mealHistoryId")) != meal_id
+            ]
+            await self._save()
+            return deepcopy(existing)
+
+        row = {
+            "id": str(uuid4()),
+            "mealHistoryId": meal_id,
+            "recipe": _recipe_snapshot(
+                meal.get("recipe")
+                or {
+                    key: meal[key]
+                    for key in (
+                        "title",
+                        "groupingFunctionalId",
+                        "variantFunctionalId",
+                    )
+                    if meal.get(key)
+                }
+            ),
+            "title": _text(meal.get("title")) or "Cook4Me leftovers",
+            "servings": remaining,
+            "originalServings": servings,
+            "createdAt": datetime.now(timezone.utc).isoformat(),
+            "storage": "fridge",
+            "bestBefore": "",
+            "nutrition": {"totals": _scale_numeric_map(nutrition, fraction)},
+            "nutritionPerServing": _scale_numeric_map(
+                nutrition, 1.0 / servings
+            ),
+            "costByCurrency": _scale_numeric_map(cost_totals, fraction),
+            "costPerServingByCurrency": _scale_numeric_map(
+                cost_totals, 1.0 / servings
+            ),
+        }
+        self._data["leftovers"] = (
+            self._data["leftovers"] + [row]
+        )[-_MAX_LEFTOVERS:]
+        await self._save()
+        return deepcopy(row)
+
     async def async_consume_leftover(self, leftover_id: str, servings: Any) -> dict[str, Any]:
         wanted = _text(leftover_id)
         amount = _number(servings)
