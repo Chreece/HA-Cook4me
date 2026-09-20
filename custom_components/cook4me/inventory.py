@@ -817,6 +817,52 @@ def _apply_primary_consumption(
     return rows, report
 
 
+
+def consumption_shortfalls(consumptions, report):
+    """Return finite requested amounts that were not fully deducted."""
+    deducted = report.get("deductedLots") if isinstance(report, dict) else []
+    skipped = report.get("skipped") if isinstance(report, dict) else []
+    deducted = deducted if isinstance(deducted, list) else []
+    skipped = skipped if isinstance(skipped, list) else []
+    result = []
+    for request in consumptions if isinstance(consumptions, list) else []:
+        if not isinstance(request, dict) or not request.get("consume", True):
+            continue
+        requested = _quantity(request.get("quantity"))
+        if requested is None or requested <= 0:
+            continue
+        ident = _text(request.get("identity")) or inventory_identity(request)
+        lot_id = _text(request.get("lotId"))
+        # Unlimited stock is intentionally non-depleting.
+        if any(
+            _text(row.get("identity")) == ident and row.get("reason") == "unlimited"
+            for row in skipped if isinstance(row, dict)
+        ):
+            continue
+        actual = 0.0
+        for row in deducted:
+            if not isinstance(row, dict) or _text(row.get("identity")) != ident:
+                continue
+            if lot_id and _text(row.get("lotId")) != lot_id:
+                continue
+            amount = convert_amount(
+                row.get("quantity"), row.get("unit", ""), request.get("unit", "")
+            )
+            if amount is not None:
+                actual += float(amount)
+        if actual + 1e-9 < requested:
+            result.append(
+                {
+                    "identity": ident,
+                    "lotId": lot_id or None,
+                    "requested": round(float(requested), 9),
+                    "deducted": round(actual, 9),
+                    "unit": _text(request.get("unit")),
+                }
+            )
+    return result
+
+
 def format_stock(row: dict[str, Any]) -> str:
     if row.get("unlimited"):
         return "∞"
