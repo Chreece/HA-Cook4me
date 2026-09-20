@@ -1,0 +1,198 @@
+name: Apply reviewed nutrition eligibility v60
+
+on:
+  push:
+    branches:
+      - cook4me-nutrition-enrichment-post-activation-v60
+    paths:
+      - .github/workflows/catalog-post-activation-nutrition-eligibility-v60.yml
+      - tools/apply_post_activation_nutrition_eligibility_overrides_v60.py
+      - tools/compile_release_catalog_semantics_v60.py
+      - tools/release_catalog_reviewed_keyless_ingredients_*.v1.json
+      - tests/test_compile_release_catalog_semantics_v60.py
+  workflow_dispatch:
+
+concurrency:
+  group: catalog-post-activation-nutrition-eligibility-v60-cook4me-nutrition-enrichment-post-activation-v60
+  cancel-in-progress: true
+
+permissions:
+  actions: write
+  contents: write
+  attestations: write
+  id-token: write
+
+jobs:
+  apply-reviewed-eligibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Run eligibility regressions
+        run: |
+          python -m py_compile \
+            tools/apply_post_activation_nutrition_eligibility_overrides_v60.py \
+            tools/compile_release_catalog_semantics_v60.py
+          python -m unittest tests.test_compile_release_catalog_semantics_v60 -v
+
+      - name: Apply reviewed eligibility overlay offline
+        run: |
+          BUILD="$RUNNER_TEMP/cook4me-nutrition-eligibility-v60"
+          mkdir -p "$BUILD"
+          python tools/apply_post_activation_nutrition_eligibility_overrides_v60.py \
+            --catalog custom_components/cook4me/catalog/merged_catalog.v1.json \
+            --review-root tools \
+            --output "$BUILD/catalog.v60.json" \
+            --summary-output "$BUILD/summary.v60.json"
+
+      - name: Independently validate eligibility catalog
+        run: |
+          BUILD="$RUNNER_TEMP/cook4me-nutrition-eligibility-v60"
+          python tools/validate_release_catalog_v60.py "$BUILD/catalog.v60.json" \
+            | tee "$BUILD/validation.v60.json"
+
+      - name: Prove exact eligibility delta
+        run: |
+          BUILD="$RUNNER_TEMP/cook4me-nutrition-eligibility-v60"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          root = Path(os.environ['RUNNER_TEMP']) / 'cook4me-nutrition-eligibility-v60'
+          before = json.loads(
+              Path('custom_components/cook4me/catalog/merged_catalog.v1.json')
+              .read_text(encoding='utf-8')
+          )
+          after = json.loads((root / 'catalog.v60.json').read_text(encoding='utf-8'))
+          summary = json.loads((root / 'summary.v60.json').read_text(encoding='utf-8'))
+          before_source = before.get('source') if isinstance(before.get('source'), dict) else {}
+          after_source = after.get('source') if isinstance(after.get('source'), dict) else {}
+
+          counts = lambda value: (
+              len(value.get('recipes') or []),
+              sum(
+                  len(row.get('variants') or [])
+                  for row in value.get('recipes') or []
+                  if isinstance(row, dict)
+              ),
+              len(value.get('ingredients') or []),
+          )
+          excluded = list(
+              after_source.get('postActivationNutritionEligibilityExcludedIdentities') or []
+          )
+          facts = {
+              'complete': after.get('complete') is True,
+              'countsBefore': counts(before),
+              'countsAfter': counts(after),
+              'requiredBefore': int(before_source.get('reviewedNutritionRequiredCount') or 0),
+              'requiredAfter': int(after_source.get('reviewedNutritionRequiredCount') or 0),
+              'resolvedBefore': int(before_source.get('reviewedNutritionResolvedCount') or 0),
+              'resolvedAfter': int(after_source.get('reviewedNutritionResolvedCount') or 0),
+              'newlyExcluded': int(summary.get('newlyExcludedIdentityCount') or 0),
+              'totalExcluded': int(
+                  after_source.get('postActivationNutritionEligibilityExcludedIdentityCount') or 0
+              ),
+              'excludedIdentities': excluded,
+              'pendingAfter': int(summary.get('pendingIdentityCountAfter') or 0),
+              'networkRequestsPerformed': bool(summary.get('networkRequestsPerformed')),
+              'runtimeCatalogCompacted': after_source.get('runtimeCatalogCompacted') is True,
+              'runtimeRecipeNutritionOnDemand': after_source.get('runtimeRecipeNutritionOnDemand') is True,
+              'catalogBytes': (root / 'catalog.v60.json').stat().st_size,
+          }
+          expected_identity = 'local:hr:da102385b2887953f1dd'
+          if not facts['complete']:
+              raise SystemExit(f"eligibility overlay lost complete=true: {facts}")
+          if facts['countsBefore'] != facts['countsAfter'] or facts['countsAfter'] != (16952, 32163, 11748):
+              raise SystemExit(f"eligibility overlay changed identity counts: {facts}")
+          if facts['newlyExcluded'] != 1:
+              raise SystemExit(f"expected exactly one newly reviewed exclusion: {facts}")
+          if facts['requiredAfter'] != facts['requiredBefore'] - facts['newlyExcluded']:
+              raise SystemExit(f"eligibility denominator delta is not exact: {facts}")
+          if facts['resolvedAfter'] != facts['resolvedBefore']:
+              raise SystemExit(f"eligibility overlay changed resolved nutrition: {facts}")
+          if expected_identity not in facts['excludedIdentities']:
+              raise SystemExit(f"expected reviewed composite is not excluded: {facts}")
+          if facts['pendingAfter'] != facts['requiredAfter'] - facts['resolvedAfter']:
+              raise SystemExit(f"eligibility pending accounting mismatch: {facts}")
+          if facts['networkRequestsPerformed']:
+              raise SystemExit(f"eligibility overlay used network: {facts}")
+          if not facts['runtimeCatalogCompacted'] or not facts['runtimeRecipeNutritionOnDemand']:
+              raise SystemExit(f"eligibility overlay broke runtime compactness: {facts}")
+          if facts['catalogBytes'] >= 95_000_000:
+              raise SystemExit(f"eligibility catalog is too large: {facts}")
+
+          (root / 'facts.v60.json').write_text(
+              json.dumps(facts, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(json.dumps(facts, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Verify no persisted secret-like fields
+        run: |
+          BUILD="$RUNNER_TEMP/cook4me-nutrition-eligibility-v60"
+          ! grep -Eiq 'access[_-]?token|refresh[_-]?token|authorization|bearer |password|api[_-]?key|client[_-]?secret' \
+            "$BUILD/catalog.v60.json" "$BUILD/summary.v60.json" "$BUILD/facts.v60.json"
+
+      - name: Upload validated eligibility evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: post-activation-nutrition-eligibility-v60-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/cook4me-nutrition-eligibility-v60/summary.v60.json
+            ${{ runner.temp }}/cook4me-nutrition-eligibility-v60/validation.v60.json
+            ${{ runner.temp }}/cook4me-nutrition-eligibility-v60/facts.v60.json
+          if-no-files-found: error
+          compression-level: 9
+          retention-days: 7
+
+      - name: Promote exact validated eligibility catalog
+        run: |
+          BUILD="$RUNNER_TEMP/cook4me-nutrition-eligibility-v60"
+          BRANCH="cook4me-nutrition-enrichment-post-activation-v60"
+          BASE_SHA="$(git rev-parse HEAD)"
+          CATALOG="custom_components/cook4me/catalog/merged_catalog.v1.json"
+          SUMMARY="tools/post_activation_nutrition_eligibility_v60_summary.json"
+
+          cp "$BUILD/catalog.v60.json" "$CATALOG"
+          cp "$BUILD/facts.v60.json" "$SUMMARY"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$CATALOG" "$SUMMARY"
+          git diff --cached --check
+          git diff --cached --quiet && exit 0
+          git commit -m "Apply reviewed nutrition eligibility v60"
+
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:$BRANCH"; then
+              exit 0
+            fi
+            test "$attempt" -lt 3
+            git fetch origin "$BRANCH"
+            REMOTE_SHA="$(git rev-parse "origin/$BRANCH")"
+            if git diff --quiet "$BASE_SHA..$REMOTE_SHA" -- \
+              "$CATALOG" \
+              "$SUMMARY" \
+              'tools/compile_release_catalog_semantics_v60.py' \
+              'tools/apply_post_activation_nutrition_eligibility_overrides_v60.py' \
+              ':(glob)tools/release_catalog_reviewed_keyless_ingredients_*.v1.json'; then
+              echo "Remote branch advanced outside eligibility inputs; rebasing."
+            else
+              echo "Eligibility inputs changed during validation; refusing stale promotion." >&2
+              exit 1
+            fi
+            if ! git rebase "origin/$BRANCH"; then
+              git rebase --abort || true
+              echo "Concurrent branch changes conflict with validated eligibility overlay." >&2
+              exit 1
+            fi
+          done
+          echo "Unable to promote validated eligibility catalog." >&2
+          exit 1
