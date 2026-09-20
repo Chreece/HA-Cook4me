@@ -38,6 +38,9 @@ def _pick_best(
     seen: set[str],
     *,
     diversity: bool,
+    daily_targets: Any = None,
+    daily_existing: Any = (),
+    daily_target_count: int = 1,
 ) -> dict[str, Any] | None:
     best_index: int | None = None
     best_score = float("-inf")
@@ -47,7 +50,22 @@ def _pick_best(
         if ident and ident in seen:
             continue
         penalty = _diversity_penalty(row, chosen) if diversity else 0.0
-        selection_score = _score(row) - penalty
+        daily_bonus = 0.0
+        if isinstance(daily_targets, dict):
+            from .nutrient_targets import daily_progress_bonus
+            context = [
+                item.get("nutrition") or item.get("catalogNutrition") or {}
+                for item in [*(daily_existing or ()), *chosen]
+                if isinstance(item, dict)
+            ]
+            hint = daily_progress_bonus(
+                context,
+                row.get("nutrition") or row.get("catalogNutrition") or {},
+                daily_targets,
+                fraction=min(1.0, (len(context) + 1) / max(1, int(daily_target_count))),
+            )
+            daily_bonus = float(hint.get("bonus") or 0.0)
+        selection_score = _score(row) - penalty + daily_bonus
         if selection_score > best_score:
             best_index = index
             best_score = selection_score
@@ -61,6 +79,20 @@ def _pick_best(
     match = picked.setdefault("match", {})
     match["todayDiversityPenalty"] = round(best_penalty, 1)
     match["todaySelectionScore"] = round(best_score, 1)
+    if isinstance(daily_targets, dict):
+        from .nutrient_targets import daily_progress_bonus
+        context = [
+            item.get("nutrition") or item.get("catalogNutrition") or {}
+            for item in [*(daily_existing or ()), *chosen]
+            if isinstance(item, dict)
+        ]
+        hint = daily_progress_bonus(
+            context,
+            picked.get("nutrition") or picked.get("catalogNutrition") or {},
+            daily_targets,
+            fraction=min(1.0, (len(context) + 1) / max(1, int(daily_target_count))),
+        )
+        match["dailyNutrientTargetBonus"] = round(float(hint.get("bonus") or 0.0), 2)
     match["todayCatalogBalanced"] = True
     return picked
 
@@ -71,6 +103,9 @@ def select_catalog_balanced(
     languages: Any,
     *,
     diversity: bool = True,
+    daily_targets: Any = None,
+    existing: Any = (),
+    overall_count: int | None = None,
 ) -> list[dict[str, Any]]:
     """Select unique recipes while spreading suggestions across chosen catalogs.
 
@@ -123,6 +158,9 @@ def select_catalog_balanced(
                 chosen,
                 seen,
                 diversity=diversity,
+                daily_targets=daily_targets,
+                daily_existing=existing,
+                daily_target_count=overall_count or target,
             )
             if picked is None:
                 continue
@@ -138,7 +176,11 @@ def select_catalog_balanced(
     for bucket in buckets.values():
         leftovers.extend(bucket)
     while leftovers and len(chosen) < target:
-        picked = _pick_best(leftovers, chosen, seen, diversity=diversity)
+        picked = _pick_best(
+            leftovers, chosen, seen, diversity=diversity,
+            daily_targets=daily_targets, daily_existing=existing,
+            daily_target_count=overall_count or target,
+        )
         if picked is None:
             break
         chosen.append(picked)
@@ -146,7 +188,7 @@ def select_catalog_balanced(
     return chosen
 
 
-def select_today_categories(rows, categories, languages, previous=(), history=()):
+def select_today_categories(rows, categories, languages, previous=(), history=(), daily_targets=None):
     """Rotate eligible families across requests, then balance their catalogs.
 
     History affects selection only after diet, pantry and other filters have
@@ -162,7 +204,8 @@ def select_today_categories(rows, categories, languages, previous=(), history=()
     last_seen = {row["familyId"]: index for index, row in enumerate(recent)}
     language_counts = Counter(row["language"] for row in recent)
     chosen, seen, counts = [], set(), {}
-    for category in normalize_meal_types(categories):
+    normalized_categories = normalize_meal_types(categories)
+    for category in normalized_categories:
         matching = [row for row in rows if recipe_matches_meal_types(row, [category])]
         counts[category] = len({identity(row) for row in matching})
         pool = [row for row in matching if identity(row) not in seen]
@@ -172,7 +215,12 @@ def select_today_categories(rows, categories, languages, previous=(), history=()
         pool = [row for row in pool if last_seen.get(str(identity(row)), -1) == oldest]
         least_used = min(language_counts[_language(row)] for row in pool)
         pool = [row for row in pool if language_counts[_language(row)] == least_used]
-        selected = select_catalog_balanced(pool, 1, languages)
+        selected = select_catalog_balanced(
+            pool, 1, languages,
+            daily_targets=daily_targets,
+            existing=chosen,
+            overall_count=max(1, len(normalized_categories)),
+        )
         if selected:
             row = selected[0]
             row["todayMealType"] = category
