@@ -107,11 +107,11 @@ class Cook4MeRecipeHubPanelV133 extends BasePanel{
    .v133-nutrient-spacer{display:inline-block;width:7px;flex:0 0 7px}
    .v130-model{
     isolation:isolate;
-    background:radial-gradient(circle at 50% 43%,rgba(105,112,113,.42) 0%,rgba(46,50,51,.34) 42%,rgba(16,18,19,.16) 72%,transparent 85%);
+    background:radial-gradient(circle at 50% 49%,#d8dcdd 0%,#b8bec0 54%,#777f82 76%,transparent 83%);
    }
    .v130-model-photo{
     mix-blend-mode:multiply;
-    filter:brightness(1.32) contrast(1.08);
+    filter:brightness(1.08) contrast(1.1);
     opacity:1!important;
    }
    .v130-model.v133-model-image-error .v130-model-photo{opacity:0!important}
