@@ -2,9 +2,10 @@
 from copy import deepcopy
 import math
 
-from .today_logic import recipe_matches_meal_types, calorie_target_bonus, offline_meal_types
+from .today_logic import recipe_matches_meal_types, offline_meal_types
 from .food_intelligence import nutrition_goal_bonus
-from .diet_profiles import TARGETS, exclusions, text_list
+from .diet_profiles import exclusions, text_list
+from .nutrient_targets import MEAL_TYPES, TARGETS, has_targets, normalize_scoped_targets, target_bonus
 
 
 TABS = {"today", "week", "official", "book", "mine", "profile", "shopping", "ai"}
@@ -29,6 +30,9 @@ def normalize_filters(value):
         result["dietProfile"] = source if source in {"manual", "household"} or source.startswith("member:") else "manual"
         result["excludedIngredients"] = exclusions(data.get("excludedIngredients"))
         result["excludedTerms"] = text_list(data.get("excludedTerms"))
+    scoped = normalize_scoped_targets(data.get("nutrientTargets"))
+    if scoped is not None:
+        result["nutrientTargets"] = scoped
     for key, maximum in TARGETS.items():
         result[key] = number(data.get(key), maximum)
     result["diet"] = data.get("diet") if data.get("diet") in {"profile", "omnivore", "pescatarian", "vegetarian", "vegan"} else "profile"
@@ -49,6 +53,31 @@ def normalize_preferences(value):
     if "filters" in data:
         result["filters"] = normalize_filters(data["filters"])
     return result
+
+
+def daily_targets(value):
+    """Return only explicit full-day targets; legacy per-serving targets never become daily targets."""
+    settings = normalize_filters(value)
+    scoped = settings.get("nutrientTargets")
+    if not isinstance(scoped, dict):
+        return {}
+    return deepcopy(scoped.get("daily") or {})
+
+
+def recipe_target_scope(settings, recipe):
+    """Pick the applicable meal-specific target set for one recipe."""
+    scoped = settings.get("nutrientTargets")
+    if not isinstance(scoped, dict):
+        return ({key: settings.get(key) for key in TARGETS}, "legacy")
+    meals = scoped.get("mealTypes") if isinstance(scoped.get("mealTypes"), dict) else {}
+    preferred = list(settings.get("mealTypes") or [])
+    for meal_type in (*preferred, *MEAL_TYPES):
+        if meal_type not in MEAL_TYPES:
+            continue
+        targets = meals.get(meal_type)
+        if has_targets(targets) and recipe_matches_meal_types(recipe, [meal_type]):
+            return (targets, meal_type)
+    return ({}, None)
 
 
 def apply_filters(rows, filters, *, ingredient_groups=None, cost=None, nutrition=None, recent=(), score_targets=True, progress=None):
@@ -97,19 +126,16 @@ def apply_filters(rows, filters, *, ingredient_groups=None, cost=None, nutrition
         row["nutrition"] = nutrients
         if score_targets:
             score += float(nutrition_goal_bonus(nutrients, settings["nutritionGoal"]).get("bonus") or 0)
-            score += float(calorie_target_bonus(nutrients, settings["calorieTarget"], tolerance_fraction=(settings["calorieTolerance"] or 25)/100).get("bonus") or 0)
-        for key, target_key in (("protein", "proteinTarget"), ("fiber", "fiberTarget"),
-                ("carbohydrates", "carbsTarget"), ("fat", "fatTarget"), ("saturatedFat", "saturatedFatTarget"),
-                ("sugars", "sugarsTarget"), ("salt", "saltTarget"), ("sodium", "sodiumTarget")):
-            target = settings[target_key]
-            aliases = {"protein": ("protein", "proteinG"), "fiber": ("fiber", "fiberG"),
-                "carbohydrates": ("carbohydrates", "carbs", "carbohydrateG"), "fat": ("fat", "fatG"),
-                "saturatedFat": ("saturatedFat", "saturatedFatG"), "sugars": ("sugars", "sugarsG", "sugarG"),
-                "salt": ("salt", "saltG"), "sodium": ("sodium", "sodiumG")}
-            actual = next((value for alias in aliases[key]
-                if (value := number((nutrients.get("perServing") or {}).get(alias), 1e6)) is not None), None)
-            if target is not None and actual is not None:
-                score += 10 * max(-1, 1 - abs(actual-target)/max(target, 1))
+            targets, target_scope = recipe_target_scope(settings, row)
+            target_hint = target_bonus(
+                nutrients,
+                targets,
+                calorie_tolerance_fraction=(settings["calorieTolerance"] or 25) / 100,
+            )
+            score += float(target_hint.get("bonus") or 0)
+            if target_scope:
+                match["nutrientTargetScope"] = target_scope
+                match["nutrientTargetBonus"] = round(float(target_hint.get("bonus") or 0), 2)
         match["score"] = round(score, 2)
         result.append(row)
     if progress:

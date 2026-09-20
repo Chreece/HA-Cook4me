@@ -302,6 +302,14 @@ async def _generate_week(
     start = date.fromisoformat(week_start)
     settings = lifecycle.settings
     meal_types = meal_slots(shared_filters, settings.get("mealTypes"))
+    from .diet_profiles import resolve_filters
+    from .shared_recipe_filters import daily_targets, normalize_filters, recipe_target_scope
+    from .nutrient_targets import daily_progress_bonus, target_bonus
+    profile_target_settings = resolve_filters(
+        bridge.recipe_hub.profile,
+        normalize_filters(shared_filters if isinstance(shared_filters, dict) else {"dietProfile": "household"}),
+    )
+    profile_daily_targets = daily_targets(profile_target_settings)
     targets = [row for row in original_slots if row["id"] in target_ids]
     existing = [row for row in original_slots if row["id"] not in target_ids] if replacing else []
 
@@ -313,6 +321,17 @@ async def _generate_week(
             stamp = (start + timedelta(days=offset)).isoformat()
             for meal_type in meal_types:
                 desired.append((stamp, _text(meal_type), None))
+
+    daily_slot_counts: dict[str, int] = {}
+    daily_scope = [*existing, *targets] if replacing else [
+        {"date": stamp, "selected": True} for stamp, _meal_type, _target in desired
+    ]
+    for slot in daily_scope:
+        if slot.get("selected") is False:
+            continue
+        stamp = _text(slot.get("date"))
+        if stamp:
+            daily_slot_counts[stamp] = daily_slot_counts.get(stamp, 0) + 1
 
     planned = list(existing)
     end = (start + timedelta(days=6)).isoformat()
@@ -376,6 +395,8 @@ async def _generate_week(
         best_nutrition: dict[str, Any] = {}
         best_cost: dict[str, Any] = {}
         best_penalty = 0.0
+        best_daily_bonus = 0.0
+        best_meal_target_bonus = 0.0
         for candidate in pool:
             nutrition = calculate_recipe_nutrition_fefo(
                 candidate,
@@ -394,9 +415,28 @@ async def _generate_week(
                 "recipe": candidate,
             }
             penalty = _plan_penalty(planned, candidate_slot, inventory)
+            meal_target_bonus = 0.0
+            if shared_filters is None:
+                meal_targets, _meal_scope = recipe_target_scope(profile_target_settings, candidate)
+                meal_target_bonus = float(target_bonus(nutrition, meal_targets).get("bonus") or 0.0)
+            day_rows = [
+                slot.get("nutrition") or (slot.get("recipe") or {}).get("nutrition") or {}
+                for slot in planned
+                if slot.get("selected") is not False and _text(slot.get("date")) == stamp
+            ]
+            day_completed = len(day_rows)
+            day_total = max(daily_slot_counts.get(stamp, 0), day_completed + 1)
+            daily_hint = daily_progress_bonus(
+                day_rows,
+                nutrition,
+                profile_daily_targets,
+                fraction=min(1.0, (day_completed + 1) / max(1, day_total)),
+            )
             score = (
                 float((candidate.get("match") or {}).get("score") or 0.0)
                 + (0.0 if shared_filters is not None else float(nutrition_hint.get("bonus") or 0.0))
+                + meal_target_bonus
+                + float(daily_hint.get("bonus") or 0.0)
                 - penalty
             )
             if score <= best_score:
@@ -406,6 +446,8 @@ async def _generate_week(
             best_nutrition = nutrition
             best_cost = _recipe_cost_with_store(bridge, candidate, cost_store)
             best_penalty = penalty
+            best_daily_bonus = float(daily_hint.get("bonus") or 0.0)
+            best_meal_target_bonus = meal_target_bonus
         if best is None:
             if target:
                 planned.append(target)
@@ -415,6 +457,9 @@ async def _generate_week(
         selected_match = selected.setdefault("match", {})
         selected_match["weeklySelectionScore"] = round(best_score, 1)
         selected_match["plannedStockPenalty"] = round(best_penalty, 1)
+        selected_match["dailyNutrientTargetBonus"] = round(best_daily_bonus, 2)
+        if shared_filters is None:
+            selected_match["mealNutrientTargetBonus"] = round(best_meal_target_bonus, 2)
         selected_match["mealTypeTaxonomyFallback"] = taxonomy_fallback
         selected["nutrition"] = best_nutrition
         selected["cost"] = best_cost
