@@ -28,9 +28,9 @@ from .websocket_v36 import async_register as async_register_websocket_v36
 from .websocket_v37 import async_register as async_register_websocket_v37
 from .websocket_v38 import async_register as async_register_websocket_v38
 
-_URL_BASE = "/cook4me_static/2026.9.20.8"
-_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v134"
-_PANEL_MODULE = "cook4me-panel-v134.js"
+_URL_BASE = "/cook4me_static/2026.9.20.9"
+_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v135"
+_PANEL_MODULE = "cook4me-panel-v135.js"
 _V20_REGISTERED = "websocket_v20_registered"
 _V21_REGISTERED = "websocket_v21_registered"
 _V22_REGISTERED = "websocket_v22_registered"
@@ -102,7 +102,7 @@ async def async_register_panel(hass: HomeAssistant) -> None:
         hass=hass,
         frontend_url_path=DOMAIN,
         webcomponent_name=_PANEL_ELEMENT,
-        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.20.8",
+        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.20.9",
         sidebar_title="Cook4Me",
         sidebar_icon="mdi:pot-steam",
         embed_iframe=False,
