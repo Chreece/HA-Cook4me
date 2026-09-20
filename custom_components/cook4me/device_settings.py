@@ -9,9 +9,10 @@ from homeassistant.helpers.storage import Store
 
 from .const import DOMAIN
 
+DEFAULT_AI_TASK = "__home_assistant_default__"
 DEFAULTS = {"enabled": False, "recipe": True, "steps": True, "state": True,
             "connection": False, "players": [], "tts": "", "ai": "",
-            "language": "", "voice": ""}
+            "ai_all": False, "language": "", "voice": ""}
 LEGACY_KEYS = {"phase", "status", "recipe", "step", "instruction", "step_type",
                "program", "progress", "remaining_time", "elapsed_time",
                "last_connection", "last_disconnection", "ui_firmware",
@@ -70,12 +71,31 @@ def choices(hass, user):
         for language in languages:
             voice_list = entity.async_get_supported_voices(language) or []
             by_language[language] = [{"id": v.voice_id, "name": v.name} for v in voice_list]
+        default_language = entity.default_language
+        if default_language not in languages:
+            default_language = languages[0] if languages else ""
         voices.append({**label(entity.entity_id), "languages": languages,
-                       "defaultLanguage": entity.default_language, "voices": by_language})
+                       "defaultLanguage": default_language, "voices": by_language})
     for entity in getattr(hass.data.get("ai_task"), "entities", ()):
         if available(entity) and entity.supported_features & AITaskEntityFeature.GENERATE_DATA:
             tasks.append(label(entity.entity_id))
-    return {"players": players, "tts": voices, "ai": tasks}
+    default_ai_task = None
+    try:
+        from homeassistant.components.ai_task.const import (
+            DATA_COMPONENT as AI_TASK_COMPONENT,
+            DATA_PREFERENCES as AI_TASK_PREFERENCES,
+        )
+        preferences = hass.data.get(AI_TASK_PREFERENCES)
+        component = hass.data.get(AI_TASK_COMPONENT)
+        preferred = getattr(preferences, "gen_data_entity_id", None) if preferences is not None else None
+        entity = component.get_entity(preferred) if component is not None and preferred else None
+        if (entity is not None and available(entity)
+                and entity.supported_features & AITaskEntityFeature.GENERATE_DATA):
+            default_ai_task = str(preferred)
+    except Exception:
+        default_ai_task = None
+    return {"players": players, "tts": voices, "ai": tasks,
+            "defaultAiTaskId": default_ai_task}
 
 
 class DeviceSettings:
@@ -103,7 +123,7 @@ class DeviceSettings:
         if set(settings) - set(DEFAULTS):
             raise ValueError("Unknown announcement setting")
         result = {**self.for_user(user.id), **settings}
-        for key in ("enabled", "recipe", "steps", "state", "connection"):
+        for key in ("enabled", "recipe", "steps", "state", "connection", "ai_all"):
             if not isinstance(result[key], bool):
                 raise ValueError("Announcement switches must be booleans")
         for key in ("tts", "ai", "language", "voice"):
@@ -119,11 +139,18 @@ class DeviceSettings:
             if not result["players"] or not set(result["players"]) <= {p["id"] for p in options["players"]}:
                 raise ValueError("Select available media players you can control")
             tts = next((t for t in options["tts"] if t["id"] == result["tts"]), None)
-            if not tts or result["language"] not in tts["languages"]:
-                raise ValueError("Select a TTS entity and one of its supported languages")
+            if not tts:
+                raise ValueError("Select an available TTS entity")
+            if not result["language"]:
+                result["language"] = tts["defaultLanguage"] or (tts["languages"][0] if tts["languages"] else "")
+            if result["language"] not in tts["languages"]:
+                raise ValueError("Select one of the languages supported by the selected TTS entity")
             if result["voice"] and result["voice"] not in {v["id"] for v in tts["voices"].get(result["language"], [])}:
                 raise ValueError("The selected voice is unavailable for this language")
-            if (result["ai"] and result["ai"] not in {a["id"] for a in options["ai"]}
+            if result["ai_all"] and not result["ai"]:
+                result["ai"] = DEFAULT_AI_TASK
+            if (result["ai"] and result["ai"] != DEFAULT_AI_TASK
+                    and result["ai"] not in {a["id"] for a in options["ai"]}
                     and result["ai"] != self.for_user(user.id)["ai"]):
                 raise ValueError("The selected AI Task is unavailable")
         data = deepcopy(self.data)
