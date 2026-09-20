@@ -26,8 +26,10 @@ jobs:
           python tools/build_frontend_bundle_v126.py --check
           node --check custom_components/cook4me/frontend/cook4me-panel-v128.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v129.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v130.js
           python tests/test_nutrient_scopes_v128.py
           python tests/test_delivery_queue_v129.py
+          python tests/test_photoreal_device_v130.py
       - name: Build HACS release archive
         run: |
           rm -rf release
@@ -57,7 +59,11 @@ jobs:
           python -m compileall -q custom_components/cook4me
           python tools/build_frontend_bundle_v126.py --check
           node --check custom_components/cook4me/frontend/cook4me-panel-v128.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v129.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v130.js
           python tests/test_nutrient_scopes_v128.py
+          python tests/test_delivery_queue_v129.py
+          python tests/test_photoreal_device_v130.py
       - name: Build HACS beta archive
         run: |
           rm -rf release
