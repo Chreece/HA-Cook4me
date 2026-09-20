@@ -9,12 +9,14 @@ ANNOUNCEMENTS=ROOT/"custom_components"/"cook4me"/"announcements.py"
 
 
 class AnnouncementSettingsV127Tests(unittest.TestCase):
-    def test_v127_is_active_and_reuses_v126_safely(self):
+    def test_v127_features_are_inherited_by_active_v128(self):
         panel=PANEL.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v127.js").read_text(encoding="utf-8")
-        self.assertIn('cook4me-recipe-hub-panel-v127',panel)
-        self.assertIn('cook4me-panel-v127.js',panel)
-        self.assertIn('/cook4me_static/2026.9.20.1',panel)
+        v128=(FRONTEND/"cook4me-panel-v128.js").read_text(encoding="utf-8")
+        self.assertIn('cook4me-recipe-hub-panel-v128',panel)
+        self.assertIn('cook4me-panel-v128.js',panel)
+        self.assertIn('/cook4me_static/2026.9.20.2',panel)
+        self.assertIn("if(!customElements.get(V127))await import('./cook4me-panel-v127.js?v=2026.9.20.1')",v128)
         self.assertIn("if(!customElements.get(V126))await import('./cook4me-panel-v126-bundle.js?v=2026.9.19.5')",ui)
         self.assertIn("data-cook4me-build','2026.9.20.1'",ui)
 
