@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-provider-nutrition-eligibility-v60",
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "policy": {
+    "manualReviewPerformed": true,
+    "exactProviderIdentityRequired": true,
+    "providerIdentityInference": false,
+    "usageCountMustBeZero": true,
+    "nutritionProfileInvented": false,
+    "classificationChanged": false
+  },
+  "items": [
+    {
+      "ingredientId": "M_FOOD_609",
+      "canonicalEnglishName": "Konjac",
+      "usageCountAtReview": 0,
+      "nutritionEligible": false,
+      "reasonCode": "food_form_unresolved",
+      "reason": "Cook4Me provides only the generic provider identity 'Konjac'. Konjac powder, hydrated block and noodle products have materially different per-100-g composition, and no exact product/form is established for this unused identity."
+    },
+    {
+      "ingredientId": "M_FOOD_553",
+      "canonicalEnglishName": "Sweet",
+      "usageCountAtReview": 0,
+      "nutritionEligible": false,
+      "reasonCode": "provider_label_semantically_incomplete",
+      "reason": "The exact provider label 'Sweet' does not identify a food or formulation. Candidate foods such as sweet potato or sweet-and-sour products cannot be inferred from the provider label, and this identity is unused by recipes."
+    },
+    {
+      "ingredientId": "M_FOOD_672",
+      "canonicalEnglishName": "Yuka",
+      "usageCountAtReview": 0,
+      "nutritionEligible": false,
+      "reasonCode": "provider_identity_unproven",
+      "reason": "The exact provider label 'Yuka' does not prove that the identity is yuca/cassava or any other specific food. Provider identity inference remains disabled, and this identity is unused by recipes."
+    }
+  ]
+}
