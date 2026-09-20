@@ -66,9 +66,11 @@ class DeliveryQueueV129Tests(unittest.TestCase):
         self.assertIn("_v129ScheduleQueueRefresh", ui)
         self.assertIn("},1000);", ui)
         self.assertIn("pendingWaiting", ui)
-        self.assertIn("cook4me-recipe-hub-panel-v129", panel)
-        self.assertIn("cook4me-panel-v129.js", panel)
-        self.assertIn('"version": "2026.9.20.3"', manifest)
+        v130 = (ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v130.js").read_text(encoding="utf-8")
+        self.assertIn("cook4me-recipe-hub-panel-v130", panel)
+        self.assertIn("cook4me-panel-v130.js", panel)
+        self.assertIn('"version": "2026.9.20.4"', manifest)
+        self.assertIn("if(!customElements.get(V129))await import('./cook4me-panel-v129.js?v=2026.9.20.3')", v130)
 
 
 if __name__ == "__main__":
