@@ -129,13 +129,15 @@ async def _handle_recipe_completed(bridge: Cook4MeBridge, completed_state=None) 
             continue
         suffix = "∞ stock; no deduction" if row.get("stockUnlimited") else _format_recipe_amount(row)
         lines.append(f"- {row.get('name')}: {suffix}")
+    pending_id = str(pending.get("id") or "")
+    editor_path = f"/cook4me?consumption={pending_id}" if pending_id else "/cook4me"
     message = (
         f"**{pending.get('recipeTitle') or 'Cook4Me recipe'} finished successfully.**\n\n"
-        "Confirm the stock consumed in **Cook4Me → House ingredients & diet**. "
-        "Each tracked ingredient defaults to **Yes** and the amount required by the recipe; "
-        "you can edit every amount before confirming.\n\n"
+        "Review the ingredients actually used before deducting stock. "
+        "You can change the amount and choose the exact storage ingredient or batch "
+        "that was used, then assign who ate how many servings.\n\n"
         + "\n".join(lines[:30])
-        + "\n\n[Open Cook4Me](/cook4me)"
+        + f"\n\n[Open consumption editor]({editor_path})"
     )
     persistent_notification.async_create(
         bridge.hass,

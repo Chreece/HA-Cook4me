@@ -783,10 +783,18 @@ def _apply_primary_consumption(
                     "bestBefore": lot.get("bestBefore"),
                     "effectiveBestBefore": _effective_best_before(lot),
                     "storage": lot.get("storage"),
+                    "storageLocationId": lot.get("storageLocationId"),
                     "barcode": lot.get("barcode"),
                     "productName": lot.get("productName"),
                     "brand": lot.get("brand"),
                     "source": lot.get("source"),
+                    "nutritionSource": lot.get("nutritionSource"),
+                    "purchaseDate": lot.get("purchaseDate"),
+                    "openedAt": lot.get("openedAt"),
+                    "useWithinDays": lot.get("useWithinDays"),
+                    "addedAt": lot.get("addedAt"),
+                    "revision": lot.get("revision"),
+                    "ingredientLinks": deepcopy(lot.get("ingredientLinks") or []),
                 }
                 report["deductedLots"].append({k: v for k, v in lot_report.items() if v not in (None, "")})
                 remaining_request -= take
@@ -808,6 +816,52 @@ def _apply_primary_consumption(
             rows.remove(current)
             report["depleted"].append({"identity": ident, "name": current.get("name")})
     return rows, report
+
+
+
+def consumption_shortfalls(consumptions, report):
+    """Return finite requested amounts that were not fully deducted."""
+    deducted = report.get("deductedLots") if isinstance(report, dict) else []
+    skipped = report.get("skipped") if isinstance(report, dict) else []
+    deducted = deducted if isinstance(deducted, list) else []
+    skipped = skipped if isinstance(skipped, list) else []
+    result = []
+    for request in consumptions if isinstance(consumptions, list) else []:
+        if not isinstance(request, dict) or not request.get("consume", True):
+            continue
+        requested = _quantity(request.get("quantity"))
+        if requested is None or requested <= 0:
+            continue
+        ident = _text(request.get("identity")) or inventory_identity(request)
+        lot_id = _text(request.get("lotId"))
+        # Unlimited stock is intentionally non-depleting.
+        if any(
+            _text(row.get("identity")) == ident and row.get("reason") == "unlimited"
+            for row in skipped if isinstance(row, dict)
+        ):
+            continue
+        actual = 0.0
+        for row in deducted:
+            if not isinstance(row, dict) or _text(row.get("identity")) != ident:
+                continue
+            if lot_id and _text(row.get("lotId")) != lot_id:
+                continue
+            amount = convert_amount(
+                row.get("quantity"), row.get("unit", ""), request.get("unit", "")
+            )
+            if amount is not None:
+                actual += float(amount)
+        if actual + 1e-9 < requested:
+            result.append(
+                {
+                    "identity": ident,
+                    "lotId": lot_id or None,
+                    "requested": round(float(requested), 9),
+                    "deducted": round(actual, 9),
+                    "unit": _text(request.get("unit")),
+                }
+            )
+    return result
 
 
 def format_stock(row: dict[str, Any]) -> str:
@@ -892,6 +946,86 @@ def reserve_requirement(used, row, quantity, unit):
         remaining -= take
         if remaining <= 1e-9:
             break
+
+
+
+def restore_consumption(inventory, report):
+    """Restore a previous confirmed deduction before applying an edited history record.
+
+    Stable lot IDs are preserved. Existing lot metadata wins; when a depleted lot
+    must be recreated, the metadata captured in the meal-history deduction report
+    is used. This makes a history edit change real stock instead of only changing
+    presentation text.
+    """
+    rows = normalize_inventory(inventory)
+    lots = report.get("deductedLots") if isinstance(report, dict) else None
+    if not isinstance(lots, list):
+        return rows, {"restored": [], "skipped": []}
+    restored: list[dict[str, Any]] = []
+    skipped: list[dict[str, Any]] = []
+    metadata_keys = (
+        "bestBefore", "storage", "storageLocationId", "barcode", "productName", "brand", "source",
+        "nutritionSource", "purchaseDate", "openedAt", "useWithinDays",
+        "addedAt", "revision", "ingredientLinks",
+    )
+    for raw in lots:
+        if not isinstance(raw, dict):
+            continue
+        ident = _text(raw.get("identity"))
+        amount = _quantity(raw.get("quantity"))
+        unit = _text(raw.get("unit"))
+        if not ident or amount is None or amount <= 0:
+            continue
+        row = next((item for item in rows if inventory_identity(item) == ident), None)
+        if row is not None and row.get("unlimited"):
+            skipped.append({"identity": ident, "reason": "unlimited"})
+            continue
+        if row is None:
+            name = _text(raw.get("name") or raw.get("productName"))
+            if not name:
+                name = ident[2:] if len(ident) > 2 else ident
+            row = {"name": name, "unit": unit, "lots": []}
+            if ident.startswith("k:"):
+                row["key"] = ident[2:]
+            rows.append(row)
+        target_unit = _text(row.get("unit") or unit)
+        if not row.get("unit") and target_unit:
+            row["unit"] = target_unit
+        converted = convert_amount(amount, unit, target_unit)
+        if converted is None:
+            skipped.append({"identity": ident, "reason": "unit_mismatch"})
+            continue
+        lot_id = _text(raw.get("lotId") or raw.get("id"))
+        existing = next(
+            (lot for lot in row.get("lots") or [] if lot_id and _text(lot.get("id")) == lot_id),
+            None,
+        )
+        if existing is not None:
+            existing["quantity"] = round(
+                float(existing.get("quantity") or 0.0) + float(converted), 9
+            )
+        else:
+            lot = {"quantity": round(float(converted), 9)}
+            if lot_id:
+                lot["id"] = lot_id
+            for key in metadata_keys:
+                value = raw.get(key)
+                if value not in (None, "", []):
+                    lot[key] = deepcopy(value)
+            normalized = _normalize_lot(lot, target_unit=target_unit, strict=True)
+            if normalized is None:
+                skipped.append({"identity": ident, "reason": "invalid_lot"})
+                continue
+            row.setdefault("lots", []).append(normalized)
+        _refresh_row_totals(row)
+        restored.append({
+            "identity": ident,
+            "name": row.get("name"),
+            "quantity": round(float(converted), 9),
+            "unit": target_unit,
+            **({"lotId": lot_id} if lot_id else {}),
+        })
+    return normalize_inventory(rows), {"restored": restored, "skipped": skipped}
 
 
 def apply_consumption(inventory, consumptions):

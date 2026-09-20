@@ -52,15 +52,17 @@ class NutrientScopeV128Tests(unittest.TestCase):
         self.assertIn("nutrientTargets", ui)
         self.assertIn("V128_MEALS", ui)
 
-    def test_v128_is_inherited_by_active_v130(self):
+    def test_v128_is_inherited_by_active_v131(self):
         panel = (ROOT / "custom_components" / "cook4me" / "panel.py").read_text(encoding="utf-8")
         manifest = (ROOT / "custom_components" / "cook4me" / "manifest.json").read_text(encoding="utf-8")
         v129 = (ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v129.js").read_text(encoding="utf-8")
         v130 = (ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v130.js").read_text(encoding="utf-8")
-        self.assertIn('cook4me-recipe-hub-panel-v130', panel)
-        self.assertIn('cook4me-panel-v130.js', panel)
-        self.assertIn('2026.9.20.4', panel)
-        self.assertIn('"version": "2026.9.20.4"', manifest)
+        v131 = (ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v131.js").read_text(encoding="utf-8")
+        self.assertIn('cook4me-recipe-hub-panel-v131', panel)
+        self.assertIn('cook4me-panel-v131.js', panel)
+        self.assertIn('2026.9.20.5', panel)
+        self.assertIn('"version": "2026.9.20.5"', manifest)
+        self.assertIn("if(!customElements.get(V130))await import('./cook4me-panel-v130.js?v=2026.9.20.4')", v131)
         self.assertIn("if(!customElements.get(V129))await import('./cook4me-panel-v129.js?v=2026.9.20.3')", v130)
         self.assertIn("if(!customElements.get(V128))await import('./cook4me-panel-v128.js?v=2026.9.20.2')", v129)
 
