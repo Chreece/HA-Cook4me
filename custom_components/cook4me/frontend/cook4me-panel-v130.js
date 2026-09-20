@@ -15,6 +15,7 @@ const V130_QUEUE_TEXT={
 };
 
 class Cook4MeRecipeHubPanelV130 extends BasePanel{
+ constructor(){super();this._v130LastPhoto='';this._v130LastPhotoTitle='';}
  _v130Text(key){
   const lang=this._uiIngredientLanguage?.()||this._langCode?.()||'en';
   return (V130_WORDS[lang]||V130_WORDS.en)[key]||V130_WORDS.en[key]||key;
@@ -37,11 +38,16 @@ class Cook4MeRecipeHubPanelV130 extends BasePanel{
  _v130PhaseLabel(phase){return this._v130Text(phase==='warm'?'warm':phase);}
  _v130RecipeImage(entry){
   const state=entry?.state||{},queue=this._bookState?.queuedSend,loaded=entry?.loadedRecipe||{};
-  return String(
+  const title=this._v130RecipeTitle(entry);
+  const current=String(
    state.recipeImage||state.cover||state.recipeCover||
    loaded.cover||loaded.image||
    queue?.recipe?.cover||queue?.recipe?.image||''
   ).trim();
+  if(current){this._v130LastPhoto=current;this._v130LastPhotoTitle=title;return current;}
+  if(title&&title===this._v130LastPhotoTitle)return this._v130LastPhoto;
+  if(!title){this._v130LastPhoto='';this._v130LastPhotoTitle='';}
+  return'';
  }
  _v130RecipeTitle(entry){
   const state=entry?.state||{},queue=this._bookState?.queuedSend;
@@ -138,9 +144,9 @@ class Cook4MeRecipeHubPanelV130 extends BasePanel{
    .v130-preheating .v130-steam,.v130-cooking .v130-steam,.v130-warm .v130-steam{opacity:1}
    .v130-preheating .v130-steam i,.v130-cooking .v130-steam i,.v130-warm .v130-steam i{animation:v130Steam 2s ease-out infinite}
    .v130-preheating .v130-live-screen{box-shadow:0 0 18px rgba(255,137,55,.36),inset 0 0 0 1px rgba(255,255,255,.08)}
-   .v130-preheating .v130-screen-symbol,.v130-preheating .v130-screen-progress i{color:#ff9a55;background:#ff9a55}
+   .v130-preheating .v130-screen-symbol{color:#ff9a55}.v130-preheating .v130-screen-progress i{background:#ff9a55}
    .v130-cooking .v130-live-screen{box-shadow:0 0 20px rgba(69,218,158,.34),inset 0 0 0 1px rgba(255,255,255,.08)}
-   .v130-warm{animation:v130Float 4s ease-in-out infinite}.v130-warm .v130-screen-symbol,.v130-warm .v130-screen-progress i{color:#ffd36b;background:#ffd36b}
+   .v130-warm{animation:v130Float 4s ease-in-out infinite}.v130-warm .v130-screen-symbol{color:#ffd36b}.v130-warm .v130-screen-progress i{background:#ffd36b}
    .v130-done{animation:v130Done 1.2s ease-out 1}.v130-done .v130-live-screen{box-shadow:0 0 22px rgba(60,220,110,.42),inset 0 0 0 1px rgba(255,255,255,.08)}
    .v130-done .v130-screen-symbol{color:#62e58c}
    @keyframes v130Steam{0%{transform:translateY(9px) scale(.8);opacity:0}25%{opacity:.65}100%{transform:translateY(-20px) translateX(4px) scale(1.25);opacity:0}}
