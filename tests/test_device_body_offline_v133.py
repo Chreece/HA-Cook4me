@@ -63,14 +63,14 @@ class DeviceBodyOfflineV133Tests(unittest.TestCase):
             v133,
         )
 
-    def test_v133_is_active_and_versioned(self):
+    def test_v133_is_inherited_by_active_v134(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         self.assertIn("cook4me-recipe-hub-panel-v134",panel)
         self.assertIn("cook4me-panel-v134.js",panel)
         self.assertIn("/cook4me_static/2026.9.20.8",panel)
-        self.assertIn("?v=2026.9.20.7",panel)
-        self.assertIn('"version": "2026.9.20.8"',manifest)
+        self.assertIn("?v=2026.9.20.8",panel)
+        self.assertIn('"version": "2026.9.20.8"',manifest)\n        self.assertIn("if(!customElements.get(V133))await import('./cook4me-panel-v133.js?v=2026.9.20.7')",v134)
 
 
 if __name__=="__main__":
