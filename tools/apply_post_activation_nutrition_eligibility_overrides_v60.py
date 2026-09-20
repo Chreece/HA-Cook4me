@@ -84,7 +84,7 @@ def _provider_override_rows(path: Path = PROVIDER_ELIGIBILITY) -> dict[str, dict
             not ingredient_id.startswith("M_FOOD_")
             or not canonical
             or raw.get("nutritionEligible") is not False
-            or int(raw.get("usageCountAtReview") or -1) != 0
+            or int(raw.get("usageCountAtReview") if raw.get("usageCountAtReview") is not None else -1) != 0
             or not reason
         ):
             raise RuntimeError(f"invalid provider nutrition eligibility row: {ingredient_id}")
