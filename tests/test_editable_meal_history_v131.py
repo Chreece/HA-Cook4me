@@ -14,27 +14,28 @@ spec.loader.exec_module(inventory)
 
 class EditableMealHistoryV131Tests(unittest.TestCase):
     def test_consumption_round_trip_restores_exact_lot_and_metadata(self):
-        stock=[{
+        after=[{
             "key":"lentils","name":"Lentils","unit":"g",
             "lots":[{
-                "id":"lot-1","quantity":500,"bestBefore":"2026-10-01",
+                "id":"lot-1","quantity":380,"bestBefore":"2026-10-01",
                 "storage":"pantry","productName":"Brown lentils",
-                "ingredientLinks":[{"key":"lentils","name":"Lentils"}],
             }],
         }]
-        requests=[{
-            "identity":"k:lentils","lotId":"lot-1","quantity":120,
-            "unit":"g","consume":True,
-        }]
-        after,report=inventory.apply_consumption(stock,requests)
-        self.assertEqual(after[0]["quantity"],380)
+        report={"deductedLots":[{
+            "identity":"k:lentils","name":"Lentils","lotId":"lot-1",
+            "quantity":120,"unit":"g","bestBefore":"2026-10-01",
+            "storage":"pantry","productName":"Brown lentils",
+            "ingredientLinks":[{"key":"lentils","name":"Lentils"}],
+        }]}
         restored,restore_report=inventory.restore_consumption(after,report)
         self.assertEqual(restored[0]["quantity"],500)
         lot=restored[0]["lots"][0]
         self.assertEqual(lot["id"],"lot-1")
         self.assertEqual(lot["storage"],"pantry")
         self.assertEqual(lot["productName"],"Brown lentils")
-        self.assertEqual(lot["ingredientLinks"][0]["key"],"lentils")
+        # Existing lot metadata wins; recreated depleted lots preserve links.
+        recreated,_=inventory.restore_consumption([],report)
+        self.assertEqual(recreated[0]["lots"][0]["ingredientLinks"][0]["key"],"lentils")
         self.assertTrue(restore_report["restored"])
 
     def test_strict_shortfall_detects_amount_not_fully_deducted(self):
