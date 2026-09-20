@@ -42,18 +42,18 @@ class PhotorealDeviceV130Tests(unittest.TestCase):
         self.assertIn("Wird an das Gerät gesendet",ui)
         self.assertIn("if(!customElements.get(V129))await import('./cook4me-panel-v129.js?v=2026.9.20.3')",ui)
 
-    def test_v130_is_inherited_by_active_v134(self):
+    def test_v130_is_inherited_by_active_v135(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         v131=(FRONTEND/"cook4me-panel-v131.js").read_text(encoding="utf-8")
         v132=(FRONTEND/"cook4me-panel-v132.js").read_text(encoding="utf-8")
         v133=(FRONTEND/"cook4me-panel-v133.js").read_text(encoding="utf-8")
         v134=(FRONTEND/"cook4me-panel-v134.js").read_text(encoding="utf-8")
-        self.assertIn('cook4me-recipe-hub-panel-v134',panel)
-        self.assertIn('cook4me-panel-v134.js',panel)
-        self.assertIn('/cook4me_static/2026.9.20.8',panel)
+        self.assertIn('cook4me-recipe-hub-panel-v135',panel)
+        self.assertIn('cook4me-panel-v135.js',panel)
+        self.assertIn('/cook4me_static/2026.9.20.9',panel)
         self.assertIn('?v=2026.9.20.8',panel)
-        self.assertIn('"version": "2026.9.20.8"',manifest)
+        self.assertIn('"version": "2026.9.20.9"',manifest)
         self.assertIn("if(!customElements.get(V133))await import('./cook4me-panel-v133.js?v=2026.9.20.7')",v134)
         self.assertIn("if(!customElements.get(V132))await import('./cook4me-panel-v132.js?v=2026.9.20.6')",v133)
         self.assertIn("if(!customElements.get(V131))await import('./cook4me-panel-v131.js?v=2026.9.20.5')",v132)
