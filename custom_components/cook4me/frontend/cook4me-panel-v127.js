@@ -1,5 +1,6 @@
-import './cook4me-panel-v126.js';
-const BasePanel=customElements.get('cook4me-recipe-hub-panel-v126');
+const V126='cook4me-recipe-hub-panel-v126';
+if(!customElements.get(V126))await import('./cook4me-panel-v126-bundle.js?v=2026.9.19.5');
+const BasePanel=customElements.get(V126);
 const AI_DEFAULT='__home_assistant_default__';
 const WORDS={
  en:{
