@@ -85,8 +85,18 @@ jobs:
               raise SystemExit(f'activated release counts changed: {facts}')
           if facts['failedDetailCount'] != 0:
               raise SystemExit(f"activated catalog has failed details: {facts['failedDetailCount']}")
-          if facts['reviewedNutritionRequiredCount'] != 10776:
-              raise SystemExit(f"nutrition-required identity count changed: {facts}")
+          eligibility_original = int(
+              source.get('postActivationNutritionEligibilityOriginalRequiredCount') or 10776
+          )
+          eligibility_excluded = int(
+              source.get('postActivationNutritionEligibilityExcludedIdentityCount') or 0
+          )
+          expected_required = eligibility_original - eligibility_excluded
+          if facts['reviewedNutritionRequiredCount'] != expected_required:
+              raise SystemExit(
+                  f"nutrition-required identity count changed without explicit eligibility "
+                  f"review: expected={expected_required} facts={facts}"
+              )
           if not 0 <= facts['reviewedNutritionResolvedCount'] <= facts['reviewedNutritionRequiredCount']:
               raise SystemExit(f"invalid reviewed nutrition coverage: {facts}")
           print(json.dumps(facts, ensure_ascii=False, indent=2))
