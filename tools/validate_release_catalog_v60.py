@@ -253,7 +253,9 @@ def validate(
         if not _text(row.get("canonicalName")):
             errors.append(f"ingredient {ident} has no canonicalName")
         nutrition_ok = _nutrition_valid(row.get("nutrition"))
-        hold = nutrition_holds.find_hold(ident, row.get("conceptId")) or nutrition_holds.profile_hold(row.get("nutrition"), ingredient_id=ident)
+        hold = nutrition_holds.profile_hold(
+            row.get("nutrition"), ingredient_id=ident
+        )
         if row.get("nutrition") and hold is not None:
             errors.append(f"ingredient {ident} carries held nutrition binding {hold['reviewTargetId']}")
             nutrition_ok = False
