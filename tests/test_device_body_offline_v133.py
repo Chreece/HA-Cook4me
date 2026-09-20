@@ -66,6 +66,7 @@ class DeviceBodyOfflineV133Tests(unittest.TestCase):
     def test_v133_is_inherited_by_active_v134(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
+        v134=(FRONTEND/"cook4me-panel-v134.js").read_text(encoding="utf-8")
         self.assertIn("cook4me-recipe-hub-panel-v134",panel)
         self.assertIn("cook4me-panel-v134.js",panel)
         self.assertIn("/cook4me_static/2026.9.20.8",panel)
