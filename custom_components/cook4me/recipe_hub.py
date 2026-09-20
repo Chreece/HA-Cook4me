@@ -19,6 +19,7 @@ from .inventory import (
     add_inventory_item,
     inventory_identity,
     apply_consumption,
+    consumption_shortfalls,
     restore_consumption,
     normalize_inventory,
     recipe_consumption_items,
@@ -436,7 +437,11 @@ class Cook4MeRecipeHub:
         return deepcopy(pending)
 
     async def async_confirm_consumption(
-        self, pending_id: str, consumptions: list[dict[str, Any]]
+        self,
+        pending_id: str,
+        consumptions: list[dict[str, Any]],
+        *,
+        strict: bool = False,
     ) -> dict[str, Any]:
         async with self._lock:
             pending = self._data.get("pendingConsumption")
@@ -447,6 +452,12 @@ class Cook4MeRecipeHub:
             house, report = apply_consumption(
                 profile.get("houseIngredients"), consumptions
             )
+            if strict:
+                shortfalls = consumption_shortfalls(consumptions, report)
+                if shortfalls:
+                    raise ValueError(
+                        "The selected storage amount is no longer available; reload stock and review the deduction"
+                    )
             profile["houseIngredients"] = house
             profile["pantry"] = [row["name"] for row in house]
             self._data["profile"] = self._normalize_profile(profile)
@@ -458,6 +469,8 @@ class Cook4MeRecipeHub:
         self,
         previous_report: dict[str, Any],
         consumptions: list[dict[str, Any]],
+        *,
+        strict: bool = False,
     ) -> dict[str, Any]:
         """Atomically restore an old meal deduction and apply the edited mapping."""
         async with self._lock:
@@ -466,6 +479,12 @@ class Cook4MeRecipeHub:
                 profile.get("houseIngredients"), previous_report
             )
             house, report = apply_consumption(restored_house, consumptions)
+            if strict:
+                shortfalls = consumption_shortfalls(consumptions, report)
+                if shortfalls:
+                    raise ValueError(
+                        "The edited storage amount cannot be fully deducted; review the selected ingredient or lot"
+                    )
             profile["houseIngredients"] = house
             profile["pantry"] = [row["name"] for row in house]
             self._data["profile"] = self._normalize_profile(profile)
