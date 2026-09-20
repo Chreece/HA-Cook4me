@@ -134,6 +134,38 @@ class SemanticIngredientCompilerTests(unittest.TestCase):
             "Unquantified serving accompaniments",
         )
 
+    def test_same_concept_requires_matching_nutrition_eligibility(self):
+        payload = self._payload(
+            [
+                {
+                    "language": "cs",
+                    "source": "Koriandrové pyré",
+                    "english": "Coriander purée",
+                    "classification": "food",
+                    "confidence": "high",
+                    "nutritionEligible": False,
+                    "nutritionEligibilityReason": "Generic prepared formulation unspecified",
+                },
+                {
+                    "language": "hu",
+                    "source": "Koriander püré",
+                    "english": "Coriander purée",
+                    "classification": "food",
+                    "confidence": "high",
+                    "nutritionEligible": False,
+                    "nutritionEligibilityReason": "Generic prepared formulation unspecified",
+                },
+            ]
+        )
+        result = mod.compile_semantic_concepts([("batch.json", payload)])
+        self.assertEqual(result["summary"]["semanticConcepts"], 1)
+        concept = result["concepts"][0]
+        self.assertFalse(concept["nutritionEligible"])
+        self.assertEqual(len(concept["sourceIdentities"]), 2)
+        self.assertTrue(
+            all(row["nutritionEligible"] is False for row in concept["sourceIdentities"])
+        )
+
     def test_source_local_identity_matches_v2_contract_and_is_stable(self):
         first = mod.source_local_ingredient_id("de", "Tomate")
         second = mod.source_local_ingredient_id("de", "Tomate")
