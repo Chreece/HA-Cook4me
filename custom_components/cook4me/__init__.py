@@ -40,7 +40,10 @@ from .websocket_v14 import async_register as async_register_websocket_v14
 from .websocket_v15 import async_register as async_register_websocket_v15
 from .websocket_v16 import async_register as async_register_websocket_v16
 from .websocket_v17 import async_register as async_register_websocket_v17
-from .websocket_v18 import async_register as async_register_websocket_v18
+from .websocket_v18 import (
+    async_register as async_register_websocket_v18,
+    register_send_queue_listener,
+)
 
 SERVICE_SEND_RECIPE = "send_recipe"
 SERVICE_SEARCH_RECIPES = "search_recipes"
@@ -326,6 +329,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entry.runtime_data = bridge
         hass.data.setdefault(DOMAIN, {}).setdefault(DATA_BRIDGES, {})[entry.entry_id] = bridge
         _register_completion_listener(bridge)
+        register_send_queue_listener(bridge)
         update_expiry_notification(bridge)
         bridge._expiry_listener_unsub = register_daily_expiry_check(bridge)
         # Restore registry defaults before platforms decide which entities load.
@@ -346,7 +350,7 @@ async def _async_cleanup_bridge(bridge: Cook4MeBridge) -> None:
     announcements = getattr(bridge, "announcements", None)
     if announcements is not None:
         await announcements.close()
-    for name in ("_completion_listener_unsub", "_expiry_listener_unsub"):
+    for name in ("_completion_listener_unsub", "_expiry_listener_unsub", "_send_queue_listener_unsub"):
         unsubscribe = getattr(bridge, name, None)
         if callable(unsubscribe):
             unsubscribe()
