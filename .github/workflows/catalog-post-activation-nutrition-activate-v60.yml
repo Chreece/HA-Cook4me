@@ -257,8 +257,18 @@ jobs:
               raise SystemExit(f'activation changed catalog identity counts: {facts}')
           if facts['failedDetailCount'] != 0 or facts['detailNotFoundCount'] != 1485:
               raise SystemExit(f'activation changed detail accounting: {facts}')
-          if facts['expectedRequiredBefore'] != 10776:
-              raise SystemExit(f'activation baseline changed the v60 nutrition denominator: {facts}')
+          eligibility_original = int(
+              baseline_source.get('postActivationNutritionEligibilityOriginalRequiredCount') or 10776
+          )
+          eligibility_excluded = int(
+              baseline_source.get('postActivationNutritionEligibilityExcludedIdentityCount') or 0
+          )
+          expected_required = eligibility_original - eligibility_excluded
+          if facts['expectedRequiredBefore'] != expected_required:
+              raise SystemExit(
+                  f'activation baseline changed the reviewed nutrition denominator without '
+                  f'an explicit eligibility exclusion: expected={expected_required} facts={facts}'
+              )
           if facts['resolvedBefore'] != facts['expectedResolvedBefore'] or facts['requiredBefore'] != facts['expectedRequiredBefore']:
               raise SystemExit(f'activation did not start from the checked-out catalog nutrition baseline: {facts}')
           if facts['newlyResolvedTargets'] <= 0 or facts['newlyResolvedIdentities'] <= 0:
