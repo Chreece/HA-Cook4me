@@ -35,6 +35,7 @@ jobs:
           node --check custom_components/cook4me/frontend/cook4me-panel-v131.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v132.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v133.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v134.js
           python tests/test_menu_footer_v126.py
           python tests/test_announcement_settings_v127.py
           python tests/test_nutrient_scopes_v128.py
@@ -43,3 +44,4 @@ jobs:
           python tests/test_editable_meal_history_v131.py
           python tests/test_hard_refresh_device_v132.py
           python tests/test_device_body_offline_v133.py
+          python tests/test_transparent_device_v134.py
