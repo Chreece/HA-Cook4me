@@ -70,7 +70,8 @@ class DeviceBodyOfflineV133Tests(unittest.TestCase):
         self.assertIn("cook4me-panel-v134.js",panel)
         self.assertIn("/cook4me_static/2026.9.20.8",panel)
         self.assertIn("?v=2026.9.20.8",panel)
-        self.assertIn('"version": "2026.9.20.8"',manifest)\n        self.assertIn("if(!customElements.get(V133))await import('./cook4me-panel-v133.js?v=2026.9.20.7')",v134)
+        self.assertIn('"version": "2026.9.20.8"',manifest)
+        self.assertIn("if(!customElements.get(V133))await import('./cook4me-panel-v133.js?v=2026.9.20.7')",v134)
 
 
 if __name__=="__main__":
