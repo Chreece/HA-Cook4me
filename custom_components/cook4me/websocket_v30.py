@@ -255,6 +255,10 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
     if isinstance(msg.get("shared_filters"), dict) and release_catalog_ready():
         from .shared_recipe_runtime import search_filtered
         filters = {**msg["shared_filters"], "mealTypes": msg.get("meal_types") or msg["shared_filters"].get("mealTypes", [])}
+        from .diet_profiles import resolve_filters
+        from .shared_recipe_filters import daily_targets, normalize_filters
+        resolved_filters = resolve_filters(bridge.recipe_hub.profile, normalize_filters(filters))
+        profile_daily_targets = daily_targets(resolved_filters)
         languages = v18._languages(bridge, msg.get("languages"))
         if msg.get("group_by_meal_type"):
             languages = list(dict.fromkeys(str(code).lower().replace("_", "-").split("-", 1)[0]
@@ -270,10 +274,23 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
         if msg.get("group_by_meal_type"):
             from .today_multilang import select_today_categories
             saved = store.snapshot or {}
-            selected = await hass.async_add_executor_job(select_today_categories, rows, filters["mealTypes"], languages,
-                saved.get("items", []), saved.get("suggestionHistory", []))
+            selected = await hass.async_add_executor_job(
+                select_today_categories,
+                rows,
+                filters["mealTypes"],
+                languages,
+                saved.get("items", []),
+                saved.get("suggestionHistory", []),
+                profile_daily_targets,
+            )
         else:
-            selected = {"items": select_catalog_balanced(rows, int(msg.get("meal_count", 1)), languages, diversity=bool(msg.get("variety", True)))}
+            selected = {"items": select_catalog_balanced(
+                rows,
+                int(msg.get("meal_count", 1)),
+                languages,
+                diversity=bool(msg.get("variety", True)),
+                daily_targets=profile_daily_targets,
+            )}
         result = {"date": dt_util.now().date().isoformat(), **selected, "candidateCount": len(rows), "rankedCount": len(rows), "catalogErrors": [], "catalogMode": "release_offline", "filters": filters}
         coordinator.progress(operation, "persist")
         await store.async_set(result)
@@ -348,10 +365,31 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
         coordinator.progress(operation, "nutrition", completed=index, total=total_ranked or 1, message=f"{index}/{total_ranked}")
     if isinstance(msg.get("shared_filters"), dict):
         from .shared_recipe_runtime import processor
-        process = await processor(bridge, msg["shared_filters"], language=msg.get("ui_language", "en"), rank=False, score_targets=False)
+        from .diet_profiles import resolve_filters
+        from .shared_recipe_filters import daily_targets, normalize_filters
+        for item in scored:
+            match = item.get("match") or {}
+            if "todayBaseScore" in match:
+                match["score"] = match["todayBaseScore"]
+        process = await processor(bridge, msg["shared_filters"], language=msg.get("ui_language", "en"), rank=False, score_targets=True)
         scored = await hass.async_add_executor_job(process, scored)
+        resolved_filters = resolve_filters(bridge.recipe_hub.profile, normalize_filters(msg["shared_filters"]))
+        profile_daily_targets = daily_targets(resolved_filters)
+    else:
+        from .diet_profiles import resolve_filters
+        from .shared_recipe_filters import daily_targets, normalize_filters
+        profile_daily_targets = daily_targets(resolve_filters(
+            bridge.recipe_hub.profile,
+            normalize_filters({"dietProfile": "household"}),
+        ))
     scored.sort(key=lambda row: row.get("match", {}).get("score", -1000), reverse=True)
-    chosen = select_catalog_balanced(scored, meal_count, languages, diversity=bool(msg.get("variety", True)))
+    chosen = select_catalog_balanced(
+        scored,
+        meal_count,
+        languages,
+        diversity=bool(msg.get("variety", True)),
+        daily_targets=profile_daily_targets,
+    )
     candidate_counts = Counter(_text(row.get("todayCatalogLanguage")) for row in candidates)
     ranked_counts = Counter(_text(row.get("todayCatalogLanguage")) for row in scored)
     selected_counts = Counter(_text(row.get("todayCatalogLanguage")) for row in chosen)
