@@ -125,6 +125,20 @@ def iter_review_rows(
             english = _text(raw.get("english"))
             classification = _text(raw.get("classification")).lower()
             confidence = _text(raw.get("confidence")).lower() or "reviewed"
+            nutrition_eligible = raw.get("nutritionEligible")
+            nutrition_reason = _text(raw.get("nutritionEligibilityReason"))
+            if nutrition_eligible is not None and not isinstance(nutrition_eligible, bool):
+                raise RuntimeError(
+                    f"{review_file}: nutritionEligible must be boolean for {language}/{source}"
+                )
+            if nutrition_eligible is False and classification != "food":
+                raise RuntimeError(
+                    f"{review_file}: nutrition eligibility override requires food classification"
+                )
+            if nutrition_eligible is False and not nutrition_reason:
+                raise RuntimeError(
+                    f"{review_file}: nutrition-ineligible food review requires a reason"
+                )
             if (
                 not language
                 or not source
@@ -141,6 +155,10 @@ def iter_review_rows(
                 "confidence": confidence,
                 "reviewFile": review_file,
             }
+            if isinstance(nutrition_eligible, bool):
+                row["nutritionEligible"] = nutrition_eligible
+            if nutrition_reason:
+                row["nutritionEligibilityReason"] = nutrition_reason
             if notes := _text(raw.get("notes")):
                 row["notes"] = notes
 
@@ -150,6 +168,8 @@ def iter_review_rows(
                 if (
                     _norm(previous["english"]) != _norm(english)
                     or previous["classification"] != classification
+                    or previous.get("nutritionEligible", classification == "food")
+                    != row.get("nutritionEligible", classification == "food")
                 ):
                     raise RuntimeError(
                         "conflicting reviewed semantics for "
@@ -201,7 +221,9 @@ def compile_semantic_concepts(
                 "classification": classification,
                 "mergePolicy": merge_policy,
                 "providerIdentityAssigned": False,
-                "nutritionEligible": classification == "food",
+                "nutritionEligible": row.get(
+                    "nutritionEligible", classification == "food"
+                ),
                 "dietEligible": classification == "food",
                 "allergenEligible": classification == "food",
                 "needsSemanticConfirmation": not mergeable,
@@ -212,6 +234,8 @@ def compile_semantic_concepts(
         if (
             concept["classification"] != classification
             or _norm(concept["canonicalEnglish"]) != _norm(english)
+            or concept["nutritionEligible"]
+            != row.get("nutritionEligible", classification == "food")
         ):
             raise RuntimeError(
                 f"semantic concept collision for {concept_id}: "
@@ -235,6 +259,10 @@ def compile_semantic_concepts(
             "reviewFile": row["reviewFile"],
             "providerIdentityAssigned": False,
         }
+        if "nutritionEligible" in row:
+            identity["nutritionEligible"] = row["nutritionEligible"]
+        if reason := row.get("nutritionEligibilityReason"):
+            identity["nutritionEligibilityReason"] = reason
         if notes := row.get("notes"):
             identity["notes"] = notes
         concept["sourceIdentities"].append(identity)
