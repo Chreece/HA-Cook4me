@@ -19,6 +19,7 @@ from .inventory import (
     add_inventory_item,
     inventory_identity,
     apply_consumption,
+    restore_consumption,
     normalize_inventory,
     recipe_consumption_items,
     recipe_expiry_priority,
@@ -452,6 +453,28 @@ class Cook4MeRecipeHub:
             self._data["pendingConsumption"] = None
             await self._save()
             return {"profile": self.profile, "report": report, "completedRecipe": completed}
+
+    async def async_revise_consumption(
+        self,
+        previous_report: dict[str, Any],
+        consumptions: list[dict[str, Any]],
+    ) -> dict[str, Any]:
+        """Atomically restore an old meal deduction and apply the edited mapping."""
+        async with self._lock:
+            profile = deepcopy(self._data["profile"])
+            restored_house, restored = restore_consumption(
+                profile.get("houseIngredients"), previous_report
+            )
+            house, report = apply_consumption(restored_house, consumptions)
+            profile["houseIngredients"] = house
+            profile["pantry"] = [row["name"] for row in house]
+            self._data["profile"] = self._normalize_profile(profile)
+            await self._save()
+            return {
+                "profile": self.profile,
+                "report": report,
+                "restored": restored,
+            }
 
     async def async_clear_pending_consumption(self, pending_id: str) -> bool:
         async with self._lock:
