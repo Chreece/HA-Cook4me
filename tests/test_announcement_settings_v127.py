@@ -9,15 +9,17 @@ ANNOUNCEMENTS=ROOT/"custom_components"/"cook4me"/"announcements.py"
 
 
 class AnnouncementSettingsV127Tests(unittest.TestCase):
-    def test_v127_features_are_inherited_by_active_v130(self):
+    def test_v127_features_are_inherited_by_active_v131(self):
         panel=PANEL.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v127.js").read_text(encoding="utf-8")
         v128=(FRONTEND/"cook4me-panel-v128.js").read_text(encoding="utf-8")
         v129=(FRONTEND/"cook4me-panel-v129.js").read_text(encoding="utf-8")
         v130=(FRONTEND/"cook4me-panel-v130.js").read_text(encoding="utf-8")
-        self.assertIn('cook4me-recipe-hub-panel-v130',panel)
-        self.assertIn('cook4me-panel-v130.js',panel)
-        self.assertIn('/cook4me_static/2026.9.20.4',panel)
+        v131=(FRONTEND/"cook4me-panel-v131.js").read_text(encoding="utf-8")
+        self.assertIn('cook4me-recipe-hub-panel-v131',panel)
+        self.assertIn('cook4me-panel-v131.js',panel)
+        self.assertIn('/cook4me_static/2026.9.20.5',panel)
+        self.assertIn("if(!customElements.get(V130))await import('./cook4me-panel-v130.js?v=2026.9.20.4')",v131)
         self.assertIn("if(!customElements.get(V129))await import('./cook4me-panel-v129.js?v=2026.9.20.3')",v130)
         self.assertIn("if(!customElements.get(V128))await import('./cook4me-panel-v128.js?v=2026.9.20.2')",v129)
         self.assertIn("if(!customElements.get(V127))await import('./cook4me-panel-v127.js?v=2026.9.20.1')",v128)
