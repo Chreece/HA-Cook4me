@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through twentieth audit 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through twenty-first audit 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -1033,7 +1033,108 @@
     "whole caraway seed": "Ολόκληρος σπόρος αγριοκύμινου",
     "whole cumin seed": "Ολόκληρος σπόρος κύμινου",
     "whole white mustard seed": "Ολόκληρος σπόρος λευκής μουστάρδας",
-    "dried lotus seed": "Αποξηραμένος σπόρος λωτού"
+    "dried lotus seed": "Αποξηραμένος σπόρος λωτού",
+    "adzuki bean": "Φασόλι αζούκι",
+    "bean": "Φασόλι",
+    "black bean": "Μαύρο φασόλι",
+    "borlotti bean": "Φασόλι μπαρμπούνι",
+    "broad bean": "Κουκί",
+    "boiled borlotti bean": "Βρασμένο φασόλι μπαρμπούνι",
+    "canned chickpea": "Ρεβίθι κονσέρβας",
+    "canned cooked lentil": "Βρασμένη φακή κονσέρβας",
+    "canned lentil": "Φακή κονσέρβας",
+    "canned red bean": "Κόκκινο φασόλι κονσέρβας",
+    "chickpea": "Ρεβίθι",
+    "cooked bean": "Μαγειρεμένο φασόλι",
+    "cooked canned chickpea": "Μαγειρεμένο ρεβίθι κονσέρβας",
+    "cooked chickpea": "Μαγειρεμένο ρεβίθι",
+    "cooked lentil": "Μαγειρεμένη φακή",
+    "cooked mature bean": "Μαγειρεμένο ξερό φασόλι",
+    "cooked mature white bean": "Μαγειρεμένο ξερό λευκό φασόλι",
+    "cooked or canned bean": "Μαγειρεμένο φασόλι ή φασόλι κονσέρβας",
+    "cooked or canned chickpea": "Μαγειρεμένο ρεβίθι ή ρεβίθι κονσέρβας",
+    "cooked or canned fava bean": "Μαγειρεμένο κουκί ή κουκί κονσέρβας",
+    "cooked paprika bean": "Μαγειρεμένο φασόλι με πάπρικα",
+    "cooked red bean": "Μαγειρεμένο κόκκινο φασόλι",
+    "cooked tarbais bean": "Μαγειρεμένο φασόλι Ταρμπ",
+    "cooked white bean": "Μαγειρεμένο λευκό φασόλι",
+    "dried bean": "Ξερό φασόλι",
+    "dried borlotti bean": "Ξερό φασόλι μπαρμπούνι",
+    "dried chickpea": "Ξερό ρεβίθι",
+    "dried red bean": "Ξερό κόκκινο φασόλι",
+    "dried shelled broad bean": "Ξερό καθαρισμένο κουκί",
+    "dried white bean": "Ξερό λευκό φασόλι",
+    "fermented black bean": "Ζυμωμένο μαύρο φασόλι",
+    "flageolet bean": "Φασόλι φλαζολέ",
+    "flat green bean": "Πλατύ φασολάκι",
+    "fresh broad bean": "Φρέσκο κουκί",
+    "fresh white bean": "Φρέσκο λευκό φασόλι",
+    "frozen bean": "Κατεψυγμένο φασόλι",
+    "frozen broad bean": "Κατεψυγμένο κουκί",
+    "frozen green bean": "Κατεψυγμένο φασολάκι",
+    "golden bean": "Χρυσό φασόλι",
+    "green bean": "Πράσινο φασολάκι",
+    "haricot bean": "Λευκό φασόλι",
+    "kintoki red bean": "Κόκκινο φασόλι κιντόκι",
+    "mature white bean": "Ώριμο λευκό φασόλι",
+    "soaked white bean": "Μουλιασμένο λευκό φασόλι",
+    "wax bean": "Κίτρινο φασολάκι",
+    "white bean": "Λευκό φασόλι",
+    "beluga black lentil": "Μαύρη φακή μπελούγκα",
+    "beluga lentil": "Φακή μπελούγκα",
+    "black lentil": "Μαύρη φακή",
+    "dried green lentil": "Ξερή πράσινη φακή",
+    "dried lentil": "Ξερή φακή",
+    "dried yellow lentil": "Ξερή κίτρινη φακή",
+    "french green lentil": "Γαλλική πράσινη φακή",
+    "green lentil": "Πράσινη φακή",
+    "green puy lentil": "Πράσινη φακή Πουί",
+    "lentil": "Φακή",
+    "red lentil": "Κόκκινη φακή",
+    "split lentil": "Σπασμένη φακή",
+    "white lentil": "Λευκή φακή",
+    "yellow lentil": "Κίτρινη φακή",
+    "black dried mushroom": "Μαύρο αποξηραμένο μανιτάρι",
+    "cultivated mushroom": "Μανιτάρι καλλιέργειας",
+    "dried black mushroom": "Αποξηραμένο μαύρο μανιτάρι",
+    "mushroom": "Μανιτάρι",
+    "pickled mushroom": "Μανιτάρι τουρσί",
+    "white mushroom": "Λευκό μανιτάρι",
+    "shiitake or other mushroom": "Σιτάκε ή άλλο μανιτάρι",
+    "blackberry": "Βατόμουρο",
+    "blueberry": "Μύρτιλο",
+    "blueberry and blackberry": "Μύρτιλο και βατόμουρο",
+    "date": "Χουρμάς",
+    "fig": "Σύκο",
+    "grape": "Σταφύλι",
+    "red grape": "Κόκκινο σταφύλι",
+    "white grape": "Λευκό σταφύλι",
+    "white or black grape": "Λευκό ή μαύρο σταφύλι",
+    "raspberry": "Σμέουρο",
+    "strawberry": "Φράουλα",
+    "datterini cherry tomato": "Ντοματίνι ντατερίνι",
+    "cocktail tomato": "Ντοματίνι κοκτέιλ",
+    "grapefruit segments": "Τμήματα γκρέιπφρουτ",
+    "stuffing zucchini": "Κολοκύθι για γέμισμα",
+    "beetroot and chard leaf": "Φύλλο παντζαριού και σέσκουλου",
+    "blanched nettle leaf": "Ζεματισμένο φύλλο τσουκνίδας",
+    "boiled savoy cabbage leaf": "Βρασμένο φύλλο λάχανου σαβόι",
+    "parsley root and leaf": "Ρίζα και φύλλο μαϊντανού",
+    "pork rib": "Χοιρινό παϊδάκι",
+    "pork back rib": "Χοιρινό παϊδάκι ράχης",
+    "lamb rib": "Αρνίσιο παϊδάκι",
+    "separated pork rib": "Χωριστό χοιρινό παϊδάκι",
+    "separated egg": "Αυγό χωρισμένο σε κρόκο και ασπράδι",
+    "seed": "Σπόρος",
+    "any seed": "Σπόρος της επιλογής σας",
+    "hempseed": "Σπόρος κάνναβης",
+    "french onion soup mix in a sachet": "Φακελάκι μείγματος γαλλικής κρεμμυδόσουπας",
+    "cans of poppy seed filling": "Κονσέρβες γέμισης παπαρουνόσπορου",
+    "pink peppercorn": "Ροζ κόκκος πιπεριού",
+    "sichuan peppercorns": "Κόκκοι πιπεριού Σετσουάν",
+    "peppercorns": "Κόκκοι πιπεριού",
+    "black peppercorns": "Κόκκοι μαύρου πιπεριού",
+    "green asparagus spears": "Βλαστοί πράσινων σπαραγγιών"
   },
   "searchAliases": {
     "veal": [
@@ -3049,6 +3150,264 @@
     "white mustard seed": [
       "σπόρος λευκής μουστάρδας",
       "white mustard seed"
+    ],
+    "adzuki bean": [
+      "φασόλι αζούκι",
+      "φασόλια αζούκι",
+      "adzuki bean"
+    ],
+    "bean": [
+      "φασόλι",
+      "φασόλια",
+      "bean"
+    ],
+    "black bean": [
+      "μαύρο φασόλι",
+      "μαύρα φασόλια",
+      "black bean"
+    ],
+    "borlotti bean": [
+      "φασόλι μπαρμπούνι",
+      "φασόλια μπαρμπούνια",
+      "borlotti bean"
+    ],
+    "broad bean": [
+      "κουκί",
+      "κουκιά",
+      "broad bean"
+    ],
+    "chickpea": [
+      "ρεβίθι",
+      "ρεβίθια",
+      "chickpea"
+    ],
+    "canned chickpea": [
+      "ρεβίθι κονσέρβας",
+      "ρεβίθια κονσέρβας",
+      "canned chickpea"
+    ],
+    "dried chickpea": [
+      "ξερό ρεβίθι",
+      "ξερά ρεβίθια",
+      "dried chickpea"
+    ],
+    "white bean": [
+      "λευκό φασόλι",
+      "λευκά φασόλια",
+      "white bean"
+    ],
+    "green bean": [
+      "πράσινο φασολάκι",
+      "φασολάκια",
+      "green bean"
+    ],
+    "flat green bean": [
+      "πλατύ φασολάκι",
+      "πλατιά φασολάκια",
+      "flat green bean"
+    ],
+    "wax bean": [
+      "κίτρινο φασολάκι",
+      "κίτρινα φασολάκια",
+      "wax bean"
+    ],
+    "flageolet bean": [
+      "φασόλι φλαζολέ",
+      "φασόλια φλαζολέ",
+      "flageolet bean"
+    ],
+    "red lentil": [
+      "κόκκινη φακή",
+      "κόκκινες φακές",
+      "red lentil"
+    ],
+    "green lentil": [
+      "πράσινη φακή",
+      "πράσινες φακές",
+      "green lentil"
+    ],
+    "black lentil": [
+      "μαύρη φακή",
+      "μαύρες φακές",
+      "black lentil"
+    ],
+    "lentil": [
+      "φακή",
+      "φακές",
+      "lentil"
+    ],
+    "white lentil": [
+      "λευκή φακή",
+      "λευκές φακές",
+      "white lentil"
+    ],
+    "yellow lentil": [
+      "κίτρινη φακή",
+      "κίτρινες φακές",
+      "yellow lentil"
+    ],
+    "beluga lentil": [
+      "φακή μπελούγκα",
+      "φακές μπελούγκα",
+      "beluga lentil"
+    ],
+    "green puy lentil": [
+      "πράσινη φακή πουί",
+      "φακές πουί",
+      "puy lentil"
+    ],
+    "mushroom": [
+      "μανιτάρι",
+      "μανιτάρια",
+      "mushroom"
+    ],
+    "cultivated mushroom": [
+      "μανιτάρι καλλιέργειας",
+      "μανιτάρια καλλιέργειας",
+      "cultivated mushroom"
+    ],
+    "white mushroom": [
+      "λευκό μανιτάρι",
+      "λευκά μανιτάρια",
+      "white mushroom"
+    ],
+    "pickled mushroom": [
+      "μανιτάρι τουρσί",
+      "μανιτάρια τουρσί",
+      "pickled mushroom"
+    ],
+    "blackberry": [
+      "βατόμουρο",
+      "βατόμουρα",
+      "blackberry"
+    ],
+    "blueberry": [
+      "μύρτιλο",
+      "μύρτιλα",
+      "blueberry"
+    ],
+    "date": [
+      "χουρμάς",
+      "χουρμάδες",
+      "date"
+    ],
+    "fig": [
+      "σύκο",
+      "σύκα",
+      "fig"
+    ],
+    "grape": [
+      "σταφύλι",
+      "σταφύλια",
+      "grape"
+    ],
+    "red grape": [
+      "κόκκινο σταφύλι",
+      "κόκκινα σταφύλια",
+      "red grape"
+    ],
+    "white grape": [
+      "λευκό σταφύλι",
+      "λευκά σταφύλια",
+      "white grape"
+    ],
+    "raspberry": [
+      "σμέουρο",
+      "σμέουρα",
+      "raspberry"
+    ],
+    "strawberry": [
+      "φράουλα",
+      "φράουλες",
+      "strawberry"
+    ],
+    "datterini cherry tomato": [
+      "ντοματίνι ντατερίνι",
+      "ντοματίνια ντατερίνι",
+      "datterini tomato"
+    ],
+    "cocktail tomato": [
+      "ντοματίνι κοκτέιλ",
+      "ντοματίνια κοκτέιλ",
+      "cocktail tomato"
+    ],
+    "grapefruit segments": [
+      "τμήματα γκρέιπφρουτ",
+      "grapefruit segments"
+    ],
+    "stuffing zucchini": [
+      "κολοκύθι για γέμισμα",
+      "stuffing zucchini"
+    ],
+    "blanched nettle leaf": [
+      "ζεματισμένο φύλλο τσουκνίδας",
+      "blanched nettle leaf"
+    ],
+    "boiled savoy cabbage leaf": [
+      "βρασμένο φύλλο λάχανου σαβόι",
+      "boiled savoy cabbage leaf"
+    ],
+    "pork rib": [
+      "χοιρινό παϊδάκι",
+      "pork rib"
+    ],
+    "pork back rib": [
+      "χοιρινό παϊδάκι ράχης",
+      "pork back rib"
+    ],
+    "lamb rib": [
+      "αρνίσιο παϊδάκι",
+      "lamb rib"
+    ],
+    "separated pork rib": [
+      "χωριστό χοιρινό παϊδάκι",
+      "separated pork rib"
+    ],
+    "separated egg": [
+      "αυγό χωρισμένο σε κρόκο και ασπράδι",
+      "separated egg"
+    ],
+    "seed": [
+      "σπόρος",
+      "σπόροι",
+      "seed"
+    ],
+    "any seed": [
+      "σπόρος της επιλογής σας",
+      "any seed"
+    ],
+    "hempseed": [
+      "σπόρος κάνναβης",
+      "σπόροι κάνναβης",
+      "hempseed"
+    ],
+    "french onion soup mix in a sachet": [
+      "φακελάκι γαλλικής κρεμμυδόσουπας",
+      "onion soup sachet"
+    ],
+    "cans of poppy seed filling": [
+      "κονσέρβες γέμισης παπαρουνόσπορου",
+      "poppy seed filling cans"
+    ],
+    "pink peppercorn": [
+      "ροζ κόκκος πιπεριού",
+      "pink peppercorn"
+    ],
+    "peppercorns": [
+      "κόκκοι πιπεριού",
+      "peppercorns"
+    ],
+    "black peppercorns": [
+      "κόκκοι μαύρου πιπεριού",
+      "black peppercorns"
+    ],
+    "sichuan peppercorns": [
+      "κόκκοι πιπεριού σετσουάν",
+      "sichuan peppercorns"
+    ],
+    "green asparagus spears": [
+      "βλαστοί πράσινων σπαραγγιών",
+      "asparagus spears"
     ]
   }
 }
