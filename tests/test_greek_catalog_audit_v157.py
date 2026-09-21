@@ -24,11 +24,11 @@ class GreekCatalogAuditV157Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v157.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v168",panel)
-        self.assertIn("cook4me-panel-v168.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.33",panel)
-        self.assertIn("?v=2026.9.21.33",panel)
-        self.assertIn('"version": "2026.9.21.33"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v169",panel)
+        self.assertIn("cook4me-panel-v169.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.34",panel)
+        self.assertIn("?v=2026.9.21.34",panel)
+        self.assertIn('"version": "2026.9.21.34"',manifest)
         self.assertIn("cook4me-panel-v156.js?v=2026.9.21.21",ui)
 
     def test_meat_and_bread_forms_keep_cut_information(self):
