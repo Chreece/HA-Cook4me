@@ -310,7 +310,7 @@ async def ws_product_add(hass, connection, msg):
             raise ValueError("Unlimited stock is one logical stock item, not multiple packages")
         ingredient = {**ingredient, "key": ingredient.get("key") or ingredient.get("ingredientId") or ingredient.get("id")}
         metadata = {key: value for key, value in msg.get("lot_metadata", {}).items() if key in {
-            "barcode", "productName", "brand", "storageLocationId", "purchaseDate", "openedAt", "useWithinDays", "noExpiry"}}
+            "barcode", "productName", "brand", "storageLocationId", "containerId", "purchaseDate", "openedAt", "useWithinDays", "noExpiry"}}
         if metadata.get("barcode"):
             metadata["barcode"] = normalize_barcode(metadata["barcode"])
         metadata["source"] = "reviewed_product"
