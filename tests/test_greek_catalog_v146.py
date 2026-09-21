@@ -20,15 +20,15 @@ def load_presentation():
 
 
 class GreekCatalogV146Tests(unittest.TestCase):
-    def test_v146_is_inherited_by_active_v160(self):
+    def test_v146_is_inherited_by_active_v161(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v146.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v160",panel)
-        self.assertIn("cook4me-panel-v160.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.25",panel)
-        self.assertIn("?v=2026.9.21.25",panel)
-        self.assertIn('"version": "2026.9.21.25"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v161",panel)
+        self.assertIn("cook4me-panel-v161.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.26",panel)
+        self.assertIn("?v=2026.9.21.26",panel)
+        self.assertIn('"version": "2026.9.21.26"',manifest)
         self.assertIn("cook4me-panel-v145.js?v=2026.9.21.10",ui)
 
     def test_curated_greek_overlay_fixes_literal_terms(self):
