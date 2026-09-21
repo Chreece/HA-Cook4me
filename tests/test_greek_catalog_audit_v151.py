@@ -24,11 +24,11 @@ class GreekCatalogAuditV151Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v151.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v166",panel)
-        self.assertIn("cook4me-panel-v166.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.31",panel)
-        self.assertIn("?v=2026.9.21.31",panel)
-        self.assertIn('"version": "2026.9.21.31"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v167",panel)
+        self.assertIn("cook4me-panel-v167.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.32",panel)
+        self.assertIn("?v=2026.9.21.32",panel)
+        self.assertIn('"version": "2026.9.21.32"',manifest)
         self.assertIn("cook4me-panel-v150.js?v=2026.9.21.15",ui)
 
     def test_mint_and_spearmint_are_consistent(self):
