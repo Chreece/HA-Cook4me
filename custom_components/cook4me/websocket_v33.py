@@ -52,12 +52,33 @@ def _state(hass, bridge, user):
 
 async def _catalog(hass, bridge, msg):
     from . import release_catalog
+    language = str(msg.get("language") or v11._device_language(bridge))
     if release_catalog.release_catalog_ready():
-        # Match and validate against exactly the complete picker shown in the
-        # UI, including all language aliases and stable IDs for keyless foods.
-        rows = await hass.async_add_executor_job(release_catalog.ingredient_choices, str(msg.get("language") or "en"))
-        return [{**row, "key": row.get("key") or row.get("ingredientId") or row.get("id")} for row in rows]
-    result = await v11._ingredient_catalog(hass, bridge, str(msg.get("language") or v11._device_language(bridge)), refresh=False)
+        # The release catalog is immutable for the lifetime of this integration
+        # process. Cache each language once so scan -> review -> save does not
+        # rebuild the same complete catalogue twice.
+        cache = getattr(bridge, "_scanner_catalog_cache", None)
+        if cache is None:
+            cache = bridge._scanner_catalog_cache = {}
+        if language not in cache:
+            rows = await hass.async_add_executor_job(
+                release_catalog.ingredient_choices, language
+            )
+            cache[language] = tuple(
+                {
+                    **row,
+                    "key": row.get("key")
+                    or row.get("ingredientId")
+                    or row.get("id"),
+                }
+                for row in rows
+            )
+            while len(cache) > 12:
+                cache.pop(next(iter(cache)))
+        return [dict(row) for row in cache[language]]
+    result = await v11._ingredient_catalog(
+        hass, bridge, language, refresh=False
+    )
     return result.get("items") or []
 
 
@@ -281,9 +302,7 @@ async def ws_product_add(hass, connection, msg):
             raise ValueError("Choose between 1 and 100 packages; an existing package is edited individually")
         ingredient = {**ingredient, "key": ingredient.get("key") or ingredient.get("ingredientId") or ingredient.get("id")}
         metadata = {key: value for key, value in msg.get("lot_metadata", {}).items() if key in {
-            "barcode", "productName", "brand", "storageLocationId", "purchaseDate", "openedAt", "useWithinDays"}}
-        if not metadata.get("storageLocationId"):
-            raise ValueError("Choose where this product is stored")
+            "barcode", "productName", "brand", "storageLocationId", "purchaseDate", "openedAt", "useWithinDays", "noExpiry"}}
         if metadata.get("barcode"):
             metadata["barcode"] = normalize_barcode(metadata["barcode"])
         metadata["source"] = "reviewed_product"
@@ -310,31 +329,74 @@ async def ws_product_add(hass, connection, msg):
                     unit=msg["unit"], best_before=msg.get("best_before", ""), lot_metadata=metadata, fingerprint=fingerprint,
                     package_count=count)
             committed = True
-            warnings = []
-            if nutrition or msg.get("edit_lot_id"):
-                try:
-                    store = await nutrition_store_for_bridge(bridge)
-                    if msg.get("edit_lot_id"):
-                        await replace_package_nutrition(store, bridge.recipe_hub.profile["houseIngredients"], receipt["lotId"], nutrition)
-                    else:
-                        for lot_id in receipt.get("lotIds") or [receipt["lotId"]]:
-                            await async_save_lot_nutrition(store, bridge.recipe_hub.profile["houseIngredients"],
-                                lot_id=lot_id, nutrition=nutrition, manually_edited=True)
-                    await async_reconcile_nutrition_inventory(store, bridge.recipe_hub.profile["houseIngredients"])
-                except Exception:
-                    warnings.append("Stock saved, but nutrition could not be saved. Retry this save to finish without adding stock again.")
-            try:
-                if metadata.get("barcode"):
-                    store = await v15._store(bridge)
-                    await store.async_set(metadata["barcode"], {"ingredient": ingredient, "ingredientLinks": links, "quantity": msg["quantity"], "unit": msg["unit"],
-                        "productName": metadata.get("productName"), "brand": metadata.get("brand"), "nutrition": nutrition})
-            except Exception:
-                warnings.append("Stock saved, but the barcode mapping could not be remembered.")
-            try:
+
+            async def save_nutrition_details():
+                if not (nutrition or msg.get("edit_lot_id")):
+                    return
+                store = await nutrition_store_for_bridge(bridge)
+                inventory = bridge.recipe_hub.profile["houseIngredients"]
+                if msg.get("edit_lot_id"):
+                    await replace_package_nutrition(
+                        store, inventory, receipt["lotId"], nutrition
+                    )
+                else:
+                    for lot_id in receipt.get("lotIds") or [receipt["lotId"]]:
+                        await async_save_lot_nutrition(
+                            store,
+                            inventory,
+                            lot_id=lot_id,
+                            nutrition=nutrition,
+                            manually_edited=True,
+                        )
+                await async_reconcile_nutrition_inventory(store, inventory)
+
+            async def save_barcode_mapping():
+                if not metadata.get("barcode"):
+                    return
+                store = await v15._store(bridge)
+                await store.async_set(
+                    metadata["barcode"],
+                    {
+                        "ingredient": ingredient,
+                        "ingredientLinks": links,
+                        "quantity": msg["quantity"],
+                        "unit": msg["unit"],
+                        "productName": metadata.get("productName"),
+                        "brand": metadata.get("brand"),
+                        "nutrition": nutrition,
+                    },
+                )
+
+            async def save_prices():
                 for lot_id in receipt.get("lotIds") or [receipt["lotId"]]:
-                    await save_product_prices(bridge, ingredient, lot_id, msg, metadata)
-            except Exception:
-                warnings.append("Stock saved, but prices could not be saved. Retry this save to finish without adding stock again.")
+                    await save_product_prices(
+                        bridge, ingredient, lot_id, msg, metadata
+                    )
+
+            # Stock is already committed and protected by the idempotent receipt.
+            # These three stores are independent, so waiting for them serially only
+            # delays the scanner without improving consistency.
+            side_effects = await asyncio.gather(
+                save_nutrition_details(),
+                save_barcode_mapping(),
+                save_prices(),
+                return_exceptions=True,
+            )
+            warnings = []
+            if isinstance(side_effects[0], BaseException):
+                warnings.append(
+                    "Stock saved, but nutrition could not be saved. "
+                    "Retry this save to finish without adding stock again."
+                )
+            if isinstance(side_effects[1], BaseException):
+                warnings.append(
+                    "Stock saved, but the barcode mapping could not be remembered."
+                )
+            if isinstance(side_effects[2], BaseException):
+                warnings.append(
+                    "Stock saved, but prices could not be saved. "
+                    "Retry this save to finish without adding stock again."
+                )
             update_expiry_notification(bridge)
             connection.send_result(msg["id"], {"status": "added", "lotId": receipt["lotId"],
                 "lotIds": receipt.get("lotIds") or [receipt["lotId"]], "warnings": warnings,
