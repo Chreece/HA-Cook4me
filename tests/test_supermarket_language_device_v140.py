@@ -61,11 +61,11 @@ class SupermarketLanguageDeviceV140Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v140.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v157",panel)
-        self.assertIn("cook4me-panel-v157.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.22",panel)
-        self.assertIn("?v=2026.9.21.22",panel)
-        self.assertIn('"version": "2026.9.21.22"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v158",panel)
+        self.assertIn("cook4me-panel-v158.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.23",panel)
+        self.assertIn("?v=2026.9.21.23",panel)
+        self.assertIn('"version": "2026.9.21.23"',manifest)
         self.assertIn(
             "if(!customElements.get(V139))await import('./cook4me-panel-v139.js?v=2026.9.21.4')",
             ui,

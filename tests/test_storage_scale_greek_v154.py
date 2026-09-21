@@ -20,15 +20,15 @@ def load_module(name, relative):
 
 
 class StorageScaleGreekV154Tests(unittest.TestCase):
-    def test_v154_is_inherited_by_active_v157(self):
+    def test_v154_is_inherited_by_active_v158(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v154.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v157",panel)
-        self.assertIn("cook4me-panel-v157.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.22",panel)
-        self.assertIn("?v=2026.9.21.22",panel)
-        self.assertIn('"version": "2026.9.21.22"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v158",panel)
+        self.assertIn("cook4me-panel-v158.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.23",panel)
+        self.assertIn("?v=2026.9.21.23",panel)
+        self.assertIn('"version": "2026.9.21.23"',manifest)
         self.assertIn("cook4me-panel-v153.js?v=2026.9.21.18",ui)
 
     def test_storage_kinds_include_real_kitchen_locations(self):
