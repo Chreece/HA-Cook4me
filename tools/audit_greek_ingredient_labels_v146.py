@@ -119,6 +119,8 @@ def main():
         for row in bad_picker[:60]:
             print("BAD_PICKER\t" + str(row.get("canonicalName")) + "\t=>\t" + str(row.get("name")))
         raise SystemExit("Greek ingredient picker contains untranslated or placeholder names")
+    if "--verbose" not in sys.argv:
+        return
 
     print("\nTOP_USED_ACTUAL_GREEK_LABELS")
     for count, key, canonical, shown, source in sorted(actual, reverse=True)[:280]:
