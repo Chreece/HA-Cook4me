@@ -116,7 +116,20 @@ def main():
     print("\nNON_GREEK_DISPLAY")
     for row in sorted(no_greek, reverse=True)[:220]:
         count, key, canonical, shown, source = row
-        print(f"{count:6d}\t{canonical}\t=>\t{shown}\t[{source}]")
+        classification = str(representative[key].get("classification") or "")
+        print(f"{count:6d}\t{classification}\t{canonical}\t=>\t{shown}\t[{source}]")
+
+    food_no_greek = [
+        row for row in no_greek
+        if str(representative[row[1]].get("classification") or "").lower()
+        not in {"equipment", "other", "ambiguous"}
+    ]
+    print(f"\nFOOD_NON_GREEK_COUNT\t{len(food_no_greek)}")
+    print("FOOD_NON_GREEK_DISPLAY")
+    for row in sorted(food_no_greek, reverse=True)[:240]:
+        count, key, canonical, shown, source = row
+        classification = str(representative[key].get("classification") or "")
+        print(f"{count:6d}\t{classification}\t{canonical}\t=>\t{shown}\t[{source}]")
 
     print("\nUNDEFINED_LABELS")
     for count, key, value in sorted(undefined, reverse=True):
