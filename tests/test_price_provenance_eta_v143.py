@@ -31,7 +31,7 @@ class PriceProvenanceEtaV143Tests(unittest.TestCase):
         self.assertIn("ingredientEstimate:'Ingredient estimate'",ui)
         self.assertIn("source==='purchase'||confidence==='exact_purchase'",ui)
         self.assertIn("source==='purchase_reference'",ui)
-        self.assertIn("matchKind==='barcode'||identity.startsWith('barcode:')",ui)
+        self.assertIn("matchKind==='barcode'||identity.startsWith('barcode:')||(source==='open_prices'&&Boolean(ref.barcode))",ui)
         self.assertIn("source==='open_prices_category'",ui)
 
     def test_price_source_shows_location_age_provider_and_basis(self):
