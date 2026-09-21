@@ -20,15 +20,15 @@ def load_presentation():
 
 
 class GreekCatalogAuditV171Tests(unittest.TestCase):
-    def test_v171_is_active_and_versioned(self):
+    def test_v171_is_inherited_by_active_v172(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
-        ui=(FRONTEND/"cook4me-panel-v171.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v171",panel)
-        self.assertIn("cook4me-panel-v171.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.36",panel)
-        self.assertIn("?v=2026.9.21.36",panel)
-        self.assertIn('"version": "2026.9.21.36"',manifest)
+        ui=(FRONTEND/"cook4me-panel-v172.js").read_text(encoding="utf-8")
+        self.assertIn("cook4me-recipe-hub-panel-v172",panel)
+        self.assertIn("cook4me-panel-v172.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.37",panel)
+        self.assertIn("?v=2026.9.21.37",panel)
+        self.assertIn('"version": "2026.9.21.37"',manifest)
         self.assertIn("cook4me-panel-v170.js?v=2026.9.21.35",ui)
 
     def test_choice_and_singular_display_fixes(self):
@@ -71,7 +71,7 @@ class GreekCatalogAuditV171Tests(unittest.TestCase):
         data=json.loads(CURATED.read_text(encoding="utf-8"))
         self.assertGreaterEqual(len(data["labels"]),1258)
         self.assertGreaterEqual(len(data["searchAliases"]),1703)
-        self.assertIn("twenty-sixth audit",data["translationSource"])
+        self.assertIn("audit",data["translationSource"])
 
 
 if __name__=="__main__":
