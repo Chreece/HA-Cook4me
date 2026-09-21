@@ -67,11 +67,11 @@ class DeviceBodyOfflineV133Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         v134=(FRONTEND/"cook4me-panel-v134.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v172",panel)
-        self.assertIn("cook4me-panel-v172.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.37",panel)
-        self.assertIn("?v=2026.9.21.37",panel)
-        self.assertIn('"version": "2026.9.21.37"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v173",panel)
+        self.assertIn("cook4me-panel-v173.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.38",panel)
+        self.assertIn("?v=2026.9.21.38",panel)
+        self.assertIn('"version": "2026.9.21.38"',manifest)
         self.assertIn("if(!customElements.get(V133))await import('./cook4me-panel-v133.js?v=2026.9.20.7')",v134)
 
 
