@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through eleventh audit 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through twelfth audit 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -516,7 +516,49 @@
     "sweet red bean paste": "Anko (γλυκιά πάστα κόκκινων φασολιών)",
     "smooth red bean paste": "Koshi-an (λεία πάστα κόκκινων φασολιών)",
     "chunky red bean paste": "Tsubu-an (πάστα κόκκινων φασολιών με κομμάτια)",
-    "red bean paste": "Πάστα κόκκινων φασολιών (red bean paste)"
+    "red bean paste": "Πάστα κόκκινων φασολιών (red bean paste)",
+    "bacon strips": "Λωρίδες μπέικον",
+    "beef in 30 g cubes": "Μοσχάρι σε κύβους των 30 g",
+    "centre-cut pork loin": "Κεντρικό κομμάτι χοιρινού καρέ",
+    "dried daikon strips": "Αποξηραμένες λωρίδες daikon",
+    "fried taro chunks": "Κομμάτια τηγανητού τάρο",
+    "large slices of toasted mafra bread": "Μεγάλες φέτες φρυγανισμένου ψωμιού Mafra",
+    "large slices of toasted rustic bread": "Μεγάλες φέτες φρυγανισμένου χωριάτικου ψωμιού",
+    "pork belly, 2–3 cm thick": "Χοιρινή πανσέτα πάχους 2–3 εκ.",
+    "slices of crustless white bread": "Φέτες λευκού ψωμιού χωρίς κόρα",
+    "slices of gingerbread": "Φέτες gingerbread",
+    "slices of italian ham": "Φέτες ιταλικού ζαμπόν",
+    "slices of italian prosciutto": "Φέτες ιταλικού προσούτο",
+    "slices of parma ham": "Φέτες ζαμπόν Πάρμας",
+    "slices of sandwich bread": "Φέτες ψωμιού τοστ",
+    "slices of smoked trout": "Φέτες καπνιστής πέστροφας",
+    "slices of toasted rustic bread": "Φέτες φρυγανισμένου χωριάτικου ψωμιού",
+    "slices of unpeeled lemon": "Φέτες λεμονιού με φλούδα",
+    "slices of white bread": "Φέτες λευκού ψωμιού",
+    "slices of wholewheat bread": "Φέτες ψωμιού ολικής άλεσης",
+    "thin slices of cooked ham": "Λεπτές φέτες βραστού ζαμπόν",
+    "pieces of crustless white bread": "Κομμάτια λευκού ψωμιού χωρίς κόρα",
+    "headless prawn": "Γαρίδα χωρίς κεφάλι",
+    "headless shrimp": "Γαρίδα χωρίς κεφάλι",
+    "large prawn tails": "Ουρές μεγάλων γαρίδων",
+    "shrimp tails": "Ουρές γαρίδων",
+    "marinated anchovy": "Μαριναρισμένη αντζούγια",
+    "dried baby sardine": "Αποξηραμένη μικρή σαρδέλα",
+    "sun-dried tomato": "Λιαστή ντομάτα",
+    "salmon fillets, 125 g each": "Φιλέτα σολομού, 125 g το καθένα",
+    "salmon fillets, 200 g each": "Φιλέτα σολομού, 200 g το καθένα",
+    "salt cod fillets, 150 g each": "Φιλέτα παστού μπακαλιάρου, 150 g το καθένα",
+    "venison fillet, 180 g portions": "Μερίδες φιλέτου ελαφιού των 180 g",
+    "ling fish": "Ling (Molva molva)",
+    "ling fish fillets, 250 g each": "Φιλέτα ling (Molva molva), 250 g το καθένα",
+    "milkfish belly": "Κοιλιά milkfish (bangus)",
+    "hairtail fish": "Hairtail / cutlassfish (Trichiurus)",
+    "yellow sea cod fillet": "Φιλέτο yellow sea cod",
+    "white-fish steak": "Φέτα λευκού ψαριού",
+    "bonito steak": "Φέτα παλαμίδας",
+    "fish steak": "Φέτα ψαριού",
+    "salmon steak": "Φέτα σολομού",
+    "salmon steaks, 150 g each": "Φέτες σολομού, 150 g η καθεμία"
   },
   "searchAliases": {
     "veal": [
@@ -1626,6 +1668,84 @@
       "πάστα κόκκινων φασολιών",
       "anko",
       "dou sha"
+    ],
+    "bacon strips": [
+      "λωρίδες μπέικον",
+      "bacon strips"
+    ],
+    "beef in 30 g cubes": [
+      "κύβοι μοσχαριού",
+      "beef cubes",
+      "μοσχάρι σε κύβους"
+    ],
+    "centre-cut pork loin": [
+      "χοιρινό καρέ",
+      "centre cut pork loin",
+      "center cut pork loin"
+    ],
+    "dried daikon strips": [
+      "λωρίδες daikon",
+      "dried daikon strips",
+      "αποξηραμένο ντάικον"
+    ],
+    "pork belly, 2–3 cm thick": [
+      "πανσέτα 2 3 εκ",
+      "pork belly 2-3 cm"
+    ],
+    "slices of sandwich bread": [
+      "φέτες ψωμιού τοστ",
+      "sandwich bread slices"
+    ],
+    "slices of white bread": [
+      "φέτες λευκού ψωμιού",
+      "white bread slices"
+    ],
+    "slices of wholewheat bread": [
+      "φέτες ψωμιού ολικής",
+      "wholewheat bread slices"
+    ],
+    "headless prawn": [
+      "γαρίδα χωρίς κεφάλι",
+      "headless prawn"
+    ],
+    "headless shrimp": [
+      "γαρίδα χωρίς κεφάλι",
+      "headless shrimp"
+    ],
+    "marinated anchovy": [
+      "μαριναρισμένη αντζούγια",
+      "marinated anchovy"
+    ],
+    "dried baby sardine": [
+      "αποξηραμένη μικρή σαρδέλα",
+      "dried baby sardine"
+    ],
+    "sun-dried tomato": [
+      "λιαστή ντομάτα",
+      "sun dried tomato"
+    ],
+    "ling fish": [
+      "ling",
+      "molva molva",
+      "ψάρι ling"
+    ],
+    "milkfish belly": [
+      "milkfish",
+      "bangus",
+      "κοιλιά milkfish"
+    ],
+    "hairtail fish": [
+      "hairtail",
+      "cutlassfish",
+      "trichiurus"
+    ],
+    "salmon fillets, 125 g each": [
+      "φιλέτα σολομού 125 g",
+      "salmon fillets 125g"
+    ],
+    "salt cod fillets, 150 g each": [
+      "φιλέτα παστού μπακαλιάρου 150 g",
+      "salt cod fillets"
     ]
   }
 }
