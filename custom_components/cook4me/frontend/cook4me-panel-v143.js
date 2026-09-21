@@ -10,7 +10,7 @@ const V143_TEXT={
   sourceProvider:'Source',observedToday:'observed today',observedYesterday:'observed yesterday',observedDays:'observed {days} days ago',
   updatedToday:'updated today',updatedYesterday:'updated yesterday',updatedDays:'updated {days} days ago',
   estimatedPrices:'estimated prices',eta:'Estimated remaining',estimatingEta:'Estimating remaining time…',
-  lessThan5s:'less than 5 s'
+  lessThan5s:'less than 5 s',secondUnit:'s',minuteUnit:'min',hourUnit:'h'
  },
  de:{
   paidExact:'Bezahlter Preis · exakte Packung',barcodeObservation:'Preisbeobachtung mit gleichem Barcode',previousPurchase:'Schätzung aus einem früheren Kauf',
@@ -19,7 +19,7 @@ const V143_TEXT={
   sourceProvider:'Quelle',observedToday:'heute beobachtet',observedYesterday:'gestern beobachtet',observedDays:'vor {days} Tagen beobachtet',
   updatedToday:'heute aktualisiert',updatedYesterday:'gestern aktualisiert',updatedDays:'vor {days} Tagen aktualisiert',
   estimatedPrices:'geschätzte Preise',eta:'Geschätzte Restzeit',estimatingEta:'Restzeit wird geschätzt…',
-  lessThan5s:'unter 5 s'
+  lessThan5s:'unter 5 Sek.',secondUnit:'Sek.',minuteUnit:'Min.',hourUnit:'Std.'
  },
  el:{
   paidExact:'Τιμή αγοράς · ακριβής συσκευασία',barcodeObservation:'Παρατήρηση τιμής με ίδιο barcode',previousPurchase:'Εκτίμηση από προηγούμενη αγορά',
@@ -28,7 +28,7 @@ const V143_TEXT={
   sourceProvider:'Πηγή',observedToday:'παρατήρηση σήμερα',observedYesterday:'παρατήρηση χθες',observedDays:'παρατήρηση πριν από {days} ημέρες',
   updatedToday:'ενημερώθηκε σήμερα',updatedYesterday:'ενημερώθηκε χθες',updatedDays:'ενημερώθηκε πριν από {days} ημέρες',
   estimatedPrices:'εκτιμώμενες τιμές',eta:'Εκτιμώμενος χρόνος που απομένει',estimatingEta:'Υπολογισμός υπολειπόμενου χρόνου…',
-  lessThan5s:'λιγότερο από 5 δ'
+  lessThan5s:'λιγότερο από 5 δ',secondUnit:'δ',minuteUnit:'λ',hourUnit:'ω'
  }
 };
 
@@ -134,21 +134,26 @@ class Cook4MeRecipeHubPanelV143 extends BasePanel{
  _v143SaveEtaHistory(){
   try{globalThis.localStorage?.setItem(this._v143EtaStorageKey(),JSON.stringify(this._v143EtaHistory||{}));}catch(_error){}
  }
+ _v143TitleKey(token){
+  const title=String(token?.title||'work').trim().toLowerCase().replace(/\s+/g,' ').slice(0,80);return `title:${title}`;
+ }
  _v143JobKey(token){
-  const kind=String(token?._v143Kind||'').trim().toLowerCase(),title=String(token?.title||'work').trim().toLowerCase().replace(/\s+/g,' ').slice(0,80);
-  return (kind?`kind:${kind}`:`title:${title}`);
+  const kind=String(token?._v143Kind||'').trim().toLowerCase();return kind?`kind:${kind}`:this._v143TitleKey(token);
  }
  _v143HistoricalDuration(token){
-  const row=this._v143LoadEtaHistory()[this._v143JobKey(token)],value=Number(row?.avgMs);
+  const history=this._v143LoadEtaHistory(),row=history[this._v143JobKey(token)]||history[this._v143TitleKey(token)],value=Number(row?.avgMs);
   return Number.isFinite(value)&&value>0?value:null;
  }
  _v143RecordDuration(token){
   if(!token||token._v143HistorySaved||token.cancelled||token.failed)return;
   token._v143HistorySaved=true;const started=Number(token._v143StartedAt),duration=this._v143Now()-started;
   if(!Number.isFinite(duration)||duration<250||duration>6*60*60*1000)return;
-  const history=this._v143LoadEtaHistory(),key=this._v143JobKey(token),old=history[key]||{},count=Math.min(20,Math.max(0,Number(old.count)||0)+1);
-  const previous=Number(old.avgMs),weight=Math.min(5,Math.max(1,Number(old.count)||1)),avg=Number.isFinite(previous)&&previous>0?(previous*weight+duration)/(weight+1):duration;
-  history[key]={avgMs:Math.round(avg),count,updatedAt:Date.now()};
+  const history=this._v143LoadEtaHistory(),keys=[...new Set([this._v143JobKey(token),this._v143TitleKey(token)])];
+  for(const key of keys){
+   const old=history[key]||{},count=Math.min(20,Math.max(0,Number(old.count)||0)+1);
+   const previous=Number(old.avgMs),weight=Math.min(5,Math.max(1,Number(old.count)||1)),avg=Number.isFinite(previous)&&previous>0?(previous*weight+duration)/(weight+1):duration;
+   history[key]={avgMs:Math.round(avg),count,updatedAt:Date.now()};
+  }
   const entries=Object.entries(history).sort((a,b)=>Number(b[1]?.updatedAt||0)-Number(a[1]?.updatedAt||0)).slice(0,80);
   this._v143EtaHistory=Object.fromEntries(entries);this._v143SaveEtaHistory();
  }
@@ -159,10 +164,11 @@ class Cook4MeRecipeHubPanelV143 extends BasePanel{
  }
  _v143FormatEta(ms){
   const seconds=Math.max(0,Math.ceil(Number(ms)/1000));if(!Number.isFinite(seconds))return '';
+  const s=this._v143Text('secondUnit'),m=this._v143Text('minuteUnit'),h=this._v143Text('hourUnit');
   if(seconds<5)return this._v143Text('lessThan5s');
-  if(seconds<60)return `~${Math.max(5,Math.round(seconds/5)*5)} s`;
-  if(seconds<3600){const minutes=Math.floor(seconds/60),rest=Math.round((seconds%60)/10)*10;return rest>=10?`~${minutes} min ${rest} s`:`~${minutes} min`;}
-  const hours=Math.floor(seconds/3600),minutes=Math.round((seconds%3600)/300)*5;return minutes>=5?`~${hours} h ${minutes} min`:`~${hours} h`;
+  if(seconds<60)return `~${Math.max(5,Math.round(seconds/5)*5)} ${s}`;
+  if(seconds<3600){const minutes=Math.floor(seconds/60),rest=Math.round((seconds%60)/10)*10;return rest>=10?`~${minutes} ${m} ${rest} ${s}`:`~${minutes} ${m}`;}
+  const hours=Math.floor(seconds/3600),minutes=Math.round((seconds%3600)/300)*5;return minutes>=5?`~${hours} ${h} ${minutes} ${m}`:`~${hours} ${h}`;
  }
  _v143EstimateEta(token,done=null,total=null){
   if(!token||token.failed||token.cancelled||token.ended)return null;
