@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through nineteenth audit 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through twentieth audit 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -976,7 +976,64 @@
     "large frozen raw shrimp": "Μεγάλη κατεψυγμένη ωμή γαρίδα",
     "canned bean": "Φασόλι κονσέρβας",
     "canned green pea": "Αρακάς κονσέρβας",
-    "canned pea": "Αρακάς κονσέρβας"
+    "canned pea": "Αρακάς κονσέρβας",
+    "almond": "Αμύγδαλο",
+    "blanched almond": "Λευκό αμύγδαλο",
+    "caramelized almond": "Καραμελωμένο αμύγδαλο",
+    "ground almond": "Αλεσμένο αμύγδαλο",
+    "flaked almond": "Αμύγδαλο φιλέ",
+    "slivered almond": "Αμύγδαλο σε λεπτές λωρίδες",
+    "roasted almond": "Καβουρδισμένο αμύγδαλο",
+    "toasted almond": "Καβουρδισμένο αμύγδαλο",
+    "roasted flaked almond": "Καβουρδισμένο αμύγδαλο φιλέ",
+    "toasted flaked almond": "Καβουρδισμένο αμύγδαλο φιλέ",
+    "whole almond": "Ολόκληρο αμύγδαλο",
+    "whole blanched almond": "Ολόκληρο λευκό αμύγδαλο",
+    "cashew": "Κάσιους",
+    "cashew nut": "Κάσιους",
+    "roasted cashew": "Καβουρδισμένο κάσιους",
+    "toasted cashew": "Καβουρδισμένο κάσιους",
+    "roasted ground cashew": "Αλεσμένο καβουρδισμένο κάσιους",
+    "unsalted cashew": "Ανάλατο κάσιους",
+    "peanut": "Αράπικο φιστίκι",
+    "chestnut": "Κάστανο",
+    "cooked chestnut": "Μαγειρεμένο κάστανο",
+    "soaked white chestnut": "Μουλιασμένο λευκό κάστανο",
+    "sweet chestnut": "Γλυκό κάστανο",
+    "plum": "Δαμάσκηνο",
+    "mirabelle plum": "Δαμάσκηνο μιραμπέλ",
+    "dried plum": "Αποξηραμένο δαμάσκηνο",
+    "frozen plum": "Κατεψυγμένο δαμάσκηνο",
+    "cherry tomato": "Ντοματίνι",
+    "grape tomato": "Μακρόστενο ντοματίνι",
+    "datterini tomato": "Ντομάτα ντατερίνι",
+    "dried tomato": "Αποξηραμένη ντομάτα",
+    "dried soft tomato": "Μαλακή αποξηραμένη ντομάτα",
+    "canned baby carrot": "Μικρό καρότο κονσέρβας",
+    "dried carrot": "Αποξηραμένο καρότο",
+    "boiled okra": "Βρασμένη μπάμια",
+    "dried okra": "Αποξηραμένη μπάμια",
+    "frozen okra": "Κατεψυγμένη μπάμια",
+    "dried anchovy": "Αποξηραμένη αντζούγια",
+    "dried baby shrimp": "Αποξηραμένη μικρή γαρίδα",
+    "dried sakura shrimp": "Αποξηραμένη γαρίδα σακούρα",
+    "dried shrimp": "Αποξηραμένη γαρίδα",
+    "salted shrimp": "Αλατισμένη γαρίδα",
+    "caraway seed": "Σπόρος αγριοκύμινου",
+    "coriander seed": "Σπόρος κόλιανδρου",
+    "cumin seed": "Σπόρος κύμινου",
+    "hemp seed": "Σπόρος κάνναβης",
+    "hulled sunflower seed": "Καθαρισμένος ηλιόσπορος",
+    "mustard seed": "Σπόρος μουστάρδας",
+    "pomegranate seed": "Σπόρος ροδιού",
+    "pumpkin seed": "Κολοκυθόσπορος",
+    "sunflower seed": "Ηλιόσπορος",
+    "white mustard seed": "Σπόρος λευκής μουστάρδας",
+    "wild fennel seed": "Σπόρος άγριου μάραθου",
+    "whole caraway seed": "Ολόκληρος σπόρος αγριοκύμινου",
+    "whole cumin seed": "Ολόκληρος σπόρος κύμινου",
+    "whole white mustard seed": "Ολόκληρος σπόρος λευκής μουστάρδας",
+    "dried lotus seed": "Αποξηραμένος σπόρος λωτού"
   },
   "searchAliases": {
     "veal": [
@@ -2845,6 +2902,153 @@
     "potato for mash": [
       "πατάτα για πουρέ",
       "potato for mash"
+    ],
+    "almond": [
+      "αμύγδαλο",
+      "αμύγδαλα",
+      "almond"
+    ],
+    "blanched almond": [
+      "λευκό αμύγδαλο",
+      "λευκά αμύγδαλα",
+      "blanched almond"
+    ],
+    "roasted almond": [
+      "καβουρδισμένο αμύγδαλο",
+      "καβουρδισμένα αμύγδαλα",
+      "roasted almond"
+    ],
+    "toasted almond": [
+      "καβουρδισμένο αμύγδαλο",
+      "καβουρδισμένα αμύγδαλα",
+      "toasted almond"
+    ],
+    "whole almond": [
+      "ολόκληρο αμύγδαλο",
+      "whole almond"
+    ],
+    "cashew": [
+      "κάσιους",
+      "cashew"
+    ],
+    "roasted cashew": [
+      "καβουρδισμένο κάσιους",
+      "roasted cashew"
+    ],
+    "unsalted cashew": [
+      "ανάλατο κάσιους",
+      "unsalted cashew"
+    ],
+    "peanut": [
+      "αράπικο φιστίκι",
+      "αράπικα φιστίκια",
+      "peanut"
+    ],
+    "chestnut": [
+      "κάστανο",
+      "κάστανα",
+      "chestnut"
+    ],
+    "plum": [
+      "δαμάσκηνο",
+      "δαμάσκηνα",
+      "plum"
+    ],
+    "dried plum": [
+      "αποξηραμένο δαμάσκηνο",
+      "ξερά δαμάσκηνα",
+      "dried plum"
+    ],
+    "cherry tomato": [
+      "ντοματίνι",
+      "ντοματίνια",
+      "cherry tomato"
+    ],
+    "grape tomato": [
+      "μακρόστενο ντοματίνι",
+      "grape tomato"
+    ],
+    "dried tomato": [
+      "αποξηραμένη ντομάτα",
+      "αποξηραμένες ντομάτες",
+      "dried tomato"
+    ],
+    "canned baby carrot": [
+      "μικρό καρότο κονσέρβας",
+      "baby carrot"
+    ],
+    "dried carrot": [
+      "αποξηραμένο καρότο",
+      "dried carrot"
+    ],
+    "boiled okra": [
+      "βρασμένη μπάμια",
+      "βρασμένες μπάμιες",
+      "boiled okra"
+    ],
+    "dried okra": [
+      "αποξηραμένη μπάμια",
+      "αποξηραμένες μπάμιες",
+      "dried okra"
+    ],
+    "frozen okra": [
+      "κατεψυγμένη μπάμια",
+      "κατεψυγμένες μπάμιες",
+      "frozen okra"
+    ],
+    "dried anchovy": [
+      "αποξηραμένη αντζούγια",
+      "αποξηραμένες αντζούγιες",
+      "dried anchovy"
+    ],
+    "dried shrimp": [
+      "αποξηραμένη γαρίδα",
+      "αποξηραμένες γαρίδες",
+      "dried shrimp"
+    ],
+    "salted shrimp": [
+      "αλατισμένη γαρίδα",
+      "αλατισμένες γαρίδες",
+      "salted shrimp"
+    ],
+    "caraway seed": [
+      "σπόρος αγριοκύμινου",
+      "σπόροι αγριοκύμινου",
+      "caraway seed"
+    ],
+    "coriander seed": [
+      "σπόρος κόλιανδρου",
+      "σπόροι κόλιανδρου",
+      "coriander seed"
+    ],
+    "cumin seed": [
+      "σπόρος κύμινου",
+      "σπόροι κύμινου",
+      "cumin seed"
+    ],
+    "mustard seed": [
+      "σπόρος μουστάρδας",
+      "σπόροι μουστάρδας",
+      "mustard seed"
+    ],
+    "pomegranate seed": [
+      "σπόρος ροδιού",
+      "σπόροι ροδιού",
+      "pomegranate seed"
+    ],
+    "pumpkin seed": [
+      "κολοκυθόσπορος",
+      "κολοκυθόσποροι",
+      "pumpkin seed"
+    ],
+    "sunflower seed": [
+      "ηλιόσπορος",
+      "ηλιόσποροι",
+      "sunflower seed"
+    ],
+    "white mustard seed": [
+      "σπόρος λευκής μουστάρδας",
+      "white mustard seed"
     ]
   }
 }
