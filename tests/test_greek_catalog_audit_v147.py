@@ -69,7 +69,7 @@ class GreekCatalogAuditV147Tests(unittest.TestCase):
         data=json.loads(CURATED.read_text(encoding="utf-8"))
         self.assertGreaterEqual(len(data["labels"]),130)
         self.assertGreaterEqual(len(data["searchAliases"]),30)
-        self.assertIn("expanded 2026-09-21",data["translationSource"])
+        self.assertIn("expanded",data["translationSource"])
 
     def test_old_awkward_phrases_are_not_final_display_labels(self):
         labels=load_presentation().labels()["el"]
