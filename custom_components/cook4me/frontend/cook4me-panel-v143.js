@@ -44,7 +44,7 @@ class Cook4MeRecipeHubPanelV143 extends BasePanel{
   if(source==='purchase'||confidence==='exact_purchase')return {key:'paidExact',icon:'receipt-text-check-outline',tone:'exact'};
   if(source==='purchase_reference')return {key:'previousPurchase',icon:'history',tone:'estimate'};
   if(source==='manual'||confidence==='user_entered'&&!source.startsWith('open_prices'))return {key:'manualReference',icon:'pencil-outline',tone:'manual'};
-  const barcode=matchKind==='barcode'||identity.startsWith('barcode:')||Boolean(ref.barcode)&&source!=='open_prices_category';
+  const barcode=matchKind==='barcode'||identity.startsWith('barcode:')||(source==='open_prices'&&Boolean(ref.barcode));
   if(barcode)return {key:'barcodeObservation',icon:'barcode-scan',tone:'barcode'};
   if(source==='open_prices_category'||source==='retail_snapshot'||source==='utility_snapshot')return {key:'categoryEstimate',icon:'shape-outline',tone:'estimate'};
   if(source.startsWith('open_prices')||confidence==='external_observation')return {key:'ingredientEstimate',icon:'chart-line',tone:'estimate'};
