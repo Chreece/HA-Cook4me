@@ -46,8 +46,8 @@ class GreekCatalogAuditV149Tests(unittest.TestCase):
         expected={
             "sesame puree":"Ταχίνι (πάστα σουσαμιού)",
             "sesame salt":"Γκομάσιο (αλάτι με σουσάμι)",
-            "wood ear mushroom":"Μανιτάρια wood ear (αυτί του Ιούδα)",
-            "king oyster mushroom":"Μανιτάρια ερίντζι (king oyster)",
+            "wood ear mushroom":"Μανιτάρι wood ear (αυτί του Ιούδα)",
+            "king oyster mushroom":"Μανιτάρι eryngii (king oyster)",
             "glass noodle":"Glass noodles (διάφανα νουντλς)",
             "jasmine rice":"Ρύζι jasmine (γιασεμί)",
             "glutinous rice":"Sticky rice (κολλώδες ρύζι)",
