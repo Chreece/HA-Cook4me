@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through thirteenth audit 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through fourteenth audit 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -31,7 +31,7 @@
     "veal topside": "Τρανς από μοσχαράκι",
     "water or veal stock": "Νερό ή ζωμός από μοσχαράκι",
     "watercress": "Νεροκάρδαμο",
-    "bunch of watercress": "Νεροκάρδαμο",
+    "bunch of watercress": "Ματσάκι νεροκάρδαμο",
     "waxy potato": "Πατάτες σφιχτής σάρκας",
     "white pudding": "Λευκό λουκάνικο τύπου white pudding",
     "swede": "Ρουταμπάγκα (γογγύλι Σουηδίας)",
@@ -209,13 +209,13 @@
     "almond puree": "Πάστα αμυγδάλου",
     "hazelnut puree": "Πάστα φουντουκιού",
     "unsweetened hazelnut puree": "Πάστα φουντουκιού χωρίς ζάχαρη",
-    "wood ear mushroom": "Μανιτάρια wood ear (αυτί του Ιούδα)",
-    "dried wood ear mushroom": "Αποξηραμένα μανιτάρια wood ear (αυτί του Ιούδα)",
-    "king oyster mushroom": "Μανιτάρια ερίντζι (king oyster)",
-    "button mushroom": "Λευκά μανιτάρια champignon",
-    "fresh button mushroom": "Φρέσκα λευκά μανιτάρια champignon",
+    "wood ear mushroom": "Μανιτάρι wood ear (αυτί του Ιούδα)",
+    "dried wood ear mushroom": "Αποξηραμένο μανιτάρι wood ear (αυτί του Ιούδα)",
+    "king oyster mushroom": "Μανιτάρι eryngii (king oyster)",
+    "button mushroom": "Λευκό μανιτάρι champignon",
+    "fresh button mushroom": "Φρέσκο λευκό μανιτάρι champignon",
     "mushroom / button mushroom": "Μανιτάρια / λευκά champignon",
-    "chestnut mushroom": "Καφέ μανιτάρια champignon",
+    "chestnut mushroom": "Καφέ μανιτάρι champignon",
     "glass noodle": "Glass noodles (διάφανα νουντλς)",
     "dried glass noodle": "Αποξηραμένα glass noodles (διάφανα νουντλς)",
     "jasmine rice": "Ρύζι jasmine (γιασεμί)",
@@ -592,7 +592,38 @@
     "packet of french onion soup mix": "Φακελάκι μείγματος γαλλικής κρεμμυδόσουπας",
     "packet taco seasoning mix": "Φακελάκι μείγματος καρυκευμάτων taco",
     "packages of vanilla pudding powder": "Συσκευασίες σκόνης πουτίγκας βανίλιας",
-    "packages of sugar-free vanilla pudding powder": "Συσκευασίες σκόνης πουτίγκας βανίλιας χωρίς ζάχαρη"
+    "packages of sugar-free vanilla pudding powder": "Συσκευασίες σκόνης πουτίγκας βανίλιας χωρίς ζάχαρη",
+    "cubed butter": "Βούτυρο σε κύβους",
+    "handful of bean sprouts": "Μια χούφτα φύτρα φασολιών",
+    "handful of blueberry": "Μια χούφτα μύρτιλα",
+    "handful of spinach": "Μια χούφτα σπανάκι",
+    "bunch of aromatic herbs": "Ματσάκι αρωματικά μυρωδικά",
+    "bunch of baby spinach": "Ματσάκι τρυφερό σπανάκι",
+    "bunch of fresh coriander": "Ματσάκι φρέσκο κόλιανδρο",
+    "bunch of herbs": "Ματσάκι μυρωδικά",
+    "bunch of parsley": "Ματσάκι μαϊντανό",
+    "bunch of soup herbs": "Ματσάκι μυρωδικά για σούπα",
+    "bunch of soup vegetables": "Ματσάκι λαχανικά για σούπα",
+    "bunch of soybean sprouts": "Ματσάκι φύτρα σόγιας",
+    "bunches of baby spinach": "Ματσάκια τρυφερού σπανακιού",
+    "small bunch of fresh herbs": "Μικρό ματσάκι φρέσκα μυρωδικά",
+    "small bunch of herbs": "Μικρό ματσάκι μυρωδικά",
+    "small bunch of wild fennel": "Μικρό ματσάκι άγριο μάραθο",
+    "sprig of aromatic herbs": "Κλωναράκι αρωματικών μυρωδικών",
+    "sprig of fresh lemon verbena": "Κλωναράκι φρέσκιας λουίζας",
+    "chanterelle mushroom": "Μανιτάρι κανθαρέλα",
+    "dried shiitake mushroom": "Αποξηραμένο μανιτάρι shiitake",
+    "enoki mushroom": "Μανιτάρι enoki",
+    "fresh oyster mushroom": "Φρέσκο μανιτάρι πλευρώτους",
+    "fresh shiitake mushroom": "Φρέσκο μανιτάρι shiitake",
+    "maitake mushroom": "Μανιτάρι maitake",
+    "nameko mushroom": "Μανιτάρι nameko",
+    "oyster mushroom": "Μανιτάρι πλευρώτους",
+    "porcini mushroom": "Μανιτάρι porcini",
+    "shiitake mushroom": "Μανιτάρι shiitake",
+    "shimeji mushroom": "Μανιτάρι shimeji",
+    "small dried shiitake mushroom": "Μικρό αποξηραμένο μανιτάρι shiitake",
+    "white shimeji mushroom": "Λευκό μανιτάρι shimeji"
   },
   "searchAliases": {
     "veal": [
@@ -939,24 +970,21 @@
     ],
     "wood ear mushroom": [
       "wood ear",
-      "μανιτάρια wood ear",
       "αυτί του ιούδα",
       "auricularia"
     ],
     "king oyster mushroom": [
-      "ερίντζι",
       "eryngii",
-      "king oyster",
-      "βασιλικό πλευρώτους"
+      "ερίντζι",
+      "king oyster"
     ],
     "button mushroom": [
       "champignon",
       "σαμπινιόν",
-      "λευκά μανιτάρια"
+      "λευκό μανιτάρι"
     ],
     "chestnut mushroom": [
       "καφέ champignon",
-      "καφέ σαμπινιόν",
       "chestnut mushroom"
     ],
     "glass noodle": [
@@ -1852,6 +1880,74 @@
     "packet taco seasoning mix": [
       "φακελάκι καρυκευμάτων taco",
       "taco seasoning packet"
+    ],
+    "cubed butter": [
+      "βούτυρο σε κύβους",
+      "cubed butter"
+    ],
+    "handful of bean sprouts": [
+      "χούφτα φύτρα φασολιών",
+      "handful bean sprouts"
+    ],
+    "handful of blueberry": [
+      "χούφτα μύρτιλα",
+      "handful blueberries"
+    ],
+    "handful of spinach": [
+      "χούφτα σπανάκι",
+      "handful spinach"
+    ],
+    "bunch of parsley": [
+      "ματσάκι μαϊντανό",
+      "bunch of parsley"
+    ],
+    "bunch of fresh coriander": [
+      "ματσάκι κόλιανδρο",
+      "bunch of coriander"
+    ],
+    "bunch of watercress": [
+      "ματσάκι νεροκάρδαμο",
+      "bunch of watercress"
+    ],
+    "small bunch of wild fennel": [
+      "μικρό ματσάκι άγριο μάραθο",
+      "wild fennel bunch"
+    ],
+    "sprig of fresh lemon verbena": [
+      "κλωναράκι λουίζας",
+      "lemon verbena sprig"
+    ],
+    "chanterelle mushroom": [
+      "κανθαρέλα",
+      "chanterelle"
+    ],
+    "dried shiitake mushroom": [
+      "αποξηραμένο shiitake",
+      "dried shiitake"
+    ],
+    "enoki mushroom": [
+      "enoki",
+      "ενόκι"
+    ],
+    "fresh oyster mushroom": [
+      "φρέσκο πλευρώτους",
+      "fresh oyster mushroom"
+    ],
+    "maitake mushroom": [
+      "maitake",
+      "μαϊτάκε"
+    ],
+    "nameko mushroom": [
+      "nameko",
+      "ναμέκο"
+    ],
+    "porcini mushroom": [
+      "porcini",
+      "πορτσίνι"
+    ],
+    "shimeji mushroom": [
+      "shimeji",
+      "σιμέτζι"
     ]
   }
 }
