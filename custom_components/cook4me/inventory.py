@@ -153,6 +153,8 @@ def _lot_metadata(raw: Any, *, strict: bool = False) -> dict[str, Any]:
     lot_id = _text(raw.get("id") or raw.get("lotId"))
     if lot_id:
         out["id"] = lot_id[:160]
+    if raw.get("noExpiry") is True:
+        out["noExpiry"] = True
     storage = _text(raw.get("storage")).lower()
     if storage:
         if storage not in _STORAGE_VALUES:
@@ -206,7 +208,9 @@ def _normalize_lot(
         amount = converted
     elif target_unit and not lot_unit:
         lot_unit = target_unit
-    stamp = _best_before(raw.get("bestBefore") or raw.get("best_before"), strict=strict)
+    stamp = "" if raw.get("noExpiry") is True else _best_before(
+        raw.get("bestBefore") or raw.get("best_before"), strict=strict
+    )
     lot: dict[str, Any] = {"quantity": amount, **_lot_metadata(raw, strict=strict)}
     if stamp:
         lot["bestBefore"] = stamp
