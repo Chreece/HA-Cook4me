@@ -28,6 +28,7 @@ from .expiry import update_expiry_notification
 from .automatic_prices import validate_paid_price, save_product_prices
 from .costs import cost_store_for_bridge
 from .product_packages import find_package, package_version, replace_package_nutrition
+from .smart_scale import smart_scale_store_for_bridge
 
 
 def _ai_choices(hass, user):
@@ -313,6 +314,10 @@ async def ws_product_add(hass, connection, msg):
             "barcode", "productName", "brand", "storageLocationId", "containerId", "purchaseDate", "openedAt", "useWithinDays", "noExpiry"}}
         if metadata.get("barcode"):
             metadata["barcode"] = normalize_barcode(metadata["barcode"])
+        if metadata.get("containerId"):
+            scale_store = await smart_scale_store_for_bridge(bridge)
+            if metadata["containerId"] not in {str(row.get("id") or "") for row in scale_store.containers}:
+                raise ValueError("Selected scale container no longer exists; choose another container")
         metadata["source"] = "reviewed_product"
         metadata["ingredientLinks"] = links
         nutrition = None
