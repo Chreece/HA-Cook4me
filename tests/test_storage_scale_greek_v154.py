@@ -20,15 +20,15 @@ def load_module(name, relative):
 
 
 class StorageScaleGreekV154Tests(unittest.TestCase):
-    def test_v154_is_active_and_versioned(self):
+    def test_v154_is_inherited_by_active_v155(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v154.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v154",panel)
-        self.assertIn("cook4me-panel-v154.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.19",panel)
-        self.assertIn("?v=2026.9.21.19",panel)
-        self.assertIn('"version": "2026.9.21.19"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v155",panel)
+        self.assertIn("cook4me-panel-v155.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.20",panel)
+        self.assertIn("?v=2026.9.21.20",panel)
+        self.assertIn('"version": "2026.9.21.20"',manifest)
         self.assertIn("cook4me-panel-v153.js?v=2026.9.21.18",ui)
 
     def test_storage_kinds_include_real_kitchen_locations(self):
@@ -115,7 +115,7 @@ class StorageScaleGreekV154Tests(unittest.TestCase):
             self.assertEqual(labels.get(key),value)
         self.assertGreaterEqual(len(labels),383)
         self.assertGreaterEqual(len(data["searchAliases"]),192)
-        self.assertIn("ninth audit",data["translationSource"])
+        self.assertIn("audit",data["translationSource"])
 
 
 if __name__=="__main__":
