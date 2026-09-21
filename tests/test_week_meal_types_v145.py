@@ -18,10 +18,10 @@ def load_weekly_plan():
 
 
 class WeekMealTypesV145Tests(unittest.TestCase):
-    def test_v145_is_active_and_versioned(self):
+    def test_v145_is_inherited_by_active_v146(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
-        ui=(FRONTEND/"cook4me-panel-v146.js").read_text(encoding="utf-8")
+        ui=(FRONTEND/"cook4me-panel-v145.js").read_text(encoding="utf-8")
         self.assertIn("cook4me-recipe-hub-panel-v146",panel)
         self.assertIn("cook4me-panel-v146.js",panel)
         self.assertIn("/cook4me_static/2026.9.21.11",panel)
@@ -33,7 +33,7 @@ class WeekMealTypesV145Tests(unittest.TestCase):
         )
 
     def test_week_meal_types_are_identical_to_today_dayparts(self):
-        ui=(FRONTEND/"cook4me-panel-v146.js").read_text(encoding="utf-8")
+        ui=(FRONTEND/"cook4me-panel-v145.js").read_text(encoding="utf-8")
         today=(FRONTEND/"cook4me-panel-v93.js").read_text(encoding="utf-8")
         expected="['breakfast','morningSnack','lunch','afternoonSnack','dinner','lateSnack']"
         self.assertIn("const V145_MEALS="+expected,ui)
@@ -70,14 +70,14 @@ class WeekMealTypesV145Tests(unittest.TestCase):
         self.assertIn('["snack", "dessert"]',websocket)
 
     def test_weekday_pattern_is_folded_by_default(self):
-        ui=(FRONTEND/"cook4me-panel-v146.js").read_text(encoding="utf-8")
+        ui=(FRONTEND/"cook4me-panel-v145.js").read_text(encoding="utf-8")
         self.assertIn('<details class="card v144-week-pattern v145-week-pattern"',ui)
         self.assertIn('<summary class="v145-pattern-summary">',ui)
         self.assertIn("section.open=false;section.removeAttribute('open')",ui)
         self.assertIn("v145-fold-chevron",ui)
 
     def test_weekday_pattern_saves_all_six_dayparts(self):
-        ui=(FRONTEND/"cook4me-panel-v146.js").read_text(encoding="utf-8")
+        ui=(FRONTEND/"cook4me-panel-v145.js").read_text(encoding="utf-8")
         self.assertIn("filter(meal=>V145_MEALS.includes(meal))",ui)
         self.assertIn("meal_types=V145_MEALS",ui.replace("payload.meal_types","meal_types"))
         self.assertIn("weekday_meal_types:schedule",ui)
