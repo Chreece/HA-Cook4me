@@ -2,7 +2,7 @@
 from copy import deepcopy
 from uuid import uuid4
 
-KINDS = {"fridge", "freezer", "pantry", "other"}
+KINDS = {"fridge", "freezer", "pantry", "cupboard", "shelf", "drawer", "countertop", "cellar", "other"}
 DEFAULTS = [{"id": kind, "name": name, "kind": kind} for kind, name in
             (("fridge", "Fridge"), ("freezer", "Freezer"), ("pantry", "Pantry"))]
 
