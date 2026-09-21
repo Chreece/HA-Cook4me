@@ -24,11 +24,11 @@ class GreekCatalogAuditV160Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v160.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v167",panel)
-        self.assertIn("cook4me-panel-v167.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.32",panel)
-        self.assertIn("?v=2026.9.21.32",panel)
-        self.assertIn('"version": "2026.9.21.32"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v168",panel)
+        self.assertIn("cook4me-panel-v168.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.33",panel)
+        self.assertIn("?v=2026.9.21.33",panel)
+        self.assertIn('"version": "2026.9.21.33"',manifest)
         self.assertIn("cook4me-panel-v159.js?v=2026.9.21.24",ui)
 
     def test_packaging_words_are_not_dropped(self):
