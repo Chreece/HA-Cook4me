@@ -92,7 +92,9 @@ def _prepare_fast_indexes(payload: dict[str, Any]) -> None:
         # release builds should ship searchIndex so this work stays build-time.
         compiled = compile_search_index(payload)
     payload["_runtimeSearchIndex"] = prepare_search_index(compiled)
-    payload["_runtimeSearchIndex"]["catalogQueryAliases"] = prepare_catalog_query_aliases(payload, _presentation.labels())
+    payload["_runtimeSearchIndex"]["catalogQueryAliases"] = prepare_catalog_query_aliases(
+        payload, _presentation.labels(), _presentation.search_aliases()
+    )
     payload["_runtimeSearchPrecompiled"] = precompiled
 
     variants: dict[str, int] = {}
