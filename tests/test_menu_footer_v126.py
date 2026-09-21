@@ -9,8 +9,8 @@ class MenuFooterV126Tests(unittest.TestCase):
     def test_all_menu_card_footers_reach_card_bottom(self):
         ui=(FRONTEND/"cook4me-panel-v126.js").read_text(encoding="utf-8")
         panel=PANEL.read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v171",panel)
-        self.assertIn("cook4me-panel-v171.js",panel)
+        self.assertIn("cook4me-recipe-hub-panel-v172",panel)
+        self.assertIn("cook4me-panel-v172.js",panel)
         self.assertIn(".rx-overlay>.rx-dialog:has(>footer)", ui)
         self.assertIn(".rx-overlay>.rx-dialog:has(>form>footer)", ui)
         self.assertIn(".rx-overlay>.rx-dialog>form>footer", ui)
