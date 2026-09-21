@@ -111,15 +111,21 @@ class Cook4MeRecipeHubPanelV140 extends BasePanel{
     try{
      const canvas=document.createElement('canvas');canvas.width=source.naturalWidth||474;canvas.height=source.naturalHeight||474;
      const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(source,0,0,canvas.width,canvas.height);
-     const image=ctx.getImageData(0,0,canvas.width,canvas.height),data=image.data;
-     for(let i=0;i<data.length;i+=4){
-      const r=data[i],g=data[i+1],b=data[i+2],max=Math.max(r,g,b),min=Math.min(r,g,b);
-      const luminance=.2126*r+.7152*g+.0722*b,chroma=max-min;
-      let alpha=255;
-      if(luminance>=246&&chroma<=22)alpha=0;
-      else if(luminance>205&&chroma<=30)alpha=Math.max(0,Math.min(255,Math.round((246-luminance)/41*255)));
-      data[i+3]=Math.min(data[i+3],alpha);
+     const image=ctx.getImageData(0,0,canvas.width,canvas.height),data=image.data,w=canvas.width,h=canvas.height;
+     const background=index=>{
+      const p=index*4,r=data[p],g=data[p+1],b=data[p+2],max=Math.max(r,g,b),min=Math.min(r,g,b);
+      const luminance=.2126*r+.7152*g+.0722*b;
+      return luminance>=182&&max-min<=34;
+     };
+     const seen=new Uint8Array(w*h),queue=new Int32Array(w*h);let head=0,tail=0;
+     const push=index=>{if(index<0||index>=w*h||seen[index]||!background(index))return;seen[index]=1;queue[tail++]=index;};
+     for(let x=0;x<w;x++){push(x);push((h-1)*w+x);}
+     for(let y=1;y<h-1;y++){push(y*w);push(y*w+w-1);}
+     while(head<tail){
+      const index=queue[head++],x=index%w,y=(index/w)|0;
+      if(x)push(index-1);if(x+1<w)push(index+1);if(y)push(index-w);if(y+1<h)push(index+w);
      }
+     for(let index=0;index<seen.length;index++)if(seen[index])data[index*4+3]=0;
      ctx.putImageData(image,0,0);
      ctx.fillStyle='#060808';
      const sx=canvas.width/474,sy=canvas.height/474;
