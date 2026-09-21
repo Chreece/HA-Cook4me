@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through sixth audit 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through seventh audit 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -297,7 +297,41 @@
     "matcha green tea": "Μάτσα (πράσινο τσάι σε σκόνη)",
     "ground matcha tea": "Μάτσα σε σκόνη",
     "jasmine green tea bag": "Πράσινο τσάι γιασεμί σε φακελάκι",
-    "black tea bag": "Μαύρο τσάι σε φακελάκι"
+    "black tea bag": "Μαύρο τσάι σε φακελάκι",
+    "quick-cook farro": "Farro γρήγορου μαγειρέματος",
+    "job's tears": "Job’s tears (σπόροι coix / adlay)",
+    "red dates": "Κόκκινα τζίτζιφα (jujube / Chinese dates)",
+    "dried red dates": "Αποξηραμένα κόκκινα τζίτζιφα (jujube)",
+    "jujube": "Τζίτζιφα (jujube)",
+    "julienned jujube": "Τζίτζιφα (jujube) σε λεπτές λωρίδες",
+    "“bird tongue” pasta": "Κριθαράκι (bird’s tongue pasta)",
+    "mentsuyu": "Mentsuyu (συμπυκνωμένη βάση για νουντλς)",
+    "mentsuyu noodle soup base": "Mentsuyu (συμπυκνωμένη βάση για νουντλς)",
+    "light soy sauce": "Light soy sauce (ανοιχτόχρωμη σάλτσα σόγιας)",
+    "dark soy sauce": "Dark soy sauce (σκούρα σάλτσα σόγιας)",
+    "sweet soy sauce": "Sweet soy sauce (γλυκιά σάλτσα σόγιας)",
+    "light sweet soy sauce": "Light sweet soy sauce (ανοιχτόχρωμη γλυκιά σάλτσα σόγιας)",
+    "soup soy sauce": "Soup soy sauce (σάλτσα σόγιας για σούπες)",
+    "black vinegar": "Μαύρο ξίδι (black vinegar)",
+    "nuoc mam fish sauce": "Nước mắm (βιετναμέζικη σάλτσα ψαριού)",
+    "nuoc-mam fish sauce": "Nước mắm (βιετναμέζικη σάλτσα ψαριού)",
+    "anchovy fish sauce": "Σάλτσα ψαριού από αντζούγια",
+    "red yeast rice sauce": "Σάλτσα από κόκκινο ζυμωμένο ρύζι (red yeast rice)",
+    "roasted buckwheat for kasha": "Κάσα (καβουρδισμένο φαγόπυρο)",
+    "toasted buckwheat ‘kasha’": "Κάσα (καβουρδισμένο φαγόπυρο)",
+    "toasted buckwheat “kasha”": "Κάσα (καβουρδισμένο φαγόπυρο)",
+    "gelatin sheet": "Φύλλο ζελατίνης",
+    "gelatine leaf": "Φύλλο ζελατίνης",
+    "leaf gelatine": "Φύλλο ζελατίνης",
+    "gelatin sheet soaked in cold water": "Μουλιασμένο φύλλο ζελατίνης",
+    "gelatin sheet softened in cold water": "Μαλακωμένο φύλλο ζελατίνης",
+    "pre-soaked gelatin sheet": "Προμουλιασμένο φύλλο ζελατίνης",
+    "starch slurry": "Μείγμα αμύλου με υγρό (starch slurry)",
+    "ponzu": "Ponzu (ιαπωνική σάλτσα εσπεριδοειδών)",
+    "ponzu sauce": "Ponzu (ιαπωνική σάλτσα εσπεριδοειδών)",
+    "shiro dashi": "Shiro dashi (λευκή βάση dashi)",
+    "doubanjiang": "Doubanjiang (πικάντικη ζυμωμένη πάστα φασολιών)",
+    "shaoxing wine": "Shaoxing (κινέζικο κρασί ρυζιού)"
   },
   "searchAliases": {
     "veal": [
@@ -915,6 +949,117 @@
     "jasmine green tea bag": [
       "τσάι γιασεμί",
       "jasmine green tea"
+    ],
+    "quick-cook farro": [
+      "farro",
+      "φάρρο",
+      "quick cook farro"
+    ],
+    "job's tears": [
+      "job's tears",
+      "coix",
+      "adlay",
+      "δάκρυα του ιώβ",
+      "σπόροι coix"
+    ],
+    "red dates": [
+      "red dates",
+      "chinese dates",
+      "jujube",
+      "τζίτζιφα",
+      "κόκκινα τζίτζιφα"
+    ],
+    "dried red dates": [
+      "dried jujube",
+      "dried red dates",
+      "αποξηραμένα τζίτζιφα"
+    ],
+    "jujube": [
+      "jujube",
+      "τζίτζιφα",
+      "chinese date"
+    ],
+    "“bird tongue” pasta": [
+      "κριθαράκι",
+      "bird tongue pasta",
+      "langue d'oiseau",
+      "orzo"
+    ],
+    "mentsuyu": [
+      "mentsuyu",
+      "tsuyu",
+      "τσούγιου",
+      "μεντσούγιου"
+    ],
+    "light soy sauce": [
+      "light soy sauce",
+      "ανοιχτόχρωμη σάλτσα σόγιας"
+    ],
+    "dark soy sauce": [
+      "dark soy sauce",
+      "σκούρα σάλτσα σόγιας"
+    ],
+    "sweet soy sauce": [
+      "sweet soy sauce",
+      "γλυκιά σάλτσα σόγιας"
+    ],
+    "soup soy sauce": [
+      "soup soy sauce",
+      "σάλτσα σόγιας για σούπες"
+    ],
+    "black vinegar": [
+      "black vinegar",
+      "μαύρο ξίδι"
+    ],
+    "nuoc mam fish sauce": [
+      "nước mắm",
+      "nuoc mam",
+      "νουόκ μαμ",
+      "βιετναμέζικη σάλτσα ψαριού"
+    ],
+    "anchovy fish sauce": [
+      "anchovy fish sauce",
+      "σάλτσα ψαριού από αντζούγια"
+    ],
+    "red yeast rice sauce": [
+      "red yeast rice",
+      "κόκκινο ζυμωμένο ρύζι"
+    ],
+    "roasted buckwheat for kasha": [
+      "kasha",
+      "κάσα",
+      "καβουρδισμένο φαγόπυρο"
+    ],
+    "gelatin sheet": [
+      "φύλλο ζελατίνης",
+      "gelatin sheet",
+      "gelatine leaf"
+    ],
+    "starch slurry": [
+      "starch slurry",
+      "slurry",
+      "μείγμα αμύλου"
+    ],
+    "ponzu": [
+      "ponzu",
+      "πόνζου",
+      "σάλτσα εσπεριδοειδών"
+    ],
+    "shiro dashi": [
+      "shiro dashi",
+      "σίρο ντάσι",
+      "λευκή βάση dashi"
+    ],
+    "doubanjiang": [
+      "doubanjiang",
+      "ντουμπαντζιάνγκ",
+      "πικάντικη πάστα φασολιών"
+    ],
+    "shaoxing wine": [
+      "shaoxing",
+      "shaoxing wine",
+      "κρασί σαοσίνγκ",
+      "κινέζικο κρασί ρυζιού"
     ]
   }
 }

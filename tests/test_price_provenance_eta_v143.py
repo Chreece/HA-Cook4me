@@ -12,11 +12,11 @@ class PriceProvenanceEtaV143Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v143.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v151",panel)
-        self.assertIn("cook4me-panel-v151.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.16",panel)
-        self.assertIn("?v=2026.9.21.16",panel)
-        self.assertIn('"version": "2026.9.21.16"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v152",panel)
+        self.assertIn("cook4me-panel-v152.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.17",panel)
+        self.assertIn("?v=2026.9.21.17",panel)
+        self.assertIn('"version": "2026.9.21.17"',manifest)
         self.assertIn(
             "if(!customElements.get(V142))await import('./cook4me-panel-v142.js?v=2026.9.21.7')",
             ui,
