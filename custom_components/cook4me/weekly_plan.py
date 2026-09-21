@@ -66,17 +66,31 @@ async def refresh_plan(bridge, state, *, filters=None, language="en"):
     return state
 
 
-MEAL_SLOT_ORDER = ("breakfast", "lunch", "snack", "dinner")
+MEAL_SLOT_ORDER = ("breakfast", "morningSnack", "lunch", "afternoonSnack", "dinner", "lateSnack")
 WEEKDAY_KEYS = ("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")
+_SLOT_ALIASES = {
+    "breakfast": "breakfast",
+    "morningsnack": "morningSnack",
+    "lunch": "lunch",
+    "afternoonsnack": "afternoonSnack",
+    "snack": "afternoonSnack",
+    "dinner": "dinner",
+    "latesnack": "lateSnack",
+}
+
+
+def normalize_meal_slot(value):
+    token = str(value or "").strip().replace("_", "").replace("-", "").replace(" ", "").casefold()
+    return _SLOT_ALIASES.get(token, "")
 
 
 def ordered_meal_slots(values):
-    selected = {str(value or "").strip().lower() for value in values or []}
+    selected = {normalize_meal_slot(value) for value in values or []}
     return [meal for meal in MEAL_SLOT_ORDER if meal in selected]
 
 
 def meal_slots(filters, legacy):
-    """Map recipe-course filters to actual chronological weekly meal slots."""
+    """Map recipe-course filters onto already-enabled chronological meal slots."""
     fallback = ordered_meal_slots(legacy) or ["breakfast", "lunch", "dinner"]
     if filters is None:
         return fallback
@@ -84,14 +98,14 @@ def meal_slots(filters, legacy):
     all_categories = {"breakfast", "starter", "salad", "soup", "main", "side", "dessert", "snack"}
     if not categories or categories == all_categories:
         return fallback
-    result = []
+    allowed = set()
     if "breakfast" in categories:
-        result.append("breakfast")
+        allowed.add("breakfast")
     if categories & {"starter", "salad", "soup", "main", "side"}:
-        result += ["lunch", "dinner"]
+        allowed.update(("lunch", "dinner"))
     if categories & {"dessert", "snack"}:
-        result.append("snack")
-    return ordered_meal_slots(result)
+        allowed.update(("morningSnack", "afternoonSnack", "lateSnack"))
+    return [meal for meal in fallback if meal in allowed]
 
 
 def meal_slots_for_date(filters, settings, stamp):

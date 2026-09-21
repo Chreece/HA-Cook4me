@@ -375,7 +375,11 @@ async def _generate_week(
                 used_recipes.append(signature(leftover["recipe"]))
             continue
 
-        wanted_taxonomy = ["breakfast"] if meal_type == "breakfast" else ["snack", "dessert"] if meal_type == "snack" else ["main", "starter", "salad", "soup", "side"]
+        wanted_taxonomy = (
+            ["breakfast"] if meal_type == "breakfast"
+            else ["snack", "dessert"] if meal_type in {"morningSnack", "afternoonSnack", "lateSnack"}
+            else ["main", "starter", "salad", "soup", "side"]
+        )
         pool = [
             row for row in candidates
             if not already_planned(candidate_signatures[id(row)], used_recipes)

@@ -21,8 +21,17 @@ _MAX_FEEDBACK = 1000
 _MAX_SUBSTITUTIONS = 1000
 _MAX_MEAL_COSTS = 1000
 _DEFAULT_MEAL_TYPES = ("breakfast", "lunch", "dinner")
-_VALID_MEAL_TYPES = {"breakfast", "lunch", "dinner", "snack"}
-_MEAL_TYPE_ORDER = ("breakfast", "lunch", "snack", "dinner")
+_VALID_MEAL_TYPES = {"breakfast", "morningSnack", "lunch", "afternoonSnack", "dinner", "lateSnack"}
+_MEAL_TYPE_ORDER = ("breakfast", "morningSnack", "lunch", "afternoonSnack", "dinner", "lateSnack")
+_MEAL_TYPE_ALIASES = {
+    "breakfast": "breakfast",
+    "morningsnack": "morningSnack",
+    "lunch": "lunch",
+    "afternoonsnack": "afternoonSnack",
+    "snack": "afternoonSnack",
+    "dinner": "dinner",
+    "latesnack": "lateSnack",
+}
 _WEEKDAY_KEYS = ("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")
 
 
@@ -60,8 +69,8 @@ def rolling_week_start(value: str | None, today: date) -> str:
 
 
 def _meal_type(value: Any) -> str:
-    token = _text(value).lower()
-    return token if token in _VALID_MEAL_TYPES else "dinner"
+    token = _text(value).replace("_", "").replace("-", "").replace(" ", "").casefold()
+    return _MEAL_TYPE_ALIASES.get(token, "dinner")
 
 
 def _ordered_meal_types(values: Any, *, fallback: bool = True) -> list[str]:
