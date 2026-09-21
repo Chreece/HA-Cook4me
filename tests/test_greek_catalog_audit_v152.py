@@ -24,11 +24,11 @@ class GreekCatalogAuditV152Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v152.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v169",panel)
-        self.assertIn("cook4me-panel-v169.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.34",panel)
-        self.assertIn("?v=2026.9.21.34",panel)
-        self.assertIn('"version": "2026.9.21.34"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v170",panel)
+        self.assertIn("cook4me-panel-v170.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.35",panel)
+        self.assertIn("?v=2026.9.21.35",panel)
+        self.assertIn('"version": "2026.9.21.35"',manifest)
         self.assertIn("cook4me-panel-v151.js?v=2026.9.21.16",ui)
 
     def test_far_ro_and_jujube_family_are_not_literal_mislabels(self):

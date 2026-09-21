@@ -20,15 +20,15 @@ def load_presentation():
 
 
 class GreekCatalogAuditV162Tests(unittest.TestCase):
-    def test_v162_is_inherited_by_active_v169(self):
+    def test_v162_is_inherited_by_active_v170(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v162.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v169",panel)
-        self.assertIn("cook4me-panel-v169.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.34",panel)
-        self.assertIn("?v=2026.9.21.34",panel)
-        self.assertIn('"version": "2026.9.21.34"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v170",panel)
+        self.assertIn("cook4me-panel-v170.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.35",panel)
+        self.assertIn("?v=2026.9.21.35",panel)
+        self.assertIn('"version": "2026.9.21.35"',manifest)
         self.assertIn("cook4me-panel-v161.js?v=2026.9.21.26",ui)
 
     def test_temperature_and_preparation_are_not_flattened(self):
