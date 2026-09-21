@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through twelfth audit 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through thirteenth audit 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -111,7 +111,7 @@
     "spring onion stalk": "Φρέσκο κρεμμυδάκι",
     "stalk of spring onion": "Φρέσκο κρεμμυδάκι",
     "fresh spring onion stalk": "Φρέσκο κρεμμυδάκι",
-    "green asparagus stalk": "Πράσινο σπαράγγι",
+    "green asparagus stalk": "Βλαστός πράσινου σπαραγγιού",
     "taro stems": "Μίσχοι τάρο",
     "pork spare rib": "Χοιρινά παϊδάκια (spare ribs)",
     "spare rib": "Παϊδάκια (spare ribs)",
@@ -353,7 +353,7 @@
     "store-bought seasoned inari tofu pouches": "Έτοιμα καρυκευμένα inari-age (πουγκιά τηγανητού τόφου)",
     "thick tofu skin": "Yuba (παχιά πέτσα τόφου)",
     "atsuage fried tofu": "Atsuage (τηγανητό τόφου)",
-    "atsuage fried tofu, 130 g per piece": "Atsuage (τηγανητό τόφου)",
+    "atsuage fried tofu, 130 g per piece": "Atsuage (τηγανητό τόφου), 130 g το τεμάχιο",
     "firm atsuage fried tofu": "Σφιχτό atsuage (τηγανητό τόφου)",
     "silken atsuage fried tofu": "Μαλακό atsuage (τηγανητό τόφου)",
     "large ganmodoki fried tofu": "Ganmodoki (τηγανητό τόφου με λαχανικά)",
@@ -558,7 +558,41 @@
     "bonito steak": "Φέτα παλαμίδας",
     "fish steak": "Φέτα ψαριού",
     "salmon steak": "Φέτα σολομού",
-    "salmon steaks, 150 g each": "Φέτες σολομού, 150 g η καθεμία"
+    "salmon steaks, 150 g each": "Φέτες σολομού, 150 g η καθεμία",
+    "garlic clove": "Σκελίδα σκόρδου",
+    "small garlic clove": "Μικρή σκελίδα σκόρδου",
+    "fresh coriander sprig": "Κλωναράκι φρέσκου κόλιανδρου",
+    "sprig of fresh coriander": "Κλωναράκι φρέσκου κόλιανδρου",
+    "rosemary sprig": "Κλωναράκι δεντρολίβανου",
+    "sprig of rosemary": "Κλωναράκι δεντρολίβανου",
+    "fresh rosemary sprig": "Κλωναράκι φρέσκου δεντρολίβανου",
+    "fresh thyme sprig": "Κλωναράκι φρέσκου θυμαριού",
+    "thyme sprig": "Κλωναράκι θυμαριού",
+    "sprig of marjoram": "Κλωναράκι μαντζουράνας",
+    "sprig of parsley": "Κλωναράκι μαϊντανού",
+    "fresh parsley stalk": "Κοτσάνι φρέσκου μαϊντανού",
+    "parsley stalk": "Κοτσάνι μαϊντανού",
+    "lemongrass stalk": "Βλαστός λεμονόχορτου",
+    "green garlic stalk": "Βλαστός πράσινου σκόρδου",
+    "head of lettuce": "Κεφάλι μαρουλιού",
+    "heads of lettuce": "Κεφάλια μαρουλιού",
+    "head of lettuce or iceberg lettuce": "Κεφάλι μαρουλιού ή iceberg",
+    "cheese portions": "Μερίδες τυριού",
+    "mozzarella ball": "Μπάλα μοτσαρέλας",
+    "ball mozzarella ball": "Μπάλα μοτσαρέλας",
+    "spoonfuls of salted ricotta": "Κουταλιές αλατισμένης ρικότα",
+    "cod fillets, 150 g each": "Φιλέτα μπακαλιάρου, 150 g το καθένα",
+    "french quenelles, 40–50 g each": "Γαλλικές κενέλ, 40–50 g η καθεμία",
+    "goose breast, 400 g each": "Στήθος χήνας, περίπου 400 g ανά τεμάχιο",
+    "quails, 160–170 g each": "Ορτύκια, 160–170 g το καθένα",
+    "package of smoked tofu": "Συσκευασία καπνιστού τόφου",
+    "packaged cotechino sausage": "Συσκευασμένο λουκάνικο cotechino",
+    "packet of baking powder": "Φακελάκι μπέικιν πάουντερ",
+    "packet of bourbon vanilla sugar": "Φακελάκι ζάχαρης με βανίλια Bourbon",
+    "packet of french onion soup mix": "Φακελάκι μείγματος γαλλικής κρεμμυδόσουπας",
+    "packet taco seasoning mix": "Φακελάκι μείγματος καρυκευμάτων taco",
+    "packages of vanilla pudding powder": "Συσκευασίες σκόνης πουτίγκας βανίλιας",
+    "packages of sugar-free vanilla pudding powder": "Συσκευασίες σκόνης πουτίγκας βανίλιας χωρίς ζάχαρη"
   },
   "searchAliases": {
     "veal": [
@@ -1746,6 +1780,78 @@
     "salt cod fillets, 150 g each": [
       "φιλέτα παστού μπακαλιάρου 150 g",
       "salt cod fillets"
+    ],
+    "garlic clove": [
+      "σκελίδα σκόρδου",
+      "garlic clove"
+    ],
+    "small garlic clove": [
+      "μικρή σκελίδα σκόρδου",
+      "small garlic clove"
+    ],
+    "fresh coriander sprig": [
+      "κλωναράκι κόλιανδρου",
+      "fresh coriander sprig"
+    ],
+    "rosemary sprig": [
+      "κλωναράκι δεντρολίβανου",
+      "rosemary sprig"
+    ],
+    "fresh thyme sprig": [
+      "κλωναράκι θυμαριού",
+      "fresh thyme sprig"
+    ],
+    "sprig of parsley": [
+      "κλωναράκι μαϊντανού",
+      "parsley sprig"
+    ],
+    "parsley stalk": [
+      "κοτσάνι μαϊντανού",
+      "parsley stalk"
+    ],
+    "lemongrass stalk": [
+      "βλαστός λεμονόχορτου",
+      "lemongrass stalk"
+    ],
+    "green asparagus stalk": [
+      "βλαστός πράσινου σπαραγγιού",
+      "asparagus stalk"
+    ],
+    "head of lettuce": [
+      "κεφάλι μαρουλιού",
+      "head of lettuce"
+    ],
+    "cheese portions": [
+      "μερίδες τυριού",
+      "cheese portions"
+    ],
+    "mozzarella ball": [
+      "μπάλα μοτσαρέλας",
+      "mozzarella ball"
+    ],
+    "atsuage fried tofu, 130 g per piece": [
+      "atsuage 130 g",
+      "atsuage per piece"
+    ],
+    "cod fillets, 150 g each": [
+      "φιλέτα μπακαλιάρου 150 g",
+      "cod fillets 150g"
+    ],
+    "french quenelles, 40–50 g each": [
+      "quenelles 40 50 g",
+      "κενέλ 40 50 g"
+    ],
+    "quails, 160–170 g each": [
+      "ορτύκια 160 170 g",
+      "quails 160-170g"
+    ],
+    "packet of baking powder": [
+      "φακελάκι μπέικιν πάουντερ",
+      "baking powder packet"
+    ],
+    "packet taco seasoning mix": [
+      "φακελάκι καρυκευμάτων taco",
+      "taco seasoning packet"
     ]
   }
 }
