@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through fifth audit 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through sixth audit 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -258,7 +258,46 @@
     "spelt pancakes": "Τηγανίτες με αλεύρι σπέλτα",
     "pearl barley": "Κριθάρι περλέ",
     "black treacle": "Μαύρη μελάσα (black treacle)",
-    "worcester sauce": "Σάλτσα Worcestershire (Γούστερ)"
+    "worcester sauce": "Σάλτσα Worcestershire (Γούστερ)",
+    "coriander and mint": "Κόλιανδρος και μέντα",
+    "dried mint": "Αποξηραμένη μέντα",
+    "fresh mint": "Φρέσκια μέντα",
+    "fresh mint leaf": "Φρέσκα φύλλα μέντας",
+    "mint and parsley": "Μέντα και μαϊντανός",
+    "mint leaf": "Φύλλα μέντας",
+    "parsley and mint": "Μαϊντανός και μέντα",
+    "pinch of dried mint": "Αποξηραμένη μέντα",
+    "tbsp fresh mint": "Φρέσκια μέντα",
+    "bay leaf": "Φύλλο δάφνης",
+    "dried bay leaf": "Αποξηραμένο φύλλο δάφνης",
+    "thyme and bay leaf": "Θυμάρι και φύλλο δάφνης",
+    "chervil": "Φραγκομαϊντανός (chervil)",
+    "chervil or parsley": "Φραγκομαϊντανός ή μαϊντανός",
+    "garden chervil or parsley": "Φραγκομαϊντανός ή μαϊντανός",
+    "nori sheet": "Φύλλο νόρι",
+    "sheet of nori seaweed": "Φύλλο νόρι",
+    "kombu seaweed sheet": "Φύλλο κόμπου",
+    "salmon roe": "Αυγά σολομού (ikura)",
+    "tarako cod roe": "Tarako (αυγά μπακαλιάρου)",
+    "kelp": "Kelp (φύκια)",
+    "hijiki seaweed": "Hijiki (φύκια χιτζίκι)",
+    "aonori": "Aonori (πράσινα φύκια)",
+    "monk fruit sweetener": "Γλυκαντικό monk fruit (λουό χαν γκουό)",
+    "pomegranate molasses": "Μελάσα ροδιού (πετιμέζι ροδιού)",
+    "small kohlrabi with leaf": "Μικρό κολράμπι με φύλλα",
+    "bitter melon": "Bitter melon (πικρό πεπόνι / goya)",
+    "white bitter melon": "Λευκό bitter melon (πικρό πεπόνι)",
+    "burdock root": "Ρίζα κολλιτσίδας (gobo)",
+    "lotus root": "Ρίζα λωτού (renkon)",
+    "sauerkraut juice": "Άλμη ξινολάχανου",
+    "sauerkraut with juice": "Ξινολάχανο με την άλμη του",
+    "red miso": "Κόκκινο μίσο (aka miso)",
+    "dark miso paste": "Σκούρο μίσο (πάστα miso)",
+    "thai green curry roux": "Βάση για ταϊλανδέζικο πράσινο κάρι",
+    "matcha green tea": "Μάτσα (πράσινο τσάι σε σκόνη)",
+    "ground matcha tea": "Μάτσα σε σκόνη",
+    "jasmine green tea bag": "Πράσινο τσάι γιασεμί σε φακελάκι",
+    "black tea bag": "Μαύρο τσάι σε φακελάκι"
   },
   "searchAliases": {
     "veal": [
@@ -308,10 +347,12 @@
       "βαλεριανέλλα"
     ],
     "mint": [
-      "μέντα"
+      "μέντα",
+      "mint"
     ],
     "spearmint": [
-      "δυόσμος"
+      "δυόσμος",
+      "spearmint"
     ],
     "sour cream": [
       "sour cream",
@@ -763,6 +804,117 @@
       "worcestershire",
       "worcester sauce",
       "σάλτσα γούστερ"
+    ],
+    "dried mint": [
+      "αποξηραμένη μέντα",
+      "dried mint"
+    ],
+    "fresh mint": [
+      "φρέσκια μέντα",
+      "fresh mint"
+    ],
+    "bay leaf": [
+      "φύλλο δάφνης",
+      "δάφνη",
+      "bay leaf"
+    ],
+    "chervil": [
+      "φραγκομαϊντανός",
+      "chervil",
+      "μυρώνι"
+    ],
+    "nori sheet": [
+      "φύλλο νόρι",
+      "nori sheet"
+    ],
+    "kombu seaweed sheet": [
+      "φύλλο κόμπου",
+      "kombu sheet"
+    ],
+    "salmon roe": [
+      "αυγά σολομού",
+      "ikura",
+      "ίκουρα"
+    ],
+    "tarako cod roe": [
+      "tarako",
+      "ταράκο",
+      "αυγά μπακαλιάρου"
+    ],
+    "kelp": [
+      "kelp",
+      "κέλπ",
+      "φύκια kelp"
+    ],
+    "hijiki seaweed": [
+      "hijiki",
+      "χιτζίκι",
+      "φύκια χιτζίκι"
+    ],
+    "aonori": [
+      "aonori",
+      "αονόρι",
+      "πράσινα φύκια"
+    ],
+    "monk fruit sweetener": [
+      "monk fruit",
+      "γλυκαντικό monk fruit",
+      "λουό χαν γκουό"
+    ],
+    "pomegranate molasses": [
+      "μελάσα ροδιού",
+      "πετιμέζι ροδιού",
+      "pomegranate molasses"
+    ],
+    "small kohlrabi with leaf": [
+      "κολράμπι",
+      "μικρό κολράμπι"
+    ],
+    "bitter melon": [
+      "bitter melon",
+      "goya",
+      "γκόγια",
+      "πικρό πεπόνι"
+    ],
+    "burdock root": [
+      "gobo",
+      "γκόμπο",
+      "ρίζα κολλιτσίδας"
+    ],
+    "lotus root": [
+      "renkon",
+      "ρένκον",
+      "ρίζα λωτού"
+    ],
+    "sauerkraut juice": [
+      "άλμη ξινολάχανου",
+      "sauerkraut brine"
+    ],
+    "red miso": [
+      "red miso",
+      "aka miso",
+      "κόκκινο μίσο"
+    ],
+    "dark miso paste": [
+      "dark miso",
+      "σκούρο μίσο"
+    ],
+    "thai green curry roux": [
+      "βάση πράσινου κάρι",
+      "thai green curry base"
+    ],
+    "matcha green tea": [
+      "matcha",
+      "μάτσα",
+      "πράσινο τσάι μάτσα"
+    ],
+    "ground matcha tea": [
+      "matcha powder",
+      "μάτσα σε σκόνη"
+    ],
+    "jasmine green tea bag": [
+      "τσάι γιασεμί",
+      "jasmine green tea"
     ]
   }
 }

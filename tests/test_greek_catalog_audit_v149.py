@@ -20,15 +20,15 @@ def load_presentation():
 
 
 class GreekCatalogAuditV149Tests(unittest.TestCase):
-    def test_v149_is_inherited_by_active_v150(self):
+    def test_v149_is_inherited_by_active_v151(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v149.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v150",panel)
-        self.assertIn("cook4me-panel-v150.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.15",panel)
-        self.assertIn("?v=2026.9.21.15",panel)
-        self.assertIn('"version": "2026.9.21.15"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v151",panel)
+        self.assertIn("cook4me-panel-v151.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.16",panel)
+        self.assertIn("?v=2026.9.21.16",panel)
+        self.assertIn('"version": "2026.9.21.16"',manifest)
         self.assertIn("cook4me-panel-v148.js?v=2026.9.21.13",ui)
 
     def test_generic_pistachio_does_not_claim_aegina_origin(self):
