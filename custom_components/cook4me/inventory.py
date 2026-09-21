@@ -11,7 +11,7 @@ from uuid import uuid4
 _MAX_ITEMS = 500
 _UNSET = object()
 DEFAULT_EXPIRY_WARNING_DAYS = 3
-_STORAGE_VALUES = {"", "fridge", "freezer", "pantry", "other"}
+_STORAGE_VALUES = {"", "fridge", "freezer", "pantry", "cupboard", "shelf", "drawer", "countertop", "cellar", "other"}
 
 
 def _text(value: Any) -> str:
@@ -159,7 +159,7 @@ def _lot_metadata(raw: Any, *, strict: bool = False) -> dict[str, Any]:
     if storage:
         if storage not in _STORAGE_VALUES:
             if strict:
-                raise ValueError("Storage must be fridge, freezer, pantry, or other")
+                raise ValueError("Storage type is not supported")
         else:
             out["storage"] = storage
     for key in ("purchaseDate", "openedAt"):
@@ -172,7 +172,7 @@ def _lot_metadata(raw: Any, *, strict: bool = False) -> dict[str, Any]:
         raise ValueError("Use-within days must be between 1 and 3650")
     if use_days:
         out["useWithinDays"] = use_days
-    for key in ("barcode", "productName", "brand", "source", "nutritionSource", "storageLocationId", "revision"):
+    for key in ("barcode", "productName", "brand", "source", "nutritionSource", "storageLocationId", "containerId", "revision"):
         value = _text(raw.get(key))
         if value:
             out[key] = value[:300]
