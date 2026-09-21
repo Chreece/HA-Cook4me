@@ -46,11 +46,11 @@ class TransparentDeviceV134Tests(unittest.TestCase):
     def test_v134_is_inherited_by_active_v138(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v149",panel)
-        self.assertIn("cook4me-panel-v149.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.14",panel)
-        self.assertIn("?v=2026.9.21.14",panel)
-        self.assertIn('"version": "2026.9.21.14"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v150",panel)
+        self.assertIn("cook4me-panel-v150.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.15",panel)
+        self.assertIn("?v=2026.9.21.15",panel)
+        self.assertIn('"version": "2026.9.21.15"',manifest)
 
 
 if __name__=="__main__":

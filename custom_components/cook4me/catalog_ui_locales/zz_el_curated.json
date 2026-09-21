@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through fourth audit 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through fifth audit 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -223,7 +223,42 @@
     "glutinous rice flour": "Αλεύρι από κολλώδες ρύζι (glutinous rice flour)",
     "passion fruit": "Passion fruit (πασιφλόρα)",
     "wholegrain mustard": "Μουστάρδα με σπόρους",
-    "whole-grain mustard": "Μουστάρδα με σπόρους"
+    "whole-grain mustard": "Μουστάρδα με σπόρους",
+    "milk jam": "Dulce de leche (καραμελωμένο γάλα)",
+    "preserved lemon": "Λεμόνι διατηρημένο σε αλάτι (preserved lemon)",
+    "bacon lardon": "Κυβάκια μπέικον (lardons)",
+    "smoked bacon lardon": "Καπνιστά κυβάκια μπέικον (lardons)",
+    "cooked salami": "Μαγειρεμένο σαλάμι (cooked salami)",
+    "cured ham": "Ζαμπόν ωρίμανσης",
+    "cured ham slices": "Φέτες ζαμπόν ωρίμανσης",
+    "italian cured ham": "Ιταλικό ζαμπόν ωρίμανσης",
+    "guanciale": "Γκουαντσιάλε",
+    "mold-ripened cheese": "Τυρί ωρίμανσης με ευγενή μούχλα",
+    "melting cheese": "Τυρί για λιώσιμο",
+    "fromage frais": "Fromage frais (φρέσκο τυρί)",
+    "herbed fromage frais": "Fromage frais με μυρωδικά",
+    "herbed fromage frais cheese": "Fromage frais με μυρωδικά",
+    "ricotta salata": "Ricotta salata (αλατισμένη ρικότα)",
+    "goat cheese log": "Κατσικίσιο τυρί σε ρολό",
+    "log-shaped goat cheese": "Κατσικίσιο τυρί σε ρολό",
+    "ash goat's cheese": "Κατσικίσιο τυρί με επικάλυψη στάχτης",
+    "ash-coated goat cheese": "Κατσικίσιο τυρί με επικάλυψη στάχτης",
+    "canola oil": "Κραμβέλαιο (canola)",
+    "peanut oil": "Λάδι αράπικου φιστικιού (αραχιδέλαιο)",
+    "worcestershire sauce": "Σάλτσα Worcestershire (Γούστερ)",
+    "worcestershire-style sauce": "Σάλτσα τύπου Worcestershire",
+    "sriracha sauce": "Sriracha (καυτερή σάλτσα τσίλι)",
+    "harissa": "Harissa (πάστα καυτερής πιπεριάς)",
+    "tapenade": "Ταπενάντ ελιάς (tapenade)",
+    "spelt": "Σπέλτα (ντίνκελ)",
+    "spelt flour": "Αλεύρι σπέλτα (ντίνκελ)",
+    "light spelt flour": "Λευκό αλεύρι σπέλτα (ντίνκελ)",
+    "white spelt flour": "Λευκό αλεύρι σπέλτα (ντίνκελ)",
+    "wholemeal spelt flour": "Αλεύρι σπέλτα ολικής άλεσης",
+    "spelt pancakes": "Τηγανίτες με αλεύρι σπέλτα",
+    "pearl barley": "Κριθάρι περλέ",
+    "black treacle": "Μαύρη μελάσα (black treacle)",
+    "worcester sauce": "Σάλτσα Worcestershire (Γούστερ)"
   },
   "searchAliases": {
     "veal": [
@@ -617,6 +652,117 @@
       "μουστάρδα με σπόρους",
       "wholegrain mustard",
       "μουστάρδα ολικής"
+    ],
+    "milk jam": [
+      "dulce de leche",
+      "ντούλσε ντε λέτσε",
+      "καραμελωμένο γάλα",
+      "milk jam"
+    ],
+    "preserved lemon": [
+      "preserved lemon",
+      "λεμόνι σε αλάτι",
+      "λεμόνι διατηρημένο σε αλάτι",
+      "μαροκινό λεμόνι"
+    ],
+    "bacon lardon": [
+      "lardons",
+      "λαρδόν",
+      "κυβάκια μπέικον"
+    ],
+    "smoked bacon lardon": [
+      "smoked lardons",
+      "καπνιστά λαρδόν",
+      "καπνιστά κυβάκια μπέικον"
+    ],
+    "cooked salami": [
+      "cooked salami",
+      "μαγειρεμένο σαλάμι"
+    ],
+    "cured ham": [
+      "ζαμπόν ωρίμανσης",
+      "cured ham",
+      "prosciutto style ham"
+    ],
+    "guanciale": [
+      "guanciale",
+      "γκουαντσιάλε",
+      "γκουαντσάλε"
+    ],
+    "mold-ripened cheese": [
+      "τυρί με ευγενή μούχλα",
+      "mold ripened cheese",
+      "mould ripened cheese"
+    ],
+    "melting cheese": [
+      "τυρί για λιώσιμο",
+      "melting cheese"
+    ],
+    "fromage frais": [
+      "fromage frais",
+      "φρέσκο τυρί",
+      "φρομάζ φρε"
+    ],
+    "ricotta salata": [
+      "ricotta salata",
+      "αλατισμένη ρικότα"
+    ],
+    "goat cheese log": [
+      "κατσικίσιο τυρί σε ρολό",
+      "goat cheese log"
+    ],
+    "canola oil": [
+      "canola",
+      "canola oil",
+      "κραμβέλαιο"
+    ],
+    "peanut oil": [
+      "λάδι αράπικου φιστικιού",
+      "αραχιδέλαιο",
+      "peanut oil"
+    ],
+    "worcestershire sauce": [
+      "worcestershire",
+      "worcester sauce",
+      "σάλτσα γούστερ"
+    ],
+    "sriracha sauce": [
+      "sriracha",
+      "σριράτσα",
+      "καυτερή σάλτσα τσίλι"
+    ],
+    "harissa": [
+      "harissa",
+      "χαρίσα",
+      "πάστα καυτερής πιπεριάς"
+    ],
+    "tapenade": [
+      "tapenade",
+      "ταπενάντ",
+      "πάστα ελιάς"
+    ],
+    "spelt": [
+      "σπέλτα",
+      "ντίνκελ",
+      "spelt"
+    ],
+    "spelt flour": [
+      "αλεύρι σπέλτα",
+      "αλεύρι ντίνκελ",
+      "spelt flour"
+    ],
+    "pearl barley": [
+      "κριθάρι περλέ",
+      "pearl barley"
+    ],
+    "black treacle": [
+      "black treacle",
+      "μαύρη μελάσα"
+    ],
+    "worcester sauce": [
+      "worcestershire",
+      "worcester sauce",
+      "σάλτσα γούστερ"
     ]
   }
 }
