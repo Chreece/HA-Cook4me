@@ -20,15 +20,15 @@ def load_presentation():
 
 
 class GreekCatalogAuditV148Tests(unittest.TestCase):
-    def test_v148_is_active_and_versioned(self):
+    def test_v148_is_inherited_by_active_v149(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v148.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v148",panel)
-        self.assertIn("cook4me-panel-v148.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.13",panel)
-        self.assertIn("?v=2026.9.21.13",panel)
-        self.assertIn('"version": "2026.9.21.13"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v149",panel)
+        self.assertIn("cook4me-panel-v149.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.14",panel)
+        self.assertIn("?v=2026.9.21.14",panel)
+        self.assertIn('"version": "2026.9.21.14"',manifest)
         self.assertIn("cook4me-panel-v147.js?v=2026.9.21.12",ui)
 
     def test_third_pass_fixes_legume_produce_and_baking_terms(self):
@@ -88,7 +88,7 @@ class GreekCatalogAuditV148Tests(unittest.TestCase):
         data=json.loads(CURATED.read_text(encoding="utf-8"))
         self.assertGreaterEqual(len(data["labels"]),180)
         self.assertGreaterEqual(len(data["searchAliases"]),60)
-        self.assertIn("third audit",data["translationSource"])
+        self.assertIn("audit",data["translationSource"])
         presentation=(ROOT/"custom_components"/"cook4me"/"catalog_presentation.py").read_text(encoding="utf-8")
         self.assertIn("display_name",presentation)
         self.assertIn("locale_search_aliases",presentation)

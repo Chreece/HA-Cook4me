@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through third audit 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through fourth audit 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -189,7 +189,41 @@
     "julienned takuan pickled radish": "Τακουάν (ντάικον τουρσί) σε λεπτές λωρίδες",
     "doenjang soybean paste": "Ντοεντζάνγκ (κορεάτικη πάστα σόγιας)",
     "kombu soaking water": "Νερό από το μούλιασμα του κόμπου",
-    "wonton dumplings": "Γουόντον"
+    "wonton dumplings": "Γουόντον",
+    "100% pistachio cream": "Κρέμα φιστικιού 100%",
+    "fresh unsalted pistachio": "Φρέσκα ανάλατα φιστίκια",
+    "ground pistachio": "Αλεσμένα φιστίκια",
+    "pistachio": "Κελυφωτά φιστίκια (pistachios)",
+    "pistachio cream": "Κρέμα φιστικιού",
+    "pistachio flavoring": "Άρωμα φιστικιού",
+    "pistachio flavouring": "Άρωμα φιστικιού",
+    "pistachio kernels": "Ψίχα φιστικιού",
+    "pistachio paste": "Πάστα φιστικιού",
+    "roasted pistachio": "Καβουρδισμένα φιστίκια",
+    "shelled pistachio": "Καθαρισμένα φιστίκια",
+    "pine nuts": "Κουκουνάρια",
+    "toasted pine nuts": "Καβουρδισμένα κουκουνάρια",
+    "sesame puree": "Ταχίνι (πάστα σουσαμιού)",
+    "sesame salt": "Γκομάσιο (αλάτι με σουσάμι)",
+    "chia seed": "Σπόροι chia (τσία)",
+    "almond puree": "Πάστα αμυγδάλου",
+    "hazelnut puree": "Πάστα φουντουκιού",
+    "unsweetened hazelnut puree": "Πάστα φουντουκιού χωρίς ζάχαρη",
+    "wood ear mushroom": "Μανιτάρια wood ear (αυτί του Ιούδα)",
+    "dried wood ear mushroom": "Αποξηραμένα μανιτάρια wood ear (αυτί του Ιούδα)",
+    "king oyster mushroom": "Μανιτάρια ερίντζι (king oyster)",
+    "button mushroom": "Λευκά μανιτάρια champignon",
+    "fresh button mushroom": "Φρέσκα λευκά μανιτάρια champignon",
+    "mushroom / button mushroom": "Μανιτάρια / λευκά champignon",
+    "chestnut mushroom": "Καφέ μανιτάρια champignon",
+    "glass noodle": "Glass noodles (διάφανα νουντλς)",
+    "dried glass noodle": "Αποξηραμένα glass noodles (διάφανα νουντλς)",
+    "jasmine rice": "Ρύζι jasmine (γιασεμί)",
+    "glutinous rice": "Sticky rice (κολλώδες ρύζι)",
+    "glutinous rice flour": "Αλεύρι από κολλώδες ρύζι (glutinous rice flour)",
+    "passion fruit": "Passion fruit (πασιφλόρα)",
+    "wholegrain mustard": "Μουστάρδα με σπόρους",
+    "whole-grain mustard": "Μουστάρδα με σπόρους"
   },
   "searchAliases": {
     "veal": [
@@ -479,6 +513,110 @@
     "wonton dumplings": [
       "wonton",
       "γουόντον"
+    ],
+    "pistachio": [
+      "pistachio",
+      "pistachios",
+      "φιστίκι",
+      "φιστίκια",
+      "κελυφωτό φιστίκι",
+      "φιστίκι αιγίνης"
+    ],
+    "pistachio cream": [
+      "κρέμα φιστικιού",
+      "pistachio cream",
+      "κρέμα φιστικιού αιγίνης"
+    ],
+    "pistachio paste": [
+      "πάστα φιστικιού",
+      "pistachio paste"
+    ],
+    "pistachio kernels": [
+      "ψίχα φιστικιού",
+      "pistachio kernels"
+    ],
+    "pine nuts": [
+      "κουκουνάρια",
+      "κουκουνάρι",
+      "pine nuts"
+    ],
+    "sesame puree": [
+      "ταχίνι",
+      "πάστα σουσαμιού",
+      "sesame paste"
+    ],
+    "sesame salt": [
+      "γκομάσιο",
+      "gomasio",
+      "αλάτι με σουσάμι"
+    ],
+    "chia seed": [
+      "chia",
+      "τσία",
+      "σπόροι chia",
+      "σπόροι τσία"
+    ],
+    "almond puree": [
+      "πάστα αμυγδάλου",
+      "βούτυρο αμυγδάλου",
+      "almond puree"
+    ],
+    "hazelnut puree": [
+      "πάστα φουντουκιού",
+      "βούτυρο φουντουκιού",
+      "hazelnut puree"
+    ],
+    "wood ear mushroom": [
+      "wood ear",
+      "μανιτάρια wood ear",
+      "αυτί του ιούδα",
+      "auricularia"
+    ],
+    "king oyster mushroom": [
+      "ερίντζι",
+      "eryngii",
+      "king oyster",
+      "βασιλικό πλευρώτους"
+    ],
+    "button mushroom": [
+      "champignon",
+      "σαμπινιόν",
+      "λευκά μανιτάρια"
+    ],
+    "chestnut mushroom": [
+      "καφέ champignon",
+      "καφέ σαμπινιόν",
+      "chestnut mushroom"
+    ],
+    "glass noodle": [
+      "glass noodles",
+      "διάφανα νουντλς",
+      "cellophane noodles"
+    ],
+    "jasmine rice": [
+      "jasmine rice",
+      "ρύζι jasmine",
+      "ρύζι γιασεμί"
+    ],
+    "glutinous rice": [
+      "sticky rice",
+      "glutinous rice",
+      "κολλώδες ρύζι"
+    ],
+    "glutinous rice flour": [
+      "glutinous rice flour",
+      "sticky rice flour",
+      "αλεύρι κολλώδους ρυζιού"
+    ],
+    "passion fruit": [
+      "passion fruit",
+      "πασιφλόρα",
+      "φρούτο του πάθους"
+    ],
+    "wholegrain mustard": [
+      "μουστάρδα με σπόρους",
+      "wholegrain mustard",
+      "μουστάρδα ολικής"
     ]
   }
 }
