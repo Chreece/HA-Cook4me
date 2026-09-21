@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through third audit 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -49,7 +49,7 @@
     "white stew roux": "Ρου για λευκό στιφάδο",
     "venison tenderloin": "Φιλέτο ελαφιού",
     "pork loin": "Χοιρινό καρέ",
-    "heavy cream": "Πλήρης κρέμα γάλακτος",
+    "heavy cream": "Κρέμα γάλακτος υψηλών λιπαρών (heavy cream)",
     "single cream": "Ελαφριά κρέμα γάλακτος",
     "sour cream": "Ξινή κρέμα (sour cream)",
     "full-fat sour cream": "Πλήρης ξινή κρέμα (sour cream)",
@@ -68,7 +68,7 @@
     "chicory": "Ραδίκι κιχωρίου",
     "romaine lettuce": "Μαρούλι ρομάνα",
     "fromage blanc": "Φρέσκο τυρί fromage blanc",
-    "double cream": "Κρέμα γάλακτος υψηλών λιπαρών",
+    "double cream": "Κρέμα γάλακτος πολύ υψηλών λιπαρών (double cream)",
     "corn flour": "Καλαμποκάλευρο",
     "green onion": "Φρέσκο κρεμμυδάκι",
     "spring onion": "Φρέσκο κρεμμυδάκι",
@@ -143,7 +143,53 @@
     "beef tendon": "Μοσχαρίσιος τένοντας",
     "sausage meat": "Κιμάς λουκάνικου",
     "thin slices of young beef": "Μοσχαράκι σε λεπτές φέτες",
-    "salad onion stalk": "Κοτσάνι φρέσκου κρεμμυδιού"
+    "salad onion stalk": "Φρέσκο κρεμμυδάκι για σαλάτα",
+    "baked bean": "Φασόλια σε σάλτσα ντομάτας (baked beans)",
+    "baked bean with tomato": "Φασόλια σε σάλτσα ντομάτας (baked beans)",
+    "snow pea": "Μπιζέλια mangetout (snow peas)",
+    "boiled snow pea": "Βρασμένα μπιζέλια mangetout",
+    "garden bean": "Κοινά φασόλια",
+    "cooked garden bean": "Μαγειρεμένα κοινά φασόλια",
+    "mature bean": "Ξερά φασόλια",
+    "young soybeans": "Edamame (νεαρά φασόλια σόγιας)",
+    "edamame": "Edamame",
+    "edamame bean": "Edamame (φασόλια σόγιας)",
+    "edamame pods": "Edamame με τον λοβό",
+    "frozen edamame": "Κατεψυγμένα edamame",
+    "frozen edamame bean": "Κατεψυγμένα edamame",
+    "frozen edamame pods": "Κατεψυγμένα edamame με τον λοβό",
+    "canned butter bean": "Φασόλια λίμα κονσέρβας (butter beans)",
+    "jerusalem artichoke": "Τοπιναμπούρ (αγκινάρα Ιερουσαλήμ)",
+    "jerusalem artichokes": "Τοπιναμπούρ (αγκινάρα Ιερουσαλήμ)",
+    "romanesco cabbage": "Κουνουπίδι ρομανέσκο",
+    "romanesco broccoli": "Κουνουπίδι ρομανέσκο",
+    "romanesco broccoli floret": "Κουνουπίδι ρομανέσκο",
+    "small romanesco broccoli floret": "Κουνουπίδι ρομανέσκο",
+    "onion squash": "Κολοκύθα onion squash (χειμωνιάτικη)",
+    "firm potato": "Πατάτα σφιχτής σάρκας",
+    "salad onion": "Κρεμμύδι για σαλάτα",
+    "large beefsteak tomato": "Ντομάτα beefsteak (μεγάλη σαρκώδης)",
+    "plain flour": "Αλεύρι για όλες τις χρήσεις",
+    "bonito flakes": "Κατσουομπούσι (νιφάδες παλαμίδας)",
+    "sake lees": "Sake kasu (υπόλειμμα ζύμωσης σάκε)",
+    "yellowtail": "Μαγιάτικο (yellowtail / hamachi)",
+    "halibut": "Ιππόγλωσσος (halibut)",
+    "smoked halibut": "Καπνιστός ιππόγλωσσος (halibut)",
+    "yellow croaker": "Yellow croaker (κίτρινη σκιαινά)",
+    "pollock": "Πόλακ (pollock)",
+    "atlantic pollock": "Πόλακ Ατλαντικού (Atlantic pollock)",
+    "frozen pollock": "Κατεψυγμένο πόλακ (pollock)",
+    "semi-dried pollock": "Ημιαποξηραμένο πόλακ (pollock)",
+    "dried pollock strips": "Αποξηραμένες λωρίδες πόλακ (pollock)",
+    "yellow pollock fillet": "Φιλέτο πόλακ (pollock)",
+    "langoustines": "Καραβίδες (langoustines)",
+    "crayfish": "Καραβίδες γλυκού νερού (crayfish)",
+    "scampi with tails": "Ουρές καραβίδας (scampi)",
+    "takuan pickled daikon": "Τακουάν (ντάικον τουρσί)",
+    "julienned takuan pickled radish": "Τακουάν (ντάικον τουρσί) σε λεπτές λωρίδες",
+    "doenjang soybean paste": "Ντοεντζάνγκ (κορεάτικη πάστα σόγιας)",
+    "kombu soaking water": "Νερό από το μούλιασμα του κόμπου",
+    "wonton dumplings": "Γουόντον"
   },
   "searchAliases": {
     "veal": [
@@ -304,6 +350,135 @@
     "boiled chicken gizzards": [
       "στομαχάκια κοτόπουλου",
       "εντόσθια κοτόπουλου"
+    ],
+    "baked bean": [
+      "baked beans",
+      "φασόλια σε σάλτσα ντομάτας",
+      "φασόλια ντομάτας"
+    ],
+    "snow pea": [
+      "mangetout",
+      "snow peas",
+      "μπιζέλια mangetout",
+      "γλυκομπίζελα"
+    ],
+    "garden bean": [
+      "κοινά φασόλια",
+      "φασόλια"
+    ],
+    "mature bean": [
+      "ξερά φασόλια"
+    ],
+    "young soybeans": [
+      "edamame",
+      "ενταμάμε",
+      "νεαρά φασόλια σόγιας"
+    ],
+    "edamame": [
+      "edamame",
+      "ενταμάμε",
+      "νεαρά φασόλια σόγιας"
+    ],
+    "canned butter bean": [
+      "butter beans",
+      "φασόλια λίμα",
+      "μεγάλα λευκά φασόλια"
+    ],
+    "jerusalem artichoke": [
+      "τοπιναμπούρ",
+      "topinambur",
+      "αγκινάρα ιερουσαλήμ"
+    ],
+    "romanesco cabbage": [
+      "ρομανέσκο",
+      "romanesco",
+      "κουνουπίδι ρομανέσκο"
+    ],
+    "onion squash": [
+      "onion squash",
+      "χειμωνιάτικη κολοκύθα"
+    ],
+    "firm potato": [
+      "πατάτα σφιχτής σάρκας",
+      "πατάτες για βράσιμο"
+    ],
+    "salad onion": [
+      "κρεμμύδι για σαλάτα",
+      "φρέσκο κρεμμυδάκι"
+    ],
+    "large beefsteak tomato": [
+      "beefsteak tomato",
+      "ντομάτα beefsteak",
+      "μεγάλη σαρκώδης ντομάτα"
+    ],
+    "plain flour": [
+      "αλεύρι για όλες τις χρήσεις",
+      "plain flour"
+    ],
+    "heavy cream": [
+      "heavy cream",
+      "πλήρης κρέμα γάλακτος",
+      "κρέμα γάλακτος υψηλών λιπαρών"
+    ],
+    "double cream": [
+      "double cream",
+      "κρέμα γάλακτος 48%",
+      "κρέμα γάλακτος πολύ υψηλών λιπαρών"
+    ],
+    "bonito flakes": [
+      "κατσουομπούσι",
+      "katsuobushi",
+      "νιφάδες παλαμίδας"
+    ],
+    "sake lees": [
+      "sake kasu",
+      "sake lees",
+      "υπόλειμμα ζύμωσης σάκε"
+    ],
+    "yellowtail": [
+      "yellowtail",
+      "hamachi",
+      "χαμάτσι",
+      "μαγιάτικο"
+    ],
+    "halibut": [
+      "halibut",
+      "ιππόγλωσσος"
+    ],
+    "yellow croaker": [
+      "yellow croaker",
+      "κίτρινη σκιαινά"
+    ],
+    "pollock": [
+      "pollock",
+      "πόλακ"
+    ],
+    "langoustines": [
+      "langoustines",
+      "scampi",
+      "καραβίδες"
+    ],
+    "crayfish": [
+      "crayfish",
+      "καραβίδες γλυκού νερού"
+    ],
+    "takuan pickled daikon": [
+      "takuan",
+      "τακουάν",
+      "ντάικον τουρσί"
+    ],
+    "doenjang soybean paste": [
+      "doenjang",
+      "ντοεντζάνγκ",
+      "κορεάτικη πάστα σόγιας"
+    ],
+    "kombu soaking water": [
+      "νερό μουλιάσματος κόμπου",
+      "νερό από το μούλιασμα του κόμπου"
+    ],
+    "wonton dumplings": [
+      "wonton",
+      "γουόντον"
     ]
   }
 }
