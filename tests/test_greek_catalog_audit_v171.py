@@ -29,7 +29,7 @@ class GreekCatalogAuditV171Tests(unittest.TestCase):
         self.assertIn("/cook4me_static/2026.9.21.37",panel)
         self.assertIn("?v=2026.9.21.37",panel)
         self.assertIn('"version": "2026.9.21.37"',manifest)
-        self.assertIn("cook4me-panel-v170.js?v=2026.9.21.35",ui)
+        self.assertIn("cook4me-panel-v171.js?v=2026.9.21.36",ui)
 
     def test_choice_and_singular_display_fixes(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
