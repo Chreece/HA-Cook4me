@@ -24,11 +24,11 @@ class GreekCatalogAuditV153Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v153.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v171",panel)
-        self.assertIn("cook4me-panel-v171.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.36",panel)
-        self.assertIn("?v=2026.9.21.36",panel)
-        self.assertIn('"version": "2026.9.21.36"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v172",panel)
+        self.assertIn("cook4me-panel-v172.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.37",panel)
+        self.assertIn("?v=2026.9.21.37",panel)
+        self.assertIn('"version": "2026.9.21.37"',manifest)
         self.assertIn("cook4me-panel-v152.js?v=2026.9.21.17",ui)
 
     def test_condensed_and_evaporated_milk_are_distinguished(self):
