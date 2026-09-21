@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through twenty-fourth audit 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through twenty-fifth audit 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -77,7 +77,7 @@
     "cardamom": "Κακουλές (καρδάμωμο)",
     "cardamom pod": "Λοβός κακουλέ",
     "cardamom pods": "Λοβοί κακουλέ",
-    "cardamom, 1 cinnamon stick, 2 bay leaf": "Κακουλές, κανέλα και δάφνη",
+    "cardamom, 1 cinnamon stick, 2 bay leaf": "Κάρδαμο, 1 ξυλάκι κανέλας και 2 φύλλα δάφνης",
     "ground cardamom": "Αλεσμένος κακουλές",
     "shelled cardamom pods": "Σπόροι κακουλέ",
     "whole spices: 1 cinnamon stick, 2 bay leaves, 5 cardamom pods": "Κανέλα, δάφνη και λοβοί κακουλέ",
@@ -102,7 +102,7 @@
     "corn on the cob": "Καλαμπόκι στο κοτσάνι",
     "raw corn on the cob": "Ωμό καλαμπόκι στο κοτσάνι",
     "raw corn cobs": "Ωμά καλαμπόκια στο κοτσάνι",
-    "celery stalk": "Κλωνάρι σέλινου",
+    "celery stalk": "Κοτσάνι σέλινου",
     "celery sticks": "Μπαστουνάκια σέλινου",
     "stalk celery": "Σέλινο σε κλωνάρια",
     "leek stalk": "Πράσο",
@@ -598,7 +598,7 @@
     "handful of blueberry": "Μια χούφτα μύρτιλα",
     "handful of spinach": "Μια χούφτα σπανάκι",
     "bunch of aromatic herbs": "Ματσάκι αρωματικά μυρωδικά",
-    "bunch of baby spinach": "Ματσάκι τρυφερό σπανάκι",
+    "bunch of baby spinach": "Ματσάκι τρυφερού σπανακιού",
     "bunch of fresh coriander": "Ματσάκι φρέσκο κόλιανδρο",
     "bunch of herbs": "Ματσάκι μυρωδικά",
     "bunch of parsley": "Ματσάκι μαϊντανό",
@@ -690,7 +690,7 @@
     "fresh sage leaf": "Φρέσκο φύλλο φασκόμηλου",
     "fresh thyme leaf": "Φρέσκο φύλλο θυμαριού",
     "cup of fresh coriander": "1 φλιτζάνι φρέσκο κόλιανδρο",
-    "cup of ground almond": "1 φλιτζάνι αλεσμένα αμύγδαλα",
+    "cup of ground almond": "1 φλιτζάνι αλεσμένο αμύγδαλο",
     "cup of long-grain white rice": "1 φλιτζάνι λευκό μακρύκοκκο ρύζι",
     "cup of parsley": "1 φλιτζάνι μαϊντανό",
     "cups of parsley": "Φλιτζάνια μαϊντανού",
@@ -1255,7 +1255,9 @@
     "rib": "Παϊδάκι",
     "★ cherry tomato": "Ντοματίνι",
     "shortbread": "Μπισκότο σόρτμπρεντ",
-    "bread croutons": "Κρουτόν ψωμιού"
+    "bread croutons": "Κρουτόν ψωμιού",
+    "chocolate disc": "Δίσκος σοκολάτας",
+    "chocolate ring": "Δαχτυλίδι σοκολάτας"
   },
   "searchAliases": {
     "veal": [
@@ -5564,6 +5566,1232 @@
     "commercial sukiyaki sauce": [
       "έτοιμη σάλτσα σουκιγιάκι",
       "commercial sukiyaki sauce"
+    ],
+    "★ cherry tomato": [
+      "ντοματίνι",
+      "★ cherry tomato"
+    ],
+    "★ japanese long onion": [
+      "ιαπωνικό μακρύ κρεμμύδι",
+      "★ japanese long onion"
+    ],
+    "allspice and black pepper": [
+      "μπαχάρι και μαύρο πιπέρι",
+      "allspice and black pepper"
+    ],
+    "almond or lemon flavouring": [
+      "άρωμα αμυγδάλου ή λεμονιού",
+      "almond or lemon flavouring"
+    ],
+    "apple compote": [
+      "κομπόστα μήλου",
+      "apple compote"
+    ],
+    "apple juice": [
+      "χυμός μήλου",
+      "apple juice"
+    ],
+    "apricot compote": [
+      "κομπόστα βερίκοκου",
+      "apricot compote"
+    ],
+    "artichoke": [
+      "αγκινάρα",
+      "artichoke"
+    ],
+    "artichoke hearts": [
+      "καρδιές αγκινάρας",
+      "καρδιά αγκινάρας",
+      "artichoke hearts"
+    ],
+    "asparagus": [
+      "σπαράγγια",
+      "asparagus"
+    ],
+    "asparagus tips": [
+      "κορυφές σπαραγγιών",
+      "asparagus tips"
+    ],
+    "baby lettuce": [
+      "μικρό μαρούλι",
+      "baby lettuce"
+    ],
+    "baby spinach": [
+      "τρυφερό σπανάκι",
+      "baby σπανάκι",
+      "baby spinach"
+    ],
+    "baby spinach salad": [
+      "τρυφερό σπανάκι για σαλάτα",
+      "baby spinach salad"
+    ],
+    "baked bean with tomato": [
+      "φασόλια σε σάλτσα ντομάτας (baked beans)",
+      "baked bean with tomato"
+    ],
+    "banana slices": [
+      "φέτες μπανάνας",
+      "banana slices"
+    ],
+    "batavia lettuce": [
+      "μαρούλι μπατάβια",
+      "batavia lettuce"
+    ],
+    "beet kvass": [
+      "κβας παντζαριού",
+      "beet kvass"
+    ],
+    "bell pepper / paprika": [
+      "πιπεριά ή πάπρικα",
+      "bell pepper / paprika"
+    ],
+    "berry skyr": [
+      "skyr με μούρα",
+      "berry skyr"
+    ],
+    "bitter orange": [
+      "νεράντζι",
+      "bitter orange"
+    ],
+    "bitter orange juice": [
+      "χυμός νεραντζιού",
+      "bitter orange juice"
+    ],
+    "black cabbage": [
+      "cavolo nero (μαύρο λάχανο)",
+      "black cabbage"
+    ],
+    "blanched atlas cabbage": [
+      "ζεματισμένο λάχανο άτλας",
+      "blanched atlas cabbage"
+    ],
+    "blanched siraegi dried radish greens": [
+      "ζεματισμένα αποξηραμένα φύλλα ραπανιού σιρέγκι",
+      "blanched siraegi dried radish greens"
+    ],
+    "blanched white cabbage": [
+      "ζεματισμένο λευκό λάχανο",
+      "blanched white cabbage"
+    ],
+    "blended tomato": [
+      "πολτός ντομάτας",
+      "blended tomato"
+    ],
+    "blood orange": [
+      "σαγκουίνι",
+      "κόκκινο πορτοκάλι",
+      "blood orange"
+    ],
+    "boiled spinach": [
+      "βρασμένο σπανάκι",
+      "boiled spinach"
+    ],
+    "brown onion": [
+      "ξερό κρεμμύδι",
+      "brown onion"
+    ],
+    "bunch of baby spinach": [
+      "ματσάκι τρυφερού σπανακιού",
+      "bunch of baby spinach"
+    ],
+    "bunches of baby spinach": [
+      "ματσάκια τρυφερού σπανακιού",
+      "bunches of baby spinach"
+    ],
+    "butternut squash": [
+      "κολοκύθα βουτύρου",
+      "butternut",
+      "butternut squash"
+    ],
+    "cabbage": [
+      "λάχανο",
+      "cabbage"
+    ],
+    "cabbage stir-fry vegetable mix": [
+      "μείγμα λαχανικών με λάχανο",
+      "cabbage stir-fry vegetable mix"
+    ],
+    "candied lemon": [
+      "λεμόνι γλασέ",
+      "candied lemon"
+    ],
+    "candied orange peel": [
+      "φλούδα πορτοκαλιού γλασέ",
+      "candied orange peel"
+    ],
+    "canned artichoke bottoms": [
+      "πάτοι αγκινάρας κονσέρβας",
+      "canned artichoke bottoms"
+    ],
+    "canned pineapple": [
+      "ανανάς κονσέρβας",
+      "canned pineapple"
+    ],
+    "canned pineapple juice": [
+      "χυμός ανανά κονσέρβας",
+      "canned pineapple juice"
+    ],
+    "canned tomato puree": [
+      "πουρές ντομάτας κονσέρβας",
+      "canned tomato puree"
+    ],
+    "carliston pepper": [
+      "πιπεριά τσαρλιστόν",
+      "carliston pepper"
+    ],
+    "cayenne pepper": [
+      "πιπέρι καγιέν",
+      "cayenne pepper"
+    ],
+    "celery": [
+      "σέλινο",
+      "celery"
+    ],
+    "celery stalk": [
+      "κοτσάνι σέλινου",
+      "celery stalk"
+    ],
+    "celery sticks": [
+      "μπαστουνάκια σέλινου",
+      "celery sticks"
+    ],
+    "cevennes sweet onion": [
+      "γλυκό κρεμμύδι σεβέν",
+      "cevennes sweet onion"
+    ],
+    "cheese with salt and pepper": [
+      "τυρί με αλάτι και πιπέρι",
+      "cheese with salt and pepper"
+    ],
+    "cheongyang chili pepper": [
+      "καυτερή πιπεριά τσονγκγιάνγκ",
+      "cheongyang chili pepper"
+    ],
+    "cherry tomato and basil": [
+      "ντοματίνι και βασιλικός",
+      "cherry tomato and basil"
+    ],
+    "chili pepper": [
+      "πιπεριά τσίλι",
+      "chili pepper"
+    ],
+    "chili pepper and black pepper": [
+      "πιπεριά τσίλι και μαύρο πιπέρι",
+      "chili pepper and black pepper"
+    ],
+    "chinese cabbage": [
+      "κινέζικο λάχανο",
+      "chinese cabbage"
+    ],
+    "coarse pepper salt": [
+      "χοντρό αλατοπίπερο",
+      "coarse pepper salt"
+    ],
+    "cocktail cherry": [
+      "κεράσι κοκτέιλ",
+      "cocktail cherry"
+    ],
+    "cognac and orange liqueur": [
+      "κονιάκ και λικέρ πορτοκαλιού",
+      "cognac and orange liqueur"
+    ],
+    "concentrated tomato puree": [
+      "συμπυκνωμένος πουρές ντομάτας",
+      "concentrated tomato puree"
+    ],
+    "cooked bell pepper": [
+      "μαγειρεμένη πιπεριά",
+      "cooked bell pepper"
+    ],
+    "cooked eggplant flesh": [
+      "μαγειρεμένη σάρκα μελιτζάνας",
+      "cooked eggplant flesh"
+    ],
+    "coriander and fennel": [
+      "κόλιανδρος και μάραθος",
+      "coriander and fennel"
+    ],
+    "cornstarch or potato starch": [
+      "άμυλο καλαμποκιού ή πατάτας",
+      "cornstarch or potato starch"
+    ],
+    "creole pepper": [
+      "κρεολικό μείγμα πιπεριών",
+      "creole pepper"
+    ],
+    "crispy fried onion mixed with yogurt": [
+      "τραγανό τηγανητό κρεμμύδι με γιαούρτι",
+      "crispy fried onion mixed with yogurt"
+    ],
+    "crystallized lemon": [
+      "λεμόνι γλασέ",
+      "crystallized lemon"
+    ],
+    "cucumber": [
+      "αγγούρι",
+      "cucumber"
+    ],
+    "cucumber in mustard brine": [
+      "αγγούρι σε άλμη μουστάρδας",
+      "cucumber in mustard brine"
+    ],
+    "cucumber juice": [
+      "χυμός αγγουριού",
+      "cucumber juice"
+    ],
+    "daikon radish sprouts": [
+      "φύτρα daikon",
+      "daikon radish sprouts"
+    ],
+    "datterini tomato": [
+      "ντομάτα ντατερίνι",
+      "ντατερίνι",
+      "datterini tomato"
+    ],
+    "datterini tomato pulp": [
+      "πολτός ντομάτας ντατερίνι",
+      "datterini tomato pulp"
+    ],
+    "all-purpose flour": [
+      "αλεύρι για όλες τις χρήσεις",
+      "αλεύρι γοχ",
+      "all-purpose flour"
+    ],
+    "almond flour": [
+      "αλεύρι αμυγδάλου",
+      "almond flour"
+    ],
+    "alphabet pasta": [
+      "ζυμαρικά αλφαβήτα",
+      "alphabet pasta"
+    ],
+    "american rice": [
+      "ρύζι αμερικανικού τύπου",
+      "american rice"
+    ],
+    "baking powder mixed with flour": [
+      "μείγμα αλευριού με μπέικιν πάουντερ",
+      "baking powder mixed with flour"
+    ],
+    "baking soda mixed with flour": [
+      "μείγμα αλευριού με μαγειρική σόδα",
+      "baking soda mixed with flour"
+    ],
+    "baldo rice": [
+      "ρύζι μπάλντο",
+      "baldo rice"
+    ],
+    "barley": [
+      "κριθάρι",
+      "barley"
+    ],
+    "bicarbonate mixed with flour": [
+      "μείγμα αλευριού με μαγειρική σόδα",
+      "bicarbonate mixed with flour"
+    ],
+    "bicarbonate of soda mixed with flour": [
+      "μείγμα αλευριού με μαγειρική σόδα",
+      "bicarbonate of soda mixed with flour"
+    ],
+    "black quinoa": [
+      "μαύρη κινόα",
+      "black quinoa"
+    ],
+    "black rice": [
+      "μαύρο ρύζι",
+      "black rice"
+    ],
+    "bread croutons": [
+      "κρουτόν ψωμιού",
+      "bread croutons"
+    ],
+    "bread rolls": [
+      "ψωμάκια",
+      "bread rolls"
+    ],
+    "bread slice": [
+      "φέτα ψωμιού",
+      "bread slice"
+    ],
+    "brioche": [
+      "μπριός",
+      "brioche"
+    ],
+    "broken rice": [
+      "σπασμένο ρύζι",
+      "broken rice"
+    ],
+    "brown basmati rice": [
+      "καστανό ρύζι μπασμάτι",
+      "καστανό μπασμάτι",
+      "brown basmati rice"
+    ],
+    "buckwheat flakes": [
+      "νιφάδες φαγόπυρου",
+      "buckwheat flakes"
+    ],
+    "buckwheat flour": [
+      "αλεύρι φαγόπυρου",
+      "buckwheat flour"
+    ],
+    "bulgur wheat": [
+      "πλιγούρι",
+      "bulgur wheat"
+    ],
+    "busiate pasta": [
+      "ζυμαρικά μπουζιάτε",
+      "busiate pasta"
+    ],
+    "cake flour": [
+      "αλεύρι για κέικ",
+      "cake flour"
+    ],
+    "calamarata-style pasta": [
+      "ζυμαρικά τύπου καλαμαράτα",
+      "calamarata-style pasta"
+    ],
+    "canederli bread dumplings": [
+      "ψωμένια ντάμπλινγκ κανεντέρλι",
+      "canederli bread dumplings"
+    ],
+    "carnaroli risotto rice": [
+      "ρύζι καρναρόλι",
+      "καρναρόλι",
+      "carnaroli risotto rice"
+    ],
+    "casarecce pasta": [
+      "ζυμαρικά καζαρέτσε",
+      "casarecce pasta"
+    ],
+    "caserecce-style pasta": [
+      "ζυμαρικά καζαρέτσε",
+      "caserecce-style pasta"
+    ],
+    "cavatelli pasta": [
+      "ζυμαρικά καβατέλι",
+      "cavatelli pasta"
+    ],
+    "cheongju rice wine": [
+      "κρασί ρυζιού τσονγκτζού",
+      "cheongju rice wine"
+    ],
+    "chestnut flour": [
+      "αλεύρι κάστανου",
+      "chestnut flour"
+    ],
+    "chinese egg noodle": [
+      "κινέζικα νουντλς αυγού",
+      "chinese egg noodle"
+    ],
+    "chinese noodle": [
+      "κινέζικα νουντλς",
+      "chinese noodle"
+    ],
+    "chinese steamed noodle": [
+      "κινέζικα νουντλς ατμού",
+      "chinese steamed noodle"
+    ],
+    "cm diameter tortilla": [
+      "τορτίγια διαμέτρου … εκ.",
+      "cm diameter tortilla"
+    ],
+    "cm tortilla": [
+      "τορτίγια … εκ.",
+      "cm tortilla"
+    ],
+    "coarse bulgur": [
+      "χοντρό πλιγούρι",
+      "coarse bulgur"
+    ],
+    "coconut flour": [
+      "αλεύρι καρύδας",
+      "coconut flour"
+    ],
+    "conchiglie pasta": [
+      "ζυμαρικά κοχύλια",
+      "conchiglie pasta"
+    ],
+    "cooked chinese noodle": [
+      "μαγειρεμένα κινέζικα νουντλς",
+      "cooked chinese noodle"
+    ],
+    "cooked egg noodle": [
+      "μαγειρεμένα νουντλς αυγού",
+      "cooked egg noodle"
+    ],
+    "cooked japanese noodle": [
+      "μαγειρεμένα ιαπωνικά νουντλς",
+      "cooked japanese noodle"
+    ],
+    "cooked noodle": [
+      "μαγειρεμένα νουντλς",
+      "cooked noodle"
+    ],
+    "cooked orzo": [
+      "μαγειρεμένο κριθαράκι",
+      "cooked orzo"
+    ],
+    "cooked pasta water": [
+      "νερό βρασμού ζυμαρικών",
+      "νερό ζυμαρικών",
+      "cooked pasta water"
+    ],
+    "cooked quinoa": [
+      "μαγειρεμένη κινόα",
+      "cooked quinoa"
+    ],
+    "cooked ramen noodle": [
+      "μαγειρεμένα νουντλς ράμεν",
+      "cooked ramen noodle"
+    ],
+    "cooked rice": [
+      "μαγειρεμένο ρύζι",
+      "cooked rice"
+    ],
+    "cooked rice for adults": [
+      "μαγειρεμένο ρύζι για ενήλικες",
+      "cooked rice for adults"
+    ],
+    "cooked rice noodle": [
+      "μαγειρεμένα νουντλς ρυζιού",
+      "cooked rice noodle"
+    ],
+    "cooking cream or oat cream": [
+      "κρέμα μαγειρικής ή κρέμα βρώμης",
+      "cooking cream or oat cream"
+    ],
+    "corn flour diluted in a little water": [
+      "αλεύρι καλαμποκιού αραιωμένο σε λίγο νερό",
+      "corn flour diluted in a little water"
+    ],
+    "corn semolina": [
+      "σιμιγδάλι καλαμποκιού",
+      "corn semolina"
+    ],
+    "couscous spices": [
+      "μπαχαρικά για κουσκούς",
+      "couscous spices"
+    ],
+    "crispy bread pieces": [
+      "τραγανά κομμάτια ψωμιού",
+      "crispy bread pieces"
+    ],
+    "crumbled bread slices": [
+      "θρυμματισμένες φέτες ψωμιού",
+      "crumbled bread slices"
+    ],
+    "crumbled brioche": [
+      "θρυμματισμένο μπριός",
+      "crumbled brioche"
+    ],
+    "crustless slice of white bread": [
+      "φέτα λευκού ψωμιού χωρίς κόρα",
+      "crustless slice of white bread"
+    ],
+    "crustless white bread": [
+      "λευκό ψωμί χωρίς κόρα",
+      "crustless white bread"
+    ],
+    "culinary rice paper": [
+      "ρυζόχαρτο μαγειρικής",
+      "culinary rice paper"
+    ],
+    "cup of long-grain white rice": [
+      "1 φλιτζάνι λευκό μακρύκοκκο ρύζι",
+      "cup of long-grain white rice"
+    ],
+    "ditaloni rigati pasta": [
+      "ζυμαρικά ντιταλόνι ριγκάτι",
+      "ditaloni rigati pasta"
+    ],
+    "domyoji-ko coarse glutinous rice flour": [
+      "χοντρό αλεύρι κολλώδους ρυζιού ντομιότζι",
+      "domyoji-ko coarse glutinous rice flour"
+    ],
+    "dried farfalle pasta": [
+      "ξερές φαρφάλες",
+      "dried farfalle pasta"
+    ],
+    "dried fusilli pasta": [
+      "ξερά φουσίλι",
+      "dried fusilli pasta"
+    ],
+    "dried glass noodle": [
+      "αποξηραμένα glass noodles (διάφανα νουντλς)",
+      "dried glass noodle"
+    ],
+    "dried pasta": [
+      "ξερά ζυμαρικά",
+      "ξηρά ζυμαρικά",
+      "dried pasta"
+    ],
+    "dried penne": [
+      "ξερές πένες",
+      "ξηρές πένες",
+      "ξερά πένες",
+      "dried penne"
+    ],
+    "dried penne pasta": [
+      "ξερές πένες",
+      "dried penne pasta"
+    ],
+    "dried small penne pasta": [
+      "ξερές μικρές πένες",
+      "dried small penne pasta"
+    ],
+    "3:1 preserving sugar": [
+      "ζάχαρη για μαρμελάδα 3:1",
+      "3:1 preserving sugar"
+    ],
+    "50% baking chocolate": [
+      "κουβερτούρα 50% κακάο",
+      "50% baking chocolate"
+    ],
+    "50% chocolate": [
+      "σοκολάτα 50% κακάο",
+      "50% chocolate"
+    ],
+    "55% melted baking chocolate": [
+      "λιωμένη κουβερτούρα 55% κακάο",
+      "55% melted baking chocolate"
+    ],
+    "acacia honey": [
+      "μέλι ακακίας",
+      "acacia honey"
+    ],
+    "agar powder": [
+      "άγαρ άγαρ σε σκόνη",
+      "άγαρ σε σκόνη",
+      "άγαρ άγαρ",
+      "agar powder"
+    ],
+    "almond oil": [
+      "αμυγδαλέλαιο",
+      "almond oil"
+    ],
+    "avocado oil": [
+      "λάδι αβοκάντο",
+      "avocado oil"
+    ],
+    "baker's yeast": [
+      "μαγιά αρτοποιίας",
+      "baker's yeast"
+    ],
+    "baking chocolate with 50–55% cocoa": [
+      "κουβερτούρα 50–55% κακάο",
+      "baking chocolate with 50–55% cocoa"
+    ],
+    "biscuit made with low-calorie chocolate powder + fondant icing decorations": [
+      "μπισκότο σοκολάτας χαμηλών θερμίδων με διακόσμηση ζαχαρόπαστας",
+      "biscuit made with low-calorie chocolate powder + fondant icing decorations"
+    ],
+    "block chocolate, 50% cocoa": [
+      "πλάκα σοκολάτας 50% κακάο",
+      "block chocolate, 50% cocoa"
+    ],
+    "bonito dashi stock": [
+      "ζωμός ντάσι παλαμίδας",
+      "bonito dashi stock"
+    ],
+    "bouillon cube": [
+      "κύβος ζωμού",
+      "bouillon cube"
+    ],
+    "brown granulated sugar": [
+      "καστανή κρυσταλλική ζάχαρη",
+      "brown granulated sugar"
+    ],
+    "brown sugar for decorating": [
+      "καστανή ζάχαρη για διακόσμηση",
+      "brown sugar for decorating"
+    ],
+    "cakes made with low-calorie chocolate powder + fondant icing decorations": [
+      "κέικ με σοκολάτα χαμηλών θερμίδων και διακόσμηση ζαχαρόπαστας",
+      "cakes made with low-calorie chocolate powder + fondant icing decorations"
+    ],
+    "candied ginger": [
+      "τζίντζερ γλασέ",
+      "candied ginger"
+    ],
+    "cane sugar": [
+      "ζάχαρη ζαχαροκάλαμου",
+      "cane sugar"
+    ],
+    "cardamom, 1 cinnamon stick, 2 bay leaf": [
+      "κάρδαμο, 1 ξυλάκι κανέλας και 2 φύλλα δάφνης",
+      "cardamom, 1 cinnamon stick, 2 bay leaf"
+    ],
+    "challah or yeast cake": [
+      "ψωμί χαλά ή κέικ μαγιάς",
+      "challah or yeast cake"
+    ],
+    "chicken or vegetable stock": [
+      "ζωμός κοτόπουλου ή λαχανικών",
+      "chicken or vegetable stock"
+    ],
+    "chicken stock & white wine - each": [
+      "ζωμός κοτόπουλου και λευκό κρασί — ίση ποσότητα από το καθένα",
+      "chicken stock & white wine - each"
+    ],
+    "chicken stock powder": [
+      "ζωμός κοτόπουλου σε σκόνη",
+      "chicken stock powder"
+    ],
+    "chicken stock seasoning": [
+      "καρυκεύματα ζωμού κοτόπουλου",
+      "chicken stock seasoning"
+    ],
+    "chicken/meat stock": [
+      "ζωμός κοτόπουλου ή κρέατος",
+      "chicken/meat stock"
+    ],
+    "chili in oil": [
+      "τσίλι σε λάδι",
+      "chili in oil"
+    ],
+    "chili oil": [
+      "λάδι τσίλι",
+      "chili oil"
+    ],
+    "chili oil or sesame oil": [
+      "λάδι τσίλι ή σησαμέλαιο",
+      "chili oil or sesame oil"
+    ],
+    "chocolate": [
+      "σοκολάτα",
+      "chocolate"
+    ],
+    "chocolate and hazelnut spread": [
+      "άλειμμα σοκολάτας και φουντουκιού",
+      "chocolate and hazelnut spread"
+    ],
+    "chocolate bar, 64% cocoa": [
+      "πλάκα σοκολάτας 64% κακάο",
+      "chocolate bar, 64% cocoa"
+    ],
+    "chocolate bars": [
+      "πλάκες σοκολάτας",
+      "chocolate bars"
+    ],
+    "chocolate cake or brownie": [
+      "κέικ σοκολάτας ή μπράουνι",
+      "chocolate cake or brownie"
+    ],
+    "chocolate cake or brownies": [
+      "κέικ σοκολάτας ή μπράουνι",
+      "chocolate cake or brownies"
+    ],
+    "chocolate candies": [
+      "σοκολατάκια",
+      "chocolate candies"
+    ],
+    "chocolate chips": [
+      "σταγόνες σοκολάτας",
+      "κομματάκια σοκολάτας",
+      "chocolate chips"
+    ],
+    "chocolate cookies": [
+      "μπισκότα σοκολάτας",
+      "chocolate cookies"
+    ],
+    "chocolate decorating pen": [
+      "σοκολάτα διακόσμησης σε στυλό",
+      "chocolate decorating pen"
+    ],
+    "chocolate decorations": [
+      "διακοσμητικά σοκολάτας",
+      "chocolate decorations"
+    ],
+    "chocolate disc": [
+      "δίσκος σοκολάτας",
+      "chocolate disc"
+    ],
+    "chocolate glaze": [
+      "γλάσο σοκολάτας",
+      "chocolate glaze"
+    ],
+    "chocolate or hazelnut spread": [
+      "άλειμμα σοκολάτας ή φουντουκιού",
+      "chocolate or hazelnut spread"
+    ],
+    "chocolate pieces": [
+      "κομμάτια σοκολάτας",
+      "chocolate pieces"
+    ],
+    "chocolate ring": [
+      "δαχτυλίδι σοκολάτας",
+      "chocolate ring"
+    ],
+    "chocolate shavings": [
+      "ξύσματα σοκολάτας",
+      "chocolate shavings"
+    ],
+    "chocolate sponge biscuit": [
+      "μαλακό μπισκότο σοκολάτας",
+      "chocolate sponge biscuit"
+    ],
+    "chocolate spread": [
+      "άλειμμα σοκολάτας",
+      "chocolate spread"
+    ],
+    "chocolate spread/cream": [
+      "άλειμμα σοκολάτας",
+      "chocolate spread/cream"
+    ],
+    "chocolate sprinkles": [
+      "τρούφα σοκολάτας",
+      "chocolate sprinkles"
+    ],
+    "chocolate sticks": [
+      "μπαστουνάκια σοκολάτας",
+      "chocolate sticks"
+    ],
+    "chocolate with 50% cocoa": [
+      "σοκολάτα 50% κακάο",
+      "chocolate with 50% cocoa"
+    ],
+    "chocolate-coated candied fruit": [
+      "φρούτα γλασέ με επικάλυψη σοκολάτας",
+      "chocolate-coated candied fruit"
+    ],
+    "chocolate-covered dried fruit": [
+      "αποξηραμένα φρούτα με επικάλυψη σοκολάτας",
+      "chocolate-covered dried fruit"
+    ],
+    "chocolate, 50/55% cocoa": [
+      "σοκολάτα 50–55% κακάο",
+      "chocolate, 50/55% cocoa"
+    ],
+    "chocolate, 50% cocoa": [
+      "σοκολάτα 50% κακάο",
+      "chocolate, 50% cocoa"
+    ],
+    "chocolate, 64% cocoa": [
+      "σοκολάτα 64% κακάο",
+      "chocolate, 64% cocoa"
+    ],
+    "cinnamon and salt": [
+      "κανέλα και αλάτι",
+      "cinnamon and salt"
+    ],
+    "cinnamon or ginger or nutmeg": [
+      "κανέλα ή τζίντζερ ή μοσχοκάρυδο",
+      "cinnamon or ginger or nutmeg"
+    ],
+    "cinnamon powder": [
+      "κανέλα σε σκόνη",
+      "cinnamon powder"
+    ],
+    "cinnamon sticks": [
+      "ξυλάκια κανέλας",
+      "cinnamon sticks"
+    ],
+    "cinnamon/ginger/nutmeg spice mix": [
+      "μείγμα κανέλας, τζίντζερ και μοσχοκάρυδου",
+      "cinnamon/ginger/nutmeg spice mix"
+    ],
+    "coarse salt": [
+      "χοντρό αλάτι",
+      "coarse salt"
+    ],
+    "coarse-grained salt": [
+      "χοντρό αλάτι",
+      "coarse-grained salt"
+    ],
+    "cocoa": [
+      "κακάο",
+      "cocoa"
+    ],
+    "cocoa and hazelnut spread": [
+      "άλειμμα κακάο και φουντουκιού",
+      "cocoa and hazelnut spread"
+    ],
+    "coconut oil": [
+      "λάδι καρύδας",
+      "coconut oil"
+    ],
+    "cold water for soaking the gelatin": [
+      "κρύο νερό για το μούλιασμα της ζελατίνης",
+      "cold water for soaking the gelatin"
+    ],
+    "confectioners' sugar": [
+      "ζάχαρη άχνη",
+      "confectioners' sugar"
+    ],
+    "consomme stock cube": [
+      "κύβος κονσομέ",
+      "consomme stock cube"
+    ],
+    "almond dragees": [
+      "κουφέτα αμυγδάλου",
+      "almond dragees"
+    ],
+    "almond drink": [
+      "ρόφημα αμυγδάλου",
+      "almond drink"
+    ],
+    "almond kernels": [
+      "αμυγδαλόψιχα",
+      "almond kernels"
+    ],
+    "almond liqueur mixed with coffee": [
+      "λικέρ αμυγδάλου με καφέ",
+      "almond liqueur mixed with coffee"
+    ],
+    "almond powder for annin tofu": [
+      "σκόνη αμυγδάλου για άνιν τόφου",
+      "almond powder for annin tofu"
+    ],
+    "bean soaking water": [
+      "νερό μουλιάσματος φασολιών",
+      "bean soaking water"
+    ],
+    "bean sprouts": [
+      "φύτρα φασολιών",
+      "bean sprouts"
+    ],
+    "beluga black lentil": [
+      "μαύρη φακή μπελούγκα",
+      "beluga black lentil"
+    ],
+    "bitter almond extract": [
+      "εκχύλισμα πικραμύγδαλου",
+      "bitter almond extract"
+    ],
+    "bitter almond flavoring": [
+      "άρωμα πικραμύγδαλου",
+      "bitter almond flavoring"
+    ],
+    "black bean soaking water": [
+      "νερό μουλιάσματος μαύρων φασολιών",
+      "black bean soaking water"
+    ],
+    "black sesame": [
+      "μαύρο σουσάμι",
+      "black sesame"
+    ],
+    "boiled borlotti bean": [
+      "βρασμένο φασόλι μπαρμπούνι",
+      "boiled borlotti bean"
+    ],
+    "boiled canned chickpea": [
+      "βρασμένα ρεβίθια κονσέρβας",
+      "boiled canned chickpea"
+    ],
+    "boiled mixed bean": [
+      "βρασμένα ανάμεικτα φασόλια",
+      "boiled mixed bean"
+    ],
+    "boiled snow pea": [
+      "βρασμένα μπιζέλια mangetout",
+      "boiled snow pea"
+    ],
+    "canned bean": [
+      "φασόλι κονσέρβας",
+      "canned bean"
+    ],
+    "canned cooked lentil": [
+      "βρασμένη φακή κονσέρβας",
+      "canned cooked lentil"
+    ],
+    "canned green pea": [
+      "αρακάς κονσέρβας",
+      "canned green pea"
+    ],
+    "canned lentil": [
+      "φακή κονσέρβας",
+      "canned lentil"
+    ],
+    "canned mixed bean": [
+      "ανάμεικτα φασόλια κονσέρβας",
+      "canned mixed bean"
+    ],
+    "canned pea": [
+      "αρακάς κονσέρβας",
+      "canned pea"
+    ],
+    "canned red bean": [
+      "κόκκινο φασόλι κονσέρβας",
+      "canned red bean"
+    ],
+    "canned red kidney bean": [
+      "κόκκινα φασόλια kidney κονσέρβας",
+      "κόκκινα φασόλια κίντνεϊ κονσέρβας",
+      "kidney φασόλια κονσέρβας",
+      "canned red kidney bean"
+    ],
+    "caramelized almond": [
+      "καραμελωμένο αμύγδαλο",
+      "caramelized almond"
+    ],
+    "cashew nut": [
+      "κάσιους",
+      "cashew nut"
+    ],
+    "cooked bean": [
+      "μαγειρεμένο φασόλι",
+      "cooked bean"
+    ],
+    "cooked canned chickpea": [
+      "μαγειρεμένο ρεβίθι κονσέρβας",
+      "cooked canned chickpea"
+    ],
+    "cooked chickpea": [
+      "μαγειρεμένο ρεβίθι",
+      "cooked chickpea"
+    ],
+    "cooked garden bean": [
+      "μαγειρεμένα κοινά φασόλια",
+      "cooked garden bean"
+    ],
+    "cooked green pea": [
+      "μαγειρεμένος αρακάς",
+      "cooked green pea"
+    ],
+    "cooked lentil": [
+      "μαγειρεμένη φακή",
+      "cooked lentil"
+    ],
+    "cooked mature bean": [
+      "μαγειρεμένο ξερό φασόλι",
+      "cooked mature bean"
+    ],
+    "cooked mature white bean": [
+      "μαγειρεμένο ξερό λευκό φασόλι",
+      "cooked mature white bean"
+    ],
+    "cooked or canned bean": [
+      "μαγειρεμένο φασόλι ή φασόλι κονσέρβας",
+      "cooked or canned bean"
+    ],
+    "cooked or canned chickpea": [
+      "μαγειρεμένο ρεβίθι ή ρεβίθι κονσέρβας",
+      "cooked or canned chickpea"
+    ],
+    "cooked or canned fava bean": [
+      "μαγειρεμένο κουκί ή κουκί κονσέρβας",
+      "cooked or canned fava bean"
+    ],
+    "cooked paprika bean": [
+      "μαγειρεμένο φασόλι με πάπρικα",
+      "cooked paprika bean"
+    ],
+    "cooked pea": [
+      "μαγειρεμένος αρακάς",
+      "cooked pea"
+    ],
+    "cooked red bean": [
+      "μαγειρεμένο κόκκινο φασόλι",
+      "cooked red bean"
+    ],
+    "cooked tarbais bean": [
+      "μαγειρεμένο φασόλι ταρμπ",
+      "cooked tarbais bean"
+    ],
+    "cooked white bean": [
+      "μαγειρεμένο λευκό φασόλι",
+      "cooked white bean"
+    ],
+    "cornstarch diluted in a small amount of almond milk": [
+      "άμυλο καλαμποκιού αραιωμένο σε μικρή ποσότητα γάλακτος αμυγδάλου",
+      "cornstarch diluted in a small amount of almond milk"
+    ],
+    "cornstarch dissolved in a small amount of almond milk": [
+      "άμυλο καλαμποκιού διαλυμένο σε μικρή ποσότητα γάλακτος αμυγδάλου",
+      "cornstarch dissolved in a small amount of almond milk"
+    ],
+    "cornstarch mixed with a little almond milk": [
+      "άμυλο καλαμποκιού ανακατεμένο με λίγο γάλα αμυγδάλου",
+      "cornstarch mixed with a little almond milk"
+    ],
+    "cornstarch mixed with a small amount of almond milk": [
+      "άμυλο καλαμποκιού ανακατεμένο με μικρή ποσότητα γάλακτος αμυγδάλου",
+      "cornstarch mixed with a small amount of almond milk"
+    ],
+    "crunchy peanut butter": [
+      "φυστικοβούτυρο με κομμάτια",
+      "crunchy peanut butter"
+    ],
+    "cup of ground almond": [
+      "1 φλιτζάνι αλεσμένο αμύγδαλο",
+      "cup of ground almond"
+    ],
+    "dried bean": [
+      "ξερό φασόλι",
+      "dried bean"
+    ],
+    "dried borlotti bean": [
+      "ξερό φασόλι μπαρμπούνι",
+      "dried borlotti bean"
+    ],
+    "aged kimchi": [
+      "ωριμασμένο κίμτσι",
+      "aged kimchi"
+    ],
+    "chipotle": [
+      "πιπεριά τσιπότλε",
+      "τσιπότλε",
+      "chipotle"
+    ],
+    "curry": [
+      "κάρι",
+      "curry"
+    ],
+    "curry and cumin mix": [
+      "μείγμα κάρι και κύμινου",
+      "curry and cumin mix"
+    ],
+    "curry paste": [
+      "πάστα κάρι",
+      "curry paste"
+    ],
+    "curry roux": [
+      "ρου κάρι",
+      "curry roux"
+    ],
+    "curry sauce": [
+      "σάλτσα κάρι",
+      "curry sauce"
+    ],
+    "curry spice": [
+      "κάρι",
+      "curry spice"
+    ],
+    "curry spice mix": [
+      "μείγμα μπαχαρικών κάρι",
+      "curry spice mix"
+    ],
+    "dashi kombu": [
+      "φύκια κόμπου για ντάσι",
+      "κόμπου για ντάσι",
+      "dashi kombu"
+    ],
+    "dried kombu seaweed": [
+      "αποξηραμένα φύκια κόμπου",
+      "dried kombu seaweed"
+    ],
+    "fresh udon noodle": [
+      "φρέσκα udon noodles",
+      "fresh udon noodle"
+    ],
+    "frozen udon": [
+      "κατεψυγμένα ούντον",
+      "frozen udon"
+    ],
+    "garam masala": [
+      "γκαράμ μασάλα",
+      "garam masala"
+    ],
+    "gochujang sauce": [
+      "σάλτσα gochujang",
+      "σάλτσα γκοτσουτζάνγκ",
+      "gochujang sauce"
+    ],
+    "green curry paste": [
+      "πάστα πράσινου κάρι",
+      "green curry paste"
+    ],
+    "gyoza wrappers": [
+      "φύλλα για γκιόζα",
+      "φύλλα γκιόζα",
+      "gyoza wrappers"
+    ],
+    "kimchi": [
+      "κίμτσι",
+      "kimchi"
+    ],
+    "kimchi brine": [
+      "άλμη κίμτσι",
+      "kimchi brine"
+    ],
+    "knotted kombu": [
+      "φύκια κόμπου σε κόμπο",
+      "knotted kombu"
+    ],
+    "kombu": [
+      "κόμπου",
+      "φύκια κόμπου",
+      "kombu"
+    ],
+    "kombu dashi": [
+      "ντάσι κόμπου",
+      "kombu dashi"
+    ],
+    "kombu seaweed": [
+      "φύκια κόμπου",
+      "kombu seaweed"
+    ],
+    "kombu stock": [
+      "ζωμός κόμπου",
+      "kombu stock"
+    ],
+    "korma curry paste": [
+      "πάστα κάρι κόρμα",
+      "korma curry paste"
+    ],
+    "madras curry powder": [
+      "κάρι μαντράς σε σκόνη",
+      "madras curry powder"
+    ],
+    "miso": [
+      "μίσο",
+      "miso"
+    ],
+    "miso soup": [
+      "σούπα μίσο",
+      "miso soup"
+    ],
+    "nori": [
+      "νόρι",
+      "φύκια νόρι",
+      "nori"
+    ],
+    "nori for sushi": [
+      "νόρι για σούσι",
+      "nori for sushi"
+    ],
+    "nori seaweed": [
+      "φύκια νόρι",
+      "nori seaweed"
+    ],
+    "nori sheets": [
+      "φύλλα νόρι",
+      "nori sheets"
+    ],
+    "pre-cooked ramen": [
+      "προμαγειρεμένα ράμεν",
+      "προμαγειρεμένο ράμεν",
+      "ράμεν",
+      "pre-cooked ramen"
+    ],
+    "pre-cooked ramen noodle": [
+      "προμαγειρεμένα νουντλς ράμεν",
+      "pre-cooked ramen noodle"
+    ],
+    "precooked ramen": [
+      "προμαγειρεμένα ράμεν",
+      "precooked ramen"
+    ],
+    "salted kombu": [
+      "αλατισμένα φύκια κόμπου",
+      "salted kombu"
+    ],
+    "sambal sauce": [
+      "σάλτσα sambal",
+      "σάλτσα σάμπαλ",
+      "sambal sauce"
+    ],
+    "satay sauce": [
+      "σάλτσα σατάι",
+      "satay sauce"
+    ],
+    "satay sauce seasoning": [
+      "καρυκεύματα σάλτσας σατάι",
+      "satay sauce seasoning"
+    ],
+    "sheet of nori seaweed": [
+      "φύλλο νόρι",
+      "sheet of nori seaweed"
     ]
   }
 }
