@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through twenty-third audit 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through twenty-fourth audit 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -4816,6 +4816,754 @@
     "seitan": [
       "σεϊτάν",
       "seitan"
+    ],
+    "beef": [
+      "μοσχάρι",
+      "μοσχαρίσιο κρέας",
+      "beef"
+    ],
+    "beef bouillon": [
+      "ζωμός μοσχαριού",
+      "beef bouillon"
+    ],
+    "beef brisket": [
+      "στήθος μοσχαριού",
+      "brisket",
+      "beef brisket"
+    ],
+    "beef cheeks": [
+      "μάγουλα μοσχαριού",
+      "μοσχαρίσια μάγουλα",
+      "beef cheeks"
+    ],
+    "beef chuck": [
+      "σπάλα μοσχαριού",
+      "chuck",
+      "beef chuck"
+    ],
+    "beef chunk": [
+      "κομμάτι μοσχαριού",
+      "beef chunk"
+    ],
+    "beef consomme cube": [
+      "κύβος κονσομέ μοσχαριού",
+      "beef consomme cube"
+    ],
+    "beef eye of round": [
+      "νουά μοσχαριού",
+      "beef eye of round"
+    ],
+    "beef fillet": [
+      "φιλέτο μοσχαριού",
+      "μοσχαρίσιο φιλέτο",
+      "beef fillet"
+    ],
+    "beef for bulgogi": [
+      "μοσχάρι για μπουλγκόγκι",
+      "beef for bulgogi"
+    ],
+    "beef for stew": [
+      "μοσχάρι για κατσαρόλα",
+      "μοσχάρι για στιφάδο",
+      "beef for stew"
+    ],
+    "beef jus": [
+      "συμπυκνωμένος ζωμός μοσχαριού",
+      "beef jus"
+    ],
+    "beef kidneys": [
+      "νεφρά μοσχαριού",
+      "beef kidneys"
+    ],
+    "beef knuckle": [
+      "τρανς μοσχαριού",
+      "beef knuckle"
+    ],
+    "beef leg bones": [
+      "κόκαλα ποδιού μοσχαριού",
+      "beef leg bones"
+    ],
+    "beef liver": [
+      "συκώτι μοσχαριού",
+      "μοσχαρίσιο συκώτι",
+      "beef liver"
+    ],
+    "beef mock tender": [
+      "ψευτοφιλέτο μοσχαριού",
+      "beef mock tender"
+    ],
+    "beef neck": [
+      "λαιμός μοσχαριού",
+      "beef neck"
+    ],
+    "beef neck or shank": [
+      "λαιμός ή κότσι μοσχαριού",
+      "beef neck or shank"
+    ],
+    "beef or chicken stock": [
+      "ζωμός μοσχαριού ή κοτόπουλου",
+      "beef or chicken stock"
+    ],
+    "beef or lamb": [
+      "μοσχάρι ή αρνί",
+      "beef or lamb"
+    ],
+    "beef or lamb shank": [
+      "κότσι μοσχαριού ή αρνιού",
+      "beef or lamb shank"
+    ],
+    "beef roast": [
+      "μοσχάρι για ψητό",
+      "beef roast"
+    ],
+    "beef rump": [
+      "κιλότο μοσχαριού",
+      "κιλότο",
+      "beef rump"
+    ],
+    "beef shank": [
+      "κότσι μοσχαριού",
+      "μοσχαρίσιο κότσι",
+      "beef shank"
+    ],
+    "beef shin": [
+      "κότσι μοσχαριού",
+      "beef shin"
+    ],
+    "beef short plate": [
+      "στηθοπλευρές μοσχαριού",
+      "beef short plate"
+    ],
+    "beef shoulder": [
+      "σπάλα μοσχαριού",
+      "beef shoulder"
+    ],
+    "beef shoulder and shank": [
+      "σπάλα και κότσι μοσχαριού",
+      "beef shoulder and shank"
+    ],
+    "beef sirloin": [
+      "κόντρα φιλέτο μοσχαριού",
+      "sirloin",
+      "beef sirloin"
+    ],
+    "andouillette sausage": [
+      "λουκάνικο αντουγιέτ",
+      "andouillette sausage"
+    ],
+    "bacon": [
+      "μπέικον",
+      "bacon"
+    ],
+    "bacon pieces": [
+      "κομμάτια μπέικον",
+      "μπέικον κομμάτια",
+      "bacon pieces"
+    ],
+    "bacon slice": [
+      "φέτα μπέικον",
+      "μπέικον φέτα",
+      "bacon slice"
+    ],
+    "boiled pork backbone": [
+      "βρασμένη χοιρινή ραχοκοκαλιά",
+      "boiled pork backbone"
+    ],
+    "chicken sausage": [
+      "λουκάνικο κοτόπουλου",
+      "chicken sausage"
+    ],
+    "chipolata sausage": [
+      "λουκάνικο τσιπολάτα",
+      "chipolata sausage"
+    ],
+    "chorizo": [
+      "τσορίθο",
+      "chorizo"
+    ],
+    "chorizo sausage": [
+      "τσορίθο",
+      "chorizo sausage"
+    ],
+    "chorizo slice": [
+      "φέτα τσορίθο",
+      "chorizo slice"
+    ],
+    "cooked cotechino sausage": [
+      "μαγειρεμένο λουκάνικο κοτεκίνο",
+      "cooked cotechino sausage"
+    ],
+    "cooked ham": [
+      "βραστό ζαμπόν",
+      "cooked ham"
+    ],
+    "cooked ham slices": [
+      "φέτες βραστού ζαμπόν",
+      "cooked ham slices"
+    ],
+    "cured ham slices": [
+      "φέτες ζαμπόν ωρίμανσης",
+      "cured ham slices"
+    ],
+    "dry sausage": [
+      "ξηρό λουκάνικο",
+      "dry sausage"
+    ],
+    "frankfurt sausage": [
+      "λουκάνικο φρανκφούρτης",
+      "frankfurt sausage"
+    ],
+    "frankfurter sausage": [
+      "λουκάνικο φρανκφούρτης",
+      "frankfurter sausage"
+    ],
+    "fresh ham tortellini": [
+      "φρέσκα τορτελίνια με ζαμπόν",
+      "fresh ham tortellini"
+    ],
+    "fresh pork belly": [
+      "φρέσκια χοιρινή πανσέτα",
+      "φρέσκια πανσέτα",
+      "χοιρινή πανσέτα",
+      "fresh pork belly"
+    ],
+    "garlic sausage": [
+      "λουκάνικο σκόρδου",
+      "garlic sausage"
+    ],
+    "grilled sausage": [
+      "ψητό λουκάνικο",
+      "grilled sausage"
+    ],
+    "ground pork and beef": [
+      "ανάμεικτος κιμάς χοιρινού και μοσχαριού",
+      "ground pork and beef"
+    ],
+    "ground pork from ham": [
+      "χοιρινός κιμάς από μπούτι",
+      "ground pork from ham"
+    ],
+    "ground pork shoulder": [
+      "χοιρινός κιμάς από σπάλα",
+      "ground pork shoulder"
+    ],
+    "ham": [
+      "ζαμπόν",
+      "ham"
+    ],
+    "ham slice": [
+      "φέτα ζαμπόν",
+      "ham slice"
+    ],
+    "ham slices": [
+      "φέτες ζαμπόν",
+      "ham slices"
+    ],
+    "ham tortellini": [
+      "τορτελίνια με ζαμπόν",
+      "ham tortellini"
+    ],
+    "herta vegetarian knacki sausage": [
+      "χορτοφαγικό λουκάνικο herta knacki",
+      "herta vegetarian knacki sausage"
+    ],
+    "italian cured ham": [
+      "ιταλικό ζαμπόν ωρίμανσης",
+      "italian cured ham"
+    ],
+    "boiled chicken egg": [
+      "βραστό αυγό κότας",
+      "boiled chicken egg"
+    ],
+    "boiling chicken stock": [
+      "ζωμός κοτόπουλου που βράζει",
+      "καυτός ζωμός κοτόπουλου",
+      "boiling chicken stock"
+    ],
+    "bone-in chicken thigh": [
+      "μπούτι κοτόπουλου με κόκαλο",
+      "bone-in chicken thigh"
+    ],
+    "chicken": [
+      "κοτόπουλο",
+      "chicken"
+    ],
+    "chicken back": [
+      "πλάτη κοτόπουλου",
+      "chicken back"
+    ],
+    "chicken bouillon": [
+      "ζωμός κοτόπουλου",
+      "chicken bouillon"
+    ],
+    "chicken bouillon powder": [
+      "ζωμός κοτόπουλου σε σκόνη",
+      "chicken bouillon powder"
+    ],
+    "chicken breast fillet": [
+      "φιλέτο στήθους κοτόπουλου",
+      "chicken breast fillet"
+    ],
+    "chicken breast or thigh": [
+      "στήθος ή μπούτι κοτόπουλου",
+      "chicken breast or thigh"
+    ],
+    "chicken cooking liquid": [
+      "υγρό μαγειρέματος κοτόπουλου",
+      "chicken cooking liquid"
+    ],
+    "chicken cutlets": [
+      "κοτολέτες κοτόπουλου",
+      "chicken cutlets"
+    ],
+    "chicken drumstick and thigh": [
+      "κοπανάκι και μπούτι κοτόπουλου",
+      "chicken drumstick and thigh"
+    ],
+    "chicken escalope": [
+      "εσκαλόπ κοτόπουλου",
+      "chicken escalope"
+    ],
+    "chicken escalopes": [
+      "εσκαλόπ κοτόπουλου",
+      "chicken escalopes"
+    ],
+    "chicken fillet": [
+      "φιλέτο κοτόπουλου",
+      "chicken fillet"
+    ],
+    "chicken fillet pieces": [
+      "κομμάτια φιλέτου κοτόπουλου",
+      "chicken fillet pieces"
+    ],
+    "chicken giblets": [
+      "εντόσθια κοτόπουλου",
+      "chicken giblets"
+    ],
+    "chicken leg": [
+      "ολόκληρο μπούτι κοτόπουλου",
+      "μπούτι κοτόπουλου",
+      "chicken leg"
+    ],
+    "chicken leg quarters": [
+      "ολόκληρα μπούτια κοτόπουλου",
+      "chicken leg quarters"
+    ],
+    "chicken legs": [
+      "ολόκληρα μπούτια κοτόπουλου",
+      "chicken legs"
+    ],
+    "chicken livers": [
+      "συκωτάκια κοτόπουλου",
+      "chicken livers"
+    ],
+    "chicken meat": [
+      "κρέας κοτόπουλου",
+      "chicken meat"
+    ],
+    "chicken necks": [
+      "λαιμοί κοτόπουλου",
+      "chicken necks"
+    ],
+    "chicken or beef stock": [
+      "ζωμός κοτόπουλου ή μοσχαριού",
+      "chicken or beef stock"
+    ],
+    "chicken or meat stock": [
+      "ζωμός κοτόπουλου ή κρέατος",
+      "chicken or meat stock"
+    ],
+    "anchovy fillet in oil": [
+      "φιλέτο αντζούγιας σε λάδι",
+      "αντζούγια σε λάδι",
+      "anchovy fillet in oil"
+    ],
+    "breaded salmon trout fillet": [
+      "παναρισμένο φιλέτο σολομοπέστροφας",
+      "breaded salmon trout fillet"
+    ],
+    "canned crab": [
+      "καβούρι κονσέρβας",
+      "canned crab"
+    ],
+    "chicken or shrimp stock": [
+      "ζωμός κοτόπουλου ή γαρίδας",
+      "chicken or shrimp stock"
+    ],
+    "chikuwa fish cake": [
+      "ψαροκροκέτα τσικούα",
+      "chikuwa fish cake"
+    ],
+    "cocktail shrimp": [
+      "μικρές γαρίδες κοκτέιλ",
+      "γαρίδες κοκτέιλ",
+      "cocktail shrimp"
+    ],
+    "cod and salmon skewers": [
+      "σουβλάκια μπακαλιάρου και σολομού",
+      "cod and salmon skewers"
+    ],
+    "cod loins": [
+      "χοντρά φιλέτα μπακαλιάρου",
+      "loin μπακαλιάρου",
+      "cod loins"
+    ],
+    "cooked mussel": [
+      "μαγειρεμένο μύδι",
+      "μαγειρεμένα μύδια",
+      "cooked mussel"
+    ],
+    "cooked shrimp": [
+      "μαγειρεμένη γαρίδα",
+      "μαγειρεμένες γαρίδες",
+      "cooked shrimp"
+    ],
+    "crab": [
+      "καβούρι",
+      "crab"
+    ],
+    "crab meat": [
+      "ψίχα καβουριού",
+      "crab meat"
+    ],
+    "crab meat sticks": [
+      "στικ καβουριού",
+      "crab meat sticks"
+    ],
+    "cream cheese with salmon": [
+      "τυρί κρέμα με σολομό",
+      "cream cheese with salmon"
+    ],
+    "dashi stock or fish stock": [
+      "ζωμός ντάσι ή ψαριού",
+      "dashi stock or fish stock"
+    ],
+    "desalted salt cod": [
+      "ξαλμυρισμένος παστός μπακαλιάρος",
+      "desalted salt cod"
+    ],
+    "dried baby shrimp": [
+      "αποξηραμένη μικρή γαρίδα",
+      "dried baby shrimp"
+    ],
+    "dried sakura shrimp": [
+      "αποξηραμένη γαρίδα σακούρα",
+      "dried sakura shrimp"
+    ],
+    "fish cake": [
+      "ψαροκροκέτα",
+      "fish cake"
+    ],
+    "fish dumplings": [
+      "ντάμπλινγκ ψαριού",
+      "fish dumplings"
+    ],
+    "fish or shrimp stock": [
+      "ζωμός ψαριού ή γαρίδας",
+      "fish or shrimp stock"
+    ],
+    "fish sauce for meat": [
+      "σάλτσα ψαριού (fish sauce)",
+      "fish sauce for meat"
+    ],
+    "fish scraps": [
+      "υπολείμματα ψαριού",
+      "fish scraps"
+    ],
+    "fish steak": [
+      "φέτα ψαριού",
+      "fish steak"
+    ],
+    "flying squid": [
+      "ιπτάμενο καλαμάρι",
+      "flying squid"
+    ],
+    "fresh salmon": [
+      "φρέσκος σολομός",
+      "fresh salmon"
+    ],
+    "frozen cooked prawn": [
+      "κατεψυγμένη μαγειρεμένη γαρίδα",
+      "frozen cooked prawn"
+    ],
+    "frozen cooked shrimp": [
+      "κατεψυγμένη μαγειρεμένη γαρίδα",
+      "frozen cooked shrimp"
+    ],
+    "frozen seafood": [
+      "κατεψυγμένα θαλασσινά",
+      "frozen seafood"
+    ],
+    "frozen seafood marinara mix": [
+      "κατεψυγμένο μείγμα θαλασσινών μαρινάρα",
+      "frozen seafood marinara mix"
+    ],
+    "100% pistachio cream": [
+      "κρέμα φιστικιού 100%",
+      "100% pistachio cream"
+    ],
+    "15% fat cream": [
+      "κρέμα γάλακτος 15% λιπαρά",
+      "15% fat cream"
+    ],
+    "30% cream": [
+      "κρέμα γάλακτος 30% λιπαρά",
+      "30% cream"
+    ],
+    "30% whipping cream": [
+      "κρέμα για σαντιγί 30% λιπαρά",
+      "30% whipping cream"
+    ],
+    "aged gouda": [
+      "παλαιωμένο γκούντα",
+      "ώριμο γκούντα",
+      "aged gouda"
+    ],
+    "aged kasar cheese": [
+      "παλαιωμένο τυρί κασάρ",
+      "aged kasar cheese"
+    ],
+    "almond butter": [
+      "βούτυρο αμυγδάλου",
+      "αμυγδαλοβούτυρο",
+      "almond butter"
+    ],
+    "almond cream": [
+      "κρέμα αμυγδάλου",
+      "almond cream"
+    ],
+    "ash goat's cheese": [
+      "κατσικίσιο τυρί με επικάλυψη στάχτης",
+      "ash goat's cheese"
+    ],
+    "ash-coated goat cheese": [
+      "κατσικίσιο τυρί με επικάλυψη στάχτης",
+      "ash-coated goat cheese"
+    ],
+    "ball mozzarella ball": [
+      "μπάλα μοτσαρέλας",
+      "ball mozzarella ball"
+    ],
+    "beaufort cheese": [
+      "τυρί μποφόρ",
+      "beaufort cheese"
+    ],
+    "boiled milk": [
+      "βρασμένο γάλα",
+      "boiled milk"
+    ],
+    "brie": [
+      "μπρι",
+      "brie"
+    ],
+    "brie-style cheese": [
+      "τυρί τύπου μπρι",
+      "brie-style cheese"
+    ],
+    "butter and flour": [
+      "βούτυρο και αλεύρι",
+      "butter and flour"
+    ],
+    "butter and oil": [
+      "βούτυρο και λάδι",
+      "butter and oil"
+    ],
+    "butter and olive oil": [
+      "βούτυρο και ελαιόλαδο",
+      "butter and olive oil"
+    ],
+    "butter for greasing the ramekins": [
+      "βούτυρο για βουτύρωμα των ραμεκίν",
+      "butter for greasing the ramekins"
+    ],
+    "butter melted with gianduja chocolate": [
+      "λιωμένο βούτυρο με σοκολάτα τζαντούγια",
+      "butter melted with gianduja chocolate"
+    ],
+    "butter roll –": [
+      "ψωμάκι βουτύρου — …",
+      "butter roll –"
+    ],
+    "butter roll for toast": [
+      "βουτυρένιο ψωμάκι για τοστ",
+      "butter roll for toast"
+    ],
+    "butter rolls": [
+      "ψωμάκια βουτύρου",
+      "butter rolls"
+    ],
+    "camembert": [
+      "καμαμπέρ",
+      "camembert"
+    ],
+    "can of condensed milk": [
+      "κονσέρβα ζαχαρούχου γάλακτος",
+      "ζαχαρούχο γάλα κονσέρβα",
+      "can of condensed milk"
+    ],
+    "chantilly cream": [
+      "σαντιγί",
+      "chantilly cream"
+    ],
+    "cheddar": [
+      "τσένταρ",
+      "cheddar"
+    ],
+    "cheddar or mimolette": [
+      "τσένταρ ή μιμολέτ",
+      "cheddar or mimolette"
+    ],
+    "cheddar or mimolette cheese": [
+      "τσένταρ ή μιμολέτ",
+      "cheddar or mimolette cheese"
+    ],
+    "cheese": [
+      "τυρί",
+      "cheese"
+    ],
+    "agave syrup": [
+      "σιρόπι αγαύης",
+      "agave syrup"
+    ],
+    "almond paste": [
+      "πάστα αμυγδάλου",
+      "almond paste"
+    ],
+    "apple jam": [
+      "μαρμελάδα μήλου",
+      "apple jam"
+    ],
+    "apple sauce": [
+      "πουρές μήλου",
+      "σάλτσα μήλου",
+      "apple sauce"
+    ],
+    "apricot in syrup": [
+      "βερίκοκο σε σιρόπι",
+      "apricot in syrup"
+    ],
+    "balsamic sauce": [
+      "σάλτσα βαλσάμικου",
+      "balsamic sauce"
+    ],
+    "balti paste": [
+      "πάστα κάρι μπάλτι",
+      "balti paste"
+    ],
+    "barbecue sauce": [
+      "σάλτσα μπάρμπεκιου",
+      "bbq sauce",
+      "barbecue sauce"
+    ],
+    "basil pesto": [
+      "πέστο βασιλικού",
+      "basil pesto"
+    ],
+    "bbq sauce": [
+      "σάλτσα μπάρμπεκιου",
+      "barbecue sauce",
+      "bbq sauce"
+    ],
+    "bechamel sauce": [
+      "μπεσαμέλ",
+      "bechamel sauce"
+    ],
+    "berry jam": [
+      "μαρμελάδα μούρων",
+      "berry jam"
+    ],
+    "blackberry jam": [
+      "μαρμελάδα βατόμουρου",
+      "blackberry jam"
+    ],
+    "blueberry jam": [
+      "μαρμελάδα μύρτιλου",
+      "blueberry jam"
+    ],
+    "brewed soy sauce": [
+      "σάλτσα σόγιας φυσικής ζύμωσης",
+      "brewed soy sauce"
+    ],
+    "canned demi-glace sauce": [
+      "σάλτσα ντεμί γκλας κονσέρβας",
+      "canned demi-glace sauce"
+    ],
+    "canned yakitori in tare sauce": [
+      "κονσέρβα yakitori σε σάλτσα tare",
+      "canned yakitori in tare sauce"
+    ],
+    "caper in vinegar": [
+      "κάπαρη σε ξίδι",
+      "caper in vinegar"
+    ],
+    "caramel sauce": [
+      "σάλτσα καραμέλας",
+      "caramel sauce"
+    ],
+    "cashew paste": [
+      "πάστα κάσιους",
+      "cashew paste"
+    ],
+    "cherry in syrup": [
+      "κεράσι σε σιρόπι",
+      "cherry in syrup"
+    ],
+    "cherry vinegar": [
+      "ξίδι κερασιού",
+      "cherry vinegar"
+    ],
+    "chestnut jam": [
+      "μαρμελάδα κάστανου",
+      "chestnut jam"
+    ],
+    "chestnut paste": [
+      "πάστα κάστανου",
+      "chestnut paste"
+    ],
+    "chili bean paste": [
+      "πάστα φασολιών με τσίλι",
+      "chili bean paste"
+    ],
+    "chili paste": [
+      "πάστα τσίλι",
+      "chili paste"
+    ],
+    "chili sauce": [
+      "σάλτσα τσίλι",
+      "chili sauce"
+    ],
+    "chipotle paste": [
+      "πάστα τσιπότλε",
+      "chipotle paste"
+    ],
+    "chipotle sauce": [
+      "σάλτσα τσιπότλε",
+      "chipotle sauce"
+    ],
+    "chipotle/smoked chili paste": [
+      "πάστα τσιπότλε ή καπνιστού τσίλι",
+      "chipotle/smoked chili paste"
+    ],
+    "chocolate sauce": [
+      "σάλτσα σοκολάτας",
+      "chocolate sauce"
+    ],
+    "chocolate sauce for the cream": [
+      "σάλτσα σοκολάτας για την κρέμα",
+      "chocolate sauce for the cream"
+    ],
+    "cider vinegar": [
+      "μηλόξιδο",
+      "ξίδι μηλίτη",
+      "cider vinegar"
+    ],
+    "citrus vinegar": [
+      "ξίδι εσπεριδοειδών",
+      "citrus vinegar"
+    ],
+    "commercial sukiyaki sauce": [
+      "έτοιμη σάλτσα σουκιγιάκι",
+      "commercial sukiyaki sauce"
     ]
   }
 }
