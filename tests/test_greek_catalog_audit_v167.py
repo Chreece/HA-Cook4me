@@ -119,10 +119,22 @@ class GreekCatalogAuditV167Tests(unittest.TestCase):
         self.assertIn("βλαστοί μπαμπού",aliases["bamboo shoot"])
         self.assertIn("ξυλάκια κανέλας",aliases["cinnamon stick"])
 
+    def test_combined_catalog_extensions_are_preserved(self):
+        labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
+        expected={
+            "dried breadcrumbs":"Αποξηραμένη τριμμένη φρυγανιά",
+            "spice sachet":"Φακελάκι μπαχαρικών",
+            "rib":"Παϊδάκι",
+            "shortbread":"Μπισκότο σόρτμπρεντ",
+            "bread croutons":"Κρουτόν ψωμιού",
+        }
+        for key,value in expected.items():
+            self.assertEqual(labels.get(key),value)
+
     def test_large_batch_scope(self):
         data=json.loads(CURATED.read_text(encoding="utf-8"))
-        self.assertGreaterEqual(len(data["labels"]),1235)
-        self.assertGreaterEqual(len(data["searchAliases"]),563)
+        self.assertGreaterEqual(len(data["labels"]),1253)
+        self.assertGreaterEqual(len(data["searchAliases"]),664)
         self.assertIn("twenty-second audit",data["translationSource"])
 
 
