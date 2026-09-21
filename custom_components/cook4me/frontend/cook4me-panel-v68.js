@@ -49,7 +49,7 @@ class Cook4MeRecipeHubPanelV68 extends BasePanel{
   });
  }
  async _api(type,data={}){
-  if(type.endsWith("/shopping_add")||type.endsWith("/week_add_shopping"))data={...data,ui_language:this._uiIngredientLanguage()};
+  if(type.endsWith("/shopping_add")||type.endsWith("/week_add_shopping"))data={...data,ui_language:data.ui_language||this._uiIngredientLanguage()};
   return super._api(type,data);
  }
  async _v66LoadRecipe(recipe,custom,state,force=false){
