@@ -42,6 +42,7 @@ jobs:
           node --check custom_components/cook4me/frontend/cook4me-panel-v143.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v144.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v145.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v146.js
           python tests/test_nutrient_scopes_v128.py
           python tests/test_delivery_queue_v129.py
           python tests/test_photoreal_device_v130.py
@@ -60,6 +61,7 @@ jobs:
           python tests/test_price_provenance_eta_v143.py
           python tests/test_weekday_unlimited_v144.py
           python tests/test_week_meal_types_v145.py
+          python tests/test_greek_catalog_v146.py
       - name: Build HACS release archive
         run: |
           rm -rf release

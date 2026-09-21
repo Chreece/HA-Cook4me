@@ -72,6 +72,28 @@ def labels():
     return result
 
 
+@lru_cache(maxsize=1)
+def locale_search_aliases():
+    result = {}
+    for overlay in sorted(Path(__file__).with_name("catalog_ui_locales").glob("*.json")):
+        data = json.loads(overlay.read_text())
+        if data.get("schemaVersion") != 1 or not isinstance(data.get("searchAliases"), dict):
+            continue
+        language = str(data.get("language") or "")
+        target = result.setdefault(language, {})
+        for canonical, values in data["searchAliases"].items():
+            if isinstance(values, str):
+                values = [values]
+            if not isinstance(values, list):
+                continue
+            current = target.setdefault(name_key(canonical), [])
+            current.extend(str(value).strip() for value in values if str(value).strip())
+    return {
+        language: {canonical: tuple(dict.fromkeys(values)) for canonical, values in rows.items()}
+        for language, rows in result.items()
+    }
+
+
 def display_name(raw, language):
     canonical = clean_name(raw.get("canonicalName") or raw.get("name") or raw.get("foodName"))
     code = str(language or "en").lower().replace("_", "-").split("-")[0]
@@ -109,6 +131,7 @@ def ingredient_choices(payload, language, query="", limit=None):
             # Reviewed locale synonyms are display aliases, never nutrient aliases.
             groups[name_key(display_name(raw, language))].append(raw)
     choices = []
+    search_aliases_map = locale_search_aliases().get(str(language or "en").lower().replace("_", "-").split("-")[0], {})
     for canonical, members in groups.items():
         # Prefer the actual generic provider row; never assign its ID to siblings.
         raw = min(members, key=lambda r: (not bool(r.get("key")), len(clean_name(r.get("canonicalName"))), not bool(r.get("nutrition")), str(r.get("id"))))
@@ -120,6 +143,7 @@ def ingredient_choices(payload, language, query="", limit=None):
             search_aliases.update(_strings(member.get("translations")))
             search_aliases.update(_strings(member.get("aliases")))
             search_aliases.update(locale[name_key(cleaned)] for locale in labels().values() if name_key(cleaned) in locale)
+            search_aliases.update(search_aliases_for_locale for search_aliases_for_locale in search_aliases_map.get(name_key(cleaned), ()))
         if terms and not matches(search_aliases):
             continue
         row = {key: raw[key] for key in ("id", "key", "conceptId", "classification", "nutritionEligible") if key in raw}

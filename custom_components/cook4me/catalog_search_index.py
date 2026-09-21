@@ -78,7 +78,7 @@ def _query_language(query: str, language: str) -> str:
     return _language(language)
 
 
-def prepare_catalog_query_aliases(payload, localized_labels):
+def prepare_catalog_query_aliases(payload, localized_labels, localized_search_aliases=None):
     """Index the complete reviewed bilingual catalog, not a dish whitelist.
 
     These are query alternatives only. They cannot merge ingredient identity,
@@ -97,6 +97,10 @@ def prepare_catalog_query_aliases(payload, localized_labels):
     for language, labels in localized_labels.items():
         for canonical, label in labels.items():
             add(language, label, canonical)
+    for language, rows in (localized_search_aliases or {}).items():
+        for canonical, values in rows.items():
+            for label in values if isinstance(values, (list, tuple, set)) else [values]:
+                add(language, label, canonical)
     for ingredient in payload.get("ingredients", []):
         canonical = ingredient.get("canonicalName")
         if not canonical or ingredient.get("classification") in {"equipment", "other", "ambiguous"}:
