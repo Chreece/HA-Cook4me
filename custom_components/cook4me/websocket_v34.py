@@ -15,26 +15,44 @@ from .barcode import normalize_barcode
 from .costs import _country, _currency, cost_store_for_bridge
 from .inventory import inventory_identity
 from .recipe_cost_cache import preview_cache_token
+from .shopping_presentation import normalize_supermarket_language, supermarket_language_options
 from .websocket_v33 import _catalog as scanner_catalog
 
 
 @websocket_api.websocket_command({vol.Required('type'): 'cook4me/v34/price_settings', vol.Required('entry_id'): str,
-    vol.Optional('country'): str, vol.Optional('currency'): str, vol.Optional('auto_global_prices'): bool})
+    vol.Optional('country'): str, vol.Optional('currency'): str, vol.Optional('supermarket_language'): str,
+    vol.Optional('auto_global_prices'): bool})
 @websocket_api.async_response
 async def ws_price_settings(hass, connection, msg):
     try:
         bridge = _authorized(hass, connection, msg)
         settings = await price_settings(bridge)
-        if any(key in msg for key in ('country', 'currency', 'auto_global_prices')):
+        if any(key in msg for key in ('country', 'currency', 'supermarket_language', 'auto_global_prices')):
             country = _country(msg.get('country', settings['country']))
             currency = _currency(msg.get('currency', country_currency(country) if 'country' in msg else settings['currency']))
             if not country or not currency:
                 raise ValueError('Choose a country code (for example DE) and currency (for example EUR)')
             validate_market(country, currency)
+            supermarket_language = normalize_supermarket_language(
+                msg.get('supermarket_language', settings.get('supermarketLanguage')),
+                country=country,
+                fallback=settings.get('supermarketLanguage') or 'en',
+            )
+            requested_language = str(msg.get('supermarket_language') or '').strip().lower().replace('_', '-').split('-', 1)[0]
+            if 'supermarket_language' in msg and requested_language != supermarket_language:
+                raise ValueError('Choose a supported supermarket language')
             store = await cost_store_for_bridge(bridge)
-            settings = await store.async_set_settings(country=country, currency=currency,
-                auto_global_prices=msg.get('auto_global_prices', settings['autoGlobalPrices']))
-        connection.send_result(msg['id'], {'settings': settings, 'priceCacheToken': await preview_cache_token(bridge)})
+            settings = await store.async_set_settings(
+                country=country,
+                currency=currency,
+                supermarket_language=supermarket_language,
+                auto_global_prices=msg.get('auto_global_prices', settings['autoGlobalPrices']),
+            )
+        connection.send_result(msg['id'], {
+            'settings': settings,
+            'supermarketLanguages': supermarket_language_options(),
+            'priceCacheToken': await preview_cache_token(bridge),
+        })
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
 
