@@ -10,7 +10,7 @@ MANIFEST=ROOT/"custom_components"/"cook4me"/"manifest.json"
 class SvgKeyedCookerV139Tests(unittest.TestCase):
     def test_v139_replaces_broken_alpha_asset_with_svg_keyed_source_photo(self):
         ui=(FRONTEND/"cook4me-panel-v139.js").read_text(encoding="utf-8")
-        self.assertIn("./assets/device-v133.jpg?v=2026.9.21.4",ui)
+        self.assertIn("./assets/device-v133.jpg?v=2026.9.21.5",ui)
         self.assertIn("document.createElementNS('http://www.w3.org/2000/svg','svg')",ui)
         self.assertIn("v139-white-key",ui)
         self.assertIn('<feFuncA type="linear" slope="4.76" intercept="-0.19"/>',ui)
@@ -31,14 +31,14 @@ class SvgKeyedCookerV139Tests(unittest.TestCase):
         self.assertIn("drop-shadow(0 0 4px rgba(220,230,255,.30))",ui)
         self.assertIn("drop-shadow(0 0 10px rgba(170,195,255,.12))",ui)
 
-    def test_v139_is_active_and_versioned(self):
+    def test_v139_is_inherited_by_active_v140(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v139",panel)
-        self.assertIn("cook4me-panel-v139.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.4",panel)
-        self.assertIn("?v=2026.9.21.4",panel)
-        self.assertIn('"version": "2026.9.21.4"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v140",panel)
+        self.assertIn("cook4me-panel-v140.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.5",panel)
+        self.assertIn("?v=2026.9.21.5",panel)
+        self.assertIn('"version": "2026.9.21.5"',manifest)
 
 
 if __name__=="__main__":
