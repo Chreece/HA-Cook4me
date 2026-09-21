@@ -424,7 +424,8 @@ async def ws_product_add(hass, connection, msg):
                 )
             update_expiry_notification(bridge)
             connection.send_result(msg["id"], {"status": "added", "lotId": receipt["lotId"],
-                "lotIds": receipt.get("lotIds") or [receipt["lotId"]], "warnings": warnings,
+                "lotIds": receipt.get("lotIds") if isinstance(receipt.get("lotIds"), list) else ([receipt["lotId"]] if receipt["lotId"] else []),
+                "unlimited": bool(receipt.get("unlimited")), "warnings": warnings,
                 **_state(hass, bridge, connection.user)})
     except Exception as exc:
         if isinstance(exc, ValueError) and not committed:
