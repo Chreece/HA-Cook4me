@@ -20,15 +20,15 @@ def load_presentation():
 
 
 class GreekCatalogAuditV147Tests(unittest.TestCase):
-    def test_v147_is_inherited_by_active_v159(self):
+    def test_v147_is_inherited_by_active_v160(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v147.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v159",panel)
-        self.assertIn("cook4me-panel-v159.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.24",panel)
-        self.assertIn("?v=2026.9.21.24",panel)
-        self.assertIn('"version": "2026.9.21.24"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v160",panel)
+        self.assertIn("cook4me-panel-v160.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.25",panel)
+        self.assertIn("?v=2026.9.21.25",panel)
+        self.assertIn('"version": "2026.9.21.25"',manifest)
         self.assertIn("cook4me-panel-v146.js?v=2026.9.21.11",ui)
 
     def test_second_pass_fixes_false_friends_and_supermarket_greek(self):
