@@ -142,7 +142,7 @@ class Cook4MeCostStore:
         self._loaded = False
         self._lock = asyncio.Lock()
         self._data: dict[str, Any] = {
-            "settings": {"currency": "", "country": "", "autoGlobalPrices": True},
+            "settings": {"currency": "", "country": "", "supermarketLanguage": "", "autoGlobalPrices": True},
             "references": {},
             "priceEvidenceRevision": 90,
         }
@@ -156,6 +156,7 @@ class Cook4MeCostStore:
             self._data["settings"] = {
                 "currency": _currency(settings.get("currency")),
                 "country": _country(settings.get("country")),
+                "supermarketLanguage": _text(settings.get("supermarketLanguage")).lower().replace("_", "-").split("-", 1)[0],
                 "autoGlobalPrices": bool(settings.get("autoGlobalPrices", True)),
             }
             refs = saved.get("references") if isinstance(saved.get("references"), dict) else {}
@@ -187,7 +188,7 @@ class Cook4MeCostStore:
         }
 
     async def async_set_settings(
-        self, *, currency: Any = None, country: Any = None, auto_global_prices: Any = None
+        self, *, currency: Any = None, country: Any = None, supermarket_language: Any = None, auto_global_prices: Any = None
     ) -> dict[str, Any]:
         async with self._lock:
             data = deepcopy(self._data)
@@ -196,6 +197,8 @@ class Cook4MeCostStore:
                 settings["currency"] = _currency(currency)
             if country is not None:
                 settings["country"] = _country(country)
+            if supermarket_language is not None:
+                settings["supermarketLanguage"] = _text(supermarket_language).lower().replace("_", "-").split("-", 1)[0]
             if auto_global_prices is not None:
                 settings["autoGlobalPrices"] = bool(auto_global_prices)
             await self._store.async_save(data)
