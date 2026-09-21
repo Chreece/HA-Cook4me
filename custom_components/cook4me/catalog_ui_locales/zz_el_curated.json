@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through eighth audit 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through ninth audit 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -365,7 +365,27 @@
     "soaked cannellini bean": "Μουλιασμένα φασόλια cannellini",
     "lima bean": "Φασόλια Lima",
     "mung bean": "Φασόλια mung",
-    "mung bean sprouts": "Φύτρα mung"
+    "mung bean sprouts": "Φύτρα mung",
+    "aburaage": "Aburaage (λεπτό τηγανητό τόφου)",
+    "perilla": "Περίλλα (perilla)",
+    "perilla seed powder": "Σκόνη σπόρων περίλλας (perilla)",
+    "shiso": "Shiso (ιαπωνική περίλλα)",
+    "shiso leaf": "Φύλλο shiso",
+    "gochugaru": "Gochugaru (κορεάτικο τσίλι)",
+    "gochugaru chili flakes": "Gochugaru (κορεάτικες νιφάδες τσίλι)",
+    "napa cabbage kimchi": "Kimchi με λάχανο napa",
+    "konjac noodle": "Shirataki / konjac noodles",
+    "boiled somen noodle": "Βρασμένα somen noodles",
+    "ramen noodle": "Ramen noodles",
+    "udon noodle": "Udon noodles",
+    "fresh udon noodle": "Φρέσκα udon noodles",
+    "package of pre-cooked udon noodle": "Προμαγειρεμένα udon noodles",
+    "shichimi chili pepper": "Shichimi togarashi (ιαπωνικό μείγμα 7 μπαχαρικών)",
+    "shichimi chili seasoning": "Shichimi togarashi (ιαπωνικό μείγμα 7 μπαχαρικών)",
+    "shichimi togarashi": "Shichimi togarashi (ιαπωνικό μείγμα 7 μπαχαρικών)",
+    "ichimi chili pepper": "Ichimi togarashi (ιαπωνικό τσίλι)",
+    "sansho pepper": "Sansho (ιαπωνικό πιπέρι)",
+    "yuzu kosho": "Yuzu kosho (πάστα γιούζου και τσίλι)"
   },
   "searchAliases": {
     "veal": [
@@ -1199,6 +1219,80 @@
       "mung beans",
       "φασόλια mung",
       "φασόλια μουνγκ"
+    ],
+    "aburaage": [
+      "aburaage",
+      "αμπουραάγκε",
+      "τηγανητό τόφου"
+    ],
+    "perilla": [
+      "perilla",
+      "περίλλα",
+      "korean perilla"
+    ],
+    "shiso": [
+      "shiso",
+      "σίσο",
+      "ιαπωνική περίλλα"
+    ],
+    "shiso leaf": [
+      "shiso leaf",
+      "φύλλο shiso",
+      "φύλλο σίσο"
+    ],
+    "gochugaru": [
+      "gochugaru",
+      "γκοτσουγκάρου",
+      "κορεάτικο τσίλι"
+    ],
+    "napa cabbage kimchi": [
+      "napa kimchi",
+      "baechu kimchi",
+      "kimchi napa",
+      "κίμτσι napa"
+    ],
+    "konjac noodle": [
+      "shirataki",
+      "konjac noodles",
+      "σιρατάκι",
+      "νουντλς κόντζακ"
+    ],
+    "boiled somen noodle": [
+      "somen",
+      "somen noodles",
+      "σόμεν"
+    ],
+    "ramen noodle": [
+      "ramen noodles",
+      "ramen",
+      "ράμεν"
+    ],
+    "udon noodle": [
+      "udon noodles",
+      "udon",
+      "ούντον"
+    ],
+    "shichimi togarashi": [
+      "shichimi",
+      "shichimi togarashi",
+      "σιτσίμι",
+      "ιαπωνικό μείγμα 7 μπαχαρικών"
+    ],
+    "ichimi chili pepper": [
+      "ichimi",
+      "ichimi togarashi",
+      "ιτσίμι",
+      "ιαπωνικό τσίλι"
+    ],
+    "sansho pepper": [
+      "sansho",
+      "σάνσο",
+      "ιαπωνικό πιπέρι"
+    ],
+    "yuzu kosho": [
+      "yuzu kosho",
+      "γιούζου κόσο",
+      "πάστα γιούζου και τσίλι"
     ]
   }
 }
