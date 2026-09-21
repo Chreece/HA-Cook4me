@@ -67,3 +67,4 @@ jobs:
           python tests/test_price_provenance_eta_v143.py
           python tests/test_weekday_unlimited_v144.py
           python tests/test_week_meal_types_v145.py
+          python tools/audit_greek_ingredient_labels_v146.py
