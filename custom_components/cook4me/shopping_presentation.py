@@ -2,6 +2,7 @@
 from copy import deepcopy
 
 from . import release_catalog
+from .recipe_languages import language_options
 from .inventory import inventory_identity
 
 COUNTRY_LANGUAGE = dict(DE="de", AT="de", CH="de", GR="el", CY="el", GB="en",
@@ -9,6 +10,26 @@ COUNTRY_LANGUAGE = dict(DE="de", AT="de", CH="de", GR="el", CY="el", GB="en",
     PT="pt", BR="pt", PL="pl", CZ="cs", SK="sk", HU="hu", RO="ro", BG="bg",
     HR="hr", SI="sl", UA="uk", RU="ru", TR="tr", JP="ja", KR="ko", CN="zh",
     TW="zh", AE="ar", SA="ar", NL="nl", DK="da", NO="nb", SE="sv", FI="fi")
+
+
+SUPPORTED_SUPERMARKET_LANGUAGES = frozenset(
+    {row["code"] for row in language_options()} | {"el"}
+)
+
+
+def normalize_supermarket_language(value, country="", fallback="en"):
+    code = str(value or "").strip().lower().replace("_", "-").split("-", 1)[0]
+    if code in SUPPORTED_SUPERMARKET_LANGUAGES:
+        return code
+    market = COUNTRY_LANGUAGE.get(str(country or "").upper(), "")
+    if market in SUPPORTED_SUPERMARKET_LANGUAGES:
+        return market
+    fallback_code = str(fallback or "en").strip().lower().replace("_", "-").split("-", 1)[0]
+    return fallback_code if fallback_code in SUPPORTED_SUPERMARKET_LANGUAGES else "en"
+
+
+def supermarket_language_options():
+    return sorted(SUPPORTED_SUPERMARKET_LANGUAGES)
 
 
 def shopping_rows(rows, language, country, sources=()):

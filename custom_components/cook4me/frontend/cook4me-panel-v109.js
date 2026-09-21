@@ -13,7 +13,7 @@ class Cook4MeRecipeHubPanelV109 extends BasePanel{
  _v109Key(){return JSON.stringify([this._prefKey(),this._v67Today(),this._uiIngredientLanguage(),this._filters(),this._currencyState?.currency,this._v79Revision||0]);}
  async _api(type,data={}){
   const week=/\/(week_state|week_generate|week_add_shopping)$/.test(type),key=this._v109Key();
-  if(week)data={...data,shared_filters:structuredClone(this._filters()),ui_language:this._uiIngredientLanguage()};
+  if(week)data={...data,shared_filters:structuredClone(this._filters()),ui_language:data.ui_language||this._uiIngredientLanguage()};
   let result=await super._api(type,data);
   if(/\/(week_state|week_generate)$/.test(type)&&!Array.isArray(result?.slots))throw new Error(this._v109Text('failed'));
   if(/\/(week_slot_clear|leftover_consume|cost_settings_set)$/.test(type)&&result?.slots){

@@ -261,12 +261,21 @@ async def ws_ingredient_catalog(hass: HomeAssistant, connection: websocket_api.A
 @websocket_api.async_response
 async def ws_shopping_add(hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: dict[str, Any]) -> None:
     try:
-        legacy._bridge(hass, msg.get("entry_id"))
+        bridge = legacy._bridge(hass, msg.get("entry_id"))
         ingredients = list(msg.get("ingredients") or [])
-        if msg.get("ui_language"):
-            from .shopping_presentation import shopping_rows
-            ingredients = await hass.async_add_executor_job(shopping_rows, ingredients,
-                msg["ui_language"], getattr(hass.config, "country", ""))
+        from .costs import cost_store_for_bridge
+        from .shopping_presentation import shopping_rows, normalize_supermarket_language
+        store = await cost_store_for_bridge(bridge)
+        settings = store.settings
+        country = settings.get("country") or getattr(hass.config, "country", "")
+        language = normalize_supermarket_language(
+            msg.get("ui_language") or settings.get("supermarketLanguage"),
+            country=country,
+            fallback="en",
+        )
+        ingredients = await hass.async_add_executor_job(
+            shopping_rows, ingredients, language, country
+        )
         result = await _add_to_shopping_list(hass, ingredients)
     except Exception as exc:
         legacy._send_error(connection, msg, exc)

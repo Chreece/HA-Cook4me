@@ -681,12 +681,24 @@ def validate_market(country, currency):
 
 
 async def price_settings(bridge):
+    from .shopping_presentation import normalize_supermarket_language
     store = await cost_store_for_bridge(bridge)
     settings = store.settings
     country = settings.get('country') or _country(getattr(bridge.hass.config, 'country', ''))
     currency = settings.get('currency') or country_currency(country)
-    if country != settings.get('country') or currency != settings.get('currency'):
-        await store.async_set_settings(country=country, currency=currency)
+    supermarket_language = normalize_supermarket_language(
+        settings.get('supermarketLanguage'), country=country, fallback='en'
+    )
+    if (
+        country != settings.get('country')
+        or currency != settings.get('currency')
+        or supermarket_language != settings.get('supermarketLanguage')
+    ):
+        await store.async_set_settings(
+            country=country,
+            currency=currency,
+            supermarket_language=supermarket_language,
+        )
     return store.settings
 
 
