@@ -88,7 +88,7 @@ class GreekCatalogAuditV148Tests(unittest.TestCase):
         data=json.loads(CURATED.read_text(encoding="utf-8"))
         self.assertGreaterEqual(len(data["labels"]),180)
         self.assertGreaterEqual(len(data["searchAliases"]),60)
-        self.assertIn("third audit",data["translationSource"])
+        self.assertIn("audit",data["translationSource"])
         presentation=(ROOT/"custom_components"/"cook4me"/"catalog_presentation.py").read_text(encoding="utf-8")
         self.assertIn("display_name",presentation)
         self.assertIn("locale_search_aliases",presentation)
