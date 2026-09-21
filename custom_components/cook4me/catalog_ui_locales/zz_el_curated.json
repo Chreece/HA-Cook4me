@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through twenty-seventh audit 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through twenty-eighth audit 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -1261,7 +1261,10 @@
     "any berries": "Μούρα της επιλογής σας",
     "any fruit": "Φρούτα της επιλογής σας",
     "black olive": "Μαύρη ελιά",
-    "christmas tea infused into 80 ml water": "Χριστουγεννιάτικο τσάι εκχυλισμένο σε 80 ml νερού"
+    "christmas tea infused into 80 ml water": "Χριστουγεννιάτικο τσάι εκχυλισμένο σε 80 ml νερού",
+    "olive": "Ελιά",
+    "greek olive": "Ελληνική ελιά",
+    "taggiasca olive": "Ελιά Τατζάσκα"
   },
   "searchAliases": {
     "veal": [
@@ -10074,6 +10077,2021 @@
     "tofu cream": [
       "κρέμα τόφου",
       "tofu cream"
+    ],
+    "olive": [
+      "ελιά",
+      "ελιές",
+      "olive"
+    ],
+    "greek olive": [
+      "ελληνική ελιά",
+      "ελληνικές ελιές",
+      "greek olive"
+    ],
+    "taggiasca olive": [
+      "ελιά τατζάσκα",
+      "ελιές τατζάσκα",
+      "taggiasca olive"
+    ],
+    "black olive spread": [
+      "πάστα μαύρης ελιάς",
+      "ταπενάντ μαύρης ελιάς",
+      "black olive spread"
+    ],
+    "chestnut spread": [
+      "άλειμμα κάστανου",
+      "chestnut spread"
+    ],
+    "cranberry jam": [
+      "μαρμελάδα κράνμπερι",
+      "cranberry jam"
+    ],
+    "demi-glace sauce": [
+      "σάλτσα ντεμί γκλας",
+      "demi-glace",
+      "demi-glace sauce"
+    ],
+    "dressing": [
+      "ντρέσινγκ",
+      "dressing"
+    ],
+    "drop of hot sauce": [
+      "μια σταγόνα καυτερής σάλτσας",
+      "drop of hot sauce"
+    ],
+    "egg yolks for the sauce": [
+      "κρόκοι αυγών για τη σάλτσα",
+      "egg yolks for the sauce"
+    ],
+    "fruit butter/preserve": [
+      "πυκνό άλειμμα φρούτων",
+      "fruit butter/preserve"
+    ],
+    "homemade cookeo bolognese sauce": [
+      "σπιτική σάλτσα μπολονέζ",
+      "homemade cookeo bolognese sauce"
+    ],
+    "horseradish sauce": [
+      "σάλτσα χρένου",
+      "horseradish sauce"
+    ],
+    "hot sauce": [
+      "καυτερή σάλτσα",
+      "hot sauce"
+    ],
+    "jam": [
+      "μαρμελάδα",
+      "jam"
+    ],
+    "japanese medium-thick sauce": [
+      "ιαπωνική σάλτσα μέτριας πυκνότητας",
+      "japanese medium-thick sauce"
+    ],
+    "korean chili paste": [
+      "κορεάτικη πάστα τσίλι",
+      "korean chili paste"
+    ],
+    "lemon preserve": [
+      "γλυκό λεμονιού",
+      "lemon preserve"
+    ],
+    "meat ragu sauce": [
+      "σάλτσα ραγού κρέατος",
+      "meat ragu sauce"
+    ],
+    "medium-thick sauce": [
+      "σάλτσα μέτριας πυκνότητας",
+      "medium-thick sauce"
+    ],
+    "mustard and fresh cream": [
+      "μουστάρδα και φρέσκια κρέμα γάλακτος",
+      "mustard and fresh cream"
+    ],
+    "mustard sauce": [
+      "σάλτσα μουστάρδας",
+      "mustard sauce"
+    ],
+    "nem sauce": [
+      "σάλτσα για νεμ",
+      "nem sauce"
+    ],
+    "nems sauce": [
+      "σάλτσα για νεμ",
+      "nems sauce"
+    ],
+    "nut paste": [
+      "πάστα ξηρών καρπών",
+      "nut paste"
+    ],
+    "nut spread/cream": [
+      "άλειμμα ξηρών καρπών",
+      "nut spread/cream"
+    ],
+    "oligosaccharide syrup": [
+      "σιρόπι ολιγοσακχαριτών",
+      "oligosaccharide syrup"
+    ],
+    "onion vinegar": [
+      "ξίδι κρεμμυδιού",
+      "onion vinegar"
+    ],
+    "orange marmalade": [
+      "μαρμελάδα πορτοκαλιού",
+      "orange marmalade"
+    ],
+    "orange salad dressing": [
+      "ντρέσινγκ πορτοκαλιού",
+      "orange salad dressing"
+    ],
+    "peanut paste": [
+      "πάστα αράπικου φιστικιού",
+      "peanut paste"
+    ],
+    "pesto": [
+      "πέστο",
+      "pesto"
+    ],
+    "pesto alla genovese": [
+      "πέστο τζενοβέζε",
+      "πέστο γενουάτικο",
+      "pesto alla genovese"
+    ],
+    "pesto alla genovese or pesto rosso": [
+      "πέστο τζενοβέζε ή κόκκινο πέστο",
+      "pesto alla genovese or pesto rosso"
+    ],
+    "pesto sauce": [
+      "σάλτσα πέστο",
+      "pesto sauce"
+    ],
+    "pho soup paste": [
+      "πάστα σούπας φο",
+      "pho soup paste"
+    ],
+    "pineapple syrup": [
+      "σιρόπι ανανά",
+      "pineapple syrup"
+    ],
+    "pink almond paste": [
+      "ροζ πάστα αμυγδάλου",
+      "pink almond paste"
+    ],
+    "plum chutney": [
+      "τσάτνεϊ δαμάσκηνου",
+      "plum chutney"
+    ],
+    "ponzu sauce": [
+      "ponzu (ιαπωνική σάλτσα εσπεριδοειδών)",
+      "σάλτσα πόνζου",
+      "πόνζου",
+      "ponzu sauce"
+    ],
+    "pork stock": [
+      "ζωμός χοιρινού",
+      "pork stock"
+    ],
+    "poultry stock": [
+      "ζωμός πουλερικών",
+      "poultry stock"
+    ],
+    "preserved cordia berry sauce": [
+      "σάλτσα διατηρημένων καρπών κόρδιας",
+      "preserved cordia berry sauce"
+    ],
+    "raita sauce": [
+      "σάλτσα ράιτα",
+      "raita sauce"
+    ],
+    "raspberry jam": [
+      "μαρμελάδα σμέουρου",
+      "raspberry jam"
+    ],
+    "raspberry sauce": [
+      "σάλτσα σμέουρου",
+      "raspberry sauce"
+    ],
+    "raspberry vinegar": [
+      "ξίδι σμέουρου",
+      "raspberry vinegar"
+    ],
+    "raw marzipan paste": [
+      "ωμή πάστα μαρσιπάν",
+      "raw marzipan paste"
+    ],
+    "ready-made bolognese sauce": [
+      "έτοιμη σάλτσα μπολονέζ",
+      "ready-made bolognese sauce"
+    ],
+    "red chili paste": [
+      "πάστα κόκκινου τσίλι",
+      "red chili paste"
+    ],
+    "red fruit jam": [
+      "μαρμελάδα κόκκινων φρούτων",
+      "red fruit jam"
+    ],
+    "red pepper sauce": [
+      "σάλτσα κόκκινης πιπεριάς",
+      "red pepper sauce"
+    ],
+    "red pesto": [
+      "κόκκινο πέστο",
+      "red pesto"
+    ],
+    "rendang paste": [
+      "πάστα ρεντάνγκ",
+      "rendang paste"
+    ],
+    "rillettes spread": [
+      "άλειμμα ριγιέτ",
+      "rillettes spread"
+    ],
+    "rose syrup": [
+      "σιρόπι τριαντάφυλλου",
+      "rose syrup"
+    ],
+    "rouille sauce and croutons": [
+      "σάλτσα ρουίγ και κρουτόν",
+      "rouille sauce and croutons"
+    ],
+    "salad dressing": [
+      "ντρέσινγκ σαλάτας",
+      "salad dressing"
+    ],
+    "salt-free vegetable stock": [
+      "ζωμός λαχανικών χωρίς αλάτι",
+      "salt-free vegetable stock"
+    ],
+    "sauce gingerbread": [
+      "τζίντζερμπρεντ για σάλτσες",
+      "sauce gingerbread"
+    ],
+    "sauceline® sauce thickener": [
+      "πηκτικό σάλτσας sauceline",
+      "sauceline® sauce thickener"
+    ],
+    "seasoned tomato sauce": [
+      "καρυκευμένη σάλτσα ντομάτας",
+      "seasoned tomato sauce"
+    ],
+    "sherry vinegar": [
+      "ξίδι σέρι",
+      "sherry vinegar"
+    ],
+    "solid cream stew roux": [
+      "στερεό ρου για κρεμώδη σούπα",
+      "solid cream stew roux"
+    ],
+    "spicy sauce": [
+      "πικάντικη σάλτσα",
+      "spicy sauce"
+    ],
+    "spirit vinegar": [
+      "ξίδι αλκοόλης",
+      "spirit vinegar"
+    ],
+    "stew roux": [
+      "ρου για φαγητό κατσαρόλας",
+      "stew roux"
+    ],
+    "stock": [
+      "ζωμός",
+      "stock"
+    ],
+    "stock or water": [
+      "ζωμός ή νερό",
+      "stock or water"
+    ],
+    "store-bought caramel sauce": [
+      "έτοιμη σάλτσα καραμέλας",
+      "store-bought caramel sauce"
+    ],
+    "store-bought meat sauce": [
+      "έτοιμη σάλτσα κρέατος",
+      "store-bought meat sauce"
+    ],
+    "strawberry preserve": [
+      "γλυκό φράουλας",
+      "strawberry preserve"
+    ],
+    "strawberry sauce": [
+      "σάλτσα φράουλας",
+      "strawberry sauce"
+    ],
+    "sugar for syrup": [
+      "ζάχαρη για σιρόπι",
+      "sugar for syrup"
+    ],
+    "sun-dried tomato paste": [
+      "πάστα λιαστής ντομάτας",
+      "sun-dried tomato paste"
+    ],
+    "sun-dried tomato pesto": [
+      "πέστο λιαστής ντομάτας",
+      "sun-dried tomato pesto"
+    ],
+    "sushi vinegar": [
+      "ξίδι για σούσι",
+      "sushi vinegar"
+    ],
+    "sweet and sour sauce": [
+      "γλυκόξινη σάλτσα",
+      "sweet and sour sauce"
+    ],
+    "sweet bean sauce": [
+      "γλυκιά σάλτσα φασολιών",
+      "sweet bean sauce"
+    ],
+    "sweet chili sauce": [
+      "γλυκιά σάλτσα τσίλι",
+      "sweet chili sauce"
+    ],
+    "sweet-and-sour sauce": [
+      "γλυκόξινη σάλτσα",
+      "sweet-and-sour sauce"
+    ],
+    "syrup": [
+      "σιρόπι",
+      "syrup"
+    ],
+    "syrup from sweet simmered fruit": [
+      "σιρόπι γλυκών βραστών φρούτων",
+      "syrup from sweet simmered fruit"
+    ],
+    "tabasco sauce": [
+      "σάλτσα ταμπάσκο",
+      "tabasco sauce"
+    ],
+    "tabasco© sauce": [
+      "σάλτσα ταμπάσκο",
+      "tabasco© sauce"
+    ],
+    "tablespoon of soy sauce": [
+      "1 κ.σ. σάλτσα σόγιας",
+      "tablespoon of soy sauce"
+    ],
+    "tablespoons mustard": [
+      "κ.σ. μουστάρδα",
+      "tablespoons mustard"
+    ],
+    "tablespoons of raspberry sauce": [
+      "κ.σ. σάλτσα σμέουρου",
+      "tablespoons of raspberry sauce"
+    ],
+    "tablespoons white vinegar": [
+      "κ.σ. λευκό ξίδι",
+      "tablespoons white vinegar"
+    ],
+    "taco sauce": [
+      "σάλτσα τάκο",
+      "taco sauce"
+    ],
+    "tartar sauce": [
+      "σάλτσα ταρτάρ",
+      "tartar sauce"
+    ],
+    "tbsp apple cider vinegar": [
+      "1 κ.σ. μηλόξιδο",
+      "tbsp apple cider vinegar"
+    ],
+    "tbsp chili paste": [
+      "1 κ.σ. πάστα τσίλι",
+      "tbsp chili paste"
+    ],
+    "tbsp english mustard": [
+      "1 κ.σ. αγγλική μουστάρδα",
+      "tbsp english mustard"
+    ],
+    "tbsp rice vinegar": [
+      "1 κ.σ. ξίδι ρυζιού",
+      "tbsp rice vinegar"
+    ],
+    "tbsp sherry vinegar": [
+      "1 κ.σ. ξίδι sherry",
+      "tbsp sherry vinegar"
+    ],
+    "tbsp soy sauce": [
+      "1 κ.σ. σάλτσα σόγιας",
+      "tbsp soy sauce"
+    ],
+    "tbsp tomato sauce": [
+      "1 κ.σ. σάλτσα ντομάτας",
+      "tbsp tomato sauce"
+    ],
+    "thousand island dressing": [
+      "ντρέσινγκ χίλια νησιά",
+      "thousand island dressing"
+    ],
+    "tom yum paste": [
+      "πάστα τομ γιαμ",
+      "tom yum paste"
+    ],
+    "tomato and tomato paste": [
+      "ντομάτα και πελτές ντομάτας",
+      "tomato and tomato paste"
+    ],
+    "tomato in sauce": [
+      "ντομάτα σε σάλτσα",
+      "tomato in sauce"
+    ],
+    "tomato ketchup": [
+      "κέτσαπ ντομάτας",
+      "tomato ketchup"
+    ],
+    "tomato or pepper paste": [
+      "πελτές ντομάτας ή πιπεριάς",
+      "tomato or pepper paste"
+    ],
+    "tomato pesto": [
+      "πέστο ντομάτας",
+      "tomato pesto"
+    ],
+    "tomato sauce for pasta": [
+      "σάλτσα ντομάτας για ζυμαρικά",
+      "tomato sauce for pasta"
+    ],
+    "tomato sauce with basil": [
+      "σάλτσα ντομάτας με βασιλικό",
+      "tomato sauce with basil"
+    ],
+    "traditional mustard": [
+      "παραδοσιακή μουστάρδα",
+      "traditional mustard"
+    ],
+    "traditional mustard and cream": [
+      "παραδοσιακή μουστάρδα και κρέμα γάλακτος",
+      "traditional mustard and cream"
+    ],
+    "traditional mustard and creme fraiche": [
+      "παραδοσιακή μουστάρδα και κρεμ φρες",
+      "traditional mustard and creme fraiche"
+    ],
+    "tsp hot pepper sauce": [
+      "1 κ.γ. καυτερή σάλτσα πιπεριάς",
+      "tsp hot pepper sauce"
+    ],
+    "tsp mustard": [
+      "1 κ.γ. μουστάρδα",
+      "tsp mustard"
+    ],
+    "unagi sauce": [
+      "σάλτσα ουνάγκι",
+      "unagi sauce"
+    ],
+    "unsalted vegetable stock": [
+      "ανάλατος ζωμός λαχανικών",
+      "unsalted vegetable stock"
+    ],
+    "unsweetened hazelnut spread": [
+      "άλειμμα φουντουκιού χωρίς ζάχαρη",
+      "unsweetened hazelnut spread"
+    ],
+    "veal stock": [
+      "ζωμός από μοσχαράκι",
+      "veal stock"
+    ],
+    "vegan mayonnaise": [
+      "βίγκαν μαγιονέζα",
+      "vegan mayonnaise"
+    ],
+    "vegetable bouillon": [
+      "ζωμός λαχανικών",
+      "vegetable bouillon"
+    ],
+    "vegetable or chicken stock": [
+      "ζωμός λαχανικών ή κοτόπουλου",
+      "vegetable or chicken stock"
+    ],
+    "vegetable or meat stock": [
+      "ζωμός λαχανικών ή κρέατος",
+      "vegetable or meat stock"
+    ],
+    "vinegar": [
+      "ξίδι",
+      "vinegar"
+    ],
+    "water or chicken stock": [
+      "νερό ή ζωμός κοτόπουλου",
+      "water or chicken stock"
+    ],
+    "water or stock": [
+      "νερό ή ζωμός",
+      "water or stock"
+    ],
+    "beef slices, 130 g each": [
+      "φέτες μοσχαριού",
+      "beef slices, 130 g each"
+    ],
+    "beef steak": [
+      "μοσχαρίσια μπριζόλα",
+      "beef steak"
+    ],
+    "beef tendon": [
+      "μοσχαρίσιος τένοντας",
+      "beef tendon"
+    ],
+    "beef tongue": [
+      "μοσχαρίσια γλώσσα",
+      "γλώσσα μοσχαριού",
+      "beef tongue"
+    ],
+    "beef tournedos": [
+      "τουρνεντό μοσχαριού",
+      "beef tournedos"
+    ],
+    "beef/lamb": [
+      "μοσχάρι ή αρνί",
+      "beef/lamb"
+    ],
+    "chicken pieces": [
+      "κομμάτια κοτόπουλου",
+      "chicken pieces"
+    ],
+    "chicken schnitzels": [
+      "σνίτσελ κοτόπουλου",
+      "chicken schnitzels"
+    ],
+    "chicken soup": [
+      "κοτόσουπα",
+      "chicken soup"
+    ],
+    "chicken steak": [
+      "μπριζόλα κοτόπουλου",
+      "chicken steak"
+    ],
+    "chicken strips": [
+      "λωρίδες κοτόπουλου",
+      "chicken strips"
+    ],
+    "chicken tenderloin": [
+      "εσωτερικό φιλετάκι κοτόπουλου",
+      "chicken tenderloin"
+    ],
+    "chicken thigh fillet": [
+      "φιλέτο μπούτι κοτόπουλου",
+      "chicken thigh fillet"
+    ],
+    "chicken thigh meat": [
+      "κρέας από μπούτι κοτόπουλου",
+      "chicken thigh meat"
+    ],
+    "confit duck leg": [
+      "μπούτι πάπιας κονφί",
+      "confit duck leg"
+    ],
+    "corned beef": [
+      "κορν μπιφ",
+      "corned beef"
+    ],
+    "duck": [
+      "πάπια",
+      "duck"
+    ],
+    "duck breast": [
+      "στήθος πάπιας",
+      "duck breast"
+    ],
+    "duck breast fillet": [
+      "φιλέτο στήθους πάπιας",
+      "duck breast fillet"
+    ],
+    "duck confit legs": [
+      "μπούτια πάπιας κονφί",
+      "duck confit legs"
+    ],
+    "duck fat": [
+      "λίπος πάπιας",
+      "duck fat"
+    ],
+    "duck fillet with skin": [
+      "φιλέτο πάπιας με πέτσα",
+      "duck fillet with skin"
+    ],
+    "duck leg": [
+      "μπούτι πάπιας",
+      "duck leg"
+    ],
+    "duck leg confit": [
+      "μπούτι πάπιας κονφί",
+      "duck leg confit"
+    ],
+    "duck legs": [
+      "μπούτια πάπιας",
+      "duck legs"
+    ],
+    "fried beef strips": [
+      "τηγανητές λωρίδες μοσχαριού",
+      "fried beef strips"
+    ],
+    "ground meat or lamb": [
+      "κιμάς κρέατος ή αρνιού",
+      "ground meat or lamb"
+    ],
+    "ground smoked duck breast": [
+      "κιμάς καπνιστού στήθους πάπιας",
+      "ground smoked duck breast"
+    ],
+    "ground veal": [
+      "κιμάς από μοσχαράκι",
+      "ground veal"
+    ],
+    "half chicken wing mid-sections": [
+      "μισά μεσαία τμήματα φτερούγας κοτόπουλου",
+      "half chicken wing mid-sections"
+    ],
+    "italian ham": [
+      "ιταλικό ζαμπόν",
+      "italian ham"
+    ],
+    "italian sausage": [
+      "ιταλικό λουκάνικο",
+      "italian sausage"
+    ],
+    "jinhua ham": [
+      "ζαμπόν τζινχουά",
+      "jinhua ham"
+    ],
+    "lamb chops": [
+      "αρνίσια παϊδάκια",
+      "lamb chops"
+    ],
+    "lamb fat": [
+      "αρνίσιο λίπος",
+      "lamb fat"
+    ],
+    "lamb liver": [
+      "αρνίσιο συκώτι",
+      "lamb liver"
+    ],
+    "lamb or beef": [
+      "αρνί ή μοσχάρι",
+      "lamb or beef"
+    ],
+    "lamb or beef liver": [
+      "αρνίσιο ή μοσχαρίσιο συκώτι",
+      "lamb or beef liver"
+    ],
+    "lamb shank": [
+      "αρνίσιο κότσι",
+      "lamb shank"
+    ],
+    "lamb shoulder": [
+      "αρνίσια σπάλα",
+      "lamb shoulder"
+    ],
+    "lean ground beef": [
+      "άπαχος μοσχαρίσιος κιμάς",
+      "lean ground beef"
+    ],
+    "lean ground pork": [
+      "άπαχος χοιρινός κιμάς",
+      "lean ground pork"
+    ],
+    "leg of lamb": [
+      "αρνίσιο μπούτι",
+      "leg of lamb"
+    ],
+    "liver sausage": [
+      "λουκάνικο συκωτιού",
+      "liver sausage"
+    ],
+    "merguez sausage": [
+      "λουκάνικο μεργκέζ",
+      "merguez sausage"
+    ],
+    "mild chorizo sausage": [
+      "ήπιο λουκάνικο τσορίθο",
+      "mild chorizo sausage"
+    ],
+    "mixed ground beef and pork": [
+      "ανάμεικτος κιμάς μοσχαριού και χοιρινού",
+      "mixed ground beef and pork"
+    ],
+    "montbeliard sausage": [
+      "λουκάνικο μονμπελιάρ",
+      "montbeliard sausage"
+    ],
+    "morteau sausage": [
+      "λουκάνικο μορτό",
+      "morteau sausage"
+    ],
+    "onion sausage": [
+      "λουκάνικο με κρεμμύδι",
+      "onion sausage"
+    ],
+    "packaged cotechino sausage": [
+      "συσκευασμένο λουκάνικο cotechino",
+      "packaged cotechino sausage"
+    ],
+    "parma ham": [
+      "ζαμπόν πάρμας",
+      "parma ham"
+    ],
+    "pieces of bacon": [
+      "κομμάτια μπέικον",
+      "pieces of bacon"
+    ],
+    "pieces of parma ham": [
+      "κομμάτια ζαμπόν πάρμας",
+      "pieces of parma ham"
+    ],
+    "pork": [
+      "χοιρινό",
+      "pork"
+    ],
+    "pork backbone": [
+      "χοιρινή ραχοκοκαλιά",
+      "pork backbone"
+    ],
+    "pork belly slice, 1 cm thick": [
+      "φέτα χοιρινής πανσέτας πάχους 1 εκ.",
+      "pork belly slice, 1 cm thick"
+    ],
+    "pork belly slices, 1 cm thick": [
+      "φέτες χοιρινής πανσέτας πάχους 1 εκ.",
+      "pork belly slices, 1 cm thick"
+    ],
+    "pork chop": [
+      "χοιρινή μπριζόλα",
+      "pork chop"
+    ],
+    "pork collar": [
+      "χοιρινός λαιμός",
+      "pork collar"
+    ],
+    "pork cracklings": [
+      "χοιρινές τσιγαρίδες",
+      "pork cracklings"
+    ],
+    "pork cutlet": [
+      "χοιρινή κοτολέτα",
+      "pork cutlet"
+    ],
+    "pork fatback": [
+      "χοιρινό λίπος ράχης",
+      "pork fatback"
+    ],
+    "pork filet mignon": [
+      "χοιρινό φιλέτο μινιόν",
+      "pork filet mignon"
+    ],
+    "pork hock": [
+      "χοιρινό κότσι",
+      "pork hock"
+    ],
+    "pork knuckle": [
+      "χοιρινό κότσι",
+      "pork knuckle"
+    ],
+    "pork leg": [
+      "χοιρινό μπούτι",
+      "pork leg"
+    ],
+    "pork loin slices": [
+      "φέτες χοιρινού καρέ",
+      "pork loin slices"
+    ],
+    "pork luncheon meat": [
+      "χοιρινό λάντσεον μιτ",
+      "pork luncheon meat"
+    ],
+    "pork neck": [
+      "χοιρινός λαιμός",
+      "pork neck"
+    ],
+    "pork offal": [
+      "χοιρινά εντόσθια",
+      "pork offal"
+    ],
+    "pork pieces": [
+      "κομμάτια χοιρινού",
+      "pork pieces"
+    ],
+    "pork ribeye steak": [
+      "χοιρινή μπριζόλα ριμπάι",
+      "pork ribeye steak"
+    ],
+    "pork sausage": [
+      "χοιρινό λουκάνικο",
+      "pork sausage"
+    ],
+    "pork shoulder": [
+      "χοιρινή σπάλα",
+      "pork shoulder"
+    ],
+    "pork shoulder loin": [
+      "χοιρινό κόντρα σπάλας",
+      "pork shoulder loin"
+    ],
+    "pork shoulder/front leg": [
+      "χοιρινή σπάλα ή μπροστινό πόδι",
+      "pork shoulder/front leg"
+    ],
+    "pork skin": [
+      "χοιρινή πέτσα",
+      "pork skin"
+    ],
+    "pork small intestine": [
+      "λεπτό έντερο χοιρινού",
+      "pork small intestine"
+    ],
+    "pork stomach": [
+      "χοιρινό στομάχι",
+      "pork stomach"
+    ],
+    "pork tenderloin": [
+      "ψαρονέφρι",
+      "pork tenderloin"
+    ],
+    "pork thick soup": [
+      "πηχτή χοιρινή σούπα",
+      "pork thick soup"
+    ],
+    "prosciutto ham": [
+      "προσούτο",
+      "prosciutto ham"
+    ],
+    "rabbit": [
+      "κουνέλι",
+      "rabbit"
+    ],
+    "rabbit hindquarters": [
+      "πίσω μέρος κουνελιού",
+      "rabbit hindquarters"
+    ],
+    "rabbit leg": [
+      "μπούτι κουνελιού",
+      "rabbit leg"
+    ],
+    "rabbit legs": [
+      "μπούτια κουνελιού",
+      "rabbit legs"
+    ],
+    "rabbit loin chops": [
+      "μπριζολάκια κόντρα κουνελιού",
+      "rabbit loin chops"
+    ],
+    "raw white sausage": [
+      "ωμό λευκό λουκάνικο",
+      "raw white sausage"
+    ],
+    "roast beef": [
+      "ψητό μοσχάρι",
+      "roast beef"
+    ],
+    "roast pork": [
+      "ψητό χοιρινό",
+      "roast pork"
+    ],
+    "roast veal": [
+      "ψητό μοσχαράκι",
+      "roast veal"
+    ],
+    "roasted leg of lamb": [
+      "ψητό αρνίσιο μπούτι",
+      "roasted leg of lamb"
+    ],
+    "salamella sausage": [
+      "λουκάνικο σαλαμέλα",
+      "salamella sausage"
+    ],
+    "salt pork": [
+      "παστό χοιρινό",
+      "salt pork"
+    ],
+    "salted pork": [
+      "αλατισμένο χοιρινό",
+      "salted pork"
+    ],
+    "salted pork shoulder": [
+      "παστή χοιρινή σπάλα",
+      "salted pork shoulder"
+    ],
+    "sausage": [
+      "λουκάνικο",
+      "sausage"
+    ],
+    "scalded white sausage": [
+      "ζεματισμένο λευκό λουκάνικο",
+      "scalded white sausage"
+    ],
+    "silesian sausage": [
+      "λουκάνικο σιλεσίας",
+      "silesian sausage"
+    ],
+    "slice of italian ham": [
+      "φέτα ιταλικού ζαμπόν",
+      "slice of italian ham"
+    ],
+    "slices of cooked ham": [
+      "φέτες βραστού ζαμπόν",
+      "slices of cooked ham"
+    ],
+    "slices of ham": [
+      "φέτες ζαμπόν",
+      "slices of ham"
+    ],
+    "slices of italian ham": [
+      "φέτες ιταλικού ζαμπόν",
+      "slices of italian ham"
+    ],
+    "slices of parma ham": [
+      "φέτες ζαμπόν πάρμας",
+      "slices of parma ham"
+    ],
+    "small chicken": [
+      "μικρό κοτόπουλο",
+      "small chicken"
+    ],
+    "small chicken fillet": [
+      "μικρό φιλέτο κοτόπουλου",
+      "small chicken fillet"
+    ],
+    "small lamb knuckle-ends": [
+      "άκρα αρνίσιου κοτσιού",
+      "small lamb knuckle-ends"
+    ],
+    "small roasted leg of lamb": [
+      "μικρό ψητό αρνίσιο μπούτι",
+      "small roasted leg of lamb"
+    ],
+    "small-cut pork pieces": [
+      "μικρά κομμάτια χοιρινού",
+      "small-cut pork pieces"
+    ],
+    "smoked bacon": [
+      "καπνιστό μπέικον",
+      "smoked bacon"
+    ],
+    "smoked duck": [
+      "καπνιστή πάπια",
+      "smoked duck"
+    ],
+    "smoked ham": [
+      "καπνιστό ζαμπόν",
+      "smoked ham"
+    ],
+    "smoked or fresh bacon": [
+      "καπνιστό ή φρέσκο μπέικον",
+      "smoked or fresh bacon"
+    ],
+    "smoked or fresh pork belly": [
+      "καπνιστή ή φρέσκια χοιρινή πανσέτα",
+      "smoked or fresh pork belly"
+    ],
+    "smoked or unsmoked bacon": [
+      "καπνιστό ή άκαπνο μπέικον",
+      "smoked or unsmoked bacon"
+    ],
+    "smoked pork shoulder": [
+      "καπνιστή χοιρινή σπάλα",
+      "smoked pork shoulder"
+    ],
+    "smoked sausage": [
+      "καπνιστό λουκάνικο",
+      "smoked sausage"
+    ],
+    "spicy sausage": [
+      "πικάντικο λουκάνικο",
+      "spicy sausage"
+    ],
+    "stewing beef": [
+      "μοσχάρι για κατσαρόλα",
+      "stewing beef"
+    ],
+    "dried marjoram": [
+      "αποξηραμένη μαντζουράνα",
+      "dried marjoram"
+    ],
+    "dried oregano": [
+      "αποξηραμένη ρίγανη",
+      "dried oregano"
+    ],
+    "dried savory": [
+      "αποξηραμένο θρούμπι",
+      "dried savory"
+    ],
+    "fresh oregano": [
+      "φρέσκια ρίγανη",
+      "fresh oregano"
+    ],
+    "fresh tarragon": [
+      "φρέσκο εστραγκόν",
+      "fresh tarragon"
+    ],
+    "marjoram": [
+      "μαντζουράνα",
+      "marjoram"
+    ],
+    "oregano": [
+      "ρίγανη",
+      "oregano"
+    ],
+    "red pointed pepper": [
+      "κόκκινη μυτερή πιπεριά",
+      "red pointed pepper"
+    ],
+    "roast seasoning": [
+      "καρυκεύματα για ψητό",
+      "roast seasoning"
+    ],
+    "rosmaninho herb": [
+      "λεβάντα ροσμανίνιο",
+      "rosmaninho herb"
+    ],
+    "saffron powder": [
+      "σκόνη σαφράν (κρόκου)",
+      "σαφράν σε σκόνη",
+      "saffron powder"
+    ],
+    "saffron threads": [
+      "νήματα σαφράν (κρόκου)",
+      "κλωστές σαφράν",
+      "νήματα σαφράν",
+      "saffron threads"
+    ],
+    "salt & pepper": [
+      "αλάτι και πιπέρι",
+      "salt & pepper"
+    ],
+    "salt and black pepper": [
+      "αλάτι και μαύρο πιπέρι",
+      "salt and black pepper"
+    ],
+    "salt and cayenne pepper": [
+      "αλάτι και πιπέρι καγιέν",
+      "salt and cayenne pepper"
+    ],
+    "salt and ground black pepper": [
+      "αλάτι και αλεσμένο μαύρο πιπέρι",
+      "salt and ground black pepper"
+    ],
+    "salt and ground cumin": [
+      "αλάτι και αλεσμένο κύμινο",
+      "salt and ground cumin"
+    ],
+    "salt and lemon pepper": [
+      "αλάτι και λεμονοπίπερο",
+      "salt and lemon pepper"
+    ],
+    "salt and pepper": [
+      "αλάτι και πιπέρι",
+      "salt and pepper"
+    ],
+    "salt and pepper for seasoning": [
+      "αλάτι και πιπέρι για καρύκευμα",
+      "salt and pepper for seasoning"
+    ],
+    "salt and sweet pepper": [
+      "αλάτι και γλυκιά πιπεριά",
+      "salt and sweet pepper"
+    ],
+    "salt and sweet red pepper powder": [
+      "αλάτι και γλυκιά κόκκινη πιπεριά σε σκόνη",
+      "salt and sweet red pepper powder"
+    ],
+    "salt and white pepper": [
+      "αλάτι και λευκό πιπέρι",
+      "salt and white pepper"
+    ],
+    "saudi kabsa spice mix": [
+      "σαουδαραβικό μείγμα μπαχαρικών κάμπσα",
+      "saudi kabsa spice mix"
+    ],
+    "saudi spice mix": [
+      "σαουδαραβικό μείγμα μπαχαρικών",
+      "saudi spice mix"
+    ],
+    "savory": [
+      "θρούμπι",
+      "savory"
+    ],
+    "seasoning mix": [
+      "μείγμα καρυκευμάτων",
+      "seasoning mix"
+    ],
+    "seven-herb blend": [
+      "μείγμα επτά βοτάνων",
+      "seven-herb blend"
+    ],
+    "shelled cardamom pods": [
+      "σπόροι κακουλέ",
+      "shelled cardamom pods"
+    ],
+    "shichimi chili pepper": [
+      "shichimi togarashi (ιαπωνικό μείγμα 7 μπαχαρικών)",
+      "shichimi chili pepper"
+    ],
+    "shichimi chili seasoning": [
+      "shichimi togarashi (ιαπωνικό μείγμα 7 μπαχαρικών)",
+      "shichimi chili seasoning"
+    ],
+    "sichuan pepper": [
+      "πιπέρι σετσουάν",
+      "sichuan pepper"
+    ],
+    "sichuan pepper powder": [
+      "πιπέρι σετσουάν σε σκόνη",
+      "sichuan pepper powder"
+    ],
+    "small hot red chili pepper": [
+      "μικρή κόκκινη καυτερή πιπεριά τσίλι",
+      "small hot red chili pepper"
+    ],
+    "small pepper": [
+      "μικρή πιπεριά",
+      "small pepper"
+    ],
+    "small red chili pepper": [
+      "μικρή κόκκινη πιπεριά τσίλι",
+      "small red chili pepper"
+    ],
+    "smoked paprika": [
+      "καπνιστή πάπρικα",
+      "smoked paprika"
+    ],
+    "smoked red paprika": [
+      "καπνιστή κόκκινη πάπρικα",
+      "smoked red paprika"
+    ],
+    "smoked sweet paprika": [
+      "καπνιστή γλυκιά πάπρικα",
+      "smoked sweet paprika"
+    ],
+    "soaked bay boletes": [
+      "μουλιασμένοι καστανοί βωλίτες",
+      "soaked bay boletes"
+    ],
+    "sour cream and dill": [
+      "ξινή κρέμα και άνηθος",
+      "sour cream and dill"
+    ],
+    "spice mix": [
+      "μείγμα μπαχαρικών",
+      "spice mix"
+    ],
+    "spoonful of cinnamon or vanilla ice cream": [
+      "μια κουταλιά παγωτό κανέλα ή βανίλια",
+      "spoonful of cinnamon or vanilla ice cream"
+    ],
+    "sprig of fresh coriander": [
+      "κλωναράκι φρέσκου κόλιανδρου",
+      "sprig of fresh coriander"
+    ],
+    "sprig of marjoram": [
+      "κλωναράκι μαντζουράνας",
+      "sprig of marjoram"
+    ],
+    "sprig of rosemary": [
+      "κλωναράκι δεντρολίβανου",
+      "sprig of rosemary"
+    ],
+    "star anise": [
+      "αστεροειδής γλυκάνισος",
+      "star anise"
+    ],
+    "sumac seasoning": [
+      "καρυκεύματα σουμάκ",
+      "sumac seasoning"
+    ],
+    "sweet bell pepper / sweet paprika": [
+      "γλυκιά πιπεριά ή γλυκιά πάπρικα",
+      "sweet bell pepper / sweet paprika"
+    ],
+    "sweet ground paprika": [
+      "γλυκιά αλεσμένη πάπρικα",
+      "sweet ground paprika"
+    ],
+    "sweet paprika": [
+      "γλυκιά πάπρικα",
+      "sweet paprika"
+    ],
+    "sweet pepper": [
+      "γλυκιά πιπεριά",
+      "sweet pepper"
+    ],
+    "sweet red paprika": [
+      "γλυκιά κόκκινη πάπρικα",
+      "sweet red paprika"
+    ],
+    "sweet red pepper": [
+      "γλυκιά κόκκινη πιπεριά",
+      "sweet red pepper"
+    ],
+    "sweet red pepper powder": [
+      "γλυκιά κόκκινη πιπεριά σε σκόνη",
+      "sweet red pepper powder"
+    ],
+    "tablespoon of basil": [
+      "1 κ.σ. βασιλικό",
+      "tablespoon of basil"
+    ],
+    "tablespoon of fresh coriander": [
+      "1 κ.σ. φρέσκο κόλιανδρο",
+      "tablespoon of fresh coriander"
+    ],
+    "tablespoon of fresh parsley": [
+      "1 κ.σ. φρέσκο μαϊντανό",
+      "tablespoon of fresh parsley"
+    ],
+    "tablespoon of parsley": [
+      "1 κ.σ. μαϊντανό",
+      "tablespoon of parsley"
+    ],
+    "taco seasoning": [
+      "καρυκεύματα τάκο",
+      "taco seasoning"
+    ],
+    "taco seasoning mix": [
+      "μείγμα καρυκευμάτων τάκο",
+      "taco seasoning mix"
+    ],
+    "tandoori seasoning": [
+      "καρυκεύματα ταντούρι",
+      "tandoori seasoning"
+    ],
+    "tarragon": [
+      "εστραγκόν",
+      "tarragon"
+    ],
+    "tbsp anise liqueur": [
+      "1 κ.σ. λικέρ γλυκάνισου",
+      "tbsp anise liqueur"
+    ],
+    "tbsp coriander leaf": [
+      "1 κ.σ. φύλλο κόλιανδρου",
+      "tbsp coriander leaf"
+    ],
+    "tbsp fresh basil leaf": [
+      "1 κ.σ. φρέσκο φύλλο βασιλικού",
+      "tbsp fresh basil leaf"
+    ],
+    "tbsp fresh coriander": [
+      "1 κ.σ. φρέσκο κόλιανδρο",
+      "tbsp fresh coriander"
+    ],
+    "tbsp parsley": [
+      "1 κ.σ. μαϊντανό",
+      "tbsp parsley"
+    ],
+    "tbsp red pepper puree": [
+      "1 κ.σ. πουρέ κόκκινης πιπεριάς",
+      "tbsp red pepper puree"
+    ],
+    "tbsp tarragon": [
+      "1 κ.σ. εστραγκόν",
+      "tbsp tarragon"
+    ],
+    "teaspoon of cinnamon": [
+      "1 κ.γ. κανέλα",
+      "teaspoon of cinnamon"
+    ],
+    "teaspoon of cumin": [
+      "1 κ.γ. κύμινο",
+      "teaspoon of cumin"
+    ],
+    "teaspoon of indian spice mix": [
+      "1 κ.γ. μείγμα ινδικών μπαχαρικών",
+      "teaspoon of indian spice mix"
+    ],
+    "tex-mex seasoning": [
+      "καρυκεύματα τεξ μεξ",
+      "tex-mex seasoning"
+    ],
+    "tex-mex spice blend": [
+      "μείγμα μπαχαρικών τεξ μεξ",
+      "tex-mex spice blend"
+    ],
+    "tex-mex spice mix": [
+      "μείγμα μπαχαρικών τεξ μεξ",
+      "tex-mex spice mix"
+    ],
+    "thyme and bay leaf": [
+      "θυμάρι και φύλλο δάφνης",
+      "thyme and bay leaf"
+    ],
+    "thyme sprig": [
+      "κλωναράκι θυμαριού",
+      "thyme sprig"
+    ],
+    "tsp fresh oregano": [
+      "1 κ.γ. φρέσκια ρίγανη",
+      "tsp fresh oregano"
+    ],
+    "tsp salt and pepper": [
+      "1 κ.γ. αλάτι και πιπέρι",
+      "tsp salt and pepper"
+    ],
+    "tsp salt and pepper mixture": [
+      "1 κ.γ. μείγμα αλατιού και πιπεριού",
+      "tsp salt and pepper mixture"
+    ],
+    "tsp spice mix": [
+      "1 κ.γ. μείγμα μπαχαρικών",
+      "tsp spice mix"
+    ],
+    "tsp tex-mex spice blend": [
+      "1 κ.γ. μείγμα μπαχαρικών tex-mex",
+      "tsp tex-mex spice blend"
+    ],
+    "tsp turmeric": [
+      "1 κ.γ. κουρκουμά",
+      "tsp turmeric"
+    ],
+    "turmeric": [
+      "κουρκουμάς",
+      "turmeric"
+    ],
+    "turmeric powder": [
+      "κουρκουμάς σε σκόνη",
+      "turmeric powder"
+    ],
+    "turmeric rice": [
+      "ρύζι με κουρκουμά",
+      "turmeric rice"
+    ],
+    "umami seasoning": [
+      "καρυκεύματα ουμάμι",
+      "umami seasoning"
+    ],
+    "white pepper": [
+      "λευκό πιπέρι",
+      "white pepper"
+    ],
+    "white pepper and salt": [
+      "λευκό πιπέρι και αλάτι",
+      "white pepper and salt"
+    ],
+    "whole cumin seed": [
+      "ολόκληρος σπόρος κύμινου",
+      "whole cumin seed"
+    ],
+    "whole spices: 1 cinnamon stick, 2 bay leaves, 5 cardamom pods": [
+      "κανέλα, δάφνη και λοβοί κακουλέ",
+      "whole spices: 1 cinnamon stick, 2 bay leaves, 5 cardamom pods"
+    ],
+    "whole spices: 4 cardamom pods, 1 cinnamon stick, 2 bay leaf": [
+      "λοβοί κακουλέ, κανέλα και δάφνη",
+      "whole spices: 4 cardamom pods, 1 cinnamon stick, 2 bay leaf"
+    ],
+    "yellow pepper": [
+      "κίτρινη πιπεριά",
+      "yellow pepper"
+    ],
+    "cooking sake": [
+      "σάκε μαγειρικής",
+      "cooking sake"
+    ],
+    "sake": [
+      "σάκε",
+      "sake"
+    ],
+    "ssanghwa herbal drink": [
+      "ρόφημα βοτάνων σανγκουά",
+      "ssanghwa herbal drink"
+    ],
+    "strawberry juice": [
+      "χυμός φράουλας",
+      "strawberry juice"
+    ],
+    "sweet orange juice": [
+      "γλυκός χυμός πορτοκαλιού",
+      "sweet orange juice"
+    ],
+    "sweet rice wine": [
+      "γλυκό κρασί ρυζιού",
+      "sweet rice wine"
+    ],
+    "sweetened black coffee": [
+      "μαύρος καφές με ζάχαρη",
+      "sweetened black coffee"
+    ],
+    "tablespoons of lime juice": [
+      "κ.σ. χυμό λάιμ",
+      "tablespoons of lime juice"
+    ],
+    "tbsp lemon juice": [
+      "1 κ.σ. χυμό λεμονιού",
+      "tbsp lemon juice"
+    ],
+    "tea": [
+      "τσάι",
+      "tea"
+    ],
+    "tomato canned in its own juice": [
+      "ντομάτα κονσέρβας στον χυμό της",
+      "tomato canned in its own juice"
+    ],
+    "tomato canned in their own juice": [
+      "ντομάτα κονσέρβας στον χυμό της",
+      "tomato canned in their own juice"
+    ],
+    "tomato in their own juice": [
+      "ντομάτα στον χυμό της",
+      "tomato in their own juice"
+    ],
+    "tsp lemon juice": [
+      "1 κ.γ. χυμό λεμονιού",
+      "tsp lemon juice"
+    ],
+    "unopened can of condensed milk": [
+      "κλειστή κονσέρβα ζαχαρούχου γάλακτος",
+      "unopened can of condensed milk"
+    ],
+    "unsweetened soy milk": [
+      "γάλα σόγιας χωρίς ζάχαρη",
+      "unsweetened soy milk"
+    ],
+    "vegetable juice": [
+      "χυμός λαχανικών",
+      "vegetable juice"
+    ],
+    "vin jaune or white dessert wine": [
+      "βεν ζον ή λευκό επιδόρπιο κρασί",
+      "vin jaune or white dessert wine"
+    ],
+    "vin jaune yellow wine": [
+      "vin jaune (κίτρινο κρασί jura)",
+      "vin jaune yellow wine"
+    ],
+    "warm fresh milk": [
+      "χλιαρό φρέσκο γάλα",
+      "warm fresh milk"
+    ],
+    "water": [
+      "νερό",
+      "water"
+    ],
+    "water combined with beet liquid": [
+      "νερό μαζί με το υγρό των παντζαριών",
+      "water combined with beet liquid"
+    ],
+    "water combined with corn liquid": [
+      "νερό μαζί με τα υγρά του καλαμποκιού",
+      "water combined with corn liquid"
+    ],
+    "water combined with shiitake soaking liquid": [
+      "νερό μαζί με το νερό μουλιάσματος των σιτάκε",
+      "water combined with shiitake soaking liquid"
+    ],
+    "water dropwort": [
+      "νερομαϊντανός",
+      "water dropwort"
+    ],
+    "water or veal stock": [
+      "νερό ή ζωμός από μοσχαράκι",
+      "water or veal stock"
+    ],
+    "water or vegetable stock": [
+      "νερό ή ζωμός λαχανικών",
+      "water or vegetable stock"
+    ],
+    "water, 300 milliliters": [
+      "νερό, 300 ml",
+      "water, 300 milliliters"
+    ],
+    "whisky": [
+      "ουίσκι",
+      "whisky"
+    ],
+    "white tea": [
+      "λευκό τσάι",
+      "white tea"
+    ],
+    "white wine": [
+      "λευκό κρασί",
+      "white wine"
+    ],
+    "white wine vinegar": [
+      "ξίδι λευκού κρασιού",
+      "white wine vinegar"
+    ],
+    "wine": [
+      "κρασί",
+      "wine"
+    ],
+    "wine vinegar": [
+      "ξίδι κρασιού",
+      "wine vinegar"
+    ],
+    "yellow wine": [
+      "vin jaune (κίτρινο κρασί jura)",
+      "yellow wine"
+    ],
+    "yuzu juice": [
+      "χυμός γιούζου",
+      "yuzu juice"
+    ],
+    "beetroot and chard leaf": [
+      "φύλλο παντζαριού και σέσκουλου",
+      "beetroot and chard leaf"
+    ],
+    "bellflower root": [
+      "ρίζα πλατυκώδωνα",
+      "bellflower root"
+    ],
+    "bellflower root for jeonggwa": [
+      "ρίζα πλατυκώδωνα για τζονγκουά",
+      "bellflower root for jeonggwa"
+    ],
+    "flower-shaped wheat gluten": [
+      "γλουτένη σιταριού σε σχήμα λουλουδιού",
+      "flower-shaped wheat gluten"
+    ],
+    "gelatine leaf": [
+      "φύλλο ζελατίνης",
+      "gelatine leaf"
+    ],
+    "kinome leaf": [
+      "φύλλο κινόμε",
+      "kinome leaf"
+    ],
+    "leaf gelatine": [
+      "φύλλο ζελατίνης",
+      "leaf gelatine"
+    ],
+    "leaf spinach": [
+      "σπανάκι σε φύλλα",
+      "leaf spinach"
+    ],
+    "lemon peel": [
+      "φλούδα λεμονιού",
+      "lemon peel"
+    ],
+    "lemon zest": [
+      "ξύσμα λεμονιού",
+      "lemon zest"
+    ],
+    "mixed salad leaf": [
+      "ανάμεικτα φύλλα σαλάτας",
+      "mixed salad leaf"
+    ],
+    "orange zest": [
+      "ξύσμα πορτοκαλιού",
+      "orange zest"
+    ],
+    "organic banana peel": [
+      "φλούδα βιολογικής μπανάνας",
+      "organic banana peel"
+    ],
+    "organic fruity olive oil": [
+      "βιολογικό φρουτώδες ελαιόλαδο",
+      "organic fruity olive oil"
+    ],
+    "prepared rehmannia root": [
+      "επεξεργασμένη ρίζα ρεμάνιας",
+      "prepared rehmannia root"
+    ],
+    "root vegetables": [
+      "ριζώδη λαχανικά",
+      "root vegetables"
+    ],
+    "salad onion stalk": [
+      "φρέσκο κρεμμυδάκι για σαλάτα",
+      "salad onion stalk"
+    ],
+    "salt-boiled nanohana greens": [
+      "χόρτα νανοχάνα βρασμένα σε αλατόνερο",
+      "salt-boiled nanohana greens"
+    ],
+    "salted cherry leaf": [
+      "παστό φύλλο κερασιάς",
+      "salted cherry leaf"
+    ],
+    "sansho leaf": [
+      "φύλλο σάνσο",
+      "sansho leaf"
+    ],
+    "scraped seed from a vanilla pod": [
+      "ξυσμένοι σπόροι από λοβό βανίλιας",
+      "scraped seed from a vanilla pod"
+    ],
+    "scraped vanilla pod": [
+      "ξυσμένος λοβός βανίλιας",
+      "scraped vanilla pod"
+    ],
+    "seaweed": [
+      "φύκια",
+      "seaweed"
+    ],
+    "shiitake mushroom": [
+      "μανιτάρι shiitake",
+      "μανιτάρι σιτάκε",
+      "shiitake",
+      "shiitake mushroom"
+    ],
+    "shiitake or other mushroom": [
+      "σιτάκε ή άλλο μανιτάρι",
+      "shiitake or other mushroom"
+    ],
+    "shungiku chrysanthemum greens": [
+      "φύλλα χρυσάνθεμου σουνγκίκου",
+      "shungiku chrysanthemum greens"
+    ],
+    "small dried shiitake mushroom": [
+      "μικρό αποξηραμένο μανιτάρι shiitake",
+      "μικρό αποξηραμένο σιτάκε",
+      "small dried shiitake mushroom"
+    ],
+    "small fennel bulb": [
+      "μικρή μαραθόριζα",
+      "small fennel bulb"
+    ],
+    "spoonfuls of extra-virgin olive oil": [
+      "κουταλιές εξαιρετικό παρθένο ελαιόλαδο",
+      "spoonfuls of extra-virgin olive oil"
+    ],
+    "spring greens": [
+      "ανοιξιάτικα χόρτα",
+      "spring greens"
+    ],
+    "spring onion stalk": [
+      "κοτσάνι φρέσκου κρεμμυδιού",
+      "spring onion stalk"
+    ],
+    "stalk celery": [
+      "σέλινο σε κλωνάρια",
+      "stalk celery"
+    ],
+    "stalk of": [
+      "κοτσάνι από…",
+      "stalk of"
+    ],
+    "stalk of spring onion": [
+      "κοτσάνι φρέσκου κρεμμυδιού",
+      "stalk of spring onion"
+    ],
+    "tablespoons of extra virgin olive oil": [
+      "κ.σ. εξαιρετικό παρθένο ελαιόλαδο",
+      "tablespoons of extra virgin olive oil"
+    ],
+    "tbsp good-quality olive oil": [
+      "1 κ.σ. ελαιόλαδο καλής ποιότητας",
+      "tbsp good-quality olive oil"
+    ],
+    "truffle": [
+      "τρούφα",
+      "truffle"
+    ],
+    "truffle oil": [
+      "λάδι τρούφας",
+      "truffle oil"
+    ],
+    "turnip greens": [
+      "χόρτα γογγυλιού",
+      "turnip greens"
+    ],
+    "ugeoji cabbage greens": [
+      "φύλλα λάχανου ουγκότζι",
+      "ugeoji cabbage greens"
+    ],
+    "vanilla pod": [
+      "λοβός βανίλιας",
+      "vanilla pod"
+    ],
+    "white cabbage leaf": [
+      "φύλλο λευκού λάχανου",
+      "white cabbage leaf"
+    ],
+    "white shimeji mushroom": [
+      "λευκό μανιτάρι shimeji",
+      "white shimeji mushroom"
+    ],
+    "yellow yuzu peel": [
+      "κίτρινη φλούδα γιούζου",
+      "yellow yuzu peel"
+    ],
+    "yuzu peel": [
+      "φλούδα γιούζου",
+      "yuzu peel"
+    ],
+    "aubergine": [
+      "μελιτζάνα",
+      "aubergine"
+    ],
+    "avocados": [
+      "αβοκάντο",
+      "avocados"
+    ],
+    "awamori": [
+      "αβαμόρι",
+      "awamori"
+    ],
+    "bagels": [
+      "μπέιγκελ",
+      "bagels"
+    ],
+    "bamboo fibre": [
+      "φυτικές ίνες μπαμπού",
+      "bamboo fibre"
+    ],
+    "bamboo shoots": [
+      "βλαστοί μπαμπού",
+      "bamboo shoots"
+    ],
+    "bao buns": [
+      "ψωμάκια μπάο",
+      "bao buns"
+    ],
+    "barberries": [
+      "καρποί βερβερίδας",
+      "barberries"
+    ],
+    "barramundi": [
+      "μπαραμούντι",
+      "barramundi"
+    ],
+    "beansprouts": [
+      "φύτρα φασολιών",
+      "beansprouts"
+    ],
+    "bechamel": [
+      "μπεσαμέλ",
+      "bechamel"
+    ],
+    "bird's eye chili": [
+      "καυτερή πιπεριά bird’s eye",
+      "bird's eye chili"
+    ],
+    "bird's eye chili powder": [
+      "σκόνη καυτερής πιπεριάς bird’s eye",
+      "bird's eye chili powder"
+    ],
+    "black tapioca pearls": [
+      "μαύρες πέρλες ταπιόκας",
+      "black tapioca pearls"
+    ],
+    "blackcurrants": [
+      "μαύρα φραγκοστάφυλα",
+      "blackcurrants"
+    ],
+    "blinis": [
+      "μπλίνι",
+      "blinis"
+    ],
+    "blueberry and blackberry": [
+      "μύρτιλο και βατόμουρο",
+      "blueberry and blackberry"
+    ],
+    "blueberry or redcurrants": [
+      "μύρτιλα ή κόκκινα φραγκοστάφυλα",
+      "blueberry or redcurrants"
+    ],
+    "boiled bamboo shoots": [
+      "βρασμένοι βλαστοί μπαμπού",
+      "boiled bamboo shoots"
+    ],
+    "boiled egg": [
+      "βραστό αυγό",
+      "boiled egg"
+    ],
+    "boiled mountain vegetables": [
+      "βρασμένα ορεινά λαχανικά",
+      "boiled mountain vegetables"
+    ],
+    "boiled quail egg": [
+      "βραστό αυγό ορτυκιού",
+      "boiled quail egg"
+    ],
+    "bone marrow": [
+      "μεδούλι",
+      "bone marrow"
+    ],
+    "bonito steak": [
+      "φέτα παλαμίδας",
+      "bonito steak"
+    ],
+    "bors souring liquid": [
+      "ξινός ζωμός μπορς",
+      "bors souring liquid"
+    ],
+    "borscht concentrate": [
+      "συμπύκνωμα μπορς",
+      "borscht concentrate"
+    ],
+    "bosnian dried meat": [
+      "βοσνιακό αποξηραμένο κρέας",
+      "bosnian dried meat"
+    ],
+    "boudin blanc": [
+      "λευκό λουκάνικο boudin blanc",
+      "boudin blanc"
+    ],
+    "bouquet garni": [
+      "μπουκέ γκαρνί",
+      "bouquet garni"
+    ],
+    "bouquet of geranium": [
+      "μπουκέτο αρμπαρόριζας",
+      "bouquet of geranium"
+    ],
+    "bouquets garni": [
+      "μπουκέ γκαρνί",
+      "bouquets garni"
+    ],
+    "breaded meat croquettes": [
+      "παναρισμένες κροκέτες κρέατος",
+      "breaded meat croquettes"
+    ],
+    "bresaola": [
+      "μπρεζάολα",
+      "bresaola"
+    ],
+    "bresaola slices": [
+      "φέτες μπρεζάολα",
+      "bresaola slices"
+    ],
+    "bunch of soup vegetables": [
+      "ματσάκι λαχανικά για σούπα",
+      "bunch of soup vegetables"
+    ],
+    "bunch of soybean sprouts": [
+      "ματσάκι φύτρα σόγιας",
+      "bunch of soybean sprouts"
+    ],
+    "buns or muffins": [
+      "ψωμάκια ή μάφιν",
+      "buns or muffins"
+    ],
+    "burdock": [
+      "κολλιτσίδα",
+      "burdock"
+    ],
+    "burger buns": [
+      "ψωμάκια για μπέργκερ",
+      "burger buns"
+    ],
+    "burger patties": [
+      "μπιφτέκια",
+      "burger patties"
+    ],
+    "burgers": [
+      "μπιφτέκια",
+      "burgers"
+    ],
+    "burrata": [
+      "μπουράτα",
+      "burrata"
+    ],
+    "caltabos": [
+      "λουκάνικο καλταμπός",
+      "caltabos"
+    ],
+    "calvados": [
+      "καλβαντός",
+      "calvados"
+    ],
+    "calvo nero": [
+      "cavolo nero (μαύρο λάχανο)",
+      "calvo nero"
+    ],
+    "calvo nero or kale": [
+      "cavolo nero ή κέιλ",
+      "calvo nero or kale"
+    ],
+    "candied chestnut": [
+      "μαρόν γλασέ",
+      "candied chestnut"
+    ],
+    "candied chestnut for decorating": [
+      "μαρόν γλασέ για διακόσμηση",
+      "candied chestnut for decorating"
+    ],
+    "candied fruit": [
+      "φρούτα γλασέ",
+      "candied fruit"
+    ],
+    "canned": [
+      "τρόφιμο κονσέρβας",
+      "canned"
+    ],
+    "canned bamboo shoots": [
+      "βλαστοί μπαμπού κονσέρβας",
+      "canned bamboo shoots"
+    ],
+    "canned beetroot with its liquid": [
+      "παντζάρια κονσέρβας με το υγρό τους",
+      "canned beetroot with its liquid"
+    ],
+    "canned blessed thistle": [
+      "αγιάγκαθο κονσέρβας",
+      "canned blessed thistle"
+    ],
+    "canned cooked beets": [
+      "βρασμένα παντζάρια κονσέρβας",
+      "canned cooked beets"
+    ],
+    "canned jackfruit": [
+      "τζάκφρουτ κονσέρβας",
+      "canned jackfruit"
+    ],
+    "canned mixed fruit": [
+      "ανάμεικτα φρούτα κονσέρβας",
+      "canned mixed fruit"
+    ],
+    "canned sweetcorn": [
+      "γλυκό καλαμπόκι κονσέρβας",
+      "canned sweetcorn"
+    ],
+    "caper": [
+      "κάπαρη",
+      "caper"
+    ],
+    "capon": [
+      "καπόνι",
+      "capon"
+    ],
+    "caramel": [
+      "καραμέλα",
+      "caramel"
+    ],
+    "caramel popcorn or": [
+      "καραμελωμένο ποπ κορν ή…",
+      "caramel popcorn or"
+    ],
+    "caramel popcorn or hard caramel": [
+      "καραμελωμένο ποπ κορν ή σκληρές καραμέλες",
+      "caramel popcorn or hard caramel"
+    ],
+    "caramel popcorn or hard caramel candies": [
+      "καραμελωμένο ποπ κορν ή σκληρές καραμέλες",
+      "caramel popcorn or hard caramel candies"
+    ],
+    "caramel popcorn or hard caramel candy": [
+      "καραμελωμένο ποπ κορν ή σκληρές καραμέλες",
+      "caramel popcorn or hard caramel candy"
+    ],
+    "caramel popcorn or hard caramel sweets": [
+      "καραμελωμένο ποπ κορν ή σκληρές καραμέλες",
+      "caramel popcorn or hard caramel sweets"
+    ],
+    "caramel popcorn or soft caramel candies": [
+      "καραμελωμένο ποπ κορν ή μαλακές καραμέλες",
+      "caramel popcorn or soft caramel candies"
+    ],
+    "caramelized popcorn": [
+      "καραμελωμένο ποπ κορν",
+      "caramelized popcorn"
+    ],
+    "caraway": [
+      "αγριοκύμινο",
+      "caraway"
+    ],
+    "catshark slice": [
+      "φέτα γαλέου",
+      "catshark slice"
+    ],
+    "cereal flakes": [
+      "νιφάδες δημητριακών",
+      "cereal flakes"
+    ],
+    "cereals": [
+      "δημητριακά",
+      "cereals"
+    ],
+    "chablis": [
+      "κρασί σαμπλί",
+      "chablis"
+    ],
+    "challah": [
+      "ψωμί χαλά",
+      "challah"
+    ],
+    "chard": [
+      "σέσκουλα",
+      "chard"
+    ],
+    "cheese tortellini": [
+      "τορτελίνια με τυρί",
+      "cheese tortellini"
+    ],
+    "chestnut cream": [
+      "κρέμα κάστανου",
+      "chestnut cream"
+    ],
+    "chicory": [
+      "ραδίκι κιχωρίου",
+      "chicory"
+    ],
+    "chikuwa": [
+      "τσικούα",
+      "chikuwa"
+    ],
+    "chili": [
+      "πιπεριά τσίλι",
+      "chili"
+    ],
+    "chili cream": [
+      "κρέμα τσίλι",
+      "chili cream"
+    ],
+    "chili flakes": [
+      "νιφάδες τσίλι",
+      "chili flakes"
+    ],
+    "chili powder": [
+      "τσίλι σε σκόνη",
+      "chili powder"
     ]
   }
 }
