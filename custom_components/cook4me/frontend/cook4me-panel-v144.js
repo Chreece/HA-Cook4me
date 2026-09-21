@@ -131,6 +131,7 @@ class Cook4MeRecipeHubPanelV144 extends BasePanel{
    if(selector.includes('data-draft'))input.required=!d.unlimited;
   }
   const amount=result?.querySelector('.v111-amount');if(amount)amount.hidden=!!d.unlimited;
+  const total=c.querySelector('[data-v112-total]');if(total&&d.unlimited)total.textContent=this._v144Text('unlimitedBadge');
   if(result){
    let badge=result.querySelector('[data-v144-unlimited-badge]');
    if(d.unlimited&&!badge){badge=document.createElement('div');badge.dataset.v144UnlimitedBadge='';badge.className='v144-unlimited-badge';badge.textContent=this._v144Text('unlimitedBadge');const facts=result.querySelector('.v111-facts');facts?.after(badge);}
