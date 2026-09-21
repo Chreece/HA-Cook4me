@@ -20,15 +20,15 @@ def load_presentation():
 
 
 class GreekCatalogAuditV164Tests(unittest.TestCase):
-    def test_v164_is_active_and_versioned(self):
+    def test_v164_is_inherited_by_active_v165(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v164.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v164",panel)
-        self.assertIn("cook4me-panel-v164.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.29",panel)
-        self.assertIn("?v=2026.9.21.29",panel)
-        self.assertIn('"version": "2026.9.21.29"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v165",panel)
+        self.assertIn("cook4me-panel-v165.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.30",panel)
+        self.assertIn("?v=2026.9.21.30",panel)
+        self.assertIn('"version": "2026.9.21.30"',manifest)
         self.assertIn("cook4me-panel-v163.js?v=2026.9.21.28",ui)
 
     def test_singular_leaf_and_small_forms_are_preserved(self):
@@ -107,7 +107,7 @@ class GreekCatalogAuditV164Tests(unittest.TestCase):
         data=json.loads(CURATED.read_text(encoding="utf-8"))
         self.assertGreaterEqual(len(data["labels"]),974)
         self.assertGreaterEqual(len(data["searchAliases"]),423)
-        self.assertIn("nineteenth audit",data["translationSource"])
+        self.assertIn("audit",data["translationSource"])
 
 
 if __name__=="__main__":
