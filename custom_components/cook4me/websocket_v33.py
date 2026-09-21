@@ -342,8 +342,8 @@ async def ws_product_add(hass, connection, msg):
                     lot_id=msg["edit_lot_id"], expected_version=msg.get("expected_version", ""), quantity=msg["quantity"],
                     unit=msg["unit"], best_before=msg.get("best_before", ""), lot_metadata=metadata, fingerprint=fingerprint)
             else:
-                receipt = await bridge.recipe_hub.async_scanner_add(msg["request_id"], ingredient, quantity=msg["quantity"],
-                    unit=msg["unit"], best_before=msg.get("best_before", ""), lot_metadata=metadata, fingerprint=fingerprint,
+                receipt = await bridge.recipe_hub.async_scanner_add(msg["request_id"], ingredient, quantity=None if unlimited else msg["quantity"],
+                    unit="" if unlimited else msg["unit"], best_before=msg.get("best_before", ""), lot_metadata=metadata, fingerprint=fingerprint,
                     package_count=count, unlimited=unlimited)
             committed = True
 
