@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through seventeenth audit 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through eighteenth audit 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -881,7 +881,51 @@
     "g carrot": "γρ. καρότο",
     "g cauliflower": "γρ. κουνουπίδι",
     "cm diameter tortilla": "Τορτίγια διαμέτρου … εκ.",
-    "cm tortilla": "Τορτίγια … εκ."
+    "cm tortilla": "Τορτίγια … εκ.",
+    "corn flour diluted in a little water": "Αλεύρι καλαμποκιού αραιωμένο σε λίγο νερό",
+    "cornstarch diluted in a little almond milk": "Άμυλο καλαμποκιού αραιωμένο σε λίγο γάλα αμυγδάλου",
+    "cornstarch diluted in a little water": "Άμυλο καλαμποκιού αραιωμένο σε λίγο νερό",
+    "cornstarch diluted in a small amount of almond milk": "Άμυλο καλαμποκιού αραιωμένο σε μικρή ποσότητα γάλακτος αμυγδάλου",
+    "cornstarch dissolved in a small amount of almond milk": "Άμυλο καλαμποκιού διαλυμένο σε μικρή ποσότητα γάλακτος αμυγδάλου",
+    "cornstarch in a little wine": "Άμυλο καλαμποκιού σε λίγο κρασί",
+    "cornstarch mixed with a little almond milk": "Άμυλο καλαμποκιού ανακατεμένο με λίγο γάλα αμυγδάλου",
+    "cornstarch mixed with a little water": "Άμυλο καλαμποκιού ανακατεμένο με λίγο νερό",
+    "cornstarch mixed with a small amount of almond milk": "Άμυλο καλαμποκιού ανακατεμένο με μικρή ποσότητα γάλακτος αμυγδάλου",
+    "canned whole-kernel corn": "Ολόκληροι κόκκοι καλαμποκιού κονσέρβας",
+    "frozen kibbeh balls": "Κατεψυγμένα μπαλάκια κίμπε",
+    "melon balls": "Μπαλάκια πεπονιού",
+    "turkey strips": "Λωρίδες γαλοπούλας",
+    "turkey breast strips": "Λωρίδες στήθους γαλοπούλας",
+    "arborio rice for risotto": "Ρύζι αρμπόριο για ριζότο",
+    "bulgur for pilaf": "Πλιγούρι για πιλάφι",
+    "carnaroli rice for risotto": "Ρύζι καρναρόλι για ριζότο",
+    "butter roll for toast": "Βουτυρένιο ψωμάκι για τοστ",
+    "chocolate sauce for the cream": "Σάλτσα σοκολάτας για την κρέμα",
+    "cooked rice for adults": "Μαγειρεμένο ρύζι για ενήλικες",
+    "dl of white wine for cooking the pumpkin": "dl λευκού κρασιού για το μαγείρεμα της κολοκύθας",
+    "egg yolk for the sauce": "Κρόκος αυγού για τη σάλτσα",
+    "egg yolks for the sauce": "Κρόκοι αυγών για τη σάλτσα",
+    "fine bulgur for meatball": "Ψιλό πλιγούρι για κεφτέδες",
+    "garlic with the germ removed": "Σκόρδο χωρίς το φύτρο",
+    "mixed dried and smoked fruit for compote": "Ανάμεικτα αποξηραμένα και καπνιστά φρούτα για κομπόστα",
+    "salt and pepper for seasoning": "Αλάτι και πιπέρι για καρύκευμα",
+    "semi-salted butter to add to the chocolate": "Ημιαλατισμένο βούτυρο για προσθήκη στη σοκολάτα",
+    "vegetable oil for cooking": "Φυτικό λάδι για μαγείρεμα",
+    "white bread with crumbled crust": "Λευκό ψωμί με τριμμένη κόρα",
+    "chicken stock & white wine - each": "Ζωμός κοτόπουλου και λευκό κρασί — ίση ποσότητα από το καθένα",
+    "g cabbage": "γρ. λάχανο",
+    "g vinegar": "γρ. ξίδι",
+    "litre of prepared sour rye starter for zur": "1 λίτρο έτοιμου ξινού προζυμιού σίκαλης για ζουρ",
+    "scoops of cinnamon or vanilla ice cream": "Μπάλες παγωτού κανέλα ή βανίλια",
+    "whole black peppercorns": "Ολόκληροι κόκκοι μαύρου πιπεριού",
+    "dried fig": "Αποξηραμένο σύκο",
+    "dried figs": "Αποξηραμένα σύκα",
+    "kaffir lime leaf": "Φύλλο λάιμ μακρούτ",
+    "makrut lime leaf": "Φύλλο λάιμ μακρούτ",
+    "leaf spinach": "Σπανάκι σε φύλλα",
+    "spinach leaf": "Φύλλο σπανακιού",
+    "chickpea cooked in cookeo": "Ρεβίθια μαγειρεμένα στο Cookeo",
+    "chicken fingers or strips": "Φιλετάκια ή λωρίδες κοτόπουλου"
   },
   "searchAliases": {
     "veal": [
@@ -2503,6 +2547,103 @@
     "medium egg, 50–55 g": [
       "μεσαίο αυγό 50 55 g",
       "medium egg 50 55g"
+    ],
+    "cornstarch diluted in a little water": [
+      "άμυλο καλαμποκιού σε λίγο νερό",
+      "cornstarch water"
+    ],
+    "cornstarch diluted in a little almond milk": [
+      "άμυλο καλαμποκιού με γάλα αμυγδάλου",
+      "cornstarch almond milk"
+    ],
+    "cornstarch mixed with a little water": [
+      "άμυλο καλαμποκιού ανακατεμένο με νερό",
+      "cornstarch mixed water"
+    ],
+    "canned whole-kernel corn": [
+      "ολόκληροι κόκκοι καλαμποκιού κονσέρβας",
+      "whole kernel corn"
+    ],
+    "frozen kibbeh balls": [
+      "μπαλάκια κίμπε",
+      "kibbeh balls"
+    ],
+    "melon balls": [
+      "μπαλάκια πεπονιού",
+      "melon balls"
+    ],
+    "turkey strips": [
+      "λωρίδες γαλοπούλας",
+      "turkey strips"
+    ],
+    "turkey breast strips": [
+      "λωρίδες στήθους γαλοπούλας",
+      "turkey breast strips"
+    ],
+    "arborio rice for risotto": [
+      "αρμπόριο για ριζότο",
+      "arborio risotto"
+    ],
+    "bulgur for pilaf": [
+      "πλιγούρι για πιλάφι",
+      "bulgur pilaf"
+    ],
+    "carnaroli rice for risotto": [
+      "καρναρόλι για ριζότο",
+      "carnaroli risotto"
+    ],
+    "egg yolk for the sauce": [
+      "κρόκος για τη σάλτσα",
+      "egg yolk sauce"
+    ],
+    "garlic with the germ removed": [
+      "σκόρδο χωρίς φύτρο",
+      "de-germed garlic"
+    ],
+    "fine bulgur for meatball": [
+      "ψιλό πλιγούρι για κεφτέδες",
+      "fine bulgur meatball"
+    ],
+    "mixed dried and smoked fruit for compote": [
+      "φρούτα για κομπόστα",
+      "dried smoked fruit compote"
+    ],
+    "semi-salted butter to add to the chocolate": [
+      "ημιαλατισμένο βούτυρο για σοκολάτα",
+      "semi salted butter chocolate"
+    ],
+    "scoops of cinnamon or vanilla ice cream": [
+      "μπάλες παγωτού",
+      "ice cream scoops"
+    ],
+    "whole black peppercorns": [
+      "ολόκληροι κόκκοι μαύρου πιπεριού",
+      "whole black peppercorns"
+    ],
+    "dried fig": [
+      "αποξηραμένο σύκο",
+      "dried fig"
+    ],
+    "spinach leaf": [
+      "φύλλο σπανακιού",
+      "spinach leaf"
+    ],
+    "kaffir lime leaf": [
+      "φύλλο λάιμ μακρούτ",
+      "kaffir lime leaf"
+    ],
+    "makrut lime leaf": [
+      "φύλλο λάιμ μακρούτ",
+      "makrut lime leaf"
+    ],
+    "chickpea cooked in cookeo": [
+      "ρεβίθια cookeo",
+      "chickpea cookeo"
+    ],
+    "chicken fingers or strips": [
+      "φιλετάκια κοτόπουλου",
+      "λωρίδες κοτόπουλου",
+      "chicken fingers"
     ]
   }
 }
