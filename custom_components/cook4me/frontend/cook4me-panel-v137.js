@@ -3,6 +3,10 @@ if(!customElements.get(V136))await import('./cook4me-panel-v136.js?v=2026.9.21.1
 const BasePanel=customElements.get(V136);
 
 class Cook4MeRecipeHubPanelV137 extends BasePanel{
+ _v136FoldWeekSections(_container){
+  /* v136 folded the recipe's own disclosure sections. The requested folding
+     is for the large Week summary panels instead, so keep recipe state intact. */
+ }
  _v137FoldWeekPanels(container){
   if(!container)return;
   const wanted=new Map([
