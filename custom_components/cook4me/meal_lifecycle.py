@@ -22,6 +22,8 @@ _MAX_SUBSTITUTIONS = 1000
 _MAX_MEAL_COSTS = 1000
 _DEFAULT_MEAL_TYPES = ("breakfast", "lunch", "dinner")
 _VALID_MEAL_TYPES = {"breakfast", "lunch", "dinner", "snack"}
+_MEAL_TYPE_ORDER = ("breakfast", "lunch", "snack", "dinner")
+_WEEKDAY_KEYS = ("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")
 
 
 def _text(value: Any) -> str:
@@ -60,6 +62,33 @@ def rolling_week_start(value: str | None, today: date) -> str:
 def _meal_type(value: Any) -> str:
     token = _text(value).lower()
     return token if token in _VALID_MEAL_TYPES else "dinner"
+
+
+def _ordered_meal_types(values: Any, *, fallback: bool = True) -> list[str]:
+    raw = values if isinstance(values, list) else []
+    selected = {_meal_type(value) for value in raw if _text(value)}
+    result = [meal for meal in _MEAL_TYPE_ORDER if meal in selected]
+    return result or (list(_DEFAULT_MEAL_TYPES) if fallback else [])
+
+
+def _weekday_meal_types(value: Any, fallback: list[str]) -> dict[str, list[str]]:
+    raw = value if isinstance(value, dict) else {}
+    result: dict[str, list[str]] = {}
+    for key in _WEEKDAY_KEYS:
+        if key in raw and isinstance(raw.get(key), list):
+            result[key] = _ordered_meal_types(raw.get(key), fallback=False)
+        else:
+            result[key] = list(fallback)
+    return result
+
+
+def _slot_sort_key(row: dict[str, Any]) -> tuple[str, int, str]:
+    meal = _text(row.get("mealType")).lower()
+    try:
+        rank = _MEAL_TYPE_ORDER.index(meal)
+    except ValueError:
+        rank = len(_MEAL_TYPE_ORDER)
+    return (_text(row.get("date")), rank, _text(row.get("id")))
 
 
 def _recipe_snapshot(recipe: Any) -> dict[str, Any]:
@@ -258,6 +287,9 @@ class Cook4MeMealLifecycleStore:
             "mealCosts": {},
             "settings": {
                 "mealTypes": list(_DEFAULT_MEAL_TYPES),
+                "weekdayMealTypes": {
+                    key: list(_DEFAULT_MEAL_TYPES) for key in _WEEKDAY_KEYS
+                },
                 "leftoversFirst": True,
                 "avoidRecentDays": 7,
                 "nutritionTargets": {},
@@ -291,7 +323,8 @@ class Cook4MeMealLifecycleStore:
                 }
             settings = saved.get("settings") if isinstance(saved.get("settings"), dict) else {}
             raw_types = settings.get("mealTypes") if isinstance(settings.get("mealTypes"), list) else list(_DEFAULT_MEAL_TYPES)
-            meal_types = list(dict.fromkeys(_meal_type(value) for value in raw_types))[:4]
+            meal_types = _ordered_meal_types(raw_types)
+            weekday_meal_types = _weekday_meal_types(settings.get("weekdayMealTypes"), meal_types)
             raw_targets = settings.get("nutritionTargets") if isinstance(settings.get("nutritionTargets"), dict) else {}
             targets: dict[str, float] = {}
             for key, value in raw_targets.items():
@@ -303,7 +336,8 @@ class Cook4MeMealLifecycleStore:
             except (TypeError, ValueError):
                 avoid_days = 7
             self._data["settings"] = {
-                "mealTypes": meal_types or list(_DEFAULT_MEAL_TYPES),
+                "mealTypes": meal_types,
+                "weekdayMealTypes": weekday_meal_types,
                 "leftoversFirst": bool(settings.get("leftoversFirst", True)),
                 "avoidRecentDays": max(0, min(avoid_days, 90)),
                 "nutritionTargets": targets,
@@ -351,12 +385,15 @@ class Cook4MeMealLifecycleStore:
         leftovers_first: Any = None,
         avoid_recent_days: Any = None,
         nutrition_targets: Any = None,
+        weekday_meal_types: Any = None,
     ) -> dict[str, Any]:
         settings = dict(self._data["settings"])
         if meal_types is not None:
-            raw = meal_types if isinstance(meal_types, list) else []
-            values = list(dict.fromkeys(_meal_type(value) for value in raw if _text(value)))[:4]
-            settings["mealTypes"] = values or list(_DEFAULT_MEAL_TYPES)
+            settings["mealTypes"] = _ordered_meal_types(meal_types)
+        if weekday_meal_types is not None:
+            settings["weekdayMealTypes"] = _weekday_meal_types(
+                weekday_meal_types, settings.get("mealTypes") or list(_DEFAULT_MEAL_TYPES)
+            )
         if leftovers_first is not None:
             settings["leftoversFirst"] = bool(leftovers_first)
         if avoid_recent_days is not None:
@@ -376,9 +413,10 @@ class Cook4MeMealLifecycleStore:
     async def async_replace_week(self, week_start: Any, slots: Any) -> dict[str, Any]:
         self._data["weekStart"] = _date(week_start) or week_monday()
         raw_slots = slots if isinstance(slots, list) else []
-        self._data["slots"] = [
-            slot for raw in raw_slots if (slot := _slot(raw)) is not None
-        ][:_MAX_SLOTS]
+        self._data["slots"] = sorted(
+            [slot for raw in raw_slots if (slot := _slot(raw)) is not None],
+            key=_slot_sort_key,
+        )[:_MAX_SLOTS]
         await self._save()
         return self.snapshot()
 
@@ -388,7 +426,7 @@ class Cook4MeMealLifecycleStore:
             raise ValueError("Meal plan slot requires a date plus recipe or leftover")
         rows = [row for row in self._data["slots"] if row.get("id") != slot["id"]]
         rows.append(slot)
-        rows.sort(key=lambda row: (row.get("date") or "", row.get("mealType") or ""))
+        rows.sort(key=_slot_sort_key)
         self._data["slots"] = rows[-_MAX_SLOTS:]
         await self._save()
         return deepcopy(slot)
