@@ -20,15 +20,15 @@ def load_presentation():
 
 
 class GreekCatalogAuditV150Tests(unittest.TestCase):
-    def test_v150_is_inherited_by_active_v156(self):
+    def test_v150_is_inherited_by_active_v157(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v150.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v156",panel)
-        self.assertIn("cook4me-panel-v156.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.21",panel)
-        self.assertIn("?v=2026.9.21.21",panel)
-        self.assertIn('"version": "2026.9.21.21"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v157",panel)
+        self.assertIn("cook4me-panel-v157.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.22",panel)
+        self.assertIn("?v=2026.9.21.22",panel)
+        self.assertIn('"version": "2026.9.21.22"',manifest)
         self.assertIn("cook4me-panel-v149.js?v=2026.9.21.14",ui)
 
     def test_fifth_pass_fixes_deli_and_preserved_food_terms(self):
