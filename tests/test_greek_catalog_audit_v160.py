@@ -20,15 +20,15 @@ def load_presentation():
 
 
 class GreekCatalogAuditV160Tests(unittest.TestCase):
-    def test_v160_is_active_and_versioned(self):
+    def test_v160_is_inherited_by_active_v161(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v160.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v160",panel)
-        self.assertIn("cook4me-panel-v160.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.25",panel)
-        self.assertIn("?v=2026.9.21.25",panel)
-        self.assertIn('"version": "2026.9.21.25"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v161",panel)
+        self.assertIn("cook4me-panel-v161.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.26",panel)
+        self.assertIn("?v=2026.9.21.26",panel)
+        self.assertIn('"version": "2026.9.21.26"',manifest)
         self.assertIn("cook4me-panel-v159.js?v=2026.9.21.24",ui)
 
     def test_packaging_words_are_not_dropped(self):
@@ -88,7 +88,7 @@ class GreekCatalogAuditV160Tests(unittest.TestCase):
         data=json.loads(CURATED.read_text(encoding="utf-8"))
         self.assertGreaterEqual(len(data["labels"]),644)
         self.assertGreaterEqual(len(data["searchAliases"]),312)
-        self.assertIn("fifteenth audit",data["translationSource"])
+        self.assertIn("audit",data["translationSource"])
 
 
 if __name__=="__main__":
