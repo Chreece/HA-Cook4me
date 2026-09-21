@@ -41,7 +41,7 @@ class WeekdayUnlimitedV144Tests(unittest.TestCase):
         all_filters={"mealTypes":["breakfast","starter","salad","soup","main","side","dessert","snack"]}
         self.assertEqual(
             weekly.meal_slots(all_filters,["breakfast","lunch","snack","dinner"]),
-            ["breakfast","lunch","snack","dinner"],
+            ["breakfast","lunch","afternoonSnack","dinner"],
         )
 
     def test_weekday_pattern_can_omit_breakfast_or_every_meal(self):
