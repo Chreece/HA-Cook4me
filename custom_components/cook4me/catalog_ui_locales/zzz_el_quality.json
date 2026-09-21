@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "language": "el",
+  "translationSource": "Usage-audited Greek ingredient catalog quality refinements, 2026-09-21",
+  "labels": {
+    "any berries": "Μούρα της επιλογής σας",
+    "any fruit": "Φρούτα της επιλογής σας",
+    "any seed": "Σπόροι της επιλογής σας",
+    "liquid cream": "Ρευστή κρέμα γάλακτος",
+    "butternut squash": "Κολοκύθα μπάτερνατ",
+    "fromage frais": "Φρέσκο τυρί fromage frais",
+    "pistachio": "Κελυφωτό φιστίκι",
+    "pistachio cream": "Κρέμα κελυφωτού φιστικιού",
+    "100% pistachio cream": "Κρέμα κελυφωτού φιστικιού 100%",
+    "pistachio paste": "Πάστα κελυφωτού φιστικιού",
+    "bacon lardon": "Κυβάκια μπέικον (lardons)",
+    "chervil": "Μυρώνι",
+    "bay leaf": "Φύλλο δάφνης",
+    "leaf gelatine": "Ζελατίνη σε φύλλα",
+    "gelatin sheet": "Ζελατίνη σε φύλλα",
+    "gelatin sheets": "Ζελατίνη σε φύλλα",
+    "gelatine leaf": "Ζελατίνη σε φύλλα",
+    "bird's eye chili": "Πολύ καυτερή πιπεριά τσίλι τύπου Bird’s Eye",
+    "bird's eye chili powder": "Σκόνη πολύ καυτερής πιπεριάς τσίλι τύπου Bird’s Eye",
+    "gruyere": "Τυρί Γκριγιέρ",
+    "gruyere cheese": "Τυρί Γκριγιέρ",
+    "strained tomato": "Πασάτα ντομάτας",
+    "tomato coulis": "Κουλί ντομάτας (λεπτή σάλτσα)"
+  },
+  "searchAliases": {
+    "any berries": [
+      "μούρα επιλογής",
+      "όποια μούρα"
+    ],
+    "any fruit": [
+      "φρούτα επιλογής",
+      "οποιοδήποτε φρούτο"
+    ],
+    "any seed": [
+      "σπόροι επιλογής",
+      "οποιοιδήποτε σπόροι"
+    ],
+    "liquid cream": [
+      "ρευστή κρέμα γάλακτος",
+      "κρέμα γάλακτος"
+    ],
+    "butternut squash": [
+      "μπάτερνατ",
+      "butternut",
+      "κολοκύθα butternut"
+    ],
+    "fromage frais": [
+      "fromage frais",
+      "φρέσκο τυρί"
+    ],
+    "pistachio": [
+      "κελυφωτό φιστίκι",
+      "φιστίκι",
+      "φιστίκι αιγίνης"
+    ],
+    "pistachio cream": [
+      "κρέμα φιστικιού",
+      "κρέμα κελυφωτού φιστικιού"
+    ],
+    "pistachio paste": [
+      "πάστα φιστικιού",
+      "πάστα κελυφωτού φιστικιού"
+    ],
+    "bacon lardon": [
+      "lardons",
+      "λαρντόν",
+      "κυβάκια μπέικον"
+    ],
+    "chervil": [
+      "μυρώνι",
+      "μυρώνια"
+    ],
+    "bay leaf": [
+      "φύλλο δάφνης",
+      "φύλλα δάφνης",
+      "δαφνόφυλλο"
+    ],
+    "leaf gelatine": [
+      "ζελατίνη σε φύλλα",
+      "φύλλα ζελατίνης"
+    ],
+    "gelatin sheet": [
+      "ζελατίνη σε φύλλα",
+      "φύλλα ζελατίνης"
+    ],
+    "bird's eye chili": [
+      "bird's eye chili",
+      "bird eye chili",
+      "πολύ καυτερή πιπεριά"
+    ],
+    "gruyere": [
+      "γκριγιέρ",
+      "τυρί γκριγιέρ"
+    ],
+    "strained tomato": [
+      "πασάτα",
+      "passata",
+      "περαστή ντομάτα"
+    ],
+    "tomato coulis": [
+      "κουλί ντομάτας",
+      "λεπτή σάλτσα ντομάτας"
+    ]
+  },
+  "excludedNames": [
+    "and",
+    "or",
+    "for serving",
+    "and steamed eggplant",
+    "optional"
+  ]
+}
