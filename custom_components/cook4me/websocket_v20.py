@@ -806,11 +806,21 @@ async def ws_week_add_shopping(hass, connection, msg) -> None:
         if any((((slot.get("recipe") or {}).get("match") or {}).get("requiresSubstitutions")) for slot in snapshot["slots"] if slot.get("selected") is not False):
             raise ValueError("Some planned recipes still need ingredient replacements. Resolve those recipes before adding the week to shopping.")
         rows = snapshot["shoppingDelta"]
-        if msg.get("ui_language"):
-            from .shopping_presentation import shopping_rows
-            rows = await hass.async_add_executor_job(shopping_rows, rows,
-                msg["ui_language"], getattr(hass.config, "country", ""),
-                [item for slot in snapshot["slots"] if slot.get("selected") is not False for item in (slot.get("recipe") or {}).get("ingredients") or []])
+        from .shopping_presentation import shopping_rows, normalize_supermarket_language
+        cost_store = await cost_store_for_bridge(bridge)
+        market_settings = cost_store.settings
+        shopping_language = normalize_supermarket_language(
+            msg.get("ui_language") or market_settings.get("supermarketLanguage"),
+            country=market_settings.get("country") or getattr(hass.config, "country", ""),
+            fallback="en",
+        )
+        rows = await hass.async_add_executor_job(
+            shopping_rows,
+            rows,
+            shopping_language,
+            market_settings.get("country") or getattr(hass.config, "country", ""),
+            [item for slot in snapshot["slots"] if slot.get("selected") is not False for item in (slot.get("recipe") or {}).get("ingredients") or []],
+        )
         result = await _shopping_add(hass, rows)
         result["shoppingDelta"] = rows
     except Exception as exc:
@@ -845,6 +855,7 @@ async def ws_recipe_cost(hass, connection, msg) -> None:
     vol.Optional("entry_id"): str,
     vol.Optional("currency"): str,
     vol.Optional("country"): str,
+    vol.Optional("supermarket_language"): str,
     vol.Optional("auto_global_prices"): bool,
 })
 @websocket_api.async_response
@@ -852,9 +863,17 @@ async def ws_cost_settings_set(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         store = await cost_store_for_bridge(bridge)
+        from .shopping_presentation import normalize_supermarket_language
+        country = msg.get("country") if "country" in msg else store.settings.get("country")
+        supermarket_language = None
+        if "supermarket_language" in msg:
+            supermarket_language = normalize_supermarket_language(
+                msg.get("supermarket_language"), country=country, fallback="en"
+            )
         settings = await store.async_set_settings(
             currency=msg.get("currency") if "currency" in msg else None,
             country=msg.get("country") if "country" in msg else None,
+            supermarket_language=supermarket_language,
             auto_global_prices=msg.get("auto_global_prices") if "auto_global_prices" in msg else None,
         )
         result = {"settings": settings, **await _state(hass, bridge)}
