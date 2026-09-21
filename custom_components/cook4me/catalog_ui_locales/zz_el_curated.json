@@ -118,8 +118,8 @@
     "pork loin slices": "Φέτες χοιρινού καρέ",
     "full fat soft cheese": "Πλήρες μαλακό τυρί",
     "full-fat cream": "Πλήρης κρέμα γάλακτος",
-    "full-fat creme fraiche": "Crème fraîche πλήρων λιπαρών",
-    "thick full-fat creme fraiche": "Παχύρρευστη crème fraîche πλήρων λιπαρών",
+    "full-fat creme fraiche": "Πλήρης crème fraîche",
+    "thick full-fat creme fraiche": "Παχύρρευστη πλήρης crème fraîche",
     "full-fat whipping cream": "Πλήρης κρέμα γάλακτος για σαντιγί",
     "full-fat mustard": "Μουστάρδα",
     "cream cheese with herbs or plain cheese": "Τυρί κρέμα με μυρωδικά ή σκέτο",
@@ -133,7 +133,17 @@
     "sole": "Γλώσσα (ψάρι)",
     "haddock": "Εγκλεφίνος (haddock)",
     "haddock fillet": "Φιλέτο εγκλεφίνου (haddock)",
-    "runner bean": "Φασόλια runner (αναρριχώμενα)"
+    "runner bean": "Φασόλια runner (αναρριχώμενα)",
+    "boiled chicken gizzards": "Βρασμένα στομαχάκια κοτόπουλου",
+    "goose gizzards": "Στομαχάκια χήνας",
+    "poultry gizzards": "Στομαχάκια πουλερικών",
+    "rabbit thigh": "Μπούτι κουνελιού",
+    "beef tongue": "Μοσχαρίσια γλώσσα",
+    "oxtail": "Μοσχαρίσια ουρά",
+    "beef tendon": "Μοσχαρίσιος τένοντας",
+    "sausage meat": "Κιμάς λουκάνικου",
+    "thin slices of young beef": "Μοσχαράκι σε λεπτές φέτες",
+    "salad onion stalk": "Κοτσάνι φρέσκου κρεμμυδιού"
   },
   "searchAliases": {
     "veal": [
@@ -275,6 +285,25 @@
     "runner bean": [
       "runner beans",
       "αναρριχώμενα φασόλια"
+    ],
+    "chicken gizzards": [
+      "στομαχάκια κοτόπουλου",
+      "εντόσθια κοτόπουλου"
+    ],
+    "poultry gizzards": [
+      "στομαχάκια πουλερικών",
+      "εντόσθια πουλερικών"
+    ],
+    "rabbit thigh": [
+      "μπούτι κουνελιού"
+    ],
+    "oxtail": [
+      "μοσχαρίσια ουρά",
+      "ουρά βοδιού"
+    ],
+    "sausage meat": [
+      "κιμάς λουκάνικου",
+      "γέμιση λουκάνικου"
     ]
   }
 }
