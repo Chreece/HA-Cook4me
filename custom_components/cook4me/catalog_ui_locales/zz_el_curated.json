@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through seventh audit 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through eighth audit 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -127,7 +127,7 @@
     "water combined with shiitake soaking liquid": "Νερό μαζί με το νερό μουλιάσματος των σιτάκε",
     "water combined with corn liquid": "Νερό μαζί με τα υγρά του καλαμποκιού",
     "american rice": "Ρύζι αμερικανικού τύπου",
-    "chinese-style stock granules": "Ζωμός κινέζικου τύπου σε κόκκους",
+    "chinese-style stock granules": "Κόκκοι ζωμού κινέζικου τύπου",
     "young chicken": "Κοτοπουλάκι",
     "poussin": "Κοτοπουλάκι (poussin)",
     "sole": "Γλώσσα (ψάρι)",
@@ -331,7 +331,41 @@
     "ponzu sauce": "Ponzu (ιαπωνική σάλτσα εσπεριδοειδών)",
     "shiro dashi": "Shiro dashi (λευκή βάση dashi)",
     "doubanjiang": "Doubanjiang (πικάντικη ζυμωμένη πάστα φασολιών)",
-    "shaoxing wine": "Shaoxing (κινέζικο κρασί ρυζιού)"
+    "shaoxing wine": "Shaoxing (κινέζικο κρασί ρυζιού)",
+    "condensed milk": "Ζαχαρούχο γάλα (sweetened condensed milk)",
+    "can of condensed milk": "Κονσέρβα ζαχαρούχου γάλακτος",
+    "unopened can of condensed milk": "Κλειστή κονσέρβα ζαχαρούχου γάλακτος",
+    "unsweetened condensed milk": "Γάλα εβαπορέ (χωρίς ζάχαρη)",
+    "coffee cream": "Κρέμα γάλακτος για καφέ",
+    "chicken stock granules": "Κόκκοι ζωμού κοτόπουλου",
+    "granulated chicken stock": "Κόκκοι ζωμού κοτόπουλου",
+    "granulated chicken bouillon": "Κόκκοι ζωμού κοτόπουλου",
+    "french-style stock granules": "Κόκκοι ζωμού γαλλικού τύπου",
+    "japanese dashi stock granules": "Κόκκοι ιαπωνικού dashi",
+    "beef stock paste": "Συμπυκνωμένη πάστα ζωμού μοσχαριού",
+    "fish stock pot": "Συμπυκνωμένος ζωμός ψαριού (stock pot)",
+    "fermented cucumber": "Ζυμωμένο αγγούρι",
+    "fermented cucumber brine": "Άλμη από ζυμωμένα αγγούρια",
+    "lightly fermented cucumber": "Ελαφρά ζυμωμένο αγγούρι",
+    "small fermented cucumber": "Μικρό ζυμωμένο αγγούρι",
+    "salted fermented shrimp": "Saeujeot (αλατισμένες ζυμωμένες γαρίδες)",
+    "sugar snap pea": "Sugar snap peas (τραγανά γλυκομπίζελα)",
+    "store-bought seasoned inari tofu pouches": "Έτοιμα καρυκευμένα inari-age (πουγκιά τηγανητού τόφου)",
+    "thick tofu skin": "Yuba (παχιά πέτσα τόφου)",
+    "atsuage fried tofu": "Atsuage (τηγανητό τόφου)",
+    "atsuage fried tofu, 130 g per piece": "Atsuage (τηγανητό τόφου)",
+    "firm atsuage fried tofu": "Σφιχτό atsuage (τηγανητό τόφου)",
+    "silken atsuage fried tofu": "Μαλακό atsuage (τηγανητό τόφου)",
+    "large ganmodoki fried tofu": "Ganmodoki (τηγανητό τόφου με λαχανικά)",
+    "kidney bean": "Φασόλια kidney",
+    "red kidney bean": "Κόκκινα φασόλια kidney",
+    "canned red kidney bean": "Κόκκινα φασόλια kidney κονσέρβας",
+    "dried kidney bean": "Ξερά φασόλια kidney",
+    "cannellini bean": "Φασόλια cannellini",
+    "soaked cannellini bean": "Μουλιασμένα φασόλια cannellini",
+    "lima bean": "Φασόλια Lima",
+    "mung bean": "Φασόλια mung",
+    "mung bean sprouts": "Φύτρα mung"
   },
   "searchAliases": {
     "veal": [
@@ -1060,6 +1094,111 @@
       "shaoxing wine",
       "κρασί σαοσίνγκ",
       "κινέζικο κρασί ρυζιού"
+    ],
+    "condensed milk": [
+      "ζαχαρούχο γάλα",
+      "sweetened condensed milk",
+      "condensed milk"
+    ],
+    "unsweetened condensed milk": [
+      "εβαπορέ",
+      "evaporated milk",
+      "unsweetened condensed milk"
+    ],
+    "coffee cream": [
+      "κρέμα γάλακτος για καφέ",
+      "coffee cream"
+    ],
+    "chicken stock granules": [
+      "κόκκοι ζωμού κοτόπουλου",
+      "granulated chicken stock",
+      "chicken stock granules"
+    ],
+    "chinese-style stock granules": [
+      "κόκκοι ζωμού κινέζικου τύπου",
+      "chinese stock granules"
+    ],
+    "french-style stock granules": [
+      "κόκκοι ζωμού γαλλικού τύπου",
+      "french stock granules"
+    ],
+    "japanese dashi stock granules": [
+      "dashi granules",
+      "ιαπωνικό dashi",
+      "κόκκοι dashi"
+    ],
+    "beef stock paste": [
+      "πάστα ζωμού μοσχαριού",
+      "beef stock paste"
+    ],
+    "fish stock pot": [
+      "fish stock pot",
+      "συμπυκνωμένος ζωμός ψαριού"
+    ],
+    "fermented cucumber": [
+      "ζυμωμένο αγγούρι",
+      "fermented cucumber"
+    ],
+    "fermented cucumber brine": [
+      "άλμη ζυμωμένων αγγουριών",
+      "fermented cucumber brine"
+    ],
+    "lightly fermented cucumber": [
+      "ελαφρά ζυμωμένο αγγούρι",
+      "lightly fermented cucumber"
+    ],
+    "salted fermented shrimp": [
+      "saeujeot",
+      "σεουτζότ",
+      "αλατισμένες ζυμωμένες γαρίδες"
+    ],
+    "sugar snap pea": [
+      "sugar snap peas",
+      "snap peas",
+      "γλυκομπίζελα",
+      "τραγανά γλυκομπίζελα"
+    ],
+    "store-bought seasoned inari tofu pouches": [
+      "inari age",
+      "inari-age",
+      "ινάρι",
+      "πουγκιά τόφου"
+    ],
+    "thick tofu skin": [
+      "yuba",
+      "γιούμπα",
+      "tofu skin",
+      "πέτσα τόφου"
+    ],
+    "atsuage fried tofu": [
+      "atsuage",
+      "ατσουάγκε",
+      "τηγανητό τόφου"
+    ],
+    "large ganmodoki fried tofu": [
+      "ganmodoki",
+      "γκανμοντόκι",
+      "τηγανητό τόφου με λαχανικά"
+    ],
+    "kidney bean": [
+      "kidney beans",
+      "φασόλια kidney",
+      "φασόλια κίντνεϊ"
+    ],
+    "cannellini bean": [
+      "cannellini",
+      "κανελίνι",
+      "φασόλια cannellini"
+    ],
+    "lima bean": [
+      "lima beans",
+      "φασόλια lima",
+      "φασόλια λίμα"
+    ],
+    "mung bean": [
+      "mung beans",
+      "φασόλια mung",
+      "φασόλια μουνγκ"
     ]
   }
 }

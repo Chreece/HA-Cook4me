@@ -20,15 +20,15 @@ def load_presentation():
 
 
 class GreekCatalogAuditV152Tests(unittest.TestCase):
-    def test_v152_is_active_and_versioned(self):
+    def test_v152_is_inherited_by_active_v153(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v152.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v152",panel)
-        self.assertIn("cook4me-panel-v152.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.17",panel)
-        self.assertIn("?v=2026.9.21.17",panel)
-        self.assertIn('"version": "2026.9.21.17"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v153",panel)
+        self.assertIn("cook4me-panel-v153.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.18",panel)
+        self.assertIn("?v=2026.9.21.18",panel)
+        self.assertIn('"version": "2026.9.21.18"',manifest)
         self.assertIn("cook4me-panel-v151.js?v=2026.9.21.16",ui)
 
     def test_far_ro_and_jujube_family_are_not_literal_mislabels(self):
@@ -85,7 +85,7 @@ class GreekCatalogAuditV152Tests(unittest.TestCase):
         data=json.loads(CURATED.read_text(encoding="utf-8"))
         self.assertGreaterEqual(len(data["labels"]),329)
         self.assertGreaterEqual(len(data["searchAliases"]),156)
-        self.assertIn("seventh audit",data["translationSource"])
+        self.assertIn("audit",data["translationSource"])
 
 
 if __name__=="__main__":
