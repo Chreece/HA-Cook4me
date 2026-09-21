@@ -14,7 +14,7 @@ CATALOG = COMPONENT / "catalog" / "merged_catalog.v1.json"
 LOCALE = COMPONENT / "catalog_ui_locales" / "el.json"
 
 sys.path.insert(0, str(COMPONENT))
-from catalog_presentation import clean_name, display_name, ingredient_choices, name_key  # noqa: E402
+from catalog_presentation import clean_name, display_name, excluded_names, ingredient_choices, name_key  # noqa: E402
 
 
 def main():
@@ -135,10 +135,12 @@ def main():
         classification = str(representative[key].get("classification") or "")
         print(f"{count:6d}\t{classification}\t{canonical}\t=>\t{shown}\t[{source}]")
 
+    reviewed_exclusions = excluded_names()
     food_no_greek = [
         row for row in no_greek
         if str(representative[row[1]].get("classification") or "").lower()
         not in {"equipment", "other", "ambiguous"}
+        and row[1] not in reviewed_exclusions
     ]
     print(f"\nFOOD_NON_GREEK_COUNT\t{len(food_no_greek)}")
     print("FOOD_NON_GREEK_DISPLAY")
