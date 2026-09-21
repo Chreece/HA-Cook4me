@@ -71,6 +71,7 @@ jobs:
           node --check custom_components/cook4me/frontend/cook4me-panel-v159.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v160.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v161.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v162.js
           python tests/test_menu_footer_v126.py
           python tests/test_announcement_settings_v127.py
           python tests/test_nutrient_scopes_v128.py
@@ -107,3 +108,4 @@ jobs:
           python tests/test_greek_catalog_audit_v159.py
           python tests/test_greek_catalog_audit_v160.py
           python tests/test_greek_catalog_audit_v161.py
+          python tests/test_greek_catalog_audit_v162.py
