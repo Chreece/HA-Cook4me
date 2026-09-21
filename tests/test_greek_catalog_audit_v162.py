@@ -68,8 +68,8 @@ class GreekCatalogAuditV162Tests(unittest.TestCase):
     def test_recipe_purpose_qualifiers_are_preserved(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
-            "butter for greasing the moulds":"Βούτυρο για άλειμμα των φορμών",
-            "flour for coating":"Αλεύρι για πανάρισμα",
+            "butter for greasing the moulds":"Βούτυρο για βουτύρωμα των φορμών",
+            "flour for coating":"Αλεύρι για αλεύρωμα",
             "powdered sugar for decorating":"Ζάχαρη άχνη για διακόσμηση",
             "sugar for caramel":"Ζάχαρη για καραμέλα",
             "sugar for syrup":"Ζάχαρη για σιρόπι",
@@ -84,9 +84,9 @@ class GreekCatalogAuditV162Tests(unittest.TestCase):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
             "baby spinach leaf":"Φύλλο τρυφερού σπανακιού",
-            "burger patty":"Μπιφτέκι",
+            "burger patty":"Μπιφτέκι για μπέργκερ",
             "crouton":"Κρουτόν",
-            "julienned carrot":"Καρότο σε λεπτές λωρίδες ζουλιέν",
+            "julienned carrot":"Καρότο κομμένο ζουλιέν",
             "zucchini flower":"Κολοκυθοανθός",
             "pumpkin, 8 mm thick":"Κολοκύθα πάχους 8 mm",
         }
