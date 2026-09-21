@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -73,7 +73,77 @@
     "green onion": "Φρέσκο κρεμμυδάκι",
     "spring onion": "Φρέσκο κρεμμυδάκι",
     "shallot": "Εσαλότ",
-    "flat-leaf parsley": "Πλατύφυλλος μαϊντανός"
+    "flat-leaf parsley": "Πλατύφυλλος μαϊντανός",
+    "cardamom": "Κακουλές (καρδάμωμο)",
+    "cardamom pod": "Λοβός κακουλέ",
+    "cardamom pods": "Λοβοί κακουλέ",
+    "cardamom, 1 cinnamon stick, 2 bay leaf": "Κακουλές, κανέλα και δάφνη",
+    "ground cardamom": "Αλεσμένος κακουλές",
+    "shelled cardamom pods": "Σπόροι κακουλέ",
+    "whole spices: 1 cinnamon stick, 2 bay leaves, 5 cardamom pods": "Κανέλα, δάφνη και λοβοί κακουλέ",
+    "whole spices: 4 cardamom pods, 1 cinnamon stick, 2 bay leaf": "Λοβοί κακουλέ, κανέλα και δάφνη",
+    "mace": "Μασίς (άνθος μοσχοκάρυδου)",
+    "salt and mace": "Αλάτι και μασίς",
+    "saffron": "Σαφράν (κρόκος)",
+    "ground saffron": "Αλεσμένο σαφράν (κρόκος)",
+    "pinch of saffron": "Σαφράν (κρόκος)",
+    "pinch of saffron powder": "Σκόνη σαφράν (κρόκου)",
+    "pinches of saffron": "Σαφράν (κρόκος)",
+    "saffron powder": "Σκόνη σαφράν (κρόκου)",
+    "saffron soaked in red wine": "Σαφράν (κρόκος) μουλιασμένο σε κόκκινο κρασί",
+    "saffron threads": "Νήματα σαφράν (κρόκου)",
+    "red cabbage": "Μωβ λάχανο",
+    "black cabbage": "Cavolo nero (μαύρο λάχανο)",
+    "cavolo nero": "Cavolo nero (μαύρο λάχανο)",
+    "calvo nero": "Cavolo nero (μαύρο λάχανο)",
+    "calvo nero or kale": "Cavolo nero ή κέιλ",
+    "blue potato": "Μπλε-μωβ πατάτα",
+    "yellow onion": "Κίτρινο ξερό κρεμμύδι",
+    "corn on the cob": "Καλαμπόκι στο κοτσάνι",
+    "raw corn on the cob": "Ωμό καλαμπόκι στο κοτσάνι",
+    "raw corn cobs": "Ωμά καλαμπόκια στο κοτσάνι",
+    "celery stalk": "Κλωνάρι σέλινου",
+    "celery sticks": "Μπαστουνάκια σέλινου",
+    "stalk celery": "Σέλινο σε κλωνάρια",
+    "leek stalk": "Πράσο",
+    "leek stem": "Πράσο",
+    "large leek stalk": "Μεγάλο πράσο",
+    "spring onion stalk": "Φρέσκο κρεμμυδάκι",
+    "stalk of spring onion": "Φρέσκο κρεμμυδάκι",
+    "fresh spring onion stalk": "Φρέσκο κρεμμυδάκι",
+    "green asparagus stalk": "Πράσινο σπαράγγι",
+    "taro stems": "Μίσχοι τάρο",
+    "pork spare rib": "Χοιρινά παϊδάκια (spare ribs)",
+    "spare rib": "Παϊδάκια (spare ribs)",
+    "pork loin slices": "Φέτες χοιρινού καρέ",
+    "full fat soft cheese": "Πλήρες μαλακό τυρί",
+    "full-fat cream": "Πλήρης κρέμα γάλακτος",
+    "full-fat creme fraiche": "Πλήρης crème fraîche",
+    "thick full-fat creme fraiche": "Παχύρρευστη πλήρης crème fraîche",
+    "full-fat whipping cream": "Πλήρης κρέμα γάλακτος για σαντιγί",
+    "full-fat mustard": "Μουστάρδα",
+    "cream cheese with herbs or plain cheese": "Τυρί κρέμα με μυρωδικά ή σκέτο",
+    "shiitake soaking liquid": "Νερό από το μούλιασμα των σιτάκε",
+    "water combined with shiitake soaking liquid": "Νερό μαζί με το νερό μουλιάσματος των σιτάκε",
+    "water combined with corn liquid": "Νερό μαζί με τα υγρά του καλαμποκιού",
+    "american rice": "Ρύζι αμερικανικού τύπου",
+    "chinese-style stock granules": "Ζωμός κινέζικου τύπου σε κόκκους",
+    "young chicken": "Κοτοπουλάκι",
+    "poussin": "Κοτοπουλάκι (poussin)",
+    "sole": "Γλώσσα (ψάρι)",
+    "haddock": "Εγκλεφίνος (haddock)",
+    "haddock fillet": "Φιλέτο εγκλεφίνου (haddock)",
+    "runner bean": "Φασόλια runner (αναρριχώμενα)",
+    "boiled chicken gizzards": "Βρασμένα στομαχάκια κοτόπουλου",
+    "goose gizzards": "Στομαχάκια χήνας",
+    "poultry gizzards": "Στομαχάκια πουλερικών",
+    "rabbit thigh": "Μπούτι κουνελιού",
+    "beef tongue": "Μοσχαρίσια γλώσσα",
+    "oxtail": "Μοσχαρίσια ουρά",
+    "beef tendon": "Μοσχαρίσιος τένοντας",
+    "sausage meat": "Κιμάς λουκάνικου",
+    "thin slices of young beef": "Μοσχαράκι σε λεπτές φέτες",
+    "salad onion stalk": "Κοτσάνι φρέσκου κρεμμυδιού"
   },
   "searchAliases": {
     "veal": [
@@ -154,6 +224,86 @@
     "beefsteak tomato": [
       "ντομάτα beefsteak",
       "μεγάλη σαρκώδης ντομάτα"
+    ],
+    "cardamom": [
+      "κακουλές",
+      "καρδάμωμο",
+      "καρδαμωμο",
+      "cardamom"
+    ],
+    "mace": [
+      "μασίς",
+      "ανθος μοσχοκάρυδου",
+      "άνθος μοσχοκάρυδου"
+    ],
+    "saffron": [
+      "σαφράν",
+      "κρόκος",
+      "κροκος"
+    ],
+    "red cabbage": [
+      "μωβ λάχανο",
+      "κόκκινο λάχανο"
+    ],
+    "cavolo nero": [
+      "cavolo nero",
+      "μαύρο λάχανο",
+      "κέιλ μαύρο"
+    ],
+    "blue potato": [
+      "μωβ πατάτα",
+      "μπλε πατάτα"
+    ],
+    "corn on the cob": [
+      "καλαμπόκι στο κοτσάνι",
+      "ολόκληρο καλαμπόκι"
+    ],
+    "pork spare rib": [
+      "χοιρινά παϊδάκια",
+      "spare ribs"
+    ],
+    "spare rib": [
+      "παϊδάκια",
+      "spare ribs"
+    ],
+    "sole": [
+      "γλώσσα",
+      "γλώσσα ψάρι"
+    ],
+    "haddock": [
+      "εγκλεφίνος",
+      "haddock"
+    ],
+    "young chicken": [
+      "κοτοπουλάκι",
+      "νεαρό κοτόπουλο"
+    ],
+    "poussin": [
+      "κοτοπουλάκι",
+      "poussin"
+    ],
+    "runner bean": [
+      "runner beans",
+      "αναρριχώμενα φασόλια"
+    ],
+    "poultry gizzards": [
+      "στομαχάκια πουλερικών",
+      "εντόσθια πουλερικών"
+    ],
+    "rabbit thigh": [
+      "μπούτι κουνελιού"
+    ],
+    "oxtail": [
+      "μοσχαρίσια ουρά",
+      "ουρά βοδιού"
+    ],
+    "sausage meat": [
+      "κιμάς λουκάνικου",
+      "γέμιση λουκάνικου"
+    ],
+    "boiled chicken gizzards": [
+      "στομαχάκια κοτόπουλου",
+      "εντόσθια κοτόπουλου"
     ]
   }
 }
