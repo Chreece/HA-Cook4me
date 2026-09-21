@@ -279,6 +279,7 @@ async def ws_product_remove(hass, connection, msg):
                                   vol.Optional("nutrition"): dict, vol.Optional("paid_price"): dict,
                                   vol.Optional("ingredient_links"): [dict],
                                   vol.Optional("package_count", default=1): vol.All(int, vol.Range(min=1, max=100)),
+                                  vol.Optional("unlimited", default=False): bool,
                                   vol.Optional("edit_lot_id"): str, vol.Optional("expected_version"): str})
 @websocket_api.async_response
 async def ws_product_add(hass, connection, msg):
@@ -292,14 +293,21 @@ async def ws_product_add(hass, connection, msg):
         ingredient = next((row for row in catalog if inventory_identity(row) == ingredient_id), None)
         if ingredient is None:
             raise ValueError("Choose an ingredient from the Cook4Me catalog")
-        if not _quantity(msg["quantity"]) or not msg["unit"].strip():
+        unlimited = bool(msg.get("unlimited"))
+        if unlimited and msg.get("edit_lot_id"):
+            raise ValueError("Convert an existing package to unlimited stock from the stock editor")
+        if not unlimited and (not _quantity(msg["quantity"]) or not msg["unit"].strip()):
             raise ValueError("Enter a positive package amount and unit")
         # Validate paid amounts before committing stock. Observation estimates are
         # never accepted as paid prices from the browser.
+        if unlimited and msg.get("paid_price") is not None:
+            raise ValueError("An exact package price cannot be attached to unlimited stock")
         validate_paid_price(msg.get("paid_price"))
         count = msg.get("package_count", 1)
         if isinstance(count, bool) or not isinstance(count, int) or not 1 <= count <= 100 or msg.get("edit_lot_id") and count != 1:
             raise ValueError("Choose between 1 and 100 packages; an existing package is edited individually")
+        if unlimited and count != 1:
+            raise ValueError("Unlimited stock is one logical stock item, not multiple packages")
         ingredient = {**ingredient, "key": ingredient.get("key") or ingredient.get("ingredientId") or ingredient.get("id")}
         metadata = {key: value for key, value in msg.get("lot_metadata", {}).items() if key in {
             "barcode", "productName", "brand", "storageLocationId", "purchaseDate", "openedAt", "useWithinDays", "noExpiry"}}
@@ -308,7 +316,7 @@ async def ws_product_add(hass, connection, msg):
         metadata["source"] = "reviewed_product"
         metadata["ingredientLinks"] = links
         nutrition = None
-        if "nutrition" in msg:
+        if "nutrition" in msg and not unlimited:
             raw = msg["nutrition"]
             if raw.get("basisUnit") not in {"g", "ml"} or raw.get("basisQuantity") != 100:
                 raise ValueError("Choose a nutrition basis of 100 g or 100 ml")
@@ -316,6 +324,15 @@ async def ws_product_add(hass, connection, msg):
             if nutrition is None or len(nutrition["values"]) != len(raw.get("values") or {}):
                 raise ValueError("Enter valid non-negative nutrition values")
             metadata["nutritionSource"] = "nutrition_label_scan"
+        replaced_lot_ids = []
+        if unlimited:
+            for existing_row in bridge.recipe_hub.profile.get("houseIngredients") or []:
+                if inventory_identity(existing_row) == inventory_identity(ingredient):
+                    replaced_lot_ids = [
+                        str(lot.get("id")) for lot in existing_row.get("lots") or []
+                        if lot.get("id")
+                    ]
+                    break
         fingerprint = hashlib.sha256(json.dumps({key: value for key, value in msg.items() if key not in {"id", "type", "request_id"}}, sort_keys=True).encode()).hexdigest()
         if not hasattr(bridge, "_scanner_save_lock"):
             bridge._scanner_save_lock = asyncio.Lock()
@@ -325,16 +342,19 @@ async def ws_product_add(hass, connection, msg):
                     lot_id=msg["edit_lot_id"], expected_version=msg.get("expected_version", ""), quantity=msg["quantity"],
                     unit=msg["unit"], best_before=msg.get("best_before", ""), lot_metadata=metadata, fingerprint=fingerprint)
             else:
-                receipt = await bridge.recipe_hub.async_scanner_add(msg["request_id"], ingredient, quantity=msg["quantity"],
-                    unit=msg["unit"], best_before=msg.get("best_before", ""), lot_metadata=metadata, fingerprint=fingerprint,
-                    package_count=count)
+                receipt = await bridge.recipe_hub.async_scanner_add(msg["request_id"], ingredient, quantity=None if unlimited else msg["quantity"],
+                    unit="" if unlimited else msg["unit"], best_before=msg.get("best_before", ""), lot_metadata=metadata, fingerprint=fingerprint,
+                    package_count=count, unlimited=unlimited)
             committed = True
 
             async def save_nutrition_details():
-                if not (nutrition or msg.get("edit_lot_id")):
+                if not (nutrition or msg.get("edit_lot_id") or unlimited):
                     return
                 store = await nutrition_store_for_bridge(bridge)
                 inventory = bridge.recipe_hub.profile["houseIngredients"]
+                if unlimited:
+                    await async_reconcile_nutrition_inventory(store, inventory)
+                    return
                 if msg.get("edit_lot_id"):
                     await replace_package_nutrition(
                         store, inventory, receipt["lotId"], nutrition
@@ -359,8 +379,8 @@ async def ws_product_add(hass, connection, msg):
                     {
                         "ingredient": ingredient,
                         "ingredientLinks": links,
-                        "quantity": msg["quantity"],
-                        "unit": msg["unit"],
+                        "quantity": None if unlimited else msg["quantity"],
+                        "unit": "" if unlimited else msg["unit"],
                         "productName": metadata.get("productName"),
                         "brand": metadata.get("brand"),
                         "nutrition": nutrition,
@@ -368,6 +388,11 @@ async def ws_product_add(hass, connection, msg):
                 )
 
             async def save_prices():
+                if unlimited:
+                    store = await cost_store_for_bridge(bridge)
+                    for lot_id in replaced_lot_ids:
+                        await store.async_remove_reference("lot:" + lot_id)
+                    return
                 for lot_id in receipt.get("lotIds") or [receipt["lotId"]]:
                     await save_product_prices(
                         bridge, ingredient, lot_id, msg, metadata
@@ -399,7 +424,8 @@ async def ws_product_add(hass, connection, msg):
                 )
             update_expiry_notification(bridge)
             connection.send_result(msg["id"], {"status": "added", "lotId": receipt["lotId"],
-                "lotIds": receipt.get("lotIds") or [receipt["lotId"]], "warnings": warnings,
+                "lotIds": receipt.get("lotIds") if isinstance(receipt.get("lotIds"), list) else ([receipt["lotId"]] if receipt["lotId"] else []),
+                "unlimited": bool(receipt.get("unlimited")), "warnings": warnings,
                 **_state(hass, bridge, connection.user)})
     except Exception as exc:
         if isinstance(exc, ValueError) and not committed:

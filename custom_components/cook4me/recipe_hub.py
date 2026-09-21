@@ -249,7 +249,8 @@ class Cook4MeRecipeHub:
             return self.profile
 
     async def async_scanner_add(self, request_id, ingredient, *, quantity, unit,
-                                best_before="", lot_metadata=None, fingerprint="", package_count=1):
+                                best_before="", lot_metadata=None, fingerprint="", package_count=1,
+                                unlimited=False):
         """Commit reviewed stock once, including across reconnect/restart retries."""
         async with self._lock:
             receipts = self._data.get("scannerReceipts") or {}
@@ -260,25 +261,40 @@ class Cook4MeRecipeHub:
                 return deepcopy(receipt)
             data = deepcopy(self._data)
             profile = data["profile"]
-            if any(row.get("unlimited") and inventory_identity(row) == inventory_identity(ingredient)
-                   for row in profile.get("houseIngredients") or []):
-                raise ValueError("This ingredient has unlimited stock. Switch it to a measured amount before adding packages")
             metadata = validate_location(profile, lot_metadata)
             if isinstance(package_count, bool) or not isinstance(package_count, int) or not 1 <= package_count <= 100:
                 raise ValueError("Choose between 1 and 100 packages")
-            lot_ids = []
-            for _ in range(package_count):
-                metadata["id"] = str(uuid4())
-                lot_ids.append(metadata["id"])
+            if unlimited and package_count != 1:
+                raise ValueError("Unlimited stock is one logical stock item, not multiple packages")
+            if unlimited:
                 profile["houseIngredients"] = add_inventory_item(
-                    profile.get("houseIngredients"), ingredient, quantity=quantity, unit=unit,
-                    unlimited=False, best_before=best_before, lot_metadata=metadata)
+                    profile.get("houseIngredients"), ingredient, quantity=None, unit=unit,
+                    unlimited=True, best_before=best_before, lot_metadata=None)
+                lot_ids = []
+            else:
+                if any(row.get("unlimited") and inventory_identity(row) == inventory_identity(ingredient)
+                       for row in profile.get("houseIngredients") or []):
+                    raise ValueError("This ingredient has unlimited stock. Switch it to a measured amount before adding packages")
+                lot_ids = []
+                for _ in range(package_count):
+                    metadata["id"] = str(uuid4())
+                    lot_ids.append(metadata["id"])
+                    profile["houseIngredients"] = add_inventory_item(
+                        profile.get("houseIngredients"), ingredient, quantity=quantity, unit=unit,
+                        unlimited=False, best_before=best_before, lot_metadata=metadata)
             profile["pantry"] = [row["name"] for row in profile["houseIngredients"]]
             data["profile"] = self._normalize_profile(profile)
-            saved_ids = {lot.get("id") for row in data["profile"]["houseIngredients"] for lot in row.get("lots") or []}
-            if not all(lot_id in saved_ids for lot_id in lot_ids):
-                raise ValueError("The stock list is full or the amount is invalid; the product was not added")
-            receipt = {"lotId": lot_ids[0], "lotIds": lot_ids, "fingerprint": fingerprint}
+            if unlimited:
+                saved = next((row for row in data["profile"]["houseIngredients"]
+                              if inventory_identity(row) == inventory_identity(ingredient)), None)
+                if not saved or not saved.get("unlimited"):
+                    raise ValueError("The unlimited stock item could not be saved")
+            else:
+                saved_ids = {lot.get("id") for row in data["profile"]["houseIngredients"] for lot in row.get("lots") or []}
+                if not all(lot_id in saved_ids for lot_id in lot_ids):
+                    raise ValueError("The stock list is full or the amount is invalid; the product was not added")
+            receipt = {"lotId": lot_ids[0] if lot_ids else "", "lotIds": lot_ids,
+                       "unlimited": bool(unlimited), "fingerprint": fingerprint}
             data["scannerReceipts"] = dict(list({**receipts, request_id: receipt}.items())[-200:])
             await self._store.async_save(data)
             self._data = data

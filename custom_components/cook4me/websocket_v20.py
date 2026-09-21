@@ -271,7 +271,7 @@ async def _generate_week(
 ) -> dict[str, Any]:
     from . import release_catalog
     from .weekly_variety import signature, already_planned
-    from .weekly_plan import meal_slots
+    from .weekly_plan import MEAL_SLOT_ORDER, meal_slots_for_date
     original_slots = deepcopy(lifecycle.slots)
     replacing = bool(replace_slot_id) or replace_slot_ids is not None
     target_ids = set(replace_slot_ids or ([replace_slot_id] if replace_slot_id else []))
@@ -301,7 +301,8 @@ async def _generate_week(
     )
     start = date.fromisoformat(week_start)
     settings = lifecycle.settings
-    meal_types = meal_slots(shared_filters, settings.get("mealTypes"))
+    # Each calendar date has its own saved slot pattern. Shared recipe filters
+    # still limit which of those slots are eligible.
     from .diet_profiles import resolve_filters
     from .shared_recipe_filters import daily_targets, normalize_filters, recipe_target_scope
     from .nutrient_targets import daily_progress_bonus, target_bonus
@@ -319,7 +320,7 @@ async def _generate_week(
     else:
         for offset in range(7):
             stamp = (start + timedelta(days=offset)).isoformat()
-            for meal_type in meal_types:
+            for meal_type in meal_slots_for_date(shared_filters, settings, stamp):
                 desired.append((stamp, _text(meal_type), None))
 
     daily_slot_counts: dict[str, int] = {}
@@ -474,7 +475,11 @@ async def _generate_week(
         })
         used_recipes.append(candidate_signatures[id(best)])
 
-    planned.sort(key=lambda row: (row.get("date") or "", row.get("mealType") or ""))
+    planned.sort(key=lambda row: (
+        row.get("date") or "",
+        MEAL_SLOT_ORDER.index(row.get("mealType")) if row.get("mealType") in MEAL_SLOT_ORDER else len(MEAL_SLOT_ORDER),
+        row.get("id") or "",
+    ))
     # Candidate search can take time. Never overwrite a selection or edit made
     # by another client while this generation was in flight.
     if lifecycle.slots != original_slots:
@@ -692,6 +697,7 @@ async def ws_week_state(hass, connection, msg) -> None:
     vol.Optional("leftovers_first"): bool,
     vol.Optional("avoid_recent_days"): vol.All(vol.Coerce(int), vol.Range(min=0, max=90)),
     vol.Optional("nutrition_targets"): dict,
+    vol.Optional("weekday_meal_types"): dict,
 })
 @websocket_api.async_response
 async def ws_week_settings_set(hass, connection, msg) -> None:
@@ -703,6 +709,7 @@ async def ws_week_settings_set(hass, connection, msg) -> None:
             leftovers_first=msg.get("leftovers_first") if "leftovers_first" in msg else None,
             avoid_recent_days=msg.get("avoid_recent_days") if "avoid_recent_days" in msg else None,
             nutrition_targets=msg.get("nutrition_targets") if "nutrition_targets" in msg else None,
+            weekday_meal_types=msg.get("weekday_meal_types") if "weekday_meal_types" in msg else None,
         )
         result = await _state(hass, bridge)
     except Exception as exc:
