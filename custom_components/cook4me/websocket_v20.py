@@ -271,7 +271,7 @@ async def _generate_week(
 ) -> dict[str, Any]:
     from . import release_catalog
     from .weekly_variety import signature, already_planned
-    from .weekly_plan import meal_slots_for_date
+    from .weekly_plan import MEAL_SLOT_ORDER, meal_slots_for_date
     original_slots = deepcopy(lifecycle.slots)
     replacing = bool(replace_slot_id) or replace_slot_ids is not None
     target_ids = set(replace_slot_ids or ([replace_slot_id] if replace_slot_id else []))
@@ -475,7 +475,11 @@ async def _generate_week(
         })
         used_recipes.append(candidate_signatures[id(best)])
 
-    planned.sort(key=lambda row: (row.get("date") or "", row.get("mealType") or ""))
+    planned.sort(key=lambda row: (
+        row.get("date") or "",
+        MEAL_SLOT_ORDER.index(row.get("mealType")) if row.get("mealType") in MEAL_SLOT_ORDER else len(MEAL_SLOT_ORDER),
+        row.get("id") or "",
+    ))
     # Candidate search can take time. Never overwrite a selection or edit made
     # by another client while this generation was in flight.
     if lifecycle.slots != original_slots:
