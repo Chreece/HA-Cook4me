@@ -302,10 +302,13 @@ class Cook4MeMealLifecycleStore:
         saved = await self._store.async_load()
         if isinstance(saved, dict):
             self._data["weekStart"] = _date(saved.get("weekStart")) or week_monday()
-            self._data["slots"] = [
-                slot for raw in saved.get("slots") or []
-                if (slot := _slot(raw)) is not None
-            ][-_MAX_SLOTS:]
+            self._data["slots"] = sorted(
+                [
+                    slot for raw in saved.get("slots") or []
+                    if (slot := _slot(raw)) is not None
+                ],
+                key=_slot_sort_key,
+            )[-_MAX_SLOTS:]
             self._data["leftovers"] = [
                 deepcopy(row) for row in saved.get("leftovers") or []
                 if isinstance(row, dict) and (_number(row.get("servings")) or 0) > 0
