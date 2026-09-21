@@ -66,16 +66,47 @@ async def refresh_plan(bridge, state, *, filters=None, language="en"):
     return state
 
 
+MEAL_SLOT_ORDER = ("breakfast", "lunch", "snack", "dinner")
+WEEKDAY_KEYS = ("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")
+
+
+def ordered_meal_slots(values):
+    selected = {str(value or "").strip().lower() for value in values or []}
+    return [meal for meal in MEAL_SLOT_ORDER if meal in selected]
+
+
 def meal_slots(filters, legacy):
-    """Shared recipe categories determine meal times when that UI is in use."""
+    """Map recipe-course filters to actual chronological weekly meal slots."""
+    fallback = ordered_meal_slots(legacy) or ["breakfast", "lunch", "dinner"]
     if filters is None:
-        return legacy or ["breakfast", "lunch", "dinner"]
+        return fallback
     categories = set(filters.get("mealTypes") or [])
-    if not categories or categories == {"breakfast", "starter", "salad", "soup", "main", "side", "dessert", "snack"}:
-        return ["breakfast", "lunch", "dinner"]
-    result = ["breakfast"] if "breakfast" in categories else []
+    all_categories = {"breakfast", "starter", "salad", "soup", "main", "side", "dessert", "snack"}
+    if not categories or categories == all_categories:
+        return fallback
+    result = []
+    if "breakfast" in categories:
+        result.append("breakfast")
     if categories & {"starter", "salad", "soup", "main", "side"}:
         result += ["lunch", "dinner"]
     if categories & {"dessert", "snack"}:
         result.append("snack")
-    return result
+    return ordered_meal_slots(result)
+
+
+def meal_slots_for_date(filters, settings, stamp):
+    """Apply the saved weekday pattern after shared-filter slot eligibility."""
+    allowed = meal_slots(filters, (settings or {}).get("mealTypes"))
+    schedule = (settings or {}).get("weekdayMealTypes")
+    if not isinstance(schedule, dict):
+        return allowed
+    from datetime import date
+    try:
+        weekday = WEEKDAY_KEYS[date.fromisoformat(str(stamp)).weekday()]
+    except (ValueError, IndexError):
+        return allowed
+    raw = schedule.get(weekday)
+    if not isinstance(raw, list):
+        return allowed
+    wanted = set(ordered_meal_slots(raw))
+    return [meal for meal in allowed if meal in wanted]
