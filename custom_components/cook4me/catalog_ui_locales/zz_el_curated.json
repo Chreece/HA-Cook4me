@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through fourteenth audit 2026-09-21",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through fifteenth audit 2026-09-21",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -108,9 +108,9 @@
     "leek stalk": "Πράσο",
     "leek stem": "Πράσο",
     "large leek stalk": "Μεγάλο πράσο",
-    "spring onion stalk": "Φρέσκο κρεμμυδάκι",
-    "stalk of spring onion": "Φρέσκο κρεμμυδάκι",
-    "fresh spring onion stalk": "Φρέσκο κρεμμυδάκι",
+    "spring onion stalk": "Κοτσάνι φρέσκου κρεμμυδιού",
+    "stalk of spring onion": "Κοτσάνι φρέσκου κρεμμυδιού",
+    "fresh spring onion stalk": "Κοτσάνι φρέσκου κρεμμυδιού",
     "green asparagus stalk": "Βλαστός πράσινου σπαραγγιού",
     "taro stems": "Μίσχοι τάρο",
     "pork spare rib": "Χοιρινά παϊδάκια (spare ribs)",
@@ -379,7 +379,7 @@
     "ramen noodle": "Ramen noodles",
     "udon noodle": "Udon noodles",
     "fresh udon noodle": "Φρέσκα udon noodles",
-    "package of pre-cooked udon noodle": "Προμαγειρεμένα udon noodles",
+    "package of pre-cooked udon noodle": "Συσκευασία προμαγειρεμένων udon noodles",
     "shichimi chili pepper": "Shichimi togarashi (ιαπωνικό μείγμα 7 μπαχαρικών)",
     "shichimi chili seasoning": "Shichimi togarashi (ιαπωνικό μείγμα 7 μπαχαρικών)",
     "shichimi togarashi": "Shichimi togarashi (ιαπωνικό μείγμα 7 μπαχαρικών)",
@@ -623,7 +623,30 @@
     "shiitake mushroom": "Μανιτάρι shiitake",
     "shimeji mushroom": "Μανιτάρι shimeji",
     "small dried shiitake mushroom": "Μικρό αποξηραμένο μανιτάρι shiitake",
-    "white shimeji mushroom": "Λευκό μανιτάρι shimeji"
+    "white shimeji mushroom": "Λευκό μανιτάρι shimeji",
+    "jar of fish stock": "Βάζο ζωμού ψαριού",
+    "small bottle of almond flavouring": "Μικρό μπουκαλάκι αρώματος αμυγδάλου",
+    "malted barley packet": "Συσκευασία βυνοποιημένου κριθαριού",
+    "package of salted nachos": "Συσκευασία αλατισμένων nachos",
+    "packet chinese soup": "Φακελάκι κινέζικης σούπας",
+    "packet of organic freeze-dried instant tomato soup for 4 servings": "Φακελάκι βιολογικής στιγμιαίας λυοφιλιωμένης ντοματόσουπας για 4 μερίδες",
+    "anchovy fillet": "Φιλέτο αντζούγιας",
+    "anchovy fillet in oil": "Φιλέτο αντζούγιας σε λάδι",
+    "graham cracker": "Μπισκότο Graham",
+    "kaiser roll": "Ψωμάκι Kaiser",
+    "piece of crustless white bread": "Κομμάτι λευκού ψωμιού χωρίς κόρα",
+    "slice of crustless sandwich bread": "Φέτα ψωμιού τοστ χωρίς κόρα",
+    "pork slice": "Φέτα χοιρινού",
+    "fresh mini meatball": "Φρέσκο μίνι κεφτεδάκι",
+    "fresh mussel": "Φρέσκο μύδι",
+    "fresh potato": "Φρέσκια πατάτα",
+    "frozen artichoke": "Κατεψυγμένη αγκινάρα",
+    "frozen beef meatball": "Κατεψυγμένο μοσχαρίσιο κεφτεδάκι",
+    "frozen king prawn": "Κατεψυγμένη μεγάλη γαρίδα",
+    "frozen mushroom": "Κατεψυγμένο μανιτάρι",
+    "dried apricot": "Αποξηραμένο βερίκοκο",
+    "dried blueberry": "Αποξηραμένο μύρτιλο",
+    "dried mushroom": "Αποξηραμένο μανιτάρι"
   },
   "searchAliases": {
     "veal": [
@@ -1948,6 +1971,98 @@
     "shimeji mushroom": [
       "shimeji",
       "σιμέτζι"
+    ],
+    "jar of fish stock": [
+      "βάζο ζωμού ψαριού",
+      "fish stock jar"
+    ],
+    "small bottle of almond flavouring": [
+      "μπουκαλάκι αρώματος αμυγδάλου",
+      "almond flavouring bottle"
+    ],
+    "malted barley packet": [
+      "συσκευασία βυνοποιημένου κριθαριού",
+      "malted barley packet"
+    ],
+    "package of pre-cooked udon noodle": [
+      "συσκευασία udon",
+      "pre-cooked udon package"
+    ],
+    "package of salted nachos": [
+      "συσκευασία nachos",
+      "salted nachos package"
+    ],
+    "packet chinese soup": [
+      "φακελάκι κινέζικης σούπας",
+      "chinese soup packet"
+    ],
+    "anchovy fillet": [
+      "φιλέτο αντζούγιας",
+      "anchovy fillet"
+    ],
+    "graham cracker": [
+      "μπισκότο graham",
+      "graham cracker"
+    ],
+    "kaiser roll": [
+      "ψωμάκι kaiser",
+      "kaiser roll"
+    ],
+    "fresh spring onion stalk": [
+      "κοτσάνι φρέσκου κρεμμυδιού",
+      "spring onion stalk"
+    ],
+    "piece of crustless white bread": [
+      "κομμάτι λευκού ψωμιού χωρίς κόρα",
+      "crustless white bread piece"
+    ],
+    "slice of crustless sandwich bread": [
+      "φέτα ψωμιού τοστ χωρίς κόρα",
+      "crustless sandwich bread slice"
+    ],
+    "pork slice": [
+      "φέτα χοιρινού",
+      "pork slice"
+    ],
+    "fresh mini meatball": [
+      "φρέσκο μίνι κεφτεδάκι",
+      "fresh mini meatball"
+    ],
+    "fresh mussel": [
+      "φρέσκο μύδι",
+      "fresh mussel"
+    ],
+    "fresh potato": [
+      "φρέσκια πατάτα",
+      "fresh potato"
+    ],
+    "frozen artichoke": [
+      "κατεψυγμένη αγκινάρα",
+      "frozen artichoke"
+    ],
+    "frozen beef meatball": [
+      "κατεψυγμένο μοσχαρίσιο κεφτεδάκι",
+      "frozen beef meatball"
+    ],
+    "frozen king prawn": [
+      "κατεψυγμένη μεγάλη γαρίδα",
+      "frozen king prawn"
+    ],
+    "frozen mushroom": [
+      "κατεψυγμένο μανιτάρι",
+      "frozen mushroom"
+    ],
+    "dried apricot": [
+      "αποξηραμένο βερίκοκο",
+      "dried apricot"
+    ],
+    "dried blueberry": [
+      "αποξηραμένο μύρτιλο",
+      "dried blueberry"
+    ],
+    "dried mushroom": [
+      "αποξηραμένο μανιτάρι",
+      "dried mushroom"
     ]
   }
 }
