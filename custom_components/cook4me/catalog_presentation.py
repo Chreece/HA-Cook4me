@@ -73,7 +73,7 @@ def labels():
 
 
 @lru_cache(maxsize=1)
-def search_aliases():
+def locale_search_aliases():
     result = {}
     for overlay in sorted(Path(__file__).with_name("catalog_ui_locales").glob("*.json")):
         data = json.loads(overlay.read_text())
@@ -131,7 +131,7 @@ def ingredient_choices(payload, language, query="", limit=None):
             # Reviewed locale synonyms are display aliases, never nutrient aliases.
             groups[name_key(display_name(raw, language))].append(raw)
     choices = []
-    search_aliases_map = search_aliases().get(str(language or "en").lower().replace("_", "-").split("-")[0], {})
+    search_aliases_map = locale_search_aliases().get(str(language or "en").lower().replace("_", "-").split("-")[0], {})
     for canonical, members in groups.items():
         # Prefer the actual generic provider row; never assign its ID to siblings.
         raw = min(members, key=lambda r: (not bool(r.get("key")), len(clean_name(r.get("canonicalName"))), not bool(r.get("nutrition")), str(r.get("id"))))
