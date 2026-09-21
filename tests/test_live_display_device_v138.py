@@ -48,14 +48,14 @@ class LiveDisplayDeviceV138Tests(unittest.TestCase):
             v138,
         )
 
-    def test_v138_is_active_and_versioned(self):
+    def test_v138_is_inherited_by_active_v139(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v138",panel)
-        self.assertIn("cook4me-panel-v138.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.3",panel)
-        self.assertIn("?v=2026.9.21.3",panel)
-        self.assertIn('"version": "2026.9.21.3"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v139",panel)
+        self.assertIn("cook4me-panel-v139.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.4",panel)
+        self.assertIn("?v=2026.9.21.4",panel)
+        self.assertIn('"version": "2026.9.21.4"',manifest)
 
 
 if __name__=="__main__":
