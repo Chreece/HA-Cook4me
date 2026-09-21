@@ -24,11 +24,11 @@ class GreekCatalogAuditV155Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v155.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v170",panel)
-        self.assertIn("cook4me-panel-v170.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.35",panel)
-        self.assertIn("?v=2026.9.21.35",panel)
-        self.assertIn('"version": "2026.9.21.35"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v171",panel)
+        self.assertIn("cook4me-panel-v171.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.36",panel)
+        self.assertIn("?v=2026.9.21.36",panel)
+        self.assertIn('"version": "2026.9.21.36"',manifest)
         self.assertIn("cook4me-panel-v154.js?v=2026.9.21.19",ui)
 
     def test_singular_food_labels_are_not_pluralized(self):
