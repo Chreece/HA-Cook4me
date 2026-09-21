@@ -936,7 +936,7 @@
     "chicken wing": "Φτερούγα κοτόπουλου",
     "cuttlefish": "Σουπιά",
     "dried oregano leaf": "Αποξηραμένο φύλλο ρίγανης",
-    "fresh or canned grape leaf": "Φρέσκο ή κονσερβοποιημένο αμπελόφυλλο",
+    "fresh or canned grape leaf": "Φρέσκο αμπελόφυλλο ή αμπελόφυλλο κονσέρβας",
     "fresh or frozen baby onion": "Φρέσκο ή κατεψυγμένο μικρό κρεμμύδι",
     "green cabbage leaf": "Φύλλο πράσινου λάχανου",
     "green savoy cabbage leaf": "Φύλλο πράσινου λάχανου σαβόι",
@@ -954,7 +954,7 @@
     "parsley leaf": "Φύλλο μαϊντανού",
     "pearl onion": "Κρεμμυδάκι πέρλα",
     "piquillo pepper": "Πιπεριά πικίγιο",
-    "hollowed piquillo pepper": "Κουφωμένη πιπεριά πικίγιο",
+    "hollowed piquillo pepper": "Αδειασμένη πιπεριά πικίγιο",
     "red potato": "Κόκκινη πατάτα",
     "salted cherry leaf": "Παστό φύλλο κερασιάς",
     "sansho leaf": "Φύλλο σάνσο",
@@ -2733,6 +2733,7 @@
       "dried oregano leaf"
     ],
     "fresh or canned grape leaf": [
+      "φρέσκο αμπελόφυλλο",
       "αμπελόφυλλο κονσέρβας",
       "fresh grape leaf",
       "canned grape leaf"
@@ -2790,7 +2791,7 @@
       "piquillo pepper"
     ],
     "hollowed piquillo pepper": [
-      "κουφωμένη πιπεριά πικίγιο",
+      "αδειασμένη πιπεριά πικίγιο",
       "hollowed piquillo pepper"
     ],
     "red potato": [
