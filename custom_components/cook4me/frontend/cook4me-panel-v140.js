@@ -122,9 +122,10 @@ class Cook4MeRecipeHubPanelV140 extends BasePanel{
      }
      ctx.putImageData(image,0,0);
      ctx.fillStyle='#060808';
-     ctx.beginPath();ctx.roundRect(174,248,127,80,12);ctx.fill();
-     ctx.beginPath();ctx.roundRect(218,231,40,15,3);ctx.fill();
-     ctx.beginPath();ctx.roundRect(219,357,38,13,3);ctx.fill();
+     const sx=canvas.width/474,sy=canvas.height/474;
+     ctx.beginPath();ctx.roundRect(174*sx,248*sy,127*sx,80*sy,12*Math.min(sx,sy));ctx.fill();
+     ctx.beginPath();ctx.roundRect(218*sx,231*sy,40*sx,15*sy,3*Math.min(sx,sy));ctx.fill();
+     ctx.beginPath();ctx.roundRect(219*sx,357*sy,38*sx,13*sy,3*Math.min(sx,sy));ctx.fill();
      this._v140DeviceCutout=canvas.toDataURL('image/png');resolve(this._v140DeviceCutout);
     }catch(error){reject(error);}
    };
