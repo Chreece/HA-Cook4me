@@ -112,6 +112,7 @@ class Cook4MeRecipeHubPanelV140 extends BasePanel{
      const canvas=document.createElement('canvas');canvas.width=source.naturalWidth||474;canvas.height=source.naturalHeight||474;
      const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(source,0,0,canvas.width,canvas.height);
      const image=ctx.getImageData(0,0,canvas.width,canvas.height),data=image.data,w=canvas.width,h=canvas.height;
+     // Remove only the edge-connected studio background; never threshold the cooker body itself.
      const background=index=>{
       const p=index*4,r=data[p],g=data[p+1],b=data[p+2],max=Math.max(r,g,b),min=Math.min(r,g,b);
       const luminance=.2126*r+.7152*g+.0722*b;
