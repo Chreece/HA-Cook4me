@@ -22,11 +22,11 @@ class WeekdayUnlimitedV144Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v144.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v155",panel)
-        self.assertIn("cook4me-panel-v155.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.20",panel)
-        self.assertIn("?v=2026.9.21.20",panel)
-        self.assertIn('"version": "2026.9.21.20"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v156",panel)
+        self.assertIn("cook4me-panel-v156.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.21",panel)
+        self.assertIn("?v=2026.9.21.21",panel)
+        self.assertIn('"version": "2026.9.21.21"',manifest)
         self.assertIn(
             "if(!customElements.get(V143))await import('./cook4me-panel-v143.js?v=2026.9.21.8')",
             ui,
