@@ -8,15 +8,15 @@ MANIFEST=ROOT/"custom_components"/"cook4me"/"manifest.json"
 
 
 class ScannerFlowV141Tests(unittest.TestCase):
-    def test_v141_is_active_and_versioned(self):
+    def test_v141_is_inherited_by_active_v142(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v141.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v141",panel)
-        self.assertIn("cook4me-panel-v141.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.6",panel)
-        self.assertIn("?v=2026.9.21.6",panel)
-        self.assertIn('"version": "2026.9.21.6"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v142",panel)
+        self.assertIn("cook4me-panel-v142.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.7",panel)
+        self.assertIn("?v=2026.9.21.7",panel)
+        self.assertIn('"version": "2026.9.21.7"',manifest)
         self.assertIn(
             "if(!customElements.get(V140))await import('./cook4me-panel-v140.js?v=2026.9.21.5')",
             ui,
