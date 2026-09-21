@@ -14,7 +14,7 @@ CATALOG = COMPONENT / "catalog" / "merged_catalog.v1.json"
 LOCALE = COMPONENT / "catalog_ui_locales" / "el.json"
 
 sys.path.insert(0, str(COMPONENT))
-from catalog_presentation import clean_name, display_name, name_key  # noqa: E402
+from catalog_presentation import clean_name, display_name, ingredient_choices, name_key  # noqa: E402
 
 
 def main():
@@ -103,6 +103,22 @@ def main():
     print(f"Actually displayed non-Greek names: {len(no_greek)}")
     print(f"Undefined-style Greek overlay labels: {len(undefined)}")
     print(f"Overlay labels with Latin characters: {len(latin_rows)}")
+
+    # This is the actual food-picker surface used by scanner assignment and
+    # ingredient catalog selection. Non-food/equipment and reviewed fragments
+    # are filtered by ingredient_choices itself.
+    picker = ingredient_choices(catalog, "el")
+    bad_picker = [
+        row for row in picker
+        if not greek.search(str(row.get("name") or ""))
+        or "Απροσδιόριστο" in str(row.get("name") or "")
+    ]
+    print(f"Actual Greek picker choices: {len(picker)}")
+    print(f"Invalid/untranslated Greek picker choices: {len(bad_picker)}")
+    if bad_picker:
+        for row in bad_picker[:60]:
+            print("BAD_PICKER\t" + str(row.get("canonicalName")) + "\t=>\t" + str(row.get("name")))
+        raise SystemExit("Greek ingredient picker contains untranslated or placeholder names")
 
     print("\nTOP_USED_ACTUAL_GREEK_LABELS")
     for count, key, canonical, shown, source in sorted(actual, reverse=True)[:280]:
