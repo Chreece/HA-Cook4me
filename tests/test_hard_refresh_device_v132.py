@@ -33,17 +33,17 @@ class HardRefreshDeviceAssetV132Tests(unittest.TestCase):
         self.assertIn("image.addEventListener('error'",ui)
         self.assertIn(".v130-model-photo{opacity:0}",ui)
 
-    def test_v132_is_inherited_by_active_v137(self):
+    def test_v132_is_inherited_by_active_v138(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v132.js").read_text(encoding="utf-8")
         v133=(FRONTEND/"cook4me-panel-v133.js").read_text(encoding="utf-8")
         v134=(FRONTEND/"cook4me-panel-v134.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v137",panel)
-        self.assertIn("cook4me-panel-v137.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.2",panel)
-        self.assertIn("?v=2026.9.21.2",panel)
-        self.assertIn('"version": "2026.9.21.2"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v138",panel)
+        self.assertIn("cook4me-panel-v138.js",panel)
+        self.assertIn("/cook4me_static/2026.9.21.3",panel)
+        self.assertIn("?v=2026.9.21.3",panel)
+        self.assertIn('"version": "2026.9.21.3"',manifest)
         self.assertIn("if(!customElements.get(V133))await import('./cook4me-panel-v133.js?v=2026.9.20.7')",v134)
         self.assertIn("if(!customElements.get(V132))await import('./cook4me-panel-v132.js?v=2026.9.20.6')",v133)
         self.assertIn("if(!customElements.get(V131))await import('./cook4me-panel-v131.js?v=2026.9.20.5')",ui)
