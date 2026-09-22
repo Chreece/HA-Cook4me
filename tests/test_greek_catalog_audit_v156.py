@@ -77,7 +77,7 @@ class GreekCatalogAuditV156Tests(unittest.TestCase):
             "tianmianjiang sweet bean sauce":"Γλυκιά πάστα φασολιών τιανμιεντζιάνγκ (tianmianjiang)",
             "yakiniku sauce":"Ιαπωνική σάλτσα για ψητό κρέας γιακινίκου (yakiniku)",
             "yakitori sauce":"Ιαπωνική σάλτσα τάρε για γιακιτόρι (yakitori tare)",
-            "teriyaki marinade sauce":"Σάλτσα / μαρινάδα teriyaki",
+            "teriyaki marinade sauce":"Σάλτσα / μαρινάδα τεριγιάκι (teriyaki)",
             "sweet red bean paste":"Γλυκιά πάστα κόκκινων φασολιών άνκο (anko)",
             "smooth red bean paste":"Λεία πάστα κόκκινων φασολιών κόσιαν (koshi-an)",
             "chunky red bean paste":"Πάστα κόκκινων φασολιών με κομμάτια τσουμπουάν (tsubu-an)",
