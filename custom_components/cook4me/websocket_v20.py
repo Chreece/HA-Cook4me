@@ -44,6 +44,7 @@ from .today_logic import recipe_identity, recipe_matches_meal_types
 from .request_coordinator import EVENT_OPERATION_PROGRESS
 
 _MAX_WEEK_CANDIDATES = 180
+_WEEK_NUTRITION_BATCH = 30
 _MAX_GLOBAL_PRICE_LOOKUPS = 4
 _SHOPPING_RE = re.compile(
     r"^\s*(?P<quantity>\d+(?:[.,]\d+)?)\s*(?P<unit>mg|g|kg|ml|cl|dl|l|pc|pcs|x)\s+(?P<name>.+?)\s*$",
@@ -260,12 +261,34 @@ def _plan_penalty(
     return max(0, after_short - before_short) * 18.0 + max(0, after_unknown - before_unknown) * 2.0
 
 
+def _week_candidate_nutrition(
+    candidates: list[dict[str, Any]],
+    inventory: Any,
+    nutrition_store,
+) -> dict[int, dict[str, Any]]:
+    """Calculate invariant candidate nutrition once for reuse across all slots."""
+    result: dict[int, dict[str, Any]] = {}
+    for candidate in candidates:
+        nutrition = calculate_recipe_nutrition_fefo(
+            candidate,
+            inventory,
+            generic=nutrition_store.generic,
+            stock_lots=nutrition_store.stock_lots,
+        )
+        if not nutrition.get("totals"):
+            nutrition = deepcopy(
+                candidate.get("catalogNutrition") or candidate.get("nutrition") or nutrition
+            )
+        result[id(candidate)] = nutrition
+    return result
+
+
 def _score_week_pool(
     pool: list[dict[str, Any]],
     *,
     planned: list[dict[str, Any]],
     inventory: Any,
-    nutrition_store,
+    nutrition_by_id: dict[int, dict[str, Any]],
     cost_store,
     goal: str,
     slot_id: str,
@@ -300,16 +323,7 @@ def _score_week_pool(
     best_meal_target_bonus = 0.0
 
     for candidate in pool:
-        nutrition = calculate_recipe_nutrition_fefo(
-            candidate,
-            inventory,
-            generic=nutrition_store.generic,
-            stock_lots=nutrition_store.stock_lots,
-        )
-        if not nutrition.get("totals"):
-            nutrition = deepcopy(
-                candidate.get("catalogNutrition") or candidate.get("nutrition") or nutrition
-            )
+        nutrition = nutrition_by_id.get(id(candidate)) or {}
         nutrition_hint = nutrition_goal_bonus(nutrition, goal)
         candidate_slot = {
             "id": slot_id,
@@ -353,15 +367,15 @@ def _score_week_pool(
         best = candidate
         best_score = score
         best_nutrition = nutrition
-        best_cost = calculate_recipe_cost(
-            candidate, inventory, cost_store
-        )
         best_penalty = penalty
         best_daily_bonus = float(daily_hint.get("bonus") or 0.0)
         best_meal_target_bonus = meal_target_bonus
 
     if best is None:
         return None
+    # Cost does not influence selection score. Calculate it exactly once for
+    # the winning recipe rather than for every temporary "best so far".
+    best_cost = calculate_recipe_cost(best, inventory, cost_store)
     return {
         "recipe": best,
         "score": best_score,
@@ -462,6 +476,32 @@ async def _generate_week(
     nutrition_store = await nutrition_store_for_bridge(bridge)
     cost_store = await cost_store_for_bridge(bridge)
     inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
+    nutrition_by_id: dict[int, dict[str, Any]] = {}
+    total_candidates = max(1, len(candidates))
+    if progress:
+        progress(
+            "nutrition",
+            completed=0,
+            total=total_candidates,
+            message="Preparing candidate nutrition",
+        )
+    for offset in range(0, len(candidates), _WEEK_NUTRITION_BATCH):
+        batch = candidates[offset : offset + _WEEK_NUTRITION_BATCH]
+        nutrition_by_id.update(
+            await hass.async_add_executor_job(
+                _week_candidate_nutrition,
+                batch,
+                inventory,
+                nutrition_store,
+            )
+        )
+        if progress:
+            progress(
+                "nutrition",
+                completed=min(offset + len(batch), len(candidates)),
+                total=total_candidates,
+                message="Preparing candidate nutrition",
+            )
     goal = normalize_nutrition_goal(
         (shared_filters or {}).get("nutritionGoal") or bridge.recipe_hub.ui_preferences.get("nutritionGoal") or "balanced"
     )
@@ -627,7 +667,7 @@ async def _generate_week(
                 pool,
                 planned=planned,
                 inventory=inventory,
-                nutrition_store=nutrition_store,
+                nutrition_by_id=nutrition_by_id,
                 cost_store=cost_store,
                 goal=goal,
                 slot_id=slot_id,
