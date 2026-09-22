@@ -142,3 +142,6 @@ jobs:
           python tests/test_greek_catalog_audit_v177.py
           python tests/test_greek_catalog_audit_v178.py
           python tests/test_reviewed_portion_stock_coverage.py
+          python tests/test_universal_stock_coverage.py
+          python tests/test_price_benchmarks_event_loop.py
+          python tests/test_greek_catalog_audit_v179.py

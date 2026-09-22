@@ -10,6 +10,7 @@ from copy import deepcopy
 from datetime import date, datetime, timedelta, timezone
 from collections import defaultdict, deque
 from functools import lru_cache
+import asyncio
 import json
 import math
 from pathlib import Path
@@ -22,12 +23,36 @@ from .price_allowances import zero_cost_allowance
 from .price_snapshot import _load, category_observation_allowed
 
 
-@lru_cache(maxsize=1)
-def _groups():
-    data = json.loads((Path(__file__).with_name('catalog') / 'price_benchmarks.v1.json').read_text())
+_BENCHMARK_GROUPS = None
+_BENCHMARK_PATH = Path(__file__).with_name('catalog') / 'price_benchmarks.v1.json'
+
+
+def _read_groups():
+    data = json.loads(_BENCHMARK_PATH.read_text())
     if data.get('schemaVersion') != 1:
         raise ValueError('Unsupported budget benchmark schema')
-    return data['groups']
+    return tuple(data['groups'])
+
+
+def warm_price_benchmarks():
+    """Load static benchmark metadata from a worker thread during HA setup."""
+    global _BENCHMARK_GROUPS
+    if _BENCHMARK_GROUPS is None:
+        _BENCHMARK_GROUPS = _read_groups()
+        _pools.cache_clear()
+    return _BENCHMARK_GROUPS
+
+
+def _groups():
+    if _BENCHMARK_GROUPS is not None:
+        return _BENCHMARK_GROUPS
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        return warm_price_benchmarks()
+    raise RuntimeError(
+        'Cook4Me price benchmarks were not preloaded before synchronous pricing'
+    )
 
 
 def _group(item):

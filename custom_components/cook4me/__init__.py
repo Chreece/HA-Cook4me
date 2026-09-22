@@ -187,9 +187,11 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     await async_warm_release_catalog(hass)
     from .price_measurements import _portions, _densities
     from .price_snapshot import _load as load_price_snapshot
+    from .price_benchmarks import warm_price_benchmarks
     await hass.async_add_executor_job(_portions)
     await hass.async_add_executor_job(_densities)
     await hass.async_add_executor_job(load_price_snapshot)
+    await hass.async_add_executor_job(warm_price_benchmarks)
 
     async def handle_send_recipe(call: ServiceCall) -> dict[str, Any] | None:
         bridge = _get_bridge(hass, call.data.get("entry_id"))
