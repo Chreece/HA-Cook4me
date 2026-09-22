@@ -27,7 +27,7 @@ _COUNTS = {'egg', 'eggs', 'onion', 'onions', 'carrot', 'carrots', 'tomato', 'tom
            'swede', 'rutabaga', 'shiitake mushroom', 'shiitake mushrooms',
            'fresh shiitake mushroom', 'fresh shiitake mushrooms'}
 
-_GELATINE_SHEETS = {'leaf gelatine', 'gelatine sheet', 'gelatine sheets', 'gelatin sheet', 'gelatin sheets'}
+_GELATINE_SHEETS = {'leaf gelatine', 'gelatine leaf', 'gelatine sheet', 'gelatine sheets', 'gelatin leaf', 'gelatin sheet', 'gelatin sheets'}
 _VANILLA_PODS = {'vanilla pod', 'vanilla pods'}
 
 
