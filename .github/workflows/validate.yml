@@ -155,3 +155,4 @@ jobs:
           python tests/test_scanner_manual_fallback_v180.py
           python tests/test_greek_catalog_audit_v182.py
           python tests/test_greek_catalog_audit_v183.py
+          python tests/test_greek_catalog_audit_v184.py
