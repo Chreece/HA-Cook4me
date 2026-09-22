@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import asyncio
 from copy import deepcopy
 from datetime import datetime, timezone
+from functools import partial
 from hashlib import sha256
 import json
 from typing import Any
@@ -130,6 +132,8 @@ class Cook4MeRecipeCostCache:
     """Persistent derived recipe prices keyed by price-relevant evidence."""
 
     def __init__(self, bridge: Any) -> None:
+        self._hass = bridge.hass
+        self._lock = asyncio.Lock()
         self._store: Store[dict[str, Any]] = Store(
             bridge.hass,
             _STORAGE_VERSION,
@@ -156,46 +160,57 @@ class Cook4MeRecipeCostCache:
         country: str = "",
         force: bool = False,
     ) -> dict[str, Any]:
-        await self.async_load()
-        recipe_hash = _canonical_hash(_recipe_price_shape(recipe))
-        price_hash = pricing_fingerprint(recipe, inventory, cost_store)
-        key = _canonical_hash({
-            "recipe": recipe_hash,
-            "pricing": price_hash,
-            "currency": _text(currency).upper(),
-            "country": _text(country).upper(),
-        })
-        entries = self._data["entries"]
-        cached = entries.get(key)
-        if not force and isinstance(cached, dict) and isinstance(cached.get("cost"), dict):
-            result = deepcopy(cached["cost"])
+        # The cache is shared per config entry. Serialize cache writes, but run
+        # the CPU-heavy calculator in HA's executor so weekly refreshes cannot
+        # monopolize the event loop or freeze unrelated browsing requests.
+        async with self._lock:
+            await self.async_load()
+            recipe_hash = _canonical_hash(_recipe_price_shape(recipe))
+            price_hash = pricing_fingerprint(recipe, inventory, cost_store)
+            key = _canonical_hash({
+                "recipe": recipe_hash,
+                "pricing": price_hash,
+                "currency": _text(currency).upper(),
+                "country": _text(country).upper(),
+            })
+            entries = self._data["entries"]
+            cached = entries.get(key)
+            if not force and isinstance(cached, dict) and isinstance(cached.get("cost"), dict):
+                result = deepcopy(cached["cost"])
+                result.update({
+                    "costCacheHit": True,
+                    "pricingFingerprint": price_hash,
+                    "recipePriceFingerprint": recipe_hash,
+                    "costCacheContract": "price-evidence-fingerprint-v1",
+                })
+                return result
+
+            cost = await self._hass.async_add_executor_job(
+                partial(
+                    calculate_recipe_cost,
+                    recipe,
+                    inventory,
+                    cost_store,
+                    currency=currency,
+                    country=country,
+                )
+            )
+            entries[key] = {
+                "cost": deepcopy(cost),
+                "pricingFingerprint": price_hash,
+                "recipePriceFingerprint": recipe_hash,
+            }
+            while len(entries) > _MAX_ENTRIES:
+                entries.pop(next(iter(entries)))
+            await self._store.async_save(deepcopy(self._data))
+            result = deepcopy(cost)
             result.update({
-                "costCacheHit": True,
+                "costCacheHit": False,
                 "pricingFingerprint": price_hash,
                 "recipePriceFingerprint": recipe_hash,
                 "costCacheContract": "price-evidence-fingerprint-v1",
             })
             return result
-
-        cost = calculate_recipe_cost(
-            recipe, inventory, cost_store, currency=currency, country=country
-        )
-        entries[key] = {
-            "cost": deepcopy(cost),
-            "pricingFingerprint": price_hash,
-            "recipePriceFingerprint": recipe_hash,
-        }
-        while len(entries) > _MAX_ENTRIES:
-            entries.pop(next(iter(entries)))
-        await self._store.async_save(deepcopy(self._data))
-        result = deepcopy(cost)
-        result.update({
-            "costCacheHit": False,
-            "pricingFingerprint": price_hash,
-            "recipePriceFingerprint": recipe_hash,
-            "costCacheContract": "price-evidence-fingerprint-v1",
-        })
-        return result
 
 
 async def recipe_cost_cache_for_bridge(bridge: Any) -> Cook4MeRecipeCostCache:
