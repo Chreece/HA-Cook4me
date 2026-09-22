@@ -1088,7 +1088,6 @@ async def ws_week_generate(hass, connection, msg) -> None:
                 shared_filters=msg.get("shared_filters"),
                 ui_language=msg.get("ui_language", "en"),
                 progress=progress,
-                reuse_costs=True,
             )
             state = await _state(
                 hass,
@@ -1096,6 +1095,7 @@ async def ws_week_generate(hass, connection, msg) -> None:
                 shared_filters=msg.get("shared_filters"),
                 ui_language=msg.get("ui_language", "en"),
                 progress=progress,
+                reuse_costs=True,
             )
             result = {**generation, **state}
         changed = int(generation.get("changedSlotCount") or 0)
