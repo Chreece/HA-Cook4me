@@ -1203,6 +1203,7 @@ async def ws_week_select(hass, connection, msg) -> None:
     vol.Optional("shared_filters"): dict,
     vol.Optional("entry_id"): str,
     vol.Optional("ui_language"): str,
+    vol.Optional("display_language"): str,
     vol.Optional("supermarket_language"): str,
 })
 @websocket_api.async_response
@@ -1244,7 +1245,7 @@ async def ws_week_add_shopping(hass, connection, msg) -> None:
             market_settings = cost_store.settings
             country = market_settings.get("country") or getattr(hass.config, "country", "")
             ui_code = normalize_supermarket_language(
-                msg.get("ui_language"),
+                msg.get("display_language") or msg.get("ui_language"),
                 country=country,
                 fallback=getattr(hass.config, "language", None) or "en",
             )
