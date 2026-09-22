@@ -143,6 +143,7 @@ jobs:
           python tests/test_greek_catalog_audit_v184.py
           python tests/test_greek_catalog_audit_v185.py
           python tests/test_greek_catalog_audit_v186.py
+          python tests/test_greek_catalog_audit_v187.py
       - name: Build HACS release archive
         run: |
           rm -rf release

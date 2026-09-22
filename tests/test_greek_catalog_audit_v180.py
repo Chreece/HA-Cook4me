@@ -26,7 +26,7 @@ class GreekCatalogAuditV180Tests(unittest.TestCase):
             "chilled cottage cheese portions":"Μερίδες τυριού κότατζ ψυγείου",
             "chilled portions of cottage cheese":"Μερίδες τυριού κότατζ ψυγείου",
             "yellow sea cod fillet":"Φιλέτο μπακαλιάρου της Κίτρινης Θάλασσας",
-            "little gem lettuce":"Μαρούλι Little Gem",
+            "little gem lettuce":"Μαρούλι Λιτλ Τζεμ (Little Gem)",
             "herta le bon vegetal plain strips":"Σκέτες φυτικές λωρίδες Herta Le Bon Végétal",
         }
         for key,value in expected.items():
