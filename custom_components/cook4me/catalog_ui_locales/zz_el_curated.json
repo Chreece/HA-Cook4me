@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through thirty-sixth audit 2026-09-22",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through thirty-seventh audit 2026-09-22",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -79,7 +79,7 @@
     "cardamom pods": "Λοβοί κακουλέ",
     "cardamom, 1 cinnamon stick, 2 bay leaf": "Κάρδαμο, 1 ξυλάκι κανέλας και 2 φύλλα δάφνης",
     "ground cardamom": "Αλεσμένος κακουλές",
-    "shelled cardamom pods": "Σπόροι κακουλέ",
+    "shelled cardamom pods": "Σπόροι κακουλέ χωρίς λοβό",
     "whole spices: 1 cinnamon stick, 2 bay leaves, 5 cardamom pods": "Ολόκληρα μπαχαρικά: 1 ξυλάκι κανέλας, 2 φύλλα δάφνης, 5 λοβοί κακουλέ",
     "whole spices: 4 cardamom pods, 1 cinnamon stick, 2 bay leaf": "Ολόκληρα μπαχαρικά: 4 λοβοί κακουλέ, 1 ξυλάκι κανέλας, 2 φύλλα δάφνης",
     "mace": "Μασίς (άνθος μοσχοκάρυδου)",
@@ -216,8 +216,8 @@
     "fresh button mushroom": "Φρέσκο λευκό μανιτάρι champignon",
     "mushroom / button mushroom": "Μανιτάρια / λευκά champignon",
     "chestnut mushroom": "Καφέ μανιτάρι champignon",
-    "glass noodle": "Glass noodles (διάφανα νουντλς)",
-    "dried glass noodle": "Αποξηραμένα glass noodles (διάφανα νουντλς)",
+    "glass noodle": "Διάφανα νουντλς (glass noodles)",
+    "dried glass noodle": "Αποξηραμένα διάφανα νουντλς (glass noodles)",
     "jasmine rice": "Ρύζι jasmine (γιασεμί)",
     "glutinous rice": "Sticky rice (κολλώδες ρύζι)",
     "glutinous rice flour": "Αλεύρι από κολλώδες ρύζι (glutinous rice flour)",
@@ -374,12 +374,12 @@
     "gochugaru": "Gochugaru (κορεάτικο τσίλι)",
     "gochugaru chili flakes": "Gochugaru (κορεάτικες νιφάδες τσίλι)",
     "napa cabbage kimchi": "Kimchi με λάχανο napa",
-    "konjac noodle": "Shirataki / konjac noodles",
-    "boiled somen noodle": "Βρασμένα somen noodles",
-    "ramen noodle": "Ramen noodles",
-    "udon noodle": "Udon noodles",
-    "fresh udon noodle": "Φρέσκα udon noodles",
-    "package of pre-cooked udon noodle": "Συσκευασία προμαγειρεμένων udon noodles",
+    "konjac noodle": "Νουντλς shirataki / konjac",
+    "boiled somen noodle": "Βρασμένα νουντλς somen",
+    "ramen noodle": "Νουντλς ramen",
+    "udon noodle": "Νουντλς udon",
+    "fresh udon noodle": "Φρέσκα νουντλς udon",
+    "package of pre-cooked udon noodle": "Συσκευασία προμαγειρεμένων νουντλς udon",
     "shichimi chili pepper": "Shichimi togarashi (ιαπωνικό μείγμα 7 μπαχαρικών)",
     "shichimi chili seasoning": "Shichimi togarashi (ιαπωνικό μείγμα 7 μπαχαρικών)",
     "shichimi togarashi": "Shichimi togarashi (ιαπωνικό μείγμα 7 μπαχαρικών)",
@@ -1766,7 +1766,8 @@
       "διάφανα νουντλς",
       "cellophane noodles",
       "glass noodle",
-      "Glass noodles (διάφανα νουντλς)"
+      "Glass noodles (διάφανα νουντλς)",
+      "Διάφανα νουντλς (glass noodles)"
     ],
     "jasmine rice": [
       "jasmine rice",
@@ -2391,26 +2392,30 @@
       "σιρατάκι",
       "νουντλς κόντζακ",
       "konjac noodle",
-      "Shirataki / konjac noodles"
+      "Shirataki / konjac noodles",
+      "Νουντλς shirataki / konjac"
     ],
     "boiled somen noodle": [
       "somen",
       "somen noodles",
       "σόμεν",
       "boiled somen noodle",
-      "Βρασμένα somen noodles"
+      "Βρασμένα somen noodles",
+      "Βρασμένα νουντλς somen"
     ],
     "ramen noodle": [
       "ramen noodles",
       "ramen",
       "ράμεν",
-      "ramen noodle"
+      "ramen noodle",
+      "Νουντλς ramen"
     ],
     "udon noodle": [
       "udon noodles",
       "udon",
       "ούντον",
-      "udon noodle"
+      "udon noodle",
+      "Νουντλς udon"
     ],
     "shichimi togarashi": [
       "shichimi",
@@ -2996,7 +3001,8 @@
       "συσκευασία udon",
       "pre-cooked udon package",
       "package of pre-cooked udon noodle",
-      "Συσκευασία προμαγειρεμένων udon noodles"
+      "Συσκευασία προμαγειρεμένων udon noodles",
+      "Συσκευασία προμαγειρεμένων νουντλς udon"
     ],
     "package of salted nachos": [
       "συσκευασία nachos",
@@ -6776,7 +6782,8 @@
     ],
     "dried glass noodle": [
       "αποξηραμένα glass noodles (διάφανα νουντλς)",
-      "dried glass noodle"
+      "dried glass noodle",
+      "Αποξηραμένα διάφανα νουντλς (glass noodles)"
     ],
     "dried pasta": [
       "ξερά ζυμαρικά",
@@ -7350,7 +7357,8 @@
     ],
     "fresh udon noodle": [
       "φρέσκα udon noodles",
-      "fresh udon noodle"
+      "fresh udon noodle",
+      "Φρέσκα νουντλς udon"
     ],
     "frozen udon": [
       "κατεψυγμένα ούντον",
@@ -12015,7 +12023,8 @@
     ],
     "shelled cardamom pods": [
       "σπόροι κακουλέ",
-      "shelled cardamom pods"
+      "shelled cardamom pods",
+      "Σπόροι κακουλέ χωρίς λοβό"
     ],
     "shichimi chili pepper": [
       "shichimi togarashi (ιαπωνικό μείγμα 7 μπαχαρικών)",
