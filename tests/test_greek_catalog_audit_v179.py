@@ -24,7 +24,7 @@ class GreekCatalogAuditV179Tests(unittest.TestCase):
             "fine-grain semolina in a salad bowl":"Ψιλό σιμιγδάλι σε σαλατιέρα",
             "gelatin sheet soaked in cold water":"Φύλλο ζελατίνης μουλιασμένο σε κρύο νερό",
             "gelatin sheet softened in cold water":"Φύλλο ζελατίνης μαλακωμένο σε κρύο νερό",
-            "large beefsteak tomato":"Μεγάλη ντομάτα beefsteak (σαρκώδης)",
+            "large beefsteak tomato":"Μεγάλη σαρκώδης ντομάτα (beefsteak)",
             "baby lettuce":"Τρυφερό μικρό μαρούλι",
             "warm cooked rice":"Ζεστό μαγειρεμένο ρύζι",
             "warm fresh milk":"Ζεστό φρέσκο γάλα",
