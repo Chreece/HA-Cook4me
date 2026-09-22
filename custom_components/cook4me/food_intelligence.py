@@ -8,6 +8,7 @@ from typing import Any
 
 from .stock_allocation import allocate_stock
 from .inventory import stock_for_ingredient, convert_amount, inventory_identity, normalize_inventory
+from .price_measurements import price_options
 
 _NUTRITION_GOALS = {
     "balanced",
@@ -88,6 +89,69 @@ def _availability_status(
     return ""
 
 
+_REVIEWED_PORTION_KINDS = {"food_portion", "reference_portion"}
+
+
+def _reviewed_portion_requirement(
+    ingredient: dict[str, Any],
+    current: dict[str, Any] | None,
+) -> dict[str, Any]:
+    """Return a stock-compatible requirement only when reviewed food evidence exists.
+
+    Recipe/source units remain authoritative. Cross-dimension conversion is allowed
+    only through an ingredient-specific reviewed portion already bundled with
+    Cook4Me (for example USDA garlic: 1 clove = 3 g). Generic spoon, density,
+    package or count guesses are intentionally excluded.
+    """
+    required, required_unit = _recipe_amount(ingredient)
+    result = {
+        "requiredQuantity": required,
+        "requiredUnit": required_unit,
+        "allocationQuantity": required,
+        "allocationUnit": required_unit,
+        "conversion": None,
+    }
+    if required is None or not isinstance(current, dict) or current.get("unlimited"):
+        return result
+
+    stock_amount = _number(current.get("quantity"))
+    stock_unit = _text(current.get("unit"))
+    if stock_amount is None:
+        return result
+    if convert_amount(stock_amount, stock_unit, required_unit) is not None:
+        return result
+
+    candidate = dict(ingredient)
+    if not candidate.get("canonicalName") and candidate.get("foodName"):
+        candidate["canonicalName"] = candidate["foodName"]
+
+    for option in price_options(candidate):
+        estimate = option.get("estimate") if isinstance(option, dict) else None
+        if not isinstance(estimate, dict) or estimate.get("kind") not in _REVIEWED_PORTION_KINDS:
+            continue
+        quantity = _number(option.get("quantity"))
+        unit = _text(option.get("unit"))
+        if quantity is None or quantity <= 0 or not unit:
+            continue
+        if convert_amount(stock_amount, stock_unit, unit) is None:
+            continue
+        source_unit = required_unit or _text(estimate.get("sourceUnit"))
+        result["requiredUnit"] = source_unit
+        result["allocationQuantity"] = quantity
+        result["allocationUnit"] = unit
+        result["conversion"] = {
+            "kind": estimate.get("kind"),
+            "label": estimate.get("label"),
+            "sourceUrl": estimate.get("sourceUrl"),
+            "sourceQuantity": required,
+            "sourceUnit": source_unit,
+            "quantity": quantity,
+            "unit": unit,
+        }
+        return result
+    return result
+
+
 def recipe_quantity_feasibility(
     recipe: dict[str, Any],
     inventory: Any,
@@ -109,11 +173,23 @@ def recipe_quantity_feasibility(
     unknown: list[dict[str, Any]] = []
 
     ingredients = [item for item in recipe.get("ingredients") or [] if isinstance(item, dict)]
-    requests = [{**item, "identity": inventory_identity(_find_stock(stock, item) or item),
-                 "quantity": _recipe_amount(item)[0], "unit": _recipe_amount(item)[1],
-                 "consume": bool(_ingredient_name(item)) and _availability_status(item, availability_rows) != "staple"}
-                for item in ingredients]
-    for ingredient, current in zip(ingredients, allocate_stock(stock, requests)):
+    requirements: list[dict[str, Any]] = []
+    requests: list[dict[str, Any]] = []
+    for item in ingredients:
+        current = _find_stock(stock, item)
+        requirement = _reviewed_portion_requirement(item, current)
+        requirements.append(requirement)
+        requests.append({
+            **item,
+            "identity": inventory_identity(current or item),
+            "quantity": requirement["allocationQuantity"],
+            "unit": requirement["allocationUnit"],
+            "consume": bool(_ingredient_name(item))
+            and _availability_status(item, availability_rows) != "staple",
+        })
+    for ingredient, current, requirement in zip(
+        ingredients, allocate_stock(stock, requests), requirements
+    ):
         name = _ingredient_name(ingredient)
         if not name:
             continue
@@ -128,7 +204,11 @@ def recipe_quantity_feasibility(
             })
             continue
 
-        required, required_unit = _recipe_amount(ingredient)
+        required = requirement["requiredQuantity"]
+        required_unit = requirement["requiredUnit"]
+        allocation_required = requirement["allocationQuantity"]
+        allocation_unit = requirement["allocationUnit"]
+        conversion = requirement["conversion"]
         ident = inventory_identity(current or ingredient)
         base: dict[str, Any] = {
             "identity": ident,
@@ -194,11 +274,14 @@ def recipe_quantity_feasibility(
             unknown.append(deepcopy(row))
             continue
 
+        comparison_required = allocation_required if conversion else required
+        comparison_unit = allocation_unit if conversion else required_unit
+
         # If both recipe and stock are truly unitless, compare the values directly.
-        if not required_unit and not stock_unit:
+        if not comparison_unit and not stock_unit:
             available_required = stock_amount
         else:
-            available_required = convert_amount(stock_amount, stock_unit, required_unit)
+            available_required = convert_amount(stock_amount, stock_unit, comparison_unit)
         if available_required is None:
             row = {
                 **base,
@@ -213,17 +296,29 @@ def recipe_quantity_feasibility(
             continue
 
         available = max(0.0, float(available_required))
-        missing = max(0.0, required - available)
-        fraction = 1.0 if required <= 1e-12 else min(1.0, available / required)
+        comparison_missing = max(0.0, comparison_required - available)
+        fraction = (
+            1.0
+            if comparison_required <= 1e-12
+            else min(1.0, available / comparison_required)
+        )
+        if conversion and comparison_required > 1e-12:
+            scale = required / comparison_required
+            reported_available = min(required, available) * scale
+            missing = max(0.0, required - reported_available)
+        else:
+            reported_available = min(available, required)
+            missing = comparison_missing
         row = {
             **base,
             "status": "enough" if missing <= 1e-9 else "shortage",
-            "availableQuantity": round(min(available, required), 9),
+            "availableQuantity": round(reported_available, 9),
             "availableUnit": required_unit,
             "missingQuantity": round(missing, 9),
             "missingUnit": required_unit,
             "coverage": round(fraction, 3),
-            "confidence": "exact",
+            "confidence": "reviewed_portion" if conversion else "exact",
+            **({"conversion": deepcopy(conversion)} if conversion else {}),
         }
         rows.append(row)
         known_fractions.append(fraction)
