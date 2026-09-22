@@ -46,7 +46,7 @@ class GreekCatalogAuditV153Tests(unittest.TestCase):
             "granulated chicken bouillon":"Κόκκοι ζωμού κοτόπουλου",
             "chinese-style stock granules":"Κόκκοι ζωμού κινέζικου τύπου",
             "french-style stock granules":"Κόκκοι ζωμού γαλλικού τύπου",
-            "japanese dashi stock granules":"Κόκκοι ιαπωνικού dashi",
+            "japanese dashi stock granules":"Κόκκοι ιαπωνικού ντάσι (dashi)",
             "beef stock paste":"Συμπυκνωμένη πάστα ζωμού μοσχαριού",
         }
         for key,value in expected.items():
@@ -67,11 +67,11 @@ class GreekCatalogAuditV153Tests(unittest.TestCase):
     def test_tofu_specialties_keep_real_product_names(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
-            "store-bought seasoned inari tofu pouches":"Έτοιμα καρυκευμένα inari-age (πουγκιά τηγανητού τόφου)",
+            "store-bought seasoned inari tofu pouches":"Έτοιμα καρυκευμένα πουγκιά τηγανητού τόφου ινάρι-άγκε (inari-age)",
             "thick tofu skin":"Παχιά πέτσα τόφου γιούμπα (yuba)",
             "atsuage fried tofu":"Τηγανητό τόφου ατσουάγκε (atsuage)",
-            "firm atsuage fried tofu":"Σφιχτό atsuage (τηγανητό τόφου)",
-            "large ganmodoki fried tofu":"Μεγάλο Ganmodoki (τηγανητό τόφου με λαχανικά)",
+            "firm atsuage fried tofu":"Σφιχτό τηγανητό τόφου ατσουάγκε (atsuage)",
+            "large ganmodoki fried tofu":"Μεγάλο τηγανητό τόφου με λαχανικά γκανμοντόκι (ganmodoki)",
         }
         for key,value in expected.items():
             self.assertEqual(labels.get(key),value)
@@ -79,10 +79,10 @@ class GreekCatalogAuditV153Tests(unittest.TestCase):
     def test_legume_package_names_are_searchable(self):
         labels=load_presentation().labels()["el"]
         aliases=load_presentation().locale_search_aliases()["el"]
-        self.assertEqual(labels["kidney bean"],"Φασόλια kidney")
-        self.assertEqual(labels["cannellini bean"],"Φασόλια cannellini")
-        self.assertEqual(labels["lima bean"],"Φασόλια Lima")
-        self.assertEqual(labels["mung bean"],"Φασόλια mung")
+        self.assertEqual(labels["kidney bean"],"Φασόλια κίντνεϊ (kidney beans)")
+        self.assertEqual(labels["cannellini bean"],"Φασόλια κανελίνι (cannellini)")
+        self.assertEqual(labels["lima bean"],"Φασόλια λίμα (lima beans)")
+        self.assertEqual(labels["mung bean"],"Φασόλια μουνγκ (mung beans)")
         self.assertIn("φασόλια κίντνεϊ",aliases["kidney bean"])
         self.assertIn("κανελίνι",aliases["cannellini bean"])
         self.assertIn("φασόλια μουνγκ",aliases["mung bean"])
