@@ -2,12 +2,16 @@
 from copy import deepcopy
 
 
+def _inventory_views(slots, inventory):
+    from .meal_lifecycle import reservation_status, shopping_delta
+    return reservation_status(slots, inventory), shopping_delta(slots, inventory)
+
+
 async def refresh_plan(bridge, state, *, filters=None, language="en", progress=None):
     from .automatic_prices import offline_recipe_price
     from .release_catalog import async_warm_release_catalog
     from .shared_recipe_runtime import processor
     from .recipe_metrics_v60 import calculate_recipe_nutrition_fast
-    from .meal_lifecycle import reservation_status, shopping_delta
 
     catalog = await async_warm_release_catalog(bridge.hass)
     leftovers = {row["id"]: row for row in state.get("leftovers", [])}
@@ -24,7 +28,11 @@ async def refresh_plan(bridge, state, *, filters=None, language="en", progress=N
             continue
         recipe = deepcopy(recipe)
         if not slot.get("leftoverId"):
-            nutrition = calculate_recipe_nutrition_fast(recipe, catalog.get("_runtimeNutritionIndex") or {})
+            nutrition = await bridge.hass.async_add_executor_job(
+                calculate_recipe_nutrition_fast,
+                recipe,
+                catalog.get("_runtimeNutritionIndex") or {},
+            )
             if nutrition["totals"]:
                 nutrition.update(estimated=True, sourceKinds=["reviewed_release_per100g"])
                 recipe["catalogNutrition"] = nutrition
@@ -61,8 +69,11 @@ async def refresh_plan(bridge, state, *, filters=None, language="en", progress=N
     state["slots"] = visible
     state["filteredSlotCount"] = len(slots) - len(visible)
     inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
-    state["reservations"] = reservation_status(visible, inventory)
-    state["shoppingDelta"] = shopping_delta(visible, inventory)
+    reservations, shopping = await bridge.hass.async_add_executor_job(
+        _inventory_views, visible, inventory
+    )
+    state["reservations"] = reservations
+    state["shoppingDelta"] = shopping
     totals = {}
     selected_slots = [slot for slot in visible if slot.get("selected") is not False]
     state["selectedSlotCount"] = len(selected_slots)
