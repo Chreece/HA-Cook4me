@@ -71,7 +71,7 @@ class GreekCatalogAuditV153Tests(unittest.TestCase):
             "thick tofu skin":"Yuba (παχιά πέτσα τόφου)",
             "atsuage fried tofu":"Atsuage (τηγανητό τόφου)",
             "firm atsuage fried tofu":"Σφιχτό atsuage (τηγανητό τόφου)",
-            "large ganmodoki fried tofu":"Ganmodoki (τηγανητό τόφου με λαχανικά)",
+            "large ganmodoki fried tofu":"Μεγάλο Ganmodoki (τηγανητό τόφου με λαχανικά)",
         }
         for key,value in expected.items():
             self.assertEqual(labels.get(key),value)
