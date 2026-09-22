@@ -11,16 +11,18 @@ class PersistentUiStateV179Tests(unittest.TestCase):
     def test_v179_is_active_and_cache_busted(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
-        ui=(FRONTEND/"cook4me-panel-v180.js").read_text(encoding="utf-8")
+        active=(FRONTEND/"cook4me-panel-v179.js").read_text(encoding="utf-8")
+        inherited=(FRONTEND/"cook4me-panel-v179.js").read_text(encoding="utf-8")
         self.assertIn("cook4me-recipe-hub-panel-v180",panel)
         self.assertIn("cook4me-panel-v180.js",panel)
         self.assertIn("/cook4me_static/2026.9.22.7",panel)
         self.assertIn("?v=2026.9.22.7",panel)
         self.assertIn('"version": "2026.9.22.7"',manifest)
-        self.assertIn("cook4me-panel-v178.js?v=2026.9.22.5",ui)
+        self.assertIn("cook4me-panel-v179.js?v=2026.9.22.6",active)
+        self.assertIn("cook4me-panel-v178.js?v=2026.9.22.5",inherited)
 
     def test_state_is_application_wide_per_user_entry_and_per_tab(self):
-        ui=(FRONTEND/"cook4me-panel-v180.js").read_text(encoding="utf-8")
+        ui=(FRONTEND/"cook4me-panel-v179.js").read_text(encoding="utf-8")
         self.assertIn("cook4me.uiState.v2.",ui)
         self.assertIn("cook4me.weekUi.v1.",ui)  # one-time migration only
         self.assertIn("this._hass?.user?.id",ui)
@@ -33,7 +35,7 @@ class PersistentUiStateV179Tests(unittest.TestCase):
         self.assertIn("openFilter",ui)
 
     def test_native_details_filter_and_recipe_dialog_state_are_restored_across_tabs(self):
-        ui=(FRONTEND/"cook4me-panel-v180.js").read_text(encoding="utf-8")
+        ui=(FRONTEND/"cook4me-panel-v179.js").read_text(encoding="utf-8")
         self.assertIn("_v179PersistDetails(root,scope='content',tab=this._tab)",ui)
         self.assertIn("node.addEventListener('toggle'",ui)
         self.assertIn("_v179RestoreFilter()",ui)
@@ -50,7 +52,7 @@ class PersistentUiStateV179Tests(unittest.TestCase):
         self.assertIn("disconnectedCallback()",ui)
 
     def test_week_sections_default_closed_but_persist_in_shared_state(self):
-        ui=(FRONTEND/"cook4me-panel-v180.js").read_text(encoding="utf-8")
+        ui=(FRONTEND/"cook4me-panel-v179.js").read_text(encoding="utf-8")
         self.assertIn("return this._v179TabState(tab).folds?.[key]===true",ui)
         for key in (
             "weekdayPattern","mealSlots","reservedStock","shoppingDelta",
@@ -61,7 +63,7 @@ class PersistentUiStateV179Tests(unittest.TestCase):
         self.assertIn("this._v179SetFold(key,open)",ui)
 
     def test_shopping_requests_send_ui_and_supermarket_languages_separately(self):
-        ui=(FRONTEND/"cook4me-panel-v180.js").read_text(encoding="utf-8")
+        ui=(FRONTEND/"cook4me-panel-v179.js").read_text(encoding="utf-8")
         self.assertIn("display_language:this._uiIngredientLanguage?.()",ui)
         self.assertIn("supermarket_language:this._v140SupermarketLanguage?.()",ui)
         self.assertIn("row.shoppingDisplayName",ui)
