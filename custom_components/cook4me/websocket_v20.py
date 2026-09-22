@@ -65,6 +65,7 @@ def _emit_week_progress(
     message: str = "",
     done: bool = False,
     error: str = "",
+    kind: str = "week_generate",
 ) -> None:
     """Publish real weekly progress only for validated UI-owned jobs."""
     operation_id = _text(operation_id)[:160]
@@ -77,7 +78,7 @@ def _emit_week_progress(
         percent = round(max(0.0, min(100.0, completed_number / total_number * 100.0)))
     hass.bus.async_fire(EVENT_OPERATION_PROGRESS, {
         "operationId": operation_id,
-        "kind": "week_generate",
+        "kind": str(kind or "week_generate")[:80],
         "title": "Weekly meal plan",
         "phase": str(phase or "starting"),
         "completed": completed_number,
@@ -984,7 +985,13 @@ async def ws_week_generate(hass, connection, msg) -> None:
             hass, operation_id, phase, **values
         )
         if lifecycle.weekly_mutation_busy:
-            progress("starting", message="Queued behind another weekly plan change")
+            _emit_week_progress(
+                hass,
+                operation_id,
+                "starting",
+                message="Queued behind another weekly plan change",
+                kind="week_generate_queued",
+            )
         async with lifecycle.weekly_mutation():
             progress("starting", message="Generating weekly plan")
             generation = await _generate_week(
