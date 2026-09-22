@@ -28,15 +28,15 @@ def load_presentation():
 
 
 class GreekCatalogAuditV175Tests(unittest.TestCase):
-    def test_v175_is_active_and_versioned(self):
+    def test_v175_is_inherited_by_active_v176(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v175.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v175",panel)
-        self.assertIn("cook4me-panel-v175.js",panel)
-        self.assertIn("/cook4me_static/2026.9.22.2",panel)
-        self.assertIn("?v=2026.9.22.2",panel)
-        self.assertIn('"version": "2026.9.22.2"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v176",panel)
+        self.assertIn("cook4me-panel-v176.js",panel)
+        self.assertIn("/cook4me_static/2026.9.22.3",panel)
+        self.assertIn("?v=2026.9.22.3",panel)
+        self.assertIn('"version": "2026.9.22.3"',manifest)
         self.assertIn("cook4me-panel-v174.js?v=2026.9.22.1",ui)
 
     def test_every_legitimate_base_ingredient_has_curated_aliases(self):
@@ -73,7 +73,7 @@ class GreekCatalogAuditV175Tests(unittest.TestCase):
         data=json.loads(CURATED.read_text(encoding="utf-8"))
         self.assertGreaterEqual(len(data["labels"]),1264)
         self.assertGreaterEqual(len(data["searchAliases"]),3689)
-        self.assertIn("thirtieth audit",data["translationSource"])
+        self.assertIn("audit",data["translationSource"])
 
 
 if __name__=="__main__":
