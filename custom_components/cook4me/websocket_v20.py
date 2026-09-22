@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 from copy import deepcopy
 from datetime import date, datetime, timedelta, timezone
+from functools import partial
 import re
 from typing import Any
 from uuid import uuid4
@@ -40,8 +41,9 @@ from .nutrition import nutrition_store_for_bridge
 from .nutrition_fefo import calculate_recipe_nutrition_fefo
 from .nutrition_inventory import async_reconcile_nutrition_inventory
 from .today_logic import recipe_identity, recipe_matches_meal_types
+from .request_coordinator import EVENT_OPERATION_PROGRESS
 
-_MAX_WEEK_CANDIDATES = 30
+_MAX_WEEK_CANDIDATES = 180
 _MAX_GLOBAL_PRICE_LOOKUPS = 4
 _SHOPPING_RE = re.compile(
     r"^\s*(?P<quantity>\d+(?:[.,]\d+)?)\s*(?P<unit>mg|g|kg|ml|cl|dl|l|pc|pcs|x)\s+(?P<name>.+?)\s*$",
@@ -51,6 +53,42 @@ _SHOPPING_RE = re.compile(
 
 def _text(value: Any) -> str:
     return str(value or "").strip()
+
+
+def _emit_week_progress(
+    hass: HomeAssistant,
+    operation_id: str,
+    phase: str,
+    *,
+    completed: int | float | None = None,
+    total: int | float | None = None,
+    message: str = "",
+    done: bool = False,
+    error: str = "",
+) -> None:
+    """Publish real weekly progress only for validated UI-owned jobs."""
+    operation_id = _text(operation_id)[:160]
+    if not operation_id:
+        return
+    completed_number = float(completed) if isinstance(completed, (int, float)) else None
+    total_number = float(total) if isinstance(total, (int, float)) else None
+    percent = None
+    if completed_number is not None and total_number is not None and total_number > 0:
+        percent = round(max(0.0, min(100.0, completed_number / total_number * 100.0)))
+    hass.bus.async_fire(EVENT_OPERATION_PROGRESS, {
+        "operationId": operation_id,
+        "kind": "week_generate",
+        "title": "Weekly meal plan",
+        "phase": str(phase or "starting"),
+        "completed": completed_number,
+        "total": total_number,
+        "percent": percent,
+        "message": str(message or "")[:400],
+        "waitingCount": 0,
+        "done": bool(done),
+        "error": str(error or "")[:300],
+        "updatedAt": datetime.now(timezone.utc).isoformat(),
+    })
 
 
 def _number(value: Any) -> float | None:
@@ -219,6 +257,119 @@ def _plan_penalty(
     before_unknown = len(before.get("unknown") or [])
     after_unknown = len(after.get("unknown") or [])
     return max(0, after_short - before_short) * 18.0 + max(0, after_unknown - before_unknown) * 2.0
+
+
+def _score_week_pool(
+    pool: list[dict[str, Any]],
+    *,
+    planned: list[dict[str, Any]],
+    inventory: Any,
+    nutrition_store,
+    cost_store,
+    goal: str,
+    slot_id: str,
+    stamp: str,
+    meal_type: str,
+    is_selected: bool,
+    shared_filters: dict | None,
+    profile_target_settings: dict[str, Any],
+    profile_daily_targets: dict[str, Any],
+    day_total: int,
+) -> dict[str, Any] | None:
+    """Score one weekly slot off the HA event loop."""
+    from .shared_recipe_filters import recipe_target_scope
+    from .nutrient_targets import daily_progress_bonus, target_bonus
+
+    before = reservation_status(planned, inventory)
+    before_short = len(before.get("shortages") or [])
+    before_unknown = len(before.get("unknown") or [])
+    day_rows = [
+        slot.get("nutrition") or (slot.get("recipe") or {}).get("nutrition") or {}
+        for slot in planned
+        if slot.get("selected") is not False and _text(slot.get("date")) == stamp
+    ]
+    day_completed = len(day_rows)
+
+    best: dict[str, Any] | None = None
+    best_score = float("-inf")
+    best_nutrition: dict[str, Any] = {}
+    best_cost: dict[str, Any] = {}
+    best_penalty = 0.0
+    best_daily_bonus = 0.0
+    best_meal_target_bonus = 0.0
+
+    for candidate in pool:
+        nutrition = calculate_recipe_nutrition_fefo(
+            candidate,
+            inventory,
+            generic=nutrition_store.generic,
+            stock_lots=nutrition_store.stock_lots,
+        )
+        if not nutrition.get("totals"):
+            nutrition = deepcopy(
+                candidate.get("catalogNutrition") or candidate.get("nutrition") or nutrition
+            )
+        nutrition_hint = nutrition_goal_bonus(nutrition, goal)
+        candidate_slot = {
+            "id": slot_id,
+            "selected": is_selected,
+            "date": stamp,
+            "mealType": meal_type,
+            "recipe": candidate,
+        }
+        after = reservation_status(planned + [candidate_slot], inventory)
+        penalty = (
+            max(0, len(after.get("shortages") or []) - before_short) * 18.0
+            + max(0, len(after.get("unknown") or []) - before_unknown) * 2.0
+        )
+        meal_target_bonus = 0.0
+        if shared_filters is None:
+            meal_targets, _meal_scope = recipe_target_scope(
+                profile_target_settings, candidate
+            )
+            meal_target_bonus = float(
+                target_bonus(nutrition, meal_targets).get("bonus") or 0.0
+            )
+        daily_hint = daily_progress_bonus(
+            day_rows,
+            nutrition,
+            profile_daily_targets,
+            fraction=min(1.0, (day_completed + 1) / max(1, day_total)),
+        )
+        score = (
+            float((candidate.get("match") or {}).get("score") or 0.0)
+            + (
+                0.0
+                if shared_filters is not None
+                else float(nutrition_hint.get("bonus") or 0.0)
+            )
+            + meal_target_bonus
+            + float(daily_hint.get("bonus") or 0.0)
+            - penalty
+        )
+        if score <= best_score:
+            continue
+        best = candidate
+        best_score = score
+        best_nutrition = nutrition
+        best_cost = calculate_recipe_cost(
+            candidate, inventory, cost_store
+        )
+        best_penalty = penalty
+        best_daily_bonus = float(daily_hint.get("bonus") or 0.0)
+        best_meal_target_bonus = meal_target_bonus
+
+    if best is None:
+        return None
+    return {
+        "recipe": best,
+        "score": best_score,
+        "nutrition": best_nutrition,
+        "cost": best_cost,
+        "penalty": best_penalty,
+        "dailyBonus": best_daily_bonus,
+        "mealTargetBonus": best_meal_target_bonus,
+    }
 
 
 async def _week_candidates(
