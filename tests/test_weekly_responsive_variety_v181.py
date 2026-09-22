@@ -130,6 +130,9 @@ class WeeklyResponsiveVarietyV181Tests(unittest.TestCase):
         self.assertIn("total_slots = max(1, len(slots))",plan)
         self.assertIn('progress("cost", completed=0, total=total_slots',plan)
         self.assertIn("completed=index",plan)
+        self.assertIn("await bridge.hass.async_add_executor_job(",plan)
+        self.assertIn("calculate_recipe_nutrition_fast",plan)
+        self.assertIn("_inventory_views, visible, inventory",plan)
 
     def test_recipe_cost_calculator_cannot_block_ha_loop(self):
         source=COST_CACHE.read_text(encoding="utf-8")
