@@ -831,6 +831,43 @@ async def _state(
         progress=progress,
         reuse_costs=reuse_costs,
     )
+
+    # Week purchases use the same presentation contract as the main shopping
+    # list: UI language first, supermarket language second when different, then
+    # the original recipe label when different again.
+    from .shopping_presentation import (
+        COUNTRY_LANGUAGE,
+        normalize_supermarket_language,
+        shopping_rows,
+    )
+    market_settings = cost_store.settings
+    country = market_settings.get("country") or getattr(hass.config, "country", "")
+    ui_code = normalize_supermarket_language(
+        ui_language,
+        country=country,
+        fallback=getattr(hass.config, "language", None) or "en",
+    )
+    supermarket_code = normalize_supermarket_language(
+        market_settings.get("supermarketLanguage"),
+        country=country,
+        fallback=COUNTRY_LANGUAGE.get(str(country or "").upper(), ui_code),
+    )
+    shopping_sources = [
+        item
+        for slot in state.get("slots") or []
+        if slot.get("selected") is not False
+        for item in (slot.get("recipe") or {}).get("ingredients") or []
+        if isinstance(item, dict)
+    ]
+    state["shoppingDelta"] = await hass.async_add_executor_job(
+        shopping_rows,
+        state.get("shoppingDelta") or [],
+        ui_code,
+        country,
+        shopping_sources,
+        supermarket_code,
+    )
+
     state.update({
         "costSettings": cost_store.settings,
         "costReferenceCount": cost_store.snapshot()["referenceCount"],
@@ -1166,6 +1203,7 @@ async def ws_week_select(hass, connection, msg) -> None:
     vol.Optional("shared_filters"): dict,
     vol.Optional("entry_id"): str,
     vol.Optional("ui_language"): str,
+    vol.Optional("supermarket_language"): str,
 })
 @websocket_api.async_response
 async def ws_week_add_shopping(hass, connection, msg) -> None:
@@ -1197,25 +1235,36 @@ async def ws_week_add_shopping(hass, connection, msg) -> None:
                     "Resolve those recipes before adding the week to shopping."
                 )
             rows = snapshot["shoppingDelta"]
-            from .shopping_presentation import shopping_rows, normalize_supermarket_language
+            from .shopping_presentation import (
+                COUNTRY_LANGUAGE,
+                normalize_supermarket_language,
+                shopping_rows,
+            )
             cost_store = await cost_store_for_bridge(bridge)
             market_settings = cost_store.settings
-            shopping_language = normalize_supermarket_language(
-                msg.get("ui_language") or market_settings.get("supermarketLanguage"),
-                country=market_settings.get("country") or getattr(hass.config, "country", ""),
-                fallback="en",
+            country = market_settings.get("country") or getattr(hass.config, "country", "")
+            ui_code = normalize_supermarket_language(
+                msg.get("ui_language"),
+                country=country,
+                fallback=getattr(hass.config, "language", None) or "en",
+            )
+            supermarket_code = normalize_supermarket_language(
+                msg.get("supermarket_language") or market_settings.get("supermarketLanguage"),
+                country=country,
+                fallback=COUNTRY_LANGUAGE.get(str(country or "").upper(), ui_code),
             )
             rows = await hass.async_add_executor_job(
                 shopping_rows,
                 rows,
-                shopping_language,
-                market_settings.get("country") or getattr(hass.config, "country", ""),
+                ui_code,
+                country,
                 [
                     item
                     for slot in snapshot["slots"]
                     if slot.get("selected") is not False
                     for item in (slot.get("recipe") or {}).get("ingredients") or []
                 ],
+                supermarket_code,
             )
             result = await _shopping_add(hass, rows)
             result["shoppingDelta"] = rows
