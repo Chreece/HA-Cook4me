@@ -11,7 +11,7 @@ class PersistentUiStateV179Tests(unittest.TestCase):
     def test_v179_is_active_and_cache_busted(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
-        active=(FRONTEND/"cook4me-panel-v179.js").read_text(encoding="utf-8")
+        active=(FRONTEND/"cook4me-panel-v180.js").read_text(encoding="utf-8")
         inherited=(FRONTEND/"cook4me-panel-v179.js").read_text(encoding="utf-8")
         self.assertIn("cook4me-recipe-hub-panel-v180",panel)
         self.assertIn("cook4me-panel-v180.js",panel)
