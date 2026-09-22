@@ -809,10 +809,13 @@ async def _state(
     *,
     history_days: int = 30,
     shared_filters=None,
-    ui_language="en",
+    ui_language=None,
     progress=None,
     reuse_costs=False,
 ) -> dict[str, Any]:
+    ui_language = _text(
+        ui_language or getattr(hass.config, "language", None) or "en"
+    )
     lifecycle = await meal_lifecycle_store_for_bridge(bridge)
     cost_store = await cost_store_for_bridge(bridge)
     inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
