@@ -690,8 +690,40 @@ async def _generate_week(
     # by another client while this generation was in flight.
     if lifecycle.slots != original_slots:
         raise ValueError("The weekly plan changed during generation. Refresh it and try again.")
+    if progress:
+        progress("persist", completed=0, total=1, message="Saving weekly plan")
+    previous_shape = {
+        row.get("id"): (
+            _text(row.get("leftoverId")),
+            recipe_identity(row.get("recipe") or {}),
+        )
+        for row in original_slots
+        if week_start <= _text(row.get("date")) <= end
+    }
+    planned_shape = {
+        row.get("id"): (
+            _text(row.get("leftoverId")),
+            recipe_identity(row.get("recipe") or {}),
+        )
+        for row in planned
+    }
+    changed_slots = sum(
+        previous_shape.get(slot_id) != shape
+        for slot_id, shape in planned_shape.items()
+    )
     await lifecycle.async_replace_week(week_start, planned)
-    return {"catalogErrors": errors, "slotCount": len(planned), "unchangedSlotIds": unchanged}
+    if progress:
+        progress("persist", completed=1, total=1, message="Weekly plan saved")
+    return {
+        "catalogErrors": errors,
+        "slotCount": len(planned),
+        "unchangedSlotIds": unchanged,
+        "candidateCount": len(candidates),
+        "candidateLimit": _MAX_WEEK_CANDIDATES,
+        "regeneratedFromExisting": bool(regeneration_avoid),
+        "regenerationFallbackSlotIds": regeneration_fallback_slots,
+        "changedSlotCount": changed_slots,
+    }
 
 
 def _leftover_recipe(leftover, meals):
