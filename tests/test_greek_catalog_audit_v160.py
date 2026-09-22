@@ -37,7 +37,7 @@ class GreekCatalogAuditV160Tests(unittest.TestCase):
             "jar of fish stock":"Βάζο ζωμού ψαριού",
             "small bottle of almond flavouring":"Μικρό μπουκαλάκι αρώματος αμυγδάλου",
             "malted barley packet":"Συσκευασία βυνοποιημένου κριθαριού",
-            "package of pre-cooked udon noodle":"Συσκευασία προμαγειρεμένων udon noodles",
+            "package of pre-cooked udon noodle":"Συσκευασία προμαγειρεμένων νουντλς udon",
             "package of salted nachos":"Συσκευασία αλατισμένων nachos",
             "packet chinese soup":"Φακελάκι κινέζικης σούπας",
         }
