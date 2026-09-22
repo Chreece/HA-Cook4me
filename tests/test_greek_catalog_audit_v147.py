@@ -38,7 +38,7 @@ class GreekCatalogAuditV147Tests(unittest.TestCase):
             "mace":"Μασίς (άνθος μοσχοκάρυδου)",
             "saffron":"Σαφράν (κρόκος)",
             "red cabbage":"Μωβ λάχανο",
-            "cavolo nero":"Cavolo nero (μαύρο λάχανο)",
+            "cavolo nero":"Μαύρο λάχανο (cavolo nero)",
             "corn on the cob":"Καλαμπόκι στο κοτσάνι",
             "pork spare rib":"Χοιρινά παϊδάκια (spare ribs)",
             "sole":"Γλώσσα (ψάρι)",
