@@ -27,12 +27,17 @@ class GreekCatalogAuditV181Tests(unittest.TestCase):
             labels["store-bought yakiniku sauce"],
             "Έτοιμη σάλτσα yakiniku",
         )
+        self.assertEqual(
+            labels["pickled jalapeno rings"],
+            "Ροδέλες χαλαπένιο τουρσί",
+        )
 
     def test_revised_display_labels_are_searchable(self):
         data=json.loads(CURATED.read_text(encoding="utf-8"))
         for key in (
             "cornflour mixed into a little stock",
             "store-bought yakiniku sauce",
+            "pickled jalapeno rings",
         ):
             aliases={str(value).strip().casefold() for value in data["searchAliases"][key]}
             self.assertIn(key.casefold(),aliases,key)
@@ -41,9 +46,9 @@ class GreekCatalogAuditV181Tests(unittest.TestCase):
     def test_thirty_sixth_audit_scope(self):
         data=json.loads(CURATED.read_text(encoding="utf-8"))
         alias_entries=sum(len(values) for values in data["searchAliases"].values())
-        self.assertGreaterEqual(len(data["labels"]),1277)
+        self.assertGreaterEqual(len(data["labels"]),1278)
         self.assertEqual(len(data["searchAliases"]),3689)
-        self.assertGreaterEqual(alias_entries,8790)
+        self.assertGreaterEqual(alias_entries,8791)
         self.assertIn("thirty-sixth audit",data["translationSource"])
 
 
