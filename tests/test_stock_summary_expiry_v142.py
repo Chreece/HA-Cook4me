@@ -12,12 +12,12 @@ class StockSummaryExpiryV142Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v142.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v174",panel)
-        self.assertIn("cook4me-panel-v174.js",panel)
-        self.assertIn("/cook4me_static/2026.9.22.1",panel)
-        self.assertIn("?v=2026.9.22.1",panel)
+        self.assertIn("cook4me-recipe-hub-panel-v175",panel)
+        self.assertIn("cook4me-panel-v175.js",panel)
+        self.assertIn("/cook4me_static/2026.9.22.2",panel)
+        self.assertIn("?v=2026.9.22.2",panel)
         self.assertIn("async_register_websocket_v39",panel)
-        self.assertIn('"version": "2026.9.22.1"',manifest)
+        self.assertIn('"version": "2026.9.22.2"',manifest)
         self.assertIn(
             "if(!customElements.get(V141))await import('./cook4me-panel-v141.js?v=2026.9.21.6')",
             ui,
