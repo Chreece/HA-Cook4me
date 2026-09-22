@@ -33,7 +33,7 @@ class GreekCatalogAuditV152Tests(unittest.TestCase):
 
     def test_far_ro_and_jujube_family_are_not_literal_mislabels(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
-        self.assertEqual(labels["quick-cook farro"],"Farro γρήγορου μαγειρέματος")
+        self.assertEqual(labels["quick-cook farro"],"Φάρρο γρήγορου μαγειρέματος (farro)")
         self.assertEqual(labels["red dates"],"Κόκκινα τζίτζιφα (jujube / Chinese dates)")
         self.assertEqual(labels["dried red dates"],"Αποξηραμένα κόκκινα τζίτζιφα (jujube)")
         self.assertEqual(labels["jujube"],"Τζίτζιφα (jujube)")
@@ -47,7 +47,7 @@ class GreekCatalogAuditV152Tests(unittest.TestCase):
             "dark soy sauce":"Σκούρα σάλτσα σόγιας (dark soy sauce)",
             "sweet soy sauce":"Γλυκιά σάλτσα σόγιας (sweet soy sauce)",
             "nuoc mam fish sauce":"Nước mắm (βιετναμέζικη σάλτσα ψαριού)",
-            "ponzu":"Ponzu (ιαπωνική σάλτσα εσπεριδοειδών)",
+            "ponzu":"Σάλτσα πόνζου (ponzu)",
             "shiro dashi":"Shiro dashi (λευκή βάση dashi)",
             "doubanjiang":"Doubanjiang (πικάντικη ζυμωμένη πάστα φασολιών)",
             "shaoxing wine":"Shaoxing (κινέζικο κρασί ρυζιού)",
