@@ -14,6 +14,8 @@ class ScannerManualFallbackV180Tests(unittest.TestCase):
         self.assertIn("[data-v111-guide]",ui)
         self.assertIn("if(!inside)",ui)
         self.assertIn("_v180OpenManualFromFrame()",ui)
+        self.assertIn("this._v78StopCamera?.()",ui)
+        self.assertIn("d.mode='manual'",ui)
         self.assertIn("this._v112Editor?.(true,'product')",ui)
 
     def test_no_camera_goes_directly_to_manual_mode(self):
