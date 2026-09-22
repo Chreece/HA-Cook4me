@@ -117,7 +117,8 @@ class WeekShoppingStorageV182Tests(unittest.TestCase):
                 )
                 status=self.meal.reservation_status(slots,inventory)
                 self.assertEqual(status["shortages"],[])
-                self.assertEqual(status["items"][0]["available"],needed)
+                self.assertEqual(status["items"][0]["available"],stored)
+                self.assertEqual(status["items"][0]["reserved"],needed)
                 self.assertEqual(self.meal.shopping_delta(slots,inventory),[])
 
     def test_ingredient_id_is_not_dropped_to_name_identity(self):
