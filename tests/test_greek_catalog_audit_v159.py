@@ -24,11 +24,11 @@ class GreekCatalogAuditV159Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v159.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v175",panel)
-        self.assertIn("cook4me-panel-v175.js",panel)
-        self.assertIn("/cook4me_static/2026.9.22.2",panel)
-        self.assertIn("?v=2026.9.22.2",panel)
-        self.assertIn('"version": "2026.9.22.2"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v176",panel)
+        self.assertIn("cook4me-panel-v176.js",panel)
+        self.assertIn("/cook4me_static/2026.9.22.3",panel)
+        self.assertIn("?v=2026.9.22.3",panel)
+        self.assertIn('"version": "2026.9.22.3"',manifest)
         self.assertIn("cook4me-panel-v158.js?v=2026.9.21.23",ui)
 
     def test_bunch_and_handful_quantities_are_preserved(self):
