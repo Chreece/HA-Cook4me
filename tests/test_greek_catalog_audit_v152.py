@@ -60,7 +60,7 @@ class GreekCatalogAuditV152Tests(unittest.TestCase):
         self.assertEqual(labels["gelatin sheet"],"Φύλλο ζελατίνης")
         self.assertEqual(labels["gelatine leaf"],"Φύλλο ζελατίνης")
         self.assertEqual(labels["leaf gelatine"],"Φύλλο ζελατίνης")
-        self.assertEqual(labels["gelatin sheet soaked in cold water"],"Μουλιασμένο φύλλο ζελατίνης")
+        self.assertEqual(labels["gelatin sheet soaked in cold water"],"Φύλλο ζελατίνης μουλιασμένο σε κρύο νερό")
         self.assertEqual(labels["pre-soaked gelatin sheet"],"Προμουλιασμένο φύλλο ζελατίνης")
         self.assertEqual(labels["gelatin sheets"],"Φύλλα ζελατίνης")
 
