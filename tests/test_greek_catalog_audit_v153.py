@@ -24,11 +24,11 @@ class GreekCatalogAuditV153Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v153.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v179",panel)
-        self.assertIn("cook4me-panel-v179.js",panel)
-        self.assertIn("/cook4me_static/2026.9.22.6",panel)
-        self.assertIn("?v=2026.9.22.6",panel)
-        self.assertIn('"version": "2026.9.22.6"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v180",panel)
+        self.assertIn("cook4me-panel-v180.js",panel)
+        self.assertIn("/cook4me_static/2026.9.22.7",panel)
+        self.assertIn("?v=2026.9.22.7",panel)
+        self.assertIn('"version": "2026.9.22.7"',manifest)
         self.assertIn("cook4me-panel-v152.js?v=2026.9.21.17",ui)
 
     def test_condensed_and_evaporated_milk_are_distinguished(self):
@@ -59,7 +59,7 @@ class GreekCatalogAuditV153Tests(unittest.TestCase):
             "fermented cucumber brine":"Άλμη από ζυμωμένα αγγούρια",
             "lightly fermented cucumber":"Ελαφρά ζυμωμένο αγγούρι",
             "salted fermented shrimp":"Saeujeot (αλατισμένες ζυμωμένες γαρίδες)",
-            "sugar snap pea":"Sugar snap peas (τραγανά γλυκομπίζελα)",
+            "sugar snap pea":"Τραγανά γλυκομπίζελα (sugar snap peas)",
         }
         for key,value in expected.items():
             self.assertEqual(labels.get(key),value)

@@ -24,11 +24,11 @@ class GreekCatalogAuditV160Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v160.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v179",panel)
-        self.assertIn("cook4me-panel-v179.js",panel)
-        self.assertIn("/cook4me_static/2026.9.22.6",panel)
-        self.assertIn("?v=2026.9.22.6",panel)
-        self.assertIn('"version": "2026.9.22.6"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v180",panel)
+        self.assertIn("cook4me-panel-v180.js",panel)
+        self.assertIn("/cook4me_static/2026.9.22.7",panel)
+        self.assertIn("?v=2026.9.22.7",panel)
+        self.assertIn('"version": "2026.9.22.7"',manifest)
         self.assertIn("cook4me-panel-v159.js?v=2026.9.21.24",ui)
 
     def test_packaging_words_are_not_dropped(self):
@@ -37,7 +37,7 @@ class GreekCatalogAuditV160Tests(unittest.TestCase):
             "jar of fish stock":"Βάζο ζωμού ψαριού",
             "small bottle of almond flavouring":"Μικρό μπουκαλάκι αρώματος αμυγδάλου",
             "malted barley packet":"Συσκευασία βυνοποιημένου κριθαριού",
-            "package of pre-cooked udon noodle":"Συσκευασία προμαγειρεμένων udon noodles",
+            "package of pre-cooked udon noodle":"Συσκευασία προμαγειρεμένων νουντλς udon",
             "package of salted nachos":"Συσκευασία αλατισμένων nachos",
             "packet chinese soup":"Φακελάκι κινέζικης σούπας",
         }

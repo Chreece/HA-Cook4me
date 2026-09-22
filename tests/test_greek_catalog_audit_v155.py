@@ -24,11 +24,11 @@ class GreekCatalogAuditV155Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v155.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v179",panel)
-        self.assertIn("cook4me-panel-v179.js",panel)
-        self.assertIn("/cook4me_static/2026.9.22.6",panel)
-        self.assertIn("?v=2026.9.22.6",panel)
-        self.assertIn('"version": "2026.9.22.6"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v180",panel)
+        self.assertIn("cook4me-panel-v180.js",panel)
+        self.assertIn("/cook4me_static/2026.9.22.7",panel)
+        self.assertIn("?v=2026.9.22.7",panel)
+        self.assertIn('"version": "2026.9.22.7"',manifest)
         self.assertIn("cook4me-panel-v154.js?v=2026.9.21.19",ui)
 
     def test_singular_food_labels_are_not_pluralized(self):
@@ -41,11 +41,11 @@ class GreekCatalogAuditV155Tests(unittest.TestCase):
     def test_bakery_and_dairy_market_names_are_clear(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
-            "flatbread":"Flatbread (πλατύ ψωμί)",
+            "flatbread":"Πλατύ ψωμί (flatbread)",
             "brick pastry sheets":"Φύλλα μπρικ (brick pastry)",
             "baguette slices":"Φέτες μπαγκέτας",
-            "cottage cheese":"Cottage cheese (τυρί κότατζ)",
-            "buttermilk":"Buttermilk (βουτυρόγαλα)",
+            "cottage cheese":"Τυρί κότατζ (cottage cheese)",
+            "buttermilk":"Βουτυρόγαλα (buttermilk)",
             "skyr":"Skyr (σκιρ)",
             "processed cheese portion":"Μερίδα επεξεργασμένου τυριού",
             "processed cheese portions":"Μερίδες επεξεργασμένου τυριού",
@@ -76,7 +76,7 @@ class GreekCatalogAuditV155Tests(unittest.TestCase):
             "ajvar":"Ajvar (βαλκανική πάστα ψητής πιπεριάς)",
             "sambal":"Sambal (ινδονησιακό καυτερό καρύκευμα)",
             "fish sauce":"Σάλτσα ψαριού (fish sauce)",
-            "miso paste":"Miso paste (πάστα μίσο)",
+            "miso paste":"Πάστα μίσο (miso paste)",
             "salt-pickled cherry blossoms":"Άνθη κερασιάς σε αλάτι (sakura)",
         }
         for key,value in expected.items():

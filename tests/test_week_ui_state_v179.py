@@ -11,13 +11,15 @@ class PersistentUiStateV179Tests(unittest.TestCase):
     def test_v179_is_active_and_cache_busted(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
-        ui=(FRONTEND/"cook4me-panel-v179.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v179",panel)
-        self.assertIn("cook4me-panel-v179.js",panel)
-        self.assertIn("/cook4me_static/2026.9.22.6",panel)
-        self.assertIn("?v=2026.9.22.6",panel)
-        self.assertIn('"version": "2026.9.22.6"',manifest)
-        self.assertIn("cook4me-panel-v178.js?v=2026.9.22.5",ui)
+        active=(FRONTEND/"cook4me-panel-v180.js").read_text(encoding="utf-8")
+        inherited=(FRONTEND/"cook4me-panel-v179.js").read_text(encoding="utf-8")
+        self.assertIn("cook4me-recipe-hub-panel-v180",panel)
+        self.assertIn("cook4me-panel-v180.js",panel)
+        self.assertIn("/cook4me_static/2026.9.22.7",panel)
+        self.assertIn("?v=2026.9.22.7",panel)
+        self.assertIn('"version": "2026.9.22.7"',manifest)
+        self.assertIn("cook4me-panel-v179.js?v=2026.9.22.6",active)
+        self.assertIn("cook4me-panel-v178.js?v=2026.9.22.5",inherited)
 
     def test_state_is_application_wide_per_user_entry_and_per_tab(self):
         ui=(FRONTEND/"cook4me-panel-v179.js").read_text(encoding="utf-8")

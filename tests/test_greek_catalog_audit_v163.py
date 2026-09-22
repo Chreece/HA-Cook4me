@@ -24,11 +24,11 @@ class GreekCatalogAuditV163Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v163.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v179",panel)
-        self.assertIn("cook4me-panel-v179.js",panel)
-        self.assertIn("/cook4me_static/2026.9.22.6",panel)
-        self.assertIn("?v=2026.9.22.6",panel)
-        self.assertIn('"version": "2026.9.22.6"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v180",panel)
+        self.assertIn("cook4me-panel-v180.js",panel)
+        self.assertIn("/cook4me_static/2026.9.22.7",panel)
+        self.assertIn("?v=2026.9.22.7",panel)
+        self.assertIn('"version": "2026.9.22.7"',manifest)
         self.assertIn("cook4me-panel-v162.js?v=2026.9.21.27",ui)
 
     def test_starch_mixture_context_is_preserved(self):

@@ -24,11 +24,11 @@ class GreekCatalogAuditV152Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v152.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v179",panel)
-        self.assertIn("cook4me-panel-v179.js",panel)
-        self.assertIn("/cook4me_static/2026.9.22.6",panel)
-        self.assertIn("?v=2026.9.22.6",panel)
-        self.assertIn('"version": "2026.9.22.6"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v180",panel)
+        self.assertIn("cook4me-panel-v180.js",panel)
+        self.assertIn("/cook4me_static/2026.9.22.7",panel)
+        self.assertIn("?v=2026.9.22.7",panel)
+        self.assertIn('"version": "2026.9.22.7"',manifest)
         self.assertIn("cook4me-panel-v151.js?v=2026.9.21.16",ui)
 
     def test_far_ro_and_jujube_family_are_not_literal_mislabels(self):
@@ -43,9 +43,9 @@ class GreekCatalogAuditV152Tests(unittest.TestCase):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
             "mentsuyu":"Mentsuyu (συμπυκνωμένη βάση για νουντλς)",
-            "light soy sauce":"Light soy sauce (ανοιχτόχρωμη σάλτσα σόγιας)",
-            "dark soy sauce":"Dark soy sauce (σκούρα σάλτσα σόγιας)",
-            "sweet soy sauce":"Sweet soy sauce (γλυκιά σάλτσα σόγιας)",
+            "light soy sauce":"Ανοιχτόχρωμη σάλτσα σόγιας (light soy sauce)",
+            "dark soy sauce":"Σκούρα σάλτσα σόγιας (dark soy sauce)",
+            "sweet soy sauce":"Γλυκιά σάλτσα σόγιας (sweet soy sauce)",
             "nuoc mam fish sauce":"Nước mắm (βιετναμέζικη σάλτσα ψαριού)",
             "ponzu":"Ponzu (ιαπωνική σάλτσα εσπεριδοειδών)",
             "shiro dashi":"Shiro dashi (λευκή βάση dashi)",
