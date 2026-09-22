@@ -1075,35 +1075,56 @@ async def ws_week_add_shopping(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         lifecycle = await meal_lifecycle_store_for_bridge(bridge)
+        # Shopping is a plan-derived mutation. Keep its snapshot and writes in
+        # the same FIFO lane as generation so it cannot add shortages from a
+        # half-replaced week.
         async with lifecycle.weekly_mutation():
-            snapshot = lifecycle.snapshot(bridge.recipe_hub.profile.get("houseIngredients") or [],
-                start_date=dt_util.now().date())
+            snapshot = lifecycle.snapshot(
+                bridge.recipe_hub.profile.get("houseIngredients") or [],
+                start_date=dt_util.now().date(),
+            )
             if msg.get("shared_filters") is not None:
-                snapshot = await _state(hass, bridge, shared_filters=msg["shared_filters"], ui_language=msg.get("ui_language", "en"))
-            if any((((slot.get("recipe") or {}).get("match") or {}).get("requiresSubstitutions")) for slot in snapshot["slots"] if slot.get("selected") is not False):
-                raise ValueError("Some planned recipes still need ingredient replacements. Resolve those recipes before adding the week to shopping.")
+                snapshot = await _state(
+                    hass,
+                    bridge,
+                    shared_filters=msg["shared_filters"],
+                    ui_language=msg.get("ui_language", "en"),
+                )
+            if any(
+                (((slot.get("recipe") or {}).get("match") or {}).get("requiresSubstitutions"))
+                for slot in snapshot["slots"]
+                if slot.get("selected") is not False
+            ):
+                raise ValueError(
+                    "Some planned recipes still need ingredient replacements. "
+                    "Resolve those recipes before adding the week to shopping."
+                )
             rows = snapshot["shoppingDelta"]
-        from .shopping_presentation import shopping_rows, normalize_supermarket_language
-        cost_store = await cost_store_for_bridge(bridge)
-        market_settings = cost_store.settings
-        shopping_language = normalize_supermarket_language(
-            msg.get("ui_language") or market_settings.get("supermarketLanguage"),
-            country=market_settings.get("country") or getattr(hass.config, "country", ""),
-            fallback="en",
-        )
-        rows = await hass.async_add_executor_job(
-            shopping_rows,
-            rows,
-            shopping_language,
-            market_settings.get("country") or getattr(hass.config, "country", ""),
-            [item for slot in snapshot["slots"] if slot.get("selected") is not False for item in (slot.get("recipe") or {}).get("ingredients") or []],
-        )
-        result = await _shopping_add(hass, rows)
-        result["shoppingDelta"] = rows
+            from .shopping_presentation import shopping_rows, normalize_supermarket_language
+            cost_store = await cost_store_for_bridge(bridge)
+            market_settings = cost_store.settings
+            shopping_language = normalize_supermarket_language(
+                msg.get("ui_language") or market_settings.get("supermarketLanguage"),
+                country=market_settings.get("country") or getattr(hass.config, "country", ""),
+                fallback="en",
+            )
+            rows = await hass.async_add_executor_job(
+                shopping_rows,
+                rows,
+                shopping_language,
+                market_settings.get("country") or getattr(hass.config, "country", ""),
+                [
+                    item
+                    for slot in snapshot["slots"]
+                    if slot.get("selected") is not False
+                    for item in (slot.get("recipe") or {}).get("ingredients") or []
+                ],
+            )
+            result = await _shopping_add(hass, rows)
+            result["shoppingDelta"] = rows
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)
-
 
 @websocket_api.websocket_command({
     vol.Required("type"): "cook4me/v20/recipe_cost",
