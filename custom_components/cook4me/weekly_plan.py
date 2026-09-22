@@ -2,7 +2,7 @@
 from copy import deepcopy
 
 
-async def refresh_plan(bridge, state, *, filters=None, language="en"):
+async def refresh_plan(bridge, state, *, filters=None, language="en", progress=None):
     from .automatic_prices import offline_recipe_price
     from .release_catalog import async_warm_release_catalog
     from .shared_recipe_runtime import processor
@@ -13,9 +13,14 @@ async def refresh_plan(bridge, state, *, filters=None, language="en"):
     leftovers = {row["id"]: row for row in state.get("leftovers", [])}
     slots = state.get("slots", [])
     rows = []
-    for slot in slots:
+    total_slots = max(1, len(slots))
+    if progress:
+        progress("cost", completed=0, total=total_slots, message="Refreshing planned meals")
+    for index, slot in enumerate(slots, start=1):
         recipe = slot.get("recipe") or leftovers.get(slot.get("leftoverId"), {}).get("recipe")
         if not recipe:
+            if progress:
+                progress("cost", completed=index, total=total_slots, message="Refreshing planned meals")
             continue
         recipe = deepcopy(recipe)
         if not slot.get("leftoverId"):
@@ -28,6 +33,13 @@ async def refresh_plan(bridge, state, *, filters=None, language="en"):
             slot["cost"] = deepcopy(recipe["cost"])
         recipe["_weeklySlotId"] = slot["id"]
         rows.append(recipe)
+        if progress:
+            progress(
+                "cost",
+                completed=index,
+                total=total_slots,
+                message=str(recipe.get("title") or slot.get("mealType") or "Planned meal"),
+            )
     if filters is not None:
         selected = filters.get("languages")
         if isinstance(selected, list):
