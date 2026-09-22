@@ -51,7 +51,7 @@ class GreekCatalogAuditV158Tests(unittest.TestCase):
     def test_portion_and_piece_weights_are_not_lost(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
-            "atsuage fried tofu, 130 g per piece":"Atsuage (τηγανητό τόφου), 130 g το τεμάχιο",
+            "atsuage fried tofu, 130 g per piece":"Τηγανητό τόφου ατσουάγκε (atsuage), 130 g το τεμάχιο",
             "cod fillets, 150 g each":"Φιλέτα μπακαλιάρου, 150 g το καθένα",
             "french quenelles, 40–50 g each":"Γαλλικές κενέλ, 40–50 g η καθεμία",
             "goose breast, 400 g each":"Στήθος χήνας, περίπου 400 g ανά τεμάχιο",

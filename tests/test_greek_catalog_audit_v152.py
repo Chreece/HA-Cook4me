@@ -42,15 +42,15 @@ class GreekCatalogAuditV152Tests(unittest.TestCase):
     def test_asian_condiments_keep_package_names(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
-            "mentsuyu":"Mentsuyu (συμπυκνωμένη βάση για νουντλς)",
+            "mentsuyu":"Συμπυκνωμένη βάση για νουντλς μεντσούγιου (mentsuyu)",
             "light soy sauce":"Ανοιχτόχρωμη σάλτσα σόγιας (light soy sauce)",
             "dark soy sauce":"Σκούρα σάλτσα σόγιας (dark soy sauce)",
             "sweet soy sauce":"Γλυκιά σάλτσα σόγιας (sweet soy sauce)",
-            "nuoc mam fish sauce":"Nước mắm (βιετναμέζικη σάλτσα ψαριού)",
+            "nuoc mam fish sauce":"Βιετναμέζικη σάλτσα ψαριού νουόκ μαμ (nước mắm)",
             "ponzu":"Σάλτσα πόνζου (ponzu)",
-            "shiro dashi":"Shiro dashi (λευκή βάση dashi)",
-            "doubanjiang":"Doubanjiang (πικάντικη ζυμωμένη πάστα φασολιών)",
-            "shaoxing wine":"Shaoxing (κινέζικο κρασί ρυζιού)",
+            "shiro dashi":"Λευκή βάση ντάσι (shiro dashi)",
+            "doubanjiang":"Πικάντικη ζυμωμένη πάστα φασολιών ντουμπαντζιάνγκ (doubanjiang)",
+            "shaoxing wine":"Κινέζικο κρασί ρυζιού Σαοσίνγκ (Shaoxing)",
         }
         for key,value in expected.items():
             self.assertEqual(labels.get(key),value)

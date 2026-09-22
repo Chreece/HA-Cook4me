@@ -74,13 +74,13 @@ class GreekCatalogAuditV156Tests(unittest.TestCase):
     def test_asian_sauces_and_red_bean_pastes_keep_market_names(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
-            "tianmianjiang sweet bean sauce":"Tianmianjiang (γλυκιά πάστα φασολιών)",
-            "yakiniku sauce":"Yakiniku sauce (ιαπωνική σάλτσα για ψητό κρέας)",
-            "yakitori sauce":"Yakitori tare (ιαπωνική σάλτσα yakitori)",
+            "tianmianjiang sweet bean sauce":"Γλυκιά πάστα φασολιών τιανμιεντζιάνγκ (tianmianjiang)",
+            "yakiniku sauce":"Ιαπωνική σάλτσα για ψητό κρέας γιακινίκου (yakiniku)",
+            "yakitori sauce":"Ιαπωνική σάλτσα τάρε για γιακιτόρι (yakitori tare)",
             "teriyaki marinade sauce":"Σάλτσα / μαρινάδα teriyaki",
-            "sweet red bean paste":"Anko (γλυκιά πάστα κόκκινων φασολιών)",
-            "smooth red bean paste":"Koshi-an (λεία πάστα κόκκινων φασολιών)",
-            "chunky red bean paste":"Tsubu-an (πάστα κόκκινων φασολιών με κομμάτια)",
+            "sweet red bean paste":"Γλυκιά πάστα κόκκινων φασολιών άνκο (anko)",
+            "smooth red bean paste":"Λεία πάστα κόκκινων φασολιών κόσιαν (koshi-an)",
+            "chunky red bean paste":"Πάστα κόκκινων φασολιών με κομμάτια τσουμπουάν (tsubu-an)",
         }
         for key,value in expected.items():
             self.assertEqual(labels.get(key),value)

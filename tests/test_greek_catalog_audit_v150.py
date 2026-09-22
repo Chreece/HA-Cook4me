@@ -34,7 +34,7 @@ class GreekCatalogAuditV150Tests(unittest.TestCase):
     def test_fifth_pass_fixes_deli_and_preserved_food_terms(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
-            "milk jam":"Dulce de leche (καραμελωμένο γάλα)",
+            "milk jam":"Καραμελωμένο γάλα (dulce de leche)",
             "preserved lemon":"Λεμόνι διατηρημένο σε αλάτι (preserved lemon)",
             "bacon lardon":"Κυβάκια μπέικον (lardons)",
             "smoked bacon lardon":"Καπνιστά κυβάκια μπέικον (lardons)",
@@ -50,8 +50,8 @@ class GreekCatalogAuditV150Tests(unittest.TestCase):
         expected={
             "mold-ripened cheese":"Τυρί ωρίμανσης με ευγενή μούχλα",
             "melting cheese":"Τυρί για λιώσιμο",
-            "fromage frais":"Fromage frais (φρέσκο τυρί)",
-            "ricotta salata":"Ricotta salata (αλατισμένη ρικότα)",
+            "fromage frais":"Φρέσκο τυρί (fromage frais)",
+            "ricotta salata":"Αλατισμένη ρικότα (ricotta salata)",
             "canola oil":"Κραμβέλαιο (canola)",
             "peanut oil":"Λάδι αράπικου φιστικιού (αραχιδέλαιο)",
             "worcestershire sauce":"Σάλτσα Worcestershire (Γούστερ)",

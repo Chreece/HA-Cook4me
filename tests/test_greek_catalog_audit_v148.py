@@ -50,7 +50,7 @@ class GreekCatalogAuditV148Tests(unittest.TestCase):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
             "bonito flakes":"Κατσουομπούσι (νιφάδες παλαμίδας)",
-            "sake lees":"Sake kasu (υπόλειμμα ζύμωσης σάκε)",
+            "sake lees":"Υπόλειμμα ζύμωσης σάκε (sake kasu)",
             "takuan pickled daikon":"Τακουάν (ντάικον τουρσί)",
             "doenjang soybean paste":"Ντοεντζάνγκ (κορεάτικη πάστα σόγιας)",
             "wonton dumplings":"Γουόντον",
