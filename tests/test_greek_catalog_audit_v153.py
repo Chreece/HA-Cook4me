@@ -24,11 +24,11 @@ class GreekCatalogAuditV153Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v153.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v177",panel)
-        self.assertIn("cook4me-panel-v177.js",panel)
-        self.assertIn("/cook4me_static/2026.9.22.4",panel)
-        self.assertIn("?v=2026.9.22.4",panel)
-        self.assertIn('"version": "2026.9.22.4"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v178",panel)
+        self.assertIn("cook4me-panel-v178.js",panel)
+        self.assertIn("/cook4me_static/2026.9.22.5",panel)
+        self.assertIn("?v=2026.9.22.5",panel)
+        self.assertIn('"version": "2026.9.22.5"',manifest)
         self.assertIn("cook4me-panel-v152.js?v=2026.9.21.17",ui)
 
     def test_condensed_and_evaporated_milk_are_distinguished(self):
@@ -71,7 +71,7 @@ class GreekCatalogAuditV153Tests(unittest.TestCase):
             "thick tofu skin":"Yuba (παχιά πέτσα τόφου)",
             "atsuage fried tofu":"Atsuage (τηγανητό τόφου)",
             "firm atsuage fried tofu":"Σφιχτό atsuage (τηγανητό τόφου)",
-            "large ganmodoki fried tofu":"Ganmodoki (τηγανητό τόφου με λαχανικά)",
+            "large ganmodoki fried tofu":"Μεγάλο Ganmodoki (τηγανητό τόφου με λαχανικά)",
         }
         for key,value in expected.items():
             self.assertEqual(labels.get(key),value)

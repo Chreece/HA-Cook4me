@@ -18,15 +18,15 @@ INTENTIONAL_PARSER_FRAGMENTS={
 
 
 class GreekCatalogAuditV177Tests(unittest.TestCase):
-    def test_v177_is_active_and_versioned(self):
+    def test_v177_is_inherited_by_active_v178(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v177.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v177",panel)
-        self.assertIn("cook4me-panel-v177.js",panel)
-        self.assertIn("/cook4me_static/2026.9.22.4",panel)
-        self.assertIn("?v=2026.9.22.4",panel)
-        self.assertIn('"version": "2026.9.22.4"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v178",panel)
+        self.assertIn("cook4me-panel-v178.js",panel)
+        self.assertIn("/cook4me_static/2026.9.22.5",panel)
+        self.assertIn("?v=2026.9.22.5",panel)
+        self.assertIn('"version": "2026.9.22.5"',manifest)
         self.assertIn("cook4me-panel-v176.js?v=2026.9.22.3",ui)
 
     def test_every_real_alias_group_contains_source_and_display_label(self):
@@ -74,7 +74,7 @@ class GreekCatalogAuditV177Tests(unittest.TestCase):
         self.assertGreaterEqual(len(data["labels"]),1272)
         self.assertEqual(len(data["searchAliases"]),3689)
         self.assertGreaterEqual(alias_entries,8755)
-        self.assertIn("thirty-second audit",data["translationSource"])
+        self.assertIn("audit",data["translationSource"])
 
 
 if __name__=="__main__":
