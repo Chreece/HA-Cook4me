@@ -75,43 +75,50 @@ class WeekShoppingStorageV182Tests(unittest.TestCase):
     def setUpClass(cls):
         cls.inventory,cls.allocation,cls.meal,cls.shopping=load_modules()
 
-    def test_recipe_ingredient_id_matches_scanned_lot_semantic_sibling(self):
-        slots=[{
-            "id":"2026-09-22:breakfast",
-            "date":"2026-09-22",
-            "mealType":"breakfast",
-            "selected":True,
-            "recipe":{
-                "title":"Skyr breakfast",
-                "ingredients":[{
-                    "ingredientId":"skyr-recipe",
-                    "name":"Skyr",
-                    "quantity":100,
-                    "unit":"g",
-                    "_testIdentities":["k:skyr-recipe","k:skyr-storage"],
-                }],
-            },
-        }]
-        inventory=[{
-            "key":"product-skyr-natur",
-            "name":"Skyr Natur",
-            "unit":"g",
-            "lots":[{
-                "id":"lot-skyr",
-                "quantity":400,
-                "ingredientLinks":[{"key":"skyr-storage","name":"Skyr Natur"}],
-            }],
-        }]
-        requirements=self.meal.planned_requirements(slots)
-        self.assertEqual(requirements[0]["identity"],"k:skyr-recipe")
-        self.assertEqual(
-            set(requirements[0]["identities"]),
-            {"k:skyr-recipe","k:skyr-storage"},
-        )
-        status=self.meal.reservation_status(slots,inventory)
-        self.assertEqual(status["shortages"],[])
-        self.assertEqual(status["items"][0]["available"],100)
-        self.assertEqual(self.meal.shopping_delta(slots,inventory),[])
+    def test_semantic_sibling_ids_cover_stock_for_any_catalog_ingredient(self):
+        cases=[
+            ("dairy-recipe","dairy-storage","Cultured dairy",100,400,"g"),
+            ("herb-recipe","herb-storage","Fresh herb",20,60,"g"),
+            ("sauce-recipe","sauce-storage","Cooking sauce",75,250,"ml"),
+        ]
+        for recipe_id,storage_id,name,needed,stored,unit in cases:
+            with self.subTest(name=name):
+                slots=[{
+                    "id":"2026-09-22:dinner",
+                    "date":"2026-09-22",
+                    "mealType":"dinner",
+                    "selected":True,
+                    "recipe":{
+                        "title":"Generic recipe",
+                        "ingredients":[{
+                            "ingredientId":recipe_id,
+                            "name":name,
+                            "quantity":needed,
+                            "unit":unit,
+                            "_testIdentities":[f"k:{recipe_id}",f"k:{storage_id}"],
+                        }],
+                    },
+                }]
+                inventory=[{
+                    "key":f"product-{storage_id}",
+                    "name":name,
+                    "unit":unit,
+                    "lots":[{
+                        "id":f"lot-{storage_id}",
+                        "quantity":stored,
+                        "ingredientLinks":[{"key":storage_id,"name":name}],
+                    }],
+                }]
+                requirements=self.meal.planned_requirements(slots)
+                self.assertEqual(requirements[0]["identity"],f"k:{recipe_id}")
+                self.assertEqual(
+                    set(requirements[0]["identities"]),
+                    {f"k:{recipe_id}",f"k:{storage_id}"},
+                )
+                status=self.meal.reservation_status(slots,inventory)
+                self.assertEqual(status["shortages"],[])
+                self.assertEqual(status["items"][0]["available"],needed)
+                self.assertEqual(self.meal.shopping_delta(slots,inventory),[])
 
     def test_ingredient_id_is_not_dropped_to_name_identity(self):
         row=self.meal._ingredient({
@@ -137,6 +144,7 @@ class WeekShoppingStorageV182Tests(unittest.TestCase):
         self.assertEqual(rows[0]["supermarketLanguage"],"de")
         self.assertEqual(rows[0]["quantity"],100)
         self.assertEqual(rows[0]["unit"],"g")
+        self.assertEqual(rows[0]["displayUnit"],"γρ.")
 
     def test_week_api_accepts_explicit_display_and_supermarket_languages(self):
         source=(PKG/"websocket_v20.py").read_text(encoding="utf-8")
@@ -150,6 +158,26 @@ class WeekShoppingStorageV182Tests(unittest.TestCase):
         self.assertIn('vol.Optional("display_language"): str',source)
         self.assertIn('vol.Optional("supermarket_language"): str',source)
         self.assertIn('msg.get("display_language") or msg.get("ui_language")',source)
+
+    def test_production_identity_matching_has_no_skyr_special_case(self):
+        for filename in ("meal_lifecycle.py","inventory.py","stock_allocation.py","release_catalog.py"):
+            source=(PKG/filename).read_text(encoding="utf-8").casefold()
+            self.assertNotIn("skyr",source,filename)
+        release=(PKG/"release_catalog.py").read_text(encoding="utf-8")
+        self.assertIn("_runtimeIngredientsByConcept",release)
+        self.assertIn("sourceIngredientIds",release)
+
+    def test_shopping_keeps_raw_unit_but_formats_display_unit_in_ui_language(self):
+        rows=self.shopping.shopping_rows(
+            [{"identity":"k:item","name":"Ingredient","quantity":2,"unit":"tbsp"}],
+            "el","DE",(),"de",
+        )
+        self.assertEqual(rows[0]["unit"],"tbsp")
+        self.assertEqual(rows[0]["displayUnit"],"κ.σ.")
+        websocket=(PKG/"websocket_v20.py").read_text(encoding="utf-8")
+        catalog=(PKG/"ingredient_catalog.py").read_text(encoding="utf-8")
+        self.assertIn('row.get("displayUnit") or unit',websocket)
+        self.assertIn('item.get("displayUnit") or item.get("unit")',catalog)
 
 
 if __name__=="__main__":
