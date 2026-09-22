@@ -70,11 +70,11 @@ class GreekCatalogAuditV155Tests(unittest.TestCase):
     def test_fermented_condiments_keep_recognizable_product_names(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
-            "gochujang":"Gochujang (κορεάτικη πάστα τσίλι)",
-            "doenjang":"Doenjang (κορεάτικη πάστα σόγιας)",
-            "cheonggukjang fermented soybean paste":"Cheonggukjang (κορεάτικη πάστα ζυμωμένης σόγιας)",
-            "ajvar":"Ajvar (βαλκανική πάστα ψητής πιπεριάς)",
-            "sambal":"Sambal (ινδονησιακό καυτερό καρύκευμα)",
+            "gochujang":"Κορεάτικη πάστα τσίλι γκοτσουτζάνγκ (gochujang)",
+            "doenjang":"Κορεάτικη πάστα σόγιας ντοεντζάνγκ (doenjang)",
+            "cheonggukjang fermented soybean paste":"Κορεάτικη πάστα ζυμωμένης σόγιας τσονγκουκτζάνγκ (cheonggukjang)",
+            "ajvar":"Βαλκανική πάστα ψητής πιπεριάς άιβαρ (ajvar)",
+            "sambal":"Ινδονησιακό καυτερό καρύκευμα σάμπαλ (sambal)",
             "fish sauce":"Σάλτσα ψαριού (fish sauce)",
             "miso paste":"Πάστα μίσο (miso paste)",
             "salt-pickled cherry blossoms":"Άνθη κερασιάς σε αλάτι (sakura)",
