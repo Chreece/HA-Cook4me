@@ -89,19 +89,27 @@ def _availability_status(
     return ""
 
 
-_REVIEWED_PORTION_KINDS = {"food_portion", "reference_portion"}
+_REVIEWED_STOCK_CONVERSION_KINDS = {
+    "food_portion",
+    "reference_portion",
+    "ingredient_count",
+    "food_density",
+    "spoon_volume",
+    "stock_cube",
+}
 
 
 def _reviewed_portion_requirement(
     ingredient: dict[str, Any],
     current: dict[str, Any] | None,
 ) -> dict[str, Any]:
-    """Return a stock-compatible requirement only when reviewed food evidence exists.
+    """Return a stock-compatible requirement only when reviewed conversion evidence exists.
 
     Recipe/source units remain authoritative. Cross-dimension conversion is allowed
-    only through an ingredient-specific reviewed portion already bundled with
-    Cook4Me (for example USDA garlic: 1 clove = 3 g). Generic spoon, density,
-    package or count guesses are intentionally excluded.
+    only through Cook4Me's bundled reviewed evidence: food/reference portions,
+    ingredient-specific count semantics, published density evidence, or standard
+    spoon volume. Unreviewed package sizes and arbitrary cross-food guesses remain
+    excluded.
     """
     required, required_unit = _recipe_amount(ingredient)
     result = {
@@ -127,7 +135,10 @@ def _reviewed_portion_requirement(
 
     for option in price_options(candidate):
         estimate = option.get("estimate") if isinstance(option, dict) else None
-        if not isinstance(estimate, dict) or estimate.get("kind") not in _REVIEWED_PORTION_KINDS:
+        if (
+            not isinstance(estimate, dict)
+            or estimate.get("kind") not in _REVIEWED_STOCK_CONVERSION_KINDS
+        ):
             continue
         quantity = _number(option.get("quantity"))
         unit = _text(option.get("unit"))
