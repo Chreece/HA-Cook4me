@@ -60,7 +60,7 @@ class GreekCatalogAuditV155Tests(unittest.TestCase):
             "daikon radish":"Λευκό ραπανάκι ντάικον (daikon)",
             "skate wing":"Φτερούγα σαλαχιού",
             "headless crucian carp":"Κουτσουράς χωρίς κεφάλι",
-            "whole albacore tuna":"Ολόκληρος τόνος albacore (λευκός τόνος)",
+            "whole albacore tuna":"Ολόκληρος λευκός τόνος (albacore)",
             "spanish mackerel":"Spanish mackerel (είδος σκουμπριού)",
         }
         for key,value in expected.items():
