@@ -896,11 +896,12 @@ async def _shopping_add(hass: HomeAssistant, rows: list[dict[str, Any]]) -> dict
     for row in rows:
         quantity = _number(row.get("quantity"))
         unit = _text(row.get("unit"))
+        display_unit = _text(row.get("displayUnit") or unit)
         name = _text(row.get("name"))
         if quantity is None or quantity <= 0 or not unit or not name:
             continue
         shown = str(int(quantity)) if float(quantity).is_integer() else f"{quantity:g}"
-        summary = f"{shown} {unit} {name}"
+        summary = f"{shown} {display_unit} {name}".strip()
         if summary.casefold() in existing:
             continue
         await hass.services.async_call(
