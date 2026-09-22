@@ -32,13 +32,40 @@ def supermarket_language_options():
     return sorted(SUPPORTED_SUPERMARKET_LANGUAGES)
 
 
-def shopping_rows(rows, language, country, sources=()):
-    language = str(language or "en").lower().replace("_", "-").split("-")[0]
-    country_language = COUNTRY_LANGUAGE.get(str(country or "").upper(), language)
+def shopping_rows(
+    rows,
+    language,
+    country,
+    sources=(),
+    supermarket_language=None,
+):
+    """Present shopping rows as UI name (market name) (original name).
+
+    The UI language is always primary. A configured/local supermarket language
+    is appended only when it produces a different label, followed by one
+    original recipe/source label when that also differs. Identity and calculated
+    shortage quantities are never changed.
+    """
+    ui_language = normalize_supermarket_language(language, fallback="en")
+    market_language = normalize_supermarket_language(
+        supermarket_language,
+        country=country,
+        fallback=COUNTRY_LANGUAGE.get(str(country or "").upper(), ui_language),
+    )
+
     by_identity = {}
     for source in sources:
-        if isinstance(source, dict):
-            by_identity.setdefault(inventory_identity(source), []).append(source)
+        if not isinstance(source, dict):
+            continue
+        identities = {inventory_identity(source)}
+        try:
+            identities.update(release_catalog.ingredient_stock_identities(source))
+        except Exception:
+            pass
+        for identity in identities:
+            if identity:
+                by_identity.setdefault(identity, []).append(source)
+
     result = []
     for raw in rows:
         if not isinstance(raw, dict):
@@ -46,27 +73,69 @@ def shopping_rows(rows, language, country, sources=()):
             continue
         item = deepcopy(raw)
         identity = item.get("identity") or inventory_identity(item)
-        originals = by_identity.get(identity, [])
-        if str(identity).startswith("k:") and not (item.get("key") or item.get("foodKey")):
-            item["key"] = identity[2:]
-        original = item.get("originalName") or item.get("name") or item.get("foodName") or ""
-        display = release_catalog.ingredient_display_name(item, language) or original
-        country_name = release_catalog.ingredient_display_name(item, country_language) or original
+        if str(identity).startswith("k:") and not (
+            item.get("key") or item.get("foodKey")
+        ):
+            item["key"] = str(identity)[2:]
+
+        original = str(
+            item.get("originalName")
+            or item.get("name")
+            or item.get("foodName")
+            or ""
+        ).strip()
+        display = release_catalog.ingredient_display_name(item, ui_language) or original
+        market_name = (
+            release_catalog.ingredient_display_name(item, market_language) or original
+        )
+
+        # Prefer one original label from the recipe/source rows when available.
+        source_original = ""
+        source_rows = []
+        for candidate_identity in (
+            [identity] + list(item.get("identities") or [])
+        ):
+            source_rows.extend(by_identity.get(candidate_identity, []))
+        for source in source_rows:
+            candidate = str(
+                source.get("originalName")
+                or source.get("name")
+                or source.get("foodName")
+                or ""
+            ).strip()
+            if candidate:
+                source_original = candidate
+                break
+        original = source_original or original
+
         alternatives = []
-        names = [country_name, original, *(source.get("originalName") or source.get("name") or "" for source in originals)]
-        for name in names:
-            name = str(name).strip()
-            if name and name.casefold() != display.casefold() and name.casefold() not in {value.casefold() for value in alternatives}:
-                alternatives.append(name)
+        for candidate in (market_name, original):
+            candidate = str(candidate or "").strip()
+            if not candidate:
+                continue
+            if candidate.casefold() == str(display).casefold():
+                continue
+            if candidate.casefold() in {value.casefold() for value in alternatives}:
+                continue
+            alternatives.append(candidate)
+
         item["originalName"] = original
-        item["name"] = display + (f" ({'; '.join(alternatives)})" if alternatives else "")
+        item["uiLanguage"] = ui_language
+        item["supermarketLanguage"] = market_language
+        item["name"] = display + (
+            f" ({'; '.join(alternatives)})" if alternatives else ""
+        )
         if "foodName" in item:
-            item["foodName"] = item["name"]  # Legacy shopping formatter prefers it.
+            item["foodName"] = item["name"]
+
         # Legacy applicationDescription can contain a whole recipe sentence,
         # including the required rather than missing amount. Use structured data.
         item.pop("applicationDescription", None)
         weight = item.get("weight") if isinstance(item.get("weight"), dict) else {}
-        if item.get("quantity") in (None, "") and weight.get("quantity") not in (None, ""):
+        if item.get("quantity") in (None, "") and weight.get("quantity") not in (
+            None,
+            "",
+        ):
             item["quantity"] = weight["quantity"]
             item["unit"] = item.get("unit") or weight.get("unit") or ""
         result.append(item)
