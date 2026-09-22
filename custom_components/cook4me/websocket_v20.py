@@ -525,7 +525,16 @@ async def _generate_week(
         leftovers = [row for row in leftovers if recipe_identity(row["recipe"]) in allowed]
 
     unchanged = []
-    for stamp, meal_type, target in desired:
+    regeneration_fallback_slots = []
+    total_desired = max(1, len(desired))
+    if progress:
+        progress(
+            "ranking",
+            completed=0,
+            total=total_desired,
+            message="Planning weekly meals",
+        )
+    for slot_index, (stamp, meal_type, target) in enumerate(desired, start=1):
         slot_id = target["id"] if target else f"{stamp}:{meal_type}"
         is_selected = target.get("selected") is not False if target else True
         if (
@@ -546,6 +555,13 @@ async def _generate_week(
             })
             if leftover.get("recipe"):
                 used_recipes.append(signature(leftover["recipe"]))
+            if progress:
+                progress(
+                    "ranking",
+                    completed=slot_index,
+                    total=total_desired,
+                    message=f"{stamp} {meal_type}",
+                )
             continue
 
         wanted_taxonomy = (
@@ -556,101 +572,114 @@ async def _generate_week(
         pool = [
             row for row in candidates
             if not already_planned(candidate_signatures[id(row)], used_recipes)
+            and not already_planned(candidate_signatures[id(row)], regeneration_avoid)
             and recipe_matches_meal_types(row, wanted_taxonomy)
         ]
         taxonomy_fallback = False
+        regeneration_fallback = False
+        if not pool and regeneration_avoid:
+            pool = [
+                row for row in candidates
+                if not already_planned(candidate_signatures[id(row)], used_recipes)
+                and recipe_matches_meal_types(row, wanted_taxonomy)
+            ]
+            regeneration_fallback = bool(pool)
         if not pool:
-            pool = [row for row in candidates if not already_planned(candidate_signatures[id(row)], used_recipes)]
-            taxonomy_fallback = True
+            pool = [
+                row for row in candidates
+                if not already_planned(candidate_signatures[id(row)], used_recipes)
+                and not already_planned(candidate_signatures[id(row)], regeneration_avoid)
+            ]
+            taxonomy_fallback = bool(pool)
+        if not pool and regeneration_avoid:
+            pool = [
+                row for row in candidates
+                if not already_planned(candidate_signatures[id(row)], used_recipes)
+            ]
+            taxonomy_fallback = bool(pool)
+            regeneration_fallback = bool(pool)
         if not pool:
             if target:
                 planned.append(target)
                 unchanged.append(slot_id)
+            if progress:
+                progress(
+                    "ranking",
+                    completed=slot_index,
+                    total=total_desired,
+                    message=f"{stamp} {meal_type}",
+                )
             continue
 
-        best: dict[str, Any] | None = None
-        best_score = float("-inf")
-        best_nutrition: dict[str, Any] = {}
-        best_cost: dict[str, Any] = {}
-        best_penalty = 0.0
-        best_daily_bonus = 0.0
-        best_meal_target_bonus = 0.0
-        for candidate in pool:
-            nutrition = calculate_recipe_nutrition_fefo(
-                candidate,
-                inventory,
-                generic=nutrition_store.generic,
-                stock_lots=nutrition_store.stock_lots,
+        day_completed = sum(
+            1
+            for slot in planned
+            if slot.get("selected") is not False and _text(slot.get("date")) == stamp
+        )
+        day_total = max(daily_slot_counts.get(stamp, 0), day_completed + 1)
+        scored = await hass.async_add_executor_job(
+            partial(
+                _score_week_pool,
+                pool,
+                planned=planned,
+                inventory=inventory,
+                nutrition_store=nutrition_store,
+                cost_store=cost_store,
+                goal=goal,
+                slot_id=slot_id,
+                stamp=stamp,
+                meal_type=meal_type,
+                is_selected=is_selected,
+                shared_filters=shared_filters,
+                profile_target_settings=profile_target_settings,
+                profile_daily_targets=profile_daily_targets,
+                day_total=day_total,
             )
-            if not nutrition.get("totals"):
-                nutrition = deepcopy(candidate.get("catalogNutrition") or candidate.get("nutrition") or nutrition)
-            nutrition_hint = nutrition_goal_bonus(nutrition, goal)
-            candidate_slot = {
-                "id": slot_id,
-                "selected": is_selected,
-                "date": stamp,
-                "mealType": meal_type,
-                "recipe": candidate,
-            }
-            penalty = _plan_penalty(planned, candidate_slot, inventory)
-            meal_target_bonus = 0.0
-            if shared_filters is None:
-                meal_targets, _meal_scope = recipe_target_scope(profile_target_settings, candidate)
-                meal_target_bonus = float(target_bonus(nutrition, meal_targets).get("bonus") or 0.0)
-            day_rows = [
-                slot.get("nutrition") or (slot.get("recipe") or {}).get("nutrition") or {}
-                for slot in planned
-                if slot.get("selected") is not False and _text(slot.get("date")) == stamp
-            ]
-            day_completed = len(day_rows)
-            day_total = max(daily_slot_counts.get(stamp, 0), day_completed + 1)
-            daily_hint = daily_progress_bonus(
-                day_rows,
-                nutrition,
-                profile_daily_targets,
-                fraction=min(1.0, (day_completed + 1) / max(1, day_total)),
-            )
-            score = (
-                float((candidate.get("match") or {}).get("score") or 0.0)
-                + (0.0 if shared_filters is not None else float(nutrition_hint.get("bonus") or 0.0))
-                + meal_target_bonus
-                + float(daily_hint.get("bonus") or 0.0)
-                - penalty
-            )
-            if score <= best_score:
-                continue
-            best = candidate
-            best_score = score
-            best_nutrition = nutrition
-            best_cost = _recipe_cost_with_store(bridge, candidate, cost_store)
-            best_penalty = penalty
-            best_daily_bonus = float(daily_hint.get("bonus") or 0.0)
-            best_meal_target_bonus = meal_target_bonus
-        if best is None:
+        )
+        if scored is None:
             if target:
                 planned.append(target)
                 unchanged.append(slot_id)
+            if progress:
+                progress(
+                    "ranking",
+                    completed=slot_index,
+                    total=total_desired,
+                    message=f"{stamp} {meal_type}",
+                )
             continue
+
+        best = scored["recipe"]
         selected = deepcopy(best)
         selected_match = selected.setdefault("match", {})
-        selected_match["weeklySelectionScore"] = round(best_score, 1)
-        selected_match["plannedStockPenalty"] = round(best_penalty, 1)
-        selected_match["dailyNutrientTargetBonus"] = round(best_daily_bonus, 2)
+        selected_match["weeklySelectionScore"] = round(float(scored["score"]), 1)
+        selected_match["plannedStockPenalty"] = round(float(scored["penalty"]), 1)
+        selected_match["dailyNutrientTargetBonus"] = round(float(scored["dailyBonus"]), 2)
         if shared_filters is None:
-            selected_match["mealNutrientTargetBonus"] = round(best_meal_target_bonus, 2)
+            selected_match["mealNutrientTargetBonus"] = round(float(scored["mealTargetBonus"]), 2)
         selected_match["mealTypeTaxonomyFallback"] = taxonomy_fallback
-        selected["nutrition"] = best_nutrition
-        selected["cost"] = best_cost
+        selected_match["weeklyRegenerationFallback"] = regeneration_fallback
+        selected["nutrition"] = scored["nutrition"]
+        selected["cost"] = scored["cost"]
         planned.append({
             "id": slot_id,
             "selected": is_selected,
             "date": stamp,
             "mealType": meal_type,
             "recipe": selected,
-            "nutrition": best_nutrition,
-            "cost": best_cost,
+            "nutrition": scored["nutrition"],
+            "cost": scored["cost"],
         })
         used_recipes.append(candidate_signatures[id(best)])
+        if regeneration_fallback:
+            regeneration_fallback_slots.append(slot_id)
+        if progress:
+            progress(
+                "ranking",
+                completed=slot_index,
+                total=total_desired,
+                message=f"{stamp} {meal_type}",
+            )
 
     planned.sort(key=lambda row: (
         row.get("date") or "",
