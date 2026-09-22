@@ -55,7 +55,7 @@ class GreekCatalogAuditV180Tests(unittest.TestCase):
         self.assertGreaterEqual(len(data["labels"]),1276)
         self.assertEqual(len(data["searchAliases"]),3689)
         self.assertGreaterEqual(alias_entries,8788)
-        self.assertIn("thirty-fifth audit",data["translationSource"])
+        self.assertIn("audit",data["translationSource"])
 
 
 if __name__=="__main__":

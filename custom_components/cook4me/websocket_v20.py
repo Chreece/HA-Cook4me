@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 from copy import deepcopy
 from datetime import date, datetime, timedelta, timezone
+from functools import partial
 import re
 from typing import Any
 from uuid import uuid4
@@ -40,8 +41,10 @@ from .nutrition import nutrition_store_for_bridge
 from .nutrition_fefo import calculate_recipe_nutrition_fefo
 from .nutrition_inventory import async_reconcile_nutrition_inventory
 from .today_logic import recipe_identity, recipe_matches_meal_types
+from .request_coordinator import EVENT_OPERATION_PROGRESS
 
-_MAX_WEEK_CANDIDATES = 30
+_MAX_WEEK_CANDIDATES = 180
+_WEEK_NUTRITION_BATCH = 30
 _MAX_GLOBAL_PRICE_LOOKUPS = 4
 _SHOPPING_RE = re.compile(
     r"^\s*(?P<quantity>\d+(?:[.,]\d+)?)\s*(?P<unit>mg|g|kg|ml|cl|dl|l|pc|pcs|x)\s+(?P<name>.+?)\s*$",
@@ -51,6 +54,43 @@ _SHOPPING_RE = re.compile(
 
 def _text(value: Any) -> str:
     return str(value or "").strip()
+
+
+def _emit_week_progress(
+    hass: HomeAssistant,
+    operation_id: str,
+    phase: str,
+    *,
+    completed: int | float | None = None,
+    total: int | float | None = None,
+    message: str = "",
+    done: bool = False,
+    error: str = "",
+    kind: str = "week_generate",
+) -> None:
+    """Publish real weekly progress only for validated UI-owned jobs."""
+    operation_id = _text(operation_id)[:160]
+    if not operation_id:
+        return
+    completed_number = float(completed) if isinstance(completed, (int, float)) else None
+    total_number = float(total) if isinstance(total, (int, float)) else None
+    percent = None
+    if completed_number is not None and total_number is not None and total_number > 0:
+        percent = round(max(0.0, min(100.0, completed_number / total_number * 100.0)))
+    hass.bus.async_fire(EVENT_OPERATION_PROGRESS, {
+        "operationId": operation_id,
+        "kind": str(kind or "week_generate")[:80],
+        "title": "Weekly meal plan",
+        "phase": str(phase or "starting"),
+        "completed": completed_number,
+        "total": total_number,
+        "percent": percent,
+        "message": str(message or "")[:400],
+        "waitingCount": 0,
+        "done": bool(done),
+        "error": str(error or "")[:300],
+        "updatedAt": datetime.now(timezone.utc).isoformat(),
+    })
 
 
 def _number(value: Any) -> float | None:
@@ -221,6 +261,147 @@ def _plan_penalty(
     return max(0, after_short - before_short) * 18.0 + max(0, after_unknown - before_unknown) * 2.0
 
 
+def _week_candidate_nutrition(
+    candidates: list[dict[str, Any]],
+    inventory: Any,
+    nutrition_store,
+) -> dict[int, dict[str, Any]]:
+    """Calculate invariant candidate nutrition once for reuse across all slots."""
+    result: dict[int, dict[str, Any]] = {}
+    for candidate in candidates:
+        nutrition = calculate_recipe_nutrition_fefo(
+            candidate,
+            inventory,
+            generic=nutrition_store.generic,
+            stock_lots=nutrition_store.stock_lots,
+        )
+        if not nutrition.get("totals"):
+            nutrition = deepcopy(
+                candidate.get("catalogNutrition") or candidate.get("nutrition") or nutrition
+            )
+        result[id(candidate)] = nutrition
+    return result
+
+
+def _score_week_pool(
+    pool: list[dict[str, Any]],
+    *,
+    planned: list[dict[str, Any]],
+    inventory: Any,
+    nutrition_by_id: dict[int, dict[str, Any]],
+    cost_store,
+    goal: str,
+    slot_id: str,
+    stamp: str,
+    meal_type: str,
+    is_selected: bool,
+    shared_filters: dict | None,
+    profile_target_settings: dict[str, Any],
+    profile_daily_targets: dict[str, Any],
+    day_total: int,
+    progress=None,
+    progress_base: float = 0.0,
+    progress_total: float = 1.0,
+) -> dict[str, Any] | None:
+    """Score one weekly slot off the HA event loop."""
+    from .shared_recipe_filters import recipe_target_scope
+    from .nutrient_targets import daily_progress_bonus, target_bonus
+
+    before = reservation_status(planned, inventory)
+    before_short = len(before.get("shortages") or [])
+    before_unknown = len(before.get("unknown") or [])
+    day_rows = [
+        slot.get("nutrition") or (slot.get("recipe") or {}).get("nutrition") or {}
+        for slot in planned
+        if slot.get("selected") is not False and _text(slot.get("date")) == stamp
+    ]
+    day_completed = len(day_rows)
+
+    best: dict[str, Any] | None = None
+    best_score = float("-inf")
+    best_nutrition: dict[str, Any] = {}
+    best_cost: dict[str, Any] = {}
+    best_penalty = 0.0
+    best_daily_bonus = 0.0
+    best_meal_target_bonus = 0.0
+
+    pool_total = max(1, len(pool))
+    for candidate_index, candidate in enumerate(pool, start=1):
+        nutrition = nutrition_by_id.get(id(candidate)) or {}
+        nutrition_hint = nutrition_goal_bonus(nutrition, goal)
+        candidate_slot = {
+            "id": slot_id,
+            "selected": is_selected,
+            "date": stamp,
+            "mealType": meal_type,
+            "recipe": candidate,
+        }
+        after = reservation_status(planned + [candidate_slot], inventory)
+        penalty = (
+            max(0, len(after.get("shortages") or []) - before_short) * 18.0
+            + max(0, len(after.get("unknown") or []) - before_unknown) * 2.0
+        )
+        meal_target_bonus = 0.0
+        if shared_filters is None:
+            meal_targets, _meal_scope = recipe_target_scope(
+                profile_target_settings, candidate
+            )
+            meal_target_bonus = float(
+                target_bonus(nutrition, meal_targets).get("bonus") or 0.0
+            )
+        daily_hint = daily_progress_bonus(
+            day_rows,
+            nutrition,
+            profile_daily_targets,
+            fraction=min(1.0, (day_completed + 1) / max(1, day_total)),
+        )
+        score = (
+            float((candidate.get("match") or {}).get("score") or 0.0)
+            + (
+                0.0
+                if shared_filters is not None
+                else float(nutrition_hint.get("bonus") or 0.0)
+            )
+            + meal_target_bonus
+            + float(daily_hint.get("bonus") or 0.0)
+            - penalty
+        )
+        if progress and (
+            candidate_index == 1
+            or candidate_index == pool_total
+            or candidate_index % 10 == 0
+        ):
+            progress(
+                "ranking",
+                completed=progress_base + candidate_index / pool_total,
+                total=progress_total,
+                message=f"Scoring candidate {candidate_index}/{pool_total}",
+            )
+        if score <= best_score:
+            continue
+        best = candidate
+        best_score = score
+        best_nutrition = nutrition
+        best_penalty = penalty
+        best_daily_bonus = float(daily_hint.get("bonus") or 0.0)
+        best_meal_target_bonus = meal_target_bonus
+
+    if best is None:
+        return None
+    # Cost does not influence selection score. Calculate it exactly once for
+    # the winning recipe rather than for every temporary "best so far".
+    best_cost = calculate_recipe_cost(best, inventory, cost_store)
+    return {
+        "recipe": best,
+        "score": best_score,
+        "nutrition": best_nutrition,
+        "cost": best_cost,
+        "penalty": best_penalty,
+        "dailyBonus": best_daily_bonus,
+        "mealTargetBonus": best_meal_target_bonus,
+    }
+
+
 async def _week_candidates(
     hass: HomeAssistant,
     bridge,
@@ -248,8 +429,14 @@ async def _week_candidates(
     )
     if recent:
         candidates = [row for row in candidates if recipe_identity(row) not in recent]
-    ranked = v13._rank_filtered(
-        bridge, candidates, diet=diet, limit=_MAX_WEEK_CANDIDATES
+    ranked = await hass.async_add_executor_job(
+        partial(
+            v13._rank_filtered,
+            bridge,
+            candidates,
+            diet=diet,
+            limit=_MAX_WEEK_CANDIDATES,
+        )
     )
     return [_feedback_adjust(lifecycle, row) for row in ranked], errors
 
@@ -268,9 +455,10 @@ async def _generate_week(
     replace_slot_ids: list[str] | None = None,
     shared_filters: dict | None = None,
     ui_language: str = "en",
+    progress=None,
 ) -> dict[str, Any]:
     from . import release_catalog
-    from .weekly_variety import signature, already_planned
+    from .weekly_variety import signature, already_planned, available_candidates
     from .weekly_plan import MEAL_SLOT_ORDER, meal_slots_for_date
     original_slots = deepcopy(lifecycle.slots)
     replacing = bool(replace_slot_id) or replace_slot_ids is not None
@@ -279,6 +467,8 @@ async def _generate_week(
     eligible_ids = {row["id"] for row in original_slots if week_start <= _text(row.get("date")) <= end}
     if replacing and (not target_ids or not target_ids.issubset(eligible_ids)):
         raise ValueError("The selected meal is no longer in the next seven days")
+    if progress:
+        progress("catalog_index", completed=0, total=1, message="Preparing weekly candidates")
     if shared_filters is not None and release_catalog.release_catalog_ready():
         from .shared_recipe_runtime import search_filtered
         result = await search_filtered(bridge, query=query, languages=languages, language=ui_language, filters=shared_filters)
@@ -293,9 +483,46 @@ async def _generate_week(
             from .shared_recipe_runtime import processor
             process = await processor(bridge, shared_filters, language=ui_language, rank=False)
             candidates = await hass.async_add_executor_job(process, candidates)
+    # Release-catalog filtering can return thousands of safe rows. Planning all
+    # of them for every slot used to run an unbounded nested scoring loop. Keep
+    # a broad ranked window for variety, but bound the expensive planner.
+    candidates = list(candidates[:_MAX_WEEK_CANDIDATES])
+    if progress:
+        progress(
+            "catalog_index",
+            completed=1,
+            total=1,
+            message=f"{len(candidates)} weekly candidates ready",
+        )
     nutrition_store = await nutrition_store_for_bridge(bridge)
     cost_store = await cost_store_for_bridge(bridge)
     inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
+    nutrition_by_id: dict[int, dict[str, Any]] = {}
+    total_candidates = max(1, len(candidates))
+    if progress:
+        progress(
+            "nutrition",
+            completed=0,
+            total=total_candidates,
+            message="Preparing candidate nutrition",
+        )
+    for offset in range(0, len(candidates), _WEEK_NUTRITION_BATCH):
+        batch = candidates[offset : offset + _WEEK_NUTRITION_BATCH]
+        nutrition_by_id.update(
+            await hass.async_add_executor_job(
+                _week_candidate_nutrition,
+                batch,
+                inventory,
+                nutrition_store,
+            )
+        )
+        if progress:
+            progress(
+                "nutrition",
+                completed=min(offset + len(batch), len(candidates)),
+                total=total_candidates,
+                message="Preparing candidate nutrition",
+            )
     goal = normalize_nutrition_goal(
         (shared_filters or {}).get("nutritionGoal") or bridge.recipe_hub.ui_preferences.get("nutritionGoal") or "balanced"
     )
@@ -304,8 +531,7 @@ async def _generate_week(
     # Each calendar date has its own saved slot pattern. Shared recipe filters
     # still limit which of those slots are eligible.
     from .diet_profiles import resolve_filters
-    from .shared_recipe_filters import daily_targets, normalize_filters, recipe_target_scope
-    from .nutrient_targets import daily_progress_bonus, target_bonus
+    from .shared_recipe_filters import daily_targets, normalize_filters
     profile_target_settings = resolve_filters(
         bridge.recipe_hub.profile,
         normalize_filters(shared_filters if isinstance(shared_filters, dict) else {"dietProfile": "household"}),
@@ -336,6 +562,15 @@ async def _generate_week(
 
     planned = list(existing)
     end = (start + timedelta(days=6)).isoformat()
+    previous_week_recipes = [
+        signature(row.get("recipe"))
+        for row in original_slots
+        if week_start <= _text(row.get("date")) <= end and row.get("recipe")
+    ]
+    # A full regenerate should actually rotate away from the plan it replaces.
+    # If the filtered pool is too small we fall back later, but we first try a
+    # genuinely different set of dishes.
+    regeneration_avoid = previous_week_recipes if not replacing else []
     used_recipes = [signature(row.get("recipe")) for row in planned
         if week_start <= _text(row.get("date")) <= end and row.get("recipe")]
     used_recipes.extend(signature(row["recipe"]) for row in targets if row.get("recipe"))
@@ -352,7 +587,16 @@ async def _generate_week(
         leftovers = [row for row in leftovers if recipe_identity(row["recipe"]) in allowed]
 
     unchanged = []
-    for stamp, meal_type, target in desired:
+    regeneration_fallback_slots = []
+    total_desired = max(1, len(desired))
+    if progress:
+        progress(
+            "ranking",
+            completed=0,
+            total=total_desired,
+            message="Planning weekly meals",
+        )
+    for slot_index, (stamp, meal_type, target) in enumerate(desired, start=1):
         slot_id = target["id"] if target else f"{stamp}:{meal_type}"
         is_selected = target.get("selected") is not False if target else True
         if (
@@ -373,6 +617,13 @@ async def _generate_week(
             })
             if leftover.get("recipe"):
                 used_recipes.append(signature(leftover["recipe"]))
+            if progress:
+                progress(
+                    "ranking",
+                    completed=slot_index,
+                    total=total_desired,
+                    message=f"{stamp} {meal_type}",
+                )
             continue
 
         wanted_taxonomy = (
@@ -380,104 +631,125 @@ async def _generate_week(
             else ["snack", "dessert"] if meal_type in {"morningSnack", "afternoonSnack", "lateSnack"}
             else ["main", "starter", "salad", "soup", "side"]
         )
+        fresh_candidates = available_candidates(
+            candidates, candidate_signatures, used_recipes, regeneration_avoid
+        )
         pool = [
-            row for row in candidates
-            if not already_planned(candidate_signatures[id(row)], used_recipes)
-            and recipe_matches_meal_types(row, wanted_taxonomy)
+            row for row in fresh_candidates
+            if recipe_matches_meal_types(row, wanted_taxonomy)
         ]
         taxonomy_fallback = False
+        regeneration_fallback = False
+        if not pool and regeneration_avoid:
+            reusable_candidates = available_candidates(
+                candidates, candidate_signatures, used_recipes
+            )
+            pool = [
+                row for row in reusable_candidates
+                if recipe_matches_meal_types(row, wanted_taxonomy)
+            ]
+            regeneration_fallback = bool(pool)
         if not pool:
-            pool = [row for row in candidates if not already_planned(candidate_signatures[id(row)], used_recipes)]
-            taxonomy_fallback = True
+            pool = fresh_candidates
+            taxonomy_fallback = bool(pool)
+        if not pool and regeneration_avoid:
+            pool = available_candidates(candidates, candidate_signatures, used_recipes)
+            taxonomy_fallback = bool(pool)
+            regeneration_fallback = bool(pool)
         if not pool:
             if target:
                 planned.append(target)
                 unchanged.append(slot_id)
+            if progress:
+                progress(
+                    "ranking",
+                    completed=slot_index,
+                    total=total_desired,
+                    message=f"{stamp} {meal_type}",
+                )
             continue
 
-        best: dict[str, Any] | None = None
-        best_score = float("-inf")
-        best_nutrition: dict[str, Any] = {}
-        best_cost: dict[str, Any] = {}
-        best_penalty = 0.0
-        best_daily_bonus = 0.0
-        best_meal_target_bonus = 0.0
-        for candidate in pool:
-            nutrition = calculate_recipe_nutrition_fefo(
-                candidate,
-                inventory,
-                generic=nutrition_store.generic,
-                stock_lots=nutrition_store.stock_lots,
+        day_completed = sum(
+            1
+            for slot in planned
+            if slot.get("selected") is not False and _text(slot.get("date")) == stamp
+        )
+        day_total = max(daily_slot_counts.get(stamp, 0), day_completed + 1)
+        if progress:
+            progress(
+                "ranking",
+                completed=slot_index - 1,
+                total=total_desired,
+                message=f"Scoring {len(pool)} candidates for {stamp} {meal_type}",
             )
-            if not nutrition.get("totals"):
-                nutrition = deepcopy(candidate.get("catalogNutrition") or candidate.get("nutrition") or nutrition)
-            nutrition_hint = nutrition_goal_bonus(nutrition, goal)
-            candidate_slot = {
-                "id": slot_id,
-                "selected": is_selected,
-                "date": stamp,
-                "mealType": meal_type,
-                "recipe": candidate,
-            }
-            penalty = _plan_penalty(planned, candidate_slot, inventory)
-            meal_target_bonus = 0.0
-            if shared_filters is None:
-                meal_targets, _meal_scope = recipe_target_scope(profile_target_settings, candidate)
-                meal_target_bonus = float(target_bonus(nutrition, meal_targets).get("bonus") or 0.0)
-            day_rows = [
-                slot.get("nutrition") or (slot.get("recipe") or {}).get("nutrition") or {}
-                for slot in planned
-                if slot.get("selected") is not False and _text(slot.get("date")) == stamp
-            ]
-            day_completed = len(day_rows)
-            day_total = max(daily_slot_counts.get(stamp, 0), day_completed + 1)
-            daily_hint = daily_progress_bonus(
-                day_rows,
-                nutrition,
-                profile_daily_targets,
-                fraction=min(1.0, (day_completed + 1) / max(1, day_total)),
+        from .shared_recipe_runtime import executor_progress
+        score_progress = executor_progress(progress) if progress else None
+        scored = await hass.async_add_executor_job(
+            partial(
+                _score_week_pool,
+                pool,
+                planned=planned,
+                inventory=inventory,
+                nutrition_by_id=nutrition_by_id,
+                cost_store=cost_store,
+                goal=goal,
+                slot_id=slot_id,
+                stamp=stamp,
+                meal_type=meal_type,
+                is_selected=is_selected,
+                shared_filters=shared_filters,
+                profile_target_settings=profile_target_settings,
+                profile_daily_targets=profile_daily_targets,
+                day_total=day_total,
+                progress=score_progress,
+                progress_base=float(slot_index - 1),
+                progress_total=float(total_desired),
             )
-            score = (
-                float((candidate.get("match") or {}).get("score") or 0.0)
-                + (0.0 if shared_filters is not None else float(nutrition_hint.get("bonus") or 0.0))
-                + meal_target_bonus
-                + float(daily_hint.get("bonus") or 0.0)
-                - penalty
-            )
-            if score <= best_score:
-                continue
-            best = candidate
-            best_score = score
-            best_nutrition = nutrition
-            best_cost = _recipe_cost_with_store(bridge, candidate, cost_store)
-            best_penalty = penalty
-            best_daily_bonus = float(daily_hint.get("bonus") or 0.0)
-            best_meal_target_bonus = meal_target_bonus
-        if best is None:
+        )
+        if scored is None:
             if target:
                 planned.append(target)
                 unchanged.append(slot_id)
+            if progress:
+                progress(
+                    "ranking",
+                    completed=slot_index,
+                    total=total_desired,
+                    message=f"{stamp} {meal_type}",
+                )
             continue
+
+        best = scored["recipe"]
         selected = deepcopy(best)
         selected_match = selected.setdefault("match", {})
-        selected_match["weeklySelectionScore"] = round(best_score, 1)
-        selected_match["plannedStockPenalty"] = round(best_penalty, 1)
-        selected_match["dailyNutrientTargetBonus"] = round(best_daily_bonus, 2)
+        selected_match["weeklySelectionScore"] = round(float(scored["score"]), 1)
+        selected_match["plannedStockPenalty"] = round(float(scored["penalty"]), 1)
+        selected_match["dailyNutrientTargetBonus"] = round(float(scored["dailyBonus"]), 2)
         if shared_filters is None:
-            selected_match["mealNutrientTargetBonus"] = round(best_meal_target_bonus, 2)
+            selected_match["mealNutrientTargetBonus"] = round(float(scored["mealTargetBonus"]), 2)
         selected_match["mealTypeTaxonomyFallback"] = taxonomy_fallback
-        selected["nutrition"] = best_nutrition
-        selected["cost"] = best_cost
+        selected_match["weeklyRegenerationFallback"] = regeneration_fallback
+        selected["nutrition"] = scored["nutrition"]
+        selected["cost"] = scored["cost"]
         planned.append({
             "id": slot_id,
             "selected": is_selected,
             "date": stamp,
             "mealType": meal_type,
             "recipe": selected,
-            "nutrition": best_nutrition,
-            "cost": best_cost,
+            "nutrition": scored["nutrition"],
+            "cost": scored["cost"],
         })
         used_recipes.append(candidate_signatures[id(best)])
+        if regeneration_fallback:
+            regeneration_fallback_slots.append(slot_id)
+        if progress:
+            progress(
+                "ranking",
+                completed=slot_index,
+                total=total_desired,
+                message=f"{stamp} {meal_type}",
+            )
 
     planned.sort(key=lambda row: (
         row.get("date") or "",
@@ -488,8 +760,40 @@ async def _generate_week(
     # by another client while this generation was in flight.
     if lifecycle.slots != original_slots:
         raise ValueError("The weekly plan changed during generation. Refresh it and try again.")
+    if progress:
+        progress("persist", completed=0, total=1, message="Saving weekly plan")
+    previous_shape = {
+        row.get("id"): (
+            _text(row.get("leftoverId")),
+            recipe_identity(row.get("recipe") or {}),
+        )
+        for row in original_slots
+        if week_start <= _text(row.get("date")) <= end
+    }
+    planned_shape = {
+        row.get("id"): (
+            _text(row.get("leftoverId")),
+            recipe_identity(row.get("recipe") or {}),
+        )
+        for row in planned
+    }
+    changed_slots = sum(
+        previous_shape.get(slot_id) != shape
+        for slot_id, shape in planned_shape.items()
+    )
     await lifecycle.async_replace_week(week_start, planned)
-    return {"catalogErrors": errors, "slotCount": len(planned), "unchangedSlotIds": unchanged}
+    if progress:
+        progress("persist", completed=1, total=1, message="Weekly plan saved")
+    return {
+        "catalogErrors": errors,
+        "slotCount": len(planned),
+        "unchangedSlotIds": unchanged,
+        "candidateCount": len(candidates),
+        "candidateLimit": _MAX_WEEK_CANDIDATES,
+        "regeneratedFromExisting": bool(regeneration_avoid),
+        "regenerationFallbackSlotIds": regeneration_fallback_slots,
+        "changedSlotCount": changed_slots,
+    }
 
 
 def _leftover_recipe(leftover, meals):
@@ -499,7 +803,16 @@ def _leftover_recipe(leftover, meals):
     return deepcopy(meal.get("recipe") or {key: meal[key] for key in ("title", "groupingFunctionalId", "variantFunctionalId") if meal.get(key)})
 
 
-async def _state(hass: HomeAssistant, bridge, *, history_days: int = 30, shared_filters=None, ui_language="en") -> dict[str, Any]:
+async def _state(
+    hass: HomeAssistant,
+    bridge,
+    *,
+    history_days: int = 30,
+    shared_filters=None,
+    ui_language="en",
+    progress=None,
+    reuse_costs=False,
+) -> dict[str, Any]:
     lifecycle = await meal_lifecycle_store_for_bridge(bridge)
     cost_store = await cost_store_for_bridge(bridge)
     inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
@@ -510,7 +823,14 @@ async def _state(hass: HomeAssistant, bridge, *, history_days: int = 30, shared_
     for leftover in state.get("leftovers", []):
         leftover["recipe"] = _leftover_recipe(leftover, meals)
     from .weekly_plan import refresh_plan
-    await refresh_plan(bridge, state, filters=shared_filters, language=ui_language)
+    await refresh_plan(
+        bridge,
+        state,
+        filters=shared_filters,
+        language=ui_language,
+        progress=progress,
+        reuse_costs=reuse_costs,
+    )
     state.update({
         "costSettings": cost_store.settings,
         "costReferenceCount": cost_store.snapshot()["referenceCount"],
@@ -708,14 +1028,15 @@ async def ws_week_settings_set(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         store = await meal_lifecycle_store_for_bridge(bridge)
-        await store.async_set_settings(
-            meal_types=msg.get("meal_types") if "meal_types" in msg else None,
-            leftovers_first=msg.get("leftovers_first") if "leftovers_first" in msg else None,
-            avoid_recent_days=msg.get("avoid_recent_days") if "avoid_recent_days" in msg else None,
-            nutrition_targets=msg.get("nutrition_targets") if "nutrition_targets" in msg else None,
-            weekday_meal_types=msg.get("weekday_meal_types") if "weekday_meal_types" in msg else None,
-        )
-        result = await _state(hass, bridge)
+        async with store.weekly_mutation():
+            await store.async_set_settings(
+                meal_types=msg.get("meal_types") if "meal_types" in msg else None,
+                leftovers_first=msg.get("leftovers_first") if "leftovers_first" in msg else None,
+                avoid_recent_days=msg.get("avoid_recent_days") if "avoid_recent_days" in msg else None,
+                nutrition_targets=msg.get("nutrition_targets") if "nutrition_targets" in msg else None,
+                weekday_meal_types=msg.get("weekday_meal_types") if "weekday_meal_types" in msg else None,
+            )
+            result = await _state(hass, bridge)
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)
@@ -736,25 +1057,64 @@ async def ws_week_settings_set(hass, connection, msg) -> None:
 })
 @websocket_api.async_response
 async def ws_week_generate(hass, connection, msg) -> None:
+    operation_id = _text(msg.get("_cook4me_job_id"))
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         lifecycle = await meal_lifecycle_store_for_bridge(bridge)
         raw_start = _text(msg.get("week_start"))
         week_start = rolling_week_start(raw_start, dt_util.now().date())
-        generation = await _generate_week(
-            hass, bridge, lifecycle,
-            week_start=week_start,
-            languages=v18._languages(bridge, msg.get("languages")),
-            diet=_text(msg.get("diet")) or "profile",
-            query=_text(msg.get("query")),
-            refresh=bool(msg.get("refresh")),
-            replace_slot_id=_text(msg.get("replace_slot_id")),
-            replace_slot_ids=msg.get("replace_slot_ids"),
-            shared_filters=msg.get("shared_filters"),
-            ui_language=msg.get("ui_language", "en"),
+        progress = lambda phase, **values: _emit_week_progress(
+            hass, operation_id, phase, **values
         )
-        result = {**generation, **await _state(hass, bridge, shared_filters=msg.get("shared_filters"), ui_language=msg.get("ui_language", "en"))}
+        if lifecycle.weekly_mutation_busy:
+            _emit_week_progress(
+                hass,
+                operation_id,
+                "starting",
+                message="Queued behind another weekly plan change",
+                kind="week_generate_queued",
+            )
+        async with lifecycle.weekly_mutation():
+            progress("starting", message="Generating weekly plan")
+            generation = await _generate_week(
+                hass, bridge, lifecycle,
+                week_start=week_start,
+                languages=v18._languages(bridge, msg.get("languages")),
+                diet=_text(msg.get("diet")) or "profile",
+                query=_text(msg.get("query")),
+                refresh=bool(msg.get("refresh")),
+                replace_slot_id=_text(msg.get("replace_slot_id")),
+                replace_slot_ids=msg.get("replace_slot_ids"),
+                shared_filters=msg.get("shared_filters"),
+                ui_language=msg.get("ui_language", "en"),
+                progress=progress,
+            )
+            state = await _state(
+                hass,
+                bridge,
+                shared_filters=msg.get("shared_filters"),
+                ui_language=msg.get("ui_language", "en"),
+                progress=progress,
+                reuse_costs=True,
+            )
+            result = {**generation, **state}
+        changed = int(generation.get("changedSlotCount") or 0)
+        progress(
+            "done",
+            completed=1,
+            total=1,
+            message=f"Weekly plan ready · {changed} meal slot(s) changed",
+            done=True,
+        )
     except Exception as exc:
+        _emit_week_progress(
+            hass,
+            operation_id,
+            "failed",
+            message=type(exc).__name__,
+            done=True,
+            error=type(exc).__name__,
+        )
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)
 
@@ -769,8 +1129,9 @@ async def ws_week_slot_clear(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         lifecycle = await meal_lifecycle_store_for_bridge(bridge)
-        cleared = await lifecycle.async_clear_slot(str(msg["slot_id"]))
-        result = {"cleared": cleared, **await _state(hass, bridge)}
+        async with lifecycle.weekly_mutation():
+            cleared = await lifecycle.async_clear_slot(str(msg["slot_id"]))
+            result = {"cleared": cleared, **await _state(hass, bridge)}
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)
@@ -789,11 +1150,12 @@ async def ws_week_select(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         lifecycle = await meal_lifecycle_store_for_bridge(bridge)
-        current = lifecycle.snapshot(start_date=dt_util.now().date())
-        if not set(msg["slot_ids"]).issubset({row["id"] for row in current["slots"]}):
-            raise ValueError("The selected meals are no longer in the next seven days")
-        await lifecycle.async_select_slots(msg["slot_ids"], msg["selected"])
-        result = await _state(hass, bridge, shared_filters=msg.get("shared_filters"), ui_language=msg["ui_language"])
+        async with lifecycle.weekly_mutation():
+            current = lifecycle.snapshot(start_date=dt_util.now().date())
+            if not set(msg["slot_ids"]).issubset({row["id"] for row in current["slots"]}):
+                raise ValueError("The selected meals are no longer in the next seven days")
+            await lifecycle.async_select_slots(msg["slot_ids"], msg["selected"])
+            result = await _state(hass, bridge, shared_filters=msg.get("shared_filters"), ui_language=msg["ui_language"])
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)
@@ -810,34 +1172,56 @@ async def ws_week_add_shopping(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         lifecycle = await meal_lifecycle_store_for_bridge(bridge)
-        snapshot = lifecycle.snapshot(bridge.recipe_hub.profile.get("houseIngredients") or [],
-            start_date=dt_util.now().date())
-        if msg.get("shared_filters") is not None:
-            snapshot = await _state(hass, bridge, shared_filters=msg["shared_filters"], ui_language=msg.get("ui_language", "en"))
-        if any((((slot.get("recipe") or {}).get("match") or {}).get("requiresSubstitutions")) for slot in snapshot["slots"] if slot.get("selected") is not False):
-            raise ValueError("Some planned recipes still need ingredient replacements. Resolve those recipes before adding the week to shopping.")
-        rows = snapshot["shoppingDelta"]
-        from .shopping_presentation import shopping_rows, normalize_supermarket_language
-        cost_store = await cost_store_for_bridge(bridge)
-        market_settings = cost_store.settings
-        shopping_language = normalize_supermarket_language(
-            msg.get("ui_language") or market_settings.get("supermarketLanguage"),
-            country=market_settings.get("country") or getattr(hass.config, "country", ""),
-            fallback="en",
-        )
-        rows = await hass.async_add_executor_job(
-            shopping_rows,
-            rows,
-            shopping_language,
-            market_settings.get("country") or getattr(hass.config, "country", ""),
-            [item for slot in snapshot["slots"] if slot.get("selected") is not False for item in (slot.get("recipe") or {}).get("ingredients") or []],
-        )
-        result = await _shopping_add(hass, rows)
-        result["shoppingDelta"] = rows
+        # Shopping is a plan-derived mutation. Keep its snapshot and writes in
+        # the same FIFO lane as generation so it cannot add shortages from a
+        # half-replaced week.
+        async with lifecycle.weekly_mutation():
+            snapshot = lifecycle.snapshot(
+                bridge.recipe_hub.profile.get("houseIngredients") or [],
+                start_date=dt_util.now().date(),
+            )
+            if msg.get("shared_filters") is not None:
+                snapshot = await _state(
+                    hass,
+                    bridge,
+                    shared_filters=msg["shared_filters"],
+                    ui_language=msg.get("ui_language", "en"),
+                )
+            if any(
+                (((slot.get("recipe") or {}).get("match") or {}).get("requiresSubstitutions"))
+                for slot in snapshot["slots"]
+                if slot.get("selected") is not False
+            ):
+                raise ValueError(
+                    "Some planned recipes still need ingredient replacements. "
+                    "Resolve those recipes before adding the week to shopping."
+                )
+            rows = snapshot["shoppingDelta"]
+            from .shopping_presentation import shopping_rows, normalize_supermarket_language
+            cost_store = await cost_store_for_bridge(bridge)
+            market_settings = cost_store.settings
+            shopping_language = normalize_supermarket_language(
+                msg.get("ui_language") or market_settings.get("supermarketLanguage"),
+                country=market_settings.get("country") or getattr(hass.config, "country", ""),
+                fallback="en",
+            )
+            rows = await hass.async_add_executor_job(
+                shopping_rows,
+                rows,
+                shopping_language,
+                market_settings.get("country") or getattr(hass.config, "country", ""),
+                [
+                    item
+                    for slot in snapshot["slots"]
+                    if slot.get("selected") is not False
+                    for item in (slot.get("recipe") or {}).get("ingredients") or []
+                ],
+            )
+            result = await _shopping_add(hass, rows)
+            result["shoppingDelta"] = rows
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)
-
 
 @websocket_api.websocket_command({
     vol.Required("type"): "cook4me/v20/recipe_cost",
@@ -1029,20 +1413,21 @@ async def ws_leftover_consume(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         lifecycle = await meal_lifecycle_store_for_bridge(bridge)
-        consumed = await lifecycle.async_consume_leftover(
-            str(msg["leftover_id"]), msg.get("servings")
-        )
-        history = await meal_history_store_for_bridge(bridge)
-        record = await history.async_record(
-            recipe={"title": consumed.get("title"), "servings": consumed.get("servings")},
-            nutrition=consumed.get("nutrition") or {},
-            consumption={},
-        )
-        await lifecycle.async_record_meal_cost(
-            record.get("id"),
-            {"totalsByCurrency": consumed.get("costByCurrency") or {}, "source": "leftover"},
-        )
-        result = {"consumed": consumed, "mealHistoryRecord": record, **await _state(hass, bridge)}
+        async with lifecycle.weekly_mutation():
+            consumed = await lifecycle.async_consume_leftover(
+                str(msg["leftover_id"]), msg.get("servings")
+            )
+            history = await meal_history_store_for_bridge(bridge)
+            record = await history.async_record(
+                recipe={"title": consumed.get("title"), "servings": consumed.get("servings")},
+                nutrition=consumed.get("nutrition") or {},
+                consumption={},
+            )
+            await lifecycle.async_record_meal_cost(
+                record.get("id"),
+                {"totalsByCurrency": consumed.get("costByCurrency") or {}, "source": "leftover"},
+            )
+            result = {"consumed": consumed, "mealHistoryRecord": record, **await _state(hass, bridge)}
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)

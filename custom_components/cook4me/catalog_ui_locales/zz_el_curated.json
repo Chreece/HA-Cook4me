@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through thirty-fifth audit 2026-09-22",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through thirty-sixth audit 2026-09-22",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -509,7 +509,7 @@
     "turkey breast pieces": "Κομμάτια στήθους γαλοπούλας",
     "tianmianjiang sweet bean sauce": "Tianmianjiang (γλυκιά πάστα φασολιών)",
     "yakiniku sauce": "Yakiniku sauce (ιαπωνική σάλτσα για ψητό κρέας)",
-    "store-bought yakiniku sauce": "Έτοιμη yakiniku sauce",
+    "store-bought yakiniku sauce": "Έτοιμη σάλτσα yakiniku",
     "yakitori sauce": "Yakitori tare (ιαπωνική σάλτσα yakitori)",
     "canned yakitori in tare sauce": "Κονσέρβα yakitori σε σάλτσα tare",
     "teriyaki marinade sauce": "Σάλτσα / μαρινάδα teriyaki",
@@ -1278,7 +1278,9 @@
     "small lamb knuckle-ends": "Μικρά άκρα αρνίσιου κοτσιού",
     "fine-grain semolina in a salad bowl": "Ψιλό σιμιγδάλι σε σαλατιέρα",
     "little gem lettuce": "Μαρούλι Little Gem",
-    "herta le bon vegetal plain strips": "Σκέτες φυτικές λωρίδες Herta Le Bon Végétal"
+    "herta le bon vegetal plain strips": "Σκέτες φυτικές λωρίδες Herta Le Bon Végétal",
+    "cornflour mixed into a little stock": "Κορν φλάουρ ανακατεμένο με λίγο ζωμό",
+    "pickled jalapeno rings": "Ροδέλες χαλαπένιο τουρσί"
   },
   "searchAliases": {
     "veal": [
@@ -8349,7 +8351,8 @@
     ],
     "cornflour mixed into a little stock": [
       "κορν φλάουρ",
-      "cornflour mixed into a little stock"
+      "cornflour mixed into a little stock",
+      "Κορν φλάουρ ανακατεμένο με λίγο ζωμό"
     ],
     "crumbled chocolate biscuit": [
       "θρυμματισμένα μπισκότα σοκολάτας",
@@ -8989,7 +8992,8 @@
     ],
     "store-bought yakiniku sauce": [
       "έτοιμη yakiniku sauce",
-      "store-bought yakiniku sauce"
+      "store-bought yakiniku sauce",
+      "Έτοιμη σάλτσα yakiniku"
     ],
     "tahini paste": [
       "ταχίνι",
@@ -13154,7 +13158,8 @@
     ],
     "pickled jalapeno rings": [
       "χαλαπένιο τουρσί",
-      "pickled jalapeno rings"
+      "pickled jalapeno rings",
+      "Ροδέλες χαλαπένιο τουρσί"
     ],
     "pinch of ground dried lime": [
       "μια πρέζα αλεσμένο αποξηραμένο λάιμ",

@@ -28,6 +28,10 @@ async def ws_job_run(hass, connection, msg):
         # command checks still run. The client cannot supply another response ID.
         schema, handler = command
         request = schema({**msg["request"], "id": msg["id"]})
+        # Internal ownership metadata is attached only after schema validation,
+        # so command schemas stay unchanged and clients cannot forge another
+        # operation id. Long-running handlers can use it for real progress.
+        request["_cook4me_job_id"] = msg["job_id"]
         async with state["registry"].run(connection, msg["job_id"]):
             await handler(hass, connection, request)
     except asyncio.CancelledError:

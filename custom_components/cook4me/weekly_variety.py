@@ -52,3 +52,18 @@ def similar(left, right):
 
 def already_planned(candidate, selected):
     return any(similar(candidate, other) for other in selected)
+
+
+def available_candidates(candidates, signatures, selected, avoid=()):
+    """Return candidates distinct from the new plan and an optional old plan.
+
+    The avoid set is used by full regeneration: existing-week dishes are
+    excluded first so pressing Regenerate actually rotates the plan. Callers
+    may retry without avoid only when the filtered catalog has no alternative.
+    """
+    return [
+        row
+        for row in candidates
+        if not already_planned(signatures[id(row)], selected)
+        and not already_planned(signatures[id(row)], avoid)
+    ]

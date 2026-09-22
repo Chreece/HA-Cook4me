@@ -2,32 +2,60 @@
 from copy import deepcopy
 
 
-async def refresh_plan(bridge, state, *, filters=None, language="en"):
+def _inventory_views(slots, inventory):
+    from .meal_lifecycle import reservation_status, shopping_delta
+    return reservation_status(slots, inventory), shopping_delta(slots, inventory)
+
+
+async def refresh_plan(bridge, state, *, filters=None, language="en", progress=None, reuse_costs=False):
     from .automatic_prices import offline_recipe_price
     from .release_catalog import async_warm_release_catalog
     from .shared_recipe_runtime import processor
     from .recipe_metrics_v60 import calculate_recipe_nutrition_fast
-    from .meal_lifecycle import reservation_status, shopping_delta
 
     catalog = await async_warm_release_catalog(bridge.hass)
     leftovers = {row["id"]: row for row in state.get("leftovers", [])}
     slots = state.get("slots", [])
     rows = []
-    for slot in slots:
+    total_slots = max(1, len(slots))
+    if progress:
+        progress("cost", completed=0, total=total_slots, message="Refreshing planned meals")
+    for index, slot in enumerate(slots, start=1):
         recipe = slot.get("recipe") or leftovers.get(slot.get("leftoverId"), {}).get("recipe")
         if not recipe:
+            if progress:
+                progress("cost", completed=index, total=total_slots, message="Refreshing planned meals")
             continue
         recipe = deepcopy(recipe)
         if not slot.get("leftoverId"):
-            nutrition = calculate_recipe_nutrition_fast(recipe, catalog.get("_runtimeNutritionIndex") or {})
+            nutrition = await bridge.hass.async_add_executor_job(
+                calculate_recipe_nutrition_fast,
+                recipe,
+                catalog.get("_runtimeNutritionIndex") or {},
+            )
             if nutrition["totals"]:
                 nutrition.update(estimated=True, sourceKinds=["reviewed_release_per100g"])
                 recipe["catalogNutrition"] = nutrition
             # The same local evidence and budget assumptions used by card prices.
-            recipe["cost"] = await offline_recipe_price(bridge, recipe, catalog["ingredients"])
-            slot["cost"] = deepcopy(recipe["cost"])
+            # A freshly generated slot already carries a current cost, so the
+            # immediate post-generation state refresh can reuse it instead of
+            # repeating the expensive calculation.
+            if reuse_costs and isinstance(slot.get("cost"), dict) and slot["cost"]:
+                recipe["cost"] = deepcopy(slot["cost"])
+            else:
+                recipe["cost"] = await offline_recipe_price(
+                    bridge, recipe, catalog["ingredients"]
+                )
+                slot["cost"] = deepcopy(recipe["cost"])
         recipe["_weeklySlotId"] = slot["id"]
         rows.append(recipe)
+        if progress:
+            progress(
+                "cost",
+                completed=index,
+                total=total_slots,
+                message=str(recipe.get("title") or slot.get("mealType") or "Planned meal"),
+            )
     if filters is not None:
         selected = filters.get("languages")
         if isinstance(selected, list):
@@ -49,8 +77,11 @@ async def refresh_plan(bridge, state, *, filters=None, language="en"):
     state["slots"] = visible
     state["filteredSlotCount"] = len(slots) - len(visible)
     inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
-    state["reservations"] = reservation_status(visible, inventory)
-    state["shoppingDelta"] = shopping_delta(visible, inventory)
+    reservations, shopping = await bridge.hass.async_add_executor_job(
+        _inventory_views, visible, inventory
+    )
+    state["reservations"] = reservations
+    state["shoppingDelta"] = shopping
     totals = {}
     selected_slots = [slot for slot in visible if slot.get("selected") is not False]
     state["selectedSlotCount"] = len(selected_slots)

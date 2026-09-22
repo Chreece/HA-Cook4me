@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import asyncio
+from contextlib import asynccontextmanager
 from copy import deepcopy
 from datetime import date, datetime, timedelta, timezone
 import math
@@ -287,6 +289,10 @@ class Cook4MeMealLifecycleStore:
             hass, _STORAGE_VERSION, f"{DOMAIN}.{entry_id}.meal_lifecycle"
         )
         self._loaded = False
+        # Serialize weekly-plan mutations for this config entry. Read-only
+        # browsing/state calls do not take this lock and remain available while
+        # a generation is running.
+        self._weekly_mutation_lock = asyncio.Lock()
         self._data: dict[str, Any] = {
             "weekStart": week_monday(),
             "slots": [],
@@ -358,6 +364,16 @@ class Cook4MeMealLifecycleStore:
 
     async def _save(self) -> None:
         await self._store.async_save(self._data)
+
+    @property
+    def weekly_mutation_busy(self) -> bool:
+        return self._weekly_mutation_lock.locked()
+
+    @asynccontextmanager
+    async def weekly_mutation(self):
+        """Serialize plan-changing work without blocking independent reads."""
+        async with self._weekly_mutation_lock:
+            yield
 
     @property
     def slots(self) -> list[dict[str, Any]]:
