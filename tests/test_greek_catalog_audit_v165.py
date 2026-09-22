@@ -35,7 +35,7 @@ class GreekCatalogAuditV165Tests(unittest.TestCase):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
             "almond":"Αμύγδαλο",
-            "blanched almond":"Λευκό αμύγδαλο",
+            "blanched almond":"Αποφλοιωμένο αμύγδαλο",
             "roasted almond":"Καβουρδισμένο αμύγδαλο",
             "toasted almond":"Καβουρδισμένο αμύγδαλο",
             "whole almond":"Ολόκληρο αμύγδαλο",

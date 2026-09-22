@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through thirty-fourth audit 2026-09-22",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through thirty-fifth audit 2026-09-22",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -401,9 +401,9 @@
     "brick pastry sheets": "Φύλλα μπρικ (brick pastry)",
     "brik pastry sheets": "Φύλλα μπρικ (brik pastry)",
     "cottage cheese": "Cottage cheese (τυρί κότατζ)",
-    "chilled cottage cheese": "Cottage cheese (τυρί κότατζ)",
-    "chilled cottage cheese portions": "Μερίδες cottage cheese",
-    "chilled portions of cottage cheese": "Μερίδες cottage cheese",
+    "chilled cottage cheese": "Cottage cheese ψυγείου",
+    "chilled cottage cheese portions": "Μερίδες cottage cheese ψυγείου",
+    "chilled portions of cottage cheese": "Μερίδες cottage cheese ψυγείου",
     "cottage cheese with herbs": "Cottage cheese με μυρωδικά",
     "portions of cottage cheese": "Μερίδες cottage cheese",
     "buttermilk": "Buttermilk (βουτυρόγαλα)",
@@ -553,7 +553,7 @@
     "ling fish fillets, 250 g each": "Φιλέτα ling (Molva molva), 250 g το καθένα",
     "milkfish belly": "Κοιλιά milkfish (bangus)",
     "hairtail fish": "Hairtail / cutlassfish (Trichiurus)",
-    "yellow sea cod fillet": "Φιλέτο yellow sea cod",
+    "yellow sea cod fillet": "Φιλέτο μπακαλιάρου της Κίτρινης Θάλασσας",
     "white-fish steak": "Φέτα λευκού ψαριού",
     "bonito steak": "Φέτα παλαμίδας",
     "fish steak": "Φέτα ψαριού",
@@ -978,7 +978,7 @@
     "canned green pea": "Αρακάς κονσέρβας",
     "canned pea": "Αρακάς κονσέρβας",
     "almond": "Αμύγδαλο",
-    "blanched almond": "Λευκό αμύγδαλο",
+    "blanched almond": "Αποφλοιωμένο αμύγδαλο",
     "caramelized almond": "Καραμελωμένο αμύγδαλο",
     "ground almond": "Αλεσμένο αμύγδαλο",
     "flaked almond": "Αμύγδαλο φιλέ",
@@ -988,7 +988,7 @@
     "roasted flaked almond": "Καβουρδισμένο αμύγδαλο φιλέ",
     "toasted flaked almond": "Καβουρδισμένο αμύγδαλο φιλέ",
     "whole almond": "Ολόκληρο αμύγδαλο",
-    "whole blanched almond": "Ολόκληρο λευκό αμύγδαλο",
+    "whole blanched almond": "Ολόκληρο αποφλοιωμένο αμύγδαλο",
     "cashew": "Κάσιους",
     "cashew nut": "Κάσιους",
     "roasted cashew": "Καβουρδισμένο κάσιους",
@@ -1276,7 +1276,9 @@
     "quail, 160–170 g": "Ορτύκι, 160–170 g",
     "quails, 160–170 g": "Ορτύκια, 160–170 g το καθένα",
     "small lamb knuckle-ends": "Μικρά άκρα αρνίσιου κοτσιού",
-    "fine-grain semolina in a salad bowl": "Ψιλό σιμιγδάλι σε σαλατιέρα"
+    "fine-grain semolina in a salad bowl": "Ψιλό σιμιγδάλι σε σαλατιέρα",
+    "little gem lettuce": "Μαρούλι Little Gem",
+    "herta le bon vegetal plain strips": "Σκέτες φυτικές λωρίδες Herta Le Bon Végétal"
   },
   "searchAliases": {
     "veal": [
@@ -3606,7 +3608,8 @@
     "blanched almond": [
       "λευκό αμύγδαλο",
       "λευκά αμύγδαλα",
-      "blanched almond"
+      "blanched almond",
+      "Αποφλοιωμένο αμύγδαλο"
     ],
     "roasted almond": [
       "καβουρδισμένο αμύγδαλο",
@@ -9487,7 +9490,8 @@
     ],
     "little gem lettuce": [
       "μικρό μαρούλι little gem",
-      "little gem lettuce"
+      "little gem lettuce",
+      "Μαρούλι Little Gem"
     ],
     "marinated artichoke hearts": [
       "μαριναρισμένες καρδιές αγκινάρας",
@@ -13270,15 +13274,18 @@
       "κότατζ",
       "τυρί κότατζ",
       "chilled cottage cheese",
-      "cottage cheese"
+      "cottage cheese",
+      "Cottage cheese ψυγείου"
     ],
     "chilled cottage cheese portions": [
       "μερίδες cottage cheese",
-      "chilled cottage cheese portions"
+      "chilled cottage cheese portions",
+      "Μερίδες cottage cheese ψυγείου"
     ],
     "chilled portions of cottage cheese": [
       "μερίδες cottage cheese",
-      "chilled portions of cottage cheese"
+      "chilled portions of cottage cheese",
+      "Μερίδες cottage cheese ψυγείου"
     ],
     "chilled whipped cream": [
       "κρύα σαντιγί",
@@ -15132,7 +15139,8 @@
     ],
     "herta le bon vegetal plain strips": [
       "φυτικές λωρίδες herta le bon végétal",
-      "herta le bon vegetal plain strips"
+      "herta le bon vegetal plain strips",
+      "Σκέτες φυτικές λωρίδες Herta Le Bon Végétal"
     ],
     "high-quality rillettes": [
       "Ριγιέτ υψηλής ποιότητας",
@@ -17291,7 +17299,8 @@
     ],
     "whole blanched almond": [
       "ολόκληρο λευκό αμύγδαλο",
-      "whole blanched almond"
+      "whole blanched almond",
+      "Ολόκληρο αποφλοιωμένο αμύγδαλο"
     ],
     "whole caraway seed": [
       "ολόκληρος σπόρος αγριοκύμινου",
@@ -17379,7 +17388,8 @@
     ],
     "yellow sea cod fillet": [
       "φιλέτο yellow sea cod",
-      "yellow sea cod fillet"
+      "yellow sea cod fillet",
+      "Φιλέτο μπακαλιάρου της Κίτρινης Θάλασσας"
     ],
     "yellow squash": [
       "κίτρινη κολοκύθα",

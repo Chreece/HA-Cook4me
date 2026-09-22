@@ -145,3 +145,4 @@ jobs:
           python tests/test_universal_stock_coverage.py
           python tests/test_price_benchmarks_event_loop.py
           python tests/test_greek_catalog_audit_v179.py
+          python tests/test_greek_catalog_audit_v180.py
