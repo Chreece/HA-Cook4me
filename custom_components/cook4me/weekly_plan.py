@@ -7,7 +7,7 @@ def _inventory_views(slots, inventory):
     return reservation_status(slots, inventory), shopping_delta(slots, inventory)
 
 
-async def refresh_plan(bridge, state, *, filters=None, language="en", progress=None):
+async def refresh_plan(bridge, state, *, filters=None, language="en", progress=None, reuse_costs=False):
     from .automatic_prices import offline_recipe_price
     from .release_catalog import async_warm_release_catalog
     from .shared_recipe_runtime import processor
@@ -37,8 +37,16 @@ async def refresh_plan(bridge, state, *, filters=None, language="en", progress=N
                 nutrition.update(estimated=True, sourceKinds=["reviewed_release_per100g"])
                 recipe["catalogNutrition"] = nutrition
             # The same local evidence and budget assumptions used by card prices.
-            recipe["cost"] = await offline_recipe_price(bridge, recipe, catalog["ingredients"])
-            slot["cost"] = deepcopy(recipe["cost"])
+            # A freshly generated slot already carries a current cost, so the
+            # immediate post-generation state refresh can reuse it instead of
+            # repeating the expensive calculation.
+            if reuse_costs and isinstance(slot.get("cost"), dict) and slot["cost"]:
+                recipe["cost"] = deepcopy(slot["cost"])
+            else:
+                recipe["cost"] = await offline_recipe_price(
+                    bridge, recipe, catalog["ingredients"]
+                )
+                slot["cost"] = deepcopy(recipe["cost"])
         recipe["_weeklySlotId"] = slot["id"]
         rows.append(recipe)
         if progress:
