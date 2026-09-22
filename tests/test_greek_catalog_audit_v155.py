@@ -46,7 +46,7 @@ class GreekCatalogAuditV155Tests(unittest.TestCase):
             "baguette slices":"Φέτες μπαγκέτας",
             "cottage cheese":"Τυρί κότατζ (cottage cheese)",
             "buttermilk":"Βουτυρόγαλα (buttermilk)",
-            "skyr":"Skyr (σκιρ)",
+            "skyr":"Σκιρ (skyr)",
             "processed cheese portion":"Μερίδα επεξεργασμένου τυριού",
             "processed cheese portions":"Μερίδες επεξεργασμένου τυριού",
         }
@@ -56,8 +56,8 @@ class GreekCatalogAuditV155Tests(unittest.TestCase):
     def test_produce_and_fish_labels_avoid_misleading_literal_terms(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
-            "bok choy":"Pak choi / bok choy (πακ τσόι)",
-            "daikon radish":"Daikon (λευκό ραπανάκι)",
+            "bok choy":"Πακ τσόι (pak choi / bok choy)",
+            "daikon radish":"Λευκό ραπανάκι ντάικον (daikon)",
             "skate wing":"Φτερούγα σαλαχιού",
             "headless crucian carp":"Κουτσουράς χωρίς κεφάλι",
             "whole albacore tuna":"Ολόκληρος τόνος albacore (λευκός τόνος)",
