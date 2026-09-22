@@ -19,7 +19,7 @@ def _function_source(path, name):
     source=path.read_text(encoding="utf-8")
     tree=ast.parse(source)
     node=next(
-        item for item in tree.body
+        item for item in ast.walk(tree)
         if isinstance(item,(ast.FunctionDef,ast.AsyncFunctionDef)) and item.name==name
     )
     return ast.get_source_segment(source,node) or ""
