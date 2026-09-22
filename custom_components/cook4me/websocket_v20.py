@@ -733,7 +733,7 @@ def _leftover_recipe(leftover, meals):
     return deepcopy(meal.get("recipe") or {key: meal[key] for key in ("title", "groupingFunctionalId", "variantFunctionalId") if meal.get(key)})
 
 
-async def _state(hass: HomeAssistant, bridge, *, history_days: int = 30, shared_filters=None, ui_language="en") -> dict[str, Any]:
+async def _state(hass: HomeAssistant, bridge, *, history_days: int = 30, shared_filters=None, ui_language="en", progress=None) -> dict[str, Any]:
     lifecycle = await meal_lifecycle_store_for_bridge(bridge)
     cost_store = await cost_store_for_bridge(bridge)
     inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
@@ -744,7 +744,7 @@ async def _state(hass: HomeAssistant, bridge, *, history_days: int = 30, shared_
     for leftover in state.get("leftovers", []):
         leftover["recipe"] = _leftover_recipe(leftover, meals)
     from .weekly_plan import refresh_plan
-    await refresh_plan(bridge, state, filters=shared_filters, language=ui_language)
+    await refresh_plan(bridge, state, filters=shared_filters, language=ui_language, progress=progress)
     state.update({
         "costSettings": cost_store.settings,
         "costReferenceCount": cost_store.snapshot()["referenceCount"],
@@ -997,14 +997,13 @@ async def ws_week_generate(hass, connection, msg) -> None:
                 ui_language=msg.get("ui_language", "en"),
                 progress=progress,
             )
-            progress("cost", completed=0, total=1, message="Refreshing weekly totals")
             state = await _state(
                 hass,
                 bridge,
                 shared_filters=msg.get("shared_filters"),
                 ui_language=msg.get("ui_language", "en"),
+                progress=progress,
             )
-            progress("cost", completed=1, total=1, message="Weekly totals ready")
             result = {**generation, **state}
         progress("done", completed=1, total=1, message="Weekly plan ready", done=True)
     except Exception as exc:
