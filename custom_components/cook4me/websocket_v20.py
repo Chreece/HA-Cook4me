@@ -1055,7 +1055,14 @@ async def ws_week_generate(hass, connection, msg) -> None:
                 progress=progress,
             )
             result = {**generation, **state}
-        progress("done", completed=1, total=1, message="Weekly plan ready", done=True)
+        changed = int(generation.get("changedSlotCount") or 0)
+        progress(
+            "done",
+            completed=1,
+            total=1,
+            message=f"Weekly plan ready · {changed} meal slot(s) changed",
+            done=True,
+        )
     except Exception as exc:
         _emit_week_progress(
             hass,
