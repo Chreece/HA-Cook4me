@@ -73,8 +73,11 @@ class GreekCatalogAuditV148Tests(unittest.TestCase):
 
     def test_edamame_family_uses_market_name(self):
         labels=load_presentation().labels()["el"]
+        aliases=load_presentation().locale_search_aliases()["el"]
         for key in ("edamame","edamame bean","frozen edamame","frozen edamame bean"):
-            self.assertIn("edamame",labels[key].casefold())
+            display=labels[key].casefold()
+            self.assertTrue("ενταμάμε" in display or "edamame" in display,key)
+            self.assertIn("edamame"," ".join(aliases[key]).casefold(),key)
 
     def test_search_aliases_cover_third_pass_terms(self):
         aliases=load_presentation().locale_search_aliases()["el"]
