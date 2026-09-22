@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "language": "el",
+  "translationSource": "Greek audit pass 45 (v192), 2026-09-22: ingredient forms, qualifier scope and natural preparation wording. Presentation/search only.",
+  "labels": {
+    "mixed-color bell pepper": "Πιπεριές διαφόρων χρωμάτων",
+    "three-colour bell pepper": "Πιπεριές τριών χρωμάτων",
+    "biscuit made with low-calorie chocolate powder + fondant icing decorations": "Μπισκότο με σκόνη σοκολάτας χαμηλών θερμίδων και διακόσμηση ζαχαρόπαστας",
+    "cakes made with low-calorie chocolate powder + fondant icing decorations": "Κέικ με σκόνη σοκολάτας χαμηλών θερμίδων και διακόσμηση ζαχαρόπαστας",
+    "cookies made with low-calorie chocolate powder plus fondant icing decorations": "Μπισκότα με σκόνη σοκολάτας χαμηλών θερμίδων και διακόσμηση ζαχαρόπαστας",
+    "grapefruit segments": "Φετούλες γκρέιπφρουτ",
+    "scraped seed from a vanilla pod": "Σπόροι από το εσωτερικό λοβού βανίλιας",
+    "bread crumb": "Τρίμματα ψωμιού",
+    "white bread crumb": "Τρίμματα λευκού ψωμιού",
+    "dried breadcrumbs": "Τρίμματα αποξηραμένου ψωμιού",
+    "praline added to the crumb-butter mixture": "Πραλίνα για προσθήκη στο μείγμα τριμμάτων και βουτύρου"
+  },
+  "searchAliases": {
+    "mixed-color bell pepper": ["mixed-color bell pepper", "Πιπεριές διαφόρων χρωμάτων", "Πολύχρωμη πιπεριά"],
+    "three-colour bell pepper": ["three-colour bell pepper", "Πιπεριές τριών χρωμάτων", "Τρίχρωμη πιπεριά"],
+    "biscuit made with low-calorie chocolate powder + fondant icing decorations": ["biscuit made with low-calorie chocolate powder + fondant icing decorations", "Μπισκότο με σκόνη σοκολάτας χαμηλών θερμίδων και διακόσμηση ζαχαρόπαστας", "Μπισκότο σοκολάτας χαμηλών θερμίδων με διακόσμηση ζαχαρόπαστας"],
+    "cakes made with low-calorie chocolate powder + fondant icing decorations": ["cakes made with low-calorie chocolate powder + fondant icing decorations", "Κέικ με σκόνη σοκολάτας χαμηλών θερμίδων και διακόσμηση ζαχαρόπαστας", "Κέικ με σοκολάτα χαμηλών θερμίδων και διακόσμηση ζαχαρόπαστας"],
+    "cookies made with low-calorie chocolate powder plus fondant icing decorations": ["cookies made with low-calorie chocolate powder plus fondant icing decorations", "Μπισκότα με σκόνη σοκολάτας χαμηλών θερμίδων και διακόσμηση ζαχαρόπαστας", "Μπισκότα με σοκολάτα χαμηλών θερμίδων και διακόσμηση ζαχαρόπαστας"],
+    "grapefruit segments": ["grapefruit segments", "Φετούλες γκρέιπφρουτ", "Τμήματα γκρέιπφρουτ"],
+    "scraped seed from a vanilla pod": ["scraped seed from a vanilla pod", "Σπόροι από το εσωτερικό λοβού βανίλιας", "Ξυσμένοι σπόροι από λοβό βανίλιας"],
+    "bread crumb": ["bread crumb", "Τρίμματα ψωμιού", "Ψίχουλο ψωμιού"],
+    "white bread crumb": ["white bread crumb", "Τρίμματα λευκού ψωμιού", "Ψίχουλο λευκού ψωμιού"],
+    "dried breadcrumbs": ["dried breadcrumbs", "Τρίμματα αποξηραμένου ψωμιού", "Αποξηραμένη τριμμένη φρυγανιά"],
+    "praline added to the crumb-butter mixture": ["praline added to the crumb-butter mixture", "Πραλίνα για προσθήκη στο μείγμα τριμμάτων και βουτύρου", "Πραλίνα για προσθήκη στο μείγμα ψίχουλων και βουτύρου"]
+  },
+  "audit": {
+    "version": 192,
+    "reviewedLabelCount": 11,
+    "scope": "Exact labels and legacy aliases only; no ingredient, diet, nutrition or price identity changes"
+  }
+}
