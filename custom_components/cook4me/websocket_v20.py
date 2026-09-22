@@ -414,8 +414,14 @@ async def _week_candidates(
     )
     if recent:
         candidates = [row for row in candidates if recipe_identity(row) not in recent]
-    ranked = v13._rank_filtered(
-        bridge, candidates, diet=diet, limit=_MAX_WEEK_CANDIDATES
+    ranked = await hass.async_add_executor_job(
+        partial(
+            v13._rank_filtered,
+            bridge,
+            candidates,
+            diet=diet,
+            limit=_MAX_WEEK_CANDIDATES,
+        )
     )
     return [_feedback_adjust(lifecycle, row) for row in ranked], errors
 
