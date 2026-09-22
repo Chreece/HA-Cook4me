@@ -61,7 +61,7 @@ class GreekCatalogAuditV155Tests(unittest.TestCase):
             "skate wing":"Φτερούγα σαλαχιού",
             "headless crucian carp":"Κουτσουράς χωρίς κεφάλι",
             "whole albacore tuna":"Ολόκληρος λευκός τόνος (albacore)",
-            "spanish mackerel":"Spanish mackerel (είδος σκουμπριού)",
+            "spanish mackerel":"Ισπανικό σκουμπρί (Spanish mackerel)",
         }
         for key,value in expected.items():
             self.assertEqual(labels.get(key),value)
