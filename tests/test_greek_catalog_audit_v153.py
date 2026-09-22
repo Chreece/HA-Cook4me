@@ -58,7 +58,7 @@ class GreekCatalogAuditV153Tests(unittest.TestCase):
             "fermented cucumber":"Ζυμωμένο αγγούρι",
             "fermented cucumber brine":"Άλμη από ζυμωμένα αγγούρια",
             "lightly fermented cucumber":"Ελαφρά ζυμωμένο αγγούρι",
-            "salted fermented shrimp":"Saeujeot (αλατισμένες ζυμωμένες γαρίδες)",
+            "salted fermented shrimp":"Αλατισμένες ζυμωμένες γαρίδες σεουτζότ (saeujeot)",
             "sugar snap pea":"Τραγανά γλυκομπίζελα (sugar snap peas)",
         }
         for key,value in expected.items():
@@ -68,8 +68,8 @@ class GreekCatalogAuditV153Tests(unittest.TestCase):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
             "store-bought seasoned inari tofu pouches":"Έτοιμα καρυκευμένα inari-age (πουγκιά τηγανητού τόφου)",
-            "thick tofu skin":"Yuba (παχιά πέτσα τόφου)",
-            "atsuage fried tofu":"Atsuage (τηγανητό τόφου)",
+            "thick tofu skin":"Παχιά πέτσα τόφου γιούμπα (yuba)",
+            "atsuage fried tofu":"Τηγανητό τόφου ατσουάγκε (atsuage)",
             "firm atsuage fried tofu":"Σφιχτό atsuage (τηγανητό τόφου)",
             "large ganmodoki fried tofu":"Μεγάλο Ganmodoki (τηγανητό τόφου με λαχανικά)",
         }
