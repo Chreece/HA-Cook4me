@@ -25,7 +25,7 @@ class GreekCatalogAuditV181Tests(unittest.TestCase):
         )
         self.assertEqual(
             labels["store-bought yakiniku sauce"],
-            "Έτοιμη σάλτσα yakiniku",
+            "Έτοιμη σάλτσα γιακινίκου (yakiniku)",
         )
         self.assertEqual(
             labels["pickled jalapeno rings"],
