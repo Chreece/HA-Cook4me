@@ -47,7 +47,9 @@ class Cook4MeRecipeHubPanelV180 extends BasePanel{
  }
  _v180OpenManualFromFrame(){
   const d=this._v78Draft;if(!d||this._v78Busy||this._v78Submitted)return;
-  d.scanNote='';
+  this._v111CancelRead?.();
+  if(this._v78Stream||this._v80CameraPending)this._v78StopCamera?.();
+  d.mode='manual';d.scanNote='';d.scanPhase='idle';
   this._v112Editor?.(true,'product');
  }
  async _v78Open(mode='barcode'){
