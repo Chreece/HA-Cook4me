@@ -942,14 +942,15 @@ async def ws_week_settings_set(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         store = await meal_lifecycle_store_for_bridge(bridge)
-        await store.async_set_settings(
-            meal_types=msg.get("meal_types") if "meal_types" in msg else None,
-            leftovers_first=msg.get("leftovers_first") if "leftovers_first" in msg else None,
-            avoid_recent_days=msg.get("avoid_recent_days") if "avoid_recent_days" in msg else None,
-            nutrition_targets=msg.get("nutrition_targets") if "nutrition_targets" in msg else None,
-            weekday_meal_types=msg.get("weekday_meal_types") if "weekday_meal_types" in msg else None,
-        )
-        result = await _state(hass, bridge)
+        async with store.weekly_mutation():
+            await store.async_set_settings(
+                meal_types=msg.get("meal_types") if "meal_types" in msg else None,
+                leftovers_first=msg.get("leftovers_first") if "leftovers_first" in msg else None,
+                avoid_recent_days=msg.get("avoid_recent_days") if "avoid_recent_days" in msg else None,
+                nutrition_targets=msg.get("nutrition_targets") if "nutrition_targets" in msg else None,
+                weekday_meal_types=msg.get("weekday_meal_types") if "weekday_meal_types" in msg else None,
+            )
+            result = await _state(hass, bridge)
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)
@@ -970,25 +971,51 @@ async def ws_week_settings_set(hass, connection, msg) -> None:
 })
 @websocket_api.async_response
 async def ws_week_generate(hass, connection, msg) -> None:
+    operation_id = _text(msg.get("_cook4me_job_id"))
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         lifecycle = await meal_lifecycle_store_for_bridge(bridge)
         raw_start = _text(msg.get("week_start"))
         week_start = rolling_week_start(raw_start, dt_util.now().date())
-        generation = await _generate_week(
-            hass, bridge, lifecycle,
-            week_start=week_start,
-            languages=v18._languages(bridge, msg.get("languages")),
-            diet=_text(msg.get("diet")) or "profile",
-            query=_text(msg.get("query")),
-            refresh=bool(msg.get("refresh")),
-            replace_slot_id=_text(msg.get("replace_slot_id")),
-            replace_slot_ids=msg.get("replace_slot_ids"),
-            shared_filters=msg.get("shared_filters"),
-            ui_language=msg.get("ui_language", "en"),
+        progress = lambda phase, **values: _emit_week_progress(
+            hass, operation_id, phase, **values
         )
-        result = {**generation, **await _state(hass, bridge, shared_filters=msg.get("shared_filters"), ui_language=msg.get("ui_language", "en"))}
+        if lifecycle.weekly_mutation_busy:
+            progress("starting", message="Queued behind another weekly plan change")
+        async with lifecycle.weekly_mutation():
+            progress("starting", message="Generating weekly plan")
+            generation = await _generate_week(
+                hass, bridge, lifecycle,
+                week_start=week_start,
+                languages=v18._languages(bridge, msg.get("languages")),
+                diet=_text(msg.get("diet")) or "profile",
+                query=_text(msg.get("query")),
+                refresh=bool(msg.get("refresh")),
+                replace_slot_id=_text(msg.get("replace_slot_id")),
+                replace_slot_ids=msg.get("replace_slot_ids"),
+                shared_filters=msg.get("shared_filters"),
+                ui_language=msg.get("ui_language", "en"),
+                progress=progress,
+            )
+            progress("cost", completed=0, total=1, message="Refreshing weekly totals")
+            state = await _state(
+                hass,
+                bridge,
+                shared_filters=msg.get("shared_filters"),
+                ui_language=msg.get("ui_language", "en"),
+            )
+            progress("cost", completed=1, total=1, message="Weekly totals ready")
+            result = {**generation, **state}
+        progress("done", completed=1, total=1, message="Weekly plan ready", done=True)
     except Exception as exc:
+        _emit_week_progress(
+            hass,
+            operation_id,
+            "failed",
+            message=type(exc).__name__,
+            done=True,
+            error=type(exc).__name__,
+        )
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)
 
@@ -1003,8 +1030,9 @@ async def ws_week_slot_clear(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         lifecycle = await meal_lifecycle_store_for_bridge(bridge)
-        cleared = await lifecycle.async_clear_slot(str(msg["slot_id"]))
-        result = {"cleared": cleared, **await _state(hass, bridge)}
+        async with lifecycle.weekly_mutation():
+            cleared = await lifecycle.async_clear_slot(str(msg["slot_id"]))
+            result = {"cleared": cleared, **await _state(hass, bridge)}
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)
@@ -1023,11 +1051,12 @@ async def ws_week_select(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         lifecycle = await meal_lifecycle_store_for_bridge(bridge)
-        current = lifecycle.snapshot(start_date=dt_util.now().date())
-        if not set(msg["slot_ids"]).issubset({row["id"] for row in current["slots"]}):
-            raise ValueError("The selected meals are no longer in the next seven days")
-        await lifecycle.async_select_slots(msg["slot_ids"], msg["selected"])
-        result = await _state(hass, bridge, shared_filters=msg.get("shared_filters"), ui_language=msg["ui_language"])
+        async with lifecycle.weekly_mutation():
+            current = lifecycle.snapshot(start_date=dt_util.now().date())
+            if not set(msg["slot_ids"]).issubset({row["id"] for row in current["slots"]}):
+                raise ValueError("The selected meals are no longer in the next seven days")
+            await lifecycle.async_select_slots(msg["slot_ids"], msg["selected"])
+            result = await _state(hass, bridge, shared_filters=msg.get("shared_filters"), ui_language=msg["ui_language"])
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)
