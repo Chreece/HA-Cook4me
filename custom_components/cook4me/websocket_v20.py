@@ -419,6 +419,7 @@ async def _generate_week(
     replace_slot_ids: list[str] | None = None,
     shared_filters: dict | None = None,
     ui_language: str = "en",
+    progress=None,
 ) -> dict[str, Any]:
     from . import release_catalog
     from .weekly_variety import signature, already_planned
@@ -430,6 +431,8 @@ async def _generate_week(
     eligible_ids = {row["id"] for row in original_slots if week_start <= _text(row.get("date")) <= end}
     if replacing and (not target_ids or not target_ids.issubset(eligible_ids)):
         raise ValueError("The selected meal is no longer in the next seven days")
+    if progress:
+        progress("catalog_index", completed=0, total=1, message="Preparing weekly candidates")
     if shared_filters is not None and release_catalog.release_catalog_ready():
         from .shared_recipe_runtime import search_filtered
         result = await search_filtered(bridge, query=query, languages=languages, language=ui_language, filters=shared_filters)
@@ -444,6 +447,17 @@ async def _generate_week(
             from .shared_recipe_runtime import processor
             process = await processor(bridge, shared_filters, language=ui_language, rank=False)
             candidates = await hass.async_add_executor_job(process, candidates)
+    # Release-catalog filtering can return thousands of safe rows. Planning all
+    # of them for every slot used to run an unbounded nested scoring loop. Keep
+    # a broad ranked window for variety, but bound the expensive planner.
+    candidates = list(candidates[:_MAX_WEEK_CANDIDATES])
+    if progress:
+        progress(
+            "catalog_index",
+            completed=1,
+            total=1,
+            message=f"{len(candidates)} weekly candidates ready",
+        )
     nutrition_store = await nutrition_store_for_bridge(bridge)
     cost_store = await cost_store_for_bridge(bridge)
     inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
