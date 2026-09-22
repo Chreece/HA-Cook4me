@@ -41,11 +41,11 @@ class GreekCatalogAuditV155Tests(unittest.TestCase):
     def test_bakery_and_dairy_market_names_are_clear(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
-            "flatbread":"Flatbread (πλατύ ψωμί)",
+            "flatbread":"Πλατύ ψωμί (flatbread)",
             "brick pastry sheets":"Φύλλα μπρικ (brick pastry)",
             "baguette slices":"Φέτες μπαγκέτας",
-            "cottage cheese":"Cottage cheese (τυρί κότατζ)",
-            "buttermilk":"Buttermilk (βουτυρόγαλα)",
+            "cottage cheese":"Τυρί κότατζ (cottage cheese)",
+            "buttermilk":"Βουτυρόγαλα (buttermilk)",
             "skyr":"Skyr (σκιρ)",
             "processed cheese portion":"Μερίδα επεξεργασμένου τυριού",
             "processed cheese portions":"Μερίδες επεξεργασμένου τυριού",
@@ -76,7 +76,7 @@ class GreekCatalogAuditV155Tests(unittest.TestCase):
             "ajvar":"Ajvar (βαλκανική πάστα ψητής πιπεριάς)",
             "sambal":"Sambal (ινδονησιακό καυτερό καρύκευμα)",
             "fish sauce":"Σάλτσα ψαριού (fish sauce)",
-            "miso paste":"Miso paste (πάστα μίσο)",
+            "miso paste":"Πάστα μίσο (miso paste)",
             "salt-pickled cherry blossoms":"Άνθη κερασιάς σε αλάτι (sakura)",
         }
         for key,value in expected.items():

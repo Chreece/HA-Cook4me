@@ -59,7 +59,7 @@ class GreekCatalogAuditV153Tests(unittest.TestCase):
             "fermented cucumber brine":"Άλμη από ζυμωμένα αγγούρια",
             "lightly fermented cucumber":"Ελαφρά ζυμωμένο αγγούρι",
             "salted fermented shrimp":"Saeujeot (αλατισμένες ζυμωμένες γαρίδες)",
-            "sugar snap pea":"Sugar snap peas (τραγανά γλυκομπίζελα)",
+            "sugar snap pea":"Τραγανά γλυκομπίζελα (sugar snap peas)",
         }
         for key,value in expected.items():
             self.assertEqual(labels.get(key),value)

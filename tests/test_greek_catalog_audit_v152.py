@@ -43,9 +43,9 @@ class GreekCatalogAuditV152Tests(unittest.TestCase):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
             "mentsuyu":"Mentsuyu (συμπυκνωμένη βάση για νουντλς)",
-            "light soy sauce":"Light soy sauce (ανοιχτόχρωμη σάλτσα σόγιας)",
-            "dark soy sauce":"Dark soy sauce (σκούρα σάλτσα σόγιας)",
-            "sweet soy sauce":"Sweet soy sauce (γλυκιά σάλτσα σόγιας)",
+            "light soy sauce":"Ανοιχτόχρωμη σάλτσα σόγιας (light soy sauce)",
+            "dark soy sauce":"Σκούρα σάλτσα σόγιας (dark soy sauce)",
+            "sweet soy sauce":"Γλυκιά σάλτσα σόγιας (sweet soy sauce)",
             "nuoc mam fish sauce":"Nước mắm (βιετναμέζικη σάλτσα ψαριού)",
             "ponzu":"Ponzu (ιαπωνική σάλτσα εσπεριδοειδών)",
             "shiro dashi":"Shiro dashi (λευκή βάση dashi)",

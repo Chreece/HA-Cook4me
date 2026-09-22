@@ -50,8 +50,8 @@ class GreekCatalogAuditV149Tests(unittest.TestCase):
             "king oyster mushroom":"Μανιτάρι eryngii (king oyster)",
             "glass noodle":"Διάφανα νουντλς (glass noodles)",
             "jasmine rice":"Ρύζι jasmine (γιασεμί)",
-            "glutinous rice":"Sticky rice (κολλώδες ρύζι)",
-            "passion fruit":"Passion fruit (πασιφλόρα)",
+            "glutinous rice":"Κολλώδες ρύζι (sticky rice)",
+            "passion fruit":"Πασιφλόρα (passion fruit)",
         }
         for key,value in expected.items():
             self.assertEqual(labels.get(key),value)

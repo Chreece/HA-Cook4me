@@ -63,7 +63,7 @@ class GreekCatalogAuditV148Tests(unittest.TestCase):
         expected={
             "pollock":"Πόλακ (pollock)",
             "halibut":"Ιππόγλωσσος (halibut)",
-            "yellow croaker":"Yellow croaker (κίτρινη σκιαινά)",
+            "yellow croaker":"Κίτρινη σκιαινά (yellow croaker)",
             "langoustines":"Καραβίδες (langoustines)",
             "crayfish":"Καραβίδες γλυκού νερού (crayfish)",
             "yellowtail":"Μαγιάτικο (yellowtail / hamachi)",
