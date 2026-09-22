@@ -37,8 +37,8 @@ class GreekCatalogAuditV160Tests(unittest.TestCase):
             "jar of fish stock":"Βάζο ζωμού ψαριού",
             "small bottle of almond flavouring":"Μικρό μπουκαλάκι αρώματος αμυγδάλου",
             "malted barley packet":"Συσκευασία βυνοποιημένου κριθαριού",
-            "package of pre-cooked udon noodle":"Συσκευασία προμαγειρεμένων νουντλς udon",
-            "package of salted nachos":"Συσκευασία αλατισμένων nachos",
+            "package of pre-cooked udon noodle":"Συσκευασία προμαγειρεμένων νουντλς ούντον (udon)",
+            "package of salted nachos":"Συσκευασία αλατισμένων νάτσος (nachos)",
             "packet chinese soup":"Φακελάκι κινέζικης σούπας",
         }
         for key,value in expected.items():
@@ -49,8 +49,8 @@ class GreekCatalogAuditV160Tests(unittest.TestCase):
         expected={
             "anchovy fillet":"Φιλέτο αντζούγιας",
             "anchovy fillet in oil":"Φιλέτο αντζούγιας σε λάδι",
-            "graham cracker":"Μπισκότο Graham",
-            "kaiser roll":"Ψωμάκι Kaiser",
+            "graham cracker":"Μπισκότο Γκράχαμ (Graham cracker)",
+            "kaiser roll":"Ψωμάκι Κάιζερ (Kaiser roll)",
             "pork slice":"Φέτα χοιρινού",
             "fresh mini meatball":"Φρέσκο μίνι κεφτεδάκι",
             "fresh mussel":"Φρέσκο μύδι",
