@@ -304,7 +304,7 @@ def recipe_quantity_feasibility(
         )
         if conversion and comparison_required > 1e-12:
             scale = required / comparison_required
-            reported_available = min(required, available) * scale
+            reported_available = min(available, comparison_required) * scale
             missing = max(0.0, required - reported_available)
         else:
             reported_available = min(available, required)
