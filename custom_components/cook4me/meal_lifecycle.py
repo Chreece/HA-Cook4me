@@ -150,7 +150,12 @@ def _ingredient(raw: Any) -> dict[str, Any] | None:
     if not isinstance(raw, dict):
         return None
     name = _text(raw.get("name") or raw.get("foodName"))
-    key = _text(raw.get("key") or raw.get("foodKey"))
+    key = _text(
+        raw.get("key")
+        or raw.get("foodKey")
+        or raw.get("ingredientId")
+        or raw.get("id")
+    )
     quantity = _number(raw.get("quantity"))
     unit = _text(raw.get("unit"))
     if quantity is None:
@@ -162,6 +167,20 @@ def _ingredient(raw: Any) -> dict[str, Any] | None:
     out = {"name": name or key, "quantity": quantity, "unit": unit}
     if key:
         out["key"] = key
+
+    # Recipe variants and scanned stock can reference different source IDs for
+    # the same reviewed catalog concept. Preserve every stable semantic identity
+    # so reservation/shopping uses the same links as the storage/product view.
+    try:
+        from .release_catalog import ingredient_stock_identities
+        identities = list(ingredient_stock_identities(raw))
+    except Exception:
+        identities = []
+    direct = inventory_identity(out)
+    if direct and direct not in identities:
+        identities.insert(0, direct)
+    if identities:
+        out["identities"] = identities
     return out
 
 
@@ -182,12 +201,23 @@ def planned_requirements(slots: Any) -> list[dict[str, Any]]:
             if ingredient is None:
                 continue
             identity = inventory_identity(ingredient)
+            identities = {
+                str(value)
+                for value in ingredient.get("identities") or []
+                if str(value)
+            }
+            if identity:
+                identities.add(identity)
             quantity = ingredient.get("quantity")
             unit = _text(ingredient.get("unit"))
-            if not identity or quantity is None or not unit:
+            if not identities or quantity is None or not unit:
                 continue
             merged = False
-            indexes = by_identity.setdefault(identity, [])
+            indexes = sorted({
+                index
+                for alias in identities
+                for index in by_identity.get(alias, [])
+            })
             for index in indexes:
                 target = groups[index]
                 converted = convert_amount(quantity, unit, target["unit"])
@@ -195,12 +225,22 @@ def planned_requirements(slots: Any) -> list[dict[str, Any]]:
                     continue
                 target["quantity"] += converted
                 target["slots"].append(slot["id"])
+                target_aliases = set(target.get("identities") or [])
+                target_aliases.update(identities)
+                target["identities"] = sorted(target_aliases)
+                for alias in target_aliases:
+                    mapped = by_identity.setdefault(alias, [])
+                    if index not in mapped:
+                        mapped.append(index)
                 merged = True
                 break
             if not merged:
-                indexes.append(len(groups))
+                index = len(groups)
+                for alias in identities:
+                    by_identity.setdefault(alias, []).append(index)
                 groups.append({
-                    "identity": identity,
+                    "identity": identity or sorted(identities)[0],
+                    "identities": sorted(identities),
                     "name": ingredient["name"],
                     "quantity": float(quantity),
                     "unit": unit,
