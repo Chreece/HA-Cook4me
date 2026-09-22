@@ -27,6 +27,7 @@ class GreekCatalogAuditV180Tests(unittest.TestCase):
             "chilled portions of cottage cheese":"Μερίδες cottage cheese ψυγείου",
             "yellow sea cod fillet":"Φιλέτο μπακαλιάρου της Κίτρινης Θάλασσας",
             "little gem lettuce":"Μαρούλι Little Gem",
+            "herta le bon vegetal plain strips":"Σκέτες φυτικές λωρίδες Herta Le Bon Végétal",
         }
         for key,value in expected.items():
             self.assertEqual(labels.get(key),value,key)
@@ -42,7 +43,7 @@ class GreekCatalogAuditV180Tests(unittest.TestCase):
             "blanched almond","whole blanched almond",
             "chilled cottage cheese","chilled cottage cheese portions",
             "chilled portions of cottage cheese","yellow sea cod fillet",
-            "little gem lettuce",
+            "little gem lettuce","herta le bon vegetal plain strips",
         ):
             aliases={str(value).strip().casefold() for value in data["searchAliases"][key]}
             self.assertIn(key.casefold(),aliases,key)
@@ -51,9 +52,9 @@ class GreekCatalogAuditV180Tests(unittest.TestCase):
     def test_thirty_fifth_audit_scope(self):
         data=json.loads(CURATED.read_text(encoding="utf-8"))
         alias_entries=sum(len(values) for values in data["searchAliases"].values())
-        self.assertGreaterEqual(len(data["labels"]),1275)
+        self.assertGreaterEqual(len(data["labels"]),1276)
         self.assertEqual(len(data["searchAliases"]),3689)
-        self.assertGreaterEqual(alias_entries,8787)
+        self.assertGreaterEqual(alias_entries,8788)
         self.assertIn("thirty-fifth audit",data["translationSource"])
 
 
