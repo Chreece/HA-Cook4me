@@ -147,6 +147,27 @@ class WeekShoppingStorageV182Tests(unittest.TestCase):
         self.assertEqual(rows[0]["unit"],"g")
         self.assertEqual(rows[0]["displayUnit"],"γρ.")
 
+    def test_reservation_rows_use_same_ui_market_original_contract(self):
+        rows=self.shopping.shopping_rows(
+            [{"identity":"k:skyr-recipe","name":"Skyr","quantity":2,"unit":"tbsp","available":0}],
+            "el",
+            "DE",
+            [{"key":"skyr-recipe","name":"Skyr"}],
+            "de",
+        )
+        self.assertEqual(rows[0]["name"],"Σκάιρ (Skyr Natur; Skyr)")
+        self.assertEqual(rows[0]["displayUnit"],"κ.σ.")
+        self.assertEqual(rows[0]["unit"],"tbsp")
+        self.assertEqual(rows[0]["available"],0)
+
+    def test_week_state_localizes_all_reservation_buckets(self):
+        source=(PKG/"websocket_v20.py").read_text(encoding="utf-8")
+        self.assertIn('for bucket in ("items", "unknown", "shortages")',source)
+        self.assertIn('reservations[bucket] = await hass.async_add_executor_job(',source)
+        self.assertIn('shopping_sources,',source)
+        self.assertIn('supermarket_code,',source)
+        self.assertIn('state["reservations"] = reservations',source)
+
     def test_week_api_accepts_explicit_display_and_supermarket_languages(self):
         source=(PKG/"websocket_v20.py").read_text(encoding="utf-8")
         self.assertIn('vol.Optional("display_language"): str',source)
