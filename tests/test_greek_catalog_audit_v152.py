@@ -66,7 +66,7 @@ class GreekCatalogAuditV152Tests(unittest.TestCase):
 
     def test_kasha_fish_sauce_and_slurry_terms(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
-        self.assertEqual(labels["roasted buckwheat for kasha"],"Κάσα (καβουρδισμένο φαγόπυρο)")
+        self.assertEqual(labels["roasted buckwheat for kasha"],"Καβουρδισμένο φαγόπυρο για κάσα")
         self.assertEqual(labels["anchovy fish sauce"],"Σάλτσα ψαριού από αντζούγια")
         self.assertEqual(labels["red yeast rice sauce"],"Σάλτσα από κόκκινο ζυμωμένο ρύζι (red yeast rice)")
         self.assertEqual(labels["starch slurry"],"Μείγμα αμύλου με υγρό (starch slurry)")
