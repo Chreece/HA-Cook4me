@@ -1,5 +1,10 @@
 """Offline shopping labels; keep identity and the calculated shortage amount."""
 from copy import deepcopy
+from functools import lru_cache
+import json
+from pathlib import Path
+import re
+import unicodedata
 
 from . import release_catalog
 from .recipe_languages import language_options
@@ -30,6 +35,42 @@ def normalize_supermarket_language(value, country="", fallback="en"):
 
 def supermarket_language_options():
     return sorted(SUPPORTED_SUPERMARKET_LANGUAGES)
+
+
+@lru_cache(maxsize=1)
+def _unit_presentation():
+    path = Path(__file__).with_name("catalog") / "ui_units.v1.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return data.get("labels") or {}, data.get("aliases") or {}
+
+
+def _fold_unit(value):
+    text = unicodedata.normalize("NFKD", str(value or "").strip().casefold())
+    text = "".join(char for char in text if not unicodedata.category(char).startswith("M"))
+    return re.sub(r"[\\s._-]+", "", text)
+
+
+def shopping_display_unit(unit, quantity, language):
+    """Localize a unit for display without changing its calculation identity."""
+    labels, aliases = _unit_presentation()
+    raw = str(unit or "").strip()
+    if not raw:
+        return ""
+    code = str(language or "en").strip().lower().replace("_", "-").split("-", 1)[0]
+    if code not in {"en", "de", "el"}:
+        code = "en"
+    folded = _fold_unit(raw)
+    kind = aliases.get(folded) or aliases.get(raw.casefold())
+    if kind is None and raw in labels:
+        kind = raw
+    forms = (labels.get(kind) or {}).get(code) if kind else None
+    if not forms:
+        return raw
+    try:
+        one = abs(float(quantity) - 1.0) <= 1e-9
+    except (TypeError, ValueError):
+        one = False
+    return str(forms[0 if one else min(1, len(forms) - 1)])
 
 
 def shopping_rows(
@@ -126,6 +167,9 @@ def shopping_rows(
         item["supermarketName"] = str(market_name)
         item["shoppingDisplayName"] = display + (
             f" ({'; '.join(alternatives)})" if alternatives else ""
+        )
+        item["displayUnit"] = shopping_display_unit(
+            item.get("unit"), item.get("quantity"), ui_language
         )
         item["name"] = item["shoppingDisplayName"]
         if "foodName" in item:
