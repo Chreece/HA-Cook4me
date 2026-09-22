@@ -69,7 +69,7 @@ class GreekCatalogAuditV158Tests(unittest.TestCase):
             "package of smoked tofu":"Συσκευασία καπνιστού τόφου",
             "package of skyr":"Συσκευασία σκιρ (skyr)",
             "packet of baking powder":"Φακελάκι μπέικιν πάουντερ",
-            "packet taco seasoning mix":"Φακελάκι μείγματος καρυκευμάτων taco",
+            "packet taco seasoning mix":"Φακελάκι μείγματος καρυκευμάτων τάκο (taco)",
             "packages of vanilla pudding powder":"Συσκευασίες σκόνης πουτίγκας βανίλιας",
         }
         for key,value in expected.items():
