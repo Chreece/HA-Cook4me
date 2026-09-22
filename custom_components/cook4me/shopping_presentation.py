@@ -122,9 +122,12 @@ def shopping_rows(
         item["originalName"] = original
         item["uiLanguage"] = ui_language
         item["supermarketLanguage"] = market_language
-        item["name"] = display + (
+        item["uiName"] = str(display)
+        item["supermarketName"] = str(market_name)
+        item["shoppingDisplayName"] = display + (
             f" ({'; '.join(alternatives)})" if alternatives else ""
         )
+        item["name"] = item["shoppingDisplayName"]
         if "foodName" in item:
             item["foodName"] = item["name"]
 
