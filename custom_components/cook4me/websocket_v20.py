@@ -868,6 +868,24 @@ async def _state(
         supermarket_code,
     )
 
+    # Stock reservation rows are rendered next to shopping rows in the weekly
+    # UI. Present them with the same language contract instead of leaking the
+    # source recipe language into "check stock" / reserved-stock sections.
+    reservations = state.get("reservations")
+    if isinstance(reservations, dict):
+        for key in ("items", "shortages", "unknown"):
+            rows = reservations.get(key)
+            if not isinstance(rows, list):
+                continue
+            reservations[key] = await hass.async_add_executor_job(
+                shopping_rows,
+                rows,
+                ui_code,
+                country,
+                shopping_sources,
+                supermarket_code,
+            )
+
     state.update({
         "costSettings": cost_store.settings,
         "costReferenceCount": cost_store.snapshot()["referenceCount"],
