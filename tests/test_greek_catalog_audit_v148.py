@@ -35,7 +35,7 @@ class GreekCatalogAuditV148Tests(unittest.TestCase):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
             "baked bean":"Φασόλια σε σάλτσα ντομάτας (baked beans)",
-            "snow pea":"Μπιζέλια mangetout (snow peas)",
+            "snow pea":"Μπιζέλια μανζτού (mangetout / snow peas)",
             "garden bean":"Κοινά φασόλια",
             "mature bean":"Ξερά φασόλια",
             "jerusalem artichoke":"Τοπιναμπούρ (αγκινάρα Ιερουσαλήμ)",
