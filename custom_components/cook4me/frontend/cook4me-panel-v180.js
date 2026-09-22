@@ -138,6 +138,33 @@ class Cook4MeRecipeHubPanelV180 extends BasePanel{
    void this._v111Resume?.();
   };
  }
+ _v180IngredientLabel(row){
+  if(!row||typeof row!=='object')return String(row??'');
+  const clean=value=>String(value??'').trim();
+  const same=(a,b)=>clean(a)&&clean(b)&&clean(a).localeCompare(clean(b),undefined,{sensitivity:'base'})===0;
+  const key=this._v140IngredientKey?.(row)||clean(row.key||row.ingredientId||row.id||row.foodKey)||(clean(row.identity).startsWith('k:')?clean(row.identity).slice(2):'');
+  const uiRow=this._v112Local?.({...row,...(key?{key}:{})})||row;
+  const ui=clean(row.uiName||uiRow?.name||uiRow?.foodName||row.name||row.foodName||row.identity);
+  const uiLanguage=clean(this._uiIngredientLanguage?.()||this._langCode?.()||'en').toLowerCase();
+  const marketLanguage=clean(this._v140SupermarketLanguage?.()||'').toLowerCase();
+  const market=marketLanguage&&marketLanguage!==uiLanguage?clean(row.supermarketName||this._v140MarketNames?.get(key)||''):'';
+  const original=clean(row.originalName||row.recipeName||row.sourceName||row.name||row.foodName||row.identity);
+  const parts=[ui||market||original];
+  for(const candidate of [market,original]){
+   if(!candidate||parts.some(value=>same(value,candidate)))continue;
+   parts.push(candidate);
+  }
+  return parts[0]+parts.slice(1).map(value=>` (${value})`).join('');
+ }
+ _v110Disclosure(kind,rows,empty,extra=''){
+  const e=value=>this._escape(String(value));
+  return `<details data-week-disclosure="${kind}"><summary>${e(this._v110Text(kind==='stock'?'covered':'buy'))} (${rows.length})</summary>${rows.length?rows.map(row=>`<div class="rx-list-row"><strong>${e(this._v180IngredientLabel(row))}</strong> · ${e(this._displayAmount(row.quantity,row.unit))}${kind==='stock'?` ${e(this._t('required'))} · ${row.unlimited?'∞':e(this._displayAmount(row.available,row.unit))} ${e(this._t('available'))}`:''}</div>`).join(''):`<p class="muted">${e(this._v110Text(empty))}</p>`}${extra}</details>`;
+ }
+ _shoppingDeltaHtml(){
+  const rows=this._weekState?.shoppingDelta||[],unknown=this._weekState?.reservations?.unknown||[],e=value=>this._escape(String(value));
+  const extra=unknown.length?`<p class="muted">${e(this._v110Text('unknown'))}</p>${unknown.map(row=>`<div class="rx-list-row" data-week-stock-unknown><strong>${e(this._v180IngredientLabel(row))}</strong> · ${e(this._displayAmount(row.quantity,row.unit))} ${e(this._t('required'))}</div>`).join('')}`:'';
+  return this._v110Disclosure('shopping',rows,'emptyBuy',extra);
+ }
  _v78RenderCapture(){
   const result=super._v78RenderCapture();
   this._v180DecorateScanner();
@@ -150,7 +177,7 @@ class Cook4MeRecipeHubPanelV180 extends BasePanel{
  }
  _renderTab(){
   const result=super._renderTab();
-  this.setAttribute('data-cook4me-build','2026.9.22.7');
+  this.setAttribute('data-cook4me-build','2026.9.22.8');
   this._v180Styles();
   return result;
  }
