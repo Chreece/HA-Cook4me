@@ -61,8 +61,8 @@ class GreekCatalogAuditV149Tests(unittest.TestCase):
         self.assertEqual(labels["pine nuts"],"Κουκουνάρια")
         self.assertEqual(labels["toasted pine nuts"],"Καβουρδισμένα κουκουνάρια")
         self.assertEqual(labels["chia seed"],"Σπόροι chia (τσία)")
-        self.assertEqual(labels["almond puree"],"Πάστα αμυγδάλου")
-        self.assertEqual(labels["hazelnut puree"],"Πάστα φουντουκιού")
+        self.assertEqual(labels["almond puree"],"Πουρές αμυγδάλου")
+        self.assertEqual(labels["hazelnut puree"],"Πουρές φουντουκιού")
 
     def test_search_aliases_include_greek_and_package_names(self):
         aliases=load_presentation().locale_search_aliases()["el"]
