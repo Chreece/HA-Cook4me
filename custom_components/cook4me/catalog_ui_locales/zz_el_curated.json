@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through thirty-third audit 2026-09-22",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through thirty-fourth audit 2026-09-22",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -168,7 +168,7 @@
     "onion squash": "Κολοκύθα onion squash (χειμωνιάτικη)",
     "firm potato": "Πατάτα σφιχτής σάρκας",
     "salad onion": "Κρεμμύδι για σαλάτα",
-    "large beefsteak tomato": "Ντομάτα beefsteak (μεγάλη σαρκώδης)",
+    "large beefsteak tomato": "Μεγάλη ντομάτα beefsteak (σαρκώδης)",
     "plain flour": "Αλεύρι για όλες τις χρήσεις",
     "bonito flakes": "Κατσουομπούσι (νιφάδες παλαμίδας)",
     "sake lees": "Sake kasu (υπόλειμμα ζύμωσης σάκε)",
@@ -181,7 +181,7 @@
     "frozen pollock": "Κατεψυγμένο πόλακ (pollock)",
     "semi-dried pollock": "Ημιαποξηραμένο πόλακ (pollock)",
     "dried pollock strips": "Αποξηραμένες λωρίδες πόλακ (pollock)",
-    "yellow pollock fillet": "Φιλέτο πόλακ (pollock)",
+    "yellow pollock fillet": "Φιλέτο κίτρινου πόλακ (pollock)",
     "langoustines": "Καραβίδες (langoustines)",
     "crayfish": "Καραβίδες γλυκού νερού (crayfish)",
     "scampi with tails": "Καραβίδες scampi με ουρές",
@@ -323,8 +323,8 @@
     "gelatin sheet": "Φύλλο ζελατίνης",
     "gelatine leaf": "Φύλλο ζελατίνης",
     "leaf gelatine": "Φύλλο ζελατίνης",
-    "gelatin sheet soaked in cold water": "Μουλιασμένο φύλλο ζελατίνης",
-    "gelatin sheet softened in cold water": "Μαλακωμένο φύλλο ζελατίνης",
+    "gelatin sheet soaked in cold water": "Φύλλο ζελατίνης μουλιασμένο σε κρύο νερό",
+    "gelatin sheet softened in cold water": "Φύλλο ζελατίνης μαλακωμένο σε κρύο νερό",
     "pre-soaked gelatin sheet": "Προμουλιασμένο φύλλο ζελατίνης",
     "starch slurry": "Μείγμα αμύλου με υγρό (starch slurry)",
     "ponzu": "Ponzu (ιαπωνική σάλτσα εσπεριδοειδών)",
@@ -869,7 +869,7 @@
     "toasted almond flakes for decorating": "Καβουρδισμένα αμύγδαλα φιλέ για διακόσμηση",
     "tortillas, 20 cm diameter": "Τορτίγιες διαμέτρου 20 εκ.",
     "warm cooked rice": "Ζεστό μαγειρεμένο ρύζι",
-    "warm fresh milk": "Χλιαρό φρέσκο γάλα",
+    "warm fresh milk": "Ζεστό φρέσκο γάλα",
     "water, 300 milliliters": "Νερό, 300 ml",
     "wheat flour for coating": "Αλεύρι σιταριού για αλεύρωμα",
     "baby spinach leaf": "Φύλλο τρυφερού σπανακιού",
@@ -1182,7 +1182,7 @@
     "chilled whipped cream": "Κρύα σαντιγί",
     "softened butter": "Μαλακωμένο βούτυρο",
     "hard bread": "Σκληρό ψωμί",
-    "baby lettuce": "Μικρό μαρούλι",
+    "baby lettuce": "Τρυφερό μικρό μαρούλι",
     "marinated artichoke": "Μαριναρισμένη αγκινάρα",
     "mixed-color bell pepper": "Πολύχρωμη πιπεριά",
     "three-colour bell pepper": "Τρίχρωμη πιπεριά",
@@ -1275,7 +1275,8 @@
     "french quenelles, 40–50 g": "Γαλλικές κενέλ, 40–50 g η καθεμία",
     "quail, 160–170 g": "Ορτύκι, 160–170 g",
     "quails, 160–170 g": "Ορτύκια, 160–170 g το καθένα",
-    "small lamb knuckle-ends": "Μικρά άκρα αρνίσιου κοτσιού"
+    "small lamb knuckle-ends": "Μικρά άκρα αρνίσιου κοτσιού",
+    "fine-grain semolina in a salad bowl": "Ψιλό σιμιγδάλι σε σαλατιέρα"
   },
   "searchAliases": {
     "veal": [
@@ -1577,7 +1578,8 @@
       "ντομάτα beefsteak",
       "μεγάλη σαρκώδης ντομάτα",
       "large beefsteak tomato",
-      "Ντομάτα beefsteak (μεγάλη σαρκώδης)"
+      "Ντομάτα beefsteak (μεγάλη σαρκώδης)",
+      "Μεγάλη ντομάτα beefsteak (σαρκώδης)"
     ],
     "plain flour": [
       "αλεύρι για όλες τις χρήσεις",
@@ -6245,7 +6247,8 @@
     ],
     "baby lettuce": [
       "μικρό μαρούλι",
-      "baby lettuce"
+      "baby lettuce",
+      "Τρυφερό μικρό μαρούλι"
     ],
     "baby spinach": [
       "τρυφερό σπανάκι",
@@ -7955,7 +7958,8 @@
     ],
     "fine-grain semolina in a salad bowl": [
       "ψιλό σιμιγδάλι",
-      "fine-grain semolina in a salad bowl"
+      "fine-grain semolina in a salad bowl",
+      "Ψιλό σιμιγδάλι σε σαλατιέρα"
     ],
     "five-grain rice": [
       "ρύζι με πέντε δημητριακά",
@@ -8472,11 +8476,13 @@
     ],
     "gelatin sheet soaked in cold water": [
       "μουλιασμένο φύλλο ζελατίνης",
-      "gelatin sheet soaked in cold water"
+      "gelatin sheet soaked in cold water",
+      "Φύλλο ζελατίνης μουλιασμένο σε κρύο νερό"
     ],
     "gelatin sheet softened in cold water": [
       "μαλακωμένο φύλλο ζελατίνης",
-      "gelatin sheet softened in cold water"
+      "gelatin sheet softened in cold water",
+      "Φύλλο ζελατίνης μαλακωμένο σε κρύο νερό"
     ],
     "gelatin sheets soaked in cold water": [
       "φύλλα ζελατίνης μουλιασμένα σε κρύο νερό",
@@ -12360,7 +12366,8 @@
     ],
     "warm fresh milk": [
       "χλιαρό φρέσκο γάλα",
-      "warm fresh milk"
+      "warm fresh milk",
+      "Ζεστό φρέσκο γάλα"
     ],
     "water": [
       "νερό",
@@ -17367,7 +17374,8 @@
     ],
     "yellow pollock fillet": [
       "φιλέτο πόλακ (pollock)",
-      "yellow pollock fillet"
+      "yellow pollock fillet",
+      "Φιλέτο κίτρινου πόλακ (pollock)"
     ],
     "yellow sea cod fillet": [
       "φιλέτο yellow sea cod",
