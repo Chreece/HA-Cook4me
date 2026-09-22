@@ -441,7 +441,7 @@ def shopping_item_name(item: Any) -> str:
     quantity = item.get("quantity")
     if quantity not in (None, ""):
         parts.append(str(quantity))
-    unit = _text(item.get("unit"))
+    unit = _text(item.get("displayUnit") or item.get("unit"))
     if unit:
         parts.append(unit)
     if name:
