@@ -20,15 +20,15 @@ def load_presentation():
 
 
 class GreekCatalogAuditV173Tests(unittest.TestCase):
-    def test_v173_is_inherited_by_active_v176(self):
+    def test_v173_is_inherited_by_active_v177(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v173.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v176",panel)
-        self.assertIn("cook4me-panel-v176.js",panel)
-        self.assertIn("/cook4me_static/2026.9.22.3",panel)
-        self.assertIn("?v=2026.9.22.3",panel)
-        self.assertIn('"version": "2026.9.22.3"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v177",panel)
+        self.assertIn("cook4me-panel-v177.js",panel)
+        self.assertIn("/cook4me_static/2026.9.22.4",panel)
+        self.assertIn("?v=2026.9.22.4",panel)
+        self.assertIn('"version": "2026.9.22.4"',manifest)
         self.assertIn("cook4me-panel-v172.js?v=2026.9.21.37",ui)
 
     def test_olive_singulars_are_preserved(self):
