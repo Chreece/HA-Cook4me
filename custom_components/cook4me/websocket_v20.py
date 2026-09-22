@@ -617,6 +617,13 @@ async def _generate_week(
             if slot.get("selected") is not False and _text(slot.get("date")) == stamp
         )
         day_total = max(daily_slot_counts.get(stamp, 0), day_completed + 1)
+        if progress:
+            progress(
+                "ranking",
+                completed=slot_index - 1,
+                total=total_desired,
+                message=f"Scoring {len(pool)} candidates for {stamp} {meal_type}",
+            )
         scored = await hass.async_add_executor_job(
             partial(
                 _score_week_pool,
