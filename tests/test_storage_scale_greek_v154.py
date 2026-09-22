@@ -105,7 +105,7 @@ class StorageScaleGreekV154Tests(unittest.TestCase):
             "aburaage":"Aburaage (λεπτό τηγανητό τόφου)",
             "shiso leaf":"Φύλλο shiso",
             "gochugaru":"Gochugaru (κορεάτικο τσίλι)",
-            "konjac noodle":"Shirataki / konjac noodles",
+            "konjac noodle":"Νουντλς shirataki / konjac",
             "shichimi togarashi":"Shichimi togarashi (ιαπωνικό μείγμα 7 μπαχαρικών)",
             "ichimi chili pepper":"Ichimi togarashi (ιαπωνικό τσίλι)",
             "sansho pepper":"Sansho (ιαπωνικό πιπέρι)",
