@@ -53,7 +53,7 @@ class GreekCatalogAuditV151Tests(unittest.TestCase):
             "kombu seaweed sheet":"Φύλλο κόμπου",
             "salmon roe":"Αυγά σολομού (ikura)",
             "tarako cod roe":"Tarako (αυγά μπακαλιάρου)",
-            "kelp":"Kelp (φύκια)",
+            "kelp":"Φύκια κελπ (kelp)",
             "hijiki seaweed":"Hijiki (φύκια χιτζίκι)",
             "aonori":"Aonori (πράσινα φύκια)",
         }

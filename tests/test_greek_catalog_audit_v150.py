@@ -55,8 +55,8 @@ class GreekCatalogAuditV150Tests(unittest.TestCase):
             "canola oil":"Κραμβέλαιο (canola)",
             "peanut oil":"Λάδι αράπικου φιστικιού (αραχιδέλαιο)",
             "worcestershire sauce":"Σάλτσα Worcestershire (Γούστερ)",
-            "sriracha sauce":"Sriracha (καυτερή σάλτσα τσίλι)",
-            "harissa":"Harissa (πάστα καυτερής πιπεριάς)",
+            "sriracha sauce":"Καυτερή σάλτσα σριράτσα (sriracha)",
+            "harissa":"Πάστα χαρίσα (harissa)",
         }
         for key,value in expected.items():
             self.assertEqual(labels.get(key),value)

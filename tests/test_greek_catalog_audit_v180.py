@@ -22,9 +22,9 @@ class GreekCatalogAuditV180Tests(unittest.TestCase):
         expected={
             "blanched almond":"Αποφλοιωμένο αμύγδαλο",
             "whole blanched almond":"Ολόκληρο αποφλοιωμένο αμύγδαλο",
-            "chilled cottage cheese":"Cottage cheese ψυγείου",
-            "chilled cottage cheese portions":"Μερίδες cottage cheese ψυγείου",
-            "chilled portions of cottage cheese":"Μερίδες cottage cheese ψυγείου",
+            "chilled cottage cheese":"Τυρί κότατζ ψυγείου",
+            "chilled cottage cheese portions":"Μερίδες τυριού κότατζ ψυγείου",
+            "chilled portions of cottage cheese":"Μερίδες τυριού κότατζ ψυγείου",
             "yellow sea cod fillet":"Φιλέτο μπακαλιάρου της Κίτρινης Θάλασσας",
             "little gem lettuce":"Μαρούλι Little Gem",
             "herta le bon vegetal plain strips":"Σκέτες φυτικές λωρίδες Herta Le Bon Végétal",
