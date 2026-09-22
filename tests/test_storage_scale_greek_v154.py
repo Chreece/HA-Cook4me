@@ -102,14 +102,14 @@ class StorageScaleGreekV154Tests(unittest.TestCase):
         data=json.loads(CURATED.read_text(encoding="utf-8"))
         labels=data["labels"]
         expected={
-            "aburaage":"Aburaage (λεπτό τηγανητό τόφου)",
+            "aburaage":"Λεπτό τηγανητό τόφου αμπουραάγκε (aburaage)",
             "shiso leaf":"Φύλλο shiso",
-            "gochugaru":"Gochugaru (κορεάτικο τσίλι)",
+            "gochugaru":"Κορεάτικο τσίλι γκοτσουγκάρου (gochugaru)",
             "konjac noodle":"Νουντλς shirataki / konjac",
-            "shichimi togarashi":"Shichimi togarashi (ιαπωνικό μείγμα 7 μπαχαρικών)",
-            "ichimi chili pepper":"Ichimi togarashi (ιαπωνικό τσίλι)",
-            "sansho pepper":"Sansho (ιαπωνικό πιπέρι)",
-            "yuzu kosho":"Yuzu kosho (πάστα γιούζου και τσίλι)",
+            "shichimi togarashi":"Ιαπωνικό μείγμα 7 μπαχαρικών σιτσίμι τογκαράσι (shichimi togarashi)",
+            "ichimi chili pepper":"Ιαπωνικό τσίλι ιτσίμι τογκαράσι (ichimi togarashi)",
+            "sansho pepper":"Ιαπωνικό πιπέρι σάνσο (sansho)",
+            "yuzu kosho":"Πάστα γιούζου και τσίλι γιούζου κόσο (yuzu kosho)",
         }
         for key,value in expected.items():
             self.assertEqual(labels.get(key),value)
