@@ -25,7 +25,7 @@ class GreekCatalogAuditV178Tests(unittest.TestCase):
         data=json.loads(CURATED.read_text(encoding="utf-8"))
         labels=data["labels"]
         expected={
-            "large ganmodoki fried tofu":"Μεγάλο Ganmodoki (τηγανητό τόφου με λαχανικά)",
+            "large ganmodoki fried tofu":"Μεγάλο τηγανητό τόφου με λαχανικά γκανμοντόκι (ganmodoki)",
             "romanesco broccoli floret":"Μπουκετάκι κουνουπιδιού ρομανέσκο",
             "small romanesco broccoli floret":"Μικρό μπουκετάκι κουνουπιδιού ρομανέσκο",
             "leek stalk":"Κοτσάνι πράσου",
@@ -35,7 +35,7 @@ class GreekCatalogAuditV178Tests(unittest.TestCase):
             "fish sauce for meat":"Σάλτσα ψαριού για κρέας",
             "salad onion stalk":"Κοτσάνι φρέσκου κρεμμυδιού για σαλάτα",
             "roasted buckwheat for kasha":"Καβουρδισμένο φαγόπυρο για κάσα",
-            "scampi with tails":"Καραβίδες scampi με ουρές",
+            "scampi with tails":"Καραβίδες με ουρές (scampi)",
         }
         for key,value in expected.items():
             self.assertEqual(labels.get(key),value,key)
