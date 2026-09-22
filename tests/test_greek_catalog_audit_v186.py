@@ -211,6 +211,8 @@ class GreekCatalogAuditV186Tests(unittest.TestCase):
             self.assertIn(key.casefold(),aliases,key)
             self.assertIn(old_label.casefold(),aliases,key)
             self.assertIn(data["labels"][key].casefold(),aliases,key)
+            raw=[str(value).strip().casefold() for value in data["searchAliases"][key]]
+            self.assertEqual(len(raw),len(set(raw)),key)
 
     def test_forty_first_audit_scope(self):
         data=json.loads(CURATED.read_text(encoding="utf-8"))
