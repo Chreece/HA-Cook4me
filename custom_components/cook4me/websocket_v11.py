@@ -257,6 +257,7 @@ async def ws_ingredient_catalog(hass: HomeAssistant, connection: websocket_api.A
     vol.Optional("entry_id"): str,
     vol.Required("ingredients"): [vol.Any(str, dict)],
     vol.Optional("ui_language"): str,
+    vol.Optional("supermarket_language"): str,
 })
 @websocket_api.async_response
 async def ws_shopping_add(hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: dict[str, Any]) -> None:
@@ -264,17 +265,31 @@ async def ws_shopping_add(hass: HomeAssistant, connection: websocket_api.ActiveC
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         ingredients = list(msg.get("ingredients") or [])
         from .costs import cost_store_for_bridge
-        from .shopping_presentation import shopping_rows, normalize_supermarket_language
+        from .shopping_presentation import (
+            COUNTRY_LANGUAGE,
+            normalize_supermarket_language,
+            shopping_rows,
+        )
         store = await cost_store_for_bridge(bridge)
         settings = store.settings
         country = settings.get("country") or getattr(hass.config, "country", "")
-        language = normalize_supermarket_language(
-            msg.get("ui_language") or settings.get("supermarketLanguage"),
+        ui_language = normalize_supermarket_language(
+            msg.get("ui_language"),
             country=country,
-            fallback="en",
+            fallback=getattr(hass.config, "language", None) or "en",
+        )
+        supermarket_language = normalize_supermarket_language(
+            msg.get("supermarket_language") or settings.get("supermarketLanguage"),
+            country=country,
+            fallback=COUNTRY_LANGUAGE.get(str(country or "").upper(), ui_language),
         )
         ingredients = await hass.async_add_executor_job(
-            shopping_rows, ingredients, language, country
+            shopping_rows,
+            ingredients,
+            ui_language,
+            country,
+            (),
+            supermarket_language,
         )
         result = await _add_to_shopping_list(hass, ingredients)
     except Exception as exc:
