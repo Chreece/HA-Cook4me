@@ -3,7 +3,8 @@ from collections import deque
 from copy import deepcopy
 
 from .inventory import (_lot_sort_key, _quantity, _unit_token, _UNIT_SCALE,
-                        convert_amount, inventory_identity, stock_for_ingredient)
+                        convert_amount, ingredient_identities, inventory_identity,
+                        stock_for_ingredient)
 
 _EPSILON = 1e-9
 
@@ -23,11 +24,27 @@ def allocate_stock(stock, requests):
     precedence over spending an early flexible lot on an unconstrained request.
     """
     views = [stock_for_ingredient(stock, request) for request in requests]
-    wanted_identities = {request.get("identity") or inventory_identity(request) for request in requests}
+    wanted_identities = {
+        identity
+        for request in requests
+        for identity in (
+            set(request.get("identities") or [])
+            | ingredient_identities(request)
+            | ({request.get("identity")} if request.get("identity") else set())
+        )
+        if identity
+    }
     lots = []
     for row in stock:
         for lot in row.get("lots") or []:
-            identities = {inventory_identity(row), *(inventory_identity(link) for link in lot.get("ingredientLinks") or [])}
+            identities = {
+                inventory_identity(row),
+                *(
+                    identity
+                    for link in lot.get("ingredientLinks") or []
+                    for identity in ingredient_identities(link)
+                ),
+            }
             if not identities & wanted_identities:
                 continue
             base = _base_unit(row.get("unit", ""))
@@ -67,9 +84,13 @@ def allocate_stock(stock, requests):
             continue
         eligible[index] = (unit, base)
         edge(request_start + index, sink, demand)
-        wanted = request.get("identity") or inventory_identity(request)
+        wanted = (
+            set(request.get("identities") or [])
+            | ingredient_identities(request)
+            | ({request.get("identity")} if request.get("identity") else set())
+        )
         for lot_index, (_, lot, identities, lot_base, capacity) in enumerate(lots):
-            if wanted not in identities or lot_base != base or request.get("lotId") and request["lotId"] != lot.get("id"):
+            if not (wanted & identities) or lot_base != base or request.get("lotId") and request["lotId"] != lot.get("id"):
                 continue
             forward = edge(lot_start + lot_index, request_start + index, min(capacity, demand))
             assignments[index].append((lot_index, forward))

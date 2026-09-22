@@ -12,10 +12,10 @@ class GreekCatalogAuditV181Tests(unittest.TestCase):
     def test_backend_only_audit_keeps_current_frontend_build(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v178",panel)
-        self.assertIn("cook4me-panel-v178.js",panel)
-        self.assertIn("/cook4me_static/2026.9.22.5",panel)
-        self.assertIn('"version": "2026.9.22.5"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v179",panel)
+        self.assertIn("cook4me-panel-v179.js",panel)
+        self.assertIn("/cook4me_static/2026.9.22.6",panel)
+        self.assertIn('"version": "2026.9.22.6"',manifest)
 
     def test_thirty_sixth_pass_preserves_recipe_and_market_context(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]

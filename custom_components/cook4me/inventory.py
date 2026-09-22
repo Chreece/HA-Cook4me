@@ -46,6 +46,20 @@ def inventory_identity(item: Any) -> str:
     return f"n:{name}" if name else ""
 
 
+def ingredient_identities(item: Any) -> set[str]:
+    """Return every explicit stable identity carried by a stock/request row."""
+    identities: set[str] = set()
+    primary = inventory_identity(item)
+    if primary:
+        identities.add(primary)
+    if isinstance(item, dict):
+        for value in item.get("identities") or []:
+            text = _text(value)
+            if text:
+                identities.add(text)
+    return identities
+
+
 def _quantity(value: Any) -> float | None:
     if value in (None, ""):
         return None
@@ -895,17 +909,31 @@ def normalize_ingredient_links(value):
 
 
 def stock_for_ingredient(stock, ingredient, used=None):
-    """Read a product through any of its links, subtracting shared lot reservations."""
-    wanted = ingredient if isinstance(ingredient, str) else ingredient.get("identity") or inventory_identity(ingredient)
+    """Read a product through any stable identity/link, subtracting reservations."""
+    if isinstance(ingredient, str):
+        wanted = {ingredient}
+        primary_identity = ingredient
+    else:
+        wanted = ingredient_identities(ingredient)
+        direct = _text(ingredient.get("identity")) if isinstance(ingredient, dict) else ""
+        if direct:
+            wanted.add(direct)
+        primary_identity = direct or inventory_identity(ingredient)
     candidates, fallback = [], None
     for row in stock:
-        primary = inventory_identity(row) == wanted
+        row_identity = inventory_identity(row)
+        primary = row_identity in wanted
         if primary and row.get("unlimited"):
             return deepcopy(row)
         if primary:
             fallback = row
         for lot in row.get("lots") or []:
-            if primary or wanted in {inventory_identity(link) for link in lot.get("ingredientLinks") or []}:
+            linked = {
+                identity
+                for link in lot.get("ingredientLinks") or []
+                for identity in ingredient_identities(link)
+            }
+            if primary or bool(wanted & linked):
                 candidates.append((row, lot))
     if not candidates:
         return deepcopy(fallback) if fallback else None
@@ -923,10 +951,10 @@ def stock_for_ingredient(stock, ingredient, used=None):
             amount -= convert_amount(taken[0], taken[1], target) or 0
         lots.append({**deepcopy(lot), "quantity": max(0.0, amount), "sourceIdentity": inventory_identity(row)})
     lots.sort(key=_lot_sort_key)
-    identity = {"key": wanted[2:]} if wanted.startswith("k:") else {}
-    name = (ingredient.get("name") or ingredient.get("foodName")) if isinstance(ingredient, dict) else wanted[2:]
+    identity = {"key": primary_identity[2:]} if primary_identity.startswith("k:") else {}
+    name = (ingredient.get("name") or ingredient.get("foodName")) if isinstance(ingredient, dict) else primary_identity[2:]
     dates = {key: min((lot[key] for lot in lots if lot.get(key)), default="") for key in ("bestBefore", "effectiveBestBefore")}
-    return {**identity, "name": name or wanted[2:], "unit": target,
+    return {**identity, "name": name or primary_identity[2:], "unit": target,
             "quantity": round(sum(lot["quantity"] for lot in lots), 9), "lots": lots, **dates}
 
 

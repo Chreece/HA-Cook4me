@@ -141,6 +141,54 @@ def ingredient_display_name(ingredient: Any, language: str) -> str:
     return _core._presentation.display_name(raw or ingredient, language)
 
 
+def ingredient_stock_identities(ingredient: Any) -> tuple[str, ...]:
+    """Return stable inventory identities for one semantic ingredient concept.
+
+    The release catalog can contain language/market-specific source ingredient
+    IDs for the same reviewed concept. Inventory lots may have been linked
+    through any of those source rows, while a recipe can reference another one.
+    Only exact catalog concept membership is expanded; names are never fuzzily
+    merged here.
+    """
+    payload = load_release_catalog()
+    raw = ingredient if isinstance(ingredient, dict) else {}
+    source = _core._global_ingredient(payload, raw)
+    rows: list[dict[str, Any]] = []
+    if isinstance(source, dict):
+        concept_id = _text(source.get("conceptId"))
+        if concept_id:
+            rows.extend(
+                row
+                for row in (payload.get("_runtimeIngredientsByConcept") or {}).get(
+                    concept_id, ()
+                )
+                if isinstance(row, dict)
+            )
+        if not rows:
+            rows.append(source)
+    if isinstance(raw, dict):
+        rows.append(raw)
+
+    identities: list[str] = []
+    seen: set[str] = set()
+    for row in rows:
+        for field in ("key", "foodKey", "ingredientId", "id"):
+            value = _text(row.get(field))
+            if not value:
+                continue
+            identity = f"k:{value}"
+            if identity not in seen:
+                seen.add(identity)
+                identities.append(identity)
+        for value in row.get("sourceIngredientIds") or []:
+            value = _text(value)
+            identity = f"k:{value}" if value else ""
+            if identity and identity not in seen:
+                seen.add(identity)
+                identities.append(identity)
+    return tuple(identities)
+
+
 def ingredient_nutrition_references(ingredient: Any, language: str):
     """Offer explicitly different food types for comparison, not an assigned profile."""
     payload = load_release_catalog()
