@@ -48,7 +48,7 @@ class GreekCatalogAuditV149Tests(unittest.TestCase):
             "sesame salt":"Γκομάσιο (αλάτι με σουσάμι)",
             "wood ear mushroom":"Μανιτάρι wood ear (αυτί του Ιούδα)",
             "king oyster mushroom":"Μανιτάρι eryngii (king oyster)",
-            "glass noodle":"Glass noodles (διάφανα νουντλς)",
+            "glass noodle":"Διάφανα νουντλς (glass noodles)",
             "jasmine rice":"Ρύζι jasmine (γιασεμί)",
             "glutinous rice":"Sticky rice (κολλώδες ρύζι)",
             "passion fruit":"Passion fruit (πασιφλόρα)",
