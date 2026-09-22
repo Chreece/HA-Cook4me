@@ -26,9 +26,9 @@ class GreekCatalogAuditV165Tests(unittest.TestCase):
         ui=(FRONTEND/"cook4me-panel-v165.js").read_text(encoding="utf-8")
         self.assertIn("cook4me-recipe-hub-panel-v180",panel)
         self.assertIn("cook4me-panel-v180.js",panel)
-        self.assertIn("/cook4me_static/2026.9.22.7",panel)
-        self.assertIn("?v=2026.9.22.7",panel)
-        self.assertIn('"version": "2026.9.22.7"',manifest)
+        self.assertIn("/cook4me_static/2026.9.22.8",panel)
+        self.assertIn("?v=2026.9.22.8",panel)
+        self.assertIn('"version": "2026.9.22.8"',manifest)
         self.assertIn("cook4me-panel-v164.js?v=2026.9.21.29",ui)
 
     def test_singular_nut_forms_are_preserved(self):
