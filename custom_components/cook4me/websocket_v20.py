@@ -868,6 +868,25 @@ async def _state(
         supermarket_code,
     )
 
+    # Stock reservation presentation must follow the same language contract as
+    # shopping rows. The weekly UI renders these names directly, so leaving
+    # reservation rows raw leaks recipe-language labels into a different UI
+    # language (for example French/German/Czech names in a Greek interface).
+    reservations = dict(state.get("reservations") or {})
+    for bucket in ("items", "unknown", "shortages"):
+        rows = reservations.get(bucket)
+        if not isinstance(rows, list):
+            continue
+        reservations[bucket] = await hass.async_add_executor_job(
+            shopping_rows,
+            rows,
+            ui_code,
+            country,
+            shopping_sources,
+            supermarket_code,
+        )
+    state["reservations"] = reservations
+
     state.update({
         "costSettings": cost_store.settings,
         "costReferenceCount": cost_store.snapshot()["referenceCount"],
