@@ -299,6 +299,9 @@ def _score_week_pool(
     profile_target_settings: dict[str, Any],
     profile_daily_targets: dict[str, Any],
     day_total: int,
+    progress=None,
+    progress_base: float = 0.0,
+    progress_total: float = 1.0,
 ) -> dict[str, Any] | None:
     """Score one weekly slot off the HA event loop."""
     from .shared_recipe_filters import recipe_target_scope
@@ -322,7 +325,8 @@ def _score_week_pool(
     best_daily_bonus = 0.0
     best_meal_target_bonus = 0.0
 
-    for candidate in pool:
+    pool_total = max(1, len(pool))
+    for candidate_index, candidate in enumerate(pool, start=1):
         nutrition = nutrition_by_id.get(id(candidate)) or {}
         nutrition_hint = nutrition_goal_bonus(nutrition, goal)
         candidate_slot = {
@@ -362,6 +366,17 @@ def _score_week_pool(
             + float(daily_hint.get("bonus") or 0.0)
             - penalty
         )
+        if progress and (
+            candidate_index == 1
+            or candidate_index == pool_total
+            or candidate_index % 10 == 0
+        ):
+            progress(
+                "ranking",
+                completed=progress_base + candidate_index / pool_total,
+                total=progress_total,
+                message=f"Scoring candidate {candidate_index}/{pool_total}",
+            )
         if score <= best_score:
             continue
         best = candidate
@@ -667,6 +682,8 @@ async def _generate_week(
                 total=total_desired,
                 message=f"Scoring {len(pool)} candidates for {stamp} {meal_type}",
             )
+        from .shared_recipe_runtime import executor_progress
+        score_progress = executor_progress(progress) if progress else None
         scored = await hass.async_add_executor_job(
             partial(
                 _score_week_pool,
@@ -684,6 +701,9 @@ async def _generate_week(
                 profile_target_settings=profile_target_settings,
                 profile_daily_targets=profile_daily_targets,
                 day_total=day_total,
+                progress=score_progress,
+                progress_base=float(slot_index - 1),
+                progress_total=float(total_desired),
             )
         )
         if scored is None:
@@ -783,7 +803,16 @@ def _leftover_recipe(leftover, meals):
     return deepcopy(meal.get("recipe") or {key: meal[key] for key in ("title", "groupingFunctionalId", "variantFunctionalId") if meal.get(key)})
 
 
-async def _state(hass: HomeAssistant, bridge, *, history_days: int = 30, shared_filters=None, ui_language="en", progress=None) -> dict[str, Any]:
+async def _state(
+    hass: HomeAssistant,
+    bridge,
+    *,
+    history_days: int = 30,
+    shared_filters=None,
+    ui_language="en",
+    progress=None,
+    reuse_costs=False,
+) -> dict[str, Any]:
     lifecycle = await meal_lifecycle_store_for_bridge(bridge)
     cost_store = await cost_store_for_bridge(bridge)
     inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
@@ -794,7 +823,14 @@ async def _state(hass: HomeAssistant, bridge, *, history_days: int = 30, shared_
     for leftover in state.get("leftovers", []):
         leftover["recipe"] = _leftover_recipe(leftover, meals)
     from .weekly_plan import refresh_plan
-    await refresh_plan(bridge, state, filters=shared_filters, language=ui_language, progress=progress)
+    await refresh_plan(
+        bridge,
+        state,
+        filters=shared_filters,
+        language=ui_language,
+        progress=progress,
+        reuse_costs=reuse_costs,
+    )
     state.update({
         "costSettings": cost_store.settings,
         "costReferenceCount": cost_store.snapshot()["referenceCount"],
@@ -1052,6 +1088,7 @@ async def ws_week_generate(hass, connection, msg) -> None:
                 shared_filters=msg.get("shared_filters"),
                 ui_language=msg.get("ui_language", "en"),
                 progress=progress,
+                reuse_costs=True,
             )
             state = await _state(
                 hass,
