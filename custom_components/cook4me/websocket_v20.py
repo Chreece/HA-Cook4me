@@ -1073,13 +1073,14 @@ async def ws_week_add_shopping(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         lifecycle = await meal_lifecycle_store_for_bridge(bridge)
-        snapshot = lifecycle.snapshot(bridge.recipe_hub.profile.get("houseIngredients") or [],
-            start_date=dt_util.now().date())
-        if msg.get("shared_filters") is not None:
-            snapshot = await _state(hass, bridge, shared_filters=msg["shared_filters"], ui_language=msg.get("ui_language", "en"))
-        if any((((slot.get("recipe") or {}).get("match") or {}).get("requiresSubstitutions")) for slot in snapshot["slots"] if slot.get("selected") is not False):
-            raise ValueError("Some planned recipes still need ingredient replacements. Resolve those recipes before adding the week to shopping.")
-        rows = snapshot["shoppingDelta"]
+        async with lifecycle.weekly_mutation():
+            snapshot = lifecycle.snapshot(bridge.recipe_hub.profile.get("houseIngredients") or [],
+                start_date=dt_util.now().date())
+            if msg.get("shared_filters") is not None:
+                snapshot = await _state(hass, bridge, shared_filters=msg["shared_filters"], ui_language=msg.get("ui_language", "en"))
+            if any((((slot.get("recipe") or {}).get("match") or {}).get("requiresSubstitutions")) for slot in snapshot["slots"] if slot.get("selected") is not False):
+                raise ValueError("Some planned recipes still need ingredient replacements. Resolve those recipes before adding the week to shopping.")
+            rows = snapshot["shoppingDelta"]
         from .shopping_presentation import shopping_rows, normalize_supermarket_language
         cost_store = await cost_store_for_bridge(bridge)
         market_settings = cost_store.settings
@@ -1292,20 +1293,21 @@ async def ws_leftover_consume(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         lifecycle = await meal_lifecycle_store_for_bridge(bridge)
-        consumed = await lifecycle.async_consume_leftover(
-            str(msg["leftover_id"]), msg.get("servings")
-        )
-        history = await meal_history_store_for_bridge(bridge)
-        record = await history.async_record(
-            recipe={"title": consumed.get("title"), "servings": consumed.get("servings")},
-            nutrition=consumed.get("nutrition") or {},
-            consumption={},
-        )
-        await lifecycle.async_record_meal_cost(
-            record.get("id"),
-            {"totalsByCurrency": consumed.get("costByCurrency") or {}, "source": "leftover"},
-        )
-        result = {"consumed": consumed, "mealHistoryRecord": record, **await _state(hass, bridge)}
+        async with lifecycle.weekly_mutation():
+            consumed = await lifecycle.async_consume_leftover(
+                str(msg["leftover_id"]), msg.get("servings")
+            )
+            history = await meal_history_store_for_bridge(bridge)
+            record = await history.async_record(
+                recipe={"title": consumed.get("title"), "servings": consumed.get("servings")},
+                nutrition=consumed.get("nutrition") or {},
+                consumption={},
+            )
+            await lifecycle.async_record_meal_cost(
+                record.get("id"),
+                {"totalsByCurrency": consumed.get("costByCurrency") or {}, "source": "leftover"},
+            )
+            result = {"consumed": consumed, "mealHistoryRecord": record, **await _state(hass, bridge)}
     except Exception as exc:
         legacy._send_error(connection, msg, exc); return
     connection.send_result(msg["id"], result)
