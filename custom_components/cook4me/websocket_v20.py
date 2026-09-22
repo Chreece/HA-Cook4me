@@ -809,10 +809,13 @@ async def _state(
     *,
     history_days: int = 30,
     shared_filters=None,
-    ui_language="en",
+    ui_language=None,
     progress=None,
     reuse_costs=False,
 ) -> dict[str, Any]:
+    ui_language = _text(
+        ui_language or getattr(hass.config, "language", None) or "en"
+    )
     lifecycle = await meal_lifecycle_store_for_bridge(bridge)
     cost_store = await cost_store_for_bridge(bridge)
     inventory = bridge.recipe_hub.profile.get("houseIngredients") or []
@@ -867,6 +870,25 @@ async def _state(
         shopping_sources,
         supermarket_code,
     )
+
+    # Stock reservation presentation must follow the same language contract as
+    # shopping rows. The weekly UI renders these names directly, so leaving
+    # reservation rows raw leaks recipe-language labels into a different UI
+    # language (for example French/German/Czech names in a Greek interface).
+    reservations = dict(state.get("reservations") or {})
+    for bucket in ("items", "unknown", "shortages"):
+        rows = reservations.get(bucket)
+        if not isinstance(rows, list):
+            continue
+        reservations[bucket] = await hass.async_add_executor_job(
+            shopping_rows,
+            rows,
+            ui_code,
+            country,
+            shopping_sources,
+            supermarket_code,
+        )
+    state["reservations"] = reservations
 
     state.update({
         "costSettings": cost_store.settings,
