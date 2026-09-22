@@ -24,11 +24,11 @@ class GreekCatalogAuditV147Tests(unittest.TestCase):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v147.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v173",panel)
-        self.assertIn("cook4me-panel-v173.js",panel)
-        self.assertIn("/cook4me_static/2026.9.21.38",panel)
-        self.assertIn("?v=2026.9.21.38",panel)
-        self.assertIn('"version": "2026.9.21.38"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v174",panel)
+        self.assertIn("cook4me-panel-v174.js",panel)
+        self.assertIn("/cook4me_static/2026.9.22.1",panel)
+        self.assertIn("?v=2026.9.22.1",panel)
+        self.assertIn('"version": "2026.9.22.1"',manifest)
         self.assertIn("cook4me-panel-v146.js?v=2026.9.21.11",ui)
 
     def test_second_pass_fixes_false_friends_and_supermarket_greek(self):
