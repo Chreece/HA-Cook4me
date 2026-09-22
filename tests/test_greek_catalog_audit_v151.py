@@ -52,10 +52,10 @@ class GreekCatalogAuditV151Tests(unittest.TestCase):
             "nori sheet":"Φύλλο νόρι",
             "kombu seaweed sheet":"Φύλλο κόμπου",
             "salmon roe":"Αυγά σολομού (ikura)",
-            "tarako cod roe":"Tarako (αυγά μπακαλιάρου)",
+            "tarako cod roe":"Αυγά μπακαλιάρου ταράκο (tarako)",
             "kelp":"Φύκια κελπ (kelp)",
-            "hijiki seaweed":"Hijiki (φύκια χιτζίκι)",
-            "aonori":"Aonori (πράσινα φύκια)",
+            "hijiki seaweed":"Φύκια χιτζίκι (hijiki)",
+            "aonori":"Πράσινα φύκια αονόρι (aonori)",
         }
         for key,value in expected.items():
             self.assertEqual(labels.get(key),value)
