@@ -63,10 +63,10 @@ class GreekCatalogAuditV157Tests(unittest.TestCase):
 
     def test_false_friend_fish_names_keep_safe_market_or_species_name(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
-        self.assertEqual(labels["hairtail fish"],"Hairtail / cutlassfish (Trichiurus)")
+        self.assertEqual(labels["hairtail fish"],"Τριχιούρος (hairtail / cutlassfish, Trichiurus)")
         self.assertNotEqual(labels["hairtail fish"],"Σπαθόψαρο")
-        self.assertEqual(labels["ling fish"],"Ling (Molva molva)")
-        self.assertEqual(labels["milkfish belly"],"Κοιλιά milkfish (bangus)")
+        self.assertEqual(labels["ling fish"],"Λινγκ (Molva molva)")
+        self.assertEqual(labels["milkfish belly"],"Κοιλιά μίλκφις / μπάνγκους (milkfish / bangus)")
 
     def test_dried_and_piece_forms_are_not_collapsed(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
