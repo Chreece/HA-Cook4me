@@ -103,9 +103,9 @@ class StorageScaleGreekV154Tests(unittest.TestCase):
         labels=data["labels"]
         expected={
             "aburaage":"Λεπτό τηγανητό τόφου αμπουραάγκε (aburaage)",
-            "shiso leaf":"Φύλλο shiso",
+            "shiso leaf":"Φύλλο σίσο (shiso)",
             "gochugaru":"Κορεάτικο τσίλι γκοτσουγκάρου (gochugaru)",
-            "konjac noodle":"Νουντλς shirataki / konjac",
+            "konjac noodle":"Νουντλς σιρατάκι / κόντζακ (shirataki / konjac)",
             "shichimi togarashi":"Ιαπωνικό μείγμα 7 μπαχαρικών σιτσίμι τογκαράσι (shichimi togarashi)",
             "ichimi chili pepper":"Ιαπωνικό τσίλι ιτσίμι τογκαράσι (ichimi togarashi)",
             "sansho pepper":"Ιαπωνικό πιπέρι σάνσο (sansho)",

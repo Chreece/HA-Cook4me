@@ -67,7 +67,7 @@ class GreekCatalogAuditV158Tests(unittest.TestCase):
             "mozzarella ball":"Μπάλα μοτσαρέλας",
             "spoonfuls of salted ricotta":"Κουταλιές αλατισμένης ρικότα",
             "package of smoked tofu":"Συσκευασία καπνιστού τόφου",
-            "package of skyr":"Συσκευασία skyr",
+            "package of skyr":"Συσκευασία σκιρ (skyr)",
             "packet of baking powder":"Φακελάκι μπέικιν πάουντερ",
             "packet taco seasoning mix":"Φακελάκι μείγματος καρυκευμάτων taco",
             "packages of vanilla pudding powder":"Συσκευασίες σκόνης πουτίγκας βανίλιας",

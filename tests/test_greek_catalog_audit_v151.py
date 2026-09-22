@@ -63,7 +63,7 @@ class GreekCatalogAuditV151Tests(unittest.TestCase):
     def test_sweetener_and_specialty_vegetable_terms(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
-            "monk fruit sweetener":"Γλυκαντικό monk fruit (λουό χαν γκουό)",
+            "monk fruit sweetener":"Γλυκαντικό λουό χαν γκουό (monk fruit)",
             "pomegranate molasses":"Μελάσα ροδιού (πετιμέζι ροδιού)",
             "small kohlrabi with leaf":"Μικρό κολράμπι με φύλλα",
             "burdock root":"Ρίζα κολλιτσίδας (gobo)",

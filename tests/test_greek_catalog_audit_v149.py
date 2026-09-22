@@ -46,10 +46,10 @@ class GreekCatalogAuditV149Tests(unittest.TestCase):
         expected={
             "sesame puree":"Ταχίνι (πάστα σουσαμιού)",
             "sesame salt":"Γκομάσιο (αλάτι με σουσάμι)",
-            "wood ear mushroom":"Μανιτάρι wood ear (αυτί του Ιούδα)",
-            "king oyster mushroom":"Μανιτάρι eryngii (king oyster)",
+            "wood ear mushroom":"Μανιτάρι «αυτί του Ιούδα» (wood ear)",
+            "king oyster mushroom":"Μανιτάρι ερίντζι (king oyster)",
             "glass noodle":"Διάφανα νουντλς (glass noodles)",
-            "jasmine rice":"Ρύζι jasmine (γιασεμί)",
+            "jasmine rice":"Ρύζι γιασεμί (jasmine)",
             "glutinous rice":"Κολλώδες ρύζι (sticky rice)",
             "passion fruit":"Πασιφλόρα (passion fruit)",
         }
@@ -60,7 +60,7 @@ class GreekCatalogAuditV149Tests(unittest.TestCase):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         self.assertEqual(labels["pine nuts"],"Κουκουνάρια")
         self.assertEqual(labels["toasted pine nuts"],"Καβουρδισμένα κουκουνάρια")
-        self.assertEqual(labels["chia seed"],"Σπόροι chia (τσία)")
+        self.assertEqual(labels["chia seed"],"Σπόροι τσία (chia)")
         self.assertEqual(labels["almond puree"],"Πουρές αμυγδάλου")
         self.assertEqual(labels["hazelnut puree"],"Πουρές φουντουκιού")
 

@@ -49,28 +49,28 @@ class GreekCatalogAuditV159Tests(unittest.TestCase):
     def test_singular_mushroom_sources_are_singular_in_greek(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
-            "button mushroom":"Λευκό μανιτάρι champignon",
+            "button mushroom":"Λευκό μανιτάρι σαμπινιόν (champignon)",
             "chanterelle mushroom":"Μανιτάρι κανθαρέλα",
-            "chestnut mushroom":"Καφέ μανιτάρι champignon",
-            "enoki mushroom":"Μανιτάρι enoki",
-            "king oyster mushroom":"Μανιτάρι eryngii (king oyster)",
-            "maitake mushroom":"Μανιτάρι maitake",
-            "nameko mushroom":"Μανιτάρι nameko",
+            "chestnut mushroom":"Καφέ μανιτάρι σαμπινιόν (champignon)",
+            "enoki mushroom":"Μανιτάρι ενόκι (enoki)",
+            "king oyster mushroom":"Μανιτάρι ερίντζι (king oyster)",
+            "maitake mushroom":"Μανιτάρι μαϊτάκε (maitake)",
+            "nameko mushroom":"Μανιτάρι ναμέκο (nameko)",
             "oyster mushroom":"Μανιτάρι πλευρώτους",
-            "porcini mushroom":"Μανιτάρι porcini",
-            "shiitake mushroom":"Μανιτάρι shiitake",
-            "shimeji mushroom":"Μανιτάρι shimeji",
-            "wood ear mushroom":"Μανιτάρι wood ear (αυτί του Ιούδα)",
+            "porcini mushroom":"Μανιτάρι πορτσίνι (porcini)",
+            "shiitake mushroom":"Μανιτάρι σιτάκε (shiitake)",
+            "shimeji mushroom":"Μανιτάρι σιμέτζι (shimeji)",
+            "wood ear mushroom":"Μανιτάρι «αυτί του Ιούδα» (wood ear)",
         }
         for key,value in expected.items():
             self.assertEqual(labels.get(key),value)
 
     def test_mushroom_preparation_state_is_preserved(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
-        self.assertEqual(labels["dried shiitake mushroom"],"Αποξηραμένο μανιτάρι shiitake")
-        self.assertEqual(labels["fresh shiitake mushroom"],"Φρέσκο μανιτάρι shiitake")
+        self.assertEqual(labels["dried shiitake mushroom"],"Αποξηραμένο μανιτάρι σιτάκε (shiitake)")
+        self.assertEqual(labels["fresh shiitake mushroom"],"Φρέσκο μανιτάρι σιτάκε (shiitake)")
         self.assertEqual(labels["fresh oyster mushroom"],"Φρέσκο μανιτάρι πλευρώτους")
-        self.assertEqual(labels["small dried shiitake mushroom"],"Μικρό αποξηραμένο μανιτάρι shiitake")
+        self.assertEqual(labels["small dried shiitake mushroom"],"Μικρό αποξηραμένο μανιτάρι σιτάκε (shiitake)")
 
     def test_search_aliases_cover_fourteenth_pass_terms(self):
         aliases=load_presentation().locale_search_aliases()["el"]

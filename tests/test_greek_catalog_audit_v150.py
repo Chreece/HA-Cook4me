@@ -54,7 +54,7 @@ class GreekCatalogAuditV150Tests(unittest.TestCase):
             "ricotta salata":"Αλατισμένη ρικότα (ricotta salata)",
             "canola oil":"Κραμβέλαιο (canola)",
             "peanut oil":"Λάδι αράπικου φιστικιού (αραχιδέλαιο)",
-            "worcestershire sauce":"Σάλτσα Worcestershire (Γούστερ)",
+            "worcestershire sauce":"Σάλτσα Γούστερ (Worcestershire)",
             "sriracha sauce":"Καυτερή σάλτσα σριράτσα (sriracha)",
             "harissa":"Πάστα χαρίσα (harissa)",
         }
