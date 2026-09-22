@@ -422,7 +422,7 @@ async def _generate_week(
     progress=None,
 ) -> dict[str, Any]:
     from . import release_catalog
-    from .weekly_variety import signature, already_planned
+    from .weekly_variety import signature, already_planned, available_candidates
     from .weekly_plan import MEAL_SLOT_ORDER, meal_slots_for_date
     original_slots = deepcopy(lifecycle.slots)
     replacing = bool(replace_slot_id) or replace_slot_ids is not None
@@ -569,33 +569,29 @@ async def _generate_week(
             else ["snack", "dessert"] if meal_type in {"morningSnack", "afternoonSnack", "lateSnack"}
             else ["main", "starter", "salad", "soup", "side"]
         )
+        fresh_candidates = available_candidates(
+            candidates, candidate_signatures, used_recipes, regeneration_avoid
+        )
         pool = [
-            row for row in candidates
-            if not already_planned(candidate_signatures[id(row)], used_recipes)
-            and not already_planned(candidate_signatures[id(row)], regeneration_avoid)
-            and recipe_matches_meal_types(row, wanted_taxonomy)
+            row for row in fresh_candidates
+            if recipe_matches_meal_types(row, wanted_taxonomy)
         ]
         taxonomy_fallback = False
         regeneration_fallback = False
         if not pool and regeneration_avoid:
+            reusable_candidates = available_candidates(
+                candidates, candidate_signatures, used_recipes
+            )
             pool = [
-                row for row in candidates
-                if not already_planned(candidate_signatures[id(row)], used_recipes)
-                and recipe_matches_meal_types(row, wanted_taxonomy)
+                row for row in reusable_candidates
+                if recipe_matches_meal_types(row, wanted_taxonomy)
             ]
             regeneration_fallback = bool(pool)
         if not pool:
-            pool = [
-                row for row in candidates
-                if not already_planned(candidate_signatures[id(row)], used_recipes)
-                and not already_planned(candidate_signatures[id(row)], regeneration_avoid)
-            ]
+            pool = fresh_candidates
             taxonomy_fallback = bool(pool)
         if not pool and regeneration_avoid:
-            pool = [
-                row for row in candidates
-                if not already_planned(candidate_signatures[id(row)], used_recipes)
-            ]
+            pool = available_candidates(candidates, candidate_signatures, used_recipes)
             taxonomy_fallback = bool(pool)
             regeneration_fallback = bool(pool)
         if not pool:
