@@ -20,15 +20,15 @@ def load_presentation():
 
 
 class GreekCatalogAuditV164Tests(unittest.TestCase):
-    def test_v164_is_inherited_by_active_v176(self):
+    def test_v164_is_inherited_by_active_v177(self):
         panel=PANEL.read_text(encoding="utf-8")
         manifest=MANIFEST.read_text(encoding="utf-8")
         ui=(FRONTEND/"cook4me-panel-v164.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v176",panel)
-        self.assertIn("cook4me-panel-v176.js",panel)
-        self.assertIn("/cook4me_static/2026.9.22.3",panel)
-        self.assertIn("?v=2026.9.22.3",panel)
-        self.assertIn('"version": "2026.9.22.3"',manifest)
+        self.assertIn("cook4me-recipe-hub-panel-v177",panel)
+        self.assertIn("cook4me-panel-v177.js",panel)
+        self.assertIn("/cook4me_static/2026.9.22.4",panel)
+        self.assertIn("?v=2026.9.22.4",panel)
+        self.assertIn('"version": "2026.9.22.4"',manifest)
         self.assertIn("cook4me-panel-v163.js?v=2026.9.21.28",ui)
 
     def test_singular_leaf_and_small_forms_are_preserved(self):
