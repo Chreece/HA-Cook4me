@@ -257,6 +257,7 @@ async def ws_ingredient_catalog(hass: HomeAssistant, connection: websocket_api.A
     vol.Optional("entry_id"): str,
     vol.Required("ingredients"): [vol.Any(str, dict)],
     vol.Optional("ui_language"): str,
+    vol.Optional("display_language"): str,
     vol.Optional("supermarket_language"): str,
 })
 @websocket_api.async_response
@@ -274,7 +275,7 @@ async def ws_shopping_add(hass: HomeAssistant, connection: websocket_api.ActiveC
         settings = store.settings
         country = settings.get("country") or getattr(hass.config, "country", "")
         ui_language = normalize_supermarket_language(
-            msg.get("ui_language"),
+            msg.get("display_language") or msg.get("ui_language"),
             country=country,
             fallback=getattr(hass.config, "language", None) or "en",
         )
