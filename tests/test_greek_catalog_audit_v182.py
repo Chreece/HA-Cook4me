@@ -12,12 +12,12 @@ class GreekCatalogAuditV182Tests(unittest.TestCase):
         expected={
             "glass noodle":"Διάφανα νουντλς (glass noodles)",
             "dried glass noodle":"Αποξηραμένα διάφανα νουντλς (glass noodles)",
-            "konjac noodle":"Νουντλς shirataki / konjac",
-            "boiled somen noodle":"Βρασμένα νουντλς somen",
-            "ramen noodle":"Νουντλς ramen",
-            "udon noodle":"Νουντλς udon",
-            "fresh udon noodle":"Φρέσκα νουντλς udon",
-            "package of pre-cooked udon noodle":"Συσκευασία προμαγειρεμένων νουντλς udon",
+            "konjac noodle":"Νουντλς σιρατάκι / κόντζακ (shirataki / konjac)",
+            "boiled somen noodle":"Βρασμένα νουντλς σόμεν (somen)",
+            "ramen noodle":"Νουντλς ράμεν (ramen)",
+            "udon noodle":"Νουντλς ούντον (udon)",
+            "fresh udon noodle":"Φρέσκα νουντλς ούντον (udon)",
+            "package of pre-cooked udon noodle":"Συσκευασία προμαγειρεμένων νουντλς ούντον (udon)",
             "shelled cardamom pods":"Σπόροι κακουλέ χωρίς λοβό",
         }
         for key,value in expected.items():
