@@ -71,7 +71,7 @@ class GreekCatalogAuditV157Tests(unittest.TestCase):
     def test_dried_and_piece_forms_are_not_collapsed(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         expected={
-            "dried daikon strips":"Αποξηραμένες λωρίδες daikon",
+            "dried daikon strips":"Αποξηραμένες λωρίδες ντάικον (daikon)",
             "fried taro chunks":"Κομμάτια τηγανητού τάρο",
             "pieces of crustless white bread":"Κομμάτια λευκού ψωμιού χωρίς κόρα",
             "sun-dried tomato":"Λιαστή ντομάτα",
