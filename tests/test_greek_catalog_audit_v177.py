@@ -53,7 +53,7 @@ class GreekCatalogAuditV177Tests(unittest.TestCase):
             "veal":("veal","μοσχαράκι"),
             "watercress":("watercress","νεροκάρδαμο"),
             "cornflour":("cornflour","Κορν φλάουρ (άμυλο καλαμποκιού)"),
-            "curd cheese":("curd cheese","Φρέσκο τυρί τύπου quark"),
+            "curd cheese":("curd cheese","Φρέσκο τυρί κουάρκ (quark)"),
             "kohlrabi":("kohlrabi","Κολράμπι (γογγυλοκράμβη)"),
             "mace":("mace","Μασίς (άνθος μοσχοκάρυδου)"),
             "saffron":("saffron","Σαφράν (κρόκος)"),
@@ -61,7 +61,7 @@ class GreekCatalogAuditV177Tests(unittest.TestCase):
             "sole":("sole","Γλώσσα (ψάρι)"),
             "oxtail":("oxtail","Μοσχαρίσια ουρά"),
             "bonito flakes":("bonito flakes","Κατσουομπούσι (νιφάδες παλαμίδας)"),
-            "wood ear mushroom":("wood ear mushroom","Μανιτάρι wood ear (αυτί του Ιούδα)"),
+            "wood ear mushroom":("wood ear mushroom","Μανιτάρι «αυτί του Ιούδα» (wood ear)"),
         }
         for key,(source,label) in expected.items():
             normalized={str(v).casefold() for v in aliases[key]}
