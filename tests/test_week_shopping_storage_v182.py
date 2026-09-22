@@ -168,6 +168,27 @@ class WeekShoppingStorageV182Tests(unittest.TestCase):
         self.assertIn('supermarket_code,',source)
         self.assertIn('state["reservations"] = reservations',source)
 
+    def test_internal_week_refresh_falls_back_to_home_assistant_language(self):
+        source=(PKG/"websocket_v20.py").read_text(encoding="utf-8")
+        self.assertIn("ui_language=None",source)
+        self.assertIn('ui_language or getattr(hass.config, "language", None) or "en"',source)
+
+    def test_screenshot_units_have_greek_display_forms(self):
+        cases=[
+            ("tbsp",3,"κ.σ."),
+            ("tsp",2,"κ.γ."),
+            ("clove",3,"σκελίδες"),
+            ("leaf",10,"φύλλα"),
+            ("g",100,"γρ."),
+            ("kg",1,"κιλό"),
+        ]
+        for unit,quantity,expected in cases:
+            with self.subTest(unit=unit,quantity=quantity):
+                self.assertEqual(
+                    self.shopping.shopping_display_unit(unit,quantity,"el"),
+                    expected,
+                )
+
     def test_week_api_accepts_explicit_display_and_supermarket_languages(self):
         source=(PKG/"websocket_v20.py").read_text(encoding="utf-8")
         self.assertIn('vol.Optional("display_language"): str',source)
