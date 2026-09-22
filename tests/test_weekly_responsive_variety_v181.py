@@ -116,6 +116,7 @@ class WeeklyResponsiveVarietyV181Tests(unittest.TestCase):
         self.assertIn('request["_cook4me_job_id"] = msg["job_id"]',jobs)
         self.assertIn("def _emit_week_progress(",week)
         self.assertIn('message="Queued behind another weekly plan change"',week)
+        self.assertIn('kind="week_generate_queued"',week)
         self.assertIn('"ranking"',week)
         self.assertIn('"persist"',week)
         self.assertIn("Scoring {len(pool)} candidates",week)
