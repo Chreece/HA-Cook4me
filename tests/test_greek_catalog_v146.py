@@ -38,7 +38,7 @@ class GreekCatalogV146Tests(unittest.TestCase):
             "veal":"Μοσχαράκι",
             "watercress":"Νεροκάρδαμο",
             "waxy potato":"Πατάτες σφιχτής σάρκας",
-            "white pudding":"Λευκό λουκάνικο τύπου white pudding",
+            "white pudding":"Λευκό λουκάνικο (white pudding)",
             "cornflour":"Κορν φλάουρ (άμυλο καλαμποκιού)",
             "venison tenderloin":"Φιλέτο ελαφιού",
             "pork loin":"Χοιρινό καρέ",
