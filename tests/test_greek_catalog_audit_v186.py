@@ -112,6 +112,7 @@ class GreekCatalogAuditV186Tests(unittest.TestCase):
         self.assertEqual(len(expected),88)
         for key,value in expected.items():
             self.assertEqual(labels.get(key),value,key)
+            self.assertRegex(value,r"[\u0370-\u03FF]",key)
 
     def test_old_labels_source_keys_and_new_labels_all_remain_searchable(self):
         data=json.loads(CURATED.read_text(encoding="utf-8"))
