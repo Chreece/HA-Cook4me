@@ -469,8 +469,7 @@ async def _generate_week(
     # Each calendar date has its own saved slot pattern. Shared recipe filters
     # still limit which of those slots are eligible.
     from .diet_profiles import resolve_filters
-    from .shared_recipe_filters import daily_targets, normalize_filters, recipe_target_scope
-    from .nutrient_targets import daily_progress_bonus, target_bonus
+    from .shared_recipe_filters import daily_targets, normalize_filters
     profile_target_settings = resolve_filters(
         bridge.recipe_hub.profile,
         normalize_filters(shared_filters if isinstance(shared_filters, dict) else {"dietProfile": "household"}),
@@ -501,6 +500,15 @@ async def _generate_week(
 
     planned = list(existing)
     end = (start + timedelta(days=6)).isoformat()
+    previous_week_recipes = [
+        signature(row.get("recipe"))
+        for row in original_slots
+        if week_start <= _text(row.get("date")) <= end and row.get("recipe")
+    ]
+    # A full regenerate should actually rotate away from the plan it replaces.
+    # If the filtered pool is too small we fall back later, but we first try a
+    # genuinely different set of dishes.
+    regeneration_avoid = previous_week_recipes if not replacing else []
     used_recipes = [signature(row.get("recipe")) for row in planned
         if week_start <= _text(row.get("date")) <= end and row.get("recipe")]
     used_recipes.extend(signature(row["recipe"]) for row in targets if row.get("recipe"))
