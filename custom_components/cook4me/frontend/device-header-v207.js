@@ -10,17 +10,18 @@ export function compactDeviceHeader(entry,view){
  return {name:entry?.accessible===false?'Cook4Me':clean(entry?.state?.deviceName)||clean(entry?.title)||'Cook4Me',
   phase,label:clean(view?.label),icon:ICONS[phase]||ICONS.unknown};
 }
+// Keep the new text on the app theme, not inherited graphic-specific colours.
 export const COMPACT_HEADER_CSS=`
  :host(.ui203) .wrap>.top.v100-top.ui207-header{min-height:0!important;padding:6px 12px!important;gap:10px!important;align-items:center!important}
  :host(.ui203) .ui207-header .v100-device{display:flex!important;align-items:center!important;flex-wrap:wrap;gap:6px 12px!important;min-width:0}
  :host(.ui203) .ui207-header #status{flex:1 1 180px;min-width:0!important}
  :host(.ui203) .ui207-header .v130-device-summary.ui207-device{display:flex!important;align-items:center!important;gap:10px!important;min-height:44px!important;min-width:0;padding:0!important;cursor:pointer}
- :host(.ui203) .ui207-device>ha-icon{flex:0 0 24px;--mdc-icon-size:24px;width:24px;height:24px;color:var(--primary-color)}
- :host(.ui203) .ui207-device[data-phase=offline]>ha-icon,:host(.ui203) .ui207-device[data-phase=waiting]>ha-icon{color:var(--secondary-text-color)}
- :host(.ui203) .ui207-device[data-phase=unavailable]>ha-icon{color:var(--error-color)}
+ :host(.ui203) .ui207-device>ha-icon{flex:0 0 24px;--mdc-icon-size:24px;width:24px;height:24px;color:var(--ui203-accent,var(--primary-color))!important}
+ :host(.ui203) .ui207-device[data-phase=offline]>ha-icon,:host(.ui203) .ui207-device[data-phase=waiting]>ha-icon{color:var(--ui203-muted,var(--secondary-text-color))!important}
+ :host(.ui203) .ui207-device[data-phase=unavailable]>ha-icon{color:var(--error-color)!important}
  :host(.ui203) .ui207-device-copy{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 12px;min-width:0;flex:1}
- :host(.ui203) .ui207-device-name{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:1rem;font-weight:650;line-height:1.4}
- :host(.ui203) .ui207-device-state{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--secondary-text-color);font-size:.85rem;line-height:1.4}
+ :host(.ui203) .ui207-device-name{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ui203-ink,var(--primary-text-color))!important;font-size:1rem;font-weight:650;line-height:1.4}
+ :host(.ui203) .ui207-device-state{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ui203-muted,var(--secondary-text-color))!important;font-size:.85rem;line-height:1.4}
  :host(.ui203) .ui207-device:focus-visible{outline:2px solid var(--primary-color);outline-offset:2px;border-radius:7px}
  :host(.ui203) .ui207-header #entrySelect{flex:0 1 180px;width:auto!important;max-width:180px!important}
  :host(.ui203) .ui207-header #cook4meTargetDevicesControl{flex:0 1 auto;max-width:100%}

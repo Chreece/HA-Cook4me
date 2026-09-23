@@ -45,8 +45,25 @@ if args.full_chain:
 else:html=focused_html()
 checks=[]
 def check(page,expression,name):
-    assert page.evaluate(expression),name
+    passed = page.evaluate(expression)
+    if not passed:
+        print('HEADER DIAGNOSTICS:', page.evaluate("""()=>{
+            const node=app.shadowRoot.querySelector('.ui207-device-state');
+            const colors=[];
+            for(let n=node;n;n=n.parentElement){
+                const s=getComputedStyle(n);
+                colors.push({node:n.tagName,id:n.id,classes:n.className,color:s.color,
+                    secondary:s.getPropertyValue('--secondary-text-color'),
+                    muted:s.getPropertyValue('--ui203-muted'),style:n.getAttribute('style')});
+            }
+            colors.push({node:'host',style:app.getAttribute('style'),
+                secondary:getComputedStyle(app).getPropertyValue('--secondary-text-color'),
+                muted:getComputedStyle(app).getPropertyValue('--ui203-muted')});
+            return colors;
+        }"""), flush=True)
+    assert passed,name
     checks.append(name)
+    print('PASS:', name, flush=True)
 
 with sync_playwright() as p:
     # Prefer the pinned Playwright browser in CI; local executable is explicit.
