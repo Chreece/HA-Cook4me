@@ -2,7 +2,7 @@
 import argparse
 import base64
 from pathlib import Path
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, expect
 
 ROOT=Path(__file__).resolve().parents[1]
 F=ROOT/'custom_components/cook4me/frontend'
@@ -101,6 +101,12 @@ with sync_playwright() as p:
         page.evaluate("app._entry().state.phase='idle';app._updateHeader()")
         # Theme variables remain inherited, not a hardcoded dark header.
         page.evaluate("document.body.classList.add('light');app.style.setProperty('--card-background-color','#ffffff');app.style.setProperty('--primary-text-color','#182f32');app.style.setProperty('--secondary-text-color','#526a6e')")
+        # Let the complete UI paint the changed HA theme before reading its
+        # computed colours. Keep the exact colour requirement, with a bounded
+        # web-first assertion rather than accepting an intermediate frame.
+        status = page.locator('.ui207-device-state')
+        status.scroll_into_view_if_needed()
+        expect(status).to_have_css('color', 'rgb(82, 106, 110)', timeout=5000)
         check(page,"getComputedStyle(app.shadowRoot.querySelector('.ui207-device-state')).color==='rgb(82, 106, 110)'",prefix+'light theme status contrast follows HA variables')
         # Reuse DOM to prove that a former operation can become a quiet manual step.
         page.evaluate('''async module=>{const {decorateStepModes}=await import(module);window.preview=document.createElement('div');preview.innerHTML='<div data-v66-step="0"><span class="step-num">1</span><span>Keep this instruction</span></div>';app.shadowRoot.append(preview);decorateStepModes(preview,{steps:[{programName:'Browning'}]},'el');window.decorateModes=decorateStepModes;}''',url(F/'recipe-step-modes-v204.js'))
