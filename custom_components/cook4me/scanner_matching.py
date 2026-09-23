@@ -124,6 +124,8 @@ def _compatible(candidate, source):
         return not (cf & {'fresh', 'frozen', 'dried', 'pickled', 'smoked'})
     if 'canned' in cf:
         return False
+    if 'dried' in cf and 'dried' not in sf:
+        return False
     for exclusive in ('pickled', 'smoked', 'roasted'):
         if (exclusive in cf) != (exclusive in sf):
             return False
@@ -201,7 +203,7 @@ def suggest_catalog_matches(product, catalog, *, limit=None):
                    for alias in _strings(raw.get(field)) if _text(alias)}
         aliases.add(canonical)
         best = None
-        for alias in aliases:
+        for alias in sorted(aliases):
             token = _words(alias)
             if not token or _norm(alias) in _BROAD:
                 continue
@@ -229,7 +231,7 @@ def suggest_catalog_matches(product, catalog, *, limit=None):
 
     # Prefer a specific matched food over words naming its ingredients:
     # "peanut butter" is not peanuts; "coconut milk" is not dairy milk.
-    anchors = [(canonical, best) for _, canonical, _, best in rows if best]
+    anchors = sorted([(canonical, best) for _, canonical, _, best in rows if best], key=lambda entry: (-entry[1][0], entry[0], entry[1][3]))
     selected = []
     for raw, canonical, aliases, best in rows:
         if best is None:

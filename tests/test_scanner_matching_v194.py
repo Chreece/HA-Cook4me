@@ -98,6 +98,10 @@ class ScannerMatchingTests(unittest.TestCase):
     def test_dried_herb_not_fresh(self):
         self.assertNotIn('f',keys({'name':'Dried basil'},[row('f','Fresh basil'),row('d','Dried basil')]))
 
+    def test_unspecified_whole_food_does_not_offer_dried_variants(self):
+        self.assertEqual(keys({'name':'Carrot'},[row('f','Carrot'),row('d','Dried carrot')]),{'f'})
+        self.assertEqual(keys({'name':'Basil'},[row('f','Basil'),row('d','Dried basil')]),{'f'})
+
     def test_frozen_not_fresh(self):
         self.assertEqual(keys({'name':'Frozen peas'},[row('f','Fresh pea'),row('z','Frozen pea'),row('p','Pea')]),{'z','p'})
 

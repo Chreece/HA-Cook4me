@@ -28,7 +28,7 @@ class Holder {
 function panel(suggestions,lang='en'){
  const holder=new Holder();
  class Base {
-  _v78IngredientOptions(){} _v114Picker(){} _v111Paint(){}
+  _v78IngredientOptions(){if(this._legacyReplace)this._v78Dialog.querySelector('[data-v78-suggestions]').innerHTML='<div>Legacy buttons</div>';} _v114Picker(){} _v111Paint(){}
   _uiIngredientLanguage(){return lang;}
   _scanIngredientIdentity(row){return identity(row);}
   _escape(value){return escape(value);}
@@ -105,4 +105,22 @@ test('unchanged render keeps DOM button objects',()=>{
 });
 test('existing camera and save methods are not overridden',()=>{
  for(const method of ['_v78Camera','_v78Recognize','_v78Lookup','_v78Save','_v78StopCamera'])assert.ok(!source.includes(method+'('));
+});
+
+test('old suggestion handler is rejected after recognition updates the same draft',()=>{
+ const {host,holder,draft}=panel([item('a')]);const old=holder.buttons[0];draft.suggestions=[item('b')];host._v194Suggestions();old.onclick();assert.deepEqual(draft.ingredientLinks,[]);
+ holder.buttons[0].onclick();assert.equal(draft.ingredient.key,'b');
+});
+test('localized source IDs stay highlighted and toggle off correctly',()=>{
+ const {host,holder,draft}=panel([item('old','Source')]);host._v112Local=()=>({key:'current',name:'Τοπικό'});host._v194Suggestions();
+ holder.buttons[0].onclick();assert.equal(holder.buttons[0].pressed,true);assert.equal(holder.buttons[0].dataset.v194Ingredient,'current');
+ holder.buttons[0].onclick();assert.equal(draft.ingredient,null);assert.deepEqual(draft.ingredientLinks,[]);
+});
+test('equal-valued refreshed suggestions rebind handlers to current result',()=>{
+ const {host,holder,draft}=panel([item('a')]);draft.suggestions=[item('a')];host._v194Suggestions();holder.buttons[0].onclick();assert.equal(draft.ingredient.key,'a');
+});
+
+test('scroll and focus survive the inherited five-button renderer',()=>{
+ const {host,holder}=panel([item('a'),item('b')]);host._legacyReplace=true;holder.list.scrollTop=123;host.shadowRoot.activeElement=holder.buttons[1];
+ holder.buttons[1].onclick();assert.equal(holder.list.scrollTop,123);assert.equal(holder.buttons[1].focused,true);assert.equal(holder.buttons[1].pressed,true);
 });

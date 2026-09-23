@@ -19,7 +19,15 @@ export function toggleScannerLink(links,row,identity){
 }
 export const ScannerSuggestionsMixin=Base=>class extends Base{
  _v78IngredientOptions(){
-  const result=super._v78IngredientOptions();this._v194Suggestions();return result;
+  const c=this._v78Dialog,d=this._v78Draft,holder=c?.querySelector('[data-v78-suggestions]');
+  const scroll=holder?.querySelector('[data-v194-list]')?.scrollTop;
+  const focused=holder?.contains?.(this.shadowRoot?.activeElement)?this.shadowRoot.activeElement?.dataset?.v194Ingredient:null;
+  const result=super._v78IngredientOptions();this._v194Suggestions();
+  if(c===this._v78Dialog&&d===this._v78Draft){
+   const list=holder?.querySelector('[data-v194-list]');if(list&&scroll!==undefined)list.scrollTop=scroll;
+   if(focused)for(const button of holder?.querySelectorAll('[data-v194-index]')||[])if(button.dataset.v194Ingredient===focused)button.focus?.({preventScroll:true});
+  }
+  return result;
  }
  _v114Picker(){
   const result=super._v114Picker();this._v194Suggestions();return result;
@@ -29,13 +37,16 @@ export const ScannerSuggestionsMixin=Base=>class extends Base{
   if(!holder||!d)return;
   const lang=String(this._uiIngredientLanguage?.()||this._langCode?.()||'en').split(/[-_]/)[0];
   const t=TEXT[lang]||TEXT.en,id=row=>this._scanIngredientIdentity(row);
-  const rows=scannerSuggestionRows(d.suggestions,id),links=this._v114Links?.()||[d.ingredient].filter(Boolean);
+  const sourceSuggestions=d.suggestions;
+  const localized=(Array.isArray(sourceSuggestions)?sourceSuggestions:[]).map(item=>item?.ingredient?{...item,ingredient:this._v112Local?.(item.ingredient)||item.ingredient}:item);
+  const rows=scannerSuggestionRows(localized,id),links=this._v114Links?.()||[d.ingredient].filter(Boolean);
   const picked=new Set(links.map(id)),busy=!!this._v78Busy||!!this._v78Submitted;
   const query=String(d.query||'').trim();
   const visible=rows.filter(item=>picked.has(id(item.ingredient))||!query||
     (this._ingredientQueryMatches?this._ingredientQueryMatches(item.ingredient,query):item.ingredient.name.toLocaleLowerCase().includes(query.toLocaleLowerCase())));
   const signature=JSON.stringify([lang,rows,query,[...picked],busy]);
-  if(holder._v194Signature===signature&&holder.querySelector('[data-v194-list]'))return;
+  if(holder._v194Signature===signature&&holder._v194Source===sourceSuggestions&&holder.querySelector('[data-v194-list]'))return;
+  holder._v194Source=sourceSuggestions;
   holder._v194Signature=signature;
   const previous=holder.querySelector('[data-v194-list]'),scroll=previous?.scrollTop||0;
   const focused=holder.contains?.(this.shadowRoot?.activeElement)?this.shadowRoot.activeElement?.dataset?.v194Ingredient:null;
@@ -47,7 +58,7 @@ export const ScannerSuggestionsMixin=Base=>class extends Base{
   const list=holder.querySelector('[data-v194-list]');if(list)list.scrollTop=scroll;
   holder.querySelectorAll('[data-v194-index]').forEach(button=>{
    button.onclick=()=>{
-    if(this._v78Draft!==d||this._v78Dialog!==c||this._v78Busy||this._v78Submitted)return;
+    if(this._v78Draft!==d||this._v78Dialog!==c||d.suggestions!==sourceSuggestions||this._v78Busy||this._v78Submitted)return;
     const row=visible[Number(button.dataset.v194Index)]?.ingredient;if(!row)return;
     const local=this._v112Local?.(row)||row,current=this._v114Links?.()||[d.ingredient].filter(Boolean);
     d.ingredientLinks=toggleScannerLink(current,local,id);
