@@ -268,12 +268,13 @@ def _week_candidate_nutrition(
 ) -> dict[int, dict[str, Any]]:
     """Calculate invariant candidate nutrition once for reuse across all slots."""
     result: dict[int, dict[str, Any]] = {}
+    generic, stock_lots = nutrition_store.generic, nutrition_store.stock_lots
     for candidate in candidates:
         nutrition = calculate_recipe_nutrition_fefo(
             candidate,
             inventory,
-            generic=nutrition_store.generic,
-            stock_lots=nutrition_store.stock_lots,
+            generic=generic,
+            stock_lots=stock_lots,
         )
         if not nutrition.get("totals"):
             nutrition = deepcopy(
@@ -468,10 +469,10 @@ async def _generate_week(
     if replacing and (not target_ids or not target_ids.issubset(eligible_ids)):
         raise ValueError("The selected meal is no longer in the next seven days")
     if progress:
-        progress("catalog_index", completed=0, total=1, message="Preparing weekly candidates")
-    if shared_filters is not None and release_catalog.release_catalog_ready():
+        progress("catalog_index", message="Preparing weekly candidates")
+    if shared_filters is not None and await hass.async_add_executor_job(release_catalog.release_catalog_ready):
         from .shared_recipe_runtime import search_filtered
-        result = await search_filtered(bridge, query=query, languages=languages, language=ui_language, filters=shared_filters)
+        result = await search_filtered(bridge, query=query, languages=languages, language=ui_language, filters=shared_filters, progress=progress)
         candidates, errors = result["items"], []
     else:
         candidates, errors = await _week_candidates(
@@ -682,9 +683,9 @@ async def _generate_week(
                 total=total_desired,
                 message=f"Scoring {len(pool)} candidates for {stamp} {meal_type}",
             )
-        from .shared_recipe_runtime import executor_progress
-        score_progress = executor_progress(progress) if progress else None
-        scored = await hass.async_add_executor_job(
+        from .executor_progress import ExecutorProgress
+        score_progress = ExecutorProgress(progress)
+        scored = await score_progress.run(hass,
             partial(
                 _score_week_pool,
                 pool,

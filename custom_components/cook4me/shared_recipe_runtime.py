@@ -14,11 +14,16 @@ async def search_filtered(bridge, *, query, languages, language, filters, progre
     from functools import partial
     from . import release_catalog
     from .websocket_v30 import _device_language, _device_country
-    report = executor_progress(progress) if progress else None
-    process = await processor(bridge, filters, language=language, progress=report)
-    return await bridge.hass.async_add_executor_job(partial(release_catalog.search_release_recipes,
-        query, language=language, configured_language=_device_language(bridge), country=_device_country(bridge),
-        catalog_languages=languages, group_families=True, all_results=True, filter_rows=process, progress=report))
+    from .executor_progress import ExecutorProgress
+    report = ExecutorProgress(progress)
+    try:
+        # Always supply checkpoints, including when there is no subscribed UI.
+        process = await processor(bridge, filters, language=language, progress=report)
+        return await report.run(bridge.hass, partial(release_catalog.search_release_recipes,
+            query, language=language, configured_language=_device_language(bridge), country=_device_country(bridge),
+            catalog_languages=languages, group_families=True, all_results=True, filter_rows=process, progress=report))
+    finally:
+        report.close()
 
 
 async def processor(bridge, filters, *, language="en", rank=True, score_targets=True, progress=None, cost_calculator=None):
@@ -51,12 +56,15 @@ async def processor(bridge, filters, *, language="en", rank=True, score_targets=
             return calculate_recipe_cost(recipe, house, references, country=market["country"], currency=market["currency"])
 
     def process(rows):
+        # These properties return deep copies. Snapshot once per pass, not twice
+        # for every recipe in the catalog; the calculation does not mutate them.
+        generic, stock_lots = nutrients.generic, nutrients.stock_lots
         rows = [row for row in rows if recipe_identity(row) not in recent]
         if rank or "dietProfile" in settings:
             rows = v13._rank_filtered(bridge, rows, diet=settings["diet"], limit=max(1, len(rows)), unlimited=True, diet_filters=settings if "dietProfile" in settings else None,
                 progress=(lambda done, total: progress("ranking", completed=done, total=total)) if progress else None)
         return apply_filters(rows, settings, ingredient_groups=aliases,
             cost=cost_calculator,
-            nutrition=lambda row: calculate_recipe_nutrition_fefo(row, house, generic=nutrients.generic, stock_lots=nutrients.stock_lots),
+            nutrition=lambda row: calculate_recipe_nutrition_fefo(row, house, generic=generic, stock_lots=stock_lots),
             score_targets=score_targets, progress=progress)
     return process
