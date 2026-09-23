@@ -1,0 +1,32 @@
+name: Manual product editor
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: manual-editor-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  editor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Manual product editor regressions
+        run: node --test tests/test_scanner_editor_v196.mjs
+      - name: Frontend syntax
+        run: |
+          node --check custom_components/cook4me/frontend/scanner-editor-v196.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v180.js

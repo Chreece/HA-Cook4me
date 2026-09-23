@@ -1,8 +1,9 @@
+import {ProductEditorMixin} from './scanner-editor-v196.js';
 import {ReceiptScannerMixin} from './scanner-receipts-v195.js';
 import {ScannerSuggestionsMixin} from './scanner-suggestions-v194.js';
 const V179='cook4me-recipe-hub-panel-v179';
 if(!customElements.get(V179))await import('./cook4me-panel-v179.js?v=2026.9.22.6');
-const BasePanel=ReceiptScannerMixin(ScannerSuggestionsMixin(customElements.get(V179)));
+const BasePanel=ProductEditorMixin(ReceiptScannerMixin(ScannerSuggestionsMixin(customElements.get(V179))));
 
 const V180_TEXT={
  en:{
