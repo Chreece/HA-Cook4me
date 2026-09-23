@@ -685,7 +685,8 @@ class Cook4MeRecipeHub:
         return result
 
     def rank(self, recipes: list[dict[str, Any]], limit: int = 12) -> list[dict[str, Any]]:
-        scored = [self.annotate(x) for x in recipes if isinstance(x, dict)]
+        from .recipe_suitability import meal_candidates
+        scored = [self.annotate(x) for x in meal_candidates(recipes)]
         safe = [x for x in scored if x.get("match", {}).get("safe") or x.get("match", {}).get("eligibleWithSubstitutions")]
         safe.sort(key=lambda x: x.get("match", {}).get("score", -1000), reverse=True)
         return safe[: max(1, min(int(limit), 50))]

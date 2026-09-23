@@ -63,8 +63,10 @@ def _rank_filtered(
     unlimited: bool = False,
     progress=None,
     diet_filters=None,
+    for_suggestions: bool = True,
 ) -> list[dict[str, Any]]:
-    """Rank recipes against exact stock quantities and soon-expiring batches."""
+    """Rank meal suggestions; manual search/validation can retain cooking guides."""
+    from .recipe_suitability import is_cooking_guide
     profile = deepcopy(bridge.recipe_hub.profile)
     profile["habitTerms"] = bridge.recipe_hub.habit_terms
     if diet != "profile":
@@ -80,6 +82,8 @@ def _rank_filtered(
         if progress and (completed == 1 or completed % 25 == 0 or completed == len(recipes)):
             progress(completed - 1, len(recipes))
         if not isinstance(recipe, dict):
+            continue
+        if for_suggestions and is_cooking_guide(recipe):
             continue
         result = deepcopy(recipe)
         base_match = score_recipe(result, profile)
