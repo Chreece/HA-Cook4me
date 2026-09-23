@@ -51,7 +51,7 @@ jobs:
           node --check custom_components/cook4me/frontend/cook4me-panel-v180.js
       - name: Commit validated source to work branch and remove temporary assembly files
         run: |
-          git rm .github/runtime-v198.patch .github/workflows/assemble-runtime-v198.yml
+          git rm -f .github/runtime-v198.patch .github/workflows/assemble-runtime-v198.yml
           git add custom_components/cook4me/__init__.py custom_components/cook4me/food_intelligence.py custom_components/cook4me/frontend/cook4me-panel-v180.js custom_components/cook4me/frontend/scanner-receipts-v195.js custom_components/cook4me/panel.py tests/test_receipt_ui_v195.mjs
           git config user.name 'Chris Chreece'
           git config user.email '68458228+Chreece@users.noreply.github.com'
