@@ -1,0 +1,15 @@
+# HACS downloads a GitHub source archive before extracting custom_components.
+# Keep development/evidence material in git clones, not installation archives.
+/tools export-ignore
+/tests export-ignore
+/docs export-ignore
+/scripts export-ignore
+/.github export-ignore
+
+# Superseded compiled bundles; v127+ loads v126-bundle, not these copies.
+# Keep ALL source modules and every runtime catalog, locale, image and asset.
+/custom_components/cook4me/frontend/cook4me-panel-v[0-9]-bundle.js export-ignore
+/custom_components/cook4me/frontend/cook4me-panel-v[0-9][0-9]-bundle.js export-ignore
+/custom_components/cook4me/frontend/cook4me-panel-v10[0-9]-bundle.js export-ignore
+/custom_components/cook4me/frontend/cook4me-panel-v11[0-9]-bundle.js export-ignore
+/custom_components/cook4me/frontend/cook4me-panel-v12[0-5]-bundle.js export-ignore

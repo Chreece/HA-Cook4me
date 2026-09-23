@@ -1,0 +1,45 @@
+name: HACS installation archive
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hacs-archive-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Verify HACS archive contents and measure the download
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          python tests/test_hacs_archive_v201.py \
+            --baseline "$BASE_SHA" \
+            --github-sha "$HEAD_SHA" \
+            --report "$RUNNER_TEMP/hacs-archive.json"
+      - name: Archive measurements
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/hacs-archive.json" ]; then
+            printf '### HACS source archive measurements\n\n```json\n' >> "$GITHUB_STEP_SUMMARY"
+            cat "$RUNNER_TEMP/hacs-archive.json" >> "$GITHUB_STEP_SUMMARY"
+            printf '\n```\n\nRunner timings are not measurements of the user’s Home Assistant.\n' >> "$GITHUB_STEP_SUMMARY"
+          fi
