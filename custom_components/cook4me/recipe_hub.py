@@ -547,10 +547,10 @@ class Cook4MeRecipeHub:
         return deepcopy(self._data.get("userUiPreferences", {}).get(user_id, {}))
 
     async def async_set_user_ui_preferences(self, user_id: str, preferences: dict[str, Any]) -> dict[str, Any]:
-        from .shared_recipe_filters import normalize_preferences
+        from .shared_recipe_filters import merge_preferences
         async with self._lock:
             users = self._data.setdefault("userUiPreferences", {})
-            users[user_id] = {**users.get(user_id, {}), **normalize_preferences(preferences)}
+            users[user_id] = merge_preferences(users.get(user_id, {}), preferences)
             await self._save()
             return self.user_ui_preferences(user_id)
 

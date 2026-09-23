@@ -1,10 +1,12 @@
+import {ViewFiltersMixin} from './view-filters-v199.js';
+import {ReceiptLauncherMixin} from './receipt-launcher-v199.js';
 import {RecipeCoverageMixin} from './recipe-coverage-v198.js';
 import {ProductEditorMixin} from './scanner-editor-v196.js';
 import {ReceiptScannerMixin} from './scanner-receipts-v195.js';
 import {ScannerSuggestionsMixin} from './scanner-suggestions-v194.js';
 const V179='cook4me-recipe-hub-panel-v179';
 if(!customElements.get(V179))await import('./cook4me-panel-v179.js?v=2026.9.22.6');
-const BasePanel=RecipeCoverageMixin(ProductEditorMixin(ReceiptScannerMixin(ScannerSuggestionsMixin(customElements.get(V179)))));
+const BasePanel=ViewFiltersMixin(ReceiptLauncherMixin(RecipeCoverageMixin(ProductEditorMixin(ReceiptScannerMixin(ScannerSuggestionsMixin(customElements.get(V179)))))));
 
 const V180_TEXT={
  en:{
@@ -154,7 +156,7 @@ class Cook4MeRecipeHubPanelV180 extends BasePanel{
  _renderTab(){
   const result=super._renderTab();
   this.setAttribute('data-cook4me-build','2026.9.22.7');
-  this.setAttribute('data-cook4me-ui-revision','198');
+  this.setAttribute('data-cook4me-ui-revision','199');
   this._v180Styles();
   return result;
  }
@@ -172,3 +174,4 @@ class Cook4MeRecipeHubPanelV180 extends BasePanel{
 // pre-editor v180 constructor after the backend integration has been updated.
 if(!customElements.get('cook4me-recipe-hub-panel-v180'))customElements.define('cook4me-recipe-hub-panel-v180',Cook4MeRecipeHubPanelV180);
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v198'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v198',class extends Cook4MeRecipeHubPanelV180{});
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v199'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v199',class extends Cook4MeRecipeHubPanelV180{});

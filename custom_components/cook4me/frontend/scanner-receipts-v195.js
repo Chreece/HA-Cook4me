@@ -164,14 +164,16 @@ export const ReceiptScannerMixin=Base=>class extends Base{
   this._r195Styles();
   const modes=c.querySelector('.v111-modes');
   if(modes&&!modes.querySelector('[data-v80-scan=receipt]')){
-   const button=document.createElement('button');button.type='button';button.className='v111-icon';button.dataset.v80Scan='receipt';button.title=button.ariaLabel=this._r195Text('scan');button.innerHTML='<ha-icon icon="mdi:receipt-text-scan" aria-hidden="true"></ha-icon>';button.onclick=()=>void this._r195Start();modes.insertBefore(button,modes.querySelector('[data-v111-power]'));
+   const button=document.createElement('button');button.type='button';button.className='v111-icon';button.dataset.v80Scan='receipt';button.title=button.ariaLabel=this._r195Text('scan');button.innerHTML='<ha-icon icon="mdi:receipt-text-scan" aria-hidden="true"></ha-icon>';button.onclick=()=>void this._v80Scan('receipt');const nutrients=modes.querySelector('[data-v80-scan=nutrition]');if(nutrients)nutrients.after(button);else modes.append(button);
   }
   const e=v=>this._escape(String(v??'')),t=k=>e(this._r195Text(k));
-  let tools=c.querySelector('[data-r195-tools]');if(!tools){tools=document.createElement('section');tools.dataset.r195Tools='';tools.className='r195-tools';
-   tools.innerHTML=`<div class="r195-actions"><button type="button" class="btn secondary" data-r195-start><ha-icon icon="mdi:receipt-text-scan"></ha-icon>${t('scan')}</button><button type="button" class="btn secondary" data-r195-saved><ha-icon icon="mdi:folder-open-outline"></ha-icon>${t('saved')}</button><label class="btn secondary r195-upload">${t('upload')}<input type="file" accept="image/*" data-r195-upload></label></div><small>${t('photoPrivacy')}</small><div data-r195-drafts class="r195-drafts" hidden></div><div data-r195-review></div>`;
+  // Product editing has no receipt toolbar or saved/photo shortcuts. Receipt
+  // review controls exist only while reviewing an actual receipt session.
+  let tools=c.querySelector('[data-r195-tools]');
+  if(!this._r195Session){tools?.remove();this._r195Paint();return;}
+  if(!tools){tools=document.createElement('section');tools.dataset.r195Tools='';tools.className='r195-tools';
+   tools.innerHTML='<div data-r195-review></div>';
    c.querySelector('.v78-capture-body').before(tools);
-   tools.querySelector('[data-r195-start]').onclick=()=>void this._r195Start();tools.querySelector('[data-r195-saved]').onclick=()=>void this._r195List();
-   tools.querySelector('[data-r195-upload]').onchange=async event=>{const file=event.target.files?.[0];event.target.value='';if(!file||this._v78Busy)return;await this._r195Start(false,false);if(this._v78Draft?.mode==='receipt')await this._v78Photo(file);};
   }
   const s=this._r195Session,area=tools.querySelector('[data-r195-review]');if(s){const r=s.receipt,item=this._r195Current();
    const field=(key,label,type='text')=>`<label class="field">${t(label)}<input data-r195-global="${key}" type="${type}" value="${e(r[key]??'')}" ${key==='currency'?'maxlength="3"':''}></label>`;

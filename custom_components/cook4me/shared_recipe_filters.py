@@ -52,7 +52,26 @@ def normalize_preferences(value):
         result["lastTab"] = data["lastTab"] if data["lastTab"] in TABS else "today"
     if "filters" in data:
         result["filters"] = normalize_filters(data["filters"])
+    if isinstance(data.get("filtersByView"), dict):
+        result["filtersByView"] = {
+            tab: normalize_filters(filters)
+            for tab, filters in data["filtersByView"].items()
+            if tab in TABS and isinstance(filters, dict)
+        }
     return result
+
+
+def merge_preferences(existing, patch):
+    """Merge independent view updates without replacing another view's filters."""
+    current = deepcopy(existing) if isinstance(existing, dict) else {}
+    normalized = normalize_preferences(patch)
+    if "filtersByView" in normalized:
+        previous = current.get("filtersByView")
+        normalized["filtersByView"] = {
+            **(previous if isinstance(previous, dict) else {}),
+            **normalized["filtersByView"],
+        }
+    return {**current, **normalized}
 
 
 def daily_targets(value):

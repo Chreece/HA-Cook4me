@@ -1,0 +1,60 @@
+<!doctype html><html><meta charset="utf-8"><body>
+<script type="module">
+const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;');
+class Boundary extends HTMLElement{
+ constructor(){super();this.attachShadow({mode:'open'});this._hass={user:{id:'fixture'},connection:{sendMessagePromise:async()=>({})}};this._entryId='fixture';this._tab='today';this.calls=[];}
+ connectedCallback(){this._renderTab();}
+ _t(k){return k;}_entry(){return {};}_prefKey(){return this._hass.user.id+'.'+this._entryId;}
+ _filters(){if(this._v63FilterKey!==this._prefKey()){this._v63FilterKey=this._prefKey();this._v63Filters={languages:['de'],diet:'vegetarian'};}return this._v63Filters;}
+ _persistPreferences(patch){this._v63PrefRevision=(this._v63PrefRevision||0)+1;this._v63Dirty={...this._v63Dirty,...patch};this._cachePreferences();}
+ _renderTabs(){}_message(){}
+ _renderTab(){this._filters?.();let c=this.shadowRoot.getElementById('content');if(!c){c=document.createElement('div');c.id='content';this.shadowRoot.append(c);}c.textContent=this._tab;}
+ _selectV52Tab(tab){this._v63CloseRecipe?.();this._v63CloseFilter?.();this._v63RecipeRequest=null;this._tab=tab;this._renderTab();}
+ async _showRecipe(recipe){
+  this._v63CloseRecipe?.();const request={};this._v63RecipeRequest=request;
+  this.calls.push(['open',recipe.id,this._tab]);if(this.delay)await this.delay;
+  if(this._v63RecipeRequest!==request)return;
+  this._opened=recipe;const overlay=document.createElement('div');overlay.dataset.recipeDialog='';overlay.className='overlay';this._v63RecipeDialog=overlay;
+  const close=()=>{document.removeEventListener('keydown',keydown);overlay.remove();this._opened=null;this._v63RecipeDialog=null;this._v63CloseRecipe=null;this._v63RecipeRequest=null;};
+  const keydown=e=>{if(e.key==='Escape'&&!this._v62CloseIngredient&&!this._v63CloseFilter)close();};document.addEventListener('keydown',keydown);this._v63CloseRecipe=close;
+  overlay.onclick=e=>{if(e.target===overlay)close();};this.shadowRoot.append(overlay);this._renderRecipeDialog();
+  if(this.closeImmediately)queueMicrotask(()=>overlay.querySelector('[data-modal-close]').click());
+ }
+ _renderRecipeDialog(){const o=this._v63RecipeDialog;if(!o)return;o.innerHTML=`<style>.overlay{position:fixed;inset:0;background:#1119;padding:50px}.rx-dialog{padding:20px;background:white;max-height:70vh;overflow:auto}</style><div class="rx-dialog"><h2>${esc(this._opened.title)}</h2><button data-modal-close><span>×</span></button><details><summary>ingredients</summary>Rice</details></div>`;o.querySelector('[data-modal-close]').onclick=()=>this._v63CloseRecipe?.();}
+ _showFilter(key){
+  this._v63CloseFilter?.();const o=document.createElement('div');o.dataset.filterDialog=key;o.style.cssText='position:fixed;inset:10px;z-index:3;background:white;padding:20px';
+  o.innerHTML='<button data-close>Close filter</button><button data-apply>Apply</button>';
+  const close=()=>{document.removeEventListener('keydown',onKey);o.remove();this._v63CloseFilter=null;};
+  const onKey=e=>{if(e.key==='Escape')close();};document.addEventListener('keydown',onKey);this._v63CloseFilter=close;
+  o.querySelector('[data-close]').onclick=close;o.querySelector('[data-apply]').onclick=()=>{this._persistPreferences({filters:{...this._filters(),maxCost:2}});close();this._renderTab();};this.shadowRoot.append(o);
+ }
+ disconnectedCallback(){this._v63CloseRecipe?.();this._v63CloseFilter?.();}
+}
+customElements.define('cook4me-recipe-hub-panel-v178',Boundary);
+await import('../custom_components/cook4me/frontend/cook4me-panel-v179.js');
+const {ViewFiltersMixin}=await import('../custom_components/cook4me/frontend/view-filters-v199.js');
+customElements.define('view-test',ViewFiltersMixin(customElements.get('cook4me-recipe-hub-panel-v179')));
+const {ReceiptScannerMixin}=await import('../custom_components/cook4me/frontend/scanner-receipts-v195.js');
+const {ReceiptLauncherMixin}=await import('../custom_components/cook4me/frontend/receipt-launcher-v199.js');
+class ScanBoundary extends HTMLElement{
+ constructor(){super();this.attachShadow({mode:'open'});this._entryId='entry';this._hass={user:{id:'scanner'}};this._v78State={aiEntityId:'',defaultAiEntityId:'ai_task.vision',aiChoices:[{id:'ai_task.vision'}]};this.calls=[];}
+ connectedCallback(){this.shadowRoot.innerHTML='<style>:host{font:16px system-ui}button,.btn{display:inline-flex;padding:10px;border:1px solid #777;border-radius:6px;gap:6px;cursor:pointer}.v78-actions,.v111-modes{display:flex;gap:8px;flex-wrap:wrap}[hidden]{display:none!important}.v111-camera{padding:10px;background:#eee;min-height:150px}.r195-tools{padding:10px}</style><section data-v78-kitchen></section>';this._renderProfile(this.shadowRoot.querySelector('[data-v78-kitchen]'));}
+ _renderProfile(c){c.innerHTML='<div class="v78-launch"><div class="v78-actions"><button data-v78-open="barcode">Προσθήκη προϊόντος</button></div></div>';c.querySelector('button').onclick=()=>this._v78Open('manual');}
+ _r199Styles(){}_updateHeader(){}_prefKey(){return 'scanner.entry';}_uiIngredientLanguage(){return 'el';}_escape(v){return esc(v);}_v78Text(k){return k;}_message(m){this.message=m;}
+ _v78Fresh(mode){return {mode,productName:'',brand:'',quantity:'',unit:'g',packageCount:1,ingredientLinks:[],nutrition:{basisQuantity:100,basisUnit:'',values:{}},paidAmount:'',paidCurrency:'EUR',purchaseDate:'2026-09-23',editorOpen:mode==='manual',scanPhase:'idle'};}
+ _v78AcceptState(s){this._v78State=s;}_v78Alive(c){return c===this._v78Dialog&&c?.isConnected;}_v111CancelRead(){}_v114Links(){return this._v78Draft?.ingredientLinks||[];}_v78IngredientOptions(){}
+ _v78SetStatus(m){this.message=m;}_v78SetBusy(b){this._v78Busy=b;this._v111Paint();}_v111Paint(){}_v141KeepCameraWarm(){}_v78Close(){this._v78Dialog?.remove();this._v78Dialog=null;}_v179DecorateWeek(){}
+ async _v78Open(mode){this._v78Close();const c=document.createElement('section');this._v78Dialog=c;this._v78Draft=this._v78Fresh(mode);this.shadowRoot.append(c);this._v78RenderCapture();}
+ async _v78Camera(){this.calls.push(['camera']);}
+ async _v78Photo(file){this.calls.push(['photo',file.name]);await this._v78Recognize('controlled-jpeg');}
+ async _v80Scan(mode){this._v78Draft.mode=mode;}
+ async _api(type){this.calls.push([type]);if(type.endsWith('/suggestions'))return {suggestions:[]};return {receipt:{merchant:'Test shop',currency:'EUR',purchaseDate:'2026-09-23',total:2,items:[{id:'row1',kind:'product',status:'pending',productName:'Ρύζι',originalName:'REIS',quantity:500,unit:'g',packageCount:1,lineTotal:2,ingredientLinks:[]}]}};}
+ _v78RenderCapture(){
+  const c=this._v78Dialog;if(!c)return;c.innerHTML=`<div class="v78-capture-body"><div data-v111-frame class="v111-camera"><div class="v111-modes">${['barcode','date','nutrition','product'].map(k=>`<button data-v80-scan="${k}">${k}</button>`).join('')}<button data-v111-power>power</button></div><div data-v111-guide-wrap><p data-v111-instruction></p></div><div data-v111-result><strong></strong></div><div class="v111-bottom"><button data-v112-apply>apply</button><button data-v113-restart>restart</button></div><main><form data-v78-form><fieldset><input data-draft="productName"><input data-draft="purchaseDate"><input data-v79-paid><input data-v79-paid-currency><input data-v79-shop></fieldset></form></main></div></div>`;
+ }
+}
+customElements.define('scanner-test',ReceiptLauncherMixin(ReceiptScannerMixin(ScanBoundary)));
+window.makeView=()=>{document.querySelector('view-test')?.remove();localStorage.clear();const h=document.createElement('view-test');document.body.append(h);window.view=h;return h;};
+window.makeScanner=()=>{document.querySelector('scanner-test')?.remove();const h=document.createElement('scanner-test');document.body.append(h);window.scanner=h;return h;};
+window.ready=true;
+</script></body></html>
