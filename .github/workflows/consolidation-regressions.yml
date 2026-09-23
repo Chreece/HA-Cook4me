@@ -1,0 +1,38 @@
+name: Consolidation regressions
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: consolidation-regressions-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  catalog-pricing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Pricing and market boundaries
+        run: |
+          python tests/test_price_audit_v189.py
+          python tests/test_price_market_v190.py
+      - name: Reviewed semantic and nutrient evidence
+        run: |
+          python tests/test_compile_release_catalog_semantics_v60.py
+          python tests/test_nutrition_review_holds_v60.py
+          python tests/test_provider_nutrition_eligibility_v60.py
+          python tests/test_supplemental_nutrition_v60.py
+          python -m unittest discover -s tests -p 'test_semantic_*v60.py'
+          python tests/test_nutrition_semantic_syntax_aliases_v60.py
+      - name: Full runtime catalog and stable identities
+        run: |
+          python tests/test_branch_consolidation_v197.py
+          python tools/validate_release_catalog_v60.py custom_components/cook4me/catalog/merged_catalog.v1.json
