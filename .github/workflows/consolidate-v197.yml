@@ -74,7 +74,7 @@ jobs:
                               break
                           body.append(following)
                       value = textwrap.dedent('\n'.join(body))
-                  assert '${{' not in value, 'Unexpanded workflow expression'
+                  assert ('$' + '{{') not in value, 'Unexpanded workflow expression'
                   print('VALIDATING', name, flush=True)
                   subprocess.run(['bash', '-e', '-o', 'pipefail', '-c', value], check=True)
                   count += 1
