@@ -162,13 +162,19 @@ class Cook4MeRecipeHubPanelV180 extends BasePanel{
  _renderTab(){
   const result=super._renderTab();
   this.setAttribute('data-cook4me-build','2026.9.22.7');
-  this.setAttribute('data-cook4me-ui-revision','204');
+  this.setAttribute('data-cook4me-ui-revision','205');
   this._v180Styles();
   return result;
  }
  _v180Styles(){
   if(!this.shadowRoot||this.shadowRoot.querySelector('#v180Styles'))return;
   const style=document.createElement('style');style.id='v180Styles';style.textContent=`
+   /* Keep navigation inside its horizontal scrollport. The inherited hover
+      lift used to move the top border out of the zero-padding tab strip. */
+   :host(.ui203) .v100-navigation #tabs .tab{transform:none!important;transition:background-color .14s ease,border-color .14s ease,color .14s ease!important}
+   /* An inset focus ring stays visible without increasing the header height. */
+   :host(.ui203) .v100-navigation #tabs .tab:focus-visible{outline-offset:-3px!important}
+   @media(prefers-reduced-motion:reduce){:host(.ui203) .v100-navigation #tabs .tab{transition:none!important}}
    .v180-manual-hint{background:color-mix(in srgb,var(--primary-color) 65%,#071016)!important;color:#fff!important;font-weight:650;line-height:1.35}
    .v180-camera-note{margin:0 0 12px;padding:12px 14px;border:1px solid var(--divider-color);border-radius:12px;background:color-mix(in srgb,var(--primary-color) 12%,var(--card-background-color));font-weight:600;line-height:1.4}
    .v180-manual-only .v111-modes,.v180-manual-only .v111-bottom,.v180-manual-only .v111-guide-wrap,.v180-manual-only video{display:none!important}
@@ -185,3 +191,4 @@ if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v200'))customEleme
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v202'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v202',class extends Cook4MeRecipeHubPanelV180{});
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v203'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v203',class extends Cook4MeRecipeHubPanelV180{});
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v204'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v204',class extends Cook4MeRecipeHubPanelV180{});
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v205'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v205',class extends Cook4MeRecipeHubPanelV180{});
