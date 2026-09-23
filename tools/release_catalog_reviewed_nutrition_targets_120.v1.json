@@ -1,0 +1,58 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-retained-reference-binding",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Gochugaru (seasoning)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, red or cayenne",
+      "fdcId": 170932,
+      "notes": "Manual semantic review binds Cook4Me 'Gochugaru (seasoning)' to USDA SR Legacy 'Spices, pepper, red or cayenne' through a retained exact evidence record. Gochugaru is dried Korean red chili pepper used as flakes or powder, so a dried red Capsicum spice record is the appropriate ingredient identity rather than fresh chili, chili sauce, or a generic seasoning mix. The pinned USDA record covers red/cayenne pepper (Capsicum frutescens or Capsicum annuum). Confidence remains medium because gochugaru cultivars, grind size, and heat level differ from cayenne; this decision does not generalize to gochujang, green chili flakes, paprika blends, or chili oil.",
+      "reviewTargetId": "concept:food:e1b6780ca927d4f4c5e5",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "697b1b1bcbe0dc6c624e8f479a016ab9c6fdb0a23a7ffeab01dfdeba517fac1d",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "df1f7e03a729c7e36822da6e60f9f4b2e5f22469e632b296c17d3d5adba9ce90",
+      "sourceEvidenceTargetId": "concept:food:2461e8ce0e8613c5ebec",
+      "usageCountAtReview": 3
+    },
+    {
+      "canonicalEnglishName": "Gochugaru",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, red or cayenne",
+      "fdcId": 170932,
+      "notes": "Manual semantic review binds Cook4Me 'Gochugaru' to USDA SR Legacy 'Spices, pepper, red or cayenne' through a retained exact evidence record. Gochugaru is dried Korean red chili pepper used as flakes or powder, so a dried red Capsicum spice record is the appropriate ingredient identity rather than fresh chili, chili sauce, or a generic seasoning mix. The pinned USDA record covers red/cayenne pepper (Capsicum frutescens or Capsicum annuum). Confidence remains medium because gochugaru cultivars, grind size, and heat level differ from cayenne; this decision does not generalize to gochujang, green chili flakes, paprika blends, or chili oil.",
+      "reviewTargetId": "concept:food:fe960485cf861ce63807",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "697b1b1bcbe0dc6c624e8f479a016ab9c6fdb0a23a7ffeab01dfdeba517fac1d",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "df1f7e03a729c7e36822da6e60f9f4b2e5f22469e632b296c17d3d5adba9ce90",
+      "sourceEvidenceTargetId": "concept:food:2461e8ce0e8613c5ebec",
+      "usageCountAtReview": 2
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "referenceReceipts": {
+    "170932": {
+      "sourceCandidateSha256": "697b1b1bcbe0dc6c624e8f479a016ab9c6fdb0a23a7ffeab01dfdeba517fac1d",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:2461e8ce0e8613c5ebec"
+    }
+  },
+  "reviewDecisionSha256": "8cf7dfea8a183d4ace1f693b0c5af8c44309b9dd71ad81dabd5e9ae1a06b7a45",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "df1f7e03a729c7e36822da6e60f9f4b2e5f22469e632b296c17d3d5adba9ce90"
+}

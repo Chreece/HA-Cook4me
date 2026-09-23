@@ -1,0 +1,44 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "evidenceBindingScope": "retained-reference-record",
+  "items": [
+    {
+      "approved": true,
+      "canonicalEnglishName": "Pepper (seasoning)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, black",
+      "fdcId": 170931,
+      "notes": "Manual semantic review binds Cook4Me 'Pepper (seasoning)' to USDA SR Legacy 'Spices, pepper, black' through a retained exact evidence record. The destination explicitly uses pepper as a seasoning, so peppercorn spice is the intended ingredient sense rather than vegetable Capsicum pepper. The retained USDA record identifies black pepper (Piper nigrum). Confidence remains medium because the wording does not explicitly distinguish black from white pepper; this decision does not generalize to chili pepper, Sichuan pepper, pink peppercorns, or pepper blends.",
+      "reviewTargetId": "concept:food:eab6f84144c33097993a",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:411e26e10323bec7c7e6"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Pepper (for seasoning), a little",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, black",
+      "fdcId": 170931,
+      "notes": "Manual semantic review binds Cook4Me 'Pepper (for seasoning), a little' to USDA SR Legacy 'Spices, pepper, black' through a retained exact evidence record. The destination explicitly uses pepper as a seasoning, so peppercorn spice is the intended ingredient sense rather than vegetable Capsicum pepper. The retained USDA record identifies black pepper (Piper nigrum). Confidence remains medium because the wording does not explicitly distinguish black from white pepper; this decision does not generalize to chili pepper, Sichuan pepper, pink peppercorns, or pepper blends.",
+      "reviewTargetId": "concept:food:b5da869ff3f70452c0fa",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:411e26e10323bec7c7e6"
+    }
+  ],
+  "kind": "cook4me-fdc-retained-reference-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "b2c3af0507df3df6c8092df2e16743ae5aa37233f4f42d8605ce4e2a8244618f"
+}

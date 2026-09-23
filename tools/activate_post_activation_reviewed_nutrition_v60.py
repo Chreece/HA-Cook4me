@@ -34,6 +34,7 @@ import fdc_reference_data_v60 as reference  # type: ignore  # noqa: E402
 import prepare_post_activation_nutrition_review_targets_v60 as adapter  # type: ignore  # noqa: E402
 import resolve_reviewed_release_catalog_nutrition_targets_offline_v60 as offline  # type: ignore  # noqa: E402
 import resolve_reviewed_release_catalog_nutrition_targets_v60 as target_resolver  # type: ignore  # noqa: E402
+import supplemental_nutrition_v60 as supplemental  # type: ignore  # noqa: E402
 
 
 def _text(value: Any) -> str:
@@ -146,26 +147,51 @@ def activate_catalog(
     if before_pending and activated_targets <= 0:
         raise RuntimeError("activated catalog has unresolved identities but no review targets")
 
+    seeded_cache, supplemental_summary = supplemental.seed_cache(
+        targets, {}, review_root=review_root
+    )
     reviews = target_resolver.load_reviews(review_root)
-    delta_cache, pending = offline.resolve_offline(targets, {}, reviews, index)
+    delta_cache, pending = offline.resolve_offline(targets, seeded_cache, reviews, index)
     resolution = pending.get("summary") if isinstance(pending.get("summary"), dict) else {}
     resolved_now_targets = int(resolution.get("resolvedNowReviewTargets") or 0)
     resolved_now_identities = int(resolution.get("resolvedNowIdentities") or 0)
+    seeded_targets = int(
+        supplemental_summary.get("supplementalResolvedNowReviewTargets") or 0
+    )
+    seeded_identities = int(
+        supplemental_summary.get("supplementalResolvedNowIdentities") or 0
+    )
+    already_resolved_targets = int(
+        resolution.get("alreadyResolvedReviewTargets") or 0
+    )
+    already_resolved_identities = int(
+        resolution.get("alreadyResolvedIdentities") or 0
+    )
     pending_targets = int(resolution.get("pendingReviewTargetCount") or 0)
     pending_identities = int(resolution.get("pendingIdentityCount") or 0)
+    delta_targets = resolved_now_targets + seeded_targets
+    delta_identities = resolved_now_identities + seeded_identities
 
-    if resolved_now_targets <= 0 or resolved_now_identities <= 0:
-        raise RuntimeError("review corpus contains no new activatable nutrition bindings")
-    if int(resolution.get("alreadyResolvedIdentities") or 0) != 0:
-        raise RuntimeError("empty delta cache unexpectedly reported already-resolved identities")
-    if len(delta_cache) != resolved_now_identities:
+    if already_resolved_targets != seeded_targets:
         raise RuntimeError(
-            f"resolved cache/profile count mismatch: cache={len(delta_cache)} resolved={resolved_now_identities}"
+            "supplemental review-target accounting disagrees with offline resolver"
         )
-    if pending_identities + resolved_now_identities != before_pending:
+    if already_resolved_identities != seeded_identities:
+        raise RuntimeError(
+            "supplemental identity accounting disagrees with offline resolver"
+        )
+    if delta_targets <= 0 or delta_identities <= 0:
+        raise RuntimeError("review corpus contains no new activatable nutrition bindings")
+    if len(delta_cache) != delta_identities:
+        raise RuntimeError(
+            f"resolved cache/profile count mismatch: cache={len(delta_cache)} resolved={delta_identities}"
+        )
+    if pending_identities + delta_identities != before_pending:
         raise RuntimeError("nutrition activation lost unresolved ingredient identities")
-    if pending_targets + resolved_now_targets != activated_targets:
+    if pending_targets + delta_targets != activated_targets:
         raise RuntimeError("nutrition activation lost unresolved review targets")
+    if supplemental_summary.get("networkRequestsPerformed") is not False:
+        raise RuntimeError("supplemental nutrition resolution performed a network request")
     if resolution.get("networkRequestsPerformed") is not False:
         raise RuntimeError("post-activation nutrition resolution performed a network request")
     if _text(resolution.get("referenceManifestSha256")) != index.manifest_sha256:
@@ -173,7 +199,7 @@ def activate_catalog(
 
     hydrated = builder.apply_reviewed_nutrition(catalog, delta_cache)
     hydrated_source = _source(hydrated)
-    expected_resolved = before_resolved + resolved_now_identities
+    expected_resolved = before_resolved + delta_identities
     if int(hydrated_source.get("reviewedNutritionRequiredCount") or 0) != before_required:
         raise RuntimeError("nutrition activation changed the required-identity denominator")
     if int(hydrated_source.get("reviewedNutritionResolvedCount") or 0) != expected_resolved:
@@ -205,9 +231,15 @@ def activate_catalog(
             "postActivationNutritionOverlayNetworkRequestsPerformed": False,
             "postActivationNutritionSourceCatalogSha256": source_catalog_sha256,
             "postActivationNutritionReferenceManifestSha256": index.manifest_sha256,
-            "postActivationNutritionReviewCorpusTargetCount": len(reviews),
-            "postActivationNutritionResolvedReviewTargetCount": resolved_now_targets,
-            "postActivationNutritionResolvedIdentityCount": resolved_now_identities,
+            "postActivationNutritionReviewCorpusTargetCount": len(reviews)
+            + int(supplemental_summary.get("supplementalReviewCorpusTargetCount") or 0),
+            "postActivationNutritionResolvedReviewTargetCount": delta_targets,
+            "postActivationNutritionResolvedIdentityCount": delta_identities,
+            "postActivationNutritionSupplementalReviewCorpusTargetCount": int(
+                supplemental_summary.get("supplementalReviewCorpusTargetCount") or 0
+            ),
+            "postActivationNutritionSupplementalResolvedReviewTargetCount": seeded_targets,
+            "postActivationNutritionSupplementalResolvedIdentityCount": seeded_identities,
             "postActivationNutritionPendingReviewTargetCount": pending_targets,
             "postActivationNutritionPendingIdentityCount": pending_identities,
         }
@@ -217,7 +249,8 @@ def activate_catalog(
         "catalogVersion": compacted.get("catalogVersion"),
         "sourceCatalogSha256": source_catalog_sha256,
         "referenceManifestSha256": index.manifest_sha256,
-        "reviewCorpusTargetCount": len(reviews),
+        "reviewCorpusTargetCount": len(reviews)
+        + int(supplemental_summary.get("supplementalReviewCorpusTargetCount") or 0),
         "recipes": before_counts[0],
         "variants": before_counts[1],
         "ingredients": before_counts[2],
@@ -225,8 +258,15 @@ def activate_catalog(
         "reviewedNutritionResolvedCountBefore": before_resolved,
         "pendingIdentityCountBefore": before_pending,
         "activatedReviewTargetCountBefore": activated_targets,
-        "newlyResolvedReviewTargetCount": resolved_now_targets,
-        "newlyResolvedIdentityCount": resolved_now_identities,
+        "newlyResolvedReviewTargetCount": delta_targets,
+        "newlyResolvedIdentityCount": delta_identities,
+        "newlyResolvedFdcReviewTargetCount": resolved_now_targets,
+        "newlyResolvedFdcIdentityCount": resolved_now_identities,
+        "newlyResolvedSupplementalReviewTargetCount": seeded_targets,
+        "newlyResolvedSupplementalIdentityCount": seeded_identities,
+        "supplementalReviewCorpusTargetCount": int(
+            supplemental_summary.get("supplementalReviewCorpusTargetCount") or 0
+        ),
         "reviewedNutritionResolvedCountAfter": expected_resolved,
         "reviewedNutritionRequiredCountAfter": before_required,
         "pendingReviewTargetCountAfter": pending_targets,

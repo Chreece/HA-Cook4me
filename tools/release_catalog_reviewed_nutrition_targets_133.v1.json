@@ -1,0 +1,303 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-retained-reference-binding",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Doubanjiang",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Miso sauce",
+      "fdcId": 2707438,
+      "notes": "Manual semantic review binds Cook4Me 'Doubanjiang' to USDA FNDDS 'Miso sauce' through an exact retained record in the same immutable evidence snapshot. Doubanjiang/chili-bean paste is a salty fermented bean condiment, and miso sauce is the closest pinned savory fermented-bean sauce profile available. Confidence remains medium because doubanjiang typically uses broad beans, chili, oil, and substantially different salt and solids, while miso is primarily fermented soy/rice or barley; this decision does not generalize to sweet bean paste, plain chili sauce, soy sauce, or meat-based chili.",
+      "reviewTargetId": "concept:food:85ba8ca597d4463ab43f",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "3b10e9b2ecb97f43c053cee03a56623e13f2b75f475c62d2aec1b621e2853e4b",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "7687d56b9dba4986b69fefc8183fd4edfa753f5cb9d802722c9417df40b46d0a",
+      "sourceEvidenceTargetId": "concept:food:ad79f40e3619cace4b35",
+      "usageCountAtReview": 7
+    },
+    {
+      "canonicalEnglishName": "Shiro dashi",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Soy sauce",
+      "fdcId": 2707442,
+      "notes": "Manual semantic review binds Cook4Me 'Shiro dashi' to USDA FNDDS 'Soy sauce' through an exact retained record in the same immutable evidence snapshot. Shiro dashi is a concentrated salty liquid seasoning commonly combining light soy sauce with dashi and sweet seasoning, so soy sauce is the closest pinned high-sodium liquid-seasoning profile available. Confidence remains medium because dashi extract, mirin/sugar, dilution, and brand formulation materially affect energy and sodium; this decision does not generalize to prepared dashi broth, dashi powder, dark soy sauce dishes, or noodle soup.",
+      "reviewTargetId": "concept:food:766d5c0416028a751c76",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "f4533d22cb530420c7af3f666f78cd02a97dfb702118e8f3605d0e3e9fbc2fcb",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceSha256": "7687d56b9dba4986b69fefc8183fd4edfa753f5cb9d802722c9417df40b46d0a",
+      "sourceEvidenceTargetId": "concept:food:ad79f40e3619cace4b35",
+      "usageCountAtReview": 3
+    },
+    {
+      "canonicalEnglishName": "Blinis",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Chinese pancake",
+      "fdcId": 2708343,
+      "notes": "Manual semantic review binds Cook4Me 'Blinis' to USDA FNDDS 'Chinese pancake' through an exact retained record in the same immutable evidence snapshot. Blinis and Chinese-style flour pancakes are small pan-cooked wheat-based pancake/flatbread products, making the pinned pancake profile a reasonable prepared-starch surrogate. Confidence remains medium because blinis may contain buckwheat, yeast, milk, egg, and different fat levels, while Chinese pancakes can use different dough and oil; this decision does not generalize to potato pancakes, sweet dessert pancakes, crêpes with fillings, or fried breads.",
+      "reviewTargetId": "concept:food:dd715696d13ed1198aad",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "8ff6fccedca766b87620ee6c658d520e990ff81517532327e19ff28a6943c37b",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceSha256": "7687d56b9dba4986b69fefc8183fd4edfa753f5cb9d802722c9417df40b46d0a",
+      "sourceEvidenceTargetId": "concept:food:a6105b3b07e0a13931cb",
+      "usageCountAtReview": 2
+    },
+    {
+      "canonicalEnglishName": "A- doubanjiang",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Miso sauce",
+      "fdcId": 2707438,
+      "notes": "Manual semantic review binds Cook4Me 'A- doubanjiang' to USDA FNDDS 'Miso sauce' through an exact retained record in the same immutable evidence snapshot. Doubanjiang/chili-bean paste is a salty fermented bean condiment, and miso sauce is the closest pinned savory fermented-bean sauce profile available. Confidence remains medium because doubanjiang typically uses broad beans, chili, oil, and substantially different salt and solids, while miso is primarily fermented soy/rice or barley; this decision does not generalize to sweet bean paste, plain chili sauce, soy sauce, or meat-based chili.",
+      "reviewTargetId": "concept:food:0ab9a590518012bbd397",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "3b10e9b2ecb97f43c053cee03a56623e13f2b75f475c62d2aec1b621e2853e4b",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "7687d56b9dba4986b69fefc8183fd4edfa753f5cb9d802722c9417df40b46d0a",
+      "sourceEvidenceTargetId": "concept:food:ad79f40e3619cace4b35",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Ajvar",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Red pepper, cooked, as ingredient",
+      "fdcId": 2710799,
+      "notes": "Manual semantic review binds Cook4Me 'Ajvar' to USDA FNDDS 'Red pepper, cooked, as ingredient' through an exact retained record in the same immutable evidence snapshot. Ajvar is primarily a cooked/roasted red-pepper relish, so cooked red pepper preserves the dominant vegetable identity and cooked state. Confidence remains medium because ajvar commonly contains oil, salt, vinegar, and sometimes eggplant, which can materially raise energy and sodium; this decision does not generalize to raw peppers, tomato sauce, hot chili paste, or pepper products with substantial added sugar.",
+      "reviewTargetId": "concept:food:b0c2bab0db26a32595b8",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "5384728030622e5709f68ffe1f94a2ad4fadb61fb0cd66dfa3ec600a72e15a7c",
+      "sourceEvidenceCandidateRank": 11,
+      "sourceEvidenceSha256": "7687d56b9dba4986b69fefc8183fd4edfa753f5cb9d802722c9417df40b46d0a",
+      "sourceEvidenceTargetId": "concept:food:dec2294958658bee4258",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "B- doubanjiang (for sauce)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Miso sauce",
+      "fdcId": 2707438,
+      "notes": "Manual semantic review binds Cook4Me 'B- doubanjiang (for sauce)' to USDA FNDDS 'Miso sauce' through an exact retained record in the same immutable evidence snapshot. Doubanjiang/chili-bean paste is a salty fermented bean condiment, and miso sauce is the closest pinned savory fermented-bean sauce profile available. Confidence remains medium because doubanjiang typically uses broad beans, chili, oil, and substantially different salt and solids, while miso is primarily fermented soy/rice or barley; this decision does not generalize to sweet bean paste, plain chili sauce, soy sauce, or meat-based chili.",
+      "reviewTargetId": "concept:food:4eda950874e37ece3529",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "3b10e9b2ecb97f43c053cee03a56623e13f2b75f475c62d2aec1b621e2853e4b",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "7687d56b9dba4986b69fefc8183fd4edfa753f5cb9d802722c9417df40b46d0a",
+      "sourceEvidenceTargetId": "concept:food:ad79f40e3619cace4b35",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Barberries",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Cranberries, dried",
+      "fdcId": 2709202,
+      "notes": "Manual semantic review binds Cook4Me 'Barberries' to USDA FNDDS 'Cranberries, dried' through an exact retained record in the same immutable evidence snapshot. Culinary barberries are commonly used as small tart dried red berries, and dried cranberries are the closest pinned dried tart-berry profile available. Confidence remains medium because commercial dried cranberries are often sweetened and barberries differ in acidity, sugar, seed, and fiber; this decision does not generalize to fresh barberries, currants, raisins, cranberry sauce, or sweetened fruit mixes.",
+      "reviewTargetId": "concept:food:0a23ffc86767dc828fa7",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "c9efec86cf3b38a46d3e134cea9632ded76d932830871a4cab9f2e0e3a5796af",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "7687d56b9dba4986b69fefc8183fd4edfa753f5cb9d802722c9417df40b46d0a",
+      "sourceEvidenceTargetId": "concept:food:449698cc6ad81307bed1",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Guanciale",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Pork, cured, breakfast strips, raw or unheated",
+      "fdcId": 168278,
+      "notes": "Manual semantic review binds Cook4Me 'Guanciale' to USDA SR Legacy 'Pork, cured, breakfast strips, raw or unheated' through an exact retained record in the same immutable evidence snapshot. Guanciale is an uncooked cured fatty pork product, so an unheated cured-pork-strip profile preserves the cured/raw state and high-fat pork identity. Confidence remains medium because guanciale is pork jowl rather than belly/breakfast strips and curing, fat ratio, and seasoning vary; this decision does not generalize to cooked bacon, fresh pork jowl, ham, pancetta dishes, or rendered pork fat.",
+      "reviewTargetId": "concept:food:1ea3fa8fa1bdeea76c64",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "4950dac1daa6e6c92f3a30533b233c9032e368c4e655cd1ea6a820cc8ed0495e",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceSha256": "7687d56b9dba4986b69fefc8183fd4edfa753f5cb9d802722c9417df40b46d0a",
+      "sourceEvidenceTargetId": "concept:food:ff1706d670ed5bee1ff5",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Job's tears",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Millet, whole grain",
+      "fdcId": 2512379,
+      "notes": "Manual semantic review binds Cook4Me \"Job's tears\" to USDA Foundation 'Millet, whole grain' through an exact retained record in the same immutable evidence snapshot. Job's tears (Coix) and millet are dry whole cereal grains used in similar grain/porridge applications, making whole-grain millet a reasonable pinned cereal proxy. Confidence remains medium because they are different cereal species with different protein, fat, fiber, and starch structure; this decision does not generalize to cooked porridge, barley, rice, flour, or puffed grain.",
+      "reviewTargetId": "concept:food:0764aa7a0d29e112d5d4",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "52012d7026a0edca5c95c2f650c64eadf069c9cd03aebf0b6087dabf76ea9230",
+      "sourceEvidenceCandidateRank": 10,
+      "sourceEvidenceSha256": "7687d56b9dba4986b69fefc8183fd4edfa753f5cb9d802722c9417df40b46d0a",
+      "sourceEvidenceTargetId": "concept:food:d1b42fb541e5179478e9",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Pandoro",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Cake, pound, commercially prepared, butter (includes fresh and frozen)",
+      "fdcId": 172704,
+      "notes": "Manual semantic review binds Cook4Me 'Pandoro' to USDA SR Legacy 'Cake, pound, commercially prepared, butter (includes fresh and frozen)' through an exact retained record in the same immutable evidence snapshot. Pandoro is a rich butter-and-egg sweet yeast cake without fruit, and butter pound cake is the closest pinned rich plain-cake nutrient profile available. Confidence remains medium because pandoro is yeast-leavened and more aerated, with different flour, butter, egg, sugar, and moisture ratios; this decision does not generalize to panettone, brioche, filled cake, or low-fat sponge cake.",
+      "reviewTargetId": "concept:food:42dc4361685e761613c9",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "09f02412fe6e191aa729452fd2a6b5a72cc2504d6d6408b46ea4b70524436de3",
+      "sourceEvidenceCandidateRank": 12,
+      "sourceEvidenceSha256": "7687d56b9dba4986b69fefc8183fd4edfa753f5cb9d802722c9417df40b46d0a",
+      "sourceEvidenceTargetId": "concept:food:d4a3617f043f67d3cf9c",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Panettone",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Cake, fruit cake",
+      "fdcId": 2707875,
+      "notes": "Manual semantic review binds Cook4Me 'Panettone' to USDA FNDDS 'Cake, fruit cake' through an exact retained record in the same immutable evidence snapshot. Panettone is a sweet enriched yeast bread containing dried or candied fruit, so fruit cake is the closest pinned fruit-rich sweet-baked profile available. Confidence remains medium because panettone is more bread-like and aerated and differs in butter, egg, sugar, fruit, and moisture; this decision does not generalize to plain brioche, pound cake, stollen, or fruit-free sweet bread.",
+      "reviewTargetId": "concept:food:d9313ce36bb5eabc1550",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "fecd578ceb9953602ad1c1a253a1f9f98b3c1774980be160c114ee976ca152f8",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceSha256": "7687d56b9dba4986b69fefc8183fd4edfa753f5cb9d802722c9417df40b46d0a",
+      "sourceEvidenceTargetId": "concept:food:6b15d50299436b925439",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Shio koji",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Miso sauce",
+      "fdcId": 2707438,
+      "notes": "Manual semantic review binds Cook4Me 'Shio koji' to USDA FNDDS 'Miso sauce' through an exact retained record in the same immutable evidence snapshot. Shio koji and miso sauce are salty fermented Japanese seasonings built from koji-driven fermentation, making miso sauce the closest pinned fermented-seasoning profile available. Confidence remains medium because shio koji is rice-koji-and-salt based and lacks miso's soybean solids, so protein, carbohydrate, and sodium can differ; this decision does not generalize to soy sauce, amazake, miso paste, or unfermented rice.",
+      "reviewTargetId": "concept:food:1454f2941781f9066b25",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "3b10e9b2ecb97f43c053cee03a56623e13f2b75f475c62d2aec1b621e2853e4b",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "7687d56b9dba4986b69fefc8183fd4edfa753f5cb9d802722c9417df40b46d0a",
+      "sourceEvidenceTargetId": "concept:food:ad79f40e3619cace4b35",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Speck",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Ham, sliced, regular (approximately 11% fat)",
+      "fdcId": 173864,
+      "notes": "Manual semantic review binds Cook4Me 'Speck' to USDA SR Legacy 'Ham, sliced, regular (approximately 11% fat)' through an exact retained record in the same immutable evidence snapshot. Speck is a sliced cured ham product, often lightly smoked, so regular sliced ham preserves the cured pork and serving form. Confidence remains medium because speck is typically drier, smokier, and may have a different fat and sodium concentration than standard ham; this decision does not generalize to bacon, fresh pork, prosciutto-style products with very different dryness, or cooked ham dishes.",
+      "reviewTargetId": "concept:food:99ddf3c9ad2e7349808c",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "e4b7a2924aa1ae1a553a07d6fc64bc7cceb898f8ed52d96f3abbded35eef7079",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceSha256": "7687d56b9dba4986b69fefc8183fd4edfa753f5cb9d802722c9417df40b46d0a",
+      "sourceEvidenceTargetId": "concept:food:27f058d564b413c2c9ae",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Bresaola",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Beef jerky",
+      "fdcId": 2705860,
+      "notes": "Manual semantic review binds Cook4Me provider identity 'Bresaola' to USDA FNDDS 'Beef jerky' through an exact retained record in the same immutable evidence snapshot. Bresaola and beef jerky are both preserved dried lean beef products, so beef jerky is the closest pinned dried-beef nutrient profile available. Confidence remains medium because bresaola is typically whole-muscle, air-dried, and less sweet or intensely seasoned than jerky, with different moisture and sodium; this decision does not generalize to corned beef, fresh beef, salami, or cooked beef dishes.",
+      "reviewTargetId": "M_FOOD_501",
+      "reviewTargetKind": "provider-identity",
+      "sourceCandidateSha256": "06d3326fed3c59db5b827a44a47958bace4e4fee9c9e85c35645f4ce8014bd52",
+      "sourceEvidenceCandidateRank": 9,
+      "sourceEvidenceSha256": "7687d56b9dba4986b69fefc8183fd4edfa753f5cb9d802722c9417df40b46d0a",
+      "sourceEvidenceTargetId": "M_FOOD_57",
+      "usageCountAtReview": 0
+    },
+    {
+      "canonicalEnglishName": "Chili bean paste",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Miso sauce",
+      "fdcId": 2707438,
+      "notes": "Manual semantic review binds Cook4Me 'Chili bean paste' to USDA FNDDS 'Miso sauce' through an exact retained record in the same immutable evidence snapshot. Doubanjiang/chili-bean paste is a salty fermented bean condiment, and miso sauce is the closest pinned savory fermented-bean sauce profile available. Confidence remains medium because doubanjiang typically uses broad beans, chili, oil, and substantially different salt and solids, while miso is primarily fermented soy/rice or barley; this decision does not generalize to sweet bean paste, plain chili sauce, soy sauce, or meat-based chili.",
+      "reviewTargetId": "M_FOOD_765",
+      "reviewTargetKind": "provider-identity",
+      "sourceCandidateSha256": "3b10e9b2ecb97f43c053cee03a56623e13f2b75f475c62d2aec1b621e2853e4b",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceSha256": "7687d56b9dba4986b69fefc8183fd4edfa753f5cb9d802722c9417df40b46d0a",
+      "sourceEvidenceTargetId": "concept:food:ad79f40e3619cace4b35",
+      "usageCountAtReview": 0
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "referenceReceipts": {
+    "168278": {
+      "sourceCandidateSha256": "4950dac1daa6e6c92f3a30533b233c9032e368c4e655cd1ea6a820cc8ed0495e",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "concept:food:ff1706d670ed5bee1ff5"
+    },
+    "172704": {
+      "sourceCandidateSha256": "09f02412fe6e191aa729452fd2a6b5a72cc2504d6d6408b46ea4b70524436de3",
+      "sourceEvidenceCandidateRank": 12,
+      "sourceEvidenceTargetId": "concept:food:d4a3617f043f67d3cf9c"
+    },
+    "173864": {
+      "sourceCandidateSha256": "e4b7a2924aa1ae1a553a07d6fc64bc7cceb898f8ed52d96f3abbded35eef7079",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "concept:food:27f058d564b413c2c9ae"
+    },
+    "2512379": {
+      "sourceCandidateSha256": "52012d7026a0edca5c95c2f650c64eadf069c9cd03aebf0b6087dabf76ea9230",
+      "sourceEvidenceCandidateRank": 10,
+      "sourceEvidenceTargetId": "concept:food:d1b42fb541e5179478e9"
+    },
+    "2705860": {
+      "sourceCandidateSha256": "06d3326fed3c59db5b827a44a47958bace4e4fee9c9e85c35645f4ce8014bd52",
+      "sourceEvidenceCandidateRank": 9,
+      "sourceEvidenceTargetId": "M_FOOD_57"
+    },
+    "2707438": {
+      "sourceCandidateSha256": "3b10e9b2ecb97f43c053cee03a56623e13f2b75f475c62d2aec1b621e2853e4b",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:ad79f40e3619cace4b35"
+    },
+    "2707442": {
+      "sourceCandidateSha256": "f4533d22cb530420c7af3f666f78cd02a97dfb702118e8f3605d0e3e9fbc2fcb",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "concept:food:ad79f40e3619cace4b35"
+    },
+    "2707875": {
+      "sourceCandidateSha256": "fecd578ceb9953602ad1c1a253a1f9f98b3c1774980be160c114ee976ca152f8",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:6b15d50299436b925439"
+    },
+    "2708343": {
+      "sourceCandidateSha256": "8ff6fccedca766b87620ee6c658d520e990ff81517532327e19ff28a6943c37b",
+      "sourceEvidenceCandidateRank": 6,
+      "sourceEvidenceTargetId": "concept:food:a6105b3b07e0a13931cb"
+    },
+    "2709202": {
+      "sourceCandidateSha256": "c9efec86cf3b38a46d3e134cea9632ded76d932830871a4cab9f2e0e3a5796af",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:449698cc6ad81307bed1"
+    },
+    "2710799": {
+      "sourceCandidateSha256": "5384728030622e5709f68ffe1f94a2ad4fadb61fb0cd66dfa3ec600a72e15a7c",
+      "sourceEvidenceCandidateRank": 11,
+      "sourceEvidenceTargetId": "concept:food:dec2294958658bee4258"
+    }
+  },
+  "reviewDecisionSha256": "b6e80dea5f3073daa26c257679dd2982e877f3f590b36dd2ee276db400121fc1",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "7687d56b9dba4986b69fefc8183fd4edfa753f5cb9d802722c9417df40b46d0a"
+}

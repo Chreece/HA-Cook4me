@@ -1,0 +1,29 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 4,
+      "canonicalEnglishName": "Taro stems",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Taro shoots, raw",
+      "fdcId": 168489,
+      "notes": "Manual semantic review binds Cook4Me 'Taro stems' to USDA SR Legacy 'Taro shoots, raw'. The destination identifies the edible taro stalk/stem portion, and the target's own immutable candidate evidence contains the USDA taro-shoot record at rank 4 with the same species, Colocasia esculenta. Confidence remains medium because culinary sources may use 'stems', 'stalks', 'petioles', and 'shoots' somewhat differently and preparation can affect water content; this decision does not generalize to taro root/corm, taro leaves, cooked taro shoots, or other colocasia preparations.",
+      "reviewTargetId": "concept:food:6934a59f299dcea82b23",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "2e1bbe419a1aea93025caab1d942094b3b8d4dabc4248c6556564340bc19282a"
+}

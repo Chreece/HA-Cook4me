@@ -1,0 +1,96 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "evidenceBindingScope": "retained-reference-record",
+  "items": [
+    {
+      "approved": true,
+      "canonicalEnglishName": "Cooking cream, 15% fat",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Cream, fluid, half and half",
+      "fdcId": 171255,
+      "notes": "Manual semantic review binds Cook4Me 'Cooking cream, 15% fat' to USDA SR Legacy 'Cream, fluid, half and half' through a retained exact evidence record. The destination explicitly identifies fluid cream at 15% fat, and half-and-half is a much closer cultured-free dairy-cream nutrient profile than sour cream, cream cheese, or heavy cream. Confidence remains medium because commercial European cooking cream can differ in milk-fat percentage, UHT processing, stabilizers, and milk/cream formulation from the USDA half-and-half reference; this decision applies only to labels that explicitly state 15% fat and does not generalize to vague low-fat cream, crème fraîche, sour cream, heavy cream, or plant-based cream.",
+      "reviewTargetId": "concept:food:66ce74e57cf60e83c4cb",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:b53156ebf99939cdc3af"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Liquid cooking cream (15% milk fat)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Cream, fluid, half and half",
+      "fdcId": 171255,
+      "notes": "Manual semantic review binds Cook4Me 'Liquid cooking cream (15% milk fat)' to USDA SR Legacy 'Cream, fluid, half and half' through a retained exact evidence record. The destination explicitly identifies fluid cream at 15% fat, and half-and-half is a much closer cultured-free dairy-cream nutrient profile than sour cream, cream cheese, or heavy cream. Confidence remains medium because commercial European cooking cream can differ in milk-fat percentage, UHT processing, stabilizers, and milk/cream formulation from the USDA half-and-half reference; this decision applies only to labels that explicitly state 15% fat and does not generalize to vague low-fat cream, crème fraîche, sour cream, heavy cream, or plant-based cream.",
+      "reviewTargetId": "concept:food:8dfaacc9bcc3a94452b2",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:b53156ebf99939cdc3af"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "15% fat cream",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Cream, fluid, half and half",
+      "fdcId": 171255,
+      "notes": "Manual semantic review binds Cook4Me '15% fat cream' to USDA SR Legacy 'Cream, fluid, half and half' through a retained exact evidence record. The destination explicitly identifies fluid cream at 15% fat, and half-and-half is a much closer cultured-free dairy-cream nutrient profile than sour cream, cream cheese, or heavy cream. Confidence remains medium because commercial European cooking cream can differ in milk-fat percentage, UHT processing, stabilizers, and milk/cream formulation from the USDA half-and-half reference; this decision applies only to labels that explicitly state 15% fat and does not generalize to vague low-fat cream, crème fraîche, sour cream, heavy cream, or plant-based cream.",
+      "reviewTargetId": "concept:food:9639dc3b6c5652bf7097",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:b53156ebf99939cdc3af"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Cream (15% fat)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Cream, fluid, half and half",
+      "fdcId": 171255,
+      "notes": "Manual semantic review binds Cook4Me 'Cream (15% fat)' to USDA SR Legacy 'Cream, fluid, half and half' through a retained exact evidence record. The destination explicitly identifies fluid cream at 15% fat, and half-and-half is a much closer cultured-free dairy-cream nutrient profile than sour cream, cream cheese, or heavy cream. Confidence remains medium because commercial European cooking cream can differ in milk-fat percentage, UHT processing, stabilizers, and milk/cream formulation from the USDA half-and-half reference; this decision applies only to labels that explicitly state 15% fat and does not generalize to vague low-fat cream, crème fraîche, sour cream, heavy cream, or plant-based cream.",
+      "reviewTargetId": "concept:food:fefba76f0bfe7eddaec2",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:b53156ebf99939cdc3af"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Liquid cream (15% fat)",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Cream, fluid, half and half",
+      "fdcId": 171255,
+      "notes": "Manual semantic review binds Cook4Me 'Liquid cream (15% fat)' to USDA SR Legacy 'Cream, fluid, half and half' through a retained exact evidence record. The destination explicitly identifies fluid cream at 15% fat, and half-and-half is a much closer cultured-free dairy-cream nutrient profile than sour cream, cream cheese, or heavy cream. Confidence remains medium because commercial European cooking cream can differ in milk-fat percentage, UHT processing, stabilizers, and milk/cream formulation from the USDA half-and-half reference; this decision applies only to labels that explicitly state 15% fat and does not generalize to vague low-fat cream, crème fraîche, sour cream, heavy cream, or plant-based cream.",
+      "reviewTargetId": "concept:food:898aade5ebfd850df68a",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:b53156ebf99939cdc3af"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Liquid cream, 15% fat",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Cream, fluid, half and half",
+      "fdcId": 171255,
+      "notes": "Manual semantic review binds Cook4Me 'Liquid cream, 15% fat' to USDA SR Legacy 'Cream, fluid, half and half' through a retained exact evidence record. The destination explicitly identifies fluid cream at 15% fat, and half-and-half is a much closer cultured-free dairy-cream nutrient profile than sour cream, cream cheese, or heavy cream. Confidence remains medium because commercial European cooking cream can differ in milk-fat percentage, UHT processing, stabilizers, and milk/cream formulation from the USDA half-and-half reference; this decision applies only to labels that explicitly state 15% fat and does not generalize to vague low-fat cream, crème fraîche, sour cream, heavy cream, or plant-based cream.",
+      "reviewTargetId": "concept:food:ae13aafa469462de7c1e",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:b53156ebf99939cdc3af"
+    }
+  ],
+  "kind": "cook4me-fdc-retained-reference-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "43024899807c670a8c1f7fe19e3491506ea43a8e2810833ce0c3fdf0028b0680"
+}

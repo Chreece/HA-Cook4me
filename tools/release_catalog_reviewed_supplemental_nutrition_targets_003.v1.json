@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-supplemental-nutrition-source-v60",
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "policy": {
+    "manualSemanticReviewPerformed": true,
+    "automaticSelectionPerformed": false,
+    "searchResultAutoAccepted": false,
+    "networkRequestsPerformedAtRuntime": false,
+    "exactReviewTargetRequired": true,
+    "exactMemberIdentityRequired": true,
+    "officialFoodCompositionSourceRequired": true,
+    "sourceValuesPinnedInRepository": true
+  },
+  "items": [
+    {
+      "reviewTargetId": "concept:food:98efb0bf0c3ac9050886",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Pumpkin purée",
+      "memberIngredientIds": [
+        "local:cs:03e975bfd3b98aabf7d2",
+        "local:de:5cc1e02e4c53cb1d3946"
+      ],
+      "confidence": "medium",
+      "replacesHeldNutritionBinding": true,
+      "source": "official_food_table",
+      "sourceAuthority": "ANSES (Agence nationale de sécurité sanitaire de l’alimentation, de l’environnement et du travail)",
+      "sourceDataset": "Ciqual French food composition table 2025",
+      "sourceRecordId": "20096",
+      "sourceId": "FR-CIQUAL:20096",
+      "dataType": "Ciqual 2025",
+      "sourceUrl": "https://doi.org/10.5281/zenodo.17550133",
+      "sourceRetrievedDate": "2026-09-19",
+      "sourceFoodName": "Potiron, cuit",
+      "basis": "per100g",
+      "values": {
+        "energyKcal": 26.1,
+        "energyKJ": 110.0,
+        "protein": 0.81,
+        "carbohydrates": 4.47,
+        "sugars": 3.1,
+        "fat": 0.07,
+        "fiber": 2.0,
+        "sodium": 0.005,
+        "salt": 0.0125
+      },
+      "sourceEvidenceSha256": "7a3678130e093dad9b48d9e0b2aa30ff21db830e45b8e87c7947240ff5fba03d",
+      "notes": "Explicit manual re-review replaces only the held raw-pumpkin proxy for this exact Pumpkin purée concept. ANSES/Ciqual food code 20096 is cooked pumpkin (Potiron, cuit), which fixes the held preparation-state mismatch. Pureeing is treated only as mechanical processing of the cooked pumpkin; no cream, butter, salt or other ingredient is inferred. Confidence is medium because water loss can vary with preparation."
+    }
+  ]
+}

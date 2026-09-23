@@ -18,6 +18,9 @@ from .price_units import price_ingredient
 from .price_measurements import price_options
 from .price_snapshot import snapshot_observations, category_observation_allowed
 from .price_identity import pricing_name, is_cost_heading, reviewed_recipe_ingredient
+from .price_market import (normalize_price_market, market_ready, price_lookup_ingredient,
+                           market_observations, local_observation_result, local_cost_store,
+                           annotate_market_cost)
 
 # Exact English catalog names only. Prepared/mixed foods are never collapsed into
 # a raw ingredient by fuzzy matching. Category matches remain estimates.
@@ -769,7 +772,7 @@ async def _observations(bridge, *, barcode='', category='', category_type='CATEG
         bridge._price_query_lock = asyncio.Lock()
         bridge._price_slots = asyncio.Semaphore(3)
     basis = next((candidate for candidate in ('g', 'ml', 'pcs') if unit and convert_amount(1, unit, candidate) is not None), unit)
-    key = (barcode, category, category_type, settings['country'], settings['currency'], basis)
+    key = (barcode, category, category_type, settings['country'], settings['currency'], settings.get('supermarketLanguage', ''), basis)
     async with bridge._price_query_lock:
         cached = bridge._price_queries.get(key)
         if cached and (not cached[1].done() or (cached[0] > time.monotonic() and
@@ -817,10 +820,16 @@ async def _store_observation(store, identity, row, *, generic=False):
 
 
 async def product_price(bridge, *, barcode='', ingredient=None, quantity=None, unit='', settings=None, refresh_since=None):
-    settings = settings or await price_settings(bridge)
+    settings = normalize_price_market(settings or await price_settings(bridge))
+    lookup_ingredient = await bridge.hass.async_add_executor_job(
+        partial(price_lookup_ingredient, ingredient, settings))
+    if not market_ready(settings):
+        return {'settings': settings, 'reference': None, 'matchKind': 'ingredient',
+                'estimate': None, 'lookupFailed': False, 'status': 'choose_country',
+                'lookupIngredient': lookup_ingredient['priceLookup']}
     store = await cost_store_for_bridge(bridge)
     country, currency = settings['country'], settings['currency']
-    identity = inventory_identity(ingredient) if ingredient else ''
+    identity = lookup_ingredient['priceLookupIdentity']
     reference = store.barcode_reference(barcode, country=country, currency=currency, unit=unit) if barcode else None
     kind = 'barcode'
     fallback = store.best_reference(identity, country=country, currency=currency, unit=unit) if identity else None
@@ -832,7 +841,9 @@ async def product_price(bridge, *, barcode='', ingredient=None, quantity=None, u
     if (settings.get('autoGlobalPrices') or refresh_since is not None) and country and currency and compatible_unit:
         async def lookup(**kwargs):
             nonlocal reason, lookup_failed
-            data = await _observations(bridge, settings=settings, refresh_since=refresh_since, unit=unit, **kwargs)
+            data = await market_observations(bridge, fetch=_observations,
+                ingredient=lookup_ingredient, settings=settings,
+                refresh_since=refresh_since, unit=unit, **kwargs)
             if not data.get('ok'):
                 reason = 'source_unavailable'
                 lookup_failed = True
@@ -850,7 +861,7 @@ async def product_price(bridge, *, barcode='', ingredient=None, quantity=None, u
                 await _store_observation(store, 'barcode:' + barcode, row)
                 reference = store.barcode_reference(barcode, country=country, currency=currency, unit=unit)
         if reference is None and (refresh_since is not None or not _fresh(fallback)):
-            category = category_for(ingredient)
+            category = category_for(lookup_ingredient)
             if category:
                 row = await lookup(category=category[0], category_type=category[1], prefer_snapshot=fallback is None)
                 if row is None and not lookup_failed:
@@ -872,6 +883,7 @@ async def product_price(bridge, *, barcode='', ingredient=None, quantity=None, u
         reference, kind = fallback, 'ingredient'
     amount = _cost_for_amount(reference, quantity, unit) if reference else None
     return {'settings': settings, 'reference': reference, 'matchKind': kind,
+            'lookupIngredient': deepcopy(lookup_ingredient['priceLookup']),
             'estimate': round(amount, 2) if amount is not None else None, 'lookupFailed': lookup_failed,
             'status': 'priced' if amount is not None else 'basis_missing' if reference else reason}
 
@@ -967,7 +979,7 @@ async def recipe_price(bridge, recipe, catalog, *, refresh_since=None):
                 if result.get('reference') and result.get('matchKind') == 'barcode':
                     await _store_observation(store, identity, result['reference'])
                 return result
-            key = (identity, code, unit, settings['country'], settings['currency'])
+            key = (identity, code, unit, settings['country'], settings['currency'], settings.get('supermarketLanguage', ''))
             task = bridge._price_hydrations.get(key)
             if task is None or task.done():
                 if len(bridge._price_hydrations) >= 500:
@@ -999,7 +1011,8 @@ async def recipe_price(bridge, recipe, catalog, *, refresh_since=None):
     for task in pending:
         lookup_status[identities[task]] = 'lookup_pending'
     cache = await recipe_cost_cache_for_bridge(bridge)
-    cost = await cache.async_cost(recipe, inventory, store, country=settings['country'], currency=settings['currency'], force=refresh_since is not None)
+    scoped_store = await bridge.hass.async_add_executor_job(partial(local_cost_store, store, settings))
+    cost = await cache.async_cost(recipe, inventory, scoped_store, country=settings['country'], currency=settings['currency'], force=refresh_since is not None)
     for row in cost.get('ingredients', []):
         if row.get('coverage', 0) < 1:
             row['priceStatus'] = ('unmeasured_basic_zero' if row.get('zeroCostAllowance') else 'recipe_amount_unknown' if row.get('reason') == 'recipe_amount_unknown'
@@ -1010,16 +1023,16 @@ async def recipe_price(bridge, recipe, catalog, *, refresh_since=None):
                 refreshPolicy={'observationsSeconds': 86400, 'missSeconds': 3600, 'failureSeconds': 60,
                                'onDemand': True, 'maximumObservationDays': 180})
     _mark_food_coverage(cost, recipe)
-    return cost
+    return await bridge.hass.async_add_executor_job(
+        partial(annotate_market_cost, cost, recipe, settings))
 
 
 def offline_price_inputs(recipe, catalog, saved, settings, *, catalog_lookup=None):
     """Share local price evidence between recipe cards and synchronous filters."""
-    from copy import copy
-    store = copy(saved)
-    store._data = deepcopy(saved._data)
+    settings = normalize_price_market(settings)
+    store = local_cost_store(saved, settings)
     recipe = canonical_recipe(recipe, catalog, lookup=catalog_lookup)
-    if settings.get('autoGlobalPrices'):
+    if settings.get('autoGlobalPrices') and market_ready(settings):
         for item in recipe.get('ingredients', []):
             category = category_for(item)
             if not category:
@@ -1030,6 +1043,7 @@ def offline_price_inputs(recipe, catalog, saved, settings, *, catalog_lookup=Non
                     continue
                 rows = snapshot_observations(category=category[0], country=settings['country'],
                     currency=settings['currency'], unit=option['unit'])
+                rows = local_observation_result({'ok': True, 'items': rows}, settings)['items']
                 if rows:
                     row = max(rows, key=lambda row: row.get('date', ''))
                     store._data['references']['preview:' + identity + ':' + option['unit']] = {
@@ -1052,7 +1066,8 @@ async def offline_recipe_price(bridge, recipe, catalog):
     cost.update(settings=settings, offlinePreview=True, priceLookupPending=False,
                 checkedAt=datetime.now(timezone.utc).isoformat())
     _mark_food_coverage(cost, recipe)
-    return cost
+    return await bridge.hass.async_add_executor_job(
+        partial(annotate_market_cost, cost, recipe, settings))
 
 
 def _mark_food_coverage(cost, recipe):

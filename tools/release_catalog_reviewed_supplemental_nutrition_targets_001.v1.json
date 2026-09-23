@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-supplemental-nutrition-source-v60",
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "policy": {
+    "manualSemanticReviewPerformed": true,
+    "automaticSelectionPerformed": false,
+    "searchResultAutoAccepted": false,
+    "networkRequestsPerformedAtRuntime": false,
+    "exactReviewTargetRequired": true,
+    "exactMemberIdentityRequired": true,
+    "officialFoodCompositionSourceRequired": true,
+    "sourceValuesPinnedInRepository": true
+  },
+  "items": [
+    {
+      "reviewTargetId": "concept:food:6e7ef7c7e15c50a5372e",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Psyllium husks",
+      "memberIngredientIds": [
+        "local:pl:689d81de9b8a8d52f1cb"
+      ],
+      "confidence": "high",
+      "source": "official_food_table",
+      "sourceAuthority": "Norwegian Food Safety Authority (Mattilsynet)",
+      "sourceDataset": "Norwegian Food Composition Table (Matvaretabellen)",
+      "sourceRecordId": "05.465",
+      "sourceId": "NO:05.465",
+      "dataType": "Norwegian Food Composition Table",
+      "sourceUrl": "https://www.matvaretabellen.no/en/psyllium-husk/",
+      "sourceRetrievedDate": "2026-09-19",
+      "scientificName": "Plantago ovata",
+      "basis": "per100g",
+      "values": {
+        "energyKcal": 206.0,
+        "energyKJ": 834.0,
+        "protein": 1.2,
+        "carbohydrates": 10.0,
+        "sugars": 0.0,
+        "fat": 0.5,
+        "saturatedFat": 0.0,
+        "fiber": 78.0,
+        "sodium": 0.074,
+        "salt": 0.185
+      },
+      "sourceEvidenceSha256": "69791271e4def6ee6c29dbcb8839785acfe932e105893fcbbe7da8b479289509",
+      "notes": "Manual semantic review binds the exact Cook4Me Psyllium husks concept to the official Matvaretabellen Psyllium husk record (Food ID 05.465, scientific name Plantago ovata). Values are per 100 g. Salt is retained at the exact sodium-derived value 0.185 g from 74 mg sodium using the table's stated 2.5 conversion; the source UI rounds this to 0.2 g."
+    }
+  ]
+}

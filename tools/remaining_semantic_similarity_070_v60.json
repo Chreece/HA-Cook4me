@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-remaining-semantic-high-similarity-review-v60",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "automaticApproval": false,
+    "manualSemanticReviewRequired": true,
+    "providerIdentityAssigned": false,
+    "sourceLocalIdentityPreserved": true
+  },
+  "criteria": {
+    "minimumTokenJaccard": 0.7,
+    "minimumBestVsRunnerUpGap": 0.15,
+    "ambiguousClassificationsExcluded": true,
+    "exactLooseLaneExcluded": true
+  },
+  "summary": {
+    "candidateCount": 0
+  },
+  "items": []
+}

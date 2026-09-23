@@ -1,0 +1,2999 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-standalone-semantic-high-priority-review-v60",
+  "policy": {
+    "automaticApproval": false,
+    "candidateSearchIsIdentityProof": false,
+    "manualSemanticReviewRequired": true,
+    "providerIdentityAssigned": false
+  },
+  "summary": {
+    "highConfidenceTargetCandidates": 91,
+    "standalonePairCandidates": 37
+  },
+  "highConfidenceTargets": [
+    {
+      "sourceIngredientId": "local:uk:c7d92d38fa801150537e",
+      "language": "uk",
+      "source": "г моркви, очищеної та нарізаної шматочками",
+      "english": "g carrots, peeled and cut into pieces",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_063.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:1649b293e82d8aebf818",
+        "targetCanonicalEnglish": "Carrots, peeled and cut into pieces",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_011.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.8571,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.9714,
+          "sharedTokenCount": 6
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:b3ebb64732a1c6e75d65",
+      "language": "uk",
+      "source": "червоних перця нарізати маленькими кубиками",
+      "english": "Red peppers, cut into small cubes",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_097.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:42de87e654fa45908caf",
+        "targetCanonicalEnglish": "Red bell peppers cut into small cubes",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_036.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.8571,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.9275,
+          "sharedTokenCount": 6
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:2af4e404564192e8e527",
+      "language": "uk",
+      "source": "часнику, очищені, дрібно нарізані без зародка",
+      "english": "Garlic, peeled, germ removed and finely chopped",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_097.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:01a28fb3a1cee0faf3b0",
+        "targetCanonicalEnglish": "Garlic, peeled, germ removed and chopped",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_004.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.8571,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.9157,
+          "sharedTokenCount": 6
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:es:0092edc969971e31c05a",
+      "language": "es",
+      "source": "Moldes de 14 cl de aluminio de silicona",
+      "english": "140 ml aluminium or silicone ramekins",
+      "classification": "equipment",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_036.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:equipment:8f5f7808633967071a67",
+        "targetCanonicalEnglish": "Aluminium-coated or silicone ramekins (140 ml)",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_065.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.8571,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7407,
+          "sharedTokenCount": 6
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:es:0092edc969971e31c05a",
+      "language": "es",
+      "source": "Moldes de 14 cl de aluminio de silicona",
+      "english": "140 ml aluminium or silicone ramekins",
+      "classification": "equipment",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_036.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:equipment:a1c2c5e6255563655b2f",
+        "targetCanonicalEnglish": "140 ml lined aluminium ramekins (or silicone)",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_036.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.8571,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7,
+          "sharedTokenCount": 6
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:hu:56575b01c768b48f0fee",
+      "language": "hu",
+      "source": "Darált sertésszelet (vagy szalonnakocka)",
+      "english": "Chopped pork slice (or diced bacon)",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_084.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:e2b02f054f22d3b6684e",
+        "targetCanonicalEnglish": "Pork slice, finely chopped (or diced bacon)",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_085.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.8571,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.6849,
+          "sharedTokenCount": 6
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:sk:445e5aca7cbdcdfeb252",
+      "language": "sk",
+      "source": "Bravčová rolka, nasekaná (alebo slanina na špikovanie)",
+      "english": "Pork roll, chopped (or larding bacon)",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_091.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:a7e0011a9490d0f1ee97",
+        "targetCanonicalEnglish": "Pork, chopped (or larding bacon)",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_091.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.8333,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.9206,
+          "sharedTokenCount": 5
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:hu:56575b01c768b48f0fee",
+      "language": "hu",
+      "source": "Darált sertésszelet (vagy szalonnakocka)",
+      "english": "Chopped pork slice (or diced bacon)",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_084.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:3c59cc300b6bd2936c55",
+        "targetCanonicalEnglish": "Chopped pork slice (or bacon)",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_079.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.8333,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.9,
+          "sharedTokenCount": 5
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:ro:84c40996b17c62040229",
+      "language": "ro",
+      "source": "Mușchi de porc, tocat (sau bacon)",
+      "english": "Pork loin, chopped (or bacon)",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_015.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:33ce6e5c36aafb50555d",
+        "targetCanonicalEnglish": "Pork loin, chopped (or diced bacon)",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_033.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.8333,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8966,
+          "sharedTokenCount": 5
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:hu:56575b01c768b48f0fee",
+      "language": "hu",
+      "source": "Darált sertésszelet (vagy szalonnakocka)",
+      "english": "Chopped pork slice (or diced bacon)",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_084.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:7956e4deb0d66743808a",
+        "targetCanonicalEnglish": "Pork slice, chopped (or bacon)",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_079.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.8333,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.6333,
+          "sharedTokenCount": 5
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:zh:cf424326ef0d422a570d",
+      "language": "zh",
+      "source": "法式高湯(顆粒)",
+      "english": "French-style stock granules",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_001.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:ce56715e3c36fd05b37c",
+        "targetCanonicalEnglish": "C- French-style stock granules",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_068.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.8,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.9643,
+          "sharedTokenCount": 4
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:zh:cf424326ef0d422a570d",
+      "language": "zh",
+      "source": "法式高湯(顆粒)",
+      "english": "French-style stock granules",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_001.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:0a03f3d876d5a3d2ec0c",
+        "targetCanonicalEnglish": "B- French-style stock granules",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_068.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.8,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.9643,
+          "sharedTokenCount": 4
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:bg:2aeac48d217e21b3851a",
+      "language": "bg",
+      "source": "ист лазаня, сготвена „ал денте“",
+      "english": "Lasagna sheet, cooked al dente",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_024.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:5233a509c9267b4286ca",
+        "targetCanonicalEnglish": "Lasagna cooked al dente",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_037.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.8,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8846,
+          "sharedTokenCount": 4
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:bg:2aeac48d217e21b3851a",
+      "language": "bg",
+      "source": "ист лазаня, сготвена „ал денте“",
+      "english": "Lasagna sheet, cooked al dente",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_024.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:31936a23789babed1f59",
+        "targetCanonicalEnglish": "Lasagna, cooked al dente",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_080.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.8,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8846,
+          "sharedTokenCount": 4
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:bg:e35ac76229b5c78378c4",
+      "language": "bg",
+      "source": "Филизи нарязан кориандър",
+      "english": "Sprigs of chopped coriander",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_028.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:474736156e14c2d92bac",
+        "targetCanonicalEnglish": "Chopped sprigs of fresh coriander",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_075.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.8,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7,
+          "sharedTokenCount": 4
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:83279e38f188ddead90d",
+      "language": "uk",
+      "source": "червоних перцю, очищених та нарізаних соломкою",
+      "english": "Red peppers, cleaned and cut into strips",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_097.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:6c279fc56f9d553886e7",
+        "targetCanonicalEnglish": "Red pepper, cleaned and cut into strips",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_067.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.75,
+          "tokenContainment": 0.8571,
+          "sequenceRatio": 0.987,
+          "sharedTokenCount": 6
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:2038766537601c8147e5",
+      "language": "uk",
+      "source": "/3 стручка ванілі, очищеного та розрізаного по довжині",
+      "english": "One-third vanilla pod, scraped and split lengthwise",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_016.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:9ac8b615de49ac5e4849",
+        "targetCanonicalEnglish": "Vanilla pod, scraped and split lengthwise",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_077.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.75,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8889,
+          "sharedTokenCount": 6
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:3a60f41add0d76e4b750",
+      "language": "uk",
+      "source": "фаршу із стейка білої риби",
+      "english": "Minced white-fish steak",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:898785471246aeebc641",
+        "targetCanonicalEnglish": "Minced white fish",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.75,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.85,
+          "sharedTokenCount": 3
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:e77be72c3a96cb5f20c5",
+      "language": "uk",
+      "source": "фаршу зі стейка білої риби",
+      "english": "Minced white-fish steak",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:898785471246aeebc641",
+        "targetCanonicalEnglish": "Minced white fish",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.75,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.85,
+          "sharedTokenCount": 3
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:ar:450dcb93f99ec3c9d868",
+      "language": "ar",
+      "source": "ملح وفلفل حلو",
+      "english": "Salt and sweet pepper",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_022.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:4e23a96597a28cf77cf5",
+        "targetCanonicalEnglish": "Salt and pepper",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.75,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8333,
+          "sharedTokenCount": 3
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:ko:aa3c73bdcee31bbc5fd8",
+      "language": "ko",
+      "source": "진간장 (쯔유)",
+      "english": "Dark soy sauce (tsuyu)",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_050.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:ecd43074be82c091def2",
+        "targetCanonicalEnglish": "Dark soy sauce",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_049.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.75,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8235,
+          "sharedTokenCount": 3
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:zh:e6619b1fbe0471126133",
+      "language": "zh",
+      "source": "中濃醬料",
+      "english": "Medium-thick sauce",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_097.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:78f12ab3bec23eb3d649",
+        "targetCanonicalEnglish": "Japanese medium-thick sauce",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_013.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.75,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8,
+          "sharedTokenCount": 3
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:zh:cf424326ef0d422a570d",
+      "language": "zh",
+      "source": "法式高湯(顆粒)",
+      "english": "French-style stock granules",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_001.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:19bc35b2a4094db25019",
+        "targetCanonicalEnglish": "French-style stock",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_069.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.75,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8,
+          "sharedTokenCount": 3
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:sk:dbf2def148e13391a2f3",
+      "language": "sk",
+      "source": "Jednoliata smotana na šľahanie",
+      "english": "Full-fat whipping cream",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_091.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:6309c668f68dbb3c6523",
+        "targetCanonicalEnglish": "Full-fat cream",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_004.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.75,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7568,
+          "sharedTokenCount": 3
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:es:0092edc969971e31c05a",
+      "language": "es",
+      "source": "Moldes de 14 cl de aluminio de silicona",
+      "english": "140 ml aluminium or silicone ramekins",
+      "classification": "equipment",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_036.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:equipment:42ccaf98bd1e6dd5e67d",
+        "targetCanonicalEnglish": "140 ml aluminum or silicone ramekins",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_008.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.7143,
+          "tokenContainment": 0.8333,
+          "sequenceRatio": 0.9863,
+          "sharedTokenCount": 5
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:d0ebe6eff41d91e4d4e9",
+      "language": "uk",
+      "source": "цибуля-шалот, очищена та нарізана на шматочками",
+      "english": "Shallot, peeled and cut into pieces",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:51e6307236b5f08983e5",
+        "targetCanonicalEnglish": "Shallots, peeled and cut into pieces",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_053.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.7143,
+          "tokenContainment": 0.8333,
+          "sequenceRatio": 0.9855,
+          "sharedTokenCount": 5
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:b3ebb64732a1c6e75d65",
+      "language": "uk",
+      "source": "червоних перця нарізати маленькими кубиками",
+      "english": "Red peppers, cut into small cubes",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_097.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:6e27a056c3b5829bc212",
+        "targetCanonicalEnglish": "Red pepper, cut into small cubes",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_060.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.7143,
+          "tokenContainment": 0.8333,
+          "sequenceRatio": 0.9841,
+          "sharedTokenCount": 5
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:48a4ea445a06b175f7b9",
+      "language": "uk",
+      "source": "стакан петрушки, митої та подрібненої",
+      "english": "Cup of parsley, washed and chopped",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:0bcbbd9b7a8cd71730b2",
+        "targetCanonicalEnglish": "Bunch of parsley, washed and chopped",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_095.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.7143,
+          "tokenContainment": 0.8333,
+          "sequenceRatio": 0.9118,
+          "sharedTokenCount": 5
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:ja:0785d2bb74f1da5d96e0",
+      "language": "ja",
+      "source": "白ごま(仕上げ用 少々",
+      "english": "White sesame seeds, a little for finishing",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_048.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:b5b5d62f9cb8c4cf45f2",
+        "targetCanonicalEnglish": "White sesame seeds (for finishing)",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_002.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.7143,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8767,
+          "sharedTokenCount": 5
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:2af4e404564192e8e527",
+      "language": "uk",
+      "source": "часнику, очищені, дрібно нарізані без зародка",
+      "english": "Garlic, peeled, germ removed and finely chopped",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_097.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:f822065946fc9a8ddacd",
+        "targetCanonicalEnglish": "Garlic, peeled and finely chopped",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_061.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.7143,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8312,
+          "sharedTokenCount": 5
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:2af4e404564192e8e527",
+      "language": "uk",
+      "source": "часнику, очищені, дрібно нарізані без зародка",
+      "english": "Garlic, peeled, germ removed and finely chopped",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_097.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:20a4afcd29d26d543237",
+        "targetCanonicalEnglish": "Garlic, germ removed and chopped",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_029.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.7143,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8158,
+          "sharedTokenCount": 5
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:ad5fb5360aa52a253341",
+      "language": "uk",
+      "source": "Сир фромаж із сіллю та перцем",
+      "english": "Cheese with salt and pepper",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_066.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:e5876a9155fce9da52e7",
+        "targetCanonicalEnglish": "Fresh cheese, season with salt and pepper",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_031.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.7143,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.806,
+          "sharedTokenCount": 5
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:a8fc807bc1827c19bb37",
+      "language": "uk",
+      "source": "овочевого бульйону (або соленої вода)",
+      "english": "Vegetable stock (or salted water; source grammar)",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_095.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:df0e7bb61897b9c51e7b",
+        "targetCanonicalEnglish": "Vegetable stock (or salted water)",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_021.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.7143,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8052,
+          "sharedTokenCount": 5
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:ja:0785d2bb74f1da5d96e0",
+      "language": "ja",
+      "source": "白ごま(仕上げ用 少々",
+      "english": "White sesame seeds, a little for finishing",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_048.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:595861576e7e621a9078",
+        "targetCanonicalEnglish": "White sesame seeds, a little",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_045.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.7143,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7941,
+          "sharedTokenCount": 5
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:ad5fb5360aa52a253341",
+      "language": "uk",
+      "source": "Сир фромаж із сіллю та перцем",
+      "english": "Cheese with salt and pepper",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_066.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:127521a845bcae9bf2d8",
+        "targetCanonicalEnglish": "Fresh cheese, seasoned with salt and pepper",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_055.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.7143,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7826,
+          "sharedTokenCount": 5
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:cs:acb0746b0095de5830cd",
+      "language": "cs",
+      "source": "Tbspmirin",
+      "english": "tbsp mirin",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_079.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:336707fa4bda9578d0fb",
+        "targetCanonicalEnglish": "2 tbsp mirin",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_086.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.9091,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:ro:84c40996b17c62040229",
+      "language": "ro",
+      "source": "Mușchi de porc, tocat (sau bacon)",
+      "english": "Pork loin, chopped (or bacon)",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_015.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:7956e4deb0d66743808a",
+        "targetCanonicalEnglish": "Pork slice, chopped (or bacon)",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_079.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 0.8,
+          "sequenceRatio": 0.9057,
+          "sharedTokenCount": 4
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:48a4ea445a06b175f7b9",
+      "language": "uk",
+      "source": "стакан петрушки, митої та подрібненої",
+      "english": "Cup of parsley, washed and chopped",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:4417f9f4f541baedb0b9",
+        "targetCanonicalEnglish": "Parsley, washed and chopped",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_011.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8814,
+          "sharedTokenCount": 4
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:8f9320d8c48803b58d31",
+      "language": "uk",
+      "source": "склянки петрушки, митої та подрібненої",
+      "english": "Cups of parsley, washed and chopped",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_095.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:4417f9f4f541baedb0b9",
+        "targetCanonicalEnglish": "Parsley, washed and chopped",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_011.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8667,
+          "sharedTokenCount": 4
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:4df5618584087f9f7fae",
+      "language": "uk",
+      "source": "ст.л. часникових сухариків",
+      "english": "tbsp garlic croutons",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_077.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:a67eb6fc2fdef7eebd5c",
+        "targetCanonicalEnglish": "Garlic croutons",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_057.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8571,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:bg:4c922567309d6fff84cc",
+      "language": "bg",
+      "source": "Череши хрущялки, без костилка",
+      "english": "Pitted firm cherries",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_029.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:5d1d7e8c2497d8f75bf1",
+        "targetCanonicalEnglish": "Pitted cherries",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_063.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8571,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:zh:cf424326ef0d422a570d",
+      "language": "zh",
+      "source": "法式高湯(顆粒)",
+      "english": "French-style stock granules",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_001.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:6351904fd416831bf38d",
+        "targetCanonicalEnglish": "French-style stock granules (for sauce)",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_069.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8438,
+          "sharedTokenCount": 4
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:bg:a64ddea939d52ec90dcf",
+      "language": "bg",
+      "source": "Тесто на листа",
+      "english": "Pastry sheets",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_078.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:ae953b05f07bd5f69e70",
+        "targetCanonicalEnglish": "Brik pastry sheets",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_078.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8387,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:691b24083e852f426206",
+      "language": "uk",
+      "source": "Яловичина м'якуш",
+      "english": "Boneless beef",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_067.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:81d0f737ed72b6bc7f47",
+        "targetCanonicalEnglish": "Boneless beef shin",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_089.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8387,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:bg:a64ddea939d52ec90dcf",
+      "language": "bg",
+      "source": "Тесто на листа",
+      "english": "Pastry sheets",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_078.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:3e705d9a5e746cf4124e",
+        "targetCanonicalEnglish": "Filo pastry sheets",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_081.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8387,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:bg:8ebf1ae78272feac861b",
+      "language": "bg",
+      "source": "Рибен сос нем",
+      "english": "Nem fish sauce",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_027.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:683599e4a1211db6912e",
+        "targetCanonicalEnglish": "Fish sauce",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_capture3_ar_001.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8333,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:zh:cf424326ef0d422a570d",
+      "language": "zh",
+      "source": "法式高湯(顆粒)",
+      "english": "French-style stock granules",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_001.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:686ba42b1b18e4c99862",
+        "targetCanonicalEnglish": "A- French-style stock granules, a little",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_067.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8308,
+          "sharedTokenCount": 4
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:zh:44946e151d4637f0f4dd",
+      "language": "zh",
+      "source": "的 糯米粉",
+      "english": "Glutinous rice flour",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_069.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:b1b4060098c26bf0492e",
+        "targetCanonicalEnglish": "Glutinous rice",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_capture3_ja_001.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8235,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:it:caf6674809e7bdfc020e",
+      "language": "it",
+      "source": "Fagiolini cannellini ammollati",
+      "english": "Soaked cannellini beans",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_041.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:66f7fd1e2d1c5177dd5a",
+        "targetCanonicalEnglish": "Cannellini beans",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_041.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8205,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:zh:7470a47970e08a4633fe",
+      "language": "zh",
+      "source": "白醬塊",
+      "english": "White sauce roux",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_069.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:3e7c934264d3f8cb2e68",
+        "targetCanonicalEnglish": "White sauce",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_035.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8148,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:bg:a64ddea939d52ec90dcf",
+      "language": "bg",
+      "source": "Тесто на листа",
+      "english": "Pastry sheets",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_078.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:1f6ac10cc8e1d02501ee",
+        "targetCanonicalEnglish": "Brick pastry sheets",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_070.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8125,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:es:0092edc969971e31c05a",
+      "language": "es",
+      "source": "Moldes de 14 cl de aluminio de silicona",
+      "english": "140 ml aluminium or silicone ramekins",
+      "classification": "equipment",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_036.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:equipment:7e705a66936d438475ec",
+        "targetCanonicalEnglish": "140 ml aluminium ramekins",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_036.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8065,
+          "sharedTokenCount": 4
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:hu:d1fa61fdf80bec28dff5",
+      "language": "hu",
+      "source": "Darált cookies keksz",
+      "english": "Crushed cookies biscuits",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_084.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:ffbca094cb2181c53c04",
+        "targetCanonicalEnglish": "Crushed biscuits",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_058.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:cs:3995087d31eafca86f83",
+      "language": "cs",
+      "source": "Lučina",
+      "english": "Lučina cream cheese",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_070.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:469954a040cfa41ed60c",
+        "targetCanonicalEnglish": "Cream cheese",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_capture3_hu_001.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7742,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:de:5f2be7421ddb4fb7b038",
+      "language": "de",
+      "source": "Gekochte Gartenbohnen",
+      "english": "Cooked garden beans",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_031.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:29391f74d526ba7e288f",
+        "targetCanonicalEnglish": "Cooked beans",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_056.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7742,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:hu:d1fa61fdf80bec28dff5",
+      "language": "hu",
+      "source": "Darált cookies keksz",
+      "english": "Crushed cookies biscuits",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_084.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:ad92e4f61597343d6d15",
+        "targetCanonicalEnglish": "Crushed cookies",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_029.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7692,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:ar:46809986e8c740406c1f",
+      "language": "ar",
+      "source": "فلفل أحمر طازج",
+      "english": "Fresh red pepper",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_007.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:0a9ce5c6fefca346626a",
+        "targetCanonicalEnglish": "Red pepper",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_capture3_sk_001.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7692,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:ar:39b68a422befb06da715",
+      "language": "ar",
+      "source": "مرق دجاج مغلي",
+      "english": "Boiling chicken stock",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_001.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:8f17515fcc465d1546db",
+        "targetCanonicalEnglish": "Chicken stock",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7647,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:ar:39b68a422befb06da715",
+      "language": "ar",
+      "source": "مرق دجاج مغلي",
+      "english": "Boiling chicken stock",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_001.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:72c30000417e070c4a86",
+        "targetCanonicalEnglish": "*Chicken stock",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_078.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7647,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:tr:9fd7fb82f2720e485376",
+      "language": "tr",
+      "source": "Yıkanmış ve irice doğranmış dolmalık kabak",
+      "english": "Stuffing zucchini, washed and roughly chopped",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_062.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:73ece8b0c7bc4af38db1",
+        "targetCanonicalEnglish": "Zucchini, washed and chopped",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_053.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7606,
+          "sharedTokenCount": 4
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:c016ebc5c3db2d871a00",
+      "language": "uk",
+      "source": "Одинарні збиті вершки",
+      "english": "Single cream, whipped",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_016.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:a4c0df801fc401f9324a",
+        "targetCanonicalEnglish": "Single cream",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_002.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.75,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:hu:1b051bb01511d21fa89c",
+      "language": "hu",
+      "source": "Főtt paprikás bab",
+      "english": "Cooked paprika beans",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_038.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:29391f74d526ba7e288f",
+        "targetCanonicalEnglish": "Cooked beans",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_056.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.75,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:pt:a1e33127e90155a1d44c",
+      "language": "pt",
+      "source": "Pimenta em pó (opcional)",
+      "english": "Ground pepper (optional)",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_055.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:426bbdb4814fda1bcdc5",
+        "targetCanonicalEnglish": "Ground pepper",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_094.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7429,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:tr:0e827c69f65a71f7527e",
+      "language": "tr",
+      "source": "Kırmızı toz biber",
+      "english": "Red pepper powder",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_060.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:0a9ce5c6fefca346626a",
+        "targetCanonicalEnglish": "Red pepper",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_capture3_sk_001.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7407,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:pt:870739bd8ec9fcd0d20c",
+      "language": "pt",
+      "source": "Pimentão",
+      "english": "Bell pepper / paprika",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_055.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:519994937921b119421c",
+        "targetCanonicalEnglish": "Bell pepper",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_capture3_it_001.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7333,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:2e96a028fd71b72a991b",
+      "language": "uk",
+      "source": "Духмяний чорний перець",
+      "english": "Fragrant black pepper",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_063.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:2bb94bf140aca984429c",
+        "targetCanonicalEnglish": "Black pepper",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_capture3_sk_001.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6667,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7273,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:c7d92d38fa801150537e",
+      "language": "uk",
+      "source": "г моркви, очищеної та нарізаної шматочками",
+      "english": "g carrots, peeled and cut into pieces",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_063.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:99dedf5b7e9c15969055",
+        "targetCanonicalEnglish": "Carrot, peeled and cut into pieces",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_070.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.625,
+          "tokenContainment": 0.8333,
+          "sequenceRatio": 0.9565,
+          "sharedTokenCount": 5
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:2af4e404564192e8e527",
+      "language": "uk",
+      "source": "часнику, очищені, дрібно нарізані без зародка",
+      "english": "Garlic, peeled, germ removed and finely chopped",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_097.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:4e922cdf4af90d0141f4",
+        "targetCanonicalEnglish": "Garlic, peeled, degermed and finely chopped",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_067.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.625,
+          "tokenContainment": 0.8333,
+          "sequenceRatio": 0.907,
+          "sharedTokenCount": 5
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:8750f1a1300154d816b6",
+      "language": "uk",
+      "source": "г свинячої лопатки, нарізаної шматочками приблизно по 100 гр",
+      "english": "Pork shoulder, cut into approximately 100 g pieces (quantity unit fragment at start)",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_075.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:967d7977cf800ddbf482",
+        "targetCanonicalEnglish": "Pork shoulder, cut into approximately 100 g pieces",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_095.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6154,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7538,
+          "sharedTokenCount": 8
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:8fa86212f5e90b67d710",
+      "language": "uk",
+      "source": "жовтий персик (або білий або нектарини), очищений та розділений на чверті",
+      "english": "Yellow peach (or white peach or nectarine), peeled and quartered",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_093.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:969a780a1432d4babbc1",
+        "targetCanonicalEnglish": "Yellow peaches (or white peaches or nectarines), peeled and quartered",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_076.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6,
+          "tokenContainment": 0.75,
+          "sequenceRatio": 0.9606,
+          "sharedTokenCount": 6
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:bg:40415a59285d0e24e4be",
+      "language": "bg",
+      "source": "Нар (сушени червени боровинки)",
+      "english": "Pomegranate (dried cranberries)",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_025.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:785e63a97fe5ccbef157",
+        "targetCanonicalEnglish": "Pomegranate seeds (or dried cranberries)",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_044.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8657,
+          "sharedTokenCount": 3
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:bg:b1b1dcc4b7801a3f728d",
+      "language": "bg",
+      "source": "Филиз ситно нарязан кориандър",
+      "english": "Sprig of finely chopped coriander",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_028.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:c9dcf92e197c846086b9",
+        "targetCanonicalEnglish": "Finely chopped coriander",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_053.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8421,
+          "sharedTokenCount": 3
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:ro:84c40996b17c62040229",
+      "language": "ro",
+      "source": "Mușchi de porc, tocat (sau bacon)",
+      "english": "Pork loin, chopped (or bacon)",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_015.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:4ff1fdf3de25929c07d9",
+        "targetCanonicalEnglish": "Pork loin, chopped",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_033.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7907,
+          "sharedTokenCount": 3
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:1d37dfec227185bf750d",
+      "language": "uk",
+      "source": "Свиняча корейка, нарізана кубиками (або сало)",
+      "english": "Pork loin, diced (or lard)",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_016.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:7d1888b57da945d4c1a0",
+        "targetCanonicalEnglish": "Pork loin, diced",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_027.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7895,
+          "sharedTokenCount": 3
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:zh:44946e151d4637f0f4dd",
+      "language": "zh",
+      "source": "的 糯米粉",
+      "english": "Glutinous rice flour",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_069.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:a9146e159e2485b7acc3",
+        "targetCanonicalEnglish": "B- shiratamako glutinous rice flour",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_072.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.6,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7407,
+          "sharedTokenCount": 3
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:zh:56be54f756a3162a619b",
+      "language": "zh",
+      "source": "烘焙紙(鋪在起司下",
+      "english": "Baking paper (placed under cheese)",
+      "classification": "equipment",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_069.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:equipment:f9991a9d3062f2fe99bd",
+        "targetCanonicalEnglish": "Baking paper (to place under cheese)",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_046.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.5714,
+          "tokenContainment": 0.8,
+          "sequenceRatio": 0.9394,
+          "sharedTokenCount": 4
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:7358702309de1e8de760",
+      "language": "uk",
+      "source": "/2 пучка свіжого коріандру, вимити та дрібно нарізати",
+      "english": "Bunch of fresh coriander, washed and finely chopped (quantity fragment: /2)",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_092.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:33048616d2334e537752",
+        "targetCanonicalEnglish": "Fresh coriander, washed and finely chopped",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_077.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.5455,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7387,
+          "sharedTokenCount": 6
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:bg:40415a59285d0e24e4be",
+      "language": "bg",
+      "source": "Нар (сушени червени боровинки)",
+      "english": "Pomegranate (dried cranberries)",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_025.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:bbdf630ca49c8d524313",
+        "targetCanonicalEnglish": "Tbsp pomegranate seeds (or dried cranberries)",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_066.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.5,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.8056,
+          "sharedTokenCount": 3
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:97fa9495baa5deadd6fa",
+      "language": "uk",
+      "source": "/2 подрібненої цибулі",
+      "english": "Half a chopped onion",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_016.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:9c767aade0cf2f6a3d24",
+        "targetCanonicalEnglish": "Chopped onion",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.5,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7879,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:bg:e35ac76229b5c78378c4",
+      "language": "bg",
+      "source": "Филизи нарязан кориандър",
+      "english": "Sprigs of chopped coriander",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_028.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:121af8c0670c1ae6a6a9",
+        "targetCanonicalEnglish": "Chopped coriander",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.5,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7727,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:uk:691b24083e852f426206",
+      "language": "uk",
+      "source": "Яловичина м'якуш",
+      "english": "Boneless beef",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_067.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:3fadcbe9dad6e81d89e6",
+        "targetCanonicalEnglish": "Boneless beef or lamb",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_021.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.5,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7647,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:sk:dbf2def148e13391a2f3",
+      "language": "sk",
+      "source": "Jednoliata smotana na šľahanie",
+      "english": "Full-fat whipping cream",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_091.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:0991f6b2ed715c2e351d",
+        "targetCanonicalEnglish": "Whipping cream",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_capture3_cs_001.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.5,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7568,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:tr:21b4df24058fa27225b1",
+      "language": "tr",
+      "source": "Rosto baharatı",
+      "english": "Roast seasoning",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_061.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:be470a178b94452b3296",
+        "targetCanonicalEnglish": "Maggi Pot Roast seasoning",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_038.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.5,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.75,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:it:012a3de9491de2c8ce81",
+      "language": "it",
+      "source": "Frutta secca",
+      "english": "Dried fruit or nuts",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_041.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:a96654ba78fe565dcbea",
+        "targetCanonicalEnglish": "Dried fruit",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_capture3_bg_001.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.5,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7333,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:it:6992179a2dfd63b171fd",
+      "language": "it",
+      "source": "Sottaceto grandi a fette",
+      "english": "Large pickles, sliced",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_044.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:c66f1940a94b0fb6fcca",
+        "targetCanonicalEnglish": "Large sweet-and-sour pickles, sliced",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_056.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.5,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7273,
+          "sharedTokenCount": 3
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:pl:62877ab92cd47dea74fd",
+      "language": "pl",
+      "source": "Szt. ziela angielskiego",
+      "english": "Allspice berries (piece count)",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_089.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:d639012a952eb30f2bb9",
+        "targetCanonicalEnglish": "Allspice berries",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_003.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.5,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7273,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:ar:450dcb93f99ec3c9d868",
+      "language": "ar",
+      "source": "ملح وفلفل حلو",
+      "english": "Salt and sweet pepper",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_022.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:88bf845a6acb618e67c6",
+        "targetCanonicalEnglish": "Sweet pepper",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_066.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.5,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7273,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:ar:eb1b2989b320bd5aa371",
+      "language": "ar",
+      "source": "المنغ (منقوع)",
+      "english": "Mung beans (soaked)",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_017.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:8f914a460552b9864f64",
+        "targetCanonicalEnglish": "Mung beans, soaked for 12 hours",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_032.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.5,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7234,
+          "sharedTokenCount": 3
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:de:f2f7ef130feb3bd1c50d",
+      "language": "de",
+      "source": "Soßenkuchen, fein gewürfelt",
+      "english": "Sauce gingerbread, finely diced",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_033.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:c0e9ca92e53ebbabf772",
+        "targetCanonicalEnglish": "Gingerbread, diced",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_023.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.5,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.7234,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:hr:95950d417feba35bed30",
+      "language": "hr",
+      "source": "Kristalizirani limun",
+      "english": "Crystallized lemon",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_082.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:a8d71f803ef266b94ab5",
+        "targetCanonicalEnglish": "Crystallized lemon, thinly sliced",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_024.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.5,
+          "tokenContainment": 1.0,
+          "sequenceRatio": 0.72,
+          "sharedTokenCount": 2
+        }
+      }
+    },
+    {
+      "sourceIngredientId": "local:hu:2476400dbb90b4779d48",
+      "language": "hu",
+      "source": "Garnicsokrok",
+      "english": "Bouquets garni",
+      "classification": "food",
+      "confidence": "medium",
+      "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_084.v1.json",
+      "disposition": "reviewed-source-local-standalone",
+      "candidateTarget": {
+        "targetType": "high-confidence-concept",
+        "targetConceptId": "concept:food:9a0077198ff432aa97b1",
+        "targetCanonicalEnglish": "Bouquet garni",
+        "targetReviewFile": "release_catalog_reviewed_keyless_ingredients_capture3_bg_001.v1.json",
+        "metrics": {
+          "exactLooseText": false,
+          "tokenJaccard": 0.3333,
+          "tokenContainment": 0.5,
+          "sequenceRatio": 0.963,
+          "sharedTokenCount": 1
+        }
+      }
+    }
+  ],
+  "standalonePairs": [
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:uk:76d0925b398675b6462d",
+        "language": "uk",
+        "source": "ст.л. базиліка, вимитого та нарізаного",
+        "english": "Tablespoon(s) of basil, washed and chopped (quantity incomplete)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_095.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:uk:bd0be7ceb5405b31d723",
+        "language": "uk",
+        "source": "ст.л базиліка, вимитого та нарізаного",
+        "english": "Tablespoon(s) of basil, washed and chopped (quantity incomplete)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_095.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": true,
+        "tokenJaccard": 1.0,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 1.0,
+        "sharedTokenCount": 9
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:uk:51d6eaad1377d7f63928",
+        "language": "uk",
+        "source": "круглі великі помідори, томат, без серцевини під фарширування (м'якоть зберегти)",
+        "english": "Large round tomatoes, cored for stuffing (reserve the flesh)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_094.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:uk:89b33e19eede66d56814",
+        "language": "uk",
+        "source": "круглих великих помідора без серцевини під фарширування, томатів (м'якоть зберегти)",
+        "english": "Large round tomatoes, cored for stuffing (reserve the flesh)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_094.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": true,
+        "tokenJaccard": 1.0,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 1.0,
+        "sharedTokenCount": 9
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:uk:2953f840d8254566bed3",
+        "language": "uk",
+        "source": "ч.л. порошку карі",
+        "english": "Teaspoon of curry powder (quantity count omitted)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:uk:9826f344b1653bf39679",
+        "language": "uk",
+        "source": "ч.л. порошку каррі",
+        "english": "Teaspoon of curry powder (quantity count omitted)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": true,
+        "tokenJaccard": 1.0,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 1.0,
+        "sharedTokenCount": 7
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:uk:3a60f41add0d76e4b750",
+        "language": "uk",
+        "source": "фаршу із стейка білої риби",
+        "english": "Minced white-fish steak",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:uk:e77be72c3a96cb5f20c5",
+        "language": "uk",
+        "source": "фаршу зі стейка білої риби",
+        "english": "Minced white-fish steak",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": true,
+        "tokenJaccard": 1.0,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 1.0,
+        "sharedTokenCount": 4
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:ro:0d41be0705b8359b9868",
+        "language": "ro",
+        "source": "Borș",
+        "english": "Borș souring liquid",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_090.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:ro:189c10638e8a7d44037c",
+        "language": "ro",
+        "source": "de borş",
+        "english": "Borș souring liquid",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_090.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": true,
+        "tokenJaccard": 1.0,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 1.0,
+        "sharedTokenCount": 3
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:cs:3ba34edde3dfcb231f53",
+        "language": "cs",
+        "source": "Plnotučná hořčice",
+        "english": "Full-fat mustard",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_014.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:sk:298f6132870ab12cbbe1",
+        "language": "sk",
+        "source": "Plnotučná horčica",
+        "english": "Full-fat mustard",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_016.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": true,
+        "tokenJaccard": 1.0,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 1.0,
+        "sharedTokenCount": 3
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:cs:8458fb91ef71ff7fc1c1",
+        "language": "cs",
+        "source": "Francouzské pěnové knedlíčky",
+        "english": "French quenelles",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_070.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:sk:c0e9a71d9ce7e16fd20b",
+        "language": "sk",
+        "source": "Francúzske penové knedličky",
+        "english": "French quenelles",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_075.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": true,
+        "tokenJaccard": 1.0,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 1.0,
+        "sharedTokenCount": 2
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:cs:530b2df02321cfee5427",
+        "language": "cs",
+        "source": "Omáčka Nems",
+        "english": "Nem sauce",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_030.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:sk:d28406d36f4dc41d4562",
+        "language": "sk",
+        "source": "Nems szósz",
+        "english": "Nem sauce",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_057.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": true,
+        "tokenJaccard": 1.0,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 1.0,
+        "sharedTokenCount": 2
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:zh:ba67d7ea43050822ef30",
+        "language": "zh",
+        "source": "酒 少許",
+        "english": "Wine, a little",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_069.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:zh:dc6d1a6f069d72ddad39",
+        "language": "zh",
+        "source": "A-酒 少許",
+        "english": "A- wine, a little",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_068.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 1.0,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.9286,
+        "sharedTokenCount": 3
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:uk:37af35ccce43b7044807",
+        "language": "uk",
+        "source": "/2 ст.л. зелені коріандру, вимитого та подрібненого",
+        "english": "Coriander greens, washed and chopped (quantity fragment: /2 tbsp)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_092.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:uk:89826d25571f2d56e901",
+        "language": "uk",
+        "source": "/2 ст.л. коріандру, вимитого та порізаного",
+        "english": "Coriander, washed and chopped (quantity fragment: /2 tbsp)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_092.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.8889,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.9381,
+        "sharedTokenCount": 8
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:cs:7df0975cb3557279b7cd",
+        "language": "cs",
+        "source": "Francouzské pěnové knedlíčky od 40 do 50 gr",
+        "english": "French quenelles, 40–50 g",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_079.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:sk:e39d11d4894094361f03",
+        "language": "sk",
+        "source": "Francúzske penové knedličky od 40 do 50 gr",
+        "english": "French quenelles, 40–50 g each",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_091.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.8333,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.9057,
+        "sharedTokenCount": 5
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:uk:0732f97da52e6ec4e078",
+        "language": "uk",
+        "source": "ст.л. свіжої петрушки, вимитої та нарізаною",
+        "english": "Tablespoon of fresh parsley, washed and chopped (quantity count omitted; source grammar)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:uk:3a54c3b6158ad1e7b926",
+        "language": "uk",
+        "source": "ст.л. свіжої петрушки, вимитої та нарізаної",
+        "english": "Tablespoon of fresh parsley, washed and chopped (quantity count omitted)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.8333,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.902,
+        "sharedTokenCount": 10
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:sk:25d5099d4d6b7b680270",
+        "language": "sk",
+        "source": "Bravčová rolka, nasekaná (alebo slanina)",
+        "english": "Pork roll, chopped (or bacon)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_091.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:sk:445e5aca7cbdcdfeb252",
+        "language": "sk",
+        "source": "Bravčová rolka, nasekaná (alebo slanina na špikovanie)",
+        "english": "Pork roll, chopped (or larding bacon)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_091.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.8333,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.8667,
+        "sharedTokenCount": 5
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:uk:3a54c3b6158ad1e7b926",
+        "language": "uk",
+        "source": "ст.л. свіжої петрушки, вимитої та нарізаної",
+        "english": "Tablespoon of fresh parsley, washed and chopped (quantity count omitted)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:uk:d76853b4303c725f0e39",
+        "language": "uk",
+        "source": "ст.л. свіжого кориандру, вимитого та подрібненого",
+        "english": "Tablespoon of fresh coriander, washed and chopped (quantity count omitted)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.8182,
+        "tokenContainment": 0.9,
+        "sequenceRatio": 0.9143,
+        "sharedTokenCount": 9
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:it:012a3de9491de2c8ce81",
+        "language": "it",
+        "source": "Frutta secca",
+        "english": "Dried fruit or nuts",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_041.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:it:9aafb483851594e02d1b",
+        "language": "it",
+        "source": "Misto di frutta secca",
+        "english": "Mixed dried fruit or nuts",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_042.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.8,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.8636,
+        "sharedTokenCount": 4
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:uk:d76853b4303c725f0e39",
+        "language": "uk",
+        "source": "ст.л. свіжого кориандру, вимитого та подрібненого",
+        "english": "Tablespoon of fresh coriander, washed and chopped (quantity count omitted)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:uk:e16f977d2d55dc9f060f",
+        "language": "uk",
+        "source": "ст.л. свежего кориандра, вымытого та измельченного",
+        "english": "Tablespoon of fresh coriander, washed and chopped (quantity count omitted; mixed-language source)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.7692,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.8659,
+        "sharedTokenCount": 10
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:uk:5803a00c73bb88155919",
+        "language": "uk",
+        "source": "ч.л. порошку чилі",
+        "english": "Teaspoon of chili powder (quantity count omitted)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:uk:9826f344b1653bf39679",
+        "language": "uk",
+        "source": "ч.л. порошку каррі",
+        "english": "Teaspoon of curry powder (quantity count omitted)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.75,
+        "tokenContainment": 0.8571,
+        "sequenceRatio": 0.9149,
+        "sharedTokenCount": 6
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:uk:2953f840d8254566bed3",
+        "language": "uk",
+        "source": "ч.л. порошку карі",
+        "english": "Teaspoon of curry powder (quantity count omitted)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:uk:5803a00c73bb88155919",
+        "language": "uk",
+        "source": "ч.л. порошку чилі",
+        "english": "Teaspoon of chili powder (quantity count omitted)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.75,
+        "tokenContainment": 0.8571,
+        "sequenceRatio": 0.9149,
+        "sharedTokenCount": 6
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:uk:5803a00c73bb88155919",
+        "language": "uk",
+        "source": "ч.л. порошку чилі",
+        "english": "Teaspoon of chili powder (quantity count omitted)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:uk:cfd3d4ae62bfa7ea4118",
+        "language": "uk",
+        "source": "ч.л. розпушувача тіста",
+        "english": "Teaspoon of baking powder (quantity count omitted)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.75,
+        "tokenContainment": 0.8571,
+        "sequenceRatio": 0.9053,
+        "sharedTokenCount": 6
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:tr:0e827c69f65a71f7527e",
+        "language": "tr",
+        "source": "Kırmızı toz biber",
+        "english": "Red pepper powder",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_060.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:tr:6a34d2c278b5087d96a5",
+        "language": "tr",
+        "source": "Tatlı kırmızı toz biber",
+        "english": "Sweet red pepper powder",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_062.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.75,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.85,
+        "sharedTokenCount": 3
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:pl:67acf23faa729a5952d4",
+        "language": "pl",
+        "source": "Z połowy cytryny",
+        "english": "From half a lemon",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_090.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:uk:dcc8266cdaf0930a8d48",
+        "language": "uk",
+        "source": "/2 лимона",
+        "english": "Half a lemon",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_016.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.75,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.8276,
+        "sharedTokenCount": 3
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:pt:63a5669e622252490159",
+        "language": "pt",
+        "source": "Pimentão doce",
+        "english": "Sweet bell pepper / sweet paprika",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_055.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:pt:870739bd8ec9fcd0d20c",
+        "language": "pt",
+        "source": "Pimentão",
+        "english": "Bell pepper / paprika",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_055.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.75,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.76,
+        "sharedTokenCount": 3
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:uk:48a4ea445a06b175f7b9",
+        "language": "uk",
+        "source": "стакан петрушки, митої та подрібненої",
+        "english": "Cup of parsley, washed and chopped",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:uk:8f9320d8c48803b58d31",
+        "language": "uk",
+        "source": "склянки петрушки, митої та подрібненої",
+        "english": "Cups of parsley, washed and chopped",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_095.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.7143,
+        "tokenContainment": 0.8333,
+        "sequenceRatio": 0.9851,
+        "sharedTokenCount": 5
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:bg:8fc2e4cb620fbcec779c",
+        "language": "bg",
+        "source": "Златен боб, киснат 12 ч",
+        "english": "Golden beans, soaked for 12 hours",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_024.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:de:6c840348865533032cbd",
+        "language": "de",
+        "source": "Gartenbohnen (12 Stunden eingeweicht)",
+        "english": "Garden beans (soaked for 12 hours)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_031.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.7143,
+        "tokenContainment": 0.8333,
+        "sequenceRatio": 0.9375,
+        "sharedTokenCount": 5
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:uk:83279e38f188ddead90d",
+        "language": "uk",
+        "source": "червоних перцю, очищених та нарізаних соломкою",
+        "english": "Red peppers, cleaned and cut into strips",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_097.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:uk:c7bb8550c7e51dabaca8",
+        "language": "uk",
+        "source": "/2 червоних перцю, очищених та нарізаних соломкою",
+        "english": "Red peppers, cleaned and cut into strips (quantity fragment: /2)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_093.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.7,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.7959,
+        "sharedTokenCount": 7
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:pl:97cca73b29d2ad4d82a8",
+        "language": "pl",
+        "source": "Czubrycy czerwonej",
+        "english": "Red chubritsa seasoning",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_087.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:pl:b031baea4de0f003164b",
+        "language": "pl",
+        "source": "Czubrycy",
+        "english": "Chubritsa seasoning",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_087.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.6667,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.9048,
+        "sharedTokenCount": 2
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:uk:3c01d6862bcbee36cdc3",
+        "language": "uk",
+        "source": "ст.л. анісової настоянки",
+        "english": "tbsp anise liqueur",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_077.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:uk:a4793fd664513e218d6b",
+        "language": "uk",
+        "source": "Анісова настоянка",
+        "english": "Anise liqueur",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_093.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.6667,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.8387,
+        "sharedTokenCount": 2
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:tr:130363d9dbd325c1b8d3",
+        "language": "tr",
+        "source": "Tuz, tatlı toz biber",
+        "english": "Salt and sweet red pepper powder",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_062.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:tr:6a34d2c278b5087d96a5",
+        "language": "tr",
+        "source": "Tatlı kırmızı toz biber",
+        "english": "Sweet red pepper powder",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_062.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.6667,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.8364,
+        "sharedTokenCount": 4
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:ar:450dcb93f99ec3c9d868",
+        "language": "ar",
+        "source": "ملح وفلفل حلو",
+        "english": "Salt and sweet pepper",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_022.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:tr:130363d9dbd325c1b8d3",
+        "language": "tr",
+        "source": "Tuz, tatlı toz biber",
+        "english": "Salt and sweet red pepper powder",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_062.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.6667,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.7925,
+        "sharedTokenCount": 4
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:bg:8ebf1ae78272feac861b",
+        "language": "bg",
+        "source": "Рибен сос нем",
+        "english": "Nem fish sauce",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_027.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:cs:530b2df02321cfee5427",
+        "language": "cs",
+        "source": "Omáčka Nems",
+        "english": "Nem sauce",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_030.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.6667,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.7826,
+        "sharedTokenCount": 2
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:bg:8ebf1ae78272feac861b",
+        "language": "bg",
+        "source": "Рибен сос нем",
+        "english": "Nem fish sauce",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_027.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:sk:d28406d36f4dc41d4562",
+        "language": "sk",
+        "source": "Nems szósz",
+        "english": "Nem sauce",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_057.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.6667,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.7826,
+        "sharedTokenCount": 2
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:uk:1b30d8c2a1f8e317b6ea",
+        "language": "uk",
+        "source": "ст.л. рибного соусу до м'ясам",
+        "english": "Tablespoon of fish sauce for the meat (quantity count omitted; malformed source)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:uk:9c6dad61c60b81843b77",
+        "language": "uk",
+        "source": "ст.л. рибний соус",
+        "english": "Tablespoon of fish sauce (quantity count omitted)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.5833,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.7581,
+        "sharedTokenCount": 7
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:uk:4c8a16200287b7b5c2d6",
+        "language": "uk",
+        "source": "ст.л. рибного соуса до м'яса",
+        "english": "Tablespoon of fish sauce for the meat (quantity count omitted; mixed source grammar)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:uk:9c6dad61c60b81843b77",
+        "language": "uk",
+        "source": "ст.л. рибний соус",
+        "english": "Tablespoon of fish sauce (quantity count omitted)",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_096.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.5385,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.7344,
+        "sharedTokenCount": 7
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:cs:7df0975cb3557279b7cd",
+        "language": "cs",
+        "source": "Francouzské pěnové knedlíčky od 40 do 50 gr",
+        "english": "French quenelles, 40–50 g",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_079.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:cs:8458fb91ef71ff7fc1c1",
+        "language": "cs",
+        "source": "Francouzské pěnové knedlíčky",
+        "english": "French quenelles",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_070.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.4,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.8,
+        "sharedTokenCount": 2
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:cs:7df0975cb3557279b7cd",
+        "language": "cs",
+        "source": "Francouzské pěnové knedlíčky od 40 do 50 gr",
+        "english": "French quenelles, 40–50 g",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_079.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:sk:c0e9a71d9ce7e16fd20b",
+        "language": "sk",
+        "source": "Francúzske penové knedličky",
+        "english": "French quenelles",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_075.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.4,
+        "tokenContainment": 1.0,
+        "sequenceRatio": 0.8,
+        "sharedTokenCount": 2
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:hu:3e566431544bdd01d940",
+        "language": "hu",
+        "source": "Nems szósz",
+        "english": "Nems sauce",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_038.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:sk:d28406d36f4dc41d4562",
+        "language": "sk",
+        "source": "Nems szósz",
+        "english": "Nem sauce",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_057.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.3333,
+        "tokenContainment": 0.5,
+        "sequenceRatio": 0.9474,
+        "sharedTokenCount": 1
+      }
+    },
+    {
+      "classification": "food",
+      "left": {
+        "sourceIngredientId": "local:cs:530b2df02321cfee5427",
+        "language": "cs",
+        "source": "Omáčka Nems",
+        "english": "Nem sauce",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_030.v1.json"
+      },
+      "right": {
+        "sourceIngredientId": "local:hu:3e566431544bdd01d940",
+        "language": "hu",
+        "source": "Nems szósz",
+        "english": "Nems sauce",
+        "reviewFile": "release_catalog_reviewed_keyless_ingredients_phase3_038.v1.json"
+      },
+      "metrics": {
+        "exactLooseText": false,
+        "tokenJaccard": 0.3333,
+        "tokenContainment": 0.5,
+        "sequenceRatio": 0.9474,
+        "sharedTokenCount": 1
+      }
+    }
+  ]
+}

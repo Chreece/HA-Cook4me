@@ -1,0 +1,96 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "evidenceBindingScope": "retained-reference-record",
+  "items": [
+    {
+      "approved": true,
+      "canonicalEnglishName": "Fleur de sel, freshly ground pepper",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Salt, table",
+      "fdcId": 173468,
+      "notes": "Manual semantic review binds Cook4Me 'Fleur de sel, freshly ground pepper' to USDA SR Legacy 'Salt, table' through a retained exact evidence record. The destination is a salt-and-pepper seasoning label: fleur de sel, crystal/coarse salt, or coarse pepper-salt wording changes presentation or salt style but keeps salt as an explicit component. The reviewed corpus already binds the generic salt-and-pepper family to this exact FDC record. Confidence remains medium because the pepper component, blend ratio, and specialty-salt mineral differences are not represented by the table-salt profile.",
+      "reviewTargetId": "concept:food:647a23122c5ccf6ade2e",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 11,
+      "sourceEvidenceTargetId": "concept:food:271755d091ef8905c217"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Fleur de sel and freshly ground pepper",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Salt, table",
+      "fdcId": 173468,
+      "notes": "Manual semantic review binds Cook4Me 'Fleur de sel and freshly ground pepper' to USDA SR Legacy 'Salt, table' through a retained exact evidence record. The destination is a salt-and-pepper seasoning label: fleur de sel, crystal/coarse salt, or coarse pepper-salt wording changes presentation or salt style but keeps salt as an explicit component. The reviewed corpus already binds the generic salt-and-pepper family to this exact FDC record. Confidence remains medium because the pepper component, blend ratio, and specialty-salt mineral differences are not represented by the table-salt profile.",
+      "reviewTargetId": "concept:food:e4bc5728c3cfcfeed4dd",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 11,
+      "sourceEvidenceTargetId": "concept:food:271755d091ef8905c217"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Fleur de sel and pepper",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Salt, table",
+      "fdcId": 173468,
+      "notes": "Manual semantic review binds Cook4Me 'Fleur de sel and pepper' to USDA SR Legacy 'Salt, table' through a retained exact evidence record. The destination is a salt-and-pepper seasoning label: fleur de sel, crystal/coarse salt, or coarse pepper-salt wording changes presentation or salt style but keeps salt as an explicit component. The reviewed corpus already binds the generic salt-and-pepper family to this exact FDC record. Confidence remains medium because the pepper component, blend ratio, and specialty-salt mineral differences are not represented by the table-salt profile.",
+      "reviewTargetId": "concept:food:8b6812dcfebf07135c89",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 11,
+      "sourceEvidenceTargetId": "concept:food:271755d091ef8905c217"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Crystal salt and freshly ground pepper",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Salt, table",
+      "fdcId": 173468,
+      "notes": "Manual semantic review binds Cook4Me 'Crystal salt and freshly ground pepper' to USDA SR Legacy 'Salt, table' through a retained exact evidence record. The destination is a salt-and-pepper seasoning label: fleur de sel, crystal/coarse salt, or coarse pepper-salt wording changes presentation or salt style but keeps salt as an explicit component. The reviewed corpus already binds the generic salt-and-pepper family to this exact FDC record. Confidence remains medium because the pepper component, blend ratio, and specialty-salt mineral differences are not represented by the table-salt profile.",
+      "reviewTargetId": "concept:food:87068bf7f673a2de22b4",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 11,
+      "sourceEvidenceTargetId": "concept:food:271755d091ef8905c217"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Coarsely ground salt and pepper, a little for finishing",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Salt, table",
+      "fdcId": 173468,
+      "notes": "Manual semantic review binds Cook4Me 'Coarsely ground salt and pepper, a little for finishing' to USDA SR Legacy 'Salt, table' through a retained exact evidence record. The destination is a salt-and-pepper seasoning label: fleur de sel, crystal/coarse salt, or coarse pepper-salt wording changes presentation or salt style but keeps salt as an explicit component. The reviewed corpus already binds the generic salt-and-pepper family to this exact FDC record. Confidence remains medium because the pepper component, blend ratio, and specialty-salt mineral differences are not represented by the table-salt profile.",
+      "reviewTargetId": "concept:food:e7a17766d394d8502c0f",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 11,
+      "sourceEvidenceTargetId": "concept:food:271755d091ef8905c217"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Coarse pepper salt (for seasoning), a little",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Salt, table",
+      "fdcId": 173468,
+      "notes": "Manual semantic review binds Cook4Me 'Coarse pepper salt (for seasoning), a little' to USDA SR Legacy 'Salt, table' through a retained exact evidence record. The destination is a salt-and-pepper seasoning label: fleur de sel, crystal/coarse salt, or coarse pepper-salt wording changes presentation or salt style but keeps salt as an explicit component. The reviewed corpus already binds the generic salt-and-pepper family to this exact FDC record. Confidence remains medium because the pepper component, blend ratio, and specialty-salt mineral differences are not represented by the table-salt profile.",
+      "reviewTargetId": "concept:food:429b82b430f76c7de266",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 11,
+      "sourceEvidenceTargetId": "concept:food:271755d091ef8905c217"
+    }
+  ],
+  "kind": "cook4me-fdc-retained-reference-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "85a24ed9a317c2bb0be43491201daa48f204f3deba39e39158bda12b79f5d740"
+}

@@ -1,0 +1,29 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "items": [
+    {
+      "approved": true,
+      "candidateEvidenceRank": 9,
+      "canonicalEnglishName": "Tsp Madras curry blend",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, curry powder",
+      "fdcId": 170924,
+      "notes": "Manual semantic review binds Cook4Me 'Tsp Madras curry blend' to USDA SR Legacy 'Spices, curry powder'. The destination explicitly identifies a Madras curry spice blend, and the target's own immutable candidate evidence contains the USDA curry-powder record at rank 9. Confidence remains medium because Madras curry blends vary in the proportions of turmeric, coriander, cumin, chili, fenugreek, and other spices; this binding represents the closest standardized curry-powder nutrient profile and does not generalize to curry paste, curry sauce, curry roux, garam masala, or generic 'Curry'.",
+      "reviewTargetId": "concept:food:84850cabb91f73e47ea8",
+      "reviewTargetKind": "semantic-concept"
+    }
+  ],
+  "kind": "cook4me-fdc-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "817f78c338584a77e29a592bc011d8cf6de4c37e6167b7ef4e5adbe8c4a29029"
+}

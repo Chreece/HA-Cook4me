@@ -1,0 +1,39 @@
+{
+  "complete": true,
+  "countsBefore": [
+    16952,
+    32163,
+    11748
+  ],
+  "countsAfter": [
+    16952,
+    32163,
+    11748
+  ],
+  "requiredBefore": 10775,
+  "requiredAfter": 10773,
+  "resolvedBefore": 10770,
+  "resolvedAfter": 10770,
+  "originalRequired": 10776,
+  "expectedExcludedIdentities": [
+    "local:cs:70a0d0d9b441783595ac",
+    "local:hr:da102385b2887953f1dd",
+    "local:hu:1ee1fa386c5772bab60a"
+  ],
+  "beforeExcludedIdentities": [
+    "local:hr:da102385b2887953f1dd"
+  ],
+  "afterExcludedIdentities": [
+    "local:cs:70a0d0d9b441783595ac",
+    "local:hr:da102385b2887953f1dd",
+    "local:hu:1ee1fa386c5772bab60a"
+  ],
+  "expectedNewlyExcluded": 2,
+  "newlyExcluded": 2,
+  "totalExcluded": 3,
+  "pendingAfter": 3,
+  "networkRequestsPerformed": false,
+  "runtimeCatalogCompacted": true,
+  "runtimeRecipeNutritionOnDemand": true,
+  "catalogBytes": 84993036
+}
