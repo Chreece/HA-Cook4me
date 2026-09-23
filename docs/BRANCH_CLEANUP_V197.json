@@ -1,0 +1,1164 @@
+{
+  "schemaVersion": 1,
+  "repository": "Chreece/HA-Cook4me",
+  "baseMain": "1f827091f2ab80dea927bbe510b47b51ff9fb149",
+  "originalAuditedBranches": 287,
+  "removedBranchCount": 287,
+  "deletedRefs": [
+    {
+      "branch": "audit/scanner-compatible-v194",
+      "sha": "11b39ddc5afc16afc2532d4a77bd5f03bfb7ad91"
+    },
+    {
+      "branch": "chore/consolidate-v197",
+      "sha": "f4819708085a7a5ee4f36244a48403354a96c33b"
+    },
+    {
+      "branch": "chore/stop-dev-ci-flood",
+      "sha": "4ef0b566f6bb523efa44e0c3735b6b223ee43f54"
+    },
+    {
+      "branch": "cook4me-audit-v115",
+      "sha": "098418151961c510de22197064850e4153530c3c"
+    },
+    {
+      "branch": "cook4me-batch23-review-prep",
+      "sha": "c146389ddc83bb07548bc97b13a856d7157af869"
+    },
+    {
+      "branch": "cook4me-catalog-builder-single-page-v59",
+      "sha": "1f98ad7613b6ddc0c463b745c60a439ed9e0dfb6"
+    },
+    {
+      "branch": "cook4me-catalog-global-id-guard-v59",
+      "sha": "5fbe9e353a68257a81ee2042b005972014694762"
+    },
+    {
+      "branch": "cook4me-catalog-global-id-proof-v59",
+      "sha": "9ff9f81bdcd9ebbad3049084cc6cb134bc197d97"
+    },
+    {
+      "branch": "cook4me-catalog-pagination-probe-v59",
+      "sha": "7e35d0dfb530813da431787d55d98bbdd9741bfc"
+    },
+    {
+      "branch": "cook4me-catalog-phase2c-single-page-title-proof-v59",
+      "sha": "83f053d70a738b8f8601090d6f2e7dc0adf5cd89"
+    },
+    {
+      "branch": "cook4me-catalog-phase2c-title-preflight-v59",
+      "sha": "6041555e4c2ad405521e5fed6a563d4ad07c9894"
+    },
+    {
+      "branch": "cook4me-catalog-phase3-keyless-review-001-v59",
+      "sha": "80f8cf85e164c51a09e180c1738eab9e6a0cd325"
+    },
+    {
+      "branch": "cook4me-catalog-phase3-staging-v59",
+      "sha": "6c3434284765d3a02f8a4487d6be0e1a84f0d93b"
+    },
+    {
+      "branch": "cook4me-catalog-phase4-staging-v59",
+      "sha": "54d842053ef7de1911332a27852b68afbf5e0c63"
+    },
+    {
+      "branch": "cook4me-catalog-title-snapshotter-v59",
+      "sha": "85f1850e204131b05d48f0338e294a4fa3991d35"
+    },
+    {
+      "branch": "cook4me-compact-alias-preservation-v60",
+      "sha": "85d30f92812ec639cef23dc6c5ec99c47a2df9ed"
+    },
+    {
+      "branch": "cook4me-continuous-scanner-v111",
+      "sha": "1d2ac3718ae9a8747ab70086333b3edab0f1a88e"
+    },
+    {
+      "branch": "cook4me-delivery-confirmation-v108",
+      "sha": "2725bd3ff3bacd464e03ced3c9c85dea49356cb5"
+    },
+    {
+      "branch": "cook4me-detail-404-reconcile-v60",
+      "sha": "e9b8f2259975b3c4e32d91909f8a40b2091ab348"
+    },
+    {
+      "branch": "cook4me-dietary-guidance-v107",
+      "sha": "5bd18488cd54b1a5df1566195699de7a1f229ad7"
+    },
+    {
+      "branch": "cook4me-final-hydration-fixes-v60",
+      "sha": "db648aac593042e0b84382f94c14930aa7f13c79"
+    },
+    {
+      "branch": "cook4me-ingredient-catalog-completeness-v60",
+      "sha": "e55371fddada70ce7ed603d55a335f66bb752d0c"
+    },
+    {
+      "branch": "cook4me-ingredient-keyed-pantry-matching-v60",
+      "sha": "079cc212a52de2a510794a429516357706874205"
+    },
+    {
+      "branch": "cook4me-ingredient-nutrition-resume-v60",
+      "sha": "6192b15039037933d91abf871db774e2dbf6ae57"
+    },
+    {
+      "branch": "cook4me-ingredient-semantic-confirmation-v60",
+      "sha": "bfd7579b5227b58c8c24a6196c6a07baad6238d6"
+    },
+    {
+      "branch": "cook4me-ingredient-semantic-next-v60",
+      "sha": "5aca42fad0673f3913910ab6bdf2370e4352466d"
+    },
+    {
+      "branch": "cook4me-nutrition-batch30-v60",
+      "sha": "a0577644a794d363fdaed01c5dd8ef7a752aa863"
+    },
+    {
+      "branch": "cook4me-nutrition-batch31-v60",
+      "sha": "caa28e366d481774891c8665473af46850934d51"
+    },
+    {
+      "branch": "cook4me-nutrition-batch32-v60",
+      "sha": "ee863affaec1b53e3e4ad480f64a888dd04f14cd"
+    },
+    {
+      "branch": "cook4me-nutrition-batch33-v60",
+      "sha": "e52514cf63f5a0651c344cd7fc5a52c193fe66c2"
+    },
+    {
+      "branch": "cook4me-nutrition-batch34-v60",
+      "sha": "ff434e8df5c7c53529905375325c0c78c559e1a0"
+    },
+    {
+      "branch": "cook4me-nutrition-batch35-evidence-worklist-v60",
+      "sha": "3ff1987d387d0187714940ed55bc4b206f2923b5"
+    },
+    {
+      "branch": "cook4me-nutrition-batch36-source-context-v60",
+      "sha": "e9d56f8557877d1df8f763a881db94c66cb2d1c5"
+    },
+    {
+      "branch": "cook4me-nutrition-batch37-bulk-families-v60",
+      "sha": "d80fd64909af74aaefababd007e69d939bfc7c2d"
+    },
+    {
+      "branch": "cook4me-nutrition-batch38-bulk-families-v60",
+      "sha": "7c273dd8dacbed4ad2b85b6781851c12bcfd46ec"
+    },
+    {
+      "branch": "cook4me-nutrition-batch39-bulk-families-v60",
+      "sha": "4ff227a03df5fabb6da5524eae4d9f8fb5a7bc50"
+    },
+    {
+      "branch": "cook4me-nutrition-batch40-bulk-families-v60",
+      "sha": "6f852dcfa732f9d9fcf0660acbf12100d026dc70"
+    },
+    {
+      "branch": "cook4me-nutrition-batch40-direct-v60",
+      "sha": "55f99c60d300c17279566ba122ff1c2accb66955"
+    },
+    {
+      "branch": "cook4me-nutrition-batch41-discovery-v60",
+      "sha": "b4b62f6099b5ec03253160a33985ccb1373a1f38"
+    },
+    {
+      "branch": "cook4me-nutrition-batch41-triage-hardening-v60",
+      "sha": "08ac98950701608ffc0eab90ed4fd56c7ee6b32d"
+    },
+    {
+      "branch": "cook4me-nutrition-batch42-explicit-v60",
+      "sha": "1c69d831ed2116a9758182aee3b17a3b666b6bd9"
+    },
+    {
+      "branch": "cook4me-nutrition-batch42-guinea-fowl-v60",
+      "sha": "3448074a388974208c96e9d59445f13b98959137"
+    },
+    {
+      "branch": "cook4me-nutrition-batch43-evidence-triage-v60",
+      "sha": "35469a080f18c1ffb4ea68157d36e2d22b0200a3"
+    },
+    {
+      "branch": "cook4me-nutrition-batch44-generic-pepper-v60",
+      "sha": "d4a7f6d5b9525414fbe1d86de2291cfe8d9a30a4"
+    },
+    {
+      "branch": "cook4me-nutrition-batch45-curry-garam-v60",
+      "sha": "63864f23791da477220ff011a7c587f00c6d048f"
+    },
+    {
+      "branch": "cook4me-nutrition-batch46-herb-blends-v60",
+      "sha": "8b2d4c4df87a7c01ad969268d081c3cfa4352b78"
+    },
+    {
+      "branch": "cook4me-nutrition-batch47-pepper-salt-v60",
+      "sha": "40cfc0f387c7da28b42f76b3a68ae31a0d03c0be"
+    },
+    {
+      "branch": "cook4me-nutrition-batch48-generic-seafood-v60",
+      "sha": "498b24f14a01db862226df57ee89a8e8c9f46b69"
+    },
+    {
+      "branch": "cook4me-nutrition-batch49-generic-starch-v60",
+      "sha": "1fb1956505c2ec6351769f3af871ef43c23c4aaa"
+    },
+    {
+      "branch": "cook4me-nutrition-batch50-formulated-dashi-v60",
+      "sha": "f9b43d41af25a80fa757c9c914790df588c3a608"
+    },
+    {
+      "branch": "cook4me-nutrition-checkpoint-resume-v60",
+      "sha": "86b80b711db1cc35a493479f6d52057fee3b661b"
+    },
+    {
+      "branch": "cook4me-nutrition-enrichment-post-activation-v60",
+      "sha": "d8c339426e83bbf20d4945d95540c92ba776fe64"
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch13-v60",
+      "sha": "90bbb85fbea3813a79ce6e518a846daaed233826"
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch14-v60",
+      "sha": "b5c0c08e22b3be6c6e6e42710952c72f66f589c6"
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch15-v60",
+      "sha": "1e8fd85efb94e9cf2f178a6bce9ec75fcd013b7f"
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch16-v60",
+      "sha": "f8162787ae7a79da59c6702c9a1fb00766eae70e"
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch17-v60",
+      "sha": "e023cf9869d580f1d17cdd6ccfef9acb384757e0"
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch18-v60",
+      "sha": "4b18e6947106c6f0fc824480f675c2dbaf8c6ad8"
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch19-v60",
+      "sha": "6b44e4af27378afecc7a30984934f00daf6dfa8a"
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch20-v60",
+      "sha": "5975ed17106073995561ece6516f48847db64aee"
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch21-v60",
+      "sha": "6ce92b33e731d709735265c6a4ae391df1af3daa"
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch22-v60",
+      "sha": "a635bc2881603bebf622053bf1c68abaabb9640e"
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch23-v60",
+      "sha": "17529901b73fc7c2b5cb952673eeb30f8b27e72b"
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch24-v60",
+      "sha": "f2d60d165c331c19bc63c434dc5a2d3cc6d9ac28"
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch25-v60",
+      "sha": "f298275e99115b7a809d4fc8490a725c5e4be989"
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch26-v60",
+      "sha": "98ed16004f49b96e638ec1e22611c1d6d6857304"
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch27-v60",
+      "sha": "1e23d065bf5d8ad639117b98ab34bf1d971f6428"
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch28-v60",
+      "sha": "fd390b41003fb206a6955b00c5fd77616fe357fe"
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch29-retained-v60",
+      "sha": "1d148a926f854ece9906b845869be9100d686332"
+    },
+    {
+      "branch": "cook4me-nutrition-review-post-batch50-v60",
+      "sha": "54833b15699890dfb84a1954807011ad1bdd1b22"
+    },
+    {
+      "branch": "cook4me-nutrition-targeted-holds-v60",
+      "sha": "a640c800e0fca8b9b21949988d5ff744cd619950"
+    },
+    {
+      "branch": "cook4me-offline-multilingual-runtime-fixes-v60",
+      "sha": "209ff06171546d796bf0733f3d013f0efb79ec45"
+    },
+    {
+      "branch": "cook4me-offline-price-evidence-v85",
+      "sha": "b21d95d2f095af50e691e76997073770e8774c6d"
+    },
+    {
+      "branch": "cook4me-original-language-v106",
+      "sha": "ae62f404c4582f0fed68c6f94e869fe2f2e27894"
+    },
+    {
+      "branch": "cook4me-price-confidence-v99",
+      "sha": "c75775a12ab2e98b411b64cc2257fc9e706b5bed"
+    },
+    {
+      "branch": "cook4me-price-conversions-v94",
+      "sha": "978f4e5511f7d648e4c17909746b3d8973f74ef4"
+    },
+    {
+      "branch": "cook4me-price-expansion-v101",
+      "sha": "b7fd2c9f122fb7c9c009e018a5349fb0df40b05b"
+    },
+    {
+      "branch": "cook4me-price-expansion-v102",
+      "sha": "8a61b66263635df350a26e63eefe6079adacdcf7"
+    },
+    {
+      "branch": "cook4me-price-expansion-v103",
+      "sha": "f86cdec36dd8a08a713169c4f1bc62afe7e14d9d"
+    },
+    {
+      "branch": "cook4me-price-expansion-v104",
+      "sha": "b0a2c7a2b0db018a6823917365795e6d0131ee21"
+    },
+    {
+      "branch": "cook4me-price-expansion-v95",
+      "sha": "02f32ba39784453819547aef0eace031f0e22d02"
+    },
+    {
+      "branch": "cook4me-price-expansion-v96",
+      "sha": "6e0937fba024575ab7c6c9917aa8a459ce6e6029"
+    },
+    {
+      "branch": "cook4me-price-expansion-v97",
+      "sha": "cd3f718a976981ca90bd6100ad5bf5659113e85f"
+    },
+    {
+      "branch": "cook4me-price-fallback-v91",
+      "sha": "598c4d57cbd459eda0e91d1ec1dfd0dd0b4e9ff5"
+    },
+    {
+      "branch": "cook4me-price-gaps-v87",
+      "sha": "866252ba5ef03734c17afa5cf601ae9fbd9979a5"
+    },
+    {
+      "branch": "cook4me-price-gaps-v88",
+      "sha": "38c044f5619af3c68dabaec92d2b0b2e61849a79"
+    },
+    {
+      "branch": "cook4me-price-gaps-v89",
+      "sha": "9346ea913a7b1c68a5888161b0a277803f1fd9a3"
+    },
+    {
+      "branch": "cook4me-price-gaps-v90",
+      "sha": "9ea014e033048e2ca6c790a17b91252eb9dec5e9"
+    },
+    {
+      "branch": "cook4me-price-optimization-v92",
+      "sha": "a7bb9edff2cb56163ffdba13c27c55444e300a43"
+    },
+    {
+      "branch": "cook4me-product-links-v114",
+      "sha": "effff4c8ae7930b9a801c19c071c30393d607e77"
+    },
+    {
+      "branch": "cook4me-product-review-v112",
+      "sha": "6d2d965cc650a190037f3c56b773a966b33819fc"
+    },
+    {
+      "branch": "cook4me-progressive-catalog-activation-v60",
+      "sha": "cebc1106fbbdab023e13df5792486f7cb80fe8e3"
+    },
+    {
+      "branch": "cook4me-query-localization-v60",
+      "sha": "94dea7a5742d6fc7531cc28e632a15212885cba7"
+    },
+    {
+      "branch": "cook4me-recipe-cost-coverage-v86",
+      "sha": "d62f438fd0d2b4352ed2a46818e7de748395a3bc"
+    },
+    {
+      "branch": "cook4me-release-catalog-cache-progress-v59",
+      "sha": "4822c81d286dd83ad0eb0e3ac9cbd96d7c5af02f"
+    },
+    {
+      "branch": "cook4me-responsive-header-v100",
+      "sha": "1e1ca9937322da3c9c824f24cf5955e57292b93f"
+    },
+    {
+      "branch": "cook4me-runtime-bug-hunt-v74",
+      "sha": "5b417fbe2c14be77e420790586916ef4d85ab163"
+    },
+    {
+      "branch": "cook4me-runtime-catalog-compact-v60",
+      "sha": "212bb9f5db99463f1c1308de7566b7d7a329714d"
+    },
+    {
+      "branch": "cook4me-scanner-retry-v113",
+      "sha": "aeca64f3442459591a387bb70641d5db4e16fe81"
+    },
+    {
+      "branch": "cook4me-today-filters-v98",
+      "sha": "c7bfaaf51c5db1e3cbd35ddce3d5b782d02b6d95"
+    },
+    {
+      "branch": "cook4me-toolbar-jobs-v93",
+      "sha": "ca27bb24277b24eb0817abc50eedffb0451efa02"
+    },
+    {
+      "branch": "cook4me-ui-announcements-v105",
+      "sha": "e362fbd634f580d384011a6f96cd7512a6732b36"
+    },
+    {
+      "branch": "cook4me-v128-nutrient-targets-beta",
+      "sha": "42d6f93973a9394a1553e3f1fab3907cf2615af3"
+    },
+    {
+      "branch": "cook4me-v129-delivery-queue",
+      "sha": "88b22935bfcc8155a61ea140e74e10366a817f28"
+    },
+    {
+      "branch": "cook4me-v130-photoreal-device",
+      "sha": "9f02e4a6eb472fb3523d08e3d1809b10dd51682d"
+    },
+    {
+      "branch": "cook4me-v131-editable-meal-history",
+      "sha": "d003c5c02028dced14148db24c9456728d4aac35"
+    },
+    {
+      "branch": "cook4me-v132-hard-refresh-device-asset",
+      "sha": "d54e8b69b040fd71a1542c003baf05b717e9cced"
+    },
+    {
+      "branch": "cook4me-v133-device-body-offline-screen",
+      "sha": "31f845eb45e433b06270228d46a6ed3142f75fdd"
+    },
+    {
+      "branch": "cook4me-v134-transparent-device",
+      "sha": "7a2b1dbb9f7d8d589544569ecb8f328da310c3a3"
+    },
+    {
+      "branch": "cook4me-v135-clean-halo-revert",
+      "sha": "54bf5c9519db37b4d968fdc6c390ecebe9966143"
+    },
+    {
+      "branch": "cook4me-v136-week-fold-clean-background",
+      "sha": "b0c38bb70b4bbb5ecbb5d9409b2913d382928a31"
+    },
+    {
+      "branch": "cook4me-v137-week-panels-transparent-device",
+      "sha": "440fbf265c6d2b44e42bffe2ad2611e378214971"
+    },
+    {
+      "branch": "cook4me-v138-live-display-new-device",
+      "sha": "7bf5043f2f36efdd1d2b352d42001beb4e22af56"
+    },
+    {
+      "branch": "cook4me-v139-svg-keyed-cooker",
+      "sha": "890faebb7b9ee565aae6a4bf63fbbc04669f2824"
+    },
+    {
+      "branch": "cook4me-v140-supermarket-language-device",
+      "sha": "4e610274f2a3198b24a2befaee32a9d899c26a69"
+    },
+    {
+      "branch": "cook4me-v60-canonical-review-overlay-batch1",
+      "sha": "7a0b0f2979c2aa66d252cc0338d02996f5733da8"
+    },
+    {
+      "branch": "cook4me-v60-capture-once-ux-batch1",
+      "sha": "a63d49c33523d43a21b53c9786b7e27a015056c0"
+    },
+    {
+      "branch": "cook4me-v60-capture3-bg-semantic-review-batch1",
+      "sha": "7bfb870a529cd4185c3da13bbf64ed36cc8f0d48"
+    },
+    {
+      "branch": "cook4me-v60-capture3-cs-sk-semantic-review-batch1",
+      "sha": "d55675bb2dd21dd53201bc536f65c7214a8e6e97"
+    },
+    {
+      "branch": "cook4me-v60-capture3-de-semantic-review-batch1",
+      "sha": "cd57e86a5d4c1ce274c6496f27087a78d6b45947"
+    },
+    {
+      "branch": "cook4me-v60-capture3-en-semantic-review-batch1",
+      "sha": "7fc450a5ac88d2be80a2b8cb68999fbec42ed1d1"
+    },
+    {
+      "branch": "cook4me-v60-capture3-es-semantic-review-batch1",
+      "sha": "9fc943c9e0a206130c7a6dc231bec13f2d629a23"
+    },
+    {
+      "branch": "cook4me-v60-capture3-final-review-reconciliation",
+      "sha": "30045464b62f3cd9f0476ac46d61a92d520b20d4"
+    },
+    {
+      "branch": "cook4me-v60-capture3-fr-semantic-review-batch1",
+      "sha": "2da62d93b6961a351859840a4261e9f931ad5112"
+    },
+    {
+      "branch": "cook4me-v60-capture3-hr-semantic-review-batch1",
+      "sha": "1888701f2fc86b0dd38df2986b934bd3eb90e300"
+    },
+    {
+      "branch": "cook4me-v60-capture3-it-pt-semantic-review-batch1",
+      "sha": "0578e244fd7b078a9618a365262ebb0b111de75a"
+    },
+    {
+      "branch": "cook4me-v60-capture3-ja-ar-semantic-review-batch1",
+      "sha": "79de330c671fe2854d9d109b95e7792ccf7093c3"
+    },
+    {
+      "branch": "cook4me-v60-capture3-ko-semantic-review-batch1",
+      "sha": "04ddc8e41efe0064eee62e3483e7722b0def71dd"
+    },
+    {
+      "branch": "cook4me-v60-capture3-offline-review-overlay",
+      "sha": "b38cb6d8611f7bb714d166d26716eb5ae60d2f8b"
+    },
+    {
+      "branch": "cook4me-v60-capture3-pl-sl-semantic-review-batch1",
+      "sha": "e03fe0ef2913eaf3a79ea1b0614bd5d4ac413ae3"
+    },
+    {
+      "branch": "cook4me-v60-capture3-provider-english-batch1",
+      "sha": "f7a36276b695e7287d34fcf7e2e49d3597b7b5f3"
+    },
+    {
+      "branch": "cook4me-v60-capture3-provider-english-batch2",
+      "sha": "d050d284c8f33bae8b0464322c9509de2d7450f4"
+    },
+    {
+      "branch": "cook4me-v60-capture3-provider-english-batch3",
+      "sha": "3a5be6eab09ae23a4fc83bc6ce8972c6e3c3330c"
+    },
+    {
+      "branch": "cook4me-v60-capture3-provider-english-batch4",
+      "sha": "1a03982814bfa04b57ca9bd4ced53950e82fca8d"
+    },
+    {
+      "branch": "cook4me-v60-capture3-provider-english-final",
+      "sha": "57cc415ea0626f92a0a6cbcc90029f16adf818d5"
+    },
+    {
+      "branch": "cook4me-v60-capture3-ro-hu-semantic-review-batch1",
+      "sha": "538e523a559301a1617c33e60971f3c33e5f8e79"
+    },
+    {
+      "branch": "cook4me-v60-capture3-ru-semantic-review-batch1",
+      "sha": "7d1c1e55814f3e116852fbc5b8482caeb09a03f2"
+    },
+    {
+      "branch": "cook4me-v60-capture3-tr-semantic-review-batch1",
+      "sha": "a82d48ee1d3273ce30f7e5002bce9044a86661a4"
+    },
+    {
+      "branch": "cook4me-v60-capture3-uk-semantic-review-batch1",
+      "sha": "69ffbd19381647d3d8559ed79a52b577cb6d79f6"
+    },
+    {
+      "branch": "cook4me-v60-capture3-zh-semantic-review-batch1",
+      "sha": "8131791ba9148282b8533bbdca1b64b86093bd29"
+    },
+    {
+      "branch": "cook4me-v60-detail-auth-differential-batch1",
+      "sha": "d4ab6863c72c8fdc7a7d01b1245e23374af5a295"
+    },
+    {
+      "branch": "cook4me-v60-detail-not-found-accounting-batch1",
+      "sha": "dde6ee3a88e440ef722f14e734793d7c5d164ca0"
+    },
+    {
+      "branch": "cook4me-v60-detail-timeout-retry-batch1",
+      "sha": "58b9d74c487aee357d6a197fd491a7e77329d175"
+    },
+    {
+      "branch": "cook4me-v60-failed-detail-evidence-batch1",
+      "sha": "68fdcabb8d6252cf5cb31154ee0424da9d0e3292"
+    },
+    {
+      "branch": "cook4me-v60-fdc-candidate-evidence-batch1",
+      "sha": "b2f0bfeb02ea8f9a06c98e83fecf09c808201acf"
+    },
+    {
+      "branch": "cook4me-v60-fdc-discovery-normalization",
+      "sha": "29d3a293821460f7161bcd3931b92b524d0d1926"
+    },
+    {
+      "branch": "cook4me-v60-fdc-manifest-stability",
+      "sha": "283c0457690ab486acf3a279e4ab599de8b1660c"
+    },
+    {
+      "branch": "cook4me-v60-final-validator-batch1",
+      "sha": "26106cf8bcaa8aad1801ce1a8b8d7334d0802c43"
+    },
+    {
+      "branch": "cook4me-v60-fndds-offline-evidence",
+      "sha": "dcd81776c4719e8b94141af97ec3da9fe00b36a9"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-exact-canonical-reuse-batch2",
+      "sha": "0a26975fa63bc6a3d26a87a4be3a0431be83e969"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-exact-canonical-reuse-batch3",
+      "sha": "22311649cbaaffa0764facd988bcf8e8b6460c91"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-exact-canonical-reuse-batch4",
+      "sha": "5b70ad1a6f1cc8212e27830c35e656a7baf19e56"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-exact-canonical-reuse-batch5",
+      "sha": "d206854c9c4d67dab8cb469494a0c188c3168cc9"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-exact-canonical-reuse-batch6",
+      "sha": "025c2b591e397341d7682543ef26dcb08aedec8b"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-exact-canonical-reuse-proposal",
+      "sha": "c6fbd331dbae2e272aa2bcb8a8ed481b9de9e556"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch1",
+      "sha": "cb97d2465556b443877045151d68e2b4dfc4e39d"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch1-check",
+      "sha": "01b7649ff80f3499092a17b45cd8ac950fa6bf4c"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch1-files",
+      "sha": "01b7649ff80f3499092a17b45cd8ac950fa6bf4c"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch10",
+      "sha": "064bcff6b04d777eb0f7ec1f4e7f05a9242ea8a1"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch11",
+      "sha": "6eb12dc7f34b1cdedba8205419b74cd0f407f032"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch12",
+      "sha": "d7a30c5382ef35e13df57357cb6a786814c05e7a"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch2",
+      "sha": "04aee577dc83e1f4a9740ebef885077ef87a4866"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch3",
+      "sha": "247365441cdf5db3436a231f70eae1d7cf5a09ed"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch4",
+      "sha": "dcc782a70abf68670324244230add88febcc0060"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch5",
+      "sha": "5df8fb0d744d4b989aeada79122fef8c625d07cb"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch6",
+      "sha": "73e72ca72a847c2a87b23e99154d46d6ff072011"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch7",
+      "sha": "a6c18f6411088dc18399b1030c8dbcb26d66a27d"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch8",
+      "sha": "957769e50badd15541825d5fe96410e5c7362fa3"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch9",
+      "sha": "6f0ca48fc8352223c488afbeb8016d1819aed3c8"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-review-targets",
+      "sha": "70352c6e7c883a3b3b712aba7f060fa7b743d55a"
+    },
+    {
+      "branch": "cook4me-v60-nutrition-reviewed-decision-reuse",
+      "sha": "388803b8d39a134372a07f4fcf0612a8bb4fd080"
+    },
+    {
+      "branch": "cook4me-v60-offline-fdc-candidates",
+      "sha": "afca1a045ab5cbd66fb3e4f03704a129110c9af2"
+    },
+    {
+      "branch": "cook4me-v60-offline-fdc-candidates-2",
+      "sha": "0377f485b91694c3da9b51f891c1a420423b40fd"
+    },
+    {
+      "branch": "cook4me-v60-phase3-identity-contract-batch1",
+      "sha": "a85731494b53e685354a25dc56285e8163c1e755"
+    },
+    {
+      "branch": "cook4me-v60-provider-key-contract-batch1",
+      "sha": "9aa98e961036e6ee6a0c132d3ff74ae8014fd94a"
+    },
+    {
+      "branch": "cook4me-v60-release-pipeline-batch1",
+      "sha": "6b411f7d9f6f880a1f031970af64451678b3d023"
+    },
+    {
+      "branch": "cook4me-v60-review-queue-reconcile-batch1",
+      "sha": "68f662e6682760e009fad9868eec294521c1ec44"
+    },
+    {
+      "branch": "cook4me-v60-review-queues-batch1",
+      "sha": "01189b25d611cd1a101ac0e74237a27b8f4cb953"
+    },
+    {
+      "branch": "cook4me-v60-reviewed-nutrition-batch1",
+      "sha": "5b07011813331379b34b4ea842618ad6524b991b"
+    },
+    {
+      "branch": "cook4me-v60-search-timeout-retry-batch1",
+      "sha": "5f9a70052990500c61442e1971701b5bd08d7dba"
+    },
+    {
+      "branch": "cook4me-weekly-selection-v110",
+      "sha": "27ce0599338a34708f0b7a8285114cc4a155a771"
+    },
+    {
+      "branch": "cook4me-weekly-summary-v109",
+      "sha": "1a73b1ea04d6b3547b2020b92bd3dc8998964bde"
+    },
+    {
+      "branch": "cook4me/catalog-it-title-probe-v59",
+      "sha": "8776632f5875a345e4a45f7483e95fe7cfabc023"
+    },
+    {
+      "branch": "cook4me/release-catalog-v59",
+      "sha": "d7f5106b77603b1b0ccff8f016117ec64939f1d7"
+    },
+    {
+      "branch": "dev/fold-week-meals-v145",
+      "sha": "ed3690d9c5c215e7128b07ca885646925de92f91"
+    },
+    {
+      "branch": "dev/greek-audit-language-stack-v188",
+      "sha": "ba9254014574a4dbe350accbf7e67d8946dc0b99"
+    },
+    {
+      "branch": "dev/greek-audit-stock-localization-v188",
+      "sha": "21c68adb162d25162f23b946165457467a3e48f3"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v147",
+      "sha": "bea5aba9c93005d93922d01ca5fd41b57352a1b6"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v148",
+      "sha": "8b88683c845122031b4bc5d37d3592da9d53c437"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v149",
+      "sha": "c768a5120155a7790fa68f2148ea0641a6343d79"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v150",
+      "sha": "a36d6df9bb31eb9ce61e7048ea5ef5286cabc9f5"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v151",
+      "sha": "12984bb7ec43060d6319bdb98eee0af2d5e4269c"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v152",
+      "sha": "04acfb93a71afa14fd9b9e02812b479e67871a23"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v153",
+      "sha": "c770c734b4719dfa14db3ed4188f968bf8312235"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v155",
+      "sha": "38acf33f9714b42048374d6e3c11b80b1f8bb3a5"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v156",
+      "sha": "34cfcf84a99412c3946d360bf289c3b68114eeee"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v157",
+      "sha": "5baad3162ac8170c467f1951e91b060e36972942"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v158",
+      "sha": "33f0a5a7583ce98524bb0a83f777ca4d2bd595be"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v159",
+      "sha": "b64adeb713ebe61761688b0e419eba327ce20b8d"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v160",
+      "sha": "711c5d98bd98dd81227cf1344c81d865d1b0b85e"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v161",
+      "sha": "c9ad2b6b626ac0d1543d98560fe0f6d463bbe795"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v162",
+      "sha": "43c150ded23b0f7960af2171c0c594172c788fab"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v163",
+      "sha": "62b9c2adce1ac5d77a1ec95583def214dd3bafa8"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v164",
+      "sha": "dbb618741d7051d74a90b6ebe52cc9a142c04bcf"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v165",
+      "sha": "e9b1bee7d119ca3176ae9d266319a95323632d43"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v166",
+      "sha": "f7c7e981ff7758a086cc171687085927f97f837d"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v167",
+      "sha": "3e89b367c7573295aed9322b8ea46491bc4de298"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v168",
+      "sha": "d5735e5722ee12bf804d4415684a3e4ba720b389"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v169",
+      "sha": "3cb076000770bb718440cc02f2f0672ceeabd9b0"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v170",
+      "sha": "d795b9354543cd7fbb538cf0835de0d1a64f746c"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v171",
+      "sha": "4ff0d3c8d49d801396ce3e53303edf56b993eca5"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v172",
+      "sha": "b4c9cb68c270c7f0f837df292593ad071256b81c"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v173",
+      "sha": "c9e921178bd6b3a152362cbabfb7848c76e7b446"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v174",
+      "sha": "8a4bc86accf93f9fe9cca802f02ee4cd385be773"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v175",
+      "sha": "597536180fca412078c84542b1741bc561b2ace0"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v176",
+      "sha": "f3c704d77376ac460990f2d6c3a7d11898d66912"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v177",
+      "sha": "7c94481d2d10284e445ac0c8502dcaf95185e135"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v178",
+      "sha": "fb74f477bfaf7f95a054464eb1a33fb972adee9f"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v180",
+      "sha": "820763a88f03fe071fc20088cd1be05eb5dabe3f"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v184",
+      "sha": "a15fa7072fc24e415a8cb2a8dc4033d84f65ae93"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v185",
+      "sha": "518b593717eb4bda00f2a37db06c0f6591c8d031"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v186",
+      "sha": "d47101e5f877256fe26ed9c5169e9eb9108f7d8b"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v186-clean",
+      "sha": "c8e8920127bd6bb34e81f97ce5d0770188a7faf4"
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v187",
+      "sha": "8cee8507d482249c69bad987796c261b0d1cf24e"
+    },
+    {
+      "branch": "dev/greek-catalog-quality-v146",
+      "sha": "890efc766e0a2ba1879dbe92dbf2e246e5036b0b"
+    },
+    {
+      "branch": "dev/greek-catalog-quality-v147",
+      "sha": "86a6e0d0a6fc413702fb6b329b0d3a8c01e84ecb"
+    },
+    {
+      "branch": "dev/greek-catalog-quality-v148",
+      "sha": "35d85f36faef5603c0106bbba7d10ce5bd453ea7"
+    },
+    {
+      "branch": "dev/greek-catalog-v146",
+      "sha": "f2d5586f44af905f42323becaf5568ab5093d53d"
+    },
+    {
+      "branch": "dev/greek-stock-loop-audit-v179",
+      "sha": "cfbc8771365dccf8bc89f8b8f0e917496ff8a2de"
+    },
+    {
+      "branch": "dev/price-provenance-eta-v143",
+      "sha": "4eec3ddd435de67529dd113ec0ed115a42ac7617"
+    },
+    {
+      "branch": "dev/reservation-language-greek-v188",
+      "sha": "72be9e8874b544ac5665f94c15cbba986ac24d87"
+    },
+    {
+      "branch": "dev/scanner-manual-greek-v180",
+      "sha": "fd0912872660b3802251ae11cd30640f39d0d7ea"
+    },
+    {
+      "branch": "dev/scanner-v141-state-and-save",
+      "sha": "28f5943646c73cfa7ea3e174c5acc625f8ad6480"
+    },
+    {
+      "branch": "dev/stock-summary-expiry-v142",
+      "sha": "cb7a93dea57d52f6b7c10953d3f86e0b945c6620"
+    },
+    {
+      "branch": "dev/storage-containers-greek-v154",
+      "sha": "f52302b2651a61c38ffa408238ded0ab9294d8e4"
+    },
+    {
+      "branch": "dev/week-shopping-state-v182",
+      "sha": "e8a97f4c9735698b62ab1872ec85f7cc94b8d1ae"
+    },
+    {
+      "branch": "dev/week-stock-language-greek-v188",
+      "sha": "82a5417907e80c47b8afdaa3402b7c7d2b4d5b3f"
+    },
+    {
+      "branch": "dev/weekday-meals-unlimited-v144",
+      "sha": "6a929a4d0d586c053dbe347f0d76991e8e726ef5"
+    },
+    {
+      "branch": "dev/weekly-responsive-variety-v181",
+      "sha": "4e00d4d461f95e8b9422cf5a4e043fe486303b4b"
+    },
+    {
+      "branch": "feat/manual-product-editor-v196",
+      "sha": "551bb0b65b70f4704a4cfb9645a18b149dfb87ae"
+    },
+    {
+      "branch": "feat/receipt-scanner-v195",
+      "sha": "e7940b537feb42052ec871447f97b126f80d57eb"
+    },
+    {
+      "branch": "feature/bundled-reference-catalog-v59",
+      "sha": "f7d7301305a08d5a3023c5d94e43fda9480dff39"
+    },
+    {
+      "branch": "feature/capture-ux-v119",
+      "sha": "bc4a64602d54e010a41823b5a6b55f4ee0e67ea3"
+    },
+    {
+      "branch": "feature/currency-fx-v24",
+      "sha": "1f1979115a2bec5952f1a14ab1fed77a344d3ded"
+    },
+    {
+      "branch": "feature/filter-checkbox-bulk-v124",
+      "sha": "2f32adadb665ceff36785b6cf15bf6f608099db0"
+    },
+    {
+      "branch": "feature/food-intelligence-2026-9-7-6",
+      "sha": "6ef74d628051da0ad9459dc747e943b16ebda97f"
+    },
+    {
+      "branch": "feature/food-intelligence-completion-2026-9-7",
+      "sha": "1a34fff1c89b54d03aa0eff7f08b657daaae5123"
+    },
+    {
+      "branch": "feature/fullscreen-weighing-v118",
+      "sha": "84e77ea42a911dea1bd03539ef9fbdca35e907c4"
+    },
+    {
+      "branch": "feature/meal-lifecycle-v23",
+      "sha": "95e4c8a62c0972b418c0e3317ab1980e6093ffd3"
+    },
+    {
+      "branch": "feature/minimal-bootstrap-v53",
+      "sha": "d6520bb24685770c0612a4189f5ed1b7e2e1608b"
+    },
+    {
+      "branch": "feature/modern-ui-2026-9-7-10",
+      "sha": "d1589295e57176692ee4b6c3c6e14ac8d771fe3a"
+    },
+    {
+      "branch": "feature/nutrition-catalog-recipes",
+      "sha": "c99aeff3454813cf92ffbdb5f34bc4b4ff75e7d6"
+    },
+    {
+      "branch": "feature/nutrition-hardening-v22",
+      "sha": "f84f4eb9b63e1a03653cc0fab03af5bbfe88ea06"
+    },
+    {
+      "branch": "feature/professional-ui-audit-2026-9-7-11",
+      "sha": "36e1864e2f229c1923f452ffd2d30b7ab3bb7ab1"
+    },
+    {
+      "branch": "feature/recipe-experience-2026-9-7-9",
+      "sha": "ebadce437b86df45f69ba826395fb0aee1485766"
+    },
+    {
+      "branch": "feature/request-orchestration-v49",
+      "sha": "1e14739c4e61217d01f472c1260a5a7cffc836a2"
+    },
+    {
+      "branch": "feature/scanner-camera-v120",
+      "sha": "b3f54c38c517e08a7096ee363791752545a0e4f8"
+    },
+    {
+      "branch": "feature/scanner-mobile-back-v121",
+      "sha": "164a5ed441721a62a794fbc8cc2c345c7087d82d"
+    },
+    {
+      "branch": "feature/scanner-torch-fallback-v122",
+      "sha": "81aae4a1c759cb16274878438fbb16d31f7511a0"
+    },
+    {
+      "branch": "feature/scanner-torch-verified-v123",
+      "sha": "75912a48271bd211304673df0f63cadf5e834b19"
+    },
+    {
+      "branch": "feature/smart-scale-ui-v117",
+      "sha": "295118eabf060f630c660fe0d9f140075a5291c1"
+    },
+    {
+      "branch": "feature/smart-scale-v116",
+      "sha": "47bbb2f2c3aa66c233c0a005072ace5a52e7647a"
+    },
+    {
+      "branch": "feature/smart-scale-v60",
+      "sha": "ed7ce6f2460becb93299c35bc41b2ff8ac392d83"
+    },
+    {
+      "branch": "feature/startup-lazy-contract-v51",
+      "sha": "b8ff3940b2e61fd5f52a15b4ad193c67ee5abd90"
+    },
+    {
+      "branch": "feature/today-rotation-2026-9-7-13",
+      "sha": "88efbc77542c22f06a26ee48e882b6895027a026"
+    },
+    {
+      "branch": "feature/today-tab-2026-9-7-8",
+      "sha": "dceed6ec7525a5689492ded6e7acc013512d7efe"
+    },
+    {
+      "branch": "fix/all-menu-footer-gap-v126",
+      "sha": "e368b0085db5e41255f79e020261068c20585de9"
+    },
+    {
+      "branch": "fix/cache-first-ui-v54",
+      "sha": "d9244bf02c9fa6bc16879a758bfc4ec0e542cca7"
+    },
+    {
+      "branch": "fix/compact-today-steps-shopping-replace",
+      "sha": "dd5d018e66af06d99ec7281382aca9722e3fc818"
+    },
+    {
+      "branch": "fix/filter-dialog-footer-v125",
+      "sha": "de9e1705df0f7838f986ef5a31b1eb34e83a2c24"
+    },
+    {
+      "branch": "fix/greek-audit-v191",
+      "sha": "9d6ace194f221595d526b210a62d2ef46920dc04"
+    },
+    {
+      "branch": "fix/greek-audit-v192",
+      "sha": "8fb1a3263a84b336c95a3b96a6fe84ec84a9647a"
+    },
+    {
+      "branch": "fix/greek-audit-v193-measurement-labels",
+      "sha": "40c3ec3a9d2f4988c467d9e496d5198c1ee970d3"
+    },
+    {
+      "branch": "fix/recipe-cover-quality-inline-steps",
+      "sha": "d53a0c2e9db4e3299bc78ca3bd33152fee333ad9"
+    },
+    {
+      "branch": "fix/reviewed-portion-stock-coverage",
+      "sha": "7692386d9aa09ce45a033fd45dbf467edf8fc376"
+    },
+    {
+      "branch": "fix/server-seeded-ui-v57",
+      "sha": "1a1bf3caa7711c2922e0cd2d65559ea89ded1d73"
+    },
+    {
+      "branch": "fix/startup-render-storm-v47",
+      "sha": "11cbe04669d7564a6e387e7d51d69de3cdc7243b"
+    },
+    {
+      "branch": "fix/today-catalog-language-v48",
+      "sha": "9eda5cbc54982c805fc6034d1526083b419ade03"
+    },
+    {
+      "branch": "fix/today-layout-and-variety",
+      "sha": "b69e6654b245c1b60b88f41e2b77f13effecdfa7"
+    },
+    {
+      "branch": "fix/today-multilang-image-cache-v58",
+      "sha": "b325e263fd1e22a3d58005d6dd62393e1e9b61b3"
+    },
+    {
+      "branch": "fix/v39-control-containment",
+      "sha": "5e12b771dfc9be1fd75608550322445a09036e19"
+    },
+    {
+      "branch": "fix/v40-single-today-icons",
+      "sha": "fccc834af9607f87fc9c6c1e158767668d0955d0"
+    },
+    {
+      "branch": "fix/v41-menu-dismiss-last-section",
+      "sha": "4da91eff4bbb43dac9d53286cec2489a14dea6d2"
+    },
+    {
+      "branch": "hotfix/dashboard-freeze-2026-9-7-12",
+      "sha": "365eef9a0f9fec8319f3564348c371a0bc2a75ad"
+    },
+    {
+      "branch": "hotfix/v38-restore-panel",
+      "sha": "1faf6a53155f7ad8729bfb0433e1b7413f755402"
+    },
+    {
+      "branch": "merge/pending-v124-nutrition-111",
+      "sha": "7223f14c7d81fcbd2e740e1331077daab6d1c480"
+    },
+    {
+      "branch": "v13-house-shopping-ingredients",
+      "sha": "2c86eedbd2b755103a4937ffcc9a2d3ce9451b0c"
+    }
+  ],
+  "method": "atomic-push-with-per-ref-leases",
+  "allTipsReachableFromMain": true,
+  "remainingBranches": [
+    "main"
+  ],
+  "tagsUntouched": true,
+  "liveDeployment": false
+}
