@@ -1,0 +1,76 @@
+--- a/tools/compile_release_catalog_semantics_v60.py
++++ b/tools/compile_release_catalog_semantics_v60.py
+@@ -1314,7 +1314,7 @@
+ 
+     for concept in concepts.values():
+         concept["aliases"] = {
+-            language: sorted(set(values), key=lambda value: _norm(value))
++            language: sorted(set(values), key=lambda value: (_norm(value), value))
+             for language, values in sorted(concept["aliases"].items())
+         }
+         concept["sourceIdentities"].sort(
+--- a/tools/reconcile_catalog_reviews_v197.py
++++ b/tools/reconcile_catalog_reviews_v197.py
+@@ -89,7 +89,7 @@
+     args = parser.parse_args()
+     compiled = semantics.compile_from_paths(semantics._review_paths())
+     result, report = reconcile(json.loads(args.catalog.read_bytes()), compiled)
+-    args.output.write_text(json.dumps(result, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
++    args.output.write_text(json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(',', ':')) + '\n', encoding='utf-8')
+     args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+     print(json.dumps({k:v for k,v in report.items() if k not in {'removedIneligibleOrUnprovenProfiles','compaction'}}, ensure_ascii=False))
+ 
+--- a/tests/test_branch_consolidation_v197.py
++++ b/tests/test_branch_consolidation_v197.py
+@@ -1,6 +1,9 @@
+ from pathlib import Path
+ import hashlib
+ import json
++import os
++import subprocess
++import sys
+ import unittest
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+@@ -48,6 +51,23 @@
+             self.assertRegex(row["sha"], r"^[0-9a-f]{40}$")
+             self.assertTrue(row["resolution"])
+ 
++    def test_semantic_alias_order_does_not_depend_on_python_hash_seed(self):
++        program = (
++            "import hashlib,json,sys;sys.path.insert(0,'tools');"
++            "import compile_release_catalog_semantics_v60 as s;"
++            "value=s.compile_from_paths(s._review_paths());"
++            "print(hashlib.sha256(json.dumps(value,sort_keys=True,"
++            "ensure_ascii=False,separators=(',',':')).encode()).hexdigest())"
++        )
++        results = []
++        for seed in ("1", "42"):
++            results.append(subprocess.check_output(
++                [sys.executable, "-c", program], cwd=ROOT,
++                env={**os.environ, "PYTHONHASHSEED": seed}, text=True,
++                timeout=120,
++            ).strip())
++        self.assertEqual(results[0], results[1])
++
+     def test_obsolete_writing_workflows_not_reactivated(self):
+         paths = {p.name for p in (ROOT / ".github/workflows").glob("*.yml")}
+         self.assertNotIn("catalog-semantic-confirmation-apply-v60.yml", paths)
+--- a/docs/BRANCH_CONSOLIDATION_V197.md
++++ b/docs/BRANCH_CONSOLIDATION_V197.md
+@@ -55,6 +55,15 @@
+ builders, and rejects changes to recipes, ingredient IDs or retained exact-ID
+ nutrient values. `CATALOG_RECONCILIATION_V197.json` records its result.
+ 
++## Reproducible reconstruction
++
++The GitHub reconstruction gate exposed nondeterministic ties between aliases
++that differ only in case. Semantic alias sorting now uses the original spelling
++as a tie-breaker, and the reconciler emits canonical JSON object-key order.
++Separate builds with Python hash seeds 1 and 42 must agree byte-for-byte;
++reviewed source hashes remain mandatory before publication. Recipe and nutrition
++values are unchanged by this reproducibility correction.
++
+ ## Validation and cleanup
+ 
+ Before publication, the existing Validate command block and Greek, scanner,

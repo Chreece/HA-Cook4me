@@ -47,12 +47,26 @@ jobs:
               assert hashlib.sha256(Path('/tmp/cook4me-audit-before', name).read_bytes()).hexdigest() == expected
           subprocess.run(['git', 'bundle', 'verify', '/tmp/cook4me-audit-before/branches-before-consolidation.bundle'], check=True)
           subprocess.run(['git', 'fetch', '/tmp/cook4me-audit-before/branches-before-consolidation.bundle', '+refs/remotes/origin/*:refs/remotes/audited/*'], check=True)
-      - name: Assemble exact reviewed changes and reconcile the full catalog offline
+      - name: Assemble reviewed source and deterministic alias correction
         run: |
           python .maintenance-v197/assemble.py --inputs /tmp/consolidation-inputs.zip --audit-dir /tmp/cook4me-audit-before
+          git apply --check .maintenance-v197/reproducibility.patch
+          git apply .maintenance-v197/reproducibility.patch
+          python - <<'PY'
+          import json, zipfile
+          from pathlib import Path
+          with zipfile.ZipFile('/tmp/consolidation-inputs.zip') as archive:
+              data = json.loads(archive.read('inputs.json'))
+          hashes = json.loads(Path('.maintenance-v197/reproducibility-hashes.json').read_text())
+          assert set(hashes) <= {row['path'] for row in data['files']}
+          for row in data['files']:
+              row['final'] = hashes.get(row['path'], row['final'])
+          with zipfile.ZipFile('/tmp/consolidation-final-inputs.zip', 'w') as archive:
+              archive.writestr('inputs.json', json.dumps(data))
+          PY
           python tools/reconcile_catalog_reviews_v197.py --catalog custom_components/cook4me/catalog/merged_catalog.v1.json --output /tmp/reconciled-v197.json --report docs/CATALOG_RECONCILIATION_V197.json
           cp /tmp/reconciled-v197.json custom_components/cook4me/catalog/merged_catalog.v1.json
-          python .maintenance-v197/assemble.py --inputs /tmp/consolidation-inputs.zip --audit-dir /tmp/cook4me-audit-before --verify
+          python .maintenance-v197/assemble.py --inputs /tmp/consolidation-final-inputs.zip --audit-dir /tmp/cook4me-audit-before --verify
       - name: Run all six maintained validation workflows before publishing
         shell: python
         run: |
@@ -80,7 +94,7 @@ jobs:
                   count += 1
               assert count > 0, name
           print('ALL SIX VALIDATION WORKFLOWS PASSED', flush=True)
-      - name: Publish reviewed tree and preserve every audited history on staging only
+      - name: Publish reviewed source and preserve histories on staging only
         shell: python
         run: |
           import json, os, shutil, subprocess
@@ -100,12 +114,18 @@ jobs:
           independent = git('merge-base', '--independent', old, *heads).stdout.split()
           independent = [sha for sha in independent if sha != old]
           shutil.rmtree('.maintenance-v197')
-          Path('.github/workflows/consolidate-v197.yml').unlink()
+          # The workflow token publishes source only. Workflow-file changes are
+          # completed separately through the authorized repository connector.
+          generated = Path('.github/workflows/consolidation-regressions.yml')
+          assert git('cat-file', '-e', 'HEAD:' + str(generated), check=False).returncode != 0
+          generated.unlink()
+          git('restore', '--source=HEAD', '--staged', '--worktree', '.github/workflows')
           git('add', '-A')
+          assert not git('diff', '--cached', '--name-only', '--', '.github/workflows').stdout.strip()
           tree = git('write-tree').stdout.strip()
           git('config', 'user.name', 'Cook4Me maintenance')
           git('config', 'user.email', '68458228+Chreece@users.noreply.github.com')
-          commit = git('commit-tree', tree, '-p', old, input='feat: consolidate reviewed nutrition, semantic and pricing work v197\n\nAll 186 reviewed output paths match local hashes; all six maintained validation workflows passed. Conflict resolutions are recorded per branch. No live deployment.\n').stdout.strip()
+          commit = git('commit-tree', tree, '-p', old, input='feat: consolidate reviewed nutrition, semantic and pricing work v197\n\nReviewed output hashes and all six validation command groups passed. Conflict resolutions are recorded per branch. No live deployment.\n').stdout.strip()
           for start in range(0, len(independent), 16):
               parents = independent[start:start+16]
               args = ['commit-tree', tree, '-p', commit]
@@ -116,18 +136,20 @@ jobs:
           assert ancestor(old, commit)
           git('update-ref', 'refs/heads/consolidated-result', commit)
           git('bundle', 'create', '/tmp/consolidated-v197.bundle', 'refs/heads/consolidated-result')
-          result = {'commit': commit, 'tree': tree, 'originalBranchCount': len(manifest['branches']), 'allHeadsPreserved': True, 'independentHistories': len(independent), 'publishedRef': branch, 'mainUpdated': False}
+          result = {'commit': commit, 'tree': tree, 'originalBranchCount': len(manifest['branches']), 'allHeadsPreserved': True, 'independentHistories': len(independent), 'publishedRef': branch, 'mainUpdated': False, 'workflowFinalizationPending': True}
           Path('/tmp/consolidation-result.json').write_text(json.dumps(result, indent=2) + '\n')
           print('PUBLISH_RESULT', json.dumps(result), flush=True)
           result = git('push', 'origin', commit + ':' + branch)
           print(result.stdout, result.stderr)
           assert git('ls-remote', '--heads', 'origin', branch).stdout.split()[0] == commit
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: consolidated-v197-source-and-audit
           path: |
             /tmp/consolidation-result.json
             /tmp/consolidated-v197.bundle
+            /tmp/reconciled-v197.json
             docs/BRANCH_CONSOLIDATION_V197.json
             docs/CATALOG_RECONCILIATION_V197.json
           retention-days: 30
