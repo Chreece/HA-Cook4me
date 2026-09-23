@@ -1,0 +1,39 @@
+name: Complete requested audited branch cleanup
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/branch-cleanup-v197.yml', '.maintenance-v197-cleanup/**']
+permissions:
+  contents: write
+  pull-requests: read
+concurrency:
+  group: cook4me-audited-branch-cleanup-v197
+  cancel-in-progress: false
+jobs:
+  cleanup:
+    if: github.repository == 'Chreece/HA-Cook4me' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Verify cleanup guards against an actual local Git race
+        run: python .maintenance-v197-cleanup/test_guards.py
+      - name: Remove only unchanged reviewed branches whose history is in main
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REVIEWED_STAGING_SHA: f4819708085a7a5ee4f36244a48403354a96c33b
+        run: python .maintenance-v197-cleanup/cleanup_branches_v197.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cook4me-complete-history-before-branch-cleanup
+          path: |
+            /tmp/cook4me-final-history.bundle
+            docs/BRANCH_CONSOLIDATION_V197.json
+            docs/BRANCH_CLEANUP_V197.json
+          retention-days: 30
