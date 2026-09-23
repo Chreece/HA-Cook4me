@@ -1,3 +1,4 @@
+import {AppDesignMixin} from './app-design-v203.js';
 import {SelectedFilterMixin} from './filter-selection-v202.js';
 import {RecipeGapsMixin} from './recipe-gaps-v202.js';
 import {ScannerCameraMixin} from './scanner-camera-v202.js';
@@ -10,7 +11,7 @@ import {ReceiptScannerMixin} from './scanner-receipts-v195.js';
 import {ScannerSuggestionsMixin} from './scanner-suggestions-v194.js';
 const V179='cook4me-recipe-hub-panel-v179';
 if(!customElements.get(V179))await import('./cook4me-panel-v179.js?v=2026.9.22.6');
-const BasePanel=SelectedFilterMixin(RecipeGapsMixin(ScannerCameraMixin(WeeklyProgressMixin(ViewFiltersMixin(ReceiptLauncherMixin(RecipeCoverageMixin(ProductEditorMixin(ReceiptScannerMixin(ScannerSuggestionsMixin(customElements.get(V179)))))))))));
+const BasePanel=AppDesignMixin(SelectedFilterMixin(RecipeGapsMixin(ScannerCameraMixin(WeeklyProgressMixin(ViewFiltersMixin(ReceiptLauncherMixin(RecipeCoverageMixin(ProductEditorMixin(ReceiptScannerMixin(ScannerSuggestionsMixin(customElements.get(V179))))))))))));
 
 const V180_TEXT={
  en:{
@@ -160,7 +161,7 @@ class Cook4MeRecipeHubPanelV180 extends BasePanel{
  _renderTab(){
   const result=super._renderTab();
   this.setAttribute('data-cook4me-build','2026.9.22.7');
-  this.setAttribute('data-cook4me-ui-revision','202');
+  this.setAttribute('data-cook4me-ui-revision','203');
   this._v180Styles();
   return result;
  }
@@ -181,3 +182,4 @@ if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v198'))customEleme
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v199'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v199',class extends Cook4MeRecipeHubPanelV180{});
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v200'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v200',class extends Cook4MeRecipeHubPanelV180{});
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v202'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v202',class extends Cook4MeRecipeHubPanelV180{});
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v203'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v203',class extends Cook4MeRecipeHubPanelV180{});

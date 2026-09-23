@@ -1,0 +1,42 @@
+name: App-wide interface refresh
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ui-refresh-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  interface:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Presentation boundaries and runtime activation
+        run: |
+          node --test tests/test_app_design_v203.mjs
+          node --check custom_components/cook4me/frontend/app-design-v203.js
+          node --check custom_components/cook4me/frontend/app-theme-v203.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v180.js
+          python -m py_compile custom_components/cook4me/panel.py
+      - name: Install browser test dependency
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - name: Actual frontend chain on desktop and mobile
+        run: python tests/browser_ui_refresh_v203.py
