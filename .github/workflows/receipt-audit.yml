@@ -1,0 +1,40 @@
+name: Receipt scanner audit
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: receipt-audit-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  receipt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Retained scanner regression baseline
+        run: |
+          python tests/test_scanner_matching_v194.py
+          python tests/test_scanner_routes_v194.py
+          node --test tests/test_scanner_suggestions_v194.mjs
+      - name: Reproducible public-source audit snapshot
+        run: git archive --format=tar.gz -o receipt-audit-source.tar.gz HEAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: receipt-audit-source
+          path: receipt-audit-source.tar.gz
+          retention-days: 1
+          if-no-files-found: error
