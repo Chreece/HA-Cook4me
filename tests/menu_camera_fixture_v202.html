@@ -1,0 +1,41 @@
+<!doctype html><html><meta charset="utf-8"><body style="margin:0"><script type="module">
+import {SelectedFilterMixin} from '../custom_components/cook4me/frontend/filter-selection-v202.js';
+import {RecipeGapsMixin} from '../custom_components/cook4me/frontend/recipe-gaps-v202.js';
+import {ScannerCameraMixin} from '../custom_components/cook4me/frontend/scanner-camera-v202.js';
+const escape=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;');
+class Boundary extends HTMLElement {
+ constructor(){super();this.attachShadow({mode:'open'});this._tab='week';this.scope='one';this.viewFilters={week:['B'],today:['C']};this.saved=0;this.cameraStarts=0;this.cameraStops=0;this._v78Stream={id:'existing-stream'};}
+ _prefKey(){return this.scope;}_uiIngredientLanguage(){return 'el';}_escape(v){return escape(v);}_t(k){return k;}_r195Text(k){return k;}
+ _filters(){return {ingredients:this.viewFilters[this._tab]};}
+ _showFilter(key){
+  this.shadowRoot.querySelector('[data-filter-dialog]')?.remove();const overlay=document.createElement('div');overlay.dataset.filterDialog=key;
+  const selected=this._filters().ingredients,rows=['A','B','C','D'];
+  overlay.innerHTML=`<div class="rx-dialog"><h2>${key}</h2><input data-ingredient-search><div data-ingredient-choices>${rows.map(value=>`<label style="display:block"><input type="checkbox" data-list="ingredients" value="${value}" ${selected.includes(value)?'checked':''}>${value}</label>`).join('')}</div><footer><button data-apply>Apply</button></footer></div>`;
+  overlay.querySelector('[data-ingredient-search]').oninput=e=>overlay.querySelectorAll('label').forEach(label=>label.style.display=label.textContent.includes(e.target.value)?'block':'none');
+  overlay.querySelector('[data-apply]').onclick=()=>{this.saved++;this.viewFilters[this._tab]=[...overlay.querySelectorAll('input[data-list]:checked')].map(node=>node.value);};
+  this.shadowRoot.append(overlay);
+ }
+ _v66PreferLanguages(rows){return Promise.resolve(rows);}_ensureRecipeSelections(){}
+ _recipeCard(recipe){if(recipe.hidden)return '';if(recipe.broken)throw new TypeError('fixture private data');return `<article class="recipe">${escape(recipe.title)}</article>`;}
+ _v66Render(section,container,render){render();}
+ _renderToday(c){c.innerHTML=`<div id="todayGrid">${this._todayResults.map(row=>this._recipeCard(row)).join('')}</div>`;}
+ _weekDayHtml(stamp){return `<section class="rx-week-day" data-week-date="${stamp}"><h3>${stamp}</h3>${this._weekState.slots.filter(s=>s.date===stamp&&s.recipe).map(s=>`<div class="rx-week-slot" data-slot-id="${s.id}"><h4>${s.mealType}</h4>${this._recipeCard(s.recipe)}</div>`).join('')}</section>`;}
+ _renderWeek(c){c.innerHTML='<div class="rx-week-grid">'+this._weekDayHtml('2026-09-23')+'</div>';}
+ _v144MealRank(meal){return ['breakfast','lunch','dinner'].indexOf(meal);}_v145MealLabel(meal){return meal;}_leftoverById(){return null;}
+ _v78RenderCapture(){
+  if(!this._v78Dialog){this._v78Dialog=document.createElement('section');this._v78Dialog.className='v78-capture';this.shadowRoot.append(this._v78Dialog);}
+  const c=this._v78Dialog;c.innerHTML=`<header><div><div class="v78-eyebrow">COOK4ME</div><h2>Προσθήκη στην κουζίνα</h2></div><button data-close>×</button></header><div class="v78-capture-body"><aside><fieldset class="v78-capture-tools"><div class="v78-viewfinder v111-camera" data-v111-frame data-mode="${this._v78Draft.mode}"><video></video><div class="v111-modes">${['barcode','date','nutrition','receipt','product'].map(mode=>`<button class="v111-icon" data-v80-scan="${mode}" title="${mode}"><ha-icon icon="${mode==='receipt'?'mdi:receipt-text-scan':'mdi:'+mode}"></ha-icon></button>`).join('')}<button class="v111-icon">off</button></div><div class="v111-guide-wrap" data-v111-guide-wrap><p data-v111-instruction>${escape(this._r195Text('frame'))}</p><div class="v111-guide" data-v111-guide><span></span><span></span><span></span><span></span></div><small data-v111-target>Align here</small><small data-r199-photo-privacy>Η φωτογραφία αποστέλλεται στην επιλεγμένη εργασία AI του Home Assistant.</small></div><div class="v111-result" hidden></div><div class="v111-bottom"><button data-v78-take class="v111-icon">●</button></div></div></fieldset><p class="v111-photo-help">Camera help</p></aside></div>`;
+  c.querySelector('[data-close]').onclick=()=>this._v78Close(true);
+ }
+ _v111Paint(){this._v78Dialog.querySelector('[data-v111-frame]').dataset.mode=this._v78Draft.mode;}
+ _v111Canvas(crop){return {crop,width:this.videoSize?.[0]||1920,height:this.videoSize?.[1]||1080};}
+ _v78Close(force){if(force){this._v78Dialog?.remove();this._v78Dialog=null;}}
+ disconnectedCallback(){}
+}
+customElements.define('menu-camera-test',SelectedFilterMixin(RecipeGapsMixin(ScannerCameraMixin(Boundary))));
+window.setup=()=>{
+ document.querySelector('menu-camera-test')?.remove();const panel=document.createElement('menu-camera-test');document.body.append(panel);window.panel=panel;
+ const style=document.createElement('style');style.textContent=window.legacyCSS+'\n:host{display:block;font:16px system-ui;--primary-color:#00a6c9;--card-background-color:#1e252a;--divider-color:#666;--primary-text-color:#fff;--secondary-text-color:#bcc9d0}button,input{font:inherit}button{min-height:44px}ha-icon{display:block;width:24px;height:24px;background:currentColor;opacity:.65;border-radius:3px}.v111-camera video{background:linear-gradient(45deg,#224353,#0f1520);}.v78-capture-body{box-sizing:border-box}';panel.shadowRoot.append(style);return panel;
+};
+window.ready=true;
+</script></body></html>
