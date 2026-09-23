@@ -372,7 +372,9 @@ async def _create_ai_recipe(hass: HomeAssistant, bridge, msg: dict[str, Any]) ->
     if not _required_ingredients_present(recipe, preferred):
         raise ValueError("AI recipe did not contain every selected preferred ingredient")
 
-    ranked = v13._rank_filtered(bridge, [recipe], diet=diet, limit=1)
+    # Explicit recipe creation is not an automatic meal suggestion. Keep the
+    # normal dietary validation without mislabelling a guide as an allergy error.
+    ranked = v13._rank_filtered(bridge, [recipe], diet=diet, limit=1, for_suggestions=False)
     if not ranked:
         raise ValueError("AI recipe failed the selected diet/allergy safety rules")
     checked = ranked[0]

@@ -226,7 +226,8 @@ def ingredient_identities(recipe: Any) -> set[str]:
 
 
 def select_diverse(rows: Any, count: int, *, enabled: bool = True) -> list[dict[str, Any]]:
-    candidates = [deepcopy(row) for row in rows if isinstance(row, dict)] if isinstance(rows, list) else []
+    from .recipe_suitability import meal_candidates
+    candidates = [deepcopy(row) for row in meal_candidates(rows)]
     target = max(1, min(int(count), 8))
     if not enabled:
         return candidates[:target]

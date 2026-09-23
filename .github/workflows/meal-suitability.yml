@@ -1,0 +1,36 @@
+name: Automatic meal suitability
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: meal-suitability-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  suitability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Meal eligibility and current shipped catalog
+        run: python tests/test_meal_suitability_v206.py
+      - name: Actual generator, replacements and search boundaries
+        run: python tests/test_meal_selection_routes_v206.py
+      - name: Retained progress, cancellation and variety
+        run: |
+          python tests/test_week_progress_v200.py
+          python tests/test_weekly_responsive_variety_v181.py
+      - name: Source syntax
+        run: python -m compileall -q custom_components/cook4me

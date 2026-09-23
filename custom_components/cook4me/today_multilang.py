@@ -5,6 +5,7 @@ from copy import deepcopy
 from typing import Any
 
 from .today_logic import ingredient_identities, recipe_identity
+from .recipe_suitability import meal_candidates
 
 
 def _language(row: dict[str, Any]) -> str:
@@ -115,11 +116,7 @@ def select_catalog_balanced(
     catalog. Duplicate logical recipes are never emitted merely to satisfy a
     catalog quota.
     """
-    candidates = [
-        deepcopy(row)
-        for row in rows
-        if isinstance(row, dict)
-    ] if isinstance(rows, list) else []
+    candidates = [deepcopy(row) for row in meal_candidates(rows)]
     target = max(1, min(int(count), 8))
 
     requested: list[str] = []
@@ -196,6 +193,7 @@ def select_today_categories(rows, categories, languages, previous=(), history=()
     translation or serving edition never counts as a new recipe.
     """
     from .today_logic import normalize_meal_types, recipe_matches_meal_types
+    rows = meal_candidates(rows)
     identity = lambda row: row.get("displayFamilyId") or recipe_identity(row)
     recent = compact_suggestion_history(history)
     if not recent:

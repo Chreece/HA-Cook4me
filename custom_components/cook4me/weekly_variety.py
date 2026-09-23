@@ -3,6 +3,7 @@ import re
 
 from .catalog_presentation import clean_name, name_key
 from .today_logic import recipe_identity
+from .recipe_suitability import is_cooking_guide
 
 _TITLE_FILLERS = {"a", "an", "the", "and", "with", "in", "of", "on", "to", "for"}
 
@@ -64,6 +65,7 @@ def available_candidates(candidates, signatures, selected, avoid=()):
     return [
         row
         for row in candidates
-        if not already_planned(signatures[id(row)], selected)
+        if not is_cooking_guide(row)
+        and not already_planned(signatures[id(row)], selected)
         and not already_planned(signatures[id(row)], avoid)
     ]
