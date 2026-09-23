@@ -1,0 +1,204 @@
+diff --git a/custom_components/cook4me/__init__.py b/custom_components/cook4me/__init__.py
+index 7c5ee505ac46fda1d5f6e7036ca25f8af6bffe00..fb69ebc2fec0f43725bff2cc386ae192e8ec62e0 100755
+--- a/custom_components/cook4me/__init__.py
++++ b/custom_components/cook4me/__init__.py
+@@ -1,5 +1,7 @@
+ from __future__ import annotations
+ 
++import logging
++from time import monotonic
+ from typing import Any
+ from copy import deepcopy
+ 
+@@ -26,6 +28,7 @@ from .expiry import (
+ )
+ from .panel import async_register_panel
+ from .release_catalog import async_warm_release_catalog
++from .stock_coverage import warm_stock_catalog
+ from .smart_scale import apply_recipe_measurements, smart_scale_store_for_bridge
+ from .websocket import async_register as async_register_websocket
+ from .websocket_v5 import async_register as async_register_websocket_v5
+@@ -184,7 +187,14 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
+     # profiles. Parse it once in HA's executor during integration setup so the
+     # first panel/search request never pays a synchronous JSON parse on the
+     # event loop. load_release_catalog() is LRU-cached after this warm-up.
++    # Both expensive catalog preparation and the small stock identity index
++    # stay off HA's event loop. Log elapsed time, not recipe or inventory data.
++    started = monotonic()
+     await async_warm_release_catalog(hass)
++    await hass.async_add_executor_job(warm_stock_catalog)
++    logging.getLogger(__name__).info(
++        "Cook4Me catalog and stock index ready in %.2f seconds", monotonic() - started
++    )
+     from .price_measurements import _portions, _densities
+     from .price_snapshot import _load as load_price_snapshot
+     from .price_benchmarks import warm_price_benchmarks
+ diff --git a/custom_components/cook4me/food_intelligence.py b/custom_components/cook4me/food_intelligence.py
+index 3043d5531bdcdc0447649d5752c952532a9b4040..77ffd848e7c3a3bce7150b591a2126b820fe882d 100644
+--- a/custom_components/cook4me/food_intelligence.py
++++ b/custom_components/cook4me/food_intelligence.py
+@@ -9,6 +9,7 @@ from typing import Any
+ from .stock_allocation import allocate_stock
+ from .inventory import stock_for_ingredient, convert_amount, inventory_identity, normalize_inventory
+ from .price_measurements import price_options
++from .stock_coverage import coverage_ingredient, coverage_stock
+ 
+ _NUTRITION_GOALS = {
+     "balanced",
+@@ -70,7 +71,9 @@ def _find_stock(stock, ingredient, used=None):
+     if current is not None:
+         return current
+     name = _norm(_ingredient_name(ingredient))
+-    fallback = next((row for row in stock if name and _norm(row.get("name")) == name), None)
++    # A translated label is not proof that two distinct keyed foods match.
++    fallback = next((row for row in stock if name and _norm(row.get("name")) == name
++                     and not (ingredient.get("key") and row.get("key"))), None)
+     return stock_for_ingredient(stock, fallback, used) if fallback else None
+ 
+ 
+@@ -176,14 +179,17 @@ def recipe_quantity_feasibility(
+     amounts or incompatible units are reported as unknown rather than pretending
+     that presence means enough stock exists.
+     """
+-    stock = normalize_inventory(inventory)
++    stock = coverage_stock(normalize_inventory(inventory))
+     availability_rows = availability if isinstance(availability, list) else []
+     rows: list[dict[str, Any]] = []
+     known_fractions: list[float] = []
+     shortages: list[dict[str, Any]] = []
+     unknown: list[dict[str, Any]] = []
+ 
+-    ingredients = [item for item in recipe.get("ingredients") or [] if isinstance(item, dict)]
++    indexed = [(index, coverage_ingredient(item))
++               for index, item in enumerate(recipe.get("ingredients") or [])
++               if isinstance(item, dict)]
++    ingredients = [item for _, item in indexed]
+     requirements: list[dict[str, Any]] = []
+     requests: list[dict[str, Any]] = []
+     for item in ingredients:
+@@ -198,9 +204,10 @@ def recipe_quantity_feasibility(
+             "consume": bool(_ingredient_name(item))
+             and _availability_status(item, availability_rows) != "staple",
+         })
+-    for ingredient, current, requirement in zip(
++    for filtered_index, (ingredient, current, requirement) in enumerate(zip(
+         ingredients, allocate_stock(stock, requests), requirements
+-    ):
++    )):
++        ingredient_index = indexed[filtered_index][0]
+         name = _ingredient_name(ingredient)
+         if not name:
+             continue
+@@ -208,6 +215,7 @@ def recipe_quantity_feasibility(
+         if status == "staple":
+             rows.append({
+                 "identity": inventory_identity(ingredient),
++                "ingredientIndex": ingredient_index,
+                 "name": name,
+                 "status": "staple",
+                 "coverage": 1.0,
+@@ -223,6 +231,7 @@ def recipe_quantity_feasibility(
+         ident = inventory_identity(current or ingredient)
+         base: dict[str, Any] = {
+             "identity": ident,
++            "ingredientIndex": ingredient_index,
+             **({"key": _text(ingredient.get("foodKey") or ingredient.get("key"))} if ingredient.get("foodKey") or ingredient.get("key") else {}),
+             "name": name,
+             "requiredQuantity": required,
+ diff --git a/custom_components/cook4me/frontend/cook4me-panel-v180.js b/custom_components/cook4me/frontend/cook4me-panel-v180.js
+index fde0f253dc9e975621439b7ef87464da493731e8..f21a0e558f3382bf299013dd8714843cb5a49d54 100644
+--- a/custom_components/cook4me/frontend/cook4me-panel-v180.js
++++ b/custom_components/cook4me/frontend/cook4me-panel-v180.js
+@@ -1,9 +1,10 @@
++import {RecipeCoverageMixin} from './recipe-coverage-v198.js';
+ import {ProductEditorMixin} from './scanner-editor-v196.js';
+ import {ReceiptScannerMixin} from './scanner-receipts-v195.js';
+ import {ScannerSuggestionsMixin} from './scanner-suggestions-v194.js';
+ const V179='cook4me-recipe-hub-panel-v179';
+ if(!customElements.get(V179))await import('./cook4me-panel-v179.js?v=2026.9.22.6');
+-const BasePanel=ProductEditorMixin(ReceiptScannerMixin(ScannerSuggestionsMixin(customElements.get(V179))));
++const BasePanel=RecipeCoverageMixin(ProductEditorMixin(ReceiptScannerMixin(ScannerSuggestionsMixin(customElements.get(V179)))));
+ 
+ const V180_TEXT={
+  en:{
+@@ -153,6 +154,7 @@ class Cook4MeRecipeHubPanelV180 extends BasePanel{
+  _renderTab(){
+   const result=super._renderTab();
+   this.setAttribute('data-cook4me-build','2026.9.22.7');
++  this.setAttribute('data-cook4me-ui-revision','198');
+   this._v180Styles();
+   return result;
+  }
+@@ -166,4 +168,7 @@ class Cook4MeRecipeHubPanelV180 extends BasePanel{
+   `;this.shadowRoot.append(style);
+  }
+ }
+-customElements.define('cook4me-recipe-hub-panel-v180',Cook4MeRecipeHubPanelV180);
++// A new active element prevents HA's long-lived page from reusing a registered
++// pre-editor v180 constructor after the backend integration has been updated.
++if(!customElements.get('cook4me-recipe-hub-panel-v180'))customElements.define('cook4me-recipe-hub-panel-v180',Cook4MeRecipeHubPanelV180);
++if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v198'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v198',class extends Cook4MeRecipeHubPanelV180{});
+ diff --git a/custom_components/cook4me/frontend/scanner-receipts-v195.js b/custom_components/cook4me/frontend/scanner-receipts-v195.js
+index 74354747fcc4c9b689ce0c92226fbcd2d44f1034..ee9734bd2016f187038530320492cfe9b7487ce5 100644
+--- a/custom_components/cook4me/frontend/scanner-receipts-v195.js
++++ b/custom_components/cook4me/frontend/scanner-receipts-v195.js
+@@ -17,6 +17,11 @@ export function removeWeeklyReceiptSections(root){
+  for(const key of ['reservedStock','leftovers','priceInventory','completedPurchases']){
+   for(const node of root?.querySelectorAll?.(`[data-v179-fold="${key}"]`)||[])node.remove();
+  }
++ // Older Week renderers already wrapped these cards before v179 sees them.
++ // Remove their stable keys too; translated heading text is not an identifier.
++ for(const key of ['leftovers','prices']){
++  for(const node of root?.querySelectorAll?.(`[data-v137-week-panel="${key}"]`)||[])node.remove();
++ }
+  for(const pair of root?.querySelectorAll?.('.two')||[]){
+   if(pair.children.length===1)pair.style.gridTemplateColumns='minmax(0,1fr)';
+  }
+ diff --git a/custom_components/cook4me/panel.py b/custom_components/cook4me/panel.py
+index 80d25d64162f459a68bacb84779b94efd83ee7e9..7f7e6fee968edbcdc14034d8c0280477952e60a0 100644
+--- a/custom_components/cook4me/panel.py
++++ b/custom_components/cook4me/panel.py
+@@ -30,8 +30,8 @@ from .websocket_v37 import async_register as async_register_websocket_v37
+ from .websocket_v38 import async_register as async_register_websocket_v38
+ from .websocket_v39 import async_register as async_register_websocket_v39
+ 
+-_URL_BASE = "/cook4me_static/2026.9.22.7"
+-_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180"
++_URL_BASE = "/cook4me_static/2026.9.22.7/runtime-v198"
++_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v198"
+ _PANEL_MODULE = "cook4me-panel-v180.js"
+ _V20_REGISTERED = "websocket_v20_registered"
+ _V21_REGISTERED = "websocket_v21_registered"
+@@ -109,7 +109,7 @@ async def async_register_panel(hass: HomeAssistant) -> None:
+         hass=hass,
+         frontend_url_path=DOMAIN,
+         webcomponent_name=_PANEL_ELEMENT,
+-        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.22.7&scanner=194&receipt=195",
++        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.22.7&scanner=194&receipt=195&editor=196&runtime=198",
+         sidebar_title="Cook4Me",
+         sidebar_icon="mdi:pot-steam",
+         embed_iframe=False,
+ diff --git a/tests/test_receipt_ui_v195.mjs b/tests/test_receipt_ui_v195.mjs
+index 9f051d2b0644a482ec11c35fa2bc89bd49e173c3..24762ed27edb4f0862bcef15428d1e81a41b323d 100644
+--- a/tests/test_receipt_ui_v195.mjs
++++ b/tests/test_receipt_ui_v195.mjs
+@@ -30,7 +30,18 @@ test('previous/next clamp at boundaries',()=>{assert.equal(receiptPosition([1,2]
+ test('line totals include discounts and deposits but not total/tax rows',()=>{const r=raw();r.items.push({kind:'discount',lineTotal:-.5},{kind:'deposit',lineTotal:.25},{kind:'total',lineTotal:99});r.total=3.75;assert.deepEqual(receiptTotals(r),{amount:3.75,known:true,different:false});});
+ test('unknown prices are not presented as complete zero totals',()=>{const r=raw();r.items[0].lineTotal=null;assert.equal(receiptTotals(r).known,false);});
+ test('different receipt totals are reported',()=>{const r=raw();r.total=9;assert.equal(receiptTotals(r).different,true);});
+-test('weekly removal is limited to four data keys',()=>{const removed=[];const pair={children:[{}],style:{}};const root={querySelectorAll(selector){if(selector==='.two')return [pair];return [{remove:()=>removed.push(selector)}];}};removeWeeklyReceiptSections(root);assert.equal(removed.length,4);assert.ok(removed.some(x=>x.includes('reservedStock')));assert.ok(removed.every(x=>!x.includes('shoppingDelta')));assert.equal(pair.style.gridTemplateColumns,'minmax(0,1fr)');});
++test('weekly removal is limited to the requested panels across both folding generations',()=>{
++ const removed=[],pair={children:[{}],style:{}};
++ const root={querySelectorAll(selector){if(selector==='.two')return [pair];return [{remove:()=>removed.push(selector)}];}};
++ removeWeeklyReceiptSections(root);
++ assert.deepEqual(removed,[
++  '[data-v179-fold="reservedStock"]','[data-v179-fold="leftovers"]',
++  '[data-v179-fold="priceInventory"]','[data-v179-fold="completedPurchases"]',
++  '[data-v137-week-panel="leftovers"]','[data-v137-week-panel="prices"]'
++ ]);
++ assert.ok(removed.every(x=>!x.includes('shoppingDelta')&&!x.includes('nutrition')));
++ assert.equal(pair.style.gridTemplateColumns,'minmax(0,1fr)');
++});
+ test('receipt item load never inherits today or preferred currency',()=>{const {host}=setup();const r=raw();r.purchaseDate='';r.currency='';host._r195SetReceipt(r);assert.equal(host._v78Draft.purchaseDate,'');assert.equal(host._v78Draft.paidCurrency,'');assert.equal(host._v78Draft.ingredient,null);});
+ test('navigation preserves amounts, nutrition and multiple ingredient choices',()=>{const {host}=setup();Object.assign(host._v78Draft,{quantity:'750',productName:'Edited carrot',ingredientLinks:[{key:'a'},{key:'b'}],nutrition:{basisQuantity:100,basisUnit:'g',values:{protein:2}}});host._v78Dirty=true;host._r195Move(1);host._r195Move(-1);assert.equal(host._v78Draft.quantity,'750');assert.equal(host._v78Draft.productName,'Edited carrot');assert.equal(host._v78Draft.ingredientLinks.length,2);assert.equal(host._v78Draft.nutrition.values.protein,2);});
+ test('busy scanner cannot change item',()=>{const {host}=setup();host._v78Busy=true;host._r195Move(1);assert.equal(host._r195Session.index,0);});

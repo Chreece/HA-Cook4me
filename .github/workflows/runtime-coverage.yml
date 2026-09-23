@@ -1,0 +1,33 @@
+name: Runtime stock coverage
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: runtime-coverage-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Stock identities, source units, shared quantities and shipped catalog
+        run: |
+          python tests/test_stock_coverage_v198.py
+          python tests/test_catalog_stock_v198.py
+          python tests/test_universal_stock_coverage.py
+          python tests/test_reviewed_portion_stock_coverage.py
+      - name: Coverage display and both weekly folding generations
+        run: node --test tests/test_recipe_coverage_v198.mjs

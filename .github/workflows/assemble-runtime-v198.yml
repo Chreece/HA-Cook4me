@@ -1,0 +1,59 @@
+name: Assemble reviewed runtime v198 patch
+on:
+  push:
+    branches: [fix/runtime-stock-coverage-v198]
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: github.repository == 'Chreece/HA-Cook4me' && github.ref == 'refs/heads/fix/runtime-stock-coverage-v198'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check exact original files and apply the reviewed patch
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, subprocess
+          path=Path('.github/runtime-v198.patch')
+          text=path.read_text().replace('\n diff --git ', '\ndiff --git ')
+          paths=re.findall(r'^diff --git a/(\S+) b/\S+$',text,re.M)
+          hashes=re.findall(r'^index ([0-9a-f]{40})\.\.([0-9a-f]{40}) ',text,re.M)
+          allowed=['custom_components/cook4me/__init__.py','custom_components/cook4me/food_intelligence.py','custom_components/cook4me/frontend/cook4me-panel-v180.js','custom_components/cook4me/frontend/scanner-receipts-v195.js','custom_components/cook4me/panel.py','tests/test_receipt_ui_v195.mjs']
+          assert paths==allowed and len(hashes)==len(paths), 'Unexpected patch paths'
+          for name,(before,after) in zip(paths,hashes):
+              assert subprocess.check_output(['git','hash-object',name],text=True).strip()==before, name
+          path.write_text(text)
+          subprocess.run(['git','apply','--check',str(path)],check=True)
+          subprocess.run(['git','apply',str(path)],check=True)
+          for name,(_,after) in zip(paths,hashes):
+              assert subprocess.check_output(['git','hash-object',name],text=True).strip()==after, name
+          print('All six runtime patch outputs match the locally tested Git hashes')
+          PY
+      - name: Focused runtime and retained editor checks on current main source
+        run: |
+          python tests/test_stock_coverage_v198.py
+          python tests/test_catalog_stock_v198.py
+          python tests/test_universal_stock_coverage.py
+          python tests/test_reviewed_portion_stock_coverage.py
+          node --test tests/test_recipe_coverage_v198.mjs tests/test_scanner_editor_v196.mjs tests/test_receipt_ui_v195.mjs tests/test_scanner_suggestions_v194.mjs
+          python -m compileall -q custom_components/cook4me
+          node --check custom_components/cook4me/frontend/cook4me-panel-v180.js
+      - name: Commit validated source to work branch and remove temporary assembly files
+        run: |
+          git rm .github/runtime-v198.patch .github/workflows/assemble-runtime-v198.yml
+          git add custom_components/cook4me/__init__.py custom_components/cook4me/food_intelligence.py custom_components/cook4me/frontend/cook4me-panel-v180.js custom_components/cook4me/frontend/scanner-receipts-v195.js custom_components/cook4me/panel.py tests/test_receipt_ui_v195.mjs
+          git config user.name 'Chris Chreece'
+          git config user.email '68458228+Chreece@users.noreply.github.com'
+          git commit -m 'fix: activate current editor, remove legacy weekly panels and normalize stock coverage (v198)'
+          git push origin HEAD:refs/heads/fix/runtime-stock-coverage-v198
