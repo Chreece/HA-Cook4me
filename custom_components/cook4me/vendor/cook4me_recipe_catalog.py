@@ -162,34 +162,49 @@ def _step_texts(step: dict[str, Any]) -> list[str]:
     return values
 
 
-def _cookeo_program(step: dict[str, Any]) -> tuple[str | None, str | None]:
+def _cookeo_programs(step: dict[str, Any]) -> list[dict[str, str]]:
+    """Keep this step's device programs in order, never another appliance's.
+
+    Unscoped older sequences remain supported only when no explicit Cook4Me
+    sequence exists. No instruction text, numeric program ID or recipe-wide
+    setting is interpreted as a mode.
+    """
     sequences = step.get("sequences")
     if not isinstance(sequences, list):
-        return None, None
-    fallback: tuple[str | None, str | None] = (None, None)
-    for sequence in sequences:
-        if not isinstance(sequence, dict):
-            continue
+        return []
+
+    def group_key(sequence):
         group = sequence.get("applianceGroup")
-        group_key = str(group.get("key") or "") if isinstance(group, dict) else ""
+        value = group.get("key") if isinstance(group, dict) else group
+        return value.strip() if isinstance(value, str) else ""
+
+    rows = [row for row in sequences if isinstance(row, dict)]
+    selected = [row for row in rows if group_key(row) == "APPLIANCE_GROUP_15"]
+    if not selected:
+        selected = [row for row in rows if not group_key(row)]
+    programs = []
+    for sequence in selected:
         operations = sequence.get("operations")
-        if not isinstance(operations, list):
-            continue
-        for operation in operations:
-            if not isinstance(operation, dict):
+        for operation in operations if isinstance(operations, list) else []:
+            if not isinstance(operation, dict) or not isinstance(operation.get("program"), dict):
                 continue
-            program = operation.get("program")
-            if not isinstance(program, dict):
-                continue
-            candidate = (
-                _clean_text(program.get("key")),
-                _clean_text(program.get("name")),
-            )
-            if fallback == (None, None):
-                fallback = candidate
-            if group_key == "APPLIANCE_GROUP_15":
-                return candidate
-    return fallback
+            program = operation["program"]
+            key = program.get("key")
+            name = program.get("name")
+            row = {
+                "programKey": _clean_text(key) if isinstance(key, (str, int)) and not isinstance(key, bool) else None,
+                "programName": _clean_text(name) if isinstance(name, str) else None,
+                "applianceGroup": group_key(sequence) or None,
+            }
+            if row["programKey"] or row["programName"]:
+                programs.append({key: value for key, value in row.items() if value is not None})
+    return programs
+
+
+def _cookeo_program(step: dict[str, Any]) -> tuple[str | None, str | None]:
+    """Retain the legacy first-program contract for existing consumers."""
+    first = next(iter(_cookeo_programs(step)), {})
+    return first.get("programKey"), first.get("programName")
 
 
 def extract_recipe_steps(root: dict[str, Any]) -> list[dict[str, Any]]:
@@ -208,7 +223,8 @@ def extract_recipe_steps(root: dict[str, Any]) -> list[dict[str, Any]]:
         else:
             type_key = _clean_text(step_type)
             type_name = None
-        program_key, program_name = _cookeo_program(step)
+        programs = _cookeo_programs(step)
+        first_program = next(iter(programs), {})
         row = {
             "functionalId": _fid(step.get("fid") or step.get("identifier") or step.get("functionalId")),
             "stepIndex": position,
@@ -218,8 +234,9 @@ def extract_recipe_steps(root: dict[str, Any]) -> list[dict[str, Any]]:
             "instructions": texts,
             "applicationDescription": _clean_text(step.get("applicationDescription")),
             "applianceDescription": _clean_text(step.get("applianceDescription")),
-            "programKey": program_key,
-            "programName": program_name,
+            "programKey": first_program.get("programKey"),
+            "programName": first_program.get("programName"),
+            "programs": programs,
         }
         out.append({key: value for key, value in row.items() if value is not None})
 
