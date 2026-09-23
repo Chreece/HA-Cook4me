@@ -3,6 +3,8 @@ name: Receipt scanner audit
 on:
   pull_request:
     branches: [main]
+  push:
+    branches: [main]
 
 permissions:
   contents: read
@@ -25,16 +27,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Retained scanner regression baseline
+      - name: Receipt validation, persistence and authenticated routes
         run: |
-          python tests/test_scanner_matching_v194.py
-          python tests/test_scanner_routes_v194.py
-          node --test tests/test_scanner_suggestions_v194.mjs
-      - name: Reproducible public-source audit snapshot
-        run: git archive --format=tar.gz -o receipt-audit-source.tar.gz HEAD
-      - uses: actions/upload-artifact@v4
-        with:
-          name: receipt-audit-source
-          path: receipt-audit-source.tar.gz
-          retention-days: 1
-          if-no-files-found: error
+          python tests/test_receipts_v195.py
+          python tests/test_receipt_routes_v195.py
+      - name: Receipt review, navigation and weekly view
+        run: node --test tests/test_receipt_ui_v195.mjs
+      - name: Source syntax
+        run: |
+          python -m compileall -q custom_components/cook4me
+          node --check custom_components/cook4me/frontend/scanner-receipts-v195.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v180.js
