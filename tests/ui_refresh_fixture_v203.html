@@ -1,0 +1,87 @@
+<!doctype html><html lang="el"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cook4Me UI regression fixture</title>
+<style>
+ html,body{margin:0;min-height:100%;font-family:system-ui,sans-serif}body{--primary-color:#009a96;--primary-text-color:#e8eeee;--secondary-text-color:#a6b6b9;--primary-background-color:#111819;--secondary-background-color:#192223;--card-background-color:#1b2526;--divider-color:#334346;--error-color:#f5948b;--text-primary-color:#fff;background:var(--primary-background-color);color:var(--primary-text-color)}
+ body.light{--primary-color:#007f7a;--primary-text-color:#183337;--secondary-text-color:#526a6e;--primary-background-color:#f2f6f5;--secondary-background-color:#eaf0ee;--card-background-color:#fff;--divider-color:#d4dedb;--error-color:#b32929}
+</style><body>
+<script type="module">
+// The real frontend inheritance chain is loaded below. Only HA/network/device
+// boundaries and icon rendering are fixtures. No live resources are accessed.
+const paths={
+ magnify:'<circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/>',
+ calendar:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 3v4m10-4v4M3 10h18M7 14h3m4 0h3m-10 4h3m4 0h3"/>',
+ heart:'<path d="M12 21 3.8 13C-2 6 7 0 12 7c5-7 14-1 8.2 6Z"/>',
+ home:'<path d="m2 11 10-8 10 8M5 9v12h14V9M10 21v-7h4v7"/>',
+ cart:'<path d="M2 4h3l3 12h11l3-9H6"/><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/>',
+ chef:'<path d="M7 15c-7-2-4-10 1-8 1-7 9-7 9 0 5-2 8 6 1 8v6H7ZM8 17h9"/>',
+ sun:'<circle cx="12" cy="12" r="5"/><path d="M12 1v3m0 16v3M1 12h3m16 0h3M4 4l2 2m12 12 2 2M4 20l2-2M18 6l2-2"/>',
+ book:'<path d="M12 21V5C8 2 4 3 2 4v15c4-1 7-1 10 2 3-3 6-3 10-2V4c-2-1-6-2-10 1Z"/>',
+ chevron:'<path d="m5 9 7 7 7-7"/>',
+ send:'<path d="m2 3 20 9-20 9 5-9Zm5 9h15"/>',
+ refresh:'<path d="M20 8a8 8 0 1 0 0 9M20 3v6h-6"/>',
+ close:'<path d="m6 6 12 12M6 18 18 6"/>',
+ settings:'<circle cx="12" cy="12" r="4"/><path d="M12 1v4m0 14v4M1 12h4m14 0h4M4 4l3 3m10 10 3 3M4 20l3-3M17 7l3-3"/>',
+ receipt:'<path d="M5 2h14v20l-3-2-4 2-4-2-3 2ZM8 6h8M8 10h8M8 14h5"/>',
+ barcode:'<path d="M2 7V3h4m12 0h4v4M2 17v4h4m12 0h4v-4M6 7v10m3-10v10m4-10v10m3-10v10m3-10v10"/>',
+ fallback:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12h8m-4-4v8"/>'
+};
+class HaIcon extends HTMLElement{
+ static get observedAttributes(){return ['icon'];}constructor(){super();this.attachShadow({mode:'open'});}connectedCallback(){this.paint();}attributeChangedCallback(){this.paint();}
+ paint(){const name=this.getAttribute('icon')||'';const key=Object.keys(paths).find(k=>name.includes(k))||'fallback';this.shadowRoot.innerHTML=`<style>:host{display:inline-flex;align-items:center;justify-content:center;width:var(--mdc-icon-size,24px);height:var(--mdc-icon-size,24px);vertical-align:middle}svg{width:100%;height:100%}</style><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${paths[key]}</svg>`;}
+}customElements.define('ha-icon',HaIcon);
+await import('../custom_components/cook4me/frontend/cook4me-panel-v180.js');
+const Base=customElements.get('cook4me-recipe-hub-panel-v180-runtime-v203');
+const dishImage=(n)=>'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320"><rect width="600" height="320" fill="${['#365c49','#78644a','#4e6172','#657752'][n%4]}"/><circle cx="300" cy="155" r="146" fill="#dce5db"/><circle cx="300" cy="155" r="125" fill="#f2eee0"/>${Array.from({length:25},(_,i)=>{let a=i*2.4,r=25+i*3;return `<ellipse cx="${300+Math.cos(a)*r}" cy="${155+Math.sin(a)*r}" rx="${12+i%9}" ry="${8+i%11}" fill="${['#71a85e','#d67c35','#d5bc71','#337b57'][i%4]}" transform="rotate(${i*19} ${300+Math.cos(a)*r} ${155+Math.sin(a)*r})"/>`;}).join('')}</svg>`);
+function recipe(i=0){
+ const titles=['Ρύζι με ψητά λαχανικά','Σούπα με καρότο και τζίντζερ','Πλιγούρι με μυρωδικά','Κουνουπίδι με λεμόνι','Ρεβίθια με σπανάκι','Βρώμη με μήλο και κανέλα','Λαχανικά με γιαούρτι'];
+ return {id:'recipe-'+i,displayVariantId:'recipe-'+i,displayFamilyId:'family-'+i,source:'official',language:'el',selectedLanguage:'el',title:titles[i%titles.length],cover:dishImage(i),imageUrl:dishImage(i),servings:2,selectedServings:2,groupSize:2,availableLanguages:['el'],mealTypes:['main'],todayMealType:['breakfast','lunch','dinner'][i%3],dietary:{vegetarian:true},ingredients:[{key:'rice',name:'Ρύζι',quantity:150,unit:'g'},{key:'carrot',name:'Καρότο',quantity:200,unit:'g'}],steps:[{instruction:'Πλύνε και ετοίμασε τα λαχανικά.'},{instruction:'Πρόσθεσε τα υλικά στον κάδο και ανακάτεψε απαλά.'},{instruction:'Μαγείρεψε και σέρβιρε ζεστό.'}],cost:{ingredients:[{name:'Ρύζι',coverage:1,costsByCurrency:{EUR:1.2},references:[]},{name:'Καρότο',coverage:1,costsByCurrency:{EUR:2},references:[]}],targetCountry:'DE',targetCurrency:'EUR',totalsByCurrency:{EUR:3.2+i*.1},perServingByCurrency:{EUR:1.6+i*.05},coverage:1,complete:true,estimated:true,budgetComplete:true,budgetTotalsByCurrency:{EUR:3.2+i*.1}},match:{safe:true,diet:'vegetarian',dietCheckVersion:76,fullyAvailableByQuantity:true,quantityCoverage:1,quantityAvailability:[{key:'rice',status:'at_home',coverage:1},{key:'carrot',status:'at_home',coverage:.75}]}};
+}
+class Fixture extends Base{
+ connectedCallback(){} // Subscription/bootstrap boundary, not a replacement renderer.
+ _api(type,data={}){
+  this.calls.push({type,data:structuredClone(data)});
+  if(type.endsWith('book_toggle'))return Promise.resolve(this._bookState);
+  if(type.endsWith('product_details')){const row=this._houseIngredients.find(row=>row.lots.some(lot=>lot.id===data.lot_id));return Promise.resolve({lot:row.lots[0],unit:row.unit,ingredient:{key:row.key,name:row.name},ingredientLinks:row.lots[0].ingredientLinks,version:'fixture-revision'});}
+  if(type.endsWith('stock_summary'))return Promise.resolve(this._v142StockSummary);
+  if(type.endsWith('barcode_lookup'))return Promise.resolve({barcode:data.barcode,product:{found:true,productName:'Βιολογικό ρύζι',quantity:500,unit:'g'},suggestions:[{ingredient:{key:'rice',name:'Ρύζι'}}]});
+  if(type.endsWith('product_add'))return Promise.resolve({houseIngredients:this._houseIngredients});
+  if(type.endsWith('week_select')){for(const s of this._weekState.slots)if(data.slot_ids?.includes(s.id))s.selected=data.selected;return Promise.resolve(this._weekState);}
+  if(type.includes('recipe_cost'))return Promise.resolve(recipe(0).cost);
+  if(type.endsWith('/drafts'))return Promise.resolve({receipt:data.receipt||this._r195Session?.receipt});
+  if(type.includes('scanner'))return Promise.resolve(this._v78State);
+  if(type.includes('ui_preferences'))return Promise.resolve({});
+  if(type.endsWith('/suggestions'))return Promise.resolve({suggestions:[]});
+  return Promise.resolve({items:[],choices:[],success:true});
+ }
+ async _requestSection(){} async _loadOverview(){} async _loadWeekState(){} async _loadIngredientCatalog(){} async _v142LoadStockSummary(){}
+ async _v78LoadState(){this._v78AcceptState(this._v78State);}
+ async _v66PreferLanguages(rows){return rows;} async _v66LoadRecipe(){return true;}
+ async _v79CostRecipe(r){return r.cost;} async _loadRecipeNutrition(){}
+ async _v78Camera(){this.cameraRequested=(this.cameraRequested||0)+1;}
+ _v141KeepCameraWarm(){} async _v66Send(){this.sendRequests=(this.sendRequests||0)+1;}
+ async _v66Favorite(){this.favoriteRequests=(this.favoriteRequests||0)+1;}
+ async _v112EditLot(id){return super._v112EditLot(id);}
+ seed(){
+  this.calls=[];this._hass={language:'el',user:{id:'ui-fixture',is_admin:true},config:{time_zone:'Europe/Berlin',country:'DE'},states:{'ai_task.vision':{state:'ready',attributes:{friendly_name:'Image AI'}}},connection:{sendMessagePromise:async()=>({}),subscribeEvents:async()=>()=>{}},themes:{darkMode:true}};
+  this._entryId='fixture';this._entries=[{entry_id:'fixture',title:'Cook4Me',connected:true,ready_for_recipe:true,cloud_connected:true,profile:{diet:'vegetarian',houseIngredients:[],pantry:[],allergies:[],avoid:[],preferences:[],storageLocations:[{id:'pantry',name:'Ντουλάπι',kind:'pantry'},{id:'fridge',name:'Ψυγείο',kind:'fridge'}]},recipes:[recipe(1),recipe(2)]}];
+  this._houseIngredients=[{key:'rice',name:'Ρύζι',unit:'g',quantity:500,lots:[{id:'lot-rice',quantity:500,productName:'Ρύζι μπασμάτι',storageLocationId:'pantry',ingredientLinks:[{key:'rice',name:'Ρύζι'}],barcode:'01234567'}]},{key:'carrot',name:'Καρότο',unit:'g',quantity:750,lots:[{id:'lot-carrot',quantity:750,productName:'Βιολογικά καρότα',storageLocationId:'fridge',ingredientLinks:[{key:'carrot',name:'Καρότο'}]}]}];
+  this._entries[0].profile.houseIngredients=this._houseIngredients;this._houseEntryId='fixture';
+  this._ingredientCatalog=[{key:'rice',ingredientId:'rice',name:'Ρύζι'},{key:'carrot',ingredientId:'carrot',name:'Καρότο'},{key:'chickpea',ingredientId:'chickpea',name:'Ρεβίθια'}];this._ingredientCatalog=this._ingredientCatalog.map(row=>({...row,presentationVersion:63,displayLanguage:'el',searchAliases:[row.name]}));this._ingredientCatalogLanguage='el';
+  this._capabilities={languages:[{code:'el',name:'Ελληνικά'},{code:'de',name:'Γερμανικά'}],defaultAiTaskAvailable:true,defaultAiTaskEntityId:'ai_task.vision',persistentCache:true};
+  this._currencyState={currency:'EUR',country:'DE',defaultCurrency:'EUR',currencies:['EUR']};this._currencyStateEntry='fixture';
+  this._bookState={favorites:[recipe(0),recipe(1)],recipeList:[recipe(2)]};this._results=Array.from({length:8},(_,i)=>recipe(i));this._todayResults=[recipe(5),recipe(0),recipe(4)];this._todayMeta={emptyMealTypes:[]};this._todayBusy=false;
+  this._shoppingItems=[{id:'s1',summary:'Ρύζι (Reis)',status:'needs_action'},{id:'s2',summary:'Καρότα (Karotten)',status:'needs_action'},{id:'s3',summary:'Γιαούρτι (Joghurt)',status:'completed'}];this._shoppingAvailable=true;
+  this._v78State={locations:this._entries[0].profile.storageLocations,storageLocations:this._entries[0].profile.storageLocations,aiEntityId:'',defaultAiEntityId:'ai_task.vision',aiChoices:[{id:'ai_task.vision',name:'Image AI'}],houseIngredients:this._houseIngredients};
+  this._v142StockSummary={packageCount:2,value:{totalsByCurrency:{EUR:4.9},pricedPackages:2,packageCount:2,exactPackages:2},nutrition:{totals:{energyKcal:2120,proteinG:41},coveredPackages:2,packageCount:2},expiring:[]};
+  this._tab='today';this._filters();this._filters().languages=['el'];this._filters().diet='vegetarian';this._filters().ingredients=[];
+  for(const value of Object.values(this._v199Filters)){value.languages=['el'];value.diet='vegetarian';}
+  const days=this._v67Days();this._weekState={weekStart:days[0],weekEnd:days[6],settings:{mealTypes:['breakfast','lunch','dinner'],weekdayMealTypes:{}},slots:days.flatMap((date,i)=>['breakfast','lunch','dinner'].map((mealType,j)=>({id:`slot-${i}-${j}`,date,mealType,selected:true,recipe:recipe(i*3+j),cost:recipe(i*3+j).cost}))),leftovers:[],reservations:[],shoppingDelta:[],weeklyCostByCurrency:{EUR:87},expectedMealSlots:[]};
+  this._weekStateEntry='fixture';this._v179TabState('week').folds.mealSlots=true;this._weekState._v109Key=this._v109Key();this._v67WeekLoaded=`${this._prefKey()}:${days[0]}`;this._v78Dirty=false;this._v79Settings={currency:'EUR',country:'DE'};
+  for(const row of [...this._results,...this._todayResults,...this._bookState.favorites,...this._bookState.recipeList,...this._entries[0].recipes,...this._weekState.slots.map(s=>s.recipe)]){const price=this._v79CostState(row);price.cost=row.cost;price.started=true;price.checkedAt=Date.now();}
+  this._renderShell();this._renderEntrySelect();this._updateHeader();
+ }
+ show(tab){this._v63CloseRecipe?.();this._tab=tab;this._filters();if(tab==='week')this._weekState._v109Key=this._v109Key();this._renderTabs();this._renderTab();}
+}
+customElements.define('cook4me-ui-fixture-v203',Fixture);
+window.make=()=>{document.querySelector('cook4me-ui-fixture-v203')?.remove();localStorage.clear();const h=document.createElement('cook4me-ui-fixture-v203');document.body.append(h);window.app=h;h.seed();return h;};
+window.samples=recipe;window.app=make();window.ready=true;
+</script></body></html>
