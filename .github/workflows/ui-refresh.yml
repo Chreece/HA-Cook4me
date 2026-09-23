@@ -40,3 +40,5 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Actual frontend chain on desktop and mobile
         run: python tests/browser_ui_refresh_v203.py
+      - name: Navigation hover and keyboard focus regression
+        run: python tests/browser_navigation_hover_v205.py
