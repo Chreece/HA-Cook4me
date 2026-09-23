@@ -1,7 +1,8 @@
+import {ReceiptScannerMixin} from './scanner-receipts-v195.js';
 import {ScannerSuggestionsMixin} from './scanner-suggestions-v194.js';
 const V179='cook4me-recipe-hub-panel-v179';
 if(!customElements.get(V179))await import('./cook4me-panel-v179.js?v=2026.9.22.6');
-const BasePanel=ScannerSuggestionsMixin(customElements.get(V179));
+const BasePanel=ReceiptScannerMixin(ScannerSuggestionsMixin(customElements.get(V179)));
 
 const V180_TEXT={
  en:{
@@ -38,8 +39,7 @@ class Cook4MeRecipeHubPanelV180 extends BasePanel{
   this._v141CameraBlocked=true;
   if(!d)return;
   this._v111CancelRead?.();
-  d.mode='manual';
-  d.editorOpen=true;
+  if(d.mode!=='receipt'){d.mode='manual';d.editorOpen=true;}
   d.scanPhase='idle';
   d.scanNote='';
   this._v78Status=reason||this._v180Text('noCamera');
@@ -110,7 +110,7 @@ class Cook4MeRecipeHubPanelV180 extends BasePanel{
     const note=document.createElement('div');note.dataset.v180CameraNote='';note.className='v180-camera-note';note.setAttribute('role','status');note.textContent=this._v180Text('noCamera');
     editor.prepend(note);
    }
-   if(!d.editorOpen){d.mode='manual';d.editorOpen=true;this._v111Paint?.();}
+   if(!d.editorOpen&&d.mode!=='receipt'){d.mode='manual';d.editorOpen=true;this._v111Paint?.();}
    return;
   }
 

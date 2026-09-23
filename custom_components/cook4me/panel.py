@@ -8,6 +8,7 @@ from homeassistant.components.http import StaticPathConfig
 from homeassistant.core import HomeAssistant
 
 from .const import DOMAIN
+from .websocket_receipts import async_register as async_register_receipts
 from .websocket_v20 import async_register as async_register_websocket_v20
 from .websocket_v21 import async_register as async_register_websocket_v21
 from .websocket_v22 import async_register as async_register_websocket_v22
@@ -56,6 +57,8 @@ _V39_REGISTERED = "websocket_v39_registered"
 
 async def async_register_panel(hass: HomeAssistant) -> None:
     domain_data = hass.data.setdefault(DOMAIN, {})
+    if not domain_data.get("receipt_v195_registered"):
+        async_register_receipts(hass); domain_data["receipt_v195_registered"] = True
     if not domain_data.get(_V20_REGISTERED):
         async_register_websocket_v20(hass); domain_data[_V20_REGISTERED] = True
     if not domain_data.get(_V21_REGISTERED):
@@ -106,7 +109,7 @@ async def async_register_panel(hass: HomeAssistant) -> None:
         hass=hass,
         frontend_url_path=DOMAIN,
         webcomponent_name=_PANEL_ELEMENT,
-        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.22.7&scanner=194",
+        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.22.7&scanner=194&receipt=195",
         sidebar_title="Cook4Me",
         sidebar_icon="mdi:pot-steam",
         embed_iframe=False,

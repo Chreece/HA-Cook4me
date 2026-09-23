@@ -1,0 +1,40 @@
+name: Receipt scanner audit
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: receipt-audit-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  receipt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Receipt validation, persistence and authenticated routes
+        run: |
+          python tests/test_receipts_v195.py
+          python tests/test_receipt_routes_v195.py
+      - name: Receipt review, navigation and weekly view
+        run: node --test tests/test_receipt_ui_v195.mjs
+      - name: Source syntax
+        run: |
+          python -m compileall -q custom_components/cook4me
+          node --check custom_components/cook4me/frontend/scanner-receipts-v195.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v180.js

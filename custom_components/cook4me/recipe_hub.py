@@ -87,6 +87,10 @@ class Cook4MeRecipeHub:
         saved = await self._store.async_load()
         if not isinstance(saved, dict):
             return
+        # Receipt drafts can be resumed long after the 200 ordinary scan retries.
+        pinned = saved.get("receiptScannerReceipts")
+        if isinstance(pinned, dict):
+            self._data["receiptScannerReceipts"] = deepcopy(pinned)
         receipts = saved.get("scannerReceipts")
         if isinstance(receipts, dict):
             self._data["scannerReceipts"] = dict(list(receipts.items())[-200:])
@@ -254,11 +258,15 @@ class Cook4MeRecipeHub:
         """Commit reviewed stock once, including across reconnect/restart retries."""
         async with self._lock:
             receipts = self._data.get("scannerReceipts") or {}
-            if request_id in receipts:
-                receipt = receipts[request_id]
+            pinned = self._data.get("receiptScannerReceipts") or {}
+            if request_id in receipts or request_id in pinned:
+                receipt = pinned.get(request_id) or receipts[request_id]
                 if receipt.get("fingerprint") != fingerprint:
                     raise ValueError("This product was already saved; start a new product")
                 return deepcopy(receipt)
+            receipt_request = str(request_id).startswith("receipt-")
+            if receipt_request and len(pinned) >= 8192:
+                raise ValueError("Finish and discard old receipt drafts before adding another receipt item")
             data = deepcopy(self._data)
             profile = data["profile"]
             metadata = validate_location(profile, lot_metadata)
@@ -295,10 +303,25 @@ class Cook4MeRecipeHub:
                     raise ValueError("The stock list is full or the amount is invalid; the product was not added")
             receipt = {"lotId": lot_ids[0] if lot_ids else "", "lotIds": lot_ids,
                        "unlimited": bool(unlimited), "fingerprint": fingerprint}
-            data["scannerReceipts"] = dict(list({**receipts, request_id: receipt}.items())[-200:])
+            if receipt_request:
+                data["receiptScannerReceipts"] = {**pinned, request_id: receipt}
+            else:
+                data["scannerReceipts"] = dict(list({**receipts, request_id: receipt}.items())[-200:])
             await self._store.async_save(data)
             self._data = data
             return deepcopy(receipt)
+
+    async def async_release_receipt_requests(self, receipt_id):
+        """Release retry records only after the owning draft has been deleted."""
+        prefix = f"receipt-{receipt_id}-"
+        async with self._lock:
+            data = deepcopy(self._data)
+            data["receiptScannerReceipts"] = {
+                key: row for key, row in data.get("receiptScannerReceipts", {}).items()
+                if not key.startswith(prefix)
+            }
+            await self._store.async_save(data)
+            self._data = data
 
     async def async_scanner_update(self, request_id, ingredient, *, lot_id, expected_version,
                                    quantity, unit, best_before="", lot_metadata=None, fingerprint=""):
