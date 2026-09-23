@@ -9,6 +9,7 @@ from typing import Any
 from .stock_allocation import allocate_stock
 from .inventory import stock_for_ingredient, convert_amount, inventory_identity, normalize_inventory
 from .price_measurements import price_options
+from .stock_coverage import coverage_ingredient, coverage_stock
 
 _NUTRITION_GOALS = {
     "balanced",
@@ -70,7 +71,9 @@ def _find_stock(stock, ingredient, used=None):
     if current is not None:
         return current
     name = _norm(_ingredient_name(ingredient))
-    fallback = next((row for row in stock if name and _norm(row.get("name")) == name), None)
+    # A translated label is not proof that two distinct keyed foods match.
+    fallback = next((row for row in stock if name and _norm(row.get("name")) == name
+                     and not (ingredient.get("key") and row.get("key"))), None)
     return stock_for_ingredient(stock, fallback, used) if fallback else None
 
 
@@ -176,14 +179,17 @@ def recipe_quantity_feasibility(
     amounts or incompatible units are reported as unknown rather than pretending
     that presence means enough stock exists.
     """
-    stock = normalize_inventory(inventory)
+    stock = coverage_stock(normalize_inventory(inventory))
     availability_rows = availability if isinstance(availability, list) else []
     rows: list[dict[str, Any]] = []
     known_fractions: list[float] = []
     shortages: list[dict[str, Any]] = []
     unknown: list[dict[str, Any]] = []
 
-    ingredients = [item for item in recipe.get("ingredients") or [] if isinstance(item, dict)]
+    indexed = [(index, coverage_ingredient(item))
+               for index, item in enumerate(recipe.get("ingredients") or [])
+               if isinstance(item, dict)]
+    ingredients = [item for _, item in indexed]
     requirements: list[dict[str, Any]] = []
     requests: list[dict[str, Any]] = []
     for item in ingredients:
@@ -198,9 +204,10 @@ def recipe_quantity_feasibility(
             "consume": bool(_ingredient_name(item))
             and _availability_status(item, availability_rows) != "staple",
         })
-    for ingredient, current, requirement in zip(
+    for filtered_index, (ingredient, current, requirement) in enumerate(zip(
         ingredients, allocate_stock(stock, requests), requirements
-    ):
+    )):
+        ingredient_index = indexed[filtered_index][0]
         name = _ingredient_name(ingredient)
         if not name:
             continue
@@ -208,6 +215,7 @@ def recipe_quantity_feasibility(
         if status == "staple":
             rows.append({
                 "identity": inventory_identity(ingredient),
+                "ingredientIndex": ingredient_index,
                 "name": name,
                 "status": "staple",
                 "coverage": 1.0,
@@ -223,6 +231,7 @@ def recipe_quantity_feasibility(
         ident = inventory_identity(current or ingredient)
         base: dict[str, Any] = {
             "identity": ident,
+            "ingredientIndex": ingredient_index,
             **({"key": _text(ingredient.get("foodKey") or ingredient.get("key"))} if ingredient.get("foodKey") or ingredient.get("key") else {}),
             "name": name,
             "requiredQuantity": required,

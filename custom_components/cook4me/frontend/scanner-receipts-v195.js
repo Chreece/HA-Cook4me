@@ -17,6 +17,11 @@ export function removeWeeklyReceiptSections(root){
  for(const key of ['reservedStock','leftovers','priceInventory','completedPurchases']){
   for(const node of root?.querySelectorAll?.(`[data-v179-fold="${key}"]`)||[])node.remove();
  }
+ // Older Week renderers already wrapped these cards before v179 sees them.
+ // Remove their stable keys too; translated heading text is not an identifier.
+ for(const key of ['leftovers','prices']){
+  for(const node of root?.querySelectorAll?.(`[data-v137-week-panel="${key}"]`)||[])node.remove();
+ }
  for(const pair of root?.querySelectorAll?.('.two')||[]){
   if(pair.children.length===1)pair.style.gridTemplateColumns='minmax(0,1fr)';
  }
