@@ -230,8 +230,31 @@ def validate(
             food_for_intelligence = classification == "food"
             if classification == "ambiguous":
                 ambiguous_ids.add(ident)
-                if row.get("needsSemanticConfirmation") is not True:
-                    errors.append(f"ambiguous ingredient {ident} must need semantic confirmation")
+                concept_id = _text(row.get("conceptId"))
+                reviewed_ambiguous = bool(
+                    row.get("needsSemanticConfirmation") is False
+                    and concept_id.startswith("concept:source:")
+                    and _text(row.get("semanticMergePolicy"))
+                    == "reviewed-ambiguous-source-fragment"
+                    and row.get("providerIdentityAssigned") is False
+                    and not provider_key
+                    and all(
+                        row.get(field) is False
+                        for field in (
+                            "nutritionEligible",
+                            "dietEligible",
+                            "allergenEligible",
+                        )
+                    )
+                )
+                if (
+                    row.get("needsSemanticConfirmation") is not True
+                    and not reviewed_ambiguous
+                ):
+                    errors.append(
+                        f"ambiguous ingredient {ident} may be final only with "
+                        "reviewed source-fragment disposition"
+                    )
                 for field in ("nutritionEligible", "dietEligible", "allergenEligible"):
                     if row.get(field) is not False:
                         errors.append(f"ambiguous ingredient {ident} must set {field}=false")
@@ -253,7 +276,9 @@ def validate(
         if not _text(row.get("canonicalName")):
             errors.append(f"ingredient {ident} has no canonicalName")
         nutrition_ok = _nutrition_valid(row.get("nutrition"))
-        hold = nutrition_holds.find_hold(ident, row.get("conceptId")) or nutrition_holds.profile_hold(row.get("nutrition"), ingredient_id=ident)
+        hold = nutrition_holds.profile_hold(
+            row.get("nutrition"), ingredient_id=ident
+        )
         if row.get("nutrition") and hold is not None:
             errors.append(f"ingredient {ident} carries held nutrition binding {hold['reviewTargetId']}")
             nutrition_ok = False

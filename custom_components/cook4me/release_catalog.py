@@ -423,3 +423,31 @@ def recipe_by_variant(
 def __getattr__(name: str):
     """Preserve the established release-catalog helper API."""
     return getattr(_core, name)
+
+
+def ingredient_price_label(ingredient: Any, language: str) -> dict[str, Any]:
+    """Return a catalog-backed market name with honest translation provenance.
+
+    Called by price lookup preparation in HA's executor. No AI, live translation
+    or fuzzy mapping is used; a missing translation cannot change the market.
+    """
+    item = ingredient if isinstance(ingredient, dict) else {'name': str(ingredient or '')}
+    # Reviewed recipe overrides can retain an older provider ingredientId.
+    # The effective key must win, even when it is a synthetic reviewed identity.
+    key = item.get('key') or item.get('foodKey') or item.get('ingredientId') or item.get('id')
+    matched = _core._global_ingredient(load_release_catalog(), {'ingredientId': key} if key else {})
+    raw = matched or item
+    presentation = _core._presentation
+    canonical = str(raw.get('canonicalName') or raw.get('name') or raw.get('foodName') or '').strip()
+    code = str(language or 'en').lower().replace('_', '-').split('-', 1)[0]
+    label_key = presentation.name_key(presentation.clean_name(canonical))
+    overlay = presentation.labels().get(code, {}).get(label_key)
+    translated = (raw.get('translations') or {}).get(code)
+    known_english = bool(matched or raw.get('canonicalName'))
+    translated_available = bool(overlay or (translated and code != 'en') or (code == 'en' and known_english))
+    name = presentation.display_name(raw, code)
+    actual_language = code if translated_available else ('en' if known_english else str(raw.get('language') or raw.get('displayLanguage') or ''))
+    return {'name': name, 'canonicalName': canonical,
+            'language': actual_language, 'translationAvailable': translated_available,
+            'source': 'catalog_overlay' if overlay else 'catalog_translation' if translated and code != 'en'
+                      else 'canonical_fallback' if known_english else 'unresolved'}

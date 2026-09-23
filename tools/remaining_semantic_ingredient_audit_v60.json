@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-remaining-semantic-ingredient-audit-v60",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "automaticApproval": false,
+    "providerIdentityAssigned": false,
+    "sourceLocalIdentityPreserved": true
+  },
+  "summary": {
+    "remaining": 0,
+    "classificationCounts": {},
+    "confidenceCounts": {},
+    "candidateLaneCounts": {}
+  },
+  "items": []
+}

@@ -45,11 +45,12 @@ def is_reviewed_profile(
     ingredient_id: Any = "",
     canonical_name: Any = "",
 ) -> bool:
-    """Return true only for exact-ID nutrition produced by the reviewed resolver.
+    """Return true only for explicitly reviewed, exact-identity nutrition.
 
     Structural ``per100g`` data alone is deliberately insufficient. Legacy v59
-    fuzzy USDA search results also used that shape, so v60 requires explicit
-    exact-FDC review provenance before a profile may satisfy release nutrition.
+    fuzzy USDA search results also used that shape, so v60 accepts only either
+    exact-FDC review provenance or a tightly-scoped reviewed official food-table
+    record with an explicit stable source identifier and data type.
     """
     if holds.profile_hold(value, ingredient_id=ingredient_id) is not None:
         return False
@@ -57,9 +58,23 @@ def is_reviewed_profile(
         return False
     if value.get("basis") != "per100g" or not _numeric_values(value.get("values")):
         return False
-    if text(value.get("source")).casefold() != "usda_fdc":
-        return False
-    if _positive_int(value.get("sourceId")) is None:
+    source = text(value.get("source")).casefold()
+    if source == "usda_fdc":
+        if _positive_int(value.get("sourceId")) is None:
+            return False
+    elif source in {"official_food_table", "authoritative_primary_composition"}:
+        source_id = text(value.get("sourceId"))
+        data_type = text(value.get("dataType"))
+        if not source_id or ":" not in source_id or not data_type:
+            return False
+        if not text(value.get("nutritionReviewTargetId")):
+            return False
+        if text(value.get("nutritionReviewTargetKind")) not in {
+            "provider-identity",
+            "semantic-concept",
+        }:
+            return False
+    else:
         return False
     if not text(value.get("reviewFile")):
         return False

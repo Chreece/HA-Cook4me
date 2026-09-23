@@ -58,6 +58,10 @@ _DISCOVERY_ALIASES: dict[str, tuple[str, ...]] = {
     "sweetcorn": ("sweet corn",),
     "whisky": ("whiskey",),
     "yoghurt": ("yogurt",),
+    "oysters washed in salt water and drained": ("oyster raw", "oysters raw", "oyster"),
+    "packet of bourbon vanilla sugar": ("sugar granulated", "sugars granulated", "sugar"),
+    "pumpkin wrap and microwave at 600 w for 5 minutes": ("pumpkin raw", "pumpkin cooked", "pumpkin"),
+    "vanilla beans a little": ("vanilla extract", "vanilla"),
 }
 
 

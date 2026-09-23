@@ -1,0 +1,308 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-retained-reference-binding",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Thick fresh cream",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Cream, heavy",
+      "fdcId": 2346386,
+      "notes": "Manual semantic review binds Cook4Me 'Thick fresh cream' to USDA Foundation 'Cream, heavy' through an exact record retained in the same immutable evidence snapshot. The destination identifies a plain thick fluid dairy cream, for which heavy cream is the closest pinned unflavored high-fat cream profile. Confidence remains medium because commercial thickened/cooking creams can use stabilizers and may have somewhat lower fat than heavy cream; this decision does not generalize to low-fat cream, crème fraîche, sour cream, plant-based cream, or cream cheese.",
+      "reviewTargetId": "concept:food:b282c5a4e49c6f0f6528",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "931cbea4bd42c500f192f379bf495fc3ff130ef303a4743c87ef9468e1d9d376",
+      "sourceEvidenceCandidateRank": 10,
+      "sourceEvidenceSha256": "29702fbafbfbc1fc993ecdbc27b2d536da9204a172ad9fc354513f634af8cc0b",
+      "sourceEvidenceTargetId": "concept:food:4dce4a17f914ae3b6d3f",
+      "usageCountAtReview": 3
+    },
+    {
+      "canonicalEnglishName": "Duck fat",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Fat, goose",
+      "fdcId": 173572,
+      "notes": "Manual semantic review binds Cook4Me 'Duck fat' to USDA SR Legacy 'Fat, goose' using the closest waterfowl-fat record present in the destination's own immutable candidate evidence. Duck and goose rendered fats are both predominantly monounsaturated waterfowl fats and have very similar energy density, making goose fat the closest pinned nutrient-profile surrogate available. Confidence remains medium because species-specific fatty-acid composition differs; this is a reviewed nutrient-profile approximation and does not generalize to chicken fat, lard, butter, or whole duck meat.",
+      "reviewTargetId": "concept:food:0e01e20b5c952242934e",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "9b70e4222c1afb6becd65b6a79a06f271ec9980b61a267239d56b6b0b7da895e",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "29702fbafbfbc1fc993ecdbc27b2d536da9204a172ad9fc354513f634af8cc0b",
+      "sourceEvidenceTargetId": "concept:food:0e01e20b5c952242934e",
+      "usageCountAtReview": 2
+    },
+    {
+      "canonicalEnglishName": "Low-fat cooking cream",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Cream, half and half, lowfat",
+      "fdcId": 171308,
+      "notes": "Manual semantic review binds Cook4Me 'Low-fat cooking cream' to USDA SR Legacy 'Cream, half and half, lowfat' through an exact record retained in the same immutable evidence snapshot. The destination explicitly identifies a low-fat fluid dairy cooking cream, so low-fat half-and-half is the closest pinned plain dairy-cream profile. Confidence remains medium because commercial cooking creams vary in fat percentage, stabilizers, and UHT formulation; this decision does not generalize to heavy cream, crème fraîche, sour cream, plant-based cream, or cream cheese.",
+      "reviewTargetId": "concept:food:5654aa4bc59483e095ab",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "886f84e4558cceb91d936be29488e5a238791d3f19adb842286bf065424a8b89",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceSha256": "29702fbafbfbc1fc993ecdbc27b2d536da9204a172ad9fc354513f634af8cc0b",
+      "sourceEvidenceTargetId": "concept:food:b53156ebf99939cdc3af",
+      "usageCountAtReview": 2
+    },
+    {
+      "canonicalEnglishName": "Ready-made crêpes",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Crepe, plain",
+      "fdcId": 2708342,
+      "notes": "Manual semantic review binds Cook4Me 'Ready-made crêpes' to USDA FNDDS 'Crepe, plain' through an exact record retained in the same immutable evidence snapshot. The destination explicitly identifies ready-made plain crêpes, so the prepared plain-crepe profile matches the food form directly. Confidence is high because packaging/readiness does not change the core crepe identity; this decision does not generalize to filled, sweetened, savory-filled, or meat-filled crêpes.",
+      "reviewTargetId": "concept:food:b615f2fa925a68cf389f",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "4a2f5a1d9b30af32e294914bd7a44f1b9bb30136ddf5d5bfb88f615065565eee",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "29702fbafbfbc1fc993ecdbc27b2d536da9204a172ad9fc354513f634af8cc0b",
+      "sourceEvidenceTargetId": "concept:food:b615f2fa925a68cf389f",
+      "usageCountAtReview": 2
+    },
+    {
+      "canonicalEnglishName": "Thick cooking cream",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Cream, heavy",
+      "fdcId": 2346386,
+      "notes": "Manual semantic review binds Cook4Me 'Thick cooking cream' to USDA Foundation 'Cream, heavy' through an exact record retained in the same immutable evidence snapshot. The destination identifies a plain thick fluid dairy cream, for which heavy cream is the closest pinned unflavored high-fat cream profile. Confidence remains medium because commercial thickened/cooking creams can use stabilizers and may have somewhat lower fat than heavy cream; this decision does not generalize to low-fat cream, crème fraîche, sour cream, plant-based cream, or cream cheese.",
+      "reviewTargetId": "concept:food:e72b62a597ee51b76c5c",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "931cbea4bd42c500f192f379bf495fc3ff130ef303a4743c87ef9468e1d9d376",
+      "sourceEvidenceCandidateRank": 10,
+      "sourceEvidenceSha256": "29702fbafbfbc1fc993ecdbc27b2d536da9204a172ad9fc354513f634af8cc0b",
+      "sourceEvidenceTargetId": "concept:food:4dce4a17f914ae3b6d3f",
+      "usageCountAtReview": 2
+    },
+    {
+      "canonicalEnglishName": "Thickened cream",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Cream, heavy",
+      "fdcId": 2346386,
+      "notes": "Manual semantic review binds Cook4Me 'Thickened cream' to USDA Foundation 'Cream, heavy' through an exact record retained in the same immutable evidence snapshot. The destination identifies a plain thick fluid dairy cream, for which heavy cream is the closest pinned unflavored high-fat cream profile. Confidence remains medium because commercial thickened/cooking creams can use stabilizers and may have somewhat lower fat than heavy cream; this decision does not generalize to low-fat cream, crème fraîche, sour cream, plant-based cream, or cream cheese.",
+      "reviewTargetId": "concept:food:d06da468b76f110d515c",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "931cbea4bd42c500f192f379bf495fc3ff130ef303a4743c87ef9468e1d9d376",
+      "sourceEvidenceCandidateRank": 10,
+      "sourceEvidenceSha256": "29702fbafbfbc1fc993ecdbc27b2d536da9204a172ad9fc354513f634af8cc0b",
+      "sourceEvidenceTargetId": "concept:food:4dce4a17f914ae3b6d3f",
+      "usageCountAtReview": 2
+    },
+    {
+      "canonicalEnglishName": "Vanilla skyr",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Yogurt, vanilla, low fat.",
+      "fdcId": 170888,
+      "notes": "Manual semantic review binds Cook4Me 'Vanilla skyr' to USDA SR Legacy 'Yogurt, vanilla, low fat.' through an exact record retained in the same immutable evidence snapshot. Vanilla skyr is a flavored strained cultured dairy product, and vanilla low-fat yogurt is the closest flavor-specific pinned profile available after keeping plain skyr separate. Confidence remains medium because skyr is typically higher in protein and commercial sugar/fat levels vary; this decision does not generalize to plain skyr, berry skyr, drinkable skyr, or non-dairy vanilla yogurt.",
+      "reviewTargetId": "concept:food:2f4b00399ccee897c67c",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "f8db3ed49d7b179c082ba3542e1492c172de07787d959b99cd516f178125283b",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "29702fbafbfbc1fc993ecdbc27b2d536da9204a172ad9fc354513f634af8cc0b",
+      "sourceEvidenceTargetId": "concept:food:dc507966d373aed439da",
+      "usageCountAtReview": 2
+    },
+    {
+      "canonicalEnglishName": "A- kamaboko, thinly sliced",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Fish, surimi",
+      "fdcId": 173702,
+      "notes": "Manual semantic review binds Cook4Me 'A- kamaboko, thinly sliced' to USDA SR Legacy 'Fish, surimi' through an exact record retained in the same immutable evidence snapshot. Kamaboko is a steamed seasoned fish-paste product made from surimi, so the surimi profile is the closest pinned representation of its base prepared-food identity. Confidence remains medium because kamaboko formulations vary in starch, salt, sugar, and water; this decision does not generalize to fried fish cakes, fish dumplings, raw fish, or seafood mixtures.",
+      "reviewTargetId": "concept:food:7a9c4640a793910c4cf1",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "a3e471c9a731cfcac62460627ea83107c3bd768189cbf2e3358388adf37bf257",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceSha256": "29702fbafbfbc1fc993ecdbc27b2d536da9204a172ad9fc354513f634af8cc0b",
+      "sourceEvidenceTargetId": "concept:food:cf67ce9fb44179365028",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "A- pumpkin, peeled, cut into bite-size pieces and heated at 600 W for 4 minutes",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Squash, pie pumpkin, peeled, seeded, raw",
+      "fdcId": 2727578,
+      "notes": "Manual semantic review binds Cook4Me 'A- pumpkin, peeled, cut into bite-size pieces and heated at 600 W for 4 minutes' to USDA Foundation 'Squash, pie pumpkin, peeled, seeded, raw' using the destination's own immutable candidate evidence. The ingredient is peeled pumpkin and the microwave instruction is a recipe preparation qualifier, so a peeled raw pumpkin profile represents the ingredient before that cooking step. Confidence remains medium because pumpkin cultivar and post-heating water loss are not specified; this decision does not generalize to pumpkin purée, canned pumpkin, pumpkin leaves, or pumpkin seeds.",
+      "reviewTargetId": "concept:food:ecf8af4b1f722a5d29f5",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "5c0269d4f569eb5e8477755843e59550d0476cac0e7990f7345d695b3c31df2c",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceSha256": "29702fbafbfbc1fc993ecdbc27b2d536da9204a172ad9fc354513f634af8cc0b",
+      "sourceEvidenceTargetId": "concept:food:ecf8af4b1f722a5d29f5",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Aburaage, blanched and halved",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Tofu, fried",
+      "fdcId": 172451,
+      "notes": "Manual semantic review binds Cook4Me 'Aburaage, blanched and halved' to USDA SR Legacy 'Tofu, fried' through an exact record retained in the same immutable evidence snapshot. Aburaage is a deep-fried tofu product; blanching is a preparation step that can remove some surface oil but does not change the underlying fried-tofu identity. Confidence is high at the food-family level, while the nutrient profile may vary with oil absorption and blanching; this decision does not generalize to plain tofu, smoked tofu, yuba, or fermented tofu.",
+      "reviewTargetId": "concept:food:5fbc3851ab8fa8e39f4d",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "84f4bed49279a54eb4045d206146ea656b908b2d973f67d11fdff56b35a231ee",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "29702fbafbfbc1fc993ecdbc27b2d536da9204a172ad9fc354513f634af8cc0b",
+      "sourceEvidenceTargetId": "concept:food:8b1193f53e269a4def49",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Berry skyr",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Yogurt, low fat milk, fruit",
+      "fdcId": 2705427,
+      "notes": "Manual semantic review binds Cook4Me 'Berry skyr' to USDA FNDDS 'Yogurt, low fat milk, fruit' through an exact record retained in the same immutable evidence snapshot. Berry skyr is a fruit-flavored strained cultured dairy product, and fruit low-fat yogurt is the closest flavor-specific pinned profile available after keeping plain skyr separate. Confidence remains medium because skyr is typically higher in protein and berry/sugar/fat formulations vary; this decision does not generalize to plain skyr, vanilla skyr, drinkable skyr, or non-dairy fruit yogurt.",
+      "reviewTargetId": "concept:food:cb51a1b63c36ec3bb044",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "f95c82dac541427284dcb0b10f155285f5e85049dd03c75315c04cbdeea87c23",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceSha256": "29702fbafbfbc1fc993ecdbc27b2d536da9204a172ad9fc354513f634af8cc0b",
+      "sourceEvidenceTargetId": "concept:food:5654aa4bc59483e095ab",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Cooked sweetcorn",
+      "confidence": "medium",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Corn, sweet, yellow, cooked, boiled, drained, with salt",
+      "fdcId": 168525,
+      "notes": "Manual semantic review binds Cook4Me 'Cooked sweetcorn' to USDA SR Legacy 'Corn, sweet, yellow, cooked, boiled, drained, with salt' through an exact record retained in the same immutable evidence snapshot. The destination explicitly specifies cooked sweetcorn, so the cooked sweet-corn profile is the appropriate food state. Confidence remains medium because corn color, cooking method, and added salt are unspecified; this decision does not generalize to raw corn, baby corn, creamed corn, or cornmeal.",
+      "reviewTargetId": "concept:food:742e7347c71a0dcbe463",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "ccc6a0601efbd8164d943c92ddce0e4a83b5f92bb95a399d1893c5f39c38a63f",
+      "sourceEvidenceCandidateRank": 11,
+      "sourceEvidenceSha256": "29702fbafbfbc1fc993ecdbc27b2d536da9204a172ad9fc354513f634af8cc0b",
+      "sourceEvidenceTargetId": "concept:food:c7925a71e0d2df4fa271",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Silken atsuage fried tofu, cut 1 cm wide and excess oil removed",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Tofu, fried",
+      "fdcId": 172451,
+      "notes": "Manual semantic review binds Cook4Me 'Silken atsuage fried tofu, cut 1 cm wide and excess oil removed' to USDA SR Legacy 'Tofu, fried' through an exact record retained in the same immutable evidence snapshot. Atsuage is thick deep-fried tofu, and removing excess oil is a preparation step rather than a different ingredient identity. Confidence is high at the food-family level, while silken texture and oil removal can shift water and fat content; this decision does not generalize to plain tofu, smoked tofu, yuba, or fermented tofu.",
+      "reviewTargetId": "concept:food:7215759fd0d2dca50c74",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "84f4bed49279a54eb4045d206146ea656b908b2d973f67d11fdff56b35a231ee",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceSha256": "29702fbafbfbc1fc993ecdbc27b2d536da9204a172ad9fc354513f634af8cc0b",
+      "sourceEvidenceTargetId": "concept:food:8b1193f53e269a4def49",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Bechamel",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "White sauce or gravy",
+      "fdcId": 2705703,
+      "notes": "Manual semantic review binds Cook4Me provider identity 'Bechamel' to USDA FNDDS 'White sauce or gravy' through an exact record retained in the same immutable evidence snapshot. Béchamel is a classic milk-based white sauce thickened with a white roux, so the USDA white-sauce profile is the appropriate reviewed identity. Confidence remains medium because formulations vary in butter, flour, milk fat, and seasoning; this decision does not infer any unrelated provider identity and does not generalize to cheese sauce, cream sauce, or flavored béchamel.",
+      "reviewTargetId": "M_FOOD_31",
+      "reviewTargetKind": "provider-identity",
+      "sourceCandidateSha256": "fdc21d487d1b954c6504d61dcd559feef386da7e4c88a8d32c7a690a1d1de944",
+      "sourceEvidenceCandidateRank": 9,
+      "sourceEvidenceSha256": "29702fbafbfbc1fc993ecdbc27b2d536da9204a172ad9fc354513f634af8cc0b",
+      "sourceEvidenceTargetId": "concept:food:9b48d00eff4f58e44d52",
+      "usageCountAtReview": 0
+    },
+    {
+      "canonicalEnglishName": "Onion squash",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Winter squash, raw",
+      "fdcId": 2709693,
+      "notes": "Manual semantic review binds Cook4Me provider identity 'Onion squash' to USDA FNDDS 'Winter squash, raw' using the provider target's own immutable candidate evidence. Onion squash is a culinary winter-squash cultivar, so the generic raw winter-squash profile matches its food family and raw ingredient state. Confidence is high at the food-family level, while cultivar-specific nutrient differences remain possible; this decision does not generalize to onions, cooked squash dishes, summer squash, or pumpkin products.",
+      "reviewTargetId": "M_FOOD_398",
+      "reviewTargetKind": "provider-identity",
+      "sourceCandidateSha256": "15bd5ff0631ab6492d1337ea0e061b3d988cbb34d998913c08e1a738d5b77956",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceSha256": "29702fbafbfbc1fc993ecdbc27b2d536da9204a172ad9fc354513f634af8cc0b",
+      "sourceEvidenceTargetId": "M_FOOD_398",
+      "usageCountAtReview": 0
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "referenceReceipts": {
+    "168525": {
+      "sourceCandidateSha256": "ccc6a0601efbd8164d943c92ddce0e4a83b5f92bb95a399d1893c5f39c38a63f",
+      "sourceEvidenceCandidateRank": 11,
+      "sourceEvidenceTargetId": "concept:food:c7925a71e0d2df4fa271"
+    },
+    "170888": {
+      "sourceCandidateSha256": "f8db3ed49d7b179c082ba3542e1492c172de07787d959b99cd516f178125283b",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:dc507966d373aed439da"
+    },
+    "171308": {
+      "sourceCandidateSha256": "886f84e4558cceb91d936be29488e5a238791d3f19adb842286bf065424a8b89",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceTargetId": "concept:food:b53156ebf99939cdc3af"
+    },
+    "172451": {
+      "sourceCandidateSha256": "84f4bed49279a54eb4045d206146ea656b908b2d973f67d11fdff56b35a231ee",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:8b1193f53e269a4def49"
+    },
+    "173572": {
+      "sourceCandidateSha256": "9b70e4222c1afb6becd65b6a79a06f271ec9980b61a267239d56b6b0b7da895e",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:0e01e20b5c952242934e"
+    },
+    "173702": {
+      "sourceCandidateSha256": "a3e471c9a731cfcac62460627ea83107c3bd768189cbf2e3358388adf37bf257",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "concept:food:cf67ce9fb44179365028"
+    },
+    "2346386": {
+      "sourceCandidateSha256": "931cbea4bd42c500f192f379bf495fc3ff130ef303a4743c87ef9468e1d9d376",
+      "sourceEvidenceCandidateRank": 10,
+      "sourceEvidenceTargetId": "concept:food:4dce4a17f914ae3b6d3f"
+    },
+    "2705427": {
+      "sourceCandidateSha256": "f95c82dac541427284dcb0b10f155285f5e85049dd03c75315c04cbdeea87c23",
+      "sourceEvidenceCandidateRank": 8,
+      "sourceEvidenceTargetId": "concept:food:5654aa4bc59483e095ab"
+    },
+    "2705703": {
+      "sourceCandidateSha256": "fdc21d487d1b954c6504d61dcd559feef386da7e4c88a8d32c7a690a1d1de944",
+      "sourceEvidenceCandidateRank": 9,
+      "sourceEvidenceTargetId": "concept:food:9b48d00eff4f58e44d52"
+    },
+    "2708342": {
+      "sourceCandidateSha256": "4a2f5a1d9b30af32e294914bd7a44f1b9bb30136ddf5d5bfb88f615065565eee",
+      "sourceEvidenceCandidateRank": 3,
+      "sourceEvidenceTargetId": "concept:food:b615f2fa925a68cf389f"
+    },
+    "2709693": {
+      "sourceCandidateSha256": "15bd5ff0631ab6492d1337ea0e061b3d988cbb34d998913c08e1a738d5b77956",
+      "sourceEvidenceCandidateRank": 4,
+      "sourceEvidenceTargetId": "M_FOOD_398"
+    },
+    "2727578": {
+      "sourceCandidateSha256": "5c0269d4f569eb5e8477755843e59550d0476cac0e7990f7345d695b3c31df2c",
+      "sourceEvidenceCandidateRank": 7,
+      "sourceEvidenceTargetId": "concept:food:ecf8af4b1f722a5d29f5"
+    }
+  },
+  "reviewDecisionSha256": "a50586d5699422f7bdc494241ec540c1ea8e535f4639be3ea544f32cdfcd0ec6",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "29702fbafbfbc1fc993ecdbc27b2d536da9204a172ad9fc354513f634af8cc0b"
+}

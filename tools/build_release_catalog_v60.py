@@ -130,6 +130,12 @@ def _identity(row: dict[str, Any]) -> str:
 def _reviewed_nutrition_eligible(row: dict[str, Any], ident: str) -> bool:
     source_local = bool(row.get("sourceLocalIdentity")) or ident.startswith("local:")
     if not source_local:
+        if (
+            row.get("nutritionEligible") is False
+            and row.get("nutritionEligibilityReviewed") is True
+            and _core._text(row.get("nutritionEligibilityReviewFile"))
+        ):
+            return False
         return provider_identity_v60.preserved_provider_identity(row, ident)
     return bool(
         _core._text(row.get("classification")).lower() == "food"

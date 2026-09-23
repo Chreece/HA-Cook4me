@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-supplemental-nutrition-source-v60",
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "policy": {
+    "manualSemanticReviewPerformed": true,
+    "automaticSelectionPerformed": false,
+    "searchResultAutoAccepted": false,
+    "networkRequestsPerformedAtRuntime": false,
+    "exactReviewTargetRequired": true,
+    "exactMemberIdentityRequired": true,
+    "authoritativePrimaryCompositionSourceRequired": true,
+    "exactPrimaryProductIdentityRequired": true,
+    "sourceValuesPinnedInRepository": true
+  },
+  "items": [
+    {
+      "reviewTargetId": "concept:food:bf319e28a87373efbe4a",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Mastic",
+      "memberIngredientIds": [
+        "local:ar:da000e9e09c65c2563d5"
+      ],
+      "confidence": "high",
+      "source": "authoritative_primary_composition",
+      "sourceAuthority": "Chios Gum Mastic Growers Association",
+      "sourceDataset": "Chios Gum Mastic – Chios Mastiha Nutritional Information",
+      "sourceRecordId": "Mastic_Gum_nutricial_information_2013-04-25",
+      "sourceId": "CHIOS-MASTIC:2013-NUTRITION",
+      "dataType": "Primary composition specification",
+      "sourceUrl": "https://mastic.gr/wp-content/uploads/2018/03/Mastic_Gum_nutricial_information.pdf",
+      "sourceRetrievedDate": "2026-09-19",
+      "sourceFoodName": "Chios Gum Mastic – Chios Mastiha",
+      "scientificName": "Pistacia lentiscus L. var. Chia",
+      "basis": "per100g",
+      "values": {
+        "energyKcal": 365,
+        "energyKJ": 1544,
+        "protein": 0.15,
+        "carbohydrates": 82.9,
+        "fiber": 16,
+        "sodium": 0.00103,
+        "salt": 0.002575
+      },
+      "sourceEvidenceSha256": "ff89b0a0c9a836fbfe0fe9ddc33d59df51f723d2befd6119ec4cefdf97ec0f6f",
+      "notes": "Exact primary composition review for authentic Chios Gum Mastic / Chios Mastiha from the Chios Gum Mastic Growers Association laboratory specification. The source reports 365 kcal, 1544 kJ, 0.15% protein, 82.9% carbohydrate, dietary fibre 16±2%, and sodium 1.03 mg/100 g. Values reported only as upper bounds (<0.1% fat, <1% sugars, <0.1% polyols) are deliberately not converted into exact catalog values. Salt is derived from sodium using the established 2.5 factor. No nutrition reuse is authorized for mastic-flavoured products or other plant resins.",
+      "reviewPass": 2
+    }
+  ]
+}

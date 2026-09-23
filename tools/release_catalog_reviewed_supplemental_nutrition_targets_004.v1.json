@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-supplemental-nutrition-source-v60",
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "policy": {
+    "manualSemanticReviewPerformed": true,
+    "automaticSelectionPerformed": false,
+    "searchResultAutoAccepted": false,
+    "networkRequestsPerformedAtRuntime": false,
+    "exactReviewTargetRequired": true,
+    "exactMemberIdentityRequired": true,
+    "officialFoodCompositionSourceRequired": true,
+    "sourceValuesPinnedInRepository": true
+  },
+  "items": [
+    {
+      "reviewTargetId": "concept:food:4b699a7031f660ff4dc1",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Chicken stock powder",
+      "memberIngredientIds": [
+        "local:ja:cc215899fc7eb23c0072",
+        "local:ja:d4c51f9fff7871e2c9bb"
+      ],
+      "confidence": "high",
+      "replacesHeldNutritionBinding": true,
+      "source": "official_food_table",
+      "sourceAuthority": "ANSES (Agence nationale de sécurité sanitaire de l’alimentation, de l’environnement et du travail)",
+      "sourceDataset": "Ciqual French food composition table 2025",
+      "sourceRecordId": "11174",
+      "sourceId": "FR-CIQUAL:11174",
+      "dataType": "Ciqual 2025",
+      "sourceUrl": "https://doi.org/10.5281/zenodo.17550133",
+      "sourceRetrievedDate": "2026-09-19",
+      "sourceFoodName": "Bouillon de volaille, déshydraté",
+      "basis": "per100g",
+      "values": {
+        "energyKcal": 233.0,
+        "energyKJ": 974.0,
+        "protein": 11.3,
+        "carbohydrates": 20.8,
+        "sugars": 5.38,
+        "fat": 11.5,
+        "fiber": 0.58,
+        "sodium": 19.8,
+        "salt": 49.6
+      },
+      "sourceEvidenceSha256": "fbe17d09be0de320b6bdc1251b15e0211a625960b8be37cf470534f18779123f",
+      "notes": "Explicit manual re-review replaces only the held home-prepared chicken-stock proxy for this exact Chicken stock powder concept. ANSES/Ciqual food code 11174 is dehydrated chicken bouillon, matching the dry powder form. No dilution or reconstitution is inferred, and no broader bouillon substitution rule is created."
+    }
+  ]
+}

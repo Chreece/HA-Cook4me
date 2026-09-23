@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-reviewed-supplemental-nutrition-source-v60",
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "policy": {
+    "manualSemanticReviewPerformed": true,
+    "automaticSelectionPerformed": false,
+    "searchResultAutoAccepted": false,
+    "networkRequestsPerformedAtRuntime": false,
+    "exactReviewTargetRequired": true,
+    "exactMemberIdentityRequired": true,
+    "officialFoodCompositionSourceRequired": true,
+    "sourceValuesPinnedInRepository": true
+  },
+  "items": [
+    {
+      "reviewTargetId": "concept:food:173e69b9214950b30980",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Consommé stock cube",
+      "memberIngredientIds": [
+        "local:ja:09f2f812071126353043",
+        "local:ja:73667cc78e64c398835c"
+      ],
+      "confidence": "medium",
+      "replacesHeldNutritionBinding": true,
+      "source": "official_food_table",
+      "sourceAuthority": "ANSES (Agence nationale de sécurité sanitaire de l’alimentation, de l’environnement et du travail)",
+      "sourceDataset": "Ciqual French food composition table 2025",
+      "sourceRecordId": "25970",
+      "sourceId": "FR-CIQUAL:25970",
+      "dataType": "Ciqual 2025",
+      "sourceUrl": "https://doi.org/10.5281/zenodo.17550133",
+      "sourceRetrievedDate": "2026-09-19",
+      "sourceFoodName": "Bouillon de viande et légumes type pot-au-feu, non dégraissé, déshydraté",
+      "basis": "per100g",
+      "values": {
+        "energyKcal": 212.0,
+        "energyKJ": 893.0,
+        "protein": 11.6,
+        "carbohydrates": 28.9,
+        "sugars": 2.8,
+        "fat": 5.4,
+        "saturatedFat": 1.4,
+        "fiber": 0.0,
+        "sodium": 19.4,
+        "salt": 48.4
+      },
+      "sourceEvidenceSha256": "9347ce3f72f49c5b37ecfde859a9554f2db378ab3b33d7ad63ce1de06e64ede5",
+      "notes": "Explicit manual re-review replaces only the held chicken-specific stock-cube proxy for this exact generic Consommé stock cube concept. Ciqual code 25970 is a non-low-sodium dehydrated meat-and-vegetable bouillon, matching the dry stock-cube/consommé family without asserting chicken identity."
+    },
+    {
+      "reviewTargetId": "concept:food:d970bae86d769631735f",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Bouillon cube (consommé cube also acceptable)",
+      "memberIngredientIds": [
+        "local:ja:0cab30c6de6b2da9933a"
+      ],
+      "confidence": "high",
+      "replacesHeldNutritionBinding": true,
+      "source": "official_food_table",
+      "sourceAuthority": "ANSES (Agence nationale de sécurité sanitaire de l’alimentation, de l’environnement et du travail)",
+      "sourceDataset": "Ciqual French food composition table 2025",
+      "sourceRecordId": "25970",
+      "sourceId": "FR-CIQUAL:25970",
+      "dataType": "Ciqual 2025",
+      "sourceUrl": "https://doi.org/10.5281/zenodo.17550133",
+      "sourceRetrievedDate": "2026-09-19",
+      "sourceFoodName": "Bouillon de viande et légumes type pot-au-feu, non dégraissé, déshydraté",
+      "basis": "per100g",
+      "values": {
+        "energyKcal": 212.0,
+        "energyKJ": 893.0,
+        "protein": 11.6,
+        "carbohydrates": 28.9,
+        "sugars": 2.8,
+        "fat": 5.4,
+        "saturatedFat": 1.4,
+        "fiber": 0.0,
+        "sodium": 19.4,
+        "salt": 48.4
+      },
+      "sourceEvidenceSha256": "9347ce3f72f49c5b37ecfde859a9554f2db378ab3b33d7ad63ce1de06e64ede5",
+      "notes": "Explicit manual re-review replaces only the held low-sodium bouillon proxy for this exact generic bouillon/consommé cube concept. Ciqual code 25970 is a standard non-low-sodium dehydrated meat-and-vegetable bouillon, matching the requested dry cube family."
+    },
+    {
+      "reviewTargetId": "concept:food:dbfce396513b670c6aa7",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Consommé granules, a little",
+      "memberIngredientIds": [
+        "local:ja:35b1a034e15ddf9717d3"
+      ],
+      "confidence": "high",
+      "replacesHeldNutritionBinding": true,
+      "source": "official_food_table",
+      "sourceAuthority": "ANSES (Agence nationale de sécurité sanitaire de l’alimentation, de l’environnement et du travail)",
+      "sourceDataset": "Ciqual French food composition table 2025",
+      "sourceRecordId": "25970",
+      "sourceId": "FR-CIQUAL:25970",
+      "dataType": "Ciqual 2025",
+      "sourceUrl": "https://doi.org/10.5281/zenodo.17550133",
+      "sourceRetrievedDate": "2026-09-19",
+      "sourceFoodName": "Bouillon de viande et légumes type pot-au-feu, non dégraissé, déshydraté",
+      "basis": "per100g",
+      "values": {
+        "energyKcal": 212.0,
+        "energyKJ": 893.0,
+        "protein": 11.6,
+        "carbohydrates": 28.9,
+        "sugars": 2.8,
+        "fat": 5.4,
+        "saturatedFat": 1.4,
+        "fiber": 0.0,
+        "sodium": 19.4,
+        "salt": 48.4
+      },
+      "sourceEvidenceSha256": "9347ce3f72f49c5b37ecfde859a9554f2db378ab3b33d7ad63ce1de06e64ede5",
+      "notes": "Explicit manual re-review replaces only the held low-sodium granule proxy for this exact Consommé granules concept. Ciqual code 25970 is a standard non-low-sodium dehydrated meat-and-vegetable bouillon and preserves the dry granule/cube nutrition form."
+    }
+  ]
+}

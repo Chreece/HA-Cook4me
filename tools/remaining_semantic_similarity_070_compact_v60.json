@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-semantic-similarity-compact-review-v60",
+  "policy": {
+    "automaticApproval": false,
+    "manualSemanticReviewRequired": true,
+    "candidateSearchIsIdentityProof": false
+  },
+  "summary": {
+    "candidateCount": 0
+  },
+  "items": []
+}

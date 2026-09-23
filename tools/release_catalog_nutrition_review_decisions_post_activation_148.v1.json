@@ -1,0 +1,70 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "evidenceBindingScope": "retained-reference-record",
+  "items": [
+    {
+      "approved": true,
+      "canonicalEnglishName": "Oysters, washed in salt water and drained",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Oysters, raw",
+      "fdcId": 2706351,
+      "notes": "Manual semantic review binds Cook4Me 'Oysters, washed in salt water and drained' to retained USDA 'Oysters, raw' as a target-specific nutrient-profile proxy because it is raw oysters directly preserve the oyster identity; washing in salt water and draining are preparation steps that do not materially change the underlying food. Confidence is high; this approval creates no culinary substitution rule and does not authorize automatic reuse for other ingredients.",
+      "reviewTargetId": "concept:food:769c3566166f3539b4f6",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:769c3566166f3539b4f6"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Packet of Bourbon vanilla sugar",
+      "confidence": "medium",
+      "fdcDataType": "Foundation",
+      "fdcDescription": "Sugars, granulated",
+      "fdcId": 746784,
+      "notes": "Manual semantic review binds Cook4Me 'Packet of Bourbon vanilla sugar' to retained USDA 'Sugars, granulated' as a target-specific nutrient-profile proxy because it is granulated sugar preserves the dominant nutrient profile of vanilla sugar while the small Bourbon-vanilla flavoring fraction is not represented. Confidence is medium; this approval creates no culinary substitution rule and does not authorize automatic reuse for other ingredients.",
+      "reviewTargetId": "concept:food:9448a3d86c749673009f",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:9448a3d86c749673009f"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Pumpkin (wrap and microwave at 600 W for 5 minutes)",
+      "confidence": "high",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Pumpkin, cooked",
+      "fdcId": 2709692,
+      "notes": "Manual semantic review binds Cook4Me 'Pumpkin (wrap and microwave at 600 W for 5 minutes)' to retained USDA 'Pumpkin, cooked' as a target-specific nutrient-profile proxy because it is cooked pumpkin directly preserves the pumpkin identity and cooked state after microwave heating. Confidence is high; this approval creates no culinary substitution rule and does not authorize automatic reuse for other ingredients.",
+      "reviewTargetId": "concept:food:b650e0ea7fd60bc39f95",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 2,
+      "sourceEvidenceTargetId": "concept:food:b650e0ea7fd60bc39f95"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Vanilla beans, a little",
+      "confidence": "low",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Vanilla extract",
+      "fdcId": 173471,
+      "notes": "Manual semantic review binds Cook4Me 'Vanilla beans, a little' to retained USDA 'Vanilla extract' as a target-specific nutrient-profile proxy because it is vanilla extract preserves the vanilla flavor-source family while whole vanilla bean is more concentrated and lacks the extract carrier. Confidence is low; this approval creates no culinary substitution rule and does not authorize automatic reuse for other ingredients.",
+      "reviewTargetId": "concept:food:8e3f5db32887a8169cce",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:8e3f5db32887a8169cce"
+    }
+  ],
+  "kind": "cook4me-fdc-retained-reference-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "fc9b48e241a2c2dfd54696bdf10fb3c03132ad9990ac264e94a3e2b8445208d6"
+}

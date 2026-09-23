@@ -1,0 +1,88 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "decisionMethod": "manual-retained-reference-binding",
+  "evidenceBindingScope": "retained-reference-record",
+  "evidenceKind": "cook4me-fdc-review-target-candidate-evidence-offline-v60",
+  "items": [
+    {
+      "canonicalEnglishName": "Skyr",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Yogurt, Greek, NS as to type of milk or flavor",
+      "fdcId": 2705415,
+      "notes": "Manual semantic review binds Cook4Me 'Skyr' to USDA FNDDS 'Yogurt, Greek, NS as to type of milk or flavor' through a retained exact evidence record. Plain skyr is a strained cultured dairy product with a high-protein yogurt-like nutrient profile, so Greek yogurt is the closest pinned USDA identity available in the offline reference corpus. Package size, serving role, and the stated gram amount do not change the underlying food identity. Confidence remains medium because traditional skyr is technically a fresh cultured cheese/yogurt-like product and commercial fat/protein levels vary, while the USDA record is not specific to plain flavor or milk-fat level; this approval does not generalize to vanilla skyr, berry skyr, drinkable skyr, or sweetened/flavored skyr.",
+      "reviewTargetId": "concept:food:d51efba6121f24976f73",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "88715eaefc1377c8e0693963d5500c9d87dae57fe113bb020afda27857abe7eb",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceSha256": "45d77c90ba4948736372cd01788712c64e39af8c7779336850cb776834b9a95c",
+      "sourceEvidenceTargetId": "concept:food:9a31f4ff5cad1908aa36",
+      "usageCountAtReview": 4
+    },
+    {
+      "canonicalEnglishName": "Package of skyr (150 g)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Yogurt, Greek, NS as to type of milk or flavor",
+      "fdcId": 2705415,
+      "notes": "Manual semantic review binds Cook4Me 'Package of skyr (150 g)' to USDA FNDDS 'Yogurt, Greek, NS as to type of milk or flavor' through a retained exact evidence record. Plain skyr is a strained cultured dairy product with a high-protein yogurt-like nutrient profile, so Greek yogurt is the closest pinned USDA identity available in the offline reference corpus. Package size, serving role, and the stated gram amount do not change the underlying food identity. Confidence remains medium because traditional skyr is technically a fresh cultured cheese/yogurt-like product and commercial fat/protein levels vary, while the USDA record is not specific to plain flavor or milk-fat level; this approval does not generalize to vanilla skyr, berry skyr, drinkable skyr, or sweetened/flavored skyr.",
+      "reviewTargetId": "concept:food:ff3d92a3aa63aac2c89e",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "88715eaefc1377c8e0693963d5500c9d87dae57fe113bb020afda27857abe7eb",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceSha256": "45d77c90ba4948736372cd01788712c64e39af8c7779336850cb776834b9a95c",
+      "sourceEvidenceTargetId": "concept:food:9a31f4ff5cad1908aa36",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Skyr (60 g)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Yogurt, Greek, NS as to type of milk or flavor",
+      "fdcId": 2705415,
+      "notes": "Manual semantic review binds Cook4Me 'Skyr (60 g)' to USDA FNDDS 'Yogurt, Greek, NS as to type of milk or flavor' through a retained exact evidence record. Plain skyr is a strained cultured dairy product with a high-protein yogurt-like nutrient profile, so Greek yogurt is the closest pinned USDA identity available in the offline reference corpus. Package size, serving role, and the stated gram amount do not change the underlying food identity. Confidence remains medium because traditional skyr is technically a fresh cultured cheese/yogurt-like product and commercial fat/protein levels vary, while the USDA record is not specific to plain flavor or milk-fat level; this approval does not generalize to vanilla skyr, berry skyr, drinkable skyr, or sweetened/flavored skyr.",
+      "reviewTargetId": "concept:food:10be4979b321b480dc67",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "88715eaefc1377c8e0693963d5500c9d87dae57fe113bb020afda27857abe7eb",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceSha256": "45d77c90ba4948736372cd01788712c64e39af8c7779336850cb776834b9a95c",
+      "sourceEvidenceTargetId": "concept:food:9a31f4ff5cad1908aa36",
+      "usageCountAtReview": 1
+    },
+    {
+      "canonicalEnglishName": "Skyr (for serving)",
+      "confidence": "medium",
+      "fdcDataType": "Survey (FNDDS)",
+      "fdcDescription": "Yogurt, Greek, NS as to type of milk or flavor",
+      "fdcId": 2705415,
+      "notes": "Manual semantic review binds Cook4Me 'Skyr (for serving)' to USDA FNDDS 'Yogurt, Greek, NS as to type of milk or flavor' through a retained exact evidence record. Plain skyr is a strained cultured dairy product with a high-protein yogurt-like nutrient profile, so Greek yogurt is the closest pinned USDA identity available in the offline reference corpus. Package size, serving role, and the stated gram amount do not change the underlying food identity. Confidence remains medium because traditional skyr is technically a fresh cultured cheese/yogurt-like product and commercial fat/protein levels vary, while the USDA record is not specific to plain flavor or milk-fat level; this approval does not generalize to vanilla skyr, berry skyr, drinkable skyr, or sweetened/flavored skyr.",
+      "reviewTargetId": "concept:food:664f670da1d2219ef06c",
+      "reviewTargetKind": "semantic-concept",
+      "sourceCandidateSha256": "88715eaefc1377c8e0693963d5500c9d87dae57fe113bb020afda27857abe7eb",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceSha256": "45d77c90ba4948736372cd01788712c64e39af8c7779336850cb776834b9a95c",
+      "sourceEvidenceTargetId": "concept:food:9a31f4ff5cad1908aa36",
+      "usageCountAtReview": 1
+    }
+  ],
+  "kind": "cook4me-reviewed-nutrition-target-source",
+  "policy": {
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false,
+    "semanticConceptGroupingReviewed": true
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "referenceReceipts": {
+    "2705415": {
+      "sourceCandidateSha256": "88715eaefc1377c8e0693963d5500c9d87dae57fe113bb020afda27857abe7eb",
+      "sourceEvidenceCandidateRank": 5,
+      "sourceEvidenceTargetId": "concept:food:9a31f4ff5cad1908aa36"
+    }
+  },
+  "reviewDecisionSha256": "61a0daad1f2a3d02f7eeac4de14abd91d0927fcefb3a53fdf4771df34790220a",
+  "schemaVersion": 1,
+  "selectionMethod": "explicit-semantic-review",
+  "sourceEvidenceSha256": "45d77c90ba4948736372cd01788712c64e39af8c7779336850cb776834b9a95c"
+}

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Any
+from copy import deepcopy
 import math
 
 from .costs import (
@@ -49,6 +50,12 @@ def _ingredient(item: Any) -> dict[str, Any] | None:
         amount, unit = options[0]['quantity'], options[0]['unit']
     out: dict[str, Any] = {"name": name or key, "quantity": amount, "unit": unit}
     out["priceOptions"] = options
+    # Allocation uses the same explicit identities as weekly stock coverage.
+    # Do not drop reviewed aliases when reducing a recipe to price inputs.
+    if item.get("identities"):
+        out["identities"] = deepcopy(item["identities"])
+    if item.get("identity"):
+        out["identity"] = _text(item["identity"])
     if key:
         out["key"] = key
     return out
@@ -70,7 +77,7 @@ def _lot_reference(
     if lot_id:
         # The exact paid currency is evidence and must not disappear merely
         # because the UI prefers a different currency for external estimates.
-        exact = store.best_reference(f"lot:{lot_id}")
+        exact = store.best_reference(f"lot:{lot_id}", unit=unit)
         if exact is not None:
             return exact, "exact_purchase"
     barcode = _text(lot.get("barcode"))
@@ -245,13 +252,13 @@ def calculate_consumption_cost(
     wanted_country = _country(country) or _country(store.settings.get("country"))
     totals: dict[str, float] = {}
     rows: list[dict[str, Any]] = []
-    for raw in report.get("deductedLots") if isinstance(report, dict) else []:
+    for raw in (report.get("deductedLots") or []) if isinstance(report, dict) else []:
         if not isinstance(raw, dict):
             continue
         quantity = _number(raw.get("quantity"))
         unit = _text(raw.get("unit"))
         reference, kind = _lot_reference(
-            store, raw, currency=wanted_currency, country=wanted_country
+            store, raw, currency=wanted_currency, country=wanted_country, unit=unit
         )
         cost = _cost_for_amount(reference, quantity, unit) if reference is not None else None
         curr = _currency((reference or {}).get("currency"))
@@ -294,10 +301,11 @@ def lookup_open_prices_safe(
         if not isinstance(raw, dict):
             continue
         row = dict(raw)
+        basis_quantity = _number(row.get("basisQuantity"))
         proven_basis = (
             bool(row.get("usable"))
             and _text(row.get("pricePer")).upper() in {"", "UNIT", "KILOGRAM"}
-            and _number(row.get("basisQuantity")) is not None
+            and basis_quantity is not None and basis_quantity > 0
             and bool(_text(row.get("basisUnit")))
         )
         row["usable"] = bool(proven_basis)

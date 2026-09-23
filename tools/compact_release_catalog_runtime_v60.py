@@ -84,6 +84,8 @@ _RUNTIME_NUTRITION_KEEP_FIELDS = (
     "reviewFile",
     "nutritionReviewTargetId",
     "nutritionReviewTargetKind",
+    "nutritionHoldReplacementApproved",
+    "nutritionHoldReplacementTargetId",
 )
 
 

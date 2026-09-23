@@ -11,6 +11,23 @@
   },
   "items": [
     {
+      "reviewTargetId": "concept:food:0bb2c48c43c227d344f5",
+      "reviewTargetKind": "semantic-concept",
+      "canonicalEnglishName": "Sesame purée",
+      "heldReasonCode": "historical_snapshot_unresolved",
+      "heldFdcId": 2262073,
+      "approved": true,
+      "fdcId": 2262073,
+      "fdcDescription": "Sesame butter, creamy",
+      "fdcDataType": "Foundation",
+      "confidence": "medium",
+      "sourceEvidenceSha256": "ee67ef91034b07912885c53fe7273dd8b3f3c7c0c9e74269cae3fbce888482b3",
+      "referenceManifestSha256": "e135d4235a897688e37f8561602820bb84d186e91c09d9f654f52bf0d8fab29d",
+      "sourceEvidenceTargetId": "concept:food:0bb2c48c43c227d344f5",
+      "sourceEvidenceCandidateRank": 6,
+      "notes": "Explicit re-review releases only the historical provenance/rank hold for Sesame purée. The committed retained-evidence subset for this exact target contains USDA Foundation FDC 2262073 'Sesame butter, creamy' at observed rank 6, matching the historical FDC ID, description and data type. The hold itself records no food mismatch; it exists because the historical review recorded rank 4 while the retained snapshot shows rank 6. This approval reconciles that provenance discrepancy without changing the selected nutrient record, creating a substitution rule, or authorizing reuse for other foods; confidence is medium because purée/butter naming and product formulation can vary."
+    },
+    {
       "reviewTargetId": "concept:food:51b62939bbb0887b2b96",
       "reviewTargetKind": "semantic-concept",
       "canonicalEnglishName": "Almond purée",

@@ -1,0 +1,57 @@
+{
+  "catalogVersion": "2026-09-14-v60-progressive",
+  "evidenceBindingScope": "retained-reference-record",
+  "items": [
+    {
+      "approved": true,
+      "canonicalEnglishName": "Coarsely ground pepper, a little",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, black",
+      "fdcId": 170931,
+      "notes": "Manual semantic review binds Cook4Me 'Coarsely ground pepper, a little' to USDA SR Legacy 'Spices, pepper, black'. The destination explicitly describes ground pepper used as a seasoning, so black pepper (Piper nigrum) is the appropriate reviewed spice identity rather than vegetable Capsicum pepper. The exact USDA record is retained from the same immutable evidence snapshot. Confidence is high because 'ground pepper' is an explicit spice preparation; this decision does not generalize to Sichuan pepper, pink peppercorns, chili pepper, or mixed pepper blends.",
+      "reviewTargetId": "concept:food:68fbbd8b5cb7a024bda7",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:66c5fc7b758825510143"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Coarsely ground pepper (for finishing), a little",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, black",
+      "fdcId": 170931,
+      "notes": "Manual semantic review binds Cook4Me 'Coarsely ground pepper (for finishing), a little' to USDA SR Legacy 'Spices, pepper, black'. The destination explicitly describes ground pepper used as a seasoning, so black pepper (Piper nigrum) is the appropriate reviewed spice identity rather than vegetable Capsicum pepper. The exact USDA record is retained from the same immutable evidence snapshot. Confidence is high because 'ground pepper' is an explicit spice preparation; this decision does not generalize to Sichuan pepper, pink peppercorns, chili pepper, or mixed pepper blends.",
+      "reviewTargetId": "concept:food:2ebe70c30f1ebbbfed60",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:66c5fc7b758825510143"
+    },
+    {
+      "approved": true,
+      "canonicalEnglishName": "Ground pepper",
+      "confidence": "high",
+      "fdcDataType": "SR Legacy",
+      "fdcDescription": "Spices, pepper, black",
+      "fdcId": 170931,
+      "notes": "Manual semantic review binds Cook4Me 'Ground pepper' to USDA SR Legacy 'Spices, pepper, black'. The destination explicitly describes ground pepper used as a seasoning, so black pepper (Piper nigrum) is the appropriate reviewed spice identity rather than vegetable Capsicum pepper. The exact USDA record is retained from the same immutable evidence snapshot. Confidence is high because 'ground pepper' is an explicit spice preparation; this decision does not generalize to Sichuan pepper, pink peppercorns, chili pepper, or mixed pepper blends.",
+      "reviewTargetId": "concept:food:426bbdb4814fda1bcdc5",
+      "reviewTargetKind": "semantic-concept",
+      "sourceEvidenceCandidateRank": 1,
+      "sourceEvidenceTargetId": "concept:food:66c5fc7b758825510143"
+    }
+  ],
+  "kind": "cook4me-fdc-retained-reference-review-decisions-v60",
+  "policy": {
+    "automaticSelectionPerformed": false,
+    "candidateSearchIsIdentityProof": false,
+    "exactFdcBindingRequired": true,
+    "manualSemanticReviewPerformed": true,
+    "providerIdentityInference": false,
+    "searchResultAutoAccepted": false
+  },
+  "referenceManifestSha256": "6ad28b7076ef650cf9b760da23a6b92fe0dcb4b3be2592634f490e84d90989b6",
+  "schemaVersion": 1,
+  "sourceEvidenceSha256": "373e1a6aaca4e92c29f704d29967bfee9c1263af547b91db72d2c358b1e6cfd4"
+}

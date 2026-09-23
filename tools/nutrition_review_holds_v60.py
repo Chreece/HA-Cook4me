@@ -19,7 +19,18 @@ import snapshot_nutrition_review_checkpoint_v60 as checkpoint
 
 TOOLS = Path(__file__).resolve().parent
 REGISTRY = TOOLS / "release_catalog_nutrition_review_holds.v1.json"
+RELEASES = TOOLS / "release_catalog_nutrition_review_hold_releases.v1.json"
 KIND = "cook4me-nutrition-review-holds-v60"
+RELEASE_KIND = "cook4me-nutrition-review-hold-releases-v60"
+RELEASE_POLICY = {
+    "explicitRereviewPerformed": True,
+    "historicalHoldRegistryModified": False,
+    "historicalReviewsModified": False,
+    "candidateSearchIsIdentityProof": False,
+    "retainedReferenceCandidateRequired": True,
+    "exactTargetReleaseRequired": True,
+    "releaseAppliesByExactReviewTargetId": True,
+}
 POLICY = {
     "replacementBindingsApproved": False,
     "historicalReviewsModified": False,
@@ -33,7 +44,110 @@ PINNED_FIELDS = (
 )
 
 
-def load_holds(path: Path = REGISTRY, review_root: Path = TOOLS) -> dict[str, Any]:
+def _load_releases(
+    path: Path | None,
+    *,
+    registry_sha256: str,
+    historical_targets: dict[str, dict[str, Any]],
+) -> tuple[dict[str, dict[str, Any]], str]:
+    """Validate compiled release receipts without rewriting hold history.
+
+    Runtime deactivation is intentionally limited to re-authorizing the same
+    exact FDC binding that was historically held. A receipt selecting a
+    different FDC record remains fail-closed until a replacement-binding
+    resolver explicitly consumes that receipt.
+    """
+    if path is None or not path.exists():
+        return {}, ""
+    value, digest = checkpoint._read(path)
+    if type(value.get("schemaVersion")) is not int or value["schemaVersion"] != 1:
+        raise ValueError("unsupported nutrition hold-release schema")
+    policy = value.get("policy")
+    if (
+        value.get("kind") != RELEASE_KIND
+        or not isinstance(policy, dict)
+        or any(policy.get(k) is not v for k, v in RELEASE_POLICY.items())
+    ):
+        raise ValueError("invalid nutrition hold-release kind/policy")
+    if checkpoint._text(value, "holdRegistrySha256", "hold release") != registry_sha256:
+        raise ValueError("nutrition hold-release registry SHA drift")
+    decision_sha = value.get("releaseDecisionSha256")
+    if decision_sha is not None and (
+        not isinstance(decision_sha, str)
+        or not checkpoint.HEX256.fullmatch(decision_sha)
+    ):
+        raise ValueError("invalid nutrition hold-release decision SHA-256")
+
+    items = value.get("items")
+    if not isinstance(items, list) or not items:
+        raise ValueError("nutrition hold-release items must be a nonempty list")
+
+    released: dict[str, dict[str, Any]] = {}
+    for raw in items:
+        target, kind, name = checkpoint._identity(raw, "nutrition hold release")
+        if target in released:
+            raise ValueError(f"duplicate nutrition hold release: {target}")
+        hold = historical_targets.get(target)
+        if not isinstance(hold, dict):
+            raise ValueError(f"nutrition hold release has no historical hold: {target}")
+        if checkpoint._identity(hold, target) != (target, kind, name):
+            raise ValueError(f"nutrition hold-release identity drift: {target}")
+        if raw.get("approved") is not True:
+            raise ValueError(f"nutrition hold release is not approved: {target}")
+        if checkpoint._text(raw, "heldReasonCode", target) != checkpoint._text(
+            hold, "reasonCode", target
+        ):
+            raise ValueError(f"nutrition hold-release reason drift: {target}")
+        held_fdc = checkpoint._positive_int(hold, "fdcId", target)
+        if checkpoint._positive_int(raw, "heldFdcId", target) != held_fdc:
+            raise ValueError(f"nutrition hold-release held FDC drift: {target}")
+        # The current runtime release mechanism only re-authorizes the original
+        # reviewed binding. A different selected FDC must not silently revive
+        # the historical review file.
+        if checkpoint._positive_int(raw, "fdcId", target) != held_fdc:
+            raise ValueError(
+                f"nutrition hold release requires replacement-binding integration: {target}"
+            )
+        if checkpoint._text(raw, "heldReviewFile", target) != checkpoint._text(
+            hold, "reviewFile", target
+        ):
+            raise ValueError(f"nutrition hold-release review file drift: {target}")
+        if checkpoint._text(raw, "heldReviewFileSha256", target) != checkpoint._text(
+            hold, "reviewFileSha256", target
+        ):
+            raise ValueError(f"nutrition hold-release review SHA drift: {target}")
+        members = sorted(
+            {
+                checkpoint._text({"value": member}, "value", target)
+                for member in raw.get("memberIngredientIds") or []
+            }
+        )
+        held_members = sorted(set(hold.get("memberIngredientIds") or []))
+        if not members or members != held_members:
+            raise ValueError(f"nutrition hold-release member drift: {target}")
+        if checkpoint._text(raw, "reviewFile", target) != RELEASES.name:
+            raise ValueError(f"nutrition hold-release receipt filename drift: {target}")
+        for key in (
+            "sourceEvidenceSha256",
+            "referenceManifestSha256",
+            "sourceCandidateSha256",
+        ):
+            value_sha = checkpoint._text(raw, key, target)
+            if not checkpoint.HEX256.fullmatch(value_sha):
+                raise ValueError(f"nutrition hold-release invalid {key}: {target}")
+        checkpoint._positive_int(raw, "sourceEvidenceCandidateRank", target)
+        checkpoint._text(raw, "sourceEvidenceTargetId", target)
+        checkpoint._text(raw, "fdcDescription", target)
+        checkpoint._text(raw, "fdcDataType", target)
+        released[target] = deepcopy(raw)
+    return released, digest
+
+
+def load_holds(
+    path: Path = REGISTRY,
+    review_root: Path = TOOLS,
+    release_path: Path | None = RELEASES,
+) -> dict[str, Any]:
     """Fail closed on missing/corrupt registry, binding drift, or invalid aliases."""
     registry, digest = checkpoint._read(path)
     if type(registry.get("schemaVersion")) is not int or registry["schemaVersion"] != 1:
@@ -94,8 +208,29 @@ def load_holds(path: Path = REGISTRY, review_root: Path = TOOLS) -> dict[str, An
             if ident in identities and identities[ident] != target:
                 raise ValueError(f"conflicting nutrition hold identity: {ident}")
             identities[ident] = target
-    return {"registrySha256": digest, "registry": registry,
-            "targets": targets, "identityToTarget": identities}
+    released, release_digest = _load_releases(
+        release_path,
+        registry_sha256=digest,
+        historical_targets=targets,
+    )
+    active_targets = {
+        target: row for target, row in targets.items() if target not in released
+    }
+    active_identities = {
+        ident: target
+        for ident, target in identities.items()
+        if target in active_targets
+    }
+    return {
+        "registrySha256": digest,
+        "registry": registry,
+        "targets": targets,
+        "historicalTargets": targets,
+        "activeTargets": active_targets,
+        "releasedTargets": released,
+        "releaseRegistrySha256": release_digest,
+        "identityToTarget": active_identities,
+    }
 
 
 @lru_cache(maxsize=1)
@@ -111,16 +246,28 @@ def find_hold(*identities: Any) -> dict[str, Any] | None:
             continue
         target = index["identityToTarget"].get(ident.strip())
         if target is not None:
-            return index["targets"][target]
+            return index["activeTargets"][target]
     return None
 
 
 def profile_hold(value: Any, *, ingredient_id: Any = "") -> dict[str, Any] | None:
     row = value if isinstance(value, dict) else {}
-    return find_hold(ingredient_id, *(row.get(k) for k in (
+    hold = find_hold(ingredient_id, *(row.get(k) for k in (
         "ingredientId", "nutritionReviewTargetId", "semanticConceptId",
         "conceptId", "reviewTargetId",
     )))
+    if hold is None:
+        return None
+    replacement_target = str(row.get("nutritionHoldReplacementTargetId") or "").strip()
+    if (
+        row.get("nutritionHoldReplacementApproved") is True
+        and replacement_target == hold.get("reviewTargetId")
+        and str(row.get("nutritionReviewTargetId") or "").strip() == replacement_target
+        and str(ingredient_id or row.get("ingredientId") or "").strip()
+        in set(hold.get("memberIngredientIds") or [])
+    ):
+        return None
+    return hold
 
 
 def filter_cache(cache: dict[str, Any]) -> tuple[dict[str, Any], int]:
@@ -136,10 +283,15 @@ def pending_hold(row: dict[str, Any], hold: dict[str, Any]) -> dict[str, Any]:
             "nutritionReviewHoldReason": hold["reasonCode"]}
 
 
-def audit(evidence_path: Path, *, review_root: Path = TOOLS,
-          registry_path: Path = REGISTRY) -> dict[str, Any]:
+def audit(
+    evidence_path: Path,
+    *,
+    review_root: Path = TOOLS,
+    registry_path: Path = REGISTRY,
+    release_path: Path | None = RELEASES,
+) -> dict[str, Any]:
     """Report raw discrepancies and a separate, unheld candidate-review gate."""
-    index = load_holds(registry_path, review_root)
+    index = load_holds(registry_path, review_root, release_path=release_path)
     recorded = checkpoint.build_checkpoint(review_root)
     resume = checkpoint.reconcile_evidence(recorded, evidence_path)
     registry = index["registry"]
@@ -149,20 +301,22 @@ def audit(evidence_path: Path, *, review_root: Path = TOOLS,
         raise ValueError("hold audit requires the exact retained candidate snapshot")
     evidence, _digest = checkpoint._read(evidence_path)
     by_id = {r["reviewTargetId"]: r for r in evidence["items"]}
-    for target, hold in index["targets"].items():
+    for target, hold in index["activeTargets"].items():
         candidate = next((c for c in by_id.get(target, {}).get("candidates", [])
                           if c["fdcId"] == hold["fdcId"]), None)
         observed_rank = candidate["localEvidenceRank"] if candidate else None
         if target not in by_id or observed_rank != hold["observedCandidateRank"]:
             raise ValueError(f"hold observation does not match retained evidence: {target}")
     unexplained = [r for r in resume["provenanceMismatches"]
-                   if r["reviewTargetId"] not in index["targets"]]
-    held_in_evidence = sorted(index["targets"].keys() & by_id.keys())
+                   if r["reviewTargetId"] not in index["activeTargets"]]
+    held_in_evidence = sorted(index["activeTargets"].keys() & by_id.keys())
     summary = {**recorded["summary"], **resume["summary"],
-               "heldReviewTargetCount": len(index["targets"]),
-               "recordedUnheldReviewTargetCount": len(recorded["recordedBindings"]) - len(index["targets"]),
+               "historicalHoldTargetCount": len(index["historicalTargets"]),
+               "releasedHoldTargetCount": len(index["releasedTargets"]),
+               "heldReviewTargetCount": len(index["activeTargets"]),
+               "recordedUnheldReviewTargetCount": len(recorded["recordedBindings"]) - len(index["activeTargets"]),
                "heldTargetsInEvidence": len(held_in_evidence),
-               "heldIngredientIdentityCount": len({m for r in index["targets"].values()
+               "heldIngredientIdentityCount": len({m for r in index["activeTargets"].values()
                                                    for m in r["memberIngredientIds"]}),
                "unheldProvenanceMismatchCount": len(unexplained),
                "unresolvedOrHeldEvidenceTargetCount": len(resume["remaining"]) + len(held_in_evidence)}
@@ -177,7 +331,8 @@ def audit(evidence_path: Path, *, review_root: Path = TOOLS,
             "catalogNutritionApprovalGranted": False, "replacementBindingsApproved": False,
             "semanticApprovalPerformed": False, "selectionPerformed": False,
             "provenanceMismatches": resume["provenanceMismatches"],
-            "heldTargets": list(index["targets"].values()),
+            "heldTargets": list(index["activeTargets"].values()),
+            "releasedTargets": list(index["releasedTargets"].values()),
             "remainingUnheldCandidates": resume["remaining"]}
 
 

@@ -1,0 +1,3903 @@
+{
+  "schemaVersion": 1,
+  "repository": "Chreece/HA-Cook4me",
+  "auditedMain": "5223eb462d1e41d51fc1e05b086e810a6ace3e7d",
+  "originalBranchCount": 287,
+  "backupRunId": 35853194745,
+  "backupArtifactId": 10746870064,
+  "branches": [
+    {
+      "branch": "audit/scanner-compatible-v194",
+      "sha": "11b39ddc5afc16afc2532d4a77bd5f03bfb7ad91",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 236,
+          "head": "11b39ddc5afc16afc2532d4a77bd5f03bfb7ad91",
+          "merged": true,
+          "merge": "7a23f3c700634bd14a3ee57e19087a8cb1daa08d",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "chore/stop-dev-ci-flood",
+      "sha": "4ef0b566f6bb523efa44e0c3735b6b223ee43f54",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 197,
+          "head": "4ef0b566f6bb523efa44e0c3735b6b223ee43f54",
+          "merged": true,
+          "merge": "4e14e8816fe037366c792692d405b2b06f0e0ee3",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-audit-v115",
+      "sha": "098418151961c510de22197064850e4153530c3c",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 157,
+          "head": "098418151961c510de22197064850e4153530c3c",
+          "merged": true,
+          "merge": "f6bdec906e76b37f490a4a4fae3dc09e924c1f24",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-batch23-review-prep",
+      "sha": "c146389ddc83bb07548bc97b13a856d7157af869",
+      "classification": "needs_review",
+      "prs": [],
+      "resolution": "Historical one-shot review-preparation workflow. Preserve ancestry; do not reactivate self-writing CI."
+    },
+    {
+      "branch": "cook4me-catalog-builder-single-page-v59",
+      "sha": "1f98ad7613b6ddc0c463b745c60a439ed9e0dfb6",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 36,
+          "head": "c4dcbcb6ed235013d38ccc068c181b135af702cd",
+          "merged": true,
+          "merge": "637801d5b56af3ff453c267da5e16d672f4e1f12",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-catalog-global-id-guard-v59",
+      "sha": "5fbe9e353a68257a81ee2042b005972014694762",
+      "classification": "needs_review",
+      "prs": [
+        {
+          "number": 37,
+          "head": "5fbe9e353a68257a81ee2042b005972014694762",
+          "merged": false,
+          "merge": "c73d7153ba46b6e4df570d06cf815417beccbb65",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Guard behavior already integrated; remaining builder difference is whitespace only."
+    },
+    {
+      "branch": "cook4me-catalog-global-id-proof-v59",
+      "sha": "9ff9f81bdcd9ebbad3049084cc6cb134bc197d97",
+      "classification": "needs_review",
+      "prs": [],
+      "resolution": "One-shot global variant-ID proof and report superseded by shipped identity validation. Keep in history."
+    },
+    {
+      "branch": "cook4me-catalog-pagination-probe-v59",
+      "sha": "7e35d0dfb530813da431787d55d98bbdd9741bfc",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 33,
+          "head": "942e0dd8c982bd2a7c85a23fa7ad15bfd238aedb",
+          "merged": true,
+          "merge": "266ebbf9e38f955eef9b599345c4201e94a93b80",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-catalog-phase2c-single-page-title-proof-v59",
+      "sha": "83f053d70a738b8f8601090d6f2e7dc0adf5cd89",
+      "classification": "needs_review",
+      "prs": [
+        {
+          "number": 39,
+          "head": "f8549947caa58b96ab73c209538d47d84f42e09d",
+          "merged": true,
+          "merge": "954673f91ff7ad72754a8faaef7e489387d7f811",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Intermediate title-proof snapshot superseded by complete shipped catalog. Keep in history."
+    },
+    {
+      "branch": "cook4me-catalog-phase2c-title-preflight-v59",
+      "sha": "6041555e4c2ad405521e5fed6a563d4ad07c9894",
+      "classification": "needs_review",
+      "prs": [],
+      "resolution": "Intermediate preflight report/workflow superseded by complete catalog. Keep in history."
+    },
+    {
+      "branch": "cook4me-catalog-phase3-keyless-review-001-v59",
+      "sha": "80f8cf85e164c51a09e180c1738eab9e6a0cd325",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 40,
+          "head": "01570f1e35f11c528674a6113e91dfd210ed74a6",
+          "merged": true,
+          "merge": "6a4610884a72091cd4307228cb938d19317e8f93",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-catalog-phase3-staging-v59",
+      "sha": "6c3434284765d3a02f8a4487d6be0e1a84f0d93b",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 35,
+          "head": "f947b5866f2593415ff0f7cf6b192b72a0d85a21",
+          "merged": true,
+          "merge": "4f12c44b2dd46c189ee5687e988020af4e9155ac",
+          "state": "closed"
+        },
+        {
+          "number": 31,
+          "head": "f947b5866f2593415ff0f7cf6b192b72a0d85a21",
+          "merged": true,
+          "merge": "c0bc67391d162dd27e89ac0b65e770f3cf669424",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-catalog-phase4-staging-v59",
+      "sha": "54d842053ef7de1911332a27852b68afbf5e0c63",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 32,
+          "head": "54d842053ef7de1911332a27852b68afbf5e0c63",
+          "merged": false,
+          "merge": "3ad13da1ffff500f3291175349939caf0bb96253",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-catalog-title-snapshotter-v59",
+      "sha": "85f1850e204131b05d48f0338e294a4fa3991d35",
+      "classification": "patch_equivalent",
+      "prs": [
+        {
+          "number": 38,
+          "head": "85f1850e204131b05d48f0338e294a4fa3991d35",
+          "merged": false,
+          "merge": "078bb9b8468dde5383e8e80dc9e58a4c7f269a6a",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-compact-alias-preservation-v60",
+      "sha": "85d30f92812ec639cef23dc6c5ec99c47a2df9ed",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 146,
+          "head": "85d30f92812ec639cef23dc6c5ec99c47a2df9ed",
+          "merged": true,
+          "merge": "deae0e6deab21ff243340a692cd7a23c16403554",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-continuous-scanner-v111",
+      "sha": "1d2ac3718ae9a8747ab70086333b3edab0f1a88e",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-delivery-confirmation-v108",
+      "sha": "2725bd3ff3bacd464e03ced3c9c85dea49356cb5",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-detail-404-reconcile-v60",
+      "sha": "e9b8f2259975b3c4e32d91909f8a40b2091ab348",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 144,
+          "head": "e9b8f2259975b3c4e32d91909f8a40b2091ab348",
+          "merged": true,
+          "merge": "25867aad6c66ac9e1754e8dc74a50b5c7afe2c11",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-dietary-guidance-v107",
+      "sha": "5bd18488cd54b1a5df1566195699de7a1f229ad7",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-final-hydration-fixes-v60",
+      "sha": "db648aac593042e0b84382f94c14930aa7f13c79",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 147,
+          "head": "db648aac593042e0b84382f94c14930aa7f13c79",
+          "merged": true,
+          "merge": "9692847b76e4c594edbb29e3d1875b7a36beaabc",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-ingredient-catalog-completeness-v60",
+      "sha": "e55371fddada70ce7ed603d55a335f66bb752d0c",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 153,
+          "head": "e55371fddada70ce7ed603d55a335f66bb752d0c",
+          "merged": true,
+          "merge": "1fb0bcb35de103f236d03e7af884bcb62c671981",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-ingredient-keyed-pantry-matching-v60",
+      "sha": "079cc212a52de2a510794a429516357706874205",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 155,
+          "head": "079cc212a52de2a510794a429516357706874205",
+          "merged": true,
+          "merge": "aa4f28f1b19960004e775b6e968077ea6e5dc898",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-ingredient-nutrition-resume-v60",
+      "sha": "6192b15039037933d91abf871db774e2dbf6ae57",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 154,
+          "head": "6192b15039037933d91abf871db774e2dbf6ae57",
+          "merged": true,
+          "merge": "e67672dfc9231fe69bd78e5bd9c3b0612d72d026",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-ingredient-semantic-confirmation-v60",
+      "sha": "bfd7579b5227b58c8c24a6196c6a07baad6238d6",
+      "classification": "needs_review",
+      "prs": [],
+      "resolution": "Integrate final reviewed semantic dispositions and equivalences, tests and tools. Reconcile exact IDs against newest nutrient snapshot. Keep old one-shot workflows inactive."
+    },
+    {
+      "branch": "cook4me-ingredient-semantic-next-v60",
+      "sha": "5aca42fad0673f3913910ab6bdf2370e4352466d",
+      "classification": "needs_review",
+      "prs": [],
+      "resolution": "Earlier semantic lane superseded by final semantic-confirmation work integrated in this consolidation."
+    },
+    {
+      "branch": "cook4me-nutrition-batch30-v60",
+      "sha": "a0577644a794d363fdaed01c5dd8ef7a752aa863",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 122,
+          "head": "a0577644a794d363fdaed01c5dd8ef7a752aa863",
+          "merged": true,
+          "merge": "d8a2b2480dcc1270082362814720aa108fe55aca",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch31-v60",
+      "sha": "caa28e366d481774891c8665473af46850934d51",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 123,
+          "head": "caa28e366d481774891c8665473af46850934d51",
+          "merged": true,
+          "merge": "9108847875aff62d0d6a7da2d89b36cc31eeb49e",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch32-v60",
+      "sha": "ee863affaec1b53e3e4ad480f64a888dd04f14cd",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 124,
+          "head": "ee863affaec1b53e3e4ad480f64a888dd04f14cd",
+          "merged": true,
+          "merge": "adc5b171b45f4650c8afafa0eb8b10e23ac24b48",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch33-v60",
+      "sha": "e52514cf63f5a0651c344cd7fc5a52c193fe66c2",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 125,
+          "head": "e52514cf63f5a0651c344cd7fc5a52c193fe66c2",
+          "merged": true,
+          "merge": "588ba93181a42254ce9e6c99917d92c609909fbe",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch34-v60",
+      "sha": "ff434e8df5c7c53529905375325c0c78c559e1a0",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 126,
+          "head": "ff434e8df5c7c53529905375325c0c78c559e1a0",
+          "merged": true,
+          "merge": "fa50586c269d4f2a5e3248f4d50e1f5454453df9",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch35-evidence-worklist-v60",
+      "sha": "3ff1987d387d0187714940ed55bc4b206f2923b5",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 127,
+          "head": "3ff1987d387d0187714940ed55bc4b206f2923b5",
+          "merged": true,
+          "merge": "0d35b270f77e5006526d52a1ef317b559b38f8ca",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch36-source-context-v60",
+      "sha": "e9d56f8557877d1df8f763a881db94c66cb2d1c5",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 128,
+          "head": "e9d56f8557877d1df8f763a881db94c66cb2d1c5",
+          "merged": true,
+          "merge": "d3673c679f4dc665c63b075c2a17bb8f7c1febd5",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch37-bulk-families-v60",
+      "sha": "d80fd64909af74aaefababd007e69d939bfc7c2d",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 129,
+          "head": "d80fd64909af74aaefababd007e69d939bfc7c2d",
+          "merged": true,
+          "merge": "c9b60bf83bebf588e6dac645eb9c0d460e980ee9",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch38-bulk-families-v60",
+      "sha": "7c273dd8dacbed4ad2b85b6781851c12bcfd46ec",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 130,
+          "head": "7c273dd8dacbed4ad2b85b6781851c12bcfd46ec",
+          "merged": true,
+          "merge": "e5d840a5748ca3717814c3dc79c3db4fd85dcf50",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch39-bulk-families-v60",
+      "sha": "4ff227a03df5fabb6da5524eae4d9f8fb5a7bc50",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 131,
+          "head": "4ff227a03df5fabb6da5524eae4d9f8fb5a7bc50",
+          "merged": true,
+          "merge": "55f99c60d300c17279566ba122ff1c2accb66955",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch40-bulk-families-v60",
+      "sha": "6f852dcfa732f9d9fcf0660acbf12100d026dc70",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 132,
+          "head": "6f852dcfa732f9d9fcf0660acbf12100d026dc70",
+          "merged": true,
+          "merge": "46b95fd627c61455d2d16cb9a39eba20c9542b84",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch40-direct-v60",
+      "sha": "55f99c60d300c17279566ba122ff1c2accb66955",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch41-discovery-v60",
+      "sha": "b4b62f6099b5ec03253160a33985ccb1373a1f38",
+      "classification": "needs_review",
+      "prs": [],
+      "resolution": "Intermediate recorded discovery candidates are not accepted nutrition evidence. Preserve history, not active automation."
+    },
+    {
+      "branch": "cook4me-nutrition-batch41-triage-hardening-v60",
+      "sha": "08ac98950701608ffc0eab90ed4fd56c7ee6b32d",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 133,
+          "head": "08ac98950701608ffc0eab90ed4fd56c7ee6b32d",
+          "merged": true,
+          "merge": "821df54ca14ee0928e03e28141bd688d3cb4f490",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch42-explicit-v60",
+      "sha": "1c69d831ed2116a9758182aee3b17a3b666b6bd9",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 134,
+          "head": "1c69d831ed2116a9758182aee3b17a3b666b6bd9",
+          "merged": true,
+          "merge": "5dd790c8e8e744b7085e24954676f61463738dd8",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch42-guinea-fowl-v60",
+      "sha": "3448074a388974208c96e9d59445f13b98959137",
+      "classification": "needs_review",
+      "prs": [],
+      "resolution": "Older meat-and-skin binding conflicts with later explicit meat-only review in targets_095. Retain later reviewed binding; preserve older evidence in history."
+    },
+    {
+      "branch": "cook4me-nutrition-batch43-evidence-triage-v60",
+      "sha": "35469a080f18c1ffb4ea68157d36e2d22b0200a3",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 135,
+          "head": "35469a080f18c1ffb4ea68157d36e2d22b0200a3",
+          "merged": true,
+          "merge": "2441fb06b7792b10a9f6dea69b46339aaf2e8fa8",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch44-generic-pepper-v60",
+      "sha": "d4a7f6d5b9525414fbe1d86de2291cfe8d9a30a4",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 136,
+          "head": "d4a7f6d5b9525414fbe1d86de2291cfe8d9a30a4",
+          "merged": true,
+          "merge": "ac19271972d0947770febb585831298261c1e7f6",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch45-curry-garam-v60",
+      "sha": "63864f23791da477220ff011a7c587f00c6d048f",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 137,
+          "head": "63864f23791da477220ff011a7c587f00c6d048f",
+          "merged": true,
+          "merge": "d4e585cdd2517c07d5cc6d114b5e3e36626331ed",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch46-herb-blends-v60",
+      "sha": "8b2d4c4df87a7c01ad969268d081c3cfa4352b78",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 138,
+          "head": "8b2d4c4df87a7c01ad969268d081c3cfa4352b78",
+          "merged": true,
+          "merge": "d97e4d943916de8c9562c8babc5645d629be178c",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch47-pepper-salt-v60",
+      "sha": "40cfc0f387c7da28b42f76b3a68ae31a0d03c0be",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 139,
+          "head": "40cfc0f387c7da28b42f76b3a68ae31a0d03c0be",
+          "merged": true,
+          "merge": "ca3cdb5350b56c4b4b8115f561b80b377309a6e9",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch48-generic-seafood-v60",
+      "sha": "498b24f14a01db862226df57ee89a8e8c9f46b69",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 140,
+          "head": "498b24f14a01db862226df57ee89a8e8c9f46b69",
+          "merged": true,
+          "merge": "1bea56ba35cc194ac05bc71208bbdc6547747e41",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch49-generic-starch-v60",
+      "sha": "1fb1956505c2ec6351769f3af871ef43c23c4aaa",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 141,
+          "head": "1fb1956505c2ec6351769f3af871ef43c23c4aaa",
+          "merged": true,
+          "merge": "2314e3a32435ccc7e0c01482cce0d569b681587f",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-batch50-formulated-dashi-v60",
+      "sha": "f9b43d41af25a80fa757c9c914790df588c3a608",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 142,
+          "head": "f9b43d41af25a80fa757c9c914790df588c3a608",
+          "merged": true,
+          "merge": "4822c81d286dd83ad0eb0e3ac9cbd96d7c5af02f",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-checkpoint-resume-v60",
+      "sha": "86b80b711db1cc35a493479f6d52057fee3b661b",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 119,
+          "head": "86b80b711db1cc35a493479f6d52057fee3b661b",
+          "merged": true,
+          "merge": "5b1ae91ca3892abd8d037077f34d8c271277e1f5",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-enrichment-post-activation-v60",
+      "sha": "d8c339426e83bbf20d4945d95540c92ba776fe64",
+      "classification": "needs_review",
+      "prs": [
+        {
+          "number": 163,
+          "head": "f1220b573464090f6d0dbdadb94efd95acdeb2d2",
+          "merged": true,
+          "merge": "7223f14c7d81fcbd2e740e1331077daab6d1c480",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Integrate exact-ID reviewed nutrition, supplementary records, eligibility/hold support and tests. Do not reactivate one-shot workflows."
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch13-v60",
+      "sha": "90bbb85fbea3813a79ce6e518a846daaed233826",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 103,
+          "head": "a6c73f820e2cf2486f6f60213799c7665730fac1",
+          "merged": true,
+          "merge": "baf53e661117220bf974e69e657b646ae516f563",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch14-v60",
+      "sha": "b5c0c08e22b3be6c6e6e42710952c72f66f589c6",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 104,
+          "head": "58552ac198e60e5b82acedc0a7a4adb67512b7cf",
+          "merged": true,
+          "merge": "d04e38500aaebab72e301e0d6c246633a1154f2d",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch15-v60",
+      "sha": "1e8fd85efb94e9cf2f178a6bce9ec75fcd013b7f",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 105,
+          "head": "ee0d48a72e83788f310911423afed73611cc5c8c",
+          "merged": true,
+          "merge": "2ab6e594b0bdf4f76479f5b59b8bbcb522881a68",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch16-v60",
+      "sha": "f8162787ae7a79da59c6702c9a1fb00766eae70e",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 106,
+          "head": "854353ae530d3e8f817ca9620e01178d4774ea24",
+          "merged": true,
+          "merge": "be603c5e34c2814d5df571421ff8679b06950d6a",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch17-v60",
+      "sha": "e023cf9869d580f1d17cdd6ccfef9acb384757e0",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 107,
+          "head": "dafb3bb25c82ce6a41f97b7858dc2cc8252dcdb6",
+          "merged": true,
+          "merge": "fcb69dd05bc717e5658e35efc417daac6669ad8b",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch18-v60",
+      "sha": "4b18e6947106c6f0fc824480f675c2dbaf8c6ad8",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 108,
+          "head": "19e330feed0eca733c7a989d14b11279ce5ee238",
+          "merged": true,
+          "merge": "57848cdee0b8ec28a7bac0f249ac3a7cd7fd8257",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch19-v60",
+      "sha": "6b44e4af27378afecc7a30984934f00daf6dfa8a",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 109,
+          "head": "5732bc5bb31984af03ed35a916b78b5d4752c098",
+          "merged": true,
+          "merge": "640c37537ac3e8c78730e3cb601b0621b12cbdf0",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch20-v60",
+      "sha": "5975ed17106073995561ece6516f48847db64aee",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 110,
+          "head": "490a0836e9b55d2b50057984f5aee95894f4bac3",
+          "merged": true,
+          "merge": "fb5874376b5388dc7c57e84e748b4e478ffb8f99",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch21-v60",
+      "sha": "6ce92b33e731d709735265c6a4ae391df1af3daa",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 111,
+          "head": "caf888329e8c70331d2022e211712f29ab53b290",
+          "merged": true,
+          "merge": "9718f017046c154fbd7a31d97aa42a24d23aae1f",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch22-v60",
+      "sha": "a635bc2881603bebf622053bf1c68abaabb9640e",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 112,
+          "head": "9d7339fb47ac88b4b72c3bcf8fca1ab3f1d7ac06",
+          "merged": true,
+          "merge": "9a71c1f715ace0df2033b165907f1eda4c656652",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch23-v60",
+      "sha": "17529901b73fc7c2b5cb952673eeb30f8b27e72b",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 113,
+          "head": "bf656cfbf494ce6c5508af59085766277f68d8fb",
+          "merged": true,
+          "merge": "19bfce3634fcf793edda6fa649ad7de7b9aec1e7",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch24-v60",
+      "sha": "f2d60d165c331c19bc63c434dc5a2d3cc6d9ac28",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 114,
+          "head": "34665556bd72e566963e4e5042142b2ab92cd3ec",
+          "merged": true,
+          "merge": "5b57b5fff805c7b58e59e74bd5f69d5f4364b29b",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch25-v60",
+      "sha": "f298275e99115b7a809d4fc8490a725c5e4be989",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 115,
+          "head": "1540f91be6882e9fa704cf6000801ec9d4d3dc07",
+          "merged": true,
+          "merge": "bd0549e9181b436b80fc37a3946d2f4a8b60cba9",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch26-v60",
+      "sha": "98ed16004f49b96e638ec1e22611c1d6d6857304",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 116,
+          "head": "f7f166f6eaac8a354a41ec02950a0a4f176a195a",
+          "merged": true,
+          "merge": "9e237bc95f8de09a9f5c64bbc73a10cd12491838",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch27-v60",
+      "sha": "1e23d065bf5d8ad639117b98ab34bf1d971f6428",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 117,
+          "head": "ecb6d0fae8e479b89cb4d6ededfa9873075e4696",
+          "merged": true,
+          "merge": "f48cf1bd4f35f94e20d1cafa51d1293a697f49e3",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch28-v60",
+      "sha": "fd390b41003fb206a6955b00c5fd77616fe357fe",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 118,
+          "head": "cb2a0cbaba173941892864cd421ddf38b611a7e9",
+          "merged": true,
+          "merge": "aff00647d2f32631ed942b9a76c2a99a65bb8d27",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-review-batch29-retained-v60",
+      "sha": "1d148a926f854ece9906b845869be9100d686332",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 121,
+          "head": "1d148a926f854ece9906b845869be9100d686332",
+          "merged": true,
+          "merge": "06ab4a513eef1eb143448893ea0e909aa5c84b2a",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-review-post-batch50-v60",
+      "sha": "54833b15699890dfb84a1954807011ad1bdd1b22",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-nutrition-targeted-holds-v60",
+      "sha": "a640c800e0fca8b9b21949988d5ff744cd619950",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 120,
+          "head": "a640c800e0fca8b9b21949988d5ff744cd619950",
+          "merged": true,
+          "merge": "6e18fcf598c0cb774d69fd336207bd59b04e588c",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-offline-multilingual-runtime-fixes-v60",
+      "sha": "209ff06171546d796bf0733f3d013f0efb79ec45",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 151,
+          "head": "209ff06171546d796bf0733f3d013f0efb79ec45",
+          "merged": false,
+          "merge": "607767edc9a99ebb71975f109f7bdbb413ba9a02",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-offline-price-evidence-v85",
+      "sha": "b21d95d2f095af50e691e76997073770e8774c6d",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-original-language-v106",
+      "sha": "ae62f404c4582f0fed68c6f94e869fe2f2e27894",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-price-confidence-v99",
+      "sha": "c75775a12ab2e98b411b64cc2257fc9e706b5bed",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-price-conversions-v94",
+      "sha": "978f4e5511f7d648e4c17909746b3d8973f74ef4",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-price-expansion-v101",
+      "sha": "b7fd2c9f122fb7c9c009e018a5349fb0df40b05b",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-price-expansion-v102",
+      "sha": "8a61b66263635df350a26e63eefe6079adacdcf7",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-price-expansion-v103",
+      "sha": "f86cdec36dd8a08a713169c4f1bc62afe7e14d9d",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-price-expansion-v104",
+      "sha": "b0a2c7a2b0db018a6823917365795e6d0131ee21",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-price-expansion-v95",
+      "sha": "02f32ba39784453819547aef0eace031f0e22d02",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-price-expansion-v96",
+      "sha": "6e0937fba024575ab7c6c9917aa8a459ce6e6029",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-price-expansion-v97",
+      "sha": "cd3f718a976981ca90bd6100ad5bf5659113e85f",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-price-fallback-v91",
+      "sha": "598c4d57cbd459eda0e91d1ec1dfd0dd0b4e9ff5",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-price-gaps-v87",
+      "sha": "866252ba5ef03734c17afa5cf601ae9fbd9979a5",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-price-gaps-v88",
+      "sha": "38c044f5619af3c68dabaec92d2b0b2e61849a79",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-price-gaps-v89",
+      "sha": "9346ea913a7b1c68a5888161b0a277803f1fd9a3",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-price-gaps-v90",
+      "sha": "9ea014e033048e2ca6c790a17b91252eb9dec5e9",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-price-optimization-v92",
+      "sha": "a7bb9edff2cb56163ffdba13c27c55444e300a43",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-product-links-v114",
+      "sha": "effff4c8ae7930b9a801c19c071c30393d607e77",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-product-review-v112",
+      "sha": "6d2d965cc650a190037f3c56b773a966b33819fc",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-progressive-catalog-activation-v60",
+      "sha": "cebc1106fbbdab023e13df5792486f7cb80fe8e3",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 149,
+          "head": "cebc1106fbbdab023e13df5792486f7cb80fe8e3",
+          "merged": true,
+          "merge": "21570432faa80196e40a14a06704932f5828a3c0",
+          "state": "closed"
+        },
+        {
+          "number": 148,
+          "head": "3b95435388d17d59d60372c1bec2127eea2bc18b",
+          "merged": true,
+          "merge": "84783b2d32a50df72d73f8dbef032a3da8e26df2",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-query-localization-v60",
+      "sha": "94dea7a5742d6fc7531cc28e632a15212885cba7",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 143,
+          "head": "94dea7a5742d6fc7531cc28e632a15212885cba7",
+          "merged": true,
+          "merge": "12529d71c30bb8d8a03d5d09ccb01fc27ec095fe",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-recipe-cost-coverage-v86",
+      "sha": "d62f438fd0d2b4352ed2a46818e7de748395a3bc",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-release-catalog-cache-progress-v59",
+      "sha": "4822c81d286dd83ad0eb0e3ac9cbd96d7c5af02f",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 34,
+          "head": "266ebbf9e38f955eef9b599345c4201e94a93b80",
+          "merged": true,
+          "merge": "f947b5866f2593415ff0f7cf6b192b72a0d85a21",
+          "state": "closed"
+        },
+        {
+          "number": 30,
+          "head": "4822c81d286dd83ad0eb0e3ac9cbd96d7c5af02f",
+          "merged": true,
+          "merge": "54833b15699890dfb84a1954807011ad1bdd1b22",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-responsive-header-v100",
+      "sha": "1e1ca9937322da3c9c824f24cf5955e57292b93f",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-runtime-bug-hunt-v74",
+      "sha": "5b417fbe2c14be77e420790586916ef4d85ab163",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 152,
+          "head": "5b417fbe2c14be77e420790586916ef4d85ab163",
+          "merged": false,
+          "merge": "c61de4b4a7321cd9ebd01fc07562a7c0cd28315c",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-runtime-catalog-compact-v60",
+      "sha": "212bb9f5db99463f1c1308de7566b7d7a329714d",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 145,
+          "head": "212bb9f5db99463f1c1308de7566b7d7a329714d",
+          "merged": true,
+          "merge": "19b410085220d20ef890cd9d7ad5c27af37eb5ce",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-scanner-retry-v113",
+      "sha": "aeca64f3442459591a387bb70641d5db4e16fe81",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-today-filters-v98",
+      "sha": "c7bfaaf51c5db1e3cbd35ddce3d5b782d02b6d95",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-toolbar-jobs-v93",
+      "sha": "ca27bb24277b24eb0817abc50eedffb0451efa02",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-ui-announcements-v105",
+      "sha": "e362fbd634f580d384011a6f96cd7512a6732b36",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v128-nutrient-targets-beta",
+      "sha": "42d6f93973a9394a1553e3f1fab3907cf2615af3",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 165,
+          "head": "42d6f93973a9394a1553e3f1fab3907cf2615af3",
+          "merged": true,
+          "merge": "0b3ed0bcc5017c55f266061db6f1cded9f6db6db",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v129-delivery-queue",
+      "sha": "88b22935bfcc8155a61ea140e74e10366a817f28",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 166,
+          "head": "88b22935bfcc8155a61ea140e74e10366a817f28",
+          "merged": true,
+          "merge": "e0ca95213e819b5027b48e59a74288f77f49e1fc",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v130-photoreal-device",
+      "sha": "9f02e4a6eb472fb3523d08e3d1809b10dd51682d",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 167,
+          "head": "9f02e4a6eb472fb3523d08e3d1809b10dd51682d",
+          "merged": true,
+          "merge": "f3e4604d8caaa5904389ab45d3021790166b5238",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v131-editable-meal-history",
+      "sha": "d003c5c02028dced14148db24c9456728d4aac35",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 168,
+          "head": "d003c5c02028dced14148db24c9456728d4aac35",
+          "merged": true,
+          "merge": "94d0c79f549ec636e3e0a39c1158e1115eb15409",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v132-hard-refresh-device-asset",
+      "sha": "d54e8b69b040fd71a1542c003baf05b717e9cced",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 169,
+          "head": "d54e8b69b040fd71a1542c003baf05b717e9cced",
+          "merged": true,
+          "merge": "d6b948fa5bf57f515aa4e26964c5181a9250f8e2",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v133-device-body-offline-screen",
+      "sha": "31f845eb45e433b06270228d46a6ed3142f75fdd",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 170,
+          "head": "31f845eb45e433b06270228d46a6ed3142f75fdd",
+          "merged": true,
+          "merge": "8b581ac81c45114abc36cf8a06a6d1848f9b0df4",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v134-transparent-device",
+      "sha": "7a2b1dbb9f7d8d589544569ecb8f328da310c3a3",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 171,
+          "head": "7a2b1dbb9f7d8d589544569ecb8f328da310c3a3",
+          "merged": true,
+          "merge": "72f021abfa1d2ea608b4c2a84c1f9d33a4d14464",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v135-clean-halo-revert",
+      "sha": "54bf5c9519db37b4d968fdc6c390ecebe9966143",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 173,
+          "head": "54bf5c9519db37b4d968fdc6c390ecebe9966143",
+          "merged": false,
+          "merge": "e371ed821b3b4de56f73fc85886e91a793e2c069",
+          "state": "closed"
+        },
+        {
+          "number": 172,
+          "head": "54bf5c9519db37b4d968fdc6c390ecebe9966143",
+          "merged": true,
+          "merge": "ced299bbca1c8595b3d040b775312dd15280ae47",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v136-week-fold-clean-background",
+      "sha": "b0c38bb70b4bbb5ecbb5d9409b2913d382928a31",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 174,
+          "head": "b0c38bb70b4bbb5ecbb5d9409b2913d382928a31",
+          "merged": true,
+          "merge": "829417a05a8bd88c2877d62d0e4fce26ce88770c",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v137-week-panels-transparent-device",
+      "sha": "440fbf265c6d2b44e42bffe2ad2611e378214971",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 175,
+          "head": "440fbf265c6d2b44e42bffe2ad2611e378214971",
+          "merged": true,
+          "merge": "b00930da0f35291ce487c3356b747b45f91a00d4",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v138-live-display-new-device",
+      "sha": "7bf5043f2f36efdd1d2b352d42001beb4e22af56",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 176,
+          "head": "7bf5043f2f36efdd1d2b352d42001beb4e22af56",
+          "merged": true,
+          "merge": "6592afe8ac16657a2f98623367586f9bdafb6437",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v139-svg-keyed-cooker",
+      "sha": "890faebb7b9ee565aae6a4bf63fbbc04669f2824",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 177,
+          "head": "890faebb7b9ee565aae6a4bf63fbbc04669f2824",
+          "merged": true,
+          "merge": "1870c7caa7ad76074a14ce991e53b7dd95d9e1fb",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v140-supermarket-language-device",
+      "sha": "4e610274f2a3198b24a2befaee32a9d899c26a69",
+      "classification": "needs_review",
+      "prs": [
+        {
+          "number": 178,
+          "head": "26d321c187f3ea3e646dbc3c14518955cd265e16",
+          "merged": true,
+          "merge": "394611b23bf5811346f19324df995054bc46b335",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Supermarket-language feature already delivered and subsequently improved through v188/v192 and recovered v190. Retain current panel, settings and localization implementation."
+    },
+    {
+      "branch": "cook4me-v60-canonical-review-overlay-batch1",
+      "sha": "7a0b0f2979c2aa66d252cc0338d02996f5733da8",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 44,
+          "head": "e45c07ccb5635298cc7a8f2999459a577c0de72b",
+          "merged": true,
+          "merge": "c1c2e19452052fa760e472500621a1412fa704ce",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture-once-ux-batch1",
+      "sha": "a63d49c33523d43a21b53c9786b7e27a015056c0",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 46,
+          "head": "76812666460194627770cd3fce71d7d91162b9ac",
+          "merged": true,
+          "merge": "5f0dcfe52a71ee107f692e97431c219c9489a344",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-bg-semantic-review-batch1",
+      "sha": "7bfb870a529cd4185c3da13bbf64ed36cc8f0d48",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 69,
+          "head": "fcdcd8625ce0fadc65c8f30f6b840e4263f126f4",
+          "merged": true,
+          "merge": "9f5adfcac19cd45c6dee0efc2c8d84a479ea42a4",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-cs-sk-semantic-review-batch1",
+      "sha": "d55675bb2dd21dd53201bc536f65c7214a8e6e97",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 61,
+          "head": "04eeb338f988d5592885c0c2371142345e9d1814",
+          "merged": true,
+          "merge": "22dcf47aebb5b1a068a0650735ff185c50c2cb59",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-de-semantic-review-batch1",
+      "sha": "cd57e86a5d4c1ce274c6496f27087a78d6b45947",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 57,
+          "head": "cf885355bacf388f98e4fa3cc94ea97faed361ce",
+          "merged": true,
+          "merge": "cc34c153f8014f0a882f3c25c4ac6d680f0809dc",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-en-semantic-review-batch1",
+      "sha": "7fc450a5ac88d2be80a2b8cb68999fbec42ed1d1",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 56,
+          "head": "5badbed9dc8ea877e263dd15faac899487714642",
+          "merged": true,
+          "merge": "1f08d2d4d1ed42cb396ad560e0082212ba6ee9ce",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-es-semantic-review-batch1",
+      "sha": "9fc943c9e0a206130c7a6dc231bec13f2d629a23",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 59,
+          "head": "6da44be6e8dd13bf44bfd5cbc982c35b434da3b5",
+          "merged": true,
+          "merge": "562985462274a79c4ec258fdedd0f736acdaa16d",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-final-review-reconciliation",
+      "sha": "30045464b62f3cd9f0476ac46d61a92d520b20d4",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 72,
+          "head": "31fe216a0426418099cf573c8de73890cee40d6d",
+          "merged": true,
+          "merge": "99cac803f810400ac7410bdec66b9e374782097c",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-fr-semantic-review-batch1",
+      "sha": "2da62d93b6961a351859840a4261e9f931ad5112",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 58,
+          "head": "6a92f8bd8c6b8f56ffa7ef72688c4c8251339f02",
+          "merged": true,
+          "merge": "ef5eca018400ae50b173669d5962e59c2246413c",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-hr-semantic-review-batch1",
+      "sha": "1888701f2fc86b0dd38df2986b934bd3eb90e300",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 71,
+          "head": "c042c721bd01df5e856cfd51b3c07dd73c92cb09",
+          "merged": true,
+          "merge": "556559f1c447b3340e1050fcba391daefe9589d4",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-it-pt-semantic-review-batch1",
+      "sha": "0578e244fd7b078a9618a365262ebb0b111de75a",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 67,
+          "head": "c0c90f79f25f6746a03b66d3425138a9fba1bf6a",
+          "merged": true,
+          "merge": "4e0eceebafa0628003ada4ffa02a1dd96a0c417c",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-ja-ar-semantic-review-batch1",
+      "sha": "79de330c671fe2854d9d109b95e7792ccf7093c3",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 66,
+          "head": "5fd7fda9f91c73d83312af00c08a801f303431c6",
+          "merged": true,
+          "merge": "121940bd33c75417893ecaede78cb3212782803c",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-ko-semantic-review-batch1",
+      "sha": "04ddc8e41efe0064eee62e3483e7722b0def71dd",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 65,
+          "head": "9d28737020c0f4a79239cd90372aa570355b44ec",
+          "merged": true,
+          "merge": "53d66995ec93b265aa9c3feacbf4729021586841",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-offline-review-overlay",
+      "sha": "b38cb6d8611f7bb714d166d26716eb5ae60d2f8b",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 78,
+          "head": "6b048f5a38902f32a0f732c7e7072a1c4e6c4f61",
+          "merged": true,
+          "merge": "580586f0b05e87147ab4ffa2d86d7812f6954fbd",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-pl-sl-semantic-review-batch1",
+      "sha": "e03fe0ef2913eaf3a79ea1b0614bd5d4ac413ae3",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 60,
+          "head": "a33b2aef42f4ac1fc0b3b4494985a1798fa5bfe8",
+          "merged": true,
+          "merge": "42e3b70fd646ef1b9fe195987edecff380169074",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-provider-english-batch1",
+      "sha": "f7a36276b695e7287d34fcf7e2e49d3597b7b5f3",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 73,
+          "head": "dc33feee2ad812f1a2416baa1a3e87d1651486ab",
+          "merged": true,
+          "merge": "d0dfc0ec92739efc1d83afeb0653520a0f67c1a8",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-provider-english-batch2",
+      "sha": "d050d284c8f33bae8b0464322c9509de2d7450f4",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 74,
+          "head": "b3dfe05cba4f0e52d32752b7d5678e975827f709",
+          "merged": true,
+          "merge": "a6a6f800ce3f058255b69f48586cc560981cd047",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-provider-english-batch3",
+      "sha": "3a5be6eab09ae23a4fc83bc6ce8972c6e3c3330c",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 75,
+          "head": "fb1f733f5e889567316f8b18823c7cf9cc8a76e9",
+          "merged": true,
+          "merge": "f6c92399c9f9b79729d0e6517acd8c08abac6c9f",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-provider-english-batch4",
+      "sha": "1a03982814bfa04b57ca9bd4ced53950e82fca8d",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 76,
+          "head": "132139f79c092772255365c52f93bce6f73c99df",
+          "merged": true,
+          "merge": "a66b2544b8afcd9003812fe3f91dffd6d182cc72",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-provider-english-final",
+      "sha": "57cc415ea0626f92a0a6cbcc90029f16adf818d5",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 77,
+          "head": "b5454fb9082cee02f362c2944d62abdc994e3d6c",
+          "merged": true,
+          "merge": "23226b8cbd54d26e8e0b9bf94feb3c798d714b45",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-ro-hu-semantic-review-batch1",
+      "sha": "538e523a559301a1617c33e60971f3c33e5f8e79",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 62,
+          "head": "07b65f463154cb50d54bad562ab28feda7680a4f",
+          "merged": true,
+          "merge": "acd643bdca851279a1f1854c0b99757947d20486",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-ru-semantic-review-batch1",
+      "sha": "7d1c1e55814f3e116852fbc5b8482caeb09a03f2",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 64,
+          "head": "61404dc1245f9e6e6343592af876ec5e7ae7283d",
+          "merged": true,
+          "merge": "5094aa3e3a016f59f50682f8b7d8956852c65026",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-tr-semantic-review-batch1",
+      "sha": "a82d48ee1d3273ce30f7e5002bce9044a86661a4",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 68,
+          "head": "0f9c89a428c115827a78d105f7980430169adee1",
+          "merged": true,
+          "merge": "a0333c4223f16b963e65746116a64f7dc33da222",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-uk-semantic-review-batch1",
+      "sha": "69ffbd19381647d3d8559ed79a52b577cb6d79f6",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 70,
+          "head": "6f91bcb203b1b33aa3ae863e59a1ee8ff932e6c9",
+          "merged": true,
+          "merge": "318669304be451352f230f233a5931b5a2ac6430",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-capture3-zh-semantic-review-batch1",
+      "sha": "8131791ba9148282b8533bbdca1b64b86093bd29",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 63,
+          "head": "201646f4eea6ecc91cf0ca2732b6a26207052cb4",
+          "merged": true,
+          "merge": "7c078bb419de656f2b9c8e93327706ffc40eca20",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-detail-auth-differential-batch1",
+      "sha": "d4ab6863c72c8fdc7a7d01b1245e23374af5a295",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 52,
+          "head": "0a8e9bfb271470b9c261930a5591748225eb12e0",
+          "merged": true,
+          "merge": "c62072dd00fe629805d4f3695a5b13ecc9a12fb5",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-detail-not-found-accounting-batch1",
+      "sha": "dde6ee3a88e440ef722f14e734793d7c5d164ca0",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 53,
+          "head": "16b32174b1730f2a8df83ed2e1929777dd818f6a",
+          "merged": true,
+          "merge": "2cf6d7a1987ae7c7c5ed13b9c282f4e0514d16c6",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-detail-timeout-retry-batch1",
+      "sha": "58b9d74c487aee357d6a197fd491a7e77329d175",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 50,
+          "head": "188c880a1f11763516c688fb56bf2fbc405c26c4",
+          "merged": true,
+          "merge": "d1f932dfb1113f85b664a13b7bec11c1e31a44c2",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-failed-detail-evidence-batch1",
+      "sha": "68fdcabb8d6252cf5cb31154ee0424da9d0e3292",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 51,
+          "head": "f190e91df27c73165825069fa4eac56dede53da8",
+          "merged": true,
+          "merge": "bbcde9c6c3c5fcfafe6fdc419b697964dd501a93",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-fdc-candidate-evidence-batch1",
+      "sha": "b2f0bfeb02ea8f9a06c98e83fecf09c808201acf",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 45,
+          "head": "658fe147a65ff450cca8bf64212a8c6ad2634d17",
+          "merged": true,
+          "merge": "a5da50392e69ea0b17c962aa03a49cb68d656e20",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-fdc-discovery-normalization",
+      "sha": "29d3a293821460f7161bcd3931b92b524d0d1926",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 90,
+          "head": "448516d07560095e3803cf4d524a3fa0ac648b93",
+          "merged": true,
+          "merge": "28258db24a1df92cb768d46ae962aff40a09cdf1",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-fdc-manifest-stability",
+      "sha": "283c0457690ab486acf3a279e4ab599de8b1660c",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 91,
+          "head": "49cd3d398039471da350dba7f8accfe880319c97",
+          "merged": true,
+          "merge": "b9c0ff6abaac4d1cebc5423d56ada8892bcc5c75",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-final-validator-batch1",
+      "sha": "26106cf8bcaa8aad1801ce1a8b8d7334d0802c43",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 42,
+          "head": "32259969da38f9b902bed121d10e65e1fe16b8ba",
+          "merged": true,
+          "merge": "6dca65e73e4ee091023673fcf784810d2fdee0a6",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-fndds-offline-evidence",
+      "sha": "dcd81776c4719e8b94141af97ec3da9fe00b36a9",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 84,
+          "head": "307ec0ca83ccdc941c6884699f7285e9138093f6",
+          "merged": true,
+          "merge": "c47cfd3b9042ec4eac6bc8f5b9aacbd8f7332f3f",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-exact-canonical-reuse-batch2",
+      "sha": "0a26975fa63bc6a3d26a87a4be3a0431be83e969",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 94,
+          "head": "407eb37eec32b032c39dae5bc6ab3975a15880c9",
+          "merged": true,
+          "merge": "78afadcc45e64192a7cbc1f42a0336cc61a79ea1",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-exact-canonical-reuse-batch3",
+      "sha": "22311649cbaaffa0764facd988bcf8e8b6460c91",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 96,
+          "head": "fc3c76e55f29674057188cde1746dd60f446cdb2",
+          "merged": true,
+          "merge": "0e76e09067d58e32e7a02f20fff79cf563567111",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-exact-canonical-reuse-batch4",
+      "sha": "5b70ad1a6f1cc8212e27830c35e656a7baf19e56",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 98,
+          "head": "a5964e8287532a6d8188c6b6bd65a6c414b0bfc3",
+          "merged": true,
+          "merge": "24290c42bb5cc3abf248ca792e332aa50d32ff46",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-exact-canonical-reuse-batch5",
+      "sha": "d206854c9c4d67dab8cb469494a0c188c3168cc9",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 100,
+          "head": "46722f3242557cab3230494b1d53c071b6a3707e",
+          "merged": true,
+          "merge": "821341df88c9c8b83c71f8d6f25496f7660b9502",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-exact-canonical-reuse-batch6",
+      "sha": "025c2b591e397341d7682543ef26dcb08aedec8b",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 102,
+          "head": "59a0e623129a8a4e89096280c38309756fb91c00",
+          "merged": true,
+          "merge": "a762bda4fe568acd057704a5a5f538c91ab35f38",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-exact-canonical-reuse-proposal",
+      "sha": "c6fbd331dbae2e272aa2bcb8a8ed481b9de9e556",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 93,
+          "head": "a4ab09d58d4c2fab6c1f5828e68a3d2ffb745684",
+          "merged": true,
+          "merge": "036726f7a2ae253424813bb0751a35f4dffe0836",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch1",
+      "sha": "cb97d2465556b443877045151d68e2b4dfc4e39d",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 81,
+          "head": "4db258e42b3eb3457c748106b8a8ab68d5f3b327",
+          "merged": true,
+          "merge": "e30341a2cb6692a3273a26a4539e32c8a3d1d361",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch1-check",
+      "sha": "01b7649ff80f3499092a17b45cd8ac950fa6bf4c",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch1-files",
+      "sha": "01b7649ff80f3499092a17b45cd8ac950fa6bf4c",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch10",
+      "sha": "064bcff6b04d777eb0f7ec1f4e7f05a9242ea8a1",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 97,
+          "head": "e135bcd1c7b7269882eef642ac8cf2efd6a838ea",
+          "merged": true,
+          "merge": "b09932a0653b9bcfa8878969403b1da5e14dcee4",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch11",
+      "sha": "6eb12dc7f34b1cdedba8205419b74cd0f407f032",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 99,
+          "head": "dfa4a3c0601a0988923f5bc0590fb3e80d8cca65",
+          "merged": true,
+          "merge": "c01a8f2b151c2da31e6985c5eeb20e0a2d5b2cf1",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch12",
+      "sha": "d7a30c5382ef35e13df57357cb6a786814c05e7a",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 101,
+          "head": "99e203af3872dca3e61c2cd99388fef379dde8d8",
+          "merged": true,
+          "merge": "efd4750bdb118243ae34be634dd02451d4780e1c",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch2",
+      "sha": "04aee577dc83e1f4a9740ebef885077ef87a4866",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 82,
+          "head": "c24251941f6d6431f36e77c54dd36f4c288468bc",
+          "merged": true,
+          "merge": "f1aebd05d733fe68a04868ed88754494bae0320e",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch3",
+      "sha": "247365441cdf5db3436a231f70eae1d7cf5a09ed",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 83,
+          "head": "2bb5548ca3ab69c4181bf8c3aec1cbb66c2f44e4",
+          "merged": true,
+          "merge": "066b4f6a95e31798d1f2bb61d104a64eb79f92fe",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch4",
+      "sha": "dcc782a70abf68670324244230add88febcc0060",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 85,
+          "head": "ef60c9057cc30cc9073ff0c533a46afced1accb7",
+          "merged": true,
+          "merge": "c2e3276a0da97839a4bb2b6b07878df03b6f0388",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch5",
+      "sha": "5df8fb0d744d4b989aeada79122fef8c625d07cb",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 86,
+          "head": "195a59ca38cb8d40f848590959f18085726c2ca0",
+          "merged": true,
+          "merge": "340be78f69ab6b06a5f0962aa286b313d144f2dd",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch6",
+      "sha": "73e72ca72a847c2a87b23e99154d46d6ff072011",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 87,
+          "head": "408c830d66a0264d0f64aedb27de3ab145276dd8",
+          "merged": true,
+          "merge": "eddbb06207d58222ddbc6d14efbe3070920a647a",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch7",
+      "sha": "a6c18f6411088dc18399b1030c8dbcb26d66a27d",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 88,
+          "head": "f63df2ed946cd83e5c0b13eb3bb0f612e14f2e3a",
+          "merged": true,
+          "merge": "85db9243d976a49ecb6d73bdf15b74d0e0630a7a",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch8",
+      "sha": "957769e50badd15541825d5fe96410e5c7362fa3",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 92,
+          "head": "63b449fac65bc9987ffc443eb8871949c8a05bc5",
+          "merged": true,
+          "merge": "b898d6342d88278cdb30064b609af8caa3d0a393",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-fdc-review-batch9",
+      "sha": "6f0ca48fc8352223c488afbeb8016d1819aed3c8",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 95,
+          "head": "3050cde1afa34f6d6351d797dd6fadd8303a42a2",
+          "merged": true,
+          "merge": "3c5afa210dc230b5a3ff6fd601d32d8aaad60a26",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-review-targets",
+      "sha": "70352c6e7c883a3b3b712aba7f060fa7b743d55a",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 79,
+          "head": "ffcedbd01ba4e45252adf1597294e857bcbacc23",
+          "merged": true,
+          "merge": "d041f312bcc085819fdcb7227c8c0c640b352eff",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-nutrition-reviewed-decision-reuse",
+      "sha": "388803b8d39a134372a07f4fcf0612a8bb4fd080",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 89,
+          "head": "55fd460a521745d01d781d6308b2b18c0eb223c6",
+          "merged": true,
+          "merge": "7849584d4bc44854d90309e2dca27a131a204021",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-offline-fdc-candidates",
+      "sha": "afca1a045ab5cbd66fb3e4f03704a129110c9af2",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 80,
+          "head": "3e83663de461198cd533b159c7dffd4d62519b12",
+          "merged": true,
+          "merge": "48a580f12e21a7a184f0a902cedcd9d0daa42fe8",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-offline-fdc-candidates-2",
+      "sha": "0377f485b91694c3da9b51f891c1a420423b40fd",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-phase3-identity-contract-batch1",
+      "sha": "a85731494b53e685354a25dc56285e8163c1e755",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 48,
+          "head": "26382007ded63d49ae27e1c58db86291500a5090",
+          "merged": true,
+          "merge": "c9870a53544bfd970d5b509dff6aac0b0783c4ce",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-provider-key-contract-batch1",
+      "sha": "9aa98e961036e6ee6a0c132d3ff74ae8014fd94a",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 49,
+          "head": "012f8548d0538dc85459c21e905b2fd437012abd",
+          "merged": true,
+          "merge": "a72ff72ee62f0944fdb0d1c404101748b3dc487c",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-release-pipeline-batch1",
+      "sha": "6b411f7d9f6f880a1f031970af64451678b3d023",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 43,
+          "head": "5ffad767a1cbfbdd74e7a25ad4635d2e782d376f",
+          "merged": true,
+          "merge": "0230f7d4a89f4d19fd1d37cbcff6de6a1aead4e1",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-review-queue-reconcile-batch1",
+      "sha": "68f662e6682760e009fad9868eec294521c1ec44",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 55,
+          "head": "a90c1a67070c238312c3a971e527e891d46b257e",
+          "merged": true,
+          "merge": "0938b732c58b60605394108dec742b94a3928e51",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-review-queues-batch1",
+      "sha": "01189b25d611cd1a101ac0e74237a27b8f4cb953",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 54,
+          "head": "718afd1f26d5d27f1c7b370911096f1337597b72",
+          "merged": true,
+          "merge": "482044f93c937f760a38235e7f0a05502be07e40",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-reviewed-nutrition-batch1",
+      "sha": "5b07011813331379b34b4ea842618ad6524b991b",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 41,
+          "head": "79fdfb47c6951431994135a88e78b3e3a2a5cd4f",
+          "merged": true,
+          "merge": "e757c17aba4082fb04889156f12c6b9b3668a666",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-v60-search-timeout-retry-batch1",
+      "sha": "5f9a70052990500c61442e1971701b5bd08d7dba",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 47,
+          "head": "2db16a4cddf9687357720152a3a820fb36b3a7ff",
+          "merged": true,
+          "merge": "4a46e81115deb4054c72fb9e265b18ca2d6c2650",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-weekly-selection-v110",
+      "sha": "27ce0599338a34708f0b7a8285114cc4a155a771",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me-weekly-summary-v109",
+      "sha": "1a73b1ea04d6b3547b2020b92bd3dc8998964bde",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "cook4me/catalog-it-title-probe-v59",
+      "sha": "8776632f5875a345e4a45f7483e95fe7cfabc023",
+      "classification": "needs_review",
+      "prs": [],
+      "resolution": "Obsolete single-market title diagnostic; preserve history without reintroducing experimental endpoint paths."
+    },
+    {
+      "branch": "cook4me/release-catalog-v59",
+      "sha": "d7f5106b77603b1b0ccff8f016117ec64939f1d7",
+      "classification": "needs_review",
+      "prs": [],
+      "resolution": "Alternative early catalog architecture superseded by released v60 core, later cache and current v180 UI. Retain current routes/schema."
+    },
+    {
+      "branch": "dev/fold-week-meals-v145",
+      "sha": "ed3690d9c5c215e7128b07ca885646925de92f91",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 183,
+          "head": "ed3690d9c5c215e7128b07ca885646925de92f91",
+          "merged": true,
+          "merge": "94e26fa01bf41334bcde5f705569218bee0183db",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-audit-language-stack-v188",
+      "sha": "ba9254014574a4dbe350accbf7e67d8946dc0b99",
+      "classification": "needs_review",
+      "prs": [],
+      "resolution": "Older language-stack experiment superseded by main v188 backend localization and current v180 plus v194-v196 mixins. No version rollback."
+    },
+    {
+      "branch": "dev/greek-audit-stock-localization-v188",
+      "sha": "21c68adb162d25162f23b946165457467a3e48f3",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 232,
+          "head": "21c68adb162d25162f23b946165457467a3e48f3",
+          "merged": true,
+          "merge": "175e285cae0f1f1e05ae2cdc3276134543cbf14d",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v147",
+      "sha": "bea5aba9c93005d93922d01ca5fd41b57352a1b6",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 186,
+          "head": "bea5aba9c93005d93922d01ca5fd41b57352a1b6",
+          "merged": true,
+          "merge": "ab302ca09d43970f075ba20f77b65934a5905421",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v148",
+      "sha": "8b88683c845122031b4bc5d37d3592da9d53c437",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 188,
+          "head": "8b88683c845122031b4bc5d37d3592da9d53c437",
+          "merged": true,
+          "merge": "ba3ad475e90d5aca934b972f704ea46db93bdd8d",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v149",
+      "sha": "c768a5120155a7790fa68f2148ea0641a6343d79",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 189,
+          "head": "c768a5120155a7790fa68f2148ea0641a6343d79",
+          "merged": true,
+          "merge": "525bfd5b4d50212090d5d77a5238412c691932e2",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v150",
+      "sha": "a36d6df9bb31eb9ce61e7048ea5ef5286cabc9f5",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 190,
+          "head": "a36d6df9bb31eb9ce61e7048ea5ef5286cabc9f5",
+          "merged": true,
+          "merge": "2973a8c19bcb541161d4cef116dab227f76430d4",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v151",
+      "sha": "12984bb7ec43060d6319bdb98eee0af2d5e4269c",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 191,
+          "head": "12984bb7ec43060d6319bdb98eee0af2d5e4269c",
+          "merged": true,
+          "merge": "5170f24e6374dbada78bc2b8588d53b9b3988d9a",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v152",
+      "sha": "04acfb93a71afa14fd9b9e02812b479e67871a23",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 192,
+          "head": "04acfb93a71afa14fd9b9e02812b479e67871a23",
+          "merged": true,
+          "merge": "4be3d38ba9015bfb71700f8a58c58e35c2e55b36",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v153",
+      "sha": "c770c734b4719dfa14db3ed4188f968bf8312235",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 193,
+          "head": "c770c734b4719dfa14db3ed4188f968bf8312235",
+          "merged": true,
+          "merge": "cf5f186027477219897fef5235ea71105b0a5c75",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v155",
+      "sha": "38acf33f9714b42048374d6e3c11b80b1f8bb3a5",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 195,
+          "head": "38acf33f9714b42048374d6e3c11b80b1f8bb3a5",
+          "merged": true,
+          "merge": "760d1b61bbe4b0c27053db62af9fcb3b5fd27f5f",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v156",
+      "sha": "34cfcf84a99412c3946d360bf289c3b68114eeee",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 196,
+          "head": "34cfcf84a99412c3946d360bf289c3b68114eeee",
+          "merged": true,
+          "merge": "90024ade307e34e5555cc08bdf9b6550fe1a19b7",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v157",
+      "sha": "5baad3162ac8170c467f1951e91b060e36972942",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 198,
+          "head": "5baad3162ac8170c467f1951e91b060e36972942",
+          "merged": true,
+          "merge": "977cdb1528cad7fa94fe3058dedcea9aad300db3",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v158",
+      "sha": "33f0a5a7583ce98524bb0a83f777ca4d2bd595be",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 199,
+          "head": "33f0a5a7583ce98524bb0a83f777ca4d2bd595be",
+          "merged": true,
+          "merge": "ad8bb7e22ff459d68e309c8466ea5249de6d0b58",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v159",
+      "sha": "b64adeb713ebe61761688b0e419eba327ce20b8d",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 200,
+          "head": "b64adeb713ebe61761688b0e419eba327ce20b8d",
+          "merged": true,
+          "merge": "3741bc6e8548c0901372b960646e99e2fb7752b9",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v160",
+      "sha": "711c5d98bd98dd81227cf1344c81d865d1b0b85e",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 201,
+          "head": "711c5d98bd98dd81227cf1344c81d865d1b0b85e",
+          "merged": true,
+          "merge": "c51ce986c8cc289b8344ef030c32e5945807dbc7",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v161",
+      "sha": "c9ad2b6b626ac0d1543d98560fe0f6d463bbe795",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 202,
+          "head": "c9ad2b6b626ac0d1543d98560fe0f6d463bbe795",
+          "merged": true,
+          "merge": "663437bf7ad5d6914f0c29aa2f18b4325d48f789",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v162",
+      "sha": "43c150ded23b0f7960af2171c0c594172c788fab",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 203,
+          "head": "43c150ded23b0f7960af2171c0c594172c788fab",
+          "merged": true,
+          "merge": "bb685227ad10b6069408613ecfea2a2493d2c1c4",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v163",
+      "sha": "62b9c2adce1ac5d77a1ec95583def214dd3bafa8",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 204,
+          "head": "62b9c2adce1ac5d77a1ec95583def214dd3bafa8",
+          "merged": true,
+          "merge": "d049b2b4d719646be0baf21a1fc726e694e674e4",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v164",
+      "sha": "dbb618741d7051d74a90b6ebe52cc9a142c04bcf",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 205,
+          "head": "dbb618741d7051d74a90b6ebe52cc9a142c04bcf",
+          "merged": true,
+          "merge": "a3ed4d52a04b9a79fefcfce27c3a9d4ba444a5ed",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v165",
+      "sha": "e9b1bee7d119ca3176ae9d266319a95323632d43",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 206,
+          "head": "e9b1bee7d119ca3176ae9d266319a95323632d43",
+          "merged": true,
+          "merge": "aca20f167e0ae6aed246fd01ff49a2aa153cfa8e",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v166",
+      "sha": "f7c7e981ff7758a086cc171687085927f97f837d",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 207,
+          "head": "f7c7e981ff7758a086cc171687085927f97f837d",
+          "merged": true,
+          "merge": "2b95dba627de3fd73c14aec99fbcc9a0b85b28b2",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v167",
+      "sha": "3e89b367c7573295aed9322b8ea46491bc4de298",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 208,
+          "head": "3e89b367c7573295aed9322b8ea46491bc4de298",
+          "merged": true,
+          "merge": "bcdb4dcc4000d90a3cca140b517408043fa0c2af",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v168",
+      "sha": "d5735e5722ee12bf804d4415684a3e4ba720b389",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 209,
+          "head": "d5735e5722ee12bf804d4415684a3e4ba720b389",
+          "merged": true,
+          "merge": "32cda9fb6b553610969c17de4f8d864d3207d249",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v169",
+      "sha": "3cb076000770bb718440cc02f2f0672ceeabd9b0",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 210,
+          "head": "3cb076000770bb718440cc02f2f0672ceeabd9b0",
+          "merged": true,
+          "merge": "41d6d1c739e992dcf42fa7f85ff1cb956736f633",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v170",
+      "sha": "d795b9354543cd7fbb538cf0835de0d1a64f746c",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 211,
+          "head": "d795b9354543cd7fbb538cf0835de0d1a64f746c",
+          "merged": true,
+          "merge": "a921f961c28145d360a2de26237ea804aef93db7",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v171",
+      "sha": "4ff0d3c8d49d801396ce3e53303edf56b993eca5",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 212,
+          "head": "4ff0d3c8d49d801396ce3e53303edf56b993eca5",
+          "merged": true,
+          "merge": "b81f836dcaf1dab7161df1399d5a92e3caa49a4d",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v172",
+      "sha": "b4c9cb68c270c7f0f837df292593ad071256b81c",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 213,
+          "head": "b4c9cb68c270c7f0f837df292593ad071256b81c",
+          "merged": true,
+          "merge": "0567fb5ae1029af3b31ae5072bc3dbb757301698",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v173",
+      "sha": "c9e921178bd6b3a152362cbabfb7848c76e7b446",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 214,
+          "head": "c9e921178bd6b3a152362cbabfb7848c76e7b446",
+          "merged": true,
+          "merge": "2acc4ca1c25382f707f95e1aea10aeab6368e010",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v174",
+      "sha": "8a4bc86accf93f9fe9cca802f02ee4cd385be773",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 215,
+          "head": "8a4bc86accf93f9fe9cca802f02ee4cd385be773",
+          "merged": true,
+          "merge": "a69ab6ffde66accb06f51d81aead2881a6911fc6",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v175",
+      "sha": "597536180fca412078c84542b1741bc561b2ace0",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 216,
+          "head": "597536180fca412078c84542b1741bc561b2ace0",
+          "merged": true,
+          "merge": "79b004026edfba23234ead5eb3119a951c3178ce",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v176",
+      "sha": "f3c704d77376ac460990f2d6c3a7d11898d66912",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 217,
+          "head": "f3c704d77376ac460990f2d6c3a7d11898d66912",
+          "merged": true,
+          "merge": "2443de5eda2b47777c9a08faad93396e98db5452",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v177",
+      "sha": "7c94481d2d10284e445ac0c8502dcaf95185e135",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 218,
+          "head": "7c94481d2d10284e445ac0c8502dcaf95185e135",
+          "merged": true,
+          "merge": "d49bccb27540f05d984408a6274a30238b50c6d0",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v178",
+      "sha": "fb74f477bfaf7f95a054464eb1a33fb972adee9f",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 220,
+          "head": "fb74f477bfaf7f95a054464eb1a33fb972adee9f",
+          "merged": true,
+          "merge": "c6049ec579e3ad65b6a2feabba02fbe1b39256b7",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v180",
+      "sha": "820763a88f03fe071fc20088cd1be05eb5dabe3f",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 222,
+          "head": "820763a88f03fe071fc20088cd1be05eb5dabe3f",
+          "merged": true,
+          "merge": "7291bf25a6e8ea229be212dab6b0d4db3c7ab5d8",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v184",
+      "sha": "a15fa7072fc24e415a8cb2a8dc4033d84f65ae93",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 226,
+          "head": "a15fa7072fc24e415a8cb2a8dc4033d84f65ae93",
+          "merged": true,
+          "merge": "7c2cb9990aee73fbb53d6cb55c3ac076f6945c84",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v185",
+      "sha": "518b593717eb4bda00f2a37db06c0f6591c8d031",
+      "classification": "needs_review",
+      "prs": [
+        {
+          "number": 228,
+          "head": "518b593717eb4bda00f2a37db06c0f6591c8d031",
+          "merged": false,
+          "merge": null,
+          "state": "closed"
+        },
+        {
+          "number": 227,
+          "head": "431daa491f297ea76c32557e4742db520f1f0227",
+          "merged": true,
+          "merge": "1adaf65c9325d395de16a5e9dfcff5e146aeec69",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Label changes present in main; divergent old v186 expected-label test superseded by merged later audits."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v186",
+      "sha": "d47101e5f877256fe26ed9c5169e9eb9108f7d8b",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 229,
+          "head": "d47101e5f877256fe26ed9c5169e9eb9108f7d8b",
+          "merged": false,
+          "merge": null,
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v186-clean",
+      "sha": "c8e8920127bd6bb34e81f97ce5d0770188a7faf4",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 230,
+          "head": "c8e8920127bd6bb34e81f97ce5d0770188a7faf4",
+          "merged": true,
+          "merge": "941ac02126c65668c54c7b2ed5d67bc6efa563fa",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-audit-v187",
+      "sha": "8cee8507d482249c69bad987796c261b0d1cf24e",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 231,
+          "head": "8cee8507d482249c69bad987796c261b0d1cf24e",
+          "merged": true,
+          "merge": "72be9e8874b544ac5665f94c15cbba986ac24d87",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-quality-v146",
+      "sha": "890efc766e0a2ba1879dbe92dbf2e246e5036b0b",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 185,
+          "head": "890efc766e0a2ba1879dbe92dbf2e246e5036b0b",
+          "merged": true,
+          "merge": "83e4cf5b26f83db52f13aaa768a6603729640989",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-quality-v147",
+      "sha": "86a6e0d0a6fc413702fb6b329b0d3a8c01e84ecb",
+      "classification": "needs_review",
+      "prs": [
+        {
+          "number": 187,
+          "head": "86a6e0d0a6fc413702fb6b329b0d3a8c01e84ecb",
+          "merged": false,
+          "merge": null,
+          "state": "closed"
+        }
+      ],
+      "resolution": "Earlier quality overlay/test experiment superseded by curated audits v147-v193. Do not override newer reviewed labels or roll back CI versions."
+    },
+    {
+      "branch": "dev/greek-catalog-quality-v148",
+      "sha": "35d85f36faef5603c0106bbba7d10ce5bd453ea7",
+      "classification": "needs_review",
+      "prs": [],
+      "resolution": "Later early quality experiment also superseded by curated v148-v193. Preserve its tools/evidence in ancestry."
+    },
+    {
+      "branch": "dev/greek-catalog-v146",
+      "sha": "f2d5586f44af905f42323becaf5568ab5093d53d",
+      "classification": "needs_review",
+      "prs": [
+        {
+          "number": 184,
+          "head": "f2d5586f44af905f42323becaf5568ab5093d53d",
+          "merged": false,
+          "merge": null,
+          "state": "closed"
+        }
+      ],
+      "resolution": "Earlier generated Greek overlay superseded by current curated translations. Preserve current IDs and reviewed language behavior."
+    },
+    {
+      "branch": "dev/greek-stock-loop-audit-v179",
+      "sha": "cfbc8771365dccf8bc89f8b8f0e917496ff8a2de",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 221,
+          "head": "cfbc8771365dccf8bc89f8b8f0e917496ff8a2de",
+          "merged": true,
+          "merge": "a317463390960366a8750dc274f94e3e120b8373",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/price-provenance-eta-v143",
+      "sha": "4eec3ddd435de67529dd113ec0ed115a42ac7617",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 181,
+          "head": "4eec3ddd435de67529dd113ec0ed115a42ac7617",
+          "merged": true,
+          "merge": "82a3ff7eff9f02fa5aeea8e8afeed2321a429626",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/reservation-language-greek-v188",
+      "sha": "72be9e8874b544ac5665f94c15cbba986ac24d87",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/scanner-manual-greek-v180",
+      "sha": "fd0912872660b3802251ae11cd30640f39d0d7ea",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 225,
+          "head": "fd0912872660b3802251ae11cd30640f39d0d7ea",
+          "merged": true,
+          "merge": "aeb14edde45e4bed68edb66d06073d8cdd8718c1",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/scanner-v141-state-and-save",
+      "sha": "28f5943646c73cfa7ea3e174c5acc625f8ad6480",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 179,
+          "head": "28f5943646c73cfa7ea3e174c5acc625f8ad6480",
+          "merged": true,
+          "merge": "83e101926afb07111a44afdc693e0a2241a8c61b",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/stock-summary-expiry-v142",
+      "sha": "cb7a93dea57d52f6b7c10953d3f86e0b945c6620",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 180,
+          "head": "cb7a93dea57d52f6b7c10953d3f86e0b945c6620",
+          "merged": true,
+          "merge": "2b0b43375d9a743835fafb2850827c2d4b8b7a1a",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/storage-containers-greek-v154",
+      "sha": "f52302b2651a61c38ffa408238ded0ab9294d8e4",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 194,
+          "head": "f52302b2651a61c38ffa408238ded0ab9294d8e4",
+          "merged": true,
+          "merge": "bce7f3e4f9e2b5f3c14b9f081bf495b7bd3749fa",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/week-shopping-state-v182",
+      "sha": "e8a97f4c9735698b62ab1872ec85f7cc94b8d1ae",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 224,
+          "head": "e8a97f4c9735698b62ab1872ec85f7cc94b8d1ae",
+          "merged": true,
+          "merge": "49f4684b3c819904bda29788531d49fe867ccf1e",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/week-stock-language-greek-v188",
+      "sha": "82a5417907e80c47b8afdaa3402b7c7d2b4d5b3f",
+      "classification": "needs_review",
+      "prs": [],
+      "resolution": "Experimental build/version edits and source-label rewrite superseded by merged structured backend localization. Keep current production panel and Greek labels."
+    },
+    {
+      "branch": "dev/weekday-meals-unlimited-v144",
+      "sha": "6a929a4d0d586c053dbe347f0d76991e8e726ef5",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 182,
+          "head": "6a929a4d0d586c053dbe347f0d76991e8e726ef5",
+          "merged": true,
+          "merge": "2254ceaaa7c2239bf73e0c8532b1e3113b1256e2",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "dev/weekly-responsive-variety-v181",
+      "sha": "4e00d4d461f95e8b9422cf5a4e043fe486303b4b",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 223,
+          "head": "4e00d4d461f95e8b9422cf5a4e043fe486303b4b",
+          "merged": true,
+          "merge": "31fc965c7c9b1105862b43af0d7cd060fcef002a",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feat/manual-product-editor-v196",
+      "sha": "551bb0b65b70f4704a4cfb9645a18b149dfb87ae",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 238,
+          "head": "551bb0b65b70f4704a4cfb9645a18b149dfb87ae",
+          "merged": true,
+          "merge": "0a6f8cd73b23debcb2585e1e75cd745110188453",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feat/receipt-scanner-v195",
+      "sha": "e7940b537feb42052ec871447f97b126f80d57eb",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 237,
+          "head": "e7940b537feb42052ec871447f97b126f80d57eb",
+          "merged": true,
+          "merge": "4ed38549c9277b999967f8b2566acc1f9cf6599e",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/bundled-reference-catalog-v59",
+      "sha": "f7d7301305a08d5a3023c5d94e43fda9480dff39",
+      "classification": "needs_review",
+      "prs": [],
+      "resolution": "Prototype reference catalog/routes superseded by active release catalog; do not replace current scanner/receipt websocket routes."
+    },
+    {
+      "branch": "feature/capture-ux-v119",
+      "sha": "bc4a64602d54e010a41823b5a6b55f4ee0e67ea3",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 161,
+          "head": "bc4a64602d54e010a41823b5a6b55f4ee0e67ea3",
+          "merged": true,
+          "merge": "1a46175e2888f50d7cbd2da03e4dbb190c912ea0",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/currency-fx-v24",
+      "sha": "1f1979115a2bec5952f1a14ab1fed77a344d3ded",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 21,
+          "head": "bbc4f5ae838806c7253ef51b0aa449beb1f8288d",
+          "merged": true,
+          "merge": "613a98ad8572093902cc93aec86d0ed3005193ac",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/filter-checkbox-bulk-v124",
+      "sha": "2f32adadb665ceff36785b6cf15bf6f608099db0",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 162,
+          "head": "2f32adadb665ceff36785b6cf15bf6f608099db0",
+          "merged": true,
+          "merge": "8986c86c60ee6656c56f58e2b0eb7175bcff7c5e",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/food-intelligence-2026-9-7-6",
+      "sha": "6ef74d628051da0ad9459dc747e943b16ebda97f",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 3,
+          "head": "6ef74d628051da0ad9459dc747e943b16ebda97f",
+          "merged": true,
+          "merge": "d11ef205767db6646c6ea7de6ff5fe77be2c50a3",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/food-intelligence-completion-2026-9-7",
+      "sha": "1a34fff1c89b54d03aa0eff7f08b657daaae5123",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 4,
+          "head": "b6a6e70f785d0a64361d2e5a35b5f91d8736a1bf",
+          "merged": true,
+          "merge": "a2ff526cb24fd806e2b0aecd4eb00ffb63911a80",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/fullscreen-weighing-v118",
+      "sha": "84e77ea42a911dea1bd03539ef9fbdca35e907c4",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 160,
+          "head": "84e77ea42a911dea1bd03539ef9fbdca35e907c4",
+          "merged": true,
+          "merge": "3bfb94372c650964569fd834397aae4bee64b60a",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/meal-lifecycle-v23",
+      "sha": "95e4c8a62c0972b418c0e3317ab1980e6093ffd3",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 20,
+          "head": "2b9c419e94c56fa69d8035c37a6a2359e78c515d",
+          "merged": true,
+          "merge": "76e84ca984956cd5bb14f3472817f72a788f3d45",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/minimal-bootstrap-v53",
+      "sha": "d6520bb24685770c0612a4189f5ed1b7e2e1608b",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 26,
+          "head": "1dddb478bc3cb7cb41a24967f3fd67dce4d7575d",
+          "merged": true,
+          "merge": "3be78647875fac0904d03a828749abe2ac32b111",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/modern-ui-2026-9-7-10",
+      "sha": "d1589295e57176692ee4b6c3c6e14ac8d771fe3a",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 7,
+          "head": "82a1ed8b16ccdad99808dc710edb0079308c66d9",
+          "merged": true,
+          "merge": "5fd474d957ab8133b3ca9e8d3d578534bc04109a",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/nutrition-catalog-recipes",
+      "sha": "c99aeff3454813cf92ffbdb5f34bc4b4ff75e7d6",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 18,
+          "head": "abd20bdbbb2a8d2632c73888aed216dfc2696961",
+          "merged": true,
+          "merge": "698d28e663b6810d7f2c5f2fe3cb91d884f1ce25",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/nutrition-hardening-v22",
+      "sha": "f84f4eb9b63e1a03653cc0fab03af5bbfe88ea06",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 19,
+          "head": "a1ca2129eb93ac36b631a4c591b51cd2da5b17d0",
+          "merged": true,
+          "merge": "30de4f31080d88b8aa25fe56ffad76eb99efdd62",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/professional-ui-audit-2026-9-7-11",
+      "sha": "36e1864e2f229c1923f452ffd2d30b7ab3bb7ab1",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 8,
+          "head": "676ad33628bdde3677ebfbf187810063a4e80995",
+          "merged": true,
+          "merge": "1073998146370c1ab9669eafae105ff6e0cda6c3",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/recipe-experience-2026-9-7-9",
+      "sha": "ebadce437b86df45f69ba826395fb0aee1485766",
+      "classification": "tree_already_included",
+      "prs": [
+        {
+          "number": 6,
+          "head": "34c6a464391d79d3a4e19c750818bdd30c25d215",
+          "merged": true,
+          "merge": "424bf13fc6478d2682ad9d328b916ade0c68e976",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/request-orchestration-v49",
+      "sha": "1e14739c4e61217d01f472c1260a5a7cffc836a2",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 24,
+          "head": "992c2ce2a0cd1a92956da8d9f1849375a67a0e87",
+          "merged": true,
+          "merge": "a8a76c5cef8ff593d2584a459f3722be69418183",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/scanner-camera-v120",
+      "sha": "b3f54c38c517e08a7096ee363791752545a0e4f8",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/scanner-mobile-back-v121",
+      "sha": "164a5ed441721a62a794fbc8cc2c345c7087d82d",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/scanner-torch-fallback-v122",
+      "sha": "81aae4a1c759cb16274878438fbb16d31f7511a0",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/scanner-torch-verified-v123",
+      "sha": "75912a48271bd211304673df0f63cadf5e834b19",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/smart-scale-ui-v117",
+      "sha": "295118eabf060f630c660fe0d9f140075a5291c1",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 159,
+          "head": "295118eabf060f630c660fe0d9f140075a5291c1",
+          "merged": true,
+          "merge": "31e5269ced6b9919485aa117ead6c13d36179c3c",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/smart-scale-v116",
+      "sha": "47bbb2f2c3aa66c233c0a005072ace5a52e7647a",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 158,
+          "head": "47bbb2f2c3aa66c233c0a005072ace5a52e7647a",
+          "merged": true,
+          "merge": "892248f61b6936d2d029fe6a3c4fc08a23b597d5",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/smart-scale-v60",
+      "sha": "ed7ce6f2460becb93299c35bc41b2ff8ac392d83",
+      "classification": "needs_review",
+      "prs": [
+        {
+          "number": 156,
+          "head": "ed7ce6f2460becb93299c35bc41b2ff8ac392d83",
+          "merged": false,
+          "merge": "3cb8b8dbde2aaaf29a8e591077662bf0c44b934e",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Alternative early smart-scale UI/route overwritten by implemented v116+ scale and v154 container handling. Retain current scale integration."
+    },
+    {
+      "branch": "feature/startup-lazy-contract-v51",
+      "sha": "b8ff3940b2e61fd5f52a15b4ad193c67ee5abd90",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 25,
+          "head": "bc3b7184048ae4738130cd83e7a50c3db21352fb",
+          "merged": true,
+          "merge": "adfbcce2546018bdcf128b4c0bc69941ceb6a48e",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/today-rotation-2026-9-7-13",
+      "sha": "88efbc77542c22f06a26ee48e882b6895027a026",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 10,
+          "head": "4d64139fdc7cf5d99c39b6a4ab10b53b0ec455b9",
+          "merged": true,
+          "merge": "62f8069498215e5ec6fcc30cde921a3880297318",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "feature/today-tab-2026-9-7-8",
+      "sha": "dceed6ec7525a5689492ded6e7acc013512d7efe",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 5,
+          "head": "a44afc0d1dc0becd476a6a85806bb9125fa7bfc6",
+          "merged": true,
+          "merge": "700fb8b5d4232254d28ebee6c8c8546c71b9445b",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "fix/all-menu-footer-gap-v126",
+      "sha": "e368b0085db5e41255f79e020261068c20585de9",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "fix/cache-first-ui-v54",
+      "sha": "d9244bf02c9fa6bc16879a758bfc4ec0e542cca7",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 27,
+          "head": "0c4d597330590cbdc51dcdb883d685a4b4448750",
+          "merged": true,
+          "merge": "499ad3b5f37488bb9316626659267e0ea8e4918b",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "fix/compact-today-steps-shopping-replace",
+      "sha": "dd5d018e66af06d99ec7281382aca9722e3fc818",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 12,
+          "head": "bd5291ba9223586dafb844e40473872b17e0d3a6",
+          "merged": true,
+          "merge": "af79c3c43e5b6ee2b28d519b65c6f424f5b51e03",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "fix/filter-dialog-footer-v125",
+      "sha": "de9e1705df0f7838f986ef5a31b1eb34e83a2c24",
+      "classification": "ancestor",
+      "prs": [],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "fix/greek-audit-v191",
+      "sha": "9d6ace194f221595d526b210a62d2ef46920dc04",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 233,
+          "head": "9d6ace194f221595d526b210a62d2ef46920dc04",
+          "merged": true,
+          "merge": "d2fbb3f6ff341dc0815a2e7e7b5dc994705ef847",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "fix/greek-audit-v192",
+      "sha": "8fb1a3263a84b336c95a3b96a6fe84ec84a9647a",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 234,
+          "head": "8fb1a3263a84b336c95a3b96a6fe84ec84a9647a",
+          "merged": true,
+          "merge": "4353a3a6e7e520829c742c90626e7998f6623b7b",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "fix/greek-audit-v193-measurement-labels",
+      "sha": "40c3ec3a9d2f4988c467d9e496d5198c1ee970d3",
+      "classification": "merged_pr_exact_head",
+      "prs": [
+        {
+          "number": 235,
+          "head": "40c3ec3a9d2f4988c467d9e496d5198c1ee970d3",
+          "merged": true,
+          "merge": "0052f12dfeb1620771bb719e7530362ff3d26b03",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "fix/recipe-cover-quality-inline-steps",
+      "sha": "d53a0c2e9db4e3299bc78ca3bd33152fee333ad9",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 11,
+          "head": "21a183827ba479b274de75bcfb22a950829b1b2d",
+          "merged": true,
+          "merge": "21a183827ba479b274de75bcfb22a950829b1b2d",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "fix/reviewed-portion-stock-coverage",
+      "sha": "7692386d9aa09ce45a033fd45dbf467edf8fc376",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 219,
+          "head": "7692386d9aa09ce45a033fd45dbf467edf8fc376",
+          "merged": true,
+          "merge": "5d359547a0388a1a0b2bf768f3cae3e649c4913c",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "fix/server-seeded-ui-v57",
+      "sha": "1a1bf3caa7711c2922e0cd2d65559ea89ded1d73",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 28,
+          "head": "22fd82f100aa467ea2d5990e7533fd30165ea0dd",
+          "merged": true,
+          "merge": "eb4f840dab89c90da54074e83e2064280f943328",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "fix/startup-render-storm-v47",
+      "sha": "11cbe04669d7564a6e387e7d51d69de3cdc7243b",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 22,
+          "head": "91159b1778fbc9f618e9188124034cdbf0863d4d",
+          "merged": true,
+          "merge": "8aea508e39cade9872420b8746ef3b011b884436",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "fix/today-catalog-language-v48",
+      "sha": "9eda5cbc54982c805fc6034d1526083b419ade03",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 23,
+          "head": "ce5a82395bb783573c44205f0c82a51dc3bb868f",
+          "merged": true,
+          "merge": "2e6145a71a253daf1a8ba7d3aa8554696b116928",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "fix/today-layout-and-variety",
+      "sha": "b69e6654b245c1b60b88f41e2b77f13effecdfa7",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 13,
+          "head": "33a6343f8cd8592523c42a4ad0a6ac47821500d7",
+          "merged": true,
+          "merge": "f4dc56dda3c6bcec95364e9ed7d682311bbd06ad",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "fix/today-multilang-image-cache-v58",
+      "sha": "b325e263fd1e22a3d58005d6dd62393e1e9b61b3",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 29,
+          "head": "706eac558abd82f78535af807867462247a51a84",
+          "merged": true,
+          "merge": "d19adf0724a6e66063100d2c5aab1a2e74df75ff",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "fix/v39-control-containment",
+      "sha": "5e12b771dfc9be1fd75608550322445a09036e19",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 15,
+          "head": "3e12b9ab6626dd7f8a077cec9b9f590683f7f997",
+          "merged": true,
+          "merge": "80e5aa8a902ec886e280af58e9e1a7739aa94ae8",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "fix/v40-single-today-icons",
+      "sha": "fccc834af9607f87fc9c6c1e158767668d0955d0",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 16,
+          "head": "e6d83dfecc26511fddf975416d2582c89782a786",
+          "merged": true,
+          "merge": "b29ee7c8a243254dac1b96886591f3031fc50c98",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "fix/v41-menu-dismiss-last-section",
+      "sha": "4da91eff4bbb43dac9d53286cec2489a14dea6d2",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 17,
+          "head": "3b02169cf6e13abbcd95c753475be021a17fdd24",
+          "merged": true,
+          "merge": "34d2bb9eef8f7bf275f2deb0ef417b69a20b766b",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "hotfix/dashboard-freeze-2026-9-7-12",
+      "sha": "365eef9a0f9fec8319f3564348c371a0bc2a75ad",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 9,
+          "head": "dcec10b4c26b3023a46d7d7f27753f90b50c8112",
+          "merged": true,
+          "merge": "a27d3fd71dca1569db25d57747d0334c87fc7eeb",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "hotfix/v38-restore-panel",
+      "sha": "1faf6a53155f7ad8729bfb0433e1b7413f755402",
+      "classification": "all_file_versions_in_main_history",
+      "prs": [
+        {
+          "number": 14,
+          "head": "162c657c7743c68c17001777a887021e6f1237a7",
+          "merged": true,
+          "merge": "53f09ed16ecbcccd7f258cd7ee179eb1cc7fd60a",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "main",
+      "sha": "5223eb462d1e41d51fc1e05b086e810a6ace3e7d",
+      "classification": "main",
+      "prs": [
+        {
+          "number": 150,
+          "head": "21570432faa80196e40a14a06704932f5828a3c0",
+          "merged": true,
+          "merge": "1fd3367b8cac7f8b50a2be7a6944264ae8ae8410",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Current main"
+    },
+    {
+      "branch": "merge/pending-v124-nutrition-111",
+      "sha": "7223f14c7d81fcbd2e740e1331077daab6d1c480",
+      "classification": "ancestor",
+      "prs": [
+        {
+          "number": 164,
+          "head": "7223f14c7d81fcbd2e740e1331077daab6d1c480",
+          "merged": true,
+          "merge": "424293b6c07dd1caa2b444aaae7642b11a8e5f7b",
+          "state": "closed"
+        }
+      ],
+      "resolution": "Already integrated or historically present in main; retain current tree and merge original ancestry."
+    },
+    {
+      "branch": "v13-house-shopping-ingredients",
+      "sha": "2c86eedbd2b755103a4937ffcc9a2d3ce9451b0c",
+      "classification": "needs_review",
+      "prs": [],
+      "resolution": "Legacy pantryItems representation superseded by houseIngredients/lot allocation; supported language list and dead-publication skipping already implemented in current code."
+    }
+  ],
+  "policy": "Preserve every original branch tip in consolidated main ancestry before deleting refs. Changed or unreviewed refs must not be deleted."
+}

@@ -12,7 +12,9 @@ from homeassistant.helpers.storage import Store
 
 from .const import DOMAIN
 from .costing import calculate_recipe_cost
-from .inventory import inventory_identity, normalize_inventory
+from .inventory import ingredient_identities, inventory_identity, normalize_inventory
+from .price_identity import pricing_name
+from .store_helpers import store_load_lock
 
 _STORAGE_VERSION = 1
 _MAX_ENTRIES = 500
@@ -27,16 +29,37 @@ def _canonical_hash(value: Any) -> str:
     return sha256(payload.encode("utf-8")).hexdigest()
 
 
+def _pricing_identities(raw: Any) -> set[str]:
+    """Mirror costing's accepted keys and allocation's explicit aliases."""
+    if isinstance(raw, str):
+        raw = {"name": raw}
+    if not isinstance(raw, dict):
+        return set()
+    item = dict(raw)
+    key = _text(raw.get("key") or raw.get("foodKey") or raw.get("ingredientId"))
+    if key:
+        item["key"] = key
+    identities = ingredient_identities(item)
+    if raw.get("identity"):
+        identities.add(_text(raw["identity"]))
+    return identities
+
+
 def _recipe_price_shape(recipe: Any) -> dict[str, Any]:
     if not isinstance(recipe, dict):
         return {}
     ingredients = []
     for raw in recipe.get("ingredients") or []:
+        if isinstance(raw, str):
+            raw = {"name": raw}
         if not isinstance(raw, dict):
             continue
         ingredients.append({
             "identity": inventory_identity(raw),
-            "key": _text(raw.get("key") or raw.get("foodKey")),
+            "key": _text(raw.get("key") or raw.get("foodKey") or raw.get("ingredientId")),
+            "identities": sorted(_pricing_identities(raw)),
+            "pricingName": pricing_name(raw),
+            "priceQuantityEvidence": deepcopy(raw.get("priceQuantityEvidence")),
             "quantity": raw.get("quantity"),
             "unit": _text(raw.get("unit")),
             "canonicalName": _text(raw.get("canonicalName")),
@@ -52,23 +75,30 @@ def _recipe_price_shape(recipe: Any) -> dict[str, Any]:
         "servings": recipe.get("servings") or recipe.get("groupSize"),
         "yield": deepcopy(recipe.get("yield")) if isinstance(recipe.get("yield"), dict) else None,
         "ingredients": ingredients,
-        "quantityEvidenceVersion": 104,
+        "quantityEvidenceVersion": 189,
     }
 
 
 def _relevant_inventory(recipe: dict[str, Any], inventory: Any) -> tuple[list[dict[str, Any]], set[str]]:
     wanted = {
-        inventory_identity(raw)
+        identity
         for raw in recipe.get("ingredients") or []
-        if isinstance(raw, dict) and inventory_identity(raw)
+        for identity in _pricing_identities(raw)
     }
     rows: list[dict[str, Any]] = []
     reference_identities = set(wanted)
     for row in normalize_inventory(inventory):
         ident = inventory_identity(row)
-        linked = {inventory_identity(link) for lot in row.get("lots") or [] for link in lot.get("ingredientLinks") or []}
-        if not ident or not ({ident} | linked) & wanted:
+        row_identities = _pricing_identities(row)
+        linked = {
+            identity
+            for lot in row.get("lots") or [] if isinstance(lot, dict)
+            for link in lot.get("ingredientLinks") or []
+            for identity in _pricing_identities(link)
+        }
+        if not (row_identities | linked) & wanted:
             continue
+        reference_identities.update(row_identities | linked)
         lots = []
         for raw in row.get("lots") or []:
             if not isinstance(raw, dict):
@@ -81,6 +111,11 @@ def _relevant_inventory(recipe: dict[str, Any], inventory: Any) -> tuple[list[di
                 reference_identities.add(f"barcode:{barcode}")
             lots.append({
                 "id": lot_id,
+                # FEFO sorts lots globally, not just inside their parent row.
+                "bestBefore": _text(raw.get("bestBefore")),
+                "openedAt": _text(raw.get("openedAt")),
+                "useWithinDays": raw.get("useWithinDays"),
+                "addedAt": _text(raw.get("addedAt")),
                 "ingredientLinks": raw.get("ingredientLinks") or [],
                 "barcode": barcode,
                 "quantity": raw.get("quantity"),
@@ -91,6 +126,7 @@ def _relevant_inventory(recipe: dict[str, Any], inventory: Any) -> tuple[list[di
             })
         rows.append({
             "identity": ident,
+            "identities": sorted(row_identities),
             "unit": _text(row.get("unit")),
             "unlimited": bool(row.get("unlimited")),
             "quantity": row.get("quantity"),
@@ -116,7 +152,7 @@ def _reference_shape(store: Any, identities: set[str]) -> list[dict[str, Any]]:
 def pricing_fingerprint(recipe: dict[str, Any], inventory: Any, store: Any) -> str:
     stock, identities = _relevant_inventory(recipe, inventory)
     return _canonical_hash({
-        "calculatorVersion": 115,
+        "calculatorVersion": 190,
         "priceDate": datetime.now(timezone.utc).date().isoformat(),
         "settings": {
             "currency": _text(getattr(store, "settings", {}).get("currency")),
@@ -126,6 +162,26 @@ def pricing_fingerprint(recipe: dict[str, Any], inventory: Any, store: Any) -> s
         "stock": stock,
         "references": _reference_shape(store, identities),
     })
+
+
+def _refresh_display_names(result: dict[str, Any], recipe: dict[str, Any]) -> None:
+    """Rebind current labels without recalculating unchanged numeric evidence."""
+    names = []
+    for raw in recipe.get("ingredients") or []:
+        if isinstance(raw, str):
+            raw = {"name": raw}
+        if not isinstance(raw, dict):
+            continue
+        name = _text(raw.get("name") or raw.get("foodName"))
+        key = _text(raw.get("key") or raw.get("foodKey") or raw.get("ingredientId"))
+        if name or key:
+            names.append(name or key)
+    rows = result.get("ingredients")
+    # Only one-to-one calculator rows are rebound; do not guess at mismatches.
+    if isinstance(rows, list) and len(rows) == len(names):
+        for row, name in zip(rows, names):
+            if isinstance(row, dict):
+                row["name"] = name
 
 
 class Cook4MeRecipeCostCache:
@@ -177,6 +233,7 @@ class Cook4MeRecipeCostCache:
             cached = entries.get(key)
             if not force and isinstance(cached, dict) and isinstance(cached.get("cost"), dict):
                 result = deepcopy(cached["cost"])
+                _refresh_display_names(result, recipe)
                 result.update({
                     "costCacheHit": True,
                     "pricingFingerprint": price_hash,
@@ -214,12 +271,15 @@ class Cook4MeRecipeCostCache:
 
 
 async def recipe_cost_cache_for_bridge(bridge: Any) -> Cook4MeRecipeCostCache:
-    cache = getattr(bridge, "_recipe_cost_cache_v1", None)
-    if not isinstance(cache, Cook4MeRecipeCostCache):
-        cache = Cook4MeRecipeCostCache(bridge)
-        await cache.async_load()
-        bridge._recipe_cost_cache_v1 = cache
-    return cache
+    # First access can race across recipe cards, weekly requests and languages.
+    # Use the same per-entry store initialization lock as the other stores.
+    async with store_load_lock(bridge, "recipe_cost_cache"):
+        cache = getattr(bridge, "_recipe_cost_cache_v1", None)
+        if not isinstance(cache, Cook4MeRecipeCostCache):
+            cache = Cook4MeRecipeCostCache(bridge)
+            await cache.async_load()
+            bridge._recipe_cost_cache_v1 = cache
+        return cache
 
 
 async def preview_cache_token(bridge: Any) -> str:
@@ -227,7 +287,7 @@ async def preview_cache_token(bridge: Any) -> str:
     from .costs import cost_store_for_bridge
     store = await cost_store_for_bridge(bridge)
     return _canonical_hash({
-        "evidenceVersion": 104,
+        "evidenceVersion": 190,
         "date": datetime.now(timezone.utc).date().isoformat(),
         "settings": store.settings,
         "inventory": bridge.recipe_hub.profile.get("houseIngredients") or [],

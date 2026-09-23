@@ -31,6 +31,40 @@ import fdc_candidate_reference_data_v60 as candidate_reference  # type: ignore  
 TARGET_KIND = "cook4me-release-catalog-nutrition-review-targets-v60"
 EVIDENCE_KIND = "cook4me-fdc-review-target-candidate-evidence-offline-v60"
 
+_TARGET_DISCOVERY_ALIASES: dict[str, tuple[str, ...]] = {
+    "concept:food:769c3566166f3539b4f6": ("oysters raw", "oyster raw"),
+    "concept:food:9448a3d86c749673009f": ("sugars granulated", "sugar granulated"),
+    "concept:food:b650e0ea7fd60bc39f95": ("pumpkin raw", "pumpkin cooked"),
+    "concept:food:8e3f5db32887a8169cce": ("vanilla extract", "vanilla"),
+}
+
+
+def _target_alias_candidates(index: Any, target_id: str, maximum: int) -> list[dict[str, Any]]:
+    aliases = _TARGET_DISCOVERY_ALIASES.get(target_id, ())
+    if not aliases:
+        return []
+    best: dict[int, dict[str, Any]] = {}
+    for alias in aliases:
+        for raw in index.search(alias, max_candidates=max(maximum * 2, 12)):
+            if not isinstance(raw, dict):
+                continue
+            row = dict(raw)
+            fdc_id = int(row.get("fdcId") or 0)
+            if fdc_id <= 0:
+                continue
+            row["localEvidenceQueryAlias"] = True
+            row["localEvidenceMatchedQuery"] = alias
+            existing = best.get(fdc_id)
+            if existing is None or float(row.get("localEvidenceScore") or 0) > float(existing.get("localEvidenceScore") or 0):
+                best[fdc_id] = row
+    merged = sorted(
+        best.values(),
+        key=lambda row: (-float(row.get("localEvidenceScore") or 0), int(row.get("fdcId") or 0)),
+    )[:maximum]
+    for rank, row in enumerate(merged, 1):
+        row["localEvidenceRank"] = rank
+    return merged
+
 
 def _text(value: Any) -> str:
     return " ".join(str(value or "").strip().split())
@@ -95,7 +129,8 @@ def capture(
             raise RuntimeError(f"duplicate review target: {target_id}")
         seen.add(target_id)
 
-        candidates = [
+        alias_candidates = _target_alias_candidates(index, target_id, maximum)
+        candidates = alias_candidates or [
             dict(row)
             for row in index.search(canonical, max_candidates=maximum)
             if isinstance(row, dict)
