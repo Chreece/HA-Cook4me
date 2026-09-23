@@ -39,6 +39,12 @@ class Cook4MeRecipeHubPanelV179 extends BasePanel{
     }
    }catch(_error){}
   }
+  // Old close listeners were lost on dialog redraw. Discard only that stale
+  // popup state once, never filters, folds, recipes or inventory data.
+  if(value.recipeCloseVersion!==199){
+   for(const state of Object.values(value.tabs||{}))if(state&&typeof state==='object'){state.openRecipe=null;state.openFilter=null;}
+   value.recipeCloseVersion=199;
+  }
   this._v179UiKey=key;this._v179UiState=value;return value;
  }
  _v179TabState(tab=this._tab){
@@ -185,22 +191,26 @@ class Cook4MeRecipeHubPanelV179 extends BasePanel{
   this._v179SaveState();
  }
  _v179ClearOpenRecipe(tab=this._tab){
+  this._v179RecipeEpoch=(this._v179RecipeEpoch||0)+1;
   const state=this._v179TabState(tab);state.openRecipe=null;state.recipeScrollTop=0;this._v179SaveState();
  }
  _v179WatchExplicitRecipeClose(dialog,tab=this._tab){
   if(!dialog||dialog.dataset.v179CloseWatch)return;dialog.dataset.v179CloseWatch='1';
-  const clear=()=>this._v179ClearOpenRecipe(tab);
-  dialog.querySelector('[data-modal-close]')?.addEventListener('click',clear,{capture:true});
-  dialog.addEventListener('click',event=>{if(event.target===dialog)clear();},{capture:true});
-  const keydown=event=>{if(event.key==='Escape'&&dialog.isConnected)clear();};
+  const context=this._v179StateKey();
+  const clear=()=>{if(context===this._v179StateKey())this._v179ClearOpenRecipe(tab);};
+  // Delegate to the stable overlay: nutrition/price/translation redraws replace
+  // the close button. A nested ingredient/filter Escape must not close the recipe.
+  dialog.addEventListener('click',event=>{if(event.target===dialog||event.target.closest?.('[data-modal-close]'))clear();},{capture:true});
+  const keydown=event=>{if(event.key==='Escape'&&dialog.isConnected&&!this._v62CloseIngredient&&!this._v63CloseFilter)clear();};
   document.addEventListener('keydown',keydown,true);
   const observer=new MutationObserver(()=>{if(!dialog.isConnected){document.removeEventListener('keydown',keydown,true);observer.disconnect();}});
   observer.observe(this.shadowRoot,{childList:true,subtree:true});
  }
  async _showRecipe(recipe,custom=false){
-  const tab=String(this._tab||'unknown');
+  const tab=String(this._tab||'unknown'),context=this._v179StateKey();
+  const epoch=this._v179RecipeEpoch=(this._v179RecipeEpoch||0)+1;
   const result=await super._showRecipe(recipe,custom);
-  if(this._v63RecipeDialog?.isConnected){
+  if(context===this._v179StateKey()&&tab===String(this._tab||'unknown')&&epoch===this._v179RecipeEpoch&&this._v63RecipeDialog?.isConnected){
    this._v179StoreOpenRecipe(this._opened||recipe,custom,tab);
    this._v179WatchExplicitRecipeClose(this._v63RecipeDialog,tab);
    this._v179PersistDetails(this._v63RecipeDialog,`recipe:${this._v179RecipeToken(this._opened||recipe)}`,tab);
@@ -211,6 +221,7 @@ class Cook4MeRecipeHubPanelV179 extends BasePanel{
   const result=super._renderRecipeDialog();
   const dialog=this._v63RecipeDialog;
   if(dialog?.isConnected&&this._opened){
+   this._v179WatchExplicitRecipeClose(dialog,this._tab);
    this._v179PersistDetails(dialog,`recipe:${this._v179RecipeToken(this._opened)}`,this._tab);
   }
   return result;
@@ -220,13 +231,16 @@ class Cook4MeRecipeHubPanelV179 extends BasePanel{
   const tab=String(this._tab||'unknown'),state=this._v179TabState(tab),saved=state.openRecipe;
   if(!saved)return;
   const recipe=this._v179FindRecipe(saved);if(!recipe)return;
-  this._v179RestoringRecipe=true;
+  const context=this._v179StateKey(),epoch=this._v179RecipeEpoch||0;
+  const ticket={};this._v179RestoringRecipe=ticket;
   queueMicrotask(async()=>{
    try{
+    if(context!==this._v179StateKey()||tab!==String(this._tab||'unknown')||epoch!==(this._v179RecipeEpoch||0)||this._v179TabState(tab).openRecipe!==saved||this._v63RecipeDialog?.isConnected)return;
     await this._showRecipe(recipe,Boolean(saved.custom));
+    if(context!==this._v179StateKey()||tab!==String(this._tab||'unknown'))return;
     const dialog=this._v63RecipeDialog?.querySelector?.('.rx-dialog');
     if(dialog){const top=Number(state.recipeScrollTop||0);requestAnimationFrame(()=>{if(dialog.isConnected)dialog.scrollTop=top;});}
-   }finally{this._v179RestoringRecipe=false;}
+   }finally{if(this._v179RestoringRecipe===ticket)this._v179RestoringRecipe=false;}
   });
  }
  _v179CaptureViewState(tab=this._v179RenderedTab){
@@ -244,18 +258,18 @@ class Cook4MeRecipeHubPanelV179 extends BasePanel{
  }
  _v179WatchExplicitFilterClose(dialog,tab=this._tab){
   if(!dialog||dialog.dataset.v179FilterWatch)return;dialog.dataset.v179FilterWatch='1';
-  const clear=()=>{const state=this._v179TabState(tab);state.openFilter=null;this._v179SaveState();};
-  dialog.querySelector('[data-close]')?.addEventListener('click',clear,{capture:true});
-  dialog.querySelector('[data-apply]')?.addEventListener('click',clear,{capture:true});
-  dialog.addEventListener('click',event=>{if(event.target===dialog)clear();},{capture:true});
+  const context=this._v179StateKey();
+  const clear=()=>{if(context!==this._v179StateKey())return;const state=this._v179TabState(tab);state.openFilter=null;this._v179SaveState();};
+  dialog.addEventListener('click',event=>{if(event.target===dialog||event.target.closest?.('[data-close],[data-apply]'))clear();},{capture:true});
   const keydown=event=>{if(event.key==='Escape'&&dialog.isConnected)clear();};
   document.addEventListener('keydown',keydown,true);
   const observer=new MutationObserver(()=>{if(!dialog.isConnected){document.removeEventListener('keydown',keydown,true);observer.disconnect();}});
   observer.observe(this.shadowRoot,{childList:true,subtree:true});
  }
  _showFilter(key){
-  const tab=String(this._tab||'unknown'),result=super._showFilter(key);
+  const tab=String(this._tab||'unknown'),context=this._v179StateKey(),result=super._showFilter(key);
   queueMicrotask(()=>{
+   if(context!==this._v179StateKey()||tab!==String(this._tab||'unknown'))return;
    const dialog=this.shadowRoot?.querySelector?.(`[data-filter-dialog="${String(key).replace(/"/g,'')}"]`);
    if(!dialog)return;
    const state=this._v179TabState(tab);state.openFilter=String(key);this._v179SaveState();
@@ -266,14 +280,19 @@ class Cook4MeRecipeHubPanelV179 extends BasePanel{
  _v179RestoreFilter(){
   if(this._v63CloseFilter||this._v179RestoringFilter)return;
   const state=this._v179TabState(),key=String(state.openFilter||'');if(!key)return;
+  const context=this._v179StateKey(),tab=this._tab,epoch=this._v179RecipeEpoch||0;
   this._v179RestoringFilter=true;
-  queueMicrotask(()=>{try{this._showFilter(key);}finally{this._v179RestoringFilter=false;}});
+  queueMicrotask(()=>{try{
+   if(context===this._v179StateKey()&&tab===this._tab&&epoch===(this._v179RecipeEpoch||0)&&this._v179TabState(tab).openFilter===key&&!this._v63CloseFilter)this._showFilter(key);
+  }finally{this._v179RestoringFilter=false;}});
  }
  _v179DecoratePersistentUi(c){
   if(!c)return;
   this._v179PersistDetails(c,'content',this._tab);
  }
  _selectV52Tab(tab){
+  this._v179RestoringRecipe=false;
+  this._v179RecipeEpoch=(this._v179RecipeEpoch||0)+1;
   this._v179CaptureViewState();
   return super._selectV52Tab(tab);
  }
@@ -293,7 +312,10 @@ class Cook4MeRecipeHubPanelV179 extends BasePanel{
   this._v179CaptureViewState();
   const result=super._renderTab();
   this._v179RenderedTab=this._tab;
+  const tab=this._tab,context=this._v179StateKey();
+  const epoch=this._v179RenderEpoch=(this._v179RenderEpoch||0)+1;
   queueMicrotask(()=>{
+   if(epoch!==this._v179RenderEpoch||tab!==this._tab||context!==this._v179StateKey())return;
    const c=this.shadowRoot?.getElementById('content');if(!c)return;
    if(this._tab==='week')this._v179DecorateWeek(c);
    this._v179DecoratePersistentUi(c);
@@ -302,6 +324,8 @@ class Cook4MeRecipeHubPanelV179 extends BasePanel{
   this._v179Styles();this.setAttribute('data-cook4me-build','2026.9.22.6');return result;
  }
  disconnectedCallback(){
+  this._v179RecipeEpoch=(this._v179RecipeEpoch||0)+1;
+  this._v179RenderEpoch=(this._v179RenderEpoch||0)+1;
   this._v179CaptureViewState();
   if(super.disconnectedCallback)super.disconnectedCallback();
  }

@@ -1,0 +1,47 @@
+name: View filters and receipt controls
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: view-scanner-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  views:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: View preferences and receipt availability
+        run: |
+          python tests/test_view_preferences_v199.py
+          node --test tests/test_view_filters_v199.mjs
+      - name: Install browser test dependency
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - name: Offline mobile and desktop interaction regressions
+        run: python tests/browser_view_scanner_v199.py
+      - name: Source syntax
+        run: |
+          python -m compileall -q custom_components/cook4me
+          node --check custom_components/cook4me/frontend/view-filters-v199.js
+          node --check custom_components/cook4me/frontend/receipt-launcher-v199.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v179.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v180.js
+          node --check custom_components/cook4me/frontend/scanner-receipts-v195.js
