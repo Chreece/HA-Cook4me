@@ -63,7 +63,8 @@ with sync_playwright() as p:
         page.set_content(html);page.wait_for_function('window.ready')
         page.evaluate('steps=>{window.modeRecipe=window.samples?samples(0):{title:"Ρύζι με λαχανικά",language:"el",ingredients:[]};modeRecipe.steps=steps;window.originalModes=JSON.stringify(modeRecipe);window.modeState={sections:new Set(["steps"]),expanded:true};const main=document.createElement("section");main.id="modePreview";app.shadowRoot.append(main);window.drawModes=()=>{main.innerHTML=app._v66Body(modeRecipe,false,modeState)};drawModes()}',STEPS)
         prefix=f'{width}: '
-        check(page,"app.shadowRoot.querySelectorAll('#modePreview [data-v204-step-modes]').length===6",prefix+'each source step receives mode metadata')
+        check(page,"app.shadowRoot.querySelectorAll('#modePreview [data-v204-step-modes]').length===5",prefix+'only the five device-operation steps receive mode metadata')
+        check(page,"!app.shadowRoot.querySelector('#modePreview [data-v66-step=\"0\"] [data-v204-step-modes]')",prefix+'preparation step has no device label or metadata row')
         check(page,"app.shadowRoot.querySelector('#modePreview [data-v204-mode=pressure]').textContent.includes('Μαγείρεμα υπό πίεση')",prefix+'Greek mode from German program name')
         check(page,"app.shadowRoot.querySelector('#modePreview [data-v66-step=\"2\"] .step-num').textContent==='9'",prefix+'sparse provider numbering remains unchanged')
         check(page,"app.shadowRoot.querySelector('#modePreview [data-v66-step=\"3\"] .v204-mode-list').textContent.includes('→')",prefix+'multiple modes shown in order')
@@ -71,7 +72,7 @@ with sync_playwright() as p:
         check(page,"!window.injected&&!app.shadowRoot.querySelector('#modePreview .v204-step-modes img')",prefix+'program names rendered as text not markup')
         check(page,"JSON.stringify(modeRecipe)===originalModes",prefix+'recipe data and instructions not modified')
         page.evaluate('drawModes();drawModes()')
-        check(page,"app.shadowRoot.querySelectorAll('#modePreview [data-v204-step-modes]').length===6&&app.shadowRoot.querySelectorAll('#stepModesV204').length===1",prefix+'repeat rendering does not duplicate badges or stylesheet')
+        check(page,"app.shadowRoot.querySelectorAll('#modePreview [data-v204-step-modes]').length===5&&app.shadowRoot.querySelectorAll('#stepModesV204').length===1",prefix+'repeat rendering does not duplicate badges or stylesheet')
         check(page,"[...app.shadowRoot.querySelectorAll('#modePreview .v204-step-modes')].every(x=>x.getBoundingClientRect().right<=innerWidth+1)",prefix+'mode labels fit viewport')
         check(page,"!app.shadowRoot.querySelector('#modePreview .v204-step-modes button, #modePreview .v204-step-modes input')",prefix+'badges are information not cooker controls')
         if not args.full_chain:
@@ -86,9 +87,9 @@ with sync_playwright() as p:
             check(page,"app.shadowRoot.querySelector('article.ui203-recipe [data-v204-mode=pressure]')!==null",prefix+'actual v203 card renderer retains step modes')
             page.locator('[data-v66-photo]').first.click()
             page.wait_for_function('app._v63RecipeDialog?.isConnected')
-            check(page,"app._v63RecipeDialog.querySelectorAll('[data-v204-step-modes]').length===6",prefix+'actual fullscreen recipe receives same badges')
+            check(page,"app._v63RecipeDialog.querySelectorAll('[data-v204-step-modes]').length===5",prefix+'actual fullscreen recipe receives same badges')
             page.evaluate('window.modeBefore=app._opened.steps[2].programName;app._renderRecipeDialog()')
-            check(page,"app._opened.steps[2].programName===modeBefore&&app._v63RecipeDialog.querySelectorAll('[data-v204-step-modes]').length===6",prefix+'fullscreen redraw retains evidence once')
+            check(page,"app._opened.steps[2].programName===modeBefore&&app._v63RecipeDialog.querySelectorAll('[data-v204-step-modes]').length===5",prefix+'fullscreen redraw retains evidence once')
             # Actual inherited previous/next highlighting is untouched.
             page.evaluate('const s=app._v66State(app._opened);s.cooking=true;s.step=2;app._renderRecipeDialog()')
             check(page,"app._v63RecipeDialog.querySelector('[data-v66-step=\"2\"]').getAttribute('aria-current')==='step'",prefix+'active cooking-step highlighting preserved')
