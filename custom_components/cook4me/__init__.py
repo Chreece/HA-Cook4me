@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import logging
+from time import monotonic
 from typing import Any
 from copy import deepcopy
 
@@ -26,6 +28,7 @@ from .expiry import (
 )
 from .panel import async_register_panel
 from .release_catalog import async_warm_release_catalog
+from .stock_coverage import warm_stock_catalog
 from .smart_scale import apply_recipe_measurements, smart_scale_store_for_bridge
 from .websocket import async_register as async_register_websocket
 from .websocket_v5 import async_register as async_register_websocket_v5
@@ -184,7 +187,14 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     # profiles. Parse it once in HA's executor during integration setup so the
     # first panel/search request never pays a synchronous JSON parse on the
     # event loop. load_release_catalog() is LRU-cached after this warm-up.
+    # Both expensive catalog preparation and the small stock identity index
+    # stay off HA's event loop. Log elapsed time, not recipe or inventory data.
+    started = monotonic()
     await async_warm_release_catalog(hass)
+    await hass.async_add_executor_job(warm_stock_catalog)
+    logging.getLogger(__name__).info(
+        "Cook4Me catalog and stock index ready in %.2f seconds", monotonic() - started
+    )
     from .price_measurements import _portions, _densities
     from .price_snapshot import _load as load_price_snapshot
     from .price_benchmarks import warm_price_benchmarks

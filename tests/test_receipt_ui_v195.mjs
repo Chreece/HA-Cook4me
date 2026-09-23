@@ -30,7 +30,18 @@ test('previous/next clamp at boundaries',()=>{assert.equal(receiptPosition([1,2]
 test('line totals include discounts and deposits but not total/tax rows',()=>{const r=raw();r.items.push({kind:'discount',lineTotal:-.5},{kind:'deposit',lineTotal:.25},{kind:'total',lineTotal:99});r.total=3.75;assert.deepEqual(receiptTotals(r),{amount:3.75,known:true,different:false});});
 test('unknown prices are not presented as complete zero totals',()=>{const r=raw();r.items[0].lineTotal=null;assert.equal(receiptTotals(r).known,false);});
 test('different receipt totals are reported',()=>{const r=raw();r.total=9;assert.equal(receiptTotals(r).different,true);});
-test('weekly removal is limited to four data keys',()=>{const removed=[];const pair={children:[{}],style:{}};const root={querySelectorAll(selector){if(selector==='.two')return [pair];return [{remove:()=>removed.push(selector)}];}};removeWeeklyReceiptSections(root);assert.equal(removed.length,4);assert.ok(removed.some(x=>x.includes('reservedStock')));assert.ok(removed.every(x=>!x.includes('shoppingDelta')));assert.equal(pair.style.gridTemplateColumns,'minmax(0,1fr)');});
+test('weekly removal is limited to the requested panels across both folding generations',()=>{
+ const removed=[],pair={children:[{}],style:{}};
+ const root={querySelectorAll(selector){if(selector==='.two')return [pair];return [{remove:()=>removed.push(selector)}];}};
+ removeWeeklyReceiptSections(root);
+ assert.deepEqual(removed,[
+  '[data-v179-fold="reservedStock"]','[data-v179-fold="leftovers"]',
+  '[data-v179-fold="priceInventory"]','[data-v179-fold="completedPurchases"]',
+  '[data-v137-week-panel="leftovers"]','[data-v137-week-panel="prices"]'
+ ]);
+ assert.ok(removed.every(x=>!x.includes('shoppingDelta')&&!x.includes('nutrition')));
+ assert.equal(pair.style.gridTemplateColumns,'minmax(0,1fr)');
+});
 test('receipt item load never inherits today or preferred currency',()=>{const {host}=setup();const r=raw();r.purchaseDate='';r.currency='';host._r195SetReceipt(r);assert.equal(host._v78Draft.purchaseDate,'');assert.equal(host._v78Draft.paidCurrency,'');assert.equal(host._v78Draft.ingredient,null);});
 test('navigation preserves amounts, nutrition and multiple ingredient choices',()=>{const {host}=setup();Object.assign(host._v78Draft,{quantity:'750',productName:'Edited carrot',ingredientLinks:[{key:'a'},{key:'b'}],nutrition:{basisQuantity:100,basisUnit:'g',values:{protein:2}}});host._v78Dirty=true;host._r195Move(1);host._r195Move(-1);assert.equal(host._v78Draft.quantity,'750');assert.equal(host._v78Draft.productName,'Edited carrot');assert.equal(host._v78Draft.ingredientLinks.length,2);assert.equal(host._v78Draft.nutrition.values.protein,2);});
 test('busy scanner cannot change item',()=>{const {host}=setup();host._v78Busy=true;host._r195Move(1);assert.equal(host._r195Session.index,0);});
