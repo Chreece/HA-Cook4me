@@ -1,0 +1,93 @@
+name: Branch consolidation audit
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/branch-consolidation-audit.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Read all branches and compare integrated work
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: python
+        run: |
+          import json, os, subprocess, urllib.request
+          from pathlib import Path
+          repo = os.environ['GITHUB_REPOSITORY']
+          assert repo == 'Chreece/HA-Cook4me'
+          def git(*args, check=True):
+              return subprocess.run(['git', *args], text=True, capture_output=True, check=check)
+          def api(path):
+              request = urllib.request.Request('https://api.github.com/repos/' + repo + path, headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'], 'Accept': 'application/vnd.github+json'})
+              with urllib.request.urlopen(request, timeout=45) as response:
+                  return json.load(response)
+          git('fetch', '--no-tags', 'origin', '+refs/heads/*:refs/remotes/origin/*')
+          main = git('rev-parse', 'origin/main').stdout.strip()
+          pulls = []
+          for page in range(1, 30):
+              batch = api('/pulls?state=all&per_page=100&page=' + str(page))
+              pulls.extend(batch)
+              if len(batch) < 100:
+                  break
+          def ancestor(a, b):
+              return git('merge-base', '--is-ancestor', a, b, check=False).returncode == 0
+          branches = []
+          for line in git('for-each-ref', '--format=%(refname:strip=3) %(objectname)', 'refs/remotes/origin').stdout.splitlines():
+              name, sha = line.split(' ', 1)
+              if name == 'HEAD':
+                  continue
+              prs = [p for p in pulls if p['head']['ref'] == name or p['head']['sha'] == sha]
+              merged = [p for p in prs if p.get('merged_at') and p['head']['sha'] == sha and p.get('merge_commit_sha') and ancestor(p['merge_commit_sha'], main)]
+              row = {'branch': name, 'sha': sha, 'prs': [{'number': p['number'], 'head': p['head']['sha'], 'merged': bool(p.get('merged_at')), 'merge': p.get('merge_commit_sha'), 'state': p['state']} for p in prs]}
+              if name == 'main':
+                  row['status'] = 'main'
+              elif ancestor(sha, main):
+                  row['status'] = 'ancestor'
+              elif merged:
+                  row['status'] = 'merged_pr_exact_head'
+              else:
+                  cherries = git('cherry', main, sha, check=False).stdout.splitlines()
+                  row['uniquePatchCommits'] = [x[2:] for x in cherries if x.startswith('+ ')]
+                  if cherries and not row['uniquePatchCommits']:
+                      row['status'] = 'patch_equivalent'
+                  else:
+                      result = git('merge-tree', '--write-tree', main, sha, check=False)
+                      lines = result.stdout.splitlines()
+                      tree = lines[0] if lines else ''
+                      if result.returncode == 0 and tree == git('rev-parse', main + '^{tree}').stdout.strip():
+                          row['status'] = 'tree_already_included'
+                      else:
+                          row['status'] = 'needs_review'
+                          row['mergeClean'] = result.returncode == 0
+                          base = git('merge-base', main, sha, check=False).stdout.strip()
+                          row['base'] = base
+                          if base:
+                              row['files'] = git('diff', '--name-status', base, sha).stdout.splitlines()
+                              row['commits'] = git('log', '--format=%h %s', main + '..' + sha).stdout.splitlines()
+                          row['mergeMessages'] = lines[1:]
+              branches.append(row)
+              print('BRANCH ' + json.dumps(row, ensure_ascii=False))
+          report = {'main': main, 'branches': branches, 'openPRs': [p['number'] for p in pulls if p['state'] == 'open']}
+          Path('branch-audit.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
+          summary = {status: sum(r['status'] == status for r in branches) for status in sorted({r['status'] for r in branches})}
+          print('SUMMARY ' + json.dumps({'main': main, 'count': len(branches), 'statuses': summary, 'openPRs': report['openPRs']}))
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('# Read-only branch audit\n\n```json\n' + json.dumps(summary, indent=2) + '\n```\n')
+          git('bundle', 'create', 'branches-before-consolidation.bundle', '--all')
+      - uses: actions/upload-artifact@v4
+        with:
+          name: branches-before-consolidation
+          path: |
+            branch-audit.json
+            branches-before-consolidation.bundle
+          retention-days: 30
