@@ -17,7 +17,8 @@ from homeassistant.core import callback
 from . import websocket as legacy
 from . import websocket_v5 as v5, websocket_v11 as v11, websocket_v15 as v15, websocket_v23 as v23
 from .websocket_v32 import _authorized
-from .barcode import normalize_barcode, suggest_catalog_matches, confident_match
+from .barcode import normalize_barcode
+from .scanner_matching import suggest_catalog_matches, confident_match
 from .device_settings import can_use
 from .inventory import _best_before, _quantity, inventory_identity
 from .nutrition import normalize_nutrition, nutrition_store_for_bridge
@@ -200,6 +201,7 @@ async def ws_recognize_photo(hass, connection, msg):
             "For date mode read only the best-before/use-by date (not manufacture date); leave ambiguous dates empty. "
             "For nutrition mode transcribe only explicitly printed per-100-g or per-100-ml values, not per-serving values. "
             "For product mode identify the product and generic culinary ingredient; do not infer nutrition or expiry. "
+            "Describe the whole product, preserving canned, dried, cooked, frozen and flavoured forms; do not replace a mixture with one of its components. "
             'Schema: {"productName":"","brand":"","ingredientName":"","quantity":null,"unit":"g|kg|ml|l|pcs",'
             '"bestBefore":"YYYY-MM-DD or empty","nutrition":{"basisQuantity":100,"basisUnit":"g|ml",'
             '"values":{"energyKcal":null,"protein":null,"carbohydrates":null,"fat":null,"saturatedFat":null,'

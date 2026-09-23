@@ -1,0 +1,38 @@
+name: Scanner compatibility audit
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: scanner-audit-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scanner:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Scanner matching and review interaction
+        run: |
+          python tests/test_scanner_matching_v194.py
+          node --test tests/test_scanner_suggestions_v194.mjs
+      - name: Actual scanner routes and shipped multilingual catalog
+        run: python tests/test_scanner_routes_v194.py
+      - name: Source syntax
+        run: |
+          python -m compileall -q custom_components/cook4me
+          node --check custom_components/cook4me/frontend/scanner-suggestions-v194.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v180.js
