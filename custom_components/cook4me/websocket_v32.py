@@ -4,6 +4,9 @@ from __future__ import annotations
 import voluptuous as vol
 from homeassistant.components import websocket_api
 from homeassistant.core import callback
+from homeassistant.helpers import device_registry as dr
+
+from .const import DOMAIN
 
 from . import websocket as legacy
 from .device_settings import choices, device_access, device_read_access
@@ -71,6 +74,18 @@ async def ws_announcement_subscribe(hass, connection, msg):
         legacy._send_error(connection, msg, exc)
 
 
+def _header_device(bridge):
+    """Read the HA name for this cooker only; never publish the registry."""
+    device = dr.async_get(bridge.hass).async_get_device(
+        identifiers={(DOMAIN, bridge.device_uuid)}
+    )
+    names = (getattr(device, "name_by_user", None),
+             getattr(device, "name", None), bridge.entry.title, "Cook4Me")
+    name = next(value.strip() for value in names
+                if isinstance(value, str) and value.strip())
+    return getattr(device, "id", None), name[:300]
+
+
 def _device_snapshot(bridge):
     # Only display telemetry crosses this channel; no profiles or raw shadow data.
     keys = ("active", "phase", "status", "updating", "recipeTitle", "currentInstruction",
@@ -80,6 +95,7 @@ def _device_snapshot(bridge):
     data = bridge.data or {}
     state = {key: data[key] for key in keys
              if isinstance(data.get(key), (str, bool, int, float))}
+    state["deviceName"] = _header_device(bridge)[1]
     loaded = bridge.loaded_recipe
     title = (loaded.get("title") or loaded.get("name")) if isinstance(loaded, dict) else loaded
     return {"entry_id": bridge.entry.entry_id, "accessible": True,
@@ -99,10 +115,16 @@ async def ws_device_state_subscribe(hass, connection, msg):
             raise PermissionError("You cannot view this Cook4Me device")
         active = True
         remove = None
+        remove_registry = None
+        watched_device = _header_device(bridge)[0]
 
         def unsubscribe():
             nonlocal active
+            if not active:
+                return
             active = False
+            if remove_registry:
+                remove_registry()
             if remove:
                 remove()
 
@@ -117,7 +139,18 @@ async def ws_device_state_subscribe(hass, connection, msg):
                 return
             connection.send_event(msg["id"], _device_snapshot(bridge))
 
+        @callback
+        def registry_updated(event):
+            nonlocal watched_device
+            current = _header_device(bridge)[0]
+            if event.data.get("device_id") in {watched_device, current} - {None}:
+                watched_device = current
+                listener()  # Recheck this user's read permission before sending.
+
         remove = bridge.async_add_listener(listener)
+        remove_registry = hass.bus.async_listen(
+            dr.EVENT_DEVICE_REGISTRY_UPDATED, registry_updated
+        )
         connection.subscriptions[msg["id"]] = unsubscribe
         connection.send_result(msg["id"])
         listener()

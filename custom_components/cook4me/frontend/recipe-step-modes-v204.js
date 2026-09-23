@@ -50,21 +50,30 @@ export function stepCookingModes(step,language='en'){
  return [{kind:'missing',mode:null,label:labels.unknown,sourceName:'',programKey:''}];
 }
 
+// Keep the evidence helper's legacy contract, but render only actual device
+// operations. Preparation, serving and absent program data need no metadata row.
+export function visibleStepCookingModes(step,language='en'){
+ return stepCookingModes(step,language).filter(mode=>mode.kind!=='manual'&&!!(mode.sourceName||mode.programKey));
+}
+
 export function decorateStepModes(root,recipe,language='en'){
- if(!root||!Array.isArray(recipe?.steps))return;
+ if(!root)return;
  const labels=strings(language);
  for(const node of root.querySelectorAll('[data-v66-step]')){
   const index=Number(node.dataset.v66Step);
-  if(!Number.isInteger(index)||index<0||index>=recipe.steps.length)continue;
   // Shared renderer uses original array positions, not the displayed step number.
   // Do not replace the instruction span or any of its existing handlers.
   const content=node.querySelector(':scope > span:not(.step-num)');if(!content)continue;
-  node.classList.add('v204-program-step');content.classList.add('v204-step-content');
   content.querySelector(':scope > [data-v204-step-modes]')?.remove();
+  const operations=Number.isInteger(index)&&index>=0&&Array.isArray(recipe?.steps)&&index<recipe.steps.length
+   ?visibleStepCookingModes(recipe.steps[index],language):[];
+  node.classList.toggle('v204-program-step',operations.length>0);
+  content.classList.toggle('v204-step-content',operations.length>0);
+  if(!operations.length)continue;
   const meta=document.createElement('span');meta.className='v204-step-modes';meta.dataset.v204StepModes='';meta.title=labels.help;
   const label=document.createElement('span');label.className='v204-mode-label';label.textContent=labels.label;meta.append(label);
   const modes=document.createElement('span');modes.className='v204-mode-list';meta.append(modes);
-  for(const [position,mode] of stepCookingModes(recipe.steps[index],language).entries()){
+  for(const [position,mode] of operations.entries()){
    if(position){const arrow=document.createElement('span');arrow.className='v204-mode-arrow';arrow.textContent='→';modes.append(arrow);}
    const chip=document.createElement('span');chip.className='v204-mode-chip';chip.dataset.v204Mode=mode.mode||mode.kind;
    const glyph=document.createElement('ha-icon');glyph.setAttribute('icon',mode.kind==='manual'?'mdi:hand-back-right-outline':mode.kind==='missing'?'mdi:help-circle-outline':'mdi:pot-steam');glyph.setAttribute('aria-hidden','true');
