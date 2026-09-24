@@ -48,9 +48,10 @@ with sync_playwright() as p:
         page.evaluate("app.show('week')")
         check(page,"[...app.shadowRoot.querySelectorAll('.rx-week-day')].every(n=>n.querySelectorAll('.rx-week-slot').length===3 && n.querySelector('.ui203-day-meta')?.textContent.includes('3'))",prefix+'day grouping keeps all three meals with each date')
         check(page,"[...app.shadowRoot.querySelectorAll('article.ui203-recipe')].every(n=>{const media=n.querySelector('.rx-v69-media'),dock=n.querySelector('.ui203-action-dock');return media&&!media.contains(dock)&&dock.getBoundingClientRect().top>=media.getBoundingClientRect().bottom-1})",prefix+'recipe actions stay below photos')
-        page.locator('article.ui203-recipe [data-v66-action=expand]').first.click()
+        page.locator('article.ui203-recipe details.ui203-more > summary').first.click()
+        page.locator('article.ui203-recipe details.ui203-more[open] [data-v66-action=expand]').first.click()
         page.wait_for_timeout(80)
-        check(page,"(()=>{const labels=[...app.shadowRoot.querySelector('article.ui203-recipe .rx-v66-ingredients').querySelectorAll('.v218-stored-at')].map(n=>n.textContent);return labels.some(x=>x.includes('Ντουλάπι'))&&labels.some(x=>x.includes('Ψυγείο'))})()",prefix+'expanded recipe ingredients show their defined storage places')
+        check(page,"(()=>{const list=app.shadowRoot.querySelector('article.ui203-recipe .rx-v66-ingredients');if(!list)return false;const labels=[...list.querySelectorAll('.v218-stored-at')].map(n=>n.textContent);return labels.some(x=>x.includes('Ντουλάπι'))&&labels.some(x=>x.includes('Ψυγείο'))})()",prefix+'expanded recipe ingredients show their defined storage places')
         check(page,"app.shadowRoot.querySelector('[aria-current=date] .ui203-today')?.textContent==='Σήμερα'",prefix+'today has an explicit day badge')
         shot(page,f'weekly-{width}')
         # Original day selector still sends exactly the original slot IDs.
