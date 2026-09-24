@@ -41,6 +41,13 @@ def load(name):
 
 
 nutrition = load("nutrition")
+
+# The cache persistence test replaces the calculator below. Stub only that
+# dependency so importing the cache does not require Home Assistant's cost-store
+# service layer in this unit-test process.
+costing = ModuleType(PKG + ".costing")
+costing.calculate_recipe_cost = lambda *_args, **_kwargs: {}
+sys.modules[costing.__name__] = costing
 cost_cache = load("recipe_cost_cache")
 
 
