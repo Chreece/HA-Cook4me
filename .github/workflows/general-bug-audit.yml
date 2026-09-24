@@ -41,6 +41,8 @@ jobs:
         run: python tests/test_currency_online_transactions_v213.py
       - name: Durable ingredient and recipe cache clears
         run: python tests/test_catalog_cache_transactions_v214.py
+      - name: Retry-safe leftover consumption
+        run: python tests/test_leftover_idempotency_v216.py
       - name: Unified catalog and nutrition resolution stores
         run: python tests/test_final_store_audit_v215.py
       - name: Preference and product editor races
