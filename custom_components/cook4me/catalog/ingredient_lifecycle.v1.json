@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-24.3",
+  "version": "2026-09-24.4",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -181,6 +181,71 @@
     "alnatura_hummus_natur": {
       "publisher": "Alnatura",
       "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/brotaufstriche/herzhafte-aufstriche/bio-aufstrich-aus-huelsenfruechten/hummus-natur-207285/",
+      "reviewedOn": "2026-09-24"
+    },
+    "vz_season_calendar": {
+      "publisher": "Verbraucherzentrale",
+      "url": "https://www.verbraucherzentrale.de/sites/default/files/migration_files/media222992A.pdf",
+      "reviewedOn": "2026-09-24"
+    },
+    "bzfe_shallots": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/presse/pressemeldungen-archiv/schalotten-fuer-die-feine-kueche",
+      "reviewedOn": "2026-09-24"
+    },
+    "hessen_wild_garlic": {
+      "publisher": "Hessen VerbraucherFenster",
+      "url": "https://verbraucherfenster.hessen.de/ernaehrung/obst-gemuese/baerlauch-wildgemuese-des-fruehlings",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_chickpeas_jar": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/kichererbsen-225540/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_chickpeas_can": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/kichererbsen-225119/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_kidney_beans_jar": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/kidneybohnen-glas-146167/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_kidney_beans_can": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/kidneybohnen-209510/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_white_beans_jar": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/weisse-bohnen-im-glas-205065/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_white_beans_can": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/weisse-bohnen-209512/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_lentils_can": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/linsen-209511/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_baked_beans_jar": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/baked-beans-200095/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_sweetcorn_can": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/mais-dose-227518/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_tomato_pieces_can": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/tomatenstuecke-natur-227167/",
       "reviewedOn": "2026-09-24"
     }
   },
@@ -2836,10 +2901,744 @@
           }
         ]
       }
+    },
+    "season_dill": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "outdoor_harvest",
+            "months": [
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "vz_season_calendar"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_marjoram": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "outdoor_harvest",
+            "months": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "vz_season_calendar"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_oregano": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "outdoor_harvest",
+            "months": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "vz_season_calendar"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_rosemary": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "outdoor_harvest",
+            "months": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "vz_season_calendar"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_sage": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "outdoor_harvest",
+            "months": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "vz_season_calendar"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_thyme": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "outdoor_harvest",
+            "months": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "vz_season_calendar"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_shallot": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bzfe_shallots"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_wild_garlic": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              3,
+              4,
+              5
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_wild_garlic"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "alnatura_chickpeas": {
+      "seasonality": {
+        "status": "unknown"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_chickpeas_jar",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_chickpeas_jar",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420230224"
+            ]
+          },
+          {
+            "id": "alnatura_chickpeas_can",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_chickpeas_can",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420230972"
+            ]
+          }
+        ]
+      }
+    },
+    "canned_chickpeas": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_chickpeas_jar",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_chickpeas_jar",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420230224"
+            ]
+          },
+          {
+            "id": "alnatura_chickpeas_can",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_chickpeas_can",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420230972"
+            ]
+          },
+          {
+            "id": "canned_low_acid",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "usda_cans",
+              "usda_cooling"
+            ],
+            "kind": "general_guidance"
+          }
+        ]
+      }
+    },
+    "alnatura_kidney_beans": {
+      "seasonality": {
+        "status": "unknown"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_kidney_beans_jar",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_kidney_beans_jar",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420138803"
+            ]
+          },
+          {
+            "id": "alnatura_kidney_beans_can",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_container"
+            ],
+            "sourceIds": [
+              "alnatura_kidney_beans_can",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420187894"
+            ]
+          }
+        ]
+      }
+    },
+    "canned_kidney_beans": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_kidney_beans_jar",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_kidney_beans_jar",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420138803"
+            ]
+          },
+          {
+            "id": "alnatura_kidney_beans_can",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_container"
+            ],
+            "sourceIds": [
+              "alnatura_kidney_beans_can",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420187894"
+            ]
+          },
+          {
+            "id": "canned_low_acid",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "usda_cans",
+              "usda_cooling"
+            ],
+            "kind": "general_guidance"
+          }
+        ]
+      }
+    },
+    "alnatura_white_beans": {
+      "seasonality": {
+        "status": "unknown"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_white_beans_jar",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_white_beans_jar",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420170179"
+            ]
+          },
+          {
+            "id": "alnatura_white_beans_can",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_container"
+            ],
+            "sourceIds": [
+              "alnatura_white_beans_can",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420187979"
+            ]
+          }
+        ]
+      }
+    },
+    "canned_white_beans": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_white_beans_jar",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_white_beans_jar",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420170179"
+            ]
+          },
+          {
+            "id": "alnatura_white_beans_can",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_container"
+            ],
+            "sourceIds": [
+              "alnatura_white_beans_can",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420187979"
+            ]
+          },
+          {
+            "id": "canned_low_acid",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "usda_cans",
+              "usda_cooling"
+            ],
+            "kind": "general_guidance"
+          }
+        ]
+      }
+    },
+    "alnatura_lentils": {
+      "seasonality": {
+        "status": "unknown"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_lentils_can",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_lentils_can",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420187931"
+            ]
+          }
+        ]
+      }
+    },
+    "canned_lentils": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_lentils_can",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_lentils_can",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420187931"
+            ]
+          },
+          {
+            "id": "canned_low_acid",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "usda_cans",
+              "usda_cooling"
+            ],
+            "kind": "general_guidance"
+          }
+        ]
+      }
+    },
+    "alnatura_baked_beans": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_baked_beans_jar",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_baked_beans_jar",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420141162"
+            ]
+          }
+        ]
+      }
+    },
+    "canned_sweetcorn": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_sweetcorn_can",
+            "daysMin": 1,
+            "daysMax": 1,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_nonmetal_container"
+            ],
+            "sourceIds": [
+              "alnatura_sweetcorn_can",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420234987"
+            ]
+          },
+          {
+            "id": "canned_low_acid",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "usda_cans",
+              "usda_cooling"
+            ],
+            "kind": "general_guidance"
+          }
+        ]
+      }
+    },
+    "canned_tomato_pieces": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_tomato_pieces_can",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_container"
+            ],
+            "sourceIds": [
+              "alnatura_tomato_pieces_can",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420234857"
+            ]
+          },
+          {
+            "id": "canned_high_acid",
+            "daysMin": 5,
+            "daysMax": 7,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "usda_cans",
+              "usda_cooling"
+            ],
+            "kind": "general_guidance"
+          }
+        ]
+      }
     }
   },
   "canonicalNames": {
+    "*medium-sized beetroot": "season_beetroot",
+    "*minced garlic": "season_garlic",
+    "*minced onion": "season_onion",
+    "*red onion peeled and finely chopped": "season_onion",
+    "a - rosemary": "season_rosemary",
+    "a - thyme": "season_thyme",
     "a sprig of finely chopped parsley": "season_parsley_leaf",
+    "a- carrot, cut into matchsticks 0.5 mm wide and 3 cm long": "season_carrot",
+    "a- green beans, cut into quarters": "season_green_bean",
+    "a- pumpkin, seeds and skin removed, cut into 3 cm cubes": "season_pumpkin",
     "almond milk": "alpro_drinks",
     "apple": "season_apple",
     "apple, diced": "season_apple",
@@ -2858,17 +3657,25 @@
     "arugula": "season_rocket",
     "arugula, washed": "season_rocket",
     "asparagus": "season_asparagus",
+    "asparagus (top 15 cm), washed and chopped": "season_asparagus",
     "asparagus tips": "season_asparagus",
     "asparagus tips, peeled and cut to fit the steaming basket": "season_asparagus",
     "asparagus tips, roughly chopped": "season_asparagus",
     "aubergine": "season_aubergine",
     "aubergines": "season_aubergine",
+    "b - thyme": "season_thyme",
+    "b- canned chopped tomatoes": "canned_tomato_pieces",
+    "b- dill, a little": "season_dill",
     "baby carrots": "season_carrot",
+    "baby lettuce": "season_lettuce",
+    "baby lettuce (or lettuce hearts), chopped": "season_lettuce",
     "baby potatoes": "season_potato",
     "baby spinach": "season_spinach",
     "baby spinach leaves": "season_spinach",
     "baby spinach, rinsed 2 or 3 times and very roughly chopped": "season_spinach",
     "baby spinach, washed twice (large stems removed)": "season_spinach",
+    "baked beans": "alnatura_baked_beans",
+    "baked beans with tomatoes": "alnatura_baked_beans",
     "basil": "season_basil",
     "basil (optional)": "season_basil",
     "basil / purple basil, leaves picked": "season_basil",
@@ -2879,6 +3686,7 @@
     "basil pesto": "alnatura_pesto",
     "basil, a little for finishing": "season_basil",
     "basil, finely chopped": "season_basil",
+    "batavia lettuce": "season_lettuce",
     "beef tomatoes": "season_tomato",
     "beefsteak tomato": "season_tomato",
     "beefsteak tomatoes": "season_tomato",
@@ -2905,7 +3713,7 @@
     "blueberries": "season_blueberry",
     "blueberries, washed": "season_blueberry",
     "blueberry": "season_blueberry",
-    "boiled canned chickpeas": "canned_low_acid",
+    "boiled canned chickpeas": "canned_chickpeas",
     "bok choy": "season_pak_choi",
     "bok choy, chopped": "season_pak_choi",
     "bok choy, cut into 6 pieces": "season_pak_choi",
@@ -2928,43 +3736,46 @@
     "butternut squash, diced": "season_pumpkin",
     "butternut squash, peeled and diced": "season_pumpkin",
     "button mushrooms": "season_button_mushroom",
+    "button mushrooms, halved or quartered": "season_button_mushroom",
     "button mushrooms, quartered": "season_button_mushroom",
     "button mushrooms, washed and finely chopped": "season_button_mushroom",
+    "c - pumpkin (5–7 mm thick, bite-size pieces)": "season_pumpkin",
+    "c- onion, cut into half-moons": "season_onion",
     "canned baby carrots (drained)": "canned_low_acid",
     "canned baby carrots, drained": "canned_low_acid",
     "canned beans": "canned_low_acid",
     "canned butter beans (canned weight), drained": "canned_low_acid",
-    "canned chickpeas": "canned_low_acid",
-    "canned chickpeas, drained": "canned_low_acid",
-    "canned chickpeas, rinsed": "canned_low_acid",
-    "canned chopped tomatoes": "canned_high_acid",
-    "canned chopped tomatoes (400 g)": "canned_high_acid",
+    "canned chickpeas": "canned_chickpeas",
+    "canned chickpeas, drained": "canned_chickpeas",
+    "canned chickpeas, rinsed": "canned_chickpeas",
+    "canned chopped tomatoes": "canned_tomato_pieces",
+    "canned chopped tomatoes (400 g)": "canned_tomato_pieces",
     "canned clams in water (use with the liquid)": "canned_low_acid",
-    "canned cooked lentils": "canned_low_acid",
-    "canned corn": "canned_low_acid",
-    "canned corn kernels, drained": "canned_low_acid",
-    "canned corn, drained": "canned_low_acid",
+    "canned cooked lentils": "canned_lentils",
+    "canned corn": "canned_sweetcorn",
+    "canned corn kernels, drained": "canned_sweetcorn",
+    "canned corn, drained": "canned_sweetcorn",
     "canned crab": "canned_low_acid",
     "canned creamed corn": "canned_low_acid",
-    "canned lentils": "canned_low_acid",
+    "canned lentils": "canned_lentils",
     "canned mackerel in water (190 g, use with liquid)": "canned_low_acid",
     "canned mixed fruit (190 g), including syrup": "canned_high_acid",
     "canned mixed fruit (190 g; use the syrup too)": "canned_high_acid",
     "canned peas": "canned_low_acid",
     "canned peas, drained": "canned_low_acid",
-    "canned peeled diced tomatoes": "canned_high_acid",
+    "canned peeled diced tomatoes": "canned_tomato_pieces",
     "canned pineapple (cut into quarters)": "canned_high_acid",
     "canned pineapple juice": "canned_high_acid",
     "canned red beans": "canned_low_acid",
-    "canned red kidney beans": "canned_low_acid",
-    "canned red kidney beans (rinsed and drained)": "canned_low_acid",
-    "canned sweetcorn": "canned_low_acid",
-    "canned sweetcorn, drained": "canned_low_acid",
+    "canned red kidney beans": "canned_kidney_beans",
+    "canned red kidney beans (rinsed and drained)": "canned_kidney_beans",
+    "canned sweetcorn": "canned_sweetcorn",
+    "canned sweetcorn, drained": "canned_sweetcorn",
     "canned tomato purée": "canned_high_acid",
     "canned tuna": "canned_low_acid",
     "canned tuna in water, drained": "canned_low_acid",
     "canned tuna, drained and flaked": "canned_low_acid",
-    "canned whole-kernel corn, drained": "canned_low_acid",
+    "canned whole-kernel corn, drained": "canned_sweetcorn",
     "carrot": "season_carrot",
     "carrot cut into pieces": "season_carrot",
     "carrot, chopped": "season_carrot",
@@ -3059,6 +3870,9 @@
     "chervil, chopped": "season_chervil",
     "chervil, washed and chopped for garnish": "season_chervil",
     "chervil, washed and finely chopped": "season_chervil",
+    "chickpeas": "alnatura_chickpeas",
+    "chickpeas (drained)": "alnatura_chickpeas",
+    "chickpeas, precooked or canned": "alnatura_chickpeas",
     "chicories": "season_chicory",
     "chicory": "season_chicory",
     "chicory, thinly sliced": "season_chicory",
@@ -3068,21 +3882,28 @@
     "chopped basil": "season_basil",
     "chopped basil leaves": "season_basil",
     "chopped bell pepper": "season_bell_pepper",
-    "chopped canned tomatoes": "canned_high_acid",
+    "chopped canned tomatoes": "canned_tomato_pieces",
     "chopped carrot": "season_carrot",
     "chopped carrots": "season_carrot",
     "chopped celery": "season_celery",
     "chopped celery stalk": "season_celery",
     "chopped celery stalks": "season_celery",
     "chopped celery sticks": "season_celery",
+    "chopped cherry tomatoes": "season_tomato",
+    "chopped cherry tomatoes (for serving)": "season_tomato",
     "chopped chervil": "season_chervil",
     "chopped chives": "season_chives",
+    "chopped dill": "season_dill",
     "chopped fennel": "season_fennel",
     "chopped fresh basil": "season_basil",
     "chopped fresh chives": "season_chives",
     "chopped fresh parsley": "season_parsley_leaf",
+    "chopped garlic": "season_garlic",
+    "chopped garlic clove": "season_garlic",
+    "chopped garlic cloves": "season_garlic",
     "chopped green beans": "season_green_bean",
     "chopped green bell pepper": "season_bell_pepper",
+    "chopped green onion": "season_spring_onion",
     "chopped leek": "season_leek",
     "chopped onion": "season_onion",
     "chopped onions": "season_onion",
@@ -3093,8 +3914,12 @@
     "chopped potatoes": "season_potato",
     "chopped red bell pepper": "season_bell_pepper",
     "chopped red onion": "season_onion",
+    "chopped sage": "season_sage",
+    "chopped salad onion": "season_spring_onion",
+    "chopped shallot": "season_shallot",
     "chopped spinach": "season_spinach",
     "chopped spinach leaves": "season_spinach",
+    "chopped spring onion": "season_spring_onion",
     "chopped white onion": "season_onion",
     "cleaned bell peppers": "season_bell_pepper",
     "cleaned bell peppers, sliced": "season_bell_pepper",
@@ -3102,9 +3927,15 @@
     "coconut cream": "label_required",
     "coconut milk": "reishunger_coconut_milk",
     "cold milk": "milk",
-    "cooked (canned) chickpeas, rinsed": "canned_low_acid",
-    "cooked (canned) lentils, rinsed": "canned_low_acid",
-    "cooked canned chickpeas, drained": "canned_low_acid",
+    "cooked (canned) chickpeas, rinsed": "canned_chickpeas",
+    "cooked (canned) lentils, rinsed": "canned_lentils",
+    "cooked canned chickpeas, drained": "canned_chickpeas",
+    "cooked chickpeas": "alnatura_chickpeas",
+    "cooked lentils": "alnatura_lentils",
+    "cooked lentils (or canned lentils)": "alnatura_lentils",
+    "cooked mature white beans": "alnatura_white_beans",
+    "cooked or canned chickpeas": "alnatura_chickpeas",
+    "cooked white beans": "alnatura_white_beans",
     "cooking cream": "label_required",
     "corn on the cob": "season_sweetcorn",
     "corn on the cob, cut into rounds": "season_sweetcorn",
@@ -3113,6 +3944,8 @@
     "cream": "label_required",
     "cream cheese": "label_required",
     "cream quark": "label_required",
+    "crushed garlic": "season_garlic",
+    "crushed garlic cloves": "season_garlic",
     "crème fraîche": "label_required",
     "cucumber": "season_cucumber",
     "cucumber, peeled and deseeded": "season_cucumber",
@@ -3124,6 +3957,8 @@
     "cups of parsley, washed and chopped": "season_parsley_leaf",
     "curly kale": "season_kale",
     "damsons": "season_plum",
+    "datterini cherry tomatoes": "season_tomato",
+    "datterini tomatoes": "season_tomato",
     "diced bell pepper": "season_bell_pepper",
     "diced carrot": "season_carrot",
     "diced carrots": "season_carrot",
@@ -3133,9 +3968,15 @@
     "diced onion": "season_onion",
     "diced potatoes": "season_potato",
     "diced potatoes for mash": "season_potato",
+    "diced pumpkin": "season_pumpkin",
     "diced red bell pepper": "season_bell_pepper",
     "diced red bell peppers": "season_bell_pepper",
     "diced zucchini": "season_courgette",
+    "dill": "season_dill",
+    "dill (for finishing)": "season_dill",
+    "dill, chopped": "season_dill",
+    "dill, trimmed": "season_dill",
+    "dill, washed and chopped": "season_dill",
     "double-cream cream cheese": "label_required",
     "dried beans": "dry_staple",
     "dried chickpeas": "dry_staple",
@@ -3175,27 +4016,40 @@
     "finely chopped carrot": "season_carrot",
     "finely chopped cauliflower": "season_cauliflower",
     "finely chopped celery": "season_celery",
+    "finely chopped garlic clove": "season_garlic",
+    "finely chopped green onions": "season_spring_onion",
     "finely chopped onion": "season_onion",
     "finely chopped parsley": "season_parsley_leaf",
     "finely chopped red onion": "season_onion",
+    "finely chopped shallot": "season_shallot",
+    "finely chopped spring onion": "season_spring_onion",
+    "finely chopped thyme leaves (for serving)": "season_thyme",
     "finely sliced onions": "season_onion",
+    "firm pears, peeled and cut into small cubes": "season_pear",
+    "firm pears, peeled and diced": "season_pear",
     "firm potatoes, peeled and cut into pieces": "season_potato",
     "firm tofu": "taifun_plain_tofu",
     "firm tofu, cut into 2 cm cubes": "taifun_plain_tofu",
     "firm tofu, cut into 4 cm cubes": "taifun_plain_tofu",
     "firm tofu, drained": "taifun_plain_tofu",
+    "firm-skinned pear, peeled and cut into small cubes": "season_pear",
     "flat green beans": "season_green_bean",
     "flat-leaf parsley": "season_parsley_leaf",
     "flat-leaf parsley, chopped": "season_parsley_leaf",
     "flour": "dry_staple",
+    "fresh asparagus, washed and chopped": "season_asparagus",
     "fresh basil leaves": "season_basil",
     "fresh basil leaves, washed": "season_basil",
     "fresh basil leaves, washed and chopped": "season_basil",
     "fresh basil leaves, washed and finely chopped": "season_basil",
     "fresh broad beans": "season_fresh_broad_bean",
+    "fresh button mushrooms, finely chopped": "season_button_mushroom",
     "fresh chopped basil": "season_basil",
     "fresh cream cheese": "label_required",
+    "fresh dill": "season_dill",
+    "fresh dill, chopped": "season_dill",
     "fresh fava beans": "season_fresh_broad_bean",
+    "fresh garlic": "season_garlic",
     "fresh green beans": "season_green_bean",
     "fresh milk": "milk",
     "fresh parsley": "season_parsley_leaf",
@@ -3207,18 +4061,28 @@
     "fresh potatoes": "season_potato",
     "fresh potatoes, peeled and diced": "season_potato",
     "fresh potatoes, washed and halved": "season_potato",
+    "fresh rosemary": "season_rosemary",
+    "fresh rosemary sprig": "season_rosemary",
+    "fresh rosemary, finely chopped": "season_rosemary",
+    "fresh sage leaves": "season_sage",
     "fresh spinach": "season_spinach",
     "fresh spinach, chopped": "season_spinach",
     "fresh spinach, rinsed and roughly chopped": "season_spinach",
     "fresh spinach, washed and chopped": "season_spinach",
     "fresh spinach, washed and finely chopped": "season_spinach",
+    "fresh spring onion stalk, cut into strips": "season_spring_onion",
     "fresh sweetcorn": "season_sweetcorn",
+    "fresh thyme": "season_thyme",
+    "fresh thyme leaves": "season_thyme",
+    "fresh thyme leaves, picked": "season_thyme",
+    "fresh thyme sprig": "season_thyme",
     "fresh tomato": "season_tomato",
     "fresh tomatoes": "season_tomato",
     "fresh tomatoes, diced": "season_tomato",
     "freshly chopped basil": "season_basil",
     "full-fat milk": "milk",
     "garlic": "season_garlic",
+    "garlic (crushed)": "season_garlic",
     "garlic clove": "season_garlic",
     "garlic clove, crushed": "season_garlic",
     "garlic clove, finely chopped": "season_garlic",
@@ -3233,6 +4097,7 @@
     "garlic cloves, peeled and germ removed": "season_garlic",
     "garlic cloves, peeled, degermed and finely chopped": "season_garlic",
     "garlic cloves, washed and chopped": "season_garlic",
+    "garlic with the germ removed": "season_garlic",
     "garlic, chopped": "season_garlic",
     "garlic, crushed": "season_garlic",
     "garlic, finely chopped": "season_garlic",
@@ -3247,6 +4112,7 @@
     "garlic, peeled, germ removed and chopped": "season_garlic",
     "garlic, peeled, germ removed and finely chopped": "season_garlic",
     "garlic, washed and chopped": "season_garlic",
+    "giant pumpkin, peeled, seeded and cut into 1 cm cubes": "season_pumpkin",
     "golden apple": "season_apple",
     "golden apple, peeled, cored and diced": "season_apple",
     "golden delicious apple": "season_apple",
@@ -3263,9 +4129,12 @@
     "grapes": "season_grape",
     "grated carrot": "season_carrot",
     "grated carrots": "season_carrot",
+    "grated garlic": "season_garlic",
     "grated onion": "season_onion",
     "greek yogurt": "label_required",
     "green asparagus": "season_asparagus",
+    "green asparagus spears, cut into pieces": "season_asparagus",
+    "green asparagus stalks, cut into small pieces": "season_asparagus",
     "green asparagus tips": "season_asparagus",
     "green asparagus tips, washed and cut": "season_asparagus",
     "green asparagus, cut into pieces": "season_asparagus",
@@ -3295,6 +4164,12 @@
     "green leek, thinly sliced": "season_leek",
     "green leek, trimmed and thinly sliced": "season_leek",
     "green leek, washed and thinly sliced": "season_leek",
+    "green onion": "season_spring_onion",
+    "green onion (garnish)": "season_spring_onion",
+    "green onion, a little for finishing": "season_spring_onion",
+    "green onion, a little for garnish": "season_spring_onion",
+    "green onion, cut into 4 cm lengths": "season_spring_onion",
+    "green onion, sliced, a little for finishing": "season_spring_onion",
     "green onions": "season_spring_onion",
     "green pepper": "season_bell_pepper",
     "green pepper, deseeded and diced": "season_bell_pepper",
@@ -3303,10 +4178,13 @@
     "greengages": "season_mirabelle",
     "ground black pepper": "dry_staple",
     "half a chopped onion": "season_onion",
+    "handful of blueberries": "season_blueberry",
     "handful of spinach, washed and roughly chopped": "season_spinach",
     "handful(s) of grated carrots": "season_carrot",
     "hazelnut milk": "alpro_drinks",
     "head of bok choy, cut into 6 pieces": "season_pak_choi",
+    "head of lettuce, washed and outer leaves removed": "season_lettuce",
+    "heads of lettuce, washed and outer leaves removed": "season_lettuce",
     "hokkaido pumpkin": "season_pumpkin",
     "houmous": "alnatura_hummus",
     "hummus": "alnatura_hummus",
@@ -3324,6 +4202,7 @@
     "julienned onion": "season_onion",
     "julienned potatoes": "season_potato",
     "kale": "season_kale",
+    "kidney beans": "alnatura_kidney_beans",
     "kohlrabi": "season_kohlrabi",
     "lamb's lettuce": "season_lambs_lettuce",
     "lambs lettuce": "season_lambs_lettuce",
@@ -3333,6 +4212,7 @@
     "large apples, peeled, cored and diced": "season_apple",
     "large beefsteak tomatoes, washed": "season_tomato",
     "large leek stalk": "season_leek",
+    "large marmande tomato, washed": "season_tomato",
     "large potato, peeled and cut into pieces": "season_potato",
     "large round tomatoes, cored for stuffing (reserve the flesh)": "season_tomato",
     "large tomato": "season_tomato",
@@ -3352,17 +4232,35 @@
     "leeks": "season_leek",
     "leeks, white part halved": "season_leek",
     "leeks, white parts washed and halved": "season_leek",
+    "lentils": "alnatura_lentils",
     "lettuce": "season_lettuce",
+    "lettuce (for finishing)": "season_lettuce",
+    "lettuce heart": "season_lettuce",
+    "lettuce hearts": "season_lettuce",
+    "lettuce hearts, diced": "season_lettuce",
+    "lettuce hearts, washed and sliced": "season_lettuce",
+    "lettuce leaves": "season_lettuce",
+    "lettuce leaves, chopped": "season_lettuce",
+    "lettuce leaves, cut to the width of the sausages": "season_lettuce",
+    "lettuce leaves, washed and finely chopped": "season_lettuce",
+    "lettuce leaves, washed and thinly sliced": "season_lettuce",
     "lettuce, shredded 1 cm wide for finishing": "season_lettuce",
     "low-fat milk": "milk",
     "mangetout": "season_fresh_pea",
     "mangetout, washed and cut in two": "season_fresh_pea",
+    "marjoram": "season_marjoram",
+    "marjoram (for finishing), a little": "season_marjoram",
+    "mature pumpkin": "season_pumpkin",
+    "medium beetroot": "season_beetroot",
     "medium onion": "season_onion",
     "medium potato": "season_potato",
     "medium red onion": "season_onion",
+    "medium-sized beetroot": "season_beetroot",
     "milk": "milk",
     "milk powder": "dry_staple",
     "minced carrot": "season_carrot",
+    "minced garlic": "season_garlic",
+    "minced garlic (seasoning)": "season_garlic",
     "minced onion": "season_onion",
     "mirabelle plums": "season_mirabelle",
     "mixed-color bell pepper": "season_bell_pepper",
@@ -3406,6 +4304,7 @@
     "onions, peeled and finely sliced": "season_onion",
     "onions, peeled and halved": "season_onion",
     "onions, peeled and quartered": "season_onion",
+    "oregano": "season_oregano",
     "organic cucumber": "season_cucumber",
     "organic granny smith apple(s), washed and cut into cubes": "season_apple",
     "organic green bell pepper": "season_bell_pepper",
@@ -3441,27 +4340,37 @@
     "pasteurized milk": "milk",
     "peach": "season_peach",
     "peach, peeled and diced": "season_peach",
+    "peach/peaches": "season_peach",
     "peaches": "season_peach",
     "peaches, not too ripe": "season_peach",
     "pear": "season_pear",
     "pear, peeled and quartered": "season_pear",
     "pear, quartered": "season_pear",
+    "pear/pears": "season_pear",
     "pearl onion": "season_onion",
     "pearl onions": "season_onion",
     "pears": "season_pear",
     "pears, diced": "season_pear",
     "pears, peeled and diced": "season_pear",
     "pears, quartered": "season_pear",
+    "peeled and chopped aubergine": "season_aubergine",
+    "peeled and chopped garlic": "season_garlic",
+    "peeled and chopped garlic cloves": "season_garlic",
     "peeled and chopped onion": "season_onion",
     "peeled bell peppers, diced": "season_bell_pepper",
     "peeled carrot": "season_carrot",
     "peeled carrots cut into strips": "season_carrot",
+    "peeled cherry tomatoes": "season_tomato",
+    "peeled chopped garlic": "season_garlic",
     "peeled diced carrots": "season_carrot",
     "peeled eggplant": "season_aubergine",
     "peeled eggplant, diced": "season_aubergine",
     "peeled eggplants, diced": "season_aubergine",
     "peeled finely chopped onion": "season_onion",
+    "peeled garlic": "season_garlic",
+    "peeled garlic cloves": "season_garlic",
     "peeled onion": "season_onion",
+    "peeled parsnip": "season_parsnip",
     "peeled potato, cut into pieces": "season_potato",
     "peeled potatoes": "season_potato",
     "peeled thinly sliced onion": "season_onion",
@@ -3469,7 +4378,13 @@
     "pesto alla genovese": "label_required",
     "pesto sauce": "alnatura_pesto",
     "philadelphia cream cheese": "label_required",
+    "pinch of fresh thyme leaves": "season_thyme",
+    "pinch of thyme": "season_thyme",
+    "pinch(es) of fresh thyme leaves": "season_thyme",
+    "pinches of fresh thyme leaves": "season_thyme",
+    "pinches of thyme": "season_thyme",
     "pink tomatoes": "season_tomato",
+    "pitted plums, chopped": "season_plum",
     "plain greek yogurt": "label_required",
     "plain yogurt": "label_required",
     "plant milk": "alpro_drinks",
@@ -3480,6 +4395,7 @@
     "plant-based yogurt": "alpro_alternatives",
     "plum": "season_plum",
     "plum tomatoes": "season_tomato",
+    "plum(s), pitted and cut into eighths": "season_plum",
     "plums": "season_plum",
     "pointed cabbage": "season_pointed_cabbage",
     "potato": "season_potato",
@@ -3504,6 +4420,8 @@
     "potatoes, washed and diced": "season_potato",
     "potatoes, washed, peeled and diced": "season_potato",
     "pumpkin": "season_pumpkin",
+    "pumpkin flesh": "season_pumpkin",
+    "pumpkin with skin, cut into 3 cm cubes": "season_pumpkin",
     "pumpkin, cut 1 cm wide and into thirds": "season_pumpkin",
     "pumpkin, cut 1.5 cm thick and portioned to match the number of pork belly slices": "season_pumpkin",
     "pumpkin, cut into 1 cm cubes": "season_pumpkin",
@@ -3526,10 +4444,14 @@
     "radishes": "season_radish",
     "radishes, washed and thinly sliced": "season_radish",
     "raspberries": "season_raspberry",
+    "raspberries for decoration": "season_raspberry",
     "raspberry": "season_raspberry",
     "raw beetroot": "season_beetroot",
     "raw beetroot, diced": "season_beetroot",
     "raw beetroot, peeled and cut into strips": "season_beetroot",
+    "raw corn cobs (husks and silk removed)": "season_sweetcorn",
+    "raw corn on the cob (husked and silk removed)": "season_sweetcorn",
+    "raw red beetroot, peeled and cut into long strips": "season_beetroot",
     "red bell pepper": "season_bell_pepper",
     "red bell pepper, chopped": "season_bell_pepper",
     "red bell pepper, chopped, peeled and deseeded": "season_bell_pepper",
@@ -3550,6 +4472,7 @@
     "red grapes": "season_grape",
     "red grapes, halved": "season_grape",
     "red grapes, washed": "season_grape",
+    "red kidney beans": "alnatura_kidney_beans",
     "red onion": "season_onion",
     "red onion (sliced, for finishing)": "season_onion",
     "red onion, chopped": "season_onion",
@@ -3574,6 +4497,7 @@
     "red pesto": "alnatura_pesto",
     "red potatoes": "season_potato",
     "red radishes": "season_radish",
+    "red spring onions": "season_spring_onion",
     "red, green and yellow bell peppers, chopped": "season_bell_pepper",
     "red, yellow and green bell peppers, cut into strips": "season_bell_pepper",
     "red, yellow and green bell peppers, thinly sliced": "season_bell_pepper",
@@ -3583,13 +4507,28 @@
     "rhubarb, washed and cut into 3–4 cm pieces": "season_rhubarb",
     "rice": "dry_staple",
     "rice milk": "alpro_drinks",
+    "ripe conference pears": "season_pear",
+    "ripe european pears": "season_pear",
+    "ripe pears, peeled and diced": "season_pear",
     "ripe tomatoes": "season_tomato",
     "ripe tomatoes, chopped": "season_tomato",
     "rocket": "season_rocket",
     "rocket leaves": "season_rocket",
+    "rocket, washed two or three times and roughly chopped": "season_rocket",
+    "rosemary": "season_rosemary",
+    "rosemary sprig, cut in half": "season_rosemary",
+    "rosemary, a little for garnish": "season_rosemary",
     "round tomatoes, about 175 g, cored for stuffing (reserve flesh and juice)": "season_tomato",
     "round zucchini": "season_courgette",
     "runner beans": "season_green_bean",
+    "sage": "season_sage",
+    "sage leaves": "season_sage",
+    "sage leaves, thinly sliced": "season_sage",
+    "sage leaves, washed (to taste)": "season_sage",
+    "sage leaves, washed and finely chopped": "season_sage",
+    "salad onion stalk": "season_spring_onion",
+    "salad onion stalk, chopped": "season_spring_onion",
+    "salad onion(s), washed and thinly sliced": "season_spring_onion",
     "salsify": "season_salsify",
     "salt": "dry_staple",
     "savoy cabbage": "season_savoy_cabbage",
@@ -3598,23 +4537,52 @@
     "sea salt": "dry_staple",
     "seasoned tomato sauce": "alnatura_tomato_sauce",
     "semi-skimmed milk": "milk",
+    "shallot": "season_shallot",
+    "shallot, chopped": "season_shallot",
+    "shallot, finely chopped": "season_shallot",
+    "shallot, peeled and finely chopped": "season_shallot",
+    "shallot, peeled and finely sliced": "season_shallot",
+    "shallot, thinly sliced": "season_shallot",
+    "shallots": "season_shallot",
+    "shallots, chopped": "season_shallot",
+    "shallots, diced": "season_shallot",
+    "shallots, finely chopped": "season_shallot",
+    "shallots, peeled": "season_shallot",
+    "shallots, peeled and chopped": "season_shallot",
+    "shallots, peeled and cut into pieces": "season_shallot",
+    "shallots, thinly sliced": "season_shallot",
     "silken tofu": "taifun_silken_tofu",
     "silken tofu, scooped into large pieces with a spoon": "taifun_silken_tofu",
     "skimmed milk": "milk",
     "sliced bok choy": "season_pak_choi",
+    "sliced button mushrooms": "season_button_mushroom",
     "sliced carrots": "season_carrot",
+    "sliced garlic": "season_garlic",
+    "sliced green onion (for finishing)": "season_spring_onion",
     "sliced onion": "season_onion",
     "sliced onions": "season_onion",
+    "sliced pumpkin, 8 mm thick": "season_pumpkin",
+    "sliced tomatoes": "season_tomato",
+    "slightly firm pears, peeled and cored": "season_pear",
     "small broccoli florets": "season_broccoli",
     "small broccoli florets, washed": "season_broccoli",
     "small eggplant": "season_aubergine",
     "small eggplant, washed and diced": "season_aubergine",
     "small eggplants, washed and diced": "season_aubergine",
     "small fennel bulb, trimmed and thinly sliced": "season_fennel",
+    "small garlic clove": "season_garlic",
+    "small garlic cloves, peeled": "season_garlic",
+    "small green onion, diagonally sliced (for finishing), a little": "season_spring_onion",
+    "small lettuce (or lettuce heart), chopped": "season_lettuce",
     "small onion, washed and chopped": "season_onion",
     "small onions": "season_onion",
     "small onions, washed and chopped": "season_onion",
     "small potato, chopped": "season_potato",
+    "small shallot(s), peeled and finely chopped": "season_shallot",
+    "small shallot, cleaned and finely chopped": "season_shallot",
+    "small shallot, peeled and finely chopped": "season_shallot",
+    "small shallots, peeled and finely chopped": "season_shallot",
+    "small tomato, diced": "season_tomato",
     "smoked tofu": "reishunger_smoked_tofu",
     "smoked tofu, in large cubes": "reishunger_smoked_tofu",
     "snow peas": "season_fresh_pea",
@@ -3638,13 +4606,24 @@
     "spinach, roughly chopped": "season_spinach",
     "spinach, washed and chopped": "season_spinach",
     "sprig of finely chopped parsley": "season_parsley_leaf",
+    "sprig of marjoram": "season_marjoram",
     "sprig of parsley": "season_parsley_leaf",
+    "sprig of rosemary": "season_rosemary",
     "sprigs of fresh parsley for garnish": "season_parsley_leaf",
     "sprigs of parsley": "season_parsley_leaf",
+    "sprigs of rosemary": "season_rosemary",
     "spring onion": "season_spring_onion",
+    "spring onion (finely sliced, for finishing)": "season_spring_onion",
+    "spring onion (finely sliced, for garnish), a little": "season_spring_onion",
+    "spring onion (white part and some green), finely sliced": "season_spring_onion",
+    "spring onion stalk": "season_spring_onion",
+    "spring onion stalk, cut into strips": "season_spring_onion",
+    "spring onion stalks": "season_spring_onion",
+    "spring onion stalks, washed and chopped": "season_spring_onion",
     "spring onion, chopped": "season_spring_onion",
     "spring onion, thinly sliced": "season_spring_onion",
     "spring onions": "season_spring_onion",
+    "spring onions (white and green parts), chopped": "season_spring_onion",
     "spring onions, chop white and green parts separately": "season_spring_onion",
     "spring onions, sliced": "season_spring_onion",
     "spring onions, washed and cut into two equal halves": "season_spring_onion",
@@ -3654,12 +4633,15 @@
     "spring onions, white part chopped and green part sliced": "season_spring_onion",
     "stalk celery": "season_celery",
     "stalk of chopped parsley": "season_parsley_leaf",
+    "stalk of spring onion, washed and chopped": "season_spring_onion",
     "stalks of chopped parsley": "season_parsley_leaf",
     "strained yogurt": "label_required",
     "strawberries": "season_strawberry",
     "strawberries, diced": "season_strawberry",
     "strawberries, quartered": "season_strawberry",
     "strawberries, washed and thinly sliced": "season_strawberry",
+    "strawberries, washed, hulled and cut into 2 or 4 pieces": "season_strawberry",
+    "strawberries, washed, hulled and halved or quartered": "season_strawberry",
     "strawberry": "season_strawberry",
     "stuffing zucchini, washed and roughly chopped": "season_courgette",
     "sugar": "dry_staple",
@@ -3675,6 +4657,7 @@
     "sweet onion, peeled and thinly sliced into rounds": "season_onion",
     "sweet onion, thinly sliced": "season_onion",
     "sweet onions, peeled and thinly sliced": "season_onion",
+    "sweet or white onion, thinly sliced": "season_onion",
     "sweetcorn on the cob": "season_sweetcorn",
     "swiss chard": "season_chard",
     "swiss chard, washed and cut into pieces": "season_chard",
@@ -3683,12 +4666,18 @@
     "tbsp chopped parsley": "season_parsley_leaf",
     "tbsp fresh basil leaves, chopped": "season_basil",
     "tbsp parsley, washed and chopped (to taste)": "season_parsley_leaf",
+    "thin green onion, diagonally sliced, as needed": "season_spring_onion",
     "thinly julienned carrot": "season_carrot",
+    "thinly sliced button mushrooms": "season_button_mushroom",
     "thinly sliced carrot": "season_carrot",
     "thinly sliced carrots": "season_carrot",
     "thinly sliced onion": "season_onion",
     "three-colour bell peppers, thinly sliced": "season_bell_pepper",
-    "tinned sweetcorn, drained": "canned_low_acid",
+    "thyme": "season_thyme",
+    "thyme leaves, washed": "season_thyme",
+    "thyme sprig": "season_thyme",
+    "thyme, a little": "season_thyme",
+    "tinned sweetcorn, drained": "canned_sweetcorn",
     "tinned tuna": "canned_low_acid",
     "tofu": "taifun_plain_tofu",
     "tofu, cut into 2 cm cubes": "taifun_plain_tofu",
@@ -3739,13 +4728,17 @@
     "washed and diced tomatoes": "season_tomato",
     "washed and diced zucchini": "season_courgette",
     "washed and halved cherry tomatoes": "season_tomato",
+    "washed blueberries": "season_blueberry",
     "washed parsley leaves": "season_parsley_leaf",
+    "washed red grape": "season_grape",
+    "washed red grapes": "season_grape",
     "waxy potatoes": "season_potato",
     "waxy potatoes, peeled and cut into pieces": "season_potato",
     "wheat flour": "dry_staple",
     "white asparagus": "season_asparagus",
     "white asparagus tips": "season_asparagus",
-    "white beans (canned)": "canned_low_acid",
+    "white beans": "alnatura_white_beans",
+    "white beans (canned)": "canned_white_beans",
     "white button mushrooms": "season_button_mushroom",
     "white cabbage": "season_white_cabbage",
     "white cabbage leaves": "season_white_cabbage",
@@ -3755,10 +4748,15 @@
     "white onion, peeled and finely chopped": "season_onion",
     "white onion, peeled and thinly sliced": "season_onion",
     "white onions": "season_onion",
+    "white or black grapes, washed": "season_grape",
+    "white or blue grapes, washed": "season_grape",
     "white part of leek, thinly sliced": "season_leek",
     "white potatoes": "season_potato",
     "white sugar": "dry_staple",
     "whole milk": "milk",
+    "wild garlic": "season_wild_garlic",
+    "wild garlic, finely chopped": "season_wild_garlic",
+    "yellow (or red) tomatoes, peeled and chopped": "season_tomato",
     "yellow bell pepper": "season_bell_pepper",
     "yellow bell pepper (cut into 1.5 cm cubes)": "season_bell_pepper",
     "yellow bell pepper, cut into 2 cm cubes": "season_bell_pepper",
@@ -3768,6 +4766,7 @@
     "yellow bell peppers, cut into strips": "season_bell_pepper",
     "yellow onion": "season_onion",
     "yellow onions": "season_onion",
+    "yellow peaches, washed and halved": "season_peach",
     "yellow pepper": "season_bell_pepper",
     "yellow pepper, peeled and diced": "season_bell_pepper",
     "yogurt": "label_required",
@@ -3788,6 +4787,7 @@
     "zucchini, washed and diced": "season_courgette",
     "zucchini, washed and diced (quantity fragment: /2)": "season_courgette",
     "zucchini, washed and sliced into rounds": "season_courgette",
-    "zucchinis": "season_courgette"
+    "zucchinis": "season_courgette",
+    "★ cherry tomatoes, stems removed": "season_tomato"
   }
 }

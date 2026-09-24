@@ -190,11 +190,21 @@ def opening_window(profile: dict[str, Any], lot: dict[str, Any], *, temperature_
         evidence = {"kind": "package_value"}
     else:
         opening = profile.get("afterOpening", {})
+        rules = opening.get("rules", [])
+        barcode = _gtin(lot.get("barcode"))
+        # A reviewed product/brand must satisfy its own identity and handling
+        # gates. Missing evidence must not select a longer generic interval.
+        product_rules = [
+            rule for rule in rules if rule.get("productBarcodes") and (
+                _name(rule["brand"]) == _name(lot.get("brand"))
+                or barcode in {_gtin(code) for code in rule["productBarcodes"]}
+            )
+        ]
         candidates = []
-        for rule in opening.get("rules", []):
+        for rule in product_rules or rules:
             if rule.get("brand") and _name(rule["brand"]) != _name(lot.get("brand")):
                 continue
-            if "productBarcodes" in rule and _gtin(lot.get("barcode")) not in {_gtin(code) for code in rule["productBarcodes"]}:
+            if "productBarcodes" in rule and barcode not in {_gtin(code) for code in rule["productBarcodes"]}:
                 continue
             if lot.get("storage") != rule["storage"]:
                 continue

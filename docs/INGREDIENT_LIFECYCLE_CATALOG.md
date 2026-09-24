@@ -5,16 +5,19 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-24.3)
+## Reviewed coverage (2026-09-24.4)
 
-- 71 produce groups, including fruit, leafy vegetables, roots, asparagus,
+- 79 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
-  savoy cabbage and pak choi.
-- Fourteen numeric after-opening groups: pasteurized/UHT milk, low-acid canned
+  savoy cabbage, pak choi, shallots and wild garlic.
+- 25 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro or Oatly), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
-  hummus. Brand, product and handling conditions remain attached.
+  hummus, chickpeas, kidney beans, white beans, lentils and baked beans. Separate
+  canned-form profiles retain generic guidance alongside verified product rules
+  for legumes, sweetcorn and tomato pieces. Brand, product and handling
+  conditions remain attached. There are 17 reviewed product barcodes.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, cream cheese and
   coconut cream.
@@ -28,9 +31,9 @@ entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
 ## Season semantics
 
 Season months are German availability guidance from the twelve monthly
-calendars published by the Hessische Lehrkräfteakademie, BZfE produce guides and
-the BVEO pak choi guide.
-For calendar entries, the source region
+calendars published by the Hessische Lehrkräfteakademie, BZfE produce guides,
+the BVEO pak choi guide, Hessen VerbraucherFenster and the Verbraucherzentrale
+season calendar. For the Hessian monthly calendar entries, the source region
 (`DE-HE`), country (`DE`), source links and review date are preserved. The source
 includes stored produce and protected cultivation; these months must not be
 labelled as exclusively fresh outdoor harvest. Ordinary potatoes have year-round
@@ -46,6 +49,14 @@ outdoor harvest period (`basis: outdoor_harvest`), independent of year-round
 potted availability. Savoy cabbage uses May–February regional availability,
 and pak choi uses May–October. These profiles do not apply to dried/frozen herbs,
 Thai basil, parsley root, cooked cabbage or mixed ingredients.
+
+The Verbraucherzentrale calendar's green outdoor-harvest cells on page 1 provide
+May–September for dill and May–October for marjoram, oregano, rosemary, sage and
+thyme (`basis: outdoor_harvest`). Protected cultivation and stored/imported
+availability do not extend those profiles. BZfE identifies July–October as the
+main availability period for fresh German shallots. Hessen VerbraucherFenster
+places wild garlic in March–May, with the season ending around mid-May. The
+month-level guidance remains approximate and does not identify wild plants.
 
 The calendars list monthly highlights rather than every crop. A listed month
 returns `in_season`, twelve listed months return `year_round`, and an omitted
@@ -63,8 +74,8 @@ An ingredient's provider IDs, nutrition and dietary evidence are preserved.
 
 `afterOpening.rules` contains `daysMin`, `daysMax`, refrigerator temperature,
 handling conditions, source IDs and, where required, brand and `productBarcodes`.
-Numeric evidence is
-general or manufacturer guidance, never a guaranteed spoilage/safety threshold.
+Numeric evidence is general or manufacturer guidance, never a guaranteed
+spoilage/safety threshold.
 The conservative refrigerator cap for general and tofu guidance is 4 °C;
 Alpro's published maximum is 7 °C. The corresponding refrigeration sources are
 included with each rule.
@@ -90,12 +101,32 @@ handling condition. Each rule links to its own manufacturer product page.
 | Tomatensauce Klassik, 350 ml | 4104420213593 | 2 | — |
 | Tomatensauce Kräuter, 350 ml | 4104420213517 | 2 | — |
 | Hummus Natur, 180 g | 4104420229761 | 7 | — |
+| Kichererbsen, 330 g jar | 4104420230224 | 2 | — |
+| Kichererbsen, 400 g can | 4104420230972 | 2 | — |
+| Kidneybohnen, 360 g jar | 4104420138803 | 2 | — |
+| Kidneybohnen, 400 g can | 4104420187894 | 3 | Transferred to a container |
+| Weiße Bohnen, 330 g jar | 4104420170179 | 2 | — |
+| Weiße Bohnen, 400 g can | 4104420187979 | 3 | Transferred to a container |
+| Linsen, 400 g can | 4104420187931 | 2 | — |
+| Baked Beans, 360 g jar | 4104420141162 | 2 | — |
+| Mais, 330 g can | 4104420234987 | 1 | Transferred to a non-metal container |
+| Tomatenstücke Natur, 400 g can | 4104420234857 | 3 | Transferred to a container |
 
 Brand alone cannot select these product-specific intervals. Missing, invalid or
 different barcodes leave the deadline unknown. Barcodes must be strings with
 valid GTIN check digits; equivalent 8-, 12- and 13-digit codes and their zero-padded
 14-digit representation match. Product and package instructions still take
 precedence if they change.
+
+For an exact ingredient profile that contains reviewed product rules, a matching
+brand or reviewed barcode selects that product scope before testing conditions.
+Both brand and barcode must then match. Missing identity, temperature or handling
+confirmation returns `label_required`; it cannot fall back to a longer generic
+canned-food interval. The verified product rule also takes precedence regardless
+of rule ordering. Generic canned-food guidance remains available for other
+products on explicitly canned ingredient profiles. Unspecified or cooked legumes
+have only product-specific rules, so they cannot borrow a generic canned interval
+for a homemade batch or an opened bag of dried beans.
 
 The date helper accepts existing lot fields `openedAt`, `bestBefore`,
 `useWithinDays`, `noExpiry`, `storage`, `brand` and `barcode`:
@@ -141,6 +172,7 @@ existing packages, change weekly-plan ranking or replace existing reminders.
 
 `python tests/test_ingredient_lifecycle.py` covers evidence validation, country
 and month boundaries, unknown/preserved forms, package precedence, brand,
-product barcode and temperature gates, leap years, earlier printed dates, unopened packages, exact
+product barcode and temperature gates, product-versus-generic precedence,
+can/jar distinctions, leap years, earlier printed dates, unopened packages, exact
 identity, recipe/picker propagation, and copy isolation. The existing Validate
 workflow runs it and audits the actual release catalog on Python 3.13.
