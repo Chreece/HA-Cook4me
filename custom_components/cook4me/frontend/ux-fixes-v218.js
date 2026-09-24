@@ -77,19 +77,34 @@ export const UXFixesMixin=Base=>class extends Base{
   }
   return names;
  }
- _v66Body(recipe,...args){
-  const html=super._v66Body(recipe,...args);if(!html||!recipe?.ingredients?.length)return html;
-  const template=document.createElement('template');template.innerHTML=html;
-  template.content.querySelectorAll('[data-v66-ingredient]').forEach(button=>{
-   const index=Number(button.dataset.v66Ingredient),item=recipe.ingredients[index],names=this._v218StorageNames(item);
-   if(!names.length)return;
-   const holder=button.querySelector(':scope > span:first-child')||button;
-   const small=document.createElement('small');small.className='v218-stored-at';
-   const icon=document.createElement('ha-icon');icon.setAttribute('icon','mdi:map-marker-outline');icon.setAttribute('aria-hidden','true');
-   small.append(icon,document.createTextNode(`${this._v218Text('storedAt')}: ${names.join(', ')}`));holder.append(small);
+ _v218DecorateRecipeStorage(container,recipe){
+  if(!container||!recipe?.ingredients?.length)return;
+  container.querySelectorAll('[data-v66-ingredient]').forEach(button=>{
+   const index=Number(button.dataset.v66Ingredient),item=recipe.ingredients[index];
+   if(!item)return;
+   const names=this._v218StorageNames(item);
+   let small=button.querySelector('.v218-stored-at');
+   if(!names.length){small?.remove();return;}
+   if(!small){
+    const holder=button.querySelector(':scope > span:first-child')||button;
+    small=document.createElement('small');small.className='v218-stored-at';
+    const icon=document.createElement('ha-icon');icon.setAttribute('icon','mdi:map-marker-outline');icon.setAttribute('aria-hidden','true');
+    small.append(icon,document.createTextNode(''));holder.append(small);
+   }
+   const textNode=[...small.childNodes].find(node=>node.nodeType===Node.TEXT_NODE);
+   const label=`${this._v218Text('storedAt')}: ${names.join(', ')}`;
+   if(textNode)textNode.textContent=label;else small.append(document.createTextNode(label));
   });
-  return template.innerHTML;
  }
+ _bindCards(container,...args){
+  const result=super._bindCards(container,...args);
+  for(const card of container?.querySelectorAll?.('[data-v66-ref]')||[]){
+   const row=this._v66Refs?.get(card.dataset.v66Ref);
+   if(row?.recipe)this._v218DecorateRecipeStorage(card,row.recipe);
+  }
+  return result;
+ }
+
  _v154PlaceItems(locationId){
   const rows=[...(super._v154PlaceItems?.(locationId)||[])],wanted=String(locationId||'');
   for(const row of this._houseIngredients||[]){
@@ -169,5 +184,9 @@ export const UXFixesMixin=Base=>class extends Base{
  }
  _renderProfile(c){const result=super._renderProfile(c);this._v218Styles();return result;}
  _renderTab(){const result=super._renderTab();this._v218Styles();return result;}
- _renderRecipeDialog(){const result=super._renderRecipeDialog();this._v218Styles();return result;}
+ _renderRecipeDialog(){
+  const result=super._renderRecipeDialog();
+  if(this._v63RecipeDialog&&this._opened)this._v218DecorateRecipeStorage(this._v63RecipeDialog,this._opened);
+  this._v218Styles();return result;
+ }
 };
