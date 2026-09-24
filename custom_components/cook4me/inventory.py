@@ -323,7 +323,7 @@ def _normalized_row(raw: Any) -> dict[str, Any] | None:
         metadata = _lot_metadata(raw)
         for key in (
             "storage", "storageLocationId", "productName", "brand",
-            "barcode", "containerId", "source"
+            "barcode", "containerId", "source", "ingredientLinks"
         ):
             if metadata.get(key):
                 row[key] = metadata[key]
@@ -447,7 +447,7 @@ def add_inventory_item(
         metadata = _lot_metadata(lot_metadata or {}, strict=True)
         for key in (
             "storage", "storageLocationId", "productName", "brand",
-            "barcode", "containerId", "source"
+            "barcode", "containerId", "source", "ingredientLinks"
         ):
             if metadata.get(key):
                 incoming[key] = metadata[key]
