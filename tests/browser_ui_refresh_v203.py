@@ -107,7 +107,7 @@ with sync_playwright() as p:
         page.evaluate("""(()=>{const salt={key:'salt',name:'Αλάτι',unlimited:true,storageLocationId:'pantry',storage:'pantry'};app._houseIngredients=[...(app._houseIngredients||[]),salt];const entry=app._entry?.();if(entry?.profile)entry.profile.houseIngredients=app._houseIngredients;app._v78State={...(app._v78State||{}),houseIngredients:app._houseIngredients};app._syncEntryProfile?.();app._renderTab();})()""")
         page.locator('[data-v78-pane=places]').click()
         page.locator('[data-place="pantry"] [data-items]').click()
-        check(page,"(()=>{const n=app.shadowRoot.querySelector('[data-place="pantry"] .v218-unlimited-item');return n&&n.textContent.includes('Αλάτι')&&n.textContent.includes('Απεριόριστο')})()",prefix+'unlimited stock appears inside its defined storage place')
+        check(page,"(()=>{const n=app.shadowRoot.querySelector('[data-place=pantry] .v218-unlimited-item');return n&&n.textContent.includes('Αλάτι')&&n.textContent.includes('Απεριόριστο')})()",prefix+'unlimited stock appears inside its defined storage place')
         page.locator('[data-v78-pane=scale]').click()
         page.wait_for_function("app.shadowRoot.querySelector('[data-v117-container] [data-use]')")
         page.locator('[data-v117-container] [data-use]').click()
