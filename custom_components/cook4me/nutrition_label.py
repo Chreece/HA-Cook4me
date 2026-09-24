@@ -83,7 +83,9 @@ async def async_save_lot_nutrition(
         if value not in (None, "")
     }
 
-    exact = store._data.setdefault("stockLots", {})
+    # Keep readers on the last durable label until storage accepts the change.
+    data = deepcopy(store._data)
+    exact = data.setdefault("stockLots", {})
     records = exact.setdefault(identity, [])
     replaced = False
     for index, existing in enumerate(records):
@@ -97,7 +99,19 @@ async def async_save_lot_nutrition(
     if not replaced:
         records.append(deepcopy(record))
 
-    await store._save()
+    if hasattr(store, "_store"):
+        await store._store.async_save(data)
+        store._data = data
+    else:
+        # The package editor uses a private draft with a no-op _save, then
+        # commits its entire replacement once. Preserve that staging boundary.
+        previous = store._data
+        store._data = data
+        try:
+            await store._save()
+        except BaseException:
+            store._data = previous
+            raise
     return {
         "identity": identity,
         "lotId": wanted,
