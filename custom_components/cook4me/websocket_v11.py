@@ -28,12 +28,14 @@ _MARKETING_FOOD_SIZE = 100000
 
 
 async def _cache(bridge) -> Cook4MeIngredientCatalogCache:
-    cache = getattr(bridge, "_ingredient_catalog_cache", None)
-    if cache is None:
-        cache = Cook4MeIngredientCatalogCache(bridge.hass, bridge.entry.entry_id)
-        await cache.async_load()
-        bridge._ingredient_catalog_cache = cache
-    return cache
+    from .store_helpers import store_load_lock
+    async with store_load_lock(bridge, "ingredient_catalog_cache"):
+        cache = getattr(bridge, "_ingredient_catalog_cache", None)
+        if cache is None:
+            cache = Cook4MeIngredientCatalogCache(bridge.hass, bridge.entry.entry_id)
+            await cache.async_load()
+            bridge._ingredient_catalog_cache = cache
+        return cache
 
 
 def _device_language(bridge) -> str:
