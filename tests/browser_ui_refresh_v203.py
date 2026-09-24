@@ -104,7 +104,7 @@ with sync_playwright() as p:
         for pane in ['food','places','integration','stock']:
             page.locator(f'[data-v78-pane={pane}]').click()
             check(page,f"app.shadowRoot.querySelector('[data-v78-section={pane}]').hidden===false",prefix+'kitchen '+pane+' still navigable')
-        page.evaluate("app._houseIngredients.push({key:'salt',name:'Αλάτι',unlimited:true,storageLocationId:'pantry',storage:'pantry'});app._v78State.houseIngredients=app._houseIngredients;app._renderTab()")
+        page.evaluate("""(()=>{const salt={key:'salt',name:'Αλάτι',unlimited:true,storageLocationId:'pantry',storage:'pantry'};app._houseIngredients=[...(app._houseIngredients||[]),salt];const entry=app._entry?.();if(entry?.profile)entry.profile.houseIngredients=app._houseIngredients;app._v78State={...(app._v78State||{}),houseIngredients:app._houseIngredients};app._syncEntryProfile?.();app._renderTab();})()""")
         page.locator('[data-v78-pane=places]').click()
         check(page,"(()=>{const n=app.shadowRoot.querySelector('.v218-unlimited-item');return n&&n.textContent.includes('Αλάτι')&&n.textContent.includes('Απεριόριστο')})()",prefix+'unlimited stock appears inside its defined storage place')
         page.locator('[data-v78-pane=scale]').click()
