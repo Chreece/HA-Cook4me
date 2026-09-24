@@ -99,6 +99,7 @@ class Cook4MeMealHistoryStore:
         nutrition: dict[str, Any],
         allocations: Any = None,
         consumption: Any = None,
+        record_id: str = "",
     ) -> dict[str, Any]:
         totals = _nutrition_totals(nutrition)
         servings = _number(recipe.get("servings"))
@@ -121,8 +122,9 @@ class Cook4MeMealHistoryStore:
             else (0.0 if servings is not None else None)
         )
 
+        identity = str(record_id or "").strip()
         row = {
-            "id": str(uuid4()),
+            "id": identity or str(uuid4()),
             "recipe": deepcopy(recipe),
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "title": str(
@@ -149,6 +151,16 @@ class Cook4MeMealHistoryStore:
             "stockLots": stock_lots,
         }
         async with self._lock:
+            if identity:
+                existing = next(
+                    (
+                        item for item in self._data.get("meals", [])
+                        if isinstance(item, dict) and str(item.get("id") or "") == identity
+                    ),
+                    None,
+                )
+                if existing is not None:
+                    return deepcopy(existing)
             data = deepcopy(self._data)
             data["meals"] = (data.get("meals", []) + [row])[-_MAX_MEALS:]
             await self._commit(data)
