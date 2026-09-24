@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-24.1",
+  "version": "2026-09-24.2",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -106,6 +106,26 @@
     "vz_opening": {
       "publisher": "Verbraucherzentrale",
       "url": "https://www.verbraucherzentrale.de/wissen/lebensmittel/auswaehlen-zubereiten-aufbewahren/lebensmittel-nach-dem-oeffnen-gekuehlt-lagern-angaben-oft-zu-vage-109122",
+      "reviewedOn": "2026-09-24"
+    },
+    "oatly_opening": {
+      "publisher": "Oatly",
+      "url": "https://www.oatly.com/de-de/random-answers/does-oat-drink-go-bad",
+      "reviewedOn": "2026-09-24"
+    },
+    "reishunger_smoked_tofu": {
+      "publisher": "Reishunger",
+      "url": "https://www.reishunger.de/produkt/1928/bio-tofu-gerauchert",
+      "reviewedOn": "2026-09-24"
+    },
+    "reishunger_coconut_milk": {
+      "publisher": "Reishunger",
+      "url": "https://www.reishunger.de/produkt/414/bio-kokosmilch",
+      "reviewedOn": "2026-09-24"
+    },
+    "bzfe_potatoes": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/kueche-und-alltag/vom-acker-bis-zum-teller/kartoffeln/kartoffeln-vom-einkauf-in-die-kueche",
       "reviewedOn": "2026-09-24"
     }
   },
@@ -2207,6 +2227,186 @@
           "vz_opening"
         ]
       }
+    },
+    "oat_drinks": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alpro_drinks",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 7,
+            "conditions": [],
+            "sourceIds": [
+              "alpro_opening"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alpro"
+          },
+          {
+            "id": "oat_drinks",
+            "daysMin": 5,
+            "daysMax": 7,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "package_reclosed_promptly",
+              "opening_not_touched_or_drunk_from"
+            ],
+            "sourceIds": [
+              "oatly_opening",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Oatly"
+          }
+        ]
+      }
+    },
+    "alpro_alternatives": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alpro_alternatives",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 7,
+            "conditions": [],
+            "sourceIds": [
+              "alpro_opening"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alpro"
+          }
+        ]
+      }
+    },
+    "reishunger_smoked_tofu": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "reishunger_smoked_tofu",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "closed_container"
+            ],
+            "sourceIds": [
+              "reishunger_smoked_tofu",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Reishunger"
+          }
+        ]
+      }
+    },
+    "reishunger_coconut_milk": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "reishunger_coconut_milk",
+            "daysMin": 2,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "reishunger_coconut_milk",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Reishunger"
+          }
+        ]
+      }
+    },
+    "season_potato": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bzfe_potatoes"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_new_potato": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              6,
+              7
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_06",
+              "hessen_07"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
     }
   },
   "canonicalNames": {
@@ -2234,11 +2434,14 @@
     "aubergine": "season_aubergine",
     "aubergines": "season_aubergine",
     "baby carrots": "season_carrot",
+    "baby potatoes": "season_potato",
     "baby spinach": "season_spinach",
     "baby spinach leaves": "season_spinach",
     "baby spinach, washed twice (large stems removed)": "season_spinach",
     "basil pesto": "label_required",
     "beef tomatoes": "season_tomato",
+    "beefsteak tomato": "season_tomato",
+    "beefsteak tomatoes": "season_tomato",
     "beet": "season_beetroot",
     "beetroot": "season_beetroot",
     "beets": "season_beetroot",
@@ -2255,6 +2458,7 @@
     "blackberry": "season_blackberry",
     "blackcurrant": "season_blackcurrant",
     "blackcurrants": "season_blackcurrant",
+    "blue potatoes": "season_potato",
     "blueberries": "season_blueberry",
     "blueberries, washed": "season_blueberry",
     "blueberry": "season_blueberry",
@@ -2265,6 +2469,7 @@
     "broccoli, cut into small florets": "season_broccoli",
     "broccoli, separated into small florets and washed": "season_broccoli",
     "brown button mushrooms": "season_button_mushroom",
+    "brown onion, peeled and thinly sliced": "season_onion",
     "brussels sprouts": "season_brussels_sprout",
     "brussels sprouts, halved": "season_brussels_sprout",
     "brussels sprouts, washed and halved": "season_brussels_sprout",
@@ -2311,6 +2516,7 @@
     "canned tuna, drained and flaked": "canned_low_acid",
     "canned whole-kernel corn, drained": "canned_low_acid",
     "carrot": "season_carrot",
+    "carrot cut into pieces": "season_carrot",
     "carrot, chopped": "season_carrot",
     "carrot, coarsely chopped": "season_carrot",
     "carrot, cut diagonally": "season_carrot",
@@ -2384,7 +2590,10 @@
     "celery, thinly sliced": "season_celery",
     "celery, washed, peeled and diced": "season_celery",
     "chard": "season_chard",
+    "cherry tomato": "season_tomato",
     "cherry tomatoes": "season_tomato",
+    "cherry tomatoes (for finishing)": "season_tomato",
+    "cherry tomatoes (for seasoning)": "season_tomato",
     "cherry tomatoes, cut into eighths": "season_tomato",
     "cherry tomatoes, halved": "season_tomato",
     "cherry tomatoes, halved (for finishing)": "season_tomato",
@@ -2398,8 +2607,16 @@
     "chicory, thinly sliced": "season_chicory",
     "chinese cabbage": "season_chinese_cabbage",
     "chopped canned tomatoes": "canned_high_acid",
+    "chopped carrot": "season_carrot",
+    "chopped carrots": "season_carrot",
+    "chopped onion": "season_onion",
+    "chopped onions": "season_onion",
+    "chopped potatoes": "season_potato",
+    "chopped red onion": "season_onion",
+    "chopped white onion": "season_onion",
+    "cocktail tomatoes": "season_tomato",
     "coconut cream": "label_required",
-    "coconut milk": "label_required",
+    "coconut milk": "reishunger_coconut_milk",
     "cold milk": "milk",
     "cooked (canned) chickpeas, rinsed": "canned_low_acid",
     "cooked (canned) lentils, rinsed": "canned_low_acid",
@@ -2419,6 +2636,14 @@
     "cucumbers": "season_cucumber",
     "curly kale": "season_kale",
     "damsons": "season_plum",
+    "diced carrot": "season_carrot",
+    "diced carrots": "season_carrot",
+    "diced eggplant": "season_aubergine",
+    "diced eggplants": "season_aubergine",
+    "diced onion": "season_onion",
+    "diced potatoes": "season_potato",
+    "diced potatoes for mash": "season_potato",
+    "diced zucchini": "season_courgette",
     "double-cream cream cheese": "label_required",
     "dried beans": "dry_staple",
     "dried chickpeas": "dry_staple",
@@ -2433,11 +2658,13 @@
     "eggplant, peeled and diced": "season_aubergine",
     "eggplant, peeled, washed and chopped": "season_aubergine",
     "eggplants": "season_aubergine",
+    "eggplants cut into small cubes": "season_aubergine",
     "eggplants, cut into 1–2 cm cubes": "season_aubergine",
     "eggplants, cut into small cubes": "season_aubergine",
     "eggplants, diced": "season_aubergine",
     "eggplants, finely diced": "season_aubergine",
     "eggplants, peeled, washed and diced": "season_aubergine",
+    "eggplants, washed and cut into 2 or 3 pieces": "season_aubergine",
     "eggplants, washed and cut into 2–3 cm pieces": "season_aubergine",
     "endive": "season_endive",
     "endives": "season_endive",
@@ -2452,6 +2679,11 @@
     "fennel, washed and diced": "season_fennel",
     "fennel, washed and finely chopped": "season_fennel",
     "fennel, washed and finely diced": "season_fennel",
+    "finely chopped carrot": "season_carrot",
+    "finely chopped onion": "season_onion",
+    "finely chopped red onion": "season_onion",
+    "finely sliced onions": "season_onion",
+    "firm potatoes, peeled and cut into pieces": "season_potato",
     "firm tofu": "taifun_plain_tofu",
     "firm tofu, cut into 2 cm cubes": "taifun_plain_tofu",
     "firm tofu, cut into 4 cm cubes": "taifun_plain_tofu",
@@ -2465,12 +2697,16 @@
     "fresh peas": "season_fresh_pea",
     "fresh peas, chopped and washed": "season_fresh_pea",
     "fresh peas, shelled and washed": "season_fresh_pea",
+    "fresh potatoes": "season_potato",
+    "fresh potatoes, peeled and diced": "season_potato",
+    "fresh potatoes, washed and halved": "season_potato",
     "fresh spinach": "season_spinach",
     "fresh spinach, chopped": "season_spinach",
     "fresh spinach, rinsed and roughly chopped": "season_spinach",
     "fresh spinach, washed and chopped": "season_spinach",
     "fresh spinach, washed and finely chopped": "season_spinach",
     "fresh sweetcorn": "season_sweetcorn",
+    "fresh tomato": "season_tomato",
     "fresh tomatoes": "season_tomato",
     "fresh tomatoes, diced": "season_tomato",
     "full-fat milk": "milk",
@@ -2503,10 +2739,23 @@
     "garlic, peeled, germ removed and chopped": "season_garlic",
     "garlic, peeled, germ removed and finely chopped": "season_garlic",
     "garlic, washed and chopped": "season_garlic",
+    "golden apple": "season_apple",
+    "golden apple, peeled, cored and diced": "season_apple",
+    "golden delicious apple": "season_apple",
+    "golden delicious apple, cut into 8 pieces": "season_apple",
+    "golden delicious apples": "season_apple",
     "gooseberries": "season_gooseberry",
     "gooseberry": "season_gooseberry",
+    "granny smith apple, diced": "season_apple",
+    "granny smith apple, washed and diced": "season_apple",
+    "granny smith apples": "season_apple",
+    "granny smith green apple, washed and diced": "season_apple",
     "grape": "season_grape",
+    "grape tomatoes, halved": "season_tomato",
     "grapes": "season_grape",
+    "grated carrot": "season_carrot",
+    "grated carrots": "season_carrot",
+    "grated onion": "season_onion",
     "greek yogurt": "label_required",
     "green asparagus": "season_asparagus",
     "green asparagus tips": "season_asparagus",
@@ -2540,6 +2789,8 @@
     "green pepper, peeled and cut into 3 cm strips": "season_bell_pepper",
     "greengages": "season_mirabelle",
     "ground black pepper": "dry_staple",
+    "half a chopped onion": "season_onion",
+    "handful(s) of grated carrots": "season_carrot",
     "hazelnut milk": "alpro_drinks",
     "hokkaido pumpkin": "season_pumpkin",
     "hummus": "label_required",
@@ -2550,10 +2801,22 @@
     "jerusalem artichoke, peeled and diced": "season_jerusalem_artichoke",
     "jerusalem artichokes": "season_jerusalem_artichoke",
     "jerusalem artichokes, peeled and diced": "season_jerusalem_artichoke",
+    "julienned onion": "season_onion",
+    "julienned potatoes": "season_potato",
     "kale": "season_kale",
     "kohlrabi": "season_kohlrabi",
     "lamb's lettuce": "season_lambs_lettuce",
     "lambs lettuce": "season_lambs_lettuce",
+    "large apple, peeled, cored and diced": "season_apple",
+    "large apples": "season_apple",
+    "large apples, cored and diced": "season_apple",
+    "large apples, peeled, cored and diced": "season_apple",
+    "large beefsteak tomatoes, washed": "season_tomato",
+    "large potato, peeled and cut into pieces": "season_potato",
+    "large round tomatoes, cored for stuffing (reserve the flesh)": "season_tomato",
+    "large tomato": "season_tomato",
+    "large tomatoes": "season_tomato",
+    "large tomatoes, washed": "season_tomato",
     "leek": "season_leek",
     "leek, chopped": "season_leek",
     "leek, cut diagonally": "season_leek",
@@ -2570,8 +2833,13 @@
     "low-fat milk": "milk",
     "mangetout": "season_fresh_pea",
     "mangetout, washed and cut in two": "season_fresh_pea",
+    "medium onion": "season_onion",
+    "medium potato": "season_potato",
+    "medium red onion": "season_onion",
     "milk": "milk",
     "milk powder": "dry_staple",
+    "minced carrot": "season_carrot",
+    "minced onion": "season_onion",
     "mirabelle plums": "season_mirabelle",
     "napa cabbage": "season_chinese_cabbage",
     "natural yogurt": "label_required",
@@ -2579,8 +2847,9 @@
     "nectarine, halved and pitted": "season_peach",
     "nectarines": "season_peach",
     "nectarines, halved and pitted": "season_peach",
-    "oat drink": "alpro_drinks",
-    "oat milk": "alpro_drinks",
+    "new potatoes": "season_new_potato",
+    "oat drink": "oat_drinks",
+    "oat milk": "oat_drinks",
     "onion": "season_onion",
     "onion, cut into large pieces": "season_onion",
     "onion, cut into wedges": "season_onion",
@@ -2612,7 +2881,9 @@
     "onions, peeled and finely sliced": "season_onion",
     "onions, peeled and halved": "season_onion",
     "onions, peeled and quartered": "season_onion",
-    "package of smoked tofu": "label_required",
+    "organic granny smith apple(s), washed and cut into cubes": "season_apple",
+    "organic new potato(es), unpeeled": "season_new_potato",
+    "package of smoked tofu": "reishunger_smoked_tofu",
     "parsley root": "season_parsley_root",
     "parsnip": "season_parsnip",
     "parsnip, cut into 2 cm sticks": "season_parsnip",
@@ -2633,22 +2904,62 @@
     "pear": "season_pear",
     "pear, peeled and quartered": "season_pear",
     "pear, quartered": "season_pear",
+    "pearl onion": "season_onion",
+    "pearl onions": "season_onion",
     "pears": "season_pear",
     "pears, diced": "season_pear",
     "pears, peeled and diced": "season_pear",
     "pears, quartered": "season_pear",
+    "peeled and chopped onion": "season_onion",
+    "peeled carrot": "season_carrot",
+    "peeled carrots cut into strips": "season_carrot",
+    "peeled diced carrots": "season_carrot",
+    "peeled eggplant": "season_aubergine",
+    "peeled eggplant, diced": "season_aubergine",
+    "peeled eggplants, diced": "season_aubergine",
+    "peeled finely chopped onion": "season_onion",
+    "peeled onion": "season_onion",
+    "peeled potato, cut into pieces": "season_potato",
+    "peeled potatoes": "season_potato",
+    "peeled thinly sliced onion": "season_onion",
     "pesto": "label_required",
     "pesto alla genovese": "label_required",
     "pesto sauce": "label_required",
     "philadelphia cream cheese": "label_required",
+    "pink tomatoes": "season_tomato",
     "plain greek yogurt": "label_required",
     "plain yogurt": "label_required",
     "plant milk": "alpro_drinks",
+    "plant-based cream": "alpro_alternatives",
+    "plant-based drink": "alpro_drinks",
     "plant-based milk": "alpro_drinks",
+    "plant-based yoghurt": "alpro_alternatives",
+    "plant-based yogurt": "alpro_alternatives",
     "plum": "season_plum",
     "plum tomatoes": "season_tomato",
     "plums": "season_plum",
     "pointed cabbage": "season_pointed_cabbage",
+    "potato": "season_potato",
+    "potato, cut into small cubes": "season_potato",
+    "potato, halved": "season_potato",
+    "potatoes": "season_potato",
+    "potatoes (90–100 g), peeled and chopped": "season_potato",
+    "potatoes, cubed": "season_potato",
+    "potatoes, cut into 1 cm cubes": "season_potato",
+    "potatoes, cut into 2 cm cubes": "season_potato",
+    "potatoes, cut into small cubes": "season_potato",
+    "potatoes, diced": "season_potato",
+    "potatoes, finely chopped": "season_potato",
+    "potatoes, peeled and chopped": "season_potato",
+    "potatoes, peeled and cut into pieces": "season_potato",
+    "potatoes, peeled and cut into small cubes": "season_potato",
+    "potatoes, peeled and cut into sticks": "season_potato",
+    "potatoes, peeled and cut into wedges": "season_potato",
+    "potatoes, peeled and diced": "season_potato",
+    "potatoes, peeled and halved": "season_potato",
+    "potatoes, sliced": "season_potato",
+    "potatoes, washed and diced": "season_potato",
+    "potatoes, washed, peeled and diced": "season_potato",
     "pumpkin": "season_pumpkin",
     "pumpkin, cut 1 cm wide and into thirds": "season_pumpkin",
     "pumpkin, cut 1.5 cm thick and portioned to match the number of pork belly slices": "season_pumpkin",
@@ -2690,6 +3001,7 @@
     "red grapes, halved": "season_grape",
     "red grapes, washed": "season_grape",
     "red onion": "season_onion",
+    "red onion (sliced, for finishing)": "season_onion",
     "red onion, chopped": "season_onion",
     "red onion, cut into 1 cm cubes": "season_onion",
     "red onion, finely chopped": "season_onion",
@@ -2710,6 +3022,7 @@
     "red pepper, deseeded and cut into strips": "season_bell_pepper",
     "red pepper, peeled and diced": "season_bell_pepper",
     "red pesto": "label_required",
+    "red potatoes": "season_potato",
     "red radishes": "season_radish",
     "redcurrant": "season_redcurrant",
     "redcurrants": "season_redcurrant",
@@ -2717,8 +3030,12 @@
     "rhubarb, washed and cut into 3–4 cm pieces": "season_rhubarb",
     "rice": "dry_staple",
     "rice milk": "alpro_drinks",
+    "ripe tomatoes": "season_tomato",
+    "ripe tomatoes, chopped": "season_tomato",
     "rocket": "season_rocket",
     "rocket leaves": "season_rocket",
+    "round tomatoes, about 175 g, cored for stuffing (reserve flesh and juice)": "season_tomato",
+    "round zucchini": "season_courgette",
     "runner beans": "season_green_bean",
     "salsify": "season_salsify",
     "salt": "dry_staple",
@@ -2728,12 +3045,28 @@
     "silken tofu": "taifun_silken_tofu",
     "silken tofu, scooped into large pieces with a spoon": "taifun_silken_tofu",
     "skimmed milk": "milk",
-    "smoked tofu": "label_required",
+    "sliced carrots": "season_carrot",
+    "sliced onion": "season_onion",
+    "sliced onions": "season_onion",
+    "small eggplant": "season_aubergine",
+    "small eggplant, washed and diced": "season_aubergine",
+    "small eggplants, washed and diced": "season_aubergine",
+    "small onion, washed and chopped": "season_onion",
+    "small onions": "season_onion",
+    "small onions, washed and chopped": "season_onion",
+    "small potato, chopped": "season_potato",
+    "smoked tofu": "reishunger_smoked_tofu",
+    "smoked tofu, in large cubes": "reishunger_smoked_tofu",
     "snow peas": "season_fresh_pea",
     "snow peas, a little for finishing": "season_fresh_pea",
     "sour cherries": "season_sour_cherry",
     "sour cream": "label_required",
+    "soy cream": "alpro_alternatives",
     "soy milk": "alpro_drinks",
+    "soy yoghurt": "alpro_alternatives",
+    "soy yogurt": "alpro_alternatives",
+    "soya yoghurt": "alpro_alternatives",
+    "soya yogurt": "alpro_alternatives",
     "spinach": "season_spinach",
     "spinach leaves": "season_spinach",
     "spinach leaves, washed": "season_spinach",
@@ -2758,15 +3091,28 @@
     "strawberries, quartered": "season_strawberry",
     "strawberries, washed and thinly sliced": "season_strawberry",
     "strawberry": "season_strawberry",
+    "stuffing zucchini, washed and roughly chopped": "season_courgette",
     "sugar": "dry_staple",
     "sugar snap peas": "season_fresh_pea",
     "sugar snap peas, strings removed": "season_fresh_pea",
     "sun-dried tomato pesto": "label_required",
+    "sweet apple, peeled and cut into small cubes": "season_apple",
     "sweet cherries": "season_sweet_cherry",
+    "sweet onion": "season_onion",
+    "sweet onion, chopped": "season_onion",
+    "sweet onion, finely chopped": "season_onion",
+    "sweet onion, peeled and chopped": "season_onion",
+    "sweet onion, peeled and thinly sliced into rounds": "season_onion",
+    "sweet onion, thinly sliced": "season_onion",
+    "sweet onions, peeled and thinly sliced": "season_onion",
     "sweetcorn on the cob": "season_sweetcorn",
     "swiss chard": "season_chard",
     "swiss chard, washed and cut into pieces": "season_chard",
     "table salt": "dry_staple",
+    "thinly julienned carrot": "season_carrot",
+    "thinly sliced carrot": "season_carrot",
+    "thinly sliced carrots": "season_carrot",
+    "thinly sliced onion": "season_onion",
     "tinned sweetcorn, drained": "canned_low_acid",
     "tinned tuna": "canned_low_acid",
     "tofu": "taifun_plain_tofu",
@@ -2802,9 +3148,18 @@
     "tomatoes, washed and finely chopped": "season_tomato",
     "tomatoes, washed and thinly sliced": "season_tomato",
     "uht milk": "milk",
+    "unpeeled apples, diced": "season_apple",
     "unsweetened soy milk": "alpro_drinks",
     "vegetable spread": "label_required",
     "vegetarian spread": "label_required",
+    "vine tomato(es), quartered": "season_tomato",
+    "vine tomatoes, cut into eight": "season_tomato",
+    "vine tomatoes, quartered": "season_tomato",
+    "washed and diced tomatoes": "season_tomato",
+    "washed and diced zucchini": "season_courgette",
+    "washed and halved cherry tomatoes": "season_tomato",
+    "waxy potatoes": "season_potato",
+    "waxy potatoes, peeled and cut into pieces": "season_potato",
     "wheat flour": "dry_staple",
     "white asparagus": "season_asparagus",
     "white asparagus tips": "season_asparagus",
@@ -2817,6 +3172,7 @@
     "white onion, peeled and finely chopped": "season_onion",
     "white onion, peeled and thinly sliced": "season_onion",
     "white onions": "season_onion",
+    "white potatoes": "season_potato",
     "white sugar": "dry_staple",
     "whole milk": "milk",
     "yellow bell pepper": "season_bell_pepper",
@@ -2828,6 +3184,8 @@
     "yellow pepper, peeled and diced": "season_bell_pepper",
     "yogurt": "label_required",
     "zucchini": "season_courgette",
+    "zucchini (1 kg = 10 pieces)": "season_courgette",
+    "zucchini cut into small cubes": "season_courgette",
     "zucchini, coarsely chopped": "season_courgette",
     "zucchini, cut into 2 cm cubes": "season_courgette",
     "zucchini, cut into pieces": "season_courgette",

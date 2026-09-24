@@ -5,15 +5,16 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Initial coverage
+## Reviewed coverage (2026-09-24.2)
 
-- 62 produce groups, including fruit, leafy vegetables, roots, asparagus,
-  tomatoes and cultivated button mushrooms.
-- Six numeric after-opening groups: pasteurized/UHT milk, low-acid canned
-  foods, high-acid canned foods, Alpro plant drinks, Taifun plain tofu and
-  Taifun silken tofu. Brand and handling conditions remain attached.
+- 64 produce groups, including fruit, leafy vegetables, roots, asparagus,
+  tomatoes, cultivated button mushrooms, potatoes and new potatoes.
+- Ten numeric after-opening groups: pasteurized/UHT milk, low-acid canned
+  foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
+  oat drinks (Alpro or Oatly), Taifun plain and silken tofu, and Reishunger
+  smoked tofu and coconut milk. Brand and handling conditions remain attached.
 - Explicit label-required guidance for reviewed foods with variable product
-  formulations, including pesto, yoghurt, cream cheese and coconut milk.
+  formulations, including pesto, dairy yoghurt, cream cheese and coconut cream.
 - Dry staples have no invented short spoilage countdown. Their package
   instructions still apply; missing data never means indefinitely safe.
 
@@ -23,11 +24,15 @@ entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
 
 ## Season semantics
 
-Season months are German regional availability guidance from the twelve monthly
-calendars published by the Hessische Lehrkräfteakademie. The source region
+Season months are German availability guidance from the twelve monthly
+calendars published by the Hessische Lehrkräfteakademie and the BZfE potato guide.
+For calendar entries, the source region
 (`DE-HE`), country (`DE`), source links and review date are preserved. The source
 includes stored produce and protected cultivation; these months must not be
-labelled as exclusively fresh outdoor harvest.
+labelled as exclusively fresh outdoor harvest. Ordinary potatoes have year-round
+availability, including stored crops, according to BZfE (`sourceRegion: DE`).
+New potatoes have a separate June/July highlight profile; they do not inherit
+the stored-potato calendar. Sweet potatoes and potato starch remain separate.
 
 The calendars list monthly highlights rather than every crop. A listed month
 returns `in_season`, twelve listed months return `year_round`, and an omitted
@@ -49,6 +54,14 @@ general or manufacturer guidance, never a guaranteed spoilage/safety threshold.
 The conservative refrigerator cap for general and tofu guidance is 4 °C;
 Alpro's published maximum is 7 °C. The corresponding refrigeration sources are
 included with each rule.
+
+Oat drinks retain separate Alpro (5 days) and Oatly (5–7 days) rules. The Oatly
+rule also requires confirmation that the package was promptly reclosed and its
+opening was not touched or drunk from. Reishunger smoked tofu requires a closed
+container (2 days); its coconut milk uses the published 2–3 day range. These
+manufacturer rules are not applied to other brands, dairy products, other tofu
+forms or coconut cream. The coconut milk source also states a 3-day maximum in
+its product storage instructions, consistent with the range's upper end.
 
 The date helper accepts existing lot fields `openedAt`, `bestBefore`,
 `useWithinDays`, `noExpiry`, `storage` and `brand`:
