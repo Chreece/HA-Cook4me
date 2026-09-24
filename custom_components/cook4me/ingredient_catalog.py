@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 from collections import defaultdict
 from copy import deepcopy
 import re
@@ -455,6 +456,7 @@ class Cook4MeIngredientCatalogCache:
             hass, _STORAGE_VERSION, f"{DOMAIN}.{entry_id}.ingredient_catalog"
         )
         self._data: dict[str, dict[str, Any]] = {}
+        self._lock = asyncio.Lock()
 
     async def async_load(self) -> None:
         saved = await self._store.async_load()
@@ -466,11 +468,12 @@ class Cook4MeIngredientCatalogCache:
             }
         self._prune()
 
-    def _prune(self) -> None:
+    @staticmethod
+    def _pruned(data: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
         now = time.time()
         current = {
             language: row
-            for language, row in self._data.items()
+            for language, row in data.items()
             if now - float(row.get("timestamp") or 0) <= _TTL
         }
         if len(current) > _MAX_LANGUAGES:
@@ -481,7 +484,10 @@ class Cook4MeIngredientCatalogCache:
                     reverse=True,
                 )[:_MAX_LANGUAGES]
             )
-        self._data = current
+        return current
+
+    def _prune(self) -> None:
+        self._data = self._pruned(self._data)
 
     def get(self, language: str) -> dict[str, Any] | None:
         self._prune()
@@ -497,10 +503,13 @@ class Cook4MeIngredientCatalogCache:
         return result
 
     async def async_set(self, language: str, items: list[dict[str, str]], *, source: str) -> None:
-        self._data[str(language)] = {
-            "timestamp": time.time(),
-            "source": str(source),
-            "items": deepcopy(_clean_catalog_rows(items)),
-        }
-        self._prune()
-        await self._store.async_save(deepcopy(self._data))
+        async with self._lock:
+            data = deepcopy(self._data)
+            data[str(language)] = {
+                "timestamp": time.time(),
+                "source": str(source),
+                "items": deepcopy(_clean_catalog_rows(items)),
+            }
+            data = self._pruned(data)
+            await self._store.async_save(deepcopy(data))
+            self._data = data
