@@ -33,6 +33,8 @@ jobs:
         run: python tests/test_persistence_audit_v209.py
       - name: Durable weekly lifecycle and leftovers
         run: python tests/test_lifecycle_transactions_v210.py
+      - name: Durable nutrition and recipe-cost cache
+        run: python tests/test_nutrition_cache_transactions_v211.py
       - name: Preference and product editor races
         run: node --test tests/test_general_audit_v208.mjs
       - name: Browser test dependency

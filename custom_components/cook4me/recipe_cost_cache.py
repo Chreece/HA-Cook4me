@@ -229,8 +229,7 @@ class Cook4MeRecipeCostCache:
                 "currency": _text(currency).upper(),
                 "country": _text(country).upper(),
             })
-            entries = self._data["entries"]
-            cached = entries.get(key)
+            cached = self._data["entries"].get(key)
             if not force and isinstance(cached, dict) and isinstance(cached.get("cost"), dict):
                 result = deepcopy(cached["cost"])
                 _refresh_display_names(result, recipe)
@@ -252,6 +251,8 @@ class Cook4MeRecipeCostCache:
                     country=country,
                 )
             )
+            data = deepcopy(self._data)
+            entries = data["entries"]
             entries[key] = {
                 "cost": deepcopy(cost),
                 "pricingFingerprint": price_hash,
@@ -259,7 +260,8 @@ class Cook4MeRecipeCostCache:
             }
             while len(entries) > _MAX_ENTRIES:
                 entries.pop(next(iter(entries)))
-            await self._store.async_save(deepcopy(self._data))
+            await self._store.async_save(deepcopy(data))
+            self._data = data
             result = deepcopy(cost)
             result.update({
                 "costCacheHit": False,

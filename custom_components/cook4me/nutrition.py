@@ -535,19 +535,26 @@ def calculate_recipe_nutrition(
 
 
 def serialize_nutrition_mutation(function):
-    """Keep read/modify/save operations on the same store in one sequence.
+    """Serialize nutrition mutations and never publish a failed storage write.
 
-    All mutation entry points must share this lock; locking only the final
-    write permits an older staged snapshot to overwrite a newer change.
+    All mutation entry points share this lock. A snapshot also protects legacy
+    mutation functions that still edit store._data before awaiting storage.
+    Newer staged writers remain compatible with the same guard.
     Wrapped functions must not call another wrapped function on the same store.
     """
     @wraps(function)
     async def serialized(store, *args, **kwargs):
-        lock = getattr(store, '_mutation_lock', None)
+        lock = getattr(store, "_mutation_lock", None)
         if lock is None:
             lock = store._mutation_lock = asyncio.Lock()
         async with lock:
-            return await function(store, *args, **kwargs)
+            before = deepcopy(store._data) if hasattr(store, "_data") else None
+            try:
+                return await function(store, *args, **kwargs)
+            except BaseException:
+                if before is not None:
+                    store._data = before
+                raise
     return serialized
 
 
@@ -572,7 +579,7 @@ class Cook4MeNutritionStore:
         self._loaded = True
 
     async def _save(self) -> None:
-        await self._store.async_save(self._data)
+        await self._store.async_save(deepcopy(self._data))
 
     @property
     def generic(self) -> dict[str, Any]:
