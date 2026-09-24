@@ -320,6 +320,13 @@ def _normalized_row(raw: Any) -> dict[str, Any] | None:
         stamp = _best_before(raw.get("bestBefore") or raw.get("best_before"))
         if stamp:
             row["bestBefore"] = stamp
+        metadata = _lot_metadata(raw)
+        for key in (
+            "storage", "storageLocationId", "productName", "brand",
+            "barcode", "containerId", "source"
+        ):
+            if metadata.get(key):
+                row[key] = metadata[key]
         return _refresh_row_totals(row)
     if isinstance(raw.get("lots"), list):
         row["lots"] = deepcopy(raw["lots"])
@@ -386,6 +393,12 @@ def normalize_inventory(value: Any) -> list[dict[str, Any]]:
                 current["unlimited"] = True
                 if row.get("unit") and not current.get("unit"):
                     current["unit"] = row["unit"]
+                for key in (
+                    "storage", "storageLocationId", "productName", "brand",
+                    "barcode", "containerId", "source"
+                ):
+                    if row.get(key):
+                        current[key] = row[key]
                 dates = [x for x in (previous_date, incoming_date) if x]
                 if dates:
                     current["bestBefore"] = min(dates)
@@ -431,6 +444,13 @@ def add_inventory_item(
         incoming["unit"] = incoming_unit
     if unlimited:
         incoming["unlimited"] = True
+        metadata = _lot_metadata(lot_metadata or {}, strict=True)
+        for key in (
+            "storage", "storageLocationId", "productName", "brand",
+            "barcode", "containerId", "source"
+        ):
+            if metadata.get(key):
+                incoming[key] = metadata[key]
         if normalized_best_before:
             incoming["bestBefore"] = normalized_best_before
     elif amount is not None and amount > 0:
@@ -453,6 +473,12 @@ def add_inventory_item(
             current["unlimited"] = True
             if incoming_unit:
                 current["unit"] = incoming_unit
+            for key in (
+                "storage", "storageLocationId", "productName", "brand",
+                "barcode", "containerId", "source"
+            ):
+                if incoming.get(key):
+                    current[key] = incoming[key]
             dates = [x for x in (previous_date, normalized_best_before) if x]
             if dates:
                 current["bestBefore"] = min(dates)
