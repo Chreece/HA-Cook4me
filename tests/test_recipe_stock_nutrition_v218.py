@@ -214,9 +214,16 @@ class WiringTests(unittest.TestCase):
 
     def test_container_has_explicit_unuse_state(self):
         ui=(FRONTEND/"cook4me-panel-v117.js").read_text()
-        self.assertIn("unuse:'Unuse'",ui)
-        self.assertIn("unuse:'Ακύρωση χρήσης'",ui)
-        self.assertIn("active?'unused':'using'",ui)
+        bundle=(FRONTEND/"cook4me-panel-v126-bundle.js").read_text()
+        for source in (ui,bundle):
+            self.assertIn("unuse:'Unuse'",source)
+            self.assertIn("unuse:'Ακύρωση χρήσης'",source)
+            self.assertIn("active?'unused':'using'",source)
+
+    def test_active_bundle_has_clarified_nutrition_fallback_labels(self):
+        bundle=(FRONTEND/"cook4me-panel-v126-bundle.js").read_text()
+        self.assertIn('nutritionSettings:"USDA fallback nutrition"',bundle)
+        self.assertIn('cachedUnresolved:"USDA matches needing review"',bundle)
 
 if __name__=="__main__":
     unittest.main()
