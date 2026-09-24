@@ -7,7 +7,6 @@ from typing import Any
 import voluptuous as vol
 from homeassistant.components import websocket_api
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers.storage import Store
 
 from . import recipe_languages
 from . import websocket as legacy
@@ -21,7 +20,6 @@ from .ingredient_catalog import _clean_catalog_rows
 from .recipe_book import recipe_book_store_for_bridge
 
 _MIN_CHECK_AGE = 24 * 60 * 60
-_CATALOG_STORE_VERSION = 1
 
 
 def _now() -> float:
@@ -29,66 +27,39 @@ def _now() -> float:
 
 
 async def _catalog_store(bridge):
-    store = getattr(bridge, "_v28_ingredient_catalog_store", None)
-    data = getattr(bridge, "_v28_ingredient_catalog_data", None)
-    if store is not None and isinstance(data, dict):
-        return store, data
-    store = Store(
-        bridge.hass,
-        _CATALOG_STORE_VERSION,
-        f"{DOMAIN}.{bridge.entry.entry_id}.ingredient_catalog",
-    )
-    saved = await store.async_load()
-    data = {}
-    if isinstance(saved, dict):
-        for language, raw in saved.items():
-            if not isinstance(raw, dict) or not isinstance(raw.get("items"), list):
-                continue
-            stamp = float(raw.get("checkedAt") or raw.get("timestamp") or 0)
-            updated = float(raw.get("updatedAt") or raw.get("timestamp") or stamp)
-            data[str(language)] = {
-                "checkedAt": stamp,
-                "updatedAt": updated,
-                "source": str(raw.get("source") or ""),
-                "items": deepcopy(_clean_catalog_rows(raw.get("items") or [])),
-            }
-    bridge._v28_ingredient_catalog_store = store
-    bridge._v28_ingredient_catalog_data = data
-    return store, data
+    """Reuse the canonical v11 cache object; never open a second writer."""
+    return await v11._cache(bridge)
 
 
 async def _cached_catalog(bridge, language: str) -> dict[str, Any] | None:
-    _store, data = await _catalog_store(bridge)
-    row = data.get(str(language))
+    cache = await _catalog_store(bridge)
+    row = cache.get(str(language))
     if not isinstance(row, dict) or not isinstance(row.get("items"), list):
         return None
-    checked = float(row.get("checkedAt") or 0)
+    checked = float(row.get("checkedAt") or row.get("timestamp") or 0)
+    updated = float(row.get("updatedAt") or row.get("timestamp") or checked)
     return {
         "language": str(language),
         "items": deepcopy(row.get("items") or []),
         "source": str(row.get("source") or ""),
         "cacheHit": True,
         "checkedAt": checked or None,
-        "updatedAt": float(row.get("updatedAt") or 0) or None,
+        "updatedAt": updated or None,
         "stale": not checked or _now() - checked >= _MIN_CHECK_AGE,
         "minimumOnlineCheckHours": 24,
     }
 
 
 async def _save_catalog(bridge, language: str, items: list[dict[str, str]], source: str) -> dict[str, Any]:
-    store, data = await _catalog_store(bridge)
-    now = _now()
+    cache = await _catalog_store(bridge)
+    previous = cache.get(language)
     clean = deepcopy(_clean_catalog_rows(items))
-    previous = data.get(language) if isinstance(data.get(language), dict) else None
-    changed = not previous or previous.get("items") != clean or str(previous.get("source") or "") != str(source)
-    updated = now if changed else float(previous.get("updatedAt") or now)
-    data[language] = {
-        "checkedAt": now,
-        "updatedAt": updated,
-        "source": str(source),
-        "items": clean,
-    }
-    await store.async_save(deepcopy(data))
+    changed = (
+        not isinstance(previous, dict)
+        or previous.get("items") != clean
+        or str(previous.get("source") or "") != str(source)
+    )
+    await cache.async_set(language, clean, source=source)
     result = await _cached_catalog(bridge, language)
     assert result is not None
     result["cacheHit"] = False
