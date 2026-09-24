@@ -1,0 +1,2847 @@
+{
+  "schemaVersion": 1,
+  "kind": "cook4me-ingredient-lifecycle",
+  "version": "2026-09-24.1",
+  "sources": {
+    "hessen_01": {
+      "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
+      "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/januar",
+      "reviewedOn": "2026-09-24"
+    },
+    "hessen_02": {
+      "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
+      "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/februar",
+      "reviewedOn": "2026-09-24"
+    },
+    "hessen_03": {
+      "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
+      "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/maerz",
+      "reviewedOn": "2026-09-24"
+    },
+    "hessen_04": {
+      "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
+      "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/april",
+      "reviewedOn": "2026-09-24"
+    },
+    "hessen_05": {
+      "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
+      "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/mai",
+      "reviewedOn": "2026-09-24"
+    },
+    "hessen_06": {
+      "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
+      "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/juni",
+      "reviewedOn": "2026-09-24"
+    },
+    "hessen_07": {
+      "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
+      "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/juli",
+      "reviewedOn": "2026-09-24"
+    },
+    "hessen_08": {
+      "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
+      "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/august",
+      "reviewedOn": "2026-09-24"
+    },
+    "hessen_09": {
+      "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
+      "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/september",
+      "reviewedOn": "2026-09-24"
+    },
+    "hessen_10": {
+      "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
+      "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/oktober",
+      "reviewedOn": "2026-09-24"
+    },
+    "hessen_11": {
+      "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
+      "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/november",
+      "reviewedOn": "2026-09-24"
+    },
+    "hessen_12": {
+      "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
+      "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/dezember",
+      "reviewedOn": "2026-09-24"
+    },
+    "bzfe_milk": {
+      "publisher": "Bundeszentrum für Ernährung",
+      "url": "https://www.bzfe.de/kueche-und-alltag/vom-acker-bis-zum-teller/milch/vom-einkauf-in-die-kueche",
+      "reviewedOn": "2026-09-24"
+    },
+    "usda_cans": {
+      "publisher": "USDA Food Safety and Inspection Service",
+      "url": "https://ask.fsis.usda.gov/article/After-you-open-a-can-how-long-can-you-keep-the-food-in-the-refrigerator",
+      "reviewedOn": "2026-09-24"
+    },
+    "bfr_cooling": {
+      "publisher": "Bundesinstitut für Risikobewertung",
+      "url": "https://www.bfr.bund.de/fragen-und-antworten/thema/korrektes-kuehlen-von-lebensmitteln-im-privathaushalt/",
+      "reviewedOn": "2026-09-24"
+    },
+    "usda_cooling": {
+      "publisher": "USDA Food Safety and Inspection Service",
+      "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/refrigeration",
+      "reviewedOn": "2026-09-24"
+    },
+    "alpro_opening": {
+      "publisher": "Alpro",
+      "url": "https://www.alpro.com/de-de/faq",
+      "reviewedOn": "2026-09-24"
+    },
+    "taifun_silken": {
+      "publisher": "Taifun-Tofu",
+      "url": "https://www.taifun-tofu.de/de/magazin/tipps-fuer-seidentofu",
+      "reviewedOn": "2026-09-24"
+    },
+    "taifun_natural": {
+      "publisher": "Taifun-Tofu",
+      "url": "https://www.taifun-tofu.de/de/produkte/tofu-natur",
+      "reviewedOn": "2026-09-24"
+    },
+    "vz_spreads": {
+      "publisher": "Verbraucherzentrale",
+      "url": "https://www.verbraucherzentrale.de/wissen/lebensmittel/auswaehlen-zubereiten-aufbewahren/vegetarische-aufstriche-das-ist-wichtig-bei-lagerung-und-haltbarkeit-90214",
+      "reviewedOn": "2026-09-24"
+    },
+    "vz_opening": {
+      "publisher": "Verbraucherzentrale",
+      "url": "https://www.verbraucherzentrale.de/wissen/lebensmittel/auswaehlen-zubereiten-aufbewahren/lebensmittel-nach-dem-oeffnen-gekuehlt-lagern-angaben-oft-zu-vage-109122",
+      "reviewedOn": "2026-09-24"
+    }
+  },
+  "profiles": {
+    "season_apple": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_02",
+              "hessen_03",
+              "hessen_04",
+              "hessen_05",
+              "hessen_06",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_pear": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_apricot": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              7,
+              8
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_07",
+              "hessen_08"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_blackberry": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              7,
+              8,
+              9
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_07",
+              "hessen_08",
+              "hessen_09"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_strawberry": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              5,
+              6,
+              7,
+              8
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_05",
+              "hessen_06",
+              "hessen_07",
+              "hessen_08"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_blueberry": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              7,
+              8
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_07",
+              "hessen_08"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_raspberry": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              6,
+              7,
+              8,
+              9
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_redcurrant": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              6,
+              7,
+              8
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_06",
+              "hessen_07",
+              "hessen_08"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_blackcurrant": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              6,
+              7,
+              8
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_06",
+              "hessen_07",
+              "hessen_08"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_sweet_cherry": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              6,
+              7
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_06",
+              "hessen_07"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_sour_cherry": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              7,
+              8
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_07",
+              "hessen_08"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_mirabelle": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              7,
+              8,
+              9
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_07",
+              "hessen_08",
+              "hessen_09"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_peach": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              7,
+              8
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_07",
+              "hessen_08"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_plum": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              7,
+              8,
+              9
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_07",
+              "hessen_08",
+              "hessen_09"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_gooseberry": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              6,
+              7
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_06",
+              "hessen_07"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_quince": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              10,
+              11
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_10",
+              "hessen_11"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_grape": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_09",
+              "hessen_10"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_aubergine": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              7,
+              8
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_07",
+              "hessen_08"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_cauliflower": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_green_bean": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              7,
+              8,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_07",
+              "hessen_08",
+              "hessen_10"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_broccoli": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              6,
+              7,
+              8,
+              9,
+              10,
+              11
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_button_mushroom": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_02",
+              "hessen_03",
+              "hessen_04",
+              "hessen_05",
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_chicory": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_02",
+              "hessen_03",
+              "hessen_04",
+              "hessen_05",
+              "hessen_06",
+              "hessen_11",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_chinese_cabbage": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_02",
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_lambs_lettuce": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_05",
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_kale": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              3,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_02",
+              "hessen_03",
+              "hessen_10",
+              "hessen_11",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_celeriac": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              3,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_02",
+              "hessen_03",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_parsnip": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              3,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_02",
+              "hessen_03",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_leek": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_02",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_brussels_sprout": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_02",
+              "hessen_10",
+              "hessen_11",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_beetroot": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              3,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_02",
+              "hessen_03",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_red_cabbage": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_02",
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_salsify": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              3,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_02",
+              "hessen_03",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_jerusalem_artichoke": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              3,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_02",
+              "hessen_03",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_white_cabbage": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              3,
+              4,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_02",
+              "hessen_03",
+              "hessen_04",
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_parsley_root": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              3,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_02",
+              "hessen_03",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_onion": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_01",
+              "hessen_02",
+              "hessen_03",
+              "hessen_04",
+              "hessen_05",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_lettuce": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_04",
+              "hessen_05",
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_spring_onion": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              4,
+              5
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_04",
+              "hessen_05"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_radish": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              4,
+              5,
+              6,
+              7,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_04",
+              "hessen_05",
+              "hessen_06",
+              "hessen_07",
+              "hessen_09",
+              "hessen_10"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_rhubarb": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              4,
+              5,
+              6
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_04",
+              "hessen_05",
+              "hessen_06"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_rocket": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_04",
+              "hessen_05",
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_asparagus": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              4,
+              5,
+              6
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_04",
+              "hessen_05",
+              "hessen_06"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_spinach": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_04",
+              "hessen_05",
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_iceberg_lettuce": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_05",
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_kohlrabi": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_05",
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_pointed_cabbage": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_05",
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_fresh_pea": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              6,
+              7,
+              8
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_06",
+              "hessen_07",
+              "hessen_08"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_fresh_broad_bean": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              6,
+              7
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_06",
+              "hessen_07"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_fennel": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_cucumber": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              6,
+              7,
+              8,
+              9
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_garlic": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              6,
+              7,
+              8,
+              9
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_celery": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_tomato": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_courgette": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              6,
+              7,
+              8,
+              9
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_sweetcorn": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_06",
+              "hessen_07",
+              "hessen_08",
+              "hessen_09",
+              "hessen_10"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_pumpkin": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_08",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_chard": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              8,
+              9
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_08",
+              "hessen_09"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_carrot": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_08",
+              "hessen_09",
+              "hessen_10",
+              "hessen_11",
+              "hessen_12"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_bell_pepper": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              7,
+              8
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_07",
+              "hessen_08"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_radicchio": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              10,
+              11
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_10",
+              "hessen_11"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_endive": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-HE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              9,
+              10,
+              11
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hessen_09",
+              "hessen_10",
+              "hessen_11"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "milk": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "milk",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "pasteurized_or_uht"
+            ],
+            "sourceIds": [
+              "bzfe_milk",
+              "bfr_cooling"
+            ],
+            "kind": "general_guidance"
+          }
+        ]
+      }
+    },
+    "canned_low_acid": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "reviewed",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "canned_low_acid",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "usda_cans",
+              "usda_cooling"
+            ],
+            "kind": "general_guidance"
+          }
+        ]
+      }
+    },
+    "canned_high_acid": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "reviewed",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "canned_high_acid",
+            "daysMin": 5,
+            "daysMax": 7,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "usda_cans",
+              "usda_cooling"
+            ],
+            "kind": "general_guidance"
+          }
+        ]
+      }
+    },
+    "alpro_drinks": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alpro_drinks",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 7,
+            "conditions": [],
+            "sourceIds": [
+              "alpro_opening"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alpro"
+          }
+        ]
+      }
+    },
+    "taifun_plain_tofu": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "taifun_plain_tofu",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "plain_natural_tofu",
+              "covered_with_fresh_water",
+              "water_changed_daily"
+            ],
+            "sourceIds": [
+              "taifun_natural",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Taifun"
+          }
+        ]
+      }
+    },
+    "taifun_silken_tofu": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "taifun_silken_tofu",
+            "daysMin": 2,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "airtight_container"
+            ],
+            "sourceIds": [
+              "taifun_silken",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Taifun"
+          }
+        ]
+      }
+    },
+    "label_required": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "sourceIds": [
+          "vz_opening"
+        ],
+        "reason": "product_formulation_varies"
+      }
+    },
+    "dry_staple": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "shelf_stable_form"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "reason": "no_universal_short_opening_window",
+        "sourceIds": [
+          "vz_opening"
+        ]
+      }
+    }
+  },
+  "canonicalNames": {
+    "almond milk": "alpro_drinks",
+    "apple": "season_apple",
+    "apple, diced": "season_apple",
+    "apple, peeled and diced": "season_apple",
+    "apple, peeled and quartered": "season_apple",
+    "apple, quartered": "season_apple",
+    "apples": "season_apple",
+    "apples, diced": "season_apple",
+    "apples, peeled and cut": "season_apple",
+    "apples, peeled and diced": "season_apple",
+    "apples, quartered": "season_apple",
+    "apricot": "season_apricot",
+    "apricot, peeled and quartered": "season_apricot",
+    "apricots": "season_apricot",
+    "apricots, peeled and quartered": "season_apricot",
+    "arugula": "season_rocket",
+    "arugula, washed": "season_rocket",
+    "asparagus": "season_asparagus",
+    "asparagus tips": "season_asparagus",
+    "asparagus tips, peeled and cut to fit the steaming basket": "season_asparagus",
+    "asparagus tips, roughly chopped": "season_asparagus",
+    "aubergine": "season_aubergine",
+    "aubergines": "season_aubergine",
+    "baby carrots": "season_carrot",
+    "baby spinach": "season_spinach",
+    "baby spinach leaves": "season_spinach",
+    "baby spinach, washed twice (large stems removed)": "season_spinach",
+    "basil pesto": "label_required",
+    "beef tomatoes": "season_tomato",
+    "beet": "season_beetroot",
+    "beetroot": "season_beetroot",
+    "beets": "season_beetroot",
+    "bell pepper": "season_bell_pepper",
+    "bell pepper, cut into strips": "season_bell_pepper",
+    "bell pepper, seeded and finely chopped": "season_bell_pepper",
+    "bell pepper, washed and cut into pieces": "season_bell_pepper",
+    "bell peppers": "season_bell_pepper",
+    "bell peppers, cut into strips": "season_bell_pepper",
+    "black currants": "season_blackcurrant",
+    "black pepper": "dry_staple",
+    "black salsify": "season_salsify",
+    "blackberries": "season_blackberry",
+    "blackberry": "season_blackberry",
+    "blackcurrant": "season_blackcurrant",
+    "blackcurrants": "season_blackcurrant",
+    "blueberries": "season_blueberry",
+    "blueberries, washed": "season_blueberry",
+    "blueberry": "season_blueberry",
+    "boiled canned chickpeas": "canned_low_acid",
+    "broccoli": "season_broccoli",
+    "broccoli florets": "season_broccoli",
+    "broccoli florets, washed": "season_broccoli",
+    "broccoli, cut into small florets": "season_broccoli",
+    "broccoli, separated into small florets and washed": "season_broccoli",
+    "brown button mushrooms": "season_button_mushroom",
+    "brussels sprouts": "season_brussels_sprout",
+    "brussels sprouts, halved": "season_brussels_sprout",
+    "brussels sprouts, washed and halved": "season_brussels_sprout",
+    "butterhead lettuce": "season_lettuce",
+    "butternut squash": "season_pumpkin",
+    "butternut squash, diced": "season_pumpkin",
+    "butternut squash, peeled and diced": "season_pumpkin",
+    "button mushrooms": "season_button_mushroom",
+    "button mushrooms, quartered": "season_button_mushroom",
+    "button mushrooms, washed and finely chopped": "season_button_mushroom",
+    "canned baby carrots (drained)": "canned_low_acid",
+    "canned baby carrots, drained": "canned_low_acid",
+    "canned beans": "canned_low_acid",
+    "canned butter beans (canned weight), drained": "canned_low_acid",
+    "canned chickpeas": "canned_low_acid",
+    "canned chickpeas, drained": "canned_low_acid",
+    "canned chickpeas, rinsed": "canned_low_acid",
+    "canned chopped tomatoes": "canned_high_acid",
+    "canned chopped tomatoes (400 g)": "canned_high_acid",
+    "canned clams in water (use with the liquid)": "canned_low_acid",
+    "canned cooked lentils": "canned_low_acid",
+    "canned corn": "canned_low_acid",
+    "canned corn kernels, drained": "canned_low_acid",
+    "canned corn, drained": "canned_low_acid",
+    "canned crab": "canned_low_acid",
+    "canned creamed corn": "canned_low_acid",
+    "canned lentils": "canned_low_acid",
+    "canned mackerel in water (190 g, use with liquid)": "canned_low_acid",
+    "canned mixed fruit (190 g), including syrup": "canned_high_acid",
+    "canned mixed fruit (190 g; use the syrup too)": "canned_high_acid",
+    "canned peas": "canned_low_acid",
+    "canned peas, drained": "canned_low_acid",
+    "canned peeled diced tomatoes": "canned_high_acid",
+    "canned pineapple (cut into quarters)": "canned_high_acid",
+    "canned pineapple juice": "canned_high_acid",
+    "canned red beans": "canned_low_acid",
+    "canned red kidney beans": "canned_low_acid",
+    "canned red kidney beans (rinsed and drained)": "canned_low_acid",
+    "canned sweetcorn": "canned_low_acid",
+    "canned sweetcorn, drained": "canned_low_acid",
+    "canned tomato purée": "canned_high_acid",
+    "canned tuna": "canned_low_acid",
+    "canned tuna in water, drained": "canned_low_acid",
+    "canned tuna, drained and flaked": "canned_low_acid",
+    "canned whole-kernel corn, drained": "canned_low_acid",
+    "carrot": "season_carrot",
+    "carrot, chopped": "season_carrot",
+    "carrot, coarsely chopped": "season_carrot",
+    "carrot, cut diagonally": "season_carrot",
+    "carrot, cut into 1 cm cubes": "season_carrot",
+    "carrot, cut into 2 cm cubes": "season_carrot",
+    "carrot, cut into 7 mm square strips, 10 cm long": "season_carrot",
+    "carrot, cut into irregular chunks": "season_carrot",
+    "carrot, cut into short strips": "season_carrot",
+    "carrot, diced": "season_carrot",
+    "carrot, finely chopped": "season_carrot",
+    "carrot, halved lengthwise and roughly chopped": "season_carrot",
+    "carrot, in 1 cm cubes": "season_carrot",
+    "carrot, peeled and cut into pieces": "season_carrot",
+    "carrot, peeled and cut into strips": "season_carrot",
+    "carrot, peeled and cut into tagliatelle-like strips": "season_carrot",
+    "carrot, peeled and diced": "season_carrot",
+    "carrot, peeled and roughly chopped": "season_carrot",
+    "carrot, peeled and thinly sliced": "season_carrot",
+    "carrot, peeled, cut lengthwise, then finely chopped": "season_carrot",
+    "carrot, roughly chopped (optional)": "season_carrot",
+    "carrot, washed and cut into strips": "season_carrot",
+    "carrots": "season_carrot",
+    "carrots, chopped": "season_carrot",
+    "carrots, cut into small cubes": "season_carrot",
+    "carrots, cut into sticks": "season_carrot",
+    "carrots, diced": "season_carrot",
+    "carrots, peeled and cut into pieces": "season_carrot",
+    "carrots, peeled and cut into small pieces": "season_carrot",
+    "carrots, peeled and cut into sticks": "season_carrot",
+    "carrots, peeled and cut into tagliatelle-like strips": "season_carrot",
+    "carrots, peeled and cut into thin strips": "season_carrot",
+    "carrots, peeled and diced": "season_carrot",
+    "carrots, peeled and sliced into rounds": "season_carrot",
+    "carrots, peeled and thinly sliced": "season_carrot",
+    "carrots, peeled, halved lengthwise and finely chopped": "season_carrot",
+    "carrots, sliced into rounds": "season_carrot",
+    "carrots, thinly sliced": "season_carrot",
+    "carrots, washed and cut into strips": "season_carrot",
+    "carrots, washed, peeled and cut into long thin strips": "season_carrot",
+    "cauliflower": "season_cauliflower",
+    "cauliflower florets": "season_cauliflower",
+    "cauliflower florets, halved": "season_cauliflower",
+    "cauliflower florets, washed and halved": "season_cauliflower",
+    "cauliflower, finely chopped": "season_cauliflower",
+    "cauliflower, separated into florets": "season_cauliflower",
+    "cauliflower, washed and cut into florets": "season_cauliflower",
+    "cauliflower, washed and divided into florets": "season_cauliflower",
+    "cauliflower, washed and halved": "season_cauliflower",
+    "celeriac": "season_celeriac",
+    "celeriac, cut into 2 cm cubes": "season_celeriac",
+    "celeriac, peeled and diced": "season_celeriac",
+    "celery": "season_celery",
+    "celery root": "season_celeriac",
+    "celery stalk": "season_celery",
+    "celery stalk, carrot": "season_celery",
+    "celery stalk, chopped": "season_celery",
+    "celery stalk, finely chopped": "season_celery",
+    "celery stalk, roughly chopped (optional)": "season_celery",
+    "celery stalk, thinly sliced": "season_celery",
+    "celery stalk, washed and cut into strips": "season_celery",
+    "celery stalk, washed and finely chopped": "season_celery",
+    "celery stalk, washed, peeled and diced": "season_celery",
+    "celery stalks": "season_celery",
+    "celery stalks, finely chopped": "season_celery",
+    "celery stalks, washed and cut into strips": "season_celery",
+    "celery stalks, washed and finely chopped": "season_celery",
+    "celery stalks, washed and thinly sliced": "season_celery",
+    "celery, finely chopped": "season_celery",
+    "celery, peeled and chopped": "season_celery",
+    "celery, peeled and diced": "season_celery",
+    "celery, thinly sliced": "season_celery",
+    "celery, washed, peeled and diced": "season_celery",
+    "chard": "season_chard",
+    "cherry tomatoes": "season_tomato",
+    "cherry tomatoes, cut into eighths": "season_tomato",
+    "cherry tomatoes, halved": "season_tomato",
+    "cherry tomatoes, halved (for finishing)": "season_tomato",
+    "cherry tomatoes, stems removed": "season_tomato",
+    "cherry tomatoes, washed": "season_tomato",
+    "cherry tomatoes, washed and cut into 8 pieces": "season_tomato",
+    "cherry tomatoes, washed and cut into pieces": "season_tomato",
+    "cherry tomatoes, washed and halved": "season_tomato",
+    "chicories": "season_chicory",
+    "chicory": "season_chicory",
+    "chicory, thinly sliced": "season_chicory",
+    "chinese cabbage": "season_chinese_cabbage",
+    "chopped canned tomatoes": "canned_high_acid",
+    "coconut cream": "label_required",
+    "coconut milk": "label_required",
+    "cold milk": "milk",
+    "cooked (canned) chickpeas, rinsed": "canned_low_acid",
+    "cooked (canned) lentils, rinsed": "canned_low_acid",
+    "cooked canned chickpeas, drained": "canned_low_acid",
+    "cooking cream": "label_required",
+    "corn on the cob": "season_sweetcorn",
+    "corn on the cob, cut into rounds": "season_sweetcorn",
+    "courgette": "season_courgette",
+    "courgettes": "season_courgette",
+    "cream": "label_required",
+    "cream cheese": "label_required",
+    "cream quark": "label_required",
+    "crème fraîche": "label_required",
+    "cucumber": "season_cucumber",
+    "cucumber, peeled and deseeded": "season_cucumber",
+    "cucumber, peeled and diced": "season_cucumber",
+    "cucumbers": "season_cucumber",
+    "curly kale": "season_kale",
+    "damsons": "season_plum",
+    "double-cream cream cheese": "label_required",
+    "dried beans": "dry_staple",
+    "dried chickpeas": "dry_staple",
+    "dried lentils": "dry_staple",
+    "dried pasta": "dry_staple",
+    "eggplant": "season_aubergine",
+    "eggplant, cut into 1–2 cm cubes": "season_aubergine",
+    "eggplant, cut into 7 mm square strips, 10 cm long": "season_aubergine",
+    "eggplant, cut into small cubes": "season_aubergine",
+    "eggplant, diced": "season_aubergine",
+    "eggplant, finely diced": "season_aubergine",
+    "eggplant, peeled and diced": "season_aubergine",
+    "eggplant, peeled, washed and chopped": "season_aubergine",
+    "eggplants": "season_aubergine",
+    "eggplants, cut into 1–2 cm cubes": "season_aubergine",
+    "eggplants, cut into small cubes": "season_aubergine",
+    "eggplants, diced": "season_aubergine",
+    "eggplants, finely diced": "season_aubergine",
+    "eggplants, peeled, washed and diced": "season_aubergine",
+    "eggplants, washed and cut into 2–3 cm pieces": "season_aubergine",
+    "endive": "season_endive",
+    "endives": "season_endive",
+    "fennel": "season_fennel",
+    "fennel bulb": "season_fennel",
+    "fennel bulb, quartered": "season_fennel",
+    "fennel bulbs": "season_fennel",
+    "fennel, cleaned and finely diced": "season_fennel",
+    "fennel, cut into small cubes": "season_fennel",
+    "fennel, diced": "season_fennel",
+    "fennel, finely chopped": "season_fennel",
+    "fennel, washed and diced": "season_fennel",
+    "fennel, washed and finely chopped": "season_fennel",
+    "fennel, washed and finely diced": "season_fennel",
+    "firm tofu": "taifun_plain_tofu",
+    "firm tofu, cut into 2 cm cubes": "taifun_plain_tofu",
+    "firm tofu, cut into 4 cm cubes": "taifun_plain_tofu",
+    "firm tofu, drained": "taifun_plain_tofu",
+    "flour": "dry_staple",
+    "fresh broad beans": "season_fresh_broad_bean",
+    "fresh cream cheese": "label_required",
+    "fresh fava beans": "season_fresh_broad_bean",
+    "fresh green beans": "season_green_bean",
+    "fresh milk": "milk",
+    "fresh peas": "season_fresh_pea",
+    "fresh peas, chopped and washed": "season_fresh_pea",
+    "fresh peas, shelled and washed": "season_fresh_pea",
+    "fresh spinach": "season_spinach",
+    "fresh spinach, chopped": "season_spinach",
+    "fresh spinach, rinsed and roughly chopped": "season_spinach",
+    "fresh spinach, washed and chopped": "season_spinach",
+    "fresh spinach, washed and finely chopped": "season_spinach",
+    "fresh sweetcorn": "season_sweetcorn",
+    "fresh tomatoes": "season_tomato",
+    "fresh tomatoes, diced": "season_tomato",
+    "full-fat milk": "milk",
+    "garlic": "season_garlic",
+    "garlic clove": "season_garlic",
+    "garlic clove, crushed": "season_garlic",
+    "garlic clove, finely chopped": "season_garlic",
+    "garlic clove, peeled": "season_garlic",
+    "garlic clove, peeled and chopped": "season_garlic",
+    "garlic clove, peeled, degermed and finely chopped": "season_garlic",
+    "garlic clove, washed and chopped": "season_garlic",
+    "garlic cloves": "season_garlic",
+    "garlic cloves, peeled": "season_garlic",
+    "garlic cloves, peeled and chopped": "season_garlic",
+    "garlic cloves, peeled and crushed": "season_garlic",
+    "garlic cloves, peeled and germ removed": "season_garlic",
+    "garlic cloves, peeled, degermed and finely chopped": "season_garlic",
+    "garlic cloves, washed and chopped": "season_garlic",
+    "garlic, chopped": "season_garlic",
+    "garlic, crushed": "season_garlic",
+    "garlic, finely chopped": "season_garlic",
+    "garlic, germ removed and chopped": "season_garlic",
+    "garlic, peeled": "season_garlic",
+    "garlic, peeled and chopped": "season_garlic",
+    "garlic, peeled and finely chopped": "season_garlic",
+    "garlic, peeled and germ removed": "season_garlic",
+    "garlic, peeled with germ removed": "season_garlic",
+    "garlic, peeled, degermed and chopped": "season_garlic",
+    "garlic, peeled, degermed and finely chopped": "season_garlic",
+    "garlic, peeled, germ removed and chopped": "season_garlic",
+    "garlic, peeled, germ removed and finely chopped": "season_garlic",
+    "garlic, washed and chopped": "season_garlic",
+    "gooseberries": "season_gooseberry",
+    "gooseberry": "season_gooseberry",
+    "grape": "season_grape",
+    "grapes": "season_grape",
+    "greek yogurt": "label_required",
+    "green asparagus": "season_asparagus",
+    "green asparagus tips": "season_asparagus",
+    "green asparagus tips, washed and cut": "season_asparagus",
+    "green asparagus, cut into pieces": "season_asparagus",
+    "green asparagus, thinly sliced": "season_asparagus",
+    "green asparagus, washed and thinly sliced": "season_asparagus",
+    "green beans": "season_green_bean",
+    "green beans, cleaned and trimmed": "season_green_bean",
+    "green beans, cleaned, trimmed and cut into pieces": "season_green_bean",
+    "green beans, cut": "season_green_bean",
+    "green beans, cut into pieces": "season_green_bean",
+    "green beans, cut into small pieces": "season_green_bean",
+    "green beans, diced": "season_green_bean",
+    "green beans, ends trimmed, 10 cm long": "season_green_bean",
+    "green beans, trimmed": "season_green_bean",
+    "green beans, trimmed and halved": "season_green_bean",
+    "green beans, washed and cut into 3 pieces": "season_green_bean",
+    "green beans, washed and cut into pieces": "season_green_bean",
+    "green beans, washed and cut into thirds": "season_green_bean",
+    "green beans, washed and finely chopped": "season_green_bean",
+    "green beans, washed and trimmed": "season_green_bean",
+    "green beans, washed, trimmed and cut into pieces": "season_green_bean",
+    "green bell pepper": "season_bell_pepper",
+    "green bell pepper, cut into pieces": "season_bell_pepper",
+    "green bell pepper, diced": "season_bell_pepper",
+    "green bell pepper, seeded and cut into 3 cm strips": "season_bell_pepper",
+    "green onions": "season_spring_onion",
+    "green pepper": "season_bell_pepper",
+    "green pepper, deseeded and diced": "season_bell_pepper",
+    "green pepper, peeled and cut into 3 cm strips": "season_bell_pepper",
+    "greengages": "season_mirabelle",
+    "ground black pepper": "dry_staple",
+    "hazelnut milk": "alpro_drinks",
+    "hokkaido pumpkin": "season_pumpkin",
+    "hummus": "label_required",
+    "iceberg lettuce": "season_iceberg_lettuce",
+    "jerusalem artichoke": "season_jerusalem_artichoke",
+    "jerusalem artichoke, cut into 2 cm pieces": "season_jerusalem_artichoke",
+    "jerusalem artichoke, peeled and cut into small pieces": "season_jerusalem_artichoke",
+    "jerusalem artichoke, peeled and diced": "season_jerusalem_artichoke",
+    "jerusalem artichokes": "season_jerusalem_artichoke",
+    "jerusalem artichokes, peeled and diced": "season_jerusalem_artichoke",
+    "kale": "season_kale",
+    "kohlrabi": "season_kohlrabi",
+    "lamb's lettuce": "season_lambs_lettuce",
+    "lambs lettuce": "season_lambs_lettuce",
+    "leek": "season_leek",
+    "leek, chopped": "season_leek",
+    "leek, cut diagonally": "season_leek",
+    "leek, trimmed and finely chopped": "season_leek",
+    "leek, well washed and thinly sliced": "season_leek",
+    "leek, white parts washed and finely chopped": "season_leek",
+    "leek, white parts washed and halved": "season_leek",
+    "leek, white parts washed and thinly sliced": "season_leek",
+    "leeks": "season_leek",
+    "leeks, white part halved": "season_leek",
+    "leeks, white parts washed and halved": "season_leek",
+    "lettuce": "season_lettuce",
+    "lettuce, shredded 1 cm wide for finishing": "season_lettuce",
+    "low-fat milk": "milk",
+    "mangetout": "season_fresh_pea",
+    "mangetout, washed and cut in two": "season_fresh_pea",
+    "milk": "milk",
+    "milk powder": "dry_staple",
+    "mirabelle plums": "season_mirabelle",
+    "napa cabbage": "season_chinese_cabbage",
+    "natural yogurt": "label_required",
+    "nectarine": "season_peach",
+    "nectarine, halved and pitted": "season_peach",
+    "nectarines": "season_peach",
+    "nectarines, halved and pitted": "season_peach",
+    "oat drink": "alpro_drinks",
+    "oat milk": "alpro_drinks",
+    "onion": "season_onion",
+    "onion, cut into large pieces": "season_onion",
+    "onion, cut into wedges": "season_onion",
+    "onion, diced": "season_onion",
+    "onion, finely chopped": "season_onion",
+    "onion, finely chopped (quantity fragment: /2)": "season_onion",
+    "onion, finely chopped (sweet variety)": "season_onion",
+    "onion, halved": "season_onion",
+    "onion, julienned": "season_onion",
+    "onion, peeled and chopped": "season_onion",
+    "onion, peeled and diced": "season_onion",
+    "onion, peeled and finely chopped": "season_onion",
+    "onion, peeled and finely sliced": "season_onion",
+    "onion, peeled and quartered": "season_onion",
+    "onion, peeled and sliced": "season_onion",
+    "onion, peeled and sliced into rounds": "season_onion",
+    "onion, peeled and thinly sliced": "season_onion",
+    "onion, quartered": "season_onion",
+    "onion, quartered with 2 cloves pressed in": "season_onion",
+    "onion, roughly chopped": "season_onion",
+    "onion, thinly sliced": "season_onion",
+    "onion, thinly sliced into rings": "season_onion",
+    "onion, washed and chopped": "season_onion",
+    "onions": "season_onion",
+    "onions, cut into 3 cm sections": "season_onion",
+    "onions, finely chopped": "season_onion",
+    "onions, peeled and chopped": "season_onion",
+    "onions, peeled and finely chopped": "season_onion",
+    "onions, peeled and finely sliced": "season_onion",
+    "onions, peeled and halved": "season_onion",
+    "onions, peeled and quartered": "season_onion",
+    "package of smoked tofu": "label_required",
+    "parsley root": "season_parsley_root",
+    "parsnip": "season_parsnip",
+    "parsnip, cut into 2 cm sticks": "season_parsnip",
+    "parsnip, peeled and cut into 1 cm-thick chips": "season_parsnip",
+    "parsnip, peeled and cut into 1 cm-thick fries": "season_parsnip",
+    "parsnip, peeled and cut into 2 cm sticks": "season_parsnip",
+    "parsnip, peeled and cut into small pieces": "season_parsnip",
+    "parsnip, peeled and sliced into rounds": "season_parsnip",
+    "parsnip, peeled, split lengthwise and diced": "season_parsnip",
+    "parsnip, sliced into rounds": "season_parsnip",
+    "parsnips": "season_parsnip",
+    "passata": "label_required",
+    "pasteurized milk": "milk",
+    "peach": "season_peach",
+    "peach, peeled and diced": "season_peach",
+    "peaches": "season_peach",
+    "peaches, not too ripe": "season_peach",
+    "pear": "season_pear",
+    "pear, peeled and quartered": "season_pear",
+    "pear, quartered": "season_pear",
+    "pears": "season_pear",
+    "pears, diced": "season_pear",
+    "pears, peeled and diced": "season_pear",
+    "pears, quartered": "season_pear",
+    "pesto": "label_required",
+    "pesto alla genovese": "label_required",
+    "pesto sauce": "label_required",
+    "philadelphia cream cheese": "label_required",
+    "plain greek yogurt": "label_required",
+    "plain yogurt": "label_required",
+    "plant milk": "alpro_drinks",
+    "plant-based milk": "alpro_drinks",
+    "plum": "season_plum",
+    "plum tomatoes": "season_tomato",
+    "plums": "season_plum",
+    "pointed cabbage": "season_pointed_cabbage",
+    "pumpkin": "season_pumpkin",
+    "pumpkin, cut 1 cm wide and into thirds": "season_pumpkin",
+    "pumpkin, cut 1.5 cm thick and portioned to match the number of pork belly slices": "season_pumpkin",
+    "pumpkin, cut into 1 cm cubes": "season_pumpkin",
+    "pumpkin, cut into 2 cm cubes": "season_pumpkin",
+    "pumpkin, cut into 2 cm slices": "season_pumpkin",
+    "pumpkin, cut into 5 cm cubes and corners trimmed": "season_pumpkin",
+    "pumpkin, peeled and chopped": "season_pumpkin",
+    "pumpkin, peeled and cut into 3 cm cubes": "season_pumpkin",
+    "pumpkin, peeled and cut into large cubes": "season_pumpkin",
+    "pumpkin, peeled and diced": "season_pumpkin",
+    "quark": "label_required",
+    "quince": "season_quince",
+    "quince, about 250 g": "season_quince",
+    "quinces": "season_quince",
+    "radicchio": "season_radicchio",
+    "radish": "season_radish",
+    "radish, thinly sliced": "season_radish",
+    "radish, thinly sliced (for garnish)": "season_radish",
+    "radish, washed and thinly sliced": "season_radish",
+    "radishes": "season_radish",
+    "radishes, washed and thinly sliced": "season_radish",
+    "raspberries": "season_raspberry",
+    "raspberry": "season_raspberry",
+    "raw beetroot": "season_beetroot",
+    "raw beetroot, diced": "season_beetroot",
+    "raw beetroot, peeled and cut into strips": "season_beetroot",
+    "red bell pepper": "season_bell_pepper",
+    "red bell pepper, chopped": "season_bell_pepper",
+    "red bell pepper, chopped, peeled and deseeded": "season_bell_pepper",
+    "red bell pepper, cut": "season_bell_pepper",
+    "red bell pepper, cut into bite-size chunks": "season_bell_pepper",
+    "red bell pepper, cut into strips": "season_bell_pepper",
+    "red bell pepper, peeled and chopped": "season_bell_pepper",
+    "red bell pepper, peeled, seeded and cut into pieces": "season_bell_pepper",
+    "red cabbage": "season_red_cabbage",
+    "red currants": "season_redcurrant",
+    "red grapes": "season_grape",
+    "red grapes, halved": "season_grape",
+    "red grapes, washed": "season_grape",
+    "red onion": "season_onion",
+    "red onion, chopped": "season_onion",
+    "red onion, cut into 1 cm cubes": "season_onion",
+    "red onion, finely chopped": "season_onion",
+    "red onion, peeled and finely chopped": "season_onion",
+    "red onion, peeled and finely chopped (quantity fragment: /2)": "season_onion",
+    "red onion, peeled and thinly sliced": "season_onion",
+    "red onion, peeled, quartered and thinly sliced": "season_onion",
+    "red onion, thinly sliced": "season_onion",
+    "red onions": "season_onion",
+    "red onions, peeled and finely sliced": "season_onion",
+    "red pepper": "season_bell_pepper",
+    "red pepper, cleaned and cut into strips": "season_bell_pepper",
+    "red pepper, cleaned and diced": "season_bell_pepper",
+    "red pepper, cut into pieces": "season_bell_pepper",
+    "red pepper, cut into small cubes": "season_bell_pepper",
+    "red pepper, cut into thin strips": "season_bell_pepper",
+    "red pepper, deseeded": "season_bell_pepper",
+    "red pepper, deseeded and cut into strips": "season_bell_pepper",
+    "red pepper, peeled and diced": "season_bell_pepper",
+    "red pesto": "label_required",
+    "red radishes": "season_radish",
+    "redcurrant": "season_redcurrant",
+    "redcurrants": "season_redcurrant",
+    "rhubarb": "season_rhubarb",
+    "rhubarb, washed and cut into 3–4 cm pieces": "season_rhubarb",
+    "rice": "dry_staple",
+    "rice milk": "alpro_drinks",
+    "rocket": "season_rocket",
+    "rocket leaves": "season_rocket",
+    "runner beans": "season_green_bean",
+    "salsify": "season_salsify",
+    "salt": "dry_staple",
+    "scallions": "season_spring_onion",
+    "sea salt": "dry_staple",
+    "semi-skimmed milk": "milk",
+    "silken tofu": "taifun_silken_tofu",
+    "silken tofu, scooped into large pieces with a spoon": "taifun_silken_tofu",
+    "skimmed milk": "milk",
+    "smoked tofu": "label_required",
+    "snow peas": "season_fresh_pea",
+    "snow peas, a little for finishing": "season_fresh_pea",
+    "sour cherries": "season_sour_cherry",
+    "sour cream": "label_required",
+    "soy milk": "alpro_drinks",
+    "spinach": "season_spinach",
+    "spinach leaves": "season_spinach",
+    "spinach leaves, washed": "season_spinach",
+    "spinach, coarsely chopped": "season_spinach",
+    "spinach, finely chopped": "season_spinach",
+    "spinach, roughly chopped": "season_spinach",
+    "spinach, washed and chopped": "season_spinach",
+    "spring onion": "season_spring_onion",
+    "spring onion, chopped": "season_spring_onion",
+    "spring onion, thinly sliced": "season_spring_onion",
+    "spring onions": "season_spring_onion",
+    "spring onions, chop white and green parts separately": "season_spring_onion",
+    "spring onions, sliced": "season_spring_onion",
+    "spring onions, washed and cut into two equal halves": "season_spring_onion",
+    "spring onions, washed and thinly sliced": "season_spring_onion",
+    "spring onions, washed, white and green parts thinly sliced": "season_spring_onion",
+    "spring onions, white and green parts washed and finely chopped": "season_spring_onion",
+    "spring onions, white part chopped and green part sliced": "season_spring_onion",
+    "strained yogurt": "label_required",
+    "strawberries": "season_strawberry",
+    "strawberries, diced": "season_strawberry",
+    "strawberries, quartered": "season_strawberry",
+    "strawberries, washed and thinly sliced": "season_strawberry",
+    "strawberry": "season_strawberry",
+    "sugar": "dry_staple",
+    "sugar snap peas": "season_fresh_pea",
+    "sugar snap peas, strings removed": "season_fresh_pea",
+    "sun-dried tomato pesto": "label_required",
+    "sweet cherries": "season_sweet_cherry",
+    "sweetcorn on the cob": "season_sweetcorn",
+    "swiss chard": "season_chard",
+    "swiss chard, washed and cut into pieces": "season_chard",
+    "table salt": "dry_staple",
+    "tinned sweetcorn, drained": "canned_low_acid",
+    "tinned tuna": "canned_low_acid",
+    "tofu": "taifun_plain_tofu",
+    "tofu, cut into 2 cm cubes": "taifun_plain_tofu",
+    "tomato": "season_tomato",
+    "tomato canned in its own juice": "canned_high_acid",
+    "tomato passata": "label_required",
+    "tomato pesto": "label_required",
+    "tomato, chopped": "season_tomato",
+    "tomato, cut into eighths": "season_tomato",
+    "tomato, finely chopped": "season_tomato",
+    "tomato, peeled and chopped": "season_tomato",
+    "tomato, peeled, deseeded and cut into pieces": "season_tomato",
+    "tomato, tomato paste": "season_tomato",
+    "tomato, washed and chopped": "season_tomato",
+    "tomato, washed and cut into pieces": "season_tomato",
+    "tomato, washed and diced": "season_tomato",
+    "tomato, washed and roughly chopped": "season_tomato",
+    "tomatoes": "season_tomato",
+    "tomatoes canned in their own juice": "canned_high_acid",
+    "tomatoes, coarsely chopped": "season_tomato",
+    "tomatoes, diced": "season_tomato",
+    "tomatoes, halved": "season_tomato",
+    "tomatoes, peeled and chopped": "season_tomato",
+    "tomatoes, peeled and cut into pieces": "season_tomato",
+    "tomatoes, peeled and quartered": "season_tomato",
+    "tomatoes, peeled, deseeded and chopped": "season_tomato",
+    "tomatoes, quartered": "season_tomato",
+    "tomatoes, thinly sliced": "season_tomato",
+    "tomatoes, washed and chopped": "season_tomato",
+    "tomatoes, washed and cut into 8 pieces": "season_tomato",
+    "tomatoes, washed and cut into large pieces": "season_tomato",
+    "tomatoes, washed and finely chopped": "season_tomato",
+    "tomatoes, washed and thinly sliced": "season_tomato",
+    "uht milk": "milk",
+    "unsweetened soy milk": "alpro_drinks",
+    "vegetable spread": "label_required",
+    "vegetarian spread": "label_required",
+    "wheat flour": "dry_staple",
+    "white asparagus": "season_asparagus",
+    "white asparagus tips": "season_asparagus",
+    "white beans (canned)": "canned_low_acid",
+    "white button mushrooms": "season_button_mushroom",
+    "white cabbage": "season_white_cabbage",
+    "white grapes": "season_grape",
+    "white onion": "season_onion",
+    "white onion, peeled and chopped": "season_onion",
+    "white onion, peeled and finely chopped": "season_onion",
+    "white onion, peeled and thinly sliced": "season_onion",
+    "white onions": "season_onion",
+    "white sugar": "dry_staple",
+    "whole milk": "milk",
+    "yellow bell pepper": "season_bell_pepper",
+    "yellow bell pepper, cut into 2 cm cubes": "season_bell_pepper",
+    "yellow bell pepper, peeled, seeded and finely chopped": "season_bell_pepper",
+    "yellow onion": "season_onion",
+    "yellow onions": "season_onion",
+    "yellow pepper": "season_bell_pepper",
+    "yellow pepper, peeled and diced": "season_bell_pepper",
+    "yogurt": "label_required",
+    "zucchini": "season_courgette",
+    "zucchini, coarsely chopped": "season_courgette",
+    "zucchini, cut into 2 cm cubes": "season_courgette",
+    "zucchini, cut into pieces": "season_courgette",
+    "zucchini, cut into small cubes": "season_courgette",
+    "zucchini, cut into small pieces": "season_courgette",
+    "zucchini, cut into sticks": "season_courgette",
+    "zucchini, diced": "season_courgette",
+    "zucchini, finely diced": "season_courgette",
+    "zucchini, peeled and diced": "season_courgette",
+    "zucchini, washed and chopped": "season_courgette",
+    "zucchini, washed and cut into strips": "season_courgette",
+    "zucchini, washed and diced": "season_courgette",
+    "zucchini, washed and diced (quantity fragment: /2)": "season_courgette",
+    "zucchini, washed and sliced into rounds": "season_courgette",
+    "zucchinis": "season_courgette"
+  }
+}
