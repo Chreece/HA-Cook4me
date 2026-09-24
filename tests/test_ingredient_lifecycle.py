@@ -32,8 +32,8 @@ class LifecycleTests(unittest.TestCase):
     def test_bundled_data_has_reviewed_evidence(self):
         data = self.lifecycle.load_lifecycle_data()
         self.lifecycle.validate_lifecycle_data(data)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 62)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 6)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 64)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 10)
 
     def test_invalid_evidence_is_rejected(self):
         mutations = [
@@ -130,10 +130,61 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(result["consumeBy"], "2026-09-28")
 
     def test_no_universal_duration_for_pesto_and_dry_staples(self):
-        for name in ("Pesto", "Salt", "Plain yogurt", "Coconut milk"):
+        for name in ("Pesto", "Salt", "Plain yogurt", "Coconut cream"):
             profile = self.profile(name)
             self.assertEqual(profile["afterOpening"]["status"], "label_required")
             self.assertNotIn("rules", profile["afterOpening"])
+
+    def test_oat_drinks_keep_each_manufacturers_own_window(self):
+        profile = self.profile("Oat milk")
+        lot = {"openedAt": "2026-09-24", "storage": "fridge", "brand": "Alpro"}
+        result = self.lifecycle.opening_window(profile, lot, temperature_c=7)
+        self.assertEqual((result["daysMin"], result["daysMax"]), (5, 5))
+        lot["brand"] = "Oatly"
+        conditions = ("package_reclosed_promptly", "opening_not_touched_or_drunk_from")
+        for confirmed in ((), conditions[:1], conditions[1:]):
+            self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot, temperature_c=4, confirmed_conditions=confirmed))
+        result = self.lifecycle.opening_window(profile, lot, temperature_c=4, confirmed_conditions=conditions)
+        self.assertEqual((result["remindOn"], result["consumeBy"]), ("2026-09-29", "2026-10-01"))
+        self.assertIn("oatly_opening", result["sourceIds"])
+        self.assertNotIn("alpro_opening", result["sourceIds"])
+        self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile("Soy milk"), lot, temperature_c=4, confirmed_conditions=conditions))
+        lot["brand"] = "Other brand"
+        self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot, temperature_c=4, confirmed_conditions=conditions))
+        lot["useWithinDays"] = 2
+        self.assertEqual(self.lifecycle.opening_window(profile, lot)["consumeBy"], "2026-09-26")
+
+    def test_plant_alternatives_and_reishunger_require_matching_products(self):
+        lot = {"openedAt": "2026-09-24", "storage": "fridge", "brand": "Alpro"}
+        for name in ("Soy cream", "Plant-based cream", "Soy yoghurt"):
+            self.assertEqual(self.lifecycle.opening_window(self.profile(name), lot, temperature_c=7)["consumeBy"], "2026-09-29")
+        for name in ("Cream", "Plain yogurt", "Coconut milk"):
+            self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile(name), lot, temperature_c=4))
+        lot["brand"] = "Reishunger"
+        result = self.lifecycle.opening_window(self.profile("Coconut milk"), lot, temperature_c=4)
+        self.assertEqual((result["daysMin"], result["daysMax"]), (2, 3))
+        self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile("Coconut cream"), lot, temperature_c=4))
+        self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile("Smoked tofu"), lot, temperature_c=4))
+        result = self.lifecycle.opening_window(self.profile("Smoked tofu"), lot, temperature_c=4, confirmed_conditions=("closed_container",))
+        self.assertEqual(result["consumeBy"], "2026-09-26")
+        self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile("Firm tofu"), lot, temperature_c=4, confirmed_conditions=("closed_container",)))
+
+    def test_potato_availability_distinguishes_new_and_stored_crops(self):
+        for month in (1, 6, 12):
+            result = self.lifecycle.seasonal_availability(self.profile("Potatoes, peeled and diced"), country="DE", month=month)
+            self.assertEqual(result["status"], "year_round")
+            self.assertEqual(result["sourceIds"], ["bzfe_potatoes"])
+            self.assertEqual(result["basis"], "seasonal_calendar_including_stored_produce")
+        for month, status in ((1, "unknown"), (6, "in_season"), (7, "in_season"), (12, "unknown")):
+            self.assertEqual(self.lifecycle.seasonal_availability(self.profile("New potatoes"), country="DE", month=month)["status"], status)
+        for name in ("Potato starch", "Sweet potato", "Small cooked potatoes (for serving)"):
+            self.assertEqual(self.profile(name)["seasonality"]["status"], "unknown")
+
+    def test_reviewed_cutting_aliases_do_not_enrich_prepared_mixtures(self):
+        for name, profile in (("Diced eggplant", "season_aubergine"), ("Grated carrots", "season_carrot"), ("Finely chopped onion", "season_onion"), ("Washed and diced zucchini", "season_courgette"), ("Granny Smith apples", "season_apple")):
+            self.assertEqual(self.profile(name)["profileId"], profile)
+        for name in ("Peeled and steamed eggplant", "Grated seasoned carrots", "Fresh or frozen baby onions", "Apple compote", "Tomato pulp", "Peeled tomatoes", "Zucchini flowers"):
+            self.assertEqual(self.profile(name)["seasonality"]["status"], "unknown")
 
     def test_bad_dates_and_nonintegral_intervals_are_rejected(self):
         for value in (True, 1.5, "1.5", -1, 0, 3651, "nan"):
