@@ -32,8 +32,8 @@ class LifecycleTests(unittest.TestCase):
     def test_bundled_data_has_reviewed_evidence(self):
         data = self.lifecycle.load_lifecycle_data()
         self.lifecycle.validate_lifecycle_data(data)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 71)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 14)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 79)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 25)
 
     def test_invalid_evidence_is_rejected(self):
         mutations = [
@@ -184,6 +184,106 @@ class LifecycleTests(unittest.TestCase):
         data["profiles"]["alnatura_passata"]["afterOpening"]["rules"][0]["brand"] = ""
         with self.assertRaises(ValueError):
             self.lifecycle.validate_lifecycle_data(data)
+
+    def test_known_canned_product_cannot_fall_back_past_missing_conditions(self):
+        profile = self.profile("Canned corn")
+        lot = {"openedAt": "2026-09-24", "storage": "fridge", "brand": "Alnatura", "barcode": "4104420234987"}
+        saved = deepcopy(profile)
+        for brand, barcode, conditions in (
+            ("Alnatura", "4104420234987", ()),
+            ("Alnatura", "4104420234987", ("transferred_to_container",)),
+            ("Alnatura", "", ("transferred_to_nonmetal_container",)),
+            ("Alnatura", "4104420230972", ("transferred_to_nonmetal_container",)),
+            ("", "4104420234987", ("transferred_to_nonmetal_container",)),
+            ("Other brand", "4104420234987", ("transferred_to_nonmetal_container",)),
+        ):
+            with self.subTest(brand=brand, barcode=barcode, conditions=conditions):
+                lot.update(brand=brand, barcode=barcode)
+                result = self.lifecycle.opening_window(profile, lot, temperature_c=4, confirmed_conditions=conditions)
+                self.assertEqual(result["status"], "label_required")
+                self.assertNotIn("consumeBy", result)
+        lot.update(brand="Alnatura", barcode="4104420234987")
+        result = self.lifecycle.opening_window(profile, lot, temperature_c=4, confirmed_conditions=("transferred_to_nonmetal_container",))
+        self.assertEqual(result["consumeBy"], "2026-09-25")
+        self.assertEqual(result["kind"], "manufacturer_guidance")
+        self.assertEqual(profile, saved)
+        lot["useWithinDays"] = "2"
+        self.assertEqual(self.lifecycle.opening_window(profile, lot)["consumeBy"], "2026-09-26")
+
+    def test_verified_legume_products_keep_their_own_windows(self):
+        products = (
+            ("Chickpeas", "4104420230224", "alnatura_chickpeas_jar", 2, ()),
+            ("Canned chickpeas", "4104420230972", "alnatura_chickpeas_can", 2, ()),
+            ("Kidney beans", "4104420138803", "alnatura_kidney_beans_jar", 2, ()),
+            ("Canned red kidney beans", "4104420187894", "alnatura_kidney_beans_can", 3, ("transferred_to_container",)),
+            ("White beans", "4104420170179", "alnatura_white_beans_jar", 2, ()),
+            ("White beans (canned)", "4104420187979", "alnatura_white_beans_can", 3, ("transferred_to_container",)),
+            ("Canned lentils", "4104420187931", "alnatura_lentils_can", 2, ()),
+            ("Baked beans", "4104420141162", "alnatura_baked_beans_jar", 2, ()),
+            ("Canned corn", "4104420234987", "alnatura_sweetcorn_can", 1, ("transferred_to_nonmetal_container",)),
+            ("Canned chopped tomatoes", "4104420234857", "alnatura_tomato_pieces_can", 3, ("transferred_to_container",)),
+        )
+        for name, barcode, rule_id, days, conditions in products:
+            with self.subTest(name=name, rule_id=rule_id):
+                profile = self.profile(name)
+                lot = {"openedAt": "2026-09-24", "storage": "fridge", "brand": "Alnatura", "barcode": barcode}
+                result = self.lifecycle.opening_window(profile, lot, temperature_c=4, confirmed_conditions=conditions)
+                self.assertEqual(result["ruleId"], rule_id)
+                self.assertEqual(result["daysMin"], days)
+                self.assertEqual(result["daysMax"], days)
+                self.assertEqual(result["consumeBy"], f"2026-09-{24 + days}")
+                self.assertEqual(result["sourceIds"], [rule_id, "bfr_cooling"])
+                if conditions:
+                    self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot, temperature_c=4))
+
+    def test_generic_canned_guidance_stays_limited_to_canned_forms(self):
+        lot = {"openedAt": "2026-09-24", "storage": "fridge", "brand": "Other brand"}
+        for name in ("Canned chickpeas", "Canned corn", "Canned lentils", "White beans (canned)"):
+            result = self.lifecycle.opening_window(self.profile(name), lot, temperature_c=4)
+            self.assertEqual(result["kind"], "general_guidance")
+            self.assertEqual((result["daysMin"], result["daysMax"]), (3, 4))
+        for name in ("Chickpeas", "Cooked chickpeas", "Kidney beans", "White beans", "Cooked white beans", "Lentils", "Cooked lentils", "Baked beans", "Dried chickpeas", "Dried white beans", "Chickpeas, soaked for 12 hours and cooked in Cook4Me"):
+            self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile(name), lot, temperature_c=4))
+        lot.update(brand="Alnatura", barcode="4104420234857")
+        self.assertEqual(self.lifecycle.opening_window(self.profile("Canned chopped tomatoes"), lot, temperature_c=4)["status"], "label_required")
+        self.assertNotEqual(self.lifecycle.opening_window(self.profile("Canned pineapple (cut into quarters)"), lot, temperature_c=4).get("ruleId"), "alnatura_tomato_pieces_can")
+
+    def test_reviewed_product_precedence_is_independent_of_rule_order(self):
+        profile = self.profile("Canned chickpeas")
+        lot = {"openedAt": "2026-09-24", "storage": "fridge", "brand": "Alnatura", "barcode": "4104420230972"}
+        # A generic range cannot override a verified product's own instructions.
+        generic = next(r for r in profile["afterOpening"]["rules"] if r["kind"] == "general_guidance")
+        generic.update(daysMin=1, daysMax=1)
+        for reverse in (False, True):
+            if reverse:
+                profile["afterOpening"]["rules"].reverse()
+            result = self.lifecycle.opening_window(profile, lot, temperature_c=4)
+            self.assertEqual(result["ruleId"], "alnatura_chickpeas_can")
+            self.assertEqual(result["daysMax"], 2)
+
+    def test_new_herbs_use_outdoor_months_and_shallots_keep_regional_scope(self):
+        for name in ("Marjoram", "Oregano", "Fresh rosemary sprig", "Sage leaves", "Fresh thyme leaves"):
+            result = self.lifecycle.seasonal_availability(self.profile(name), country="DE", month=5)
+            self.assertEqual(result["months"], list(range(5, 11)))
+            self.assertEqual(result["basis"], "outdoor_harvest")
+            self.assertEqual(result["sourceIds"], ["vz_season_calendar"])
+            self.assertEqual(self.lifecycle.seasonal_availability(self.profile(name), country="DE", month=4)["status"], "unknown")
+        dill = self.profile("Dill, washed and chopped")
+        self.assertEqual(self.lifecycle.seasonal_availability(dill, country="DE", month=5)["months"], list(range(5, 10)))
+        self.assertEqual(self.lifecycle.seasonal_availability(dill, country="DE", month=10)["status"], "unknown")
+        shallot = self.lifecycle.seasonal_availability(self.profile("Shallots, peeled"), country="DE", month=7)
+        self.assertEqual(shallot["months"], [7, 8, 9, 10])
+        self.assertEqual(shallot["basis"], "regional_seasonal_availability")
+        wild = self.lifecycle.seasonal_availability(self.profile("Wild garlic"), country="DE", month=3)
+        self.assertEqual(wild["months"], [3, 4, 5])
+        self.assertEqual(wild["sourceRegion"], "DE-HE")
+        self.assertEqual(self.lifecycle.seasonal_availability(dill, country="GR", month=5)["status"], "unknown")
+
+    def test_new_raw_variants_exclude_mixtures_and_processed_forms(self):
+        for name, expected in (("Grated garlic", "season_garlic"), ("Chopped spring onion", "season_spring_onion"), ("Raw corn cobs (husks and silk removed)", "season_sweetcorn"), ("Peeled cherry tomatoes", "season_tomato"), ("Ripe Conference pears", "season_pear"), ("Washed blueberries", "season_blueberry")):
+            self.assertEqual(self.profile(name)["profileId"], expected)
+        for name in ("Dried thyme", "Dried oregano", "Dried marjoram", "Dill seeds", "Frozen dill", "Thyme and bay leaves", "Fresh thyme and rosemary", "Shallot, chopped and fried", "Shallot, or small onion", "Frozen garlic", "Garlic powder", "Sweet potato", "Cherry tomatoes and basil", "Cultivated mushrooms", "Frozen plums, halved", "Canned corn", "Chopped tomatoes"):
+            self.assertNotEqual(self.profile(name)["seasonality"]["status"], "reviewed")
 
     def test_herbs_and_leafy_crops_keep_their_season_scope(self):
         basil = self.profile("Fresh basil leaves")
