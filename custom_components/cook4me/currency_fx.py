@@ -190,6 +190,7 @@ class Cook4MeCurrencyFxStore:
             hass, _STORAGE_VERSION, f"{DOMAIN}.{entry_id}.currency_fx"
         )
         self._loaded = False
+        self._lock = asyncio.Lock()
         self._data: dict[str, Any] = {
             "preference": {"initialized": False, "mode": "auto", "currency": ""},
             "rates": {},
@@ -228,31 +229,36 @@ class Cook4MeCurrencyFxStore:
                 }
         self._loaded = True
 
-    async def _save(self) -> None:
-        await self._store.async_save(self._data)
+    async def _commit(self, data: dict[str, Any]) -> None:
+        await self._store.async_save(deepcopy(data))
+        self._data = data
 
     @property
     def preference(self) -> dict[str, Any]:
         return deepcopy(self._data["preference"])
 
+
     async def async_resolve_currency(self, language: Any, cost_store: Any) -> str:
-        pref = dict(self._data["preference"])
-        existing = _currency((getattr(cost_store, "settings", {}) or {}).get("currency"))
-        if not pref.get("initialized"):
-            if existing:
-                pref = {"initialized": True, "mode": "fixed", "currency": existing}
-            else:
-                pref = {"initialized": True, "mode": "auto", "currency": ""}
-            self._data["preference"] = pref
-            await self._save()
-        selected = (
-            default_currency_for_language(language)
-            if pref.get("mode") == "auto"
-            else _currency(pref.get("currency")) or default_currency_for_language(language)
-        )
-        if existing != selected:
-            await cost_store.async_set_settings(currency=selected)
-        return selected
+        async with self._lock:
+            pref = dict(self._data["preference"])
+            existing = _currency((getattr(cost_store, "settings", {}) or {}).get("currency"))
+            if not pref.get("initialized"):
+                if existing:
+                    pref = {"initialized": True, "mode": "fixed", "currency": existing}
+                else:
+                    pref = {"initialized": True, "mode": "auto", "currency": ""}
+                data = deepcopy(self._data)
+                data["preference"] = pref
+                await self._commit(data)
+            selected = (
+                default_currency_for_language(language)
+                if pref.get("mode") == "auto"
+                else _currency(pref.get("currency")) or default_currency_for_language(language)
+            )
+            if existing != selected:
+                await cost_store.async_set_settings(currency=selected)
+            return selected
+
 
     async def async_set_preference(
         self,
@@ -268,65 +274,60 @@ class Cook4MeCurrencyFxStore:
         chosen_currency = _currency(currency)
         if chosen_mode == "fixed" and not chosen_currency:
             raise ValueError("A fixed currency requires a three-letter currency code")
-        self._data["preference"] = {
-            "initialized": True,
-            "mode": chosen_mode,
-            "currency": chosen_currency if chosen_mode == "fixed" else "",
-        }
-        await self._save()
-        selected = (
-            default_currency_for_language(language)
-            if chosen_mode == "auto"
-            else chosen_currency
-        )
-        await cost_store.async_set_settings(currency=selected)
-        return selected
+        async with self._lock:
+            data = deepcopy(self._data)
+            data["preference"] = {
+                "initialized": True,
+                "mode": chosen_mode,
+                "currency": chosen_currency if chosen_mode == "fixed" else "",
+            }
+            await self._commit(data)
+            selected = (
+                default_currency_for_language(language)
+                if chosen_mode == "auto"
+                else chosen_currency
+            )
+            await cost_store.async_set_settings(currency=selected)
+            return selected
+
 
     async def async_rates(self, *, force: bool = False) -> dict[str, Any]:
-        cached = self._data.get("rates") if isinstance(self._data.get("rates"), dict) else {}
-        fetched = _parse_datetime(cached.get("fetchedAt"))
-        fresh = bool(
-            cached.get("rates")
-            and fetched is not None
-            and datetime.now(timezone.utc) - fetched < _REFRESH_AFTER
-        )
-        if fresh and not force:
-            return {**deepcopy(cached), "stale": False, "refreshError": ""}
+        async with self._lock:
+            cached = self._data.get("rates") if isinstance(self._data.get("rates"), dict) else {}
+            cached = deepcopy(cached)
+            fetched = _parse_datetime(cached.get("fetchedAt"))
+            fresh = bool(
+                cached.get("rates")
+                and fetched is not None
+                and datetime.now(timezone.utc) - fetched < _REFRESH_AFTER
+            )
+            if fresh and not force:
+                return {**cached, "stale": False, "refreshError": ""}
 
-        result = await self.hass.async_add_executor_job(fetch_ecb_daily_rates)
-        if result.get("ok"):
-            stored = {
-                "date": _text(result.get("date")),
-                "fetchedAt": datetime.now(timezone.utc).isoformat(),
-                "source": "ecb_reference_rates",
-                "rates": dict(result.get("rates") or {}),
-            }
-            self._data["rates"] = stored
-            await self._save()
-            return {**deepcopy(stored), "stale": False, "refreshError": ""}
+            result = await self.hass.async_add_executor_job(fetch_ecb_daily_rates)
+            if result.get("ok"):
+                stored = {
+                    "date": _text(result.get("date")),
+                    "fetchedAt": datetime.now(timezone.utc).isoformat(),
+                    "source": "ecb_reference_rates",
+                    "rates": dict(result.get("rates") or {}),
+                }
+                data = deepcopy(self._data)
+                data["rates"] = stored
+                await self._commit(data)
+                return {**deepcopy(stored), "stale": False, "refreshError": ""}
 
-        if cached.get("rates"):
+            if cached.get("rates"):
+                return {
+                    **cached,
+                    "stale": True,
+                    "refreshError": _text(result.get("reason")) or "fx_refresh_failed",
+                }
             return {
-                **deepcopy(cached),
+                "date": "",
+                "fetchedAt": "",
+                "source": "ecb_reference_rates",
+                "rates": {"EUR": 1.0},
                 "stale": True,
                 "refreshError": _text(result.get("reason")) or "fx_refresh_failed",
             }
-        return {
-            "date": "",
-            "fetchedAt": "",
-            "source": "ecb_reference_rates",
-            "rates": {"EUR": 1.0},
-            "stale": True,
-            "refreshError": _text(result.get("reason")) or "fx_refresh_failed",
-        }
-
-
-async def currency_fx_store_for_bridge(bridge: Any) -> Cook4MeCurrencyFxStore:
-    from .store_helpers import store_load_lock
-    async with store_load_lock(bridge, 'currency_fx'):
-        store = getattr(bridge, "_currency_fx_store", None)
-        if store is None:
-            store = Cook4MeCurrencyFxStore(bridge.hass, bridge.entry.entry_id)
-            await store.async_load()
-            bridge._currency_fx_store = store
-        return store
