@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 from copy import deepcopy
 from datetime import datetime, timezone
 import math
@@ -525,6 +526,7 @@ class Cook4MeSmartScaleStore:
             "containers": [],
             "sessions": {},
         }
+        self._lock = asyncio.Lock()
 
     async def async_load(self) -> None:
         if self._loaded:
@@ -556,8 +558,9 @@ class Cook4MeSmartScaleStore:
             }
         self._loaded = True
 
-    async def _save(self) -> None:
-        await self._store.async_save(self._data)
+    async def _commit(self, data: dict[str, Any]) -> None:
+        await self._store.async_save(deepcopy(data))
+        self._data = data
 
     @property
     def selected_entity_id(self) -> str:
@@ -568,9 +571,11 @@ class Cook4MeSmartScaleStore:
         return deepcopy(self._data.get("containers") or [])
 
     async def async_select_entity(self, entity_id: str) -> str:
-        self._data["selectedEntityId"] = _text(entity_id)
-        await self._save()
-        return self.selected_entity_id
+        async with self._lock:
+            data = deepcopy(self._data)
+            data["selectedEntityId"] = _text(entity_id)
+            await self._commit(data)
+            return self.selected_entity_id
 
     async def async_save_container(
         self, name: str, tare_grams: Any, *, container_id: str = ""
@@ -587,28 +592,33 @@ class Cook4MeSmartScaleStore:
             "name": label[:120],
             "tareGrams": round(tare, 6),
         }
-        rows = [item for item in self._data["containers"] if _text(item.get("id")) != row["id"]]
-        rows.append(row)
-        self._data["containers"] = rows[-_MAX_CONTAINERS:]
-        await self._save()
+        async with self._lock:
+            data = deepcopy(self._data)
+            rows = [item for item in data["containers"] if _text(item.get("id")) != row["id"]]
+            rows.append(row)
+            data["containers"] = rows[-_MAX_CONTAINERS:]
+            await self._commit(data)
         return deepcopy(row)
 
     async def async_delete_container(self, container_id: str) -> bool:
         wanted = _text(container_id)
-        before = len(self._data["containers"])
-        self._data["containers"] = [
-            row for row in self._data["containers"] if _text(row.get("id")) != wanted
-        ]
-        changed = before != len(self._data["containers"])
-        if changed:
-            await self._save()
-        return changed
+        async with self._lock:
+            data = deepcopy(self._data)
+            before = len(data["containers"])
+            data["containers"] = [
+                row for row in data["containers"] if _text(row.get("id")) != wanted
+            ]
+            changed = before != len(data["containers"])
+            if changed:
+                await self._commit(data)
+            return changed
 
-    def _session_key(self, recipe: dict[str, Any]) -> str | None:
+    def _session_key(self, recipe: dict[str, Any], data: dict[str, Any] | None = None) -> str | None:
         wanted = set(recipe_aliases(recipe))
         if not wanted:
             return None
-        for key, row in self._data["sessions"].items():
+        source = data if data is not None else self._data
+        for key, row in source["sessions"].items():
             aliases = set(str(value) for value in row.get("aliases") or [])
             if wanted & aliases:
                 return key
@@ -624,10 +634,13 @@ class Cook4MeSmartScaleStore:
         row = self._data["sessions"].get(key) if key else None
         return deepcopy(row) if isinstance(row, dict) else None
 
-    def _ensure_session(self, recipe: dict[str, Any]) -> tuple[str, dict[str, Any]]:
-        key = self._session_key(recipe)
-        if key and isinstance(self._data["sessions"].get(key), dict):
-            row = self._data["sessions"][key]
+    def _ensure_session(
+        self, recipe: dict[str, Any], data: dict[str, Any] | None = None
+    ) -> tuple[str, dict[str, Any]]:
+        target = data if data is not None else self._data
+        key = self._session_key(recipe, target)
+        if key and isinstance(target["sessions"].get(key), dict):
+            row = target["sessions"][key]
             row["aliases"] = list(dict.fromkeys((row.get("aliases") or []) + recipe_aliases(recipe)))
             return key, row
         key = recipe_identity(recipe) or (recipe_aliases(recipe)[0] if recipe_aliases(recipe) else "")
@@ -641,7 +654,7 @@ class Cook4MeSmartScaleStore:
             "batchWeightGrams": None,
             "updatedAt": datetime.now(timezone.utc).isoformat(),
         }
-        self._data["sessions"][key] = row
+        target["sessions"][key] = row
         return key, row
 
     async def async_record_measurement(
@@ -655,7 +668,6 @@ class Cook4MeSmartScaleStore:
         amount = _number(grams)
         if amount is None or amount <= 0:
             raise ValueError("Ingredient weight must be greater than zero")
-        key, session = self._ensure_session(recipe)
         measurement = {
             "ingredientIndex": int(ingredient_index),
             "ingredientIdentity": inventory_identity(ingredient),
@@ -663,47 +675,55 @@ class Cook4MeSmartScaleStore:
             "grams": round(amount, 6),
             "recordedAt": datetime.now(timezone.utc).isoformat(),
         }
-        rows = [
-            row for row in session.get("measurements") or []
-            if int(row.get("ingredientIndex", -1)) != int(ingredient_index)
-        ]
-        rows.append(measurement)
-        session["measurements"] = rows[-_MAX_MEASUREMENTS:]
-        session["updatedAt"] = datetime.now(timezone.utc).isoformat()
-        self._data["sessions"][key] = session
-        self._trim_sessions()
-        await self._save()
+        async with self._lock:
+            data = deepcopy(self._data)
+            key, session = self._ensure_session(recipe, data)
+            rows = [
+                row for row in session.get("measurements") or []
+                if int(row.get("ingredientIndex", -1)) != int(ingredient_index)
+            ]
+            rows.append(measurement)
+            session["measurements"] = rows[-_MAX_MEASUREMENTS:]
+            session["updatedAt"] = datetime.now(timezone.utc).isoformat()
+            data["sessions"][key] = session
+            self._trim_sessions(data)
+            await self._commit(data)
         return deepcopy(session)
 
     async def async_set_batch_weight(self, recipe: dict[str, Any], grams: Any) -> dict[str, Any]:
         amount = _number(grams)
         if amount is None or amount <= 0:
             raise ValueError("Cooked batch weight must be greater than zero")
-        key, session = self._ensure_session(recipe)
-        session["batchWeightGrams"] = round(amount, 6)
-        session["updatedAt"] = datetime.now(timezone.utc).isoformat()
-        self._data["sessions"][key] = session
-        self._trim_sessions()
-        await self._save()
+        async with self._lock:
+            data = deepcopy(self._data)
+            key, session = self._ensure_session(recipe, data)
+            session["batchWeightGrams"] = round(amount, 6)
+            session["updatedAt"] = datetime.now(timezone.utc).isoformat()
+            data["sessions"][key] = session
+            self._trim_sessions(data)
+            await self._commit(data)
         return deepcopy(session)
 
     async def async_clear_session(self, recipe: Any) -> bool:
         if not isinstance(recipe, dict):
             return False
-        key = self._session_key(recipe)
-        if not key or key not in self._data["sessions"]:
-            return False
-        self._data["sessions"].pop(key, None)
-        await self._save()
-        return True
+        async with self._lock:
+            data = deepcopy(self._data)
+            key = self._session_key(recipe, data)
+            if not key or key not in data["sessions"]:
+                return False
+            data["sessions"].pop(key, None)
+            await self._commit(data)
+            return True
 
-    def _trim_sessions(self) -> None:
-        while len(self._data["sessions"]) > _MAX_SESSIONS:
+    def _trim_sessions(self, data: dict[str, Any] | None = None) -> None:
+        target = data if data is not None else self._data
+        while len(target["sessions"]) > _MAX_SESSIONS:
             oldest = min(
-                self._data["sessions"],
-                key=lambda key: _text(self._data["sessions"][key].get("updatedAt")),
+                target["sessions"],
+                key=lambda key: _text(target["sessions"][key].get("updatedAt")),
             )
-            self._data["sessions"].pop(oldest, None)
+            target["sessions"].pop(oldest, None)
 
     def snapshot(self, *, recipe: dict[str, Any] | None = None) -> dict[str, Any]:
         return {
@@ -714,9 +734,11 @@ class Cook4MeSmartScaleStore:
 
 
 async def smart_scale_store_for_bridge(bridge: Any) -> Cook4MeSmartScaleStore:
-    store = getattr(bridge, "_smart_scale_store", None)
-    if store is None:
-        store = Cook4MeSmartScaleStore(bridge.hass, bridge.entry.entry_id)
-        await store.async_load()
-        bridge._smart_scale_store = store
-    return store
+    from .store_helpers import store_load_lock
+    async with store_load_lock(bridge, "smart_scale"):
+        store = getattr(bridge, "_smart_scale_store", None)
+        if store is None:
+            store = Cook4MeSmartScaleStore(bridge.hass, bridge.entry.entry_id)
+            await store.async_load()
+            bridge._smart_scale_store = store
+        return store
