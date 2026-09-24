@@ -44,18 +44,25 @@ export const ViewFiltersMixin=Base=>class extends Base{
   }
   return super._persistPreferences(patch);
  }
+ _v199PendingPreferences(){
+  const request=this._v199PreferenceRequest;
+  return mergePreferencePatches(request?.key===this._prefKey()?request.patch:null,this._v63Dirty);
+ }
  async _restorePreferences(){
   if(!this._entryId||!this._hass?.user?.id)return;
   this._filters();const key=this._prefKey(),connection=this._hass.connection;
-  if(this._v63PrefsLoaded===key||this._v63PrefsLoading?.key===key)return;
+  if(this._v63PrefsLoaded===key||(this._v63PrefsLoading?.key===key&&this._v63PrefsLoading.connection===connection))return;
   const request={key,connection};this._v63PrefsLoading=request;
   const revision=this._v63PrefRevision||0;
+  // A visibility/reconnect read can return before OR after the write it raced.
+  // Retain the local patch even if its acknowledgement arrives before this read.
+  const pendingAtStart=this._v199PendingPreferences();
   try{
    const saved=await connection.sendMessagePromise({type:'cook4me/v31/ui_preferences',entry_id:this._entryId});
-   if(key!==this._prefKey()||connection!==this._hass?.connection)return;
+   if(key!==this._prefKey()||connection!==this._hass?.connection||this._v63PrefsLoading!==request)return;
    this._v63PrefsLoaded=key;
    if(revision===(this._v63PrefRevision||0)){
-    const remote=viewFilterMap(saved?.filtersByView),pending=this._v63Dirty;
+    const remote=viewFilterMap(saved?.filtersByView),pending=mergePreferencePatches(pendingAtStart,this._v199PendingPreferences());
     if(Object.keys(remote).length)this._v199Filters={...this._v199Filters,...remote};
     else if(!this._v199HadViewFilters&&object(saved?.filters)){
      this._v199Filters=Object.fromEntries(FILTER_VIEWS.map(view=>[view,{...copy(this._v199Filters[view]),...copy(saved.filters)}]));
@@ -66,7 +73,7 @@ export const ViewFiltersMixin=Base=>class extends Base{
     this._v199HadViewFilters=true;this._v199ActiveView=null;this._filters();this._cachePreferences();this._renderTabs();this._renderTab();
    }
    if(this._v63Dirty)void this._flushPreferences();
-  }catch{if(key===this._prefKey())this._v63PrefsLoaded=key;}
+  }catch{if(key===this._prefKey()&&connection===this._hass?.connection&&this._v63PrefsLoading===request)this._v63PrefsLoaded=key;}
   finally{if(this._v63PrefsLoading===request)this._v63PrefsLoading=null;}
  }
  async _flushPreferences(){

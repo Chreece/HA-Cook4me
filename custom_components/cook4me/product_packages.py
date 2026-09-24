@@ -39,8 +39,10 @@ async def replace_package_nutrition(store, inventory, lot_id, nutrition):
             pass
 
     if nutrition:
-        await async_save_lot_nutrition(Draft(), inventory, lot_id=lot_id,
+        draft = Draft()
+        await async_save_lot_nutrition(draft, inventory, lot_id=lot_id,
                                        nutrition=nutrition, manually_edited=True)
+        data = draft._data
     # A failed write must not change the in-memory package label.
     await store._store.async_save(data)
     store._data = data

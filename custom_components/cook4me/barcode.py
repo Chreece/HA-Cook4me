@@ -295,6 +295,12 @@ class Cook4MeBarcodeMappingStore:
 
     async def _save_mapping(self, code: str, mapping: dict[str, Any]) -> dict[str, Any]:
         code = normalize_barcode(code)
+        # A package edit supplies REMAINING stock, not the original retail size.
+        # Merge under the write lock so another reviewed scan cannot be lost.
+        if mapping.get("preservePackage") is True:
+            previous = self._data.get(code) or {}
+            mapping = {**mapping, "quantity": previous.get("quantity"),
+                       "unit": previous.get("unit", "")}
         ingredient = mapping.get("ingredient") if isinstance(mapping.get("ingredient"), dict) else {}
         name = _text(ingredient.get("name"))
         if not name:

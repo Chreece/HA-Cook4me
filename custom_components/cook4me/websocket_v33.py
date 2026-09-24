@@ -386,6 +386,7 @@ async def ws_product_add(hass, connection, msg):
                     {
                         "ingredient": ingredient,
                         "ingredientLinks": links,
+                        "preservePackage": bool(msg.get("edit_lot_id") or unlimited),
                         "quantity": None if unlimited else msg["quantity"],
                         "unit": "" if unlimited else msg["unit"],
                         "productName": metadata.get("productName"),
