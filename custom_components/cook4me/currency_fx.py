@@ -319,7 +319,12 @@ class Cook4MeCurrencyFxStore:
 
     async def async_rates(self, *, force: bool = False) -> dict[str, Any]:
         async with self._rates_lock:
-            cached = self._data.get("rates") if isinstance(self._data.get("rates"), dict) else {}
+            async with self._lock:
+                cached = deepcopy(
+                    self._data.get("rates")
+                    if isinstance(self._data.get("rates"), dict)
+                    else {}
+                )
             fetched = _parse_datetime(cached.get("fetchedAt"))
             fresh = bool(
                 cached.get("rates")
@@ -327,7 +332,7 @@ class Cook4MeCurrencyFxStore:
                 and datetime.now(timezone.utc) - fetched < _REFRESH_AFTER
             )
             if fresh and not force:
-                return {**deepcopy(cached), "stale": False, "refreshError": ""}
+                return {**cached, "stale": False, "refreshError": ""}
 
             result = await self.hass.async_add_executor_job(fetch_ecb_daily_rates)
             if result.get("ok"):
@@ -337,14 +342,15 @@ class Cook4MeCurrencyFxStore:
                     "source": "ecb_reference_rates",
                     "rates": dict(result.get("rates") or {}),
                 }
-                data = deepcopy(self._data)
-                data["rates"] = stored
-                await self._commit(data)
+                async with self._lock:
+                    data = deepcopy(self._data)
+                    data["rates"] = stored
+                    await self._commit(data)
                 return {**deepcopy(stored), "stale": False, "refreshError": ""}
 
             if cached.get("rates"):
                 return {
-                    **deepcopy(cached),
+                    **cached,
                     "stale": True,
                     "refreshError": _text(result.get("reason")) or "fx_refresh_failed",
                 }
