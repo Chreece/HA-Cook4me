@@ -31,6 +31,7 @@ jobs:
         run: |
           python tests/test_recipe_stock_nutrition_v218.py
           node --test tests/test_app_design_v203.mjs
+          node --test tests/test_catalog_identity_index_v219.mjs
           node --check custom_components/cook4me/frontend/app-design-v203.js
           node --check custom_components/cook4me/frontend/app-theme-v203.js
           node --check custom_components/cook4me/frontend/ux-fixes-v218.js
@@ -42,5 +43,7 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Actual frontend chain on desktop and mobile
         run: python tests/browser_ui_refresh_v203.py
+      - name: Stock view with full-size ingredient catalog
+        run: python tests/browser_stock_responsiveness_v219.py
       - name: Navigation hover and keyboard focus regression
         run: python tests/browser_navigation_hover_v205.py
