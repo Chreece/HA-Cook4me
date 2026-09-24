@@ -198,6 +198,7 @@ class Cook4MeRecipeCache:
 
     async def async_clear(self, bucket: str | None = None) -> None:
         async with self._lock:
+            before = deepcopy(self._data)
             if bucket is None:
                 for name in self._data:
                     self._data[name] = {}
@@ -205,4 +206,8 @@ class Cook4MeRecipeCache:
                 self._data[bucket] = {}
             else:
                 raise ValueError(f"Unknown Cook4Me cache bucket: {bucket}")
-            await self._store.async_save(deepcopy(self._data))
+            try:
+                await self._store.async_save(deepcopy(self._data))
+            except BaseException:
+                self._data = before
+                raise
