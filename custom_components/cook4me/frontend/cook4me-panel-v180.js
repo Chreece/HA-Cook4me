@@ -165,7 +165,7 @@ class Cook4MeRecipeHubPanelV180 extends BasePanel{
  _renderTab(){
   const result=super._renderTab();
   this.setAttribute('data-cook4me-build','2026.9.22.7');
-  this.setAttribute('data-cook4me-ui-revision','218');
+  this.setAttribute('data-cook4me-ui-revision','219');
   this._v180Styles();
   return result;
  }
@@ -199,3 +199,4 @@ if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v207'))customEleme
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v208'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v208',class extends Cook4MeRecipeHubPanelV180{});
 
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v218'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v218',class extends Cook4MeRecipeHubPanelV180{});
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v219'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v219',class extends Cook4MeRecipeHubPanelV180{});

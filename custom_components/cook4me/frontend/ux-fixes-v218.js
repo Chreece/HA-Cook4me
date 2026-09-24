@@ -46,18 +46,57 @@ function rawIds(row){
 }
 function intersects(a,b){for(const value of a)if(b.has(value))return true;return false;}
 
+// Build connected components from reviewed IDs once. Searching every catalog
+// row and expanding its aliases again for each review label is quadratic and
+// blocks the browser for seconds per label on the shipped ingredient catalog.
+function catalogIdentityIndex(catalog){
+ const parents=new Map(),ranks=new Map();
+ const root=id=>{
+  let current=id;
+  while(parents.get(current)!==current)current=parents.get(current);
+  while(id!==current){const next=parents.get(id);parents.set(id,current);id=next;}
+  return current;
+ };
+ const rows=catalog.map(row=>({row,ids:rawIds(row)}));
+ for(const {ids} of rows){
+  let first;
+  for(const id of ids){
+   if(!parents.has(id)){parents.set(id,id);ranks.set(id,0);}
+   if(first===undefined){first=id;continue;}
+   let a=root(first),b=root(id);if(a===b)continue;
+   if(ranks.get(a)<ranks.get(b))[a,b]=[b,a];
+   parents.set(b,a);
+   if(ranks.get(a)===ranks.get(b))ranks.set(a,ranks.get(a)+1);
+  }
+ }
+ const groups=new Map(),components=new Map(),firstRows=new Map(),localizedRows=new Map();
+ for(const id of parents.keys()){
+  const key=root(id);if(!groups.has(key))groups.set(key,new Set());
+  groups.get(key).add(id);components.set(id,groups.get(key));
+ }
+ for(const {row,ids} of rows){
+  const first=ids.values().next().value;if(first===undefined)continue;
+  const group=components.get(first);if(!firstRows.has(group))firstRows.set(group,row);
+ }
+ for(const [id,group] of components)localizedRows.set(id,firstRows.get(group));
+ return {components,localizedRows};
+}
+
 export const UXFixesMixin=Base=>class extends Base{
  _v218Text(key){const lang=String(this._uiIngredientLanguage?.()||this._langCode?.()||'en').split(/[-_]/)[0];return (TEXT[lang]||TEXT.en)[key]||TEXT.en[key]||key;}
+ _v219IdentityIndex(){
+  const catalog=this._ingredientCatalog,context=this._prefKey?.()||this._entryId||'';
+  const cached=this._v219IdentityCache;
+  // Catalog loads/language changes replace the array. Also account for rows
+  // appended to the same array and household switches while a load is pending.
+  if(cached&&cached.catalog===catalog&&cached.length===(catalog?.length||0)&&cached.context===context)return cached.index;
+  const index=catalogIdentityIndex(catalog||[]);
+  this._v219IdentityCache={catalog,length:catalog?.length||0,context,index};
+  return index;
+ }
  _v218ExpandedIds(item){
-  const ids=rawIds(item),catalog=this._ingredientCatalog||[];
-  let changed=true;
-  while(changed){
-   changed=false;
-   for(const row of catalog){
-    const aliases=rawIds(row);
-    if(intersects(ids,aliases))for(const value of aliases)if(!ids.has(value)){ids.add(value);changed=true;}
-   }
-  }
+  const ids=rawIds(item),{components}=this._v219IdentityIndex();
+  for(const id of [...ids])for(const alias of components.get(id)||[])ids.add(alias);
   return ids;
  }
  _v218StockMatches(item,row){
@@ -135,7 +174,7 @@ export const UXFixesMixin=Base=>class extends Base{
   return value||this._v218Text('unresolved');
  }
  _v218LocalUnresolvedName(row){
-  const wanted=token(row?.identity),match=(this._ingredientCatalog||[]).find(item=>this._v218ExpandedIds(item).has(wanted));
+  const match=this._v219IdentityIndex().localizedRows.get(token(row?.identity));
   return match?.name||row?.name||row?.query||row?.identity||'';
  }
  _nutritionSettingsHtml(){
