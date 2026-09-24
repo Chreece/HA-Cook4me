@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+from contextlib import asynccontextmanager
 from copy import deepcopy
 from datetime import datetime, timezone
 import hashlib
@@ -86,6 +87,16 @@ class Cook4MeOnlineCache:
     async def _save(self) -> None:
         await self._store.async_save({"rows": deepcopy(self._rows)})
 
+    @asynccontextmanager
+    async def _mutation(self):
+        async with self._lock:
+            before = deepcopy(self._rows)
+            try:
+                yield
+            except BaseException:
+                self._rows = before
+                raise
+
     def row(self, key: str) -> dict[str, Any] | None:
         row = self._rows.get(str(key))
         if not isinstance(row, dict):
@@ -111,7 +122,7 @@ class Cook4MeOnlineCache:
         *,
         source: str = "",
     ) -> dict[str, Any]:
-        async with self._lock:
+        async with self._mutation():
             now = time.time()
             existing = self._rows.get(str(key))
             digest = _fingerprint(value)
@@ -135,7 +146,7 @@ class Cook4MeOnlineCache:
             }
 
     async def async_record_failure(self, key: str, error: Any) -> None:
-        async with self._lock:
+        async with self._mutation():
             row = self._rows.get(str(key))
             if not isinstance(row, dict):
                 return
@@ -194,9 +205,11 @@ class Cook4MeOnlineCache:
 
 
 async def online_cache_for_bridge(bridge: Any) -> Cook4MeOnlineCache:
-    store = getattr(bridge, "_cook4me_online_cache", None)
-    if store is None:
-        store = Cook4MeOnlineCache(bridge.hass, bridge.entry.entry_id)
-        await store.async_load()
-        bridge._cook4me_online_cache = store
-    return store
+    from .store_helpers import store_load_lock
+    async with store_load_lock(bridge, "online_cache"):
+        store = getattr(bridge, "_cook4me_online_cache", None)
+        if store is None:
+            store = Cook4MeOnlineCache(bridge.hass, bridge.entry.entry_id)
+            await store.async_load()
+            bridge._cook4me_online_cache = store
+        return store
