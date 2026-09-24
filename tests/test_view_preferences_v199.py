@@ -1,6 +1,7 @@
 """Actual preference normalization and locked Hub writes; no HA/network calls."""
 import ast
 import asyncio
+from contextlib import asynccontextmanager
 from copy import deepcopy
 import importlib.util
 from pathlib import Path
@@ -28,11 +29,12 @@ spec.loader.exec_module(preferences)
 source = ast.parse((COMPONENT/'recipe_hub.py').read_text())
 methods = [deepcopy(method) for node in source.body if isinstance(node, ast.ClassDef)
            for method in node.body if isinstance(method, (ast.FunctionDef, ast.AsyncFunctionDef))
-           and method.name in {'user_ui_preferences', 'async_set_user_ui_preferences'}]
-ns = {'__name__': PACKAGE+'.hub_test', '__package__': PACKAGE, 'deepcopy': deepcopy, 'Any': object}
+           and method.name in {'_durable_mutation', 'user_ui_preferences', 'async_set_user_ui_preferences'}]
+ns = {'__name__': PACKAGE+'.hub_test', '__package__': PACKAGE, 'deepcopy': deepcopy, 'Any': object, 'asynccontextmanager': asynccontextmanager}
 exec(compile(ast.fix_missing_locations(ast.Module(body=methods, type_ignores=[])), str(COMPONENT/'recipe_hub.py'), 'exec'), ns)
 
 class Hub:
+    _durable_mutation = ns['_durable_mutation']
     user_ui_preferences = ns['user_ui_preferences']
     async_set_user_ui_preferences = ns['async_set_user_ui_preferences']
     def __init__(self):
