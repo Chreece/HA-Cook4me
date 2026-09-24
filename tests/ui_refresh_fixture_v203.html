@@ -44,6 +44,10 @@ class Fixture extends Base{
   if(type.endsWith('stock_summary'))return Promise.resolve(this._v142StockSummary);
   if(type.endsWith('barcode_lookup'))return Promise.resolve({barcode:data.barcode,product:{found:true,productName:'Βιολογικό ρύζι',quantity:500,unit:'g'},suggestions:[{ingredient:{key:'rice',name:'Ρύζι'}}]});
   if(type.endsWith('product_add'))return Promise.resolve({houseIngredients:this._houseIngredients});
+  if(type.endsWith('scale_state'))return Promise.resolve(structuredClone(this._fixtureScale));
+  if(type.endsWith('nutrition_unresolved_retry')){this._fixtureNutrition={...this._fixtureNutrition,blockedFailures:0,unresolvedDetails:[],actionableRemaining:this._fixtureNutrition.remaining};return Promise.resolve(structuredClone(this._fixtureNutrition));}
+  if(type.endsWith('nutrition_generic_set')){this._fixtureNutrition={...this._fixtureNutrition,catalogCount:this._fixtureNutrition.catalogCount+1,remaining:this._fixtureNutrition.remaining-1,blockedFailures:0,unresolvedDetails:[]};return Promise.resolve(structuredClone(this._fixtureNutrition));}
+  if(type.endsWith('nutrition_settings'))return Promise.resolve(structuredClone(this._fixtureNutrition));
   if(type.endsWith('week_select')){for(const s of this._weekState.slots)if(data.slot_ids?.includes(s.id))s.selected=data.selected;return Promise.resolve(this._weekState);}
   if(type.includes('recipe_cost'))return Promise.resolve(recipe(0).cost);
   if(type.endsWith('/drafts'))return Promise.resolve({receipt:data.receipt||this._r195Session?.receipt});
@@ -71,6 +75,9 @@ class Fixture extends Base{
   this._bookState={favorites:[recipe(0),recipe(1)],recipeList:[recipe(2)]};this._results=Array.from({length:8},(_,i)=>recipe(i));this._todayResults=[recipe(5),recipe(0),recipe(4)];this._todayMeta={emptyMealTypes:[]};this._todayBusy=false;
   this._shoppingItems=[{id:'s1',summary:'Ρύζι (Reis)',status:'needs_action'},{id:'s2',summary:'Καρότα (Karotten)',status:'needs_action'},{id:'s3',summary:'Γιαούρτι (Joghurt)',status:'completed'}];this._shoppingAvailable=true;
   this._v78State={locations:this._entries[0].profile.storageLocations,storageLocations:this._entries[0].profile.storageLocations,aiEntityId:'',defaultAiEntityId:'ai_task.vision',aiChoices:[{id:'ai_task.vision',name:'Image AI'}],houseIngredients:this._houseIngredients};
+  this._fixtureScale={selectedEntityId:'',entities:[],containers:[{id:'jar-1',name:'Βαζάκι μπαχαρικών',tareGrams:127}],grossGrams:null,netGrams:null,tareGrams:0,stable:false,leftovers:[]};
+  this._fixtureNutrition={fdcApiKeyConfigured:false,fdcMode:'demo',catalogCount:4,catalogTotal:6292,remaining:6288,blockedFailures:1,actionableRemaining:6287,genericFallbackCatalog:true,unresolvedDetails:[{identity:'k:rice',name:'Rice',query:'rice',reason:'ambiguous',confidence:.9,retryAfter:'2026-10-24T08:00:00+00:00'}]};
+  this._nutritionSettings=structuredClone(this._fixtureNutrition);
   this._v142StockSummary={packageCount:2,value:{totalsByCurrency:{EUR:4.9},pricedPackages:2,packageCount:2,exactPackages:2},nutrition:{totals:{energyKcal:2120,proteinG:41},coveredPackages:2,packageCount:2},expiring:[]};
   this._tab='today';this._filters();this._filters().languages=['el'];this._filters().diet='vegetarian';this._filters().ingredients=[];
   for(const value of Object.values(this._v199Filters)){value.languages=['el'];value.diet='vegetarian';}
