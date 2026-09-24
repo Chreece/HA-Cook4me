@@ -66,10 +66,10 @@ with sync_playwright() as p:
         check(page,"app._filters().maxCost===2",prefix+'per-view filters stay independent')
         # More is native disclosure; its original button routes still run.
         card=page.locator('article.ui203-recipe').first
-        page.evaluate("(()=>{const s=app.shadowRoot.querySelector('article.ui203-recipe details.ui203-more > summary').getBoundingClientRect();window.moreBefore={left:s.left,top:s.top,width:s.width}})()")
+        page.evaluate("(()=>{const card=app.shadowRoot.querySelector('article.ui203-recipe'),s=card.querySelector('details.ui203-more > summary').getBoundingClientRect(),dock=card.querySelector('.ui203-action-dock').getBoundingClientRect();window.moreBefore={left:s.left-dock.left,top:s.top-dock.top,width:s.width}})()")
         card.locator('details.ui203-more > summary').click()
         check(page,"!!app.shadowRoot.querySelector('details.ui203-more[open]')&&!app._v63RecipeDialog",prefix+'More opens without opening recipe')
-        check(page,"(()=>{const d=app.shadowRoot.querySelector('article.ui203-recipe details.ui203-more[open]'),s=d.querySelector(':scope > summary').getBoundingClientRect();return Math.abs(s.left-moreBefore.left)<2&&Math.abs(s.top-moreBefore.top)<2&&d.querySelector('.ui203-more-grid')?.parentElement===d&&getComputedStyle(d).borderTopStyle!=='none'})()",prefix+'More stays anchored and groups expanded actions inside itself')
+        check(page,"(()=>{const d=app.shadowRoot.querySelector('article.ui203-recipe details.ui203-more[open]'),s=d.querySelector(':scope > summary').getBoundingClientRect(),dock=d.closest('.ui203-action-dock').getBoundingClientRect();return Math.abs(s.left-dock.left-moreBefore.left)<2&&Math.abs(s.top-dock.top-moreBefore.top)<2&&Math.abs(s.width-moreBefore.width)<2&&d.querySelector('.ui203-more-grid')?.parentElement===d&&getComputedStyle(d).borderTopStyle!=='none'})()",prefix+'More stays anchored and groups expanded actions inside itself')
         card.locator('[data-v66-action=list]').click()
         page.wait_for_timeout(80)
         check(page,"app.calls.some(x=>x.type.endsWith('book_toggle')&&x.data.collection==='recipeList')",prefix+'secondary action retains its binding')
