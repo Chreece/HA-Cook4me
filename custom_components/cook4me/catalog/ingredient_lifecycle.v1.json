@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-24.4",
+  "version": "2026-09-24.5",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -246,6 +246,76 @@
     "alnatura_tomato_pieces_can": {
       "publisher": "Alnatura",
       "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/tomatenstuecke-natur-227167/",
+      "reviewedOn": "2026-09-24"
+    },
+    "hortipendium_turnips": {
+      "publisher": "Hortipendium / Gartenakademie Rheinland-Pfalz",
+      "url": "https://hortipendium.de/Speiser%C3%BCben_im_Hausgarten",
+      "reviewedOn": "2026-09-24"
+    },
+    "bzfe_snow_peas": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/presse/pressemeldungen-archiv/zeit-fuer-zuckerschoten",
+      "reviewedOn": "2026-09-24"
+    },
+    "bzfe_walnuts": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/presse/pressemeldungen-archiv-2024-und-frueher/walnuss-fuer-die-herbstkueche",
+      "reviewedOn": "2026-09-24"
+    },
+    "bund_bavarian_seasons": {
+      "publisher": "BUND Naturschutz in Bayern",
+      "url": "https://www.bund-naturschutz.de/oekologisch-leben/essen-und-trinken/bayerischer-saisonkalender",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_apfelmark_360g": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-obstkonserven/apfelmark-137076/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_apple_juice_cloudy": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-obst-saefte/apfel-direktsaft-naturtrueb-213503/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_apple_juice_mild": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-obst-saefte/milder-apfelsaft-naturtrueb-137729/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_orange_juice": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-obst-saefte/orange-direktsaft-225195/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_vegetable_juice_500ml": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-gemuese-saefte/gemuese-direktsaft-128766/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_vegetable_juice_330ml": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-gemuese-saefte/gemuese-direktsaft-feldfrisch-verarbeitet-141655/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_sauerkraut_juice": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-gemuese-saefte/sauerkraut-direktsaft-128769/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_beetroot_juice": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-gemuese-saefte/rote-bete-direktsaft-feldfrisch-verarbeitet-138118/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_lemon_juice": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-obst-saefte/zitrone-direktsaft-223508/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_ginger_juice": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-obst-saefte/ingwer-direktsaft-244870/",
       "reviewedOn": "2026-09-24"
     }
   },
@@ -3626,9 +3696,452 @@
           }
         ]
       }
+    },
+    "season_turnip": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-RP",
+            "basis": "outdoor_harvest",
+            "months": [
+              6,
+              7,
+              8,
+              9,
+              10,
+              11
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "hortipendium_turnips"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_snow_pea": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "outdoor_harvest",
+            "months": [
+              6,
+              7,
+              8
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bzfe_snow_peas"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_walnut": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bzfe_walnuts"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_hazelnut": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-BY",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              9,
+              10,
+              11
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bund_bavarian_seasons"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_artichoke": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-BY",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bund_bavarian_seasons"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_melon": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-BY",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              8,
+              9
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bund_bavarian_seasons"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_kiwi": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-BY",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bund_bavarian_seasons"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "alnatura_apple_puree": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_apfelmark_360g",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_apfelmark_360g",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420227408"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_apple_juice": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_apple_juice_cloudy",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_apple_juice_cloudy",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420208735"
+            ]
+          },
+          {
+            "id": "alnatura_apple_juice_mild",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_apple_juice_mild",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420179677"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_orange_juice": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_orange_juice",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_orange_juice",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420231214"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_vegetable_juice": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_vegetable_juice_500ml",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_vegetable_juice_500ml",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420072862"
+            ]
+          },
+          {
+            "id": "alnatura_vegetable_juice_330ml",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_vegetable_juice_330ml",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420133365"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_sauerkraut_juice": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_sauerkraut_juice",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_sauerkraut_juice",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420072800"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_beetroot_juice": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_beetroot_juice",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_beetroot_juice",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420070202"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_lemon_juice": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_lemon_juice",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_lemon_juice",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420228986"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_ginger_juice": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_ginger_juice",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_ginger_juice",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420260467"
+            ]
+          }
+        ]
+      }
     }
   },
   "canonicalNames": {
+    "*lemon juice": "alnatura_lemon_juice",
     "*medium-sized beetroot": "season_beetroot",
     "*minced garlic": "season_garlic",
     "*minced onion": "season_onion",
@@ -3641,6 +4154,8 @@
     "a- pumpkin, seeds and skin removed, cut into 3 cm cubes": "season_pumpkin",
     "almond milk": "alpro_drinks",
     "apple": "season_apple",
+    "apple juice": "alnatura_apple_juice",
+    "apple sauce": "alnatura_apple_puree",
     "apple, diced": "season_apple",
     "apple, peeled and diced": "season_apple",
     "apple, peeled and quartered": "season_apple",
@@ -3650,10 +4165,14 @@
     "apples, peeled and cut": "season_apple",
     "apples, peeled and diced": "season_apple",
     "apples, quartered": "season_apple",
+    "applesauce": "alnatura_apple_puree",
     "apricot": "season_apricot",
     "apricot, peeled and quartered": "season_apricot",
     "apricots": "season_apricot",
     "apricots, peeled and quartered": "season_apricot",
+    "artichoke": "season_artichoke",
+    "artichoke hearts": "season_artichoke",
+    "artichoke hearts, each cut into 8 pieces": "season_artichoke",
     "arugula": "season_rocket",
     "arugula, washed": "season_rocket",
     "asparagus": "season_asparagus",
@@ -3663,9 +4182,11 @@
     "asparagus tips, roughly chopped": "season_asparagus",
     "aubergine": "season_aubergine",
     "aubergines": "season_aubergine",
+    "b - apple juice": "alnatura_apple_juice",
     "b - thyme": "season_thyme",
     "b- canned chopped tomatoes": "canned_tomato_pieces",
     "b- dill, a little": "season_dill",
+    "b- snow peas, strings removed": "season_snow_pea",
     "baby carrots": "season_carrot",
     "baby lettuce": "season_lettuce",
     "baby lettuce (or lettuce hearts), chopped": "season_lettuce",
@@ -3692,6 +4213,7 @@
     "beefsteak tomatoes": "season_tomato",
     "beet": "season_beetroot",
     "beetroot": "season_beetroot",
+    "beetroot juice": "alnatura_beetroot_juice",
     "beets": "season_beetroot",
     "bell pepper": "season_bell_pepper",
     "bell pepper, cut into strips": "season_bell_pepper",
@@ -3904,6 +4426,7 @@
     "chopped green beans": "season_green_bean",
     "chopped green bell pepper": "season_bell_pepper",
     "chopped green onion": "season_spring_onion",
+    "chopped hazelnuts": "season_hazelnut",
     "chopped leek": "season_leek",
     "chopped onion": "season_onion",
     "chopped onions": "season_onion",
@@ -3946,6 +4469,8 @@
     "cream quark": "label_required",
     "crushed garlic": "season_garlic",
     "crushed garlic cloves": "season_garlic",
+    "crushed hazelnuts": "season_hazelnut",
+    "crushed walnuts": "season_walnut",
     "crème fraîche": "label_required",
     "cucumber": "season_cucumber",
     "cucumber, peeled and deseeded": "season_cucumber",
@@ -3956,6 +4481,7 @@
     "cups of finely chopped parsley": "season_parsley_leaf",
     "cups of parsley, washed and chopped": "season_parsley_leaf",
     "curly kale": "season_kale",
+    "d- walnuts, crushed": "season_walnut",
     "damsons": "season_plum",
     "datterini cherry tomatoes": "season_tomato",
     "datterini tomatoes": "season_tomato",
@@ -3965,6 +4491,7 @@
     "diced eggplant": "season_aubergine",
     "diced eggplants": "season_aubergine",
     "diced green bell peppers": "season_bell_pepper",
+    "diced melon": "season_melon",
     "diced onion": "season_onion",
     "diced potatoes": "season_potato",
     "diced potatoes for mash": "season_potato",
@@ -4025,6 +4552,7 @@
     "finely chopped spring onion": "season_spring_onion",
     "finely chopped thyme leaves (for serving)": "season_thyme",
     "finely sliced onions": "season_onion",
+    "firm kiwi, peeled and cut into 2 cm rounds": "season_kiwi",
     "firm pears, peeled and cut into small cubes": "season_pear",
     "firm pears, peeled and diced": "season_pear",
     "firm potatoes, peeled and cut into pieces": "season_potato",
@@ -4113,6 +4641,7 @@
     "garlic, peeled, germ removed and finely chopped": "season_garlic",
     "garlic, washed and chopped": "season_garlic",
     "giant pumpkin, peeled, seeded and cut into 1 cm cubes": "season_pumpkin",
+    "ginger juice": "alnatura_ginger_juice",
     "golden apple": "season_apple",
     "golden apple, peeled, cored and diced": "season_apple",
     "golden delicious apple": "season_apple",
@@ -4177,11 +4706,14 @@
     "green savoy cabbage leaf": "season_savoy_cabbage",
     "greengages": "season_mirabelle",
     "ground black pepper": "dry_staple",
+    "ground hazelnuts": "season_hazelnut",
     "half a chopped onion": "season_onion",
     "handful of blueberries": "season_blueberry",
     "handful of spinach, washed and roughly chopped": "season_spinach",
     "handful(s) of grated carrots": "season_carrot",
     "hazelnut milk": "alpro_drinks",
+    "hazelnuts": "season_hazelnut",
+    "hazelnuts (to taste)": "season_hazelnut",
     "head of bok choy, cut into 6 pieces": "season_pak_choi",
     "head of lettuce, washed and outer leaves removed": "season_lettuce",
     "heads of lettuce, washed and outer leaves removed": "season_lettuce",
@@ -4203,6 +4735,8 @@
     "julienned potatoes": "season_potato",
     "kale": "season_kale",
     "kidney beans": "alnatura_kidney_beans",
+    "kiwi": "season_kiwi",
+    "kiwi, peeled and diced": "season_kiwi",
     "kohlrabi": "season_kohlrabi",
     "lamb's lettuce": "season_lambs_lettuce",
     "lambs lettuce": "season_lambs_lettuce",
@@ -4232,6 +4766,9 @@
     "leeks": "season_leek",
     "leeks, white part halved": "season_leek",
     "leeks, white parts washed and halved": "season_leek",
+    "lemon juice": "alnatura_lemon_juice",
+    "lemon juice (for finishing)": "alnatura_lemon_juice",
+    "lemon juice (optional)": "alnatura_lemon_juice",
     "lentils": "alnatura_lentils",
     "lettuce": "season_lettuce",
     "lettuce (for finishing)": "season_lettuce",
@@ -4247,6 +4784,7 @@
     "lettuce, shredded 1 cm wide for finishing": "season_lettuce",
     "low-fat milk": "milk",
     "mangetout": "season_fresh_pea",
+    "mangetout peas": "season_snow_pea",
     "mangetout, washed and cut in two": "season_fresh_pea",
     "marjoram": "season_marjoram",
     "marjoram (for finishing), a little": "season_marjoram",
@@ -4256,6 +4794,9 @@
     "medium potato": "season_potato",
     "medium red onion": "season_onion",
     "medium-sized beetroot": "season_beetroot",
+    "melon balls": "season_melon",
+    "melon flesh, seeds removed": "season_melon",
+    "melon, diced": "season_melon",
     "milk": "milk",
     "milk powder": "dry_staple",
     "minced carrot": "season_carrot",
@@ -4304,6 +4845,7 @@
     "onions, peeled and finely sliced": "season_onion",
     "onions, peeled and halved": "season_onion",
     "onions, peeled and quartered": "season_onion",
+    "orange juice": "alnatura_orange_juice",
     "oregano": "season_oregano",
     "organic cucumber": "season_cucumber",
     "organic granny smith apple(s), washed and cut into cubes": "season_apple",
@@ -4369,6 +4911,7 @@
     "peeled finely chopped onion": "season_onion",
     "peeled garlic": "season_garlic",
     "peeled garlic cloves": "season_garlic",
+    "peeled jerusalem artichoke": "season_jerusalem_artichoke",
     "peeled onion": "season_onion",
     "peeled parsnip": "season_parsnip",
     "peeled potato, cut into pieces": "season_potato",
@@ -4432,6 +4975,7 @@
     "pumpkin, peeled and cut into 3 cm cubes": "season_pumpkin",
     "pumpkin, peeled and cut into large cubes": "season_pumpkin",
     "pumpkin, peeled and diced": "season_pumpkin",
+    "purple turnip, cut into pieces": "season_turnip",
     "quark": "label_required",
     "quince": "season_quince",
     "quince, about 250 g": "season_quince",
@@ -4531,6 +5075,7 @@
     "salad onion(s), washed and thinly sliced": "season_spring_onion",
     "salsify": "season_salsify",
     "salt": "dry_staple",
+    "sauerkraut juice": "alnatura_sauerkraut_juice",
     "savoy cabbage": "season_savoy_cabbage",
     "savoy cabbage leaf": "season_savoy_cabbage",
     "scallions": "season_spring_onion",
@@ -4551,6 +5096,10 @@
     "shallots, peeled and chopped": "season_shallot",
     "shallots, peeled and cut into pieces": "season_shallot",
     "shallots, thinly sliced": "season_shallot",
+    "shelled walnut": "season_walnut",
+    "shelled walnuts": "season_walnut",
+    "shelled walnuts, chopped": "season_walnut",
+    "shelled walnuts, very finely ground": "season_walnut",
     "silken tofu": "taifun_silken_tofu",
     "silken tofu, scooped into large pieces with a spoon": "taifun_silken_tofu",
     "skimmed milk": "milk",
@@ -4583,10 +5132,12 @@
     "small shallot, peeled and finely chopped": "season_shallot",
     "small shallots, peeled and finely chopped": "season_shallot",
     "small tomato, diced": "season_tomato",
+    "small turnip, halved": "season_turnip",
+    "small turnips, peeled, halved crosswise and then quartered": "season_turnip",
     "smoked tofu": "reishunger_smoked_tofu",
     "smoked tofu, in large cubes": "reishunger_smoked_tofu",
-    "snow peas": "season_fresh_pea",
-    "snow peas, a little for finishing": "season_fresh_pea",
+    "snow peas": "season_snow_pea",
+    "snow peas, a little for finishing": "season_snow_pea",
     "sorrel": "season_sorrel",
     "sour cherries": "season_sour_cherry",
     "sour cream": "label_required",
@@ -4658,6 +5209,7 @@
     "sweet onion, thinly sliced": "season_onion",
     "sweet onions, peeled and thinly sliced": "season_onion",
     "sweet or white onion, thinly sliced": "season_onion",
+    "sweet orange juice": "alnatura_orange_juice",
     "sweetcorn on the cob": "season_sweetcorn",
     "swiss chard": "season_chard",
     "swiss chard, washed and cut into pieces": "season_chard",
@@ -4665,6 +5217,8 @@
     "tbsp chopped basil": "season_basil",
     "tbsp chopped parsley": "season_parsley_leaf",
     "tbsp fresh basil leaves, chopped": "season_basil",
+    "tbsp lemon juice": "alnatura_lemon_juice",
+    "tbsp lemon juice (to taste)": "alnatura_lemon_juice",
     "tbsp parsley, washed and chopped (to taste)": "season_parsley_leaf",
     "thin green onion, diagonally sliced, as needed": "season_spring_onion",
     "thinly julienned carrot": "season_carrot",
@@ -4715,23 +5269,45 @@
     "tomatoes, washed and finely chopped": "season_tomato",
     "tomatoes, washed and thinly sliced": "season_tomato",
     "tsp freshly chopped basil": "season_basil",
+    "tsp lemon juice": "alnatura_lemon_juice",
+    "turnip": "season_turnip",
+    "turnip(s), peeled and finely diced (optional)": "season_turnip",
+    "turnip(s), peeled and quartered": "season_turnip",
+    "turnip, diced": "season_turnip",
+    "turnip, peeled and cut into 2 cm pieces": "season_turnip",
+    "turnip, peeled and cut into small cubes (optional)": "season_turnip",
+    "turnip, peeled and cut into small cubes (to taste)": "season_turnip",
+    "turnip, peeled and cut into small pieces": "season_turnip",
+    "turnip, peeled and diced": "season_turnip",
+    "turnip, peeled and quartered": "season_turnip",
+    "turnip, peeled and sliced into rounds": "season_turnip",
+    "turnips, peeled and finely diced (optional)": "season_turnip",
+    "turnips, peeled and quartered": "season_turnip",
+    "turnips, quartered": "season_turnip",
     "uht milk": "milk",
     "unpeeled apples, diced": "season_apple",
     "unsweetened soy milk": "alpro_drinks",
+    "vegetable juice": "alnatura_vegetable_juice",
     "vegetable spread": "label_required",
     "vegetarian spread": "label_required",
     "vine tomato(es), quartered": "season_tomato",
     "vine tomatoes, cut into eight": "season_tomato",
     "vine tomatoes, quartered": "season_tomato",
+    "walnuts": "season_walnut",
+    "walnuts, broken by hand": "season_walnut",
+    "walnuts, finely chopped": "season_walnut",
     "washed and chopped fresh basil leaves": "season_basil",
     "washed and chopped parsley": "season_parsley_leaf",
+    "washed and coarsely chopped kale": "season_kale",
     "washed and diced tomatoes": "season_tomato",
     "washed and diced zucchini": "season_courgette",
     "washed and halved cherry tomatoes": "season_tomato",
+    "washed and roughly chopped kale": "season_kale",
     "washed blueberries": "season_blueberry",
     "washed parsley leaves": "season_parsley_leaf",
     "washed red grape": "season_grape",
     "washed red grapes": "season_grape",
+    "washed, coarsely chopped kale leaves": "season_kale",
     "waxy potatoes": "season_potato",
     "waxy potatoes, peeled and cut into pieces": "season_potato",
     "wheat flour": "dry_staple",

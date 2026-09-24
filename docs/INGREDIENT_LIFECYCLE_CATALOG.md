@@ -5,19 +5,22 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-24.4)
+## Reviewed coverage (2026-09-24.5)
 
-- 79 produce groups, including fruit, leafy vegetables, roots, asparagus,
+- 86 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
-  savoy cabbage, pak choi, shallots and wild garlic.
-- 25 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+  savoy cabbage, pak choi, shallots, wild garlic, turnips, snow peas, walnuts,
+  hazelnuts, artichokes, melons and kiwi.
+- 33 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro or Oatly), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
   hummus, chickpeas, kidney beans, white beans, lentils and baked beans. Separate
   canned-form profiles retain generic guidance alongside verified product rules
   for legumes, sweetcorn and tomato pieces. Brand, product and handling
-  conditions remain attached. There are 17 reviewed product barcodes.
+  conditions remain attached. Alnatura apple purée, apple, orange, vegetable,
+  sauerkraut, beetroot, lemon and ginger juices add product-specific guidance.
+  There are 27 reviewed product barcodes and 1,224 exact canonical names.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, cream cheese and
   coconut cream.
@@ -33,7 +36,8 @@ entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
 Season months are German availability guidance from the twelve monthly
 calendars published by the Hessische Lehrkräfteakademie, BZfE produce guides,
 the BVEO pak choi guide, Hessen VerbraucherFenster and the Verbraucherzentrale
-season calendar. For the Hessian monthly calendar entries, the source region
+season calendar, BUND Naturschutz's Bavarian calendar and Hortipendium.
+For the Hessian monthly calendar entries, the source region
 (`DE-HE`), country (`DE`), source links and review date are preserved. The source
 includes stored produce and protected cultivation; these months must not be
 labelled as exclusively fresh outdoor harvest. Ordinary potatoes have year-round
@@ -57,6 +61,23 @@ availability do not extend those profiles. BZfE identifies July–October as the
 main availability period for fresh German shallots. Hessen VerbraucherFenster
 places wild garlic in March–May, with the season ending around mid-May. The
 month-level guidance remains approximate and does not identify wild plants.
+
+Turnip roots use Hortipendium's sowing-dependent June–mid-November harvest
+range, attributed to Gartenakademie Rheinland-Pfalz (`DE-RP`, `outdoor_harvest`).
+This is horticultural harvest guidance, not a complete national market calendar.
+Turnip greens and ambiguous yellow turnips/swede remain separate. Snow peas
+and mangetout now have their own BZfE June–August outdoor profile instead of
+sharing the shelled-pea calendar. BZfE also identifies September–October regional
+walnuts (`DE`, `regional_seasonal_availability`).
+
+The Bavarian calendar supplies artichokes (July–October), melons
+(August–September), hazelnuts (September–November) and kiwi (September–October).
+These retain `DE-BY` and `regional_seasonal_availability`, including the calendar's
+secondary season; they are not labelled as exclusively outdoor harvest.
+Plain shelled/chopped/ground nuts retain their crop's seasonal shopping hint.
+This does not limit the availability of stored nuts or apply to roasted nuts,
+nut flour, paste, oil or mixtures. Bitter melon is not included in the melon
+profile. Preserved artichokes and cooked snow peas remain unassigned.
 
 The calendars list monthly highlights rather than every crop. A listed month
 returns `in_season`, twelve listed months return `year_round`, and an omitted
@@ -111,6 +132,22 @@ handling condition. Each rule links to its own manufacturer product page.
 | Baked Beans, 360 g jar | 4104420141162 | 2 | — |
 | Mais, 330 g can | 4104420234987 | 1 | Transferred to a non-metal container |
 | Tomatenstücke Natur, 400 g can | 4104420234857 | 3 | Transferred to a container |
+| Apfelmark, 360 g | 4104420227408 | 3 | — |
+| Apfel-Direktsaft naturtrüb, 1 l | 4104420208735 | 3 | — |
+| Milder Apfelsaft naturtrüb, 1 l | 4104420179677 | 3 | — |
+| Orange-Direktsaft, 1 l | 4104420231214 | 3 | — |
+| Gemüse-Direktsaft, 500 ml | 4104420072862 | 3 | — |
+| Gemüse-Direktsaft feldfrisch verarbeitet, 330 ml | 4104420133365 | 5 | — |
+| Sauerkraut-Direktsaft, 500 ml | 4104420072800 | 3 | — |
+| Rote Bete-Direktsaft feldfrisch verarbeitet, 330 ml | 4104420070202 | 5 | — |
+| Zitrone-Direktsaft, 750 ml | 4104420228986 | 14 | — |
+| Ingwer-Direktsaft, 200 ml | 4104420260467 | 14 | — |
+
+Juice intervals vary by product: the two vegetable juices have separate 3- and
+5-day rules. The 14-day lemon and ginger intervals do not transfer to other
+juices. Applesauce and juice profiles do not assign those clocks to whole fruit,
+freshly squeezed juice, apple compote or juice-and-zest mixtures. General names
+still need the matching packaged product; homemade preparations remain unknown.
 
 Brand alone cannot select these product-specific intervals. Missing, invalid or
 different barcodes leave the deadline unknown. Barcodes must be strings with
@@ -173,6 +210,7 @@ existing packages, change weekly-plan ranking or replace existing reminders.
 `python tests/test_ingredient_lifecycle.py` covers evidence validation, country
 and month boundaries, unknown/preserved forms, package precedence, brand,
 product barcode and temperature gates, product-versus-generic precedence,
-can/jar distinctions, leap years, earlier printed dates, unopened packages, exact
+can/jar distinctions, juice formulation and fresh/prepared boundaries, regional
+crop calendars, leap years, earlier printed dates, unopened packages, exact
 identity, recipe/picker propagation, and copy isolation. The existing Validate
 workflow runs it and audits the actual release catalog on Python 3.13.
