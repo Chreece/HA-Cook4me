@@ -48,6 +48,7 @@ with sync_playwright() as p:
         page.evaluate("app.show('week')")
         check(page,"[...app.shadowRoot.querySelectorAll('.rx-week-day')].every(n=>n.querySelectorAll('.rx-week-slot').length===3 && n.querySelector('.ui203-day-meta')?.textContent.includes('3'))",prefix+'day grouping keeps all three meals with each date')
         check(page,"[...app.shadowRoot.querySelectorAll('article.ui203-recipe')].every(n=>{const media=n.querySelector('.rx-v69-media'),dock=n.querySelector('.ui203-action-dock');return media&&!media.contains(dock)&&dock.getBoundingClientRect().top>=media.getBoundingClientRect().bottom-1})",prefix+'recipe actions stay below photos')
+        check(page,"(()=>{const labels=[...app.shadowRoot.querySelector('article.ui203-recipe').querySelectorAll('.v218-stored-at')].map(n=>n.textContent);return labels.some(x=>x.includes('Ντουλάπι'))&&labels.some(x=>x.includes('Ψυγείο'))})()",prefix+'recipe ingredients show their defined storage places')
         check(page,"app.shadowRoot.querySelector('[aria-current=date] .ui203-today')?.textContent==='Σήμερα'",prefix+'today has an explicit day badge')
         shot(page,f'weekly-{width}')
         # Original day selector still sends exactly the original slot IDs.
@@ -62,8 +63,10 @@ with sync_playwright() as p:
         check(page,"app._filters().maxCost===2",prefix+'per-view filters stay independent')
         # More is native disclosure; its original button routes still run.
         card=page.locator('article.ui203-recipe').first
+        page.evaluate("(()=>{const s=app.shadowRoot.querySelector('article.ui203-recipe details.ui203-more > summary').getBoundingClientRect();window.moreBefore={left:s.left,top:s.top,width:s.width}})()")
         card.locator('details.ui203-more > summary').click()
         check(page,"!!app.shadowRoot.querySelector('details.ui203-more[open]')&&!app._v63RecipeDialog",prefix+'More opens without opening recipe')
+        check(page,"(()=>{const d=app.shadowRoot.querySelector('article.ui203-recipe details.ui203-more[open]'),s=d.querySelector(':scope > summary').getBoundingClientRect();return Math.abs(s.left-moreBefore.left)<2&&Math.abs(s.top-moreBefore.top)<2&&d.querySelector('.ui203-more-grid')?.parentElement===d&&getComputedStyle(d).borderTopStyle!=='none'})()",prefix+'More stays anchored and groups expanded actions inside itself')
         card.locator('[data-v66-action=list]').click()
         page.wait_for_timeout(80)
         check(page,"app.calls.some(x=>x.type.endsWith('book_toggle')&&x.data.collection==='recipeList')",prefix+'secondary action retains its binding')
@@ -98,6 +101,19 @@ with sync_playwright() as p:
         for pane in ['food','places','integration','stock']:
             page.locator(f'[data-v78-pane={pane}]').click()
             check(page,f"app.shadowRoot.querySelector('[data-v78-section={pane}]').hidden===false",prefix+'kitchen '+pane+' still navigable')
+        page.evaluate("app._houseIngredients.push({key:'salt',name:'Αλάτι',unlimited:true,storageLocationId:'pantry',storage:'pantry'});app._v78State.houseIngredients=app._houseIngredients;app._renderTab()")
+        page.locator('[data-v78-pane=places]').click()
+        check(page,"(()=>{const n=app.shadowRoot.querySelector('.v218-unlimited-item');return n&&n.textContent.includes('Αλάτι')&&n.textContent.includes('Απεριόριστο')})()",prefix+'unlimited stock appears inside its defined storage place')
+        page.locator('[data-v78-pane=scale]').click()
+        page.wait_for_function("app.shadowRoot.querySelector('[data-v117-container] [data-use]')")
+        page.locator('[data-v117-container] [data-use]').click()
+        check(page,"app._v117ActiveContainerId==='jar-1'&&app.shadowRoot.querySelector('[data-v117-container] [data-use]').textContent.includes('Ακύρωση χρήσης')",prefix+'container Use changes to Unuse when active')
+        page.locator('[data-v117-container] [data-use]').click()
+        check(page,"app._v117ActiveContainerId===''&&app._v116SoftwareTare===0&&app.shadowRoot.querySelector('[data-v117-container] [data-use]').textContent.includes('Χρήση')",prefix+'container Unuse restores unused state')
+        check(page,"app.shadowRoot.querySelectorAll('[data-v218-unresolved]').length===1&&app.shadowRoot.querySelector('.v218-fallback-help')?.textContent.includes('προαιρετικός')",prefix+'nutrition fallback explains unresolved entries instead of implying broken catalog')
+        page.locator('[data-v218-unresolved] [data-v218-retry]').click()
+        page.wait_for_timeout(80)
+        check(page,"app._nutritionSettings.blockedFailures===0&&app.shadowRoot.querySelectorAll('[data-v218-unresolved]').length===0",prefix+'unresolved nutrition can be retried immediately')
         shot(page,f'kitchen-{width}')
         # Manual form, validation, barcode lookup, save/discard with original code.
         page.evaluate("app._v78Open('manual')")
