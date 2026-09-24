@@ -32,8 +32,8 @@ class LifecycleTests(unittest.TestCase):
     def test_bundled_data_has_reviewed_evidence(self):
         data = self.lifecycle.load_lifecycle_data()
         self.lifecycle.validate_lifecycle_data(data)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 79)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 25)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 86)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 33)
 
     def test_invalid_evidence_is_rejected(self):
         mutations = [
@@ -85,6 +85,70 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(result["consumeBy"], "2028-03-02")
         self.assertFalse(result["safetyGuarantee"])
         self.assertEqual(lot, saved)
+
+    def test_new_crop_calendars_preserve_regions_and_food_forms(self):
+        cases = (
+            ("Turnip, peeled and diced", [6, 7, 8, 9, 10, 11], "DE-RP", "outdoor_harvest"),
+            ("Snow peas", [6, 7, 8], "DE", "outdoor_harvest"),
+            ("Mangetout peas", [6, 7, 8], "DE", "outdoor_harvest"),
+            ("Shelled walnuts", [9, 10], "DE", "regional_seasonal_availability"),
+            ("Ground hazelnuts", [9, 10, 11], "DE-BY", "regional_seasonal_availability"),
+            ("Artichoke", [7, 8, 9, 10], "DE-BY", "regional_seasonal_availability"),
+            ("Melon balls", [8, 9], "DE-BY", "regional_seasonal_availability"),
+            ("Kiwi", [9, 10], "DE-BY", "regional_seasonal_availability"),
+        )
+        for name, months, region, basis in cases:
+            with self.subTest(name=name):
+                profile = self.profile(name)
+                evidence = profile["seasonality"]["regions"][0]
+                self.assertEqual(evidence["sourceRegion"], region)
+                self.assertEqual(evidence["basis"], basis)
+                for month in range(1, 13):
+                    self.assertEqual(self.lifecycle.seasonal_availability(profile, country="DE", month=month)["status"], "in_season" if month in months else "unknown")
+                self.assertEqual(self.lifecycle.seasonal_availability(profile, country="GR", month=months[0])["status"], "unknown")
+                self.assertNotIn("rules", profile["afterOpening"])
+        for name in ("Turnip greens", "Yellow turnip, cut into 2 cm pieces", "Rutabaga", "Snow peas, parboiled", "Frozen snow peas", "Walnut oil", "Roasted hazelnuts", "Hazelnut flour", "Hazelnut paste", "Artichoke hearts (fresh or frozen)", "Marinated artichoke hearts", "Frozen artichoke", "Bitter melon, seeds and pith removed, cut 1 cm wide", "Dried kiwi"):
+            with self.subTest(excluded=name):
+                self.assertEqual(self.profile(name)["seasonality"]["status"], "unknown")
+
+    def test_vegetable_juice_package_selects_its_own_interval(self):
+        profile = self.profile("Vegetable juice")
+        lot = {"openedAt": "2026-09-24", "brand": "Alnatura", "storage": "fridge"}
+        for code, days in (("4104420072862", 3), ("4104420133365", 5)):
+            with self.subTest(code=code):
+                lot["barcode"] = code
+                result = self.lifecycle.opening_window(profile, lot, temperature_c=4)
+                self.assertEqual(result["daysMax"], days)
+                self.assertEqual(result["consumeBy"], f"2026-09-{24 + days}")
+                lot["bestBefore"] = "2026-09-26"
+                self.assertEqual(self.lifecycle.opening_window(profile, lot, temperature_c=4)["consumeBy"], "2026-09-26")
+                del lot["bestBefore"]
+        for code in (None, "4104420231214", "4104420133366"):
+            lot["barcode"] = code
+            self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot, temperature_c=4))
+
+    def test_juice_and_puree_rules_do_not_transfer_to_other_foods(self):
+        cases = (
+            ("Applesauce", "4104420227408", 3, "Apple compote"),
+            ("Apple juice", "4104420208735", 3, "Apple"),
+            ("Apple juice", "4104420179677", 3, "Freshly squeezed apple juice"),
+            ("Orange juice", "4104420231214", 3, "Fresh orange juice"),
+            ("Sauerkraut juice", "4104420072800", 3, "Chopped sauerkraut with juice"),
+            ("Beetroot juice", "4104420070202", 5, "Beetroot"),
+            ("Lemon juice", "4104420228986", 14, "Freshly squeezed lemon juice"),
+            ("Ginger juice", "4104420260467", 14, "Ginger"),
+        )
+        for name, code, days, other_form in cases:
+            with self.subTest(name=name, code=code):
+                profile = self.profile(name)
+                lot = {"openedAt": "2026-09-24", "brand": "Alnatura", "storage": "fridge", "barcode": code}
+                result = self.lifecycle.opening_window(profile, lot, temperature_c=4)
+                self.assertEqual(result["daysMax"], days)
+                self.assertFalse(result["safetyGuarantee"])
+                self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile(other_form), lot, temperature_c=4))
+                for changes, temp in (({"brand": "Other brand"}, 4), ({"storage": "pantry"}, 4), ({}, None), ({}, 5)):
+                    self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot | changes, temperature_c=temp))
+                self.assertEqual(self.lifecycle.opening_window(profile, lot | {"useWithinDays": 1})["consumeBy"], "2026-09-25")
 
     def test_earlier_printed_date_caps_both_ends(self):
         result = self.lifecycle.opening_window(self.profile("Canned chopped tomatoes"), {"openedAt": "2026-12-30", "bestBefore": "2027-01-01", "storage": "fridge"}, temperature_c=4)
