@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 from collections import Counter
+from contextlib import asynccontextmanager
 from copy import deepcopy
 from datetime import datetime, timezone
 from typing import Any
@@ -197,7 +198,18 @@ class Cook4MeRecipeHub:
         }
 
     async def _save(self) -> None:
-        await self._store.async_save(self._data)
+        await self._store.async_save(deepcopy(self._data))
+
+    @asynccontextmanager
+    async def _durable_mutation(self):
+        """Serialize one in-place mutation and roll memory back on failed storage."""
+        async with self._lock:
+            before = deepcopy(self._data)
+            try:
+                yield
+            except BaseException:
+                self._data = before
+                raise
 
     def snapshot(self) -> dict[str, Any]:
         return deepcopy(self._data)
@@ -224,7 +236,7 @@ class Cook4MeRecipeHub:
         return self._habit_terms()
 
     async def async_set_profile(self, profile: dict[str, Any]) -> dict[str, Any]:
-        async with self._lock:
+        async with self._durable_mutation():
             merged = deepcopy(self._data["profile"])
             # Storage mutations need their own locked referential checks.
             merged.update({key: value for key, value in profile.items() if key != "storageLocations"})
@@ -392,7 +404,7 @@ class Cook4MeRecipeHub:
         best_before: str = "",
         lot_metadata: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
-        async with self._lock:
+        async with self._durable_mutation():
             profile = deepcopy(self._data["profile"])
             lot_metadata = validate_location(profile, lot_metadata)
             house = add_inventory_item(
@@ -420,7 +432,7 @@ class Cook4MeRecipeHub:
         best_before: Any = None,
         lots: Any = None,
     ) -> dict[str, Any]:
-        async with self._lock:
+        async with self._durable_mutation():
             profile = deepcopy(self._data["profile"])
             kwargs: dict[str, Any] = {}
             if best_before is not None:
@@ -442,7 +454,7 @@ class Cook4MeRecipeHub:
             return self.profile
 
     async def async_inventory_remove(self, identity: str) -> dict[str, Any]:
-        async with self._lock:
+        async with self._durable_mutation():
             profile = deepcopy(self._data["profile"])
             house = remove_inventory_item(profile.get("houseIngredients"), identity)
             profile["houseIngredients"] = house
@@ -470,7 +482,7 @@ class Cook4MeRecipeHub:
             "recipeIngredients": deepcopy(recipe.get("ingredients") or []),
             "ingredients": ingredients,
         }
-        async with self._lock:
+        async with self._durable_mutation():
             self._data["pendingConsumption"] = pending
             await self._save()
         return deepcopy(pending)
@@ -482,7 +494,7 @@ class Cook4MeRecipeHub:
         *,
         strict: bool = False,
     ) -> dict[str, Any]:
-        async with self._lock:
+        async with self._durable_mutation():
             pending = self._data.get("pendingConsumption")
             if not isinstance(pending, dict) or str(pending.get("id")) != str(pending_id):
                 raise ValueError("Consumption confirmation is no longer pending")
@@ -512,7 +524,7 @@ class Cook4MeRecipeHub:
         strict: bool = False,
     ) -> dict[str, Any]:
         """Atomically restore an old meal deduction and apply the edited mapping."""
-        async with self._lock:
+        async with self._durable_mutation():
             profile = deepcopy(self._data["profile"])
             restored_house, restored = restore_consumption(
                 profile.get("houseIngredients"), previous_report
@@ -535,7 +547,7 @@ class Cook4MeRecipeHub:
             }
 
     async def async_clear_pending_consumption(self, pending_id: str) -> bool:
-        async with self._lock:
+        async with self._durable_mutation():
             pending = self._data.get("pendingConsumption")
             if not isinstance(pending, dict) or str(pending.get("id")) != str(pending_id):
                 return False
@@ -548,7 +560,7 @@ class Cook4MeRecipeHub:
 
     async def async_set_user_ui_preferences(self, user_id: str, preferences: dict[str, Any]) -> dict[str, Any]:
         from .shared_recipe_filters import merge_preferences
-        async with self._lock:
+        async with self._durable_mutation():
             users = self._data.setdefault("userUiPreferences", {})
             users[user_id] = merge_preferences(users.get(user_id, {}), preferences)
             await self._save()
@@ -556,7 +568,7 @@ class Cook4MeRecipeHub:
 
     async def async_set_ui_preferences(self, preferences: dict[str, Any]) -> dict[str, Any]:
         """Persist Recipe Hub display controls without touching dietary profile data."""
-        async with self._lock:
+        async with self._durable_mutation():
             merged = deepcopy(self._data["uiPreferences"])
             merged.update(preferences)
             self._data["uiPreferences"] = self._normalize_ui_preferences(merged)
@@ -579,7 +591,7 @@ class Cook4MeRecipeHub:
                 "updatedAt": now,
             }
         )
-        async with self._lock:
+        async with self._durable_mutation():
             items = self._data["recipes"]
             for index, current in enumerate(items):
                 if current.get("id") == recipe_id:
@@ -593,7 +605,7 @@ class Cook4MeRecipeHub:
         return deepcopy(normalized)
 
     async def async_delete_recipe(self, recipe_id: str) -> bool:
-        async with self._lock:
+        async with self._durable_mutation():
             before = len(self._data["recipes"])
             self._data["recipes"] = [x for x in self._data["recipes"] if x.get("id") != recipe_id]
             changed = len(self._data["recipes"]) != before
@@ -611,7 +623,7 @@ class Cook4MeRecipeHub:
             "ingredientNames": recipe_ingredient_names(recipe)[:80],
             "courses": deepcopy(recipe.get("courses") or [])[:20],
         }
-        async with self._lock:
+        async with self._durable_mutation():
             self._data["history"] = (self._data["history"] + [entry])[-100:]
             await self._save()
 
