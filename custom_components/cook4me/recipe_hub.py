@@ -289,7 +289,7 @@ class Cook4MeRecipeHub:
             if unlimited:
                 profile["houseIngredients"] = add_inventory_item(
                     profile.get("houseIngredients"), ingredient, quantity=None, unit=unit,
-                    unlimited=True, best_before=best_before, lot_metadata=None)
+                    unlimited=True, best_before=best_before, lot_metadata=metadata)
                 lot_ids = []
             else:
                 if any(row.get("unlimited") and inventory_identity(row) == inventory_identity(ingredient)

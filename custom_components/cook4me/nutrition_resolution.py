@@ -149,6 +149,36 @@ class Cook4MeNutritionResolutionStore:
                 count += 1
         return count
 
+    def active_rows(
+        self,
+        identities: set[str] | None = None,
+        *,
+        mode: str | None = None,
+        now: datetime | None = None,
+        limit: int = 80,
+    ) -> list[dict[str, Any]]:
+        """Return active negative-cache rows so the UI can explain/review them."""
+        current = (now or _utcnow()).astimezone(timezone.utc)
+        wanted = set(identities or ())
+        rows: list[dict[str, Any]] = []
+        for identity, raw in (self._data.get("failures") or {}).items():
+            if wanted and identity not in wanted:
+                continue
+            if not isinstance(raw, dict) or not _mode_matches(raw, mode):
+                continue
+            retry_at = _parse_utc(raw.get("retryAt"))
+            if retry_at is None or retry_at <= current:
+                continue
+            rows.append({"identity": identity, **deepcopy(raw)})
+        rows.sort(
+            key=lambda row: (
+                _text(row.get("retryAt")),
+                _text(row.get("identity")),
+            )
+        )
+        return rows[: max(1, min(int(limit), 200))]
+
+
     async def async_record_failure(
         self,
         identity: str,

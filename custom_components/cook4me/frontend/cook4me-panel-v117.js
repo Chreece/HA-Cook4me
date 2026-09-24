@@ -5,28 +5,28 @@ const WORDS={
   tab:'Smart scale',title:'Smart scale',help:'Use a Home Assistant weight sensor for recipes, scanned products, stock, portions and leftovers.',
   sensor:'Weight sensor',status:'Scale status',tare:'Tare scale',clear:'Clear saved/software tare',
   containers:'Containers',containersHelp:'Save the empty weight of bowls, jars or other containers once, without taring the scale first. When you use one, Cook4me subtracts that saved tare from the live scale weight automatically.',
-  noContainers:'No saved containers yet.',active:'Active',use:'Use',edit:'Edit',delete:'Delete',
+  noContainers:'No saved containers yet.',active:'Active',use:'Use',unuse:'Unuse',edit:'Edit',delete:'Delete',
   addContainer:'Add container',editContainer:'Edit container',containerName:'Container name',emptyWeight:'Empty container weight',readScale:'Read current scale weight',
   save:'Save container',cancel:'Cancel editing',nameRequired:'Enter a container name.',weightRequired:'Enter the empty container weight or place the empty container on the scale and press “Read current scale weight”.',
-  saved:'Container saved.',deleted:'Container deleted.',using:'Container tare applied.'
+  saved:'Container saved.',deleted:'Container deleted.',using:'Container tare applied.',unused:'Container tare removed.'
  },
  de:{
   tab:'Smart-Waage',title:'Smart-Waage',help:'Home-Assistant-Gewichtssensor für Rezepte, gescannte Produkte, Vorrat, Portionen und Reste.',
   sensor:'Gewichtssensor',status:'Waagenstatus',tare:'Waage tarieren',clear:'Gespeicherte/Software-Tara löschen',
   containers:'Behälter',containersHelp:'Speichere das Leergewicht von Schüsseln, Gläsern oder anderen Behältern einmal, ohne die Waage vorher zu tarieren. Bei „Verwenden“ zieht Cook4me diese Tara automatisch vom Live-Gewicht ab.',
-  noContainers:'Noch keine Behälter gespeichert.',active:'Aktiv',use:'Verwenden',edit:'Bearbeiten',delete:'Löschen',
+  noContainers:'Noch keine Behälter gespeichert.',active:'Aktiv',use:'Verwenden',unuse:'Nicht mehr verwenden',edit:'Bearbeiten',delete:'Löschen',
   addContainer:'Behälter hinzufügen',editContainer:'Behälter bearbeiten',containerName:'Behältername',emptyWeight:'Leergewicht des Behälters',readScale:'Aktuelles Waagengewicht übernehmen',
   save:'Behälter speichern',cancel:'Bearbeitung abbrechen',nameRequired:'Gib einen Behälternamen ein.',weightRequired:'Gib das Leergewicht ein oder stelle den leeren Behälter auf die Waage und wähle „Aktuelles Waagengewicht übernehmen“.',
-  saved:'Behälter gespeichert.',deleted:'Behälter gelöscht.',using:'Behälter-Tara angewendet.'
+  saved:'Behälter gespeichert.',deleted:'Behälter gelöscht.',using:'Behälter-Tara angewendet.',unused:'Behälter-Tara entfernt.'
  },
  el:{
   tab:'Έξυπνη ζυγαριά',title:'Έξυπνη ζυγαριά',help:'Χρησιμοποίησε αισθητήρα βάρους του Home Assistant για συνταγές, σαρωμένα προϊόντα, απόθεμα, μερίδες και περισσεύματα.',
   sensor:'Αισθητήρας βάρους',status:'Κατάσταση ζυγαριάς',tare:'Απόβαρο ζυγαριάς',clear:'Καθαρισμός αποθηκευμένου/λογισμικού απόβαρου',
   containers:'Δοχεία',containersHelp:'Αποθήκευσε μία φορά το βάρος του άδειου μπολ, βάζου ή άλλου δοχείου, χωρίς να κάνεις πρώτα απόβαρο στη ζυγαριά. Όταν πατήσεις «Χρήση», το Cook4me αφαιρεί αυτόματα το αποθηκευμένο απόβαρο από το ζωντανό βάρος.',
-  noContainers:'Δεν υπάρχουν ακόμη αποθηκευμένα δοχεία.',active:'Ενεργό',use:'Χρήση',edit:'Επεξεργασία',delete:'Διαγραφή',
+  noContainers:'Δεν υπάρχουν ακόμη αποθηκευμένα δοχεία.',active:'Ενεργό',use:'Χρήση',unuse:'Ακύρωση χρήσης',edit:'Επεξεργασία',delete:'Διαγραφή',
   addContainer:'Προσθήκη δοχείου',editContainer:'Επεξεργασία δοχείου',containerName:'Όνομα δοχείου',emptyWeight:'Βάρος άδειου δοχείου',readScale:'Χρήση τωρινού βάρους ζυγαριάς',
   save:'Αποθήκευση δοχείου',cancel:'Ακύρωση επεξεργασίας',nameRequired:'Δώσε όνομα στο δοχείο.',weightRequired:'Δώσε το βάρος του άδειου δοχείου ή βάλε το άδειο δοχείο στη ζυγαριά και πάτησε «Χρήση τωρινού βάρους ζυγαριάς».',
-  saved:'Το δοχείο αποθηκεύτηκε.',deleted:'Το δοχείο διαγράφηκε.',using:'Εφαρμόστηκε το απόβαρο του δοχείου.'
+  saved:'Το δοχείο αποθηκεύτηκε.',deleted:'Το δοχείο διαγράφηκε.',using:'Εφαρμόστηκε το απόβαρο του δοχείου.',unused:'Αφαιρέθηκε το απόβαρο του δοχείου.'
  }
 };
 class Cook4MeRecipeHubPanelV117 extends BasePanel{
@@ -87,7 +87,7 @@ class Cook4MeRecipeHubPanelV117 extends BasePanel{
  _v117ContainersHtml(){
   const rows=this._v116Scale?.containers||[];
   if(!rows.length)return `<p class="muted v117-empty">${this._escape(this._v117Text('noContainers'))}</p>`;
-  return `<div class="v117-containers">${rows.map(row=>`<div class="v117-container" data-v117-container="${this._escape(row.id)}"><div class="v117-container-main"><strong>${this._escape(row.name)}</strong><span>${this._v116Num(row.tareGrams,3)} g</span>${row.id===this._v117ActiveContainerId?`<span class="chip">${this._escape(this._v117Text('active'))}</span>`:''}</div><div class="v117-container-actions"><button type="button" class="btn secondary" data-use>⚖ ${this._escape(this._v117Text('use'))}</button><button type="button" class="btn secondary" data-edit>${this._escape(this._v117Text('edit'))}</button><button type="button" class="btn secondary" data-delete>${this._escape(this._v117Text('delete'))}</button></div></div>`).join('')}</div>`;
+  return `<div class="v117-containers">${rows.map(row=>`<div class="v117-container" data-v117-container="${this._escape(row.id)}"><div class="v117-container-main"><strong>${this._escape(row.name)}</strong><span>${this._v116Num(row.tareGrams,3)} g</span>${row.id===this._v117ActiveContainerId?`<span class="chip">${this._escape(this._v117Text('active'))}</span>`:''}</div><div class="v117-container-actions"><button type="button" class="btn secondary" data-v117-use>⚖ ${this._escape(this._v117Text(row.id===this._v117ActiveContainerId?'unuse':'use'))}</button><button type="button" class="btn secondary" data-edit>${this._escape(this._v117Text('edit'))}</button><button type="button" class="btn secondary" data-delete>${this._escape(this._v117Text('delete'))}</button></div></div>`).join('')}</div>`;
  }
  _v117EditorHtml(){
   const row=(this._v116Scale?.containers||[]).find(item=>String(item.id)===String(this._v117EditingContainerId));
@@ -105,7 +105,7 @@ class Cook4MeRecipeHubPanelV117 extends BasePanel{
   card.querySelector('#v116Clear')?.addEventListener('click',()=>{this._v116SoftwareTare=0;this._v117ActiveContainerId='';this._v116Card(section);this._v116Live();});
   card.querySelectorAll('[data-v117-container]').forEach(node=>{
    const id=node.dataset.v117Container,row=(this._v116Scale?.containers||[]).find(item=>String(item.id)===String(id));if(!row)return;
-   node.querySelector('[data-use]').onclick=()=>{this._v116SoftwareTare=Number(row.tareGrams||0);this._v117ActiveContainerId=id;this._v116Card(section);this._v116Live();this._message(this._v117Text('using'));};
+   node.querySelector('[data-v117-use]').onclick=()=>{const active=this._v117ActiveContainerId===id;if(active){this._v116SoftwareTare=0;this._v117ActiveContainerId='';}else{this._v116SoftwareTare=Number(row.tareGrams||0);this._v117ActiveContainerId=id;}this._v116Card(section);this._v116Live();this._message(this._v117Text(active?'unused':'using'));};
    node.querySelector('[data-edit]').onclick=()=>{this._v117EditingContainerId=id;this._v116Card(section);card.querySelector('#v117ContainerName')?.focus();};
    node.querySelector('[data-delete]').onclick=async()=>{try{this._v116Scale=await this._api('cook4me/v37/container_delete',{entry_id:this._entryId,container_id:id});if(this._v117ActiveContainerId===id){this._v117ActiveContainerId='';this._v116SoftwareTare=0;}if(this._v117EditingContainerId===id)this._v117EditingContainerId='';this._v116Card(section);this._message(this._v117Text('deleted'));}catch(error){this._message(String(error.message||error),true);}};
   });

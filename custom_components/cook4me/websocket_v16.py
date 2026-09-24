@@ -102,10 +102,35 @@ async def _catalog_status(hass: HomeAssistant, bridge) -> dict[str, Any]:
         result["catalogCount"] = nutrition_store.generic_count
         return result
 
-    identities = {ingredient_identity(row) for row in catalog}
+    catalog_by_identity = {
+        ingredient_identity(row): row
+        for row in catalog
+        if ingredient_identity(row)
+    }
+    identities = set(catalog_by_identity)
     mapped = sum(1 for ident in identities if nutrition_store.get_generic(ident) is not None)
     blocked = resolution_store.active_count(identities, mode=mode)
+    active = resolution_store.active_rows(identities, mode=mode, limit=80)
     remaining = max(0, len(identities) - mapped)
+    unresolved_details = []
+    for failure in active:
+        ident = str(failure.get("identity") or "")
+        ingredient = catalog_by_identity.get(ident) or {}
+        unresolved_details.append(
+            {
+                "identity": ident,
+                "name": str(
+                    ingredient.get("name")
+                    or ingredient.get("canonicalName")
+                    or failure.get("query")
+                    or ident
+                ),
+                "query": str(failure.get("query") or ""),
+                "reason": str(failure.get("reason") or "not_resolved"),
+                "confidence": failure.get("confidence"),
+                "retryAfter": str(failure.get("retryAt") or ""),
+            }
+        )
     result.update(
         {
             "catalogCount": mapped,
@@ -113,6 +138,11 @@ async def _catalog_status(hass: HomeAssistant, bridge) -> dict[str, Any]:
             "remaining": remaining,
             "blockedFailures": min(remaining, blocked),
             "actionableRemaining": max(0, remaining - blocked),
+            "unresolvedDetails": unresolved_details,
+            "unresolvedDetailsTruncated": max(
+                0, min(remaining, blocked) - len(unresolved_details)
+            ),
+            "genericFallbackCatalog": True,
         }
     )
     return result
@@ -250,6 +280,8 @@ def async_register(hass: HomeAssistant) -> None:
         ws_nutrition_settings,
         ws_nutrition_settings_set,
         ws_nutrition_catalog_fill,
+        ws_nutrition_unresolved_retry,
+        ws_nutrition_generic_set,
     ):
         websocket_api.async_register_command(hass, command)
 
@@ -350,6 +382,92 @@ async def ws_nutrition_settings_set(
         cleared = await resolution_store.async_clear_transient()
         result = await _catalog_status(hass, bridge)
         result["clearedTransientFailures"] = cleared
+    except Exception as exc:
+        legacy._send_error(connection, msg, exc)
+        return
+    connection.send_result(msg["id"], result)
+
+
+@websocket_api.websocket_command(
+    {
+        vol.Required("type"): "cook4me/v16/nutrition_unresolved_retry",
+        vol.Optional("entry_id"): str,
+        vol.Required("identity"): str,
+    }
+)
+@websocket_api.async_response
+async def ws_nutrition_unresolved_retry(
+    hass: HomeAssistant,
+    connection: websocket_api.ActiveConnection,
+    msg: dict[str, Any],
+) -> None:
+    try:
+        bridge = legacy._bridge(hass, msg.get("entry_id"))
+        wanted = str(msg.get("identity") or "").strip()
+        catalog = _catalog_identity_rows(await _english_catalog(hass, bridge))
+        ingredient = next(
+            (row for row in catalog if ingredient_identity(row) == wanted),
+            None,
+        )
+        if ingredient is None:
+            raise ValueError("Ingredient is no longer in the Cook4Me catalog")
+        resolution_store = await nutrition_resolution_store_for_bridge(bridge)
+        await resolution_store.async_clear(wanted)
+        resolution = await _resolve_missing(
+            hass,
+            bridge,
+            [ingredient],
+            requested_limit=1,
+        )
+        result = {**resolution, **(await _catalog_status(hass, bridge))}
+    except Exception as exc:
+        legacy._send_error(connection, msg, exc)
+        return
+    connection.send_result(msg["id"], result)
+
+
+@websocket_api.websocket_command(
+    {
+        vol.Required("type"): "cook4me/v16/nutrition_generic_set",
+        vol.Optional("entry_id"): str,
+        vol.Required("identity"): str,
+        vol.Required("nutrition"): dict,
+    }
+)
+@websocket_api.async_response
+async def ws_nutrition_generic_set(
+    hass: HomeAssistant,
+    connection: websocket_api.ActiveConnection,
+    msg: dict[str, Any],
+) -> None:
+    try:
+        bridge = legacy._bridge(hass, msg.get("entry_id"))
+        wanted = str(msg.get("identity") or "").strip()
+        catalog = _catalog_identity_rows(await _english_catalog(hass, bridge))
+        ingredient = next(
+            (row for row in catalog if ingredient_identity(row) == wanted),
+            None,
+        )
+        if ingredient is None:
+            raise ValueError("Ingredient is no longer in the Cook4Me catalog")
+        raw = dict(msg.get("nutrition") or {})
+        raw["source"] = "user_manual"
+        raw["label"] = str(
+            ingredient.get("name")
+            or ingredient.get("canonicalName")
+            or wanted
+        )
+        store = await nutrition_store_for_bridge(bridge)
+        await store.async_set_generic(
+            wanted,
+            ingredient,
+            raw,
+            query=await _english_name(hass, bridge, ingredient),
+            confidence=1.0,
+        )
+        resolution_store = await nutrition_resolution_store_for_bridge(bridge)
+        await resolution_store.async_clear(wanted)
+        result = await _catalog_status(hass, bridge)
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
         return

@@ -6,20 +6,20 @@ const TEXT={
   en:{
     officialEnergy:"Energy",
     officialEnergyUnknownUnit:"SEB proves this value is per 100 g, but this payload does not expose the energy unit.",
-    cachedUnresolved:"temporarily cached unresolved",
-    readyToTry:"ready to try",
+    cachedUnresolved:"USDA matches needing review",
+    readyToTry:"USDA lookups ready to try",
   },
   de:{
     officialEnergy:"Energie",
     officialEnergyUnknownUnit:"SEB bestätigt den Bezug pro 100 g, aber diese Antwort enthält keine Einheit für den Energiewert.",
-    cachedUnresolved:"vorübergehend als ungelöst zwischengespeichert",
-    readyToTry:"für einen neuen Versuch bereit",
+    cachedUnresolved:"USDA-Treffer zur Prüfung",
+    readyToTry:"USDA-Suchen bereit",
   },
   el:{
     officialEnergy:"Ενέργεια",
     officialEnergyUnknownUnit:"Η SEB επιβεβαιώνει ότι η τιμή είναι ανά 100 g, αλλά αυτό το payload δεν εκθέτει τη μονάδα ενέργειας.",
-    cachedUnresolved:"προσωρινά αποθηκευμένα ως μη επιλυμένα",
-    readyToTry:"έτοιμα για νέα προσπάθεια",
+    cachedUnresolved:"αντιστοιχίσεις USDA που χρειάζονται έλεγχο",
+    readyToTry:"αναζητήσεις USDA έτοιμες για προσπάθεια",
   },
 };
 
