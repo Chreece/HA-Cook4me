@@ -5,13 +5,14 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-24.5)
+## Reviewed coverage (2026-09-24.6)
 
-- 86 produce groups, including fruit, leafy vegetables, roots, asparagus,
+- 90 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
   savoy cabbage, pak choi, shallots, wild garlic, turnips, snow peas, walnuts,
-  hazelnuts, artichokes, melons and kiwi.
-- 33 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+  hazelnuts, artichokes, melons, kiwi, chestnuts, sweet potatoes, swede and
+  chanterelles.
+- 36 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro or Oatly), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
@@ -19,11 +20,12 @@ cloud credentials, or per-scan file reads are needed.
   canned-form profiles retain generic guidance alongside verified product rules
   for legumes, sweetcorn and tomato pieces. Brand, product and handling
   conditions remain attached. Alnatura apple purée, apple, orange, vegetable,
-  sauerkraut, beetroot, lemon and ginger juices add product-specific guidance.
-  There are 27 reviewed product barcodes and 1,224 exact canonical names.
+  sauerkraut, beetroot, lemon, ginger and grape juices add product-specific
+  guidance, along with Alnatura natural/smoked tofu, salsa and curry sauces.
+  There are 33 reviewed product barcodes and 1,261 exact canonical names.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, cream cheese and
-  coconut cream.
+  coconut cream, tomato paste and ketchup.
 - Dry staples have no invented short spoilage countdown. Their package
   instructions still apply; missing data never means indefinitely safe.
 
@@ -78,6 +80,22 @@ Plain shelled/chopped/ground nuts retain their crop's seasonal shopping hint.
 This does not limit the availability of stored nuts or apply to roasted nuts,
 nut flour, paste, oil or mixtures. Bitter melon is not included in the melon
 profile. Preserved artichokes and cooked snow peas remain unassigned.
+
+LWG's Bavarian horticultural guidance supplies late September–October chestnut
+harvest and an October sweet-potato harvest highlight (`DE-BY`, `outdoor_harvest`).
+Both are approximate and weather-dependent; the sweet-potato source describes
+harvesting around the first surface frost, before the tubers freeze. These are
+not complete market calendars and do not extend to imported or stored produce.
+Yams, chestnut flour, sweetened chestnuts and explicitly cooked forms stay separate.
+
+Swede/rutabaga uses BZfE's September–November domestic harvest followed by storage
+until about April (`DE`, `seasonal_calendar_including_stored_produce`). It does
+not inherit the turnip calendar. Chanterelles use BZfE's July–August collection
+peak (`outdoor_harvest`). Applying that stated Central European peak to Germany
+is a geographic inference, recorded under `DE`; it is not a complete collection
+season or mushroom-identification advice. The article's unusually early Balkan
+imports in 2026 do not extend the recurring highlight months. Preserved mushrooms
+and mixed-species entries do not receive this profile.
 
 The calendars list monthly highlights rather than every crop. A listed month
 returns `in_season`, twelve listed months return `year_round`, and an omitted
@@ -142,6 +160,31 @@ handling condition. Each rule links to its own manufacturer product page.
 | Rote Bete-Direktsaft feldfrisch verarbeitet, 330 ml | 4104420070202 | 5 | — |
 | Zitrone-Direktsaft, 750 ml | 4104420228986 | 14 | — |
 | Ingwer-Direktsaft, 200 ml | 4104420260467 | 14 | — |
+| Tofu Natur (ungekühlt), 200 g | 4104420094840 | 2 | — |
+| Räuchertofu (ungekühlt), 200 g | 4104420094864 | 2 | — |
+| Rote-Traube-Direktsaft naturtrüb, 1 l | 4104420262676 | 3 | — |
+| Salsa-Dip, 245 ml | 42398479 | 3 | — |
+| Curry indische Art, 325 ml | 4104420213128 | 2–3 | — |
+| Kokoscurry thailändische Art, 325 ml | 4104420212794 | 2–3 | — |
+
+The two Alnatura tofu products add their own 2-day rules to the existing plain
+and smoked tofu profiles. Taifun's water-changing conditions and Reishunger's
+closed-container condition still apply to their respective rules. The historical
+profile IDs remain stable; each rule carries its own manufacturer and product
+scope. Alnatura's unopened ambient-storage description does not permit pantry
+storage after opening. Natural and smoked tofu barcodes cannot select each
+other's rule, and silken tofu stays separate.
+
+The curry rules retain the published 2–3 day range: opening + 2 days is the
+reminder and opening + 3 days is the upper advisory date. A matching curry sauce
+does not give the same interval to curry paste, powder or coconut milk. Likewise,
+salsa does not inherit the passata or generic canned-tomato interval.
+
+The reviewed Alnatura tomato-paste and ketchup pages specify refrigeration after
+opening but no number of days. Their separate `label_required` profiles document
+that evidence gap and defer to the actual package; they assign no numeric rule
+even for that brand. Ambiguous tomato purée and condiment alternatives remain
+unassigned. A known package `useWithinDays` still takes precedence.
 
 Juice intervals vary by product: the two vegetable juices have separate 3- and
 5-day rules. The 14-day lemon and ginger intervals do not transfer to other

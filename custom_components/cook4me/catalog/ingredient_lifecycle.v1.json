@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-24.5",
+  "version": "2026-09-24.6",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -316,6 +316,66 @@
     "alnatura_ginger_juice": {
       "publisher": "Alnatura",
       "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-obst-saefte/ingwer-direktsaft-244870/",
+      "reviewedOn": "2026-09-24"
+    },
+    "lwg_chestnuts": {
+      "publisher": "Bayerische Landesanstalt für Weinbau und Gartenbau (LWG)",
+      "url": "https://www.lwg.bayern.de/gartenakademie/gartendokumente/infoschriften/184949/index.php",
+      "reviewedOn": "2026-09-24"
+    },
+    "lwg_sweet_potatoes": {
+      "publisher": "Bayerische Landesanstalt für Weinbau und Gartenbau (LWG)",
+      "url": "https://www.lwg.bayern.de/gartenakademie/gartendokumente/infoschriften/134792/index.php",
+      "reviewedOn": "2026-09-24"
+    },
+    "bzfe_swede": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/presse/pressemeldungen-archiv/pressemeldungen-2025/steckruebe-feiert-comeback",
+      "reviewedOn": "2026-09-24"
+    },
+    "bzfe_chanterelles": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/presse/pressemeldungen-archiv/fruehe-pfifferling-saison-2026",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_natural_tofu_200g": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/fertiggerichte-konserven/vegane-fleischalternativen/tofu-natur-ungekuehlt-133447/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_smoked_tofu_200g": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/fertiggerichte-konserven/vegane-fleischalternativen/raeuchertofu-ungekuehlt-133448/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_red_grape_juice": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-obst-saefte/rote-traube-direktsaft-naturtrueb-130055/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_salsa_dip": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/wuerzen-oele-essige/bio-senf-mayo-ketchup-bio-dip/salsa-dip-218906/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_indian_curry": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/bio-sossen/curry-indische-art-140844/",
+      "reviewedOn": "2026-09-24"
+    },
+    "alnatura_thai_coconut_curry": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/bio-sossen/kokoscurry-thailaendische-art-144010/",
+      "reviewedOn": "2026-09-24"
+    },
+    "tomato_paste_label": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/tomatenmark-130597/",
+      "reviewedOn": "2026-09-24"
+    },
+    "ketchup_label": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/wuerzen-oele-essige/bio-senf-mayo-ketchup-bio-dip/tomatenketchup-115662/",
       "reviewedOn": "2026-09-24"
     }
   },
@@ -2358,6 +2418,23 @@
             ],
             "kind": "manufacturer_guidance",
             "brand": "Taifun"
+          },
+          {
+            "id": "alnatura_natural_tofu_200g",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_natural_tofu_200g",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420094840"
+            ]
           }
         ]
       }
@@ -2509,6 +2586,23 @@
             ],
             "kind": "manufacturer_guidance",
             "brand": "Reishunger"
+          },
+          {
+            "id": "alnatura_smoked_tofu_200g",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_smoked_tofu_200g",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420094864"
+            ]
           }
         ]
       }
@@ -4138,6 +4232,241 @@
           }
         ]
       }
+    },
+    "season_chestnut": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-BY",
+            "basis": "outdoor_harvest",
+            "months": [
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "lwg_chestnuts"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_sweet_potato": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-BY",
+            "basis": "outdoor_harvest",
+            "months": [
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "lwg_sweet_potatoes"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_swede": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              3,
+              4,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bzfe_swede"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_chanterelle": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "outdoor_harvest",
+            "months": [
+              7,
+              8
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bzfe_chanterelles"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "alnatura_grape_juice": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_red_grape_juice",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_red_grape_juice",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420262676"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_salsa": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_salsa_dip",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_salsa_dip",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "42398479"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_curry_sauce": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_indian_curry",
+            "daysMin": 2,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_indian_curry",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420213128"
+            ]
+          },
+          {
+            "id": "alnatura_thai_coconut_curry",
+            "daysMin": 2,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_thai_coconut_curry",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420212794"
+            ]
+          }
+        ]
+      }
+    },
+    "tomato_paste_label": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "sourceIds": [
+          "tomato_paste_label",
+          "vz_opening"
+        ],
+        "reason": "no_reviewed_numeric_opening_interval"
+      }
+    },
+    "ketchup_label": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "sourceIds": [
+          "ketchup_label",
+          "vz_opening"
+        ],
+        "reason": "no_reviewed_numeric_opening_interval"
+      }
     }
   },
   "canonicalNames": {
@@ -4187,6 +4516,7 @@
     "b- canned chopped tomatoes": "canned_tomato_pieces",
     "b- dill, a little": "season_dill",
     "b- snow peas, strings removed": "season_snow_pea",
+    "b- tomato paste": "tomato_paste_label",
     "baby carrots": "season_carrot",
     "baby lettuce": "season_lettuce",
     "baby lettuce (or lettuce hearts), chopped": "season_lettuce",
@@ -4375,6 +4705,10 @@
     "celery, peeled and diced": "season_celery",
     "celery, thinly sliced": "season_celery",
     "celery, washed, peeled and diced": "season_celery",
+    "chanterelle mushrooms": "season_chanterelle",
+    "chanterelle mushrooms, halved": "season_chanterelle",
+    "chanterelles": "season_chanterelle",
+    "chanterelles (halved)": "season_chanterelle",
     "chard": "season_chard",
     "cherry tomato": "season_tomato",
     "cherry tomatoes": "season_tomato",
@@ -4392,6 +4726,8 @@
     "chervil, chopped": "season_chervil",
     "chervil, washed and chopped for garnish": "season_chervil",
     "chervil, washed and finely chopped": "season_chervil",
+    "chestnut": "season_chestnut",
+    "chestnuts": "season_chestnut",
     "chickpeas": "alnatura_chickpeas",
     "chickpeas (drained)": "alnatura_chickpeas",
     "chickpeas, precooked or canned": "alnatura_chickpeas",
@@ -4414,6 +4750,7 @@
     "chopped cherry tomatoes": "season_tomato",
     "chopped cherry tomatoes (for serving)": "season_tomato",
     "chopped chervil": "season_chervil",
+    "chopped chestnuts": "season_chestnut",
     "chopped chives": "season_chives",
     "chopped dill": "season_dill",
     "chopped fennel": "season_fennel",
@@ -4481,6 +4818,7 @@
     "cups of finely chopped parsley": "season_parsley_leaf",
     "cups of parsley, washed and chopped": "season_parsley_leaf",
     "curly kale": "season_kale",
+    "curry sauce": "alnatura_curry_sauce",
     "d- walnuts, crushed": "season_walnut",
     "damsons": "season_plum",
     "datterini cherry tomatoes": "season_tomato",
@@ -4654,6 +4992,7 @@
     "granny smith apples": "season_apple",
     "granny smith green apple, washed and diced": "season_apple",
     "grape": "season_grape",
+    "grape juice": "alnatura_grape_juice",
     "grape tomatoes, halved": "season_tomato",
     "grapes": "season_grape",
     "grated carrot": "season_carrot",
@@ -4734,6 +5073,10 @@
     "julienned onion": "season_onion",
     "julienned potatoes": "season_potato",
     "kale": "season_kale",
+    "ketchup": "ketchup_label",
+    "ketchup (for finishing)": "ketchup_label",
+    "ketchup (for finishing), a little": "ketchup_label",
+    "ketchup (for sauce)": "ketchup_label",
     "kidney beans": "alnatura_kidney_beans",
     "kiwi": "season_kiwi",
     "kiwi, peeled and diced": "season_kiwi",
@@ -4793,6 +5136,7 @@
     "medium onion": "season_onion",
     "medium potato": "season_potato",
     "medium red onion": "season_onion",
+    "medium sweet potato, cut into 1.5 cm cubes": "season_sweet_potato",
     "medium-sized beetroot": "season_beetroot",
     "melon balls": "season_melon",
     "melon flesh, seeds removed": "season_melon",
@@ -4916,6 +5260,7 @@
     "peeled parsnip": "season_parsnip",
     "peeled potato, cut into pieces": "season_potato",
     "peeled potatoes": "season_potato",
+    "peeled sweet chestnuts": "season_chestnut",
     "peeled thinly sliced onion": "season_onion",
     "pesto": "alnatura_pesto",
     "pesto alla genovese": "label_required",
@@ -5065,6 +5410,7 @@
     "round tomatoes, about 175 g, cored for stuffing (reserve flesh and juice)": "season_tomato",
     "round zucchini": "season_courgette",
     "runner beans": "season_green_bean",
+    "rutabaga": "season_swede",
     "sage": "season_sage",
     "sage leaves": "season_sage",
     "sage leaves, thinly sliced": "season_sage",
@@ -5073,6 +5419,8 @@
     "salad onion stalk": "season_spring_onion",
     "salad onion stalk, chopped": "season_spring_onion",
     "salad onion(s), washed and thinly sliced": "season_spring_onion",
+    "salsa": "alnatura_salsa",
+    "salsa:": "alnatura_salsa",
     "salsify": "season_salsify",
     "salt": "dry_staple",
     "sauerkraut juice": "alnatura_sauerkraut_juice",
@@ -5199,6 +5547,8 @@
     "sugar snap peas": "season_fresh_pea",
     "sugar snap peas, strings removed": "season_fresh_pea",
     "sun-dried tomato pesto": "alnatura_pesto",
+    "swede": "season_swede",
+    "swede, peeled and cut into 2 cm-thick pieces": "season_swede",
     "sweet apple, peeled and cut into small cubes": "season_apple",
     "sweet cherries": "season_sweet_cherry",
     "sweet onion": "season_onion",
@@ -5210,6 +5560,17 @@
     "sweet onions, peeled and thinly sliced": "season_onion",
     "sweet or white onion, thinly sliced": "season_onion",
     "sweet orange juice": "alnatura_orange_juice",
+    "sweet potato": "season_sweet_potato",
+    "sweet potato (cut into 2 cm-thick half-moons)": "season_sweet_potato",
+    "sweet potato, cut as desired": "season_sweet_potato",
+    "sweet potato, cut into 2 cm quarter-round slices": "season_sweet_potato",
+    "sweet potato, cut into 5 mm half-moons": "season_sweet_potato",
+    "sweet potato, diced": "season_sweet_potato",
+    "sweet potato, peeled and cut into 4 cm cubes": "season_sweet_potato",
+    "sweet potato, peeled and diced": "season_sweet_potato",
+    "sweet potatoes": "season_sweet_potato",
+    "sweet potatoes, diced": "season_sweet_potato",
+    "sweet potatoes, peeled and cut into large pieces": "season_sweet_potato",
     "sweetcorn on the cob": "season_sweetcorn",
     "swiss chard": "season_chard",
     "swiss chard, washed and cut into pieces": "season_chard",
@@ -5237,7 +5598,12 @@
     "tofu, cut into 2 cm cubes": "taifun_plain_tofu",
     "tomato": "season_tomato",
     "tomato canned in its own juice": "canned_high_acid",
+    "tomato ketchup": "ketchup_label",
     "tomato passata": "alnatura_passata",
+    "tomato paste": "tomato_paste_label",
+    "tomato paste (15 g)": "tomato_paste_label",
+    "tomato paste (20 g)": "tomato_paste_label",
+    "tomato paste (jar)": "tomato_paste_label",
     "tomato pesto": "alnatura_pesto",
     "tomato sauce": "alnatura_tomato_sauce",
     "tomato sauce for pasta": "alnatura_tomato_sauce",
