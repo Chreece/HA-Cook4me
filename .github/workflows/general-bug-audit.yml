@@ -37,6 +37,8 @@ jobs:
         run: python tests/test_nutrition_cache_transactions_v211.py
       - name: Durable Recipe Hub state
         run: python tests/test_recipe_hub_transactions_v212.py
+      - name: Durable currency and online cache
+        run: python tests/test_currency_online_transactions_v213.py
       - name: Preference and product editor races
         run: node --test tests/test_general_audit_v208.mjs
       - name: Browser test dependency
