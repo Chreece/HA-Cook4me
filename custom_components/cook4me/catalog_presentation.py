@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from copy import deepcopy
 from functools import lru_cache
 import hashlib
 import json
@@ -146,7 +147,7 @@ def ingredient_choices(payload, language, query="", limit=None):
             search_aliases.update(search_aliases_for_locale for search_aliases_for_locale in search_aliases_map.get(name_key(cleaned), ()))
         if terms and not matches(search_aliases):
             continue
-        row = {key: raw[key] for key in ("id", "key", "conceptId", "classification", "nutritionEligible") if key in raw}
+        row = {key: deepcopy(raw[key]) for key in ("id", "key", "conceptId", "classification", "nutritionEligible", "lifecycle") if key in raw}
         row.update(ingredientId=raw["id"], name=name, foodName=name, canonicalName=clean_name(raw.get("canonicalName")), displayGroupId="ingredient:"+hashlib.sha256(canonical.encode()).hexdigest()[:16], sourceIngredientIds=[member["id"] for member in members], displayLanguage=language, presentationVersion=63)
         row["searchAliases"] = sorted(alias for alias in search_aliases if alias)
         if raw.get("key"):

@@ -26,6 +26,8 @@ jobs:
       - name: Minimal source validation
         run: |
           python scripts/version.py validate
+          python tests/test_ingredient_lifecycle.py
+          python tools/audit_ingredient_lifecycle.py
           python -m compileall -q custom_components/cook4me
           python - <<'PY'
           import json

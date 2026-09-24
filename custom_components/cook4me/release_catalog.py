@@ -132,6 +132,26 @@ def ingredient_nutrition_profile(ingredient: Any) -> dict[str, Any] | None:
     return _core.ingredient_nutrition_profile(ingredient)
 
 
+def ingredient_lifecycle_profile(ingredient: Any, *, include_sources: bool = True) -> dict[str, Any]:
+    """Resolve seasonal/opening evidence by exact catalog identity."""
+    source = _core._global_ingredient(load_release_catalog(), ingredient)
+    return _core._lifecycle.lifecycle_profile(source, include_sources=include_sources)
+
+
+def ingredient_seasonal_availability(ingredient: Any, *, country: str, month: int) -> dict[str, Any]:
+    return _core._lifecycle.seasonal_availability(
+        ingredient_lifecycle_profile(ingredient, include_sources=False), country=country, month=month
+    )
+
+
+def ingredient_opening_window(ingredient: Any, lot: dict[str, Any], *, temperature_c: float | None = None, confirmed_conditions: tuple[str, ...] = ()) -> dict[str, Any]:
+    """Use existing openedAt/useWithinDays fields without changing a package."""
+    return _core._lifecycle.opening_window(
+        ingredient_lifecycle_profile(ingredient, include_sources=False), lot,
+        temperature_c=temperature_c, confirmed_conditions=confirmed_conditions,
+    )
+
+
 def ingredient_choices(language: str, query: str = "", limit: int | None = None):
     return _core._presentation.ingredient_choices(load_release_catalog(), language, query, limit)
 

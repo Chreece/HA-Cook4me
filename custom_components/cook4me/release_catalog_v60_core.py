@@ -10,6 +10,7 @@ try:
     from . import release_catalog_legacy as _legacy
     from . import recipe_metrics_v60 as _metrics
     from . import catalog_presentation as _presentation
+    from . import ingredient_lifecycle as _lifecycle
     from .catalog_search_index import (
         compile_search_index,
         prepare_search_index,
@@ -36,6 +37,7 @@ except ImportError:  # Standalone unit-test import via spec_from_file_location.
         "cook4me_recipe_metrics_runtime_test", "recipe_metrics_v60.py"
     )
     _presentation = _load_sibling("cook4me_catalog_presentation", "catalog_presentation.py")
+    _lifecycle = _load_sibling("cook4me_ingredient_lifecycle", "ingredient_lifecycle.py")
     _search_module = _load_sibling(
         "cook4me_catalog_search_index_runtime_test", "catalog_search_index.py"
     )
@@ -52,6 +54,7 @@ _CATALOG_PATH = _legacy._CATALOG_PATH
 _MAX_PAGE_SIZE = _legacy._MAX_PAGE_SIZE
 _NON_FOOD_CLASSIFICATIONS = {"equipment", "other", "ambiguous"}
 _INGREDIENT_METADATA_FIELDS = (
+    "lifecycle",
     "conceptId",
     "classification",
     "sourceLocalIdentity",
@@ -226,6 +229,7 @@ def load_release_catalog() -> dict[str, Any]:
     _legacy._CATALOG_PATH = _CATALOG_PATH
     _legacy.load_release_catalog.cache_clear()
     payload = _legacy.load_release_catalog()
+    _lifecycle.enrich_catalog_ingredients(payload)
     _prepare_fast_indexes(payload)
     return payload
 
@@ -280,6 +284,7 @@ def release_catalog_summary() -> dict[str, Any]:
         "ingredientIntelligenceComplete": bool(source.get("ingredientIntelligenceComplete")),
         "sourceLocalIngredientCount": int(source.get("sourceLocalIngredientCount") or 0),
         "runtimeNutritionProfileCount": len(payload.get("_runtimeNutritionIndex") or {}),
+        "ingredientLifecycle": deepcopy(payload.get("_runtimeLifecycleSummary") or {}),
     }
 
 
