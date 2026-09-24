@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 from copy import deepcopy
 from datetime import datetime, timedelta, timezone
 from typing import Any
@@ -89,6 +90,7 @@ class Cook4MeNutritionResolutionStore:
         )
         self._loaded = False
         self._data: dict[str, Any] = {"failures": {}}
+        self._lock = asyncio.Lock()
 
     async def async_load(self) -> None:
         if self._loaded:
@@ -98,8 +100,9 @@ class Cook4MeNutritionResolutionStore:
         self._data = {"failures": failures if isinstance(failures, dict) else {}}
         self._loaded = True
 
-    async def _save(self) -> None:
-        await self._store.async_save(self._data)
+    async def _commit(self, data: dict[str, Any]) -> None:
+        await self._store.async_save(deepcopy(data))
+        self._data = data
 
     @property
     def failure_count(self) -> int:
@@ -176,35 +179,41 @@ class Cook4MeNutritionResolutionStore:
         if numeric is not None:
             row["confidence"] = round(numeric, 3)
 
-        failures = self._data.setdefault("failures", {})
-        if identity not in failures and len(failures) >= _MAX_FAILURES:
-            oldest = min(
-                failures,
-                key=lambda key: _text((failures.get(key) or {}).get("attemptedAt")),
-            )
-            failures.pop(oldest, None)
-        failures[identity] = row
-        await self._save()
+        async with self._lock:
+            data = deepcopy(self._data)
+            failures = data.setdefault("failures", {})
+            if identity not in failures and len(failures) >= _MAX_FAILURES:
+                oldest = min(
+                    failures,
+                    key=lambda key: _text((failures.get(key) or {}).get("attemptedAt")),
+                )
+                failures.pop(oldest, None)
+            failures[identity] = row
+            await self._commit(data)
         return deepcopy(row)
 
     async def async_clear(self, identity: str) -> bool:
-        removed = (self._data.get("failures") or {}).pop(_text(identity), None)
-        if removed is None:
-            return False
-        await self._save()
-        return True
+        async with self._lock:
+            data = deepcopy(self._data)
+            removed = (data.get("failures") or {}).pop(_text(identity), None)
+            if removed is None:
+                return False
+            await self._commit(data)
+            return True
 
     async def async_clear_transient(self) -> int:
-        failures = self._data.get("failures") or {}
-        removed = 0
-        for identity in list(failures):
-            row = failures.get(identity)
-            if isinstance(row, dict) and is_transient_reason(row.get("reason")):
-                failures.pop(identity, None)
-                removed += 1
-        if removed:
-            await self._save()
-        return removed
+        async with self._lock:
+            data = deepcopy(self._data)
+            failures = data.get("failures") or {}
+            removed = 0
+            for identity in list(failures):
+                row = failures.get(identity)
+                if isinstance(row, dict) and is_transient_reason(row.get("reason")):
+                    failures.pop(identity, None)
+                    removed += 1
+            if removed:
+                await self._commit(data)
+            return removed
 
 
 async def nutrition_resolution_store_for_bridge(
