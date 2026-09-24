@@ -323,6 +323,19 @@ def _scale_numeric_map(values: Any, factor: float) -> dict[str, float]:
     }
 
 
+def _durable_mutation(method):
+    """Serialize one lifecycle mutation and roll memory back if storage fails."""
+    async def wrapped(self, *args, **kwargs):
+        async with self._persistence_mutation_lock:
+            before = deepcopy(self._data)
+            try:
+                return await method(self, *args, **kwargs)
+            except BaseException:
+                self._data = before
+                raise
+    return wrapped
+
+
 class Cook4MeMealLifecycleStore:
     def __init__(self, hass: HomeAssistant, entry_id: str) -> None:
         self._store: Store[dict[str, Any]] = Store(
@@ -333,6 +346,7 @@ class Cook4MeMealLifecycleStore:
         # browsing/state calls do not take this lock and remain available while
         # a generation is running.
         self._weekly_mutation_lock = asyncio.Lock()
+        self._persistence_mutation_lock = asyncio.Lock()
         self._data: dict[str, Any] = {
             "weekStart": week_monday(),
             "slots": [],
@@ -403,7 +417,7 @@ class Cook4MeMealLifecycleStore:
         self._loaded = True
 
     async def _save(self) -> None:
-        await self._store.async_save(self._data)
+        await self._store.async_save(deepcopy(self._data))
 
     @property
     def weekly_mutation_busy(self) -> bool:
@@ -446,6 +460,7 @@ class Cook4MeMealLifecycleStore:
             result["shoppingDelta"] = shopping_delta(result["slots"], inventory)
         return result
 
+    @_durable_mutation
     async def async_set_settings(
         self,
         *,
@@ -478,6 +493,7 @@ class Cook4MeMealLifecycleStore:
         await self._save()
         return self.settings
 
+    @_durable_mutation
     async def async_replace_week(self, week_start: Any, slots: Any) -> dict[str, Any]:
         self._data["weekStart"] = _date(week_start) or week_monday()
         raw_slots = slots if isinstance(slots, list) else []
@@ -488,6 +504,7 @@ class Cook4MeMealLifecycleStore:
         await self._save()
         return self.snapshot()
 
+    @_durable_mutation
     async def async_upsert_slot(self, raw: dict[str, Any]) -> dict[str, Any]:
         slot = _slot(raw)
         if slot is None:
@@ -499,6 +516,7 @@ class Cook4MeMealLifecycleStore:
         await self._save()
         return deepcopy(slot)
 
+    @_durable_mutation
     async def async_clear_slot(self, slot_id: str) -> bool:
         before = len(self._data["slots"])
         self._data["slots"] = [row for row in self._data["slots"] if row.get("id") != _text(slot_id)]
@@ -507,6 +525,7 @@ class Cook4MeMealLifecycleStore:
             await self._save()
         return changed
 
+    @_durable_mutation
     async def async_select_slots(self, slot_ids: list[str], selected: bool) -> None:
         ids = set(slot_ids)
         if not ids.issubset({row["id"] for row in self._data["slots"]}):
@@ -533,6 +552,7 @@ class Cook4MeMealLifecycleStore:
             bonus += 5.0
         return round(bonus, 1)
 
+    @_durable_mutation
     async def async_set_feedback(
         self,
         recipe: dict[str, Any],
@@ -565,6 +585,7 @@ class Cook4MeMealLifecycleStore:
         await self._save()
         return deepcopy(row)
 
+    @_durable_mutation
     async def async_record_meal_cost(self, meal_id: str, cost: dict[str, Any]) -> None:
         key = _text(meal_id)
         if not key:
@@ -582,6 +603,7 @@ class Cook4MeMealLifecycleStore:
         row = self._data["mealCosts"].get(_text(meal_id))
         return deepcopy(row.get("cost")) if isinstance(row, dict) else None
 
+    @_durable_mutation
     async def async_add_leftover_from_meal(
         self,
         meal: dict[str, Any],
@@ -619,6 +641,7 @@ class Cook4MeMealLifecycleStore:
         await self._save()
         return deepcopy(row)
 
+    @_durable_mutation
     async def async_sync_leftover_from_meal(
         self,
         meal: dict[str, Any],
@@ -740,6 +763,7 @@ class Cook4MeMealLifecycleStore:
         await self._save()
         return deepcopy(row)
 
+    @_durable_mutation
     async def async_consume_leftover(self, leftover_id: str, servings: Any) -> dict[str, Any]:
         wanted = _text(leftover_id)
         amount = _number(servings)
@@ -777,6 +801,7 @@ class Cook4MeMealLifecycleStore:
             return consumed
         raise ValueError("Leftover meal was not found")
 
+    @_durable_mutation
     async def async_set_leftover_weight(self, leftover_id: str, grams: Any) -> dict[str, Any]:
         """Attach a physical net weight to the current leftover amount."""
         wanted = _text(leftover_id)
@@ -794,6 +819,7 @@ class Cook4MeMealLifecycleStore:
             return deepcopy(row)
         raise ValueError("Leftover meal was not found")
 
+    @_durable_mutation
     async def async_consume_leftover_weight(
         self, leftover_id: str, grams: Any
     ) -> dict[str, Any]:
@@ -849,6 +875,7 @@ class Cook4MeMealLifecycleStore:
         values = row.get("items") if isinstance(row, dict) and isinstance(row.get("items"), list) else []
         return deepcopy(values)
 
+    @_durable_mutation
     async def async_approve_substitution(
         self,
         ingredient: dict[str, Any],
