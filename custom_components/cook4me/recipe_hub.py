@@ -464,28 +464,31 @@ class Cook4MeRecipeHub:
             return self.profile
 
     async def async_prepare_consumption(self, recipe: dict[str, Any]) -> dict[str, Any] | None:
-        ingredients = recipe_consumption_items(
-            recipe, self._data["profile"].get("houseIngredients")
-        )
-        if not ingredients:
-            return None
-        servings = recipe.get("servings") or recipe.get("groupSize")
-        yield_data = recipe.get("yield") if isinstance(recipe.get("yield"), dict) else {}
-        servings = servings or yield_data.get("quantity") or yield_data.get("quantityDisplay")
-        pending = {
-            "id": str(uuid4()),
-            "createdAt": datetime.now(timezone.utc).isoformat(),
-            "recipeTitle": str(recipe.get("title") or "Cook4Me recipe"),
-            "groupingFunctionalId": recipe.get("groupingFunctionalId"),
-            "variantFunctionalId": recipe.get("variantFunctionalId") or recipe.get("recipeFunctionalId"),
-            "servings": servings,
-            "recipeIngredients": deepcopy(recipe.get("ingredients") or []),
-            "ingredients": ingredients,
-        }
+        # Build the deduction choices under the same lock as the inventory
+        # snapshot they will be saved beside. A failed or queued stock edit must
+        # not leave a pending confirmation based on transient/stale stock.
         async with self._durable_mutation():
+            ingredients = recipe_consumption_items(
+                recipe, self._data["profile"].get("houseIngredients")
+            )
+            if not ingredients:
+                return None
+            servings = recipe.get("servings") or recipe.get("groupSize")
+            yield_data = recipe.get("yield") if isinstance(recipe.get("yield"), dict) else {}
+            servings = servings or yield_data.get("quantity") or yield_data.get("quantityDisplay")
+            pending = {
+                "id": str(uuid4()),
+                "createdAt": datetime.now(timezone.utc).isoformat(),
+                "recipeTitle": str(recipe.get("title") or "Cook4Me recipe"),
+                "groupingFunctionalId": recipe.get("groupingFunctionalId"),
+                "variantFunctionalId": recipe.get("variantFunctionalId") or recipe.get("recipeFunctionalId"),
+                "servings": servings,
+                "recipeIngredients": deepcopy(recipe.get("ingredients") or []),
+                "ingredients": ingredients,
+            }
             self._data["pendingConsumption"] = pending
             await self._save()
-        return deepcopy(pending)
+            return deepcopy(pending)
 
     async def async_confirm_consumption(
         self,
@@ -577,11 +580,6 @@ class Cook4MeRecipeHub:
 
     async def async_save_recipe(self, recipe: dict[str, Any], *, source: str = "manual") -> dict[str, Any]:
         normalized = normalize_manual_recipe(recipe, source=source)
-        if source == "ai":
-            match = score_recipe(normalized, self._scoring_profile())
-            if not match.get("safe"):
-                conflicts = ", ".join(match.get("violations") or []) or "saved dietary profile"
-                raise ValueError(f"AI recipe conflicts with Cook4Me dietary profile: {conflicts}")
         now = datetime.now(timezone.utc).isoformat()
         recipe_id = str(recipe.get("id") or uuid4())
         normalized.update(
@@ -592,6 +590,14 @@ class Cook4MeRecipeHub:
             }
         )
         async with self._durable_mutation():
+            # A profile update may already be queued ahead of this save. Check
+            # AI safety only after acquiring the same lock, against the profile
+            # that will coexist with the recipe if this commit succeeds.
+            if source == "ai":
+                match = score_recipe(normalized, self._scoring_profile())
+                if not match.get("safe"):
+                    conflicts = ", ".join(match.get("violations") or []) or "saved dietary profile"
+                    raise ValueError(f"AI recipe conflicts with Cook4Me dietary profile: {conflicts}")
             items = self._data["recipes"]
             for index, current in enumerate(items):
                 if current.get("id") == recipe_id:

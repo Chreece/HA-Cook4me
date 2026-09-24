@@ -131,6 +131,7 @@ class Storage:
     def __init__(self, initial):
         self.saved = deepcopy(initial)
         self.fail = False
+        self.fail_next = 0
         self.block_next = False
         self.started = asyncio.Event()
         self.release = asyncio.Event()
@@ -141,6 +142,9 @@ class Storage:
             self.block_next = False
             self.started.set()
             await self.release.wait()
+        if self.fail_next:
+            self.fail_next -= 1
+            raise OSError("disk full")
         if self.fail:
             raise OSError("disk full")
         self.saved = snapshot
@@ -306,6 +310,102 @@ class ConcurrencyTests(unittest.IsolatedAsyncioTestCase):
         with self.assertRaises(OSError):
             await h.async_save_recipe({"title": "Should fail", "ingredients": []})
         self.assertEqual(h.snapshot(), durable)
+
+
+class OrderingRaceTests(unittest.IsolatedAsyncioTestCase):
+    async def test_pending_consumption_uses_inventory_after_failed_queued_edit(self):
+        h = hub()
+        old_update = hubmod.update_inventory_item
+        old_items = hubmod.recipe_consumption_items
+
+        def update_inventory(rows, _identity, *, quantity=None, unit="", **_kwargs):
+            result = deepcopy(rows or [])
+            if result:
+                result[0]["quantity"] = quantity
+                result[0]["unit"] = unit or result[0].get("unit", "")
+            return result
+
+        def consumption_items(_recipe, house):
+            return [{
+                "identity": "k:rice",
+                "name": "Rice",
+                "quantity": float(house[0].get("quantity") or 0),
+                "unit": house[0].get("unit") or "g",
+            }]
+
+        hubmod.update_inventory_item = update_inventory
+        hubmod.recipe_consumption_items = consumption_items
+        h._store.block_next = True
+        h._store.fail_next = 1
+        try:
+            stock_edit = asyncio.create_task(
+                h.async_inventory_update("k:rice", quantity=99, unit="g")
+            )
+            await h._store.started.wait()
+
+            # The stock edit has changed its private/in-memory transaction state
+            # but has not durably committed. A pending-consumption calculation
+            # must wait for the same lock rather than snapshotting transient stock.
+            pending_task = asyncio.create_task(
+                h.async_prepare_consumption(
+                    {"title": "Meal", "servings": 1, "ingredients": [{"name": "Rice"}]}
+                )
+            )
+            await asyncio.sleep(0)
+            self.assertFalse(pending_task.done())
+
+            h._store.release.set()
+            with self.assertRaises(OSError):
+                await stock_edit
+            pending = await pending_task
+
+            self.assertEqual(h.profile["houseIngredients"][0]["quantity"], 10)
+            self.assertEqual(pending["ingredients"][0]["quantity"], 10)
+            self.assertEqual(h.pending_consumption["ingredients"][0]["quantity"], 10)
+        finally:
+            hubmod.update_inventory_item = old_update
+            hubmod.recipe_consumption_items = old_items
+
+    async def test_ai_recipe_is_rechecked_after_profile_update_already_in_queue(self):
+        h = hub()
+        old_score = hubmod.score_recipe
+
+        def score(_recipe, profile):
+            safe = profile.get("diet") != "vegan"
+            return {
+                "safe": safe,
+                "score": 1 if safe else -100,
+                "violations": [] if safe else ["vegan profile"],
+            }
+
+        hubmod.score_recipe = score
+        await h._lock.acquire()
+        try:
+            profile_task = asyncio.create_task(h.async_set_profile({"diet": "vegan"}))
+            await asyncio.sleep(0)
+            ai_task = asyncio.create_task(
+                h.async_save_recipe(
+                    {"title": "AI dairy meal", "ingredients": [{"name": "Milk"}]},
+                    source="ai",
+                )
+            )
+            await asyncio.sleep(0)
+
+            # Both writes are queued behind the same lock, with the profile
+            # update first. The AI check must happen only after it acquires that
+            # lock, otherwise it could be validated against the old profile.
+            self.assertFalse(profile_task.done())
+            self.assertFalse(ai_task.done())
+        finally:
+            h._lock.release()
+
+        await profile_task
+        with self.assertRaisesRegex(ValueError, "dietary profile"):
+            await ai_task
+
+        self.assertEqual(h.profile["diet"], "vegan")
+        self.assertNotIn("AI dairy meal", [row.get("title") for row in h.recipes])
+        hubmod.score_recipe = old_score
 
 
 class StagedPathsRemainValidTests(unittest.IsolatedAsyncioTestCase):
