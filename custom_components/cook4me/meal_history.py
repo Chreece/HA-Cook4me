@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 from copy import deepcopy
 from datetime import datetime, timedelta, timezone
 from typing import Any
@@ -73,6 +74,7 @@ class Cook4MeMealHistoryStore:
         )
         self._loaded = False
         self._data: dict[str, Any] = {"meals": []}
+        self._lock = asyncio.Lock()
 
     async def async_load(self) -> None:
         if self._loaded:
@@ -86,8 +88,9 @@ class Cook4MeMealHistoryStore:
             ]
         self._loaded = True
 
-    async def _save(self) -> None:
-        await self._store.async_save(self._data)
+    async def _commit(self, data: dict[str, Any]) -> None:
+        await self._store.async_save(deepcopy(data))
+        self._data = data
 
     async def async_record(
         self,
@@ -145,10 +148,10 @@ class Cook4MeMealHistoryStore:
             "ingredients": ingredients,
             "stockLots": stock_lots,
         }
-        self._data["meals"] = (
-            self._data.get("meals", []) + [row]
-        )[-_MAX_MEALS:]
-        await self._save()
+        async with self._lock:
+            data = deepcopy(self._data)
+            data["meals"] = (data.get("meals", []) + [row])[-_MAX_MEALS:]
+            await self._commit(data)
         return deepcopy(row)
 
     def get(self, meal_id: str) -> dict[str, Any] | None:
@@ -172,52 +175,54 @@ class Cook4MeMealHistoryStore:
     ) -> dict[str, Any]:
         """Edit who ate a meal and which real stock was consumed."""
         wanted = str(meal_id or "").strip()
-        index = next(
-            (
-                pos
-                for pos, item in enumerate(self._data.get("meals", []))
-                if isinstance(item, dict) and str(item.get("id") or "") == wanted
-            ),
-            None,
-        )
-        if index is None:
-            raise ValueError("Meal history record was not found")
-        row = deepcopy(self._data["meals"][index])
-        servings = _number(row.get("servings"))
-        cooked_nutrition = deepcopy(
-            row.get("cookedNutrition") or row.get("nutrition") or {}
-        )
-        totals = _nutrition_totals(cooked_nutrition)
-        allocation = allocate_meal_nutrition(totals, servings, allocations)
-        allocation_rows = allocation.get("allocations") or []
-        assigned = _number(allocation.get("assignedServings")) or 0.0
-        consumed_fraction = 1.0
-        if allocation_rows and servings and servings > 0:
-            consumed_fraction = min(1.0, assigned / servings)
-        remaining = (
-            _number(allocation.get("unassignedServings"))
-            if allocation_rows
-            else (0.0 if servings is not None else None)
-        )
-        row.update(
-            {
-                "consumedNutrition": _scaled_nutrition(
-                    cooked_nutrition, consumed_fraction
+        async with self._lock:
+            index = next(
+                (
+                    pos
+                    for pos, item in enumerate(self._data.get("meals", []))
+                    if isinstance(item, dict) and str(item.get("id") or "") == wanted
                 ),
-                "eatenServings": assigned if allocation_rows else servings,
-                "remainingServings": remaining,
-                "allocations": allocation_rows,
-                "assignedServings": allocation.get("assignedServings"),
-                "unassignedServings": allocation.get("unassignedServings"),
-                "editedAt": datetime.now(timezone.utc).isoformat(),
-            }
-        )
-        if consumption is not None:
-            ingredients, stock_lots = _actual_consumption(consumption)
-            row["ingredients"] = ingredients
-            row["stockLots"] = stock_lots
-        self._data["meals"][index] = row
-        await self._save()
+                None,
+            )
+            if index is None:
+                raise ValueError("Meal history record was not found")
+            row = deepcopy(self._data["meals"][index])
+            servings = _number(row.get("servings"))
+            cooked_nutrition = deepcopy(
+                row.get("cookedNutrition") or row.get("nutrition") or {}
+            )
+            totals = _nutrition_totals(cooked_nutrition)
+            allocation = allocate_meal_nutrition(totals, servings, allocations)
+            allocation_rows = allocation.get("allocations") or []
+            assigned = _number(allocation.get("assignedServings")) or 0.0
+            consumed_fraction = 1.0
+            if allocation_rows and servings and servings > 0:
+                consumed_fraction = min(1.0, assigned / servings)
+            remaining = (
+                _number(allocation.get("unassignedServings"))
+                if allocation_rows
+                else (0.0 if servings is not None else None)
+            )
+            row.update(
+                {
+                    "consumedNutrition": _scaled_nutrition(
+                        cooked_nutrition, consumed_fraction
+                    ),
+                    "eatenServings": assigned if allocation_rows else servings,
+                    "remainingServings": remaining,
+                    "allocations": allocation_rows,
+                    "assignedServings": allocation.get("assignedServings"),
+                    "unassignedServings": allocation.get("unassignedServings"),
+                    "editedAt": datetime.now(timezone.utc).isoformat(),
+                }
+            )
+            if consumption is not None:
+                ingredients, stock_lots = _actual_consumption(consumption)
+                row["ingredients"] = ingredients
+                row["stockLots"] = stock_lots
+            data = deepcopy(self._data)
+            data["meals"][index] = row
+            await self._commit(data)
         return deepcopy(row)
 
     def recent(self, limit: int = 30) -> list[dict[str, Any]]:

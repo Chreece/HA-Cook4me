@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 from copy import deepcopy
 from typing import Any
 
@@ -121,6 +122,7 @@ class Cook4MeTodayPlanStore:
         )
         self._loaded = False
         self._data: dict[str, Any] | None = None
+        self._lock = asyncio.Lock()
 
     async def async_load(self) -> None:
         if self._loaded:
@@ -135,18 +137,24 @@ class Cook4MeTodayPlanStore:
 
     async def async_set(self, result: Any) -> dict[str, Any] | None:
         compact = compact_today_result(result)
-        self._data = compact
-        self._loaded = True
-        if compact is None:
-            await self._store.async_remove()
-            return None
-        await self._store.async_save(deepcopy(compact))
-        return deepcopy(compact)
+        async with self._lock:
+            # Never publish a Today plan that failed to reach durable storage.
+            if compact is None:
+                await self._store.async_remove()
+                self._data = None
+                self._loaded = True
+                return None
+            data = deepcopy(compact)
+            await self._store.async_save(data)
+            self._data = data
+            self._loaded = True
+            return deepcopy(data)
 
     async def async_clear(self) -> None:
-        self._data = None
-        self._loaded = True
-        await self._store.async_remove()
+        async with self._lock:
+            await self._store.async_remove()
+            self._data = None
+            self._loaded = True
 
 
 async def today_plan_store_for_bridge(bridge: Any) -> Cook4MeTodayPlanStore:

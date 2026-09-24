@@ -29,6 +29,8 @@ jobs:
           node-version: '22'
       - name: Transactional labels and correct barcode package size
         run: python tests/test_general_audit_v208.py
+      - name: Durable Today history and smart-scale stores
+        run: python tests/test_persistence_audit_v209.py
       - name: Preference and product editor races
         run: node --test tests/test_general_audit_v208.mjs
       - name: Browser test dependency
