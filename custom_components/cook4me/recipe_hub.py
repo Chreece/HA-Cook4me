@@ -197,7 +197,12 @@ class Cook4MeRecipeHub:
         }
 
     async def _save(self) -> None:
-        await self._store.async_save(self._data)
+        await self._store.async_save(deepcopy(self._data))
+
+    async def _commit(self, data: dict[str, Any]) -> None:
+        """Publish one already-normalized hub snapshot only after storage succeeds."""
+        await self._store.async_save(deepcopy(data))
+        self._data = data
 
     def snapshot(self) -> dict[str, Any]:
         return deepcopy(self._data)
@@ -223,9 +228,11 @@ class Cook4MeRecipeHub:
     def habit_terms(self) -> list[str]:
         return self._habit_terms()
 
+
     async def async_set_profile(self, profile: dict[str, Any]) -> dict[str, Any]:
         async with self._lock:
-            merged = deepcopy(self._data["profile"])
+            data = deepcopy(self._data)
+            merged = deepcopy(data["profile"])
             # Storage mutations need their own locked referential checks.
             merged.update({key: value for key, value in profile.items() if key != "storageLocations"})
             if "dietProfiles" not in profile and any(key in profile for key in ("diet", "allergies", "avoid", "householdMembers")):
@@ -240,8 +247,8 @@ class Cook4MeRecipeHub:
                     migration = normalize_profiles({"diet": merged.get("diet"), "householdMembers": profile["householdMembers"]})
                     diets["members"] = [old.get(row["name"], {**row, **normalize_diet(diets["household"])}) for row in migration["members"]]
                 merged["dietProfiles"] = diets
-            self._data["profile"] = self._normalize_profile(merged)
-            await self._save()
+            data["profile"] = self._normalize_profile(merged)
+            await self._commit(data)
             return self.profile
 
     async def async_storage_location(self, **change) -> dict[str, Any]:
@@ -382,6 +389,7 @@ class Cook4MeRecipeHub:
             self._data = data
             return self.profile
 
+
     async def async_inventory_add(
         self,
         ingredient: dict[str, Any],
@@ -393,7 +401,8 @@ class Cook4MeRecipeHub:
         lot_metadata: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         async with self._lock:
-            profile = deepcopy(self._data["profile"])
+            data = deepcopy(self._data)
+            profile = data["profile"]
             lot_metadata = validate_location(profile, lot_metadata)
             house = add_inventory_item(
                 profile.get("houseIngredients"),
@@ -406,9 +415,10 @@ class Cook4MeRecipeHub:
             )
             profile["houseIngredients"] = house
             profile["pantry"] = [row["name"] for row in house]
-            self._data["profile"] = self._normalize_profile(profile)
-            await self._save()
+            data["profile"] = self._normalize_profile(profile)
+            await self._commit(data)
             return self.profile
+
 
     async def async_inventory_update(
         self,
@@ -421,7 +431,8 @@ class Cook4MeRecipeHub:
         lots: Any = None,
     ) -> dict[str, Any]:
         async with self._lock:
-            profile = deepcopy(self._data["profile"])
+            data = deepcopy(self._data)
+            profile = data["profile"]
             kwargs: dict[str, Any] = {}
             if best_before is not None:
                 kwargs["best_before"] = best_before
@@ -437,43 +448,51 @@ class Cook4MeRecipeHub:
             )
             profile["houseIngredients"] = house
             profile["pantry"] = [row["name"] for row in house]
-            self._data["profile"] = self._normalize_profile(profile)
-            await self._save()
+            data["profile"] = self._normalize_profile(profile)
+            await self._commit(data)
             return self.profile
+
 
     async def async_inventory_remove(self, identity: str) -> dict[str, Any]:
         async with self._lock:
-            profile = deepcopy(self._data["profile"])
+            data = deepcopy(self._data)
+            profile = data["profile"]
             house = remove_inventory_item(profile.get("houseIngredients"), identity)
             profile["houseIngredients"] = house
             profile["pantry"] = [row["name"] for row in house]
-            self._data["profile"] = self._normalize_profile(profile)
-            await self._save()
+            data["profile"] = self._normalize_profile(profile)
+            await self._commit(data)
             return self.profile
 
+
     async def async_prepare_consumption(self, recipe: dict[str, Any]) -> dict[str, Any] | None:
-        ingredients = recipe_consumption_items(
-            recipe, self._data["profile"].get("houseIngredients")
-        )
-        if not ingredients:
-            return None
-        servings = recipe.get("servings") or recipe.get("groupSize")
-        yield_data = recipe.get("yield") if isinstance(recipe.get("yield"), dict) else {}
-        servings = servings or yield_data.get("quantity") or yield_data.get("quantityDisplay")
-        pending = {
-            "id": str(uuid4()),
-            "createdAt": datetime.now(timezone.utc).isoformat(),
-            "recipeTitle": str(recipe.get("title") or "Cook4Me recipe"),
-            "groupingFunctionalId": recipe.get("groupingFunctionalId"),
-            "variantFunctionalId": recipe.get("variantFunctionalId") or recipe.get("recipeFunctionalId"),
-            "servings": servings,
-            "recipeIngredients": deepcopy(recipe.get("ingredients") or []),
-            "ingredients": ingredients,
-        }
+        # Build the deduction choices under the same lock as the snapshot they
+        # are committed with. A concurrent stock edit must not create a pending
+        # confirmation from stale inventory.
         async with self._lock:
-            self._data["pendingConsumption"] = pending
-            await self._save()
-        return deepcopy(pending)
+            data = deepcopy(self._data)
+            ingredients = recipe_consumption_items(
+                recipe, data["profile"].get("houseIngredients")
+            )
+            if not ingredients:
+                return None
+            servings = recipe.get("servings") or recipe.get("groupSize")
+            yield_data = recipe.get("yield") if isinstance(recipe.get("yield"), dict) else {}
+            servings = servings or yield_data.get("quantity") or yield_data.get("quantityDisplay")
+            pending = {
+                "id": str(uuid4()),
+                "createdAt": datetime.now(timezone.utc).isoformat(),
+                "recipeTitle": str(recipe.get("title") or "Cook4Me recipe"),
+                "groupingFunctionalId": recipe.get("groupingFunctionalId"),
+                "variantFunctionalId": recipe.get("variantFunctionalId") or recipe.get("recipeFunctionalId"),
+                "servings": servings,
+                "recipeIngredients": deepcopy(recipe.get("ingredients") or []),
+                "ingredients": ingredients,
+            }
+            data["pendingConsumption"] = pending
+            await self._commit(data)
+            return deepcopy(pending)
+
 
     async def async_confirm_consumption(
         self,
@@ -483,11 +502,12 @@ class Cook4MeRecipeHub:
         strict: bool = False,
     ) -> dict[str, Any]:
         async with self._lock:
-            pending = self._data.get("pendingConsumption")
+            data = deepcopy(self._data)
+            pending = data.get("pendingConsumption")
             if not isinstance(pending, dict) or str(pending.get("id")) != str(pending_id):
                 raise ValueError("Consumption confirmation is no longer pending")
             completed = deepcopy(pending)
-            profile = deepcopy(self._data["profile"])
+            profile = data["profile"]
             house, report = apply_consumption(
                 profile.get("houseIngredients"), consumptions
             )
@@ -499,10 +519,11 @@ class Cook4MeRecipeHub:
                     )
             profile["houseIngredients"] = house
             profile["pantry"] = [row["name"] for row in house]
-            self._data["profile"] = self._normalize_profile(profile)
-            self._data["pendingConsumption"] = None
-            await self._save()
+            data["profile"] = self._normalize_profile(profile)
+            data["pendingConsumption"] = None
+            await self._commit(data)
             return {"profile": self.profile, "report": report, "completedRecipe": completed}
+
 
     async def async_revise_consumption(
         self,
@@ -513,7 +534,8 @@ class Cook4MeRecipeHub:
     ) -> dict[str, Any]:
         """Atomically restore an old meal deduction and apply the edited mapping."""
         async with self._lock:
-            profile = deepcopy(self._data["profile"])
+            data = deepcopy(self._data)
+            profile = data["profile"]
             restored_house, restored = restore_consumption(
                 profile.get("houseIngredients"), previous_report
             )
@@ -526,50 +548,52 @@ class Cook4MeRecipeHub:
                     )
             profile["houseIngredients"] = house
             profile["pantry"] = [row["name"] for row in house]
-            self._data["profile"] = self._normalize_profile(profile)
-            await self._save()
+            data["profile"] = self._normalize_profile(profile)
+            await self._commit(data)
             return {
                 "profile": self.profile,
                 "report": report,
                 "restored": restored,
             }
 
+
     async def async_clear_pending_consumption(self, pending_id: str) -> bool:
         async with self._lock:
-            pending = self._data.get("pendingConsumption")
+            data = deepcopy(self._data)
+            pending = data.get("pendingConsumption")
             if not isinstance(pending, dict) or str(pending.get("id")) != str(pending_id):
                 return False
-            self._data["pendingConsumption"] = None
-            await self._save()
+            data["pendingConsumption"] = None
+            await self._commit(data)
             return True
 
     def user_ui_preferences(self, user_id: str) -> dict[str, Any]:
         return deepcopy(self._data.get("userUiPreferences", {}).get(user_id, {}))
 
+
     async def async_set_user_ui_preferences(self, user_id: str, preferences: dict[str, Any]) -> dict[str, Any]:
         from .shared_recipe_filters import merge_preferences
         async with self._lock:
-            users = self._data.setdefault("userUiPreferences", {})
+            data = deepcopy(self._data)
+            users = data.setdefault("userUiPreferences", {})
             users[user_id] = merge_preferences(users.get(user_id, {}), preferences)
-            await self._save()
+            await self._commit(data)
             return self.user_ui_preferences(user_id)
+
 
     async def async_set_ui_preferences(self, preferences: dict[str, Any]) -> dict[str, Any]:
         """Persist Recipe Hub display controls without touching dietary profile data."""
         async with self._lock:
-            merged = deepcopy(self._data["uiPreferences"])
+            data = deepcopy(self._data)
+            merged = deepcopy(data["uiPreferences"])
             merged.update(preferences)
-            self._data["uiPreferences"] = self._normalize_ui_preferences(merged)
-            await self._save()
+            data["uiPreferences"] = self._normalize_ui_preferences(merged)
+            await self._commit(data)
             return self.ui_preferences
+
 
     async def async_save_recipe(self, recipe: dict[str, Any], *, source: str = "manual") -> dict[str, Any]:
         normalized = normalize_manual_recipe(recipe, source=source)
-        if source == "ai":
-            match = score_recipe(normalized, self._scoring_profile())
-            if not match.get("safe"):
-                conflicts = ", ".join(match.get("violations") or []) or "saved dietary profile"
-                raise ValueError(f"AI recipe conflicts with Cook4Me dietary profile: {conflicts}")
         now = datetime.now(timezone.utc).isoformat()
         recipe_id = str(recipe.get("id") or uuid4())
         normalized.update(
@@ -580,26 +604,37 @@ class Cook4MeRecipeHub:
             }
         )
         async with self._lock:
-            items = self._data["recipes"]
+            # Diet/profile changes and an AI save share this lock. Re-check the
+            # recipe against the profile that will coexist with the saved recipe.
+            if source == "ai":
+                match = score_recipe(normalized, self._scoring_profile())
+                if not match.get("safe"):
+                    conflicts = ", ".join(match.get("violations") or []) or "saved dietary profile"
+                    raise ValueError(f"AI recipe conflicts with Cook4Me dietary profile: {conflicts}")
+            data = deepcopy(self._data)
+            items = data["recipes"]
             for index, current in enumerate(items):
                 if current.get("id") == recipe_id:
                     normalized["createdAt"] = current.get("createdAt") or normalized["createdAt"]
-                    items[index] = normalized
+                    items[index] = deepcopy(normalized)
                     break
             else:
-                items.append(normalized)
-            self._data["recipes"] = items[-250:]
-            await self._save()
+                items.append(deepcopy(normalized))
+            data["recipes"] = items[-250:]
+            await self._commit(data)
         return deepcopy(normalized)
+
 
     async def async_delete_recipe(self, recipe_id: str) -> bool:
         async with self._lock:
-            before = len(self._data["recipes"])
-            self._data["recipes"] = [x for x in self._data["recipes"] if x.get("id") != recipe_id]
-            changed = len(self._data["recipes"]) != before
+            data = deepcopy(self._data)
+            before = len(data["recipes"])
+            data["recipes"] = [x for x in data["recipes"] if x.get("id") != recipe_id]
+            changed = len(data["recipes"]) != before
             if changed:
-                await self._save()
+                await self._commit(data)
             return changed
+
 
     async def async_record_send(self, recipe: dict[str, Any]) -> None:
         entry = {
@@ -612,8 +647,9 @@ class Cook4MeRecipeHub:
             "courses": deepcopy(recipe.get("courses") or [])[:20],
         }
         async with self._lock:
-            self._data["history"] = (self._data["history"] + [entry])[-100:]
-            await self._save()
+            data = deepcopy(self._data)
+            data["history"] = (data["history"] + [entry])[-100:]
+            await self._commit(data)
 
     def _habit_terms(self) -> list[str]:
         """Return frequent past-send terms as ranking-only hints, never safety rules."""
