@@ -32,8 +32,8 @@ class LifecycleTests(unittest.TestCase):
     def test_bundled_data_has_reviewed_evidence(self):
         data = self.lifecycle.load_lifecycle_data()
         self.lifecycle.validate_lifecycle_data(data)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 64)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 10)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 71)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 14)
 
     def test_invalid_evidence_is_rejected(self):
         mutations = [
@@ -130,10 +130,80 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(result["consumeBy"], "2026-09-28")
 
     def test_no_universal_duration_for_pesto_and_dry_staples(self):
-        for name in ("Pesto", "Salt", "Plain yogurt", "Coconut cream"):
+        for name in ("Pesto alla Genovese", "Salt", "Plain yogurt", "Coconut cream"):
             profile = self.profile(name)
             self.assertEqual(profile["afterOpening"]["status"], "label_required")
             self.assertNotIn("rules", profile["afterOpening"])
+
+    def test_product_specific_rules_require_brand_and_verified_gtin(self):
+        profile = self.profile("Passata")
+        lot = {"openedAt": "2026-09-24", "storage": "fridge", "brand": "Alnatura"}
+        for code in (None, "", "4104420250346", "4104420031326", 4104420250345, True, "４１０４４２０２５０３４５"):
+            with self.subTest(code=code):
+                lot["barcode"] = code
+                result = self.lifecycle.opening_window(profile, lot, temperature_c=4)
+                self.assertEqual(result["status"], "label_required")
+                self.assertNotIn("consumeBy", result)
+        for code, rule_id in (("4104420250345", "alnatura_passata_carton"), ("04104420250345", "alnatura_passata_carton"), ("40045238", "alnatura_passata_bottle"), ("00000040045238", "alnatura_passata_bottle")):
+            lot["barcode"] = code
+            result = self.lifecycle.opening_window(profile, lot, temperature_c=4)
+            self.assertEqual(result["consumeBy"], "2026-09-27")
+            self.assertEqual(result["ruleId"], rule_id)
+        lot["brand"] = "Another brand"
+        self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot, temperature_c=4))
+        lot["useWithinDays"] = 1
+        self.assertEqual(self.lifecycle.opening_window(profile, lot)["consumeBy"], "2026-09-25")
+
+    def test_product_form_and_handling_stay_separate(self):
+        lot = {"openedAt": "2026-09-24", "storage": "fridge", "brand": "Alnatura", "barcode": "4104420031326"}
+        self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile("Pesto"), lot, temperature_c=4))
+        for code, source_id in (("4104420031326", "alnatura_pesto_basilico"), ("4104420257344", "alnatura_pesto_rosso")):
+            lot["barcode"] = code
+            result = self.lifecycle.opening_window(self.profile("Pesto"), lot, temperature_c=4, confirmed_conditions=("covered_with_oil",))
+            self.assertEqual(result["consumeBy"], "2026-09-29")
+            self.assertEqual(result["sourceIds"], [source_id, "bfr_cooling"])
+            self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile("Basil"), lot, temperature_c=4, confirmed_conditions=("covered_with_oil",)))
+        for code in ("4104420213593", "4104420213517"):
+            lot["barcode"] = code
+            self.assertEqual(self.lifecycle.opening_window(self.profile("Tomato sauce"), lot, temperature_c=4)["consumeBy"], "2026-09-26")
+            self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile("Passata"), lot, temperature_c=4))
+        lot["barcode"] = "4104420229761"
+        self.assertEqual(self.lifecycle.opening_window(self.profile("Hummus"), lot, temperature_c=4)["consumeBy"], "2026-10-01")
+        for storage, temp in (("pantry", 4), ("fridge", 7), ("freezer", -18)):
+            lot["storage"] = storage
+            self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile("Hummus"), lot, temperature_c=temp))
+
+    def test_malformed_bundled_product_scopes_are_rejected(self):
+        for codes in ([], "4104420250345", [True], ["00000000"], ["4104420250346"], ["4104420250345", "04104420250345"]):
+            with self.subTest(codes=codes):
+                data = deepcopy(self.lifecycle.load_lifecycle_data())
+                data["profiles"]["alnatura_passata"]["afterOpening"]["rules"][0]["productBarcodes"] = codes
+                with self.assertRaises(ValueError):
+                    self.lifecycle.validate_lifecycle_data(data)
+        data = deepcopy(self.lifecycle.load_lifecycle_data())
+        data["profiles"]["alnatura_passata"]["afterOpening"]["rules"][0]["brand"] = ""
+        with self.assertRaises(ValueError):
+            self.lifecycle.validate_lifecycle_data(data)
+
+    def test_herbs_and_leafy_crops_keep_their_season_scope(self):
+        basil = self.profile("Fresh basil leaves")
+        result = self.lifecycle.seasonal_availability(basil, country="DE", month=6)
+        self.assertEqual(result["basis"], "outdoor_harvest")
+        self.assertEqual(result["months"], [6, 7, 8, 9, 10])
+        self.assertEqual(result["status"], "in_season")
+        self.assertEqual(self.lifecycle.seasonal_availability(basil, country="DE", month=1)["status"], "unknown")
+        for name in ("Parsley, washed and chopped", "Chives", "Chervil", "Sorrel"):
+            result = self.lifecycle.seasonal_availability(self.profile(name), country="DE", month=4)
+            self.assertEqual(result["status"], "in_season")
+            self.assertEqual(result["months"], list(range(4, 11)))
+            self.assertEqual(result["basis"], "regional_seasonal_availability")
+        for month, status in ((1, "in_season"), (3, "unknown"), (5, "in_season")):
+            self.assertEqual(self.lifecycle.seasonal_availability(self.profile("Savoy cabbage"), country="DE", month=month)["status"], status)
+        self.assertEqual(self.lifecycle.seasonal_availability(self.profile("Bok choy, chopped"), country="DE", month=5)["months"], list(range(5, 11)))
+        self.assertEqual(self.lifecycle.seasonal_availability(basil, country="GR", month=6)["status"], "unknown")
+        for name in ("Dried basil", "Thai basil", "Mitsuba (Japanese parsley)", "Garlic chives, cut into 3 cm lengths for finishing", "Boiled Savoy cabbage leaves", "Bean sprouts (or sliced pak choi)", "Chopped herbs (tarragon, parsley, chervil, etc.)", "Frozen spinach", "Cooked bell pepper"):
+            self.assertNotEqual(self.profile(name)["seasonality"]["status"], "reviewed")
+        self.assertEqual(self.profile("Parsley root")["profileId"], "season_parsley_root")
 
     def test_oat_drinks_keep_each_manufacturers_own_window(self):
         profile = self.profile("Oat milk")

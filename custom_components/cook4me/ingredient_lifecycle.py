@@ -26,6 +26,17 @@ def _integer(value: Any, maximum: int) -> bool:
     return type(value) is int and 1 <= value <= maximum
 
 
+def _gtin(value: Any) -> str:
+    """Canonical GTIN for a verified product code; malformed input is unknown."""
+    if not isinstance(value, str):
+        return ""
+    code = value.strip()
+    if len(code) not in (8, 12, 13, 14) or not code.isascii() or not code.isdecimal() or not int(code):
+        return ""
+    total = sum(int(digit) * (3 if i % 2 == 0 else 1) for i, digit in enumerate(code[-2::-1]))
+    return code.zfill(14) if (-total) % 10 == int(code[-1]) else ""
+
+
 def validate_lifecycle_data(data: Any) -> None:
     """Reject malformed bundled evidence rather than guessing dates or months."""
     if not isinstance(data, dict) or data.get("schemaVersion") != 1 or data.get("kind") != "cook4me-ingredient-lifecycle":
@@ -58,7 +69,7 @@ def validate_lifecycle_data(data: Any) -> None:
             months = region.get("months")
             if not isinstance(months, list) or not months or any(not _integer(m, 12) for m in months) or months != sorted(set(months)):
                 raise ValueError("Invalid season months")
-            if region.get("basis") != "seasonal_calendar_including_stored_produce":
+            if region.get("basis") not in {"seasonal_calendar_including_stored_produce", "regional_seasonal_availability", "outdoor_harvest"}:
                 raise ValueError("Invalid season basis")
             evidence(region)
         if opening.get("status") not in {"reviewed", "conditional", "label_required", "unknown", "not_applicable"}:
@@ -79,6 +90,14 @@ def validate_lifecycle_data(data: Any) -> None:
                 raise ValueError("Invalid opening storage conditions")
             if not isinstance(rule.get("conditions"), list) or any(not isinstance(c, str) or not c for c in rule["conditions"]):
                 raise ValueError("Invalid opening conditions")
+            if "productBarcodes" in rule:
+                codes = rule["productBarcodes"]
+                if not isinstance(codes, list) or not codes or any(not _gtin(code) for code in codes):
+                    raise ValueError("Invalid opening product barcode")
+                if len({_gtin(code) for code in codes}) != len(codes):
+                    raise ValueError("Duplicate opening product barcode")
+                if not isinstance(rule.get("brand"), str) or not rule["brand"].strip():
+                    raise ValueError("Product-specific guidance needs a brand")
             evidence(rule)
     if any(not key or key != _name(key) or profile_id not in profiles for key, profile_id in names.items()):
         raise ValueError("Invalid lifecycle identity mapping")
@@ -174,6 +193,8 @@ def opening_window(profile: dict[str, Any], lot: dict[str, Any], *, temperature_
         candidates = []
         for rule in opening.get("rules", []):
             if rule.get("brand") and _name(rule["brand"]) != _name(lot.get("brand")):
+                continue
+            if "productBarcodes" in rule and _gtin(lot.get("barcode")) not in {_gtin(code) for code in rule["productBarcodes"]}:
                 continue
             if lot.get("storage") != rule["storage"]:
                 continue
