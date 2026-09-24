@@ -469,18 +469,27 @@ class Cook4MeIngredientCatalogCache:
         self._prune()
 
     @staticmethod
-    def _pruned(data: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    def _stamp(row: dict[str, Any]) -> float:
+        return float(
+            row.get("checkedAt")
+            or row.get("timestamp")
+            or row.get("updatedAt")
+            or 0
+        )
+
+    @classmethod
+    def _pruned(cls, data: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
         now = time.time()
         current = {
             language: row
             for language, row in data.items()
-            if now - float(row.get("timestamp") or 0) <= _TTL
+            if now - cls._stamp(row) <= _TTL
         }
         if len(current) > _MAX_LANGUAGES:
             current = dict(
                 sorted(
                     current.items(),
-                    key=lambda pair: float(pair[1].get("timestamp") or 0),
+                    key=lambda pair: cls._stamp(pair[1]),
                     reverse=True,
                 )[:_MAX_LANGUAGES]
             )
@@ -499,16 +508,37 @@ class Cook4MeIngredientCatalogCache:
             self._data.pop(str(language), None)
             return None
         result = deepcopy(row)
+        checked = self._stamp(result)
+        updated = float(result.get("updatedAt") or result.get("timestamp") or checked)
+        result["timestamp"] = float(result.get("timestamp") or checked)
+        result["checkedAt"] = checked
+        result["updatedAt"] = updated
         result["items"] = _clean_catalog_rows(result.get("items") or [])
         return result
 
     async def async_set(self, language: str, items: list[dict[str, str]], *, source: str) -> None:
         async with self._lock:
             data = deepcopy(self._data)
-            data[str(language)] = {
-                "timestamp": time.time(),
+            key = str(language)
+            clean = deepcopy(_clean_catalog_rows(items))
+            previous = data.get(key) if isinstance(data.get(key), dict) else None
+            changed = (
+                previous is None
+                or previous.get("items") != clean
+                or str(previous.get("source") or "") != str(source)
+            )
+            now = time.time()
+            updated = (
+                now
+                if changed
+                else float(previous.get("updatedAt") or previous.get("timestamp") or now)
+            )
+            data[key] = {
+                "timestamp": now,
+                "checkedAt": now,
+                "updatedAt": updated,
                 "source": str(source),
-                "items": deepcopy(_clean_catalog_rows(items)),
+                "items": clean,
             }
             data = self._pruned(data)
             await self._store.async_save(deepcopy(data))
