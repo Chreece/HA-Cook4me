@@ -399,6 +399,12 @@ def normalize_inventory(value: Any) -> list[dict[str, Any]]:
                 ):
                     if row.get(key):
                         current[key] = row[key]
+                links = normalize_ingredient_links([
+                    *(current.get("ingredientLinks") or []),
+                    *(row.get("ingredientLinks") or []),
+                ])
+                if links:
+                    current["ingredientLinks"] = links
                 dates = [x for x in (previous_date, incoming_date) if x]
                 if dates:
                     current["bestBefore"] = min(dates)
@@ -479,6 +485,12 @@ def add_inventory_item(
             ):
                 if incoming.get(key):
                     current[key] = incoming[key]
+            links = normalize_ingredient_links([
+                *(current.get("ingredientLinks") or []),
+                *(incoming.get("ingredientLinks") or []),
+            ])
+            if links:
+                current["ingredientLinks"] = links
             dates = [x for x in (previous_date, normalized_best_before) if x]
             if dates:
                 current["bestBefore"] = min(dates)
