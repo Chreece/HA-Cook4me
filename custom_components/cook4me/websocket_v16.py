@@ -109,6 +109,7 @@ async def _catalog_status(hass: HomeAssistant, bridge) -> dict[str, Any]:
     }
     identities = set(catalog_by_identity)
     mapped = sum(1 for ident in identities if nutrition_store.get_generic(ident) is not None)
+    blocked = resolution_store.active_count(identities, mode=mode)
     active = resolution_store.active_rows(identities, mode=mode, limit=80)
     remaining = max(0, len(identities) - mapped)
     unresolved_details = []
@@ -135,11 +136,11 @@ async def _catalog_status(hass: HomeAssistant, bridge) -> dict[str, Any]:
             "catalogCount": mapped,
             "catalogTotal": len(identities),
             "remaining": remaining,
-            "blockedFailures": min(remaining, len(active)),
-            "actionableRemaining": max(0, remaining - len(active)),
+            "blockedFailures": min(remaining, blocked),
+            "actionableRemaining": max(0, remaining - blocked),
             "unresolvedDetails": unresolved_details,
             "unresolvedDetailsTruncated": max(
-                0, min(remaining, len(active)) - len(unresolved_details)
+                0, min(remaining, blocked) - len(unresolved_details)
             ),
             "genericFallbackCatalog": True,
         }
