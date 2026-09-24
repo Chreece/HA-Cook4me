@@ -28,11 +28,22 @@ def edit_location(profile, *, action, identity="", name="", kind="other"):
     existing = next((row for row in locations if row["id"] == identity), None)
     if identity and existing is None:
         raise ValueError("Storage place no longer exists; reload the list")
-    lots = [lot for row in profile.get("houseIngredients") or [] for lot in row.get("lots") or []]
+    stock_rows = [
+        row for row in profile.get("houseIngredients") or []
+        if isinstance(row, dict)
+    ]
+    lots = [lot for row in stock_rows for lot in row.get("lots") or []]
     if action == "delete":
         if existing is None:
             raise ValueError("Choose a storage place")
-        if any(lot.get("storageLocationId") == identity for lot in lots):
+        if (
+            any(lot.get("storageLocationId") == identity for lot in lots)
+            or any(
+                row.get("unlimited")
+                and row.get("storageLocationId") == identity
+                for row in stock_rows
+            )
+        ):
             raise ValueError("Move the stock stored here before deleting this place")
         locations.remove(existing)
     elif action == "save":
@@ -50,6 +61,12 @@ def edit_location(profile, *, action, identity="", name="", kind="other"):
             for lot in lots:
                 if lot.get("storageLocationId") == identity:
                     lot["storage"] = kind
+            for stock_row in stock_rows:
+                if (
+                    stock_row.get("unlimited")
+                    and stock_row.get("storageLocationId") == identity
+                ):
+                    stock_row["storage"] = kind
     else:
         raise ValueError("Unknown storage action")
     profile["storageLocations"] = locations
