@@ -949,9 +949,15 @@ def stock_for_ingredient(stock, ingredient, used=None):
     for row in stock:
         row_identity = inventory_identity(row)
         primary = row_identity in wanted
-        if primary and row.get("unlimited"):
+        row_linked = {
+            identity
+            for link in row.get("ingredientLinks") or []
+            for identity in ingredient_identities(link)
+        }
+        linked_row = bool(wanted & row_linked)
+        if row.get("unlimited") and (primary or linked_row):
             return deepcopy(row)
-        if primary:
+        if primary or linked_row:
             fallback = row
         for lot in row.get("lots") or []:
             linked = {
@@ -959,7 +965,7 @@ def stock_for_ingredient(stock, ingredient, used=None):
                 for link in lot.get("ingredientLinks") or []
                 for identity in ingredient_identities(link)
             }
-            if primary or bool(wanted & linked):
+            if primary or linked_row or bool(wanted & linked):
                 candidates.append((row, lot))
     if not candidates:
         return deepcopy(fallback) if fallback else None
