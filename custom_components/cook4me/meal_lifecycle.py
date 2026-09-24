@@ -22,6 +22,7 @@ _MAX_LEFTOVERS = 250
 _MAX_FEEDBACK = 1000
 _MAX_SUBSTITUTIONS = 1000
 _MAX_MEAL_COSTS = 1000
+_MAX_LEFTOVER_OPERATIONS = 200
 _DEFAULT_MEAL_TYPES = ("breakfast", "lunch", "dinner")
 _VALID_MEAL_TYPES = {"breakfast", "morningSnack", "lunch", "afternoonSnack", "dinner", "lateSnack"}
 _MEAL_TYPE_ORDER = ("breakfast", "morningSnack", "lunch", "afternoonSnack", "dinner", "lateSnack")
@@ -336,6 +337,86 @@ def _durable_mutation(method):
     return wrapped
 
 
+def _leftover_consumption_plan(
+    row: dict[str, Any], amount: float, mode: str
+) -> tuple[dict[str, Any], dict[str, Any] | None]:
+    """Return consumed evidence plus the remaining leftover without mutating row."""
+    current = deepcopy(row)
+    if mode == "servings":
+        available = _number(current.get("servings")) or 0.0
+        take = min(available, amount)
+        if available <= 0 or take <= 0:
+            raise ValueError("Leftover meal has no servings remaining")
+        fraction = take / available
+        consumed = {
+            "id": current.get("id"),
+            "title": current.get("title"),
+            "servings": take,
+            "nutrition": {"totals": _scale_numeric_map(
+                _nutrition_totals(current.get("nutrition")), fraction
+            )},
+            "costByCurrency": _scale_numeric_map(
+                current.get("costByCurrency"), fraction
+            ),
+        }
+        left = available - take
+        if left <= 1e-9:
+            remaining = None
+        else:
+            remaining = deepcopy(current)
+            remaining_fraction = left / available
+            remaining["servings"] = round(left, 3)
+            remaining["nutrition"] = {"totals": _scale_numeric_map(
+                _nutrition_totals(current.get("nutrition")), remaining_fraction
+            )}
+            remaining["costByCurrency"] = _scale_numeric_map(
+                current.get("costByCurrency"), remaining_fraction
+            )
+        consumed["remainingServings"] = max(0.0, left)
+        return consumed, remaining
+
+    if mode != "weight":
+        raise ValueError("Unknown leftover consumption mode")
+    available_weight = _number(current.get("weightGrams"))
+    if available_weight is None or available_weight <= 0:
+        raise ValueError("Weigh the remaining leftovers before consuming by weight")
+    take_weight = min(available_weight, amount)
+    fraction = take_weight / available_weight
+    available_servings = _number(current.get("servings")) or 0.0
+    take_servings = available_servings * fraction
+    consumed = {
+        "id": current.get("id"),
+        "title": current.get("title"),
+        "grams": round(take_weight, 3),
+        "servings": round(take_servings, 3),
+        "nutrition": {"totals": _scale_numeric_map(
+            _nutrition_totals(current.get("nutrition")), fraction
+        )},
+        "costByCurrency": _scale_numeric_map(
+            current.get("costByCurrency"), fraction
+        ),
+    }
+    left_weight = available_weight - take_weight
+    left_servings = max(0.0, available_servings - take_servings)
+    if left_weight <= 1e-9 or left_servings <= 1e-9:
+        remaining = None
+    else:
+        remaining = deepcopy(current)
+        remaining_fraction = left_weight / available_weight
+        remaining["weightGrams"] = round(left_weight, 3)
+        remaining["servings"] = round(left_servings, 3)
+        remaining["nutrition"] = {"totals": _scale_numeric_map(
+            _nutrition_totals(current.get("nutrition")), remaining_fraction
+        )}
+        remaining["costByCurrency"] = _scale_numeric_map(
+            current.get("costByCurrency"), remaining_fraction
+        )
+        remaining["weighedAt"] = datetime.now(timezone.utc).isoformat()
+    consumed["remainingGrams"] = round(max(0.0, left_weight), 3)
+    consumed["remainingServings"] = round(max(0.0, left_servings), 3)
+    return consumed, remaining
+
+
 class Cook4MeMealLifecycleStore:
     def __init__(self, hass: HomeAssistant, entry_id: str) -> None:
         self._store: Store[dict[str, Any]] = Store(
@@ -354,6 +435,7 @@ class Cook4MeMealLifecycleStore:
             "feedback": {},
             "substitutions": {},
             "mealCosts": {},
+            "leftoverOperations": {},
             "settings": {
                 "mealTypes": list(_DEFAULT_MEAL_TYPES),
                 "weekdayMealTypes": {
@@ -386,6 +468,7 @@ class Cook4MeMealLifecycleStore:
                 ("feedback", _MAX_FEEDBACK),
                 ("substitutions", _MAX_SUBSTITUTIONS),
                 ("mealCosts", _MAX_MEAL_COSTS),
+                ("leftoverOperations", _MAX_LEFTOVER_OPERATIONS),
             ):
                 raw = saved.get(key) if isinstance(saved.get(key), dict) else {}
                 self._data[key] = {
@@ -763,9 +846,168 @@ class Cook4MeMealLifecycleStore:
         await self._save()
         return deepcopy(row)
 
+    def _pending_leftover_operation(self, leftover_id: str, *, except_id: str = "") -> dict[str, Any] | None:
+        wanted = _text(leftover_id)
+        for request_id, operation in (self._data.get("leftoverOperations") or {}).items():
+            if request_id == except_id or not isinstance(operation, dict):
+                continue
+            if operation.get("status") == "prepared" and _text(operation.get("leftoverId")) == wanted:
+                return deepcopy(operation)
+        return None
+
+    async def async_consume_leftover_transaction(
+        self,
+        *,
+        request_id: str,
+        leftover_id: str,
+        amount: Any,
+        mode: str,
+        record_history: Any,
+        cost_source: str,
+    ) -> dict[str, Any]:
+        """Durable/idempotent leftover -> history transaction.
+
+        The prepared intent is saved before touching history or the leftover.
+        History uses a deterministic record ID. A retry after timeout resumes the
+        same intent; the leftover itself is changed only in the final commit.
+        """
+        request = _text(request_id)
+        wanted = _text(leftover_id)
+        numeric = _number(amount)
+        if len(request) < 16 or len(request) > 80:
+            raise ValueError("Leftover request id is invalid")
+        if not wanted:
+            raise ValueError("Leftover meal id is required")
+        if numeric is None or numeric <= 0:
+            raise ValueError(
+                "Consumed leftover weight must be greater than zero"
+                if mode == "weight"
+                else "Leftover servings must be greater than zero"
+            )
+        if mode not in {"servings", "weight"}:
+            raise ValueError("Unknown leftover consumption mode")
+
+        async with self._persistence_mutation_lock:
+            operations = self._data.get("leftoverOperations") or {}
+            operation = operations.get(request)
+            fingerprint = {
+                "leftoverId": wanted,
+                "mode": mode,
+                "amount": round(float(numeric), 9),
+            }
+            if isinstance(operation, dict):
+                if operation.get("fingerprint") != fingerprint:
+                    raise ValueError(
+                        "This leftover retry belongs to a different amount; finish the previous action first"
+                    )
+                if operation.get("status") == "applied":
+                    return deepcopy(operation["result"])
+            else:
+                pending = self._pending_leftover_operation(wanted)
+                if pending is not None:
+                    raise ValueError(
+                        "A previous leftover action still needs retry before this leftover can be changed"
+                    )
+                row = next(
+                    (
+                        item for item in self._data.get("leftovers") or []
+                        if _text(item.get("id")) == wanted
+                    ),
+                    None,
+                )
+                if row is None:
+                    raise ValueError("Leftover meal was not found")
+                consumed, remaining = _leftover_consumption_plan(
+                    row, float(numeric), mode
+                )
+                operation = {
+                    "requestId": request,
+                    "leftoverId": wanted,
+                    "fingerprint": fingerprint,
+                    "status": "prepared",
+                    "beforeLeftover": deepcopy(row),
+                    "remainingLeftover": deepcopy(remaining),
+                    "consumed": deepcopy(consumed),
+                    "createdAt": datetime.now(timezone.utc).isoformat(),
+                }
+                prepared = deepcopy(self._data)
+                prepared_ops = prepared.setdefault("leftoverOperations", {})
+                # Never silently evict unfinished operations.
+                if len(prepared_ops) >= _MAX_LEFTOVER_OPERATIONS:
+                    applied = [
+                        (key, value) for key, value in prepared_ops.items()
+                        if isinstance(value, dict) and value.get("status") == "applied"
+                    ]
+                    applied.sort(key=lambda item: _text(item[1].get("appliedAt")))
+                    while len(prepared_ops) >= _MAX_LEFTOVER_OPERATIONS and applied:
+                        key, _value = applied.pop(0)
+                        prepared_ops.pop(key, None)
+                if len(prepared_ops) >= _MAX_LEFTOVER_OPERATIONS:
+                    raise ValueError("Finish pending leftover actions before starting another")
+                prepared_ops[request] = operation
+                await self._store.async_save(deepcopy(prepared))
+                self._data = prepared
+
+            consumed = deepcopy(operation["consumed"])
+            record_id = f"leftover-{request}"
+            record = await record_history(consumed, record_id)
+
+            # Retry-safe: the current leftover must still equal the durable
+            # pre-consumption snapshot. The lifecycle lock prevents an in-process
+            # mutation from passing this point concurrently.
+            current_index = next(
+                (
+                    index for index, item in enumerate(self._data.get("leftovers") or [])
+                    if _text(item.get("id")) == wanted
+                ),
+                None,
+            )
+            if current_index is None or self._data["leftovers"][current_index] != operation["beforeLeftover"]:
+                raise ValueError(
+                    "The leftover changed while this action was pending; reload before retrying"
+                )
+
+            final = deepcopy(self._data)
+            remaining = deepcopy(operation.get("remainingLeftover"))
+            if remaining is None:
+                final["leftovers"].pop(current_index)
+            else:
+                final["leftovers"][current_index] = remaining
+            history_id = _text(record.get("id"))
+            if history_id:
+                final.setdefault("mealCosts", {})[history_id] = {
+                    "mealId": history_id,
+                    "cost": {
+                        "totalsByCurrency": deepcopy(consumed.get("costByCurrency") or {}),
+                        "source": _text(cost_source) or "leftover",
+                    },
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                }
+                while len(final["mealCosts"]) > _MAX_MEAL_COSTS:
+                    final["mealCosts"].pop(next(iter(final["mealCosts"])), None)
+            result = {
+                "consumed": consumed,
+                "mealHistoryRecord": deepcopy(record),
+            }
+            finished = final.setdefault("leftoverOperations", {}).get(request, {})
+            finished.clear()
+            finished.update({
+                "requestId": request,
+                "leftoverId": wanted,
+                "fingerprint": fingerprint,
+                "status": "applied",
+                "result": deepcopy(result),
+                "appliedAt": datetime.now(timezone.utc).isoformat(),
+            })
+            await self._store.async_save(deepcopy(final))
+            self._data = final
+            return result
+
     @_durable_mutation
     async def async_consume_leftover(self, leftover_id: str, servings: Any) -> dict[str, Any]:
         wanted = _text(leftover_id)
+        if self._pending_leftover_operation(wanted) is not None:
+            raise ValueError("A previous leftover action still needs retry before this leftover can be changed")
         amount = _number(servings)
         if amount is None or amount <= 0:
             raise ValueError("Leftover servings must be greater than zero")
@@ -805,6 +1047,8 @@ class Cook4MeMealLifecycleStore:
     async def async_set_leftover_weight(self, leftover_id: str, grams: Any) -> dict[str, Any]:
         """Attach a physical net weight to the current leftover amount."""
         wanted = _text(leftover_id)
+        if self._pending_leftover_operation(wanted) is not None:
+            raise ValueError("A previous leftover action still needs retry before this leftover can be changed")
         amount = _number(grams)
         if amount is None or amount <= 0:
             raise ValueError("Leftover weight must be greater than zero")
@@ -825,6 +1069,8 @@ class Cook4MeMealLifecycleStore:
     ) -> dict[str, Any]:
         """Consume a weighed part of leftovers and scale nutrition/cost proportionally."""
         wanted = _text(leftover_id)
+        if self._pending_leftover_operation(wanted) is not None:
+            raise ValueError("A previous leftover action still needs retry before this leftover can be changed")
         amount = _number(grams)
         if amount is None or amount <= 0:
             raise ValueError("Consumed leftover weight must be greater than zero")

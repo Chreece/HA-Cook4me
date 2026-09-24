@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from typing import Any
+from uuid import uuid4
 
 import voluptuous as vol
 from homeassistant.components import websocket_api
@@ -323,6 +324,7 @@ async def ws_inventory_reweigh(hass, connection, msg) -> None:
         vol.Optional("entry_id"): str,
         vol.Required("leftover_id"): str,
         vol.Required("grams"): vol.Any(int, float, str),
+        vol.Optional("request_id"): vol.All(str, vol.Length(min=16, max=80)),
     }
 )
 @websocket_api.async_response
@@ -356,28 +358,30 @@ async def ws_leftover_consume_weight(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         lifecycle = await meal_lifecycle_store_for_bridge(bridge)
-        consumed = await lifecycle.async_consume_leftover_weight(
-            str(msg["leftover_id"]), msg.get("grams")
-        )
-        history = await meal_history_store_for_bridge(bridge)
-        record = await history.async_record(
-            recipe={
-                "title": consumed.get("title"),
-                "servings": consumed.get("servings"),
-            },
-            nutrition=consumed.get("nutrition") or {},
-            consumption={},
-        )
-        await lifecycle.async_record_meal_cost(
-            record.get("id"),
-            {
-                "totalsByCurrency": consumed.get("costByCurrency") or {},
-                "source": "leftover_scale",
-            },
-        )
+        async with lifecycle.weekly_mutation():
+            history = await meal_history_store_for_bridge(bridge)
+
+            async def record_history(consumed, record_id):
+                return await history.async_record(
+                    recipe={
+                        "title": consumed.get("title"),
+                        "servings": consumed.get("servings"),
+                    },
+                    nutrition=consumed.get("nutrition") or {},
+                    consumption={},
+                    record_id=record_id,
+                )
+
+            transaction = await lifecycle.async_consume_leftover_transaction(
+                request_id=str(msg.get("request_id") or uuid4().hex),
+                leftover_id=str(msg["leftover_id"]),
+                amount=msg.get("grams"),
+                mode="weight",
+                record_history=record_history,
+                cost_source="leftover_scale",
+            )
         result = {
-            "consumed": consumed,
-            "mealHistoryRecord": record,
+            **transaction,
             "leftovers": lifecycle.leftovers,
         }
     except Exception as exc:
