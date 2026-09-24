@@ -88,6 +88,31 @@ class UnlimitedStockTests(unittest.TestCase):
         self.assertTrue(found["unlimited"])
         self.assertEqual(found["storageLocationId"],"spices")
 
+    def test_existing_unlimited_item_merges_new_reviewed_catalog_links(self):
+        rows=inventory.add_inventory_item(
+            [{
+                "key":"salt","name":"Salt","unlimited":True,
+                "storageLocationId":"spices","storage":"pantry",
+                "ingredientLinks":[{"key":"salt","name":"Salt"}],
+            }],
+            {"key":"salt","name":"Salt"},
+            unlimited=True,
+            lot_metadata={
+                "storageLocationId":"spices",
+                "storage":"pantry",
+                "ingredientLinks":[{"key":"sea-salt","name":"Sea salt"}],
+            },
+        )
+        self.assertEqual(
+            {link["key"] for link in rows[0]["ingredientLinks"]},
+            {"salt","sea-salt"},
+        )
+        found=inventory.stock_for_ingredient(
+            rows,{"key":"sea-salt","name":"Sea salt"}
+        )
+        self.assertIsNotNone(found)
+        self.assertTrue(found["unlimited"])
+
     def test_storage_place_cannot_be_deleted_while_unlimited_stock_uses_it(self):
         profile={
             "storageLocations":[{"id":"spices","name":"Spice shelf","kind":"shelf"}],
