@@ -88,6 +88,9 @@ def validate_lifecycle_data(data: Any) -> None:
             temperature = rule.get("maxTemperatureC")
             if rule.get("storage") != "fridge" or type(temperature) not in (int, float) or not math.isfinite(temperature) or not 0 < temperature <= 7:
                 raise ValueError("Invalid opening storage conditions")
+            minimum_temperature = rule.get("minTemperatureC", 0)
+            if type(minimum_temperature) not in (int, float) or not math.isfinite(minimum_temperature) or not 0 <= minimum_temperature <= temperature:
+                raise ValueError("Invalid opening minimum temperature")
             if not isinstance(rule.get("conditions"), list) or any(not isinstance(c, str) or not c for c in rule["conditions"]):
                 raise ValueError("Invalid opening conditions")
             if "productBarcodes" in rule:
@@ -224,7 +227,7 @@ def opening_window(profile: dict[str, Any], lot: dict[str, Any], *, temperature_
                 continue
             if lot.get("storage") != rule["storage"]:
                 continue
-            if type(temperature_c) not in (int, float) or not math.isfinite(temperature_c) or not 0 <= temperature_c <= rule["maxTemperatureC"]:
+            if type(temperature_c) not in (int, float) or not math.isfinite(temperature_c) or not rule.get("minTemperatureC", 0) <= temperature_c <= rule["maxTemperatureC"]:
                 continue
             if not set(rule["conditions"]).issubset(confirmed_conditions):
                 continue

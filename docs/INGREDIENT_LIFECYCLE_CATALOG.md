@@ -5,7 +5,7 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.11)
+## Reviewed coverage (2026-09-25.12)
 
 - 112 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
@@ -18,7 +18,7 @@ cloud credentials, or per-scan file reads are needed.
   Nine further produce groups now have Greek evidence, including pomegranate.
   Fresh nettle leaves now have a Bavarian harvest profile; national German
   guidance expands bell-pepper, spring-onion and parsnip availability.
-- 71 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+- 75 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro, Oatly or verified Alnatura packages), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
@@ -45,8 +45,10 @@ cloud credentials, or per-scan file reads are needed.
   Eleven further dmBio packages cover passata, chickpeas, coconut milk and
   soy, rice, coconut and oat drinks, retaining their exact handling conditions.
   Ten further dmBio packages add cans, cooking creams and apple purées.
-  There are 99 reviewed product barcodes, 1,727 exact canonical names and
-  97 reviewed provider ingredient IDs.
+  Tofu, seitan, olive products and basil pesto add ten more packages; plain and
+  smoked tofu, specific olive forms, and basil/red pesto keep separate rules.
+  There are 109 reviewed product barcodes, 1,731 exact canonical names and
+  101 reviewed provider ingredient IDs.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
   coconut cream, unverified tomato paste, ketchup and Skyr, plus mustard, mayonnaise and
@@ -58,6 +60,50 @@ cloud credentials, or per-scan file reads are needed.
 Run `python tools/audit_ingredient_lifecycle.py` for counts against the actual
 shipped catalog. Counts distinguish seasonal, numeric and label-required
 entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
+
+## Batch 18: tofu temperatures, olive packages and pesto forms
+
+Ten additional dmBio packages were reviewed on 2026-09-25. Source URLs and
+the exact verified GTINs are stored alongside each rule.
+
+| Package | Verified GTIN | Days after opening | Refrigeration |
+| --- | --- | --- | --- |
+| Natural tofu, 200 g | `4067796251999` | 2 | 2–6 °C, as labelled |
+| Smoked tofu, 200 g | `4067796252019` | 2 | 2–6 °C, as labelled |
+| Green pitted olives, German listing | `4070765075939` | 14 | Catalog cap of 4 °C |
+| Green pitted olives, Austrian listing | `4066447870411` | 14 | Catalog cap of 4 °C |
+| Kalamon pitted olives, German listing | `4070765075953` | 14 | Catalog cap of 4 °C |
+| Kalamon pitted olives, Austrian listing | `4066447898743` | 14 | Catalog cap of 4 °C |
+| Olive mix with herbs, 180 g | `4070765075892` | 7 | Catalog cap of 4 °C |
+| Seitan, 200 g | `4066447884883` | 2 | Catalog cap of 4 °C; keep closed |
+| Black olive spread with feta, 190 g | `4066447087161` | 14 | Catalog cap of 4 °C |
+| Pesto Verde with basil and cashews, 190 g | `4066447887822` | 5 | Catalog cap of 4 °C |
+
+An optional `minTemperatureC` now preserves a labelled lower temperature bound.
+The validator rejects invalid or inverted ranges; the evaluator rejects a
+temperature below that bound. Rules without it retain the existing zero-degree
+lower bound. The opening editor and cooking review share translated range text
+in English, German and Greek. Both tofu products use their manufacturer's
+explicit 2–6 °C range. Other products retain the conservative 4 °C cap with BfR
+cooling evidence. Barcode/brand checks and explicit handling confirmation still
+apply, and neither choosing guidance nor scanning starts the opening clock.
+
+Basil and red pesto now have separate profiles. The generic pesto profile keeps
+all reviewed choices; basil pesto accepts the verified basil packages, while red,
+tomato and sun-dried-tomato pesto accept the reviewed red package. In particular,
+the new dmBio Verde instruction cannot be borrowed by a red pesto ingredient.
+Seitan and black olive spread gain separate product-scoped profiles; plain,
+smoked, silken and fried tofu do not share these new rules. Four reviewed provider
+IDs (M_FOOD_477, M_FOOD_733, M_FOOD_539 and M_FOOD_370) expose the matching profiles.
+
+German seasons now use BZfE's national guidance for chard (March–September,
+including early protected cultivation), fresh green beans (approximately June
+to mid-November), and cauliflower (approximately May/June to October/November).
+The month-level windows remain approximate. Deutschland – Mein Garten documents
+year-round fresh domestic leek harvest across summer and winter varieties.
+Preserved/frozen forms do not inherit these calendars. Coverage now reaches
+3,208 catalog rows: 2,239 seasonal, 534 with numeric opening rules and 435
+requiring package instructions; the catalog remains incomplete.
 
 ## Batch 17: everyday packages and official catalog coverage
 

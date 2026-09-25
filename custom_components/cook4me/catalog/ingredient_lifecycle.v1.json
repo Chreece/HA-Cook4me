@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.11",
+  "version": "2026-09-25.12",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -872,6 +872,76 @@
       "publisher": "Bundeszentrum für Ernährung (BZfE)",
       "url": "https://www.bzfe.de/presse/pressemeldungen-archiv/heimische-heidelbeerzeit",
       "reviewedOn": "2026-09-25"
+    },
+    "dmbio_natural_tofu": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1457962/dmbio-tofu-natur",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_smoked_tofu": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1503058/dmbio-tofu-geraeuchert",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_green_olives": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/3093722/dmbio-gruene-oliven-ohne-stein",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_green_olives_at": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.at/p/d/3093722/dmbio-oliven-gruen-ohne-stein",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_kalamon_olives": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1496925/dmbio-kalamon-oliven-ohne-stein",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_kalamon_olives_at": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.at/p/d/1496925/dmbio-kalamon-oliven-ohne-stein",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_olive_mix": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1638680/dmbio-oliven-mix-mit-kraeutern",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_seitan": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/3065507/dmbio-seitan",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_black_olive_spread": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1638653/dmbio-brotaufstrich-schwarze-olivencreme-mit-feta",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_pesto_verde": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1711140/dmbio-pesto-verde-mit-basilikum-und-cashews-vegan",
+      "reviewedOn": "2026-09-25"
+    },
+    "bzfe_chard_availability": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/presse/pressemeldungen-archiv/mangold-blatt-und-stiel-geniessen",
+      "reviewedOn": "2026-09-25"
+    },
+    "bzfe_garden_beans": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/presse/pressemeldungen-archiv/gartenbohnen-knackfrisch-vom-feld",
+      "reviewedOn": "2026-09-25"
+    },
+    "bzfe_cauliflower_harvest": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/presse/pressemeldungen-archiv/die-kunst-des-blumenkohls",
+      "reviewedOn": "2026-09-25"
+    },
+    "mein_garten_leek": {
+      "publisher": "Deutschland – Mein Garten",
+      "url": "https://geerntet-in-deutschland.de/lauchporree/",
+      "reviewedOn": "2026-09-25"
     }
   },
   "profiles": {
@@ -1463,22 +1533,20 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "outdoor_harvest",
             "months": [
+              5,
               6,
               7,
               8,
               9,
-              10
+              10,
+              11
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_06",
-              "hessen_07",
-              "hessen_08",
-              "hessen_09",
-              "hessen_10"
+              "bzfe_cauliflower_harvest"
             ],
             "coverage": "listed_months_only"
           }
@@ -1494,18 +1562,19 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "outdoor_harvest",
             "months": [
+              6,
               7,
               8,
-              10
+              9,
+              10,
+              11
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_07",
-              "hessen_08",
-              "hessen_10"
+              "bzfe_garden_beans"
             ],
             "coverage": "listed_months_only"
           }
@@ -1810,11 +1879,17 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "outdoor_harvest",
             "months": [
               1,
               2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
               9,
               10,
               11,
@@ -1822,12 +1897,7 @@
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_01",
-              "hessen_02",
-              "hessen_09",
-              "hessen_10",
-              "hessen_11",
-              "hessen_12"
+              "mein_garten_leek"
             ],
             "coverage": "listed_months_only"
           }
@@ -2768,16 +2838,20 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
             "months": [
+              3,
+              4,
+              5,
+              6,
+              7,
               8,
               9
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_08",
-              "hessen_09"
+              "bzfe_chard_availability"
             ],
             "coverage": "listed_months_only"
           }
@@ -3046,6 +3120,23 @@
             "productBarcodes": [
               "4104420094840"
             ]
+          },
+          {
+            "id": "dmbio_natural_tofu",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 6,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_natural_tofu"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796251999"
+            ],
+            "minTemperatureC": 2
           }
         ]
       }
@@ -3286,6 +3377,23 @@
             "productBarcodes": [
               "4104420094864"
             ]
+          },
+          {
+            "id": "dmbio_smoked_tofu",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 6,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_smoked_tofu"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796252019"
+            ],
+            "minTemperatureC": 2
           }
         ]
       }
@@ -3773,6 +3881,23 @@
             "brand": "Alnatura",
             "productBarcodes": [
               "4104420257344"
+            ]
+          },
+          {
+            "id": "dmbio_pesto_verde",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_pesto_verde",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447887822"
             ]
           }
         ]
@@ -6092,6 +6217,40 @@
             "productBarcodes": [
               "4104420129849"
             ]
+          },
+          {
+            "id": "dmbio_green_olives",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_green_olives",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765075939"
+            ]
+          },
+          {
+            "id": "dmbio_green_olives_at",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_green_olives_at",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447870411"
+            ]
           }
         ]
       }
@@ -6137,6 +6296,40 @@
             "brand": "Alnatura Origin",
             "productBarcodes": [
               "4104420132085"
+            ]
+          },
+          {
+            "id": "dmbio_kalamon_olives",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_kalamon_olives",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765075953"
+            ]
+          },
+          {
+            "id": "dmbio_kalamon_olives_at",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_kalamon_olives_at",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447898743"
             ]
           }
         ]
@@ -6200,6 +6393,23 @@
             "brand": "Alnatura",
             "productBarcodes": [
               "40045542"
+            ]
+          },
+          {
+            "id": "dmbio_olive_mix",
+            "daysMin": 7,
+            "daysMax": 7,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_olive_mix",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765075892"
             ]
           }
         ]
@@ -6365,6 +6575,91 @@
             "brand": "Alnatura",
             "productBarcodes": [
               "40045542"
+            ]
+          },
+          {
+            "id": "dmbio_green_olives",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_green_olives",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765075939"
+            ]
+          },
+          {
+            "id": "dmbio_green_olives_at",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_green_olives_at",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447870411"
+            ]
+          },
+          {
+            "id": "dmbio_kalamon_olives",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_kalamon_olives",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765075953"
+            ]
+          },
+          {
+            "id": "dmbio_kalamon_olives_at",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_kalamon_olives_at",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447898743"
+            ]
+          },
+          {
+            "id": "dmbio_olive_mix",
+            "daysMin": 7,
+            "daysMax": 7,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_olive_mix",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765075892"
             ]
           }
         ]
@@ -8294,6 +8589,145 @@
       "afterOpening": {
         "status": "unknown"
       }
+    },
+    "seitan": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "dmbio_seitan",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "closed_container"
+            ],
+            "sourceIds": [
+              "dmbio_seitan",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447884883"
+            ]
+          }
+        ]
+      }
+    },
+    "black_olive_spread": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "dmbio_black_olive_spread",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_black_olive_spread",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447087161"
+            ]
+          }
+        ]
+      }
+    },
+    "basil_pesto": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_pesto_basilico",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "covered_with_oil"
+            ],
+            "sourceIds": [
+              "alnatura_pesto_basilico",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420031326"
+            ]
+          },
+          {
+            "id": "dmbio_pesto_verde",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_pesto_verde",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447887822"
+            ]
+          }
+        ]
+      }
+    },
+    "red_pesto": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_pesto_rosso",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "covered_with_oil"
+            ],
+            "sourceIds": [
+              "alnatura_pesto_rosso",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420257344"
+            ]
+          }
+        ]
+      }
     }
   },
   "canonicalNames": {
@@ -8383,7 +8817,7 @@
     "basil leaves, a little": "season_basil",
     "basil leaves, chopped": "season_basil",
     "basil leaves, finely chopped": "season_basil",
-    "basil pesto": "alnatura_pesto",
+    "basil pesto": "basil_pesto",
     "basil, a little for finishing": "season_basil",
     "basil, finely chopped": "season_basil",
     "basil, washed and chopped (quantity fragment: /2 tbsp)": "season_basil",
@@ -8406,6 +8840,7 @@
     "bell peppers, cut into strips": "season_bell_pepper",
     "berry skyr": "skyr_label_required",
     "black currants": "season_blackcurrant",
+    "black olive spread": "black_olive_spread",
     "black olives": "alnatura_black_olives",
     "black olives, chopped": "alnatura_black_olives",
     "black olives, sliced into rings": "alnatura_black_olives",
@@ -9552,7 +9987,7 @@
     "red pepper, deseeded": "season_bell_pepper",
     "red pepper, deseeded and cut into strips": "season_bell_pepper",
     "red pepper, peeled and diced": "season_bell_pepper",
-    "red pesto": "alnatura_pesto",
+    "red pesto": "red_pesto",
     "red potatoes": "season_potato",
     "red radicchio": "season_radicchio",
     "red radishes": "season_radish",
@@ -9611,6 +10046,9 @@
     "scallions": "season_spring_onion",
     "sea salt": "dry_staple",
     "seasoned tomato sauce": "alnatura_tomato_sauce",
+    "seitan": "seitan",
+    "seitan in large pieces": "seitan",
+    "seitan, cut into large pieces": "seitan",
     "semi-skimmed milk": "milk",
     "shallot": "season_shallot",
     "shallot, chopped": "season_shallot",
@@ -9762,7 +10200,7 @@
     "sugar snap peas": "season_fresh_pea",
     "sugar snap peas, strings removed": "season_fresh_pea",
     "summer purslane": "season_summer_purslane",
-    "sun-dried tomato pesto": "alnatura_pesto",
+    "sun-dried tomato pesto": "red_pesto",
     "sun-dried tomato, roughly chopped": "alnatura_dried_tomatoes",
     "sun-dried tomatoes": "alnatura_dried_tomatoes",
     "sun-dried tomatoes (optional)": "alnatura_dried_tomatoes",
@@ -9866,7 +10304,7 @@
     "tomato paste (15 g)": "tomato_paste",
     "tomato paste (20 g)": "tomato_paste",
     "tomato paste (jar)": "tomato_paste_label",
-    "tomato pesto": "alnatura_pesto",
+    "tomato pesto": "red_pesto",
     "tomato sauce": "alnatura_tomato_sauce",
     "tomato sauce for pasta": "alnatura_tomato_sauce",
     "tomato sauce with basil": "alnatura_tomato_sauce",
@@ -10080,6 +10518,7 @@
     "M_FOOD_355": "season_parsnip",
     "M_FOOD_360": "season_sweet_potato",
     "M_FOOD_366": "season_peach",
+    "M_FOOD_370": "alnatura_pesto",
     "M_FOOD_373": "cream_cheese",
     "M_FOOD_382": "season_pear",
     "M_FOOD_383": "season_leek",
@@ -10099,10 +10538,12 @@
     "M_FOOD_433": "season_swede",
     "M_FOOD_44": "season_chard",
     "M_FOOD_445": "alnatura_tomato_sauce",
+    "M_FOOD_477": "taifun_plain_tofu",
     "M_FOOD_478": "season_tomato",
     "M_FOOD_479": "season_tomato",
     "M_FOOD_480": "season_jerusalem_artichoke",
     "M_FOOD_527": "season_rhubarb",
+    "M_FOOD_539": "seitan",
     "M_FOOD_561": "cream_cheese",
     "M_FOOD_581": "season_potato",
     "M_FOOD_6": "season_garlic",
@@ -10114,6 +10555,7 @@
     "M_FOOD_634": "season_spring_onion",
     "M_FOOD_64": "season_peach",
     "M_FOOD_727": "season_sweet_potato",
+    "M_FOOD_733": "taifun_plain_tofu",
     "M_FOOD_743": "season_bell_pepper",
     "M_FOOD_748": "season_tomato",
     "M_FOOD_79": "season_carrot",

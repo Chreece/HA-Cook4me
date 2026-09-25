@@ -69,5 +69,7 @@ jobs:
         run: python tests/browser_catalog_lifecycle_v227.py
       - name: Seasonal boundaries and canned-product opening ranges
         run: python tests/browser_catalog_lifecycle_v228.py
+      - name: Expanded seasons and bounded-temperature tofu guidance
+        run: python tests/browser_catalog_lifecycle_v229.py
       - name: Navigation hover and keyboard focus regression
         run: python tests/browser_navigation_hover_v205.py
