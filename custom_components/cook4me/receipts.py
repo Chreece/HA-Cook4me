@@ -145,7 +145,10 @@ def _nutrition(raw: Any) -> dict[str, Any]:
 
 def editable_item(raw: dict[str, Any], *, model: bool = False) -> dict[str, Any]:
     kind = raw.get("kind") if raw.get("kind") in KINDS else "product"
-    item = {"productName": text(raw.get("productName")), "originalName": text(raw.get("originalName") or raw.get("productName")),
+    printed_name = text(raw.get("originalName")) or text(raw.get("productName"))
+    # Recognition must not replace receipt wording with a translated AI label.
+    # Explicit edits remain independent of the original receipt transcription.
+    item = {"productName": printed_name if model else text(raw.get("productName")), "originalName": printed_name,
             "ingredientName": text(raw.get("ingredientName")), "brand": text(raw.get("brand")),
             "kind": kind, "lineTotal": number(raw.get("lineTotal"), signed=kind != "product"),
             "packageCount": _count(raw.get("packageCount")), "quantity": number(raw.get("quantity")),

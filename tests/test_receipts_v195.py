@@ -27,6 +27,24 @@ class Memory:
 
 
 class Normalization(unittest.TestCase):
+    def test_recognition_keeps_each_printed_language_instead_of_ai_translation(self):
+        raw={'items':[
+            {'productName':'Ρόφημα βρώμης','originalName':'dmBio HAFERDRINK NATUR','ingredientName':'Ρόφημα βρώμης'},
+            {'productName':'Κρέμα γάλακτος','originalName':'Crème fraîche 30%'},
+            {'productName':'Feta cheese','originalName':'ΦΕΤΑ ΠΟΠ'},
+        ]}
+        rows=m.normalize_receipt(raw,model=True)['items']
+        self.assertEqual([i['productName'] for i in rows],[i['originalName'] for i in raw['items']])
+        self.assertEqual(rows[0]['ingredientName'],'Ρόφημα βρώμης')
+
+    def test_source_name_fallback_and_manual_corrections_are_preserved(self):
+        parsed=m.editable_item({'productName':'Bio Haferdrink','originalName':'  '},model=True)
+        self.assertEqual(parsed['productName'],'Bio Haferdrink')
+        self.assertEqual(parsed['originalName'],'Bio Haferdrink')
+        edited=m.editable_item({**parsed,'productName':'Bio Haferdrink Natur'})
+        self.assertEqual(edited['productName'],'Bio Haferdrink Natur')
+        self.assertEqual(edited['originalName'],'Bio Haferdrink')
+
     def test_incomplete_nutrition_is_kept_until_basis_confirmed(self):
         raw=receipt();raw['items'][0]['nutrition']['basisUnit']=''
         cleaned=m.normalize_receipt(raw)

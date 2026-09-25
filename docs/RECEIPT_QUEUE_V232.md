@@ -10,6 +10,12 @@ pending lines or processing. Expand a receipt to see line quantities, prices,
 barcodes, ingredient matches and progress through barcode, nutrition and catalog
 matching. Review remains available when the AI provider is unavailable.
 
+Recognized product names retain the language and script printed on each receipt
+line, including brands and variants. The separate ingredient name can use the UI
+language for catalog matching. Barcode searches use the original receipt wording
+(also for older drafts with translated display names), adding a parsed brand only
+when it is not already present. Nutrition comes from the matched product record.
+
 - **Edit** opens the existing product form with the receipt values. Package barcode,
   nutrition and date scanning remain available. Barcode scanning preserves the
   purchase price, date and package count. Save changes returns to the receipt list.
