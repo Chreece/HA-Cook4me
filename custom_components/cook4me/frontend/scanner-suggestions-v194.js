@@ -42,9 +42,10 @@ export const ScannerSuggestionsMixin=Base=>class extends Base{
   const rows=scannerSuggestionRows(localized,id),links=this._v114Links?.()||[d.ingredient].filter(Boolean);
   const picked=new Set(links.map(id)),busy=!!this._v78Busy||!!this._v78Submitted;
   const query=String(d.query||'').trim();
-  const visible=rows.filter(item=>picked.has(id(item.ingredient))||!query||
+  const seasonal=new Set(this._v223SeasonRows?.(rows.map(item=>item.ingredient),picked,id)||rows.map(item=>item.ingredient));
+  const visible=rows.filter(item=>seasonal.has(item.ingredient)).filter(item=>picked.has(id(item.ingredient))||!query||
     (this._ingredientQueryMatches?this._ingredientQueryMatches(item.ingredient,query):item.ingredient.name.toLocaleLowerCase().includes(query.toLocaleLowerCase())));
-  const signature=JSON.stringify([lang,rows,query,[...picked],busy]);
+  const signature=JSON.stringify([lang,rows,query,[...picked],busy,visible.map(item=>id(item.ingredient)),this._v140MarketCatalogKey]);
   if(holder._v194Signature===signature&&holder._v194Source===sourceSuggestions&&holder.querySelector('[data-v194-list]'))return;
   holder._v194Source=sourceSuggestions;
   holder._v194Signature=signature;
@@ -53,7 +54,7 @@ export const ScannerSuggestionsMixin=Base=>class extends Base{
   const e=value=>this._escape(String(value??''));
   holder.innerHTML=`<strong>${e(t.title)} (${visible.length} / ${rows.length})</strong><p>${e(rows.length?t.help:t.empty)}</p><div data-v194-list style="max-height:260px;overflow:auto;display:flex;flex-wrap:wrap;gap:8px;padding:4px">${visible.map((item,i)=>{
    const key=id(item.ingredient),selected=picked.has(key),reason=item.reason==='preparation_variant'?t.preparation:item.reason==='category_exact'?t.category:t.name;
-   return `<button type="button" class="btn secondary ${selected?'v141-selected':''}" data-v194-ingredient="${e(key)}" data-v194-index="${i}" aria-pressed="${selected}" ${busy?'disabled':''} title="${e(reason)}">${selected?'✓ ':''}${e(item.ingredient.name)}</button>`;
+   return `<button type="button" class="btn secondary ${selected?'v141-selected':''}" data-v194-ingredient="${e(key)}" data-v194-index="${i}" aria-pressed="${selected}" ${busy?'disabled':''} title="${e(reason)}">${selected?'✓ ':''}${e(this._v223Name?.(item.ingredient)||item.ingredient.name)}</button>`;
   }).join('')}</div>`;
   const list=holder.querySelector('[data-v194-list]');if(list)list.scrollTop=scroll;
   holder.querySelectorAll('[data-v194-index]').forEach(button=>{

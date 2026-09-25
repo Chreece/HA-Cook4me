@@ -136,7 +136,8 @@ export const InteractionPositionMixin=Base=>class extends Base {
   const identity=row=>this._scanIngredientIdentity(row),picked=new Set(d.ingredientLinks.map(identity));
   const language=this._uiIngredientLanguage(),all=new Map();
   for(const row of [...(this._ingredientCatalog||[]),...d.ingredientLinks])all.set(identity(row),row);
-  const rows=[...all.values()].filter(row=>picked.has(identity(row))||!d.query||this._ingredientQueryMatches(row,d.query)).sort((a,b)=>a.name.localeCompare(b.name,language));
+  const candidates=this._v223SeasonRows?.([...all.values()],picked,identity)||[...all.values()];
+  const rows=candidates.filter(row=>picked.has(identity(row))||!d.query||this._ingredientQueryMatches(row,d.query)).sort((a,b)=>a.name.localeCompare(b.name,language));
   if(!holder._v220List){
    holder.replaceChildren();
    const title=document.createElement('strong'),help=document.createElement('p'),list=document.createElement('div'),count=document.createElement('small');
@@ -157,7 +158,7 @@ export const InteractionPositionMixin=Base=>class extends Base {
      d.productLocked=true;this._v78Dirty=true;this._v78IngredientOptions();
     };
    }
-   node._v220Ingredient=row;const input=node.firstElementChild;input.dataset.v114Link=String(index);input.checked=picked.has(key);input.disabled=!!this._v78Busy||!!this._v78Submitted;node.lastElementChild.textContent=row.name;
+   node._v220Ingredient=row;const input=node.firstElementChild;input.dataset.v114Link=String(index);input.checked=picked.has(key);input.disabled=!!this._v78Busy||!!this._v78Submitted;node.lastElementChild.textContent=this._v223Name?.(row)||row.name;
    // Leave unchanged nodes attached: moving a focused checkbox can itself
    // reset focus and scroll, even when the final HTML is identical.
    if(list.children[index]!==node)list.insertBefore(node,list.children[index]||null);

@@ -41,6 +41,7 @@ def normalize_filters(value):
         result[key] = number(data.get(key), maximum)
     for key in ("onlyHome", "preferExpiring"):
         result[key] = bool(data.get(key, key == "preferExpiring"))
+    result["seasonalIngredients"] = data.get("seasonalIngredients") is True
     result["currency"] = str(data.get("currency") or "EUR").upper()[:3]
     return result
 

@@ -33,6 +33,10 @@ jobs:
           node --test tests/test_app_design_v203.mjs
           node --test tests/test_catalog_identity_index_v219.mjs
           node --test tests/test_ingredient_names_v221.mjs
+          node --test tests/test_ingredient_season_v223.mjs
+          python tests/test_ingredient_season_v223.py
+          python tests/test_product_save_v224.py
+          python tools/build_frontend_bundle_v126.py --check
           node --check custom_components/cook4me/frontend/app-design-v203.js
           node --check custom_components/cook4me/frontend/app-theme-v203.js
           node --check custom_components/cook4me/frontend/ux-fixes-v218.js
@@ -52,5 +56,9 @@ jobs:
         run: python tests/browser_interaction_position_v220.py
       - name: Recipe and ingredient-info language order
         run: python tests/browser_ingredient_names_v221.py
+      - name: Seasonal ingredient choices and supermarket languages
+        run: python tests/browser_ingredient_season_v223.py
+      - name: Product saves during background work
+        run: python tests/browser_product_save_v224.py
       - name: Navigation hover and keyboard focus regression
         run: python tests/browser_navigation_hover_v205.py
