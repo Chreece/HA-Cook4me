@@ -32,8 +32,96 @@ class LifecycleTests(unittest.TestCase):
     def test_bundled_data_has_reviewed_evidence(self):
         data = self.lifecycle.load_lifecycle_data()
         self.lifecycle.validate_lifecycle_data(data)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 90)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 36)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 93)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 42)
+
+    def test_mint_tarragon_and_lovage_keep_their_regional_harvest_scope(self):
+        cases = (
+            ("Fresh mint leaves, washed and chopped", [5, 6, 7, 8, 9, 10], "DE-NW"),
+            ("Spearmint", [5, 6, 7, 8, 9, 10], "DE-NW"),
+            ("Tarragon, washed and chopped", [6, 7, 8, 9], "DE-BY"),
+            ("Lovage", [5, 6, 7, 8, 9, 10], "DE-BY"),
+        )
+        for name, months, region in cases:
+            with self.subTest(name=name):
+                profile = self.profile(name)
+                evidence = profile["seasonality"]["regions"][0]
+                self.assertEqual(evidence["sourceRegion"], region)
+                self.assertEqual(evidence["basis"], "outdoor_harvest")
+                for month in range(1, 13):
+                    self.assertEqual(self.lifecycle.seasonal_availability(profile, country="DE", month=month)["status"], "in_season" if month in months else "unknown")
+                self.assertEqual(self.lifecycle.seasonal_availability(profile, country="GR", month=months[0])["status"], "unknown")
+                self.assertNotIn("rules", profile["afterOpening"])
+        for name in ("Dried mint", "Pinch of dried mint", "Frozen mint", "Peppermint essence", "Finely chopped mint and parsley", "Coriander and mint for garnish", "Dried tarragon", "Chopped herbs (tarragon, parsley, chervil, etc.)", "Dried lovage", "Dried lovage (optional)", "Lovage seeds"):
+            with self.subTest(excluded=name):
+                self.assertEqual(self.profile(name)["seasonality"]["status"], "unknown")
+
+    def test_cooking_cream_products_cannot_assign_a_yoghurt_or_other_cream_clock(self):
+        codes = ("4104420095205", "4104420241176", "4104420240940")
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": "Alnatura"}
+        for code in codes:
+            with self.subTest(code=code):
+                package = lot | {"barcode": code}
+                profile = self.profile("Plant-based cream")
+                result = self.lifecycle.opening_window(profile, package, temperature_c=4)
+                self.assertEqual((result["daysMin"], result["daysMax"]), (4, 4))
+                self.assertEqual(result["consumeBy"], "2026-09-29")
+                for name in ("Soy yoghurt", "Plant-based yogurt", "Cream", "Coconut cream", "Coconut milk", "Oat milk", "Soy milk", "Cooking cream or oat cream"):
+                    self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile(name), package, temperature_c=4))
+                soy_result = self.lifecycle.opening_window(self.profile("Soy cream"), package, temperature_c=4)
+                self.assertEqual("consumeBy" in soy_result, code == "4104420095205")
+                for changes, temp in (({"brand": "Alpro"}, 4), ({"brand": "Other brand"}, 4), ({"barcode": None}, 4), ({"barcode": "4104420262676"}, 4), ({"storage": "pantry"}, 4), ({}, None), ({}, 5)):
+                    self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, package | changes, temperature_c=temp))
+                self.assertEqual(self.lifecycle.opening_window(profile, package | {"useWithinDays": 1})["consumeBy"], "2026-09-26")
+        for name in ("Soy cream", "Plant-based cream", "Soy yoghurt", "Plant-based yogurt"):
+            # The split preserves the existing Alpro guidance, including its 7 C cap.
+            self.assertEqual(self.lifecycle.opening_window(self.profile(name), lot | {"brand": "Alpro"}, temperature_c=7)["consumeBy"], "2026-09-30")
+        self.assertNotEqual(self.profile("Soy cream")["profileId"], self.profile("Soy yoghurt")["profileId"])
+
+    def test_olive_barcode_selects_the_package_interval_and_exact_brand_label(self):
+        cases = (
+            ("4104420211827", 14, "2026-10-09", True),
+            ("4104420129849", 5, "2026-09-30", True),
+            ("4104420132085", 14, "2026-10-09", True),
+            ("42400660", 14, "2026-10-09", True),
+            ("40045542", 2, "2026-09-27", False),
+        )
+        profile = self.profile("Olives")
+        lot = {"openedAt": "2026-09-25", "storage": "fridge"}
+        for code, days, deadline, origin in cases:
+            with self.subTest(code=code):
+                for brand in (("Alnatura", "Alnatura Origin") if origin else ("Alnatura",)):
+                    for barcode in (code, code.zfill(14)):
+                        package = lot | {"brand": brand, "barcode": barcode}
+                        result = self.lifecycle.opening_window(profile, package, temperature_c=4)
+                        self.assertEqual((result["daysMin"], result["daysMax"]), (days, days))
+                        self.assertEqual((result["remindOn"], result["consumeBy"]), (deadline, deadline))
+                        self.assertFalse(result["safetyGuarantee"])
+                        capped = self.lifecycle.opening_window(profile, package | {"bestBefore": "2026-09-26"}, temperature_c=4)
+                        self.assertEqual((capped["remindOn"], capped["consumeBy"]), ("2026-09-26", "2026-09-26"))
+                package = lot | {"brand": "Alnatura", "barcode": code}
+                for changes, temp in (({"brand": "Other brand"}, 4), ({"brand": "Alnatura Organic"}, 4), ({"brand": ""}, 4), ({"barcode": None}, 4), ({"barcode": code[:-1] + str((int(code[-1]) + 1) % 10)}, 4), ({"storage": "pantry"}, 4), ({}, None), ({}, 5)):
+                    self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, package | changes, temperature_c=temp))
+        # The Origin label belongs to the jar, not the distinct fresh antipasti pack.
+        self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot | {"brand": "Alnatura Origin", "barcode": "40045542"}, temperature_c=4))
+
+    def test_olive_colour_and_preparation_do_not_borrow_another_product_rule(self):
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": "Alnatura"}
+        cases = (
+            ("Pitted green olives, chopped", {"4104420211827": 14, "4104420129849": 5}),
+            ("Black olives, sliced into rings", {"4104420132085": 14}),
+            ("Green and black olives", {"42400660": 14, "40045542": 2}),
+        )
+        codes = ("4104420211827", "4104420129849", "4104420132085", "42400660", "40045542")
+        for name, expected in cases:
+            profile = self.profile(name)
+            for code in codes:
+                with self.subTest(name=name, code=code):
+                    result = self.lifecycle.opening_window(profile, lot | {"barcode": code}, temperature_c=4)
+                    self.assertEqual(result.get("daysMax"), expected.get(code))
+        for name in ("Olive oil", "Black olive spread", "Pitted Taggiasca olives", "Pitted black olives (or green olives)", "Olives stuffed with almonds"):
+            for code in codes:
+                self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile(name), lot | {"barcode": code}, temperature_c=4))
 
     def test_invalid_evidence_is_rejected(self):
         mutations = [
