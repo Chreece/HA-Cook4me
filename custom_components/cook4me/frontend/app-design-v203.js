@@ -102,6 +102,23 @@ export function groupDietPreferences(container,state){
  }
 }
 
+// Keep the original controls and form ownership: only the content area scrolls.
+export function layoutDialog(dialog,footer=dialog?.querySelector(':scope > footer, :scope > form > footer')){
+ if(!dialog||dialog.classList.contains('ui234-dialog'))return;
+ const focused=dialog.getRootNode().activeElement;
+ const header=dialog.querySelector(':scope > header, :scope > .detail-head');
+ if(!header&&!footer)return;
+ const form=footer?.parentElement.tagName==='FORM'?footer.parentElement:null;
+ const body=document.createElement('div');body.className='ui234-dialog-body';
+ for(const node of [...dialog.childNodes])if(node!==header&&node!==form&&node!==footer)body.append(node);
+ if(form){
+  for(const node of [...form.childNodes])if(node!==footer)body.append(node);
+  form.classList.add('ui234-dialog-form');form.insertBefore(body,footer);
+ }else dialog.insertBefore(body,footer||null);
+ header?.classList.add('ui234-dialog-header');footer?.classList.add('ui234-dialog-footer');dialog.classList.add('ui234-dialog');
+ if(focused&&dialog.contains(focused))focused.focus({preventScroll:true});
+}
+
 export const AppDesignMixin=Base=>class extends Base{
  _ui203Text(key){return designText(this._uiIngredientLanguage?.()||this._langCode?.()||'en',key);}
  _ui203Labels(){return Object.fromEntries(['more','actions','meals','missing','today'].map(key=>[key,this._ui203Text(key)]));}
@@ -218,7 +235,18 @@ export const AppDesignMixin=Base=>class extends Base{
  _v100Header(){const result=super._v100Header();this._ui203Install();return result;}
  _renderTab(){const result=super._renderTab();this._ui203Page();return result;}
  _v83RenderProfiles(container,state){const result=super._v83RenderProfiles(container,state);groupDietPreferences(container,state);return result;}
- _showFilter(key){const result=super._showFilter(key);this._ui203Install();return result;}
+ _showFilter(key){const result=super._showFilter(key);this._ui203Install();layoutDialog(this.shadowRoot?.querySelector('[data-filter-dialog] .rx-dialog'));return result;}
+ _v83ShowSource(){const result=super._v83ShowSource();layoutDialog(this.shadowRoot?.querySelector('[data-filter-dialog] .rx-dialog'));return result;}
+ _v72RenderSettings(){const result=super._v72RenderSettings();this._ui203Install();layoutDialog(this._v72Dialog?.querySelector('.rx-dialog'));return result;}
+ _v81OpenInfo(){const result=super._v81OpenInfo();layoutDialog(this._v81InfoDialog);return result;}
+ async _showIngredientInfo(...args){const result=await super._showIngredientInfo(...args);layoutDialog(this.shadowRoot?.querySelector('[data-ingredient-dialog] .rx-dialog'));return result;}
+ _v131OpenHistoryEditor(...args){const result=super._v131OpenHistoryEditor(...args);layoutDialog([...this.shadowRoot?.querySelectorAll('.v131-history-dialog')||[]].at(-1));return result;}
+ async _v154OpenWeigh(...args){
+  const result=await super._v154OpenWeigh(...args);
+  const dialog=[...this.shadowRoot?.querySelectorAll('dialog.v154-weigh')||[]].at(-1),actions=dialog?.querySelector('.v154-weigh-body > .toolbar');
+  if(actions){dialog.append(actions);layoutDialog(dialog,actions);}
+  return result;
+ }
  _v78RenderCapture(){const result=super._v78RenderCapture();this._ui203Form();return result;}
  _v111Paint(){const result=super._v111Paint();this._ui203Form();return result;}
  _v78Close(...args){const result=super._v78Close(...args);if(!this._v78Dialog)this._ui203Form();return result;}

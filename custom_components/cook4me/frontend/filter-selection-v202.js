@@ -15,7 +15,9 @@ export function installSelectedFirst(overlay, activeElement=()=>null) {
  }
  const reorder=()=>{
   const active=activeElement();
-  for(const {parent,anchor,rows} of groups.values()) {
+  for(const {anchor,rows} of groups.values()) {
+   // A dialog may move these same controls into its scrolling content area.
+   const parent=anchor.parentElement;if(!parent)continue;
    let previous=anchor;
    for(const item of selectedFirst(rows,item=>item.input.checked)) {
     if(previous.nextSibling!==item.row)parent.insertBefore(item.row,previous.nextSibling);

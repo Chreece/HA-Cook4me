@@ -156,6 +156,32 @@ export const APP_THEME = `
 :host(.ui203) [data-filter-dialog] .rx-dialog>label:has(input[type=checkbox]),:host(.ui203) [data-filter-dialog] label:has(>input[data-list]){padding:11px 12px!important;border-radius:10px;background:var(--ui203-raised);border:1px solid transparent;margin:6px 0!important;gap:10px!important}
 :host(.ui203) [data-filter-dialog] label:has(input[data-list]:checked){background:var(--ui203-soft)!important;border-color:color-mix(in srgb,var(--ui203-accent) 30%,var(--ui203-line))!important}
 :host(.ui203) .rx-dialog details:not(.ui203-more)>summary{padding:12px 0!important;line-height:1.5;font-weight:600;cursor:pointer}
+/* Dialog actions stay on the card edge; content never passes behind them. */
+:host(.ui203) .rx-overlay>.rx-dialog.ui234-dialog,:host(.ui203) dialog.ui234-dialog{display:flex!important;flex-direction:column;box-sizing:border-box;min-width:0;min-height:0;max-width:calc(100vw - 24px)!important;max-height:calc(100dvh - 24px)!important;padding:0!important;overflow:hidden!important;transition:none!important}
+:host(.ui203) dialog.ui234-dialog:not([open]){display:none!important}
+:host(.ui203) .ui234-dialog>.ui234-dialog-header{display:flex;flex:0 0 auto;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:12px;min-width:0;margin:0!important;padding:16px 22px!important;border-bottom:1px solid var(--ui203-line);background:var(--ui203-surface);overflow-wrap:anywhere}
+:host(.ui203) .ui234-dialog-header :is(h2,h3){margin:0!important}
+:host(.ui203) .ui234-dialog-header>:first-child{flex:1 1 auto;min-width:0}
+:host(.ui203) .ui234-dialog-header>button{flex:0 0 auto}
+:host(.ui203) .ui234-dialog>.ui234-dialog-form{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;min-width:0;margin:0;overflow:hidden}
+:host(.ui203) .ui234-dialog-body{flex:1 1 auto;min-height:0;min-width:0;box-sizing:border-box;padding:18px 22px;overflow:auto;overscroll-behavior:contain;overflow-wrap:anywhere;scroll-padding-block:18px}
+:host(.ui203) .ui234-dialog :is(.ui234-dialog-footer){position:static!important;inset:auto!important;flex:0 0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:12px;box-sizing:border-box;margin:0!important;padding:12px 22px max(12px,env(safe-area-inset-bottom))!important;border:0;border-top:1px solid var(--ui203-line);border-radius:0!important;background:var(--ui203-surface)}
+:host(.ui203) .ui234-dialog-footer .btn{max-width:100%;min-width:0;white-space:normal;overflow-wrap:anywhere}
+:host(.ui203) .ui234-dialog-body :is(input,select,textarea){min-width:0;max-width:100%}
+:host(.ui203) [data-device-settings] .ui234-dialog .v72-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+:host(.ui203) [data-filter-dialog] .ui234-dialog-body>label:has(input[type=checkbox]){padding:11px 12px!important;border-radius:10px;background:var(--ui203-raised);border:1px solid transparent;margin:6px 0!important;gap:10px!important}
+:host(.ui203) .ui234-dialog .v131-history-usage{grid-template-columns:minmax(0,1.5fr) minmax(0,1.35fr) minmax(70px,.55fr) minmax(65px,.5fr) auto}
+:host(.ui203) .ui234-dialog .v131-history-usage :is(input,select){width:100%}
+:host(.ui203) .ui234-dialog .v154-weigh-body{padding:0;min-width:0}
+@media(max-width:760px){:host(.ui203) .ui234-dialog .v131-history-usage{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){
+ :host(.ui203) .ui234-dialog>.ui234-dialog-header{padding:12px 14px!important}
+ :host(.ui203) .ui234-dialog-body{padding:14px;scroll-padding-block:14px}
+ :host(.ui203) .ui234-dialog .ui234-dialog-footer{padding:12px 14px max(12px,env(safe-area-inset-bottom))!important;gap:8px;flex-direction:row}
+ :host(.ui203) .ui234-dialog-footer .btn{flex:1 1 120px}
+ :host(.ui203) [data-device-settings] .ui234-dialog .v72-fields{grid-template-columns:minmax(0,1fr)}
+ :host(.ui203) .ui234-dialog .v131-history-usage{grid-template-columns:minmax(0,1fr)}
+}
 :host(.ui203) .rx-v66-fullscreen .rx-v67-photo-side{background:var(--ui203-surface);border:1px solid var(--ui203-line);border-radius:16px;overflow:auto}
 :host(.ui203) .rx-v66-fullscreen .rx-v69-media{border-radius:0!important}
 :host(.ui203) .rx-v66-fullscreen .rx-v66-body{padding:0 18px 24px!important}
