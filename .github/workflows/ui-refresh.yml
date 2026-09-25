@@ -32,10 +32,12 @@ jobs:
           python tests/test_recipe_stock_nutrition_v218.py
           node --test tests/test_app_design_v203.mjs
           node --test tests/test_catalog_identity_index_v219.mjs
+          node --test tests/test_ingredient_names_v221.mjs
           node --check custom_components/cook4me/frontend/app-design-v203.js
           node --check custom_components/cook4me/frontend/app-theme-v203.js
           node --check custom_components/cook4me/frontend/ux-fixes-v218.js
           node --check custom_components/cook4me/frontend/interaction-position-v220.js
+          node --check custom_components/cook4me/frontend/ingredient-names-v221.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v180.js
           python -m py_compile custom_components/cook4me/panel.py
       - name: Install browser test dependency
@@ -48,5 +50,7 @@ jobs:
         run: python tests/browser_stock_responsiveness_v219.py
       - name: Interaction position in page and Home Assistant scroll containers
         run: python tests/browser_interaction_position_v220.py
+      - name: Recipe and ingredient-info language order
+        run: python tests/browser_ingredient_names_v221.py
       - name: Navigation hover and keyboard focus regression
         run: python tests/browser_navigation_hover_v205.py
