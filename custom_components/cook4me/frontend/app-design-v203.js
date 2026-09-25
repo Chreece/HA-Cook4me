@@ -73,6 +73,35 @@ export function decorateDay(day,labels){
  badge(`${meals} ${labels.meals}`);if(missing)badge(`${missing} ${labels.missing}`);
 }
 
+// Keep the existing form controls and their listeners while grouping the diet
+// profiles like the other kitchen sections. Member edits rerender this form.
+export function groupDietPreferences(container,state){
+ const form=container?.querySelector('[data-v83-profiles]'),heading=container?.querySelector(':scope > h2');
+ if(!form||!heading)return;
+ state.sectionOpen??=new Map();
+ const section=document.createElement('section');section.className='card ui233-diet-section';
+ heading.before(section);section.append(heading,form);
+ const household=form.querySelector('[data-v83-profile="household"]'),title=household?.querySelector(':scope > h3');
+ if(household&&title){
+  const fold=document.createElement('details'),summary=document.createElement('summary');
+  fold.className=household.className;fold.dataset.v83Profile='household';
+  fold.open=state.sectionOpen.get('household')??true;
+  summary.append(...title.childNodes);title.remove();fold.append(summary,...household.childNodes);household.replaceWith(fold);
+  fold.addEventListener('toggle',()=>state.sectionOpen.set('household',fold.open));
+ }
+ const input=form.querySelector('#preferences'),label=input?.closest('label');
+ if(label){
+  const fold=document.createElement('details'),summary=document.createElement('summary');
+  fold.className='card v83-diet-card ui233-other-preferences';
+  fold.open=state.sectionOpen.get('other')??false;
+  summary.textContent=[...label.childNodes].filter(node=>node!==input).map(node=>node.textContent).join('').trim();
+  input.setAttribute('aria-label',summary.textContent);
+  const body=document.createElement('div');body.className='v83-profile-body';
+  label.before(fold);body.append(input);label.remove();fold.append(summary,body);
+  fold.addEventListener('toggle',()=>state.sectionOpen.set('other',fold.open));
+ }
+}
+
 export const AppDesignMixin=Base=>class extends Base{
  _ui203Text(key){return designText(this._uiIngredientLanguage?.()||this._langCode?.()||'en',key);}
  _ui203Labels(){return Object.fromEntries(['more','actions','meals','missing','today'].map(key=>[key,this._ui203Text(key)]));}
@@ -188,6 +217,7 @@ export const AppDesignMixin=Base=>class extends Base{
  _v100Layout(){const result=super._v100Layout();this._ui203Page();return result;}
  _v100Header(){const result=super._v100Header();this._ui203Install();return result;}
  _renderTab(){const result=super._renderTab();this._ui203Page();return result;}
+ _v83RenderProfiles(container,state){const result=super._v83RenderProfiles(container,state);groupDietPreferences(container,state);return result;}
  _showFilter(key){const result=super._showFilter(key);this._ui203Install();return result;}
  _v78RenderCapture(){const result=super._v78RenderCapture();this._ui203Form();return result;}
  _v111Paint(){const result=super._v111Paint();this._ui203Form();return result;}
