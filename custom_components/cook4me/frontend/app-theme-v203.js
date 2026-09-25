@@ -57,6 +57,13 @@ export const APP_THEME = `
 :host(.ui203) :is(input,select,textarea)[aria-invalid=true]{outline:2px solid var(--error-color,#c93636)!important;border-color:var(--error-color,#c93636)!important}
 :host(.ui203) button ha-icon{flex-shrink:0}
 :host(.ui203) .chip{border-radius:8px!important;padding:4px 9px;line-height:1.4;border:1px solid var(--ui203-line);background:var(--ui203-raised);font-weight:500}
+/* Stock percentage shares the photo overlay across every recipe preview. */
+:host(.ui203) .v241-stock-badge{position:absolute;top:10px;right:10px;z-index:3;display:inline-flex;align-items:center;gap:6px;max-width:calc(100% - 20px);box-sizing:border-box;padding:6px 9px;border:1px solid rgba(255,255,255,.55);border-radius:10px;background:rgba(20,29,31,.94);color:#fff;font-size:.85rem;font-weight:700;line-height:1.4;white-space:nowrap;font-variant-numeric:tabular-nums;pointer-events:none;box-shadow:0 1px 5px #0004}
+:host(.ui203) article.ui203-recipe .v82-card-cost[data-v99-confidence]{max-width:calc(100% - 120px)!important}
+:host(.ui203) .v241-stock-badge ha-icon{--mdc-icon-size:19px}
+:host(.ui203) .v241-stock-badge[data-state=complete]{background:#20563f}
+:host(.ui203) .v241-photo-badges{position:absolute;inset:10px 10px auto;z-index:3;display:flex;flex-direction:column;align-items:flex-end;gap:7px;pointer-events:none}
+:host(.ui203) .v241-photo-badges .v241-stock-badge,:host(.ui203) .v241-photo-badges [data-v76-diet-badge]{position:static!important;inset:auto!important;max-width:100%;box-sizing:border-box}
 /* Shared recipe cards: source title above photo, only a small action dock below. */
 :host(.ui203) article.recipe.ui203-recipe{display:flex!important;flex-direction:column;gap:0!important;padding:0!important;margin:0!important;height:auto!important;min-height:0!important;max-height:none!important;border:1px solid var(--ui203-line)!important;border-radius:16px!important;background:var(--ui203-surface)!important;box-shadow:var(--ui203-shadow)!important;overflow:hidden!important}
 :host(.ui203) article.ui203-recipe>.rx-v66-title{display:flex!important;gap:10px!important;align-items:flex-start!important;padding:16px!important;min-height:0!important;height:auto!important;max-height:none!important;overflow:visible!important;flex:0 0 auto}

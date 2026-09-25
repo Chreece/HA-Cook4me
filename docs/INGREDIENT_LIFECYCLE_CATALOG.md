@@ -5,7 +5,7 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.19)
+## Reviewed coverage (2026-09-25.20)
 
 - 112 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
@@ -18,7 +18,7 @@ cloud credentials, or per-scan file reads are needed.
   Nine further produce groups now have Greek evidence, including pomegranate.
   Fresh nettle leaves now have a Bavarian harvest profile; national German
   guidance expands bell-pepper, spring-onion and parsnip availability.
-- 78 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+- 81 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro, Oatly or verified Alnatura packages), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
@@ -52,20 +52,103 @@ cloud credentials, or per-scan file reads are needed.
   Seven condiment/sauce packages add ketchup, Ajvar, curry and tomato sauces.
   Two fermented-vegetable packages add kimchi and sauerkraut guidance.
   A verified dmBio satay sauce adds its own three-day package rule.
-  There are 133 reviewed product barcodes, 1,753 exact canonical names and
-  148 reviewed provider ingredient IDs.
+  Two Xucker fruit spreads add separate strawberry/raspberry package rules.
+  There are 135 reviewed product barcodes, 1,783 exact canonical names and
+  167 reviewed provider ingredient IDs.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
   coconut cream, unverified tomato paste, unverified ketchup and Skyr, plus mustard, mayonnaise and
   additional cream, cream-cheese and yoghurt variants, plus plain/brewed soy sauce,
   cottage cheese and further crème fraîche variants, ground nuts, nut butters
-  and tahini.
+  and tahini, plus reviewed fruit jams without a verified numeric package rule.
 - Dry staples have no invented short spoilage countdown. Their package
   instructions still apply; missing data never means indefinitely safe.
 
 Run `python tools/audit_ingredient_lifecycle.py` for counts against the actual
 shipped catalog. Counts distinguish seasonal, numeric and label-required
 entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
+
+## Batch 26: exact produce identities and fruit-spread packages
+
+Nineteen more provider IDs now expose reviewed lifecycle guidance on the real
+Greek, German and English catalog choices. Exact singular/plural canonical
+mappings are added alongside the provider allowlist; the identity gate is unchanged.
+
+| Ingredients | Exact provider IDs | Reviewed season / guidance |
+| --- | --- | --- |
+| Button, shiitake and king oyster mushrooms | `M_FOOD_89`, `M_FOOD_460`, `M_FOOD_591` | German cultivated production, all year |
+| Mirabelle plum | `M_FOOD_315` | July–September, Hesse |
+| Walnut | `M_FOOD_331` | September–October, Germany |
+| Pomegranate | `M_FOOD_227` | October–November, Limni in northern Evia; German season unknown |
+| Hokkaido squash | `M_FOOD_398` | August–December, Hesse |
+| Melon | `M_FOOD_307` | August–September, Bavaria |
+| Welsh/spring onion | `M_FOOD_114` | March–November, German outdoor harvest |
+| Capers, olives, black/green olives, pickled gherkins | `M_FOOD_76`, `M_FOOD_344`, `M_FOOD_345`, `M_FOOD_346`, `M_FOOD_138` | Existing exact-package rules only |
+| Chickpea, kidney bean, dried tomato | `M_FOOD_385`, `M_FOOD_237`, `M_FOOD_679` | Existing exact-package rules only; generic legumes do not imply canned form |
+| Jam, orange marmalade | `M_FOOD_133`, `M_FOOD_644` | New fruit-spread profiles below |
+
+The [BZfE cultivated-mushroom guidance](https://www.bzfe.de/kueche-und-alltag/kochen/how-to-obst-und-gemuese/how-to-pilze)
+now supports national year-round availability for button mushrooms, matching the
+existing shiitake and king oyster profiles. The remaining seasonal mappings use
+existing reviewed regional evidence: [Hesse](https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/),
+[Bavaria](https://www.bund-naturschutz.de/oekologisch-leben/essen-und-trinken/bayerischer-saisonkalender),
+[BZfE walnuts](https://www.bzfe.de/presse/pressemeldungen-archiv-2024-und-frueher/walnuss-fuer-die-herbstkueche),
+[BZfE spring onions](https://www.bzfe.de/presse/pressemeldungen-archiv/feinwuerzige-fruehlingszwiebel)
+and [Elymnion pomegranates](https://elimnionrodi.gr/en/elymnion-rodi/).
+Unlisted months and unsupported countries remain unknown. Preserved, powdered,
+frozen and dried forms do not acquire a fresh harvest calendar.
+
+Two verified Xucker 220 g spreads have a ten-day after-opening instruction:
+
+| Flavour | GTIN | Manufacturer instruction | Retailer GTIN evidence |
+| --- | --- | --- | --- |
+| Strawberry | `4260248063892` | [Xucker](https://www.xucker.de/aufstriche/fruchtaufstrich-erdbeere) | [dm](https://www.dm.de/p/d/1559917/xucker-fruchtaufstrich-erdbeere-mit-xylit) |
+| Raspberry | `4260248063908` | [Xucker](https://www.xucker.de/aufstriche/fruchtaufstrich-himbeere) | [dm](https://www.dm.de/p/d/1559922/xucker-fruchtaufstrich-himbeere-mit-xylit) |
+
+Both require refrigeration and clean utensils. The 4 °C cap comes from the
+existing BfR cooling policy; the manufacturer specifies refrigeration without a
+numeric temperature. The generic jam choice accepts either exact package;
+strawberry and raspberry profiles each accept only the matching flavour. Brand,
+barcode, refrigeration, opening and handling confirmation are required. Selecting
+guidance does not mark a package open. Manual package intervals and earlier
+printed dates retain precedence.
+
+[dmBio strawberry spread](https://www.dm.de/p/d/1058435/dmbio-fruchtaufstrich-erdbeere-75-prozent-frucht)
+(`4067796111118`) says to consume within a few days, and
+[Alnatura sweet-orange spread](https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/brotaufstriche/suesse-aufstriche/bio-fruchtaufstrich-bio-gelee/fruchtaufstrich-suesse-orange-244231/)
+specifies refrigeration without an exact duration. Neither receives a numeric
+rule. Apple, berry, blueberry, cherry, cranberry, orange and red-fruit jams use
+label-required guidance. Milk jam, chestnut jam, mixed alternatives, homemade
+jams and fresh berries cannot borrow the Xucker limits. Sources checked 2026-09-25.
+
+German supermarket labels now include `Kräuterseitlinge`, `Granatapfel`,
+`Erdbeermarmelade`, `Himbeermarmelade` and `Orangenmarmelade`; search also accepts
+Konfitüre and Fruchtaufstrich variants. The provider's Hokkaido squash identity,
+confirmed by German, Czech, French and Polish translations, now displays as
+`Κολοκύθα Χοκάιντο` in Greek. Raw recipe amounts, IDs, nutrients and translations
+are unchanged.
+
+Coverage reaches 3,360 rows: 2,254 seasonal, 591 with numeric opening guidance
+and 515 label-required, adding 42 enriched rows. There are 112 season groups,
+81 opening-rule groups and 135 unique reviewed numeric-rule barcodes. Local
+checks cover real multilingual choices, twelve-month German/Greek filters,
+flavour and product boundaries, manual/printed precedence and opening
+confirmation, including mobile and desktop browser paths in
+`tests/browser_catalog_lifecycle_v240.py`.
+
+### Recipe preview stock percentage (runtime v241)
+
+Every recipe preview now shows a home icon and the at-home percentage in the
+top-right corner of its photo. The shared renderer covers Today, Week, Discover,
+recommendations, saved recipes, personal recipes and ingredient-usage previews.
+It uses the existing quantity coverage, then legacy pantry/presence data when
+needed. Partial known coverage is marked `≈`; entirely unknown availability is
+`—`, including the backend's all-unknown average. Price labels stay top-left and
+dietary-change notices remain readable below the percentage. Rendering adds no
+network request or stock mutation. Greek, German and English accessible labels
+are provided, and runtime v241 refreshes the cached frontend module graph.
+Local tests cover numeric/unknown/partial values, identity-safe fallback, all
+preview routes, mobile/desktop positioning and the existing photo-open action.
 
 ## Batch 25: ground nuts, nut/seed pastes and two fresh herbs
 
