@@ -5,9 +5,9 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.8)
+## Reviewed coverage (2026-09-25.9)
 
-- 110 produce groups, including fruit, leafy vegetables, roots, asparagus,
+- 111 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
   savoy cabbage, pak choi, shallots, wild garlic, turnips, snow peas, walnuts,
   hazelnuts, artichokes, melons, kiwi, chestnuts, sweet potatoes, swede and
@@ -15,7 +15,8 @@ cloud credentials, or per-scan file reads are needed.
   fresh coriander leaves, watercress, lemon balm, Romanesco, fresh chillies
   and romaine/Little Gem lettuce, fresh ginger, figs and summer purslane,
   plus Greek regional lemon, orange, grapefruit, mandarin and clementine calendars.
-- 69 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+  Nine further produce groups now have Greek evidence, including pomegranate.
+- 71 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro, Oatly or verified Alnatura packages), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
@@ -35,12 +36,14 @@ cloud credentials, or per-scan file reads are needed.
   Galbani mozzarella, mascarpone, ricotta and Gorgonzola, Dodoni feta and halloumi,
   and a verified Alnatura millet-flake package add separate opening profiles.
   Two verified US Philadelphia Original packages add exact-product cream-cheese rules.
+  Five dmBio packages add preserved jackfruit, hummus, tomato paste and separate
+  tomato-sauce package windows.
   Cream and yoghurt profiles are separate; olive
   profiles distinguish green, black, mixed and unspecified forms.
-  There are 73 reviewed product barcodes and 1,714 exact canonical names.
+  There are 78 reviewed product barcodes and 1,718 exact canonical names.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
-  coconut cream, tomato paste, ketchup and Skyr, plus mustard, mayonnaise and
+  coconut cream, unverified tomato paste, ketchup and Skyr, plus mustard, mayonnaise and
   additional cream, cream-cheese and yoghurt variants, plus plain/brewed soy sauce,
   cottage cheese and further crème fraîche variants.
 - Dry staples have no invented short spoilage countdown. Their package
@@ -78,6 +81,31 @@ other months and countries remain unknown. They do not represent every Greek
 region or cultivar, or German import availability. Blood/bitter oranges,
 preserves, bottled juice, mixed ingredients and flavourings do not inherit
 these calendars. Explicit fresh juice and fruit/zest preparations do.
+
+Batch 15 adds Greek evidence to eight existing produce profiles and a new
+pomegranate profile, covering 55 exact names. Existing German regions remain
+unchanged. NEA EXFRUT's calendar and product pages identify these supply periods
+and growing regions:
+
+| Produce | Greek region | Listed availability |
+| --- | --- | --- |
+| Apricots | Pella, Chalkidiki | May–August |
+| Sweet cherries | Pella | May–August |
+| Peaches and nectarines | Pella | May–September |
+| Plums | Pella | July–October |
+| Table grapes | Pella, Kavala | July–October |
+| White and green asparagus | Pella | February–May |
+| Kiwi | Pella, Pieria | October–May, including cold storage |
+| Sweet chestnuts | Pella | October–December |
+
+These are approximate regional availability windows, including controlled
+cultivation for asparagus. Kiwi explicitly uses
+`seasonal_calendar_including_stored_produce`, as the supplier documents cold
+storage. Elimnion Rodi separately supports an October–November outdoor harvest
+for pomegranate seeds from Limni, northern Evia, based on local Ermioni fruit.
+That harvest window does not inherit an exporter's longer stored-fruit season.
+Unlisted months remain unknown. Sour cherries, Mirabelle plums, juice, preserves,
+frozen fruit and dried-cranberry alternatives do not borrow the new Greek rules.
 
 Fresh parsley leaves, chives, chervil and sorrel use the Frankfurt green-sauce
 herb season (`sourceRegion: DE-HE`, `basis: regional_seasonal_availability`).
@@ -474,10 +502,32 @@ does not give the same interval to curry paste, powder or coconut milk. Likewise
 salsa does not inherit the passata or generic canned-tomato interval.
 
 The reviewed Alnatura tomato-paste and ketchup pages specify refrigeration after
-opening but no number of days. Their separate `label_required` profiles document
-that evidence gap and defer to the actual package; they assign no numeric rule
-even for that brand. Ambiguous tomato purée and condiment alternatives remain
-unassigned. A known package `useWithinDays` still takes precedence.
+opening but no number of days. Those packages continue to return `label_required`
+without a numeric deadline. Batch 15's separate dmBio tomato-paste rule requires
+its own verified package; the Alnatura barcode cannot select it. Jar-labelled
+tomato paste retains the label-required profile rather than borrowing a tube's
+rule. Ambiguous tomato purée and condiment alternatives remain unassigned.
+A known package `useWithinDays` still takes precedence.
+
+Batch 15's dmBio rules retain the brand owner's package-specific instructions:
+
+| Product | Verified GTIN | Days after opening |
+| --- | --- | --- |
+| Jackfruit Natur in Salzlake, 240 g drained | `4066447443318` | 3 |
+| Hummus natur, 180 g | `4066447910865` | 3 |
+| Tomatenmark, 200 g tube | `4066447887716` | 21 (the label's exact 3 weeks) |
+| Tomatensauce Klassik, 350 ml | `4066447887747` | 1–2 |
+| Tomatensauce Klassik, 520 ml | `4066447972153` | 3–4 |
+
+All five require exact `dmBio` brand and GTIN, refrigerator storage and at most
+4 °C under the existing BfR cooling guidance. The two sauce sizes deliberately
+keep different windows even though their names and ingredient lists are similar.
+The shorter end sets the reminder; the longer end sets the advisory deadline,
+capped by an earlier printed date. Brand-only entries, another food's barcode,
+fresh jackfruit, sweet jackfruit in syrup, beetroot hummus, passata and ketchup
+cannot select these rules. Existing Alnatura hummus and sauce intervals remain
+unchanged. Product entry and cooking review still require the user's opening
+confirmation and expiry opt-in; adding guidance does not start a package clock.
 
 Prepared mustard and mayonnaise now have their own label-required profiles.
 Alnatura's mustard, egg mayonnaise and vegan mayo pages require refrigeration

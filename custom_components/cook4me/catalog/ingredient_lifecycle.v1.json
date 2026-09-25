@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.8",
+  "version": "2026-09-25.9",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -692,6 +692,46 @@
       "publisher": "Kraft Heinz — Philadelphia (United States)",
       "url": "https://www.kraftheinz.com/philadelphia/products/00021000000142-original-cream-cheese-spread",
       "reviewedOn": "2026-09-25"
+    },
+    "nea_exfrut_calendar": {
+      "publisher": "NEA EXFRUT S.A.",
+      "url": "https://neaexfrut.gr/en/seasonality",
+      "reviewedOn": "2026-09-25"
+    },
+    "nea_exfrut_products": {
+      "publisher": "NEA EXFRUT S.A.",
+      "url": "https://neaexfrut.gr/en/products",
+      "reviewedOn": "2026-09-25"
+    },
+    "elimnion_pomegranate": {
+      "publisher": "Elimnion Rodi",
+      "url": "https://elimnionrodi.gr/en/elymnion-rodi/",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_jackfruit": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1710214/dmbio-jackfruit-natur-in-salzlake",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_hummus_natur": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1599795/dmbio-hummus-natur",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_tomato_paste": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1446420/dmbio-tomatenmark",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_tomato_sauce_350": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1560410/dmbio-tomatensauce-klassik",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_tomato_sauce_520": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/3059277/dmbio-tomatensauce-klassik",
+      "reviewedOn": "2026-09-25"
     }
   },
   "profiles": {
@@ -787,6 +827,23 @@
             "sourceIds": [
               "hessen_07",
               "hessen_08"
+            ],
+            "coverage": "listed_months_only"
+          },
+          {
+            "country": "GR",
+            "sourceRegion": "Pella, Chalkidiki",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              5,
+              6,
+              7,
+              8
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "nea_exfrut_calendar",
+              "nea_exfrut_products"
             ],
             "coverage": "listed_months_only"
           }
@@ -978,6 +1035,23 @@
               "hessen_07"
             ],
             "coverage": "listed_months_only"
+          },
+          {
+            "country": "GR",
+            "sourceRegion": "Pella",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              5,
+              6,
+              7,
+              8
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "nea_exfrut_calendar",
+              "nea_exfrut_products"
+            ],
+            "coverage": "listed_months_only"
           }
         ]
       },
@@ -1055,6 +1129,24 @@
               "hessen_08"
             ],
             "coverage": "listed_months_only"
+          },
+          {
+            "country": "GR",
+            "sourceRegion": "Pella",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "nea_exfrut_calendar",
+              "nea_exfrut_products"
+            ],
+            "coverage": "listed_months_only"
           }
         ]
       },
@@ -1080,6 +1172,23 @@
               "hessen_07",
               "hessen_08",
               "hessen_09"
+            ],
+            "coverage": "listed_months_only"
+          },
+          {
+            "country": "GR",
+            "sourceRegion": "Pella",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "nea_exfrut_calendar",
+              "nea_exfrut_products"
             ],
             "coverage": "listed_months_only"
           }
@@ -1155,6 +1264,23 @@
             "sourceIds": [
               "hessen_09",
               "hessen_10"
+            ],
+            "coverage": "listed_months_only"
+          },
+          {
+            "country": "GR",
+            "sourceRegion": "Pella, Kavala",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "nea_exfrut_calendar",
+              "nea_exfrut_products"
             ],
             "coverage": "listed_months_only"
           }
@@ -2027,6 +2153,23 @@
               "hessen_04",
               "hessen_05",
               "hessen_06"
+            ],
+            "coverage": "listed_months_only"
+          },
+          {
+            "country": "GR",
+            "sourceRegion": "Pella",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              2,
+              3,
+              4,
+              5
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "nea_exfrut_calendar",
+              "nea_exfrut_products"
             ],
             "coverage": "listed_months_only"
           }
@@ -3450,6 +3593,40 @@
             "productBarcodes": [
               "4104420129603"
             ]
+          },
+          {
+            "id": "dmbio_tomato_sauce_350",
+            "daysMin": 1,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_tomato_sauce_350",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447887747"
+            ]
+          },
+          {
+            "id": "dmbio_tomato_sauce_520",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_tomato_sauce_520",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447972153"
+            ]
           }
         ]
       }
@@ -3478,6 +3655,23 @@
             "brand": "Alnatura",
             "productBarcodes": [
               "4104420229761"
+            ]
+          },
+          {
+            "id": "dmbio_hummus_natur",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_hummus_natur",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447910865"
             ]
           }
         ]
@@ -4462,6 +4656,27 @@
               "bund_bavarian_seasons"
             ],
             "coverage": "listed_months_only"
+          },
+          {
+            "country": "GR",
+            "sourceRegion": "Pella, Pieria",
+            "basis": "seasonal_calendar_including_stored_produce",
+            "months": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "nea_exfrut_calendar",
+              "nea_exfrut_products"
+            ],
+            "coverage": "listed_months_only"
           }
         ]
       },
@@ -4784,6 +4999,22 @@
             "approximate": true,
             "sourceIds": [
               "lwg_chestnuts"
+            ],
+            "coverage": "listed_months_only"
+          },
+          {
+            "country": "GR",
+            "sourceRegion": "Pella",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "nea_exfrut_calendar",
+              "nea_exfrut_products"
             ],
             "coverage": "listed_months_only"
           }
@@ -7219,6 +7450,88 @@
           }
         ]
       }
+    },
+    "season_pomegranate": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "GR",
+            "sourceRegion": "Limni, northern Evia",
+            "basis": "outdoor_harvest",
+            "months": [
+              10,
+              11
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "elimnion_pomegranate"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "preserved_jackfruit": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "dmbio_jackfruit",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_jackfruit",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447443318"
+            ]
+          }
+        ]
+      }
+    },
+    "tomato_paste": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "dmbio_tomato_paste",
+            "daysMin": 21,
+            "daysMax": 21,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_tomato_paste",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447887716"
+            ]
+          }
+        ]
+      }
     }
   },
   "canonicalNames": {
@@ -7287,7 +7600,7 @@
     "b- milk, brought to room temperature": "milk",
     "b- snow peas, strings removed": "season_snow_pea",
     "b- soy sauce (for dressing)": "soy_sauce_label_required",
-    "b- tomato paste": "tomato_paste_label",
+    "b- tomato paste": "tomato_paste",
     "b- wholegrain mustard, a little": "mustard_label_required",
     "baby carrots": "season_carrot",
     "baby lettuce": "season_lettuce",
@@ -7395,6 +7708,7 @@
     "canned crab": "canned_low_acid",
     "canned creamed corn": "canned_low_acid",
     "canned green peas, a little": "canned_vegetables",
+    "canned jackfruit, drained": "preserved_jackfruit",
     "canned lentils": "canned_lentils",
     "canned mackerel in water (190 g, use with liquid)": "canned_low_acid",
     "canned mixed beans (110 g)": "canned_vegetables",
@@ -7610,6 +7924,7 @@
     "coconut drink": "coconut_drinks",
     "coconut milk": "reishunger_coconut_milk",
     "cold milk": "milk",
+    "concentrated tomato purée": "tomato_paste",
     "cooked (canned) chickpeas, rinsed": "canned_chickpeas",
     "cooked (canned) lentils, rinsed": "canned_lentils",
     "cooked canned chickpeas, drained": "canned_chickpeas",
@@ -8364,6 +8679,7 @@
     "plum(s), pitted and cut into eighths": "season_plum",
     "plums": "season_plum",
     "pointed cabbage": "season_pointed_cabbage",
+    "pomegranate seeds": "season_pomegranate",
     "portions of cottage cheese": "label_required",
     "potato": "season_potato",
     "potato, cut into small cubes": "season_potato",
@@ -8775,9 +9091,9 @@
     "tomato juice": "alnatura_tomato_juice",
     "tomato ketchup": "ketchup_label",
     "tomato passata": "alnatura_passata",
-    "tomato paste": "tomato_paste_label",
-    "tomato paste (15 g)": "tomato_paste_label",
-    "tomato paste (20 g)": "tomato_paste_label",
+    "tomato paste": "tomato_paste",
+    "tomato paste (15 g)": "tomato_paste",
+    "tomato paste (20 g)": "tomato_paste",
     "tomato paste (jar)": "tomato_paste_label",
     "tomato pesto": "alnatura_pesto",
     "tomato sauce": "alnatura_tomato_sauce",
@@ -8910,6 +9226,7 @@
     "yellow bell peppers, cut into strips": "season_bell_pepper",
     "yellow onion": "season_onion",
     "yellow onions": "season_onion",
+    "yellow peaches (or white peaches or nectarines), peeled and quartered": "season_peach",
     "yellow peaches, washed and halved": "season_peach",
     "yellow pepper": "season_bell_pepper",
     "yellow pepper, peeled and diced": "season_bell_pepper",

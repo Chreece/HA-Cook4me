@@ -101,6 +101,29 @@ class PackageOpening(unittest.TestCase):
     def test_catalog_identity_does_not_fall_back_to_display_name(self):
         self.assertEqual(opening.opening_rules({'key':'not-a-catalog-id','name':'Mozzarella'},{'brand':'Galbani'}),[])
 
+    def test_dmbio_package_choice_keeps_distinct_intervals_and_opening_opt_in(self):
+        cases=[('Tomato sauce','4066447887747',2,'2026-09-27'),
+               ('Tomato sauce','4066447972153',4,'2026-09-29'),
+               ('Tomato paste','4066447887716',21,'2026-10-16'),
+               ('Hummus','4066447910865',3,'2026-09-28'),
+               ('Canned jackfruit, drained','4066447443318',3,'2026-09-28')]
+        for name,barcode,days,deadline in cases:
+            with self.subTest(name=name,barcode=barcode),patch.object(release,'ingredient_lifecycle_profile',return_value=self.profile(name)):
+                metadata={'brand':'dmBio','barcode':barcode,'applyOpeningExpiry':False}
+                rules=opening.opening_rules({'key':'fixture'},metadata)
+                self.assertEqual(len(rules),1)
+                selected={**metadata,'openingRuleId':rules[0]['id']}
+                with self.assertRaises(ValueError):opening.configure_opening({'key':'fixture'},selected)
+                configured=opening.configure_opening({'key':'fixture'},{**selected,'openingConditionsConfirmed':True})
+                self.assertEqual(configured['useWithinDays'],days)
+                self.assertFalse(configured['applyOpeningExpiry'])
+                self.assertNotIn('openedAt',configured)
+                opened=opening.mark_package_opened({'key':'fixture'},configured,
+                    {'applyOpeningExpiry':True},opened_on='2026-09-25')
+                self.assertEqual(inv._effective_best_before(opened),deadline)
+                self.assertEqual(opening.opening_rules({'key':'fixture'},{'brand':'dmBio'}),[])
+                self.assertEqual(opening.opening_rules({'key':'fixture'},metadata|{'brand':'Alnatura'}),[])
+
     def test_cream_cheese_package_guidance_requires_opt_in_and_valid_identity(self):
         with patch.object(release,'ingredient_lifecycle_profile',return_value=self.profile('Cream cheese')):
             for barcode in ('00021000075997','00021000000142'):
