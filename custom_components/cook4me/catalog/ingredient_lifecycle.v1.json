@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.15",
+  "version": "2026-09-25.16",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -1097,6 +1097,31 @@
       "publisher": "Alnatura – national seasonal calendar",
       "url": "https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/spinat-saison/",
       "reviewedOn": "2026-09-25"
+    },
+    "dmbio_kimchi": {
+      "publisher": "dm-drogerie markt – dmBio product label",
+      "url": "https://www.dm.de/p/d/1639878/dmbio-kimchi-fermentiertes-gemuese",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_sauerkraut": {
+      "publisher": "dm-drogerie markt – dmBio product label",
+      "url": "https://www.dm.de/p/d/1530880/dmbio-mildes-sauerkraut",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_season_celeriac": {
+      "publisher": "Alnatura – national seasonal calendar",
+      "url": "https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/sellerie-saison/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_season_celery": {
+      "publisher": "Alnatura – national seasonal calendar",
+      "url": "https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/stangensellerie-saison/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_season_brussels_sprout": {
+      "publisher": "Alnatura – national seasonal calendar",
+      "url": "https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/rosenkohl-saison/",
+      "reviewedOn": "2026-09-25"
     }
   },
   "profiles": {
@@ -1953,12 +1978,16 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
+            "sourceRegion": "DE",
             "basis": "seasonal_calendar_including_stored_produce",
             "months": [
               1,
               2,
               3,
+              5,
+              6,
+              7,
+              8,
               9,
               10,
               11,
@@ -1966,13 +1995,7 @@
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_01",
-              "hessen_02",
-              "hessen_03",
-              "hessen_09",
-              "hessen_10",
-              "hessen_11",
-              "hessen_12"
+              "alnatura_season_celeriac"
             ],
             "coverage": "listed_months_only"
           }
@@ -2050,22 +2073,19 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
             "months": [
               1,
               2,
+              9,
               10,
               11,
               12
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_01",
-              "hessen_02",
-              "hessen_10",
-              "hessen_11",
-              "hessen_12"
+              "alnatura_season_brussels_sprout"
             ],
             "coverage": "listed_months_only"
           }
@@ -2792,9 +2812,10 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
             "months": [
+              5,
               6,
               7,
               8,
@@ -2803,11 +2824,7 @@
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_06",
-              "hessen_07",
-              "hessen_08",
-              "hessen_09",
-              "hessen_10"
+              "alnatura_season_celery"
             ],
             "coverage": "listed_months_only"
           }
@@ -7582,6 +7599,23 @@
             "productBarcodes": [
               "4104420033849"
             ]
+          },
+          {
+            "id": "dmbio_sauerkraut",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_sauerkraut",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447677652"
+            ]
           }
         ]
       }
@@ -9325,6 +9359,35 @@
           }
         ]
       }
+    },
+    "kimchi": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "dmbio_kimchi",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_kimchi",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447087130"
+            ]
+          }
+        ]
+      }
     }
   },
   "canonicalNames": {
@@ -9589,7 +9652,6 @@
     "celery root": "season_celeriac",
     "celery stalk": "season_celery",
     "celery stalk(s), washed and thinly sliced": "season_celery",
-    "celery stalk, carrot": "season_celery",
     "celery stalk, chopped": "season_celery",
     "celery stalk, finely chopped": "season_celery",
     "celery stalk, roughly chopped (optional)": "season_celery",
@@ -10152,6 +10214,7 @@
     "ketchup (for finishing), a little": "ketchup_label",
     "ketchup (for sauce)": "ketchup_label",
     "kidney beans": "alnatura_kidney_beans",
+    "kimchi": "kimchi",
     "king oyster mushroom": "season_king_oyster_mushroom",
     "kiwi": "season_kiwi",
     "kiwi, peeled and diced": "season_kiwi",
@@ -11100,6 +11163,7 @@
     "M_FOOD_256": "alnatura_apple_juice",
     "M_FOOD_257": "alnatura_tomato_juice",
     "M_FOOD_258": "alnatura_orange_juice",
+    "M_FOOD_259": "ketchup_label",
     "M_FOOD_261": "season_kiwi",
     "M_FOOD_265": "alpro_drinks",
     "M_FOOD_267": "reishunger_coconut_milk",
@@ -11143,8 +11207,10 @@
     "M_FOOD_480": "season_jerusalem_artichoke",
     "M_FOOD_527": "season_rhubarb",
     "M_FOOD_539": "seitan",
+    "M_FOOD_548": "alnatura_sauerkraut",
     "M_FOOD_561": "cream_cheese",
     "M_FOOD_581": "season_potato",
+    "M_FOOD_595": "kimchi",
     "M_FOOD_6": "season_garlic",
     "M_FOOD_613": "season_green_bean",
     "M_FOOD_621": "season_pak_choi",
@@ -11163,7 +11229,6 @@
     "M_FOOD_82": "season_celery",
     "M_FOOD_83": "season_celeriac",
     "M_FOOD_91": "season_chanterelle",
-    "M_FOOD_94": "season_chestnut",
-    "M_FOOD_259": "ketchup_label"
+    "M_FOOD_94": "season_chestnut"
   }
 }
