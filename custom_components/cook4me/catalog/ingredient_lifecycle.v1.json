@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.4",
+  "version": "2026-09-25.5",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -561,6 +561,61 @@
     "alnatura_pickled_beetroot": {
       "publisher": "Alnatura",
       "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/rote-bete-ungesuesst-227416/",
+      "reviewedOn": "2026-09-25"
+    },
+    "stoevesandt_ginger": {
+      "publisher": "Biohof Stövesandt",
+      "url": "https://biohof-stoevesandt.de/products/frischer-ingwer",
+      "reviewedOn": "2026-09-25"
+    },
+    "lwg_figs": {
+      "publisher": "Bayerische Landesanstalt für Weinbau und Gartenbau (LWG)",
+      "url": "https://lwg.bayern.de/gartenbau/obstbau/238458/index.php",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_dried_tomatoes_origin": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/feinkost/bio-salat-bio-antipasti/origin-getrocknete-tomaten-137141/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_dried_tomatoes_basil": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/feinkost/bio-salat-bio-antipasti/getrocknete-tomaten-mit-basilikum-246312/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_soy_drink": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/milch-milchprodukte/milchalternativen/bio-sojadrink-bio-reisdrink/sojadrink-natur-139354/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_rice_drink": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/milch-milchprodukte/milchalternativen/bio-sojadrink-bio-reisdrink/reisdrink-natur-139355/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_oat_bioland_drink": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/milch-milchprodukte/milchalternativen/bio-haferdrink-bio-getreidedrink/haferdrink-210693/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_oat_naturland_drink": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/milch-milchprodukte/milchalternativen/bio-haferdrink-bio-getreidedrink/haferdrink-225451/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_hazelnut_drink": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/milch-milchprodukte/milchalternativen/bio-mandeldrink-bio-nussdrink/haselnussdrink-natur-229385/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_cashew_drink": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/milch-milchprodukte/milchalternativen/bio-mandeldrink-bio-nussdrink/cashewdrink-natur-208838/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_coconut_drink": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/milch-milchprodukte/milchalternativen/bio-sojadrink-bio-reisdrink/kokosdrink-ungesuesst-210469/",
       "reviewedOn": "2026-09-25"
     }
   },
@@ -2718,6 +2773,40 @@
             ],
             "kind": "manufacturer_guidance",
             "brand": "Oatly"
+          },
+          {
+            "id": "alnatura_oat_bioland_drink",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_oat_bioland_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420186279"
+            ]
+          },
+          {
+            "id": "alnatura_oat_naturland_drink",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_oat_naturland_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420260139"
+            ]
           }
         ]
       }
@@ -6025,6 +6114,447 @@
           }
         ]
       }
+    },
+    "season_fresh_ginger": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-NI",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "stoevesandt_ginger"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_fig": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-BY",
+            "basis": "outdoor_harvest",
+            "months": [
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "lwg_figs"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "alnatura_dried_tomatoes": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_dried_tomatoes_origin",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_dried_tomatoes_origin",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "42271017"
+            ]
+          },
+          {
+            "id": "alnatura_dried_tomatoes_origin_origin",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_dried_tomatoes_origin",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura Origin",
+            "productBarcodes": [
+              "42271017"
+            ]
+          },
+          {
+            "id": "alnatura_dried_tomatoes_basil",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_dried_tomatoes_basil",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "40045528"
+            ]
+          }
+        ]
+      }
+    },
+    "soy_drinks": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alpro_drinks",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 7,
+            "conditions": [],
+            "sourceIds": [
+              "alpro_opening"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alpro"
+          },
+          {
+            "id": "alnatura_soy_drink",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_soy_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420266827"
+            ]
+          }
+        ]
+      }
+    },
+    "rice_drinks": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alpro_drinks",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 7,
+            "conditions": [],
+            "sourceIds": [
+              "alpro_opening"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alpro"
+          },
+          {
+            "id": "alnatura_rice_drink",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_rice_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420260337"
+            ]
+          }
+        ]
+      }
+    },
+    "hazelnut_drinks": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alpro_drinks",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 7,
+            "conditions": [],
+            "sourceIds": [
+              "alpro_opening"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alpro"
+          },
+          {
+            "id": "alnatura_hazelnut_drink",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_hazelnut_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420237292"
+            ]
+          }
+        ]
+      }
+    },
+    "cashew_drinks": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_cashew_drink",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_cashew_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420234383"
+            ]
+          }
+        ]
+      }
+    },
+    "coconut_drinks": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_coconut_drink",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_coconut_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420204225"
+            ]
+          }
+        ]
+      }
+    },
+    "plant_drinks": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alpro_drinks",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 7,
+            "conditions": [],
+            "sourceIds": [
+              "alpro_opening"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alpro"
+          },
+          {
+            "id": "alnatura_soy_drink",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_soy_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420266827"
+            ]
+          },
+          {
+            "id": "alnatura_rice_drink",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_rice_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420260337"
+            ]
+          },
+          {
+            "id": "alnatura_oat_bioland_drink",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_oat_bioland_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420186279"
+            ]
+          },
+          {
+            "id": "alnatura_oat_naturland_drink",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_oat_naturland_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420260139"
+            ]
+          },
+          {
+            "id": "alnatura_hazelnut_drink",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_hazelnut_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420237292"
+            ]
+          },
+          {
+            "id": "alnatura_cashew_drink",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_cashew_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420234383"
+            ]
+          },
+          {
+            "id": "alnatura_coconut_drink",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_coconut_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420204225"
+            ]
+          }
+        ]
+      }
     }
   },
   "canonicalNames": {
@@ -6041,6 +6571,8 @@
     "a- carrot, cut into matchsticks 0.5 mm wide and 3 cm long": "season_carrot",
     "a- green beans, cut into quarters": "season_green_bean",
     "a- pumpkin, seeds and skin removed, cut into 3 cm cubes": "season_pumpkin",
+    "a- unsweetened soy milk": "soy_drinks",
+    "almond drink": "alpro_drinks",
     "almond milk": "alpro_drinks",
     "apple": "season_apple",
     "apple juice": "alnatura_apple_juice",
@@ -6243,6 +6775,8 @@
     "carrots, thinly sliced": "season_carrot",
     "carrots, washed and cut into strips": "season_carrot",
     "carrots, washed, peeled and cut into long thin strips": "season_carrot",
+    "cashew drink": "cashew_drinks",
+    "cashew milk": "cashew_drinks",
     "cauliflower": "season_cauliflower",
     "cauliflower florets": "season_cauliflower",
     "cauliflower florets, halved": "season_cauliflower",
@@ -6338,6 +6872,7 @@
     "chopped fresh chives": "season_chives",
     "chopped fresh coriander": "season_coriander_leaf",
     "chopped fresh coriander sprigs": "season_coriander_leaf",
+    "chopped fresh ginger": "season_fresh_ginger",
     "chopped fresh mint": "season_mint",
     "chopped fresh mint leaves": "season_mint",
     "chopped fresh parsley": "season_parsley_leaf",
@@ -6345,6 +6880,8 @@
     "chopped garlic": "season_garlic",
     "chopped garlic clove": "season_garlic",
     "chopped garlic cloves": "season_garlic",
+    "chopped ginger": "season_fresh_ginger",
+    "chopped ginger (quantity fragment: /2 tbsp)": "season_fresh_ginger",
     "chopped green beans": "season_green_bean",
     "chopped green bell pepper": "season_bell_pepper",
     "chopped green olives": "alnatura_green_olives",
@@ -6370,11 +6907,13 @@
     "chopped spinach leaves": "season_spinach",
     "chopped sprigs of fresh coriander": "season_coriander_leaf",
     "chopped spring onion": "season_spring_onion",
+    "chopped sun-dried tomatoes": "alnatura_dried_tomatoes",
     "chopped white onion": "season_onion",
     "cleaned bell peppers": "season_bell_pepper",
     "cleaned bell peppers, sliced": "season_bell_pepper",
     "cocktail tomatoes": "season_tomato",
     "coconut cream": "label_required",
+    "coconut drink": "coconut_drinks",
     "coconut milk": "reishunger_coconut_milk",
     "cold milk": "milk",
     "cooked (canned) chickpeas, rinsed": "canned_chickpeas",
@@ -6448,6 +6987,8 @@
     "dried chickpeas": "dry_staple",
     "dried lentils": "dry_staple",
     "dried pasta": "dry_staple",
+    "dried tomatoes": "alnatura_dried_tomatoes",
+    "dried tomatoes, coarsely chopped": "alnatura_dried_tomatoes",
     "eggplant": "season_aubergine",
     "eggplant, cut into 1–2 cm cubes": "season_aubergine",
     "eggplant, cut into 7 mm square strips, 10 cm long": "season_aubergine",
@@ -6478,13 +7019,18 @@
     "fennel, washed and diced": "season_fennel",
     "fennel, washed and finely chopped": "season_fennel",
     "fennel, washed and finely diced": "season_fennel",
+    "fig": "season_fig",
+    "figs": "season_fig",
+    "figs, cut into eighths": "season_fig",
     "finely chopped basil": "season_basil",
     "finely chopped carrot": "season_carrot",
     "finely chopped cauliflower": "season_cauliflower",
     "finely chopped celery": "season_celery",
     "finely chopped coriander": "season_coriander_leaf",
     "finely chopped fresh coriander": "season_coriander_leaf",
+    "finely chopped fresh ginger": "season_fresh_ginger",
     "finely chopped garlic clove": "season_garlic",
+    "finely chopped ginger": "season_fresh_ginger",
     "finely chopped green olives": "alnatura_green_olives",
     "finely chopped green onions": "season_spring_onion",
     "finely chopped mint": "season_mint",
@@ -6522,6 +7068,7 @@
     "fresh chopped chili pepper": "season_fresh_chili",
     "fresh chopped chili pepper (quantity fragment: /2)": "season_fresh_chili",
     "fresh chopped chili peppers": "season_fresh_chili",
+    "fresh chopped ginger": "season_fresh_ginger",
     "fresh chopped mint": "season_mint",
     "fresh chopped tarragon": "season_tarragon",
     "fresh coriander": "season_coriander_leaf",
@@ -6534,6 +7081,13 @@
     "fresh dill, chopped": "season_dill",
     "fresh fava beans": "season_fresh_broad_bean",
     "fresh garlic": "season_garlic",
+    "fresh ginger": "season_fresh_ginger",
+    "fresh ginger, chopped": "season_fresh_ginger",
+    "fresh ginger, crushed": "season_fresh_ginger",
+    "fresh ginger, grated": "season_fresh_ginger",
+    "fresh ginger, peeled and crushed": "season_fresh_ginger",
+    "fresh ginger, peeled and thinly sliced": "season_fresh_ginger",
+    "fresh grated ginger": "season_fresh_ginger",
     "fresh green beans": "season_green_bean",
     "fresh jalapeño peppers": "season_fresh_chili",
     "fresh jalapeño, finely chopped": "season_fresh_chili",
@@ -6584,6 +7138,8 @@
     "fresh, chopped tarragon": "season_tarragon",
     "freshly chopped basil": "season_basil",
     "freshly chopped mint leaves": "season_mint",
+    "freshly cut ginger": "season_fresh_ginger",
+    "freshly grated ginger": "season_fresh_ginger",
     "full-fat milk": "milk",
     "g carrots, peeled and cut into pieces": "season_carrot",
     "g cauliflower, washed and cut into 2 or 4 parts": "season_cauliflower",
@@ -6620,7 +7176,13 @@
     "garlic, washed and chopped": "season_garlic",
     "gherkins, thinly sliced": "alnatura_pickled_cucumber",
     "giant pumpkin, peeled, seeded and cut into 1 cm cubes": "season_pumpkin",
+    "ginger": "season_fresh_ginger",
     "ginger juice": "alnatura_ginger_juice",
+    "ginger, chopped": "season_fresh_ginger",
+    "ginger, finely chopped": "season_fresh_ginger",
+    "ginger, peeled and chopped": "season_fresh_ginger",
+    "ginger, thinly sliced": "season_fresh_ginger",
+    "ginger, washed well and julienned with the skin on": "season_fresh_ginger",
     "golden apple": "season_apple",
     "golden apple, peeled, cored and diced": "season_apple",
     "golden apple, peeled, cored and diced (quantity fragment: /2)": "season_apple",
@@ -6697,7 +7259,8 @@
     "handful of blueberries": "season_blueberry",
     "handful of spinach, washed and roughly chopped": "season_spinach",
     "handful(s) of grated carrots": "season_carrot",
-    "hazelnut milk": "alpro_drinks",
+    "hazelnut milk": "hazelnut_drinks",
+    "hazelnut milk (from organic food stores)": "hazelnut_drinks",
     "hazelnuts": "season_hazelnut",
     "hazelnuts (to taste)": "season_hazelnut",
     "head of bok choy, cut into 6 pieces": "season_pak_choi",
@@ -6717,6 +7280,8 @@
     "jerusalem artichoke, peeled and diced": "season_jerusalem_artichoke",
     "jerusalem artichokes": "season_jerusalem_artichoke",
     "jerusalem artichokes, peeled and diced": "season_jerusalem_artichoke",
+    "julienned ginger (as garnish), a little": "season_fresh_ginger",
+    "julienned ginger (for finishing)": "season_fresh_ginger",
     "julienned onion": "season_onion",
     "julienned potatoes": "season_potato",
     "kale": "season_kale",
@@ -6949,6 +7514,7 @@
     "pickled cucumbers": "alnatura_pickled_cucumber",
     "pickles": "alnatura_pickled_cucumber",
     "pickles, chopped and drained": "alnatura_pickled_cucumber",
+    "pieces of sun-dried tomatoes, cut into strips": "alnatura_dried_tomatoes",
     "pinch of fresh thyme leaves": "season_thyme",
     "pinch of thyme": "season_thyme",
     "pinch(es) of fresh thyme leaves": "season_thyme",
@@ -6969,10 +7535,10 @@
     "pitted plums, chopped": "season_plum",
     "plain greek yogurt": "label_required",
     "plain yogurt": "label_required",
-    "plant milk": "alpro_drinks",
+    "plant milk": "plant_drinks",
     "plant-based cream": "plant_cooking_cream",
-    "plant-based drink": "alpro_drinks",
-    "plant-based milk": "alpro_drinks",
+    "plant-based drink": "plant_drinks",
+    "plant-based milk": "plant_drinks",
     "plant-based yoghurt": "alpro_alternatives",
     "plant-based yogurt": "alpro_alternatives",
     "plum": "season_plum",
@@ -7092,7 +7658,7 @@
     "rhubarb": "season_rhubarb",
     "rhubarb, washed and cut into 3–4 cm pieces": "season_rhubarb",
     "rice": "dry_staple",
-    "rice milk": "alpro_drinks",
+    "rice milk": "rice_drinks",
     "ripe conference pears": "season_pear",
     "ripe european pears": "season_pear",
     "ripe pears, peeled and diced": "season_pear",
@@ -7170,6 +7736,7 @@
     "sliced button mushrooms": "season_button_mushroom",
     "sliced carrots": "season_carrot",
     "sliced garlic": "season_garlic",
+    "sliced ginger": "season_fresh_ginger",
     "sliced green onion (for finishing)": "season_spring_onion",
     "sliced onion": "season_onion",
     "sliced onions": "season_onion",
@@ -7211,7 +7778,8 @@
     "sour cherries": "season_sour_cherry",
     "sour cream": "label_required",
     "soy cream": "soy_cooking_cream",
-    "soy milk": "alpro_drinks",
+    "soy milk": "soy_drinks",
+    "soy milk, room temperature": "soy_drinks",
     "soy yoghurt": "alpro_alternatives",
     "soy yogurt": "alpro_alternatives",
     "soya yoghurt": "alpro_alternatives",
@@ -7271,6 +7839,17 @@
     "sugar snap peas": "season_fresh_pea",
     "sugar snap peas, strings removed": "season_fresh_pea",
     "sun-dried tomato pesto": "alnatura_pesto",
+    "sun-dried tomato, roughly chopped": "alnatura_dried_tomatoes",
+    "sun-dried tomatoes": "alnatura_dried_tomatoes",
+    "sun-dried tomatoes (optional)": "alnatura_dried_tomatoes",
+    "sun-dried tomatoes (optional), cut into strips": "alnatura_dried_tomatoes",
+    "sun-dried tomatoes (optional), cut into thin strips": "alnatura_dried_tomatoes",
+    "sun-dried tomatoes in oil": "alnatura_dried_tomatoes",
+    "sun-dried tomatoes, chopped": "alnatura_dried_tomatoes",
+    "sun-dried tomatoes, cut into pieces": "alnatura_dried_tomatoes",
+    "sun-dried tomatoes, cut into strips": "alnatura_dried_tomatoes",
+    "sun-dried tomatoes, cut into strips (to taste)": "alnatura_dried_tomatoes",
+    "sun-dried tomatoes, finely chopped": "alnatura_dried_tomatoes",
     "swede": "season_swede",
     "swede, peeled and cut into 2 cm-thick pieces": "season_swede",
     "sweet apple, peeled and cut into small cubes": "season_apple",
@@ -7310,6 +7889,7 @@
     "tarragon, finely chopped": "season_tarragon",
     "tarragon, washed and chopped": "season_tarragon",
     "tbsp chopped basil": "season_basil",
+    "tbsp chopped ginger": "season_fresh_ginger",
     "tbsp chopped parsley": "season_parsley_leaf",
     "tbsp coriander leaves, washed and chopped": "season_coriander_leaf",
     "tbsp coriander, washed and chopped": "season_coriander_leaf",
@@ -7320,7 +7900,9 @@
     "tbsp lemon juice (to taste)": "alnatura_lemon_juice",
     "tbsp parsley, washed and chopped (to taste)": "season_parsley_leaf",
     "tbsp tarragon, washed and chopped": "season_tarragon",
+    "teaspoon of fresh ginger, peeled and chopped (quantity count omitted)": "season_fresh_ginger",
     "thin green onion, diagonally sliced, as needed": "season_spring_onion",
+    "thin slices of ginger": "season_fresh_ginger",
     "thinly julienned carrot": "season_carrot",
     "thinly sliced button mushrooms": "season_button_mushroom",
     "thinly sliced carrot": "season_carrot",
@@ -7375,7 +7957,10 @@
     "tomatoes, washed and finely chopped": "season_tomato",
     "tomatoes, washed and thinly sliced": "season_tomato",
     "tsp chopped coriander": "season_coriander_leaf",
+    "tsp fresh ginger, peeled and chopped": "season_fresh_ginger",
+    "tsp fresh grated ginger": "season_fresh_ginger",
     "tsp freshly chopped basil": "season_basil",
+    "tsp ginger, peeled and chopped": "season_fresh_ginger",
     "tsp lemon juice": "alnatura_lemon_juice",
     "turnip": "season_turnip",
     "turnip(s), peeled and finely diced (optional)": "season_turnip",
@@ -7393,7 +7978,8 @@
     "turnips, quartered": "season_turnip",
     "uht milk": "milk",
     "unpeeled apples, diced": "season_apple",
-    "unsweetened soy milk": "alpro_drinks",
+    "unsweetened coconut drink": "coconut_drinks",
+    "unsweetened soy milk": "soy_drinks",
     "vanilla skyr": "skyr_label_required",
     "vegetable juice": "alnatura_vegetable_juice",
     "vegetable spread": "label_required",
