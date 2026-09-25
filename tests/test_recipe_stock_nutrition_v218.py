@@ -200,10 +200,10 @@ class WiringTests(unittest.TestCase):
         panel=(COMPONENT/"panel.py").read_text()
         active=(FRONTEND/"cook4me-panel-v180.js").read_text()
         ux=(FRONTEND/"ux-fixes-v218.js").read_text()
-        self.assertIn("/runtime-v219",panel)
-        self.assertIn("&runtime=219",panel)
+        self.assertIn("/runtime-v220",panel)
+        self.assertIn("&runtime=220",panel)
         self.assertIn("UXFixesMixin",active)
-        self.assertIn("runtime-v219",active)
+        self.assertIn("runtime-v220",active)
         self.assertIn("nutrition_unresolved_retry",ux)
         self.assertIn("nutrition_generic_set",ux)
 

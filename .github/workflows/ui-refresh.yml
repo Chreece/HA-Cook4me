@@ -35,6 +35,7 @@ jobs:
           node --check custom_components/cook4me/frontend/app-design-v203.js
           node --check custom_components/cook4me/frontend/app-theme-v203.js
           node --check custom_components/cook4me/frontend/ux-fixes-v218.js
+          node --check custom_components/cook4me/frontend/interaction-position-v220.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v180.js
           python -m py_compile custom_components/cook4me/panel.py
       - name: Install browser test dependency
@@ -45,5 +46,7 @@ jobs:
         run: python tests/browser_ui_refresh_v203.py
       - name: Stock view with full-size ingredient catalog
         run: python tests/browser_stock_responsiveness_v219.py
+      - name: Interaction position in page and Home Assistant scroll containers
+        run: python tests/browser_interaction_position_v220.py
       - name: Navigation hover and keyboard focus regression
         run: python tests/browser_navigation_hover_v205.py
