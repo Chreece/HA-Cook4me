@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from typing import Any
+from uuid import uuid4
 
 import voluptuous as vol
-from homeassistant.components import persistent_notification, websocket_api
+from homeassistant.components import websocket_api
 from homeassistant.core import HomeAssistant, callback
 
 from . import websocket as legacy
@@ -115,6 +116,8 @@ def async_register(hass: HomeAssistant) -> None:
 async def ws_ai_create(hass, connection, msg) -> None:
     bridge = None
     notification_id = "cook4me_ai_recipe"
+    notice_key = str(uuid4())
+    notice_started = False
     language = _text(msg.get("language") or "en")
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
@@ -126,11 +129,8 @@ async def ws_ai_create(hass, connection, msg) -> None:
             entry_ids=[bridge.entry.entry_id],
         ):
             title, message = v22._notification_text(language, "running")
-            persistent_notification.async_create(
-                hass,
-                message,
-                title=title,
-                notification_id=notification_id,
+            notice_started = bridge.notifications.publish(
+                notification_id, [notice_key], message, title=title,
             )
             profile = bridge.recipe_hub.profile
             had_diet = "diet" in profile
@@ -146,20 +146,15 @@ async def ws_ai_create(hass, connection, msg) -> None:
                     profile.pop("diet", None)
             recipe_title = _text(result.get("recipe", {}).get("title"))
             title, message = v22._notification_text(language, "done", recipe_title)
-            persistent_notification.async_create(
-                hass,
-                message,
-                title=title,
-                notification_id=notification_id,
+            bridge.notifications.publish(
+                notification_id, [notice_key], message, title=title, update=True,
             )
     except Exception as exc:
         title, message = v22._notification_text(language, "failed", str(exc)[:300])
-        persistent_notification.async_create(
-            hass,
-            message,
-            title=title,
-            notification_id=notification_id,
-        )
+        if bridge is not None:
+            bridge.notifications.publish(
+                notification_id, [notice_key], message, title=title, update=notice_started,
+            )
         legacy._send_error(connection, msg, exc)
         return
     connection.send_result(msg["id"], result)

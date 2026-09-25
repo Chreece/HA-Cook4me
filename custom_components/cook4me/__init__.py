@@ -6,7 +6,6 @@ from typing import Any
 from copy import deepcopy
 
 import voluptuous as vol
-from homeassistant.components import persistent_notification
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, ServiceCall, SupportsResponse
 from homeassistant.helpers.typing import ConfigType
@@ -29,6 +28,7 @@ from .expiry import (
 from .panel import async_register_panel
 from .release_catalog import async_warm_release_catalog
 from .stock_coverage import warm_stock_catalog
+from .notifications import Cook4MeNotifications, event_key
 from .smart_scale import apply_recipe_measurements, smart_scale_store_for_bridge
 from .websocket import async_register as async_register_websocket
 from .websocket_v5 import async_register as async_register_websocket_v5
@@ -142,39 +142,40 @@ async def _handle_recipe_completed(bridge: Cook4MeBridge, completed_state=None) 
         + "\n".join(lines[:30])
         + f"\n\n[Open consumption editor]({editor_path})"
     )
-    persistent_notification.async_create(
-        bridge.hass,
-        message,
+    bridge.notifications.publish(
+        _consumption_notification_id(bridge.entry.entry_id),
+        [event_key(pending_id)], message,
         title="Cook4Me · Confirm consumed ingredients",
-        notification_id=_consumption_notification_id(bridge.entry.entry_id),
     )
 
 
 def _register_completion_listener(bridge: Cook4MeBridge) -> None:
     """Watch live state transitions without treating startup state as completion."""
+    cooking_phases = {"preparation", "add_ingredient", "warming", "cooking", "depressurization"}
     state = {
         "phase": str(bridge.data.get("phase") or ""),
-        "active": bool(bridge.data.get("active")),
-        "session": 0,
-        "completed_session": None,
+        "initialized": bridge.data.get("connected") is True,
+        "armed": bridge.data.get("phase") in cooking_phases,
     }
 
     def listener() -> None:
+        if bridge.data.get("connected") is not True:
+            # A disconnect is not a new cooking session. Retain the last real
+            # phase so reconnect/metadata packets cannot repeat a done event.
+            return
         phase = str(bridge.data.get("phase") or "")
-        active = bool(bridge.data.get("active"))
-        if active and not state["active"]:
-            state["session"] += 1
-            state["completed_session"] = None
-        if (
-            phase == "done"
-            and state["phase"] != "done"
-            and state["completed_session"] != state["session"]
-        ):
-            state["completed_session"] = state["session"]
+        if not state["initialized"]:
+            state.update(initialized=True, phase=phase, armed=phase in cooking_phases)
+            return
+        if phase in cooking_phases:
+            state["armed"] = True
+        if phase == "done" and state["phase"] != "done" and state["armed"]:
+            state["armed"] = False
             bridge.async_create_task(_handle_recipe_completed(bridge, deepcopy(bridge.data)),
                                      "Cook4Me completed recipe")
+        elif phase in {"idle", "stopped"}:
+            state["armed"] = False
         state["phase"] = phase
-        state["active"] = active
 
     bridge._completion_listener_unsub = bridge.async_add_listener(listener)
 
@@ -336,8 +337,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     from .device_settings import DeviceSettings
     from .announcements import Announcements
     bridge = Cook4MeBridge(hass, entry)
+    bridge.notifications = Cook4MeNotifications(hass, entry.entry_id)
     bridge.device_settings = DeviceSettings(bridge)
     try:
+        await bridge.notifications.async_load()
         await bridge.device_settings.async_load()
         await bridge.async_start()
         entry.runtime_data = bridge
@@ -370,7 +373,10 @@ async def _async_cleanup_bridge(bridge: Cook4MeBridge) -> None:
             unsubscribe()
             setattr(bridge, name, None)
     dismiss_expiry_notification(bridge)
-    await bridge.async_stop()
+    try:
+        await bridge.async_stop()
+    finally:
+        await bridge.notifications.async_close()
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:

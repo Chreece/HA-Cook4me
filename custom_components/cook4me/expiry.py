@@ -3,7 +3,6 @@ from __future__ import annotations
 from datetime import date, datetime
 from typing import Any
 
-from homeassistant.components import persistent_notification
 from homeassistant.core import callback
 from homeassistant.helpers.event import async_track_time_change
 from homeassistant.util import dt as dt_util
@@ -13,6 +12,7 @@ from .inventory import (
     expiring_inventory_items,
     format_stock,
 )
+from .notifications import event_key
 
 _NOTIFICATION_PREFIX = "cook4me_best_before_"
 
@@ -27,6 +27,7 @@ _TEXT = {
         "opened": "opened-package limit",
         "storage": "stored in {storage}",
         "open": "Open Cook4Me",
+        "more": "And {count} more batches in Cook4Me.",
     },
     "de": {
         "title": "Cook4Me · Lebensmittel bald verwenden",
@@ -38,6 +39,7 @@ _TEXT = {
         "opened": "Frist nach dem Öffnen",
         "storage": "Lagerort: {storage}",
         "open": "Cook4Me öffnen",
+        "more": "Und {count} weitere Chargen in Cook4Me.",
     },
     "el": {
         "title": "Cook4Me · Τρόφιμα για σύντομη κατανάλωση",
@@ -49,6 +51,7 @@ _TEXT = {
         "opened": "όριο μετά το άνοιγμα",
         "storage": "αποθήκευση: {storage}",
         "open": "Άνοιγμα Cook4Me",
+        "more": "Και {count} ακόμη παρτίδες στο Cook4Me.",
     },
 }
 
@@ -87,9 +90,25 @@ def update_expiry_notification(
         include_past=True,
     )
     ident = notification_id(bridge.entry.entry_id)
-    if not items:
-        persistent_notification.async_dismiss(bridge.hass, ident)
+    notices = bridge.notifications
+    # A warning is about a product and its effective use date. Amounts,
+    # regenerated legacy lot IDs, storage edits and relative day text do not
+    # make it new. Keep all batches in the message even when they share a key.
+    keyed = [
+        (event_key(row.get("identity"),
+                   row.get("effectiveBestBefore") or row.get("bestBefore")), row)
+        for row in items
+    ]
+    active = notices.active_keys(ident)
+    fresh = notices.unseen(ident, (key for key, _row in keyed))
+    visible = [(key, row) for key, row in keyed if key in fresh or key in active]
+    visible_keys = {key for key, _row in visible}
+    if not visible:
+        notices.clear(ident)
         return
+    if not fresh and visible_keys == active:
+        return
+    items = [row for _key, row in visible]
 
     lang = _language(bridge.hass)
     text = _TEXT[lang]
@@ -110,20 +129,15 @@ def update_expiry_notification(
             f"{effective} · {_relative_text(days_remaining, text)}{suffix}"
         )
 
+    if len(items) > 40:
+        lines.append(text["more"].format(count=len(items) - 40))
     message = text["intro"] + "\n\n" + "\n".join(lines) + f"\n\n[{text['open']}](/cook4me)"
-    persistent_notification.async_create(
-        bridge.hass,
-        message,
-        title=text["title"],
-        notification_id=ident,
-    )
+    notices.publish(ident, visible_keys, message, title=text["title"], update=True)
 
 
 @callback
 def dismiss_expiry_notification(bridge: Any) -> None:
-    persistent_notification.async_dismiss(
-        bridge.hass, notification_id(bridge.entry.entry_id)
-    )
+    bridge.notifications.clear(notification_id(bridge.entry.entry_id))
 
 
 def register_daily_expiry_check(bridge: Any):
