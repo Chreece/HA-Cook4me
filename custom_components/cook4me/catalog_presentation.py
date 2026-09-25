@@ -12,12 +12,17 @@ import unicodedata
 
 try:
     from .catalog_search_index import _strings, normalize_search_text, query_terms
+    from .catalog_amounts import catalog_name
 except ImportError:  # Standalone offline catalog tools.
     import importlib.util
     spec = importlib.util.spec_from_file_location("cook4me_presentation_search", Path(__file__).with_name("catalog_search_index.py"))
     search = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(search)
     _strings, normalize_search_text, query_terms = search._strings, search.normalize_search_text, search.query_terms
+    spec = importlib.util.spec_from_file_location("cook4me_catalog_amounts", Path(__file__).with_name("catalog_amounts.py"))
+    amounts = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(amounts)
+    catalog_name = amounts.catalog_name
 
 
 def norm(value):
@@ -121,26 +126,57 @@ def ingredient_choices(payload, language, query="", limit=None):
         texts = [normalize_search_text(alias).split() for alias in aliases if alias]
         return all(any(all(any(token.startswith(word) for token in text) for word in alternative.split())
             for text in texts for alternative in alternatives) for alternatives in terms)
-    groups = defaultdict(list)
+    def food_name(raw):
+        return catalog_name(clean_name(raw.get("canonicalName")))
+    def priority(raw):
+        return (not bool(raw.get("key")), len(clean_name(raw.get("canonicalName"))), not bool(raw.get("nutrition")), str(raw.get("id")))
+    # Exact amount-free source names share one translated choice. Preserve food
+    # qualifiers in the source key (including parentheses) rather than using
+    # preparation cleanup to infer a new equivalence between different foods.
+    families = defaultdict(list)
     for raw in payload.get("ingredients", []):
         if raw.get("classification") in {"equipment", "other", "ambiguous"}:
             continue
         canonical = clean_name(raw.get("canonicalName"))
+        if not canonical or name_key(canonical) in excluded_names():
+            continue
         if re.match(r"^(?:or\b|and\b|fragment\b|for\b|optional\b|quantity\b|a little\b)", canonical, re.I):
             continue
-        if canonical and name_key(canonical) not in excluded_names():
-            # Reviewed locale synonyms are display aliases, never nutrient aliases.
-            groups[name_key(display_name(raw, language))].append(raw)
+        families[name_key(catalog_name(raw.get("canonicalName") or ""))].append(raw)
+    groups = defaultdict(list)
+    names = {}
+    code = str(language or "en").lower().replace("_", "-").split("-")[0]
+    locale = labels().get(code, {})
+    def translated_label(raw):
+        return locale.get(name_key(clean_name(raw.get("canonicalName")))) or (raw.get("translations") or {}).get(code)
+    def label_priority(raw):
+        measured = catalog_name(raw.get("canonicalName") or "") != raw.get("canonicalName")
+        return (not bool(translated_label(raw)), measured, *priority(raw))
+    representatives = {key: min(members, key=label_priority) for key, members in families.items()}
+    for members in families.values():
+        representative = min(members, key=label_priority)
+        if not translated_label(representative):
+            # Existing presentation already removes recipe-use annotations such
+            # as "(for sauce)". Reuse the exact generic food's available locale
+            # label rather than offering both "Water" and "Wasser" in German.
+            translated = representatives.get(name_key(food_name(representative)))
+            if translated and translated_label(translated):
+                representative = translated
+        name = catalog_name(display_name(representative, language))
+        for raw in members:
+            names[id(raw)] = name
+        # Display aliases retain every original ID; no provider data is rewritten.
+        groups[name_key(name)].extend(members)
     choices = []
     search_aliases_map = locale_search_aliases().get(str(language or "en").lower().replace("_", "-").split("-")[0], {})
     for canonical, members in groups.items():
         # Prefer the actual generic provider row; never assign its ID to siblings.
-        raw = min(members, key=lambda r: (not bool(r.get("key")), len(clean_name(r.get("canonicalName"))), not bool(r.get("nutrition")), str(r.get("id"))))
-        name = display_name(raw, language)
+        raw = min(members, key=priority)
+        name = names[id(raw)]
         search_aliases = {name}
         for member in members:
             cleaned = clean_name(member.get("canonicalName"))
-            search_aliases.add(cleaned)
+            search_aliases.update((member.get("canonicalName") or "", cleaned, food_name(member), display_name(member, language)))
             search_aliases.update(_strings(member.get("translations")))
             search_aliases.update(_strings(member.get("aliases")))
             search_aliases.update(locale[name_key(cleaned)] for locale in labels().values() if name_key(cleaned) in locale)
@@ -148,7 +184,7 @@ def ingredient_choices(payload, language, query="", limit=None):
         if terms and not matches(search_aliases):
             continue
         row = {key: deepcopy(raw[key]) for key in ("id", "key", "conceptId", "classification", "nutritionEligible", "lifecycle") if key in raw}
-        row.update(ingredientId=raw["id"], name=name, foodName=name, canonicalName=clean_name(raw.get("canonicalName")), displayGroupId="ingredient:"+hashlib.sha256(canonical.encode()).hexdigest()[:16], sourceIngredientIds=[member["id"] for member in members], displayLanguage=language, presentationVersion=63)
+        row.update(ingredientId=raw["id"], name=name, foodName=name, canonicalName=food_name(raw), displayGroupId="ingredient:"+hashlib.sha256(canonical.encode()).hexdigest()[:16], sourceIngredientIds=[member["id"] for member in members], displayLanguage=language, presentationVersion=63)
         row["searchAliases"] = sorted(alias for alias in search_aliases if alias)
         if raw.get("key"):
             row["foodKey"] = raw["key"]
