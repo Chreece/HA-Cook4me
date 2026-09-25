@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.2",
+  "version": "2026-09-25.3",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -476,6 +476,46 @@
     "arla_skyr_opening": {
       "publisher": "Arla Foods Deutschland",
       "url": "https://www.arlafoods.de/articles/wie-lange-ist-skyr-nach-dem-offnen-haltbar/",
+      "reviewedOn": "2026-09-25"
+    },
+    "meinland_coriander": {
+      "publisher": "EDEKA meinLand",
+      "url": "https://www.meinland.de/produkte/koriander",
+      "reviewedOn": "2026-09-25"
+    },
+    "kressepark_watercress": {
+      "publisher": "Kressepark Erfurt",
+      "url": "https://kressepark-erfurt.de/",
+      "reviewedOn": "2026-09-25"
+    },
+    "iva_romanesco": {
+      "publisher": "Industrieverband Agrar e. V. (IVA)",
+      "url": "https://www.iva.de/iva-magazin/schule-wissen/romanesco-jeder-kopf-ein-kunstwerk",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_coconut_milk_400": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/milch-milchprodukte/bio-milchprodukte-zum-kochen/kokosmilch-135024/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_coconut_milk_200": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/milch-milchprodukte/bio-milchprodukte-zum-kochen/kokosmilch-138705/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_sauerkraut": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/sauerkraut-129963/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_tomato_juice": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-gemuese-saefte/tomate-direktsaft-128767/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_peanut_sauce": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/bio-sossen/erdnuss-sauce-243700/",
       "reviewedOn": "2026-09-25"
     }
   },
@@ -2729,6 +2769,40 @@
             ],
             "kind": "manufacturer_guidance",
             "brand": "Reishunger"
+          },
+          {
+            "id": "alnatura_coconut_milk_400",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_coconut_milk_400",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420034327"
+            ]
+          },
+          {
+            "id": "alnatura_coconut_milk_200",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_coconut_milk_200",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420033641"
+            ]
           }
         ]
       }
@@ -5497,6 +5571,206 @@
         ],
         "reason": "no_numeric_manufacturer_window"
       }
+    },
+    "season_coriander_leaf": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-NW",
+            "basis": "outdoor_harvest",
+            "months": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "meinland_coriander"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_lemon_balm": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-BY",
+            "basis": "outdoor_harvest",
+            "months": [
+              6,
+              7,
+              8,
+              9
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "lwg_garden_herbs"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_watercress": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-TH",
+            "basis": "outdoor_harvest",
+            "months": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "kressepark_watercress"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_romanesco": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "iva_romanesco"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "alnatura_sauerkraut": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_sauerkraut",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_sauerkraut",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420033849"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_tomato_juice": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_tomato_juice",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_tomato_juice",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420072787"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_peanut_sauce": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_peanut_sauce",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_peanut_sauce",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420257863"
+            ]
+          }
+        ]
+      }
     }
   },
   "canonicalNames": {
@@ -5615,8 +5889,10 @@
     "brussels sprouts, halved": "season_brussels_sprout",
     "brussels sprouts, washed and halved": "season_brussels_sprout",
     "bunch of baby spinach": "season_spinach",
+    "bunch of fresh coriander, washed and finely chopped (quantity fragment: /2)": "season_coriander_leaf",
     "bunch of parsley": "season_parsley_leaf",
     "bunch of parsley, washed and chopped": "season_parsley_leaf",
+    "bunch of watercress, washed twice (thick stems removed)": "season_watercress",
     "bunches of baby spinach, washed twice (large stems removed)": "season_spinach",
     "butterhead lettuce": "season_lettuce",
     "butternut squash": "season_pumpkin",
@@ -5791,10 +6067,16 @@
     "chopped chervil": "season_chervil",
     "chopped chestnuts": "season_chestnut",
     "chopped chives": "season_chives",
+    "chopped coriander": "season_coriander_leaf",
+    "chopped coriander (for serving)": "season_coriander_leaf",
+    "chopped coriander leaves": "season_coriander_leaf",
+    "chopped coriander stems": "season_coriander_leaf",
     "chopped dill": "season_dill",
     "chopped fennel": "season_fennel",
     "chopped fresh basil": "season_basil",
     "chopped fresh chives": "season_chives",
+    "chopped fresh coriander": "season_coriander_leaf",
+    "chopped fresh coriander sprigs": "season_coriander_leaf",
     "chopped fresh mint": "season_mint",
     "chopped fresh mint leaves": "season_mint",
     "chopped fresh parsley": "season_parsley_leaf",
@@ -5819,9 +6101,11 @@
     "chopped red onion": "season_onion",
     "chopped sage": "season_sage",
     "chopped salad onion": "season_spring_onion",
+    "chopped sauerkraut with juice": "alnatura_sauerkraut",
     "chopped shallot": "season_shallot",
     "chopped spinach": "season_spinach",
     "chopped spinach leaves": "season_spinach",
+    "chopped sprigs of fresh coriander": "season_coriander_leaf",
     "chopped spring onion": "season_spring_onion",
     "chopped white onion": "season_onion",
     "cleaned bell peppers": "season_bell_pepper",
@@ -5840,6 +6124,15 @@
     "cooked or canned chickpeas": "alnatura_chickpeas",
     "cooked white beans": "alnatura_white_beans",
     "cooking cream": "label_required",
+    "coriander (for seasoning), washed and cut into sections, a little": "season_coriander_leaf",
+    "coriander greens, washed and chopped (quantity fragment: /2 tbsp)": "season_coriander_leaf",
+    "coriander, chopped": "season_coriander_leaf",
+    "coriander, cut into sections (for seasoning), a little": "season_coriander_leaf",
+    "coriander, finely chopped": "season_coriander_leaf",
+    "coriander, roughly chopped, a little for finishing": "season_coriander_leaf",
+    "coriander, sliced for finishing": "season_coriander_leaf",
+    "coriander, washed and chopped (quantity fragment: /2 tbsp)": "season_coriander_leaf",
+    "coriander, washed and roughly chopped, a little for finishing": "season_coriander_leaf",
     "corn on the cob": "season_sweetcorn",
     "corn on the cob, cut into rounds": "season_sweetcorn",
     "courgette": "season_courgette",
@@ -5856,6 +6149,7 @@
     "cucumber, peeled and deseeded": "season_cucumber",
     "cucumber, peeled and diced": "season_cucumber",
     "cucumbers": "season_cucumber",
+    "cup of fresh coriander": "season_coriander_leaf",
     "cup of parsley": "season_parsley_leaf",
     "cup of parsley, washed and chopped": "season_parsley_leaf",
     "cups of finely chopped parsley": "season_parsley_leaf",
@@ -5925,6 +6219,8 @@
     "finely chopped carrot": "season_carrot",
     "finely chopped cauliflower": "season_cauliflower",
     "finely chopped celery": "season_celery",
+    "finely chopped coriander": "season_coriander_leaf",
+    "finely chopped fresh coriander": "season_coriander_leaf",
     "finely chopped garlic clove": "season_garlic",
     "finely chopped green olives": "alnatura_green_olives",
     "finely chopped green onions": "season_spring_onion",
@@ -5959,6 +6255,11 @@
     "fresh chopped basil": "season_basil",
     "fresh chopped mint": "season_mint",
     "fresh chopped tarragon": "season_tarragon",
+    "fresh coriander": "season_coriander_leaf",
+    "fresh coriander, chopped": "season_coriander_leaf",
+    "fresh coriander, washed and chopped": "season_coriander_leaf",
+    "fresh coriander, washed and chopped (quantity fragment: /2 tbsp)": "season_coriander_leaf",
+    "fresh coriander, washed and finely chopped": "season_coriander_leaf",
     "fresh cream cheese": "label_required",
     "fresh dill": "season_dill",
     "fresh dill, chopped": "season_dill",
@@ -6180,6 +6481,7 @@
     "leeks": "season_leek",
     "leeks, white part halved": "season_leek",
     "leeks, white parts washed and halved": "season_leek",
+    "lemon balm": "season_lemon_balm",
     "lemon juice": "alnatura_lemon_juice",
     "lemon juice (for finishing)": "alnatura_lemon_juice",
     "lemon juice (optional)": "alnatura_lemon_juice",
@@ -6514,9 +6816,14 @@
     "rocket": "season_rocket",
     "rocket leaves": "season_rocket",
     "rocket, washed two or three times and roughly chopped": "season_rocket",
+    "romanesco broccoli": "season_romanesco",
+    "romanesco broccoli florets": "season_romanesco",
+    "romanesco cabbage": "season_romanesco",
+    "romanesco cauliflower, washed": "season_romanesco",
     "rosemary": "season_rosemary",
     "rosemary sprig, cut in half": "season_rosemary",
     "rosemary, a little for garnish": "season_rosemary",
+    "roughly chopped coriander (for finishing)": "season_coriander_leaf",
     "round tomatoes, about 175 g, cored for stuffing (reserve flesh and juice)": "season_tomato",
     "round zucchini": "season_courgette",
     "runner beans": "season_green_bean",
@@ -6533,6 +6840,8 @@
     "salsa:": "alnatura_salsa",
     "salsify": "season_salsify",
     "salt": "dry_staple",
+    "satay sauce": "alnatura_peanut_sauce",
+    "sauerkraut": "alnatura_sauerkraut",
     "sauerkraut juice": "alnatura_sauerkraut_juice",
     "savoy cabbage": "season_savoy_cabbage",
     "savoy cabbage leaf": "season_savoy_cabbage",
@@ -6594,6 +6903,7 @@
     "small onions": "season_onion",
     "small onions, washed and chopped": "season_onion",
     "small potato, chopped": "season_potato",
+    "small romanesco broccoli florets, washed": "season_romanesco",
     "small shallot(s), peeled and finely chopped": "season_shallot",
     "small shallot, cleaned and finely chopped": "season_shallot",
     "small shallot, peeled and finely chopped": "season_shallot",
@@ -6624,10 +6934,12 @@
     "spinach, finely chopped": "season_spinach",
     "spinach, roughly chopped": "season_spinach",
     "spinach, washed and chopped": "season_spinach",
+    "sprig of finely chopped coriander": "season_coriander_leaf",
     "sprig of finely chopped parsley": "season_parsley_leaf",
     "sprig of marjoram": "season_marjoram",
     "sprig of parsley": "season_parsley_leaf",
     "sprig of rosemary": "season_rosemary",
+    "sprigs of chopped coriander": "season_coriander_leaf",
     "sprigs of fresh parsley for garnish": "season_parsley_leaf",
     "sprigs of parsley": "season_parsley_leaf",
     "sprigs of rosemary": "season_rosemary",
@@ -6697,13 +7009,18 @@
     "swiss chard": "season_chard",
     "swiss chard, washed and cut into pieces": "season_chard",
     "table salt": "dry_staple",
+    "tablespoon of fresh coriander, washed and chopped (quantity count omitted)": "season_coriander_leaf",
+    "tablespoon of fresh coriander, washed and chopped (quantity count omitted; mixed-language source)": "season_coriander_leaf",
     "tarragon": "season_tarragon",
     "tarragon, chopped": "season_tarragon",
     "tarragon, finely chopped": "season_tarragon",
     "tarragon, washed and chopped": "season_tarragon",
     "tbsp chopped basil": "season_basil",
     "tbsp chopped parsley": "season_parsley_leaf",
+    "tbsp coriander leaves, washed and chopped": "season_coriander_leaf",
+    "tbsp coriander, washed and chopped": "season_coriander_leaf",
     "tbsp fresh basil leaves, chopped": "season_basil",
+    "tbsp fresh coriander, washed and chopped": "season_coriander_leaf",
     "tbsp fresh mint, washed and finely chopped": "season_mint",
     "tbsp lemon juice": "alnatura_lemon_juice",
     "tbsp lemon juice (to taste)": "alnatura_lemon_juice",
@@ -6726,6 +7043,7 @@
     "tofu, cut into 2 cm cubes": "taifun_plain_tofu",
     "tomato": "season_tomato",
     "tomato canned in its own juice": "canned_high_acid",
+    "tomato juice": "alnatura_tomato_juice",
     "tomato ketchup": "ketchup_label",
     "tomato passata": "alnatura_passata",
     "tomato paste": "tomato_paste_label",
@@ -6762,6 +7080,7 @@
     "tomatoes, washed and cut into large pieces": "season_tomato",
     "tomatoes, washed and finely chopped": "season_tomato",
     "tomatoes, washed and thinly sliced": "season_tomato",
+    "tsp chopped coriander": "season_coriander_leaf",
     "tsp freshly chopped basil": "season_basil",
     "tsp lemon juice": "alnatura_lemon_juice",
     "turnip": "season_turnip",
@@ -6804,6 +7123,13 @@
     "washed red grape": "season_grape",
     "washed red grapes": "season_grape",
     "washed, coarsely chopped kale leaves": "season_kale",
+    "watercress": "season_watercress",
+    "watercress, roughly torn": "season_watercress",
+    "watercress, washed 2 or 3 times and very coarsely chopped": "season_watercress",
+    "watercress, washed 2 or 3 times, very roughly chopped": "season_watercress",
+    "watercress, washed 2–3 times and roughly chopped": "season_watercress",
+    "watercress, washed twice (large stems removed)": "season_watercress",
+    "watercress, washed twice (thick stems removed)": "season_watercress",
     "waxy potatoes": "season_potato",
     "waxy potatoes, peeled and cut into pieces": "season_potato",
     "wheat flour": "dry_staple",

@@ -5,14 +5,15 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.2)
+## Reviewed coverage (2026-09-25.3)
 
-- 96 produce groups, including fruit, leafy vegetables, roots, asparagus,
+- 100 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
   savoy cabbage, pak choi, shallots, wild garlic, turnips, snow peas, walnuts,
   hazelnuts, artichokes, melons, kiwi, chestnuts, sweet potatoes, swede and
-  chanterelles, mint, tarragon, lovage, oyster/king oyster mushrooms and shiitake.
-- 47 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+  chanterelles, mint, tarragon, lovage, oyster/king oyster mushrooms, shiitake,
+  fresh coriander leaves, watercress, lemon balm and Romanesco.
+- 50 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro or Oatly), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
@@ -23,9 +24,10 @@ cloud credentials, or per-scan file reads are needed.
   sauerkraut, beetroot, lemon, ginger and grape juices add product-specific
   guidance, along with Alnatura natural/smoked tofu, salsa, curry sauces,
   cooking creams, olives, pickled cucumbers, capers, marinated artichokes and
-  preserved pineapple. Cream and yoghurt profiles are separate; olive
+  preserved pineapple, coconut milk, sauerkraut, tomato juice and peanut sauce.
+  Cream and yoghurt profiles are separate; olive
   profiles distinguish green, black, mixed and unspecified forms.
-  There are 49 reviewed product barcodes and 1,361 exact canonical names.
+  There are 54 reviewed product barcodes and 1,413 exact canonical names.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, cream cheese and
   coconut cream, tomato paste, ketchup and Skyr.
@@ -42,7 +44,8 @@ Season months are German availability guidance from the twelve monthly
 calendars published by the Hessische Lehrkräfteakademie, BZfE produce guides,
 the BVEO pak choi guide, Hessen VerbraucherFenster and the Verbraucherzentrale
 season calendar, BUND Naturschutz's Bavarian calendar, Hortipendium, LWG and
-Landwirtschaftskammer Nordrhein-Westfalen's Landservice.
+Landwirtschaftskammer Nordrhein-Westfalen's Landservice, EDEKA meinLand,
+Kressepark Erfurt and Industrieverband Agrar (IVA).
 For the Hessian monthly calendar entries, the source region
 (`DE-HE`), country (`DE`), source links and review date are preserved. The source
 includes stored produce and protected cultivation; these months must not be
@@ -114,6 +117,26 @@ Exact fresh sliced/chopped/washed forms are included; explicitly wild, dried,
 rehydrated, frozen, pickled, mixed-species and unspecified mushrooms are excluded.
 The source's storage durations after purchase or cooking do not create an
 after-opening clock.
+
+Fresh coriander leaves and stems use EDEKA meinLand's explicit May–October
+outdoor calendar for its NRW regional supply (`DE-NW`, `outdoor_harvest`). This
+is a regional shopping hint, not a national calendar or a seed-harvest period.
+Only exact fresh, chopped, washed, sliced, leaf/stem and sprig forms are mapped.
+Unqualified "Coriander", seed/powder, dried/frozen forms, other species and herb
+mixtures remain unknown because the ingredient name does not establish that form.
+Lemon balm uses LWG's June–September garden harvest (`DE-BY`, `outdoor_harvest`).
+It does not extend to tea, dried herbs or frozen products.
+
+Watercress uses Kressepark Erfurt's traditional cultivated harvest peak from
+mid-September through the end of May (`DE-TH`, `outdoor_harvest`). The source
+also describes availability outside that peak; omitted summer months remain
+unknown rather than unavailable. This is a cultivated-crop highlight, not a wild
+foraging calendar, identification aid or statement that washed greens are safe.
+Garden cress, mixed watercress/arugula, soups and preserved forms stay separate.
+Romanesco uses IVA's late-May–October availability for German-grown produce
+(`DE`, `regional_seasonal_availability`). Its exact raw heads and florets do not
+inherit an ordinary broccoli calendar. Both partially covered months remain
+approximate; the sources' post-purchase storage advice creates no opening clock.
 
 The calendars list monthly highlights rather than every crop. A listed month
 returns `in_season`, twelve listed months return `year_round`, and an omitted
@@ -200,6 +223,28 @@ handling condition. Each rule links to its own manufacturer product page.
 | Artischockenherzen mit Kräutern, 125 g fresh antipasti | 40045559 | 2 | — |
 | Ananas, 350 g jar | 4104420033900 | 3 | — |
 | Origin Sugo Toscano, 325 ml | 4104420129603 | 5 | — |
+| Kokosmilch, 400 ml | 4104420034327 | 3 | — |
+| Kokosmilch, 200 ml | 4104420033641 | 3 | — |
+| Sauerkraut, 520 g pouch | 4104420033849 | 5 | — |
+| Tomate-Direktsaft, 500 ml | 4104420072787 | 3 | — |
+| Erdnuss-Sauce, 325 ml | 4104420257863 | 3 | — |
+
+The two coconut-milk packs add Alnatura's three-day instructions to the existing
+profile while retaining Reishunger's two-to-three-day range and historical
+profile ID. They do not apply to coconut drinks, cream, light milk or mixed
+milk/cream alternatives. Alnatura Kokos-Cuisine still has its separate four-day
+rule. A verified Alnatura milk barcode paired with the Reishunger brand cannot
+fall back to Reishunger's rule.
+
+Sauerkraut uses the verified blanched pouch, including the exact chopped-with-juice
+ingredient. It does not assign a clock to raw fermented cabbage, cooked leftovers
+or sauerkraut juice; the latter keeps its own three-day product instruction.
+The new tomato-juice rule does not transfer to sauce, passata, vegetable-juice
+blends or freshly squeezed juice. Satay sauce can select the manufacturer's
+peanut sauce explicitly offered for saté skewers, but only with the matching
+barcode and brand. Seasoning powder, peanut butter and homemade sauce do not
+receive that package rule. All five additions require refrigeration at no more
+than 4 °C; package instructions and an earlier printed date still take precedence.
 
 Pickled cucumbers and gherkin cutting forms require one of the four verified
 Alnatura cucumber products. Explicit sweet-and-sour forms use only the two

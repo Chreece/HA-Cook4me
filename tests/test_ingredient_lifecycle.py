@@ -32,8 +32,109 @@ class LifecycleTests(unittest.TestCase):
     def test_bundled_data_has_reviewed_evidence(self):
         data = self.lifecycle.load_lifecycle_data()
         self.lifecycle.validate_lifecycle_data(data)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 96)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 47)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 100)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 50)
+
+    def test_coriander_watercress_lemon_balm_and_romanesco_retain_regional_seasons(self):
+        cases = (
+            ("Fresh coriander, washed and finely chopped", [5, 6, 7, 8, 9, 10], "DE-NW", "outdoor_harvest", "meinland_coriander"),
+            ("Chopped coriander stems", [5, 6, 7, 8, 9, 10], "DE-NW", "outdoor_harvest", "meinland_coriander"),
+            ("tbsp coriander leaves, washed and chopped", [5, 6, 7, 8, 9, 10], "DE-NW", "outdoor_harvest", "meinland_coriander"),
+            ("Watercress, washed twice (thick stems removed)", [1, 2, 3, 4, 5, 9, 10, 11, 12], "DE-TH", "outdoor_harvest", "kressepark_watercress"),
+            ("Lemon balm", [6, 7, 8, 9], "DE-BY", "outdoor_harvest", "lwg_garden_herbs"),
+            ("Romanesco broccoli florets", [5, 6, 7, 8, 9, 10], "DE", "regional_seasonal_availability", "iva_romanesco"),
+            ("Romanesco cauliflower, washed", [5, 6, 7, 8, 9, 10], "DE", "regional_seasonal_availability", "iva_romanesco"),
+        )
+        for name, months, region, basis, source in cases:
+            with self.subTest(name=name):
+                profile = self.profile(name)
+                evidence = profile["seasonality"]["regions"][0]
+                self.assertEqual((evidence["sourceRegion"], evidence["basis"]), (region, basis))
+                self.assertEqual(evidence["sourceIds"], [source])
+                self.assertTrue(evidence["approximate"])
+                for month in range(1, 13):
+                    self.assertEqual(self.lifecycle.seasonal_availability(profile, country="DE", month=month)["status"], "in_season" if month in months else "unknown")
+                self.assertEqual(self.lifecycle.seasonal_availability(profile, country="GR", month=months[0])["status"], "unknown")
+                self.assertNotIn("rules", profile["afterOpening"])
+
+    def test_fresh_herb_seasons_do_not_transfer_to_seeds_mixtures_or_other_species(self):
+        for name in (
+            "Coriander", "Coriander (garnish)", "Coriander powder", "Coriander seeds",
+            "Ground coriander", "Dried coriander", "Frozen coriander", "Coriander purée",
+            "Coriander or parsley, washed and chopped", "Coriander and mint for garnish",
+            "Coriander and soybean sprouts", "Vietnamese coriander", "Coriander root",
+            "Garden cress", "Watercress (or arugula)", "Frozen watercress", "Watercress soup",
+            "Dried lemon balm", "Lemon balm tea", "Frozen lemon balm",
+            "Frozen Romanesco broccoli", "Cooked Romanesco", "Romanesco and broccoli",
+        ):
+            with self.subTest(excluded=name):
+                self.assertEqual(self.profile(name)["seasonality"]["status"], "unknown")
+
+    def test_coconut_sauerkraut_tomato_juice_and_satay_dates_require_the_package(self):
+        cases = (
+            ("Coconut milk", "4104420034327", 3),
+            ("Coconut milk", "4104420033641", 3),
+            ("Sauerkraut", "4104420033849", 5),
+            ("Chopped sauerkraut with juice", "4104420033849", 5),
+            ("Tomato juice", "4104420072787", 3),
+            ("Satay sauce", "4104420257863", 3),
+        )
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": "Alnatura"}
+        for name, code, days in cases:
+            with self.subTest(name=name, code=code):
+                profile = self.profile(name)
+                package = lot | {"barcode": code}
+                self.assertEqual(profile["seasonality"]["status"], "not_applicable")
+                for barcode in (code, code.zfill(14)):
+                    result = self.lifecycle.opening_window(profile, package | {"barcode": barcode}, temperature_c=4)
+                    expected = "2026-09-28" if days == 3 else "2026-09-30"
+                    self.assertEqual((result["daysMin"], result["daysMax"]), (days, days))
+                    self.assertEqual((result["remindOn"], result["consumeBy"]), (expected, expected))
+                    self.assertFalse(result["safetyGuarantee"])
+                for changes, temp in (({"brand": "Other brand"}, 4), ({"brand": ""}, 4), ({"barcode": None}, 4), ({"barcode": code[:-1] + str((int(code[-1]) + 1) % 10)}, 4), ({"storage": "pantry"}, 4), ({"openedAt": None}, 4), ({}, None), ({}, 5)):
+                    self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, package | changes, temperature_c=temp))
+                capped = self.lifecycle.opening_window(profile, package | {"bestBefore": "2026-09-26"}, temperature_c=4)
+                self.assertEqual((capped["remindOn"], capped["consumeBy"]), ("2026-09-26", "2026-09-26"))
+                self.assertEqual(self.lifecycle.opening_window(profile, package | {"useWithinDays": 1})["consumeBy"], "2026-09-26")
+
+    def test_sauce_milk_and_juice_product_rules_stay_with_their_food_form(self):
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": "Alnatura"}
+        groups = (
+            ("Coconut milk", {"4104420034327", "4104420033641"}),
+            ("Sauerkraut", {"4104420033849"}),
+            ("Tomato juice", {"4104420072787"}),
+            ("Satay sauce", {"4104420257863"}),
+        )
+        codes = set().union(*(codes for _, codes in groups))
+        for name, allowed in groups:
+            for code in codes:
+                with self.subTest(name=name, code=code):
+                    self.assertEqual("consumeBy" in self.lifecycle.opening_window(self.profile(name), lot | {"barcode": code}, temperature_c=4), code in allowed)
+        for name in (
+            "Coconut cream", "Plant-based cream", "Coconut milk or coconut cream", "Coconut oil",
+            "Coconut drink", "Light coconut milk", "Cooked sauerkraut", "Raw sauerkraut",
+            "Sauerkraut juice", "White cabbage", "Tomato sauce", "Passata", "Tomato pulp",
+            "Vegetable juice", "Freshly squeezed tomato juice", "Satay sauce seasoning",
+            "Peanut butter", "Peanuts", "Homemade satay sauce",
+        ):
+            for code in codes:
+                with self.subTest(excluded=name, code=code):
+                    self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile(name), lot | {"barcode": code}, temperature_c=4))
+
+    def test_coconut_milk_keeps_reishunger_range_without_accepting_conflicting_barcodes(self):
+        profile = self.profile("Coconut milk")
+        self.assertEqual(profile["profileId"], "reishunger_coconut_milk")
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": "Reishunger"}
+        result = self.lifecycle.opening_window(profile, lot, temperature_c=4)
+        self.assertEqual((result["daysMin"], result["daysMax"]), (2, 3))
+        self.assertEqual((result["remindOn"], result["consumeBy"]), ("2026-09-27", "2026-09-28"))
+        for code in ("4104420034327", "4104420033641"):
+            self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot | {"barcode": code}, temperature_c=4))
+        # The separate coconut cooking cream retains its four-day instruction.
+        cream = self.profile("Plant-based cream")
+        package = lot | {"brand": "Alnatura", "barcode": "4104420240940"}
+        self.assertEqual(self.lifecycle.opening_window(cream, package, temperature_c=4)["consumeBy"], "2026-09-29")
+        self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, package, temperature_c=4))
 
     def test_cultivated_mushrooms_have_german_availability_without_an_opening_clock(self):
         for name in ("Fresh oyster mushrooms", "Oyster mushrooms, coarsely chopped", "King oyster mushroom", "Fresh shiitake slices", "Shiitake mushrooms, washed"):
