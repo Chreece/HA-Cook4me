@@ -100,7 +100,34 @@ def locale_search_aliases():
     }
 
 
+@lru_cache(maxsize=1)
+def presentation_overrides():
+    """Reviewed source identities whose English labels conflate different foods."""
+    path = Path(__file__).with_name("ingredient_presentation_overrides.json")
+    return json.loads(path.read_text())["ingredients"]
+
+
+def presentation_ingredient(raw):
+    """Return a display-only view, keeping the provider's original search names."""
+    override = next((presentation_overrides()[str(raw[field])]
+        for field in ("ingredientId", "id", "key", "foodKey")
+        if raw.get(field) and str(raw[field]) in presentation_overrides()), None)
+    if not override:
+        return raw
+    translations = raw.get("translations") or {}
+    aliases = raw.get("aliases") or {}
+    english = aliases.get("en", [])
+    if isinstance(english, str):
+        english = [english]
+    legacy = [*english, raw.get("canonicalName"), translations.get("en"),
+        override.get("canonicalName"), override.get("translations", {}).get("en")]
+    return {**raw, **override,
+        "translations": {**translations, **override.get("translations", {})},
+        "aliases": {**aliases, "en": list(dict.fromkeys(value for value in legacy if value))}}
+
+
 def display_name(raw, language):
+    raw = presentation_ingredient(raw)
     canonical = clean_name(raw.get("canonicalName") or raw.get("name") or raw.get("foodName"))
     code = str(language or "en").lower().replace("_", "-").split("-")[0]
     translated = labels().get(code, {}).get(name_key(canonical))
@@ -134,7 +161,8 @@ def ingredient_choices(payload, language, query="", limit=None):
     # qualifiers in the source key (including parentheses) rather than using
     # preparation cleanup to infer a new equivalence between different foods.
     families = defaultdict(list)
-    for raw in payload.get("ingredients", []):
+    for source in payload.get("ingredients", []):
+        raw = presentation_ingredient(source)
         if raw.get("classification") in {"equipment", "other", "ambiguous"}:
             continue
         canonical = clean_name(raw.get("canonicalName"))

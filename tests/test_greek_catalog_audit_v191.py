@@ -58,7 +58,8 @@ EXPECTED = {
 def presentation_functions():
     path = COMPONENT / 'catalog_presentation.py'
     functions = {'norm', 'name_key', 'clean_name', 'labels',
-                 'locale_search_aliases', 'display_name', 'excluded_names'}
+                 'locale_search_aliases', 'display_name', 'excluded_names',
+                 'presentation_overrides', 'presentation_ingredient'}
     constants = {'_PLURALS', '_AMOUNT', '_UNITS', '_PREP'}
     nodes = []
     for node in ast.parse(path.read_text(encoding='utf-8')).body:

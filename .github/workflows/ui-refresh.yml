@@ -63,5 +63,7 @@ jobs:
         run: python tests/browser_product_save_v224.py
       - name: Catalog quantity cleanup and saved ingredient aliases
         run: python tests/browser_catalog_amounts_v225.py
+      - name: Greek vegetable peppers and pepper spices
+        run: python tests/browser_greek_peppers_v226.py
       - name: Navigation hover and keyboard focus regression
         run: python tests/browser_navigation_hover_v205.py
