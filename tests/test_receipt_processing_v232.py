@@ -58,6 +58,27 @@ class Worker(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(self.queries,['Test Karotten'])
         self.assertNotIn('Example supermarket',self.queries[0])
 
+    async def test_german_receipt_in_greek_ui_uses_printed_name_for_enrichment(self):
+        raw=receipt();raw['items'][0].update(productName='Καρότο',originalName='Test Karotten',
+                                           brand='Test',ingredientName='Καρότο')
+        row=await self.store.save('alice',m.normalize_receipt(raw,model=True),processing_language='el')
+        await self.processor.run()
+        item=(await self.store.get('alice',row['id']))['items'][0]
+        self.assertEqual(self.queries,['Test Karotten'])
+        self.assertEqual(item['productName'],'Test Karotten')
+        self.assertEqual(item['barcode'],self.product['barcode'])
+        self.assertEqual(item['nutrition']['values']['protein'],1)
+        self.assertEqual(item['ingredientLinks'][0]['name'],'Καρότο')
+
+    def test_search_keeps_source_accents_variants_and_brand_without_duplicates(self):
+        query=self.worker.receipt_product_query
+        self.assertEqual(query({'originalName':'  Crème fraîche 30%  ', 'productName':'Cream', 'brand':'Example'}),
+                         'Example Crème fraîche 30%')
+        self.assertEqual(query({'originalName':'dmbio HAFERDRINK NATUR','brand':'dmBio'}),'dmbio HAFERDRINK NATUR')
+        self.assertEqual(query({'originalName':'   ','productName':'ΦΕΤΑ ΠΟΠ','brand':''}),'ΦΕΤΑ ΠΟΠ')
+        self.assertEqual(query({'productName':'BIOMILCH','brand':'Bio'}),'Bio BIOMILCH')
+        self.assertEqual(query({'brand':'Example'}),'')
+
     async def test_ambiguous_barcode_and_different_size_are_not_guessed(self):
         self.products.append({**self.product,'barcode':'4000000000002'})
         row=await self.queued();await self.processor.run();i=(await self.store.get('alice',row['id']))['items'][0]

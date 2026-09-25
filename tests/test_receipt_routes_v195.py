@@ -65,6 +65,8 @@ class Routes(unittest.IsolatedAsyncioTestCase):
         self.assertIn('unlink',calls);self.assertEqual(calls.count('authorize'),2)
         prompt=next(x for x in calls if isinstance(x,dict) and 'instructions' in x)
         self.assertIn('untrusted data',prompt['instructions']);self.assertIn('payment card',prompt['instructions'])
+        self.assertIn('Do not translate productName, originalName or brand',prompt['instructions'])
+        self.assertIn('Use language el only for ingredientName and explanatory notes',prompt['instructions'])
         self.assertIn('media-source://',prompt['attachments'][0]['media_content_id'])
 
     async def test_provider_error_cleans_photo_without_draft(self):

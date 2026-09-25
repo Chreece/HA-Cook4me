@@ -17,6 +17,18 @@ from .receipts import receipt_store_for_bridge, text
 _LOGGER = logging.getLogger(__name__)
 
 
+def receipt_product_query(item):
+    """Search receipt wording, including legacy drafts with translated names."""
+    name = text(item.get('originalName')) or text(item.get('productName'))
+    if not name:
+        return ''
+    brand = text(item.get('brand'))
+    # Compare normalized words, but send the original accents/script/variants.
+    if brand and f' {_norm(brand)} ' not in f' {_norm(name)} ':
+        return f'{brand} {name}'
+    return name
+
+
 def search_products(query):
     params = urllib.parse.urlencode({'search_terms': text(query, 160), 'search_simple': 1,
         'action': 'process', 'json': 1, 'page_size': 8, 'fields': _OFF_FIELDS})
@@ -96,7 +108,7 @@ class ReceiptProcessor:
             if len(candidates) == 1:
                 code = candidates[0]['barcode']
             else:
-                query = ' '.join(filter(None, (item.get('brand'), item.get('originalName') or item.get('productName'))))
+                query = receipt_product_query(item)
                 if query:
                     try:
                         if query not in self.cache:
