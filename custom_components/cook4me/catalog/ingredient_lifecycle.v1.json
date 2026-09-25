@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.19",
+  "version": "2026-09-25.20",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -36,32 +36,32 @@
     "hessen_07": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
       "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/juli",
-      "reviewedOn": "2026-09-24"
+      "reviewedOn": "2026-09-25"
     },
     "hessen_08": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
       "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/august",
-      "reviewedOn": "2026-09-24"
+      "reviewedOn": "2026-09-25"
     },
     "hessen_09": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
       "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/september",
-      "reviewedOn": "2026-09-24"
+      "reviewedOn": "2026-09-25"
     },
     "hessen_10": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
       "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/oktober",
-      "reviewedOn": "2026-09-24"
+      "reviewedOn": "2026-09-25"
     },
     "hessen_11": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
       "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/november",
-      "reviewedOn": "2026-09-24"
+      "reviewedOn": "2026-09-25"
     },
     "hessen_12": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
       "url": "https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/saisonkalender/dezember",
-      "reviewedOn": "2026-09-24"
+      "reviewedOn": "2026-09-25"
     },
     "bzfe_milk": {
       "publisher": "Bundeszentrum für Ernährung",
@@ -261,7 +261,7 @@
     "bzfe_walnuts": {
       "publisher": "Bundeszentrum für Ernährung (BZfE)",
       "url": "https://www.bzfe.de/presse/pressemeldungen-archiv-2024-und-frueher/walnuss-fuer-die-herbstkueche",
-      "reviewedOn": "2026-09-24"
+      "reviewedOn": "2026-09-25"
     },
     "bund_bavarian_seasons": {
       "publisher": "BUND Naturschutz in Bayern",
@@ -1162,6 +1162,36 @@
       "publisher": "Verbraucherzentrale",
       "url": "https://www.verbraucherzentrale.de/wissen/lebensmittel/auswaehlen-zubereiten-aufbewahren/nuesse-laenger-haltbar-durch-richtige-lagerung-58935",
       "reviewedOn": "2026-09-25"
+    },
+    "xucker_strawberry_spread": {
+      "publisher": "Xucker GmbH",
+      "url": "https://www.xucker.de/aufstriche/fruchtaufstrich-erdbeere",
+      "reviewedOn": "2026-09-25"
+    },
+    "xucker_raspberry_spread": {
+      "publisher": "Xucker GmbH",
+      "url": "https://www.xucker.de/aufstriche/fruchtaufstrich-himbeere",
+      "reviewedOn": "2026-09-25"
+    },
+    "dm_xucker_strawberry_spread": {
+      "publisher": "dm-drogerie markt (Xucker product label and GTIN)",
+      "url": "https://www.dm.de/p/d/1559917/xucker-fruchtaufstrich-erdbeere-mit-xylit",
+      "reviewedOn": "2026-09-25"
+    },
+    "dm_xucker_raspberry_spread": {
+      "publisher": "dm-drogerie markt (Xucker product label and GTIN)",
+      "url": "https://www.dm.de/p/d/1559922/xucker-fruchtaufstrich-himbeere-mit-xylit",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_strawberry_spread": {
+      "publisher": "dm-drogerie markt",
+      "url": "https://www.dm.de/p/d/1058435/dmbio-fruchtaufstrich-erdbeere-75-prozent-frucht",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_orange_spread": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/brotaufstriche/suesse-aufstriche/bio-fruchtaufstrich-bio-gelee/fruchtaufstrich-suesse-orange-244231/",
+      "reviewedOn": "2026-09-25"
     }
   },
   "profiles": {
@@ -1839,8 +1869,8 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
             "months": [
               1,
               2,
@@ -1857,18 +1887,7 @@
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_01",
-              "hessen_02",
-              "hessen_03",
-              "hessen_04",
-              "hessen_05",
-              "hessen_06",
-              "hessen_07",
-              "hessen_08",
-              "hessen_09",
-              "hessen_10",
-              "hessen_11",
-              "hessen_12"
+              "bzfe_cultivated_mushrooms"
             ],
             "coverage": "listed_months_only"
           }
@@ -9484,6 +9503,138 @@
           "vz_opening"
         ]
       }
+    },
+    "jam_product_guidance": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "xucker_strawberry_spread",
+            "daysMin": 10,
+            "daysMax": 10,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "clean_spoon"
+            ],
+            "sourceIds": [
+              "xucker_strawberry_spread",
+              "dm_xucker_strawberry_spread",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Xucker",
+            "productBarcodes": [
+              "4260248063892"
+            ]
+          },
+          {
+            "id": "xucker_raspberry_spread",
+            "daysMin": 10,
+            "daysMax": 10,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "clean_spoon"
+            ],
+            "sourceIds": [
+              "xucker_raspberry_spread",
+              "dm_xucker_raspberry_spread",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Xucker",
+            "productBarcodes": [
+              "4260248063908"
+            ]
+          }
+        ]
+      }
+    },
+    "strawberry_jam_product_guidance": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "xucker_strawberry_spread",
+            "daysMin": 10,
+            "daysMax": 10,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "clean_spoon"
+            ],
+            "sourceIds": [
+              "xucker_strawberry_spread",
+              "dm_xucker_strawberry_spread",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Xucker",
+            "productBarcodes": [
+              "4260248063892"
+            ]
+          }
+        ]
+      }
+    },
+    "raspberry_jam_product_guidance": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "xucker_raspberry_spread",
+            "daysMin": 10,
+            "daysMax": 10,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "clean_spoon"
+            ],
+            "sourceIds": [
+              "xucker_raspberry_spread",
+              "dm_xucker_raspberry_spread",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Xucker",
+            "productBarcodes": [
+              "4260248063908"
+            ]
+          }
+        ]
+      }
+    },
+    "fruit_spread_label_required": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "reason": "product_formulation_varies",
+        "sourceIds": [
+          "dmbio_strawberry_spread",
+          "alnatura_orange_spread",
+          "vz_opening"
+        ]
+      }
     }
   },
   "canonicalNames": {
@@ -11239,7 +11390,37 @@
     "zucchini, washed and diced (quantity fragment: /2)": "season_courgette",
     "zucchini, washed and sliced into rounds": "season_courgette",
     "zucchinis": "season_courgette",
-    "★ cherry tomatoes, stems removed": "season_tomato"
+    "★ cherry tomatoes, stems removed": "season_tomato",
+    "button mushroom": "season_button_mushroom",
+    "shiitake mushroom": "season_shiitake",
+    "king oyster mushrooms": "season_king_oyster_mushroom",
+    "mirabelle plum": "season_mirabelle",
+    "walnut": "season_walnut",
+    "pomegranate": "season_pomegranate",
+    "onion squash": "season_pumpkin",
+    "melon": "season_melon",
+    "welsh onion": "season_spring_onion",
+    "caper": "alnatura_capers",
+    "olive": "alnatura_olives",
+    "black olive": "alnatura_black_olives",
+    "green olive": "alnatura_green_olives",
+    "pickled gherkin": "alnatura_pickled_cucumber",
+    "chickpea": "alnatura_chickpeas",
+    "kidney bean": "alnatura_kidney_beans",
+    "dried tomato": "alnatura_dried_tomatoes",
+    "jam": "jam_product_guidance",
+    "orange marmalade": "fruit_spread_label_required",
+    "jam for decoration": "jam_product_guidance",
+    "jam for garnish": "jam_product_guidance",
+    "strawberry jam": "strawberry_jam_product_guidance",
+    "raspberry jam": "raspberry_jam_product_guidance",
+    "apple jam": "fruit_spread_label_required",
+    "berry jam": "fruit_spread_label_required",
+    "blueberry jam": "fruit_spread_label_required",
+    "cherry jam": "fruit_spread_label_required",
+    "cranberry jam": "fruit_spread_label_required",
+    "orange jam": "fruit_spread_label_required",
+    "red fruit jam": "fruit_spread_label_required"
   },
   "ingredientIds": {
     "M_FOOD_1": "season_apricot",
@@ -11389,6 +11570,25 @@
     "M_FOOD_82": "season_celery",
     "M_FOOD_83": "season_celeriac",
     "M_FOOD_91": "season_chanterelle",
-    "M_FOOD_94": "season_chestnut"
+    "M_FOOD_94": "season_chestnut",
+    "M_FOOD_89": "season_button_mushroom",
+    "M_FOOD_460": "season_shiitake",
+    "M_FOOD_591": "season_king_oyster_mushroom",
+    "M_FOOD_315": "season_mirabelle",
+    "M_FOOD_331": "season_walnut",
+    "M_FOOD_227": "season_pomegranate",
+    "M_FOOD_398": "season_pumpkin",
+    "M_FOOD_307": "season_melon",
+    "M_FOOD_114": "season_spring_onion",
+    "M_FOOD_76": "alnatura_capers",
+    "M_FOOD_344": "alnatura_olives",
+    "M_FOOD_345": "alnatura_black_olives",
+    "M_FOOD_346": "alnatura_green_olives",
+    "M_FOOD_138": "alnatura_pickled_cucumber",
+    "M_FOOD_385": "alnatura_chickpeas",
+    "M_FOOD_237": "alnatura_kidney_beans",
+    "M_FOOD_679": "alnatura_dried_tomatoes",
+    "M_FOOD_133": "jam_product_guidance",
+    "M_FOOD_644": "fruit_spread_label_required"
   }
 }

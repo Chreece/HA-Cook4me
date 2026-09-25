@@ -33,7 +33,7 @@ class LifecycleTests(unittest.TestCase):
         data = self.lifecycle.load_lifecycle_data()
         self.lifecycle.validate_lifecycle_data(data)
         self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 112)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 78)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 81)
 
     def test_greek_produce_regions_preserve_german_calendars(self):
         cases = (
@@ -180,12 +180,12 @@ class LifecycleTests(unittest.TestCase):
         for name in ("Blood oranges", "Organic blood oranges", "Bitter oranges, diced",
                 "Fresh bitter orange juice", "Lime (or lemon)", "Lemongrass", "Dried lemon",
                 "Candied lemon", "Preserved lemon, diced", "Lemon curd", "Lemon sorbet",
-                "Lemon juice (quantity fragment: /2)", "Orange jam", "Orange marmalade",
+                "Lemon juice (quantity fragment: /2)",
                 "Orange blossom water", "Candied orange peel", "Mandarin honey", "Mandarin liqueur",
                 "Avocado, peeled and diced, mixed with lemon juice"):
             with self.subTest(name=name):
                 self.assertEqual(self.profile(name)["seasonality"]["status"], "unknown")
-        for name in ("Lemon juice", "Orange juice"):
+        for name in ("Lemon juice", "Orange juice", "Orange jam", "Orange marmalade"):
             self.assertEqual(self.profile(name)["seasonality"]["status"], "not_applicable")
 
     def test_philadelphia_original_requires_exact_package_and_prompt_reclosure(self):
@@ -1026,13 +1026,14 @@ class LifecycleTests(unittest.TestCase):
                     self.lifecycle.validate_lifecycle_data(data)
 
     def test_preserved_forms_and_ambiguous_rows_never_borrow_fresh_seasons(self):
-        for name in ("Frozen strawberries", "Strawberry jam", "Tomatoes (fresh or canned)", "Milk chocolate", "Milk (cow's milk or plant-based milk)"):
+        for name in ("Frozen strawberries", "Tomatoes (fresh or canned)", "Milk chocolate", "Milk (cow's milk or plant-based milk)"):
             with self.subTest(name=name):
                 self.assertEqual(self.profile(name)["seasonality"]["status"], "unknown")
         for classification, unconfirmed in (("ambiguous", False), ("food", True), ("equipment", False)):
             payload = {"ingredients": [{"canonicalName": "Asparagus", "classification": classification, "needsSemanticConfirmation": unconfirmed}]}
             self.lifecycle.enrich_catalog_ingredients(payload)
             self.assertNotIn("lifecycle", payload["ingredients"][0])
+        self.assertEqual(self.profile("Strawberry jam")["seasonality"]["status"], "not_applicable")
         self.assertEqual(self.profile("Canned chopped tomatoes")["seasonality"]["status"], "not_applicable")
         self.assertEqual(self.profile("Dried tomatoes")["seasonality"]["status"], "not_applicable")
         self.assertNotIn("rules", self.profile("Milk powder")["afterOpening"])

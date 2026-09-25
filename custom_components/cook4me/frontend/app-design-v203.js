@@ -1,4 +1,5 @@
 import {APP_THEME} from './app-theme-v203.js';
+import {decorateRecipeStock} from './recipe-stock-badge-v241.js';
 
 // Presentation only. Existing route owners, eligibility and handlers are retained.
 export const DESIGN_TEXT={
@@ -179,7 +180,7 @@ export const AppDesignMixin=Base=>class extends Base{
   this._ui203Install();const html=super._recipeCard(recipe,custom);if(!html)return html;
   const holder=document.createElement('div');holder.innerHTML=html;
   const card=holder.querySelector('article.rx-v66-recipe');
-  if(card){const row=this._v66Refs?.get(card.dataset.v66Ref);const state=row?this._v66State(row.recipe,row.slot?.id||''):null;restyleRecipe(card,this._ui203Labels(),{expanded:state?.ui203More===true});}
+  if(card){const row=this._v66Refs?.get(card.dataset.v66Ref);const state=row?this._v66State(row.recipe,row.slot?.id||''):null;restyleRecipe(card,this._ui203Labels(),{expanded:state?.ui203More===true});decorateRecipeStock(card,recipe,this._uiIngredientLanguage?.()||this._langCode?.());}
   return holder.innerHTML;
  }
  _ui203BindActions(container){

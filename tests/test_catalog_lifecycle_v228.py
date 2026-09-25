@@ -66,8 +66,10 @@ class CatalogLifecycle228(unittest.TestCase):
                 self.assertEqual((row['months'], row['basis'], row['sourceRegion']), (months, basis, 'DE'))
                 self.assertTrue(row['approximate'])
                 self.assertEqual(catalog.ingredient_seasonal_availability({'ingredientId': ident}, country='GR', month=month)['status'], 'unknown')
-        for name in ('Dried blueberries', 'Blueberry jam', 'Fermented cucumbers', 'Zucchini flowers', 'Cucumber juice'):
+        for name in ('Dried blueberries', 'Fermented cucumbers', 'Zucchini flowers', 'Cucumber juice'):
             self.assertEqual(lifecycle.seasonal_availability(profile(name), country='DE', month=10)['status'], 'unknown')
+
+        self.assertEqual(lifecycle.seasonal_availability(profile('Blueberry jam'), country='DE', month=10)['status'], 'not_applicable')
 
     def test_reviewed_provider_ids_reach_real_choices_without_broadening_identity(self):
         data = lifecycle.load_lifecycle_data()

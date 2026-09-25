@@ -1,10 +1,15 @@
 {
   "schemaVersion": 1,
   "language": "de",
-  "translationSource": "German supermarket names reviewed through lifecycle batch 25, 2026-09-25. Display/search only.",
+  "translationSource": "German supermarket names reviewed through lifecycle batch 26, 2026-09-25. Display/search only.",
   "labels": {
     "almond butter": "Mandelmus",
+    "apple jam": "Apfelmarmelade",
+    "berry jam": "Beerenmarmelade",
+    "blueberry jam": "Heidelbeermarmelade",
     "celery": "Stangensellerie",
+    "cherry jam": "Kirschmarmelade",
+    "cranberry jam": "Cranberrymarmelade",
     "creme fraiche": "Crème fraîche",
     "crunchy peanut butter": "Erdnussbutter mit Stückchen",
     "curry sauce": "Currysauce",
@@ -20,17 +25,24 @@
     "ground black pepper": "Gemahlener schwarzer Pfeffer",
     "ground hazelnut": "Gemahlene Haselnüsse",
     "hazelnut milk": "Haselnussdrink",
+    "king oyster mushroom": "Kräuterseitlinge",
     "lamb's lettuce": "Feldsalat",
     "lemon balm": "Zitronenmelisse",
     "mangetout": "Zuckerschoten",
     "mangetout pea": "Zuckerschoten",
     "mixed dried herbs": "Getrocknete Kräutermischung",
+    "orange jam": "Orangenmarmelade",
+    "orange marmalade": "Orangenmarmelade",
     "parsley root": "Petersilienwurzel",
     "plant milk": "Pflanzendrink",
+    "pomegranate": "Granatapfel",
+    "raspberry jam": "Himbeermarmelade",
+    "red fruit jam": "Marmelade aus roten Früchten",
     "satay sauce": "Satésauce",
     "semi-skimmed milk": "Fettarme Milch",
     "snow pea": "Zuckerschoten",
     "sorrel": "Sauerampfer",
+    "strawberry jam": "Erdbeermarmelade",
     "tahini": "Sesammus (Tahin)",
     "tahini paste": "Sesammus (Tahin)",
     "thick creme fraiche": "Crème fraîche"
@@ -94,6 +106,22 @@
       "Tahin",
       "Tahini",
       "Sesampaste"
+    ],
+    "strawberry jam": [
+      "Erdbeerkonfitüre",
+      "Erdbeer-Fruchtaufstrich"
+    ],
+    "raspberry jam": [
+      "Himbeerkonfitüre",
+      "Himbeer-Fruchtaufstrich"
+    ],
+    "orange marmalade": [
+      "Orangenkonfitüre",
+      "Orangen-Fruchtaufstrich"
+    ],
+    "orange jam": [
+      "Orangenkonfitüre",
+      "Orangen-Fruchtaufstrich"
     ]
   }
 }
