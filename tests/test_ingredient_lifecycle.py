@@ -32,8 +32,102 @@ class LifecycleTests(unittest.TestCase):
     def test_bundled_data_has_reviewed_evidence(self):
         data = self.lifecycle.load_lifecycle_data()
         self.lifecycle.validate_lifecycle_data(data)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 93)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 42)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 96)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 47)
+
+    def test_cultivated_mushrooms_have_german_availability_without_an_opening_clock(self):
+        for name in ("Fresh oyster mushrooms", "Oyster mushrooms, coarsely chopped", "King oyster mushroom", "Fresh shiitake slices", "Shiitake mushrooms, washed"):
+            with self.subTest(name=name):
+                profile = self.profile(name)
+                region = profile["seasonality"]["regions"][0]
+                self.assertEqual(region["sourceRegion"], "DE")
+                self.assertEqual(region["basis"], "regional_seasonal_availability")
+                for month in range(1, 13):
+                    self.assertEqual(self.lifecycle.seasonal_availability(profile, country="DE", month=month)["status"], "year_round")
+                self.assertEqual(self.lifecycle.seasonal_availability(profile, country="GR", month=9)["status"], "unknown")
+                self.assertNotIn("rules", profile["afterOpening"])
+        for name in ("Wild oyster mushrooms", "Frozen oyster mushrooms", "Dried shiitake mushrooms", "Dried shiitake mushrooms, rehydrated in water and sliced", "Shiitake or other mushrooms", "Shiitake soaking liquid", "Oyster sauce", "Pickled mushrooms", "Mushrooms"):
+            with self.subTest(excluded=name):
+                self.assertEqual(self.profile(name)["seasonality"]["status"], "unknown")
+
+    def test_pickle_caper_artichoke_and_sugo_windows_require_the_verified_package(self):
+        cases = (
+            ("Pickled cucumbers", "4104420257603", 5),
+            ("Diced pickled cucumber", "4104420228795", 5),
+            ("Gherkins, thinly sliced", "4104420257641", 5),
+            ("Pickles, chopped and drained", "4104420228832", 5),
+            ("Capers in vinegar", "42298601", 5),
+            ("Marinated artichoke hearts, cut into thirds", "40045559", 2),
+            ("Tomato sauce", "4104420129603", 5),
+        )
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": "Alnatura"}
+        for name, code, days in cases:
+            with self.subTest(name=name, code=code):
+                profile = self.profile(name)
+                package = lot | {"barcode": code}
+                for barcode in (code, code.zfill(14)):
+                    result = self.lifecycle.opening_window(profile, package | {"barcode": barcode}, temperature_c=4)
+                    self.assertEqual((result["daysMin"], result["daysMax"]), (days, days))
+                    self.assertEqual(result["consumeBy"], "2026-09-30" if days == 5 else "2026-09-27")
+                    self.assertFalse(result["safetyGuarantee"])
+                capped = self.lifecycle.opening_window(profile, package | {"bestBefore": "2026-09-26"}, temperature_c=4)
+                self.assertEqual((capped["remindOn"], capped["consumeBy"]), ("2026-09-26", "2026-09-26"))
+                for changes, temp in (({"brand": "Other brand"}, 4), ({"brand": ""}, 4), ({"barcode": None}, 4), ({"barcode": code[:-1] + str((int(code[-1]) + 1) % 10)}, 4), ({"storage": "pantry"}, 4), ({"openedAt": None}, 4), ({}, None), ({}, 5)):
+                    self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, package | changes, temperature_c=temp))
+        # Both exact brand labels are valid for this Origin sauce. Existing
+        # Klassik/Kräuter packages retain their shorter two-day instructions.
+        sauce = self.profile("Tomato sauce")
+        for code, brand, days in (("4104420129603", "Alnatura Origin", 5), ("4104420213593", "Alnatura", 2), ("4104420213517", "Alnatura", 2)):
+            self.assertEqual(self.lifecycle.opening_window(sauce, lot | {"barcode": code, "brand": brand}, temperature_c=4)["daysMax"], days)
+
+    def test_preserved_vegetable_packages_do_not_cross_food_or_form_boundaries(self):
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": "Alnatura"}
+        groups = (
+            ("Pickled cucumbers", {"4104420257603", "4104420228795", "4104420257641", "4104420228832"}),
+            ("Sweet-and-sour pickles, chopped", {"4104420257603", "4104420257641"}),
+            ("Chopped capers", {"42298601"}),
+            ("Marinated artichokes", {"40045559"}),
+        )
+        codes = set().union(*(codes for _, codes in groups))
+        for name, allowed in groups:
+            for code in codes:
+                with self.subTest(name=name, code=code):
+                    profile = self.profile(name)
+                    self.assertEqual(profile["seasonality"]["status"], "not_applicable")
+                    self.assertEqual("consumeBy" in self.lifecycle.opening_window(profile, lot | {"barcode": code}, temperature_c=4), code in allowed)
+        for name in ("Cucumber", "Pickle brine", "Gherkin vinegar", "Pickled onions", "Pickled vegetables (peppers, corn, carrots, mushrooms, peas...)", "Salt-packed capers", "Caper berries", "Artichoke hearts", "Canned artichoke bottoms", "Frozen artichoke"):
+            for code in codes:
+                self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile(name), lot | {"barcode": code}, temperature_c=4))
+
+    def test_pineapple_product_overrides_generic_canned_guidance_without_fallback(self):
+        profile = self.profile("Canned pineapple (cut into quarters)")
+        lot = {"openedAt": "2026-09-25", "storage": "fridge"}
+        generic = self.lifecycle.opening_window(profile, lot, temperature_c=4)
+        self.assertEqual((generic["daysMin"], generic["daysMax"]), (5, 7))
+        package = lot | {"brand": "Alnatura", "barcode": "4104420033900"}
+        result = self.lifecycle.opening_window(profile, package, temperature_c=4)
+        self.assertEqual((result["remindOn"], result["consumeBy"]), ("2026-09-28", "2026-09-28"))
+        for changes, temp in (({"brand": "Other brand"}, 4), ({"brand": ""}, 4), ({"barcode": None}, 4), ({"barcode": "4104420129603"}, 4), ({"storage": "pantry"}, 4), ({}, None), ({}, 5)):
+            self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, package | changes, temperature_c=temp))
+        for name in ("Pineapple", "Fresh pineapple, diced", "Pineapple juice", "Pineapple syrup (from the can)"):
+            self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile(name), package, temperature_c=4))
+        self.assertEqual(self.profile("Canned pineapple juice")["profileId"], "canned_high_acid")
+        capped = self.lifecycle.opening_window(profile, package | {"bestBefore": "2026-09-26"}, temperature_c=4)
+        self.assertEqual(capped["consumeBy"], "2026-09-26")
+        self.assertEqual(self.lifecycle.opening_window(profile, package | {"useWithinDays": 1})["consumeBy"], "2026-09-26")
+
+    def test_skyr_qualitative_guidance_never_becomes_an_invented_number(self):
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": "Arla"}
+        for name in ("Skyr", "Package of skyr (150 g)", "Berry skyr", "Vanilla skyr"):
+            with self.subTest(name=name):
+                profile = self.profile(name)
+                self.assertEqual(profile["afterOpening"]["status"], "label_required")
+                self.assertEqual(profile["afterOpening"]["sourceIds"], ["arla_skyr_opening"])
+                self.assertNotIn("rules", profile["afterOpening"])
+                self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot, temperature_c=4))
+                self.assertEqual(self.lifecycle.opening_window(profile, lot | {"useWithinDays": 2})["consumeBy"], "2026-09-27")
+        for name in ("Skyr drink", "Vegan skyr", "Quark", "Greek yoghurt"):
+            self.assertNotEqual(self.profile(name).get("profileId"), "skyr_label_required")
 
     def test_mint_tarragon_and_lovage_keep_their_regional_harvest_scope(self):
         cases = (
@@ -195,9 +289,10 @@ class LifecycleTests(unittest.TestCase):
                     self.assertEqual(self.lifecycle.seasonal_availability(profile, country="DE", month=month)["status"], "in_season" if month in months else "unknown")
                 self.assertEqual(self.lifecycle.seasonal_availability(profile, country="GR", month=months[0])["status"], "unknown")
                 self.assertNotIn("rules", profile["afterOpening"])
-        for name in ("Turnip greens", "Yellow turnip, cut into 2 cm pieces", "Snow peas, parboiled", "Frozen snow peas", "Walnut oil", "Roasted hazelnuts", "Hazelnut flour", "Hazelnut paste", "Artichoke hearts (fresh or frozen)", "Marinated artichoke hearts", "Frozen artichoke", "Bitter melon, seeds and pith removed, cut 1 cm wide", "Dried kiwi"):
+        for name in ("Turnip greens", "Yellow turnip, cut into 2 cm pieces", "Snow peas, parboiled", "Frozen snow peas", "Walnut oil", "Roasted hazelnuts", "Hazelnut flour", "Hazelnut paste", "Artichoke hearts (fresh or frozen)", "Frozen artichoke", "Bitter melon, seeds and pith removed, cut 1 cm wide", "Dried kiwi"):
             with self.subTest(excluded=name):
                 self.assertEqual(self.profile(name)["seasonality"]["status"], "unknown")
+        self.assertEqual(self.profile("Marinated artichoke hearts")["seasonality"]["status"], "not_applicable")
 
     def test_autumn_crops_distinguish_harvest_from_storage_and_other_forms(self):
         cases = (

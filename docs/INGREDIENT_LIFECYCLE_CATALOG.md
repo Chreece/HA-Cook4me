@@ -5,14 +5,14 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.1)
+## Reviewed coverage (2026-09-25.2)
 
-- 93 produce groups, including fruit, leafy vegetables, roots, asparagus,
+- 96 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
   savoy cabbage, pak choi, shallots, wild garlic, turnips, snow peas, walnuts,
   hazelnuts, artichokes, melons, kiwi, chestnuts, sweet potatoes, swede and
-  chanterelles, mint, tarragon and lovage.
-- 42 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+  chanterelles, mint, tarragon, lovage, oyster/king oyster mushrooms and shiitake.
+- 47 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro or Oatly), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
@@ -22,12 +22,13 @@ cloud credentials, or per-scan file reads are needed.
   conditions remain attached. Alnatura apple purée, apple, orange, vegetable,
   sauerkraut, beetroot, lemon, ginger and grape juices add product-specific
   guidance, along with Alnatura natural/smoked tofu, salsa, curry sauces,
-  cooking creams and olives. Cream and yoghurt profiles are separate; olive
+  cooking creams, olives, pickled cucumbers, capers, marinated artichokes and
+  preserved pineapple. Cream and yoghurt profiles are separate; olive
   profiles distinguish green, black, mixed and unspecified forms.
-  There are 41 reviewed product barcodes and 1,321 exact canonical names.
+  There are 49 reviewed product barcodes and 1,361 exact canonical names.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, cream cheese and
-  coconut cream, tomato paste and ketchup.
+  coconut cream, tomato paste, ketchup and Skyr.
 - Dry staples have no invented short spoilage countdown. Their package
   instructions still apply; missing data never means indefinitely safe.
 
@@ -82,7 +83,7 @@ secondary season; they are not labelled as exclusively outdoor harvest.
 Plain shelled/chopped/ground nuts retain their crop's seasonal shopping hint.
 This does not limit the availability of stored nuts or apply to roasted nuts,
 nut flour, paste, oil or mixtures. Bitter melon is not included in the melon
-profile. Preserved artichokes and cooked snow peas remain unassigned.
+profile. Preserved artichokes and cooked snow peas do not receive fresh seasons.
 
 LWG's Bavarian horticultural guidance supplies late September–October chestnut
 harvest and an October sweet-potato harvest highlight (`DE-BY`, `outdoor_harvest`).
@@ -105,6 +106,14 @@ garden-herb guide supplies June–September for tarragon and May–October for
 lovage (`DE-BY`). All three use `outdoor_harvest`; year-round retail or potted
 availability does not extend those months. Exact fresh leaf, washed and chopped
 forms are included. Dried/frozen herbs, extracts and herb mixtures stay separate.
+
+Oyster mushrooms, king oyster mushrooms and shiitake use BZfE's year-round
+German cultivated availability (`DE`, `regional_seasonal_availability`). This
+is shopping guidance for cultivated produce, not a wild collection calendar.
+Exact fresh sliced/chopped/washed forms are included; explicitly wild, dried,
+rehydrated, frozen, pickled, mixed-species and unspecified mushrooms are excluded.
+The source's storage durations after purchase or cooking do not create an
+after-opening clock.
 
 The calendars list monthly highlights rather than every crop. A listed month
 returns `in_season`, twelve listed months return `year_round`, and an omitted
@@ -183,6 +192,36 @@ handling condition. Each rule links to its own manufacturer product page.
 | Origin Kalamata-Oliven ohne Stein, 350 g jar | 4104420132085 | 14 | — |
 | Origin Oliven-Mix mit Kräutern, 180 g | 42400660 | 14 | — |
 | Oliven-Mix mit Kräutern, 125 g fresh antipasti | 40045542 | 2 | — |
+| Gewürzgurken, 670 g | 4104420257603 | 5 | — |
+| Gewürzgurken ohne Zuckerzusatz, 670 g | 4104420228795 | 5 | — |
+| Cornichons, 330 g | 4104420257641 | 5 | — |
+| Cornichons ohne Zuckerzusatz, 330 g | 4104420228832 | 5 | — |
+| Kapern, 150 g | 42298601 | 5 | — |
+| Artischockenherzen mit Kräutern, 125 g fresh antipasti | 40045559 | 2 | — |
+| Ananas, 350 g jar | 4104420033900 | 3 | — |
+| Origin Sugo Toscano, 325 ml | 4104420129603 | 5 | — |
+
+Pickled cucumbers and gherkin cutting forms require one of the four verified
+Alnatura cucumber products. Explicit sweet-and-sour forms use only the two
+sweetened products. Neither profile includes pickle brine, other pickled
+vegetables or fresh cucumbers. The caper rule is for the reviewed vinegar-brine
+product, not salt-packed capers or caper berries. Marinated artichoke hearts use
+the fresh antipasti package; fresh, frozen and canned-in-water forms stay separate.
+All require the exact brand, verified GTIN and refrigeration at the conservative
+4 °C cap. They do not infer a fresh growing season for preserved food.
+
+The preserved-pineapple profile adds Alnatura's three-day package instruction
+alongside the existing generic canned high-acid range. Known brand/barcode
+conflicts cannot fall back to the longer generic range. It does not apply the
+fruit package's clock to whole pineapple, juice or syrup. Sugo Toscano accepts
+the two exact labels `Alnatura` and `Alnatura Origin`, always with its own GTIN;
+the previously reviewed Klassik and Kräuter sauces retain their two-day windows.
+
+Skyr has separate label-required evidence from Arla, which describes only a
+qualitative short interval under refrigeration. No numeric day limit is inferred.
+The reviewed spoonable plain/fruit/vanilla forms keep that uncertainty, while an
+explicit package `useWithinDays` still works. Skyr drinks, plant-based alternatives,
+quark and other dairy foods do not inherit this profile.
 
 Soy cream and generic plant-based cooking cream have separate profiles from
 yoghurt. Both preserve the existing Alpro 5-day rule and its 7 °C cap. The soy

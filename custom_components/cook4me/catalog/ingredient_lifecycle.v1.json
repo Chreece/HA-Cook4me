@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.1",
+  "version": "2026-09-25.2",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -426,6 +426,56 @@
     "alnatura_olive_mix_125g": {
       "publisher": "Alnatura",
       "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/feinkost/bio-oliven/oliven-mix-mit-kraeutern-246290/",
+      "reviewedOn": "2026-09-25"
+    },
+    "bzfe_cultivated_mushrooms": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/kueche-und-alltag/kochen/how-to-obst-und-gemuese/how-to-pilze",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_pickled_cucumber": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/gewuerzgurken-227293/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_pickled_cucumber_no_added_sugar": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/gewuerzgurken-ohne-zuckerzusatz-223418/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_cornichons": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/cornichons-131387/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_cornichons_no_added_sugar": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/cornichons-ohne-zuckerzusatz-223417/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_capers": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/feinkost/bio-salat-bio-antipasti/kapern-145797/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_marinated_artichokes": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/feinkost/bio-salat-bio-antipasti/artischockenherzen-mit-kraeutern-246174/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_pineapple": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-obstkonserven/ananas-129965/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_sugo_toscano": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/bio-sossen/sugo-toscano-133488/",
+      "reviewedOn": "2026-09-25"
+    },
+    "arla_skyr_opening": {
+      "publisher": "Arla Foods Deutschland",
+      "url": "https://www.arlafoods.de/articles/wie-lange-ist-skyr-nach-dem-offnen-haltbar/",
       "reviewedOn": "2026-09-25"
     }
   },
@@ -3083,6 +3133,40 @@
             "productBarcodes": [
               "4104420213517"
             ]
+          },
+          {
+            "id": "alnatura_sugo_toscano",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_sugo_toscano",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420129603"
+            ]
+          },
+          {
+            "id": "alnatura_sugo_toscano_origin",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_sugo_toscano",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura Origin",
+            "productBarcodes": [
+              "4104420129603"
+            ]
           }
         ]
       }
@@ -5071,9 +5155,352 @@
           }
         ]
       }
+    },
+    "season_oyster_mushroom": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bzfe_cultivated_mushrooms"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_king_oyster_mushroom": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bzfe_cultivated_mushrooms"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_shiitake": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bzfe_cultivated_mushrooms"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "alnatura_pickled_cucumber": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_pickled_cucumber",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_pickled_cucumber",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420257603"
+            ]
+          },
+          {
+            "id": "alnatura_pickled_cucumber_no_added_sugar",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_pickled_cucumber_no_added_sugar",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420228795"
+            ]
+          },
+          {
+            "id": "alnatura_cornichons",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_cornichons",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420257641"
+            ]
+          },
+          {
+            "id": "alnatura_cornichons_no_added_sugar",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_cornichons_no_added_sugar",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420228832"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_sweet_sour_pickles": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_pickled_cucumber",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_pickled_cucumber",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420257603"
+            ]
+          },
+          {
+            "id": "alnatura_cornichons",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_cornichons",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420257641"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_capers": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_capers",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_capers",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "42298601"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_marinated_artichokes": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_marinated_artichokes",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_marinated_artichokes",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "40045559"
+            ]
+          }
+        ]
+      }
+    },
+    "canned_pineapple": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_pineapple",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_pineapple",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420033900"
+            ]
+          },
+          {
+            "id": "canned_high_acid",
+            "daysMin": 5,
+            "daysMax": 7,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "usda_cans",
+              "usda_cooling"
+            ],
+            "kind": "general_guidance"
+          }
+        ]
+      }
+    },
+    "skyr_label_required": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "sourceIds": [
+          "arla_skyr_opening"
+        ],
+        "reason": "no_numeric_manufacturer_window"
+      }
     }
   },
   "canonicalNames": {
+    "*capers": "alnatura_capers",
     "*lemon juice": "alnatura_lemon_juice",
     "*medium-sized beetroot": "season_beetroot",
     "*minced garlic": "season_garlic",
@@ -5158,6 +5585,7 @@
     "bell peppers (red, yellow, green), cut into strips": "season_bell_pepper",
     "bell peppers (stems and seeds removed)": "season_bell_pepper",
     "bell peppers, cut into strips": "season_bell_pepper",
+    "berry skyr": "skyr_label_required",
     "black currants": "season_blackcurrant",
     "black olives": "alnatura_black_olives",
     "black olives, chopped": "alnatura_black_olives",
@@ -5223,7 +5651,7 @@
     "canned peas": "canned_low_acid",
     "canned peas, drained": "canned_low_acid",
     "canned peeled diced tomatoes": "canned_tomato_pieces",
-    "canned pineapple (cut into quarters)": "canned_high_acid",
+    "canned pineapple (cut into quarters)": "canned_pineapple",
     "canned pineapple juice": "canned_high_acid",
     "canned red beans": "canned_low_acid",
     "canned red kidney beans": "canned_kidney_beans",
@@ -5235,6 +5663,9 @@
     "canned tuna in water, drained": "canned_low_acid",
     "canned tuna, drained and flaked": "canned_low_acid",
     "canned whole-kernel corn, drained": "canned_sweetcorn",
+    "capers": "alnatura_capers",
+    "capers in vinegar": "alnatura_capers",
+    "capers, chopped (optional)": "alnatura_capers",
     "carrot": "season_carrot",
     "carrot cut into pieces": "season_carrot",
     "carrot, chopped": "season_carrot",
@@ -5348,6 +5779,7 @@
     "chopped basil leaves": "season_basil",
     "chopped bell pepper": "season_bell_pepper",
     "chopped canned tomatoes": "canned_tomato_pieces",
+    "chopped capers": "alnatura_capers",
     "chopped carrot": "season_carrot",
     "chopped carrots": "season_carrot",
     "chopped celery": "season_celery",
@@ -5442,6 +5874,7 @@
     "diced green bell peppers": "season_bell_pepper",
     "diced melon": "season_melon",
     "diced onion": "season_onion",
+    "diced pickled cucumber": "alnatura_pickled_cucumber",
     "diced potatoes": "season_potato",
     "diced potatoes for mash": "season_potato",
     "diced pumpkin": "season_pumpkin",
@@ -5543,6 +5976,7 @@
     "fresh mint, sliced": "season_mint",
     "fresh mint, washed": "season_mint",
     "fresh mint, washed and finely chopped": "season_mint",
+    "fresh oyster mushrooms": "season_oyster_mushroom",
     "fresh parsley": "season_parsley_leaf",
     "fresh parsley stalk, chopped": "season_parsley_leaf",
     "fresh parsley, chopped": "season_parsley_leaf",
@@ -5556,6 +5990,8 @@
     "fresh rosemary sprig": "season_rosemary",
     "fresh rosemary, finely chopped": "season_rosemary",
     "fresh sage leaves": "season_sage",
+    "fresh shiitake mushrooms": "season_shiitake",
+    "fresh shiitake slices": "season_shiitake",
     "fresh spinach": "season_spinach",
     "fresh spinach, chopped": "season_spinach",
     "fresh spinach, rinsed and roughly chopped": "season_spinach",
@@ -5605,6 +6041,7 @@
     "garlic, peeled, germ removed and chopped": "season_garlic",
     "garlic, peeled, germ removed and finely chopped": "season_garlic",
     "garlic, washed and chopped": "season_garlic",
+    "gherkins, thinly sliced": "alnatura_pickled_cucumber",
     "giant pumpkin, peeled, seeded and cut into 1 cm cubes": "season_pumpkin",
     "ginger juice": "alnatura_ginger_juice",
     "golden apple": "season_apple",
@@ -5708,6 +6145,7 @@
     "ketchup (for finishing), a little": "ketchup_label",
     "ketchup (for sauce)": "ketchup_label",
     "kidney beans": "alnatura_kidney_beans",
+    "king oyster mushroom": "season_king_oyster_mushroom",
     "kiwi": "season_kiwi",
     "kiwi, peeled and diced": "season_kiwi",
     "kohlrabi": "season_kohlrabi",
@@ -5720,8 +6158,11 @@
     "large beefsteak tomatoes, washed": "season_tomato",
     "large leek stalk": "season_leek",
     "large marmande tomato, washed": "season_tomato",
+    "large pickled cucumber, sliced": "alnatura_pickled_cucumber",
+    "large pickled cucumbers": "alnatura_pickled_cucumber",
     "large potato, peeled and cut into pieces": "season_potato",
     "large round tomatoes, cored for stuffing (reserve the flesh)": "season_tomato",
+    "large sweet-and-sour pickles, sliced": "alnatura_sweet_sour_pickles",
     "large tomato": "season_tomato",
     "large tomatoes": "season_tomato",
     "large tomatoes, washed": "season_tomato",
@@ -5760,6 +6201,10 @@
     "mangetout": "season_fresh_pea",
     "mangetout peas": "season_snow_pea",
     "mangetout, washed and cut in two": "season_fresh_pea",
+    "marinated artichoke hearts": "alnatura_marinated_artichokes",
+    "marinated artichoke hearts, cut into thirds": "alnatura_marinated_artichokes",
+    "marinated artichoke, chopped": "alnatura_marinated_artichokes",
+    "marinated artichokes": "alnatura_marinated_artichokes",
     "marjoram": "season_marjoram",
     "marjoram (for finishing), a little": "season_marjoram",
     "mature pumpkin": "season_pumpkin",
@@ -5840,6 +6285,12 @@
     "organic granny smith apple(s), washed and cut into cubes": "season_apple",
     "organic green bell pepper": "season_bell_pepper",
     "organic new potato(es), unpeeled": "season_new_potato",
+    "oyster mushroom": "season_oyster_mushroom",
+    "oyster mushrooms": "season_oyster_mushroom",
+    "oyster mushrooms, coarsely chopped": "season_oyster_mushroom",
+    "oyster mushrooms, roughly chopped": "season_oyster_mushroom",
+    "oyster mushrooms, sliced": "season_oyster_mushroom",
+    "package of skyr (150 g)": "skyr_label_required",
     "package of smoked tofu": "reishunger_smoked_tofu",
     "pak choi": "season_pak_choi",
     "parsley": "season_parsley_leaf",
@@ -5911,6 +6362,9 @@
     "pesto alla genovese": "label_required",
     "pesto sauce": "alnatura_pesto",
     "philadelphia cream cheese": "label_required",
+    "pickled cucumbers": "alnatura_pickled_cucumber",
+    "pickles": "alnatura_pickled_cucumber",
+    "pickles, chopped and drained": "alnatura_pickled_cucumber",
     "pinch of fresh thyme leaves": "season_thyme",
     "pinch of thyme": "season_thyme",
     "pinch(es) of fresh thyme leaves": "season_thyme",
@@ -6104,9 +6558,18 @@
     "shelled walnuts": "season_walnut",
     "shelled walnuts, chopped": "season_walnut",
     "shelled walnuts, very finely ground": "season_walnut",
+    "shiitake mushrooms": "season_shiitake",
+    "shiitake mushrooms, halved": "season_shiitake",
+    "shiitake mushrooms, thinly sliced": "season_shiitake",
+    "shiitake mushrooms, thinly sliced 1 cm wide": "season_shiitake",
+    "shiitake mushrooms, trimmed and quartered": "season_shiitake",
+    "shiitake mushrooms, washed": "season_shiitake",
     "silken tofu": "taifun_silken_tofu",
     "silken tofu, scooped into large pieces with a spoon": "taifun_silken_tofu",
     "skimmed milk": "milk",
+    "skyr": "skyr_label_required",
+    "skyr (60 g)": "skyr_label_required",
+    "skyr (for serving)": "skyr_label_required",
     "sliced bok choy": "season_pak_choi",
     "sliced button mushrooms": "season_button_mushroom",
     "sliced carrots": "season_carrot",
@@ -6228,6 +6691,8 @@
     "sweet potatoes": "season_sweet_potato",
     "sweet potatoes, diced": "season_sweet_potato",
     "sweet potatoes, peeled and cut into large pieces": "season_sweet_potato",
+    "sweet-and-sour pickles": "alnatura_sweet_sour_pickles",
+    "sweet-and-sour pickles, chopped": "alnatura_sweet_sour_pickles",
     "sweetcorn on the cob": "season_sweetcorn",
     "swiss chard": "season_chard",
     "swiss chard, washed and cut into pieces": "season_chard",
@@ -6316,6 +6781,7 @@
     "uht milk": "milk",
     "unpeeled apples, diced": "season_apple",
     "unsweetened soy milk": "alpro_drinks",
+    "vanilla skyr": "skyr_label_required",
     "vegetable juice": "alnatura_vegetable_juice",
     "vegetable spread": "label_required",
     "vegetarian spread": "label_required",
