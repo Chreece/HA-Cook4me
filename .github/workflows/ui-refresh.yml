@@ -73,5 +73,7 @@ jobs:
         run: python tests/browser_catalog_lifecycle_v229.py
       - name: Juice handling and seasonal catalog gaps
         run: python tests/browser_catalog_lifecycle_v230.py
+      - name: Winter produce and plant-drink opening guidance
+        run: python tests/browser_catalog_lifecycle_v231.py
       - name: Navigation hover and keyboard focus regression
         run: python tests/browser_navigation_hover_v205.py

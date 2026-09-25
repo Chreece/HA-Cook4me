@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.13",
+  "version": "2026-09-25.14",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -992,6 +992,56 @@
       "publisher": "Alnatura",
       "url": "https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/radieschen-saison/",
       "reviewedOn": "2026-09-25"
+    },
+    "dmbio_almond_drink": {
+      "publisher": "dm-drogerie markt (dmBio)",
+      "url": "https://www.dm.de/p/d/1599340/dmbio-pflanzendrink-mandel-drink",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_almond_drink_at": {
+      "publisher": "dm-drogerie markt (dmBio)",
+      "url": "https://www.dm.at/p/d/1599340/dmbio-mandeldrink-natur",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_oat_gluten_free": {
+      "publisher": "dm-drogerie markt (dmBio)",
+      "url": "https://www.dm.de/p/d/1586991/dmbio-haferdrink-glutenfrei",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_oat_natur_at": {
+      "publisher": "dm-drogerie markt (dmBio)",
+      "url": "https://www.dm.at/p/d/1453941/dmbio-haferdrink-natur",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_cashew_drink": {
+      "publisher": "dm-drogerie markt (dmBio)",
+      "url": "https://www.dm.de/p/d/1626807/dmbio-pflanzendrink-cashew-natur",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_ginger_juice": {
+      "publisher": "dm-drogerie markt (dmBio)",
+      "url": "https://www.dm.de/p/d/1446520/dmbio-direktsaft-ingwer",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_carrot_availability": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/moehren-saison/",
+      "reviewedOn": "2026-09-25"
+    },
+    "bzl_onion_availability": {
+      "publisher": "Bundesinformationszentrum Landwirtschaft (BZL)",
+      "url": "https://www.landwirtschaft.de/einkauf/lebensmittel/pflanzliche-lebensmittel/zwiebeln",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_chicory_availability": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/chicoree-saison/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_lambs_lettuce_availability": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/magazin/saisonkalender/salat-saison-salat-im-saisonkalender/feldsalat-saison/",
+      "reviewedOn": "2026-09-25"
     }
   },
   "profiles": {
@@ -1718,8 +1768,8 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
             "months": [
               1,
               2,
@@ -1727,19 +1777,16 @@
               4,
               5,
               6,
+              7,
+              8,
+              9,
+              10,
               11,
               12
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_01",
-              "hessen_02",
-              "hessen_03",
-              "hessen_04",
-              "hessen_05",
-              "hessen_06",
-              "hessen_11",
-              "hessen_12"
+              "alnatura_chicory_availability"
             ],
             "coverage": "listed_months_only"
           }
@@ -1788,14 +1835,13 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
             "months": [
               1,
-              5,
-              6,
-              7,
-              8,
+              2,
+              3,
+              4,
               9,
               10,
               11,
@@ -1803,15 +1849,7 @@
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_01",
-              "hessen_05",
-              "hessen_06",
-              "hessen_07",
-              "hessen_08",
-              "hessen_09",
-              "hessen_10",
-              "hessen_11",
-              "hessen_12"
+              "alnatura_lambs_lettuce_availability"
             ],
             "coverage": "listed_months_only"
           }
@@ -2198,7 +2236,7 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
+            "sourceRegion": "DE",
             "basis": "seasonal_calendar_including_stored_produce",
             "months": [
               1,
@@ -2206,6 +2244,8 @@
               3,
               4,
               5,
+              6,
+              7,
               8,
               9,
               10,
@@ -2214,16 +2254,7 @@
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_01",
-              "hessen_02",
-              "hessen_03",
-              "hessen_04",
-              "hessen_05",
-              "hessen_08",
-              "hessen_09",
-              "hessen_10",
-              "hessen_11",
-              "hessen_12"
+              "bzl_onion_availability"
             ],
             "coverage": "listed_months_only"
           }
@@ -2908,9 +2939,15 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
+            "sourceRegion": "DE",
             "basis": "seasonal_calendar_including_stored_produce",
             "months": [
+              1,
+              2,
+              3,
+              5,
+              6,
+              7,
               8,
               9,
               10,
@@ -2919,11 +2956,7 @@
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_08",
-              "hessen_09",
-              "hessen_10",
-              "hessen_11",
-              "hessen_12"
+              "alnatura_carrot_availability"
             ],
             "coverage": "listed_months_only"
           }
@@ -3114,6 +3147,44 @@
             ],
             "kind": "manufacturer_guidance",
             "brand": "Alpro"
+          },
+          {
+            "id": "dmbio_almond_drink",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_almond_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765022797"
+            ]
+          },
+          {
+            "id": "dmbio_almond_drink_at",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_almond_drink_at",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796002065"
+            ]
           }
         ]
       }
@@ -3347,6 +3418,44 @@
             "brand": "dmBio",
             "productBarcodes": [
               "4070765022841"
+            ]
+          },
+          {
+            "id": "dmbio_oat_gluten_free",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_oat_gluten_free",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765022780"
+            ]
+          },
+          {
+            "id": "dmbio_oat_natur_at",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_oat_natur_at",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796194807"
             ]
           }
         ]
@@ -5769,6 +5878,25 @@
             "productBarcodes": [
               "4104420260467"
             ]
+          },
+          {
+            "id": "dmbio_ginger_juice",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "clean_spoon"
+            ],
+            "sourceIds": [
+              "dmbio_ginger_juice",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447982046"
+            ]
           }
         ]
       }
@@ -7871,6 +7999,25 @@
             "productBarcodes": [
               "4104420234383"
             ]
+          },
+          {
+            "id": "dmbio_cashew_drink",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_cashew_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765022810"
+            ]
           }
         ]
       }
@@ -8157,6 +8304,101 @@
             "brand": "dmBio",
             "productBarcodes": [
               "4070765022841"
+            ]
+          },
+          {
+            "id": "dmbio_almond_drink",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_almond_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765022797"
+            ]
+          },
+          {
+            "id": "dmbio_almond_drink_at",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_almond_drink_at",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796002065"
+            ]
+          },
+          {
+            "id": "dmbio_oat_gluten_free",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_oat_gluten_free",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765022780"
+            ]
+          },
+          {
+            "id": "dmbio_oat_natur_at",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_oat_natur_at",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796194807"
+            ]
+          },
+          {
+            "id": "dmbio_cashew_drink",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_cashew_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765022810"
             ]
           }
         ]
@@ -10690,6 +10932,7 @@
     "M_FOOD_257": "alnatura_tomato_juice",
     "M_FOOD_258": "alnatura_orange_juice",
     "M_FOOD_261": "season_kiwi",
+    "M_FOOD_265": "alpro_drinks",
     "M_FOOD_267": "reishunger_coconut_milk",
     "M_FOOD_272": "season_lettuce",
     "M_FOOD_300": "season_mandarin",
