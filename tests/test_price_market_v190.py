@@ -105,8 +105,11 @@ def name_key(value):
     return ' '.join(str(value).casefold().split())
 
 
-PRESENTATION = load('catalog_presentation', {'clean_name': lambda x: str(x or '').strip(),
-    'name_key': name_key, 'labels': lambda: LABELS}, {'display_name'})
+# Load display_name together with its current presentation helpers. Extracting
+# only that function omitted presentation_ingredient after catalog corrections.
+PRESENTATION = load('catalog_presentation')
+PRESENTATION.update({'clean_name': lambda x: str(x or '').strip(),
+    'name_key': name_key, 'labels': lambda: LABELS})
 CORE = SimpleNamespace(_global_ingredient=lambda payload, item: CATALOG.get(item.get('ingredientId') or item.get('key') or item.get('foodKey')),
     _presentation=SimpleNamespace(clean_name=lambda x: str(x or '').strip(), name_key=name_key,
         labels=lambda: LABELS, display_name=PRESENTATION['display_name']))
