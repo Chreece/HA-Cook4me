@@ -5,7 +5,7 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.12)
+## Reviewed coverage (2026-09-25.13)
 
 - 112 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
@@ -47,7 +47,8 @@ cloud credentials, or per-scan file reads are needed.
   Ten further dmBio packages add cans, cooking creams and apple purées.
   Tofu, seitan, olive products and basil pesto add ten more packages; plain and
   smoked tofu, specific olive forms, and basil/red pesto keep separate rules.
-  There are 109 reviewed product barcodes, 1,731 exact canonical names and
+  Eight juice packages add separate flavour/size rules and upright storage where labelled.
+  There are 117 reviewed product barcodes, 1,731 exact canonical names and
   101 reviewed provider ingredient IDs.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
@@ -60,6 +61,49 @@ cloud credentials, or per-scan file reads are needed.
 Run `python tools/audit_ingredient_lifecycle.py` for counts against the actual
 shipped catalog. Counts distinguish seasonal, numeric and label-required
 entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
+
+## Batch 19: juice packages and seasonal gaps
+
+Eight additional dmBio juice packages were reviewed on 2026-09-25. Each source
+URL is stored with its rule. The brand and exact barcode must match; package
+size alone never selects a rule.
+
+| Package | Verified GTIN | Days after opening | Extra handling |
+| --- | --- | --- | --- |
+| Orange juice, 1 l | `4066447855494` | 3 | Store upright |
+| Beetroot juice, 1 l | `4070765031096` | 3 | — |
+| Beetroot juice, 500 ml | `4070765031126` | 3 | — |
+| Cloudy grape juice, 330 ml | `4066447855449` | 3 | Store upright |
+| Sauerkraut juice, 500 ml | `4070765031140` | 3–4 | Store upright |
+| Lemon juice, 200 ml | `4066447855579` | 14 | Store upright |
+| Vegetable juice, 500 ml | `4066447855630` | 3–4 | Store upright |
+| Tomato juice with sea salt, 500 ml | `4066447855685` | 3 | — |
+
+All labels require refrigeration. The catalog retains its conservative 4 °C
+cap with BfR cooling evidence; that numeric cap is not attributed to dmBio.
+Range rules retain the earlier reminder and later maximum date. Selecting
+catalog guidance still requires confirmation and does not mark a package open.
+Manual package instructions and earlier printed dates retain precedence.
+
+Different juices, fresh produce and freshly squeezed preparations do not borrow
+these package rules. The lemon interval cannot apply to orange juice. Two
+verified carrot-juice labels were held because no matching selectable ingredient
+exists in the shipped catalog. The checked apple
+juices and 1 l grape juice did not expose numeric opening instructions on the
+reviewed German pages, so they were not added in this batch.
+
+BZfE's national Chinese-cabbage guidance adds March (stored domestic produce)
+and May (protected cultivation), alongside June–November outdoor harvest and
+December–February storage. April remains unknown. Alnatura's national radish
+calendar lists domestic availability throughout April–November, closing the
+previous August gap and adding November. Its smaller April/May/October/November
+offer is included; this is availability, not a peak-harvest claim. Both calendars
+remain approximate and do not apply to kimchi, pickled or frozen forms.
+
+No new ingredient identities are inferred. Coverage remains 3,208 ingredient
+rows, with 117 verified product barcodes and 198 evidence sources. Regression
+checks exercise all eight packages through actual Greek/German catalog choices,
+all seasonal month boundaries, and mobile/desktop opening confirmation.
 
 ## Batch 18: tofu temperatures, olive packages and pesto forms
 

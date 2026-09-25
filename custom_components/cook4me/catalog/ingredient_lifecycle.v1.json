@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.12",
+  "version": "2026-09-25.13",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -942,6 +942,56 @@
       "publisher": "Deutschland – Mein Garten",
       "url": "https://geerntet-in-deutschland.de/lauchporree/",
       "reviewedOn": "2026-09-25"
+    },
+    "dmbio_orange_juice": {
+      "publisher": "dm-drogerie markt (dmBio)",
+      "url": "https://www.dm.de/p/d/1484511/dmbio-direktsaft-orange",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_beetroot_juice_litre": {
+      "publisher": "dm-drogerie markt (dmBio)",
+      "url": "https://www.dm.de/p/d/3097422/dmbio-direktsaft-rote-bete",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_beetroot_juice_500": {
+      "publisher": "dm-drogerie markt (dmBio)",
+      "url": "https://www.dm.de/p/d/1446505/dmbio-direktsaft-rote-bete",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_grape_juice_330": {
+      "publisher": "dm-drogerie markt (dmBio)",
+      "url": "https://www.dm.de/p/d/1454199/dmbio-direktsaft-traube-naturtrueb",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_sauerkraut_juice": {
+      "publisher": "dm-drogerie markt (dmBio)",
+      "url": "https://www.dm.de/p/d/1446484/dmbio-direktsaft-sauerkraut",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_lemon_juice": {
+      "publisher": "dm-drogerie markt (dmBio)",
+      "url": "https://www.dm.de/p/d/1446479/dmbio-direktsaft-zitrone",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_vegetable_juice": {
+      "publisher": "dm-drogerie markt (dmBio)",
+      "url": "https://www.dm.de/p/d/1446487/dmbio-direktsaft-gemuese",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_tomato_juice": {
+      "publisher": "dm-drogerie markt (dmBio)",
+      "url": "https://www.dm.de/p/d/1446500/dmbio-direktsaft-tomaten-mit-meersalz",
+      "reviewedOn": "2026-09-25"
+    },
+    "bzfe_chinese_cabbage_availability": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/presse/pressemeldungen-archiv/pressemeldungen-2025/chinakohl-vielseitig-und-gesund",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_radish_availability": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/radieschen-saison/",
+      "reviewedOn": "2026-09-25"
     }
   },
   "profiles": {
@@ -1705,11 +1755,13 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
+            "sourceRegion": "DE",
             "basis": "seasonal_calendar_including_stored_produce",
             "months": [
               1,
               2,
+              3,
+              5,
               6,
               7,
               8,
@@ -1720,15 +1772,7 @@
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_01",
-              "hessen_02",
-              "hessen_06",
-              "hessen_07",
-              "hessen_08",
-              "hessen_09",
-              "hessen_10",
-              "hessen_11",
-              "hessen_12"
+              "bzfe_chinese_cabbage_availability"
             ],
             "coverage": "listed_months_only"
           }
@@ -2261,24 +2305,21 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
             "months": [
               4,
               5,
               6,
               7,
+              8,
               9,
-              10
+              10,
+              11
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_04",
-              "hessen_05",
-              "hessen_06",
-              "hessen_07",
-              "hessen_09",
-              "hessen_10"
+              "alnatura_radish_availability"
             ],
             "coverage": "listed_months_only"
           }
@@ -5422,6 +5463,25 @@
             "productBarcodes": [
               "4104420231214"
             ]
+          },
+          {
+            "id": "dmbio_orange_juice",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_orange_juice",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447855494"
+            ]
           }
         ]
       }
@@ -5468,6 +5528,25 @@
             "productBarcodes": [
               "4104420133365"
             ]
+          },
+          {
+            "id": "dmbio_vegetable_juice",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_vegetable_juice",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447855630"
+            ]
           }
         ]
       }
@@ -5496,6 +5575,25 @@
             "brand": "Alnatura",
             "productBarcodes": [
               "4104420072800"
+            ]
+          },
+          {
+            "id": "dmbio_sauerkraut_juice",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_sauerkraut_juice",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765031140"
             ]
           }
         ]
@@ -5560,6 +5658,40 @@
             "productBarcodes": [
               "4104420259980"
             ]
+          },
+          {
+            "id": "dmbio_beetroot_juice_litre",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_beetroot_juice_litre",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765031096"
+            ]
+          },
+          {
+            "id": "dmbio_beetroot_juice_500",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_beetroot_juice_500",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765031126"
+            ]
           }
         ]
       }
@@ -5588,6 +5720,25 @@
             "brand": "Alnatura",
             "productBarcodes": [
               "4104420228986"
+            ]
+          },
+          {
+            "id": "dmbio_lemon_juice",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_lemon_juice",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447855579"
             ]
           }
         ]
@@ -5763,6 +5914,25 @@
             "brand": "Alnatura",
             "productBarcodes": [
               "4104420262676"
+            ]
+          },
+          {
+            "id": "dmbio_grape_juice_330",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_grape_juice_330",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447855449"
             ]
           }
         ]
@@ -7173,6 +7343,23 @@
             "brand": "Alnatura",
             "productBarcodes": [
               "4104420072787"
+            ]
+          },
+          {
+            "id": "dmbio_tomato_juice",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_tomato_juice",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447855685"
             ]
           }
         ]
