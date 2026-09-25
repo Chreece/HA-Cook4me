@@ -121,6 +121,7 @@ export const InteractionPositionMixin=Base=>class extends Base {
   // The old implementation only restored #content.scrollTop. HA may scroll
   // the document or an outer shadow host instead; capture those actual owners.
   const saved=this._v220Views?.get(`${this._v179StateKey()}:${this._tab}`);
+  if(!saved)return super._v179RestoreViewState();
   restorePosition(this,saved,{focus:false});
   this._v179RestoreRecipe();this._v179RestoreFilter();
  }

@@ -161,6 +161,18 @@ def page_views(page):
     unchanged(before, page.evaluate(READ), 'weekly disclosure')
     assert fold.get_attribute('aria-expanded') == 'true'
 
+    # Retain the earlier persisted #content position on a first render/reload,
+    # before there is a current-session snapshot for that tab.
+    page.evaluate("""() => {
+        const content=app.shadowRoot.getElementById('content');
+        content.style.height='300px';content.style.overflow='auto';
+        app._v179TabState().scrollTop=120;
+        app._v220Views.clear();content.scrollTop=0;
+        app._v179RestoreViewState();
+    }""")
+    page.wait_for_timeout(80)
+    assert page.evaluate("app.shadowRoot.getElementById('content').scrollTop") == 120
+
 
 def run():
     html=local_html(ROOT)
