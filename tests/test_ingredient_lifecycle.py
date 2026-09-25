@@ -935,9 +935,12 @@ class LifecycleTests(unittest.TestCase):
                     self.assertEqual(self.lifecycle.seasonal_availability(profile, country="DE", month=month)["status"], "in_season" if month in months else "unknown")
                 self.assertEqual(self.lifecycle.seasonal_availability(profile, country="GR", month=months[0])["status"], "unknown")
                 self.assertNotIn("rules", profile["afterOpening"])
-        for name in ("Dried mint", "Pinch of dried mint", "Frozen mint", "Peppermint essence", "Finely chopped mint and parsley", "Coriander and mint for garnish", "Dried tarragon", "Chopped herbs (tarragon, parsley, chervil, etc.)", "Dried lovage", "Dried lovage (optional)", "Lovage seeds"):
+        for name in ("Frozen mint", "Peppermint essence", "Finely chopped mint and parsley", "Coriander and mint for garnish", "Dried tarragon", "Chopped herbs (tarragon, parsley, chervil, etc.)", "Dried lovage", "Dried lovage (optional)", "Lovage seeds"):
             with self.subTest(excluded=name):
                 self.assertEqual(self.profile(name)["seasonality"]["status"], "unknown")
+        for name in ("Dried mint", "Pinch of dried mint"):
+            self.assertEqual(self.profile(name)["seasonality"]["status"], "not_applicable")
+            self.assertEqual(self.profile(name)["afterOpening"]["status"], "label_required")
 
     def test_cooking_cream_products_cannot_assign_a_yoghurt_or_other_cream_clock(self):
         codes = ("4104420095205", "4104420241176", "4104420240940")

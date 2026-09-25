@@ -5,7 +5,7 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.17)
+## Reviewed coverage (2026-09-25.18)
 
 - 112 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
@@ -51,8 +51,8 @@ cloud credentials, or per-scan file reads are needed.
   Five more plant-drink packages and one ginger juice retain their storage instructions.
   Seven condiment/sauce packages add ketchup, Ajvar, curry and tomato sauces.
   Two fermented-vegetable packages add kimchi and sauerkraut guidance.
-  There are 132 reviewed product barcodes, 1,731 exact canonical names and
-  125 reviewed provider ingredient IDs.
+  There are 132 reviewed product barcodes, 1,740 exact canonical names and
+  141 reviewed provider ingredient IDs.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
   coconut cream, unverified tomato paste, unverified ketchup and Skyr, plus mustard, mayonnaise and
@@ -64,6 +64,67 @@ cloud credentials, or per-scan file reads are needed.
 Run `python tools/audit_ingredient_lifecycle.py` for counts against the actual
 shipped catalog. Counts distinguish seasonal, numeric and label-required
 entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
+
+## Batch 24: fresh herbs, dried pantry forms and edible pea pods
+
+Sixteen further provider identities now expose their reviewed profiles on the
+actual Greek, German and English choices. Existing catalog nutrition reviews
+identify the seven herbs below as fresh/raw culinary herbs; their translations
+and explicit dried-herb counterparts were reviewed together. The runtime still
+requires the exact provider allowlist and does not infer form from nutrients,
+search text or a related ingredient.
+
+| Ingredients | Exact provider IDs | Existing guidance |
+| --- | --- | --- |
+| Basil | `M_FOOD_30` | German outdoor harvest, June–October |
+| Chives, parsley | `M_FOOD_115`, `M_FOOD_369` | Hesse seasonal availability, April–October |
+| Dill | `M_FOOD_16` | German outdoor harvest, May–September |
+| Mint | `M_FOOD_308` | North Rhine-Westphalia outdoor harvest, May–October |
+| Rosemary, thyme | `M_FOOD_425`, `M_FOOD_476` | German outdoor harvest, May–October |
+| Mangetout | `M_FOOD_386` | German snow-pea harvest, June–August |
+| Dried pasta, dried beans, flour, milk powder, ground black pepper, rice, salt, sugar | `M_FOOD_361`, `M_FOOD_512`, `M_FOOD_186`, `M_FOOD_270`, `M_FOOD_764`, `M_FOOD_421`, `M_FOOD_457`, `M_FOOD_467` | Dry-staple profile; package label required, no numeric opening interval |
+
+The seasonal sources were rechecked on 2026-09-25:
+[BZfE basil](https://www.bzfe.de/presse/pressemeldungen-archiv/volles-sommeraroma-basilikum),
+[BZfE green-sauce herbs](https://www.bzfe.de/presse/pressemeldungen-archiv/frankfurter-gruene-sosse),
+[Verbraucherzentrale seasonal calendar](https://www.verbraucherzentrale.de/sites/default/files/migration_files/media222992A.pdf),
+[Landservice mint](https://www.landservice.de/regionale-lebensmittel/kraeuter-getreide/minze)
+and [BZfE snow peas](https://www.bzfe.de/presse/pressemeldungen-archiv/zeit-fuer-zuckerschoten).
+Month lists and regional scope are unchanged. Unlisted months and countries
+without supporting evidence remain unknown. Chervil, oregano, sage and tarragon
+provider rows retain unknown guidance because their generic names and dried or
+ground nutrition references do not establish a consistent fresh identity.
+
+The two exact mangetout canonical names now use the edible-pod snow-pea
+profile instead of the shelled-pea profile. German choices use `Zuckerschoten`,
+with `Zuckererbsen` and `Kaiserschoten` search aliases. Fresh shelled peas remain
+a separate profile; frozen and canned forms do not inherit this calendar.
+
+Nine explicitly dried herb canonical names cover 18 existing rows: dried
+basil, mint, oregano, oregano leaves, thyme, herbs, herbs such as rosemary,
+mixed herbs and the recipe fragment `Pinch of dried mint`. These receive the
+dry-staple profile, so the seasonal filter keeps them available throughout the
+year without implying a fresh harvest or an unlimited shelf life. The existing
+[package-label policy](https://www.verbraucherzentrale.de/wissen/lebensmittel/auswaehlen-zubereiten-aufbewahren/lebensmittel-nach-dem-oeffnen-gekuehlt-lagern-angaben-oft-zu-vage-109122)
+still applies: no short expiry is invented, manual package intervals remain
+possible, and a milk or canned-bean barcode cannot turn a dry ingredient into
+that product's opening rule.
+
+German labels now explicitly say `Getrockneter Basilikum`, `Getrocknete Minze`,
+`Getrockneter Oregano`, `Getrockneter Thymian`, `Getrocknete Kräuter`,
+`Getrocknete Kräutermischung`, `Getrocknete Bohnen` and
+`Gemahlener schwarzer Pfeffer`. An exact display override merges the leftover
+pinch-of-dried-mint choice with dried mint in all three tested languages.
+Its original canonical name, recipe quantities, nutrition and source identity
+remain intact; fresh mint remains separate.
+
+Coverage reaches 3,272 rows: 2,245 seasonal, 574 with numeric opening guidance
+and 453 label-required. No new barcode, numeric interval, ingredient or recipe
+is introduced. Local validation includes `tests/test_catalog_lifecycle_v238.py`,
+the lifecycle regressions, amount-free choices and seasonal-filter tests,
+plus `tests/browser_catalog_lifecycle_v238.py` at mobile and desktop sizes.
+The browser checks all twelve months, unsupported-country fallback, preserved
+fresh/dried distinctions, supermarket labels and the deduplicated mint entry.
 
 ## Batch 23: existing guidance on selectable provider ingredients
 

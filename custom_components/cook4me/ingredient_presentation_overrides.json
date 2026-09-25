@@ -1,8 +1,12 @@
 {
   "schemaVersion": 1,
   "scope": "Display and choice grouping only; preserve source IDs, nutrition, prices and quantities.",
-  "review": "v226: provider French Poivron/Poivre/Piment and German Paprika/Pfeffer distinguish three foods called Pepper in English. Preparation descriptions identify whole peppers. Paprika powder remains a spice.",
+  "review": "v226: provider French Poivron/Poivre/Piment and German Paprika/Pfeffer distinguish three foods called Pepper in English. Preparation descriptions identify whole peppers. Paprika powder remains a spice. v238: the exact dried-mint entry drops its recipe pinch from display and choice grouping only.",
   "ingredients": {
+    "local:ar:6aac151aef2122c6c395": {
+      "canonicalName": "Dried mint",
+      "translations": {"en": "Dried mint"}
+    },
     "M_FOOD_358": {
       "canonicalName": "Paprika",
       "translations": {"de": "Paprikapulver"}
