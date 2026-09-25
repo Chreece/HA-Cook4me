@@ -10,7 +10,7 @@ SOURCE = FRONTEND / "cook4me-panel-v126.js"
 TARGET = FRONTEND / "cook4me-panel-v126-bundle.js"
 IMPORT = re.compile(r'^import ["\']\./cook4me-panel-v125\.js["\'];\s*$', re.M)
 PANEL_IMPORT = re.compile(r'^import ["\']\./cook4me-panel-v\d+\.js["\'];\s*$', re.M)
-SOURCE_OVERLAYS = (23, 43, 117)
+SOURCE_OVERLAYS = (23, 43, 49, 93, 117)
 
 
 def _overlay_panel(base: str, version: int) -> str:

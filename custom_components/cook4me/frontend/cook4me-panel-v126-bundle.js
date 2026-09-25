@@ -7905,8 +7905,11 @@ class Cook4MeRecipeHubPanelV49 extends BasePanel{
     let key="";try{key=`${mapped}:${JSON.stringify(data||{})}`;}catch(_e){key=`${mapped}:${Date.now()}`;}
     if(this._cook4meApiInflight.has(key))return this._cook4meApiInflight.get(key);
     const execute=()=>super._api(mapped,data);
-    const task=this._cook4meApiTail.then(execute,execute);
-    this._cook4meApiTail=task.catch(()=>undefined);
+    // Reviewed product saves use local stores with server-side locking. Do not
+    // make them wait behind AI generation, device delivery or online lookups.
+    const productSave=mapped==="cook4me/v33/product_add";
+    const task=productSave?execute():this._cook4meApiTail.then(execute,execute);
+    if(!productSave)this._cook4meApiTail=task.catch(()=>undefined);
     this._cook4meApiInflight.set(key,task);
     try{return await task;}finally{if(this._cook4meApiInflight.get(key)===task)this._cook4meApiInflight.delete(key);}
   }
@@ -8084,7 +8087,6 @@ class Cook4MeRecipeHubPanelV49 extends BasePanel{
 customElements.define("cook4me-recipe-hub-panel-v49",Cook4MeRecipeHubPanelV49);
 
 })();
-
 // cook4me-panel-v50.js
 (() => {
 
@@ -13563,8 +13565,9 @@ class Cook4MeRecipeHubPanelV93 extends BasePanel{
  // the existing terminal layers preserve their mapping, diet and cache logic.
  async _api(type,data={}){
   const inline=type.startsWith('cook4me/v34/')&&!type.endsWith('/recipe_cost_refresh');
-  const created=!inline&&!this._process;
-  const job=inline?null:this._process||this._processStart(this._t('backgroundWork'),this._loadLabel(type)||this._t('loading'));
+  // Saves can run alongside background work and must not inherit its cancellation.
+  const created=!inline&&(type==='cook4me/v33/product_add'||!this._process);
+  const job=inline?null:created?this._processStart(this._t('backgroundWork'),this._loadLabel(type)||this._t('loading')):this._process;
   try{
    if(job?.cancelled)throw this._v93CancelledError();
    const result=await super._api(type,job?{...data,__cook4meJobId:job.id}:data);
@@ -13708,7 +13711,6 @@ class Cook4MeRecipeHubPanelV93 extends BasePanel{
 customElements.define('cook4me-recipe-hub-panel-v93',Cook4MeRecipeHubPanelV93);
 
 })();
-
 // cook4me-panel-v94.js
 (() => {
 

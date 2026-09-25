@@ -345,7 +345,8 @@ async def ws_product_add(hass, connection, msg):
                         if lot.get("id")
                     ]
                     break
-        fingerprint = hashlib.sha256(json.dumps({key: value for key, value in msg.items() if key not in {"id", "type", "request_id"}}, sort_keys=True).encode()).hexdigest()
+        # A retry gets a new transport job, but represents the same product save.
+        fingerprint = hashlib.sha256(json.dumps({key: value for key, value in msg.items() if key not in {"id", "type", "request_id", "_cook4me_job_id"}}, sort_keys=True).encode()).hexdigest()
         if not hasattr(bridge, "_scanner_save_lock"):
             bridge._scanner_save_lock = asyncio.Lock()
         async with bridge._scanner_save_lock:

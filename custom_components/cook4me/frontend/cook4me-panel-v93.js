@@ -17,8 +17,9 @@ class Cook4MeRecipeHubPanelV93 extends BasePanel{
  // the existing terminal layers preserve their mapping, diet and cache logic.
  async _api(type,data={}){
   const inline=type.startsWith('cook4me/v34/')&&!type.endsWith('/recipe_cost_refresh');
-  const created=!inline&&!this._process;
-  const job=inline?null:this._process||this._processStart(this._t('backgroundWork'),this._loadLabel(type)||this._t('loading'));
+  // Saves can run alongside background work and must not inherit its cancellation.
+  const created=!inline&&(type==='cook4me/v33/product_add'||!this._process);
+  const job=inline?null:created?this._processStart(this._t('backgroundWork'),this._loadLabel(type)||this._t('loading')):this._process;
   try{
    if(job?.cancelled)throw this._v93CancelledError();
    const result=await super._api(type,job?{...data,__cook4meJobId:job.id}:data);
