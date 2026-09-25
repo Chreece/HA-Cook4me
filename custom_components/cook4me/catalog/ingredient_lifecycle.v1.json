@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.5",
+  "version": "2026-09-25.6",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -616,6 +616,36 @@
     "alnatura_coconut_drink": {
       "publisher": "Alnatura",
       "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/milch-milchprodukte/milchalternativen/bio-sojadrink-bio-reisdrink/kokosdrink-ungesuesst-210469/",
+      "reviewedOn": "2026-09-25"
+    },
+    "bzfe_summer_purslane": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/presse/pressemeldungen-archiv/sommerportulak-geniessen",
+      "reviewedOn": "2026-09-25"
+    },
+    "bonduelle_canned_vegetables": {
+      "publisher": "Bonduelle",
+      "url": "https://www.bonduelle.de/faq/gemuesekonserven/haltbarkeit-nach-dem-oeffnen-der-dose/53",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_mustard_opening": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/wuerzen-oele-essige/bio-senf-mayo-ketchup-bio-dip/mittelscharfer-senf-129827/",
+      "reviewedOn": "2026-09-25"
+    },
+    "loewensenf_opening": {
+      "publisher": "Löwensenf",
+      "url": "https://www.loewensenf.de/de/senfwissen/senf-faq",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_mayonnaise_opening": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/wuerzen-oele-essige/bio-senf-mayo-ketchup-bio-dip/delikatess-mayonnaise-135262/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_vegan_mayo_opening": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/wuerzen-oele-essige/bio-senf-mayo-ketchup-bio-dip/vegane-mayo-ohne-ei-211958/",
       "reviewedOn": "2026-09-25"
     }
   },
@@ -3681,6 +3711,23 @@
         "labelOverrides": true,
         "rules": [
           {
+            "id": "bonduelle_canned_vegetables",
+            "daysMin": 1,
+            "daysMax": 1,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_clean_container",
+              "closed_container"
+            ],
+            "sourceIds": [
+              "bonduelle_canned_vegetables",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Bonduelle"
+          },
+          {
             "id": "alnatura_chickpeas_jar",
             "daysMin": 2,
             "daysMax": 2,
@@ -3786,6 +3833,23 @@
         "status": "conditional",
         "labelOverrides": true,
         "rules": [
+          {
+            "id": "bonduelle_canned_vegetables",
+            "daysMin": 1,
+            "daysMax": 1,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_clean_container",
+              "closed_container"
+            ],
+            "sourceIds": [
+              "bonduelle_canned_vegetables",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Bonduelle"
+          },
           {
             "id": "alnatura_kidney_beans_jar",
             "daysMin": 2,
@@ -3895,6 +3959,23 @@
         "labelOverrides": true,
         "rules": [
           {
+            "id": "bonduelle_canned_vegetables",
+            "daysMin": 1,
+            "daysMax": 1,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_clean_container",
+              "closed_container"
+            ],
+            "sourceIds": [
+              "bonduelle_canned_vegetables",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Bonduelle"
+          },
+          {
             "id": "alnatura_white_beans_jar",
             "daysMin": 2,
             "daysMax": 2,
@@ -3984,6 +4065,23 @@
         "labelOverrides": true,
         "rules": [
           {
+            "id": "bonduelle_canned_vegetables",
+            "daysMin": 1,
+            "daysMax": 1,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_clean_container",
+              "closed_container"
+            ],
+            "sourceIds": [
+              "bonduelle_canned_vegetables",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Bonduelle"
+          },
+          {
             "id": "alnatura_lentils_can",
             "daysMin": 2,
             "daysMax": 2,
@@ -4054,6 +4152,23 @@
         "status": "conditional",
         "labelOverrides": true,
         "rules": [
+          {
+            "id": "bonduelle_canned_vegetables",
+            "daysMin": 1,
+            "daysMax": 1,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_clean_container",
+              "closed_container"
+            ],
+            "sourceIds": [
+              "bonduelle_canned_vegetables",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Bonduelle"
+          },
           {
             "id": "alnatura_sweetcorn_can",
             "daysMin": 1,
@@ -6555,21 +6670,128 @@
           }
         ]
       }
+    },
+    "season_summer_purslane": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bzfe_summer_purslane"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "canned_vegetables": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "bonduelle_canned_vegetables",
+            "daysMin": 1,
+            "daysMax": 1,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_clean_container",
+              "closed_container"
+            ],
+            "sourceIds": [
+              "bonduelle_canned_vegetables",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Bonduelle"
+          },
+          {
+            "id": "canned_low_acid",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "usda_cans",
+              "usda_cooling"
+            ],
+            "kind": "general_guidance"
+          }
+        ]
+      }
+    },
+    "mustard_label_required": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "sourceIds": [
+          "alnatura_mustard_opening",
+          "loewensenf_opening"
+        ],
+        "reason": "no_numeric_manufacturer_window"
+      }
+    },
+    "mayonnaise_label_required": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "sourceIds": [
+          "alnatura_mayonnaise_opening",
+          "alnatura_vegan_mayo_opening"
+        ],
+        "reason": "no_numeric_manufacturer_window"
+      }
     }
   },
   "canonicalNames": {
     "*capers": "alnatura_capers",
+    "*dijon mustard": "mustard_label_required",
     "*fresh chili": "season_fresh_chili",
     "*lemon juice": "alnatura_lemon_juice",
     "*medium-sized beetroot": "season_beetroot",
     "*minced garlic": "season_garlic",
     "*minced onion": "season_onion",
     "*red onion peeled and finely chopped": "season_onion",
+    "15% fat cream": "label_required",
+    "30% cream": "label_required",
+    "30% whipping cream": "label_required",
+    "a - cream cheese (bring to room temperature)": "label_required",
     "a - rosemary": "season_rosemary",
     "a - thyme": "season_thyme",
     "a sprig of finely chopped parsley": "season_parsley_leaf",
     "a- carrot, cut into matchsticks 0.5 mm wide and 3 cm long": "season_carrot",
+    "a- cream cheese, brought to room temperature": "label_required",
     "a- green beans, cut into quarters": "season_green_bean",
+    "a- mayonnaise (for sauce)": "mayonnaise_label_required",
+    "a- milk": "milk",
     "a- pumpkin, seeds and skin removed, cut into 3 cm cubes": "season_pumpkin",
     "a- unsweetened soy milk": "soy_drinks",
     "almond drink": "alpro_drinks",
@@ -6607,8 +6829,12 @@
     "b - thyme": "season_thyme",
     "b- canned chopped tomatoes": "canned_tomato_pieces",
     "b- dill, a little": "season_dill",
+    "b- mayonnaise": "mayonnaise_label_required",
+    "b- milk": "milk",
+    "b- milk, brought to room temperature": "milk",
     "b- snow peas, strings removed": "season_snow_pea",
     "b- tomato paste": "tomato_paste_label",
+    "b- wholegrain mustard, a little": "mustard_label_required",
     "baby carrots": "season_carrot",
     "baby lettuce": "season_lettuce",
     "baby lettuce (or lettuce hearts), chopped": "season_lettuce",
@@ -6693,11 +6919,11 @@
     "button mushrooms, washed and finely chopped": "season_button_mushroom",
     "c - pumpkin (5–7 mm thick, bite-size pieces)": "season_pumpkin",
     "c- onion, cut into half-moons": "season_onion",
-    "canned baby carrots (drained)": "canned_low_acid",
-    "canned baby carrots, drained": "canned_low_acid",
-    "canned beans": "canned_low_acid",
+    "canned baby carrots (drained)": "canned_vegetables",
+    "canned baby carrots, drained": "canned_vegetables",
+    "canned beans": "canned_vegetables",
     "canned beetroot with its liquid": "alnatura_pickled_beetroot",
-    "canned butter beans (canned weight), drained": "canned_low_acid",
+    "canned butter beans (canned weight), drained": "canned_vegetables",
     "canned chickpeas": "canned_chickpeas",
     "canned chickpeas, drained": "canned_chickpeas",
     "canned chickpeas, rinsed": "canned_chickpeas",
@@ -6711,16 +6937,18 @@
     "canned corn, drained": "canned_sweetcorn",
     "canned crab": "canned_low_acid",
     "canned creamed corn": "canned_low_acid",
+    "canned green peas, a little": "canned_vegetables",
     "canned lentils": "canned_lentils",
     "canned mackerel in water (190 g, use with liquid)": "canned_low_acid",
+    "canned mixed beans (110 g)": "canned_vegetables",
     "canned mixed fruit (190 g), including syrup": "canned_high_acid",
     "canned mixed fruit (190 g; use the syrup too)": "canned_high_acid",
-    "canned peas": "canned_low_acid",
-    "canned peas, drained": "canned_low_acid",
+    "canned peas": "canned_vegetables",
+    "canned peas, drained": "canned_vegetables",
     "canned peeled diced tomatoes": "canned_tomato_pieces",
     "canned pineapple (cut into quarters)": "canned_pineapple",
     "canned pineapple juice": "canned_high_acid",
-    "canned red beans": "canned_low_acid",
+    "canned red beans": "canned_vegetables",
     "canned red kidney beans": "canned_kidney_beans",
     "canned red kidney beans (rinsed and drained)": "canned_kidney_beans",
     "canned sweetcorn": "canned_sweetcorn",
@@ -6866,6 +7094,7 @@
     "chopped coriander (for serving)": "season_coriander_leaf",
     "chopped coriander leaves": "season_coriander_leaf",
     "chopped coriander stems": "season_coriander_leaf",
+    "chopped cream cheese": "label_required",
     "chopped dill": "season_dill",
     "chopped fennel": "season_fennel",
     "chopped fresh basil": "season_basil",
@@ -6926,6 +7155,9 @@
     "cooked or canned chickpeas": "alnatura_chickpeas",
     "cooked white beans": "alnatura_white_beans",
     "cooking cream": "label_required",
+    "cooking cream (30% milk fat)": "label_required",
+    "cooking cream (up to 20% milk fat)": "label_required",
+    "cooking cream, 15% fat": "label_required",
     "coriander (for seasoning), washed and cut into sections, a little": "season_coriander_leaf",
     "coriander greens, washed and chopped (quantity fragment: /2 tbsp)": "season_coriander_leaf",
     "coriander, chopped": "season_coriander_leaf",
@@ -6940,7 +7172,12 @@
     "courgette": "season_courgette",
     "courgettes": "season_courgette",
     "cream": "label_required",
+    "cream (15% fat)": "label_required",
+    "cream (20% fat)": "label_required",
+    "cream (30% fat)": "label_required",
+    "cream (35% fat)": "label_required",
     "cream cheese": "label_required",
+    "cream cheese, cut into bite-size pieces": "label_required",
     "cream quark": "label_required",
     "crushed garlic": "season_garlic",
     "crushed garlic cloves": "season_garlic",
@@ -6977,11 +7214,15 @@
     "diced red bell pepper": "season_bell_pepper",
     "diced red bell peppers": "season_bell_pepper",
     "diced zucchini": "season_courgette",
+    "dijon mustard": "mustard_label_required",
     "dill": "season_dill",
     "dill (for finishing)": "season_dill",
     "dill, chopped": "season_dill",
     "dill, trimmed": "season_dill",
     "dill, washed and chopped": "season_dill",
+    "double cream": "label_required",
+    "double cream (45% fat or more)": "label_required",
+    "double cream (optional)": "label_required",
     "double-cream cream cheese": "label_required",
     "dried beans": "dry_staple",
     "dried chickpeas": "dry_staple",
@@ -7008,6 +7249,7 @@
     "eggplants, washed and cut into 2–3 cm pieces": "season_aubergine",
     "endive": "season_endive",
     "endives": "season_endive",
+    "english mustard": "mustard_label_required",
     "fennel": "season_fennel",
     "fennel bulb": "season_fennel",
     "fennel bulb, quartered": "season_fennel",
@@ -7054,6 +7296,7 @@
     "flat-leaf parsley": "season_parsley_leaf",
     "flat-leaf parsley, chopped": "season_parsley_leaf",
     "flour": "dry_staple",
+    "french mustard": "mustard_label_required",
     "fresh asparagus, washed and chopped": "season_asparagus",
     "fresh basil leaves": "season_basil",
     "fresh basil leaves, chopped (quantity fragment: /2 tbsp)": "season_basil",
@@ -7076,6 +7319,7 @@
     "fresh coriander, washed and chopped": "season_coriander_leaf",
     "fresh coriander, washed and chopped (quantity fragment: /2 tbsp)": "season_coriander_leaf",
     "fresh coriander, washed and finely chopped": "season_coriander_leaf",
+    "fresh cream": "label_required",
     "fresh cream cheese": "label_required",
     "fresh dill": "season_dill",
     "fresh dill, chopped": "season_dill",
@@ -7140,7 +7384,11 @@
     "freshly chopped mint leaves": "season_mint",
     "freshly cut ginger": "season_fresh_ginger",
     "freshly grated ginger": "season_fresh_ginger",
+    "full-fat cream": "label_required",
+    "full-fat cream (30% fat)": "label_required",
     "full-fat milk": "milk",
+    "full-fat sour cream": "label_required",
+    "full-fat whipping cream": "label_required",
     "g carrots, peeled and cut into pieces": "season_carrot",
     "g cauliflower, washed and cut into 2 or 4 parts": "season_cauliflower",
     "garlic": "season_garlic",
@@ -7205,6 +7453,7 @@
     "grated carrots": "season_carrot",
     "grated garlic": "season_garlic",
     "grated onion": "season_onion",
+    "greek yoghurt": "label_required",
     "greek yogurt": "label_required",
     "greek-style pitted black olives": "alnatura_black_olives",
     "green and black olives": "alnatura_mixed_olives",
@@ -7256,6 +7505,7 @@
     "ground black pepper": "dry_staple",
     "ground hazelnuts": "season_hazelnut",
     "half a chopped onion": "season_onion",
+    "half-fat cream": "label_required",
     "handful of blueberries": "season_blueberry",
     "handful of spinach, washed and roughly chopped": "season_spinach",
     "handful(s) of grated carrots": "season_carrot",
@@ -7266,6 +7516,8 @@
     "head of bok choy, cut into 6 pieces": "season_pak_choi",
     "head of lettuce, washed and outer leaves removed": "season_lettuce",
     "heads of lettuce, washed and outer leaves removed": "season_lettuce",
+    "heavy cream": "label_required",
+    "herbed cream cheese": "label_required",
     "hokkaido pumpkin": "season_pumpkin",
     "houmous": "alnatura_hummus",
     "hummus": "alnatura_hummus",
@@ -7342,10 +7594,20 @@
     "lettuce leaves, washed and finely chopped": "season_lettuce",
     "lettuce leaves, washed and thinly sliced": "season_lettuce",
     "lettuce, shredded 1 cm wide for finishing": "season_lettuce",
+    "light cream": "label_required",
     "lime juice": "alnatura_lime_juice",
+    "liquid cooking cream (15% milk fat)": "label_required",
+    "liquid cream": "label_required",
+    "liquid cream (15% fat)": "label_required",
+    "liquid cream, 15%": "label_required",
+    "liquid cream, 15% fat": "label_required",
+    "liquid whipping cream": "label_required",
     "little gem lettuce": "season_romaine",
     "lovage": "season_lovage",
+    "low-fat cooking cream": "label_required",
+    "low-fat cream": "label_required",
     "low-fat milk": "milk",
+    "lučina cream cheese": "label_required",
     "mangetout": "season_fresh_pea",
     "mangetout peas": "season_snow_pea",
     "mangetout, washed and cut in two": "season_fresh_pea",
@@ -7356,11 +7618,16 @@
     "marjoram": "season_marjoram",
     "marjoram (for finishing), a little": "season_marjoram",
     "mature pumpkin": "season_pumpkin",
+    "mayonnaise": "mayonnaise_label_required",
+    "mayonnaise (for finishing)": "mayonnaise_label_required",
+    "mayonnaise (for sauce)": "mayonnaise_label_required",
+    "mayonnaise (for seasoning)": "mayonnaise_label_required",
     "medium beetroot": "season_beetroot",
     "medium onion": "season_onion",
     "medium potato": "season_potato",
     "medium red onion": "season_onion",
     "medium sweet potato, cut into 1.5 cm cubes": "season_sweet_potato",
+    "medium-hot mustard": "mustard_label_required",
     "medium-sized beetroot": "season_beetroot",
     "melon balls": "season_melon",
     "melon flesh, seeds removed": "season_melon",
@@ -7386,6 +7653,8 @@
     "mint, washed and finely chopped": "season_mint",
     "mirabelle plums": "season_mirabelle",
     "mixed-color bell pepper": "season_bell_pepper",
+    "mustard": "mustard_label_required",
+    "mustard (for finishing), a little": "mustard_label_required",
     "napa cabbage": "season_chinese_cabbage",
     "natural yogurt": "label_required",
     "nectarine": "season_peach",
@@ -7581,6 +7850,7 @@
     "pumpkin, peeled and cut into large cubes": "season_pumpkin",
     "pumpkin, peeled and diced": "season_pumpkin",
     "purple turnip, cut into pieces": "season_turnip",
+    "purslane": "season_summer_purslane",
     "quark": "label_required",
     "quince": "season_quince",
     "quince, about 250 g": "season_quince",
@@ -7655,6 +7925,7 @@
     "red, yellow and green bell peppers, thinly sliced": "season_bell_pepper",
     "redcurrant": "season_redcurrant",
     "redcurrants": "season_redcurrant",
+    "reduced-fat cream (sour cream)": "label_required",
     "rhubarb": "season_rhubarb",
     "rhubarb, washed and cut into 3–4 cm pieces": "season_rhubarb",
     "rice": "dry_staple",
@@ -7728,6 +7999,7 @@
     "shiitake mushrooms, washed": "season_shiitake",
     "silken tofu": "taifun_silken_tofu",
     "silken tofu, scooped into large pieces with a spoon": "taifun_silken_tofu",
+    "single cream": "label_required",
     "skimmed milk": "milk",
     "skyr": "skyr_label_required",
     "skyr (60 g)": "skyr_label_required",
@@ -7838,6 +8110,7 @@
     "sugar": "dry_staple",
     "sugar snap peas": "season_fresh_pea",
     "sugar snap peas, strings removed": "season_fresh_pea",
+    "summer purslane": "season_summer_purslane",
     "sun-dried tomato pesto": "alnatura_pesto",
     "sun-dried tomato, roughly chopped": "alnatura_dried_tomatoes",
     "sun-dried tomatoes": "alnatura_dried_tomatoes",
@@ -7883,7 +8156,9 @@
     "table salt": "dry_staple",
     "tablespoon of fresh coriander, washed and chopped (quantity count omitted)": "season_coriander_leaf",
     "tablespoon of fresh coriander, washed and chopped (quantity count omitted; mixed-language source)": "season_coriander_leaf",
+    "tablespoons mustard": "mustard_label_required",
     "tablespoons of lime juice": "alnatura_lime_juice",
+    "tablespoons thick fresh cream": "label_required",
     "tarragon": "season_tarragon",
     "tarragon, chopped": "season_tarragon",
     "tarragon, finely chopped": "season_tarragon",
@@ -7893,14 +8168,22 @@
     "tbsp chopped parsley": "season_parsley_leaf",
     "tbsp coriander leaves, washed and chopped": "season_coriander_leaf",
     "tbsp coriander, washed and chopped": "season_coriander_leaf",
+    "tbsp english mustard": "mustard_label_required",
     "tbsp fresh basil leaves, chopped": "season_basil",
     "tbsp fresh coriander, washed and chopped": "season_coriander_leaf",
     "tbsp fresh mint, washed and finely chopped": "season_mint",
     "tbsp lemon juice": "alnatura_lemon_juice",
     "tbsp lemon juice (to taste)": "alnatura_lemon_juice",
     "tbsp parsley, washed and chopped (to taste)": "season_parsley_leaf",
+    "tbsp plain yogurt, for serving": "label_required",
     "tbsp tarragon, washed and chopped": "season_tarragon",
     "teaspoon of fresh ginger, peeled and chopped (quantity count omitted)": "season_fresh_ginger",
+    "thick cooking cream": "label_required",
+    "thick cream": "label_required",
+    "thick fresh cream": "label_required",
+    "thick greek yogurt": "label_required",
+    "thick sour cream": "label_required",
+    "thickened cream": "label_required",
     "thin green onion, diagonally sliced, as needed": "season_spring_onion",
     "thin slices of ginger": "season_fresh_ginger",
     "thinly julienned carrot": "season_carrot",
@@ -7956,12 +8239,14 @@
     "tomatoes, washed and cut into large pieces": "season_tomato",
     "tomatoes, washed and finely chopped": "season_tomato",
     "tomatoes, washed and thinly sliced": "season_tomato",
+    "traditional mustard": "mustard_label_required",
     "tsp chopped coriander": "season_coriander_leaf",
     "tsp fresh ginger, peeled and chopped": "season_fresh_ginger",
     "tsp fresh grated ginger": "season_fresh_ginger",
     "tsp freshly chopped basil": "season_basil",
     "tsp ginger, peeled and chopped": "season_fresh_ginger",
     "tsp lemon juice": "alnatura_lemon_juice",
+    "tsp mustard": "mustard_label_required",
     "turnip": "season_turnip",
     "turnip(s), peeled and finely diced (optional)": "season_turnip",
     "turnip(s), peeled and quartered": "season_turnip",
@@ -7981,6 +8266,8 @@
     "unsweetened coconut drink": "coconut_drinks",
     "unsweetened soy milk": "soy_drinks",
     "vanilla skyr": "skyr_label_required",
+    "vanilla yogurt": "label_required",
+    "vegan mayonnaise": "mayonnaise_label_required",
     "vegetable juice": "alnatura_vegetable_juice",
     "vegetable spread": "label_required",
     "vegetarian spread": "label_required",
@@ -8013,6 +8300,8 @@
     "waxy potatoes": "season_potato",
     "waxy potatoes, peeled and cut into pieces": "season_potato",
     "wheat flour": "dry_staple",
+    "whipping cream": "label_required",
+    "whipping cream without carrageenan": "label_required",
     "white asparagus": "season_asparagus",
     "white asparagus tips": "season_asparagus",
     "white beans": "alnatura_white_beans",
@@ -8032,6 +8321,12 @@
     "white potatoes": "season_potato",
     "white sugar": "dry_staple",
     "whole milk": "milk",
+    "whole-grain mustard": "mustard_label_required",
+    "wholegrain mustard": "mustard_label_required",
+    "wholegrain mustard (for finishing)": "mustard_label_required",
+    "wholegrain mustard (for seasoning)": "mustard_label_required",
+    "wholegrain mustard (for seasoning), a little": "mustard_label_required",
+    "wholegrain mustard, a little for finishing": "mustard_label_required",
     "wild garlic": "season_wild_garlic",
     "wild garlic, finely chopped": "season_wild_garlic",
     "yellow (or red) tomatoes, peeled and chopped": "season_tomato",
@@ -8047,7 +8342,10 @@
     "yellow peaches, washed and halved": "season_peach",
     "yellow pepper": "season_bell_pepper",
     "yellow pepper, peeled and diced": "season_bell_pepper",
+    "yoghurt": "label_required",
     "yogurt": "label_required",
+    "yogurt (125 g cup measure)": "label_required",
+    "yogurt (125–150 g each)": "label_required",
     "zucchini": "season_courgette",
     "zucchini (1 kg = 10 pieces)": "season_courgette",
     "zucchini cut into small cubes": "season_courgette",

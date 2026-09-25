@@ -200,8 +200,12 @@ def opening_window(profile: dict[str, Any], lot: dict[str, Any], *, temperature_
                 or barcode in {_gtin(code) for code in rule["productBarcodes"]}
             )
         ]
+        brand_rules = [
+            rule for rule in rules if rule.get("brand")
+            and _name(rule["brand"]) == _name(lot.get("brand"))
+        ]
         candidates = []
-        for rule in product_rules or rules:
+        for rule in product_rules or brand_rules or rules:
             if rule.get("brand") and _name(rule["brand"]) != _name(lot.get("brand")):
                 continue
             if "productBarcodes" in rule and barcode not in {_gtin(code) for code in rule["productBarcodes"]}:
