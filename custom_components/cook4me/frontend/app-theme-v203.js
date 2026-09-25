@@ -112,6 +112,17 @@ export const APP_THEME = `
 :host(.ui203) .v202-recipe-gap p{font-size:.86rem}
 :host(.ui203) [data-v202-gap-info]{border-radius:12px!important;background:var(--ui203-soft);color:var(--ui203-muted);font-size:.88rem}
 /* Panels, kitchen, shopping, preferences and dialogs use the same visual rules. */
+:host(.ui203) .ui233-diet-section>h2{margin:0 0 18px!important}
+:host(.ui203) .ui233-diet-section>[data-v83-profiles]{display:grid;gap:14px;min-width:0}
+:host(.ui203) .ui233-diet-section .v83-diet-card{margin:0!important;padding:16px!important;border-radius:14px!important;background:var(--ui203-raised)!important;box-shadow:none!important;min-width:0}
+:host(.ui203) .ui233-diet-section .v83-diet-card>summary{min-height:44px;font-size:1rem;list-style:none;overflow-wrap:anywhere}
+:host(.ui203) .ui233-diet-section .v83-diet-card>summary::-webkit-details-marker{display:none}
+:host(.ui203) .ui233-diet-section .v83-diet-card>summary>span{min-width:0}
+:host(.ui203) .ui233-diet-section .v83-profile-actions{margin:0}
+:host(.ui203) .ui233-diet-section [data-v83-save]{justify-self:start;max-width:100%;white-space:normal}
+:host(.ui203) .ui233-diet-section [data-v83-status]:empty{display:none}
+:host(.ui203) .ui233-other-preferences textarea{display:block;min-height:100px;resize:vertical}
+@media(max-width:680px){:host(.ui203) .ui233-diet-section .v83-diet-card{padding:12px!important}}
 :host(.ui203) [data-v179-fold],:host(.ui203) [data-v137-week-panel],:host(.ui203) .v145-week-pattern{margin-block:16px!important;padding:20px!important;background:var(--ui203-surface)!important}
 :host(.ui203) .v179-fold-head,:host(.ui203) .v137-week-head{padding:0!important;min-height:32px;gap:12px!important}
 :host(.ui203) .v179-fold-title{font-size:1rem!important;font-weight:600}
