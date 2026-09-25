@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.18",
+  "version": "2026-09-25.19",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -266,7 +266,7 @@
     "bund_bavarian_seasons": {
       "publisher": "BUND Naturschutz in Bayern",
       "url": "https://www.bund-naturschutz.de/oekologisch-leben/essen-und-trinken/bayerischer-saisonkalender",
-      "reviewedOn": "2026-09-24"
+      "reviewedOn": "2026-09-25"
     },
     "alnatura_apfelmark_360g": {
       "publisher": "Alnatura",
@@ -1131,6 +1131,36 @@
     "alnatura_season_tomato": {
       "publisher": "Alnatura – national seasonal calendar",
       "url": "https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/tomaten-saison/",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_peanut_sauce": {
+      "publisher": "dm-drogerie markt",
+      "url": "https://www.dm.de/p/d/1682196/dmbio-erdnusssosse-sate-wuerzig-nussig",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_peanut_butter": {
+      "publisher": "dm-drogerie markt",
+      "url": "https://www.dm.de/p/d/1446281/dmbio-erdnussmus",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_almond_butter": {
+      "publisher": "dm-drogerie markt",
+      "url": "https://www.dm.de/p/d/1449136/dmbio-mandelmus-weiss",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_tahini": {
+      "publisher": "dm-drogerie markt",
+      "url": "https://www.dm.de/p/d/3064622/dmbio-sesammus-tahin",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_ground_hazelnuts": {
+      "publisher": "dm-drogerie markt Österreich",
+      "url": "https://www.dm.at/p/d/3060015/dmbio-haselnuesse-gemahlen",
+      "reviewedOn": "2026-09-25"
+    },
+    "vz_nut_storage": {
+      "publisher": "Verbraucherzentrale",
+      "url": "https://www.verbraucherzentrale.de/wissen/lebensmittel/auswaehlen-zubereiten-aufbewahren/nuesse-laenger-haltbar-durch-richtige-lagerung-58935",
       "reviewedOn": "2026-09-25"
     }
   },
@@ -7693,6 +7723,23 @@
             "productBarcodes": [
               "4104420257863"
             ]
+          },
+          {
+            "id": "dmbio_peanut_sauce",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_peanut_sauce",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447377903"
+            ]
           }
         ]
       }
@@ -9390,6 +9437,53 @@
           }
         ]
       }
+    },
+    "ground_nuts_label_required": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "reason": "product_formulation_varies",
+        "sourceIds": [
+          "vz_nut_storage",
+          "dmbio_ground_hazelnuts",
+          "vz_opening"
+        ]
+      }
+    },
+    "nut_butter_label_required": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "reason": "product_formulation_varies",
+        "sourceIds": [
+          "dmbio_peanut_butter",
+          "dmbio_almond_butter",
+          "vz_opening"
+        ]
+      }
+    },
+    "tahini_label_required": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "reason": "product_formulation_varies",
+        "sourceIds": [
+          "dmbio_tahini",
+          "vz_opening"
+        ]
+      }
     }
   },
   "canonicalNames": {
@@ -9419,6 +9513,7 @@
     "a- soy sauce": "soy_sauce_label_required",
     "a- unsweetened soy milk": "soy_drinks",
     "ajvar": "ajvar",
+    "almond butter": "nut_butter_label_required",
     "almond drink": "alpro_drinks",
     "almond milk": "alpro_drinks",
     "apple": "season_apple",
@@ -9824,6 +9919,7 @@
     "cream cheese, cut into bite-size pieces": "cream_cheese",
     "cream quark": "label_required",
     "crumbled feta cheese": "feta",
+    "crunchy peanut butter": "nut_butter_label_required",
     "crushed garlic": "season_garlic",
     "crushed garlic cloves": "season_garlic",
     "crushed hazelnuts": "season_hazelnut",
@@ -10175,8 +10271,10 @@
     "green pepper, peeled and cut into 3 cm strips": "season_bell_pepper",
     "green savoy cabbage leaf": "season_savoy_cabbage",
     "greengages": "season_mirabelle",
+    "ground almonds": "ground_nuts_label_required",
+    "ground almonds (125 g cup measure)": "ground_nuts_label_required",
     "ground black pepper": "dry_staple",
-    "ground hazelnuts": "season_hazelnut",
+    "ground hazelnuts": "ground_nuts_label_required",
     "half a chopped onion": "season_onion",
     "half a lemon": "season_lemon",
     "half-fat cream": "label_required",
@@ -10186,6 +10284,7 @@
     "handful of blueberries": "season_blueberry",
     "handful of spinach, washed and roughly chopped": "season_spinach",
     "handful(s) of grated carrots": "season_carrot",
+    "hazelnut": "season_hazelnut",
     "hazelnut milk": "hazelnut_drinks",
     "hazelnut milk (from organic food stores)": "hazelnut_drinks",
     "hazelnuts": "season_hazelnut",
@@ -10474,6 +10573,7 @@
     "peach/peaches": "season_peach",
     "peaches": "season_peach",
     "peaches, not too ripe": "season_peach",
+    "peanut butter": "nut_butter_label_required",
     "pear": "season_pear",
     "pear, peeled and quartered": "season_pear",
     "pear, quartered": "season_pear",
@@ -10921,6 +11021,13 @@
     "tablespoons mustard": "mustard_label_required",
     "tablespoons of lime juice": "alnatura_lime_juice",
     "tablespoons thick fresh cream": "label_required",
+    "tahini": "tahini_label_required",
+    "tahini (or sesame paste, from the organic products section)": "tahini_label_required",
+    "tahini (sesame paste)": "tahini_label_required",
+    "tahini (sesame seed paste)": "tahini_label_required",
+    "tahini paste": "tahini_label_required",
+    "tahini paste (sesame seed paste)": "tahini_label_required",
+    "tahini, sesame paste": "tahini_label_required",
     "tarragon": "season_tarragon",
     "tarragon, chopped": "season_tarragon",
     "tarragon, finely chopped": "season_tarragon",
@@ -11202,6 +11309,9 @@
     "M_FOOD_325": "mozzarella",
     "M_FOOD_326": "season_blackberry",
     "M_FOOD_327": "season_blueberry",
+    "M_FOOD_329": "season_hazelnut",
+    "M_FOOD_330": "ground_nuts_label_required",
+    "M_FOOD_34": "nut_butter_label_required",
     "M_FOOD_341": "season_onion",
     "M_FOOD_343": "season_spring_onion",
     "M_FOOD_347": "season_orange",
@@ -11223,6 +11333,7 @@
     "M_FOOD_394": "season_apple",
     "M_FOOD_395": "season_potato",
     "M_FOOD_40": "season_leek",
+    "M_FOOD_400": "ground_nuts_label_required",
     "M_FOOD_406": "season_plum",
     "M_FOOD_412": "season_radish",
     "M_FOOD_413": "season_grape",
@@ -11251,6 +11362,7 @@
     "M_FOOD_539": "seitan",
     "M_FOOD_548": "alnatura_sauerkraut",
     "M_FOOD_561": "cream_cheese",
+    "M_FOOD_571": "season_sorrel",
     "M_FOOD_581": "season_potato",
     "M_FOOD_595": "kimchi",
     "M_FOOD_6": "season_garlic",
@@ -11264,6 +11376,8 @@
     "M_FOOD_64": "season_peach",
     "M_FOOD_653": "alnatura_kidney_beans",
     "M_FOOD_681": "label_required",
+    "M_FOOD_697": "season_lemon_balm",
+    "M_FOOD_706": "tahini_label_required",
     "M_FOOD_727": "season_sweet_potato",
     "M_FOOD_733": "taifun_plain_tofu",
     "M_FOOD_743": "season_bell_pepper",
