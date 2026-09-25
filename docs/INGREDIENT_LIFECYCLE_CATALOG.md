@@ -5,7 +5,7 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.16)
+## Reviewed coverage (2026-09-25.17)
 
 - 112 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
@@ -51,8 +51,8 @@ cloud credentials, or per-scan file reads are needed.
   Five more plant-drink packages and one ginger juice retain their storage instructions.
   Seven condiment/sauce packages add ketchup, Ajvar, curry and tomato sauces.
   Two fermented-vegetable packages add kimchi and sauerkraut guidance.
-  There are 132 reviewed product barcodes, 1,732 exact canonical names and
-  105 reviewed provider ingredient IDs.
+  There are 132 reviewed product barcodes, 1,731 exact canonical names and
+  125 reviewed provider ingredient IDs.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
   coconut cream, unverified tomato paste, unverified ketchup and Skyr, plus mustard, mayonnaise and
@@ -64,6 +64,73 @@ cloud credentials, or per-scan file reads are needed.
 Run `python tools/audit_ingredient_lifecycle.py` for counts against the actual
 shipped catalog. Counts distinguish seasonal, numeric and label-required
 entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
+
+## Batch 23: existing guidance on selectable provider ingredients
+
+Twenty reviewed provider rows lacked lifecycle metadata because these official
+rows have no classification field and require an explicit identity allowlist.
+The classification gate remains intact. The following exact IDs now expose
+their already reviewed profiles on the real Greek, German and English choices:
+
+| Ingredients | Provider IDs | Existing guidance |
+| --- | --- | --- |
+| Milk, semi-skimmed milk, whole milk | `M_FOOD_263`, `M_FOOD_269`, `M_FOOD_271` | Conditional milk rule; heat treatment and refrigeration must be confirmed |
+| Hazelnut drink | `M_FOOD_268` | Alpro brand guidance or the exact Alnatura package |
+| Lentils, red kidney beans | `M_FOOD_280`, `M_FOOD_653` | Verified Alnatura/dmBio packages with their own handling conditions |
+| Salsa, satay sauce | `M_FOOD_533`, `M_FOOD_534` | Their exact Alnatura packages |
+| Coconut cream, cream, crème fraîche, cottage cheese, sour cream, thick crème fraîche, yoghurt, liquid cream | `M_FOOD_507`, `M_FOOD_681`, `M_FOOD_150`, `M_FOOD_184`, `M_FOOD_614`, `M_FOOD_151`, `M_FOOD_497`, `M_FOOD_152` | Package label required; no numeric interval |
+| Mayonnaise, mustard, wholegrain mustard, soy sauce | `M_FOOD_306`, `M_FOOD_323`, `M_FOOD_324`, `M_FOOD_444` | Package label required; no numeric interval |
+
+This batch adds no new barcode or opening duration. The
+[milk guidance](https://www.bzfe.de/kueche-und-alltag/vom-acker-bis-zum-teller/milch/vom-einkauf-in-die-kueche),
+[Alnatura hazelnut drink](https://www.alnatura.de/de-de/produkte/alle-produkte/milch-milchprodukte/milchalternativen/bio-mandeldrink-bio-nussdrink/haselnussdrink-natur-229385/),
+[salsa](https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/wuerzen-oele-essige/bio-senf-mayo-ketchup-bio-dip/salsa-dip-218906/)
+and [peanut sauce](https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/bio-sossen/erdnuss-sauce-243700/)
+were rechecked on 2026-09-25. Existing exact-package rules, temperature limits,
+container-transfer requirements, printed-date precedence and opening opt-in
+remain unchanged. Generic lentil/bean names cannot select a canned-product
+interval without that product's identity. The milk rule does not establish
+heat treatment from fat content and does not apply to raw or powdered milk.
+The previously unmapped `M_FOOD_653` has an unspecified English kidney-bean
+form and a canned Japanese label. It now receives the product-only profile,
+whose season is unknown and whose every rule requires a reviewed barcode;
+the generic canned-food profile remains inapplicable. The earlier regression
+now verifies that missing package identity cannot produce an opening date,
+including with a canned-food brand such as Bonduelle.
+Unreviewed herb forms, ambiguous identities and non-food rows are not made
+eligible by this mapping work.
+
+German supermarket labels now use `Haselnussdrink`, `Satésauce` and
+`Fettarme Milch`, retaining search aliases such as `Haselnussmilch`,
+`Sataysauce`, `Saté-Sauce` and `Teilentrahmte Milch`. Crème fraîche is labelled
+`Crème fraîche` instead of `Sahne`; the thick variant shares that supermarket
+name while retaining its source identity. Cream remains a separate choice.
+Locale lookup keys use the presentation layer's accent-free normalization;
+display labels retain their accents. Existing Greek labels are preserved.
+
+Two German profiles now use national Alnatura calendars:
+
+| Ingredient | Reviewed availability | Source |
+| --- | --- | --- |
+| Broccoli | May–November, including smaller supply in May, June, October and November | [Broccoli calendar](https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/brokkoli-saison/) |
+| Fresh tomatoes | June–October, including smaller supply in June, July and October | [Tomato calendar](https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/tomaten-saison/) |
+
+Tomatoes retain their previous months, with a national supply basis replacing
+regional monthly highlights; broccoli gains May. Both remain approximate,
+with unlisted months and unsupported countries unknown. The ambiguous exact
+entry `Tomato, tomato paste` no longer borrows a fresh-tomato calendar.
+Preserved, dried and frozen forms do not inherit these seasons.
+
+Coverage reaches 3,238 ingredient rows: 2,237 seasonal, 574 with numeric opening
+guidance and 427 label-required. The numeric and label increases come from
+making existing evidence available on eight and twelve provider rows,
+respectively. One mixed entry is removed from seasonal coverage.
+
+Local validation: `tests/test_catalog_lifecycle_v237.py`, the lifecycle
+regression suite, amount-free choices and seasonal-filter tests, and
+`tests/browser_catalog_lifecycle_v237.py` on mobile and desktop. The browser
+checks the actual multilingual rows, seasonal boundaries and package editors,
+including the milk heat-treatment and non-metal-container confirmations.
 
 ## Batch 22: fermented vegetables, roots and stalks
 
