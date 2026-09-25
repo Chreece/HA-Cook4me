@@ -5,7 +5,7 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.15)
+## Reviewed coverage (2026-09-25.16)
 
 - 112 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
@@ -18,7 +18,7 @@ cloud credentials, or per-scan file reads are needed.
   Nine further produce groups now have Greek evidence, including pomegranate.
   Fresh nettle leaves now have a Bavarian harvest profile; national German
   guidance expands bell-pepper, spring-onion and parsnip availability.
-- 77 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+- 78 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro, Oatly or verified Alnatura packages), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
@@ -50,8 +50,9 @@ cloud credentials, or per-scan file reads are needed.
   Eight juice packages add separate flavour/size rules and upright storage where labelled.
   Five more plant-drink packages and one ginger juice retain their storage instructions.
   Seven condiment/sauce packages add ketchup, Ajvar, curry and tomato sauces.
-  There are 130 reviewed product barcodes, 1,732 exact canonical names and
-  103 reviewed provider ingredient IDs.
+  Two fermented-vegetable packages add kimchi and sauerkraut guidance.
+  There are 132 reviewed product barcodes, 1,732 exact canonical names and
+  105 reviewed provider ingredient IDs.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
   coconut cream, unverified tomato paste, unverified ketchup and Skyr, plus mustard, mayonnaise and
@@ -63,6 +64,66 @@ cloud credentials, or per-scan file reads are needed.
 Run `python tools/audit_ingredient_lifecycle.py` for counts against the actual
 shipped catalog. Counts distinguish seasonal, numeric and label-required
 entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
+
+## Batch 22: fermented vegetables, roots and stalks
+
+Two dmBio packages were reviewed on 2026-09-25. Each requires the exact brand
+and GTIN, refrigeration and the catalog's existing conservative maximum of
+4 °C. This numerical temperature cap comes from the BfR cooling policy; the
+product pages themselves specify refrigeration without a temperature.
+
+| Package and label source | Verified GTIN | Days after opening |
+| --- | --- | --- |
+| [Kimchi, pasteurized fermented white cabbage, 270 g / 240 g drained](https://www.dm.de/p/d/1639878/dmbio-kimchi-fermentiertes-gemuese) | `4066447087130` | 3 |
+| [Mild sauerkraut, 520 g / 500 g drained](https://www.dm.de/p/d/1530880/dmbio-mildes-sauerkraut) | `4066447677652` | 3 |
+
+The existing plain kimchi ingredient gains a processed-food profile. Its rule
+does not transfer to napa-cabbage kimchi, kimchi brine, aged/sour kimchi or a
+homemade preparation. Sauerkraut retains its existing Alnatura package rule.
+Exact provider mappings for `M_FOOD_595` and `M_FOOD_548` make both profiles
+available on the actual Greek, German and English picker entries. Canonical
+names alone had left the selectable provider sauerkraut row without guidance.
+No new ingredient rows or duplicates are created.
+
+Choosing guidance still requires storage confirmation. It does not mark the
+package opened or apply an expiry automatically; manual package instructions
+and earlier printed dates retain priority. Neither fermented vegetable inherits
+fresh cabbage seasonality. Cooking a product is not a new package-opening event.
+
+The reviewed [dmBio capers](https://www.dm.de/p/d/3095647/dmbio-kapern),
+[tomatoes in oil](https://www.dm.de/p/d/1488097/dmbio-tomaten-sonnengetrocknet-eingelegt-in-oel)
+and [soft dried tomatoes](https://www.dm.de/p/d/1638727/dmbio-soft-tomaten)
+only specify prompt use or a few days. Their GTINs `4066447876468`,
+`4066447898729` and `4066447885019` therefore receive no numeric rule.
+
+Three German produce profiles now use national Alnatura calendars:
+
+| Ingredient | Reviewed availability | Basis/source |
+| --- | --- | --- |
+| Celeriac | January–March and May–December | [Fresh May–November, stored December–March](https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/sellerie-saison/) |
+| Celery stalks | May–October | [Domestic supply, including smaller May, June and October availability](https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/stangensellerie-saison/) |
+| Brussels sprouts | September–February | [Domestic supply, including smaller September, January and February availability](https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/rosenkohl-saison/) |
+
+These remain approximate German calendars. Unlisted months and other countries
+remain unknown; fresh seasons do not apply to frozen or cooked products.
+The exact mixed name `Celery stalk, carrot` is removed from the celery allowlist
+because one component's calendar cannot establish availability for the mixture.
+
+German supermarket labels now distinguish `Stangensellerie` from
+`Knollensellerie`; `Staudensellerie` and `Bleichsellerie` remain searchable.
+Parsley root uses `Petersilienwurzel`, with `Wurzelpetersilie` as a search alias.
+Existing Greek names and ingredient identities are preserved.
+
+Coverage reaches 3,219 ingredient rows: 2,238 seasonal, 566 with numeric opening
+guidance and 415 label-required. The seasonal count decreases by one because
+the mixed celery/carrot entry no longer borrows a single-vegetable calendar.
+The source catalog remains explicitly incomplete.
+
+Local checks: `tests/test_catalog_lifecycle_v236.py`, the lifecycle regression
+suite, amount-free catalog choices and seasonal-filter tests, plus
+`tests/browser_catalog_lifecycle_v236.py` at mobile and desktop sizes. Browser
+coverage uses the real enriched rows, Greek UI with German supermarket names,
+month boundaries, both package editors and opening confirmation.
 
 ## Batch 21: condiments, year-round produce and catalog identity
 

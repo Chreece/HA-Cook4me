@@ -1,11 +1,13 @@
 {
   "schemaVersion": 1,
   "language": "de",
-  "translationSource": "German supermarket names reviewed for lifecycle batch 21, 2026-09-25. Display/search only.",
+  "translationSource": "German supermarket names reviewed for lifecycle batch 22, 2026-09-25. Display/search only.",
   "labels": {
+    "celery": "Stangensellerie",
     "curry sauce": "Currysauce",
     "ginger juice": "Ingwersaft",
     "lamb's lettuce": "Feldsalat",
+    "parsley root": "Petersilienwurzel",
     "plant milk": "Pflanzendrink"
   },
   "searchAliases": {
@@ -16,6 +18,13 @@
     "curry sauce": [
       "Currysoße",
       "Currysosse"
+    ],
+    "celery": [
+      "Staudensellerie",
+      "Bleichsellerie"
+    ],
+    "parsley root": [
+      "Wurzelpetersilie"
     ]
   }
 }
