@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.10",
+  "version": "2026-09-25.11",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -807,6 +807,71 @@
       "publisher": "VerbraucherService Bayern",
       "url": "https://www.verbraucherservice-bayern.de/themen/hauswirtschaft/brennnessel-superfood-und-pflanzenpflege",
       "reviewedOn": "2026-09-25"
+    },
+    "dmbio_kidney_beans": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1635195/dmbio-kidneybohnen",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_cannellini_beans": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1627399/dmbio-cannellini-bohnen",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_brown_lentils": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1635196/dmbio-braune-linsen",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_sweetcorn": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1588131/dmbio-sonnenmais",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_tomato_pieces": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1440255/dmbio-tomatenstuecke-natur",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_oat_cuisine": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1451202/dmbio-hafer-creme-cuisine",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_soy_cuisine": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1451212/dmbio-soja-creme-cuisine",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_almond_cuisine": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/3084734/dmbio-mandel-creme-cuisine",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_apple_puree": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1454123/dmbio-fruchtmark-apfel",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_apple_puree_cold_grated": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1634190/dmbio-fruchtmark-apfel-kaltgerieben",
+      "reviewedOn": "2026-09-25"
+    },
+    "bzfe_courgette_harvest": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/presse/pressemeldungen-archiv-2024-und-frueher/zucchini-das-chamaeleon-in-der-kueche",
+      "reviewedOn": "2026-09-25"
+    },
+    "bzfe_cucumber_availability": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/presse/pressemeldungen-archiv/vom-snack-bis-ins-einmachglas",
+      "reviewedOn": "2026-09-25"
+    },
+    "bzfe_blueberry_availability": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/presse/pressemeldungen-archiv/heimische-heidelbeerzeit",
+      "reviewedOn": "2026-09-25"
     }
   },
   "profiles": {
@@ -990,16 +1055,18 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
             "months": [
+              6,
               7,
-              8
+              8,
+              9,
+              10
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_07",
-              "hessen_08"
+              "bzfe_blueberry_availability"
             ],
             "coverage": "listed_months_only"
           }
@@ -2490,20 +2557,21 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
             "months": [
+              3,
+              4,
+              5,
               6,
               7,
               8,
-              9
+              9,
+              10
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_06",
-              "hessen_07",
-              "hessen_08",
-              "hessen_09"
+              "bzfe_cucumber_availability"
             ],
             "coverage": "listed_months_only"
           }
@@ -2610,20 +2678,19 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "outdoor_harvest",
             "months": [
+              5,
               6,
               7,
               8,
-              9
+              9,
+              10
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_06",
-              "hessen_07",
-              "hessen_08",
-              "hessen_09"
+              "bzfe_courgette_harvest"
             ],
             "coverage": "listed_months_only"
           }
@@ -4321,6 +4388,25 @@
             "productBarcodes": [
               "4104420187894"
             ]
+          },
+          {
+            "id": "dmbio_kidney_beans",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_nonmetal_container"
+            ],
+            "sourceIds": [
+              "dmbio_kidney_beans",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796187038"
+            ]
           }
         ]
       }
@@ -4399,6 +4485,25 @@
               "usda_cooling"
             ],
             "kind": "general_guidance"
+          },
+          {
+            "id": "dmbio_kidney_beans",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_nonmetal_container"
+            ],
+            "sourceIds": [
+              "dmbio_kidney_beans",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796187038"
+            ]
           }
         ]
       }
@@ -4445,6 +4550,25 @@
             "brand": "Alnatura",
             "productBarcodes": [
               "4104420187979"
+            ]
+          },
+          {
+            "id": "dmbio_cannellini_beans",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_nonmetal_container"
+            ],
+            "sourceIds": [
+              "dmbio_cannellini_beans",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796187052"
             ]
           }
         ]
@@ -4524,6 +4648,25 @@
               "usda_cooling"
             ],
             "kind": "general_guidance"
+          },
+          {
+            "id": "dmbio_cannellini_beans",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_nonmetal_container"
+            ],
+            "sourceIds": [
+              "dmbio_cannellini_beans",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796187052"
+            ]
           }
         ]
       }
@@ -4551,6 +4694,25 @@
             "brand": "Alnatura",
             "productBarcodes": [
               "4104420187931"
+            ]
+          },
+          {
+            "id": "dmbio_brown_lentils",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_nonmetal_container"
+            ],
+            "sourceIds": [
+              "dmbio_brown_lentils",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447373189"
             ]
           }
         ]
@@ -4611,6 +4773,25 @@
               "usda_cooling"
             ],
             "kind": "general_guidance"
+          },
+          {
+            "id": "dmbio_brown_lentils",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_nonmetal_container"
+            ],
+            "sourceIds": [
+              "dmbio_brown_lentils",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447373189"
+            ]
           }
         ]
       }
@@ -4701,6 +4882,23 @@
               "usda_cooling"
             ],
             "kind": "general_guidance"
+          },
+          {
+            "id": "dmbio_sweetcorn",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_sweetcorn",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796153903"
+            ]
           }
         ]
       }
@@ -4745,6 +4943,25 @@
               "usda_cooling"
             ],
             "kind": "general_guidance"
+          },
+          {
+            "id": "dmbio_tomato_pieces",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_nonmetal_container"
+            ],
+            "sourceIds": [
+              "dmbio_tomato_pieces",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447887679"
+            ]
           }
         ]
       }
@@ -4970,6 +5187,40 @@
             "brand": "Alnatura",
             "productBarcodes": [
               "4104420227408"
+            ]
+          },
+          {
+            "id": "dmbio_apple_puree",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_apple_puree",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796068498"
+            ]
+          },
+          {
+            "id": "dmbio_apple_puree_cold_grated",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_apple_puree_cold_grated",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796068559"
             ]
           }
         ]
@@ -5617,6 +5868,23 @@
             "productBarcodes": [
               "4104420095205"
             ]
+          },
+          {
+            "id": "dmbio_soy_cuisine",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_soy_cuisine",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765067460"
+            ]
           }
         ]
       }
@@ -5692,6 +5960,57 @@
             "brand": "Alnatura",
             "productBarcodes": [
               "4104420240940"
+            ]
+          },
+          {
+            "id": "dmbio_oat_cuisine",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_oat_cuisine",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447965988"
+            ]
+          },
+          {
+            "id": "dmbio_soy_cuisine",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_soy_cuisine",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765067460"
+            ]
+          },
+          {
+            "id": "dmbio_almond_cuisine",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_almond_cuisine",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447876642"
             ]
           }
         ]
@@ -9707,15 +10026,102 @@
     "★ cherry tomatoes, stems removed": "season_tomato"
   },
   "ingredientIds": {
+    "M_FOOD_1": "season_apricot",
+    "M_FOOD_106": "season_white_cabbage",
+    "M_FOOD_107": "season_chinese_cabbage",
+    "M_FOOD_108": "season_brussels_sprout",
+    "M_FOOD_109": "season_cauliflower",
+    "M_FOOD_110": "season_kohlrabi",
+    "M_FOOD_111": "season_romanesco",
+    "M_FOOD_112": "season_red_cabbage",
+    "M_FOOD_117": "season_lemon",
+    "M_FOOD_120": "season_pumpkin",
+    "M_FOOD_121": "season_clementine",
+    "M_FOOD_126": "season_quince",
+    "M_FOOD_132": "season_cucumber",
+    "M_FOOD_146": "season_pumpkin",
+    "M_FOOD_147": "season_courgette",
+    "M_FOOD_153": "season_watercress",
+    "M_FOOD_166": "season_shallot",
+    "M_FOOD_171": "season_chicory",
+    "M_FOOD_177": "season_spinach",
+    "M_FOOD_19": "season_artichoke",
+    "M_FOOD_190": "season_fennel",
+    "M_FOOD_191": "feta",
+    "M_FOOD_194": "season_fig",
+    "M_FOOD_20": "season_asparagus",
+    "M_FOOD_21": "season_asparagus",
+    "M_FOOD_210": "season_strawberry",
+    "M_FOOD_211": "season_raspberry",
+    "M_FOOD_22": "season_asparagus",
+    "M_FOOD_220": "season_fresh_ginger",
+    "M_FOOD_222": "gorgonzola",
+    "M_FOOD_229": "season_redcurrant",
+    "M_FOOD_23": "season_aubergine",
+    "M_FOOD_236": "season_green_bean",
+    "M_FOOD_238": "season_green_bean",
+    "M_FOOD_255": "alnatura_lemon_juice",
+    "M_FOOD_256": "alnatura_apple_juice",
+    "M_FOOD_257": "alnatura_tomato_juice",
+    "M_FOOD_258": "alnatura_orange_juice",
+    "M_FOOD_261": "season_kiwi",
     "M_FOOD_267": "reishunger_coconut_milk",
+    "M_FOOD_272": "season_lettuce",
+    "M_FOOD_300": "season_mandarin",
+    "M_FOOD_305": "mascarpone",
+    "M_FOOD_32": "season_beetroot",
+    "M_FOOD_325": "mozzarella",
+    "M_FOOD_326": "season_blackberry",
+    "M_FOOD_327": "season_blueberry",
+    "M_FOOD_341": "season_onion",
     "M_FOOD_343": "season_spring_onion",
+    "M_FOOD_347": "season_orange",
+    "M_FOOD_354": "season_grapefruit",
     "M_FOOD_355": "season_parsnip",
+    "M_FOOD_360": "season_sweet_potato",
+    "M_FOOD_366": "season_peach",
+    "M_FOOD_373": "cream_cheese",
+    "M_FOOD_382": "season_pear",
+    "M_FOOD_383": "season_leek",
     "M_FOOD_389": "season_bell_pepper",
     "M_FOOD_390": "season_bell_pepper",
     "M_FOOD_391": "season_bell_pepper",
     "M_FOOD_392": "season_bell_pepper",
+    "M_FOOD_394": "season_apple",
+    "M_FOOD_395": "season_potato",
+    "M_FOOD_40": "season_leek",
+    "M_FOOD_406": "season_plum",
+    "M_FOOD_412": "season_radish",
+    "M_FOOD_413": "season_grape",
+    "M_FOOD_419": "ricotta",
+    "M_FOOD_424": "season_romaine",
+    "M_FOOD_427": "season_rocket",
+    "M_FOOD_433": "season_swede",
+    "M_FOOD_44": "season_chard",
+    "M_FOOD_445": "alnatura_tomato_sauce",
+    "M_FOOD_478": "season_tomato",
+    "M_FOOD_479": "season_tomato",
+    "M_FOOD_480": "season_jerusalem_artichoke",
+    "M_FOOD_527": "season_rhubarb",
+    "M_FOOD_561": "cream_cheese",
+    "M_FOOD_581": "season_potato",
+    "M_FOOD_6": "season_garlic",
+    "M_FOOD_613": "season_green_bean",
+    "M_FOOD_621": "season_pak_choi",
     "M_FOOD_624": "soy_drinks",
+    "M_FOOD_63": "season_broccoli",
+    "M_FOOD_631": "season_leek",
     "M_FOOD_634": "season_spring_onion",
-    "M_FOOD_743": "season_bell_pepper"
+    "M_FOOD_64": "season_peach",
+    "M_FOOD_727": "season_sweet_potato",
+    "M_FOOD_743": "season_bell_pepper",
+    "M_FOOD_748": "season_tomato",
+    "M_FOOD_79": "season_carrot",
+    "M_FOOD_8": "season_blueberry",
+    "M_FOOD_80": "season_blackcurrant",
+    "M_FOOD_82": "season_celery",
+    "M_FOOD_83": "season_celeriac",
+    "M_FOOD_91": "season_chanterelle",
+    "M_FOOD_94": "season_chestnut"
   }
 }
