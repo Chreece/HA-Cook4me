@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.6",
+  "version": "2026-09-25.7",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -646,6 +646,26 @@
     "alnatura_vegan_mayo_opening": {
       "publisher": "Alnatura",
       "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/wuerzen-oele-essige/bio-senf-mayo-ketchup-bio-dip/vegane-mayo-ohne-ei-211958/",
+      "reviewedOn": "2026-09-25"
+    },
+    "galbani_cheese_opening": {
+      "publisher": "Galbani",
+      "url": "https://www.galbani.de/kasewissen",
+      "reviewedOn": "2026-09-25"
+    },
+    "dodoni_cheese_opening": {
+      "publisher": "Dodoni",
+      "url": "https://uk.dodoni.com/contact-us/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_millet_flakes": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/cerealien/bio-flocken-flockenmischungen/hirseflocken-111231/",
+      "reviewedOn": "2026-09-25"
+    },
+    "kikkoman_soy_sauce_opening": {
+      "publisher": "Kikkoman",
+      "url": "https://www.kikkoman.de/ueber-kikkoman/anwendungstipps/haltbarkeit-lagerung",
       "reviewedOn": "2026-09-25"
     }
   },
@@ -6769,6 +6789,226 @@
         ],
         "reason": "no_numeric_manufacturer_window"
       }
+    },
+    "mozzarella": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "galbani_mozzarella",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "galbani_cheese_opening",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Galbani"
+          }
+        ]
+      }
+    },
+    "mascarpone": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "galbani_mascarpone",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "galbani_cheese_opening",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Galbani"
+          }
+        ]
+      }
+    },
+    "ricotta": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "galbani_ricotta",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "galbani_cheese_opening",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Galbani"
+          }
+        ]
+      }
+    },
+    "gorgonzola": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "galbani_gorgonzola",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "galbani_cheese_opening",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Galbani"
+          }
+        ]
+      }
+    },
+    "feta": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "dodoni_feta_vacuum_pack",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "vacuum_packed_feta"
+            ],
+            "sourceIds": [
+              "dodoni_cheese_opening",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Dodoni"
+          },
+          {
+            "id": "dodoni_feta_in_brine",
+            "daysMin": 8,
+            "daysMax": 8,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "feta_in_original_brine"
+            ],
+            "sourceIds": [
+              "dodoni_cheese_opening",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Dodoni"
+          }
+        ]
+      }
+    },
+    "halloumi": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "dodoni_halloumi",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 6,
+            "conditions": [
+              "airtight_container"
+            ],
+            "sourceIds": [
+              "dodoni_cheese_opening"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Dodoni"
+          }
+        ]
+      }
+    },
+    "millet_flakes": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_millet_flakes_500g",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "closed_container"
+            ],
+            "sourceIds": [
+              "alnatura_millet_flakes",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420013308"
+            ]
+          }
+        ]
+      }
+    },
+    "soy_sauce_label_required": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "sourceIds": [
+          "kikkoman_soy_sauce_opening"
+        ],
+        "reason": "no_numeric_manufacturer_window"
+      }
     }
   },
   "canonicalNames": {
@@ -6781,8 +7021,10 @@
     "*minced onion": "season_onion",
     "*red onion peeled and finely chopped": "season_onion",
     "15% fat cream": "label_required",
+    "2 tbsp soy sauce": "soy_sauce_label_required",
     "30% cream": "label_required",
     "30% whipping cream": "label_required",
+    "[a] soy sauce": "soy_sauce_label_required",
     "a - cream cheese (bring to room temperature)": "label_required",
     "a - rosemary": "season_rosemary",
     "a - thyme": "season_thyme",
@@ -6793,6 +7035,7 @@
     "a- mayonnaise (for sauce)": "mayonnaise_label_required",
     "a- milk": "milk",
     "a- pumpkin, seeds and skin removed, cut into 3 cm cubes": "season_pumpkin",
+    "a- soy sauce": "soy_sauce_label_required",
     "a- unsweetened soy milk": "soy_drinks",
     "almond drink": "alpro_drinks",
     "almond milk": "alpro_drinks",
@@ -6833,6 +7076,7 @@
     "b- milk": "milk",
     "b- milk, brought to room temperature": "milk",
     "b- snow peas, strings removed": "season_snow_pea",
+    "b- soy sauce (for dressing)": "soy_sauce_label_required",
     "b- tomato paste": "tomato_paste_label",
     "b- wholegrain mustard, a little": "mustard_label_required",
     "baby carrots": "season_carrot",
@@ -6845,6 +7089,7 @@
     "baby spinach, washed twice (large stems removed)": "season_spinach",
     "baked beans": "alnatura_baked_beans",
     "baked beans with tomatoes": "alnatura_baked_beans",
+    "ball mozzarella ball,cut into chunks": "mozzarella",
     "basil": "season_basil",
     "basil (optional)": "season_basil",
     "basil / purple basil, leaves picked": "season_basil",
@@ -6892,6 +7137,7 @@
     "bok choy": "season_pak_choi",
     "bok choy, chopped": "season_pak_choi",
     "bok choy, cut into 6 pieces": "season_pak_choi",
+    "brewed soy sauce": "soy_sauce_label_required",
     "broccoli": "season_broccoli",
     "broccoli florets": "season_broccoli",
     "broccoli florets, washed": "season_broccoli",
@@ -6919,6 +7165,7 @@
     "button mushrooms, washed and finely chopped": "season_button_mushroom",
     "c - pumpkin (5–7 mm thick, bite-size pieces)": "season_pumpkin",
     "c- onion, cut into half-moons": "season_onion",
+    "c- soy sauce": "soy_sauce_label_required",
     "canned baby carrots (drained)": "canned_vegetables",
     "canned baby carrots, drained": "canned_vegetables",
     "canned beans": "canned_vegetables",
@@ -7097,6 +7344,7 @@
     "chopped cream cheese": "label_required",
     "chopped dill": "season_dill",
     "chopped fennel": "season_fennel",
+    "chopped feta": "feta",
     "chopped fresh basil": "season_basil",
     "chopped fresh chives": "season_chives",
     "chopped fresh coriander": "season_coriander_leaf",
@@ -7179,6 +7427,7 @@
     "cream cheese": "label_required",
     "cream cheese, cut into bite-size pieces": "label_required",
     "cream quark": "label_required",
+    "crumbled feta cheese": "feta",
     "crushed garlic": "season_garlic",
     "crushed garlic cloves": "season_garlic",
     "crushed hazelnuts": "season_hazelnut",
@@ -7204,8 +7453,10 @@
     "diced carrots": "season_carrot",
     "diced eggplant": "season_aubergine",
     "diced eggplants": "season_aubergine",
+    "diced feta cheese": "feta",
     "diced green bell peppers": "season_bell_pepper",
     "diced melon": "season_melon",
+    "diced mozzarella": "mozzarella",
     "diced onion": "season_onion",
     "diced pickled cucumber": "alnatura_pickled_cucumber",
     "diced potatoes": "season_potato",
@@ -7224,6 +7475,7 @@
     "double cream (45% fat or more)": "label_required",
     "double cream (optional)": "label_required",
     "double-cream cream cheese": "label_required",
+    "drained ricotta": "ricotta",
     "dried beans": "dry_staple",
     "dried chickpeas": "dry_staple",
     "dried lentils": "dry_staple",
@@ -7261,6 +7513,8 @@
     "fennel, washed and diced": "season_fennel",
     "fennel, washed and finely chopped": "season_fennel",
     "fennel, washed and finely diced": "season_fennel",
+    "feta": "feta",
+    "feta cheese": "feta",
     "fig": "season_fig",
     "figs": "season_fig",
     "figs, cut into eighths": "season_fig",
@@ -7439,6 +7693,8 @@
     "golden delicious apples": "season_apple",
     "gooseberries": "season_gooseberry",
     "gooseberry": "season_gooseberry",
+    "gorgonzola": "gorgonzola",
+    "gorgonzola cheese": "gorgonzola",
     "granny smith apple, diced": "season_apple",
     "granny smith apple, washed and diced": "season_apple",
     "granny smith apple, washed and diced (quantity fragment: /2)": "season_apple",
@@ -7452,6 +7708,8 @@
     "grated carrot": "season_carrot",
     "grated carrots": "season_carrot",
     "grated garlic": "season_garlic",
+    "grated mozzarella": "mozzarella",
+    "grated mozzarella cheese": "mozzarella",
     "grated onion": "season_onion",
     "greek yoghurt": "label_required",
     "greek yogurt": "label_required",
@@ -7506,6 +7764,9 @@
     "ground hazelnuts": "season_hazelnut",
     "half a chopped onion": "season_onion",
     "half-fat cream": "label_required",
+    "halloumi": "halloumi",
+    "halloumi cheese": "halloumi",
+    "halloumi, sliced": "halloumi",
     "handful of blueberries": "season_blueberry",
     "handful of spinach, washed and roughly chopped": "season_spinach",
     "handful(s) of grated carrots": "season_carrot",
@@ -7617,6 +7878,8 @@
     "marinated artichokes": "alnatura_marinated_artichokes",
     "marjoram": "season_marjoram",
     "marjoram (for finishing), a little": "season_marjoram",
+    "mascarpone": "mascarpone",
+    "mascarpone cheese": "mascarpone",
     "mature pumpkin": "season_pumpkin",
     "mayonnaise": "mayonnaise_label_required",
     "mayonnaise (for finishing)": "mayonnaise_label_required",
@@ -7634,6 +7897,7 @@
     "melon, diced": "season_melon",
     "milk": "milk",
     "milk powder": "dry_staple",
+    "millet flakes": "millet_flakes",
     "minced carrot": "season_carrot",
     "minced garlic": "season_garlic",
     "minced garlic (seasoning)": "season_garlic",
@@ -7653,6 +7917,10 @@
     "mint, washed and finely chopped": "season_mint",
     "mirabelle plums": "season_mirabelle",
     "mixed-color bell pepper": "season_bell_pepper",
+    "mozzarella": "mozzarella",
+    "mozzarella ball, roughly chopped": "mozzarella",
+    "mozzarella slices": "mozzarella",
+    "mozzarella, thickly sliced": "mozzarella",
     "mustard": "mustard_label_required",
     "mustard (for finishing), a little": "mustard_label_required",
     "napa cabbage": "season_chinese_cabbage",
@@ -7802,6 +8070,8 @@
     "pitted olives, chopped": "alnatura_olives",
     "pitted olives, sliced": "alnatura_olives",
     "pitted plums, chopped": "season_plum",
+    "plain feta": "feta",
+    "plain feta cheese": "feta",
     "plain greek yogurt": "label_required",
     "plain yogurt": "label_required",
     "plant milk": "plant_drinks",
@@ -7930,6 +8200,8 @@
     "rhubarb, washed and cut into 3–4 cm pieces": "season_rhubarb",
     "rice": "dry_staple",
     "rice milk": "rice_drinks",
+    "ricotta": "ricotta",
+    "ricotta cheese": "ricotta",
     "ripe conference pears": "season_pear",
     "ripe european pears": "season_pear",
     "ripe pears, peeled and diced": "season_pear",
@@ -8010,6 +8282,7 @@
     "sliced garlic": "season_garlic",
     "sliced ginger": "season_fresh_ginger",
     "sliced green onion (for finishing)": "season_spring_onion",
+    "sliced mozzarella": "mozzarella",
     "sliced onion": "season_onion",
     "sliced onions": "season_onion",
     "sliced pumpkin, 8 mm thick": "season_pumpkin",
@@ -8028,6 +8301,8 @@
     "small hot red chili pepper": "season_fresh_chili",
     "small hot red chili pepper, deseeded": "season_fresh_chili",
     "small lettuce (or lettuce heart), chopped": "season_lettuce",
+    "small mozzarella balls": "mozzarella",
+    "small mozzarella balls, halved": "mozzarella",
     "small onion, washed and chopped": "season_onion",
     "small onions": "season_onion",
     "small onions, washed and chopped": "season_onion",
@@ -8052,6 +8327,13 @@
     "soy cream": "soy_cooking_cream",
     "soy milk": "soy_drinks",
     "soy milk, room temperature": "soy_drinks",
+    "soy sauce": "soy_sauce_label_required",
+    "soy sauce (for dressing)": "soy_sauce_label_required",
+    "soy sauce (for finishing)": "soy_sauce_label_required",
+    "soy sauce (for sauce)": "soy_sauce_label_required",
+    "soy sauce (for seasoning pork)": "soy_sauce_label_required",
+    "soy sauce (seasoning)": "soy_sauce_label_required",
+    "soy sauce, a little": "soy_sauce_label_required",
     "soy yoghurt": "alpro_alternatives",
     "soy yogurt": "alpro_alternatives",
     "soya yoghurt": "alpro_alternatives",
@@ -8156,6 +8438,7 @@
     "table salt": "dry_staple",
     "tablespoon of fresh coriander, washed and chopped (quantity count omitted)": "season_coriander_leaf",
     "tablespoon of fresh coriander, washed and chopped (quantity count omitted; mixed-language source)": "season_coriander_leaf",
+    "tablespoon of soy sauce": "soy_sauce_label_required",
     "tablespoons mustard": "mustard_label_required",
     "tablespoons of lime juice": "alnatura_lime_juice",
     "tablespoons thick fresh cream": "label_required",
@@ -8176,6 +8459,7 @@
     "tbsp lemon juice (to taste)": "alnatura_lemon_juice",
     "tbsp parsley, washed and chopped (to taste)": "season_parsley_leaf",
     "tbsp plain yogurt, for serving": "label_required",
+    "tbsp soy sauce": "soy_sauce_label_required",
     "tbsp tarragon, washed and chopped": "season_tarragon",
     "teaspoon of fresh ginger, peeled and chopped (quantity count omitted)": "season_fresh_ginger",
     "thick cooking cream": "label_required",

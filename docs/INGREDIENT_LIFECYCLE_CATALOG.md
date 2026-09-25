@@ -5,7 +5,7 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.6)
+## Reviewed coverage (2026-09-25.7)
 
 - 105 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
@@ -14,7 +14,7 @@ cloud credentials, or per-scan file reads are needed.
   chanterelles, mint, tarragon, lovage, oyster/king oyster mushrooms, shiitake,
   fresh coriander leaves, watercress, lemon balm, Romanesco, fresh chillies
   and romaine/Little Gem lettuce, fresh ginger, figs and summer purslane.
-- 61 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+- 68 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro, Oatly or verified Alnatura packages), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
@@ -31,13 +31,15 @@ cloud credentials, or per-scan file reads are needed.
   plant drinks and dried-tomato antipasti now also retain exact package windows.
   Bonduelle's canned-vegetable family adds conditional one-day guidance across
   six explicitly canned profiles, alongside the existing generic can intervals.
+  Galbani mozzarella, mascarpone, ricotta and Gorgonzola, Dodoni feta and halloumi,
+  and a verified Alnatura millet-flake package add separate opening profiles.
   Cream and yoghurt profiles are separate; olive
   profiles distinguish green, black, mixed and unspecified forms.
-  There are 70 reviewed product barcodes and 1,593 exact canonical names.
+  There are 71 reviewed product barcodes and 1,637 exact canonical names.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, cream cheese and
   coconut cream, tomato paste, ketchup and Skyr, plus mustard, mayonnaise and
-  additional cream, cream-cheese and yoghurt variants.
+  additional cream, cream-cheese and yoghurt variants, plus plain/brewed soy sauce.
 - Dry staples have no invented short spoilage countdown. Their package
   instructions still apply; missing data never means indefinitely safe.
 
@@ -209,7 +211,8 @@ handling conditions, source IDs and, where required, brand and `productBarcodes`
 Numeric evidence is general or manufacturer guidance, never a guaranteed
 spoilage/safety threshold.
 The conservative refrigerator cap for general and tofu guidance is 4 °C;
-Alpro's published maximum is 7 °C. The corresponding refrigeration sources are
+Alpro's published maximum is 7 °C; Dodoni halloumi uses its published 6 °C maximum.
+The corresponding refrigeration sources are
 included with each rule.
 
 Oat drinks retain separate Alpro (5 days) and Oatly (5–7 days) rules. The Oatly
@@ -231,12 +234,49 @@ home-cooked legumes, fruit, seafood, creamed corn and ready meals cannot select
 it. Missing handling evidence cannot fall back to the generic three-to-four-day
 can window. Other brands retain existing guidance and package-label overrides.
 
+Galbani's [cheese FAQ](https://www.galbani.de/kasewissen) gives two days for
+mozzarella, three for mascarpone and ricotta, and five for Gorgonzola after
+opening. Each rule requires the Galbani brand and refrigerator storage. The
+catalog uses a conservative 4 °C cap with BfR cooling evidence; this is narrower
+than Galbani's stated cheese-storage temperatures. These are family instructions,
+so no barcode is required. Reviewed plain, sliced, grated and drained forms are
+included, while ricotta salata, dessert creams, cooked dishes, cheese mixtures,
+generic blue cheese and other brands cannot select them.
+
+Dodoni's [FAQ](https://uk.dodoni.com/contact-us/) distinguishes vacuum-packed
+feta (four days) from feta packed in brine (eight days). Both require the Dodoni
+brand, refrigeration at the conservative BfR-backed 4 °C cap, and explicit package
+form confirmation. `vacuum_packed_feta` means the product was supplied in a vacuum
+pack; `feta_in_original_brine` means it was supplied in brine and remains in that
+original brine. Residual moisture in a vacuum pack, added water, homemade brine,
+oil marinade or an unspecified container do not confirm the brine-packed form.
+If both forms are confirmed, the shorter rule wins. Missing package information
+leaves the opening window label-required. Dodoni halloumi has a separate three-day
+rule requiring an `airtight_container` and the manufacturer's explicit 0–6 °C
+refrigeration range. Cooked/grilled halloumi, salad cheese and vegan alternatives
+are excluded. Package instructions and earlier printed dates still take precedence.
+
+Alnatura millet flakes are an explicit exception to ordinary dry-staple storage:
+the reviewed 500 g package says to refrigerate, close well and use within 14 days
+after opening. The rule requires Alnatura, its verified GTIN, `closed_container`
+and the conservative 4 °C cap. Whole millet, flour, porridge and mixed flakes do
+not inherit it. This is a manufacturer's product window, not a generic claim
+that dry grains spoil after two weeks.
+
+Kikkoman's [storage guidance](https://www.kikkoman.de/ueber-kikkoman/anwendungstipps/haltbarkeit-lagerung)
+recommends refrigeration and replacing the cap after opening naturally brewed soy
+sauce, but describes the duration only as several months. The reviewed plain/brewed
+soy-sauce names therefore remain label-required; no month-to-day conversion is
+invented. Light/dark/sweet/soup variants, mixed sauces and ambiguous quantity
+fragments remain outside this profile. An explicit saved package window still works.
+
 The Alnatura rules require both the brand and one of the following verified
 product barcodes, refrigerator storage at no more than 4 °C, and any listed
 handling condition. Each rule links to its own manufacturer product page.
 
 | Product | Barcode | Days after opening | Additional condition |
 | --- | --- | --- | --- |
+| Hirseflocken, 500 g | 4104420013308 | 14 | Closed container |
 | Passierte Tomaten, 500 g carton | 4104420250345 | 3 | — |
 | Passata Natur, 690 g bottle | 40045238 | 3 | — |
 | Pesto Basilico, 130 g | 4104420031326 | 5 | Covered with oil |

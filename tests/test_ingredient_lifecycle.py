@@ -33,7 +33,141 @@ class LifecycleTests(unittest.TestCase):
         data = self.lifecycle.load_lifecycle_data()
         self.lifecycle.validate_lifecycle_data(data)
         self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 105)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 61)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 68)
+
+    def test_galbani_cheese_windows_require_brand_and_refrigeration(self):
+        cases = (
+            (("Ball Mozzarella ball,cut into chunks", "Diced mozzarella", "Grated mozzarella",
+              "Grated mozzarella cheese", "Mozzarella", "Mozzarella ball, roughly chopped",
+              "Mozzarella slices", "Mozzarella, thickly sliced", "Sliced mozzarella",
+              "Small mozzarella balls", "Small mozzarella balls, halved"), 2, "2026-09-27"),
+            (("Mascarpone", "Mascarpone cheese", "Drained ricotta", "Ricotta", "Ricotta cheese"), 3, "2026-09-28"),
+            (("Gorgonzola", "Gorgonzola cheese"), 5, "2026-09-30"),
+        )
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": " Galbani "}
+        for names, days, deadline in cases:
+            for name in names:
+                with self.subTest(name=name):
+                    profile = self.profile(name)
+                    result = self.lifecycle.opening_window(profile, lot, temperature_c=4)
+                    self.assertEqual((result["daysMin"], result["daysMax"]), (days, days))
+                    self.assertEqual((result["remindOn"], result["consumeBy"]), (deadline, deadline))
+                    self.assertEqual(result["sourceIds"], ["galbani_cheese_opening", "bfr_cooling"])
+                    self.assertFalse(result["safetyGuarantee"])
+                    for changes, temperature in (({"brand": None}, 4), ({"brand": "Other brand"}, 4),
+                            ({"storage": "pantry"}, 4), ({"storage": "freezer"}, 4),
+                            ({"openedAt": None}, 4), ({}, None), ({}, 5)):
+                        self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot | changes, temperature_c=temperature))
+                    capped = self.lifecycle.opening_window(profile, lot | {"bestBefore": "2026-09-26"}, temperature_c=4)
+                    self.assertEqual((capped["remindOn"], capped["consumeBy"]), ("2026-09-26", "2026-09-26"))
+                    self.assertEqual(self.lifecycle.opening_window(profile, lot | {"noExpiry": True}, temperature_c=4)["consumeBy"], deadline)
+                    self.assertEqual(self.lifecycle.opening_window(profile, lot | {"useWithinDays": 1})["consumeBy"], "2026-09-26")
+
+    def test_cheese_rules_do_not_cross_types_mixtures_or_cooked_forms(self):
+        names = ("Ricotta salata", "Spoonfuls of salted ricotta", "Ricotta and spinach tortellini",
+            "Gorgonzola (or Roquefort or other blue cheese)",
+            "Gorgonzola cheese (or Roquefort or another blue cheese)", "Roquefort", "Dolcelatte",
+            "Blue cheese", "Cream cheese", "Quark", "Cottage cheese", "Vegan mozzarella",
+            "Smoked mozzarella", "Cooked mozzarella", "Mozzarella and tomato salad",
+            "Crema al Mascarpone", "Mascarpone dessert cream", "Homemade ricotta",
+            "Feta, diced and marinated in oil", "Oil marinade from feta", "Salad cheese",
+            "Grilled halloumi", "Halloumi fries", "Vegan halloumi")
+        for name in names:
+            with self.subTest(name=name):
+                for brand in ("Galbani", "Dodoni"):
+                    lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": brand}
+                    result = self.lifecycle.opening_window(self.profile(name), lot, temperature_c=4,
+                        confirmed_conditions=("vacuum_packed_feta", "feta_in_original_brine", "airtight_container"))
+                    self.assertNotIn("consumeBy", result)
+
+    def test_dodoni_feta_requires_confirmation_of_package_form(self):
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": "DODONI"}
+        for name in ("Chopped feta", "Crumbled feta cheese", "Diced feta cheese", "Feta",
+                "Feta cheese", "Plain feta", "Plain feta cheese"):
+            with self.subTest(name=name):
+                profile = self.profile(name)
+                for condition, days, deadline in (("vacuum_packed_feta", 4, "2026-09-29"),
+                        ("feta_in_original_brine", 8, "2026-10-03")):
+                    for reverse in (False, True):
+                        if reverse:
+                            profile["afterOpening"]["rules"].reverse()
+                        result = self.lifecycle.opening_window(profile, lot, temperature_c=4, confirmed_conditions=(condition,))
+                        self.assertEqual((result["daysMin"], result["daysMax"]), (days, days))
+                        self.assertEqual((result["remindOn"], result["consumeBy"]), (deadline, deadline))
+                    capped = self.lifecycle.opening_window(profile, lot | {"bestBefore": "2026-09-26"},
+                        temperature_c=4, confirmed_conditions=(condition,))
+                    self.assertEqual(capped["consumeBy"], "2026-09-26")
+                    for changes, temperature in (({"brand": None}, 4), ({"brand": "Other brand"}, 4),
+                            ({"storage": "pantry"}, 4), ({}, None), ({}, 5)):
+                        self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot | changes,
+                            temperature_c=temperature, confirmed_conditions=(condition,)))
+                for conditions in ((), ("covered_with_fresh_water",), ("covered_with_oil",), ("closed_container",)):
+                    result = self.lifecycle.opening_window(profile, lot, temperature_c=4, confirmed_conditions=conditions)
+                    self.assertEqual(result["status"], "label_required")
+                    self.assertNotIn("consumeBy", result)
+                # Conflicting confirmations must never extend the shorter window.
+                both = self.lifecycle.opening_window(profile, lot, temperature_c=4,
+                    confirmed_conditions=("vacuum_packed_feta", "feta_in_original_brine"))
+                self.assertEqual(both["consumeBy"], "2026-09-29")
+                self.assertEqual(self.lifecycle.opening_window(profile, lot | {"useWithinDays": 2})["consumeBy"], "2026-09-27")
+
+    def test_dodoni_halloumi_requires_airtight_refrigeration(self):
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": "Dodoni"}
+        for name in ("Halloumi", "Halloumi cheese", "Halloumi, sliced"):
+            with self.subTest(name=name):
+                profile = self.profile(name)
+                for temperature in (0, 4, 6):
+                    result = self.lifecycle.opening_window(profile, lot, temperature_c=temperature,
+                        confirmed_conditions=("airtight_container",))
+                    self.assertEqual((result["daysMax"], result["consumeBy"]), (3, "2026-09-28"))
+                    self.assertEqual(result["sourceIds"], ["dodoni_cheese_opening"])
+                for changes, temperature, conditions in (({}, 4, ()), ({}, 4, ("closed_container",)),
+                        ({}, 6.1, ("airtight_container",)), ({}, -1, ("airtight_container",)),
+                        ({}, None, ("airtight_container",)), ({"brand": "Other brand"}, 4, ("airtight_container",)),
+                        ({"storage": "pantry"}, 4, ("airtight_container",))):
+                    self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot | changes,
+                        temperature_c=temperature, confirmed_conditions=conditions))
+
+    def test_millet_flakes_require_exact_package_and_closed_refrigeration(self):
+        profile = self.profile("Millet flakes")
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": "Alnatura", "barcode": "4104420013308"}
+        for barcode in ("4104420013308", "04104420013308"):
+            result = self.lifecycle.opening_window(profile, lot | {"barcode": barcode}, temperature_c=4,
+                confirmed_conditions=("closed_container",))
+            self.assertEqual((result["daysMin"], result["daysMax"]), (14, 14))
+            self.assertEqual((result["remindOn"], result["consumeBy"]), ("2026-10-09", "2026-10-09"))
+        for changes, temperature, conditions in (({}, 4, ()), ({"barcode": None}, 4, ("closed_container",)),
+                ({"barcode": "4104420013309"}, 4, ("closed_container",)),
+                ({"barcode": "4104420266827"}, 4, ("closed_container",)),
+                ({"brand": None}, 4, ("closed_container",)), ({"brand": "Other brand"}, 4, ("closed_container",)),
+                ({"storage": "pantry"}, 4, ("closed_container",)), ({}, None, ("closed_container",)),
+                ({}, 5, ("closed_container",))):
+            self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot | changes,
+                temperature_c=temperature, confirmed_conditions=conditions))
+        for name in ("Millet", "Millet flour", "Millet porridge base:", "Mixed grain flakes", "Muesli", "Oat flakes"):
+            self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile(name), lot, temperature_c=4,
+                confirmed_conditions=("closed_container",)))
+        capped = self.lifecycle.opening_window(profile, lot | {"bestBefore": "2026-10-01"}, temperature_c=4,
+            confirmed_conditions=("closed_container",))
+        self.assertEqual((capped["remindOn"], capped["consumeBy"]), ("2026-10-01", "2026-10-01"))
+
+    def test_soy_sauce_vague_months_do_not_become_numeric_days(self):
+        for name in ("2 tbsp soy sauce", "[A] Soy sauce", "A- soy sauce", "B- soy sauce (for dressing)",
+                "Brewed soy sauce", "C- soy sauce", "Soy sauce", "Soy sauce (for dressing)",
+                "Soy sauce (for finishing)", "Soy sauce (for sauce)", "Soy sauce (for seasoning pork)",
+                "Soy sauce (seasoning)", "Soy sauce, a little", "Tablespoon of soy sauce", "tbsp soy sauce"):
+            with self.subTest(name=name):
+                profile = self.profile(name)
+                self.assertEqual(profile["afterOpening"]["status"], "label_required")
+                self.assertNotIn("rules", profile["afterOpening"])
+                for brand in (None, "Kikkoman", "Other brand"):
+                    lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": brand}
+                    self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot, temperature_c=4))
+                    self.assertEqual(self.lifecycle.opening_window(profile, lot | {"useWithinDays": 7})["consumeBy"], "2026-10-02")
+        for name in ("Light soy sauce", "Dark soy sauce", "Sweet soy sauce", "Soup soy sauce",
+                "Dark soy sauce (tsuyu)", "Soy sauce (quantity fragment: /2 tbsp)",
+                "Teriyaki sauce", "Soy sauce and mirin", "Soy beans", "Soy milk"):
+            self.assertNotEqual(self.profile(name).get("profileId"), "soy_sauce_label_required")
 
     def test_bonduelle_canned_vegetables_use_one_day_with_confirmed_handling(self):
         conditions = ("transferred_to_clean_container", "closed_container")
