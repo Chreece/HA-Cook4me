@@ -101,6 +101,26 @@ class PackageOpening(unittest.TestCase):
     def test_catalog_identity_does_not_fall_back_to_display_name(self):
         self.assertEqual(opening.opening_rules({'key':'not-a-catalog-id','name':'Mozzarella'},{'brand':'Galbani'}),[])
 
+    def test_cream_cheese_package_guidance_requires_opt_in_and_valid_identity(self):
+        with patch.object(release,'ingredient_lifecycle_profile',return_value=self.profile('Cream cheese')):
+            for barcode in ('00021000075997','00021000000142'):
+                metadata={'brand':'Philadelphia','barcode':barcode,'applyOpeningExpiry':False}
+                rules=opening.opening_rules({'key':'fixture'},metadata)
+                self.assertEqual(len(rules),1)
+                selected={**metadata,'openingRuleId':rules[0]['id']}
+                with self.assertRaises(ValueError):opening.configure_opening({'key':'fixture'},selected)
+                configured=opening.configure_opening({'key':'fixture'},{**selected,'openingConditionsConfirmed':True})
+                self.assertEqual(configured['useWithinDays'],10)
+                self.assertFalse(configured['applyOpeningExpiry'])
+                self.assertNotIn('openedAt',configured)
+                opened=opening.mark_package_opened({'key':'fixture'},configured,
+                    {'applyOpeningExpiry':True},opened_on='2026-09-25')
+                self.assertEqual(inv._effective_best_before(opened),'2026-10-05')
+            for metadata in ({'brand':'Philadelphia'},{'barcode':'00021000000142'},
+                    {'brand':'Other','barcode':'00021000000142'},
+                    {'brand':'Philadelphia','barcode':'00021000083206'}):
+                self.assertEqual(opening.opening_rules({'key':'fixture'},metadata),[])
+
     def test_cooking_applies_validated_catalog_duration(self):
         with patch.object(release,'ingredient_lifecycle_profile',return_value=self.profile('mozzarella')):
             rule=next(r for r in opening.opening_rules({'key':'milk'},{'brand':'Galbani'}) if r.get('brand','').casefold()=='galbani')
