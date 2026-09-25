@@ -1,10 +1,12 @@
 {
   "schemaVersion": 1,
   "language": "de",
-  "translationSource": "German supermarket names reviewed through lifecycle batch 24, 2026-09-25. Display/search only.",
+  "translationSource": "German supermarket names reviewed through lifecycle batch 25, 2026-09-25. Display/search only.",
   "labels": {
+    "almond butter": "Mandelmus",
     "celery": "Stangensellerie",
     "creme fraiche": "Crème fraîche",
+    "crunchy peanut butter": "Erdnussbutter mit Stückchen",
     "curry sauce": "Currysauce",
     "dried basil": "Getrockneter Basilikum",
     "dried bean": "Getrocknete Bohnen",
@@ -14,9 +16,12 @@
     "dried oregano leaf": "Getrockneter Oregano",
     "dried thyme": "Getrockneter Thymian",
     "ginger juice": "Ingwersaft",
+    "ground almond": "Gemahlene Mandeln",
     "ground black pepper": "Gemahlener schwarzer Pfeffer",
+    "ground hazelnut": "Gemahlene Haselnüsse",
     "hazelnut milk": "Haselnussdrink",
     "lamb's lettuce": "Feldsalat",
+    "lemon balm": "Zitronenmelisse",
     "mangetout": "Zuckerschoten",
     "mangetout pea": "Zuckerschoten",
     "mixed dried herbs": "Getrocknete Kräutermischung",
@@ -25,6 +30,9 @@
     "satay sauce": "Satésauce",
     "semi-skimmed milk": "Fettarme Milch",
     "snow pea": "Zuckerschoten",
+    "sorrel": "Sauerampfer",
+    "tahini": "Sesammus (Tahin)",
+    "tahini paste": "Sesammus (Tahin)",
     "thick creme fraiche": "Crème fraîche"
   },
   "searchAliases": {
@@ -70,6 +78,22 @@
     "snow peas": [
       "Zuckererbsen",
       "Kaiserschoten"
+    ],
+    "lemon balm": [
+      "Melisse"
+    ],
+    "almond butter": [
+      "Mandelbutter"
+    ],
+    "tahini": [
+      "Tahin",
+      "Tahini",
+      "Sesampaste"
+    ],
+    "tahini paste": [
+      "Tahin",
+      "Tahini",
+      "Sesampaste"
     ]
   }
 }

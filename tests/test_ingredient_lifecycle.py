@@ -1067,7 +1067,7 @@ class LifecycleTests(unittest.TestCase):
             ("Snow peas", [6, 7, 8], "DE", "outdoor_harvest"),
             ("Mangetout peas", [6, 7, 8], "DE", "outdoor_harvest"),
             ("Shelled walnuts", [9, 10], "DE", "regional_seasonal_availability"),
-            ("Ground hazelnuts", [9, 10, 11], "DE-BY", "regional_seasonal_availability"),
+            ("Hazelnuts", [9, 10, 11], "DE-BY", "regional_seasonal_availability"),
             ("Artichoke", [7, 8, 9, 10], "DE-BY", "regional_seasonal_availability"),
             ("Melon balls", [8, 9], "DE-BY", "regional_seasonal_availability"),
             ("Kiwi", [9, 10], "DE-BY", "regional_seasonal_availability"),

@@ -5,7 +5,7 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.18)
+## Reviewed coverage (2026-09-25.19)
 
 - 112 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
@@ -51,19 +51,97 @@ cloud credentials, or per-scan file reads are needed.
   Five more plant-drink packages and one ginger juice retain their storage instructions.
   Seven condiment/sauce packages add ketchup, Ajvar, curry and tomato sauces.
   Two fermented-vegetable packages add kimchi and sauerkraut guidance.
-  There are 132 reviewed product barcodes, 1,740 exact canonical names and
-  141 reviewed provider ingredient IDs.
+  A verified dmBio satay sauce adds its own three-day package rule.
+  There are 133 reviewed product barcodes, 1,753 exact canonical names and
+  148 reviewed provider ingredient IDs.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
   coconut cream, unverified tomato paste, unverified ketchup and Skyr, plus mustard, mayonnaise and
   additional cream, cream-cheese and yoghurt variants, plus plain/brewed soy sauce,
-  cottage cheese and further crème fraîche variants.
+  cottage cheese and further crème fraîche variants, ground nuts, nut butters
+  and tahini.
 - Dry staples have no invented short spoilage countdown. Their package
   instructions still apply; missing data never means indefinitely safe.
 
 Run `python tools/audit_ingredient_lifecycle.py` for counts against the actual
 shipped catalog. Counts distinguish seasonal, numeric and label-required
 entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
+
+## Batch 25: ground nuts, nut/seed pastes and two fresh herbs
+
+Ground hazelnuts no longer borrow the harvest calendar for whole hazelnuts.
+Ground almonds and hazelnuts have a separate processed-form profile with
+package-label guidance, including the reviewed cup-measure canonical variant.
+The exact provider IDs `M_FOOD_330` and `M_FOOD_400` expose this guidance on
+the actual choices. Whole nuts remain distinct. Browser validation exposed a
+missing whole-hazelnut mapping: `M_FOOD_329` and the singular `Hazelnut` canonical
+name now expose the existing September–November Bavarian calendar, rechecked
+against the [BUND Naturschutz source](https://www.bund-naturschutz.de/oekologisch-leben/essen-und-trinken/bayerischer-saisonkalender).
+
+The [Verbraucherzentrale nut-storage guidance](https://www.verbraucherzentrale.de/wissen/lebensmittel/auswaehlen-zubereiten-aufbewahren/nuesse-laenger-haltbar-durch-richtige-lagerung-58935)
+gives an approximate four-week refrigerated interval for opened, chopped nuts.
+However, the reviewed [dmBio ground-hazelnut package](https://www.dm.at/p/d/3060015/dmbio-haselnuesse-gemahlen)
+(`4066447856439`, Austrian product page) calls for consumption within a few days.
+This batch therefore does not set a universal 28-day clock, or convert vague
+package wording into an exact day count. Users can still enter their own
+package instructions. The product-specific difference remains documented.
+
+Peanut butter, crunchy peanut butter and almond butter now have a separate
+label-required profile. Seven reviewed tahini and paste canonical names share
+another label-required profile; the ambiguous sesame-sauce variant stays
+unmapped. Provider IDs `M_FOOD_34` and `M_FOOD_706` are explicitly allowed.
+The reviewed product pages below give storage instructions without a numeric
+after-opening duration, so none is invented:
+
+| Reviewed package | GTIN | Source |
+| --- | --- | --- |
+| dmBio peanut butter, 250 g | `4066447948271` | [Peanut butter](https://www.dm.de/p/d/1446281/dmbio-erdnussmus) |
+| dmBio white almond butter, 250 g | `4070765069976` | [Almond butter](https://www.dm.de/p/d/1449136/dmbio-mandelmus-weiss) |
+| dmBio tahini, 250 g | `4066447948318` | [Sesame paste](https://www.dm.de/p/d/3064622/dmbio-sesammus-tahin) |
+
+These barcodes document the review; they do not enter the numeric-rule barcode
+count. All sources in this batch were checked on 2026-09-25.
+
+One new numeric rule applies to the exact
+[dmBio satay peanut sauce, 325 ml](https://www.dm.de/p/d/1682196/dmbio-erdnusssosse-sate-wuerzig-nussig),
+GTIN `4066447377903`: three days after opening under refrigeration. It extends
+the existing satay profile and selectable `M_FOOD_534`, while retaining the
+Alnatura package rule. The 4 °C cap comes from the existing BfR cooling policy;
+the manufacturer page specifies refrigeration without a numerical temperature.
+Brand, barcode, storage and opening must match. Selection requires confirmation
+and does not itself mark the package open. Earlier printed dates and manual
+package intervals retain precedence. Peanut butter, tahini, peanuts, seasoning
+and homemade satay cannot borrow this sauce's rule.
+
+Two further provider rows now expose their existing regional herb calendars:
+
+| Ingredient | Provider ID | Existing season | Source |
+| --- | --- | --- | --- |
+| Lemon balm | `M_FOOD_697` | June–September, Bavaria | [LWG garden herbs](https://www.lwg.bayern.de/gartenakademie/gartendokumente/infoschriften/157754/index.php) |
+| Sorrel | `M_FOOD_571` | April–October, Hesse | [BZfE green-sauce herbs](https://www.bzfe.de/presse/pressemeldungen-archiv/frankfurter-gruene-sosse) |
+
+The canonical identities and Czech `Meduňka` / Polish `Szczaw` names were
+reviewed directly. The catalog's low-confidence lemongrass and mustard-green
+nutrient proxies are not evidence of culinary identity and do not transfer
+their species to the lifecycle data. This batch does not alter nutrition.
+Unsupported countries and months remain unknown; extracts, teas, dried and
+frozen forms do not inherit the fresh calendars.
+
+German supermarket labels now use `Zitronenmelisse`, `Sauerampfer`, `Mandelmus`,
+`Erdnussbutter mit Stückchen`, `Gemahlene Mandeln`, `Gemahlene Haselnüsse` and
+`Sesammus (Tahin)`. Search also accepts `Melisse`, `Mandelbutter`, `Tahin`,
+`Tahini` and `Sesampaste`. Whole nuts, ground nuts, nut butter, sauce and seeds
+retain separate source identities and choices.
+
+Coverage reaches 3,318 rows: 2,245 seasonal, 574 with numeric opening guidance
+and 499 label-required. There are 46 newly enriched rows; three existing ground
+hazelnut rows move from seasonal to processed guidance. The numeric row count
+stays unchanged because the new sauce rule extends an existing profile.
+Local validation includes `tests/test_catalog_lifecycle_v239.py`, the lifecycle,
+amount/deduplication and seasonal-filter regressions, plus
+`tests/browser_catalog_lifecycle_v239.py` on mobile and desktop. Browser checks
+cover twelve months, whole/ground distinctions, supermarket names, storage
+confirmation and rejection of a peanut-butter barcode for satay guidance.
 
 ## Batch 24: fresh herbs, dried pantry forms and edible pea pods
 
