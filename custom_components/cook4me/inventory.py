@@ -529,7 +529,10 @@ def update_inventory_item(
     unlimited: bool = False,
     best_before: Any = _UNSET,
     lots: Any = _UNSET,
+    ingredient_links: Any = _UNSET,
 ) -> list[dict[str, Any]]:
+    if ingredient_links is not _UNSET and (not unlimited or not isinstance(ingredient_links, list)):
+        raise ValueError("Catalog links on a stock item require unlimited stock and a list")
     rows = normalize_inventory(inventory)
     for current in rows:
         if inventory_identity(current) != identity:
@@ -542,6 +545,17 @@ def update_inventory_item(
             current.pop("unit", None)
 
         if unlimited:
+            if ingredient_links is not _UNSET:
+                links = normalize_ingredient_links(ingredient_links)
+            else:
+                links = normalize_ingredient_links([
+                    *(current.get("ingredientLinks") or []),
+                    *(link for lot in current.get("lots") or [] for link in lot.get("ingredientLinks") or []),
+                ])
+            if links:
+                current["ingredientLinks"] = links
+            else:
+                current.pop("ingredientLinks", None)
             current.pop("quantity", None)
             current.pop("lots", None)
             current["unlimited"] = True
@@ -1123,7 +1137,7 @@ def restore_consumption(inventory, report):
 def _consume_inventory(inventory, consumptions):
     """Consume linked products once, retaining the owner's lot IDs and FEFO order."""
     rows = normalize_inventory(inventory)
-    if not any(lot.get("ingredientLinks") for row in rows for lot in row.get("lots") or []):
+    if not any(row.get("ingredientLinks") or any(lot.get("ingredientLinks") for lot in row.get("lots") or []) for row in rows):
         return _apply_primary_consumption(rows, consumptions)
     report = {key: [] for key in ("deducted", "deductedLots", "skipped", "depleted")}
     from .stock_allocation import allocate_stock
@@ -1131,7 +1145,10 @@ def _consume_inventory(inventory, consumptions):
     for request, view in zip(requests, allocate_stock(rows, requests)):
         identity = request.get("identity") or inventory_identity(request)
         remaining = _quantity(request.get("quantity"))
-        if not view or view.get("unlimited") or remaining is None or convert_amount(remaining, request.get("unit", ""), view.get("unit", "")) is None or not view.get("lots"):
+        if view and view.get("unlimited"):
+            report["skipped"].append({"identity": identity, "reason": "unlimited"})
+            continue
+        if not view or remaining is None or convert_amount(remaining, request.get("unit", ""), view.get("unit", "")) is None or not view.get("lots"):
             _, skipped = _apply_primary_consumption(rows, [request])
             report["skipped"].extend(skipped["skipped"])
             continue

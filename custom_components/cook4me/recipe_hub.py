@@ -431,6 +431,7 @@ class Cook4MeRecipeHub:
         unlimited: bool = False,
         best_before: Any = None,
         lots: Any = None,
+        ingredient_links: Any = None,
     ) -> dict[str, Any]:
         async with self._durable_mutation():
             profile = deepcopy(self._data["profile"])
@@ -439,6 +440,8 @@ class Cook4MeRecipeHub:
                 kwargs["best_before"] = best_before
             if lots is not None:
                 kwargs["lots"] = [validate_location(profile, lot) for lot in lots]
+            if ingredient_links is not None:
+                kwargs["ingredient_links"] = ingredient_links
             house = update_inventory_item(
                 profile.get("houseIngredients"),
                 identity,

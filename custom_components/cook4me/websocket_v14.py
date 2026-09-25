@@ -99,6 +99,8 @@ async def ws_inventory_add(hass, connection, msg) -> None:
     vol.Optional("unlimited", default=False): bool,
     vol.Optional("best_before"): str,
     vol.Optional("lots"): [dict],
+    vol.Optional("ingredient_links"): [dict],
+    vol.Optional("language"): str,
 })
 @websocket_api.async_response
 async def ws_inventory_update(hass, connection, msg) -> None:
@@ -107,6 +109,13 @@ async def ws_inventory_update(hass, connection, msg) -> None:
         kwargs: dict[str, Any] = {}
         if "best_before" in msg: kwargs["best_before"] = str(msg.get("best_before") or "")
         if "lots" in msg: kwargs["lots"] = list(msg.get("lots") or [])
+        if "ingredient_links" in msg:
+            if not msg.get("unlimited"):
+                raise ValueError("Edit catalog links on each package for measured stock")
+            from .product_packages import resolve_ingredient_links
+            from .websocket_v33 import _catalog
+            catalog = await _catalog(hass, bridge, msg)
+            kwargs["ingredient_links"] = resolve_ingredient_links(msg["ingredient_links"], catalog, strict=True)
         await bridge.recipe_hub.async_inventory_update(
             str(msg["identity"]), quantity=msg.get("quantity"),
             unit=str(msg.get("unit") or ""), unlimited=bool(msg.get("unlimited")), **kwargs,
