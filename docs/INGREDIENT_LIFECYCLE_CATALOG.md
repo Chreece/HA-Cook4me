@@ -5,18 +5,18 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.4)
+## Reviewed coverage (2026-09-25.5)
 
-- 102 produce groups, including fruit, leafy vegetables, roots, asparagus,
+- 104 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
   savoy cabbage, pak choi, shallots, wild garlic, turnips, snow peas, walnuts,
   hazelnuts, artichokes, melons, kiwi, chestnuts, sweet potatoes, swede and
   chanterelles, mint, tarragon, lovage, oyster/king oyster mushrooms, shiitake,
   fresh coriander leaves, watercress, lemon balm, Romanesco, fresh chillies
-  and romaine/Little Gem lettuce.
-- 53 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+  and romaine/Little Gem lettuce, fresh ginger and figs.
+- 60 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
-  oat drinks (Alpro or Oatly), Taifun plain and silken tofu, and Reishunger
+  oat drinks (Alpro, Oatly or verified Alnatura packages), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
   hummus, chickpeas, kidney beans, white beans, lentils and baked beans. Separate
   canned-form profiles retain generic guidance alongside verified product rules
@@ -27,10 +27,11 @@ cloud credentials, or per-scan file reads are needed.
   cooking creams, olives, pickled cucumbers, capers, marinated artichokes and
   preserved pineapple, coconut milk, sauerkraut, tomato juice and peanut sauce,
   carrot juice, lime juice and pickled beetroot. Beetroot juice now distinguishes
-  three verified packages with either three- or five-day instructions.
+  three verified packages with either three- or five-day instructions. Alnatura
+  plant drinks and dried-tomato antipasti now also retain exact package windows.
   Cream and yoghurt profiles are separate; olive
   profiles distinguish green, black, mixed and unspecified forms.
-  There are 61 reviewed product barcodes and 1,453 exact canonical names.
+  There are 70 reviewed product barcodes and 1,509 exact canonical names.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, cream cheese and
   coconut cream, tomato paste, ketchup and Skyr.
@@ -48,7 +49,8 @@ calendars published by the Hessische Lehrkräfteakademie, BZfE produce guides,
 the BVEO pak choi guide, Hessen VerbraucherFenster and the Verbraucherzentrale
 season calendar, BUND Naturschutz's Bavarian calendar, Hortipendium, LWG and
 Landwirtschaftskammer Nordrhein-Westfalen's Landservice, EDEKA meinLand,
-Kressepark Erfurt, Industrieverband Agrar (IVA) and Dehner's cultivation guide.
+Kressepark Erfurt, Industrieverband Agrar (IVA), Dehner's cultivation guide
+and Biohof Stövesandt's regional ginger harvest.
 For the Hessian monthly calendar entries, the source region
 (`DE-HE`), country (`DE`), source links and review date are preserved. The source
 includes stored produce and protected cultivation; these months must not be
@@ -81,6 +83,21 @@ Romaine and Little Gem use BZfE's German outdoor availability from mid-May to
 the end of November, encoded as approximate May–November months. BZfE explicitly
 identifies Little Gem as a romaine variety. This dedicated profile does not
 replace the existing general lettuce calendar or apply to cooked/mixed salads.
+
+Fresh ginger uses Biohof Stövesandt's October–December harvest in the
+Lüneburger Heide (`DE-NI`, `regional_seasonal_availability`). This is one
+regional producer's young-ginger season, not a nationwide outdoor or import
+calendar. Reviewed root, fresh, peeled, sliced and chopped forms are included;
+paste, pickled, dried, ground and candied forms stay separate. Unqualified
+grated/minced entries that may refer to prepared ginger remain unknown.
+The producer's storage advice for a fresh root does not create an opening clock.
+
+Figs use approximate August–October outdoor harvest highlights from LWG's
+Veithshöchheim trials (`DE-BY`). The source distinguishes once-bearing varieties
+from September and twice-bearing varieties from early August and October.
+The month list combines those reported harvests, rather than promising one
+continuous crop or specifying the season's final day. Ripening depends on
+variety and autumn weather. Dried figs, preserves and imports do not extend it.
 
 Sixteen additional exact names carrying quantity fragments or leading gram
 markers now retain their reviewed produce/herb profile. These are individual
@@ -259,6 +276,35 @@ handling condition. Each rule links to its own manufacturer product page.
 | Rote Bete-Direktsaft milchsauer vergoren, 500 ml | 4104420259980 | 3 | — |
 | Limette-Direktsaft, 200 ml | 4104420072121 | 14 | — |
 | Rote Bete ungesüßt, 330 g jar | 4104420235397 | 5 | — |
+| Sojadrink Natur, 1 l | 4104420266827 | 3 | — |
+| Reisdrink Natur, 1 l | 4104420260337 | 4 | — |
+| Haferdrink, Bioland, 1 l | 4104420186279 | 3 | — |
+| Haferdrink, Naturland, 1 l | 4104420260139 | 3 | — |
+| Haselnussdrink Natur, 1 l | 4104420237292 | 4 | — |
+| Cashewdrink Natur, 1 l | 4104420234383 | 4 | — |
+| Kokosdrink ungesüßt, 1 l | 4104420204225 | 3 | — |
+| Origin Getrocknete Tomaten, 180 g jar | 42271017 | 5 | — |
+| Getrocknete Tomaten mit Basilikum, 125 g fresh antipasti | 40045528 | 2 | — |
+
+Plant-drink profiles distinguish soy, rice, oat, hazelnut, cashew, coconut and
+almond. Only a generic plant-drink ingredient may select any of the seven
+verified Alnatura drink packages; a named type cannot borrow another type's
+barcode. Existing Alpro five-day and Oatly five-to-seven-day rules and handling
+conditions remain intact. The current plain soy package has a three-day
+instruction; an older or unreviewed barcode cannot inherit it. Coconut drink
+is separate from coconut milk, cooking cream and coconut water. Flavoured,
+sweetened, mixed and homemade drinks are not inferred. A room-temperature
+recipe instruction does not waive the actual lot's refrigeration requirement.
+The four exact cashew/coconut drink names prepare those profiles for future
+catalog rows; they do not create picker ingredients by themselves.
+
+Dried-tomato names select a numeric interval only when the verified package
+identity establishes one of the two marinated products. The 180 g Origin jar
+has five-day guidance, while the 125 g fresh antipasti has two-day guidance.
+Only the Origin jar accepts the `Alnatura Origin` brand alias. The separate
+dry Soft-Tomaten pouch, dry-packed tomatoes, paste, powder, oil alone and
+mixtures cannot inherit those intervals. The common 4 °C gate is the catalog's
+conservative refrigeration requirement, not an Alnatura temperature quote.
 
 The new carrot-juice profile and expanded beetroot-juice profile retain each
 package's own interval. A 330 ml bottle's five-day instruction cannot select
