@@ -31,10 +31,13 @@ jobs:
         run: |
           python tests/test_receipts_v195.py
           python tests/test_receipt_routes_v195.py
+          python tests/test_receipt_queue_v232.py
+          python tests/test_receipt_processing_v232.py
       - name: Receipt review, navigation and weekly view
         run: node --test tests/test_receipt_ui_v195.mjs
       - name: Source syntax
         run: |
           python -m compileall -q custom_components/cook4me
           node --check custom_components/cook4me/frontend/scanner-receipts-v195.js
+          node --check custom_components/cook4me/frontend/receipt-queue-v232.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v180.js

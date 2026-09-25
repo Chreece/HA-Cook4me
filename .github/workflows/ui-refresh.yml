@@ -77,3 +77,5 @@ jobs:
         run: python tests/browser_catalog_lifecycle_v231.py
       - name: Navigation hover and keyboard focus regression
         run: python tests/browser_navigation_hover_v205.py
+      - name: Receipt queue, barcode editing, interrupted additions and product weighing
+        run: python tests/browser_receipt_queue_v232.py

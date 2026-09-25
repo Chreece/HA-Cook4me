@@ -354,6 +354,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
         bridge.announcements = Announcements(bridge, bridge.device_settings)
         bridge.announcements.start()
+        from .receipt_processing import start_receipt_processing
+        start_receipt_processing(bridge)
     except BaseException:
         await _async_cleanup_bridge(bridge)
         raise
@@ -363,6 +365,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 async def _async_cleanup_bridge(bridge: Cook4MeBridge) -> None:
     # Remove the entry first so the queue watcher cannot schedule new sends.
     bridge._stopping = True
+    processor = getattr(bridge, '_receipt_processor', None)
+    if processor is not None:
+        await processor.close()
     bridge.hass.data.get(DOMAIN, {}).get(DATA_BRIDGES, {}).pop(bridge.entry.entry_id, None)
     announcements = getattr(bridge, "announcements", None)
     if announcements is not None:

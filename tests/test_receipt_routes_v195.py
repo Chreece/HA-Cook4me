@@ -50,15 +50,17 @@ class Routes(unittest.IsolatedAsyncioTestCase):
           _catalog=catalog,suggest_catalog_matches=suggestions)
         ns={'asyncio':asyncio,'inspect':inspect,'scanner':scanner,'text':m.text,'normalize_receipt':m.normalize_receipt,
             'ReceiptConflict':m.ReceiptConflict,'receipt_store_for_bridge':get_store,
+            'start_receipt_processing':lambda bridge:calls.append('background'),
             'ai_task':SimpleNamespace(async_generate_data=generate),
             'legacy':SimpleNamespace(_send_error=lambda c,msg,exc:errors.append((type(exc).__name__,str(exc))))}
         functions(COMP/'websocket_receipts.py',['_owner','receipt_instructions','ws_receipt_recognize','ws_receipt_suggestions','ProductError','_ProductReply','_add_reviewed_product','ws_receipt_drafts'],ns)
         return ns,Hass(),connection,bridge,store,disk,calls,out,errors
 
-    async def test_recognition_is_review_only_and_cleans_photo(self):
+    async def test_recognition_saves_and_queues_without_stock_and_cleans_photo(self):
         ns,h,c,b,store,disk,calls,out,errors=self.environment()
         await ns['ws_receipt_recognize'](h,c,{'id':1,'entry_id':'e','image':'fixture','language':'el'})
-        self.assertFalse(errors,errors);self.assertFalse(out[0]['saved']);self.assertEqual(disk.writes,0)
+        self.assertFalse(errors,errors);self.assertTrue(out[0]['saved']);self.assertEqual(disk.writes,1)
+        self.assertEqual(out[0]['receipt']['processing']['state'],'queued');self.assertIn('background',calls)
         self.assertEqual(out[0]['receipt']['items'][0]['ingredientLinks'],[])
         self.assertIn('unlink',calls);self.assertEqual(calls.count('authorize'),2)
         prompt=next(x for x in calls if isinstance(x,dict) and 'instructions' in x)

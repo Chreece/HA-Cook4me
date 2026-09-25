@@ -289,6 +289,9 @@ class Cook4MeBarcodeMappingStore:
         row = self._data.get(normalize_barcode(code))
         return deepcopy(row) if isinstance(row, dict) else None
 
+    def all(self) -> dict[str, dict[str, Any]]:
+        return deepcopy(self._data)
+
     async def async_set(self, code: str, mapping: dict[str, Any]) -> dict[str, Any]:
         async with self._write_lock:
             return await self._save_mapping(code, mapping)
