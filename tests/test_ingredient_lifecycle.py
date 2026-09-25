@@ -32,8 +32,134 @@ class LifecycleTests(unittest.TestCase):
     def test_bundled_data_has_reviewed_evidence(self):
         data = self.lifecycle.load_lifecycle_data()
         self.lifecycle.validate_lifecycle_data(data)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 104)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 60)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 105)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 61)
+
+    def test_bonduelle_canned_vegetables_use_one_day_with_confirmed_handling(self):
+        conditions = ("transferred_to_clean_container", "closed_container")
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": "Bonduelle"}
+        for name in ("Canned peas", "Canned mixed beans (110 g)", "Canned green peas, a little",
+                "Canned baby carrots, drained", "Canned chickpeas", "Canned red kidney beans",
+                "White beans (canned)", "Canned lentils", "Canned sweetcorn"):
+            with self.subTest(name=name):
+                profile = self.profile(name)
+                original = deepcopy(profile)
+                for reverse in (False, True):
+                    if reverse:
+                        profile["afterOpening"]["rules"].reverse()
+                    result = self.lifecycle.opening_window(profile, lot, temperature_c=4, confirmed_conditions=conditions)
+                    self.assertEqual((result["daysMin"], result["daysMax"]), (1, 1))
+                    self.assertEqual((result["remindOn"], result["consumeBy"]), ("2026-09-26", "2026-09-26"))
+                    self.assertEqual(result["ruleId"], "bonduelle_canned_vegetables")
+                    self.assertFalse(result["safetyGuarantee"])
+                capped = self.lifecycle.opening_window(original, lot | {"bestBefore": "2026-09-25"}, temperature_c=4, confirmed_conditions=conditions)
+                self.assertEqual((capped["remindOn"], capped["consumeBy"]), ("2026-09-25", "2026-09-25"))
+                self.assertEqual(self.lifecycle.opening_window(original, lot | {"useWithinDays": 2})["consumeBy"], "2026-09-27")
+                self.assertEqual(self.lifecycle.opening_window(original, lot | {"noExpiry": True}, temperature_c=4, confirmed_conditions=conditions)["consumeBy"], "2026-09-26")
+
+    def test_known_brand_cannot_fall_back_when_its_handling_is_unconfirmed(self):
+        conditions = ("transferred_to_clean_container", "closed_container")
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": " bonDUELLE "}
+        for name in ("Canned peas", "Canned chickpeas", "Canned red kidney beans",
+                "White beans (canned)", "Canned lentils", "Canned sweetcorn"):
+            with self.subTest(name=name):
+                profile = self.profile(name)
+                for confirmed in ((), conditions[:1], conditions[1:], ("transferred_to_container", "closed_container")):
+                    result = self.lifecycle.opening_window(profile, lot, temperature_c=4, confirmed_conditions=confirmed)
+                    self.assertEqual(result["status"], "label_required")
+                    self.assertNotIn("consumeBy", result)
+                for changes, temperature in (({}, None), ({}, 5), ({"storage": "pantry"}, 4), ({"storage": "freezer"}, 4), ({"openedAt": None}, 4)):
+                    self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot | changes, temperature_c=temperature, confirmed_conditions=conditions))
+                for brand in (None, "Other brand"):
+                    generic = self.lifecycle.opening_window(profile, lot | {"brand": brand}, temperature_c=4)
+                    self.assertEqual((generic["daysMin"], generic["daysMax"]), (3, 4))
+                    self.assertEqual(generic["kind"], "general_guidance")
+
+    def test_bonduelle_rule_does_not_cross_unreviewed_food_forms(self):
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": "Bonduelle"}
+        conditions = ("transferred_to_clean_container", "closed_container")
+        for name in ("Peas", "Frozen green peas", "Fresh green beans", "Beans", "Cooked beans",
+                "Cooked or canned beans", "Chickpeas", "White beans", "Lentils", "Sweetcorn",
+                "Canned tuna", "Canned crab", "Canned creamed corn", "Canned pineapple (cut into quarters)",
+                "Canned mixed fruit (190 g), including syrup", "Canned demi-glace sauce", "Fresh salad"):
+            with self.subTest(name=name):
+                result = self.lifecycle.opening_window(self.profile(name), lot, temperature_c=4, confirmed_conditions=conditions)
+                self.assertNotEqual(result.get("ruleId"), "bonduelle_canned_vegetables")
+        self.assertEqual(self.profile("Canned tuna")["profileId"], "canned_low_acid")
+        self.assertEqual(self.profile("Canned peas")["profileId"], "canned_vegetables")
+
+    def test_exact_product_identity_precedes_brand_family_guidance(self):
+        profile = self.profile("Canned chickpeas")
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": "Alnatura", "barcode": "4104420230972"}
+        self.assertEqual(self.lifecycle.opening_window(profile, lot, temperature_c=4)["daysMax"], 2)
+        for changes in ({"barcode": None}, {"brand": "Bonduelle"}, {"brand": None}):
+            result = self.lifecycle.opening_window(profile, lot | changes, temperature_c=4,
+                confirmed_conditions=("transferred_to_clean_container", "closed_container"))
+            self.assertNotIn("consumeBy", result)
+        # Brand guidance has precedence even if generic guidance is shorter.
+        profile = deepcopy(self.profile("Canned peas"))
+        for rule in profile["afterOpening"]["rules"]:
+            if not rule.get("brand"):
+                rule.update(daysMin=1, daysMax=1)
+            else:
+                rule.update(daysMin=2, daysMax=2)
+        result = self.lifecycle.opening_window(profile, lot | {"brand": "Bonduelle", "barcode": None},
+            temperature_c=4, confirmed_conditions=("transferred_to_clean_container", "closed_container"))
+        self.assertEqual((result["daysMax"], result["kind"]), (2, "manufacturer_guidance"))
+
+    def test_mustard_and_mayonnaise_defer_to_package_without_invented_days(self):
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": "Alnatura"}
+        for name in ("Mustard", "*Dijon mustard", "English mustard", "B- wholegrain mustard, a little",
+                "Tablespoons mustard", "Mayonnaise", "A- mayonnaise (for sauce)", "Vegan mayonnaise"):
+            with self.subTest(name=name):
+                profile = self.profile(name)
+                self.assertEqual(profile["afterOpening"]["status"], "label_required")
+                self.assertEqual(profile["seasonality"]["status"], "not_applicable")
+                for code in (None, "4104420209152", "4104420028166", "4104420206571"):
+                    self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot | {"barcode": code}, temperature_c=4))
+                self.assertEqual(self.lifecycle.opening_window(profile, lot | {"useWithinDays": 7})["consumeBy"], "2026-10-02")
+        for name in ("Mustard seed", "White mustard seeds", "Whole white mustard seeds",
+                "Mustard and fresh cream for serving", "Ketchup (or mustard or burger sauce)",
+                "Cucumbers in mustard brine", "Homemade mayonnaise"):
+            with self.subTest(excluded=name):
+                self.assertNotIn(self.profile(name).get("profileId"), ("mustard_label_required", "mayonnaise_label_required"))
+
+    def test_dairy_variants_preserve_label_and_pasteurization_requirements(self):
+        lot = {"openedAt": "2026-09-25", "storage": "fridge"}
+        for name in ("30% whipping cream", "Liquid cream, 15% fat", "Full-fat sour cream",
+                "A- cream cheese, brought to room temperature", "Herbed cream cheese",
+                "Greek yoghurt", "Yogurt (125 g cup measure)", "Vanilla yogurt"):
+            with self.subTest(name=name):
+                profile = self.profile(name)
+                self.assertEqual(profile["afterOpening"]["status"], "label_required")
+                self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot, temperature_c=4))
+        for name in ("A- milk", "B- milk", "B- milk, brought to room temperature"):
+            with self.subTest(name=name):
+                profile = self.profile(name)
+                self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot, temperature_c=4))
+                self.assertEqual(self.lifecycle.opening_window(profile, lot, temperature_c=4,
+                    confirmed_conditions=("pasteurized_or_uht",))["consumeBy"], "2026-09-28")
+                self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot | {"storage": "pantry"},
+                    temperature_c=4, confirmed_conditions=("pasteurized_or_uht",)))
+        for name in ("Cooking cream or oat cream", "Low-fat cream (or milk)", "Thick cream or natural yogurt",
+                "Cream cheese with herbs or plain cheese", "Oil, mixed with yogurt", "Milk (dairy or non-dairy)"):
+            self.assertNotIn(self.profile(name).get("profileId"), ("milk", "label_required"))
+
+    def test_summer_purslane_keeps_species_and_season_boundaries(self):
+        for name in ("Purslane", "Summer purslane"):
+            profile = self.profile(name)
+            evidence = profile["seasonality"]["regions"][0]
+            self.assertEqual(evidence["sourceIds"], ["bzfe_summer_purslane"])
+            self.assertEqual((evidence["sourceRegion"], evidence["basis"]), ("DE", "regional_seasonal_availability"))
+            self.assertTrue(evidence["approximate"])
+            for month in range(1, 13):
+                self.assertEqual(self.lifecycle.seasonal_availability(profile, country="DE", month=month)["status"],
+                    "in_season" if month in (5, 6, 7, 8, 9) else "unknown")
+            self.assertEqual(self.lifecycle.seasonal_availability(profile, country="TR", month=6)["status"], "unknown")
+            self.assertNotIn("rules", profile["afterOpening"])
+        for name in ("Winter purslane", "Postelein", "Miner's lettuce", "Pickled purslane", "Dried purslane",
+                "Purslane and spinach", "Cooked purslane"):
+            self.assertNotEqual(self.profile(name)["seasonality"]["status"], "reviewed")
 
     def test_fresh_ginger_and_figs_keep_regional_harvest_scope(self):
         for name, months, region, basis, source in (
@@ -175,7 +301,7 @@ class LifecycleTests(unittest.TestCase):
             "Frozen fresh chili pepper", "Chili flakes", "Chili paste", "Chili in oil",
             "Sweet chili sauce", "Pepperoni", "Red and green chili peppers",
             "Pickled jalapeños", "Fresh or dried chili", "Cooked Romaine lettuce",
-            "Romaine and iceberg lettuce", "Little Gem salad with dressing", "Purslane",
+            "Romaine and iceberg lettuce", "Little Gem salad with dressing",
         ):
             with self.subTest(excluded=name):
                 self.assertEqual(self.profile(name)["seasonality"]["status"], "unknown")

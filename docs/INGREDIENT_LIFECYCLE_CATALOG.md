@@ -5,16 +5,16 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.5)
+## Reviewed coverage (2026-09-25.6)
 
-- 104 produce groups, including fruit, leafy vegetables, roots, asparagus,
+- 105 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
   savoy cabbage, pak choi, shallots, wild garlic, turnips, snow peas, walnuts,
   hazelnuts, artichokes, melons, kiwi, chestnuts, sweet potatoes, swede and
   chanterelles, mint, tarragon, lovage, oyster/king oyster mushrooms, shiitake,
   fresh coriander leaves, watercress, lemon balm, Romanesco, fresh chillies
-  and romaine/Little Gem lettuce, fresh ginger and figs.
-- 60 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+  and romaine/Little Gem lettuce, fresh ginger, figs and summer purslane.
+- 61 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro, Oatly or verified Alnatura packages), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
@@ -29,12 +29,15 @@ cloud credentials, or per-scan file reads are needed.
   carrot juice, lime juice and pickled beetroot. Beetroot juice now distinguishes
   three verified packages with either three- or five-day instructions. Alnatura
   plant drinks and dried-tomato antipasti now also retain exact package windows.
+  Bonduelle's canned-vegetable family adds conditional one-day guidance across
+  six explicitly canned profiles, alongside the existing generic can intervals.
   Cream and yoghurt profiles are separate; olive
   profiles distinguish green, black, mixed and unspecified forms.
-  There are 70 reviewed product barcodes and 1,509 exact canonical names.
+  There are 70 reviewed product barcodes and 1,593 exact canonical names.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, cream cheese and
-  coconut cream, tomato paste, ketchup and Skyr.
+  coconut cream, tomato paste, ketchup and Skyr, plus mustard, mayonnaise and
+  additional cream, cream-cheese and yoghurt variants.
 - Dry staples have no invented short spoilage countdown. Their package
   instructions still apply; missing data never means indefinitely safe.
 
@@ -98,6 +101,14 @@ from September and twice-bearing varieties from early August and October.
 The month list combines those reported harvests, rather than promising one
 continuous crop or specifying the season's final day. Ripening depends on
 variety and autumn weather. Dried figs, preserves and imports do not extend it.
+
+Summer purslane uses BZfE's May–September availability (`DE`,
+`regional_seasonal_availability`). The existing `Purslane` row, whose Turkish
+source is Semizotu, refers to this species (Portulaca oleracea); it does not
+borrow a lettuce calendar. `Summer purslane` is also prepared as an exact name
+for future catalog rows. Winter purslane/Postelein is a different species and
+does not receive these months. Preserved, cooked and mixed forms remain unknown.
+The source's short storage advice does not create an after-opening clock.
 
 Sixteen additional exact names carrying quantity fragments or leading gram
 markers now retain their reviewed produce/herb profile. These are individual
@@ -208,6 +219,17 @@ container (2 days); its coconut milk uses the published 2–3 day range. These
 manufacturer rules are not applied to other brands, dairy products, other tofu
 forms or coconut cream. The coconut milk source also states a 3-day maximum in
 its product storage instructions, consistent with the range's upper end.
+
+Bonduelle publishes a family-wide instruction for opened canned vegetables:
+use within 24 hours, refrigerated after transfer to a clean, closable container.
+The catalog represents this as one day, with a conservative 4 °C limit and
+explicit `transferred_to_clean_container` plus `closed_container` confirmations.
+The helper returns dates, not an hour-precise timer. This brand rule applies to
+reviewed canned peas/carrots/beans, chickpeas, kidney beans, white beans, lentils
+and sweetcorn; it does not require a barcode. Fresh/frozen vegetables, dry or
+home-cooked legumes, fruit, seafood, creamed corn and ready meals cannot select
+it. Missing handling evidence cannot fall back to the generic three-to-four-day
+can window. Other brands retain existing guidance and package-label overrides.
 
 The Alnatura rules require both the brand and one of the following verified
 product barcodes, refrigerator storage at no more than 4 °C, and any listed
@@ -402,6 +424,21 @@ that evidence gap and defer to the actual package; they assign no numeric rule
 even for that brand. Ambiguous tomato purée and condiment alternatives remain
 unassigned. A known package `useWithinDays` still takes precedence.
 
+Prepared mustard and mayonnaise now have their own label-required profiles.
+Alnatura's mustard, egg mayonnaise and vegan mayo pages require refrigeration
+but supply no number of days; Löwensenf likewise gives storage guidance without
+a fixed opening interval. These sources therefore create no numeric clock,
+including when one of those brands or barcodes is known. Seed/powder forms,
+condiment alternatives, homemade mayonnaise and mixed dishes stay separate.
+
+Fifty-two exact cream, cream-cheese and yoghurt variants now share the existing
+formulation-dependent label guidance. Fat percentages, serving measures and
+recipe section markers do not establish a universal opening interval. Three
+additional milk names retain the existing requirement to confirm pasteurization
+or UHT treatment and refrigeration; a room-temperature preparation instruction
+does not waive cold storage. No generic marker stripping or mixture matching
+is introduced.
+
 Juice intervals vary by product: the two vegetable juices have separate 3- and
 5-day rules. The 14-day lemon and ginger intervals do not transfer to other
 juices. Applesauce and juice profiles do not assign those clocks to whole fruit,
@@ -418,8 +455,11 @@ For an exact ingredient profile that contains reviewed product rules, a matching
 brand or reviewed barcode selects that product scope before testing conditions.
 Both brand and barcode must then match. Missing identity, temperature or handling
 confirmation returns `label_required`; it cannot fall back to a longer generic
-canned-food interval. The verified product rule also takes precedence regardless
-of rule ordering. Generic canned-food guidance remains available for other
+canned-food interval. Where no product scope is selected, matching brand-family
+rules take precedence over generic guidance, even when their handling evidence
+is missing. A conflicting reviewed barcode cannot be bypassed by a brand-only
+rule. This precedence is independent of rule ordering or interval length.
+Generic canned-food guidance remains available for other
 products on explicitly canned ingredient profiles. Unspecified or cooked legumes
 have only product-specific rules, so they cannot borrow a generic canned interval
 for a homemade batch or an opened bag of dried beans.
