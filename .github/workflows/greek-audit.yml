@@ -23,3 +23,5 @@ jobs:
           python-version: "3.13"
       - name: Validate new Greek overlays against repository data
         run: python -m unittest discover -s tests -p 'test_greek_catalog_audit_v19*.py' -v
+      - name: Whole pepper and spice names against shipped catalog identities
+        run: python tests/test_greek_peppers_v226.py

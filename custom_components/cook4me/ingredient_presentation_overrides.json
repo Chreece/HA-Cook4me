@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "scope": "Display and choice grouping only; preserve source IDs, nutrition, prices and quantities.",
+  "review": "v226: provider French Poivron/Poivre/Piment and German Paprika/Pfeffer distinguish three foods called Pepper in English. Preparation descriptions identify whole peppers. Paprika powder remains a spice.",
+  "ingredients": {
+    "M_FOOD_358": {
+      "canonicalName": "Paprika",
+      "translations": {"de": "Paprikapulver"}
+    },
+    "M_FOOD_377": {
+      "canonicalName": "Chili pepper",
+      "translations": {"en": "Chili pepper", "de": "Chilischote"}
+    },
+    "M_FOOD_389": {
+      "canonicalName": "Bell pepper",
+      "translations": {"en": "Bell pepper"}
+    },
+    "local:ar:4dfea6b1b4078417156b": {
+      "canonicalName": "Bell pepper, seeded and cut into long strips",
+      "translations": {"de": "Paprika"}
+    },
+    "local:tr:3926b17a846678338688": {
+      "canonicalName": "Chopped bell pepper",
+      "translations": {"de": "Paprika"}
+    },
+    "local:tr:9a5d0b225575099864f8": {
+      "canonicalName": "Bell pepper, deseeded and cut into strips",
+      "translations": {"de": "Paprika"}
+    },
+    "local:tr:267d2e66dcf980d27a49": {
+      "canonicalName": "Bell pepper, stem removed and deseeded",
+      "translations": {"de": "Paprika"}
+    },
+    "local:uk:8a82638ca5be5aa1e2b5": {
+      "canonicalName": "Bell pepper, deseeded and diced",
+      "translations": {"de": "Paprika"}
+    },
+    "local:uk:bb6e47a75307079d3923": {
+      "canonicalName": "Bell pepper, cleaned and diced",
+      "translations": {"de": "Paprika"}
+    }
+  }
+}
