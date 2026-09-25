@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.17",
+  "version": "2026-09-25.18",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -106,7 +106,7 @@
     "vz_opening": {
       "publisher": "Verbraucherzentrale",
       "url": "https://www.verbraucherzentrale.de/wissen/lebensmittel/auswaehlen-zubereiten-aufbewahren/lebensmittel-nach-dem-oeffnen-gekuehlt-lagern-angaben-oft-zu-vage-109122",
-      "reviewedOn": "2026-09-24"
+      "reviewedOn": "2026-09-25"
     },
     "oatly_opening": {
       "publisher": "Oatly",
@@ -131,12 +131,12 @@
     "bzfe_green_sauce_herbs": {
       "publisher": "Bundeszentrum für Ernährung (BZfE)",
       "url": "https://www.bzfe.de/presse/pressemeldungen-archiv/frankfurter-gruene-sosse",
-      "reviewedOn": "2026-09-24"
+      "reviewedOn": "2026-09-25"
     },
     "bzfe_basil": {
       "publisher": "Bundeszentrum für Ernährung (BZfE)",
       "url": "https://www.bzfe.de/presse/pressemeldungen-archiv/volles-sommeraroma-basilikum",
-      "reviewedOn": "2026-09-24"
+      "reviewedOn": "2026-09-25"
     },
     "bzfe_savoy": {
       "publisher": "Bundeszentrum für Ernährung (BZfE)",
@@ -186,7 +186,7 @@
     "vz_season_calendar": {
       "publisher": "Verbraucherzentrale",
       "url": "https://www.verbraucherzentrale.de/sites/default/files/migration_files/media222992A.pdf",
-      "reviewedOn": "2026-09-24"
+      "reviewedOn": "2026-09-25"
     },
     "bzfe_shallots": {
       "publisher": "Bundeszentrum für Ernährung (BZfE)",
@@ -256,7 +256,7 @@
     "bzfe_snow_peas": {
       "publisher": "Bundeszentrum für Ernährung (BZfE)",
       "url": "https://www.bzfe.de/presse/pressemeldungen-archiv/zeit-fuer-zuckerschoten",
-      "reviewedOn": "2026-09-24"
+      "reviewedOn": "2026-09-25"
     },
     "bzfe_walnuts": {
       "publisher": "Bundeszentrum für Ernährung (BZfE)",
@@ -9873,10 +9873,17 @@
     "double cream (optional)": "label_required",
     "double-cream cream cheese": "cream_cheese",
     "drained ricotta": "ricotta",
+    "dried basil": "dry_staple",
     "dried beans": "dry_staple",
     "dried chickpeas": "dry_staple",
+    "dried herbs": "dry_staple",
+    "dried herbs (such as rosemary)": "dry_staple",
     "dried lentils": "dry_staple",
+    "dried mint": "dry_staple",
+    "dried oregano": "dry_staple",
+    "dried oregano leaves": "dry_staple",
     "dried pasta": "dry_staple",
+    "dried thyme": "dry_staple",
     "dried tomatoes": "alnatura_dried_tomatoes",
     "dried tomatoes, coarsely chopped": "alnatura_dried_tomatoes",
     "eggplant": "season_aubergine",
@@ -10312,9 +10319,9 @@
     "lučina cream cheese": "label_required",
     "mandarin": "season_mandarin",
     "mandarins (zest and segments)": "season_mandarin",
-    "mangetout": "season_fresh_pea",
+    "mangetout": "season_snow_pea",
     "mangetout peas": "season_snow_pea",
-    "mangetout, washed and cut in two": "season_fresh_pea",
+    "mangetout, washed and cut in two": "season_snow_pea",
     "marinated artichoke hearts": "alnatura_marinated_artichokes",
     "marinated artichoke hearts, cut into thirds": "alnatura_marinated_artichokes",
     "marinated artichoke, chopped": "alnatura_marinated_artichokes",
@@ -10359,6 +10366,7 @@
     "mint, washed and cut into pieces": "season_mint",
     "mint, washed and finely chopped": "season_mint",
     "mirabelle plums": "season_mirabelle",
+    "mixed dried herbs": "dry_staple",
     "mixed-color bell pepper": "season_bell_pepper",
     "mozzarella": "mozzarella",
     "mozzarella ball, roughly chopped": "mozzarella",
@@ -10514,6 +10522,7 @@
     "pickles": "alnatura_pickled_cucumber",
     "pickles, chopped and drained": "alnatura_pickled_cucumber",
     "pieces of sun-dried tomatoes, cut into strips": "alnatura_dried_tomatoes",
+    "pinch of dried mint": "dry_staple",
     "pinch of fresh thyme leaves": "season_thyme",
     "pinch of thyme": "season_thyme",
     "pinch(es) of fresh thyme leaves": "season_thyme",
@@ -11134,6 +11143,7 @@
     "M_FOOD_110": "season_kohlrabi",
     "M_FOOD_111": "season_romanesco",
     "M_FOOD_112": "season_red_cabbage",
+    "M_FOOD_115": "season_chives",
     "M_FOOD_117": "season_lemon",
     "M_FOOD_120": "season_pumpkin",
     "M_FOOD_121": "season_clementine",
@@ -11145,10 +11155,12 @@
     "M_FOOD_151": "label_required",
     "M_FOOD_152": "label_required",
     "M_FOOD_153": "season_watercress",
+    "M_FOOD_16": "season_dill",
     "M_FOOD_166": "season_shallot",
     "M_FOOD_171": "season_chicory",
     "M_FOOD_177": "season_spinach",
     "M_FOOD_184": "label_required",
+    "M_FOOD_186": "dry_staple",
     "M_FOOD_19": "season_artichoke",
     "M_FOOD_190": "season_fennel",
     "M_FOOD_191": "feta",
@@ -11175,12 +11187,15 @@
     "M_FOOD_267": "reishunger_coconut_milk",
     "M_FOOD_268": "hazelnut_drinks",
     "M_FOOD_269": "milk",
+    "M_FOOD_270": "dry_staple",
     "M_FOOD_271": "milk",
     "M_FOOD_272": "season_lettuce",
     "M_FOOD_280": "alnatura_lentils",
+    "M_FOOD_30": "season_basil",
     "M_FOOD_300": "season_mandarin",
     "M_FOOD_305": "mascarpone",
     "M_FOOD_306": "mayonnaise_label_required",
+    "M_FOOD_308": "season_mint",
     "M_FOOD_32": "season_beetroot",
     "M_FOOD_323": "mustard_label_required",
     "M_FOOD_324": "mustard_label_required",
@@ -11193,11 +11208,14 @@
     "M_FOOD_354": "season_grapefruit",
     "M_FOOD_355": "season_parsnip",
     "M_FOOD_360": "season_sweet_potato",
+    "M_FOOD_361": "dry_staple",
     "M_FOOD_366": "season_peach",
+    "M_FOOD_369": "season_parsley_leaf",
     "M_FOOD_370": "alnatura_pesto",
     "M_FOOD_373": "cream_cheese",
     "M_FOOD_382": "season_pear",
     "M_FOOD_383": "season_leek",
+    "M_FOOD_386": "season_snow_pea",
     "M_FOOD_389": "season_bell_pepper",
     "M_FOOD_390": "season_bell_pepper",
     "M_FOOD_391": "season_bell_pepper",
@@ -11209,18 +11227,24 @@
     "M_FOOD_412": "season_radish",
     "M_FOOD_413": "season_grape",
     "M_FOOD_419": "ricotta",
+    "M_FOOD_421": "dry_staple",
     "M_FOOD_424": "season_romaine",
+    "M_FOOD_425": "season_rosemary",
     "M_FOOD_427": "season_rocket",
     "M_FOOD_433": "season_swede",
     "M_FOOD_44": "season_chard",
     "M_FOOD_444": "soy_sauce_label_required",
     "M_FOOD_445": "alnatura_tomato_sauce",
+    "M_FOOD_457": "dry_staple",
+    "M_FOOD_467": "dry_staple",
+    "M_FOOD_476": "season_thyme",
     "M_FOOD_477": "taifun_plain_tofu",
     "M_FOOD_478": "season_tomato",
     "M_FOOD_479": "season_tomato",
     "M_FOOD_480": "season_jerusalem_artichoke",
     "M_FOOD_497": "label_required",
     "M_FOOD_507": "label_required",
+    "M_FOOD_512": "dry_staple",
     "M_FOOD_527": "season_rhubarb",
     "M_FOOD_533": "alnatura_salsa",
     "M_FOOD_534": "alnatura_peanut_sauce",
@@ -11244,6 +11268,7 @@
     "M_FOOD_733": "taifun_plain_tofu",
     "M_FOOD_743": "season_bell_pepper",
     "M_FOOD_748": "season_tomato",
+    "M_FOOD_764": "dry_staple",
     "M_FOOD_79": "season_carrot",
     "M_FOOD_8": "season_blueberry",
     "M_FOOD_80": "season_blackcurrant",

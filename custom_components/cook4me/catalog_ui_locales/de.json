@@ -1,18 +1,30 @@
 {
   "schemaVersion": 1,
   "language": "de",
-  "translationSource": "German supermarket names reviewed for lifecycle batch 23, 2026-09-25. Display/search only.",
+  "translationSource": "German supermarket names reviewed through lifecycle batch 24, 2026-09-25. Display/search only.",
   "labels": {
     "celery": "Stangensellerie",
     "creme fraiche": "Crème fraîche",
     "curry sauce": "Currysauce",
+    "dried basil": "Getrockneter Basilikum",
+    "dried bean": "Getrocknete Bohnen",
+    "dried herbs": "Getrocknete Kräuter",
+    "dried mint": "Getrocknete Minze",
+    "dried oregano": "Getrockneter Oregano",
+    "dried oregano leaf": "Getrockneter Oregano",
+    "dried thyme": "Getrockneter Thymian",
     "ginger juice": "Ingwersaft",
+    "ground black pepper": "Gemahlener schwarzer Pfeffer",
     "hazelnut milk": "Haselnussdrink",
     "lamb's lettuce": "Feldsalat",
+    "mangetout": "Zuckerschoten",
+    "mangetout pea": "Zuckerschoten",
+    "mixed dried herbs": "Getrocknete Kräutermischung",
     "parsley root": "Petersilienwurzel",
     "plant milk": "Pflanzendrink",
     "satay sauce": "Satésauce",
     "semi-skimmed milk": "Fettarme Milch",
+    "snow pea": "Zuckerschoten",
     "thick creme fraiche": "Crème fraîche"
   },
   "searchAliases": {
@@ -46,6 +58,18 @@
     ],
     "thick creme fraiche": [
       "Creme fraiche"
+    ],
+    "mangetout": [
+      "Zuckererbsen",
+      "Kaiserschoten"
+    ],
+    "mangetout peas": [
+      "Zuckererbsen",
+      "Kaiserschoten"
+    ],
+    "snow peas": [
+      "Zuckererbsen",
+      "Kaiserschoten"
     ]
   }
 }
