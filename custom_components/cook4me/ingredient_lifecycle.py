@@ -1,7 +1,7 @@
 """Offline seasonal availability and conditional after-opening guidance.
 
-Only a reviewed canonical-name allowlist is used while loading the release
-catalog. Runtime callers resolve an exact ingredient ID through release_catalog;
+Reviewed canonical-name and provider-ID allowlists are used while loading the
+release catalog. Runtime callers resolve an exact ingredient ID through release_catalog;
 translated labels, fuzzy matches and display groups never provide evidence.
 """
 from __future__ import annotations
@@ -101,6 +101,12 @@ def validate_lifecycle_data(data: Any) -> None:
             evidence(rule)
     if any(not key or key != _name(key) or profile_id not in profiles for key, profile_id in names.items()):
         raise ValueError("Invalid lifecycle identity mapping")
+    identities = data.get("ingredientIds", {})
+    if not isinstance(identities, dict) or any(
+        not isinstance(key, str) or not key.strip() or key != key.strip() or profile_id not in profiles
+        for key, profile_id in identities.items()
+    ):
+        raise ValueError("Invalid exact ingredient lifecycle mapping")
 
 
 @lru_cache(maxsize=1)
@@ -115,9 +121,15 @@ def enrich_catalog_ingredients(payload: dict[str, Any]) -> None:
     data = load_lifecycle_data()
     coverage = {"seasonality": 0, "afterOpening": 0, "labelRequired": 0}
     for ingredient in payload.get("ingredients", []):
-        if not isinstance(ingredient, dict) or ingredient.get("classification") != "food" or ingredient.get("needsSemanticConfirmation"):
+        if not isinstance(ingredient, dict) or ingredient.get("needsSemanticConfirmation"):
             continue
-        profile_id = data["canonicalNames"].get(_name(ingredient.get("canonicalName")))
+        # Reviewed provider IDs distinguish homonyms (vegetable Pepper versus
+        # the spice) and cover official rows without a classification field.
+        profile_id = data.get("ingredientIds", {}).get(str(ingredient.get("id") or ""))
+        classification = ingredient.get("classification")
+        if classification not in (None, "food") or (classification != "food" and not profile_id):
+            continue
+        profile_id = profile_id or data["canonicalNames"].get(_name(ingredient.get("canonicalName")))
         if not profile_id:
             continue
         profile = deepcopy(data["profiles"][profile_id])

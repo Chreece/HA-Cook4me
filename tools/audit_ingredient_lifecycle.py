@@ -26,6 +26,7 @@ def audit():
         "catalogIngredientRows": len(payload["ingredients"]),
         "enrichedIngredientRows": len(covered),
         "exactCanonicalNames": len(data["canonicalNames"]),
+        "exactIngredientIds": len(data.get("ingredientIds", {})),
         "seasonGroups": sum(p["seasonality"]["status"] == "reviewed" for p in data["profiles"].values()),
         "openingRuleGroups": sum(bool(p["afterOpening"].get("rules")) for p in data["profiles"].values()),
         "productScopedRules": len(product_rules),

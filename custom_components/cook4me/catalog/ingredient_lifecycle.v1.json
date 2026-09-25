@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.9",
+  "version": "2026-09-25.10",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -731,6 +731,81 @@
     "dmbio_tomato_sauce_520": {
       "publisher": "dm-drogerie markt — dmBio",
       "url": "https://www.dm.de/p/d/3059277/dmbio-tomatensauce-klassik",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_passata_500": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/2975558/dmbio-passierte-tomaten",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_passata_690": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1446418/dmbio-tomaten-fein-passiert-passata",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_chickpeas_350": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1469738/dmbio-kichererbsen",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_chickpeas_700": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1686838/dmbio-kichererbsen",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_coconut_milk_400": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1449263/dmbio-kokosmilch",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_coconut_milk_250": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/2971643/dmbio-kokosmilch-tetrapack",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_soy_drink": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1502910/dmbio-pflanzendrink-soja-natur",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_rice_drink": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.at/p/d/1502968/dmbio-reisdrink-natur",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_coconut_drink": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1691036/dmbio-pflanzendrink-kokos-natur",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_oat_natur": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1453941/dmbio-pflanzendrink-haferdrink-natur",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_oat_barista": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/1697279/dmbio-haferdrink-barista",
+      "reviewedOn": "2026-09-25"
+    },
+    "bzfe_pepper_availability": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/kueche-und-alltag/kochen/how-to-obst-und-gemuese/how-to-paprika",
+      "reviewedOn": "2026-09-25"
+    },
+    "bzfe_spring_onion": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/presse/pressemeldungen-archiv/feinwuerzige-fruehlingszwiebel",
+      "reviewedOn": "2026-09-25"
+    },
+    "bzfe_parsnip": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/presse/pressemeldungen-archiv/pastinake-fuer-die-winterkueche",
+      "reviewedOn": "2026-09-25"
+    },
+    "vsb_nettle": {
+      "publisher": "VerbraucherService Bayern",
+      "url": "https://www.verbraucherservice-bayern.de/themen/hauswirtschaft/brennnessel-superfood-und-pflanzenpflege",
       "reviewedOn": "2026-09-25"
     }
   },
@@ -1640,20 +1715,19 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
             "months": [
               1,
               2,
               3,
+              10,
+              11,
               12
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_01",
-              "hessen_02",
-              "hessen_03",
-              "hessen_12"
+              "bzfe_parsnip"
             ],
             "coverage": "listed_months_only"
           }
@@ -2019,16 +2093,22 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "outdoor_harvest",
             "months": [
+              3,
               4,
-              5
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_04",
-              "hessen_05"
+              "bzfe_spring_onion"
             ],
             "coverage": "listed_months_only"
           }
@@ -2677,16 +2757,22 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
             "months": [
+              3,
+              4,
+              5,
+              6,
               7,
-              8
+              8,
+              9,
+              10,
+              11
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_07",
-              "hessen_08"
+              "bzfe_pepper_availability"
             ],
             "coverage": "listed_months_only"
           }
@@ -3025,6 +3111,44 @@
             "productBarcodes": [
               "4104420260139"
             ]
+          },
+          {
+            "id": "dmbio_oat_natur",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_oat_natur",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765022759"
+            ]
+          },
+          {
+            "id": "dmbio_oat_barista",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_oat_barista",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765022841"
+            ]
           }
         ]
       }
@@ -3154,6 +3278,40 @@
             "brand": "Alnatura",
             "productBarcodes": [
               "4104420033641"
+            ]
+          },
+          {
+            "id": "dmbio_coconut_milk_400",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_coconut_milk_400",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796063882"
+            ]
+          },
+          {
+            "id": "dmbio_coconut_milk_250",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_coconut_milk_250",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796075519"
             ]
           }
         ]
@@ -3462,6 +3620,42 @@
             "brand": "Alnatura",
             "productBarcodes": [
               "40045238"
+            ]
+          },
+          {
+            "id": "dmbio_passata_500",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_passata_500",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447887730"
+            ]
+          },
+          {
+            "id": "dmbio_passata_690",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "closed_container"
+            ],
+            "sourceIds": [
+              "dmbio_passata_690",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765018783"
             ]
           }
         ]
@@ -3936,6 +4130,40 @@
             "productBarcodes": [
               "4104420230972"
             ]
+          },
+          {
+            "id": "dmbio_chickpeas_350",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_chickpeas_350",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765042894"
+            ]
+          },
+          {
+            "id": "dmbio_chickpeas_700",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_chickpeas_700",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765071559"
+            ]
           }
         ]
       }
@@ -4012,6 +4240,40 @@
               "usda_cooling"
             ],
             "kind": "general_guidance"
+          },
+          {
+            "id": "dmbio_chickpeas_350",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_chickpeas_350",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765042894"
+            ]
+          },
+          {
+            "id": "dmbio_chickpeas_700",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_chickpeas_700",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765071559"
+            ]
           }
         ]
       }
@@ -6657,6 +6919,25 @@
             "productBarcodes": [
               "4104420266827"
             ]
+          },
+          {
+            "id": "dmbio_soy_drink",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_soy_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765022803"
+            ]
           }
         ]
       }
@@ -6698,6 +6979,25 @@
             "brand": "Alnatura",
             "productBarcodes": [
               "4104420260337"
+            ]
+          },
+          {
+            "id": "dmbio_rice_drink",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_rice_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796002102"
             ]
           }
         ]
@@ -6798,6 +7098,25 @@
             "brand": "Alnatura",
             "productBarcodes": [
               "4104420204225"
+            ]
+          },
+          {
+            "id": "dmbio_coconut_drink",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_coconut_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765022827"
             ]
           }
         ]
@@ -6942,6 +7261,101 @@
             "brand": "Alnatura",
             "productBarcodes": [
               "4104420204225"
+            ]
+          },
+          {
+            "id": "dmbio_soy_drink",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_soy_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765022803"
+            ]
+          },
+          {
+            "id": "dmbio_rice_drink",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_rice_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796002102"
+            ]
+          },
+          {
+            "id": "dmbio_coconut_drink",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_coconut_drink",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765022827"
+            ]
+          },
+          {
+            "id": "dmbio_oat_natur",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_oat_natur",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765022759"
+            ]
+          },
+          {
+            "id": "dmbio_oat_barista",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_oat_barista",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765022841"
             ]
           }
         ]
@@ -7532,6 +7946,35 @@
           }
         ]
       }
+    },
+    "season_nettle_leaf": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-BY",
+            "basis": "outdoor_harvest",
+            "months": [
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "vsb_nettle"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
     }
   },
   "canonicalNames": {
@@ -7608,6 +8051,7 @@
     "baby potatoes": "season_potato",
     "baby spinach": "season_spinach",
     "baby spinach leaves": "season_spinach",
+    "baby spinach salad": "season_spinach",
     "baby spinach, rinsed 2 or 3 times and very roughly chopped": "season_spinach",
     "baby spinach, washed twice (large stems removed)": "season_spinach",
     "baked beans": "alnatura_baked_beans",
@@ -7900,6 +8344,7 @@
     "chopped parsley (for serving)": "season_parsley_leaf",
     "chopped parsley (garnish)": "season_parsley_leaf",
     "chopped parsley (quantity fragment: /2 tbsp)": "season_parsley_leaf",
+    "chopped pepper": "season_bell_pepper",
     "chopped potatoes": "season_potato",
     "chopped red bell pepper": "season_bell_pepper",
     "chopped red onion": "season_onion",
@@ -8510,6 +8955,7 @@
     "nectarine, halved and pitted": "season_peach",
     "nectarines": "season_peach",
     "nectarines, halved and pitted": "season_peach",
+    "nettle leaves, washed using gloves": "season_nettle_leaf",
     "new potatoes": "season_new_potato",
     "oat drink": "oat_drinks",
     "oat milk": "oat_drinks",
@@ -8637,6 +9083,11 @@
     "peeled potatoes": "season_potato",
     "peeled sweet chestnuts": "season_chestnut",
     "peeled thinly sliced onion": "season_onion",
+    "pepper, cleaned and diced": "season_bell_pepper",
+    "pepper, deseeded and cut into strips": "season_bell_pepper",
+    "pepper, deseeded and diced": "season_bell_pepper",
+    "pepper, seeded and cut into long strips": "season_bell_pepper",
+    "pepper, stem removed and deseeded": "season_bell_pepper",
     "pesto": "alnatura_pesto",
     "pesto alla genovese": "label_required",
     "pesto sauce": "alnatura_pesto",
@@ -8784,6 +9235,7 @@
     "red pepper, peeled and diced": "season_bell_pepper",
     "red pesto": "alnatura_pesto",
     "red potatoes": "season_potato",
+    "red radicchio": "season_radicchio",
     "red radishes": "season_radish",
     "red spring onions": "season_spring_onion",
     "red, green and yellow bell peppers, chopped": "season_bell_pepper",
@@ -9253,5 +9705,17 @@
     "zucchini, washed and sliced into rounds": "season_courgette",
     "zucchinis": "season_courgette",
     "★ cherry tomatoes, stems removed": "season_tomato"
+  },
+  "ingredientIds": {
+    "M_FOOD_267": "reishunger_coconut_milk",
+    "M_FOOD_343": "season_spring_onion",
+    "M_FOOD_355": "season_parsnip",
+    "M_FOOD_389": "season_bell_pepper",
+    "M_FOOD_390": "season_bell_pepper",
+    "M_FOOD_391": "season_bell_pepper",
+    "M_FOOD_392": "season_bell_pepper",
+    "M_FOOD_624": "soy_drinks",
+    "M_FOOD_634": "season_spring_onion",
+    "M_FOOD_743": "season_bell_pepper"
   }
 }
