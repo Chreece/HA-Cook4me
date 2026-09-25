@@ -33,7 +33,7 @@ class LifecycleTests(unittest.TestCase):
         data = self.lifecycle.load_lifecycle_data()
         self.lifecycle.validate_lifecycle_data(data)
         self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 112)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 75)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 77)
 
     def test_greek_produce_regions_preserve_german_calendars(self):
         cases = (
@@ -1158,9 +1158,10 @@ class LifecycleTests(unittest.TestCase):
             with self.subTest(name=name):
                 profile = self.profile(name)
                 if name == "Ketchup":
-                    self.assertEqual(profile["afterOpening"]["status"], "label_required")
-                    self.assertEqual(profile["afterOpening"]["reason"], "no_reviewed_numeric_opening_interval")
-                    self.assertNotIn("rules", profile["afterOpening"])
+                    # A reviewed dmBio package must not assign its numeric
+                    # interval to Alnatura's refrigeration-only label.
+                    self.assertEqual(profile["afterOpening"]["status"], "conditional")
+                    self.assertEqual([rule["brand"] for rule in profile["afterOpening"]["rules"]], ["dmBio"])
                 lot = {"openedAt": "2026-09-24", "brand": "Alnatura", "barcode": code, "storage": "fridge"}
                 window = self.lifecycle.opening_window(profile, lot, temperature_c=4)
                 self.assertEqual(window["status"], "label_required")

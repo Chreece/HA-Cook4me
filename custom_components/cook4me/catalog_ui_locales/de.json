@@ -1,13 +1,21 @@
 {
   "schemaVersion": 1,
   "language": "de",
-  "translationSource": "German supermarket names reviewed for lifecycle batch 20, 2026-09-25. Display/search only.",
+  "translationSource": "German supermarket names reviewed for lifecycle batch 21, 2026-09-25. Display/search only.",
   "labels": {
+    "curry sauce": "Currysauce",
     "ginger juice": "Ingwersaft",
     "lamb's lettuce": "Feldsalat",
     "plant milk": "Pflanzendrink"
   },
   "searchAliases": {
-    "plant milk": ["Pflanzenmilch", "pflanzliches Getränk"]
+    "plant milk": [
+      "Pflanzenmilch",
+      "pflanzliches Getränk"
+    ],
+    "curry sauce": [
+      "Currysoße",
+      "Currysosse"
+    ]
   }
 }

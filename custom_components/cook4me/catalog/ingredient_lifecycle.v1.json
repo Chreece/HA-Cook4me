@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.14",
+  "version": "2026-09-25.15",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -1042,6 +1042,61 @@
       "publisher": "Alnatura",
       "url": "https://www.alnatura.de/de-de/magazin/saisonkalender/salat-saison-salat-im-saisonkalender/feldsalat-saison/",
       "reviewedOn": "2026-09-25"
+    },
+    "dmbio_ketchup": {
+      "publisher": "dm-drogerie markt – dmBio product label",
+      "url": "https://www.dm.de/p/d/1622220/dmbio-tomaten-ketchup",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_thai_curry": {
+      "publisher": "dm-drogerie markt – dmBio product label",
+      "url": "https://www.dm.de/p/d/1488554/dmbio-currysosse-thai",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_indian_curry": {
+      "publisher": "dm-drogerie markt – dmBio product label",
+      "url": "https://www.dm.de/p/d/1488553/dmbio-currysosse-indisch-cremig-pikant",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_tomato_grilled_pepper": {
+      "publisher": "dm-drogerie markt – dmBio product label",
+      "url": "https://www.dm.de/p/d/1372859/dmbio-tomatensauce-gegrillte-paprika",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_tomato_goat_cheese_320": {
+      "publisher": "dm-drogerie markt – dmBio product label",
+      "url": "https://www.dm.de/p/d/3120498/dmbio-tomatensauce-ziegenfrischkaese",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_tomato_goat_cheese_340": {
+      "publisher": "dm-drogerie markt – dmBio product label",
+      "url": "https://www.dm.de/p/d/1638721/dmbio-tomatensosse-ziegenfrischkaese",
+      "reviewedOn": "2026-09-25"
+    },
+    "dmbio_ajvar": {
+      "publisher": "dm-drogerie markt – dmBio product label",
+      "url": "https://www.dm.at/p/d/3042443/dmbio-gemueseaufstrich-ajvar-creme-dip",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_season_beetroot": {
+      "publisher": "Alnatura – national seasonal calendar",
+      "url": "https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/rote-bete-saison/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_season_red_cabbage": {
+      "publisher": "Alnatura – national seasonal calendar",
+      "url": "https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/rotkohl-saison/",
+      "reviewedOn": "2026-09-25"
+    },
+    "bzfe_season_white_cabbage": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/kueche-und-alltag/kochen/how-to-obst-und-gemuese/how-to-weisskohl-und-spitzkohl",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_season_spinach": {
+      "publisher": "Alnatura – national seasonal calendar",
+      "url": "https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/spinat-saison/",
+      "reviewedOn": "2026-09-25"
     }
   },
   "profiles": {
@@ -2026,12 +2081,17 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
+            "sourceRegion": "DE",
             "basis": "seasonal_calendar_including_stored_produce",
             "months": [
               1,
               2,
               3,
+              4,
+              5,
+              6,
+              7,
+              8,
               9,
               10,
               11,
@@ -2039,13 +2099,7 @@
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_01",
-              "hessen_02",
-              "hessen_03",
-              "hessen_09",
-              "hessen_10",
-              "hessen_11",
-              "hessen_12"
+              "alnatura_season_beetroot"
             ],
             "coverage": "listed_months_only"
           }
@@ -2061,11 +2115,14 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
+            "sourceRegion": "DE",
             "basis": "seasonal_calendar_including_stored_produce",
             "months": [
               1,
               2,
+              3,
+              4,
+              5,
               6,
               7,
               8,
@@ -2076,15 +2133,7 @@
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_01",
-              "hessen_02",
-              "hessen_06",
-              "hessen_07",
-              "hessen_08",
-              "hessen_09",
-              "hessen_10",
-              "hessen_11",
-              "hessen_12"
+              "alnatura_season_red_cabbage"
             ],
             "coverage": "listed_months_only"
           }
@@ -2164,13 +2213,14 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
             "months": [
               1,
               2,
               3,
               4,
+              5,
               6,
               7,
               8,
@@ -2181,17 +2231,7 @@
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_01",
-              "hessen_02",
-              "hessen_03",
-              "hessen_04",
-              "hessen_06",
-              "hessen_07",
-              "hessen_08",
-              "hessen_09",
-              "hessen_10",
-              "hessen_11",
-              "hessen_12"
+              "bzfe_season_white_cabbage"
             ],
             "coverage": "listed_months_only"
           }
@@ -2474,9 +2514,10 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
             "months": [
+              3,
               4,
               5,
               6,
@@ -2488,14 +2529,7 @@
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_04",
-              "hessen_05",
-              "hessen_06",
-              "hessen_07",
-              "hessen_08",
-              "hessen_09",
-              "hessen_10",
-              "hessen_11"
+              "alnatura_season_spinach"
             ],
             "coverage": "listed_months_only"
           }
@@ -4162,6 +4196,57 @@
             "brand": "dmBio",
             "productBarcodes": [
               "4066447972153"
+            ]
+          },
+          {
+            "id": "dmbio_tomato_grilled_pepper",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_tomato_grilled_pepper",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447887785"
+            ]
+          },
+          {
+            "id": "dmbio_tomato_goat_cheese_320",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_tomato_goat_cheese_320",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4070765100709"
+            ]
+          },
+          {
+            "id": "dmbio_tomato_goat_cheese_340",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_tomato_goat_cheese_340",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447257748"
             ]
           }
         ]
@@ -6137,6 +6222,40 @@
             "productBarcodes": [
               "4104420212794"
             ]
+          },
+          {
+            "id": "dmbio_thai_curry",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_thai_curry",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447675887"
+            ]
+          },
+          {
+            "id": "dmbio_indian_curry",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_indian_curry",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796097245"
+            ]
           }
         ]
       }
@@ -6162,13 +6281,33 @@
         "reason": "processed_food"
       },
       "afterOpening": {
-        "status": "label_required",
+        "status": "conditional",
         "labelOverrides": true,
         "sourceIds": [
           "ketchup_label",
           "vz_opening"
         ],
-        "reason": "no_reviewed_numeric_opening_interval"
+        "rules": [
+          {
+            "id": "dmbio_ketchup",
+            "daysMin": 30,
+            "daysMax": 30,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "stored_upright"
+            ],
+            "sourceIds": [
+              "dmbio_ketchup",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447887723"
+            ]
+          }
+        ]
       }
     },
     "season_mint": {
@@ -9157,6 +9296,35 @@
           }
         ]
       }
+    },
+    "ajvar": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "dmbio_ajvar",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "dmbio_ajvar",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4067796185997"
+            ]
+          }
+        ]
+      }
     }
   },
   "canonicalNames": {
@@ -9185,6 +9353,7 @@
     "a- pumpkin, seeds and skin removed, cut into 3 cm cubes": "season_pumpkin",
     "a- soy sauce": "soy_sauce_label_required",
     "a- unsweetened soy milk": "soy_drinks",
+    "ajvar": "ajvar",
     "almond drink": "alpro_drinks",
     "almond milk": "alpro_drinks",
     "apple": "season_apple",
@@ -10994,6 +11163,7 @@
     "M_FOOD_82": "season_celery",
     "M_FOOD_83": "season_celeriac",
     "M_FOOD_91": "season_chanterelle",
-    "M_FOOD_94": "season_chestnut"
+    "M_FOOD_94": "season_chestnut",
+    "M_FOOD_259": "ketchup_label"
   }
 }
