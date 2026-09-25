@@ -5,14 +5,14 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-24.6)
+## Reviewed coverage (2026-09-25.1)
 
-- 90 produce groups, including fruit, leafy vegetables, roots, asparagus,
+- 93 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
   savoy cabbage, pak choi, shallots, wild garlic, turnips, snow peas, walnuts,
   hazelnuts, artichokes, melons, kiwi, chestnuts, sweet potatoes, swede and
-  chanterelles.
-- 36 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+  chanterelles, mint, tarragon and lovage.
+- 42 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro or Oatly), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
@@ -21,8 +21,10 @@ cloud credentials, or per-scan file reads are needed.
   for legumes, sweetcorn and tomato pieces. Brand, product and handling
   conditions remain attached. Alnatura apple purée, apple, orange, vegetable,
   sauerkraut, beetroot, lemon, ginger and grape juices add product-specific
-  guidance, along with Alnatura natural/smoked tofu, salsa and curry sauces.
-  There are 33 reviewed product barcodes and 1,261 exact canonical names.
+  guidance, along with Alnatura natural/smoked tofu, salsa, curry sauces,
+  cooking creams and olives. Cream and yoghurt profiles are separate; olive
+  profiles distinguish green, black, mixed and unspecified forms.
+  There are 41 reviewed product barcodes and 1,321 exact canonical names.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, cream cheese and
   coconut cream, tomato paste and ketchup.
@@ -38,7 +40,8 @@ entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
 Season months are German availability guidance from the twelve monthly
 calendars published by the Hessische Lehrkräfteakademie, BZfE produce guides,
 the BVEO pak choi guide, Hessen VerbraucherFenster and the Verbraucherzentrale
-season calendar, BUND Naturschutz's Bavarian calendar and Hortipendium.
+season calendar, BUND Naturschutz's Bavarian calendar, Hortipendium, LWG and
+Landwirtschaftskammer Nordrhein-Westfalen's Landservice.
 For the Hessian monthly calendar entries, the source region
 (`DE-HE`), country (`DE`), source links and review date are preserved. The source
 includes stored produce and protected cultivation; these months must not be
@@ -96,6 +99,12 @@ is a geographic inference, recorded under `DE`; it is not a complete collection
 season or mushroom-identification advice. The article's unusually early Balkan
 imports in 2026 do not extend the recurring highlight months. Preserved mushrooms
 and mixed-species entries do not receive this profile.
+
+Fresh mint uses Landservice's May–October harvest guidance (`DE-NW`). LWG's
+garden-herb guide supplies June–September for tarragon and May–October for
+lovage (`DE-BY`). All three use `outdoor_harvest`; year-round retail or potted
+availability does not extend those months. Exact fresh leaf, washed and chopped
+forms are included. Dried/frozen herbs, extracts and herb mixtures stay separate.
 
 The calendars list monthly highlights rather than every crop. A listed month
 returns `in_season`, twelve listed months return `year_round`, and an omitted
@@ -166,6 +175,36 @@ handling condition. Each rule links to its own manufacturer product page.
 | Salsa-Dip, 245 ml | 42398479 | 3 | — |
 | Curry indische Art, 325 ml | 4104420213128 | 2–3 | — |
 | Kokoscurry thailändische Art, 325 ml | 4104420212794 | 2–3 | — |
+| Soja-Cuisine, 200 ml | 4104420095205 | 4 | — |
+| Hafer-Cuisine, 200 ml | 4104420241176 | 4 | — |
+| Kokos-Cuisine, 200 ml | 4104420240940 | 4 | — |
+| Origin Grüne Oliven ohne Stein, 350 g jar | 4104420211827 | 14 | — |
+| Origin Grüne Oliven mit Stein, 310 g jar | 4104420129849 | 5 | — |
+| Origin Kalamata-Oliven ohne Stein, 350 g jar | 4104420132085 | 14 | — |
+| Origin Oliven-Mix mit Kräutern, 180 g | 42400660 | 14 | — |
+| Oliven-Mix mit Kräutern, 125 g fresh antipasti | 40045542 | 2 | — |
+
+Soy cream and generic plant-based cooking cream have separate profiles from
+yoghurt. Both preserve the existing Alpro 5-day rule and its 7 °C cap. The soy
+cream profile adds only Soja-Cuisine; generic plant-based cream can select the
+verified soy, oat or coconut Cuisine product. Those Alnatura rules require at
+most 4 °C and do not apply to yoghurt, dairy cream, coconut cream, plant drinks
+or ambiguous dairy/oat alternatives. A known Alnatura barcode paired with a
+conflicting Alpro brand cannot fall back to Alpro's longer interval.
+
+The four Origin olive products accept either exact brand label `Alnatura` or
+`Alnatura Origin`, always with their own verified barcode. Separate rules encode
+these two labels; no substring brand matching is used. The fresh 125 g antipasti
+pack is an Alnatura product and receives no Origin alias. The jars' total weights
+are shown above; their drained weights differ.
+
+Olive preparation does not select a duration: pitting or chopping a green olive
+still requires its original product barcode to choose 5 or 14 days. The two
+mixed-olive packages likewise retain their separate 2- and 14-day rules.
+Colour-specific profiles cannot borrow a different colour or mix's barcode;
+unspecified olives can select any of the five reviewed products. Olive oil,
+spreads, Taggiasca olives, stuffed olives and ambiguous alternatives remain
+outside these profiles. These preserved products receive no fresh season.
 
 The two Alnatura tofu products add their own 2-day rules to the existing plain
 and smoked tofu profiles. Taifun's water-changing conditions and Reishunger's

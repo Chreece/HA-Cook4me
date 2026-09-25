@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-24.6",
+  "version": "2026-09-25.1",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -377,6 +377,56 @@
       "publisher": "Alnatura",
       "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/wuerzen-oele-essige/bio-senf-mayo-ketchup-bio-dip/tomatenketchup-115662/",
       "reviewedOn": "2026-09-24"
+    },
+    "landservice_mint": {
+      "publisher": "Landwirtschaftskammer Nordrhein-Westfalen / Landservice",
+      "url": "https://www.landservice.de/regionale-lebensmittel/kraeuter-getreide/minze",
+      "reviewedOn": "2026-09-25"
+    },
+    "lwg_garden_herbs": {
+      "publisher": "Bayerische Landesanstalt für Weinbau und Gartenbau (LWG)",
+      "url": "https://www.lwg.bayern.de/gartenakademie/gartendokumente/infoschriften/157754/index.php",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_soy_cuisine": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/milch-milchprodukte/bio-milchprodukte-zum-kochen/soja-cuisine-140890/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_oat_cuisine": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/milch-milchprodukte/bio-milchprodukte-zum-kochen/hafer-cuisine-200188/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_coconut_cuisine": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/milch-milchprodukte/bio-milchprodukte-zum-kochen/kokos-cuisine-216712/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_green_pitted_olives": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/feinkost/bio-oliven/gruene-oliven-ohne-stein-214568/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_green_whole_olives": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/feinkost/bio-oliven/gruene-oliven-mit-stein-133500/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_kalamata_pitted_olives": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/feinkost/bio-oliven/kalamata-oliven-ohne-stein-141627/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_olive_mix_180g": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/feinkost/bio-oliven/oliven-mix-mit-kraeutern-219489/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_olive_mix_125g": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/feinkost/bio-oliven/oliven-mix-mit-kraeutern-246290/",
+      "reviewedOn": "2026-09-25"
     }
   },
   "profiles": {
@@ -4467,6 +4517,560 @@
         ],
         "reason": "no_reviewed_numeric_opening_interval"
       }
+    },
+    "season_mint": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-NW",
+            "basis": "outdoor_harvest",
+            "months": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "landservice_mint"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_tarragon": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-BY",
+            "basis": "outdoor_harvest",
+            "months": [
+              6,
+              7,
+              8,
+              9
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "lwg_garden_herbs"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_lovage": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-BY",
+            "basis": "outdoor_harvest",
+            "months": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "lwg_garden_herbs"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "soy_cooking_cream": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alpro_alternatives",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 7,
+            "conditions": [],
+            "sourceIds": [
+              "alpro_opening"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alpro"
+          },
+          {
+            "id": "alnatura_soy_cuisine",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_soy_cuisine",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420095205"
+            ]
+          }
+        ]
+      }
+    },
+    "plant_cooking_cream": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alpro_alternatives",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 7,
+            "conditions": [],
+            "sourceIds": [
+              "alpro_opening"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alpro"
+          },
+          {
+            "id": "alnatura_soy_cuisine",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_soy_cuisine",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420095205"
+            ]
+          },
+          {
+            "id": "alnatura_oat_cuisine",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_oat_cuisine",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420241176"
+            ]
+          },
+          {
+            "id": "alnatura_coconut_cuisine",
+            "daysMin": 4,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_coconut_cuisine",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420240940"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_green_olives": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_green_pitted_olives",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_green_pitted_olives",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420211827"
+            ]
+          },
+          {
+            "id": "alnatura_green_pitted_olives_origin",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_green_pitted_olives",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura Origin",
+            "productBarcodes": [
+              "4104420211827"
+            ]
+          },
+          {
+            "id": "alnatura_green_whole_olives",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_green_whole_olives",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420129849"
+            ]
+          },
+          {
+            "id": "alnatura_green_whole_olives_origin",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_green_whole_olives",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura Origin",
+            "productBarcodes": [
+              "4104420129849"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_black_olives": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_kalamata_pitted_olives",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_kalamata_pitted_olives",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420132085"
+            ]
+          },
+          {
+            "id": "alnatura_kalamata_pitted_olives_origin",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_kalamata_pitted_olives",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura Origin",
+            "productBarcodes": [
+              "4104420132085"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_mixed_olives": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_olive_mix_180g",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_olive_mix_180g",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "42400660"
+            ]
+          },
+          {
+            "id": "alnatura_olive_mix_180g_origin",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_olive_mix_180g",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura Origin",
+            "productBarcodes": [
+              "42400660"
+            ]
+          },
+          {
+            "id": "alnatura_olive_mix_125g",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_olive_mix_125g",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "40045542"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_olives": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_green_pitted_olives",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_green_pitted_olives",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420211827"
+            ]
+          },
+          {
+            "id": "alnatura_green_pitted_olives_origin",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_green_pitted_olives",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura Origin",
+            "productBarcodes": [
+              "4104420211827"
+            ]
+          },
+          {
+            "id": "alnatura_green_whole_olives",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_green_whole_olives",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420129849"
+            ]
+          },
+          {
+            "id": "alnatura_green_whole_olives_origin",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_green_whole_olives",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura Origin",
+            "productBarcodes": [
+              "4104420129849"
+            ]
+          },
+          {
+            "id": "alnatura_kalamata_pitted_olives",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_kalamata_pitted_olives",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420132085"
+            ]
+          },
+          {
+            "id": "alnatura_kalamata_pitted_olives_origin",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_kalamata_pitted_olives",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura Origin",
+            "productBarcodes": [
+              "4104420132085"
+            ]
+          },
+          {
+            "id": "alnatura_olive_mix_180g",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_olive_mix_180g",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "42400660"
+            ]
+          },
+          {
+            "id": "alnatura_olive_mix_180g_origin",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_olive_mix_180g",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura Origin",
+            "productBarcodes": [
+              "42400660"
+            ]
+          },
+          {
+            "id": "alnatura_olive_mix_125g",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_olive_mix_125g",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "40045542"
+            ]
+          }
+        ]
+      }
     }
   },
   "canonicalNames": {
@@ -4555,6 +5159,9 @@
     "bell peppers (stems and seeds removed)": "season_bell_pepper",
     "bell peppers, cut into strips": "season_bell_pepper",
     "black currants": "season_blackcurrant",
+    "black olives": "alnatura_black_olives",
+    "black olives, chopped": "alnatura_black_olives",
+    "black olives, sliced into rings": "alnatura_black_olives",
     "black pepper": "dry_staple",
     "black salsify": "season_salsify",
     "blackberries": "season_blackberry",
@@ -4756,12 +5363,16 @@
     "chopped fennel": "season_fennel",
     "chopped fresh basil": "season_basil",
     "chopped fresh chives": "season_chives",
+    "chopped fresh mint": "season_mint",
+    "chopped fresh mint leaves": "season_mint",
     "chopped fresh parsley": "season_parsley_leaf",
+    "chopped fresh tarragon": "season_tarragon",
     "chopped garlic": "season_garlic",
     "chopped garlic clove": "season_garlic",
     "chopped garlic cloves": "season_garlic",
     "chopped green beans": "season_green_bean",
     "chopped green bell pepper": "season_bell_pepper",
+    "chopped green olives": "alnatura_green_olives",
     "chopped green onion": "season_spring_onion",
     "chopped hazelnuts": "season_hazelnut",
     "chopped leek": "season_leek",
@@ -4882,7 +5493,9 @@
     "finely chopped cauliflower": "season_cauliflower",
     "finely chopped celery": "season_celery",
     "finely chopped garlic clove": "season_garlic",
+    "finely chopped green olives": "alnatura_green_olives",
     "finely chopped green onions": "season_spring_onion",
+    "finely chopped mint": "season_mint",
     "finely chopped onion": "season_onion",
     "finely chopped parsley": "season_parsley_leaf",
     "finely chopped red onion": "season_onion",
@@ -4911,6 +5524,8 @@
     "fresh broad beans": "season_fresh_broad_bean",
     "fresh button mushrooms, finely chopped": "season_button_mushroom",
     "fresh chopped basil": "season_basil",
+    "fresh chopped mint": "season_mint",
+    "fresh chopped tarragon": "season_tarragon",
     "fresh cream cheese": "label_required",
     "fresh dill": "season_dill",
     "fresh dill, chopped": "season_dill",
@@ -4918,6 +5533,16 @@
     "fresh garlic": "season_garlic",
     "fresh green beans": "season_green_bean",
     "fresh milk": "milk",
+    "fresh mint": "season_mint",
+    "fresh mint leaves": "season_mint",
+    "fresh mint leaves, chopped": "season_mint",
+    "fresh mint leaves, washed and chopped": "season_mint",
+    "fresh mint leaves, washed and finely chopped": "season_mint",
+    "fresh mint, chopped": "season_mint",
+    "fresh mint, finely chopped": "season_mint",
+    "fresh mint, sliced": "season_mint",
+    "fresh mint, washed": "season_mint",
+    "fresh mint, washed and finely chopped": "season_mint",
     "fresh parsley": "season_parsley_leaf",
     "fresh parsley stalk, chopped": "season_parsley_leaf",
     "fresh parsley, chopped": "season_parsley_leaf",
@@ -4945,7 +5570,9 @@
     "fresh tomato": "season_tomato",
     "fresh tomatoes": "season_tomato",
     "fresh tomatoes, diced": "season_tomato",
+    "fresh, chopped tarragon": "season_tarragon",
     "freshly chopped basil": "season_basil",
+    "freshly chopped mint leaves": "season_mint",
     "full-fat milk": "milk",
     "garlic": "season_garlic",
     "garlic (crushed)": "season_garlic",
@@ -5000,6 +5627,8 @@
     "grated garlic": "season_garlic",
     "grated onion": "season_onion",
     "greek yogurt": "label_required",
+    "greek-style pitted black olives": "alnatura_black_olives",
+    "green and black olives": "alnatura_mixed_olives",
     "green asparagus": "season_asparagus",
     "green asparagus spears, cut into pieces": "season_asparagus",
     "green asparagus stalks, cut into small pieces": "season_asparagus",
@@ -5032,6 +5661,7 @@
     "green leek, thinly sliced": "season_leek",
     "green leek, trimmed and thinly sliced": "season_leek",
     "green leek, washed and thinly sliced": "season_leek",
+    "green olives": "alnatura_green_olives",
     "green onion": "season_spring_onion",
     "green onion (garnish)": "season_spring_onion",
     "green onion, a little for finishing": "season_spring_onion",
@@ -5125,6 +5755,7 @@
     "lettuce leaves, washed and finely chopped": "season_lettuce",
     "lettuce leaves, washed and thinly sliced": "season_lettuce",
     "lettuce, shredded 1 cm wide for finishing": "season_lettuce",
+    "lovage": "season_lovage",
     "low-fat milk": "milk",
     "mangetout": "season_fresh_pea",
     "mangetout peas": "season_snow_pea",
@@ -5147,6 +5778,19 @@
     "minced garlic": "season_garlic",
     "minced garlic (seasoning)": "season_garlic",
     "minced onion": "season_onion",
+    "mint": "season_mint",
+    "mint (for seasoning), a little": "season_mint",
+    "mint leaves": "season_mint",
+    "mint leaves (optional, for finishing), a little": "season_mint",
+    "mint leaves, chopped": "season_mint",
+    "mint leaves, picked": "season_mint",
+    "mint leaves, sliced": "season_mint",
+    "mint, a little": "season_mint",
+    "mint, a little for finishing": "season_mint",
+    "mint, as needed": "season_mint",
+    "mint, chopped": "season_mint",
+    "mint, washed and cut into pieces": "season_mint",
+    "mint, washed and finely chopped": "season_mint",
     "mirabelle plums": "season_mirabelle",
     "mixed-color bell pepper": "season_bell_pepper",
     "napa cabbage": "season_chinese_cabbage",
@@ -5158,6 +5802,7 @@
     "new potatoes": "season_new_potato",
     "oat drink": "oat_drinks",
     "oat milk": "oat_drinks",
+    "olives": "alnatura_olives",
     "onion": "season_onion",
     "onion, cut into large pieces": "season_onion",
     "onion, cut into wedges": "season_onion",
@@ -5272,11 +5917,22 @@
     "pinches of fresh thyme leaves": "season_thyme",
     "pinches of thyme": "season_thyme",
     "pink tomatoes": "season_tomato",
+    "pitted black olives": "alnatura_black_olives",
+    "pitted black olives (optional)": "alnatura_black_olives",
+    "pitted black olives, chopped": "alnatura_black_olives",
+    "pitted black olives, thinly sliced (optional)": "alnatura_black_olives",
+    "pitted green olives": "alnatura_green_olives",
+    "pitted green olives, chopped": "alnatura_green_olives",
+    "pitted green olives, coarsely chopped": "alnatura_green_olives",
+    "pitted green olives, sliced": "alnatura_green_olives",
+    "pitted olives": "alnatura_olives",
+    "pitted olives, chopped": "alnatura_olives",
+    "pitted olives, sliced": "alnatura_olives",
     "pitted plums, chopped": "season_plum",
     "plain greek yogurt": "label_required",
     "plain yogurt": "label_required",
     "plant milk": "alpro_drinks",
-    "plant-based cream": "alpro_alternatives",
+    "plant-based cream": "plant_cooking_cream",
     "plant-based drink": "alpro_drinks",
     "plant-based milk": "alpro_drinks",
     "plant-based yoghurt": "alpro_alternatives",
@@ -5489,12 +6145,13 @@
     "sorrel": "season_sorrel",
     "sour cherries": "season_sour_cherry",
     "sour cream": "label_required",
-    "soy cream": "alpro_alternatives",
+    "soy cream": "soy_cooking_cream",
     "soy milk": "alpro_drinks",
     "soy yoghurt": "alpro_alternatives",
     "soy yogurt": "alpro_alternatives",
     "soya yoghurt": "alpro_alternatives",
     "soya yogurt": "alpro_alternatives",
+    "spearmint": "season_mint",
     "spinach": "season_spinach",
     "spinach leaf": "season_spinach",
     "spinach leaves": "season_spinach",
@@ -5575,12 +6232,18 @@
     "swiss chard": "season_chard",
     "swiss chard, washed and cut into pieces": "season_chard",
     "table salt": "dry_staple",
+    "tarragon": "season_tarragon",
+    "tarragon, chopped": "season_tarragon",
+    "tarragon, finely chopped": "season_tarragon",
+    "tarragon, washed and chopped": "season_tarragon",
     "tbsp chopped basil": "season_basil",
     "tbsp chopped parsley": "season_parsley_leaf",
     "tbsp fresh basil leaves, chopped": "season_basil",
+    "tbsp fresh mint, washed and finely chopped": "season_mint",
     "tbsp lemon juice": "alnatura_lemon_juice",
     "tbsp lemon juice (to taste)": "alnatura_lemon_juice",
     "tbsp parsley, washed and chopped (to taste)": "season_parsley_leaf",
+    "tbsp tarragon, washed and chopped": "season_tarragon",
     "thin green onion, diagonally sliced, as needed": "season_spring_onion",
     "thinly julienned carrot": "season_carrot",
     "thinly sliced button mushrooms": "season_button_mushroom",
@@ -5670,6 +6333,7 @@
     "washed and halved cherry tomatoes": "season_tomato",
     "washed and roughly chopped kale": "season_kale",
     "washed blueberries": "season_blueberry",
+    "washed mint": "season_mint",
     "washed parsley leaves": "season_parsley_leaf",
     "washed red grape": "season_grape",
     "washed red grapes": "season_grape",
