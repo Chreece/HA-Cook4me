@@ -5,7 +5,7 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.13)
+## Reviewed coverage (2026-09-25.14)
 
 - 112 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
@@ -48,8 +48,9 @@ cloud credentials, or per-scan file reads are needed.
   Tofu, seitan, olive products and basil pesto add ten more packages; plain and
   smoked tofu, specific olive forms, and basil/red pesto keep separate rules.
   Eight juice packages add separate flavour/size rules and upright storage where labelled.
-  There are 117 reviewed product barcodes, 1,731 exact canonical names and
-  101 reviewed provider ingredient IDs.
+  Five more plant-drink packages and one ginger juice retain their storage instructions.
+  There are 123 reviewed product barcodes, 1,731 exact canonical names and
+  102 reviewed provider ingredient IDs.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
   coconut cream, unverified tomato paste, ketchup and Skyr, plus mustard, mayonnaise and
@@ -61,6 +62,52 @@ cloud credentials, or per-scan file reads are needed.
 Run `python tools/audit_ingredient_lifecycle.py` for counts against the actual
 shipped catalog. Counts distinguish seasonal, numeric and label-required
 entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
+
+## Batch 20: plant drinks, winter produce and supermarket names
+
+Six additional dmBio packages were reviewed on 2026-09-25. German and Austrian
+listings retain separate exact GTINs and day ranges; one market's package does
+not identify another market's package.
+
+| Package | Verified GTIN | Days after opening | Extra handling |
+| --- | --- | --- | --- |
+| Almond drink, German listing, 1 l | `4070765022797` | 4 | Store upright |
+| Almond drink, Austrian listing, 1 l | `4067796002065` | 4 | Store upright |
+| Gluten-free oat drink, 1 l | `4070765022780` | 4 | Store upright |
+| Oat drink natur, Austrian listing, 1 l | `4067796194807` | 3–4 | Store upright |
+| Cashew drink natur, 1 l | `4070765022810` | 3–4 | Store upright |
+| Ginger juice, 200 ml | `4066447982046` | 14 | Use a clean spoon |
+
+All labels require refrigeration, and the existing BfR-based catalog policy
+adds the conservative 4 °C cap. The new clean-spoon condition is translated into
+English, German and Greek in the shared opening-editor/cooking-review helper.
+Confirmation, an explicit opening date, manual-label precedence and earlier
+printed expiry dates remain required or respected as before.
+
+The five plant drinks are reachable through the existing generic Plant milk
+choice; almond milk also gains the exact provider mapping M_FOOD_265. Specific
+almond/oat/cashew profiles keep their own products, and ginger juice cannot use
+a plant-drink rule. Existing Alpro guidance remains available. No new ingredient
+names are inferred merely because a product was found.
+
+Four German calendars replace the older monthly highlights with national
+sources. Alnatura lists carrots in January–March and May–December, including
+stored produce; April remains unknown. BZL documents year-round domestic onions
+through variety selection and storage, with smaller summer supply. Alnatura
+lists chicory year-round and lamb's lettuce in September–April. The latter
+corrects both the missing winter/spring months and the old summer highlights;
+May–August are now unknown and hidden by the opt-in seasonal view. These are
+approximate availability calendars, not guarantees of local stock or claims
+that storage/protected production equals outdoor harvest.
+
+Three exact display/search labels now supply German supermarket names where
+English was previously shown: Feldsalat, Pflanzendrink and Ingwersaft. The Greek
+names and original catalog identities remain intact. Pflanzenmilch is also a
+search alias. Backend and mobile/desktop checks cover the actual catalog rows,
+month boundaries, both languages and translated handling confirmation.
+
+Coverage now reaches 3,209 catalog rows: 2,239 seasonal, 535 with numeric
+opening rules and 435 requiring package instructions, backed by 208 sources.
 
 ## Batch 19: juice packages and seasonal gaps
 
