@@ -56,6 +56,7 @@ class Cook4MeRecipeHubPanelV140 extends BasePanel{
     for(const row of result?.items||[]){
      if(!row||typeof row!=='object'||!row.name)continue;
      for(const field of ['ingredientId','id','key','foodKey'])if(row[field])map.set(String(row[field]),String(row.name));
+     for(const id of row.sourceIngredientIds||[])if(id)map.set(String(id),String(row.name));
     }
     this._v140MarketNames=map;this._v140MarketCatalogKey=key;
     if(this.shadowRoot?.getElementById('content')){this._renderTab();if(this._opened)this._renderRecipeDialog();}

@@ -36,6 +36,7 @@ jobs:
           node --test tests/test_ingredient_season_v223.mjs
           python tests/test_ingredient_season_v223.py
           python tests/test_product_save_v224.py
+          python tests/test_catalog_amounts_v225.py
           python tools/build_frontend_bundle_v126.py --check
           node --check custom_components/cook4me/frontend/app-design-v203.js
           node --check custom_components/cook4me/frontend/app-theme-v203.js
@@ -60,5 +61,7 @@ jobs:
         run: python tests/browser_ingredient_season_v223.py
       - name: Product saves during background work
         run: python tests/browser_product_save_v224.py
+      - name: Catalog quantity cleanup and saved ingredient aliases
+        run: python tests/browser_catalog_amounts_v225.py
       - name: Navigation hover and keyboard focus regression
         run: python tests/browser_navigation_hover_v205.py

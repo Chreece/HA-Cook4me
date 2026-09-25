@@ -29,7 +29,7 @@ class HaIcon extends HTMLElement{
  paint(){const name=this.getAttribute('icon')||'';const key=Object.keys(paths).find(k=>name.includes(k))||'fallback';this.shadowRoot.innerHTML=`<style>:host{display:inline-flex;align-items:center;justify-content:center;width:var(--mdc-icon-size,24px);height:var(--mdc-icon-size,24px);vertical-align:middle}svg{width:100%;height:100%}</style><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${paths[key]}</svg>`;}
 }customElements.define('ha-icon',HaIcon);
 await import('../custom_components/cook4me/frontend/cook4me-panel-v180.js');
-const Base=customElements.get('cook4me-recipe-hub-panel-v180-runtime-v224');
+const Base=customElements.get('cook4me-recipe-hub-panel-v180-runtime-v225');
 const dishImage=(n)=>'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320"><rect width="600" height="320" fill="${['#365c49','#78644a','#4e6172','#657752'][n%4]}"/><circle cx="300" cy="155" r="146" fill="#dce5db"/><circle cx="300" cy="155" r="125" fill="#f2eee0"/>${Array.from({length:25},(_,i)=>{let a=i*2.4,r=25+i*3;return `<ellipse cx="${300+Math.cos(a)*r}" cy="${155+Math.sin(a)*r}" rx="${12+i%9}" ry="${8+i%11}" fill="${['#71a85e','#d67c35','#d5bc71','#337b57'][i%4]}" transform="rotate(${i*19} ${300+Math.cos(a)*r} ${155+Math.sin(a)*r})"/>`;}).join('')}</svg>`);
 function recipe(i=0){
  const titles=['Ρύζι με ψητά λαχανικά','Σούπα με καρότο και τζίντζερ','Πλιγούρι με μυρωδικά','Κουνουπίδι με λεμόνι','Ρεβίθια με σπανάκι','Βρώμη με μήλο και κανέλα','Λαχανικά με γιαούρτι'];
