@@ -313,13 +313,18 @@ async def ws_product_add(hass, connection, msg):
             raise ValueError("Unlimited stock is one logical stock item, not multiple packages")
         ingredient = {**ingredient, "key": ingredient.get("key") or ingredient.get("ingredientId") or ingredient.get("id")}
         metadata = {key: value for key, value in msg.get("lot_metadata", {}).items() if key in {
-            "barcode", "productName", "brand", "storageLocationId", "containerId", "purchaseDate", "openedAt", "useWithinDays", "noExpiry"}}
+            "barcode", "productName", "brand", "storageLocationId", "containerId", "purchaseDate", "openedAt", "useWithinDays", "noExpiry", "applyOpeningExpiry", "openingRuleId", "openingConditionsConfirmed"}}
         if metadata.get("barcode"):
             metadata["barcode"] = normalize_barcode(metadata["barcode"])
         if metadata.get("containerId"):
             scale_store = await smart_scale_store_for_bridge(bridge)
             if metadata["containerId"] not in {str(row.get("id") or "") for row in scale_store.containers}:
                 raise ValueError("Selected scale container no longer exists; choose another container")
+        if metadata.get("openingRuleId"):
+            from .product_opening import configure_opening
+            from .storage_locations import validate_location
+            metadata = await hass.async_add_executor_job(
+                configure_opening, ingredient, validate_location(bridge.recipe_hub.profile, metadata))
         metadata["source"] = "reviewed_product"
         metadata["ingredientLinks"] = links
         nutrition = None
@@ -442,7 +447,22 @@ async def ws_product_add(hass, connection, msg):
             legacy._send_error(connection, msg, exc)
 
 
+
+@websocket_api.websocket_command({vol.Required("type"): "cook4me/v33/opening_guidance",
+                                  vol.Required("entry_id"): str, vol.Required("ingredient"): dict,
+                                  vol.Optional("lot_metadata", default={}): dict})
+@websocket_api.async_response
+async def ws_opening_guidance(hass, connection, msg):
+    try:
+        _authorized(hass, connection, msg)
+        from .product_opening import opening_rules
+        rules = await hass.async_add_executor_job(opening_rules, msg["ingredient"], msg.get("lot_metadata", {}))
+        connection.send_result(msg["id"], {"rules": rules})
+    except Exception as exc:
+        legacy._send_error(connection, msg, exc)
+
+
 @callback
 def async_register(hass):
-    for command in (ws_scanner_state, ws_storage_location, ws_barcode_lookup, ws_recognize_photo, ws_product_add, ws_product_details, ws_product_remove):
+    for command in (ws_scanner_state, ws_storage_location, ws_barcode_lookup, ws_recognize_photo, ws_product_add, ws_product_details, ws_product_remove, ws_opening_guidance):
         websocket_api.async_register_command(hass, command)

@@ -34,7 +34,7 @@ export const ReceiptScannerMixin=Base=>class extends Base{
   const session=this._r195Session,item=this._r195Current(),d=this._v78Draft;
   if(!session||!item||!d||d.receiptItemId!==item.id||item.status!=='pending')return;
   if(item.productName!==d.productName){item.ingredientName='';session.suggestions.delete(item.id);d.suggestions=[];}
-  for(const key of ['productName','brand','quantity','unit','packageCount','bestBefore','storageLocationId','barcode','noExpiry','containerId','openedAt','useWithinDays'])item[key]=d[key]??'';
+  for(const key of ['productName','brand','quantity','unit','packageCount','bestBefore','storageLocationId','barcode','noExpiry','containerId','openedAt','useWithinDays','applyOpeningExpiry','openingRuleId','openingConditionsConfirmed'])item[key]=d[key]??'';
   item.lineTotal=d.paidAmount===''?null:d.paidAmount;
   item.nutrition=clone(d.nutrition||{basisQuantity:100,basisUnit:'',values:{}});
   item.ingredientLinks=clone(this._v114Links?.()||[d.ingredient].filter(Boolean));
@@ -50,7 +50,7 @@ export const ReceiptScannerMixin=Base=>class extends Base{
   if(flush)this._r195Flush();const session=this._r195Session,item=this._r195Current();if(!item)return;
   this._v111CancelRead?.();this._v78Submitted=null;this._v78Busy=false;this._v78Discard=false;
   const d=this._v78Fresh('manual');
-  for(const key of ['productName','brand','quantity','unit','packageCount','bestBefore','storageLocationId','barcode','noExpiry','containerId','openedAt','useWithinDays'])d[key]=item[key]??'';
+  for(const key of ['productName','brand','quantity','unit','packageCount','bestBefore','storageLocationId','barcode','noExpiry','containerId','openedAt','useWithinDays','applyOpeningExpiry','openingRuleId','openingConditionsConfirmed'])d[key]=item[key]??'';
   Object.assign(d,{receiptItemId:item.id,productLocked:true,editorOpen:true,scanPhase:'recognized',scanNote:item.note||'',
    ingredientLinks:clone(item.ingredientLinks||[]),ingredient:clone(item.ingredientLinks?.[0]||null),suggestions:session.suggestions.get(item.id)||[],
    nutrition:clone(item.nutrition||{basisQuantity:100,basisUnit:'',values:{}}),paidAmount:item.lineTotal??'',paidCurrency:session.receipt.currency||'',
