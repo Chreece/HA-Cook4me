@@ -32,8 +32,107 @@ class LifecycleTests(unittest.TestCase):
     def test_bundled_data_has_reviewed_evidence(self):
         data = self.lifecycle.load_lifecycle_data()
         self.lifecycle.validate_lifecycle_data(data)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 105)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 68)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 110)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 69)
+
+    def test_greek_citrus_calendars_keep_region_and_partial_month_coverage(self):
+        cases = (
+            (("Lemon", "Fresh lemon, sliced", "Freshly squeezed lemon juice", "Lemon zest",
+              "Organic lemon, juiced and zested"), [1, 2, 3, 12], "Western Greece", "bionet_citrus"),
+            (("Orange", "Orange, segmented", "Fresh organic orange juice", "Orange zest"),
+             [1, 2, 3, 4, 5, 10, 11, 12], "Western Greece", "bionet_citrus"),
+            (("Grapefruit", "Grapefruit, peeled and diced"), [1, 2, 3, 11, 12], "Western Greece", "bionet_citrus"),
+            (("Mandarin", "Mandarins (zest and segments)", "Small mandarin oranges, peel and white pith removed"),
+             [1, 2, 3, 10, 11, 12], "Western Greece", "bionet_citrus"),
+            (("Clementine", "Clementines (prepare zest and segments)", "Peeled clementine segments"),
+             [1, 12], "Skala, Laconia", "sparta_citrus"),
+        )
+        for names, months, region, source in cases:
+            for name in names:
+                with self.subTest(name=name):
+                    profile = self.profile(name)
+                    evidence = profile["seasonality"]["regions"][0]
+                    self.assertEqual(evidence["months"], months)
+                    self.assertEqual((evidence["sourceRegion"], evidence["basis"]), (region, "regional_seasonal_availability"))
+                    self.assertEqual(evidence["sourceIds"], [source])
+                    self.assertTrue(evidence["approximate"])
+                    self.assertEqual(evidence["coverage"], "listed_months_only")
+                    for month in range(1, 13):
+                        result = self.lifecycle.seasonal_availability(profile, country="gr", month=month)
+                        self.assertEqual(result["status"], "in_season" if month in months else "unknown")
+                        for country in ("DE", "US", "TR"):
+                            self.assertEqual(self.lifecycle.seasonal_availability(profile, country=country, month=month)["status"], "unknown")
+                    self.assertEqual(profile["afterOpening"]["status"], "unknown")
+
+    def test_citrus_seasons_do_not_cross_varieties_preserves_or_mixtures(self):
+        for name in ("Blood oranges", "Organic blood oranges", "Bitter oranges, diced",
+                "Fresh bitter orange juice", "Lime (or lemon)", "Lemongrass", "Dried lemon",
+                "Candied lemon", "Preserved lemon, diced", "Lemon curd", "Lemon sorbet",
+                "Lemon juice (quantity fragment: /2)", "Orange jam", "Orange marmalade",
+                "Orange blossom water", "Candied orange peel", "Mandarin honey", "Mandarin liqueur",
+                "Avocado, peeled and diced, mixed with lemon juice"):
+            with self.subTest(name=name):
+                self.assertEqual(self.profile(name)["seasonality"]["status"], "unknown")
+        for name in ("Lemon juice", "Orange juice"):
+            self.assertEqual(self.profile(name)["seasonality"]["status"], "not_applicable")
+
+    def test_philadelphia_original_requires_exact_package_and_prompt_reclosure(self):
+        names = ("Cream cheese", "Philadelphia cream cheese", "Fresh cream cheese", "Chopped cream cheese",
+            "Cream cheese, cut into bite-size pieces", "Double-cream cream cheese",
+            "A - cream cheese (bring to room temperature)", "A- cream cheese, brought to room temperature")
+        conditions = ("package_reclosed_promptly",)
+        for name in names:
+            for code, kind in (("00021000075997", "block"), ("00021000000142", "spread")):
+                with self.subTest(name=name, code=code):
+                    profile = self.profile(name)
+                    lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": " Philadelphia ", "barcode": code}
+                    for barcode in (code, code[-12:]):
+                        result = self.lifecycle.opening_window(profile, lot | {"barcode": barcode},
+                            temperature_c=4, confirmed_conditions=conditions)
+                        self.assertEqual(result["ruleId"], "philadelphia_us_original_" + kind)
+                        self.assertEqual((result["daysMin"], result["daysMax"]), (10, 10))
+                        self.assertEqual((result["remindOn"], result["consumeBy"]), ("2026-10-05", "2026-10-05"))
+                        self.assertFalse(result["safetyGuarantee"])
+                    for changes, temperature, confirmed in (({}, 4, ()), ({}, 4, ("closed_container",)),
+                            ({"barcode": None}, 4, conditions), ({"barcode": "00021000075998"}, 4, conditions),
+                            ({"barcode": "00021000083206"}, 4, conditions),
+                            ({"brand": None}, 4, conditions), ({"brand": "Other brand"}, 4, conditions),
+                            ({"storage": "pantry"}, 4, conditions), ({"storage": "freezer"}, 4, conditions),
+                            ({"openedAt": None}, 4, conditions), ({}, None, conditions), ({}, 4.1, conditions)):
+                        result = self.lifecycle.opening_window(profile, lot | changes,
+                            temperature_c=temperature, confirmed_conditions=confirmed)
+                        self.assertNotIn("consumeBy", result)
+                    capped = self.lifecycle.opening_window(profile, lot | {"bestBefore": "2026-09-27"},
+                        temperature_c=4, confirmed_conditions=conditions)
+                    self.assertEqual((capped["remindOn"], capped["consumeBy"]), ("2026-09-27", "2026-09-27"))
+                    self.assertEqual(self.lifecycle.opening_window(profile, lot | {"useWithinDays": 2})["consumeBy"], "2026-09-27")
+
+    def test_cream_cheese_package_rules_do_not_cross_cheeses_flavours_or_dishes(self):
+        for name in ("Herbed cream cheese", "Lučina cream cheese", "Cottage cheese", "Quark",
+                "Ricotta", "Mascarpone", "Cream cheese with herbs or plain cheese",
+                "Herb cream cheese (or plain)", "Herbed cream cheese (or plain)",
+                "Cream cheese frosting", "Vegan cream cheese", "Cheesecake", "Cream"):
+            for code in ("00021000075997", "00021000000142"):
+                with self.subTest(name=name, code=code):
+                    result = self.lifecycle.opening_window(self.profile(name),
+                        {"openedAt": "2026-09-25", "storage": "fridge", "brand": "Philadelphia", "barcode": code},
+                        temperature_c=4, confirmed_conditions=("package_reclosed_promptly",))
+                    self.assertNotIn("consumeBy", result)
+
+    def test_dairy_variants_without_package_evidence_require_label(self):
+        for name in ("Cottage cheese", "Portions of cottage cheese", "Chilled cottage cheese portions drained an hour before",
+                "Chilled cottage cheese, drained one hour beforehand", "Chilled portions of cottage cheese drained one hour earlier",
+                "Cottage cheese with herbs (or plain)", "Fresh brousse cheese or cottage cheese",
+                "Cream cheese with herbs or plain cheese", "Herb cream cheese (or plain)", "Herbed cream cheese (or plain)",
+                "Full-fat crème fraîche", "Thick crème fraîche", "Thick full-fat crème fraîche",
+                "Thick, full-fat crème fraîche", "Crème fraîche (or fresh cheese)"):
+            with self.subTest(name=name):
+                profile = self.profile(name)
+                self.assertEqual(profile["afterOpening"]["status"], "label_required")
+                self.assertNotIn("rules", profile["afterOpening"])
+                lot = {"openedAt": "2026-09-25", "storage": "fridge"}
+                self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot, temperature_c=4))
+                self.assertEqual(self.lifecycle.opening_window(profile, lot | {"useWithinDays": 3})["consumeBy"], "2026-09-28")
 
     def test_galbani_cheese_windows_require_brand_and_refrigeration(self):
         cases = (
@@ -261,7 +360,7 @@ class LifecycleTests(unittest.TestCase):
     def test_dairy_variants_preserve_label_and_pasteurization_requirements(self):
         lot = {"openedAt": "2026-09-25", "storage": "fridge"}
         for name in ("30% whipping cream", "Liquid cream, 15% fat", "Full-fat sour cream",
-                "A- cream cheese, brought to room temperature", "Herbed cream cheese",
+                "Herbed cream cheese",
                 "Greek yoghurt", "Yogurt (125 g cup measure)", "Vanilla yogurt"):
             with self.subTest(name=name):
                 profile = self.profile(name)
@@ -276,7 +375,7 @@ class LifecycleTests(unittest.TestCase):
                 self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot | {"storage": "pantry"},
                     temperature_c=4, confirmed_conditions=("pasteurized_or_uht",)))
         for name in ("Cooking cream or oat cream", "Low-fat cream (or milk)", "Thick cream or natural yogurt",
-                "Cream cheese with herbs or plain cheese", "Oil, mixed with yogurt", "Milk (dairy or non-dairy)"):
+                "Oil, mixed with yogurt", "Milk (dairy or non-dairy)"):
             self.assertNotIn(self.profile(name).get("profileId"), ("milk", "label_required"))
 
     def test_summer_purslane_keeps_species_and_season_boundaries(self):

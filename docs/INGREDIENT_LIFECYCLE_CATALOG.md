@@ -5,16 +5,17 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.7)
+## Reviewed coverage (2026-09-25.8)
 
-- 105 produce groups, including fruit, leafy vegetables, roots, asparagus,
+- 110 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
   savoy cabbage, pak choi, shallots, wild garlic, turnips, snow peas, walnuts,
   hazelnuts, artichokes, melons, kiwi, chestnuts, sweet potatoes, swede and
   chanterelles, mint, tarragon, lovage, oyster/king oyster mushrooms, shiitake,
   fresh coriander leaves, watercress, lemon balm, Romanesco, fresh chillies
-  and romaine/Little Gem lettuce, fresh ginger, figs and summer purslane.
-- 68 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+  and romaine/Little Gem lettuce, fresh ginger, figs and summer purslane,
+  plus Greek regional lemon, orange, grapefruit, mandarin and clementine calendars.
+- 69 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro, Oatly or verified Alnatura packages), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
@@ -33,13 +34,15 @@ cloud credentials, or per-scan file reads are needed.
   six explicitly canned profiles, alongside the existing generic can intervals.
   Galbani mozzarella, mascarpone, ricotta and Gorgonzola, Dodoni feta and halloumi,
   and a verified Alnatura millet-flake package add separate opening profiles.
+  Two verified US Philadelphia Original packages add exact-product cream-cheese rules.
   Cream and yoghurt profiles are separate; olive
   profiles distinguish green, black, mixed and unspecified forms.
-  There are 71 reviewed product barcodes and 1,637 exact canonical names.
+  There are 73 reviewed product barcodes and 1,714 exact canonical names.
 - Explicit label-required guidance for reviewed foods with variable product
-  formulations, including unverified pesto, dairy yoghurt, cream cheese and
+  formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
   coconut cream, tomato paste, ketchup and Skyr, plus mustard, mayonnaise and
-  additional cream, cream-cheese and yoghurt variants, plus plain/brewed soy sauce.
+  additional cream, cream-cheese and yoghurt variants, plus plain/brewed soy sauce,
+  cottage cheese and further crème fraîche variants.
 - Dry staples have no invented short spoilage countdown. Their package
   instructions still apply; missing data never means indefinitely safe.
 
@@ -49,7 +52,7 @@ entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
 
 ## Season semantics
 
-Season months are German availability guidance from the twelve monthly
+German season months are availability guidance from the twelve monthly
 calendars published by the Hessische Lehrkräfteakademie, BZfE produce guides,
 the BVEO pak choi guide, Hessen VerbraucherFenster and the Verbraucherzentrale
 season calendar, BUND Naturschutz's Bavarian calendar, Hortipendium, LWG and
@@ -63,6 +66,18 @@ labelled as exclusively fresh outdoor harvest. Ordinary potatoes have year-round
 availability, including stored crops, according to BZfE (`sourceRegion: DE`).
 New potatoes have a separate June/July highlight profile; they do not inherit
 the stored-potato calendar. Sweet potatoes and potato starch remain separate.
+
+Batch 14 adds 62 exact fresh citrus names. Bio Net West Hellas's cooperative
+calendar supplies approximate Western Greece (`country: GR`) availability:
+lemons December–March, sweet oranges October–May, grapefruit November–March
+and mandarins October–March. The source starts some crops partway through a
+month; this month-level guidance is approximate. Sparta Orange's Skala,
+Laconia calendar supplies a separate December–January clementine season.
+Both sources use `regional_seasonal_availability` and `listed_months_only`:
+other months and countries remain unknown. They do not represent every Greek
+region or cultivar, or German import availability. Blood/bitter oranges,
+preserves, bottled juice, mixed ingredients and flavourings do not inherit
+these calendars. Explicit fresh juice and fruit/zest preparations do.
 
 Fresh parsley leaves, chives, chervil and sorrel use the Frankfurt green-sauce
 herb season (`sourceRegion: DE-HE`, `basis: regional_seasonal_availability`).
@@ -471,13 +486,29 @@ a fixed opening interval. These sources therefore create no numeric clock,
 including when one of those brands or barcodes is known. Seed/powder forms,
 condiment alternatives, homemade mayonnaise and mixed dishes stay separate.
 
-Fifty-two exact cream, cream-cheese and yoghurt variants now share the existing
+An earlier batch added 52 exact cream, cream-cheese and yoghurt variants with
 formulation-dependent label guidance. Fat percentages, serving measures and
 recipe section markers do not establish a universal opening interval. Three
 additional milk names retain the existing requirement to confirm pasteurization
 or UHT treatment and refrigeration; a room-temperature preparation instruction
 does not waive cold storage. No generic marker stripping or mixture matching
 is introduced.
+
+Batch 14 gives eight reviewed plain cream-cheese names a separate profile.
+Philadelphia Original cream cheese (four 8 oz blocks, GTIN `00021000075997`)
+and Original cream cheese spread (8 oz tub, GTIN `00021000000142`) each have
+a manufacturer-published 10-day window after opening. Each individual opened
+package has its own clock. Both rules require exact Philadelphia brand and
+GTIN, prompt resealing, and refrigeration at no more than 4 °C (conservatively
+below the US FAQ's 40 °F). An earlier printed date still wins. A preparation
+instruction to soften cream cheese does not waive these storage conditions.
+
+These are US package rules; the brand alone, another market's package,
+herbed/plant-based cheese, Lučina, cottage cheese, frosting and desserts cannot
+select them. In particular, [Philadelphia's German FAQ](https://www.philadelphia-professional.de/unternehmen/faq/) has different guidance,
+so no global Philadelphia interval is inferred. Fifteen additional cottage-cheese,
+crème fraîche and cream-cheese alternative names receive label-required guidance
+without an invented duration. A manually entered package interval still works.
 
 Juice intervals vary by product: the two vegetable juices have separate 3- and
 5-day rules. The 14-day lemon and ginger intervals do not transfer to other

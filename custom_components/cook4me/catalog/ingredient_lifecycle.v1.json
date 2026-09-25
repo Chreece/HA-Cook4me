@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.7",
+  "version": "2026-09-25.8",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -666,6 +666,31 @@
     "kikkoman_soy_sauce_opening": {
       "publisher": "Kikkoman",
       "url": "https://www.kikkoman.de/ueber-kikkoman/anwendungstipps/haltbarkeit-lagerung",
+      "reviewedOn": "2026-09-25"
+    },
+    "bionet_citrus": {
+      "publisher": "Bio Net West Hellas — Agricultural Cooperative of Organic Producers of Western Greece",
+      "url": "https://bionetwesthellas.gr/en/organic-biodynamic-citrus-fruits/",
+      "reviewedOn": "2026-09-25"
+    },
+    "sparta_citrus": {
+      "publisher": "Sparta Orange Agricultural Cooperative",
+      "url": "https://www.spartaorange.gr/index.php/en/products",
+      "reviewedOn": "2026-09-25"
+    },
+    "philadelphia_us_opening": {
+      "publisher": "Kraft Heinz — Philadelphia (United States)",
+      "url": "https://www.kraftheinz.com/philadelphia/faq",
+      "reviewedOn": "2026-09-25"
+    },
+    "philadelphia_us_original_block": {
+      "publisher": "Kraft Heinz — Philadelphia (United States)",
+      "url": "https://www.kraftheinz.com/philadelphia/products/00021000075997-original-cream-cheese",
+      "reviewedOn": "2026-09-25"
+    },
+    "philadelphia_us_original_spread": {
+      "publisher": "Kraft Heinz — Philadelphia (United States)",
+      "url": "https://www.kraftheinz.com/philadelphia/products/00021000000142-original-cream-cheese-spread",
       "reviewedOn": "2026-09-25"
     }
   },
@@ -7009,6 +7034,191 @@
         ],
         "reason": "no_numeric_manufacturer_window"
       }
+    },
+    "season_lemon": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "GR",
+            "sourceRegion": "Western Greece",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              1,
+              2,
+              3,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bionet_citrus"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_orange": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "GR",
+            "sourceRegion": "Western Greece",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bionet_citrus"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_grapefruit": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "GR",
+            "sourceRegion": "Western Greece",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              1,
+              2,
+              3,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bionet_citrus"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_mandarin": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "GR",
+            "sourceRegion": "Western Greece",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              1,
+              2,
+              3,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bionet_citrus"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_clementine": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "GR",
+            "sourceRegion": "Skala, Laconia",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              1,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "sparta_citrus"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "cream_cheese": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "philadelphia_us_original_block",
+            "daysMin": 10,
+            "daysMax": 10,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "package_reclosed_promptly"
+            ],
+            "sourceIds": [
+              "philadelphia_us_original_block",
+              "philadelphia_us_opening"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Philadelphia",
+            "productBarcodes": [
+              "00021000075997"
+            ]
+          },
+          {
+            "id": "philadelphia_us_original_spread",
+            "daysMin": 10,
+            "daysMax": 10,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "package_reclosed_promptly"
+            ],
+            "sourceIds": [
+              "philadelphia_us_original_spread",
+              "philadelphia_us_opening"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Philadelphia",
+            "productBarcodes": [
+              "00021000000142"
+            ]
+          }
+        ]
+      }
     }
   },
   "canonicalNames": {
@@ -7025,12 +7235,12 @@
     "30% cream": "label_required",
     "30% whipping cream": "label_required",
     "[a] soy sauce": "soy_sauce_label_required",
-    "a - cream cheese (bring to room temperature)": "label_required",
+    "a - cream cheese (bring to room temperature)": "cream_cheese",
     "a - rosemary": "season_rosemary",
     "a - thyme": "season_thyme",
     "a sprig of finely chopped parsley": "season_parsley_leaf",
     "a- carrot, cut into matchsticks 0.5 mm wide and 3 cm long": "season_carrot",
-    "a- cream cheese, brought to room temperature": "label_required",
+    "a- cream cheese, brought to room temperature": "cream_cheese",
     "a- green beans, cut into quarters": "season_green_bean",
     "a- mayonnaise (for sauce)": "mayonnaise_label_required",
     "a- milk": "milk",
@@ -7317,6 +7527,9 @@
     "chicories": "season_chicory",
     "chicory": "season_chicory",
     "chicory, thinly sliced": "season_chicory",
+    "chilled cottage cheese portions drained an hour before": "label_required",
+    "chilled cottage cheese, drained one hour beforehand": "label_required",
+    "chilled portions of cottage cheese drained one hour earlier": "label_required",
     "chinese cabbage": "season_chinese_cabbage",
     "chives": "season_chives",
     "chives, washed and finely chopped": "season_chives",
@@ -7341,7 +7554,7 @@
     "chopped coriander (for serving)": "season_coriander_leaf",
     "chopped coriander leaves": "season_coriander_leaf",
     "chopped coriander stems": "season_coriander_leaf",
-    "chopped cream cheese": "label_required",
+    "chopped cream cheese": "cream_cheese",
     "chopped dill": "season_dill",
     "chopped fennel": "season_fennel",
     "chopped feta": "feta",
@@ -7388,6 +7601,10 @@
     "chopped white onion": "season_onion",
     "cleaned bell peppers": "season_bell_pepper",
     "cleaned bell peppers, sliced": "season_bell_pepper",
+    "clementine": "season_clementine",
+    "clementines": "season_clementine",
+    "clementines (prepare the zest and segments)": "season_clementine",
+    "clementines (prepare zest and segments)": "season_clementine",
     "cocktail tomatoes": "season_tomato",
     "coconut cream": "label_required",
     "coconut drink": "coconut_drinks",
@@ -7417,6 +7634,8 @@
     "coriander, washed and roughly chopped, a little for finishing": "season_coriander_leaf",
     "corn on the cob": "season_sweetcorn",
     "corn on the cob, cut into rounds": "season_sweetcorn",
+    "cottage cheese": "label_required",
+    "cottage cheese with herbs (or plain)": "label_required",
     "courgette": "season_courgette",
     "courgettes": "season_courgette",
     "cream": "label_required",
@@ -7424,8 +7643,9 @@
     "cream (20% fat)": "label_required",
     "cream (30% fat)": "label_required",
     "cream (35% fat)": "label_required",
-    "cream cheese": "label_required",
-    "cream cheese, cut into bite-size pieces": "label_required",
+    "cream cheese": "cream_cheese",
+    "cream cheese with herbs or plain cheese": "label_required",
+    "cream cheese, cut into bite-size pieces": "cream_cheese",
     "cream quark": "label_required",
     "crumbled feta cheese": "feta",
     "crushed garlic": "season_garlic",
@@ -7433,6 +7653,7 @@
     "crushed hazelnuts": "season_hazelnut",
     "crushed walnuts": "season_walnut",
     "crème fraîche": "label_required",
+    "crème fraîche (or fresh cheese)": "label_required",
     "cucumber": "season_cucumber",
     "cucumber, peeled and deseeded": "season_cucumber",
     "cucumber, peeled and diced": "season_cucumber",
@@ -7474,7 +7695,7 @@
     "double cream": "label_required",
     "double cream (45% fat or more)": "label_required",
     "double cream (optional)": "label_required",
-    "double-cream cream cheese": "label_required",
+    "double-cream cream cheese": "cream_cheese",
     "drained ricotta": "ricotta",
     "dried beans": "dry_staple",
     "dried chickpeas": "dry_staple",
@@ -7558,6 +7779,7 @@
     "fresh basil leaves, washed and chopped": "season_basil",
     "fresh basil leaves, washed and finely chopped": "season_basil",
     "fresh broad beans": "season_fresh_broad_bean",
+    "fresh brousse cheese or cottage cheese": "label_required",
     "fresh button mushrooms, finely chopped": "season_button_mushroom",
     "fresh chili pepper": "season_fresh_chili",
     "fresh chili pepper, sliced": "season_fresh_chili",
@@ -7574,7 +7796,7 @@
     "fresh coriander, washed and chopped (quantity fragment: /2 tbsp)": "season_coriander_leaf",
     "fresh coriander, washed and finely chopped": "season_coriander_leaf",
     "fresh cream": "label_required",
-    "fresh cream cheese": "label_required",
+    "fresh cream cheese": "cream_cheese",
     "fresh dill": "season_dill",
     "fresh dill, chopped": "season_dill",
     "fresh fava beans": "season_fresh_broad_bean",
@@ -7589,6 +7811,8 @@
     "fresh green beans": "season_green_bean",
     "fresh jalapeño peppers": "season_fresh_chili",
     "fresh jalapeño, finely chopped": "season_fresh_chili",
+    "fresh lemon": "season_lemon",
+    "fresh lemon, sliced": "season_lemon",
     "fresh milk": "milk",
     "fresh mint": "season_mint",
     "fresh mint leaves": "season_mint",
@@ -7600,6 +7824,9 @@
     "fresh mint, sliced": "season_mint",
     "fresh mint, washed": "season_mint",
     "fresh mint, washed and finely chopped": "season_mint",
+    "fresh orange juice": "season_orange",
+    "fresh orange juice (organic fruit)": "season_orange",
+    "fresh organic orange juice": "season_orange",
     "fresh oyster mushrooms": "season_oyster_mushroom",
     "fresh parsley": "season_parsley_leaf",
     "fresh parsley stalk, chopped": "season_parsley_leaf",
@@ -7638,8 +7865,10 @@
     "freshly chopped mint leaves": "season_mint",
     "freshly cut ginger": "season_fresh_ginger",
     "freshly grated ginger": "season_fresh_ginger",
+    "freshly squeezed lemon juice": "season_lemon",
     "full-fat cream": "label_required",
     "full-fat cream (30% fat)": "label_required",
+    "full-fat crème fraîche": "label_required",
     "full-fat milk": "milk",
     "full-fat sour cream": "label_required",
     "full-fat whipping cream": "label_required",
@@ -7704,6 +7933,9 @@
     "grape": "season_grape",
     "grape juice": "alnatura_grape_juice",
     "grape tomatoes, halved": "season_tomato",
+    "grapefruit": "season_grapefruit",
+    "grapefruit segments, cut into two or three pieces": "season_grapefruit",
+    "grapefruit, peeled and diced": "season_grapefruit",
     "grapes": "season_grape",
     "grated carrot": "season_carrot",
     "grated carrots": "season_carrot",
@@ -7763,6 +7995,7 @@
     "ground black pepper": "dry_staple",
     "ground hazelnuts": "season_hazelnut",
     "half a chopped onion": "season_onion",
+    "half a lemon": "season_lemon",
     "half-fat cream": "label_required",
     "halloumi": "halloumi",
     "halloumi cheese": "halloumi",
@@ -7778,7 +8011,9 @@
     "head of lettuce, washed and outer leaves removed": "season_lettuce",
     "heads of lettuce, washed and outer leaves removed": "season_lettuce",
     "heavy cream": "label_required",
+    "herb cream cheese (or plain)": "label_required",
     "herbed cream cheese": "label_required",
+    "herbed cream cheese (or plain)": "label_required",
     "hokkaido pumpkin": "season_pumpkin",
     "houmous": "alnatura_hummus",
     "hummus": "alnatura_hummus",
@@ -7793,6 +8028,8 @@
     "jerusalem artichoke, peeled and diced": "season_jerusalem_artichoke",
     "jerusalem artichokes": "season_jerusalem_artichoke",
     "jerusalem artichokes, peeled and diced": "season_jerusalem_artichoke",
+    "juice of 1 lemon and a little finely chopped zest": "season_lemon",
+    "juice of 1.5 lemons and a little finely chopped zest": "season_lemon",
     "julienned ginger (as garnish), a little": "season_fresh_ginger",
     "julienned ginger (for finishing)": "season_fresh_ginger",
     "julienned onion": "season_onion",
@@ -7838,10 +8075,37 @@
     "leeks": "season_leek",
     "leeks, white part halved": "season_leek",
     "leeks, white parts washed and halved": "season_leek",
+    "lemon": "season_lemon",
+    "lemon (finely grated zest)": "season_lemon",
+    "lemon (grated lemon zest)": "season_lemon",
+    "lemon (grated zest)": "season_lemon",
+    "lemon (juice only)": "season_lemon",
+    "lemon (juice or zest)": "season_lemon",
+    "lemon (juice)": "season_lemon",
+    "lemon (lemon juice)": "season_lemon",
+    "lemon (zest finely grated)": "season_lemon",
+    "lemon (zest)": "season_lemon",
+    "lemon and a little chopped zest": "season_lemon",
     "lemon balm": "season_lemon_balm",
     "lemon juice": "alnatura_lemon_juice",
     "lemon juice (for finishing)": "alnatura_lemon_juice",
     "lemon juice (optional)": "alnatura_lemon_juice",
+    "lemon juice and a little chopped zest": "season_lemon",
+    "lemon peel": "season_lemon",
+    "lemon slices": "season_lemon",
+    "lemon slices (garnish)": "season_lemon",
+    "lemon slices, halved (for garnish)": "season_lemon",
+    "lemon zest": "season_lemon",
+    "lemon zest and juice": "season_lemon",
+    "lemon(s)": "season_lemon",
+    "lemon, quartered": "season_lemon",
+    "lemon, quartered for serving": "season_lemon",
+    "lemons": "season_lemon",
+    "lemons (juice and zest)": "season_lemon",
+    "lemons (juice)": "season_lemon",
+    "lemons (zest)": "season_lemon",
+    "lemons, cut": "season_lemon",
+    "lemons, quartered": "season_lemon",
     "lentils": "alnatura_lentils",
     "lettuce": "season_lettuce",
     "lettuce (for finishing)": "season_lettuce",
@@ -7869,6 +8133,8 @@
     "low-fat cream": "label_required",
     "low-fat milk": "milk",
     "lučina cream cheese": "label_required",
+    "mandarin": "season_mandarin",
+    "mandarins (zest and segments)": "season_mandarin",
     "mangetout": "season_fresh_pea",
     "mangetout peas": "season_snow_pea",
     "mangetout, washed and cut in two": "season_fresh_pea",
@@ -7964,12 +8230,24 @@
     "onions, peeled and finely sliced": "season_onion",
     "onions, peeled and halved": "season_onion",
     "onions, peeled and quartered": "season_onion",
+    "orange": "season_orange",
+    "orange (peeled segments)": "season_orange",
     "orange juice": "alnatura_orange_juice",
+    "orange zest": "season_orange",
+    "orange, cut into 3 cm pieces": "season_orange",
+    "orange, segmented": "season_orange",
+    "orange, segmented with membranes removed": "season_orange",
+    "oranges (segments and zest)": "season_orange",
     "oregano": "season_oregano",
     "organic cucumber": "season_cucumber",
     "organic granny smith apple(s), washed and cut into cubes": "season_apple",
     "organic green bell pepper": "season_bell_pepper",
+    "organic lemon (juice and zest)": "season_lemon",
+    "organic lemon slices": "season_lemon",
+    "organic lemon, juiced and zested": "season_lemon",
+    "organic lemon, seeded and sliced": "season_lemon",
     "organic new potato(es), unpeeled": "season_new_potato",
+    "organic orange, cut into pieces": "season_orange",
     "oyster mushroom": "season_oyster_mushroom",
     "oyster mushrooms": "season_oyster_mushroom",
     "oyster mushrooms, coarsely chopped": "season_oyster_mushroom",
@@ -8029,6 +8307,7 @@
     "peeled carrots cut into strips": "season_carrot",
     "peeled cherry tomatoes": "season_tomato",
     "peeled chopped garlic": "season_garlic",
+    "peeled clementine segments": "season_clementine",
     "peeled diced carrots": "season_carrot",
     "peeled eggplant": "season_aubergine",
     "peeled eggplant, diced": "season_aubergine",
@@ -8046,7 +8325,7 @@
     "pesto": "alnatura_pesto",
     "pesto alla genovese": "label_required",
     "pesto sauce": "alnatura_pesto",
-    "philadelphia cream cheese": "label_required",
+    "philadelphia cream cheese": "cream_cheese",
     "pickled beetroot": "alnatura_pickled_beetroot",
     "pickled cucumbers": "alnatura_pickled_cucumber",
     "pickles": "alnatura_pickled_cucumber",
@@ -8085,6 +8364,7 @@
     "plum(s), pitted and cut into eighths": "season_plum",
     "plums": "season_plum",
     "pointed cabbage": "season_pointed_cabbage",
+    "portions of cottage cheese": "label_required",
     "potato": "season_potato",
     "potato, cut into small cubes": "season_potato",
     "potato, halved": "season_potato",
@@ -8287,6 +8567,7 @@
     "sliced onions": "season_onion",
     "sliced pumpkin, 8 mm thick": "season_pumpkin",
     "sliced tomatoes": "season_tomato",
+    "slices of unpeeled lemon": "season_lemon",
     "slightly firm pears, peeled and cored": "season_pear",
     "small broccoli florets": "season_broccoli",
     "small broccoli florets, washed": "season_broccoli",
@@ -8301,6 +8582,7 @@
     "small hot red chili pepper": "season_fresh_chili",
     "small hot red chili pepper, deseeded": "season_fresh_chili",
     "small lettuce (or lettuce heart), chopped": "season_lettuce",
+    "small mandarin oranges, peel and white pith removed": "season_mandarin",
     "small mozzarella balls": "mozzarella",
     "small mozzarella balls, halved": "mozzarella",
     "small onion, washed and chopped": "season_onion",
@@ -8464,11 +8746,15 @@
     "teaspoon of fresh ginger, peeled and chopped (quantity count omitted)": "season_fresh_ginger",
     "thick cooking cream": "label_required",
     "thick cream": "label_required",
+    "thick crème fraîche": "label_required",
     "thick fresh cream": "label_required",
+    "thick full-fat crème fraîche": "label_required",
     "thick greek yogurt": "label_required",
     "thick sour cream": "label_required",
+    "thick, full-fat crème fraîche": "label_required",
     "thickened cream": "label_required",
     "thin green onion, diagonally sliced, as needed": "season_spring_onion",
+    "thin lemon slices, a little for finishing": "season_lemon",
     "thin slices of ginger": "season_fresh_ginger",
     "thinly julienned carrot": "season_carrot",
     "thinly sliced button mushrooms": "season_button_mushroom",
@@ -8547,6 +8833,7 @@
     "turnips, quartered": "season_turnip",
     "uht milk": "milk",
     "unpeeled apples, diced": "season_apple",
+    "unpeeled lemon": "season_lemon",
     "unsweetened coconut drink": "coconut_drinks",
     "unsweetened soy milk": "soy_drinks",
     "vanilla skyr": "skyr_label_required",
