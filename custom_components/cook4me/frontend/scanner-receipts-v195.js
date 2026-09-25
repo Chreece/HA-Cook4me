@@ -147,7 +147,7 @@ export const ReceiptScannerMixin=Base=>class extends Base{
   finally{if(alive()){this._v78SetBusy(false);this._v78RenderCapture();}}
  }
  async _v78CaptureFrame(){if(this._v78Draft?.mode!=='receipt')return super._v78CaptureFrame();if(this._v78Busy)return;const canvas=this._v111Canvas(false);if(canvas)await this._v78Recognize(canvas.toDataURL('image/jpeg',.9));}
- async _v80Scan(mode){if(mode==='receipt')return this._r195Start();if(this._r195Session&&['barcode','product'].includes(mode)){this._v78SetStatus(this._r195Text('switch'));return;}return super._v80Scan(mode);}
+ async _v80Scan(mode){if(mode==='receipt')return this._r195Start();return super._v80Scan(mode);}
  async _v78Save(){if(this._r195Session)return this._r195Action('apply');return super._v78Save();}
  async _v113Restart(){if(this._r195Session||this._v78Draft?.mode==='receipt')return this._r195Start();return super._v113Restart();}
  _v141KeepCameraWarm(){if(this._v78Draft?.mode==='receipt'&&this._r195UploadOnly)return;return super._v141KeepCameraWarm();}
@@ -216,7 +216,7 @@ export const ReceiptScannerMixin=Base=>class extends Base{
   const discard=tools.querySelector('[data-r195-discard]');if(discard)discard.disabled=busy||item.status!=='pending';
   const kind=tools.querySelector('[data-r195-kind]');if(kind)kind.disabled=busy||locked;
   const prev=tools.querySelector('[data-r195-prev]'),next=tools.querySelector('[data-r195-next]');if(prev)prev.disabled=busy||s.index===0;if(next)next.disabled=busy||s.index===s.receipt.items.length-1;
-  for(const button of c.querySelectorAll('[data-v80-scan="product"],[data-v80-scan="barcode"],[data-v78-mode="product"],[data-v78-mode="barcode"],[data-v78-native]'))button.disabled=true;
+  for(const button of c.querySelectorAll('[data-v80-scan="product"],[data-v80-scan="barcode"],[data-v78-mode="product"],[data-v78-mode="barcode"],[data-v78-native]'))button.disabled=busy||locked;
   if(locked)for(const button of c.querySelectorAll('[data-v80-scan],[data-v78-file],[data-v78-take]'))button.disabled=true;
   for(const selector of ['[data-v112-apply]','[data-v113-restart]']){const button=c.querySelector(selector);if(button)button.hidden=true;}
   const note=tools.querySelector('[data-r195-note]');if(note)note.textContent=[item.originalName!==item.productName?item.originalName:'',s.receipt.note,item.note,...(item.warnings||[]),item.kind!=='product'?this._r195Text('nonProduct'):''].filter(Boolean).join(' · ');

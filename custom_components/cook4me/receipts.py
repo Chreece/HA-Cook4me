@@ -9,7 +9,7 @@ from __future__ import annotations
 import asyncio
 from copy import deepcopy
 from datetime import date, datetime, timezone
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal, InvalidOperation, ROUND_HALF_UP, ROUND_FLOOR
 import re
 from typing import Any
 from uuid import uuid4
@@ -19,6 +19,55 @@ MAX_DRAFTS = 30  # per user and integration entry; never silently evict drafts
 KINDS = {"product", "discount", "deposit", "tax", "total", "payment", "other"}
 UNITS = {"g", "kg", "ml", "cl", "dl", "l", "pcs"}
 NUTRIENTS = {"energyKcal", "protein", "carbohydrates", "fat", "saturatedFat", "fiber", "sugars", "salt"}
+
+
+def allocate_receipt_tax(receipt):
+    """Allocate printed exclusive tax in cents; included VAT is never added twice."""
+    mode = receipt.get('taxMode', 'unknown')
+    receipt['taxStatus'] = 'included' if mode == 'included' else 'unknown'
+    if mode != 'added':
+        return
+    receipt['taxStatus'] = 'needs_review'
+    rows = [r for r in receipt['items'] if r['kind'] in {'product', 'discount', 'deposit'}]
+    taxes = receipt.get('taxes') or []
+    if not rows or not taxes or any(r['lineTotal'] is None for r in rows):
+        return
+    def cents(value):
+        return int((Decimal(str(value)) * 100).quantize(Decimal('1'), rounding=ROUND_HALF_UP))
+    assigned, allocations = set(), {}
+    for tax in taxes:
+        if tax.get('amount') is None:
+            return
+        group = [r for r in rows if (r.get('taxCode') and r['taxCode'] == tax.get('code'))
+                 or (r.get('taxRate') is not None and r['taxRate'] == tax.get('rate'))]
+        # An unlabelled single tax total can be shared only when all receipt
+        # lines explicitly belong to it (or the receipt has one tax rate).
+        if len(taxes) == 1 and not any(r.get('taxCode') or r.get('taxRate') is not None for r in rows):
+            group = rows
+        if not group or any(r['id'] in assigned for r in group):
+            return
+        base = sum(cents(r['lineTotal']) for r in group)
+        if base <= 0:
+            return
+        amount = cents(tax['amount'])
+        exact = [Decimal(amount) * cents(r['lineTotal']) / base for r in group]
+        parts = [int(v.to_integral_value(rounding=ROUND_FLOOR)) for v in exact]
+        for i in sorted(range(len(group)), key=lambda i: (-(exact[i]-parts[i]), i))[:amount-sum(parts)]:
+            parts[i] += 1
+        for row, part in zip(group, parts):
+            assigned.add(row['id']); allocations[row['id']] = part
+    if assigned != {r['id'] for r in rows}:
+        return
+    gross = sum(cents(r['lineTotal']) + allocations[r['id']] for r in rows)
+    if receipt.get('total') is None or abs(gross-cents(receipt['total'])) > 1:
+        return
+    if any(r['kind'] == 'product' and cents(r['lineTotal'])+allocations[r['id']] < 0 for r in rows):
+        return
+    for row in rows:
+        row['netLineTotal'] = row['lineTotal']
+        row['taxAmount'] = allocations[row['id']]/100
+        row['lineTotal'] = (cents(row['lineTotal'])+allocations[row['id']])/100
+    receipt['taxStatus'] = 'allocated'
 
 
 def text(value: Any, limit: int = 300) -> str:
@@ -110,6 +159,10 @@ def editable_item(raw: dict[str, Any], *, model: bool = False) -> dict[str, Any]
         # A till receipt is not a nutrition label or an expiry-date source.
         item.update(ingredientLinks=[], nutrition={"basisQuantity": 100, "basisUnit": "", "values": {}},
                     bestBefore="", storageLocationId="", barcode="", noExpiry=False)
+        code = text(raw.get('barcode'), 80)
+        if code.isascii() and code.isdigit() and len(code) in {8, 12, 13, 14}:
+            # Only explicitly printed product codes; the prompt forbids invention.
+            item['barcode'] = code
     else:
         item.update(ingredientLinks=_links(raw.get("ingredientLinks")), nutrition=_nutrition(raw.get("nutrition")),
                     bestBefore=iso_date(raw.get("bestBefore")), storageLocationId=text(raw.get("storageLocationId"), 160),
@@ -119,6 +172,10 @@ def editable_item(raw: dict[str, Any], *, model: bool = False) -> dict[str, Any]
                     applyOpeningExpiry=raw.get("applyOpeningExpiry", True) is True,
                     openingRuleId=text(raw.get("openingRuleId"), 160),
                     openingConditionsConfirmed=raw.get("openingConditionsConfirmed") is True)
+    item.update(taxCode=text(raw.get('taxCode'), 20), taxRate=number(raw.get('taxRate')),
+                netLineTotal=number(raw.get('netLineTotal'), signed=True),
+                taxAmount=number(raw.get('taxAmount'), signed=True),
+                taxReviewed=False if model else raw.get('taxReviewed') is True)
     return item
 
 
@@ -137,15 +194,24 @@ def normalize_receipt(raw: Any, *, model: bool = False) -> dict[str, Any]:
         item["id"] = uuid4().hex if model else text(row.get("id"), 80)
         item["status"] = "discarded" if not model and row.get("status") == "discarded" else "pending"
         items.append(item)
-    return {"merchant": text(raw.get("merchant")), "purchaseDate": iso_date(raw.get("purchaseDate")),
+    receipt = {"merchant": text(raw.get("merchant")), "purchaseDate": iso_date(raw.get("purchaseDate")),
             "currency": _currency(raw.get("currency")), "total": number(raw.get("total")),
-            "note": text(raw.get("note"), 2000), "items": items}
+            "note": text(raw.get("note"), 2000), "items": items,
+            'taxMode': raw.get('taxMode') if raw.get('taxMode') in {'included', 'added'} else 'unknown',
+            'taxes': [{'code': text(t.get('code'), 20), 'rate': number(t.get('rate')), 'amount': number(t.get('amount'))}
+                      for t in (raw.get('taxes') if isinstance(raw.get('taxes'), list) else [])[:20] if isinstance(t, dict)],
+            'taxStatus': raw.get('taxStatus') if raw.get('taxStatus') in {'included','allocated','needs_review'} else 'unknown'}
+    if model:
+        allocate_receipt_tax(receipt)
+    return receipt
 
 
 def product_payload(receipt: dict[str, Any], item: dict[str, Any], entry_id: str, language: str) -> dict[str, Any]:
     """One explicitly reviewed receipt line -> existing scanner stock request."""
     if item["kind"] != "product":
         raise ValueError("Deposits, discounts, totals and other non-product lines cannot be added to stock")
+    if receipt.get('taxStatus') == 'needs_review' and not item.get('taxReviewed'):
+        raise ValueError('Confirm the VAT-inclusive line price in Edit before adding this product')
     links = item.get("ingredientLinks") or []
     if not links:
         raise ValueError("Choose at least one compatible catalog ingredient")
@@ -226,7 +292,9 @@ class ReceiptDraftStore:
         async with self._lock:
             await self._load()
             return [{key: row.get(key) for key in ("id", "revision", "merchant", "purchaseDate", "currency", "updatedAt")}
-                    | {"itemCount": len(row["items"]), "pendingCount": sum(i["status"] == "pending" for i in row["items"])}
+                    | {"itemCount": sum(i['status'] != 'discarded' for i in row['items']),
+                       "pendingCount": sum(i["status"] in {"pending", "applying"} for i in row["items"]),
+                       "processing": deepcopy(row.get('processing', {}))}
                     for row in sorted(self._data["drafts"].values(), key=lambda r: r["updatedAt"], reverse=True)
                     if row.get("owner") == owner]
 
@@ -235,7 +303,8 @@ class ReceiptDraftStore:
             await self._load()
             return self._public(self._owned(owner, ident))
 
-    async def save(self, owner: str, raw: dict[str, Any], *, ident: str = "", revision: int = 0) -> dict[str, Any]:
+    async def save(self, owner: str, raw: dict[str, Any], *, ident: str = "", revision: int = 0,
+                   processing_language: str | None = None) -> dict[str, Any]:
         if not owner:
             raise ValueError("A signed-in user is required")
         cleaned = normalize_receipt(raw)
@@ -261,8 +330,85 @@ class ReceiptDraftStore:
                     item["id"] = uuid4().hex
             row = {**cleaned, "id": ident, "owner": owner, "revision": (old["revision"] if old else 0) + 1,
                    "updatedAt": datetime.now(timezone.utc).isoformat()}
+            if old:
+                row['processing'] = deepcopy(old.get('processing', {}))
+                row['language'] = old.get('language', 'en')
+                for item in row['items']:
+                    original = originals[item['id']]
+                    if original['status'] == 'pending':
+                        item['itemRevision'] = original.get('itemRevision', 0) + 1
+                        item['enrichment'] = {'state': 'reviewed'}
+            elif processing_language is not None:
+                self._queue(row, processing_language)
             data = deepcopy(self._data)
             data["drafts"][ident] = row
+            await self._commit(data)
+            return self._public(row)
+
+    @staticmethod
+    def _queue(row, language):
+        row['language'] = text(language, 12) or 'en'
+        for item in row['items']:
+            if item['status'] == 'pending' and item['kind'] == 'product':
+                if item.get('enrichment', {}).get('state') != 'reviewed':
+                    item['enrichment'] = {'state': 'queued'}
+        row['processing'] = {'state': 'queued', 'stage': 'queued', 'done': 0,
+                             'total': sum(i['kind'] == 'product' for i in row['items'])}
+
+    async def queue(self, owner, ident, language):
+        async with self._lock:
+            await self._load(); self._owned(owner, ident)
+            data = deepcopy(self._data); row = data['drafts'][ident]
+            self._queue(row, language)
+            await self._commit(data)
+            return self._public(row)
+
+    async def work(self):
+        async with self._lock:
+            await self._load()
+            return [deepcopy(r) for r in self._data['drafts'].values()
+                    if r.get('processing', {}).get('state') in {'queued', 'processing'}]
+
+    async def progress(self, owner, ident, **progress):
+        async with self._lock:
+            await self._load()
+            if ident not in self._data['drafts']:
+                return
+            self._owned(owner, ident)
+            data = deepcopy(self._data); row = data['drafts'][ident]
+            row['processing'].update(progress)
+            await self._commit(data)
+
+    async def enrich_item(self, owner, ident, expected, changes):
+        async with self._lock:
+            await self._load()
+            if ident not in self._data['drafts']:
+                return False
+            row = self._owned(owner, ident)
+            item = next((i for i in row['items'] if i['id'] == expected['id']), None)
+            if item != expected or item['status'] != 'pending':
+                return False  # Never overwrite a manual edit/add/discard made during lookup.
+            data = deepcopy(self._data); row = data['drafts'][ident]
+            item = next(i for i in row['items'] if i['id'] == expected['id'])
+            item.update(deepcopy(changes)); item['itemRevision'] = item.get('itemRevision', 0)+1
+            row['revision'] += 1
+            await self._commit(data)
+            return True
+
+    async def save_item(self, owner, ident, item_id, revision, raw, metadata):
+        cleaned = editable_item(raw)
+        async with self._lock:
+            await self._load(); current = self._owned(owner, ident)
+            old = next((i for i in current['items'] if i['id'] == item_id), None)
+            if not old or old['status'] != 'pending' or old.get('itemRevision', 0) != revision:
+                raise ReceiptConflict('This product changed. Reopen it before editing.')
+            data = deepcopy(self._data); row = data['drafts'][ident]
+            item = next(i for i in row['items'] if i['id'] == item_id)
+            item.update(cleaned, itemRevision=revision+1, enrichment={'state': 'reviewed'})
+            for key in ('merchant', 'currency', 'purchaseDate'):
+                if key in metadata:
+                    row[key] = _currency(metadata[key]) if key == 'currency' else iso_date(metadata[key]) if key == 'purchaseDate' else text(metadata[key])
+            row['revision'] += 1; row['updatedAt'] = datetime.now(timezone.utc).isoformat()
             await self._commit(data)
             return self._public(row)
 

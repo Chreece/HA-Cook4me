@@ -11,6 +11,7 @@ from homeassistant.core import callback
 from . import websocket as legacy
 from . import websocket_v33 as scanner
 from .receipts import ReceiptConflict, normalize_receipt, receipt_store_for_bridge, text
+from .receipt_processing import start_receipt_processing
 
 
 def _owner(connection):
@@ -30,14 +31,16 @@ def receipt_instructions(language):
         "not the unit price. packageCount is the printed number of packages; default 1 for a single line. "
         "quantity and unit are the printed CONTENTS OF EACH package (mass/volume/count), NOT packageCount. "
         "Leave quantity/unit empty if no contents are printed. Never infer package sizes, nutrition, "
-        "expiry, barcodes, currencies or unreadable digits. Leave ambiguous dates empty. "
+        "expiry, currencies or unreadable digits. Copy a barcode ONLY if an actual EAN/UPC is printed for that item; never invent one. Leave ambiguous dates empty. "
+        "Identify VAT: taxMode=included when prices already include it (including a VAT breakdown), added ONLY when tax is added to net line prices, otherwise unknown. "
+        "For added tax transcribe each printed tax group into taxes with code, rate and amount; copy matching taxCode or taxRate on EVERY product, discount and deposit line, including zero-rate groups. Do not calculate tax yourself. "
         "Keep separate discounts and deposits as their own kinds; never attach a general basket discount "
         "to a guessed product. Do not include subtotal, total, tax or payment rows as purchasable products. "
         "Never include payment card numbers, bank accounts, customer identifiers or loyalty details. Do not duplicate repeated item headers. Mention uncertainty in note. Limit to 120 items. "
         'Schema: {"merchant":"", "purchaseDate":"YYYY-MM-DD or empty", "currency":"ISO currency or empty", '
-        '"total":null,"note":"","items":[{"productName":"","originalName":"exact printed text",'
+        '"total":null,"taxMode":"included|added|unknown","taxes":[{"code":"","rate":null,"amount":null}],"note":"","items":[{"productName":"","originalName":"exact printed text",'
         '"ingredientName":"whole product", "brand":"", "kind":"product|discount|deposit|other", '
-        '"lineTotal":null,"packageCount":1,"quantity":null,"unit":"g|kg|ml|cl|dl|l|pcs or empty","note":""}]}. '
+        '"lineTotal":null,"taxCode":"","taxRate":null,"barcode":"","packageCount":1,"quantity":null,"unit":"g|kg|ml|cl|dl|l|pcs or empty","note":""}]}. '
         f"Use language {text(language, 12)} for productName and ingredientName."
     )
 
@@ -75,7 +78,10 @@ async def ws_receipt_recognize(hass, connection, msg):
                                   "media_content_type": "image/jpeg"}],
                 )
         receipt = normalize_receipt(scanner.v5._parse_ai_json(result.data), model=True)
-        connection.send_result(msg["id"], {"receipt": receipt, "status": "review", "saved": False})
+        store = await receipt_store_for_bridge(bridge)
+        receipt = await store.save(_owner(connection), receipt, processing_language=msg.get('language', 'en'))
+        start_receipt_processing(bridge)
+        connection.send_result(msg["id"], {"receipt": receipt, "status": "processing", "saved": True})
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
     finally:
@@ -142,10 +148,12 @@ async def _add_reviewed_product(hass, connection, payload):
 
 @websocket_api.websocket_command({
     vol.Required("type"): "cook4me/receipts/drafts", vol.Required("entry_id"): str,
-    vol.Required("action"): vol.In(["list", "get", "save", "discard", "apply"]),
+    vol.Required("action"): vol.In(["list", "get", "save", "save_item", "retry", "discard", "apply"]),
     vol.Optional("receipt_id", default=""): str, vol.Optional("item_id", default=""): str,
     vol.Optional("revision", default=0): vol.All(int, vol.Range(min=0)),
-    vol.Optional("receipt"): dict, vol.Optional("language", default="en"): str,
+    vol.Optional("receipt"): dict, vol.Optional("item"): dict,
+    vol.Optional("item_revision", default=0): vol.All(int, vol.Range(min=0)),
+    vol.Optional("language", default="en"): str,
 })
 @websocket_api.async_response
 async def ws_receipt_drafts(hass, connection, msg):
@@ -160,6 +168,12 @@ async def ws_receipt_drafts(hass, connection, msg):
             result = {"receipt": await store.get(owner, ident)}
         elif action == "save":
             result = {"receipt": await store.save(owner, msg.get("receipt"), ident=ident, revision=revision)}
+        elif action == 'save_item':
+            result = {'receipt': await store.save_item(owner, ident, msg.get('item_id', ''),
+                msg.get('item_revision', 0), msg.get('item', {}), msg.get('receipt', {}))}
+        elif action == 'retry':
+            result = {'receipt': await store.queue(owner, ident, msg.get('language', 'en'))}
+            start_receipt_processing(bridge)
         elif action == "discard":
             result = {"receipt": await store.discard(owner, ident, revision, msg.get("item_id", ""))}
             if result["receipt"] is None:
