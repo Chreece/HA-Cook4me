@@ -5,7 +5,7 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.10)
+## Reviewed coverage (2026-09-25.11)
 
 - 112 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
@@ -44,8 +44,9 @@ cloud credentials, or per-scan file reads are needed.
   profiles distinguish green, black, mixed and unspecified forms.
   Eleven further dmBio packages cover passata, chickpeas, coconut milk and
   soy, rice, coconut and oat drinks, retaining their exact handling conditions.
-  There are 89 reviewed product barcodes, 1,727 exact canonical names and
-  10 reviewed provider ingredient IDs.
+  Ten further dmBio packages add cans, cooking creams and apple purées.
+  There are 99 reviewed product barcodes, 1,727 exact canonical names and
+  97 reviewed provider ingredient IDs.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
   coconut cream, unverified tomato paste, ketchup and Skyr, plus mustard, mayonnaise and
@@ -57,6 +58,50 @@ cloud credentials, or per-scan file reads are needed.
 Run `python tools/audit_ingredient_lifecycle.py` for counts against the actual
 shipped catalog. Counts distinguish seasonal, numeric and label-required
 entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
+
+## Batch 17: everyday packages and official catalog coverage
+
+These ten additional dmBio instructions were reviewed on 2026-09-25. The exact
+brand-owner product URLs and review date accompany each rule in the sidecar.
+
+| Package | Verified GTIN | Days after opening | Extra handling |
+| --- | --- | --- | --- |
+| Kidney beans, 240 g drained | `4067796187038` | 3–4 | Transfer to non-metal container |
+| Cannellini beans, 240 g drained | `4067796187052` | 3–4 | Transfer to non-metal container |
+| Brown lentils, 240 g drained | `4066447373189` | 3–4 | Transfer to non-metal container |
+| Sweetcorn, 340 g / 230 g drained | `4067796153903` | 2 | — |
+| Tomato pieces, 400 g | `4066447887679` | 3 | Transfer to non-metal container |
+| Oat cooking cream, 200 ml | `4066447965988` | 4 | — |
+| Soy cooking cream, 200 ml | `4070765067460` | 4 | — |
+| Almond cooking cream, 200 ml | `4066447876642` | 4 | — |
+| Apple purée, 360 g | `4067796068498` | 3 | — |
+| Cold-grated apple purée, 360 g | `4067796068559` | 3 | — |
+
+All retain exact brand/GTIN matching, confirmation and the conservative 4 °C
+refrigeration cap. For sweetcorn, the two-day period is the product instruction;
+refrigeration is the catalog's conservative handling requirement supported by
+the BfR cooling guidance, not a temperature printed on that product page.
+For 3–4 day ranges, the lifecycle evaluator returns day 3 as the advisory
+reminder and day 4 as the maximum deadline. Selecting the rule in the package
+editor stores the four-day maximum. Earlier printed dates and manual package values retain
+precedence. Cooking creams do not supply drink or dairy-cream rules, and these
+can instructions do not transfer to dried beans or lentils.
+
+Three existing seasonal profiles now use national BZfE evidence: courgettes
+approximately May–October (harvest starts around mid-May), cucumbers
+March–October (including greenhouse salad cucumbers, not a blanket outdoor
+claim), and cultivated blueberries approximately June–October (starts late
+June). Pickled cucumbers, juice, dried berries, jam, mixed dishes and courgette
+flowers do not inherit these fresh-produce windows. Unlisted months remain
+unknown in the evidence API and are excluded by the seasonal-only picker.
+
+Another 87 individually reviewed official IDs now receive their existing
+profiles: 75 produce rows and 12 cheese, juice and sauce rows. Their exact IDs
+are recorded in `ingredientIds`; this remains an allowlist. Conflicting
+translations (including M_FOOD_399 and M_FOOD_328), the dry/canned ambiguity of
+M_FOOD_653, and spice homonyms were not added. This brings evidence to 3,199
+actual catalog rows: 2,239 seasonal, 525 with numeric opening rules, and 435
+requiring package instructions. Overall coverage is still incomplete.
 
 ## Batch 16: verified dmBio packages and German season gaps
 
