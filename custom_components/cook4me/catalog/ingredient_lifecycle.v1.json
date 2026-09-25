@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.16",
+  "version": "2026-09-25.17",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -66,7 +66,7 @@
     "bzfe_milk": {
       "publisher": "Bundeszentrum für Ernährung",
       "url": "https://www.bzfe.de/kueche-und-alltag/vom-acker-bis-zum-teller/milch/vom-einkauf-in-die-kueche",
-      "reviewedOn": "2026-09-24"
+      "reviewedOn": "2026-09-25"
     },
     "usda_cans": {
       "publisher": "USDA Food Safety and Inspection Service",
@@ -356,7 +356,7 @@
     "alnatura_salsa_dip": {
       "publisher": "Alnatura",
       "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/wuerzen-oele-essige/bio-senf-mayo-ketchup-bio-dip/salsa-dip-218906/",
-      "reviewedOn": "2026-09-24"
+      "reviewedOn": "2026-09-25"
     },
     "alnatura_indian_curry": {
       "publisher": "Alnatura",
@@ -1122,6 +1122,16 @@
       "publisher": "Alnatura – national seasonal calendar",
       "url": "https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/rosenkohl-saison/",
       "reviewedOn": "2026-09-25"
+    },
+    "alnatura_season_broccoli": {
+      "publisher": "Alnatura – national seasonal calendar",
+      "url": "https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/brokkoli-saison/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_season_tomato": {
+      "publisher": "Alnatura – national seasonal calendar",
+      "url": "https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/tomaten-saison/",
+      "reviewedOn": "2026-09-25"
     }
   },
   "profiles": {
@@ -1770,9 +1780,10 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
             "months": [
+              5,
               6,
               7,
               8,
@@ -1782,12 +1793,7 @@
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_06",
-              "hessen_07",
-              "hessen_08",
-              "hessen_09",
-              "hessen_10",
-              "hessen_11"
+              "alnatura_season_broccoli"
             ],
             "coverage": "listed_months_only"
           }
@@ -2840,8 +2846,8 @@
         "regions": [
           {
             "country": "DE",
-            "sourceRegion": "DE-HE",
-            "basis": "seasonal_calendar_including_stored_produce",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
             "months": [
               6,
               7,
@@ -2851,11 +2857,7 @@
             ],
             "approximate": true,
             "sourceIds": [
-              "hessen_06",
-              "hessen_07",
-              "hessen_08",
-              "hessen_09",
-              "hessen_10"
+              "alnatura_season_tomato"
             ],
             "coverage": "listed_months_only"
           }
@@ -10974,7 +10976,6 @@
     "tomato, finely chopped": "season_tomato",
     "tomato, peeled and chopped": "season_tomato",
     "tomato, peeled, deseeded and cut into pieces": "season_tomato",
-    "tomato, tomato paste": "season_tomato",
     "tomato, washed and chopped": "season_tomato",
     "tomato, washed and cut into pieces": "season_tomato",
     "tomato, washed and diced": "season_tomato",
@@ -11140,10 +11141,14 @@
     "M_FOOD_132": "season_cucumber",
     "M_FOOD_146": "season_pumpkin",
     "M_FOOD_147": "season_courgette",
+    "M_FOOD_150": "label_required",
+    "M_FOOD_151": "label_required",
+    "M_FOOD_152": "label_required",
     "M_FOOD_153": "season_watercress",
     "M_FOOD_166": "season_shallot",
     "M_FOOD_171": "season_chicory",
     "M_FOOD_177": "season_spinach",
+    "M_FOOD_184": "label_required",
     "M_FOOD_19": "season_artichoke",
     "M_FOOD_190": "season_fennel",
     "M_FOOD_191": "feta",
@@ -11165,12 +11170,20 @@
     "M_FOOD_258": "alnatura_orange_juice",
     "M_FOOD_259": "ketchup_label",
     "M_FOOD_261": "season_kiwi",
+    "M_FOOD_263": "milk",
     "M_FOOD_265": "alpro_drinks",
     "M_FOOD_267": "reishunger_coconut_milk",
+    "M_FOOD_268": "hazelnut_drinks",
+    "M_FOOD_269": "milk",
+    "M_FOOD_271": "milk",
     "M_FOOD_272": "season_lettuce",
+    "M_FOOD_280": "alnatura_lentils",
     "M_FOOD_300": "season_mandarin",
     "M_FOOD_305": "mascarpone",
+    "M_FOOD_306": "mayonnaise_label_required",
     "M_FOOD_32": "season_beetroot",
+    "M_FOOD_323": "mustard_label_required",
+    "M_FOOD_324": "mustard_label_required",
     "M_FOOD_325": "mozzarella",
     "M_FOOD_326": "season_blackberry",
     "M_FOOD_327": "season_blueberry",
@@ -11200,12 +11213,17 @@
     "M_FOOD_427": "season_rocket",
     "M_FOOD_433": "season_swede",
     "M_FOOD_44": "season_chard",
+    "M_FOOD_444": "soy_sauce_label_required",
     "M_FOOD_445": "alnatura_tomato_sauce",
     "M_FOOD_477": "taifun_plain_tofu",
     "M_FOOD_478": "season_tomato",
     "M_FOOD_479": "season_tomato",
     "M_FOOD_480": "season_jerusalem_artichoke",
+    "M_FOOD_497": "label_required",
+    "M_FOOD_507": "label_required",
     "M_FOOD_527": "season_rhubarb",
+    "M_FOOD_533": "alnatura_salsa",
+    "M_FOOD_534": "alnatura_peanut_sauce",
     "M_FOOD_539": "seitan",
     "M_FOOD_548": "alnatura_sauerkraut",
     "M_FOOD_561": "cream_cheese",
@@ -11213,12 +11231,15 @@
     "M_FOOD_595": "kimchi",
     "M_FOOD_6": "season_garlic",
     "M_FOOD_613": "season_green_bean",
+    "M_FOOD_614": "label_required",
     "M_FOOD_621": "season_pak_choi",
     "M_FOOD_624": "soy_drinks",
     "M_FOOD_63": "season_broccoli",
     "M_FOOD_631": "season_leek",
     "M_FOOD_634": "season_spring_onion",
     "M_FOOD_64": "season_peach",
+    "M_FOOD_653": "alnatura_kidney_beans",
+    "M_FOOD_681": "label_required",
     "M_FOOD_727": "season_sweet_potato",
     "M_FOOD_733": "taifun_plain_tofu",
     "M_FOOD_743": "season_bell_pepper",

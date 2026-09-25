@@ -1,14 +1,19 @@
 {
   "schemaVersion": 1,
   "language": "de",
-  "translationSource": "German supermarket names reviewed for lifecycle batch 22, 2026-09-25. Display/search only.",
+  "translationSource": "German supermarket names reviewed for lifecycle batch 23, 2026-09-25. Display/search only.",
   "labels": {
     "celery": "Stangensellerie",
+    "creme fraiche": "Crème fraîche",
     "curry sauce": "Currysauce",
     "ginger juice": "Ingwersaft",
+    "hazelnut milk": "Haselnussdrink",
     "lamb's lettuce": "Feldsalat",
     "parsley root": "Petersilienwurzel",
-    "plant milk": "Pflanzendrink"
+    "plant milk": "Pflanzendrink",
+    "satay sauce": "Satésauce",
+    "semi-skimmed milk": "Fettarme Milch",
+    "thick creme fraiche": "Crème fraîche"
   },
   "searchAliases": {
     "plant milk": [
@@ -25,6 +30,22 @@
     ],
     "parsley root": [
       "Wurzelpetersilie"
+    ],
+    "hazelnut milk": [
+      "Haselnussmilch"
+    ],
+    "satay sauce": [
+      "Sataysauce",
+      "Saté-Sauce"
+    ],
+    "semi-skimmed milk": [
+      "Teilentrahmte Milch"
+    ],
+    "creme fraiche": [
+      "Creme fraiche"
+    ],
+    "thick creme fraiche": [
+      "Creme fraiche"
     ]
   }
 }

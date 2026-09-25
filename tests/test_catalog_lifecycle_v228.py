@@ -78,9 +78,18 @@ class CatalogLifecycle228(unittest.TestCase):
             for ident in ('M_FOOD_147', 'M_FOOD_132', 'M_FOOD_79', 'M_FOOD_325', 'M_FOOD_256'):
                 row = next(r for r in rows if r.get('key') == ident)
                 self.assertEqual(row['lifecycle']['profileId'], data['ingredientIds'][ident])
-        # Conflicting translations, dry/canned ambiguity and spice homonyms stay unmapped.
-        for ident in ('M_FOOD_399', 'M_FOOD_328', 'M_FOOD_653', 'M_FOOD_388', 'M_FOOD_358'):
+        # Conflicting food identities and spice homonyms stay unmapped.
+        for ident in ('M_FOOD_399', 'M_FOOD_328', 'M_FOOD_388', 'M_FOOD_358'):
             self.assertNotIn('profileId', catalog.ingredient_lifecycle_profile({'ingredientId': ident}))
+        # Batch 23 gives the unqualified kidney-bean row product-only evidence.
+        # Its dry/canned ambiguity must never select a generic canned interval.
+        generic_beans = catalog.ingredient_lifecycle_profile({'ingredientId': 'M_FOOD_653'})
+        self.assertTrue(all(rule.get('productBarcodes') for rule in generic_beans['afterOpening']['rules']))
+        self.assertEqual(generic_beans['seasonality']['status'], 'unknown')
+        for brand in ('Alnatura', 'dmBio', 'Bonduelle', 'Other'):
+            self.assertNotIn('consumeBy', lifecycle.opening_window(generic_beans,
+                {'brand': brand, 'openedAt': '2026-09-25', 'storage': 'fridge'},
+                temperature_c=4, confirmed_conditions=NONMETAL))
 
     def test_actual_catalog_opening_editor_keeps_range_and_confirmation(self):
         rows = catalog.ingredient_choices('el')
