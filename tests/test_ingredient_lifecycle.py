@@ -32,8 +32,114 @@ class LifecycleTests(unittest.TestCase):
     def test_bundled_data_has_reviewed_evidence(self):
         data = self.lifecycle.load_lifecycle_data()
         self.lifecycle.validate_lifecycle_data(data)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 100)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 50)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 102)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 53)
+
+    def test_chili_and_romaine_seasons_keep_source_scope_and_month_boundaries(self):
+        cases = (
+            ("Fresh chopped chili pepper", [8, 9, 10], "regional_seasonal_availability", "dehner_chili"),
+            ("Fresh jalapeño peppers", [8, 9, 10], "regional_seasonal_availability", "dehner_chili"),
+            ("Small hot red chili pepper, deseeded", [8, 9, 10], "regional_seasonal_availability", "dehner_chili"),
+            ("Romaine lettuce", [5, 6, 7, 8, 9, 10, 11], "outdoor_harvest", "bzfe_romaine"),
+            ("Little Gem lettuce", [5, 6, 7, 8, 9, 10, 11], "outdoor_harvest", "bzfe_romaine"),
+        )
+        for name, months, basis, source in cases:
+            with self.subTest(name=name):
+                profile = self.profile(name)
+                region = profile["seasonality"]["regions"][0]
+                self.assertEqual((region["sourceRegion"], region["basis"]), ("DE", basis))
+                self.assertEqual(region["sourceIds"], [source])
+                self.assertTrue(region["approximate"])
+                for month in range(1, 13):
+                    result = self.lifecycle.seasonal_availability(profile, country="DE", month=month)
+                    self.assertEqual(result["status"], "in_season" if month in months else "unknown")
+                self.assertEqual(self.lifecycle.seasonal_availability(profile, country="GR", month=9)["status"], "unknown")
+                self.assertNotIn("rules", profile["afterOpening"])
+
+    def test_ambiguous_translated_chilies_and_prepared_forms_do_not_inherit_fresh_seasons(self):
+        for name in (
+            "Chili", "Chili pepper", "Red chili pepper", "Red chili pepper (seeds removed)",
+            "A- red chili, deseeded and finely chopped", "Sliced red chili pepper",
+            "Pinch of chili pepper", "Bird's eye chili powder", "Dried chili pepper (takanotsume)",
+            "Frozen fresh chili pepper", "Chili flakes", "Chili paste", "Chili in oil",
+            "Sweet chili sauce", "Pepperoni", "Red and green chili peppers",
+            "Pickled jalapeños", "Fresh or dried chili", "Cooked Romaine lettuce",
+            "Romaine and iceberg lettuce", "Little Gem salad with dressing", "Purslane",
+        ):
+            with self.subTest(excluded=name):
+                self.assertEqual(self.profile(name)["seasonality"]["status"], "unknown")
+
+    def test_seven_new_packages_require_identity_cooling_and_opening_date(self):
+        cases = (
+            ("Carrot juice", "4104420221970", 3, "2026-09-28"),
+            ("Carrot juice", "4104420070189", 5, "2026-09-30"),
+            ("Carrot juice", "4104420072848", 3, "2026-09-28"),
+            ("Beetroot juice", "4104420261136", 3, "2026-09-28"),
+            ("Beetroot juice", "4104420259980", 3, "2026-09-28"),
+            ("Lime juice", "4104420072121", 14, "2026-10-09"),
+            ("Canned beetroot with its liquid", "4104420235397", 5, "2026-09-30"),
+        )
+        for name, code, days, deadline in cases:
+            with self.subTest(name=name, code=code):
+                profile = self.profile(name)
+                lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": "Alnatura", "barcode": code}
+                self.assertEqual(profile["seasonality"]["status"], "not_applicable")
+                for barcode in (code, code.zfill(14)):
+                    result = self.lifecycle.opening_window(profile, lot | {"barcode": barcode}, temperature_c=4)
+                    self.assertEqual((result["daysMin"], result["daysMax"]), (days, days))
+                    self.assertEqual((result["remindOn"], result["consumeBy"]), (deadline, deadline))
+                    self.assertFalse(result["safetyGuarantee"])
+                for changes, temperature in (({"barcode": None}, 4), ({"brand": None}, 4),
+                        ({"brand": "Other brand"}, 4), ({"barcode": code[:-1] + str((int(code[-1]) + 1) % 10)}, 4),
+                        ({"openedAt": None}, 4), ({"storage": "pantry"}, 4), ({"storage": "freezer"}, 4), ({}, None), ({}, 5)):
+                    self.assertNotIn("consumeBy", self.lifecycle.opening_window(profile, lot | changes, temperature_c=temperature))
+                capped = self.lifecycle.opening_window(profile, lot | {"bestBefore": "2026-09-26"}, temperature_c=4)
+                self.assertEqual((capped["remindOn"], capped["consumeBy"]), ("2026-09-26", "2026-09-26"))
+                self.assertEqual(self.lifecycle.opening_window(profile, lot | {"useWithinDays": 1})["consumeBy"], "2026-09-26")
+
+    def test_juice_and_pickled_root_rules_do_not_cross_food_forms(self):
+        groups = (
+            ("Carrot juice", {"4104420221970": 3, "4104420070189": 5, "4104420072848": 3}),
+            ("Beetroot juice", {"4104420261136": 3, "4104420259980": 3, "4104420070202": 5}),
+            ("Lime juice", {"4104420072121": 14}),
+            ("Pickled beetroot", {"4104420235397": 5}),
+        )
+        codes = set().union(*(set(codes) for _, codes in groups))
+        lot = {"openedAt": "2026-09-25", "storage": "fridge", "brand": "Alnatura"}
+        for name, allowed in groups:
+            for code in codes:
+                with self.subTest(name=name, code=code):
+                    result = self.lifecycle.opening_window(self.profile(name), lot | {"barcode": code}, temperature_c=4)
+                    self.assertEqual("consumeBy" in result, code in allowed)
+                    if code in allowed:
+                        self.assertEqual(result["daysMax"], allowed[code])
+        for name in (
+            "Carrot", "Beetroot", "Cooked beetroot", "Raw beetroot, diced", "Lime",
+            "Limes (juice)", "Lime juice and zest (quantity fragment: /2)",
+            "Freshly squeezed carrot juice", "Freshly squeezed lime juice", "Beet kvass",
+            "Vegetable juice", "Fruit juice", "Carrot and apple juice", "Beetroot and ginger shot",
+            "Water combined with beet liquid", "Pickled vegetables (peppers, corn, carrots, mushrooms, peas...)",
+        ):
+            for code in codes:
+                with self.subTest(excluded=name, code=code):
+                    self.assertNotIn("consumeBy", self.lifecycle.opening_window(self.profile(name), lot | {"barcode": code}, temperature_c=4))
+
+    def test_reviewed_quantity_fragments_preserve_exact_food_identity(self):
+        cases = (
+            ("Fresh basil leaves, chopped (quantity fragment: /2 tbsp)", "season_basil"),
+            ("Fresh parsley, washed and chopped (quantity fragment: /2 tbsp)", "season_parsley_leaf"),
+            ("Fresh thyme leaves (quantity fragment: /4 tsp)", "season_thyme"),
+            ("Rosemary sprigs (quantity fragment: /2)", "season_rosemary"),
+            ("Chopped onion (quantity fragment: /4)", "season_onion"),
+            ("Granny Smith apple, washed and diced (quantity fragment: /4)", "season_apple"),
+            ("Small eggplant, washed and diced (quantity fragment: /2)", "season_aubergine"),
+            ("g carrots, peeled and cut into pieces", "season_carrot"),
+            ("g cauliflower, washed and cut into 2 or 4 parts", "season_cauliflower"),
+        )
+        for name, ident in cases:
+            self.assertEqual(self.profile(name)["profileId"], ident)
+        for name in ("Fresh thyme leaves (quantity fragment: /8 tsp)", "Onion, peeled and halved, with clove (quantity fragment: /2)", "Fresh basil or mint (quantity fragment: /2 tbsp)"):
+            self.assertEqual(self.profile(name)["seasonality"]["status"], "unknown")
 
     def test_coriander_watercress_lemon_balm_and_romanesco_retain_regional_seasons(self):
         cases = (

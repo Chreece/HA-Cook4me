@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.3",
+  "version": "2026-09-25.4",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -516,6 +516,51 @@
     "alnatura_peanut_sauce": {
       "publisher": "Alnatura",
       "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/schnelle-kueche/bio-sossen/erdnuss-sauce-243700/",
+      "reviewedOn": "2026-09-25"
+    },
+    "dehner_chili": {
+      "publisher": "Dehner",
+      "url": "https://www.dehner.de/tipps-trends/garten-pflanzen/selbstversorger/chili-peperoni",
+      "reviewedOn": "2026-09-25"
+    },
+    "bzfe_romaine": {
+      "publisher": "Bundeszentrum für Ernährung (BZfE)",
+      "url": "https://www.bzfe.de/kueche-und-alltag/vom-acker-bis-zum-teller/salate/salate-vom-einkauf-in-die-kueche",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_carrot_juice_litre": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-gemuese-saefte/karotte-direktsaft-219942/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_carrot_juice_fresh": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-gemuese-saefte/karotten-direktsaft-feldfrisch-verarbeitet-138117/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_carrot_juice_fermented": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-gemuese-saefte/karotten-direktsaft-milchsauer-vergoren-128760/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_beetroot_juice_litre": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-gemuese-saefte/rote-bete-direktsaft-232109/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_beetroot_juice_fermented": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-gemuese-saefte/rote-bete-direktsaft-milchsauer-vergoren-128768/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_lime_juice": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/getraenke/saefte/bio-obst-saefte/limette-direktsaft-131364/",
+      "reviewedOn": "2026-09-25"
+    },
+    "alnatura_pickled_beetroot": {
+      "publisher": "Alnatura",
+      "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/konserven/bio-gemuesekonserven/rote-bete-ungesuesst-227416/",
       "reviewedOn": "2026-09-25"
     }
   },
@@ -4379,6 +4424,40 @@
             "productBarcodes": [
               "4104420070202"
             ]
+          },
+          {
+            "id": "alnatura_beetroot_juice_litre",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_beetroot_juice_litre",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420261136"
+            ]
+          },
+          {
+            "id": "alnatura_beetroot_juice_fermented",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_beetroot_juice_fermented",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420259980"
+            ]
           }
         ]
       }
@@ -5771,10 +5850,186 @@
           }
         ]
       }
+    },
+    "season_fresh_chili": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "dehner_chili"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "season_romaine": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE",
+            "basis": "outdoor_harvest",
+            "months": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "bzfe_romaine"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "alnatura_carrot_juice": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_carrot_juice_litre",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_carrot_juice_litre",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420221970"
+            ]
+          },
+          {
+            "id": "alnatura_carrot_juice_fresh",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_carrot_juice_fresh",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420070189"
+            ]
+          },
+          {
+            "id": "alnatura_carrot_juice_fermented",
+            "daysMin": 3,
+            "daysMax": 3,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_carrot_juice_fermented",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420072848"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_lime_juice": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_lime_juice",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_lime_juice",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420072121"
+            ]
+          }
+        ]
+      }
+    },
+    "alnatura_pickled_beetroot": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "alnatura_pickled_beetroot",
+            "daysMin": 5,
+            "daysMax": 5,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "alnatura_pickled_beetroot",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Alnatura",
+            "productBarcodes": [
+              "4104420235397"
+            ]
+          }
+        ]
+      }
     }
   },
   "canonicalNames": {
     "*capers": "alnatura_capers",
+    "*fresh chili": "season_fresh_chili",
     "*lemon juice": "alnatura_lemon_juice",
     "*medium-sized beetroot": "season_beetroot",
     "*minced garlic": "season_garlic",
@@ -5842,6 +6097,7 @@
     "basil pesto": "alnatura_pesto",
     "basil, a little for finishing": "season_basil",
     "basil, finely chopped": "season_basil",
+    "basil, washed and chopped (quantity fragment: /2 tbsp)": "season_basil",
     "batavia lettuce": "season_lettuce",
     "beef tomatoes": "season_tomato",
     "beefsteak tomato": "season_tomato",
@@ -5892,6 +6148,7 @@
     "bunch of fresh coriander, washed and finely chopped (quantity fragment: /2)": "season_coriander_leaf",
     "bunch of parsley": "season_parsley_leaf",
     "bunch of parsley, washed and chopped": "season_parsley_leaf",
+    "bunch of parsley, washed and chopped (quantity fragment: /2)": "season_parsley_leaf",
     "bunch of watercress, washed twice (thick stems removed)": "season_watercress",
     "bunches of baby spinach, washed twice (large stems removed)": "season_spinach",
     "butterhead lettuce": "season_lettuce",
@@ -5907,6 +6164,7 @@
     "canned baby carrots (drained)": "canned_low_acid",
     "canned baby carrots, drained": "canned_low_acid",
     "canned beans": "canned_low_acid",
+    "canned beetroot with its liquid": "alnatura_pickled_beetroot",
     "canned butter beans (canned weight), drained": "canned_low_acid",
     "canned chickpeas": "canned_chickpeas",
     "canned chickpeas, drained": "canned_chickpeas",
@@ -5914,6 +6172,7 @@
     "canned chopped tomatoes": "canned_tomato_pieces",
     "canned chopped tomatoes (400 g)": "canned_tomato_pieces",
     "canned clams in water (use with the liquid)": "canned_low_acid",
+    "canned cooked beets, about 230 g per can, cut into 4 mm strips": "alnatura_pickled_beetroot",
     "canned cooked lentils": "canned_lentils",
     "canned corn": "canned_sweetcorn",
     "canned corn kernels, drained": "canned_sweetcorn",
@@ -5944,6 +6203,7 @@
     "capers, chopped (optional)": "alnatura_capers",
     "carrot": "season_carrot",
     "carrot cut into pieces": "season_carrot",
+    "carrot juice": "alnatura_carrot_juice",
     "carrot, chopped": "season_carrot",
     "carrot, coarsely chopped": "season_carrot",
     "carrot, cut diagonally": "season_carrot",
@@ -6066,6 +6326,7 @@
     "chopped cherry tomatoes (for serving)": "season_tomato",
     "chopped chervil": "season_chervil",
     "chopped chestnuts": "season_chestnut",
+    "chopped chili pepper": "season_fresh_chili",
     "chopped chives": "season_chives",
     "chopped coriander": "season_coriander_leaf",
     "chopped coriander (for serving)": "season_coriander_leaf",
@@ -6091,11 +6352,13 @@
     "chopped hazelnuts": "season_hazelnut",
     "chopped leek": "season_leek",
     "chopped onion": "season_onion",
+    "chopped onion (quantity fragment: /4)": "season_onion",
     "chopped onions": "season_onion",
     "chopped parsley": "season_parsley_leaf",
     "chopped parsley (for finishing)": "season_parsley_leaf",
     "chopped parsley (for serving)": "season_parsley_leaf",
     "chopped parsley (garnish)": "season_parsley_leaf",
+    "chopped parsley (quantity fragment: /2 tbsp)": "season_parsley_leaf",
     "chopped potatoes": "season_potato",
     "chopped red bell pepper": "season_bell_pepper",
     "chopped red onion": "season_onion",
@@ -6247,12 +6510,18 @@
     "flour": "dry_staple",
     "fresh asparagus, washed and chopped": "season_asparagus",
     "fresh basil leaves": "season_basil",
+    "fresh basil leaves, chopped (quantity fragment: /2 tbsp)": "season_basil",
     "fresh basil leaves, washed": "season_basil",
     "fresh basil leaves, washed and chopped": "season_basil",
     "fresh basil leaves, washed and finely chopped": "season_basil",
     "fresh broad beans": "season_fresh_broad_bean",
     "fresh button mushrooms, finely chopped": "season_button_mushroom",
+    "fresh chili pepper": "season_fresh_chili",
+    "fresh chili pepper, sliced": "season_fresh_chili",
     "fresh chopped basil": "season_basil",
+    "fresh chopped chili pepper": "season_fresh_chili",
+    "fresh chopped chili pepper (quantity fragment: /2)": "season_fresh_chili",
+    "fresh chopped chili peppers": "season_fresh_chili",
     "fresh chopped mint": "season_mint",
     "fresh chopped tarragon": "season_tarragon",
     "fresh coriander": "season_coriander_leaf",
@@ -6266,6 +6535,8 @@
     "fresh fava beans": "season_fresh_broad_bean",
     "fresh garlic": "season_garlic",
     "fresh green beans": "season_green_bean",
+    "fresh jalapeño peppers": "season_fresh_chili",
+    "fresh jalapeño, finely chopped": "season_fresh_chili",
     "fresh milk": "milk",
     "fresh mint": "season_mint",
     "fresh mint leaves": "season_mint",
@@ -6281,6 +6552,7 @@
     "fresh parsley": "season_parsley_leaf",
     "fresh parsley stalk, chopped": "season_parsley_leaf",
     "fresh parsley, chopped": "season_parsley_leaf",
+    "fresh parsley, washed and chopped (quantity fragment: /2 tbsp)": "season_parsley_leaf",
     "fresh peas": "season_fresh_pea",
     "fresh peas, chopped and washed": "season_fresh_pea",
     "fresh peas, shelled and washed": "season_fresh_pea",
@@ -6302,6 +6574,8 @@
     "fresh sweetcorn": "season_sweetcorn",
     "fresh thyme": "season_thyme",
     "fresh thyme leaves": "season_thyme",
+    "fresh thyme leaves (quantity fragment: /2 tsp)": "season_thyme",
+    "fresh thyme leaves (quantity fragment: /4 tsp)": "season_thyme",
     "fresh thyme leaves, picked": "season_thyme",
     "fresh thyme sprig": "season_thyme",
     "fresh tomato": "season_tomato",
@@ -6311,6 +6585,8 @@
     "freshly chopped basil": "season_basil",
     "freshly chopped mint leaves": "season_mint",
     "full-fat milk": "milk",
+    "g carrots, peeled and cut into pieces": "season_carrot",
+    "g cauliflower, washed and cut into 2 or 4 parts": "season_cauliflower",
     "garlic": "season_garlic",
     "garlic (crushed)": "season_garlic",
     "garlic clove": "season_garlic",
@@ -6347,6 +6623,7 @@
     "ginger juice": "alnatura_ginger_juice",
     "golden apple": "season_apple",
     "golden apple, peeled, cored and diced": "season_apple",
+    "golden apple, peeled, cored and diced (quantity fragment: /2)": "season_apple",
     "golden delicious apple": "season_apple",
     "golden delicious apple, cut into 8 pieces": "season_apple",
     "golden delicious apples": "season_apple",
@@ -6354,6 +6631,8 @@
     "gooseberry": "season_gooseberry",
     "granny smith apple, diced": "season_apple",
     "granny smith apple, washed and diced": "season_apple",
+    "granny smith apple, washed and diced (quantity fragment: /2)": "season_apple",
+    "granny smith apple, washed and diced (quantity fragment: /4)": "season_apple",
     "granny smith apples": "season_apple",
     "granny smith green apple, washed and diced": "season_apple",
     "grape": "season_grape",
@@ -6498,6 +6777,8 @@
     "lettuce leaves, washed and finely chopped": "season_lettuce",
     "lettuce leaves, washed and thinly sliced": "season_lettuce",
     "lettuce, shredded 1 cm wide for finishing": "season_lettuce",
+    "lime juice": "alnatura_lime_juice",
+    "little gem lettuce": "season_romaine",
     "lovage": "season_lovage",
     "low-fat milk": "milk",
     "mangetout": "season_fresh_pea",
@@ -6664,6 +6945,7 @@
     "pesto alla genovese": "label_required",
     "pesto sauce": "alnatura_pesto",
     "philadelphia cream cheese": "label_required",
+    "pickled beetroot": "alnatura_pickled_beetroot",
     "pickled cucumbers": "alnatura_pickled_cucumber",
     "pickles": "alnatura_pickled_cucumber",
     "pickles, chopped and drained": "alnatura_pickled_cucumber",
@@ -6769,6 +7051,9 @@
     "red bell peppers, diced": "season_bell_pepper",
     "red bell peppers, seeded": "season_bell_pepper",
     "red cabbage": "season_red_cabbage",
+    "red chili pepper, chopped": "season_fresh_chili",
+    "red chili pepper, cleaned and finely chopped": "season_fresh_chili",
+    "red chili peppers, deseeded and finely chopped": "season_fresh_chili",
     "red currants": "season_redcurrant",
     "red grapes": "season_grape",
     "red grapes, halved": "season_grape",
@@ -6816,12 +7101,14 @@
     "rocket": "season_rocket",
     "rocket leaves": "season_rocket",
     "rocket, washed two or three times and roughly chopped": "season_rocket",
+    "romaine lettuce": "season_romaine",
     "romanesco broccoli": "season_romanesco",
     "romanesco broccoli florets": "season_romanesco",
     "romanesco cabbage": "season_romanesco",
     "romanesco cauliflower, washed": "season_romanesco",
     "rosemary": "season_rosemary",
     "rosemary sprig, cut in half": "season_rosemary",
+    "rosemary sprigs (quantity fragment: /2)": "season_rosemary",
     "rosemary, a little for garnish": "season_rosemary",
     "roughly chopped coriander (for finishing)": "season_coriander_leaf",
     "round tomatoes, about 175 g, cored for stuffing (reserve flesh and juice)": "season_tomato",
@@ -6893,16 +7180,21 @@
     "small broccoli florets, washed": "season_broccoli",
     "small eggplant": "season_aubergine",
     "small eggplant, washed and diced": "season_aubergine",
+    "small eggplant, washed and diced (quantity fragment: /2)": "season_aubergine",
     "small eggplants, washed and diced": "season_aubergine",
     "small fennel bulb, trimmed and thinly sliced": "season_fennel",
     "small garlic clove": "season_garlic",
     "small garlic cloves, peeled": "season_garlic",
     "small green onion, diagonally sliced (for finishing), a little": "season_spring_onion",
+    "small hot red chili pepper": "season_fresh_chili",
+    "small hot red chili pepper, deseeded": "season_fresh_chili",
     "small lettuce (or lettuce heart), chopped": "season_lettuce",
     "small onion, washed and chopped": "season_onion",
     "small onions": "season_onion",
     "small onions, washed and chopped": "season_onion",
     "small potato, chopped": "season_potato",
+    "small red chili pepper": "season_fresh_chili",
+    "small red chili pepper (quantity fragment: /2)": "season_fresh_chili",
     "small romanesco broccoli florets, washed": "season_romanesco",
     "small shallot(s), peeled and finely chopped": "season_shallot",
     "small shallot, cleaned and finely chopped": "season_shallot",
@@ -6986,6 +7278,7 @@
     "sweet onion": "season_onion",
     "sweet onion, chopped": "season_onion",
     "sweet onion, finely chopped": "season_onion",
+    "sweet onion, finely chopped (quantity fragment: /4)": "season_onion",
     "sweet onion, peeled and chopped": "season_onion",
     "sweet onion, peeled and thinly sliced into rounds": "season_onion",
     "sweet onion, thinly sliced": "season_onion",
@@ -7011,6 +7304,7 @@
     "table salt": "dry_staple",
     "tablespoon of fresh coriander, washed and chopped (quantity count omitted)": "season_coriander_leaf",
     "tablespoon of fresh coriander, washed and chopped (quantity count omitted; mixed-language source)": "season_coriander_leaf",
+    "tablespoons of lime juice": "alnatura_lime_juice",
     "tarragon": "season_tarragon",
     "tarragon, chopped": "season_tarragon",
     "tarragon, finely chopped": "season_tarragon",
