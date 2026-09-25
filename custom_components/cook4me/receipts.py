@@ -115,7 +115,10 @@ def editable_item(raw: dict[str, Any], *, model: bool = False) -> dict[str, Any]
                     bestBefore=iso_date(raw.get("bestBefore")), storageLocationId=text(raw.get("storageLocationId"), 160),
                     barcode=text(raw.get("barcode"), 80), noExpiry=raw.get("noExpiry") is True,
                     containerId=text(raw.get("containerId"), 160), openedAt=iso_date(raw.get("openedAt")),
-                    useWithinDays=text(raw.get("useWithinDays"), 8))
+                    useWithinDays=text(raw.get("useWithinDays"), 8),
+                    applyOpeningExpiry=raw.get("applyOpeningExpiry", True) is True,
+                    openingRuleId=text(raw.get("openingRuleId"), 160),
+                    openingConditionsConfirmed=raw.get("openingConditionsConfirmed") is True)
     return item
 
 
@@ -161,7 +164,9 @@ def product_payload(receipt: dict[str, Any], item: dict[str, Any], entry_id: str
                                 "barcode": item.get("barcode", ""), "storageLocationId": item.get("storageLocationId", ""),
                                 "purchaseDate": receipt["purchaseDate"], "noExpiry": item.get("noExpiry", False),
                                 "containerId": item.get("containerId", ""), "openedAt": item.get("openedAt", ""),
-                                "useWithinDays": item.get("useWithinDays", "")}}
+                                "useWithinDays": item.get("useWithinDays", ""),
+                                **{key: item.get(key) for key in (
+                                    "applyOpeningExpiry", "openingRuleId", "openingConditionsConfirmed")}}}
     price = number(item.get("lineTotal"))
     if price is not None:
         if not receipt.get("currency"):

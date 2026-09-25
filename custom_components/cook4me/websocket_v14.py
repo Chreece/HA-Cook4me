@@ -149,9 +149,17 @@ async def ws_inventory_remove(hass, connection, msg) -> None:
 async def ws_consumption_confirm(hass, connection, msg) -> None:
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
+        if any(item.get("ruleId") for row in msg.get("ingredients", [])
+               for item in row.get("packageOpenings", []) if isinstance(item, dict)):
+            from .release_catalog import load_release_catalog
+            await hass.async_add_executor_job(load_release_catalog)
+        consumptions = list(msg.get("ingredients") or [])
+        if any(row.get("packageOpenings") for row in consumptions):
+            from homeassistant.util import dt as dt_util
+            consumptions = [{**row, "_openingDate": dt_util.now().date().isoformat()} for row in consumptions]
         result = await bridge.recipe_hub.async_confirm_consumption(
             str(msg["pending_id"]),
-            list(msg.get("ingredients") or []),
+            consumptions,
             strict=bool(msg.get("strict")),
         )
         nutrition_store = await nutrition_store_for_bridge(bridge)

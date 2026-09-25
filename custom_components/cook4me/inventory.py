@@ -141,11 +141,11 @@ def convert_amount(value: Any, from_unit: Any, to_unit: Any) -> float | None:
 
 
 def _effective_best_before(lot: dict[str, Any]) -> str:
-    printed = _best_before(lot.get("bestBefore"))
+    printed = "" if lot.get("noExpiry") is True else _best_before(lot.get("bestBefore"))
     opened = _best_before(lot.get("openedAt"))
     use_days = _positive_int(lot.get("useWithinDays"))
     opened_limit = ""
-    if opened and use_days:
+    if opened and use_days and lot.get("applyOpeningExpiry") is not False:
         opened_limit = (date.fromisoformat(opened) + timedelta(days=use_days)).isoformat()
     if printed and opened_limit:
         return min(printed, opened_limit)
@@ -169,6 +169,13 @@ def _lot_metadata(raw: Any, *, strict: bool = False) -> dict[str, Any]:
         out["id"] = lot_id[:160]
     if raw.get("noExpiry") is True:
         out["noExpiry"] = True
+    for key in ("applyOpeningExpiry", "openingConditionsConfirmed"):
+        if key in raw and raw[key] not in (None, ""):
+            if type(raw[key]) is not bool:
+                if strict:
+                    raise ValueError("Use-within opening options must be checkboxes")
+            else:
+                out[key] = raw[key]
     storage = _text(raw.get("storage")).lower()
     if storage:
         if storage not in _STORAGE_VALUES:
@@ -186,7 +193,7 @@ def _lot_metadata(raw: Any, *, strict: bool = False) -> dict[str, Any]:
         raise ValueError("Use-within days must be between 1 and 3650")
     if use_days:
         out["useWithinDays"] = use_days
-    for key in ("barcode", "productName", "brand", "source", "nutritionSource", "storageLocationId", "containerId", "revision"):
+    for key in ("barcode", "productName", "brand", "source", "nutritionSource", "storageLocationId", "containerId", "revision", "openingRuleId"):
         value = _text(raw.get(key))
         if value:
             out[key] = value[:300]
@@ -830,12 +837,18 @@ def _apply_primary_consumption(
             take = min(lot_amount, remaining_request) if remaining_request > 1e-12 and (not request.get("lotId") or request["lotId"] == lot.get("id")) else 0.0
             left = lot_amount - take
             if take > 1e-12:
+                opening = next((item for item in request.get("packageOpenings", [])
+                                if item.get("lotId") == lot.get("id")), None)
+                if opening is not None:
+                    from .product_opening import mark_package_opened
+                    lot = mark_package_opened(current, lot, opening, opened_on=request.get("_openingDate"))
                 lot_report = {
                     "identity": ident,
                     "name": current.get("name"),
                     "quantity": round(take, 9),
                     "unit": current.get("unit", ""),
                     "lotId": lot.get("id"),
+                    **({"markedOpened": True} if opening is not None else {}),
                     "bestBefore": lot.get("bestBefore"),
                     "effectiveBestBefore": _effective_best_before(lot),
                     "storage": lot.get("storage"),
@@ -848,6 +861,8 @@ def _apply_primary_consumption(
                     "purchaseDate": lot.get("purchaseDate"),
                     "openedAt": lot.get("openedAt"),
                     "useWithinDays": lot.get("useWithinDays"),
+                    **{key: lot.get(key) for key in (
+                        "applyOpeningExpiry", "openingRuleId", "openingConditionsConfirmed", "noExpiry", "containerId")},
                     "addedAt": lot.get("addedAt"),
                     "revision": lot.get("revision"),
                     "ingredientLinks": deepcopy(lot.get("ingredientLinks") or []),
@@ -1042,6 +1057,7 @@ def restore_consumption(inventory, report):
     metadata_keys = (
         "bestBefore", "storage", "storageLocationId", "barcode", "productName", "brand", "source",
         "nutritionSource", "purchaseDate", "openedAt", "useWithinDays",
+        "applyOpeningExpiry", "openingRuleId", "openingConditionsConfirmed", "noExpiry", "containerId",
         "addedAt", "revision", "ingredientLinks",
     )
     for raw in lots:
@@ -1104,7 +1120,7 @@ def restore_consumption(inventory, report):
     return normalize_inventory(rows), {"restored": restored, "skipped": skipped}
 
 
-def apply_consumption(inventory, consumptions):
+def _consume_inventory(inventory, consumptions):
     """Consume linked products once, retaining the owner's lot IDs and FEFO order."""
     rows = normalize_inventory(inventory)
     if not any(lot.get("ingredientLinks") for row in rows for lot in row.get("lots") or []):
@@ -1130,4 +1146,22 @@ def apply_consumption(inventory, consumptions):
             remaining -= take
             if remaining <= 1e-9:
                 break
+    return rows, report
+
+
+def apply_consumption(inventory, consumptions):
+    """Commit opening changes only for exact packages actually consumed."""
+    for request in consumptions:
+        openings = request.get("packageOpenings", []) if isinstance(request, dict) else []
+        if not isinstance(openings, list) or any(
+            not isinstance(item, dict) or not item.get("lotId") for item in openings
+        ):
+            raise ValueError("Choose a package to mark opened")
+    rows, report = _consume_inventory(inventory, consumptions)
+    consumed = {item.get("lotId") for item in report["deductedLots"] if item.get("markedOpened")}
+    for request in consumptions:
+        if not isinstance(request, dict):
+            continue
+        if any(item["lotId"] not in consumed for item in request.get("packageOpenings", [])):
+            raise ValueError("An opened package was not used; review its selected amount")
     return rows, report

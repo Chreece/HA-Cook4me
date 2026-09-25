@@ -76,7 +76,7 @@ export function editorRequest(d,links,extras,entryId,language){
  const request={...copy(extras||{}),entry_id:entryId,request_id:d.requestId,language,
   ingredient:{key:keyOf(ingredient),name:ingredient.name},ingredient_links:links.map(row=>({key:keyOf(row),name:row.name})),
   quantity:editorNumber(d.quantity),unit:String(d.unit||'').trim(),package_count:d.editLotId?1:editorNumber(d.packageCount),best_before:d.noExpiry?'':d.bestBefore||'',
-  lot_metadata:Object.fromEntries(['productName','brand','barcode','storageLocationId','containerId','purchaseDate','openedAt','useWithinDays','noExpiry'].map(key=>[key,d[key]??'']))};
+  lot_metadata:Object.fromEntries(['productName','brand','barcode','storageLocationId','containerId','purchaseDate','openedAt','useWithinDays','noExpiry','applyOpeningExpiry','openingRuleId','openingConditionsConfirmed'].map(key=>[key,d[key]??'']))};
  if(!blank(d.barcode))request.lot_metadata.barcode=editorBarcode(d.barcode);
  if(Object.keys(values).length)request.nutrition={basisQuantity:100,basisUnit:d.nutrition.basisUnit,values};
  if(!blank(d.paidAmount)){
