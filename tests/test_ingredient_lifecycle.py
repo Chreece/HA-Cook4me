@@ -32,7 +32,7 @@ class LifecycleTests(unittest.TestCase):
     def test_bundled_data_has_reviewed_evidence(self):
         data = self.lifecycle.load_lifecycle_data()
         self.lifecycle.validate_lifecycle_data(data)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 111)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 112)
         self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 71)
 
     def test_greek_produce_regions_preserve_german_calendars(self):

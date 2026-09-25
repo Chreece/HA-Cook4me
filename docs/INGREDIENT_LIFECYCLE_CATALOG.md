@@ -5,9 +5,9 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.9)
+## Reviewed coverage (2026-09-25.10)
 
-- 111 produce groups, including fruit, leafy vegetables, roots, asparagus,
+- 112 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
   savoy cabbage, pak choi, shallots, wild garlic, turnips, snow peas, walnuts,
   hazelnuts, artichokes, melons, kiwi, chestnuts, sweet potatoes, swede and
@@ -16,6 +16,8 @@ cloud credentials, or per-scan file reads are needed.
   and romaine/Little Gem lettuce, fresh ginger, figs and summer purslane,
   plus Greek regional lemon, orange, grapefruit, mandarin and clementine calendars.
   Nine further produce groups now have Greek evidence, including pomegranate.
+  Fresh nettle leaves now have a Bavarian harvest profile; national German
+  guidance expands bell-pepper, spring-onion and parsnip availability.
 - 71 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro, Oatly or verified Alnatura packages), Taifun plain and silken tofu, and Reishunger
@@ -40,7 +42,10 @@ cloud credentials, or per-scan file reads are needed.
   tomato-sauce package windows.
   Cream and yoghurt profiles are separate; olive
   profiles distinguish green, black, mixed and unspecified forms.
-  There are 78 reviewed product barcodes and 1,718 exact canonical names.
+  Eleven further dmBio packages cover passata, chickpeas, coconut milk and
+  soy, rice, coconut and oat drinks, retaining their exact handling conditions.
+  There are 89 reviewed product barcodes, 1,727 exact canonical names and
+  10 reviewed provider ingredient IDs.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
   coconut cream, unverified tomato paste, ketchup and Skyr, plus mustard, mayonnaise and
@@ -52,6 +57,55 @@ cloud credentials, or per-scan file reads are needed.
 Run `python tools/audit_ingredient_lifecycle.py` for counts against the actual
 shipped catalog. Counts distinguish seasonal, numeric and label-required
 entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
+
+## Batch 16: verified dmBio packages and German season gaps
+
+The following additional package instructions were reviewed on 2026-09-25.
+Each product's brand-owner URL is stored with its rule in the sidecar.
+
+| dmBio package | Verified GTIN | Days after opening | Additional condition |
+| --- | --- | --- | --- |
+| Passierte Tomaten, 500 g | `4066447887730` | 3 | — |
+| Passata, 690 g bottle | `4070765018783` | 3 | Keep closed |
+| Chickpeas, 350 g / 220 g drained | `4070765042894` | 2 | — |
+| Chickpeas, 700 g / 410 g drained | `4070765071559` | 2 | — |
+| Coconut milk, 400 ml | `4067796063882` | 4 | — |
+| Coconut milk, 250 ml carton | `4067796075519` | 4 | — |
+| Soy drink natur, 1 l | `4070765022803` | 4 | Store upright |
+| Rice drink natur, 1 l (verified Austrian package) | `4067796002102` | 4 | Store upright |
+| Coconut drink natur, 1 l | `4070765022827` | 4 | Store upright |
+| Oat drink natur, 1 l | `4070765022759` | 4 | Store upright |
+| Oat drink Barista, 1 l | `4070765022841` | 4 | Store upright |
+
+All require the exact brand and barcode, refrigeration at the existing
+conservative 4 °C cap, and confirmation of the listed handling instructions.
+The upright-storage condition is translated into English, German and Greek.
+These periods do not transfer between coconut milk and coconut drink, between
+drink types, or to dried legumes, homemade hummus, tomato paste or coconut cream.
+Earlier printed dates still cap the calculated deadline; opening and applying
+the deadline remain explicit user actions. Old or changed GTINs do not inherit
+instructions just because a product name or package size looks the same.
+
+BZfE's national guidance replaces the shorter Hessian highlight lists for three
+existing groups: bell peppers March–November (domestic availability, including
+protected growing rather than an outdoor-only claim), spring onions approximately
+March–November (outdoor harvest from mid-March), and parsnips October–March
+(regional availability, not an outdoor-only claim). Preserved/frozen forms and
+unlisted months or countries remain unknown. VerbraucherService Bayern adds
+March–September harvesting for fresh nettle leaves; blanched leaves, seeds and
+dried nettles do not receive that fresh-leaf calendar. Nine exact fresh names
+also gain coverage, including prepared whole peppers, red radicchio and baby
+spinach salad.
+
+Ten explicitly reviewed provider IDs now receive their existing food profiles
+even where the official row omits `classification`. This covers bell peppers,
+spring onions, parsnip, coconut milk and soy milk. In particular, M_FOOD_389 is
+the vegetable pepper; M_FOOD_388 (pepper spice), M_FOOD_358 (paprika powder) and
+the ambiguous fresh/dried chilli entry M_FOOD_377 do not borrow its season.
+Non-food classifications and rows requiring semantic confirmation are still
+excluded. No fuzzy label matching or blanket acceptance of unclassified rows
+is introduced. Actual picker choices and opening-guidance requests are tested
+against these IDs.
 
 ## Season semantics
 
