@@ -5,15 +5,16 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.3)
+## Reviewed coverage (2026-09-25.4)
 
-- 100 produce groups, including fruit, leafy vegetables, roots, asparagus,
+- 102 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
   savoy cabbage, pak choi, shallots, wild garlic, turnips, snow peas, walnuts,
   hazelnuts, artichokes, melons, kiwi, chestnuts, sweet potatoes, swede and
   chanterelles, mint, tarragon, lovage, oyster/king oyster mushrooms, shiitake,
-  fresh coriander leaves, watercress, lemon balm and Romanesco.
-- 50 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+  fresh coriander leaves, watercress, lemon balm, Romanesco, fresh chillies
+  and romaine/Little Gem lettuce.
+- 53 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro or Oatly), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
@@ -24,10 +25,12 @@ cloud credentials, or per-scan file reads are needed.
   sauerkraut, beetroot, lemon, ginger and grape juices add product-specific
   guidance, along with Alnatura natural/smoked tofu, salsa, curry sauces,
   cooking creams, olives, pickled cucumbers, capers, marinated artichokes and
-  preserved pineapple, coconut milk, sauerkraut, tomato juice and peanut sauce.
+  preserved pineapple, coconut milk, sauerkraut, tomato juice and peanut sauce,
+  carrot juice, lime juice and pickled beetroot. Beetroot juice now distinguishes
+  three verified packages with either three- or five-day instructions.
   Cream and yoghurt profiles are separate; olive
   profiles distinguish green, black, mixed and unspecified forms.
-  There are 54 reviewed product barcodes and 1,413 exact canonical names.
+  There are 61 reviewed product barcodes and 1,453 exact canonical names.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, cream cheese and
   coconut cream, tomato paste, ketchup and Skyr.
@@ -45,7 +48,7 @@ calendars published by the Hessische Lehrkräfteakademie, BZfE produce guides,
 the BVEO pak choi guide, Hessen VerbraucherFenster and the Verbraucherzentrale
 season calendar, BUND Naturschutz's Bavarian calendar, Hortipendium, LWG and
 Landwirtschaftskammer Nordrhein-Westfalen's Landservice, EDEKA meinLand,
-Kressepark Erfurt and Industrieverband Agrar (IVA).
+Kressepark Erfurt, Industrieverband Agrar (IVA) and Dehner's cultivation guide.
 For the Hessian monthly calendar entries, the source region
 (`DE-HE`), country (`DE`), source links and review date are preserved. The source
 includes stored produce and protected cultivation; these months must not be
@@ -62,6 +65,27 @@ outdoor harvest period (`basis: outdoor_harvest`), independent of year-round
 potted availability. Savoy cabbage uses May–February regional availability,
 and pak choi uses May–October. These profiles do not apply to dried/frozen herbs,
 Thai basil, parsley root, cooked cabbage or mixed ingredients.
+
+Fresh chilli entries use Dehner's August-to-first-frost guidance, with its
+explicit October harvest endpoint. These approximate August–October months use
+`regional_seasonal_availability`, because the cultivation guide covers both
+garden and protected growing. They do not describe all supermarket availability.
+Only reviewed fresh or clearly fresh-pod forms are mapped. Generic chilli,
+pinches of chilli, dried/powdered forms and ambiguous translated red-chilli
+entries remain unknown. Deseeding or slicing alone does not prove freshness;
+Japanese red-chilli entries that can also mean dried pods are deliberately
+excluded. Fresh jalapeño forms share the fresh-chilli profile; pickled forms do
+not.
+
+Romaine and Little Gem use BZfE's German outdoor availability from mid-May to
+the end of November, encoded as approximate May–November months. BZfE explicitly
+identifies Little Gem as a romaine variety. This dedicated profile does not
+replace the existing general lettuce calendar or apply to cooked/mixed salads.
+
+Sixteen additional exact names carrying quantity fragments or leading gram
+markers now retain their reviewed produce/herb profile. These are individual
+allowlist additions; there is no general suffix stripping or quantity parser.
+Mixtures and unreviewed variants remain unknown.
 
 The Verbraucherzentrale calendar's green outdoor-harvest cells on page 1 provide
 May–September for dill and May–October for marjoram, oregano, rosemary, sage and
@@ -228,6 +252,29 @@ handling condition. Each rule links to its own manufacturer product page.
 | Sauerkraut, 520 g pouch | 4104420033849 | 5 | — |
 | Tomate-Direktsaft, 500 ml | 4104420072787 | 3 | — |
 | Erdnuss-Sauce, 325 ml | 4104420257863 | 3 | — |
+| Karotte-Direktsaft, 1 l | 4104420221970 | 3 | — |
+| Karotten-Direktsaft feldfrisch verarbeitet, 330 ml | 4104420070189 | 5 | — |
+| Karotten-Direktsaft milchsauer vergoren, 500 ml | 4104420072848 | 3 | — |
+| Rote Bete-Direktsaft, 1 l | 4104420261136 | 3 | — |
+| Rote Bete-Direktsaft milchsauer vergoren, 500 ml | 4104420259980 | 3 | — |
+| Limette-Direktsaft, 200 ml | 4104420072121 | 14 | — |
+| Rote Bete ungesüßt, 330 g jar | 4104420235397 | 5 | — |
+
+The new carrot-juice profile and expanded beetroot-juice profile retain each
+package's own interval. A 330 ml bottle's five-day instruction cannot select
+the three-day litre or fermented bottle, or vice versa. Generic carrot/beetroot
+juice names still require the verified brand and barcode; freshly squeezed
+juice, juice mixtures and beet kvass remain outside those profiles. The carrot
+juice exact name is prepared in the sidecar for future catalog rows; it does
+not create a new picker ingredient by itself.
+
+Lime juice's 14-day package instruction does not transfer to whole limes,
+freshly squeezed juice, juice-and-zest combinations or other citrus juices.
+The preserved-beetroot profile requires the verified vinegar-pickled Alnatura
+jar. Exact canned/preserved beetroot names may select it only with that package
+identity; the profile contains no generic can interval. Cooked beetroot without
+a preserved form, raw roots, mixed pickles and the liquid alone remain separate.
+The new `Pickled beetroot` exact name is also available for future catalog rows.
 
 The two coconut-milk packs add Alnatura's three-day instructions to the existing
 profile while retaining Reishunger's two-to-three-day range and historical
