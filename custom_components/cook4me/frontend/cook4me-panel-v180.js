@@ -1,3 +1,4 @@
+import {UnlimitedStockLinksMixin} from './unlimited-stock-links-v242.js';
 import {ReceiptQueueMixin} from './receipt-queue-v232.js';
 import {IngredientSeasonMixin} from './ingredient-season-v223.js';
 import {PackageOpeningMixin} from './package-opening-v222.js';
@@ -22,7 +23,7 @@ const V179='cook4me-recipe-hub-panel-v179';
 if(!customElements.get(V179))await import('./cook4me-panel-v179.js?v=2026.9.22.6');
 const PreviousPanel=IngredientSeasonMixin(InteractionPositionMixin(PackageOpeningMixin(IngredientNamesMixin(UXFixesMixin(CompactDeviceHeaderMixin(RecipeStepModesMixin(AppDesignMixin(SelectedFilterMixin(RecipeGapsMixin(ScannerCameraMixin(WeeklyProgressMixin(ViewFiltersMixin(ReceiptLauncherMixin(RecipeCoverageMixin(ProductEditGuardMixin(ProductEditorMixin(ReceiptScannerMixin(ScannerSuggestionsMixin(customElements.get(V179))))))))))))))))))));
 
-const BasePanel=ReceiptQueueMixin(PreviousPanel);
+const BasePanel=UnlimitedStockLinksMixin(ReceiptQueueMixin(PreviousPanel));
 const V180_TEXT={
  en:{
   manualOutside:'Tap outside the barcode box to enter the product manually.',
@@ -206,4 +207,4 @@ if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v208'))customEleme
 
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v218'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v218',class extends Cook4MeRecipeHubPanelV180{});
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v219'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v219',class extends Cook4MeRecipeHubPanelV180{});
-if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v241'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v241',class extends Cook4MeRecipeHubPanelV180{});
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v242'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v242',class extends Cook4MeRecipeHubPanelV180{});

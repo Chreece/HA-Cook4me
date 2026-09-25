@@ -365,6 +365,7 @@ def enrich_match_with_house_keys(
     house = normalize_house_ingredients(house_ingredients)
     for row in house_ingredients if isinstance(house_ingredients, list) else []:
         if isinstance(row, dict):
+            house.extend(link for link in row.get("ingredientLinks") or [] if isinstance(link, dict))
             house.extend(
                 link
                 for lot in row.get("lots") or []
