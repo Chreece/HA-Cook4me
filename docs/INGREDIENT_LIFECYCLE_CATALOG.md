@@ -5,7 +5,7 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.14)
+## Reviewed coverage (2026-09-25.15)
 
 - 112 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
@@ -18,7 +18,7 @@ cloud credentials, or per-scan file reads are needed.
   Nine further produce groups now have Greek evidence, including pomegranate.
   Fresh nettle leaves now have a Bavarian harvest profile; national German
   guidance expands bell-pepper, spring-onion and parsnip availability.
-- 75 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+- 77 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro, Oatly or verified Alnatura packages), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
@@ -49,11 +49,12 @@ cloud credentials, or per-scan file reads are needed.
   smoked tofu, specific olive forms, and basil/red pesto keep separate rules.
   Eight juice packages add separate flavour/size rules and upright storage where labelled.
   Five more plant-drink packages and one ginger juice retain their storage instructions.
-  There are 123 reviewed product barcodes, 1,731 exact canonical names and
-  102 reviewed provider ingredient IDs.
+  Seven condiment/sauce packages add ketchup, Ajvar, curry and tomato sauces.
+  There are 130 reviewed product barcodes, 1,732 exact canonical names and
+  103 reviewed provider ingredient IDs.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
-  coconut cream, unverified tomato paste, ketchup and Skyr, plus mustard, mayonnaise and
+  coconut cream, unverified tomato paste, unverified ketchup and Skyr, plus mustard, mayonnaise and
   additional cream, cream-cheese and yoghurt variants, plus plain/brewed soy sauce,
   cottage cheese and further crème fraîche variants.
 - Dry staples have no invented short spoilage countdown. Their package
@@ -62,6 +63,56 @@ cloud credentials, or per-scan file reads are needed.
 Run `python tools/audit_ingredient_lifecycle.py` for counts against the actual
 shipped catalog. Counts distinguish seasonal, numeric and label-required
 entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
+
+## Batch 21: condiments, year-round produce and catalog identity
+
+Seven dmBio packages were reviewed on 2026-09-25. These rules require the exact
+brand and GTIN, refrigeration, and the existing conservative catalog cap of
+4 °C. The temperature cap comes from the catalog's BfR cooling policy, not a
+numeric temperature on these product pages.
+
+| Package and label source | Verified GTIN | Days after opening | Extra handling |
+| --- | --- | --- | --- |
+| [Tomato ketchup, 450 ml](https://www.dm.de/p/d/1622220/dmbio-tomaten-ketchup) | `4066447887723` | 30 | Store upright |
+| [Thai curry sauce, 325 ml](https://www.dm.de/p/d/1488554/dmbio-currysosse-thai) | `4066447675887` | 3 | — |
+| [Indian curry sauce, 325 ml](https://www.dm.de/p/d/1488553/dmbio-currysosse-indisch-cremig-pikant) | `4067796097245` | 3 | — |
+| [Tomato sauce with grilled pepper, 325 ml](https://www.dm.de/p/d/1372859/dmbio-tomatensauce-gegrillte-paprika) | `4066447887785` | 3–4 | — |
+| [Tomato sauce with goat cream cheese, 320 ml](https://www.dm.de/p/d/3120498/dmbio-tomatensauce-ziegenfrischkaese) | `4070765100709` | 5 | — |
+| [Tomato sauce with goat cream cheese, 340 g](https://www.dm.de/p/d/1638721/dmbio-tomatensosse-ziegenfrischkaese) | `4066447257748` | 5 | — |
+| [Ajvar cream dip, Austrian listing, 180 g](https://www.dm.at/p/d/3042443/dmbio-gemueseaufstrich-ajvar-creme-dip) | `4067796185997` | 3 | — |
+
+Ajvar gains a profile for the already existing exact ingredient; it does not
+create another catalog entry. The reviewed provider ketchup ID `M_FOOD_259` now
+carries the same evidence as the existing unambiguous ketchup names. This fixes
+the German picker choosing an official ketchup row without lifecycle metadata.
+The historic `ketchup_label` profile ID is preserved, now with a conditional
+product rule. Unverified ketchup and Alnatura's refrigeration-only package still
+have no catalog duration. Curry powder/paste, passata, fresh peppers, cheese,
+homemade Ajvar and mixed condiment alternatives cannot borrow these rules.
+The reviewed dmBio red/basil pesto pages say to use promptly but give no numeric
+duration, so no numeric rule was added for those packages.
+
+Four German calendars now use national evidence:
+
+- [Beetroot](https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/rote-bete-saison/): April–November domestic supply plus December–March stored produce.
+- [Red cabbage](https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/rotkohl-saison/): May–November domestic supply plus December–April stored produce.
+- [White cabbage](https://www.bzfe.de/kueche-und-alltag/kochen/how-to-obst-und-gemuese/how-to-weisskohl-und-spitzkohl): available from Germany throughout the year. The separate pointed-cabbage profile is unchanged.
+- [Spinach](https://www.alnatura.de/de-de/magazin/saisonkalender/saisongemuese-gemuese-im-saisonkalender/spinat-saison/): March–November, including the smaller March/July/August supply.
+
+These remain approximate availability calendars rather than a claim of outdoor
+harvest throughout every listed month. Greek calendars are unchanged, and cooked,
+frozen or pickled forms do not inherit fresh-produce seasons. The existing German
+curry-sauce choice now displays **Currysauce**, searchable as **Currysoße** or
+**Currysosse**, while retaining its Greek name and original identity.
+
+Coverage reaches 3,211 ingredient rows: 2,239 seasonal, 557 with numeric opening
+rules and 415 requiring package instructions, backed by 219 sources. Backend
+checks cover all seven exact packages, wrong/missing identity, food forms,
+temperature/handling conditions, earlier printed dates, manual precedence and
+all 12 seasonal months. Mobile/desktop checks exercise the real Greek/German
+catalog choices and the opening confirmation flow. Run
+`python tests/test_catalog_lifecycle_v235.py` and, with Playwright installed,
+`python tests/browser_catalog_lifecycle_v235.py` locally.
 
 ## Batch 20: plant drinks, winter produce and supermarket names
 
