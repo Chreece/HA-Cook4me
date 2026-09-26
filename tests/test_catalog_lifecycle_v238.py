@@ -76,8 +76,9 @@ class CatalogLifecycle238(unittest.TestCase):
             self.assertNotEqual(profile(name)['seasonality']['status'], 'reviewed', name)
 
     def test_unreviewed_forms_and_nonfood_rows_do_not_gain_guidance(self):
-        for n in (85, 349, 453, 183, 399, 328, 388, 358):
+        for n in (85, 349, 453, 183, 399, 388, 358):
             self.assertNotIn('profileId', catalog.ingredient_lifecycle_profile({'ingredientId': f'M_FOOD_{n}'}))
+        self.assertEqual(catalog.ingredient_lifecycle_profile({'ingredientId': 'M_FOOD_328'})['profileId'], 'season_turnip')
         for ident in (*SEASONS, *STAPLES):
             for extras in ({'classification': 'equipment'}, {'needsSemanticConfirmation': True}):
                 row = {'id': ident} | extras

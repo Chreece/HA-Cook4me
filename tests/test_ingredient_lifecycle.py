@@ -32,8 +32,8 @@ class LifecycleTests(unittest.TestCase):
     def test_bundled_data_has_reviewed_evidence(self):
         data = self.lifecycle.load_lifecycle_data()
         self.lifecycle.validate_lifecycle_data(data)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 112)
-        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 81)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["seasonality"]["status"] == "reviewed"]), 113)
+        self.assertEqual(len([p for p in data["profiles"].values() if p["afterOpening"].get("rules")]), 82)
 
     def test_greek_produce_regions_preserve_german_calendars(self):
         cases = (
@@ -181,11 +181,11 @@ class LifecycleTests(unittest.TestCase):
                 "Fresh bitter orange juice", "Lime (or lemon)", "Lemongrass", "Dried lemon",
                 "Candied lemon", "Preserved lemon, diced", "Lemon curd", "Lemon sorbet",
                 "Lemon juice (quantity fragment: /2)",
-                "Orange blossom water", "Candied orange peel", "Mandarin honey", "Mandarin liqueur",
+                "Orange blossom water", "Candied orange peel", "Mandarin liqueur",
                 "Avocado, peeled and diced, mixed with lemon juice"):
             with self.subTest(name=name):
                 self.assertEqual(self.profile(name)["seasonality"]["status"], "unknown")
-        for name in ("Lemon juice", "Orange juice", "Orange jam", "Orange marmalade"):
+        for name in ("Lemon juice", "Orange juice", "Orange jam", "Orange marmalade", "Mandarin honey"):
             self.assertEqual(self.profile(name)["seasonality"]["status"], "not_applicable")
 
     def test_philadelphia_original_requires_exact_package_and_prompt_reclosure(self):

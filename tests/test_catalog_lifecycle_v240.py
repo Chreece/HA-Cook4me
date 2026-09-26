@@ -120,7 +120,7 @@ class CatalogLifecycle240(unittest.TestCase):
                 self.assertNotIn('consumeBy', lifecycle.opening_window(profile(other), lot, temperature_c=4, confirmed_conditions=('clean_spoon',)), other)
 
     def test_vague_fruit_spread_labels_never_become_numeric_limits(self):
-        for name in ('Apple jam', 'Berry jam', 'Blueberry jam', 'Cherry jam', 'Cranberry jam', 'Orange jam', 'Orange marmalade', 'Red fruit jam'):
+        for name in ('Apple jam', 'Berry jam', 'Blueberry jam', 'Cherry jam', 'Cranberry jam', 'Orange jam', 'Orange marmalade'):
             data = profile(name)
             self.assertEqual((data['seasonality']['status'], data['afterOpening']['status']), ('not_applicable', 'label_required'))
             for code in ('4260248063892', '4260248063908', '4067796111118'):

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-25.20",
+  "version": "2026-09-26.1",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -251,7 +251,7 @@
     "hortipendium_turnips": {
       "publisher": "Hortipendium / Gartenakademie Rheinland-Pfalz",
       "url": "https://hortipendium.de/Speiser%C3%BCben_im_Hausgarten",
-      "reviewedOn": "2026-09-24"
+      "reviewedOn": "2026-09-26"
     },
     "bzfe_snow_peas": {
       "publisher": "Bundeszentrum für Ernährung (BZfE)",
@@ -1192,6 +1192,46 @@
       "publisher": "Alnatura",
       "url": "https://www.alnatura.de/de-de/produkte/alle-produkte/vorratskammer/brotaufstriche/suesse-aufstriche/bio-fruchtaufstrich-bio-gelee/fruchtaufstrich-suesse-orange-244231/",
       "reviewedOn": "2026-09-25"
+    },
+    "tzioutzias_watermelon": {
+      "publisher": "Tzioutzias Charis, watermelon grower/exporter, Ilia and Trifylia",
+      "url": "https://tzioutzias.gr/watermelon/",
+      "reviewedOn": "2026-09-26"
+    },
+    "xucker_red_fruit_spread": {
+      "publisher": "Xucker GmbH",
+      "url": "https://www.xucker.de/aufstriche/fruchtaufstrich-rote-fruechte",
+      "reviewedOn": "2026-09-26"
+    },
+    "foodsetter_xucker_red_fruit_spread": {
+      "publisher": "foodsetter, exact package GTIN listing",
+      "url": "https://foodsetter.de/zuckerarmer-fruchtaufstrich-rote-fruechte-74-frucht-220g-glas",
+      "reviewedOn": "2026-09-26"
+    },
+    "dmbio_maple_syrup": {
+      "publisher": "dm-drogerie markt / dmBio",
+      "url": "https://www.dm.de/p/d/1445499/dmbio-ahornsirup-grad-a",
+      "reviewedOn": "2026-09-26"
+    },
+    "dmbio_agave_syrup": {
+      "publisher": "dm-drogerie markt / dmBio",
+      "url": "https://www.dm.de/p/d/1457811/dmbio-agavendicksaft",
+      "reviewedOn": "2026-09-26"
+    },
+    "dmbio_dark_chocolate_spread": {
+      "publisher": "dm-drogerie markt / dmBio",
+      "url": "https://www.dm.de/p/d/1448561/dmbio-schokocreme-zartbitter",
+      "reviewedOn": "2026-09-26"
+    },
+    "dmbio_hazelnut_chocolate_spread": {
+      "publisher": "dm-drogerie markt / dmBio",
+      "url": "https://www.dm.de/p/d/1433589/dmbio-schokocreme-nuss-nougat",
+      "reviewedOn": "2026-09-26"
+    },
+    "dmbio_blossom_honey": {
+      "publisher": "dm-drogerie markt / dmBio",
+      "url": "https://www.dm.de/p/d/1546636/dmbio-bluetenhonig-aus-deutschland",
+      "reviewedOn": "2026-09-26"
     }
   },
   "profiles": {
@@ -9552,6 +9592,26 @@
             "productBarcodes": [
               "4260248063908"
             ]
+          },
+          {
+            "id": "xucker_red_fruit_spread",
+            "daysMin": 10,
+            "daysMax": 10,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "clean_spoon"
+            ],
+            "sourceIds": [
+              "xucker_red_fruit_spread",
+              "foodsetter_xucker_red_fruit_spread",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Xucker",
+            "productBarcodes": [
+              "4260248063939"
+            ]
           }
         ]
       }
@@ -9632,6 +9692,126 @@
         "sourceIds": [
           "dmbio_strawberry_spread",
           "alnatura_orange_spread",
+          "vz_opening"
+        ]
+      }
+    },
+    "season_watermelon": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "GR",
+            "sourceRegion": "Ilia and Trifylia, Peloponnese",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "tzioutzias_watermelon"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "red_fruit_jam_product_guidance": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "xucker_red_fruit_spread",
+            "daysMin": 10,
+            "daysMax": 10,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "clean_spoon"
+            ],
+            "sourceIds": [
+              "xucker_red_fruit_spread",
+              "foodsetter_xucker_red_fruit_spread",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Xucker",
+            "productBarcodes": [
+              "4260248063939"
+            ]
+          }
+        ]
+      }
+    },
+    "maple_syrup_label_required": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "shelf_stable_form"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "reason": "no_universal_short_opening_window",
+        "sourceIds": [
+          "dmbio_maple_syrup",
+          "vz_opening"
+        ]
+      }
+    },
+    "agave_syrup_label_required": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "shelf_stable_form"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "reason": "no_universal_short_opening_window",
+        "sourceIds": [
+          "dmbio_agave_syrup",
+          "vz_opening"
+        ]
+      }
+    },
+    "chocolate_spread_label_required": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "shelf_stable_form"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "reason": "no_universal_short_opening_window",
+        "sourceIds": [
+          "dmbio_dark_chocolate_spread",
+          "dmbio_hazelnut_chocolate_spread",
+          "vz_opening"
+        ]
+      }
+    },
+    "honey_label_required": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "shelf_stable_form"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "reason": "no_universal_short_opening_window",
+        "sourceIds": [
+          "dmbio_blossom_honey",
           "vz_opening"
         ]
       }
@@ -11420,7 +11600,26 @@
     "cherry jam": "fruit_spread_label_required",
     "cranberry jam": "fruit_spread_label_required",
     "orange jam": "fruit_spread_label_required",
-    "red fruit jam": "fruit_spread_label_required"
+    "red fruit jam": "red_fruit_jam_product_guidance",
+    "watermelon": "season_watermelon",
+    "maple syrup": "maple_syrup_label_required",
+    "maple syrup (for the sauce)": "maple_syrup_label_required",
+    "agave syrup": "agave_syrup_label_required",
+    "chocolate spread": "chocolate_spread_label_required",
+    "chocolate and hazelnut spread": "chocolate_spread_label_required",
+    "cocoa and hazelnut spread": "chocolate_spread_label_required",
+    "nutella": "chocolate_spread_label_required",
+    "acacia honey": "honey_label_required",
+    "crystallized honey": "honey_label_required",
+    "forest honey": "honey_label_required",
+    "honey": "honey_label_required",
+    "honey, divided for use in stages": "honey_label_required",
+    "liquid honey": "honey_label_required",
+    "mandarin honey": "honey_label_required",
+    "runny honey": "honey_label_required",
+    "runny honey (optional)": "honey_label_required",
+    "runny honey (to taste)": "honey_label_required",
+    "strained honey": "honey_label_required"
   },
   "ingredientIds": {
     "M_FOOD_1": "season_apricot",
@@ -11589,6 +11788,13 @@
     "M_FOOD_237": "alnatura_kidney_beans",
     "M_FOOD_679": "alnatura_dried_tomatoes",
     "M_FOOD_133": "jam_product_guidance",
-    "M_FOOD_644": "fruit_spread_label_required"
+    "M_FOOD_644": "fruit_spread_label_required",
+    "M_FOOD_572": "season_watermelon",
+    "M_FOOD_328": "season_turnip",
+    "M_FOOD_462": "maple_syrup_label_required",
+    "M_FOOD_704": "agave_syrup_label_required",
+    "M_FOOD_362": "chocolate_spread_label_required",
+    "M_FOOD_339": "chocolate_spread_label_required",
+    "M_FOOD_313": "honey_label_required"
   }
 }
