@@ -75,7 +75,7 @@ class CatalogLifecycle240(unittest.TestCase):
             self.assertEqual((data['basis'], data['sourceIds']), ('regional_seasonal_availability', ['bzfe_cultivated_mushrooms']))
         for name in ('Dried shiitake mushrooms', 'Walnut oil', 'Pomegranate juice', 'Melon jam', 'Frozen pumpkin'):
             self.assertNotEqual(profile(name)['seasonality']['status'], 'reviewed', name)
-        for ident in ('M_FOOD_399', 'M_FOOD_113', 'M_FOOD_388', 'M_FOOD_358'):
+        for ident in ('M_FOOD_145', 'M_FOOD_113', 'M_FOOD_388', 'M_FOOD_358'):
             self.assertNotIn(catalog.ingredient_lifecycle_profile({'ingredientId': ident}).get('profileId'), {v[0] for v in SEASONS.values()})
 
     def test_restored_pantry_ids_keep_only_exact_product_rules(self):
