@@ -1,17 +1,23 @@
 {
   "schemaVersion": 1,
   "language": "de",
-  "translationSource": "German supermarket names reviewed through lifecycle batch 26, 2026-09-25. Display/search only.",
+  "translationSource": "German supermarket names reviewed through lifecycle batch 27, 2026-09-26. Display/search only.",
   "labels": {
+    "acacia honey": "Akazienhonig",
+    "agave syrup": "Agavendicksaft",
     "almond butter": "Mandelmus",
     "apple jam": "Apfelmarmelade",
     "berry jam": "Beerenmarmelade",
     "blueberry jam": "Heidelbeermarmelade",
     "celery": "Stangensellerie",
     "cherry jam": "Kirschmarmelade",
+    "chocolate and hazelnut spread": "Nuss-Nougat-Creme",
+    "chocolate spread": "Schokoaufstrich",
+    "cocoa and hazelnut spread": "Nuss-Nougat-Creme",
     "cranberry jam": "Cranberrymarmelade",
     "creme fraiche": "Crème fraîche",
     "crunchy peanut butter": "Erdnussbutter mit Stückchen",
+    "crystallized honey": "Kristallisierter Honig",
     "curry sauce": "Currysauce",
     "dried basil": "Getrockneter Basilikum",
     "dried bean": "Getrocknete Bohnen",
@@ -20,17 +26,25 @@
     "dried oregano": "Getrockneter Oregano",
     "dried oregano leaf": "Getrockneter Oregano",
     "dried thyme": "Getrockneter Thymian",
+    "forest honey": "Waldhonig",
     "ginger juice": "Ingwersaft",
     "ground almond": "Gemahlene Mandeln",
     "ground black pepper": "Gemahlener schwarzer Pfeffer",
     "ground hazelnut": "Gemahlene Haselnüsse",
     "hazelnut milk": "Haselnussdrink",
+    "honey": "Honig",
+    "honey, divided for use in stages": "Honig",
     "king oyster mushroom": "Kräuterseitlinge",
     "lamb's lettuce": "Feldsalat",
     "lemon balm": "Zitronenmelisse",
+    "liquid honey": "Flüssiger Honig",
+    "mandarin honey": "Mandarinenblütenhonig",
     "mangetout": "Zuckerschoten",
     "mangetout pea": "Zuckerschoten",
+    "maple syrup": "Ahornsirup",
+    "maple syrup (for the sauce)": "Ahornsirup",
     "mixed dried herbs": "Getrocknete Kräutermischung",
+    "nutella": "Nutella",
     "orange jam": "Orangenmarmelade",
     "orange marmalade": "Orangenmarmelade",
     "parsley root": "Petersilienwurzel",
@@ -38,14 +52,21 @@
     "pomegranate": "Granatapfel",
     "raspberry jam": "Himbeermarmelade",
     "red fruit jam": "Marmelade aus roten Früchten",
+    "runny honey": "Flüssiger Honig",
+    "runny honey (optional)": "Flüssiger Honig",
+    "runny honey (to taste)": "Flüssiger Honig",
     "satay sauce": "Satésauce",
     "semi-skimmed milk": "Fettarme Milch",
     "snow pea": "Zuckerschoten",
     "sorrel": "Sauerampfer",
+    "strained honey": "Gesiebter Honig",
     "strawberry jam": "Erdbeermarmelade",
+    "swede": "Steckrübe",
     "tahini": "Sesammus (Tahin)",
     "tahini paste": "Sesammus (Tahin)",
-    "thick creme fraiche": "Crème fraîche"
+    "thick creme fraiche": "Crème fraîche",
+    "turnip": "Speiserübe",
+    "watermelon": "Wassermelone"
   },
   "searchAliases": {
     "plant milk": [
@@ -122,6 +143,34 @@
     "orange jam": [
       "Orangenkonfitüre",
       "Orangen-Fruchtaufstrich"
+    ],
+    "turnip": [
+      "Speiserübe",
+      "Mairübe",
+      "Herbstrübe",
+      "Navet"
+    ],
+    "swede": [
+      "Steckrübe",
+      "Kohlrübe",
+      "Wruke",
+      "Rutabaga"
+    ],
+    "red fruit jam": [
+      "Rote-Früchte-Konfitüre",
+      "Rote-Früchte-Fruchtaufstrich"
+    ],
+    "chocolate spread": [
+      "Schokoladenaufstrich",
+      "Schokocreme"
+    ],
+    "chocolate and hazelnut spread": [
+      "Haselnuss-Kakao-Aufstrich",
+      "Nuss-Nougat-Creme"
+    ],
+    "cocoa and hazelnut spread": [
+      "Haselnuss-Kakao-Aufstrich",
+      "Nuss-Nougat-Creme"
     ]
   }
 }

@@ -5,9 +5,9 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-25.20)
+## Reviewed coverage (2026-09-26.1)
 
-- 112 produce groups, including fruit, leafy vegetables, roots, asparagus,
+- 113 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
   savoy cabbage, pak choi, shallots, wild garlic, turnips, snow peas, walnuts,
   hazelnuts, artichokes, melons, kiwi, chestnuts, sweet potatoes, swede and
@@ -15,10 +15,11 @@ cloud credentials, or per-scan file reads are needed.
   fresh coriander leaves, watercress, lemon balm, Romanesco, fresh chillies
   and romaine/Little Gem lettuce, fresh ginger, figs and summer purslane,
   plus Greek regional lemon, orange, grapefruit, mandarin and clementine calendars.
-  Nine further produce groups now have Greek evidence, including pomegranate.
+  Ten further produce groups now have Greek evidence, including pomegranate
+  and watermelon from Ilia and Trifylia in the Peloponnese.
   Fresh nettle leaves now have a Bavarian harvest profile; national German
   guidance expands bell-pepper, spring-onion and parsnip availability.
-- 81 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+- 82 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro, Oatly or verified Alnatura packages), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
@@ -52,9 +53,9 @@ cloud credentials, or per-scan file reads are needed.
   Seven condiment/sauce packages add ketchup, Ajvar, curry and tomato sauces.
   Two fermented-vegetable packages add kimchi and sauerkraut guidance.
   A verified dmBio satay sauce adds its own three-day package rule.
-  Two Xucker fruit spreads add separate strawberry/raspberry package rules.
-  There are 135 reviewed product barcodes, 1,783 exact canonical names and
-  167 reviewed provider ingredient IDs.
+  Three Xucker fruit spreads have separate strawberry, raspberry and red-fruit package rules.
+  There are 136 reviewed product barcodes, 1,802 exact canonical names and
+  174 reviewed provider ingredient IDs.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
   coconut cream, unverified tomato paste, unverified ketchup and Skyr, plus mustard, mayonnaise and
@@ -67,6 +68,78 @@ cloud credentials, or per-scan file reads are needed.
 Run `python tools/audit_ingredient_lifecycle.py` for counts against the actual
 shipped catalog. Counts distinguish seasonal, numeric and label-required
 entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
+
+## Batch 27: sweet pantry foods, turnips and Greek watermelons
+
+Coverage reaches **3,430 ingredient rows**: 2,256 seasonal, 592 with numeric
+opening guidance and 582 label-required. This adds 70 enriched rows, seven exact
+provider IDs and 19 canonical names. One existing red-fruit jam entry moves from
+label-required to its own exact-product profile. The lifecycle version is
+`2026-09-26.1`; there are 113 seasonal groups, 82 opening-rule groups and 136
+unique reviewed numeric-rule barcodes. Sources were checked on 2026-09-26.
+
+### Regional produce and supermarket names
+
+| Ingredient | Provider ID | Evidence and scope |
+| --- | --- | --- |
+| Turnip | `M_FOOD_328` | Existing June–November Rheinland-Pfalz harvest profile, rechecked against [Hortipendium](https://hortipendium.de/Speiser%C3%BCben_im_Hausgarten) |
+| Watermelon | `M_FOOD_572` | May–September availability in Ilia and Trifylia, Peloponnese, from [grower/exporter Tzioutzias](https://tzioutzias.gr/watermelon/) |
+
+The provider's turnip row had the German label `Steckrübe`, although its English,
+French, Italian, Japanese and other translations identify a turnip. Its German
+UI label is now `Speiserübe`, with `Mairübe`, `Herbstrübe` and `Navet` search terms.
+The distinct swede row `M_FOOD_433` displays as `Steckrübe`, with `Kohlrübe`,
+`Wruke` and `Rutabaga` search terms. Greek keeps `Γογγύλι` and
+`Ρουταμπάγκα (γογγύλι Σουηδίας)` separate. Original provider translations remain
+available as source data; only display/search labels change.
+
+Greek watermelon evidence is regional and does not establish a German harvest
+season. Unlisted months and unsupported countries remain unknown. Turnip greens,
+daikon, pickles, dried roots and watermelon juice or jam do not inherit these
+fresh-produce profiles.
+
+### Red-fruit spread package
+
+[Xucker Rote Früchte, 220 g](https://www.xucker.de/aufstriche/fruchtaufstrich-rote-fruechte)
+has a ten-day refrigerated opening instruction and requires clean utensils.
+[The retailer's exact-package listing](https://foodsetter.de/zuckerarmer-fruchtaufstrich-rote-fruechte-74-frucht-220g-glas)
+confirms GTIN `4260248063939`, size and matching fruit composition. The generic jam
+profile can select this package; the red-fruit profile can select only this
+flavour. Strawberry, raspberry, generic berry jam and fresh fruit cannot borrow
+its rule. The rule retains the existing BfR 4 °C cap, explicit opening/handling
+confirmation, manual-interval precedence and earlier-printed-date cap. Selecting
+a rule does not open a package. German search accepts Rote-Früchte-Konfitüre and
+Rote-Früchte-Fruchtaufstrich.
+
+### Honey, syrups and chocolate spreads
+
+Eighteen exact pantry names now have form-specific label-required guidance:
+plain honey and reviewed liquid/crystallized/floral variants, maple syrup,
+agave syrup, chocolate spread, cocoa/chocolate-and-hazelnut spreads and Nutella.
+The official provider rows are included. German labels/search now cover
+`Ahornsirup`, `Agavendicksaft`, `Honig`, `Schokoaufstrich` and `Nuss-Nougat-Creme`,
+while retaining the distinct ingredients and all original recipe quantities.
+
+| Reviewed package | GTIN | Published storage information |
+| --- | --- | --- |
+| [dmBio maple syrup Grade A, 250 ml](https://www.dm.de/p/d/1445499/dmbio-ahornsirup-grad-a) | `4067796084849` | Refrigerate after opening and use promptly; no exact day count |
+| [dmBio agave syrup, 250 ml](https://www.dm.de/p/d/1457811/dmbio-agavendicksaft) | `4066447413052` | Dry storage, protected from heat/light; no numeric opening period |
+| [dmBio blossom honey, 500 g](https://www.dm.de/p/d/1546636/dmbio-bluetenhonig-aus-deutschland) | `4067796063790` | Dry storage protected from light; no numeric opening period |
+| [dmBio dark chocolate spread, 400 g](https://www.dm.de/p/d/1448561/dmbio-schokocreme-zartbitter) | `4066447948417` | Dry storage away from heat/light, explicitly not refrigerated |
+| [dmBio hazelnut chocolate spread, 400 g](https://www.dm.de/p/d/1433589/dmbio-schokocreme-nuss-nougat) | `4066447948394` | Cool, dry storage away from sunlight, explicitly not refrigerated |
+
+These five reviewed barcodes are evidence only and do not add numeric expiry
+rules. Vague words such as “promptly” are not converted into days. The catalog
+also does not impose a refrigerator rule on chocolate spreads or mark any food
+as indefinitely safe. Honey mustard, dressings, dessert creams, ambiguous
+hazelnut spreads and homemade mixtures remain separate. User-entered package
+instructions still work.
+
+Local regression tests cover exact multilingual identities, the real German
+search results, twelve-month/country boundaries, package/flavour exclusions,
+manual/printed precedence and opening consent. Browser checks at 390 and
+1440 px exercise both country filters, Greek UI with German supermarket names,
+and the actual opening-guidance controls.
 
 ## Batch 26: exact produce identities and fruit-spread packages
 
