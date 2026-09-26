@@ -1,8 +1,12 @@
 {
   "schemaVersion": 1,
   "scope": "Display and choice grouping only; preserve source IDs, nutrition, prices and quantities.",
-  "review": "v226: provider French Poivron/Poivre/Piment and German Paprika/Pfeffer distinguish three foods called Pepper in English. Preparation descriptions identify whole peppers. Paprika powder remains a spice. v238: the exact dried-mint entry drops its recipe pinch from display and choice grouping only.",
+  "review": "v226: provider French Poivron/Poivre/Piment and German Paprika/Pfeffer distinguish three foods called Pepper in English. Preparation descriptions identify whole peppers. Paprika powder remains a spice. v238: the exact dried-mint entry drops its recipe pinch from display and choice grouping only. v246: the exact salt-boiled okra entry retains its cooked state instead of grouping with fresh okra.",
   "ingredients": {
+    "local:ja:f2862792bd59cf2c5bb5": {
+      "canonicalName": "Boiled okra",
+      "translations": {"en": "Boiled okra"}
+    },
     "local:ar:6aac151aef2122c6c395": {
       "canonicalName": "Dried mint",
       "translations": {"en": "Dried mint"}

@@ -5,9 +5,9 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-26.3)
+## Reviewed coverage (2026-09-26.4)
 
-- 114 produce groups, including fruit, leafy vegetables, roots, asparagus,
+- 115 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
   savoy cabbage, pak choi, shallots, wild garlic, turnips, snow peas, walnuts,
   hazelnuts, artichokes, melons, kiwi, chestnuts, sweet potatoes, swede and
@@ -58,21 +58,71 @@ cloud credentials, or per-scan file reads are needed.
   guidance, also selectable from the generic stock entry by exact barcode.
   Edamame and bamboo shoots add two exact package rules, and avocado adds
   a Western Crete availability calendar.
-  There are 142 reviewed product barcodes, 1,842 exact canonical names and
-  189 reviewed provider ingredient IDs.
+  There are 142 reviewed product barcodes, 1,854 exact canonical names and
+  192 reviewed provider ingredient IDs.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
   coconut cream, unverified tomato paste, unverified ketchup and Skyr, plus mustard, mayonnaise and
   additional cream, cream-cheese and yoghurt variants, plus plain/brewed soy sauce,
   cottage cheese and further crème fraîche variants, ground nuts, nut butters
   and tahini, plus reviewed fruit jams without a verified numeric package rule,
-  dry stock cubes, powders and granules.
+  dry stock cubes, powders and granules, miso paste and harissa paste.
 - Dry staples have no invented short spoilage countdown. Their package
   instructions still apply; missing data never means indefinitely safe.
 
 Run `python tools/audit_ingredient_lifecycle.py` for counts against the actual
 shipped catalog. Counts distinguish seasonal, numeric and label-required
 entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
+
+## Batch 30: miso, harissa and fresh/cooked okra
+
+Coverage reaches **3,598 ingredient rows**: 2,269 seasonal, 685 with numeric
+opening guidance and 644 label-required. This adds 32 enriched rows, three exact
+provider IDs and 12 canonical names. Version `2026-09-26.4` has 115 seasonal
+groups, 90 opening-rule groups, 142 unique numeric-rule barcodes and 259 sources.
+Sources were reviewed on 2026-09-26.
+
+Miso paste now requires the package label for an opening period. This covers
+plain, red and dark miso and exact sauce/finishing ingredient references, while
+leaving prepared soup and instant soup mix separate. [Hikari Miso's storage
+guide](https://hikarimiso.com/what-is-miso/how-to-store-miso-paste/) requires
+refrigeration and covered, clean handling but gives no numeric opening interval.
+[Arche's Mugi Miso product information](https://www.arche-naturkueche-shop.de/gewuerze-pasten/miso/mugi-miso-wuerzpaste_10011704_20178/)
+also specifies refrigeration without a number of days. The storage instruction
+is in the manufacturer's embedded consumer-information data.
+
+Harissa paste has its own label-required profile. [BioGourmet's supplied label
+data](https://ecoinform.de/Harissa.Detail;279099.html) says to keep it cool and
+use it within a few weeks; that vague interval is not converted into a countdown.
+Its GTIN `4039057412876` identifies the reviewed source product, but is not a
+numeric-rule barcode. Another brand's interval cannot become a generic harissa
+rule. Dry spice mixtures and other chilli pastes do not inherit this profile.
+
+The two paste profiles offer no automatic numeric rule, even when a brand and
+barcode are known. Users can still enter the package's interval and mark the
+package opened; earlier printed dates and an existing opening date retain their
+normal precedence. No existing stock is changed.
+
+Fresh okra ID `M_FOOD_669` and four exact fresh/prepared ingredient rows receive
+an approximate June–October outdoor-harvest window for **Imathia, Greece**.
+The evidence is [grower Giorgos Gousiopoulos's interview, published on
+2023-08-10](https://www.ypaithros.gr/koryfonetai-sezon-mpamias/): harvest starts
+in the second half of June and ends with October frost, depending on weather.
+This historical local growing window is not a nationwide calendar or a claim
+about current shop stock. Unlisted months and other countries remain unknown.
+Frozen, dried, boiled and powdered okra receive no fresh-season evidence.
+
+A reviewed display override fixes the exact salt-boiled okra entry
+`local:ja:f2862792bd59cf2c5bb5`: its cooked state previously disappeared when
+preparation text after the comma was removed. It now groups with boiled okra
+instead of fresh okra in every language. The original Japanese and English
+source names remain searchable; the provider ID, nutrition and recipe quantities
+are preserved.
+
+Greek and German names now unify plain miso and miso-paste synonyms while
+keeping red/dark paste, soup and instant soup separate. Okra labels distinguish
+fresh, frozen, dried, boiled and ground-dried forms. The frontend runtime remains
+unchanged; this batch uses the existing offline catalog and opening controls.
 
 ## Batch 29: edamame, bamboo shoots and Cretan avocado
 

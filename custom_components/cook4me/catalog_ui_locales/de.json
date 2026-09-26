@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "de",
-  "translationSource": "German supermarket names reviewed through lifecycle batch 29, 2026-09-26. Display/search only.",
+  "translationSource": "German supermarket names reviewed through lifecycle batch 30, 2026-09-26. Display/search only.",
   "labels": {
     "acacia honey": "Akazienhonig",
     "agave syrup": "Agavendicksaft",
@@ -100,7 +100,19 @@
     "edamame pods (frozen)": "Edamame in der Schote (tiefgekühlt)",
     "avocado": "Avocado",
     "avocados": "Avocado",
-    "avocado oil": "Avocadoöl"
+    "avocado oil": "Avocadoöl",
+    "miso": "Misopaste",
+    "miso paste": "Misopaste",
+    "dark miso paste": "Dunkle Misopaste",
+    "red miso": "Rote Misopaste",
+    "miso soup": "Misosuppe",
+    "instant miso soup mix": "Instant-Misosuppe",
+    "harissa": "Harissapaste",
+    "okra": "Okraschoten",
+    "boiled okra": "Gekochte Okraschoten",
+    "dried okra": "Getrocknete Okraschoten",
+    "frozen okra": "Okraschoten (tiefgekühlt)",
+    "weika": "Okrapulver (Weika)"
   },
   "searchAliases": {
     "plant milk": [
@@ -272,6 +284,20 @@
     ],
     "avocado": [
       "Avocados"
+    ],
+    "miso": [
+      "Miso",
+      "Miso-Paste",
+      "Sojabohnenpaste"
+    ],
+    "harissa": [
+      "Harissa",
+      "Chilipaste"
+    ],
+    "okra": [
+      "Okra",
+      "Bamya",
+      "Bamies"
     ]
   }
 }
