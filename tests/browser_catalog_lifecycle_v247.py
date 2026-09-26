@@ -110,7 +110,7 @@ def run():
 
             def option(key):
                 name = actual_choice(catalogs['el'], ids[key])['name']
-                return section.locator('option').filter(has_text=re.compile('^' + re.escape(name) + r'(?: \\(|$)'))
+                return section.locator('option').filter(has_text=re.compile('^' + re.escape(name) + r'(?: \(|$)'))
 
             section.locator('[data-v223-toggle]').uncheck()
             for key, german in (
