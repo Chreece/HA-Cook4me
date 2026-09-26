@@ -124,11 +124,31 @@ def run():
 
             for month in range(1, 13):
                 page.clock.set_system_time(datetime(2026, month, 15, 12, tzinfo=timezone.utc))
+                # The season view intentionally preserves the currently selected
+                # ingredient. Clear selection so this loop tests season hiding,
+                # not the separate selected-row preservation contract.
+                page.evaluate("""() => {
+                    app._v84Catalog.selected='';
+                    const select=app.shadowRoot.querySelector('[data-v84-catalog] [data-v105-select]');
+                    if(select)select.value='';
+                }""")
                 section.locator('[data-v223-toggle]').uncheck()
                 section.locator('[data-v223-toggle]').check()
                 expect(option('horseradish')).to_have_count(1 if month == 10 else 0)
                 for key in ('bbq', 'honey_bbq', 'horseradish_sauce', 'daikon'):
                     expect(option(key)).to_have_count(1)
+
+            # Selected rows stay visible by design even when the reviewed
+            # calendar would otherwise hide them.
+            page.clock.set_system_time(datetime(2026, 9, 15, 12, tzinfo=timezone.utc))
+            section.locator('[data-v223-toggle]').uncheck()
+            page.evaluate("""ident => {
+                const row=(app._ingredientCatalog||[]).find(item =>
+                    item.id===ident || item.key===ident || (item.sourceIngredientIds||[]).includes(ident));
+                app._v84Catalog.selected=app._houseKey(row);
+            }""", ids['horseradish'])
+            section.locator('[data-v223-toggle]').check()
+            expect(option('horseradish')).to_have_count(1)
 
             section.locator('[data-v223-toggle]').uncheck()
             page.clock.set_system_time(datetime(2026, 9, 26, 12, tzinfo=timezone.utc))
