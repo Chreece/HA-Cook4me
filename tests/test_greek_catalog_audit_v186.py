@@ -82,7 +82,7 @@ class GreekCatalogAuditV186Tests(unittest.TestCase):
     "daikon sprouts": "Φύτρα ντάικον (daikon)",
     "gochujang sauce": "Σάλτσα γκοτσουτζάνγκ (gochujang)",
     "sambal sauce": "Σάλτσα σάμπαλ (sambal)",
-    "instant miso soup mix": "Μείγμα για στιγμιαία σούπα μίσο (miso)",
+    "instant miso soup mix": "Μείγμα για στιγμιαία σούπα μίσο",
     "store-bought yakiniku sauce": "Έτοιμη σάλτσα γιακινίκου (yakiniku)",
     "canned yakitori in tare sauce": "Κονσέρβα γιακιτόρι σε σάλτσα τάρε (yakitori tare)",
     "teriyaki marinade sauce": "Σάλτσα / μαρινάδα τεριγιάκι (teriyaki)",
