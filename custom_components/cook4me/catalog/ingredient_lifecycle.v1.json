@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-26.2",
+  "version": "2026-09-26.3",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -1261,6 +1261,21 @@
     "dmbio_vegetable_stock_powder": {
       "publisher": "dm-drogerie markt",
       "url": "https://www.dm.de/p/d/1490261/dmbio-gemuesebruehe-nachfuellbeutel",
+      "reviewedOn": "2026-09-26"
+    },
+    "agrocreta_avocado_calendar": {
+      "publisher": "AGROCRETA — Western Crete producer, packer and exporter",
+      "url": "https://www.agrocreta.gr/products/avocado/",
+      "reviewedOn": "2026-09-26"
+    },
+    "dmbio_edamame_210": {
+      "publisher": "dm-drogerie markt — dmBio",
+      "url": "https://www.dm.de/p/d/3121355/dmbio-edamame",
+      "reviewedOn": "2026-09-26"
+    },
+    "shanshi_bamboo_330": {
+      "publisher": "Maresi Austria / Shan'shi — supplier label data published by KASTNER",
+      "url": "https://dokumente.kastner.at/lmiv/kastner/311896.pdf",
       "reviewedOn": "2026-09-26"
     }
   },
@@ -10057,6 +10072,126 @@
           "vz_opening"
         ]
       }
+    },
+    "season_avocado_gr": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "GR",
+            "sourceRegion": "GR-M",
+            "basis": "regional_seasonal_availability",
+            "months": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              10,
+              11,
+              12
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "agrocreta_avocado_calendar"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "edamame_product_guidance": {
+      "seasonality": {
+        "status": "unknown"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "dmbio_edamame_210",
+            "daysMin": 3,
+            "daysMax": 4,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [
+              "transferred_to_nonmetal_container"
+            ],
+            "sourceIds": [
+              "dmbio_edamame_210",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "dmBio",
+            "productBarcodes": [
+              "4066447954203"
+            ]
+          }
+        ]
+      }
+    },
+    "bamboo_shoots_product_guidance": {
+      "seasonality": {
+        "status": "unknown"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "shanshi_bamboo_330",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "shanshi_bamboo_330",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Shan'shi",
+            "productBarcodes": [
+              "9120012040076"
+            ]
+          }
+        ]
+      }
+    },
+    "canned_bamboo_shoots_product_guidance": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "shanshi_bamboo_330",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "shanshi_bamboo_330",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Shan'shi",
+            "productBarcodes": [
+              "9120012040076"
+            ]
+          }
+        ]
+      }
     }
   },
   "canonicalNames": {
@@ -11888,7 +12023,20 @@
     "french-style stock granules": "dry_stock_label_required",
     "french-style stock granules (for sauce)": "dry_stock_label_required",
     "french-style stock granules (for seasoning), a little": "dry_stock_label_required",
-    "french-style beef stock (stock cube)": "dry_stock_label_required"
+    "french-style beef stock (stock cube)": "dry_stock_label_required",
+    "avocado": "season_avocado_gr",
+    "avocado, diced": "season_avocado_gr",
+    "avocado, sliced lengthwise 5 mm thick": "season_avocado_gr",
+    "avocados, diced": "season_avocado_gr",
+    "diced avocado": "season_avocado_gr",
+    "edamame": "edamame_product_guidance",
+    "edamame beans": "edamame_product_guidance",
+    "young soybeans (edamame beans)": "edamame_product_guidance",
+    "bamboo shoot": "bamboo_shoots_product_guidance",
+    "bamboo shoots": "bamboo_shoots_product_guidance",
+    "bamboo shoots, drained": "bamboo_shoots_product_guidance",
+    "canned bamboo shoots": "canned_bamboo_shoots_product_guidance",
+    "canned bamboo shoots, drained": "canned_bamboo_shoots_product_guidance"
   },
   "ingredientIds": {
     "M_FOOD_1": "season_apricot",
@@ -12074,6 +12222,11 @@
     "M_FOOD_51": "dry_stock_label_required",
     "M_FOOD_52": "dry_stock_label_required",
     "M_FOOD_53": "dry_stock_label_required",
-    "M_FOOD_399": "season_pumpkin"
+    "M_FOOD_399": "season_pumpkin",
+    "M_FOOD_24": "season_avocado_gr",
+    "M_FOOD_662": "edamame_product_guidance",
+    "M_FOOD_589": "edamame_product_guidance",
+    "M_FOOD_404": "bamboo_shoots_product_guidance",
+    "M_FOOD_735": "bamboo_shoots_product_guidance"
   }
 }

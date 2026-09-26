@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "de",
-  "translationSource": "German supermarket names reviewed through lifecycle batch 27, 2026-09-26. Display/search only.",
+  "translationSource": "German supermarket names reviewed through lifecycle batch 29, 2026-09-26. Display/search only.",
   "labels": {
     "acacia honey": "Akazienhonig",
     "agave syrup": "Agavendicksaft",
@@ -80,7 +80,27 @@
     "vegetable stock cube": "Gemüsebrühwürfel",
     "fish stock cube": "Fischbrühwürfel",
     "chicken stock powder": "Hühnerbrühe in Pulverform",
-    "chicken stock granules": "Hühnerbrühe in Granulatform"
+    "chicken stock granules": "Hühnerbrühe in Granulatform",
+    "bamboo shoot": "Bambussprossen",
+    "bamboo shoots": "Bambussprossen",
+    "bamboo shoots, drained": "Bambussprossen",
+    "canned bamboo shoots": "Bambussprossen (Konserve)",
+    "canned bamboo shoots, drained": "Bambussprossen (Konserve)",
+    "boiled bamboo shoots": "Gekochte Bambussprossen",
+    "bamboo fibre": "Bambusfasern",
+    "edamame": "Edamame",
+    "edamame bean": "Edamame",
+    "edamame beans": "Edamame",
+    "young soybeans (edamame beans)": "Edamame",
+    "frozen edamame": "Edamame (tiefgekühlt)",
+    "frozen edamame bean": "Edamame (tiefgekühlt)",
+    "frozen edamame beans": "Edamame (tiefgekühlt)",
+    "edamame pods": "Edamame in der Schote",
+    "frozen edamame pods": "Edamame in der Schote (tiefgekühlt)",
+    "edamame pods (frozen)": "Edamame in der Schote (tiefgekühlt)",
+    "avocado": "Avocado",
+    "avocados": "Avocado",
+    "avocado oil": "Avocadoöl"
   },
   "searchAliases": {
     "plant milk": [
@@ -233,6 +253,25 @@
     ],
     "chicken stock granules": [
       "Hühnerbrühgranulat"
+    ],
+    "edamame": [
+      "Edamame-Bohnen",
+      "junge Sojabohnen",
+      "grüne Sojabohnen"
+    ],
+    "bamboo shoot": [
+      "Bambustriebe",
+      "Bambussprossen"
+    ],
+    "bamboo shoots": [
+      "Bambustriebe",
+      "Bambussprossen"
+    ],
+    "canned bamboo shoots": [
+      "Bambussprossen im Glas"
+    ],
+    "avocado": [
+      "Avocados"
     ]
   }
 }
