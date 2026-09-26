@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-26.4",
+  "version": "2026-09-26.5",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -1296,6 +1296,26 @@
     "imathia_okra_harvest": {
       "publisher": "Giorgos Gousiopoulos, Imathia grower — interview published by Ypaithros Chora, 2023-08-10",
       "url": "https://www.ypaithros.gr/koryfonetai-sezon-mpamias/",
+      "reviewedOn": "2026-09-26"
+    },
+    "sbunion_heinz_barbecue_10l": {
+      "publisher": "H. J. Heinz — manufacturer-supplied label data published by SB Union / EDEKA Hessenring",
+      "url": "https://sbunion.shop/?articleNumber=769705&page_id=36651",
+      "reviewedOn": "2026-09-26"
+    },
+    "lfl_bavarian_horseradish": {
+      "publisher": "Bayerische Landesanstalt für Landwirtschaft (LfL)",
+      "url": "https://www.lfl.bayern.de/mam/cms07/iem/dateien/bf-steckbrief_bayerische-originale-herkunftsschutz.pdf",
+      "reviewedOn": "2026-09-26"
+    },
+    "byodo_tafelmeerrettich_100": {
+      "publisher": "Byodo Naturkost",
+      "url": "https://shop.byodo.de/Tafelmeerrettich/16055",
+      "reviewedOn": "2026-09-26"
+    },
+    "rewe_byodo_tafelmeerrettich_100": {
+      "publisher": "Byodo — product and storage data published by REWE",
+      "url": "https://www.rewe.de/shop/p/byodo-bioland-meerrettich-100g/8890820",
       "reviewedOn": "2026-09-26"
     }
   },
@@ -10268,6 +10288,88 @@
       "afterOpening": {
         "status": "unknown"
       }
+    },
+    "barbecue_sauce_product_guidance": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "heinz_barbecue_10l",
+            "daysMin": 14,
+            "daysMax": 14,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "sbunion_heinz_barbecue_10l",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Heinz",
+            "productBarcodes": [
+              "8715700036106"
+            ]
+          }
+        ]
+      }
+    },
+    "season_horseradish_by": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "DE",
+            "sourceRegion": "DE-BY",
+            "basis": "outdoor_harvest",
+            "months": [
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "lfl_bavarian_horseradish"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
+    },
+    "horseradish_sauce_product_guidance": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "byodo_tafelmeerrettich_100",
+            "daysMin": 21,
+            "daysMax": 21,
+            "storage": "fridge",
+            "minTemperatureC": 2,
+            "maxTemperatureC": 7,
+            "conditions": [],
+            "sourceIds": [
+              "byodo_tafelmeerrettich_100",
+              "rewe_byodo_tafelmeerrettich_100"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Byodo",
+            "productBarcodes": [
+              "4018462160558"
+            ]
+          }
+        ]
+      }
     }
   },
   "canonicalNames": {
@@ -12124,7 +12226,11 @@
     "okra": "season_okra_gr",
     "okra, cut diagonally in half": "season_okra_gr",
     "okra, rubbed with salt, washed and cut 1 cm wide": "season_okra_gr",
-    "okra, trimmed": "season_okra_gr"
+    "okra, trimmed": "season_okra_gr",
+    "barbecue sauce": "barbecue_sauce_product_guidance",
+    "bbq sauce": "barbecue_sauce_product_guidance",
+    "horseradish": "season_horseradish_by",
+    "horseradish sauce": "horseradish_sauce_product_guidance"
   },
   "ingredientIds": {
     "M_FOOD_1": "season_apricot",

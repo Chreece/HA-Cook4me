@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "de",
-  "translationSource": "German supermarket names reviewed through lifecycle batch 30, 2026-09-26. Display/search only.",
+  "translationSource": "German supermarket names reviewed through lifecycle batch 31, 2026-09-26. Display/search only.",
   "labels": {
     "acacia honey": "Akazienhonig",
     "agave syrup": "Agavendicksaft",
@@ -112,7 +112,23 @@
     "boiled okra": "Gekochte Okraschoten",
     "dried okra": "Getrocknete Okraschoten",
     "frozen okra": "Okraschoten (tiefgekühlt)",
-    "weika": "Okrapulver (Weika)"
+    "weika": "Okrapulver (Weika)",
+    "barbecue sauce": "BBQ-Sauce",
+    "bbq sauce": "BBQ-Sauce",
+    "honey barbecue sauce": "Honig-BBQ-Sauce",
+    "radish": "Radieschen",
+    "radishes": "Radieschen",
+    "red radishes": "Rote Radieschen",
+    "daikon radish": "Daikon-Rettich",
+    "daikon radish sprouts": "Daikon-Sprossen",
+    "daikon sprouts": "Daikon-Sprossen",
+    "dried daikon strips": "Getrocknete Daikonstreifen",
+    "takuan pickled daikon": "Takuan (eingelegter Daikon)",
+    "julienned takuan pickled radish": "Takuan (eingelegter Daikon), feine Streifen",
+    "korean radish": "Koreanischer Rettich",
+    "horseradish": "Meerrettich",
+    "horseradish sauce": "Meerrettichsauce",
+    "blanched siraegi dried radish greens": "Blanchierte getrocknete Rettichblätter (Siraegi)"
   },
   "searchAliases": {
     "plant milk": [
@@ -298,6 +314,66 @@
       "Okra",
       "Bamya",
       "Bamies"
+    ],
+    "barbecue sauce": [
+      "Barbecuesauce",
+      "BBQ Sauce",
+      "Grillsauce"
+    ],
+    "bbq sauce": [
+      "Barbecuesauce",
+      "BBQ Sauce",
+      "Grillsauce"
+    ],
+    "honey barbecue sauce": [
+      "Honig-Barbecuesauce",
+      "Honig-Grillsauce"
+    ],
+    "radish": [
+      "Radieschen"
+    ],
+    "radishes": [
+      "Radieschen"
+    ],
+    "red radishes": [
+      "Rote Radieschen"
+    ],
+    "daikon radish": [
+      "Daikon",
+      "weißer Rettich",
+      "japanischer Rettich"
+    ],
+    "daikon radish sprouts": [
+      "Daikon-Sprossen",
+      "Rettichsprossen"
+    ],
+    "daikon sprouts": [
+      "Daikon-Sprossen",
+      "Rettichsprossen"
+    ],
+    "dried daikon strips": [
+      "Daikonstreifen",
+      "getrockneter Daikon"
+    ],
+    "takuan pickled daikon": [
+      "Takuan",
+      "eingelegter Daikon"
+    ],
+    "julienned takuan pickled radish": [
+      "Takuan-Streifen",
+      "eingelegter Daikon in Streifen"
+    ],
+    "korean radish": [
+      "koreanischer Rettich",
+      "Mu-Rettich"
+    ],
+    "horseradish": [
+      "Kren"
+    ],
+    "horseradish sauce": [
+      "Meerrettich-Sauce",
+      "Kren-Sauce",
+      "Tafelmeerrettich"
     ]
   }
 }
