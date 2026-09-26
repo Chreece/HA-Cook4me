@@ -5,9 +5,9 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-26.2)
+## Reviewed coverage (2026-09-26.3)
 
-- 113 produce groups, including fruit, leafy vegetables, roots, asparagus,
+- 114 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
   savoy cabbage, pak choi, shallots, wild garlic, turnips, snow peas, walnuts,
   hazelnuts, artichokes, melons, kiwi, chestnuts, sweet potatoes, swede and
@@ -19,7 +19,7 @@ cloud credentials, or per-scan file reads are needed.
   and watermelon from Ilia and Trifylia in the Peloponnese.
   Fresh nettle leaves now have a Bavarian harvest profile; national German
   guidance expands bell-pepper, spring-onion and parsnip availability.
-- 87 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+- 90 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro, Oatly or verified Alnatura packages), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
@@ -56,8 +56,10 @@ cloud credentials, or per-scan file reads are needed.
   Three Xucker fruit spreads have separate strawberry, raspberry and red-fruit package rules.
   Four Lacroix stock packages add separate beef, fish, chicken and vegetable
   guidance, also selectable from the generic stock entry by exact barcode.
-  There are 140 reviewed product barcodes, 1,829 exact canonical names and
-  184 reviewed provider ingredient IDs.
+  Edamame and bamboo shoots add two exact package rules, and avocado adds
+  a Western Crete availability calendar.
+  There are 142 reviewed product barcodes, 1,842 exact canonical names and
+  189 reviewed provider ingredient IDs.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
   coconut cream, unverified tomato paste, unverified ketchup and Skyr, plus mustard, mayonnaise and
@@ -71,6 +73,49 @@ cloud credentials, or per-scan file reads are needed.
 Run `python tools/audit_ingredient_lifecycle.py` for counts against the actual
 shipped catalog. Counts distinguish seasonal, numeric and label-required
 entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
+
+## Batch 29: edamame, bamboo shoots and Cretan avocado
+
+Coverage reaches **3,566 ingredient rows**: 2,264 seasonal, 685 with numeric
+opening guidance and 617 label-required. This adds 28 enriched rows, five exact
+provider IDs and 13 canonical names. Version `2026-09-26.3` has 114 seasonal
+groups, 90 opening-rule groups, 142 unique numeric-rule barcodes and 255 sources.
+Sources were checked on 2026-09-26.
+
+| Exact package | Consumer GTIN | Opening instruction | Evidence |
+| --- | --- | --- | --- |
+| dmBio Edamame, 210 g net / 126 g drained | `4066447954203` | 3–4 days refrigerated, after transfer to a nonmetal container | [dmBio](https://www.dm.de/p/d/3121355/dmbio-edamame) |
+| Shan'shi Bambussprossen, 330 g jar | `9120012040076` | 2 days refrigerated | [Maresi supplier label data, published by KASTNER](https://dokumente.kastner.at/lmiv/kastner/311896.pdf) |
+
+Both rules require exact brand and barcode, confirmed handling and refrigeration
+at no more than 4 °C under the existing BfR cooling guidance. The edamame rule
+keeps its separate three-day reminder and four-day advisory deadline. A generic
+container confirmation does not satisfy the nonmetal-container requirement.
+The bamboo source distinguishes the consumer jar from six-jar case GTIN
+`9002600274318`; only the consumer code is allowlisted. Its supplier record's
+180 g drained weight is not used to rewrite product quantities or nutrients.
+An earlier printed date still caps the window, and a package-label interval
+still takes precedence. Adding catalog evidence never marks a package opened.
+
+Edamame IDs `M_FOOD_589` and `M_FOOD_662` and bamboo IDs `M_FOOD_404` and
+`M_FOOD_735` receive product-only profiles. Generic forms keep unknown seasons.
+Explicitly preserved bamboo has a separate nonseasonal profile, without a
+borrowed generic canned-food countdown. Frozen edamame, boiled bamboo, bamboo
+fibre, other soy products and homemade preparations receive no package rule.
+
+Avocado ID `M_FOOD_24` and six exact fresh/cut ingredient rows use
+[AGROCRETA's Western Crete variety calendar](https://www.agrocreta.gr/products/avocado/).
+The January–August and October–December window is the union of its published
+Ettinger/Zutano, Fuerte/Benik, Hass and Reed availability months. This is an
+approximate regional availability calendar (`GR-M`), not a national harvest
+claim or a German season. September is unlisted and remains unknown. Oil,
+frozen avocado, guacamole and lemon-juice mixtures get no fresh-fruit profile.
+
+German supermarket labels and aliases now cover edamame, bamboo shoots,
+preserved/cooked bamboo, frozen edamame and avocado. Greek bamboo singular and
+plural names collapse into **Βλαστοί μπαμπού**; edamame bean synonyms also share
+one catalog choice. Frozen, cooked and preserved forms retain distinct choices.
+Raw IDs, recipe amounts and shopping-list quantities remain unchanged.
 
 ## Batch 28: stock packages, dry bouillon and edible pumpkin names
 

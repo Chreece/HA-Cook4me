@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through forty-third audit 2026-09-22; Hokkaido squash identity corrected in lifecycle batch 26, 2026-09-25; generic squash/pumpkin distinction corrected in lifecycle batch 28, 2026-09-26",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through forty-third audit 2026-09-22; Hokkaido squash identity corrected in lifecycle batch 26, 2026-09-25; generic squash/pumpkin distinction corrected in lifecycle batch 28, 2026-09-26; edamame and bamboo supermarket terminology reviewed in lifecycle batch 29, 2026-09-26",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -153,7 +153,7 @@
     "mature bean": "Ξερά φασόλια",
     "young soybeans": "Ενταμάμε (νεαρά φασόλια σόγιας)",
     "edamame": "Ενταμάμε (edamame)",
-    "edamame bean": "Ενταμάμε (φασόλια σόγιας)",
+    "edamame bean": "Ενταμάμε (edamame)",
     "edamame pods": "Ενταμάμε με τον λοβό",
     "frozen edamame": "Κατεψυγμένο ενταμάμε (edamame)",
     "frozen edamame bean": "Κατεψυγμένο ενταμάμε (edamame)",
@@ -1229,7 +1229,7 @@
     "scraped seed from a vanilla pod": "Ξυσμένοι σπόροι από λοβό βανίλιας",
     "canned beetroot with its liquid": "Παντζάρια κονσέρβας με το υγρό τους",
     "water combined with beet liquid": "Νερό μαζί με το υγρό των παντζαριών",
-    "bamboo shoot": "Βλαστός μπαμπού",
+    "bamboo shoot": "Βλαστοί μπαμπού",
     "cinnamon stick": "Ξυλάκι κανέλας",
     "textured soy protein soaked for 30 minutes": "Πρωτεΐνη σόγιας με υφή, μουλιασμένη για 30 λεπτά",
     "cherry jam": "Μαρμελάδα κερασιού",
@@ -1292,7 +1292,17 @@
     "parsley": "Μαϊντανός",
     "sesame seed": "Σουσάμι",
     "agave syrup": "Σιρόπι αγαύης",
-    "squash": "Κολοκύθι ή κολοκύθα"
+    "squash": "Κολοκύθι ή κολοκύθα",
+    "bamboo shoots": "Βλαστοί μπαμπού",
+    "bamboo shoots, drained": "Βλαστοί μπαμπού",
+    "canned bamboo shoots": "Βλαστοί μπαμπού κονσέρβας",
+    "canned bamboo shoots, drained": "Βλαστοί μπαμπού κονσέρβας",
+    "boiled bamboo shoots": "Βρασμένοι βλαστοί μπαμπού",
+    "bamboo fibre": "Φυτικές ίνες μπαμπού",
+    "edamame beans": "Ενταμάμε (edamame)",
+    "young soybeans (edamame beans)": "Ενταμάμε (edamame)",
+    "frozen edamame beans": "Κατεψυγμένο ενταμάμε (edamame)",
+    "edamame pods (frozen)": "Κατεψυγμένο ενταμάμε με τον λοβό (edamame)"
   },
   "searchAliases": {
     "veal": [
@@ -1560,7 +1570,8 @@
       "edamame",
       "ενταμάμε",
       "νεαρά φασόλια σόγιας",
-      "Ενταμάμε (edamame)"
+      "Ενταμάμε (edamame)",
+      "φασόλια ενταμάμε"
     ],
     "canned butter bean": [
       "butter beans",
@@ -4376,7 +4387,8 @@
     "bamboo shoot": [
       "βλαστός μπαμπού",
       "βλαστοί μπαμπού",
-      "bamboo shoot"
+      "bamboo shoot",
+      "bamboo shoots"
     ],
     "cinnamon stick": [
       "ξυλάκι κανέλας",
