@@ -38,7 +38,7 @@ class GreekCatalogAuditV186Tests(unittest.TestCase):
     "frozen edamame": "Κατεψυγμένο ενταμάμε (edamame)",
     "frozen edamame bean": "Κατεψυγμένο ενταμάμε (edamame)",
     "frozen edamame pods": "Κατεψυγμένο ενταμάμε με τον λοβό (edamame)",
-    "onion squash": "Χειμωνιάτικη κολοκύθα (onion squash)",
+    "onion squash": "Κολοκύθα Χοκάιντο",
     "large beefsteak tomato": "Μεγάλη σαρκώδης ντομάτα (beefsteak)",
     "scampi with tails": "Καραβίδες με ουρές (scampi)",
     "chia seed": "Σπόροι τσία (chia)",
