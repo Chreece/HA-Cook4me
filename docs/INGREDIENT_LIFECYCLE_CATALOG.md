@@ -5,7 +5,7 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-26.1)
+## Reviewed coverage (2026-09-26.2)
 
 - 113 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
@@ -19,7 +19,7 @@ cloud credentials, or per-scan file reads are needed.
   and watermelon from Ilia and Trifylia in the Peloponnese.
   Fresh nettle leaves now have a Bavarian harvest profile; national German
   guidance expands bell-pepper, spring-onion and parsnip availability.
-- 82 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+- 87 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro, Oatly or verified Alnatura packages), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
@@ -54,20 +54,102 @@ cloud credentials, or per-scan file reads are needed.
   Two fermented-vegetable packages add kimchi and sauerkraut guidance.
   A verified dmBio satay sauce adds its own three-day package rule.
   Three Xucker fruit spreads have separate strawberry, raspberry and red-fruit package rules.
-  There are 136 reviewed product barcodes, 1,802 exact canonical names and
-  174 reviewed provider ingredient IDs.
+  Four Lacroix stock packages add separate beef, fish, chicken and vegetable
+  guidance, also selectable from the generic stock entry by exact barcode.
+  There are 140 reviewed product barcodes, 1,829 exact canonical names and
+  184 reviewed provider ingredient IDs.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
   coconut cream, unverified tomato paste, unverified ketchup and Skyr, plus mustard, mayonnaise and
   additional cream, cream-cheese and yoghurt variants, plus plain/brewed soy sauce,
   cottage cheese and further crème fraîche variants, ground nuts, nut butters
-  and tahini, plus reviewed fruit jams without a verified numeric package rule.
+  and tahini, plus reviewed fruit jams without a verified numeric package rule,
+  dry stock cubes, powders and granules.
 - Dry staples have no invented short spoilage countdown. Their package
   instructions still apply; missing data never means indefinitely safe.
 
 Run `python tools/audit_ingredient_lifecycle.py` for counts against the actual
 shipped catalog. Counts distinguish seasonal, numeric and label-required
 entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
+
+## Batch 28: stock packages, dry bouillon and edible pumpkin names
+
+Coverage reaches **3,538 ingredient rows**: 2,257 seasonal, 664 with numeric
+opening guidance and 617 label-required. This adds 108 enriched rows, ten exact
+provider IDs and 27 canonical names. The lifecycle version is `2026-09-26.2`;
+there are 113 seasonal groups, 87 opening-rule groups and 140 unique reviewed
+numeric-rule barcodes. Sources were checked on 2026-09-26.
+
+### Four exact stock packages
+
+Each package below has a two-day refrigerated opening limit. The source pages
+explicitly identify their information as manufacturer-supplied data and include
+the consumer GTIN and pack size. Their additional case/alternate GTINs are not
+added without separate package verification.
+
+| Lacroix package | Consumer GTIN | Manufacturer data |
+| --- | --- | --- |
+| Rinder Fond, 400 ml | `4009062800395` | [Handelshof](https://www.handelshof.de/eigenmarken/produkte/131253005/lacroix-rinder-fond-400ml) |
+| Fisch Fond, 400 ml | `4009062800203` | [Handelshof](https://www.handelshof.de/eigenmarken/produkte/131252002/lacroix-fisch-fond-400ml) |
+| Bio Geflügel Fond, 300 ml | `4009062801200` | [EDEKA Foodservice](https://edeka-foodservice.de/eigenmarken/produkte/3084182008/bio-lacroix-gefluegel-fond-300ml) |
+| Bio Gemüse Fond, 300 ml | `4009062801309` | [EDEKA Foodservice](https://edeka-foodservice.de/eigenmarken/produkte/3084170005/bio-lacroix-gemuese-fond-300ml) |
+
+The catalog now gives beef, fish, chicken and vegetable stock their own
+product-only profiles. Generic stock accepts any of these four verified packages.
+The exact provider IDs are `M_FOOD_54`, `M_FOOD_214`, `M_FOOD_209`, `M_FOOD_55`
+and `M_FOOD_49`. The conflicting cube/powder translations of `M_FOOD_56` have
+not been approved as a separate raw lifecycle identity; display grouping does
+not supply evidence to direct-ID lookups.
+
+No two-day limit is inferred from an ingredient name alone. Brand, exact barcode,
+refrigeration and an opening date are required. The existing BfR 4 °C cap applies;
+the product data specifies cool storage without a numeric temperature. The
+freezing alternative does not become a refrigerated countdown. Manual package
+instructions and an earlier printed date retain precedence. Selecting guidance
+requires confirmation and does not itself open the package or restart its clock.
+
+Prepared/hot broths, stock-and-water alternatives, salt-free stock, veal stock,
+concentrated pastes and other flavours cannot borrow these rules. Original
+recipe quantities, nutrients and raw ingredient identities are unchanged.
+
+### Dry stock and supermarket names
+
+Seventeen exact dry-stock names and provider IDs `M_FOOD_50`, `M_FOOD_51`,
+`M_FOOD_52`, `M_FOOD_53` now use label-required guidance. The reviewed
+[dmBio vegetable cubes](https://www.dm.de/p/d/1490263/dmbio-gemuesebruehwuerfel)
+(`4066447992373`) and
+[powder refill](https://www.dm.de/p/d/1490261/dmbio-gemuesebruehe-nachfuellbeutel)
+(`4066447523027`) specify protected, dry, closed storage without a numeric
+opening interval. Neither receives a short refrigerated limit or an unlimited
+safety claim. Their evidence barcodes are not counted as numeric-rule barcodes.
+
+German search now accepts Rinderfond, Fischfond, Hühnerfond, Geflügelfond,
+Gemüsefond and Bouillon variants. Cubes retain Brühwürfel labels and powder and
+granules retain their form. Greek labels preserve the distinct liquid and cube
+entries, with all source IDs retained by the existing amount-free grouping.
+
+### Pumpkin display correction
+
+The multilingual food identity `M_FOOD_399` now uses the existing regional
+August–December pumpkin calendar for Hesse, including stored produce. Its
+incorrect German provider label `Zierkürbis` is overridden in the UI by `Kürbis`,
+with `Speisekürbis` as a search term. The other provider translations and reviewed
+food identity describe edible pumpkin. [Hesse's pumpkin guidance](https://schulverpflegung.hessen.de/informieren-und-vernetzen/rezepte-und-warenkunde/warenkunde/kuerbis)
+distinguishes edible pumpkins from ornamental ones. Greek remains `Κολοκύθα`.
+No season is inferred for Greece, unlisted months, frozen/canned pumpkin, seeds,
+oil, jam or ornamental pumpkins. The original provider translation is retained
+as source data.
+
+The broader `Squash` row `M_FOOD_145` has conflicting summer/winter squash
+translations and remains unknown. Its Greek label is now `Κολοκύθι ή κολοκύθα`
+so it no longer absorbs the reviewed pumpkin choice merely because both used
+to display as `Κολοκύθα`. The two raw pumpkin provider IDs still deduplicate
+together, while this ambiguous identity stays separate in every language.
+
+Local tests cover exact package/food/form matching, real multilingual choices,
+opening consent, date precedence, twelve-month country boundaries and supermarket
+search. Browser checks exercise the actual picker and opening editor at 390 and
+1440 px in Greek with German supermarket names.
 
 ## Batch 27: sweet pantry foods, turnips and Greek watermelons
 

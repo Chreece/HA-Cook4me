@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-26.1",
+  "version": "2026-09-26.2",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -1231,6 +1231,36 @@
     "dmbio_blossom_honey": {
       "publisher": "dm-drogerie markt / dmBio",
       "url": "https://www.dm.de/p/d/1546636/dmbio-bluetenhonig-aus-deutschland",
+      "reviewedOn": "2026-09-26"
+    },
+    "lacroix_beef_stock_400": {
+      "publisher": "GB Foods / Lacroix — manufacturer data published by Handelshof",
+      "url": "https://www.handelshof.de/eigenmarken/produkte/131253005/lacroix-rinder-fond-400ml",
+      "reviewedOn": "2026-09-26"
+    },
+    "lacroix_fish_stock_400": {
+      "publisher": "Eugen Lacroix — manufacturer data published by Handelshof",
+      "url": "https://www.handelshof.de/eigenmarken/produkte/131252002/lacroix-fisch-fond-400ml",
+      "reviewedOn": "2026-09-26"
+    },
+    "lacroix_bio_chicken_stock_300": {
+      "publisher": "GB Foods / Lacroix — manufacturer data published by EDEKA Foodservice",
+      "url": "https://edeka-foodservice.de/eigenmarken/produkte/3084182008/bio-lacroix-gefluegel-fond-300ml",
+      "reviewedOn": "2026-09-26"
+    },
+    "lacroix_bio_vegetable_stock_300": {
+      "publisher": "GB Foods / Lacroix — manufacturer data published by EDEKA Foodservice",
+      "url": "https://edeka-foodservice.de/eigenmarken/produkte/3084170005/bio-lacroix-gemuese-fond-300ml",
+      "reviewedOn": "2026-09-26"
+    },
+    "dmbio_vegetable_stock_cubes": {
+      "publisher": "dm-drogerie markt",
+      "url": "https://www.dm.de/p/d/1490263/dmbio-gemuesebruehwuerfel",
+      "reviewedOn": "2026-09-26"
+    },
+    "dmbio_vegetable_stock_powder": {
+      "publisher": "dm-drogerie markt",
+      "url": "https://www.dm.de/p/d/1490261/dmbio-gemuesebruehe-nachfuellbeutel",
       "reviewedOn": "2026-09-26"
     }
   },
@@ -9815,6 +9845,218 @@
           "vz_opening"
         ]
       }
+    },
+    "beef_stock_product_guidance": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "lacroix_beef_stock_400",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "lacroix_beef_stock_400",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Lacroix",
+            "productBarcodes": [
+              "4009062800395"
+            ]
+          }
+        ]
+      }
+    },
+    "fish_stock_product_guidance": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "lacroix_fish_stock_400",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "lacroix_fish_stock_400",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Lacroix",
+            "productBarcodes": [
+              "4009062800203"
+            ]
+          }
+        ]
+      }
+    },
+    "chicken_stock_product_guidance": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "lacroix_bio_chicken_stock_300",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "lacroix_bio_chicken_stock_300",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Lacroix",
+            "productBarcodes": [
+              "4009062801200"
+            ]
+          }
+        ]
+      }
+    },
+    "vegetable_stock_product_guidance": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "lacroix_bio_vegetable_stock_300",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "lacroix_bio_vegetable_stock_300",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Lacroix",
+            "productBarcodes": [
+              "4009062801309"
+            ]
+          }
+        ]
+      }
+    },
+    "stock_product_guidance": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "conditional",
+        "labelOverrides": true,
+        "rules": [
+          {
+            "id": "lacroix_beef_stock_400",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "lacroix_beef_stock_400",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Lacroix",
+            "productBarcodes": [
+              "4009062800395"
+            ]
+          },
+          {
+            "id": "lacroix_fish_stock_400",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "lacroix_fish_stock_400",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Lacroix",
+            "productBarcodes": [
+              "4009062800203"
+            ]
+          },
+          {
+            "id": "lacroix_bio_chicken_stock_300",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "lacroix_bio_chicken_stock_300",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Lacroix",
+            "productBarcodes": [
+              "4009062801200"
+            ]
+          },
+          {
+            "id": "lacroix_bio_vegetable_stock_300",
+            "daysMin": 2,
+            "daysMax": 2,
+            "storage": "fridge",
+            "maxTemperatureC": 4,
+            "conditions": [],
+            "sourceIds": [
+              "lacroix_bio_vegetable_stock_300",
+              "bfr_cooling"
+            ],
+            "kind": "manufacturer_guidance",
+            "brand": "Lacroix",
+            "productBarcodes": [
+              "4009062801309"
+            ]
+          }
+        ]
+      }
+    },
+    "dry_stock_label_required": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "shelf_stable_form"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "reason": "no_universal_short_opening_window",
+        "sourceIds": [
+          "dmbio_vegetable_stock_cubes",
+          "dmbio_vegetable_stock_powder",
+          "vz_opening"
+        ]
+      }
     }
   },
   "canonicalNames": {
@@ -11619,7 +11861,34 @@
     "runny honey": "honey_label_required",
     "runny honey (optional)": "honey_label_required",
     "runny honey (to taste)": "honey_label_required",
-    "strained honey": "honey_label_required"
+    "strained honey": "honey_label_required",
+    "beef stock": "beef_stock_product_guidance",
+    "beef bouillon": "beef_stock_product_guidance",
+    "fish stock": "fish_stock_product_guidance",
+    "jar of fish stock": "fish_stock_product_guidance",
+    "chicken stock": "chicken_stock_product_guidance",
+    "chicken bouillon": "chicken_stock_product_guidance",
+    "poultry stock": "chicken_stock_product_guidance",
+    "vegetable stock": "vegetable_stock_product_guidance",
+    "vegetable bouillon": "vegetable_stock_product_guidance",
+    "stock": "stock_product_guidance",
+    "beef stock cube": "dry_stock_label_required",
+    "chicken stock cube": "dry_stock_label_required",
+    "chicken stock cube, crumbled": "dry_stock_label_required",
+    "vegetable stock cube": "dry_stock_label_required",
+    "fish stock cube": "dry_stock_label_required",
+    "meat stock cube": "dry_stock_label_required",
+    "stock cube": "dry_stock_label_required",
+    "consommé stock cube": "dry_stock_label_required",
+    "chicken bouillon powder": "dry_stock_label_required",
+    "chicken stock granules": "dry_stock_label_required",
+    "chicken stock powder": "dry_stock_label_required",
+    "chicken stock powder (granules)": "dry_stock_label_required",
+    "granulated chicken stock": "dry_stock_label_required",
+    "french-style stock granules": "dry_stock_label_required",
+    "french-style stock granules (for sauce)": "dry_stock_label_required",
+    "french-style stock granules (for seasoning), a little": "dry_stock_label_required",
+    "french-style beef stock (stock cube)": "dry_stock_label_required"
   },
   "ingredientIds": {
     "M_FOOD_1": "season_apricot",
@@ -11795,6 +12064,16 @@
     "M_FOOD_704": "agave_syrup_label_required",
     "M_FOOD_362": "chocolate_spread_label_required",
     "M_FOOD_339": "chocolate_spread_label_required",
-    "M_FOOD_313": "honey_label_required"
+    "M_FOOD_313": "honey_label_required",
+    "M_FOOD_54": "beef_stock_product_guidance",
+    "M_FOOD_55": "vegetable_stock_product_guidance",
+    "M_FOOD_209": "chicken_stock_product_guidance",
+    "M_FOOD_214": "fish_stock_product_guidance",
+    "M_FOOD_49": "stock_product_guidance",
+    "M_FOOD_50": "dry_stock_label_required",
+    "M_FOOD_51": "dry_stock_label_required",
+    "M_FOOD_52": "dry_stock_label_required",
+    "M_FOOD_53": "dry_stock_label_required",
+    "M_FOOD_399": "season_pumpkin"
   }
 }

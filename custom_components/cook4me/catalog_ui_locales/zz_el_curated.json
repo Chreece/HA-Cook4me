@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "el",
-  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through forty-third audit 2026-09-22; Hokkaido squash identity corrected in lifecycle batch 26, 2026-09-25",
+  "translationSource": "Curated native-Greek culinary and supermarket terminology review, expanded through forty-third audit 2026-09-22; Hokkaido squash identity corrected in lifecycle batch 26, 2026-09-25; generic squash/pumpkin distinction corrected in lifecycle batch 28, 2026-09-26",
   "labels": {
     "veal": "Μοσχαράκι",
     "ground veal": "Κιμάς από μοσχαράκι",
@@ -1291,7 +1291,8 @@
     "coconut": "Καρύδα",
     "parsley": "Μαϊντανός",
     "sesame seed": "Σουσάμι",
-    "agave syrup": "Σιρόπι αγαύης"
+    "agave syrup": "Σιρόπι αγαύης",
+    "squash": "Κολοκύθι ή κολοκύθα"
   },
   "searchAliases": {
     "veal": [
@@ -16904,9 +16905,7 @@
       "sprouts"
     ],
     "squash": [
-      "κολοκύθα",
-      "squash",
-      "pumpkin"
+      "squash"
     ],
     "starch": [
       "άμυλο",

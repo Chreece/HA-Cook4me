@@ -81,7 +81,7 @@ class CatalogLifecycle228(unittest.TestCase):
                 row = next(r for r in rows if r.get('key') == ident)
                 self.assertEqual(row['lifecycle']['profileId'], data['ingredientIds'][ident])
         # Conflicting food identities and spice homonyms stay unmapped.
-        for ident in ('M_FOOD_399', 'M_FOOD_388', 'M_FOOD_358'):
+        for ident in ('M_FOOD_145', 'M_FOOD_388', 'M_FOOD_358'):
             self.assertNotIn('profileId', catalog.ingredient_lifecycle_profile({'ingredientId': ident}))
         # Batch 27 reviewed the multilingual turnip identity and corrected its
         # German display label. It must keep the turnip calendar, not swede's.

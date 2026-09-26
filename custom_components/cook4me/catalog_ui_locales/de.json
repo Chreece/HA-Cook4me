@@ -66,7 +66,21 @@
     "tahini paste": "Sesammus (Tahin)",
     "thick creme fraiche": "Crème fraîche",
     "turnip": "Speiserübe",
-    "watermelon": "Wassermelone"
+    "watermelon": "Wassermelone",
+    "pumpkin": "Kürbis",
+    "beef stock": "Rinderbrühe",
+    "fish stock": "Fischbrühe",
+    "chicken stock": "Hühnerbrühe",
+    "poultry stock": "Geflügelbrühe",
+    "vegetable stock": "Gemüsebrühe",
+    "stock": "Brühe",
+    "stock cube": "Brühwürfel",
+    "beef stock cube": "Rinderbrühwürfel",
+    "chicken stock cube": "Hühnerbrühwürfel",
+    "vegetable stock cube": "Gemüsebrühwürfel",
+    "fish stock cube": "Fischbrühwürfel",
+    "chicken stock powder": "Hühnerbrühe in Pulverform",
+    "chicken stock granules": "Hühnerbrühe in Granulatform"
   },
   "searchAliases": {
     "plant milk": [
@@ -171,6 +185,54 @@
     "cocoa and hazelnut spread": [
       "Haselnuss-Kakao-Aufstrich",
       "Nuss-Nougat-Creme"
+    ],
+    "pumpkin": [
+      "Speisekürbis"
+    ],
+    "beef stock": [
+      "Rinderfond",
+      "Rinderbouillon"
+    ],
+    "fish stock": [
+      "Fischfond",
+      "Fischbouillon"
+    ],
+    "chicken stock": [
+      "Hühnerfond",
+      "Geflügelfond",
+      "Geflügelbrühe"
+    ],
+    "poultry stock": [
+      "Geflügelfond"
+    ],
+    "vegetable stock": [
+      "Gemüsefond",
+      "Gemüsebouillon"
+    ],
+    "stock": [
+      "Fond",
+      "Bouillon"
+    ],
+    "stock cube": [
+      "Bouillonwürfel"
+    ],
+    "beef stock cube": [
+      "Rinderbouillonwürfel"
+    ],
+    "chicken stock cube": [
+      "Geflügelbrühwürfel"
+    ],
+    "vegetable stock cube": [
+      "Gemüsebouillonwürfel"
+    ],
+    "fish stock cube": [
+      "Fischbouillonwürfel"
+    ],
+    "chicken stock powder": [
+      "Hühnerbrühpulver"
+    ],
+    "chicken stock granules": [
+      "Hühnerbrühgranulat"
     ]
   }
 }
