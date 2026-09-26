@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "cook4me-ingredient-lifecycle",
-  "version": "2026-09-26.3",
+  "version": "2026-09-26.4",
   "sources": {
     "hessen_01": {
       "publisher": "Hessische Lehrkräfteakademie – Vernetzungsstelle Schulverpflegung",
@@ -1276,6 +1276,26 @@
     "shanshi_bamboo_330": {
       "publisher": "Maresi Austria / Shan'shi — supplier label data published by KASTNER",
       "url": "https://dokumente.kastner.at/lmiv/kastner/311896.pdf",
+      "reviewedOn": "2026-09-26"
+    },
+    "hikari_miso_storage": {
+      "publisher": "Hikari Miso",
+      "url": "https://hikarimiso.com/what-is-miso/how-to-store-miso-paste/",
+      "reviewedOn": "2026-09-26"
+    },
+    "arche_mugi_miso_storage": {
+      "publisher": "Arche Naturküche",
+      "url": "https://www.arche-naturkueche-shop.de/gewuerze-pasten/miso/mugi-miso-wuerzpaste_10011704_20178/",
+      "reviewedOn": "2026-09-26"
+    },
+    "biogourmet_harissa_storage": {
+      "publisher": "BioGourmet — product label data published by ecoinform",
+      "url": "https://ecoinform.de/Harissa.Detail;279099.html",
+      "reviewedOn": "2026-09-26"
+    },
+    "imathia_okra_harvest": {
+      "publisher": "Giorgos Gousiopoulos, Imathia grower — interview published by Ypaithros Chora, 2023-08-10",
+      "url": "https://www.ypaithros.gr/koryfonetai-sezon-mpamias/",
       "reviewedOn": "2026-09-26"
     }
   },
@@ -10192,6 +10212,62 @@
           }
         ]
       }
+    },
+    "miso_paste_label_required": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "sourceIds": [
+          "hikari_miso_storage",
+          "arche_mugi_miso_storage"
+        ],
+        "reason": "no_numeric_manufacturer_window"
+      }
+    },
+    "harissa_paste_label_required": {
+      "seasonality": {
+        "status": "not_applicable",
+        "reason": "processed_food"
+      },
+      "afterOpening": {
+        "status": "label_required",
+        "labelOverrides": true,
+        "sourceIds": [
+          "biogourmet_harissa_storage"
+        ],
+        "reason": "no_numeric_manufacturer_window"
+      }
+    },
+    "season_okra_gr": {
+      "seasonality": {
+        "status": "reviewed",
+        "regions": [
+          {
+            "country": "GR",
+            "sourceRegion": "Imathia",
+            "basis": "outdoor_harvest",
+            "months": [
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "approximate": true,
+            "sourceIds": [
+              "imathia_okra_harvest"
+            ],
+            "coverage": "listed_months_only"
+          }
+        ]
+      },
+      "afterOpening": {
+        "status": "unknown"
+      }
     }
   },
   "canonicalNames": {
@@ -12036,7 +12112,19 @@
     "bamboo shoots": "bamboo_shoots_product_guidance",
     "bamboo shoots, drained": "bamboo_shoots_product_guidance",
     "canned bamboo shoots": "canned_bamboo_shoots_product_guidance",
-    "canned bamboo shoots, drained": "canned_bamboo_shoots_product_guidance"
+    "canned bamboo shoots, drained": "canned_bamboo_shoots_product_guidance",
+    "miso": "miso_paste_label_required",
+    "miso paste": "miso_paste_label_required",
+    "miso (for finishing)": "miso_paste_label_required",
+    "miso (for sauce)": "miso_paste_label_required",
+    "dark miso paste": "miso_paste_label_required",
+    "red miso": "miso_paste_label_required",
+    "red miso (for sauce)": "miso_paste_label_required",
+    "harissa": "harissa_paste_label_required",
+    "okra": "season_okra_gr",
+    "okra, cut diagonally in half": "season_okra_gr",
+    "okra, rubbed with salt, washed and cut 1 cm wide": "season_okra_gr",
+    "okra, trimmed": "season_okra_gr"
   },
   "ingredientIds": {
     "M_FOOD_1": "season_apricot",
@@ -12227,6 +12315,9 @@
     "M_FOOD_662": "edamame_product_guidance",
     "M_FOOD_589": "edamame_product_guidance",
     "M_FOOD_404": "bamboo_shoots_product_guidance",
-    "M_FOOD_735": "bamboo_shoots_product_guidance"
+    "M_FOOD_735": "bamboo_shoots_product_guidance",
+    "M_FOOD_316": "miso_paste_label_required",
+    "M_FOOD_239": "harissa_paste_label_required",
+    "M_FOOD_669": "season_okra_gr"
   }
 }

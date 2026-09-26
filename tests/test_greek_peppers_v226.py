@@ -40,8 +40,15 @@ class GreekPeppers(unittest.TestCase):
                     self.assertFalse(ids & other)
 
     def test_prepared_whole_peppers_join_vegetable_choice(self):
-        targets = [key for key in presentation.presentation_overrides() if key.startswith('local:')]
-        self.assertEqual(len(targets), 6)
+        # Other reviewed foods also have local-ID display overrides.
+        targets = (
+            'local:ar:4dfea6b1b4078417156b',
+            'local:tr:3926b17a846678338688',
+            'local:tr:9a5d0b225575099864f8',
+            'local:tr:267d2e66dcf980d27a49',
+            'local:uk:8a82638ca5be5aa1e2b5',
+            'local:uk:bb6e47a75307079d3923',
+        )
         for ident in targets:
             with self.subTest(ingredient=ident):
                 self.assertEqual(catalog.ingredient_display_name({'ingredientId': ident}, 'el'), 'Πιπεριά')
