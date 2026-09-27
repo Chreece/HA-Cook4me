@@ -212,6 +212,17 @@ def ingredient_choices(payload, language, query="", limit=None):
         if terms and not matches(search_aliases):
             continue
         row = {key: deepcopy(raw[key]) for key in ("id", "key", "conceptId", "classification", "nutritionEligible", "lifecycle") if key in raw}
+        # One display choice can represent several exact source rows for the
+        # same cleaned food name. Keep reviewed lifecycle metadata when only
+        # one profile is present in that display family, without changing the
+        # representative/provider identity used for stock writes.
+        reviewed_lifecycle = [
+            member["lifecycle"] for member in members
+            if isinstance(member.get("lifecycle"), dict) and member["lifecycle"].get("profileId")
+        ]
+        profile_ids = {value["profileId"] for value in reviewed_lifecycle}
+        if "lifecycle" not in row and len(profile_ids) == 1:
+            row["lifecycle"] = deepcopy(reviewed_lifecycle[0])
         row.update(ingredientId=raw["id"], name=name, foodName=name, canonicalName=food_name(raw), displayGroupId="ingredient:"+hashlib.sha256(canonical.encode()).hexdigest()[:16], sourceIngredientIds=[member["id"] for member in members], displayLanguage=language, presentationVersion=63)
         row["searchAliases"] = sorted(alias for alias in search_aliases if alias)
         if raw.get("key"):
