@@ -125,6 +125,21 @@ class CatalogOwnedSubstitutionTests(unittest.TestCase):
         self.assertEqual(match["substitutionCandidateCount"], 2)
         self.assertEqual(match["substitutionSources"], ["ingredient_catalog"])
 
+    def test_catalog_metadata_conflict_mounts_without_text_guessing(self):
+        source = target("provider-protein", "Provider protein")
+        source["substitutionDiets"] = ["vegetarian"]
+        source["substitutions"] = list(self.by_id["cod"]["substitutions"])
+        match = logic.score_recipe(
+            {"title": "Provider recipe", "ingredients": [source]},
+            profile("vegetarian"),
+        )
+        self.assertTrue(match["eligibleWithSubstitutions"])
+        self.assertEqual(match["substitutionSources"], ["ingredient_catalog"])
+        self.assertEqual(
+            [row["key"] for row in match["substitutions"][0]["alternatives"]],
+            ["tofu", "mushrooms", "chickpeas"],
+        )
+
     def test_filtering_can_remove_some_candidates_without_hiding_recipe(self):
         milk = self.by_id["milk"]
         match = logic.score_recipe(
@@ -135,6 +150,22 @@ class CatalogOwnedSubstitutionTests(unittest.TestCase):
         alternatives = match["substitutions"][0]["alternatives"]
         self.assertEqual([row["key"] for row in alternatives], ["rice_milk"])
         self.assertEqual(match["substitutions"][0]["replacement"]["key"], "rice_milk")
+
+    def test_catalog_excluded_ingredient_identity_filters_candidate(self):
+        cod = self.by_id["cod"]
+        selected = profile("vegetarian", allergies=("soy",))
+        selected["excludedIngredients"] = [
+            {"ingredientId": "mushrooms", "canonicalName": "Different display label"}
+        ]
+        match = logic.score_recipe(
+            {"title": "Cod", "ingredients": [cod]},
+            selected,
+        )
+        self.assertTrue(match["eligibleWithSubstitutions"])
+        self.assertEqual(
+            [row["key"] for row in match["substitutions"][0]["alternatives"]],
+            ["chickpeas"],
+        )
 
     def test_all_filtered_candidates_fail_closed(self):
         cod = self.by_id["cod"]
@@ -156,8 +187,24 @@ class CatalogOwnedSubstitutionTests(unittest.TestCase):
 
     def test_substitution_catalog_resolves_all_declared_profiles(self):
         self.assertGreater(self.summary["ingredientCount"], 0)
+        self.assertGreater(self.summary["sourceProfiles"], 0)
+        self.assertGreater(self.summary["virtualIngredientCount"], 0)
         self.assertEqual(self.summary["missingProfiles"], [])
         self.assertEqual(self.summary["unresolvedTargets"], [])
+        aquafaba = self.by_id["substitution:aquafaba"]
+        self.assertTrue(aquafaba["substitutionOnly"])
+        self.assertEqual(aquafaba["classification"], "substitution")
+        self.assertEqual(aquafaba["conceptId"], "concept:substitution:aquafaba")
+
+    def test_source_to_candidate_mapping_is_catalog_data_not_python_lists(self):
+        catalog = subs.load_substitution_catalog()
+        profiles = catalog.get("sourceProfiles") or []
+        self.assertTrue(profiles)
+        animal = next(row for row in profiles if row.get("id") == "animal_protein")
+        self.assertEqual(animal["candidateKeys"], ["tofu", "mushrooms", "chickpeas"])
+        source = (COMPONENT / "ingredient_substitutions.py").read_text(encoding="utf-8")
+        self.assertIn('catalog.get("sourceProfiles")', source)
+        self.assertNotIn('return ["tofu", "mushrooms", "chickpeas"]', source)
 
     def test_release_catalog_and_ingredient_info_expose_substitutions(self):
         core = (COMPONENT / "release_catalog_v60_core.py").read_text(encoding="utf-8")
@@ -166,6 +213,7 @@ class CatalogOwnedSubstitutionTests(unittest.TestCase):
         self.assertIn('"substitutions"', core)
         self.assertIn('"substitutionDiets"', core)
         self.assertIn('"substitutions"', presentation)
+        self.assertIn('raw.get("substitutionOnly")', presentation)
         self.assertIn('"catalogSubstitutions": catalog_substitutions', api)
 
 
