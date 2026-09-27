@@ -12,7 +12,7 @@ def run():
     html = local_html(ROOT)
     html = html.replace(
         "_api(type,data={}){\n  this.calls.push",
-        "_api(type,data={}){\n  if(/\\/(ingredient_info|ingredient_catalog)$/.test(type))return super._api(type,data);\n  this.calls.push",
+        "_api(type,data={}){\n  if(/\\/(ingredient_info|ingredient_catalog|inventory_assign_ingredient)$/.test(type))return super._api(type,data);\n  this.calls.push",
     )
     with sync_playwright() as p:
         browser = p.chromium.launch(executable_path=shutil.which("chromium") or None, args=["--no-sandbox"])
