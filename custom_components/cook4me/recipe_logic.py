@@ -370,6 +370,7 @@ _PLANT_PHRASES.update({
     "oat cream", "soy cream", "coconut cream", "soy yogurt", "soya yogurt",
     "coconut yogurt", "oyster mushrooms", "oyster mushroom", "soy milk",
     "soya milk", "rice milk", "cashew cheese", "soy cheese", "plant cheese",
+    "microbial rennet", "flax egg",
 })
 
 
