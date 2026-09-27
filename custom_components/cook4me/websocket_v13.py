@@ -88,7 +88,7 @@ def _rank_filtered(
         result = deepcopy(recipe)
         base_match = score_recipe(result, profile)
         result["match"] = enrich_match_with_house_keys(result, base_match, house)
-        if result["match"].get("eligibleWithSubstitutions"):
+        if not result["match"].get("safe") and result["match"].get("eligibleWithSubstitutions"):
             # Fail closed at the final suggestion boundary: an incompatible
             # recipe may appear only when every conflicting ingredient row has
             # one concrete replacement attached to that exact row.
