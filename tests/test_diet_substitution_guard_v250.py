@@ -104,7 +104,7 @@ class VegetarianFishSubstitutionGuardTests(unittest.TestCase):
 
         import re
         self.assertIn('get("substitutionCoverageComplete") is not True', ranking)
-        runtime = re.search(r'_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v(\\d+)"', panel)
+        runtime = re.search(r'_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v(\d+)"', panel)
         self.assertIsNotNone(runtime)
         self.assertGreaterEqual(int(runtime.group(1)), 250)
         self.assertIn("DietSubstitutionGuardMixin", active)
