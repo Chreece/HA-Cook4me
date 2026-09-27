@@ -102,8 +102,11 @@ class VegetarianFishSubstitutionGuardTests(unittest.TestCase):
         panel = (ROOT / "custom_components" / "cook4me" / "panel.py").read_text(encoding="utf-8")
         active = (ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-v180.js").read_text(encoding="utf-8")
 
+        import re
         self.assertIn('get("substitutionCoverageComplete") is not True', ranking)
-        self.assertIn("runtime-v250", panel)
+        runtime = re.search(r'_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v(\\d+)"', panel)
+        self.assertIsNotNone(runtime)
+        self.assertGreaterEqual(int(runtime.group(1)), 250)
         self.assertIn("DietSubstitutionGuardMixin", active)
 
 
