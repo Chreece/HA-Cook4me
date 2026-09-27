@@ -175,6 +175,24 @@ def main():
     }
     print("DIET_SUBSTITUTION_CATALOG_AUDIT=" + json.dumps(report, ensure_ascii=False))
 
+    if variants_seen <= 0:
+        raise SystemExit("Diet substitution audit did not scan any catalog variants")
+    for diet in DIETS:
+        if totals[diet] != variants_seen:
+            raise SystemExit(f"Diet substitution audit missed variants for {diet}")
+        if safe[diet] <= 0 or incompatible[diet] <= 0 or adapted[diet] <= 0:
+            raise SystemExit(f"Diet substitution audit did not exercise all states for {diet}")
+        if adapted[diet] != incompatible[diet]:
+            raise SystemExit(
+                f"Incomplete {diet} catalog coverage: "
+                f"{adapted[diet]}/{incompatible[diet]} incompatible variants adapted"
+            )
+    if unresolved:
+        raise SystemExit(
+            f"Catalog has {sum(unresolved.values())} unresolved diet-conflict occurrences "
+            f"across {len(unresolved)} groups"
+        )
+
 
 if __name__ == "__main__":
     main()
