@@ -8,7 +8,17 @@ import re
 import unicodedata
 from typing import Any
 
-from . import recipe_logic as _diet
+try:
+    from . import recipe_logic as _diet
+except ImportError:  # Standalone unit-test import via spec_from_file_location.
+    import importlib.util
+    _spec = importlib.util.spec_from_file_location(
+        "cook4me_recipe_logic_substitution_test", Path(__file__).with_name("recipe_logic.py")
+    )
+    if _spec is None or _spec.loader is None:
+        raise ImportError("recipe_logic.py")
+    _diet = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(_diet)
 
 _DATA_PATH = Path(__file__).with_name("catalog") / "ingredient_substitutions.v1.json"
 
