@@ -89,6 +89,11 @@ def _rank_filtered(
         base_match = score_recipe(result, profile)
         result["match"] = enrich_match_with_house_keys(result, base_match, house)
         if result["match"].get("eligibleWithSubstitutions"):
+            # Fail closed at the final suggestion boundary: an incompatible
+            # recipe may appear only when every conflicting ingredient row has
+            # one concrete replacement attached to that exact row.
+            if result["match"].get("substitutionCoverageComplete") is not True:
+                continue
             # Stock quantities and expiry bonuses refer to the original animal
             # ingredients. They must not rank an adaptation as ready to cook.
             result["match"].update(fullyAvailableByQuantity=False, quantityCoverage=0,
