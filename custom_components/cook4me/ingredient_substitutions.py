@@ -79,6 +79,10 @@ def _target_ref(row: dict[str, Any]) -> dict[str, Any]:
             "foodKey": row.get("foodKey") or row.get("key"),
             "conceptId": row.get("conceptId"),
             "canonicalName": row.get("canonicalName") or row.get("name") or row.get("foodName"),
+            "classification": row.get("classification"),
+            "substitutionOnly": row.get("substitutionOnly"),
+            "substitutionCompatibleDiets": row.get("substitutionCompatibleDiets"),
+            "substitutionAllergens": row.get("substitutionAllergens"),
         }.items()
         if value not in (None, "")
     }
