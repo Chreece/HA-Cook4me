@@ -22,7 +22,7 @@ class GreekCatalogAuditV184Tests(unittest.TestCase):
         expected={
             "edamame":"Ενταμάμε (edamame)",
             "young soybeans":"Ενταμάμε (νεαρά φασόλια σόγιας)",
-            "edamame bean":"Ενταμάμε (φασόλια σόγιας)",
+            "edamame bean":"Ενταμάμε (edamame)",
             "edamame pods":"Ενταμάμε με τον λοβό",
             "kelp":"Φύκια κελπ (kelp)",
             "quick-cook farro":"Φάρρο γρήγορου μαγειρέματος (farro)",

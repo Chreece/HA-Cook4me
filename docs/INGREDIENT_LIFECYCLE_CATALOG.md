@@ -5,9 +5,9 @@ The release catalog now includes a versioned, reviewed lifecycle sidecar:
 It is read once during the existing catalog executor warmup. No network, AI,
 cloud credentials, or per-scan file reads are needed.
 
-## Reviewed coverage (2026-09-26.4)
+## Reviewed coverage (2026-09-26.5)
 
-- 115 produce groups, including fruit, leafy vegetables, roots, asparagus,
+- 116 produce groups, including fruit, leafy vegetables, roots, asparagus,
   tomatoes, cultivated button mushrooms, potatoes, new potatoes, fresh herbs,
   savoy cabbage, pak choi, shallots, wild garlic, turnips, snow peas, walnuts,
   hazelnuts, artichokes, melons, kiwi, chestnuts, sweet potatoes, swede and
@@ -19,7 +19,7 @@ cloud credentials, or per-scan file reads are needed.
   and watermelon from Ilia and Trifylia in the Peloponnese.
   Fresh nettle leaves now have a Bavarian harvest profile; national German
   guidance expands bell-pepper, spring-onion and parsnip availability.
-- 90 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
+- 92 numeric after-opening rule groups: pasteurized/UHT milk, low-acid canned
   foods, high-acid canned foods, Alpro plant drinks and cream/yoghurt alternatives,
   oat drinks (Alpro, Oatly or verified Alnatura packages), Taifun plain and silken tofu, and Reishunger
   smoked tofu and coconut milk, plus Alnatura passata, pesto, tomato sauce and
@@ -58,7 +58,7 @@ cloud credentials, or per-scan file reads are needed.
   guidance, also selectable from the generic stock entry by exact barcode.
   Edamame and bamboo shoots add two exact package rules, and avocado adds
   a Western Crete availability calendar.
-  There are 142 reviewed product barcodes, 1,854 exact canonical names and
+  There are 144 reviewed product barcodes, 1,858 exact canonical names and
   192 reviewed provider ingredient IDs.
 - Explicit label-required guidance for reviewed foods with variable product
   formulations, including unverified pesto, dairy yoghurt, unverified cream cheese and
@@ -73,6 +73,45 @@ cloud credentials, or per-scan file reads are needed.
 Run `python tools/audit_ingredient_lifecycle.py` for counts against the actual
 shipped catalog. Counts distinguish seasonal, numeric and label-required
 entries. Coverage is explicitly incomplete; unmapped ingredients remain unknown.
+
+## Batch 31: BBQ sauce and fresh/prepared horseradish
+
+Version `2026-09-26.5` has 116 reviewed seasonal groups, 92 opening-rule
+groups, 144 unique numeric-rule barcodes, 1,858 exact canonical names and
+263 sources. The existing German radish calendar remains unchanged.
+
+Plain barbecue sauce now carries one exact-product opening rule. The reviewed
+**Heinz Barbecue Sauce 10 L** package, GTIN `8715700036106`, says to keep the
+product cool after opening and consume it within **two weeks**. The
+[manufacturer-supplied label data published by SB Union / EDEKA Hessenring](https://sbunion.shop/?articleNumber=769705&page_id=36651)
+is scoped to that exact brand and consumer GTIN. The existing BfR refrigeration
+guidance keeps the runtime gate at no more than 4 °C. Other barbecue sauces do
+not borrow the 14-day clock: they fall back to their own package value/manual
+entry. **Honey barbecue sauce remains unmapped** until an exact package with its
+own verified interval is reviewed.
+
+Fresh horseradish is separated from prepared horseradish. The
+[Bavarian State Research Center for Agriculture (LfL)](https://www.lfl.bayern.de/mam/cms07/iem/dateien/bf-steckbrief_bayerische-originale-herkunftsschutz.pdf)
+documents Bavarian horseradish raw-material harvest as normally taking place in
+**October**. Only the fresh canonical `horseradish` identity receives that
+`DE-BY` outdoor-harvest month. This is a regional harvest signal, not a claim
+that German supermarket stock is unavailable outside October.
+
+Prepared horseradish has a separate exact-package clock. Byodo's official
+[100 g Tafelmeerrettich page](https://shop.byodo.de/Tafelmeerrettich/16055)
+identifies GTIN `4018462160558`; the
+[Byodo product data published by REWE](https://www.rewe.de/shop/p/byodo-bioland-meerrettich-100g/8890820)
+specifies refrigerated storage at **2–7 °C** and use within **21 days** after
+opening. The rule therefore requires the Byodo brand, exact GTIN, refrigerator
+storage and a measured temperature inside that range. Other horseradish sauces
+remain package-driven.
+
+Daikon, Korean radish, daikon sprouts, dried daikon and takuan stay distinct.
+They do **not** inherit the small-radish calendar or the Bavarian horseradish
+harvest month. German supermarket/search names now distinguish `Radieschen`,
+`Daikon-Rettich`, `Koreanischer Rettich`, `Meerrettich`,
+`Meerrettichsauce`, dried/sprouted daikon and pickled takuan. Greek curated
+names are unchanged because those forms were already distinguished there.
 
 ## Batch 30: miso, harissa and fresh/cooked okra
 

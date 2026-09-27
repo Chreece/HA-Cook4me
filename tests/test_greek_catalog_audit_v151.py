@@ -76,7 +76,7 @@ class GreekCatalogAuditV151Tests(unittest.TestCase):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]
         self.assertEqual(labels["sauerkraut juice"],"Άλμη ξινολάχανου")
         self.assertEqual(labels["sauerkraut with juice"],"Ξινολάχανο με την άλμη του")
-        self.assertEqual(labels["red miso"],"Κόκκινο μίσο (aka miso)")
+        self.assertEqual(labels["red miso"],"Κόκκινη πάστα μίσο")
         self.assertEqual(labels["matcha green tea"],"Μάτσα (πράσινο τσάι σε σκόνη)")
         self.assertEqual(labels["ground matcha tea"],"Μάτσα σε σκόνη")
 

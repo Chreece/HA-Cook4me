@@ -72,7 +72,7 @@ class GreekCatalogAuditV167Tests(unittest.TestCase):
             "splash of orange liqueur":"Μια μικρή δόση λικέρ πορτοκαλιού",
             "vial of orange blossom essence":"Φιαλίδιο εσάνς ανθών πορτοκαλιάς",
             "cinnamon stick":"Ξυλάκι κανέλας",
-            "bamboo shoot":"Βλαστός μπαμπού",
+            "bamboo shoot":"Βλαστοί μπαμπού",
             "textured soy protein soaked for 30 minutes":"Πρωτεΐνη σόγιας με υφή, μουλιασμένη για 30 λεπτά",
         }
         for key,value in expected.items():

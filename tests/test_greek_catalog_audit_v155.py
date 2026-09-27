@@ -76,7 +76,7 @@ class GreekCatalogAuditV155Tests(unittest.TestCase):
             "ajvar":"Βαλκανική πάστα ψητής πιπεριάς άιβαρ (ajvar)",
             "sambal":"Ινδονησιακό καυτερό καρύκευμα σάμπαλ (sambal)",
             "fish sauce":"Σάλτσα ψαριού (fish sauce)",
-            "miso paste":"Πάστα μίσο (miso paste)",
+            "miso paste":"Πάστα μίσο",
             "salt-pickled cherry blossoms":"Άνθη κερασιάς σε αλάτι (sakura)",
         }
         for key,value in expected.items():

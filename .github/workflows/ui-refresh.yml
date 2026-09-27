@@ -75,6 +75,8 @@ jobs:
         run: python tests/browser_catalog_lifecycle_v230.py
       - name: Winter produce and plant-drink opening guidance
         run: python tests/browser_catalog_lifecycle_v231.py
+      - name: BBQ and horseradish season/opening guidance
+        run: python tests/browser_catalog_lifecycle_v247.py
       - name: Navigation hover and keyboard focus regression
         run: python tests/browser_navigation_hover_v205.py
       - name: Receipt queue, barcode editing, interrupted additions and product weighing

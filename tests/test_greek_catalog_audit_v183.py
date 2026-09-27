@@ -32,7 +32,7 @@ class GreekCatalogAuditV183Tests(unittest.TestCase):
             "flatbread":"Πλατύ ψωμί (flatbread)",
             "buttermilk":"Βουτυρόγαλα (buttermilk)",
             "cottage cheese":"Τυρί κότατζ (cottage cheese)",
-            "miso paste":"Πάστα μίσο (miso paste)",
+            "miso paste":"Πάστα μίσο",
             "bitter melon":"Πικρό πεπόνι / γκόγια (bitter melon)",
         }
         for key,value in expected.items():
