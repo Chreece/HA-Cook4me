@@ -29,18 +29,30 @@ def run():
                 app._ingredientCatalog=uiRows;app._ingredientCatalogLanguage='el';
                 app._v140MarketNames=new Map([['rice','Reis']]);
                 app._v140MarketCatalogKey=app._prefKey()+':de';
+                app._houseIngredients=[...(app._houseIngredients||[]),{key:'stock-rice-product',name:'Σακούλα δημητριακών',unit:'g',lots:[
+                    {id:'assign-a',quantity:300,bestBefore:'2026-10-10'},{id:'assign-b',quantity:200,storage:'pantry'}
+                ]}];
+                app._syncEntryProfile?.();
                 window.requests=[];
                 app._hass.connection.sendMessagePromise=async msg => {
                     if(msg.type.endsWith('/job_run'))return app._hass.connection.sendMessagePromise(msg.request);
                     requests.push(structuredClone(msg));
                     if(msg.type.endsWith('/ingredient_info'))return {
-                        ingredientInfoContract:'offline-ingredient-info-v62',ingredient:{name:'Ρύζι'},
+                        ingredientInfoContract:'offline-ingredient-info-v62',ingredient:{key:'rice',name:'Ρύζι'},
                         stock:null,history:[],savedRecipeUsage:[],officialRecipeUsage:[],nutritionReferences:[]
                     };
                     if(msg.type.endsWith('/ingredient_catalog')){
                         if(msg.language==='de')return {items:[{key:'rice',name:'Reis'}],presentationVersion:63};
                         if(msg.language==='it')return new Promise(resolve=>window.finishMarket=resolve);
                         return {items:uiRows,presentationVersion:63};
+                    }
+                    if(msg.type.endsWith('/inventory_assign_ingredient')){
+                        const row=app._houseIngredients.find(item=>app._stockIdentity(item)===msg.identity);
+                        if(!row)throw Error('missing assignment stock');
+                        for(const lot of row.lots||[]){
+                            lot.ingredientLinks=[...(lot.ingredientLinks||[]),structuredClone(msg.ingredient)];
+                        }
+                        return {houseIngredients:structuredClone(app._houseIngredients),storageLocations:app._v78State?.storageLocations||[]};
                     }
                     return {};
                 };
@@ -92,6 +104,18 @@ def run():
             # labels collapse, and unknown handwritten ingredients stay readable.
             page.evaluate("app._showIngredientInfo(uiRows[0])")
             expect(heading).to_have_text("🥕 Ρύζι (Riso)")
+            assignment=page.locator('[data-v249-stock-assignment]')
+            expect(assignment.locator('h3')).to_have_text('Αντιστοίχιση σε υλικό αποθέματος')
+            assignment.locator('[data-v249-stock]').select_option('k:stock-rice-product')
+            expect(assignment.locator('[data-v249-assign]')).to_be_enabled()
+            assignment.locator('[data-v249-assign]').click()
+            expect(assignment.locator('[data-v249-status]')).to_have_text('Το υλικό αντιστοιχίστηκε στο απόθεμα.')
+            assert page.evaluate("""()=>app._houseIngredients.find(row=>row.key==='stock-rice-product').lots.every(lot=>
+                (lot.ingredientLinks||[]).some(link=>link.key==='rice'))""")
+            assert page.evaluate("""()=>{const r=requests.findLast?.(row=>row.type.endsWith('/inventory_assign_ingredient'))||
+                [...requests].reverse().find(row=>row.type.endsWith('/inventory_assign_ingredient'));return r.identity==='k:stock-rice-product'&&r.ingredient.key==='rice';}""")
+            expect(assignment.locator('[data-v249-assign]')).to_have_text('Ήδη αντιστοιχισμένο')
+            expect(assignment.locator('[data-v249-assign]')).to_be_disabled()
             page.locator('[data-ingredient-dialog] [data-close]').click()
             page.evaluate("""() => {
                 app._v79Settings.supermarketLanguage='de';
@@ -101,7 +125,7 @@ def run():
             expect(name).to_have_text("Ρύζι (Riz)")
             assert page.evaluate("JSON.stringify(namingRecipe.ingredients)===originalIngredients")
             assert not errors, errors
-            print(f"PASS {width}: recipe list, fullscreen, info window, delayed catalog, duplicate names and original identity", flush=True)
+            print(f"PASS {width}: recipe list, info naming, stock assignment, delayed catalog and original identity", flush=True)
             page.close()
         browser.close()
 

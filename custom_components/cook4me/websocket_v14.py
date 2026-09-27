@@ -43,7 +43,8 @@ async def _reconcile_nutrition(bridge) -> None:
 def async_register(hass: HomeAssistant) -> None:
     for command in (
         ws_inventory_state, ws_inventory_add, ws_inventory_update,
-        ws_inventory_remove, ws_consumption_confirm, ws_consumption_clear,
+        ws_inventory_assign_ingredient, ws_inventory_remove,
+        ws_consumption_confirm, ws_consumption_clear,
     ):
         websocket_api.async_register_command(hass, command)
 

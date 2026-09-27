@@ -33,6 +33,7 @@ jobs:
           python tests/test_catalog_lifecycle_v230.py
           python tests/test_catalog_lifecycle_v231.py
           python tests/test_catalog_lifecycle_v247.py
+          python tests/test_ingredient_stock_assignment_v249.py
           python tests/test_notifications_once.py
           python tools/audit_ingredient_lifecycle.py
           python -m compileall -q custom_components/cook4me
@@ -99,6 +100,7 @@ jobs:
           node --check custom_components/cook4me/frontend/cook4me-panel-v178.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v179.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v180.js
+          node --check custom_components/cook4me/frontend/ingredient-stock-assignment-v249.js
           python tests/test_menu_footer_v126.py
           python tests/test_announcement_settings_v127.py
           python tests/test_nutrient_scopes_v128.py

@@ -24,6 +24,8 @@ class Boundary {
  _v78AcceptState(value){this.accepted=value;}
  _v78RenderCapture(){this.renders=(this.renders||0)+1;}
  _v111Paint(){}
+ _v80Scan(mode){this.scanMode=mode;return Promise.resolve();}
+ _v78Lookup(code){this.lookupCode=code;this._v78Draft.barcode=code;this._v78Draft.scanRecognized=true;return Promise.resolve();}
  _api(type,data){this.calls.push([type,data]);return this.response?.(type,data)??Promise.resolve({houseIngredients:[]});}
  _v78Save(){this.delegated=true;return Promise.resolve();}
  _v78Close(force){if(!force&&this._v78Dirty){this._v78Discard=true;}else{this._v78Dialog=null;this._v78Draft=null;}}
@@ -139,6 +141,14 @@ test('receipt Save delegates and never resets the receipt session',async()=>{
 });
 test('valid receipt Apply delegates; draft saves remain allowed when incomplete',async()=>{
  const h=new Harness();h.receiptItem={status:'pending'};await h._r195Action('apply');assert.equal(h.receiptAction,'apply');h._v78Draft=fresh();await h._r195Action('save');assert.equal(h.receiptAction,'save');
+});
+test('camera barcode scan beside the edit field reuses the current draft',async()=>{
+ const h=new Harness(),d=h._v78Draft;Object.assign(d,{productLocked:true,scanRecognized:true,editorOpen:true});
+ await h._v196ScanBarcode();assert.equal(h._v78Draft,d);assert.equal(d.productLocked,false);assert.equal(h.scanMode,'barcode');assert.equal(h.calls.length,0);
+});
+test('camera barcode result returns to the same editor and relocks the recognized product',async()=>{
+ const h=new Harness(),d=h._v78Draft;Object.assign(d,{productLocked:false,scanRecognized:false,editorOpen:false});h._v196BarcodeScanDraft=d;
+ await h._v78Lookup('01234567');assert.equal(h.lookupCode,'01234567');assert.equal(h._v78Draft,d);assert.equal(d.editorOpen,true);assert.equal(d.productLocked,true);assert.equal(h._v196BarcodeScanDraft,null);
 });
 test('barcode lookup is explicit, supports locked edits, and never saves stock',async()=>{
  const h=new Harness();Object.assign(h._v78Draft,{barcode:'01234567',editLotId:'lot',productLocked:true,scanRecognized:true});h.response=()=>Promise.resolve({product:{productName:'Rice',found:true,quantity:1000,unit:'g'},suggestions:[]});

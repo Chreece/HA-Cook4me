@@ -975,6 +975,42 @@ def normalize_ingredient_links(value):
     return result
 
 
+def assign_inventory_ingredient(inventory, identity: str, ingredient: dict[str, Any]):
+    """Link one reviewed catalog ingredient to an existing stock ingredient.
+
+    Unlimited stock stores links on the row. Measured stock stores links on
+    every current package so package metadata and stock amounts stay untouched.
+    """
+    rows = normalize_inventory(inventory)
+    current = next((row for row in rows if inventory_identity(row) == identity), None)
+    if current is None:
+        raise ValueError("House ingredient was not found")
+    links = normalize_ingredient_links([ingredient])
+    if len(links) != 1:
+        raise ValueError("Choose a valid catalog ingredient")
+    link = links[0]
+
+    # The primary stock identity already supplies this catalog ingredient.
+    if inventory_identity(current) == inventory_identity(link):
+        return rows
+
+    if current.get("unlimited"):
+        current["ingredientLinks"] = normalize_ingredient_links([
+            *(current.get("ingredientLinks") or []), link
+        ])
+        return rows
+
+    lots = current.get("lots") or []
+    if not lots:
+        raise ValueError("This stock ingredient has no packages to assign")
+    for lot in lots:
+        lot["ingredientLinks"] = normalize_ingredient_links([
+            *(lot.get("ingredientLinks") or []), link
+        ])
+    _refresh_row_totals(current)
+    return rows
+
+
 def stock_for_ingredient(stock, ingredient, used=None):
     """Read a product through any stable identity/link, subtracting reservations."""
     if isinstance(ingredient, str):
