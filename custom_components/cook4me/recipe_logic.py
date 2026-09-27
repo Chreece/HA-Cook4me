@@ -54,7 +54,13 @@ _FISH_WORDS.update({
     "pulpo", "anchoas", "garnalen", "kabeljauw", "zalm", "tonijn",
     "καλαμαρι", "καλαμαρια", "χταποδι", "μυδια", "αντζουγιες", "γαυρος", "μπακαλιαρος",
 })
-_ANIMAL_DERIVATIVES = {"gelatin", "gelatine", "gelatina", "ζελατινη", "rennet", "animal rennet", "isinglass"}
+_ANIMAL_DERIVATIVES = {
+    "gelatin", "gelatine", "gelatina", "ζελατινη", "ζελατίνη",
+    "rennet", "animal rennet", "lab", "tierisches lab", "presure", "présure",
+    "caglio", "cuajo", "πυτια", "πυτιά",
+    "isinglass", "hausenblase", "colle de poisson", "colla di pesce",
+    "cola de pescado", "ιχθυοκολλα", "ιχθυόκολλα",
+}
 _MEAT_WORDS |= _ANIMAL_DERIVATIVES
 _ANIMAL_WORDS = _MEAT_WORDS | _FISH_WORDS
 
@@ -64,9 +70,17 @@ _NON_VEGAN_WORDS = _ANIMAL_WORDS | {
     "yogurt", "yoghurt", "joghurt", "γιαουρτι", "γιαούρτι", "egg", "eggs", "ei", "eier", "αυγο", "αυγό",
     "αυγα", "αυγά", "honey", "honig", "μελι", "μέλι", "gelatin", "gelatine", "ζελατινη", "ζελατίνη",
 }
-_NON_VEGAN_WORDS.update({"lait", "beurre", "fromage", "creme", "oeuf", "oeufs", "œuf", "œufs", "miel",
+_NON_VEGAN_WORDS.update({
+    "lait", "beurre", "fromage", "creme", "oeuf", "oeufs", "œuf", "œufs", "miel",
     "latte", "burro", "formaggio", "panna", "uovo", "uova", "miele", "leche", "mantequilla", "queso", "huevo", "huevos",
-    "whey", "casein", "ghee", "yolks", "yolk", "whites", "mozzarella", "feta", "ricotta", "quark", "kefir"})
+    "whey", "casein", "molke", "kasein", "käsein", "lactoserum", "lactosérum", "caseine", "caséine",
+    "siero di latte", "caseina", "suero de leche", "caseína", "ορος γαλακτος", "ορός γάλακτος", "καζεινη", "καζεΐνη",
+    "ghee", "yolks", "yolk", "whites", "egg white", "egg whites", "egg yolk", "egg yolks",
+    "eiweiss", "eiweiß", "eigelb", "ασπραδι", "ασπράδι", "κροκος", "κρόκος",
+    "blanc d oeuf", "blanc d'œuf", "jaune d oeuf", "jaune d'œuf",
+    "albume", "tuorlo", "clara de huevo", "yema de huevo",
+    "mozzarella", "feta", "ricotta", "quark", "kefir",
+})
 
 _PESCATARIAN_EXCLUSION_KEYS = {
     "MEAT", "BEEF", "PORK", "POULTRY", "CHICKEN", "TURKEY", "LAMB", "VEAL", "DUCK", "GELATIN", "LARD",
@@ -320,20 +334,36 @@ _DIET_REPLACEMENTS = {
 }
 
 _GELATIN_TERMS = ("gelatin", "gelatine", "gelatina", "ζελατινη", "ζελατίνη")
-_RENNET_TERMS = ("rennet", "animal rennet")
-_ISINGLASS_TERMS = ("isinglass",)
+_RENNET_TERMS = (
+    "rennet", "animal rennet", "lab", "tierisches lab", "presure", "présure",
+    "caglio", "cuajo", "πυτια", "πυτιά",
+)
+_ISINGLASS_TERMS = (
+    "isinglass", "hausenblase", "colle de poisson", "colla di pesce",
+    "cola de pescado", "ιχθυοκολλα", "ιχθυόκολλα",
+)
 _CHEESE_TERMS = (
     "cheese", "kase", "käse", "τυρι", "τυρί", "parmesan", "parmesankase",
     "parmesankäse", "fromage", "formaggio", "queso", "mozzarella", "feta",
     "ricotta", "quark", "mascarpone",
 )
-_EGG_WHITE_TERMS = ("egg white", "egg whites", "white of egg", "whites", "eiweiss", "eiweiß", "ασπραδι", "ασπράδι")
-_EGG_YOLK_TERMS = ("egg yolk", "egg yolks", "yolk", "yolks", "eigelb", "κροκος", "κρόκος")
+_EGG_WHITE_TERMS = (
+    "egg white", "egg whites", "white of egg", "whites", "eiweiss", "eiweiß",
+    "ασπραδι", "ασπράδι", "blanc d oeuf", "blanc d'œuf", "albume", "clara de huevo",
+)
+_EGG_YOLK_TERMS = (
+    "egg yolk", "egg yolks", "yolk", "yolks", "eigelb", "κροκος", "κρόκος",
+    "jaune d oeuf", "jaune d'œuf", "tuorlo", "yema de huevo",
+)
 _EGG_TERMS = (
     "egg", "eggs", "ei", "eier", "αυγο", "αυγό", "αυγα", "αυγά",
     "oeuf", "oeufs", "œuf", "œufs", "uovo", "uova", "huevo", "huevos",
 )
-_WHEY_CASEIN_TERMS = ("whey", "casein")
+_WHEY_CASEIN_TERMS = (
+    "whey", "casein", "molke", "kasein", "käsein", "lactoserum", "lactosérum",
+    "caseine", "caséine", "siero di latte", "caseina", "suero de leche", "caseína",
+    "ορος γαλακτος", "ορός γάλακτος", "καζεινη", "καζεΐνη",
+)
 _KEFIR_TERMS = ("kefir",)
 
 _PLANT_PHRASES.update({
