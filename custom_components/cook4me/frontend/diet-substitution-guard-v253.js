@@ -41,14 +41,19 @@ export function dietReplacementLabel(key,language='en',fallback=''){
  return (LABELS[code]||LABELS.en)[key]||dietReplacementLabelV251(key,code,fallback)||fallback||'';
 }
 
+export function dietAlternativeLabels(row,language='en'){
+ const candidates=Array.isArray(row?.alternatives)&&row.alternatives.length?row.alternatives:[row?.replacement].filter(Boolean);
+ return candidates.map(candidate=>dietReplacementLabel(candidate?.key,language,candidate?.name||candidate?.key||'')).filter(Boolean);
+}
+
 export const DietSubstitutionGuardMixin=Base=>class extends DietSubstitutionGuardMixinV251(Base){
  _v76Text(key){
   const lang=this._uiIngredientLanguage?.()||this._langCode?.()||'en';
   return dietReplacementLabel(key,lang)||super._v76Text(key);
  }
  _v253Alternatives(row){
-  const candidates=Array.isArray(row?.alternatives)&&row.alternatives.length?row.alternatives:[row?.replacement].filter(Boolean);
-  return candidates.map(candidate=>this._v76Text(candidate?.key)||candidate?.name||candidate?.key||'').filter(Boolean);
+  const lang=this._uiIngredientLanguage?.()||this._langCode?.()||'en';
+  return dietAlternativeLabels(row,lang);
  }
  _recipeCard(recipe,custom=false){
   const html=super._recipeCard(recipe,custom);if(!html)return html;
