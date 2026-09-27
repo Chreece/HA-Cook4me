@@ -294,45 +294,21 @@ def _matches_exclusion_key(term: str, exclusion_keys: set[str]) -> bool:
 def _explicit_diet_conflict(item, diet):
     if not isinstance(item, dict):
         return False
+    if str(diet or "").lower() in {
+        str(value).lower()
+        for value in item.get("substitutionDiets") or []
+        if str(value).strip()
+    }:
+        return True
     intelligence = item.get("intelligence") if isinstance(item.get("intelligence"), dict) else {}
     diets = intelligence.get("diets") or item.get("diets") or {}
     state = diets.get(diet) if isinstance(diets, dict) else None
     return state is False or state == "incompatible"
 
 
-# Culinary suggestions, never rewritten cloud recipes or invented nutrient data.
-# Every candidate is concrete enough to display and to run through the existing
-# allergy/avoid-term checks.  Ordering is intentional: prefer the closest common
-# replacement, then fall back to alternatives with different allergen profiles.
-_DIET_REPLACEMENTS = {
-    "tofu": ("Firm tofu", ("soy",)),
-    "mushrooms": ("Mushrooms", ()),
-    "chickpeas": ("Chickpeas", ()),
-    "stock": ("Vegetable stock", ("celery",)),
-    "mushroom_stock": ("Mushroom stock", ()),
-    "oat_cream": ("Oat cream", ("gluten",)),
-    "soy_cream": ("Soy cream", ("soy",)),
-    "coconut_cream": ("Coconut cream", ()),
-    "oat_milk": ("Oat milk", ("gluten",)),
-    "soy_milk": ("Soy milk", ("soy",)),
-    "rice_milk": ("Rice milk", ()),
-    "oil": ("Olive oil", ()),
-    "soy_yogurt": ("Soy yogurt", ("soy",)),
-    "coconut_yogurt": ("Coconut yogurt", ()),
-    "sweetener": ("Maple syrup", ()),
-    "soy_sauce": ("Soy sauce", ("soy", "gluten")),
-    "coconut_aminos": ("Coconut aminos", ()),
-    "agar": ("Agar-agar", ()),
-    "microbial_rennet": ("Microbial rennet", ()),
-    "bentonite": ("Food-grade bentonite", ()),
-    "soy_cheese": ("Soy-based plant cheese", ("soy",)),
-    "cashew_cheese": ("Cashew-based plant cheese", ("tree_nut",)),
-    "nutritional_yeast": ("Nutritional yeast", ()),
-    "flax_egg": ("Flax egg", ()),
-    "aquafaba": ("Aquafaba (chickpea brine)", ()),
-    "pea_protein": ("Pea protein", ()),
-}
-
+# Dietary incompatibility detection remains local and conservative. Replacement
+# candidates themselves are owned by catalog ingredient metadata and mounted
+# only after the active diet/filter profile is applied.
 _GELATIN_TERMS = ("gelatin", "gelatine", "gelatina", "ζελατινη", "ζελατίνη")
 _RENNET_TERMS = (
     "rennet", "animal rennet", "lab", "tierisches lab", "presure", "présure",
@@ -370,12 +346,98 @@ _PLANT_PHRASES.update({
     "oat cream", "soy cream", "coconut cream", "soy yogurt", "soya yogurt",
     "coconut yogurt", "oyster mushrooms", "oyster mushroom", "soy milk",
     "soya milk", "rice milk", "cashew cheese", "soy cheese", "plant cheese",
+    "plant based cheese", "plant based yogurt", "plant yogurt",
     "microbial rennet", "flax egg",
 })
 
 
-def _has_any_phrase(text: str, phrases) -> bool:
-    return any(_contains_phrase(text, phrase) for phrase in phrases)
+def _mounted_candidate_text(candidate):
+    values = [
+        str(candidate.get("name") or ""),
+        *(str(value) for value in candidate.get("allergens") or []),
+    ]
+    target = candidate.get("target")
+    if isinstance(target, dict):
+        values.append(str(target.get("canonicalName") or target.get("name") or ""))
+    for component in candidate.get("components") or []:
+        if not isinstance(component, dict):
+            continue
+        target = component.get("target")
+        if isinstance(target, dict):
+            values.append(str(target.get("canonicalName") or target.get("name") or ""))
+    return " ".join(value for value in values if value).strip()
+
+
+def _candidate_catalog_identities(candidate):
+    values = set()
+    def collect(target):
+        if not isinstance(target, dict):
+            return
+        for key in ("ingredientId", "id", "key", "foodKey", "conceptId"):
+            value = str(target.get(key) or "").strip()
+            if value:
+                values.add(value)
+    collect(candidate.get("target") if isinstance(candidate, dict) else None)
+    for component in candidate.get("components") or [] if isinstance(candidate, dict) else []:
+        if isinstance(component, dict):
+            collect(component.get("target"))
+    return values
+
+
+def _excluded_catalog_identities(profile):
+    values = set()
+    for row in profile.get("excludedIngredients") or []:
+        if not isinstance(row, dict):
+            continue
+        for key in ("ingredientId", "id", "key", "foodKey", "conceptId"):
+            value = str(row.get(key) or "").strip()
+            if value:
+                values.add(value)
+        for value in row.get("sourceIngredientIds") or []:
+            value = str(value or "").strip()
+            if value:
+                values.add(value)
+    return values
+
+
+def _mounted_candidates(item, profile, diet, group):
+    raw_rows = item.get("substitutions") if isinstance(item, dict) else None
+    if not isinstance(raw_rows, list):
+        return None
+    restrictions = [
+        *(str(value) for value in profile.get("allergies") or []),
+        *(str(value) for value in profile.get("avoid") or []),
+    ]
+    allergies = [str(value) for value in profile.get("allergies") or [] if str(value).strip()]
+    excluded_identities = _excluded_catalog_identities(profile)
+    out = []
+    for raw in raw_rows:
+        if not isinstance(raw, dict):
+            continue
+        compatible = [str(value).lower() for value in raw.get("compatibleDiets") or []]
+        if compatible and diet not in compatible:
+            continue
+        if raw.get("allergenEvidence") == "unknown" and allergies:
+            continue
+        safety_text = _mounted_candidate_text(raw)
+        if any(_matches_term(safety_text, term) for term in restrictions if term.strip()):
+            continue
+        if excluded_identities and _candidate_catalog_identities(raw) & excluded_identities:
+            continue
+        if _diet_hits(normalize_text(str(raw.get("name") or "")))[group]:
+            continue
+        candidate = {
+            "key": str(raw.get("key") or ""),
+            "name": str(raw.get("name") or raw.get("key") or "").strip(),
+            "catalogSource": str(raw.get("catalogSource") or "ingredient_catalog"),
+            "confidence": str(raw.get("confidence") or "reviewed"),
+        }
+        for key in ("target", "components", "contexts", "evidence", "catalogVersion", "allergens"):
+            if raw.get(key) not in (None, "", [], {}):
+                candidate[key] = raw[key]
+        if candidate["name"]:
+            out.append(candidate)
+    return out
 
 
 def _diet_substitutions(recipe, profile, violations):
@@ -390,64 +452,33 @@ def _diet_substitutions(recipe, profile, violations):
         unresolved |= not bool(text)
         hits = _diet_hits(text)
         ingredient_hits.append(hits)
-        if not hits[group]:
-            unresolved |= _explicit_diet_conflict(item, diet)
+        conflicting = bool(hits[group] or _explicit_diet_conflict(item, diet))
+        if not conflicting:
             continue
-        words = set(hits[group])
-        options = []
-        if _has_any_phrase(text, _GELATIN_TERMS):
-            options = ["agar"]
-        elif _has_any_phrase(text, _RENNET_TERMS):
-            options = ["microbial_rennet"]
-        elif _has_any_phrase(text, _ISINGLASS_TERMS):
-            options = ["bentonite"]
-        elif words & {"lard", "tallow", "suet", "schmalz"}:
-            options = ["oil"]
-        elif any(_contains_phrase(text, word) for word in ("fish sauce", "oyster sauce", "worcestershire", "sauce de poisson", "nuoc mam")):
-            options = ["soy_sauce", "coconut_aminos"]
-        elif any(_contains_phrase(text, word) for word in ("stock", "broth", "bouillon", "brühe", "bruehe", "fond", "caldo")):
-            options = ["stock", "mushroom_stock"]
-        elif hits[1]:
-            options = ["tofu", "mushrooms", "chickpeas"]
-        elif _has_any_phrase(text, _EGG_WHITE_TERMS):
-            options = ["aquafaba", "flax_egg"]
-        elif _has_any_phrase(text, _EGG_YOLK_TERMS):
-            options = ["flax_egg"]
-        elif _has_any_phrase(text, _EGG_TERMS):
-            options = ["flax_egg", "aquafaba"]
-        elif _has_any_phrase(text, _WHEY_CASEIN_TERMS):
-            options = ["pea_protein"]
-        elif _has_any_phrase(text, _KEFIR_TERMS):
-            options = ["soy_yogurt", "coconut_yogurt"]
-        elif _has_any_phrase(text, _CHEESE_TERMS):
-            options = ["soy_cheese", "cashew_cheese", "nutritional_yeast"]
-        elif words & {"butter", "βουτυρο", "βούτυρο", "beurre", "burro", "mantequilla", "ghee"}:
-            options = ["oil"]
-        elif words & {"cream", "sahne", "creme", "panna", "κρεμα", "κρέμα"}:
-            options = ["oat_cream", "soy_cream", "coconut_cream"]
-        elif words & {"milk", "milch", "lait", "latte", "leche", "γαλα", "γάλα"}:
-            options = ["oat_milk", "soy_milk", "rice_milk"]
-        elif words & {"yogurt", "yoghurt", "joghurt", "γιαουρτι", "γιαούρτι"}:
-            options = ["soy_yogurt", "coconut_yogurt"]
-        elif words & {"honey", "honig", "miel", "miele", "μελι", "μέλι"}:
-            options = ["sweetener"]
-        candidate = None
-        for key in options:
-            name, allergens = _DIET_REPLACEMENTS[key]
-            safety_text = " ".join((name, *allergens))
-            if any(_matches_term(safety_text, str(term)) for term in
-                   [*(profile.get("allergies") or []), *(profile.get("avoid") or [])]):
+
+        mounted = _mounted_candidates(item, profile, diet, group)
+        if mounted is not None:
+            if not mounted:
+                unresolved = True
                 continue
-            if _diet_hits(normalize_text(name))[group]:
-                continue
-            candidate = {"key": key, "name": name}
-            break
-        if candidate is None:
-            unresolved = True
+            names = recipe_ingredient_names({"ingredients": [item]})
+            substitutions.append({
+                "ingredientIndex": index,
+                "original": names[0] if names else text,
+                "replacement": mounted[0],
+                "alternatives": mounted,
+                "candidateCount": len(mounted),
+                "source": "ingredient_catalog",
+                "reason": "diet:" + diet,
+                "advisory": True,
+            })
             continue
-        names = recipe_ingredient_names({"ingredients": [item]})
-        substitutions.append({"ingredientIndex": index, "original": names[0] if names else text,
-            "replacement": candidate, "reason": "diet:" + diet, "advisory": True})
+
+        # No catalog-owned substitution metadata means there is no reviewed
+        # replacement. Unmapped/manual ingredients therefore fail closed until
+        # they are assigned to a catalog ingredient.
+        unresolved = True
+        continue
 
     # Recipe-level evidence must be accounted for by concrete ingredient rows.
     keys, _ = _excluded_values(recipe)
@@ -518,6 +549,16 @@ def diet_substitution_coverage(
             return False
         if not str(replacement.get("name") or replacement.get("key") or "").strip():
             return False
+        alternatives = row.get("alternatives")
+        if alternatives is not None:
+            if not isinstance(alternatives, list) or not alternatives:
+                return False
+            if any(
+                not isinstance(candidate, dict)
+                or not str(candidate.get("name") or candidate.get("key") or "").strip()
+                for candidate in alternatives
+            ):
+                return False
         covered.add(index)
     return covered == required
 
@@ -567,9 +608,17 @@ def _ingredient_changes(recipe, profile, substitutions):
         if not reasons:
             continue
         names = recipe_ingredient_names({"ingredients": [item]})
-        changes.append({"ingredientIndex": index, "original": names[0] if names else text,
-                        "reasons": reasons, "replacement": suggested.get(index, {}).get("replacement"),
-                        "advisory": True})
+        suggestion = suggested.get(index, {})
+        changes.append({
+            "ingredientIndex": index,
+            "original": names[0] if names else text,
+            "reasons": reasons,
+            "replacement": suggestion.get("replacement"),
+            "alternatives": suggestion.get("alternatives") or [],
+            "candidateCount": int(suggestion.get("candidateCount") or 0),
+            "substitutionSource": suggestion.get("source"),
+            "advisory": True,
+        })
     return changes
 
 
@@ -656,6 +705,16 @@ def score_recipe(recipe: dict[str, Any], profile: dict[str, Any]) -> dict[str, A
         "substitutions": substitutions,
         "ingredientChanges": _ingredient_changes(recipe, profile, substitutions),
         "substitutionCoverageComplete": substitution_coverage_complete,
+        "substitutionCandidateCount": sum(
+            len(row.get("alternatives") or [])
+            for row in substitutions
+            if isinstance(row, dict)
+        ),
+        "substitutionSources": sorted({
+            str(row.get("source"))
+            for row in substitutions
+            if isinstance(row, dict) and row.get("source")
+        }),
         "eligibleWithSubstitutions": complete,
         "requiresSubstitutions": complete,
         "score": round(score, 1),

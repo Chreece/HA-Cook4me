@@ -5,12 +5,45 @@ from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-LOGIC_PATH = ROOT / "custom_components" / "cook4me" / "recipe_logic.py"
+COMPONENT = ROOT / "custom_components" / "cook4me"
+LOGIC_PATH = COMPONENT / "recipe_logic.py"
+SUBS_PATH = COMPONENT / "ingredient_substitutions.py"
 
 spec = importlib.util.spec_from_file_location("cook4me_recipe_logic_v250_test", LOGIC_PATH)
 assert spec is not None and spec.loader is not None
 logic = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(logic)
+
+sub_spec = importlib.util.spec_from_file_location("cook4me_substitutions_v250_test", SUBS_PATH)
+assert sub_spec is not None and sub_spec.loader is not None
+subs = importlib.util.module_from_spec(sub_spec)
+sub_spec.loader.exec_module(subs)
+
+
+def _row(identifier, name):
+    return {
+        "id": identifier,
+        "conceptId": f"concept:food:{identifier}",
+        "canonicalName": name,
+        "name": name,
+        "classification": "food",
+    }
+
+
+_TARGETS = [
+    _row("target-tofu", "Tofu"),
+    _row("target-mushrooms", "Mushrooms"),
+    _row("target-chickpeas", "Chickpeas"),
+]
+
+
+def catalog_recipe(*names):
+    ingredients = [_row(f"source-{index}", name) for index, name in enumerate(names)]
+    payload = {"ingredients": [*(dict(row) for row in _TARGETS), *ingredients]}
+    summary = subs.enrich_catalog_substitutions(payload)
+    if summary["missingProfiles"]:
+        raise AssertionError(summary)
+    return {"title": "Catalog recipe", "ingredients": ingredients}
 
 
 class VegetarianFishSubstitutionGuardTests(unittest.TestCase):
@@ -25,13 +58,7 @@ class VegetarianFishSubstitutionGuardTests(unittest.TestCase):
         }
 
     def test_fish_suggestion_has_concrete_replacement_and_complete_coverage(self):
-        recipe = {
-            "title": "Cod with vegetables",
-            "ingredients": [
-                {"name": "Cod"},
-                {"name": "Carrots"},
-            ],
-        }
+        recipe = catalog_recipe("Cod", "Carrots")
         match = logic.score_recipe(recipe, self.profile())
 
         self.assertFalse(match["safe"])
@@ -42,14 +69,7 @@ class VegetarianFishSubstitutionGuardTests(unittest.TestCase):
         self.assertTrue(match["substitutions"][0]["replacement"]["name"])
 
     def test_every_fish_row_requires_its_own_replacement(self):
-        recipe = {
-            "title": "Fish duo",
-            "ingredients": [
-                {"name": "Cod"},
-                {"name": "Salmon"},
-                {"name": "Potatoes"},
-            ],
-        }
+        recipe = catalog_recipe("Cod", "Salmon", "Potatoes")
         match = logic.score_recipe(recipe, self.profile())
 
         self.assertTrue(match["substitutionCoverageComplete"])
@@ -86,10 +106,7 @@ class VegetarianFishSubstitutionGuardTests(unittest.TestCase):
         self.assertEqual(match["substitutions"], [])
 
     def test_allergy_or_avoid_violation_cannot_be_hidden_by_diet_substitution(self):
-        recipe = {
-            "title": "Cod with soy",
-            "ingredients": [{"name": "Cod"}],
-        }
+        recipe = catalog_recipe("Cod")
         profile = self.profile()
         profile["avoid"] = ["tofu", "mushrooms", "chickpeas"]
         match = logic.score_recipe(recipe, profile)

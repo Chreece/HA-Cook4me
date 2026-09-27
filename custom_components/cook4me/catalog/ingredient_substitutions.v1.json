@@ -1,0 +1,907 @@
+{
+  "schemaVersion": 1,
+  "version": "2026.9.27.2",
+  "evidence": "Cook4Me reviewed dietary substitution catalog v1",
+  "candidates": {
+    "tofu": {
+      "name": "Firm tofu",
+      "targetCanonicalName": "Tofu",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [
+        "soy"
+      ],
+      "contexts": [
+        "general",
+        "protein"
+      ],
+      "confidence": "reviewed"
+    },
+    "mushrooms": {
+      "name": "Mushrooms",
+      "targetCanonicalName": "Mushrooms",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "general",
+        "protein"
+      ],
+      "confidence": "reviewed"
+    },
+    "chickpeas": {
+      "name": "Chickpeas",
+      "targetCanonicalName": "Chickpeas",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "general",
+        "protein"
+      ],
+      "confidence": "reviewed"
+    },
+    "vegetable_stock": {
+      "name": "Vegetable stock",
+      "targetCanonicalName": "Vegetable stock",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [
+        "celery"
+      ],
+      "contexts": [
+        "general",
+        "stock"
+      ],
+      "confidence": "reviewed"
+    },
+    "vegetable_stock_cube": {
+      "name": "Vegetable stock cube",
+      "targetCanonicalName": "Vegetable stock cube",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [
+        "celery"
+      ],
+      "contexts": [
+        "stock"
+      ],
+      "confidence": "reviewed"
+    },
+    "water": {
+      "name": "Water",
+      "targetCanonicalName": "Water",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "stock"
+      ],
+      "confidence": "reviewed"
+    },
+    "coconut_cream": {
+      "name": "Coconut cream",
+      "targetCanonicalName": "Coconut cream",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [
+        "tree_nut"
+      ],
+      "contexts": [
+        "cream",
+        "yogurt"
+      ],
+      "confidence": "reviewed"
+    },
+    "soy_cream": {
+      "name": "Soy cream",
+      "targetCanonicalName": "Soy cream",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [
+        "soy"
+      ],
+      "contexts": [
+        "cream",
+        "yogurt"
+      ],
+      "confidence": "reviewed"
+    },
+    "soy_milk": {
+      "name": "Soy milk",
+      "targetCanonicalName": "Soy milk",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [
+        "soy"
+      ],
+      "contexts": [
+        "milk"
+      ],
+      "confidence": "reviewed"
+    },
+    "unsweetened_soy_milk": {
+      "name": "Unsweetened soy milk",
+      "targetCanonicalName": "Unsweetened soy milk",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [
+        "soy"
+      ],
+      "contexts": [
+        "milk"
+      ],
+      "confidence": "reviewed"
+    },
+    "rice_milk": {
+      "name": "Rice milk",
+      "targetCanonicalName": "Rice milk",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "milk"
+      ],
+      "confidence": "reviewed"
+    },
+    "olive_oil": {
+      "name": "Olive oil",
+      "targetCanonicalName": "Olive oil",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "fat"
+      ],
+      "confidence": "reviewed"
+    },
+    "coconut_oil": {
+      "name": "Coconut oil",
+      "targetCanonicalName": "Coconut oil",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [
+        "tree_nut"
+      ],
+      "contexts": [
+        "fat"
+      ],
+      "confidence": "reviewed"
+    },
+    "maple_syrup": {
+      "name": "Maple syrup",
+      "targetCanonicalName": "Maple syrup",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "sweetener"
+      ],
+      "confidence": "reviewed"
+    },
+    "agave_syrup": {
+      "name": "Agave syrup",
+      "targetCanonicalName": "Agave syrup",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "sweetener"
+      ],
+      "confidence": "reviewed"
+    },
+    "sugar": {
+      "name": "Sugar",
+      "targetCanonicalName": "Sugar",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "sweetener"
+      ],
+      "confidence": "reviewed"
+    },
+    "soy_sauce": {
+      "name": "Soy sauce",
+      "targetCanonicalName": "Soy sauce",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [
+        "soy",
+        "gluten"
+      ],
+      "contexts": [
+        "sauce",
+        "umami"
+      ],
+      "confidence": "reviewed"
+    },
+    "agar": {
+      "name": "Agar-agar",
+      "targetCanonicalName": "Agar-agar",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "gel",
+        "thickener"
+      ],
+      "confidence": "reviewed"
+    },
+    "pectin": {
+      "name": "Pectin",
+      "targetCanonicalName": "Pectin",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "gel",
+        "thickener"
+      ],
+      "confidence": "reviewed"
+    },
+    "cornstarch": {
+      "name": "Cornstarch",
+      "targetCanonicalName": "Cornstarch",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "thickener",
+        "binder"
+      ],
+      "confidence": "reviewed"
+    },
+    "lemon_juice": {
+      "name": "Lemon juice",
+      "targetCanonicalName": "Lemon juice",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "fresh_cheese",
+        "acid"
+      ],
+      "confidence": "reviewed"
+    },
+    "citric_acid": {
+      "name": "Citric acid",
+      "targetCanonicalName": "Citric acid",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "fresh_cheese",
+        "acid"
+      ],
+      "confidence": "reviewed"
+    },
+    "ground_flaxseed_water": {
+      "name": "Ground flaxseed + water",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "egg",
+        "binder"
+      ],
+      "confidence": "reviewed",
+      "components": [
+        {
+          "targetCanonicalName": "Ground flaxseed",
+          "quantity": 1,
+          "unit": "tbsp"
+        },
+        {
+          "targetCanonicalName": "Water",
+          "quantity": 3,
+          "unit": "tbsp"
+        }
+      ]
+    },
+    "cornstarch_water": {
+      "name": "Cornstarch + water",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "egg",
+        "binder"
+      ],
+      "confidence": "reviewed",
+      "components": [
+        {
+          "targetCanonicalName": "Cornstarch",
+          "quantity": 1,
+          "unit": "tbsp"
+        },
+        {
+          "targetCanonicalName": "Water",
+          "quantity": 3,
+          "unit": "tbsp"
+        }
+      ]
+    },
+    "tofu_lemon": {
+      "name": "Tofu + lemon juice",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [
+        "soy"
+      ],
+      "contexts": [
+        "yogurt",
+        "cheese"
+      ],
+      "confidence": "reviewed",
+      "components": [
+        {
+          "targetCanonicalName": "Tofu"
+        },
+        {
+          "targetCanonicalName": "Lemon juice"
+        }
+      ]
+    },
+    "coconut_cream_lemon": {
+      "name": "Coconut cream + lemon juice",
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [
+        "tree_nut"
+      ],
+      "contexts": [
+        "yogurt"
+      ],
+      "confidence": "reviewed",
+      "components": [
+        {
+          "targetCanonicalName": "Coconut cream"
+        },
+        {
+          "targetCanonicalName": "Lemon juice"
+        }
+      ]
+    },
+    "aquafaba": {
+      "name": "Aquafaba (chickpea brine)",
+      "virtualCatalogIngredient": true,
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "egg_white",
+        "egg",
+        "binder",
+        "foam"
+      ],
+      "confidence": "reviewed"
+    },
+    "microbial_rennet": {
+      "name": "Microbial rennet",
+      "virtualCatalogIngredient": true,
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "rennet",
+        "cheese"
+      ],
+      "confidence": "reviewed"
+    },
+    "bentonite": {
+      "name": "Food-grade bentonite",
+      "virtualCatalogIngredient": true,
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "clarifier"
+      ],
+      "confidence": "reviewed"
+    },
+    "nutritional_yeast": {
+      "name": "Nutritional yeast",
+      "virtualCatalogIngredient": true,
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "cheese",
+        "umami"
+      ],
+      "confidence": "reviewed",
+      "allergenEvidence": "unknown"
+    },
+    "plant_cheese": {
+      "name": "Plant-based cheese",
+      "virtualCatalogIngredient": true,
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "cheese"
+      ],
+      "confidence": "reviewed",
+      "allergenEvidence": "unknown"
+    },
+    "plant_yogurt": {
+      "name": "Plant-based yogurt",
+      "virtualCatalogIngredient": true,
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "yogurt"
+      ],
+      "confidence": "reviewed",
+      "allergenEvidence": "unknown"
+    },
+    "pea_protein": {
+      "name": "Pea protein",
+      "virtualCatalogIngredient": true,
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "protein"
+      ],
+      "confidence": "reviewed"
+    },
+    "coconut_aminos": {
+      "name": "Coconut aminos",
+      "virtualCatalogIngredient": true,
+      "compatibleDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [
+        "tree_nut"
+      ],
+      "contexts": [
+        "sauce",
+        "umami"
+      ],
+      "confidence": "reviewed"
+    }
+  },
+  "sourceProfiles": [
+    {
+      "id": "gelatin",
+      "match": {
+        "terms": [
+          "gelatin",
+          "gelatine",
+          "gelatina",
+          "ζελατινη",
+          "ζελατίνη"
+        ]
+      },
+      "candidateKeys": [
+        "agar",
+        "pectin",
+        "cornstarch"
+      ]
+    },
+    {
+      "id": "rennet",
+      "match": {
+        "terms": [
+          "rennet",
+          "animal rennet",
+          "lab",
+          "tierisches lab",
+          "presure",
+          "présure",
+          "caglio",
+          "cuajo",
+          "πυτια",
+          "πυτιά"
+        ]
+      },
+      "candidateKeys": [
+        "microbial_rennet",
+        "lemon_juice",
+        "citric_acid"
+      ]
+    },
+    {
+      "id": "isinglass",
+      "match": {
+        "terms": [
+          "isinglass",
+          "hausenblase",
+          "colle de poisson",
+          "colla di pesce",
+          "cola de pescado",
+          "ιχθυοκολλα",
+          "ιχθυόκολλα"
+        ]
+      },
+      "candidateKeys": [
+        "bentonite"
+      ]
+    },
+    {
+      "id": "animal_fat",
+      "match": {
+        "terms": [
+          "lard",
+          "tallow",
+          "suet",
+          "schmalz"
+        ]
+      },
+      "candidateKeys": [
+        "olive_oil",
+        "coconut_oil"
+      ]
+    },
+    {
+      "id": "fish_sauce",
+      "match": {
+        "terms": [
+          "fish sauce",
+          "oyster sauce",
+          "worcestershire",
+          "sauce de poisson",
+          "nuoc mam"
+        ]
+      },
+      "candidateKeys": [
+        "soy_sauce",
+        "coconut_aminos"
+      ]
+    },
+    {
+      "id": "stock",
+      "match": {
+        "terms": [
+          "stock",
+          "broth",
+          "bouillon",
+          "brühe",
+          "bruehe",
+          "fond",
+          "caldo"
+        ]
+      },
+      "candidateKeys": [
+        "vegetable_stock",
+        "vegetable_stock_cube",
+        "water"
+      ]
+    },
+    {
+      "id": "animal_protein",
+      "match": {
+        "dietHit": "animal"
+      },
+      "candidateKeys": [
+        "tofu",
+        "mushrooms",
+        "chickpeas"
+      ]
+    },
+    {
+      "id": "egg_white",
+      "match": {
+        "terms": [
+          "egg white",
+          "egg whites",
+          "white of egg",
+          "whites",
+          "eiweiss",
+          "eiweiß",
+          "ασπραδι",
+          "ασπράδι",
+          "blanc d oeuf",
+          "blanc d'œuf",
+          "albume",
+          "clara de huevo"
+        ]
+      },
+      "candidateKeys": [
+        "aquafaba",
+        "ground_flaxseed_water",
+        "cornstarch_water"
+      ]
+    },
+    {
+      "id": "egg_yolk",
+      "match": {
+        "terms": [
+          "egg yolk",
+          "egg yolks",
+          "yolk",
+          "yolks",
+          "eigelb",
+          "κροκος",
+          "κρόκος",
+          "jaune d oeuf",
+          "jaune d'œuf",
+          "tuorlo",
+          "yema de huevo"
+        ]
+      },
+      "candidateKeys": [
+        "ground_flaxseed_water",
+        "tofu"
+      ]
+    },
+    {
+      "id": "egg",
+      "match": {
+        "terms": [
+          "egg",
+          "eggs",
+          "ei",
+          "eier",
+          "αυγο",
+          "αυγό",
+          "αυγα",
+          "αυγά",
+          "oeuf",
+          "oeufs",
+          "œuf",
+          "œufs",
+          "uovo",
+          "uova",
+          "huevo",
+          "huevos"
+        ]
+      },
+      "candidateKeys": [
+        "ground_flaxseed_water",
+        "aquafaba",
+        "tofu"
+      ]
+    },
+    {
+      "id": "whey_casein",
+      "match": {
+        "terms": [
+          "whey",
+          "casein",
+          "molke",
+          "kasein",
+          "käsein",
+          "lactoserum",
+          "lactosérum",
+          "caseine",
+          "caséine",
+          "siero di latte",
+          "caseina",
+          "suero de leche",
+          "caseína",
+          "ορος γαλακτος",
+          "ορός γάλακτος",
+          "καζεινη",
+          "καζεΐνη"
+        ]
+      },
+      "candidateKeys": [
+        "pea_protein",
+        "tofu"
+      ]
+    },
+    {
+      "id": "yogurt",
+      "match": {
+        "terms": [
+          "kefir",
+          "yogurt",
+          "yoghurt",
+          "joghurt",
+          "γιαουρτι",
+          "γιαούρτι"
+        ]
+      },
+      "candidateKeys": [
+        "plant_yogurt",
+        "tofu_lemon",
+        "coconut_cream_lemon"
+      ]
+    },
+    {
+      "id": "cheese",
+      "match": {
+        "terms": [
+          "cheese",
+          "kase",
+          "käse",
+          "τυρι",
+          "τυρί",
+          "parmesan",
+          "parmesankase",
+          "parmesankäse",
+          "fromage",
+          "formaggio",
+          "queso",
+          "mozzarella",
+          "feta",
+          "ricotta",
+          "quark",
+          "mascarpone"
+        ]
+      },
+      "candidateKeys": [
+        "plant_cheese",
+        "tofu",
+        "nutritional_yeast"
+      ]
+    },
+    {
+      "id": "butter",
+      "match": {
+        "terms": [
+          "butter",
+          "βουτυρο",
+          "βούτυρο",
+          "beurre",
+          "burro",
+          "mantequilla",
+          "ghee"
+        ]
+      },
+      "candidateKeys": [
+        "olive_oil",
+        "coconut_oil"
+      ]
+    },
+    {
+      "id": "cream",
+      "match": {
+        "terms": [
+          "cream",
+          "sahne",
+          "creme",
+          "panna",
+          "κρεμα",
+          "κρέμα"
+        ]
+      },
+      "candidateKeys": [
+        "coconut_cream",
+        "soy_cream"
+      ]
+    },
+    {
+      "id": "milk",
+      "match": {
+        "terms": [
+          "milk",
+          "milch",
+          "lait",
+          "latte",
+          "leche",
+          "γαλα",
+          "γάλα"
+        ]
+      },
+      "candidateKeys": [
+        "soy_milk",
+        "rice_milk",
+        "unsweetened_soy_milk"
+      ]
+    },
+    {
+      "id": "honey",
+      "match": {
+        "terms": [
+          "honey",
+          "honig",
+          "miel",
+          "miele",
+          "μελι",
+          "μέλι"
+        ]
+      },
+      "candidateKeys": [
+        "maple_syrup",
+        "agave_syrup",
+        "sugar"
+      ]
+    }
+  ]
+}

@@ -8,11 +8,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / "custom_components" / "cook4me" / "catalog" / "merged_catalog.v1.json"
 LOGIC = ROOT / "custom_components" / "cook4me" / "recipe_logic.py"
+SUBSTITUTIONS = ROOT / "custom_components" / "cook4me" / "ingredient_substitutions.py"
 
 spec = importlib.util.spec_from_file_location("cook4me_recipe_logic_catalog_audit", LOGIC)
 assert spec is not None and spec.loader is not None
 logic = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(logic)
+
+sub_spec = importlib.util.spec_from_file_location(
+    "cook4me_ingredient_substitutions_catalog_audit", SUBSTITUTIONS
+)
+assert sub_spec is not None and sub_spec.loader is not None
+substitutions = importlib.util.module_from_spec(sub_spec)
+sub_spec.loader.exec_module(substitutions)
 
 DIETS = ("pescatarian", "vegetarian", "vegan")
 
@@ -90,6 +98,7 @@ def _candidate(recipe, variant, lookup):
 
 def main():
     payload = json.loads(CATALOG.read_text(encoding="utf-8"))
+    substitution_summary = substitutions.enrich_catalog_substitutions(payload)
     lookup = _ingredient_lookup(payload)
     unresolved = Counter()
     unresolved_examples = defaultdict(list)
@@ -97,6 +106,8 @@ def main():
     adapted = Counter()
     safe = Counter()
     incompatible = Counter()
+    legacy_fallback = Counter()
+    legacy_examples = defaultdict(list)
     variants_seen = 0
 
     for recipe in payload.get("recipes") or []:
@@ -132,6 +143,16 @@ def main():
                     and match.get("substitutionCoverageComplete")
                 ):
                     adapted[diet] += 1
+                    sources = set(match.get("substitutionSources") or [])
+                    if "legacy_text_fallback" in sources:
+                        legacy_fallback[diet] += 1
+                        if len(legacy_examples[diet]) < 5:
+                            legacy_examples[diet].append({
+                                "title": title,
+                                "variantId": variant_id,
+                                "language": language,
+                                "sources": sorted(sources),
+                            })
                     continue
 
                 for change in match.get("ingredientChanges") or []:
@@ -169,6 +190,9 @@ def main():
         "safe": dict(safe),
         "incompatible": dict(incompatible),
         "adapted": dict(adapted),
+        "legacyFallback": dict(legacy_fallback),
+        "legacyExamples": dict(legacy_examples),
+        "catalogSubstitutionSummary": substitution_summary,
         "unresolvedOccurrences": sum(unresolved.values()),
         "unresolvedGroups": len(unresolved),
         "topUnresolved": rows[:120],
@@ -191,6 +215,18 @@ def main():
         raise SystemExit(
             f"Catalog has {sum(unresolved.values())} unresolved diet-conflict occurrences "
             f"across {len(unresolved)} groups"
+        )
+    if any(legacy_fallback.values()):
+        raise SystemExit(
+            "Official catalog diet adaptations still use legacy text fallback: "
+            + json.dumps(dict(legacy_fallback), sort_keys=True)
+        )
+    if int(substitution_summary.get("ingredientCount") or 0) <= 0:
+        raise SystemExit("No ingredient-owned substitutions were mounted")
+    if substitution_summary.get("missingProfiles"):
+        raise SystemExit(
+            "Mounted substitution profiles are missing: "
+            + ", ".join(substitution_summary["missingProfiles"])
         )
 
 

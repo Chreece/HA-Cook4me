@@ -5,12 +5,60 @@ from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-LOGIC_PATH = ROOT / "custom_components" / "cook4me" / "recipe_logic.py"
+COMPONENT = ROOT / "custom_components" / "cook4me"
+LOGIC_PATH = COMPONENT / "recipe_logic.py"
+SUBS_PATH = COMPONENT / "ingredient_substitutions.py"
 
 spec = importlib.util.spec_from_file_location("cook4me_recipe_logic_v251_test", LOGIC_PATH)
 assert spec is not None and spec.loader is not None
 logic = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(logic)
+
+sub_spec = importlib.util.spec_from_file_location("cook4me_substitutions_v251_test", SUBS_PATH)
+assert sub_spec is not None and sub_spec.loader is not None
+subs = importlib.util.module_from_spec(sub_spec)
+sub_spec.loader.exec_module(subs)
+
+
+def catalog_row(identifier: str, name: str) -> dict:
+    return {
+        "id": identifier,
+        "conceptId": f"concept:food:{identifier}",
+        "canonicalName": name,
+        "name": name,
+        "classification": "food",
+    }
+
+
+_TARGET_NAMES = (
+    "Tofu",
+    "Mushrooms",
+    "Chickpeas",
+    "Vegetable stock",
+    "Vegetable stock cube",
+    "Water",
+    "Coconut cream",
+    "Soy cream",
+    "Soy milk",
+    "Unsweetened soy milk",
+    "Rice milk",
+    "Olive oil",
+    "Coconut oil",
+    "Maple syrup",
+    "Agave syrup",
+    "Sugar",
+    "Soy sauce",
+    "Agar-agar",
+    "Pectin",
+    "Cornstarch",
+    "Lemon juice",
+    "Citric acid",
+    "Ground flaxseed",
+)
+TARGETS = [
+    catalog_row(f"target-{index}", name)
+    for index, name in enumerate(_TARGET_NAMES)
+]
 
 
 def profile(diet: str, *, allergies=(), avoid=()):
@@ -25,9 +73,22 @@ def profile(diet: str, *, allergies=(), avoid=()):
 
 
 def recipe(*ingredients: str):
+    sources = [
+        catalog_row(f"source-{index}-{logic.normalize_text(name)}", name)
+        for index, name in enumerate(ingredients)
+    ]
+    payload = {
+        "ingredients": [
+            *(dict(row) for row in TARGETS),
+            *sources,
+        ]
+    }
+    summary = subs.enrich_catalog_substitutions(payload)
+    if summary["missingProfiles"] or summary["unresolvedTargets"]:
+        raise AssertionError(summary)
     return {
         "title": "Diet substitution matrix test",
-        "ingredients": [{"name": name} for name in ingredients],
+        "ingredients": sources,
     }
 
 
@@ -46,13 +107,14 @@ class AllDietSubstitutionTests(unittest.TestCase):
             [row["replacement"]["key"] for row in match["substitutions"]],
             expected_keys,
         )
+        self.assertEqual(match["substitutionSources"], ["ingredient_catalog"])
         return match
 
     def test_pescatarian_meat_gelatin_rennet_and_lard(self):
         self.assert_adapted(
             "pescatarian",
             ["Chicken", "Gelatin", "Animal rennet", "Lard"],
-            ["tofu", "agar", "microbial_rennet", "oil"],
+            ["tofu", "agar", "microbial_rennet", "olive_oil"],
         )
 
     def test_vegetarian_fish_meat_gelatin_and_isinglass(self):
@@ -83,13 +145,13 @@ class AllDietSubstitutionTests(unittest.TestCase):
             [
                 "tofu",
                 "tofu",
-                "oat_milk",
-                "oat_cream",
-                "oil",
-                "soy_yogurt",
-                "sweetener",
-                "soy_cheese",
-                "flax_egg",
+                "soy_milk",
+                "coconut_cream",
+                "olive_oil",
+                "plant_yogurt",
+                "maple_syrup",
+                "plant_cheese",
+                "ground_flaxseed_water",
                 "aquafaba",
                 "pea_protein",
                 "agar",
@@ -119,7 +181,10 @@ class AllDietSubstitutionTests(unittest.TestCase):
             profile("vegan", allergies=("soy",)),
         )
         self.assertTrue(match["eligibleWithSubstitutions"])
-        self.assertEqual(match["substitutions"][0]["replacement"]["key"], "coconut_yogurt")
+        self.assertEqual(
+            match["substitutions"][0]["replacement"]["key"],
+            "coconut_cream_lemon",
+        )
 
     def test_fish_sauce_falls_back_when_soy_and_gluten_are_blocked(self):
         match = logic.score_recipe(
@@ -135,15 +200,15 @@ class AllDietSubstitutionTests(unittest.TestCase):
             profile("vegetarian", allergies=("celery",)),
         )
         self.assertTrue(match["eligibleWithSubstitutions"])
-        self.assertEqual(match["substitutions"][0]["replacement"]["key"], "mushroom_stock")
+        self.assertEqual(match["substitutions"][0]["replacement"]["key"], "water")
 
-    def test_cheese_falls_back_across_soy_and_nut_restrictions(self):
+    def test_cheese_fails_closed_when_all_reviewed_candidates_are_uncertain_or_blocked(self):
         match = logic.score_recipe(
             recipe("Cheese"),
             profile("vegan", allergies=("soy", "nuts")),
         )
-        self.assertTrue(match["eligibleWithSubstitutions"])
-        self.assertEqual(match["substitutions"][0]["replacement"]["key"], "nutritional_yeast")
+        self.assertFalse(match["eligibleWithSubstitutions"])
+        self.assertFalse(match["substitutionCoverageComplete"])
 
     def test_multilingual_derivatives_are_replaced(self):
         cases = [
@@ -153,7 +218,7 @@ class AllDietSubstitutionTests(unittest.TestCase):
             ("vegan", "Molke", "pea_protein"),
             ("vegan", "Ορός γάλακτος", "pea_protein"),
             ("vegan", "Eiweiß", "aquafaba"),
-            ("vegan", "Yema de huevo", "flax_egg"),
+            ("vegan", "Yema de huevo", "ground_flaxseed_water"),
         ]
         for diet, ingredient, expected in cases:
             with self.subTest(diet=diet, ingredient=ingredient):
@@ -162,7 +227,7 @@ class AllDietSubstitutionTests(unittest.TestCase):
                 self.assertTrue(match["substitutionCoverageComplete"])
                 self.assertEqual(match["substitutions"][0]["replacement"]["key"], expected)
 
-    def test_omnivore_does_not_create_diet_substitutions(self):
+    def test_omnivore_does_not_mount_diet_substitutions(self):
         match = logic.score_recipe(recipe("Chicken", "Milk", "Egg"), profile("omnivore"))
         self.assertTrue(match["safe"])
         self.assertFalse(match["eligibleWithSubstitutions"])
