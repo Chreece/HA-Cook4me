@@ -32,7 +32,45 @@ def _profile(diet):
     }
 
 
-def _candidate(recipe, variant):
+def _identity_values(row):
+    if not isinstance(row, dict):
+        return ()
+    return tuple(
+        _text(row.get(key))
+        for key in ("ingredientId", "id", "key", "foodKey")
+        if _text(row.get(key))
+    )
+
+
+def _ingredient_lookup(payload):
+    lookup = {}
+    for row in payload.get("ingredients") or []:
+        if not isinstance(row, dict):
+            continue
+        for identity in _identity_values(row):
+            lookup.setdefault(identity, row)
+    return lookup
+
+
+def _resolved_ingredient(raw, lookup):
+    if not isinstance(raw, dict):
+        return raw
+    source = next((lookup.get(value) for value in _identity_values(raw) if value in lookup), None)
+    if not isinstance(source, dict):
+        return raw
+    out = dict(source)
+    out.update(raw)
+    if raw.get("originalName"):
+        out["originalName"] = raw["originalName"]
+    if not out.get("canonicalName"):
+        out["canonicalName"] = source.get("canonicalName") or source.get("name") or source.get("foodName")
+    for key in ("intelligence", "diets", "allergens", "classification", "conceptId"):
+        if key not in out and key in source:
+            out[key] = source[key]
+    return out
+
+
+def _candidate(recipe, variant, lookup):
     ingredients = variant.get("ingredients") or recipe.get("ingredients") or []
     return {
         "title": (
@@ -41,7 +79,7 @@ def _candidate(recipe, variant):
             or recipe.get("canonicalName")
             or ""
         ),
-        "ingredients": ingredients,
+        "ingredients": [_resolved_ingredient(row, lookup) for row in ingredients],
         **{
             key: variant.get(key, recipe.get(key))
             for key in ("excludedFoods", "detectedExcludedFoods", "recipeType")
@@ -52,6 +90,7 @@ def _candidate(recipe, variant):
 
 def main():
     payload = json.loads(CATALOG.read_text(encoding="utf-8"))
+    lookup = _ingredient_lookup(payload)
     unresolved = Counter()
     unresolved_examples = defaultdict(list)
     totals = Counter()
@@ -73,7 +112,7 @@ def main():
             language = _text(
                 variant.get("originalLanguage") or variant.get("language") or "unknown"
             ).lower()
-            candidate = _candidate(recipe, variant)
+            candidate = _candidate(recipe, variant, lookup)
             title = _text(candidate.get("title"))
             variant_id = _text(
                 variant.get("variantId")
