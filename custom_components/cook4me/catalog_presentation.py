@@ -163,7 +163,7 @@ def ingredient_choices(payload, language, query="", limit=None):
     families = defaultdict(list)
     for source in payload.get("ingredients", []):
         raw = presentation_ingredient(source)
-        if raw.get("classification") in {"equipment", "other", "ambiguous"}:
+        if raw.get("classification") in {"equipment", "other", "ambiguous", "substitution"} or raw.get("substitutionOnly"):
             continue
         canonical = clean_name(raw.get("canonicalName"))
         if not canonical or name_key(canonical) in excluded_names():
@@ -213,7 +213,7 @@ def ingredient_choices(payload, language, query="", limit=None):
             continue
         row = {key: deepcopy(raw[key]) for key in (
             "id", "key", "conceptId", "classification", "nutritionEligible", "lifecycle",
-            "substitutions", "substitutionDiets", "substitutionCatalogVersion"
+            "substitutions", "substitutionDiets", "substitutionCatalogVersion", "substitutionOnly"
         ) if key in raw}
         # One display choice can represent several exact source rows for the
         # same cleaned food name. Keep reviewed lifecycle metadata when only
