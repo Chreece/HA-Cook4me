@@ -197,6 +197,14 @@ def ingredient_display_name(ingredient: Any, language: str) -> str:
     return _core._presentation.display_name(raw or ingredient, language)
 
 
+def ingredient_substitution_candidates(ingredient: Any) -> list[dict[str, Any]]:
+    """Return all reviewed substitution candidates owned by one catalog ingredient."""
+    raw = _core._global_ingredient(load_release_catalog(), ingredient)
+    if not isinstance(raw, dict):
+        return []
+    return deepcopy(raw.get("substitutions") or [])
+
+
 def ingredient_stock_identities(ingredient: Any) -> tuple[str, ...]:
     """Return stable inventory identities for one semantic ingredient concept.
 
