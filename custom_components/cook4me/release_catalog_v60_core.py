@@ -11,6 +11,7 @@ try:
     from . import recipe_metrics_v60 as _metrics
     from . import catalog_presentation as _presentation
     from . import ingredient_lifecycle as _lifecycle
+    from . import ingredient_substitutions as _substitutions
     from .catalog_search_index import (
         compile_search_index,
         prepare_search_index,
@@ -38,6 +39,7 @@ except ImportError:  # Standalone unit-test import via spec_from_file_location.
     )
     _presentation = _load_sibling("cook4me_catalog_presentation", "catalog_presentation.py")
     _lifecycle = _load_sibling("cook4me_ingredient_lifecycle", "ingredient_lifecycle.py")
+    _substitutions = _load_sibling("cook4me_ingredient_substitutions", "ingredient_substitutions.py")
     _search_module = _load_sibling(
         "cook4me_catalog_search_index_runtime_test", "catalog_search_index.py"
     )
@@ -66,6 +68,9 @@ _INGREDIENT_METADATA_FIELDS = (
     "dietEligible",
     "allergenEligible",
     "needsSemanticConfirmation",
+    "substitutions",
+    "substitutionDiets",
+    "substitutionCatalogVersion",
 )
 
 
@@ -230,6 +235,7 @@ def load_release_catalog() -> dict[str, Any]:
     _legacy.load_release_catalog.cache_clear()
     payload = _legacy.load_release_catalog()
     _lifecycle.enrich_catalog_ingredients(payload)
+    _substitutions.enrich_catalog_substitutions(payload)
     _prepare_fast_indexes(payload)
     return payload
 
@@ -285,6 +291,7 @@ def release_catalog_summary() -> dict[str, Any]:
         "sourceLocalIngredientCount": int(source.get("sourceLocalIngredientCount") or 0),
         "runtimeNutritionProfileCount": len(payload.get("_runtimeNutritionIndex") or {}),
         "ingredientLifecycle": deepcopy(payload.get("_runtimeLifecycleSummary") or {}),
+        "ingredientSubstitutions": deepcopy(payload.get("_runtimeSubstitutionSummary") or {}),
     }
 
 
