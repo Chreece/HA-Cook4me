@@ -306,39 +306,9 @@ def _explicit_diet_conflict(item, diet):
     return state is False or state == "incompatible"
 
 
-# Culinary suggestions, never rewritten cloud recipes or invented nutrient data.
-# Every candidate is concrete enough to display and to run through the existing
-# allergy/avoid-term checks.  Ordering is intentional: prefer the closest common
-# replacement, then fall back to alternatives with different allergen profiles.
-_DIET_REPLACEMENTS = {
-    "tofu": ("Firm tofu", ("soy",)),
-    "mushrooms": ("Mushrooms", ()),
-    "chickpeas": ("Chickpeas", ()),
-    "stock": ("Vegetable stock", ("celery",)),
-    "mushroom_stock": ("Mushroom stock", ()),
-    "oat_cream": ("Oat cream", ("gluten",)),
-    "soy_cream": ("Soy cream", ("soy",)),
-    "coconut_cream": ("Coconut cream", ()),
-    "oat_milk": ("Oat milk", ("gluten",)),
-    "soy_milk": ("Soy milk", ("soy",)),
-    "rice_milk": ("Rice milk", ()),
-    "oil": ("Olive oil", ()),
-    "soy_yogurt": ("Soy yogurt", ("soy",)),
-    "coconut_yogurt": ("Coconut yogurt", ()),
-    "sweetener": ("Maple syrup", ()),
-    "soy_sauce": ("Soy sauce", ("soy", "gluten")),
-    "coconut_aminos": ("Coconut aminos", ()),
-    "agar": ("Agar-agar", ()),
-    "microbial_rennet": ("Microbial rennet", ()),
-    "bentonite": ("Food-grade bentonite", ()),
-    "soy_cheese": ("Soy-based plant cheese", ("soy",)),
-    "cashew_cheese": ("Cashew-based plant cheese", ("tree_nut",)),
-    "nutritional_yeast": ("Nutritional yeast", ()),
-    "flax_egg": ("Flax egg", ()),
-    "aquafaba": ("Aquafaba (chickpea brine)", ()),
-    "pea_protein": ("Pea protein", ()),
-}
-
+# Dietary incompatibility detection remains local and conservative. Replacement
+# candidates themselves are owned by catalog ingredient metadata and mounted
+# only after the active diet/filter profile is applied.
 _GELATIN_TERMS = ("gelatin", "gelatine", "gelatina", "ζελατινη", "ζελατίνη")
 _RENNET_TERMS = (
     "rennet", "animal rennet", "lab", "tierisches lab", "presure", "présure",
@@ -378,10 +348,6 @@ _PLANT_PHRASES.update({
     "soya milk", "rice milk", "cashew cheese", "soy cheese", "plant cheese",
     "microbial rennet", "flax egg",
 })
-
-
-def _has_any_phrase(text: str, phrases) -> bool:
-    return any(_contains_phrase(text, phrase) for phrase in phrases)
 
 
 def _mounted_candidate_text(candidate):
@@ -507,75 +473,11 @@ def _diet_substitutions(recipe, profile, violations):
             })
             continue
 
-        # Only unmapped/manual ingredients may use the compatibility fallback
-        # below. Catalog ingredients with an explicit substitution list are
-        # always resolved exclusively from their catalog-owned candidates.
-        if not hits[group]:
-            unresolved = True
-            continue
-        words = set(hits[group])
-        options = []
-        if _has_any_phrase(text, _GELATIN_TERMS):
-            options = ["agar"]
-        elif _has_any_phrase(text, _RENNET_TERMS):
-            options = ["microbial_rennet"]
-        elif _has_any_phrase(text, _ISINGLASS_TERMS):
-            options = ["bentonite"]
-        elif words & {"lard", "tallow", "suet", "schmalz"}:
-            options = ["oil"]
-        elif any(_contains_phrase(text, word) for word in ("fish sauce", "oyster sauce", "worcestershire", "sauce de poisson", "nuoc mam")):
-            options = ["soy_sauce", "coconut_aminos"]
-        elif any(_contains_phrase(text, word) for word in ("stock", "broth", "bouillon", "brühe", "bruehe", "fond", "caldo")):
-            options = ["stock", "mushroom_stock"]
-        elif hits[1]:
-            options = ["tofu", "mushrooms", "chickpeas"]
-        elif _has_any_phrase(text, _EGG_WHITE_TERMS):
-            options = ["aquafaba", "flax_egg"]
-        elif _has_any_phrase(text, _EGG_YOLK_TERMS):
-            options = ["flax_egg"]
-        elif _has_any_phrase(text, _EGG_TERMS):
-            options = ["flax_egg", "aquafaba"]
-        elif _has_any_phrase(text, _WHEY_CASEIN_TERMS):
-            options = ["pea_protein"]
-        elif _has_any_phrase(text, _KEFIR_TERMS):
-            options = ["soy_yogurt", "coconut_yogurt"]
-        elif _has_any_phrase(text, _CHEESE_TERMS):
-            options = ["soy_cheese", "cashew_cheese", "nutritional_yeast"]
-        elif words & {"butter", "βουτυρο", "βούτυρο", "beurre", "burro", "mantequilla", "ghee"}:
-            options = ["oil"]
-        elif words & {"cream", "sahne", "creme", "panna", "κρεμα", "κρέμα"}:
-            options = ["oat_cream", "soy_cream", "coconut_cream"]
-        elif words & {"milk", "milch", "lait", "latte", "leche", "γαλα", "γάλα"}:
-            options = ["oat_milk", "soy_milk", "rice_milk"]
-        elif words & {"yogurt", "yoghurt", "joghurt", "γιαουρτι", "γιαούρτι"}:
-            options = ["soy_yogurt", "coconut_yogurt"]
-        elif words & {"honey", "honig", "miel", "miele", "μελι", "μέλι"}:
-            options = ["sweetener"]
-        candidate = None
-        for key in options:
-            name, allergens = _DIET_REPLACEMENTS[key]
-            safety_text = " ".join((name, *allergens))
-            if any(_matches_term(safety_text, str(term)) for term in
-                   [*(profile.get("allergies") or []), *(profile.get("avoid") or [])]):
-                continue
-            if _diet_hits(normalize_text(name))[group]:
-                continue
-            candidate = {"key": key, "name": name}
-            break
-        if candidate is None:
-            unresolved = True
-            continue
-        names = recipe_ingredient_names({"ingredients": [item]})
-        substitutions.append({
-            "ingredientIndex": index,
-            "original": names[0] if names else text,
-            "replacement": candidate,
-            "alternatives": [candidate],
-            "candidateCount": 1,
-            "source": "legacy_text_fallback",
-            "reason": "diet:" + diet,
-            "advisory": True,
-        })
+        # No catalog-owned substitution metadata means there is no reviewed
+        # replacement. Unmapped/manual ingredients therefore fail closed until
+        # they are assigned to a catalog ingredient.
+        unresolved = True
+        continue
 
     # Recipe-level evidence must be accounted for by concrete ingredient rows.
     keys, _ = _excluded_values(recipe)
