@@ -91,7 +91,7 @@ class VegetarianFishSubstitutionGuardTests(unittest.TestCase):
             "ingredients": [{"name": "Cod"}],
         }
         profile = self.profile()
-        profile["avoid"] = ["tofu"]
+        profile["avoid"] = ["tofu", "mushrooms", "chickpeas"]
         match = logic.score_recipe(recipe, profile)
 
         self.assertFalse(match["eligibleWithSubstitutions"])
