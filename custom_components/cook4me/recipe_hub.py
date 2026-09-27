@@ -422,6 +422,20 @@ class Cook4MeRecipeHub:
             await self._save()
             return self.profile
 
+    async def async_inventory_assign_ingredient(
+        self, identity: str, ingredient: dict[str, Any]
+    ) -> dict[str, Any]:
+        from .inventory import assign_inventory_ingredient
+        async with self._durable_mutation():
+            profile = deepcopy(self._data["profile"])
+            profile["houseIngredients"] = assign_inventory_ingredient(
+                profile.get("houseIngredients"), identity, ingredient
+            )
+            profile["pantry"] = [row["name"] for row in profile["houseIngredients"]]
+            self._data["profile"] = self._normalize_profile(profile)
+            await self._save()
+            return self.profile
+
     async def async_inventory_update(
         self,
         identity: str,

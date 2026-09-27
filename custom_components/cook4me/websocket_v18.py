@@ -704,7 +704,9 @@ async def async_ingredient_info(hass, connection, msg) -> None:
             {
                 "identity": identity,
                 "ingredient": {
-                    **({"key": stock.get("key")} if stock and stock.get("key") else {}),
+                    **({"key": str(ingredient.get("key") or ingredient.get("foodKey") or ingredient.get("ingredientId") or ingredient.get("id"))}
+                       if (ingredient.get("key") or ingredient.get("foodKey") or ingredient.get("ingredientId") or ingredient.get("id"))
+                       else ({"key": stock.get("key")} if stock and stock.get("key") else {})),
                     "name": release_catalog.ingredient_display_name(ingredient, msg.get("language") or "en") or name or (stock or {}).get("name") or "Ingredient",
                 },
                 "stock": stock,
