@@ -33,6 +33,22 @@ _CATALOG_PATH = _core._CATALOG_PATH
 _MAX_PAGE_SIZE = _core._MAX_PAGE_SIZE
 
 
+def set_release_catalog_path(path: str | Path) -> None:
+    """Point all cached release-catalog layers at one runtime file."""
+    global _CATALOG_PATH
+    target = Path(path)
+    if target == _CATALOG_PATH:
+        return
+    _CATALOG_PATH = target
+    _core._CATALOG_PATH = target
+    load_release_catalog.cache_clear()
+    _core.load_release_catalog.cache_clear()
+    # Core normally refreshes the legacy layer on its next load. Update it now
+    # too so a direct legacy helper cannot retain the packaged path.
+    _core._legacy._CATALOG_PATH = target
+    _core._legacy.load_release_catalog.cache_clear()
+
+
 def _text(value: Any) -> str:
     return _core._text(value)
 

@@ -13,6 +13,7 @@ from homeassistant.exceptions import HomeAssistantError
 
 from . import websocket_v10 as recipe_search_api
 from .bridge import Cook4MeBridge
+from .catalog_storage import prepare_release_catalog_storage
 from .const import (
     CONF_LANGUAGE,
     DATA_BRIDGES,
@@ -26,7 +27,7 @@ from .expiry import (
     update_expiry_notification,
 )
 from .panel import async_register_panel
-from .release_catalog import async_warm_release_catalog
+from .release_catalog import async_warm_release_catalog, set_release_catalog_path
 from .stock_coverage import warm_stock_catalog
 from .notifications import Cook4MeNotifications, event_key
 from .smart_scale import apply_recipe_measurements, smart_scale_store_for_bridge
@@ -191,6 +192,12 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     # Both expensive catalog preparation and the small stock identity index
     # stay off HA's event loop. Log elapsed time, not recipe or inventory data.
     started = monotonic()
+    config_dir = getattr(getattr(hass, "config", None), "config_dir", None)
+    if config_dir:
+        catalog_path = await hass.async_add_executor_job(
+            prepare_release_catalog_storage, config_dir
+        )
+        set_release_catalog_path(catalog_path)
     await async_warm_release_catalog(hass)
     await hass.async_add_executor_job(warm_stock_catalog)
     logging.getLogger(__name__).info(
