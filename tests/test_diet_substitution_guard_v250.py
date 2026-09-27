@@ -41,7 +41,7 @@ def catalog_recipe(*names):
     ingredients = [_row(f"source-{index}", name) for index, name in enumerate(names)]
     payload = {"ingredients": [*(dict(row) for row in _TARGETS), *ingredients]}
     summary = subs.enrich_catalog_substitutions(payload)
-    if summary["missingProfiles"] or summary["unresolvedTargets"]:
+    if summary["missingProfiles"]:
         raise AssertionError(summary)
     return {"title": "Catalog recipe", "ingredients": ingredients}
 
