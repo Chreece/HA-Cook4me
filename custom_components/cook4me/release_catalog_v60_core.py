@@ -71,6 +71,9 @@ _INGREDIENT_METADATA_FIELDS = (
     "substitutions",
     "substitutionDiets",
     "substitutionCatalogVersion",
+    "substitutionOnly",
+    "substitutionCompatibleDiets",
+    "substitutionAllergens",
 )
 
 
