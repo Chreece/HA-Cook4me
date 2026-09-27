@@ -45,6 +45,12 @@ export const ReceiptQueueMixin=Base=>class extends Base{
   this._r232Ensure();
   if(receipt)this._r232Details.set(receipt.id,receipt);
   this._r232Expanded.clear();
+  // Every entry into Saved receipts starts visually folded, including when the
+  // same dialog DOM is reused after editing an item.
+  for(const detail of this._r232Dialog?.querySelectorAll('[data-r232-receipt]')||[]){
+   detail.open=false;const body=detail.querySelector('[data-r232-lines]');
+   if(body){body.replaceChildren();body._signature=null;}
+  }
   if(!this._r232Dialog){
    const d=document.createElement('dialog');d.className='r232-dialog';d.dataset.r232Queue='';
    d.innerHTML='<header><h2></h2><button type="button" class="btn secondary" data-r232-close></button></header><p data-r232-hint></p><p role="status" aria-live="polite" data-r232-message></p><div data-r232-list></div>';
@@ -198,7 +204,7 @@ export const ReceiptQueueMixin=Base=>class extends Base{
   this._r195Flush();const s=this._r195Session,item=this._r195Current();
   const metadata=Object.fromEntries(['merchant','currency','purchaseDate'].filter(k=>s.receipt[k]!==s.metadata?.[k]).map(k=>[k,s.receipt[k]]));
   const {receipt}=await this._r232Api('save_item',{receipt_id:s.receipt.id,item_id:item.id,item_revision:item.itemRevision||0,item,receipt:metadata});
-  if(s!==this._r195Session)return null;s.receipt=receipt;s.metadata=Object.fromEntries(['merchant','currency','purchaseDate'].map(k=>[k,receipt[k]]));s.dirty=false;this._v78Dirty=false;return receipt;
+  if(s!==this._r195Session)return null;s.receipt=receipt;this._r232Details.set(receipt.id,receipt);s.metadata=Object.fromEntries(['merchant','currency','purchaseDate'].map(k=>[k,receipt[k]]));s.dirty=false;this._v78Dirty=false;return receipt;
  }
  async _r195Action(action){
   if(!this._r232Editing)return super._r195Action(action);if(this._v78Busy)return;
