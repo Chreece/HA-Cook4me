@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 import unittest
 
-from test_catalog_lifecycle_v227 import lifecycle, profile
+from test_catalog_lifecycle_v227 import catalog, lifecycle, profile
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -74,6 +74,24 @@ class CatalogLifecycle247(unittest.TestCase):
                 self.assertNotEqual(profile(other)['profileId'], 'season_horseradish_by')
             else:
                 self.assertNotIn('profileId', profile(other), other)
+
+    def test_horseradish_display_choice_keeps_reviewed_lifecycle(self):
+        source = catalog.load_release_catalog()['ingredients']
+        ident = next(
+            row['id'] for row in source
+            if row.get('canonicalName') == 'Horseradish'
+            and row.get('classification') in (None, 'food')
+            and not row.get('needsSemanticConfirmation')
+        )
+        for language in ('el', 'de'):
+            row = next(
+                choice for choice in catalog.ingredient_choices(language)
+                if choice.get('id') == ident
+                or choice.get('key') == ident
+                or ident in choice.get('sourceIngredientIds', [])
+            )
+            self.assertEqual(row['lifecycle']['profileId'], 'season_horseradish_by')
+            self.assertEqual(row['lifecycle']['seasonality']['regions'][0]['months'], [10])
 
     def test_exact_byodo_prepared_horseradish_has_twenty_one_day_clock(self):
         data = profile('Horseradish sauce')
