@@ -300,6 +300,8 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
     for row in payload.get("ingredients") or []:
         if not isinstance(row, dict):
             continue
+        if row.get("substitutionOnly") or row.get("classification") == "substitution":
+            continue
         keys = substitution_candidate_keys(row)
         if not keys:
             continue
