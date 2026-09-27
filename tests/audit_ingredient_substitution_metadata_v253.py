@@ -24,7 +24,12 @@ EXACT_TARGETS = (
     "Soy yogurt", "Coconut yogurt", "Maple syrup", "Soy sauce",
     "Coconut aminos", "Agar agar", "Agar-agar", "Microbial rennet",
     "Bentonite", "Nutritional yeast", "Flaxseed", "Ground flaxseed",
-    "Aquafaba", "Pea protein",
+    "Aquafaba", "Pea protein", "Water", "Vegetable stock cube", "Olive oil",
+    "Coconut oil", "Sugar", "Agave syrup", "Tamari", "Gluten-free soy sauce",
+    "Lemon juice", "Citric acid", "Pectin", "Cornstarch", "Corn starch",
+    "Soy protein", "Textured soy protein", "Natural soy yogurt", "Soy yoghurt",
+    "Coconut yoghurt", "Plant-based yogurt", "Vegan cheese", "Plant-based cheese",
+    "Chickpea liquid", "Chickpea water",
 )
 
 
