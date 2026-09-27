@@ -35,6 +35,10 @@ jobs:
         run: |
           python tests/test_diet_substitution_guard_v250.py
           node tests/test_diet_substitution_guard_v250.mjs
+      - name: All restricted diets receive complete replacements
+        run: |
+          python tests/test_all_diet_substitutions_v251.py
+          node tests/test_all_diet_substitutions_v251.mjs
       - name: Retained progress, cancellation and variety
         run: |
           python tests/test_week_progress_v200.py
