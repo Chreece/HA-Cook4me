@@ -145,6 +145,23 @@ class AllDietSubstitutionTests(unittest.TestCase):
         self.assertTrue(match["eligibleWithSubstitutions"])
         self.assertEqual(match["substitutions"][0]["replacement"]["key"], "nutritional_yeast")
 
+    def test_multilingual_derivatives_are_replaced(self):
+        cases = [
+            ("pescatarian", "Tierisches Lab", "microbial_rennet"),
+            ("vegetarian", "Présure", "microbial_rennet"),
+            ("vegetarian", "Ιχθυόκολλα", "bentonite"),
+            ("vegan", "Molke", "pea_protein"),
+            ("vegan", "Ορός γάλακτος", "pea_protein"),
+            ("vegan", "Eiweiß", "aquafaba"),
+            ("vegan", "Yema de huevo", "flax_egg"),
+        ]
+        for diet, ingredient, expected in cases:
+            with self.subTest(diet=diet, ingredient=ingredient):
+                match = logic.score_recipe(recipe(ingredient), profile(diet))
+                self.assertTrue(match["eligibleWithSubstitutions"], match)
+                self.assertTrue(match["substitutionCoverageComplete"])
+                self.assertEqual(match["substitutions"][0]["replacement"]["key"], expected)
+
     def test_omnivore_does_not_create_diet_substitutions(self):
         match = logic.score_recipe(recipe("Chicken", "Milk", "Egg"), profile("omnivore"))
         self.assertTrue(match["safe"])
