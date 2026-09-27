@@ -176,14 +176,15 @@ class CatalogOwnedSubstitutionTests(unittest.TestCase):
         self.assertFalse(match["eligibleWithSubstitutions"])
         self.assertFalse(match["substitutionCoverageComplete"])
 
-    def test_unmapped_manual_recipe_retains_legacy_fallback_only(self):
+    def test_unmapped_manual_recipe_fails_closed_until_catalog_mapped(self):
         match = logic.score_recipe(
             {"title": "Manual cod", "ingredients": [{"name": "Cod"}]},
             profile("vegetarian"),
         )
-        self.assertTrue(match["eligibleWithSubstitutions"])
-        self.assertEqual(match["substitutionSources"], ["legacy_text_fallback"])
-        self.assertEqual(match["substitutions"][0]["candidateCount"], 1)
+        self.assertFalse(match["eligibleWithSubstitutions"])
+        self.assertFalse(match["substitutionCoverageComplete"])
+        self.assertEqual(match["substitutions"], [])
+        self.assertEqual(match["substitutionSources"], [])
 
     def test_substitution_catalog_resolves_all_declared_profiles(self):
         self.assertGreater(self.summary["ingredientCount"], 0)
