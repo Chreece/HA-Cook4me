@@ -294,6 +294,12 @@ def _matches_exclusion_key(term: str, exclusion_keys: set[str]) -> bool:
 def _explicit_diet_conflict(item, diet):
     if not isinstance(item, dict):
         return False
+    if str(diet or "").lower() in {
+        str(value).lower()
+        for value in item.get("substitutionDiets") or []
+        if str(value).strip()
+    }:
+        return True
     intelligence = item.get("intelligence") if isinstance(item.get("intelligence"), dict) else {}
     diets = intelligence.get("diets") or item.get("diets") or {}
     state = diets.get(diet) if isinstance(diets, dict) else None
@@ -395,6 +401,38 @@ def _mounted_candidate_text(candidate):
     return " ".join(value for value in values if value).strip()
 
 
+def _candidate_catalog_identities(candidate):
+    values = set()
+    def collect(target):
+        if not isinstance(target, dict):
+            return
+        for key in ("ingredientId", "id", "key", "foodKey", "conceptId"):
+            value = str(target.get(key) or "").strip()
+            if value:
+                values.add(value)
+    collect(candidate.get("target") if isinstance(candidate, dict) else None)
+    for component in candidate.get("components") or [] if isinstance(candidate, dict) else []:
+        if isinstance(component, dict):
+            collect(component.get("target"))
+    return values
+
+
+def _excluded_catalog_identities(profile):
+    values = set()
+    for row in profile.get("excludedIngredients") or []:
+        if not isinstance(row, dict):
+            continue
+        for key in ("ingredientId", "id", "key", "foodKey", "conceptId"):
+            value = str(row.get(key) or "").strip()
+            if value:
+                values.add(value)
+        for value in row.get("sourceIngredientIds") or []:
+            value = str(value or "").strip()
+            if value:
+                values.add(value)
+    return values
+
+
 def _mounted_candidates(item, profile, diet, group):
     raw_rows = item.get("substitutions") if isinstance(item, dict) else None
     if not isinstance(raw_rows, list):
@@ -404,6 +442,7 @@ def _mounted_candidates(item, profile, diet, group):
         *(str(value) for value in profile.get("avoid") or []),
     ]
     allergies = [str(value) for value in profile.get("allergies") or [] if str(value).strip()]
+    excluded_identities = _excluded_catalog_identities(profile)
     out = []
     for raw in raw_rows:
         if not isinstance(raw, dict):
@@ -415,6 +454,8 @@ def _mounted_candidates(item, profile, diet, group):
             continue
         safety_text = _mounted_candidate_text(raw)
         if any(_matches_term(safety_text, term) for term in restrictions if term.strip()):
+            continue
+        if excluded_identities and _candidate_catalog_identities(raw) & excluded_identities:
             continue
         if _diet_hits(normalize_text(str(raw.get("name") or "")))[group]:
             continue
@@ -444,8 +485,8 @@ def _diet_substitutions(recipe, profile, violations):
         unresolved |= not bool(text)
         hits = _diet_hits(text)
         ingredient_hits.append(hits)
-        if not hits[group]:
-            unresolved |= _explicit_diet_conflict(item, diet)
+        conflicting = bool(hits[group] or _explicit_diet_conflict(item, diet))
+        if not conflicting:
             continue
 
         mounted = _mounted_candidates(item, profile, diet, group)
@@ -466,6 +507,12 @@ def _diet_substitutions(recipe, profile, violations):
             })
             continue
 
+        # Only unmapped/manual ingredients may use the compatibility fallback
+        # below. Catalog ingredients with an explicit substitution list are
+        # always resolved exclusively from their catalog-owned candidates.
+        if not hits[group]:
+            unresolved = True
+            continue
         words = set(hits[group])
         options = []
         if _has_any_phrase(text, _GELATIN_TERMS):
