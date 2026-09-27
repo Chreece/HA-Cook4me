@@ -8,6 +8,7 @@ export {dietAdaptation};
 
 const LABELS={
  en:{
+  tofu:'Firm tofu',mushrooms:'Mushrooms',chickpeas:'Chickpeas',
   vegetable_stock:'Vegetable stock',vegetable_stock_cube:'Vegetable stock cube',water:'Water',
   unsweetened_soy_milk:'Unsweetened soy milk',olive_oil:'Olive oil',coconut_oil:'Coconut oil',
   maple_syrup:'Maple syrup',agave_syrup:'Agave syrup',sugar:'Sugar',pectin:'Pectin',
@@ -17,6 +18,7 @@ const LABELS={
   plant_cheese:'Plant-based cheese',plant_yogurt:'Plant-based yogurt'
  },
  de:{
+  tofu:'Fester Tofu',mushrooms:'Pilze',chickpeas:'Kichererbsen',
   vegetable_stock:'Gemüsebrühe',vegetable_stock_cube:'Gemüsebrühwürfel',water:'Wasser',
   unsweetened_soy_milk:'Ungesüßte Sojamilch',olive_oil:'Olivenöl',coconut_oil:'Kokosöl',
   maple_syrup:'Ahornsirup',agave_syrup:'Agavendicksaft',sugar:'Zucker',pectin:'Pektin',
@@ -26,6 +28,7 @@ const LABELS={
   plant_cheese:'Pflanzlicher Käse',plant_yogurt:'Pflanzlicher Joghurt'
  },
  el:{
+  tofu:'Σφιχτό τόφου',mushrooms:'Μανιτάρια',chickpeas:'Ρεβίθια',
   vegetable_stock:'Ζωμός λαχανικών',vegetable_stock_cube:'Κύβος ζωμού λαχανικών',water:'Νερό',
   unsweetened_soy_milk:'Γάλα σόγιας χωρίς ζάχαρη',olive_oil:'Ελαιόλαδο',coconut_oil:'Λάδι καρύδας',
   maple_syrup:'Σιρόπι σφενδάμου',agave_syrup:'Σιρόπι αγαύης',sugar:'Ζάχαρη',pectin:'Πηκτίνη',
