@@ -378,6 +378,60 @@ def _has_any_phrase(text: str, phrases) -> bool:
     return any(_contains_phrase(text, phrase) for phrase in phrases)
 
 
+def _mounted_candidate_text(candidate):
+    values = [
+        str(candidate.get("name") or ""),
+        *(str(value) for value in candidate.get("allergens") or []),
+    ]
+    target = candidate.get("target")
+    if isinstance(target, dict):
+        values.append(str(target.get("canonicalName") or target.get("name") or ""))
+    for component in candidate.get("components") or []:
+        if not isinstance(component, dict):
+            continue
+        target = component.get("target")
+        if isinstance(target, dict):
+            values.append(str(target.get("canonicalName") or target.get("name") or ""))
+    return " ".join(value for value in values if value).strip()
+
+
+def _mounted_candidates(item, profile, diet, group):
+    raw_rows = item.get("substitutions") if isinstance(item, dict) else None
+    if not isinstance(raw_rows, list):
+        return None
+    restrictions = [
+        *(str(value) for value in profile.get("allergies") or []),
+        *(str(value) for value in profile.get("avoid") or []),
+    ]
+    allergies = [str(value) for value in profile.get("allergies") or [] if str(value).strip()]
+    out = []
+    for raw in raw_rows:
+        if not isinstance(raw, dict):
+            continue
+        compatible = [str(value).lower() for value in raw.get("compatibleDiets") or []]
+        if compatible and diet not in compatible:
+            continue
+        if raw.get("allergenEvidence") == "unknown" and allergies:
+            continue
+        safety_text = _mounted_candidate_text(raw)
+        if any(_matches_term(safety_text, term) for term in restrictions if term.strip()):
+            continue
+        if _diet_hits(normalize_text(str(raw.get("name") or "")))[group]:
+            continue
+        candidate = {
+            "key": str(raw.get("key") or ""),
+            "name": str(raw.get("name") or raw.get("key") or "").strip(),
+            "catalogSource": str(raw.get("catalogSource") or "ingredient_catalog"),
+            "confidence": str(raw.get("confidence") or "reviewed"),
+        }
+        for key in ("target", "components", "contexts", "evidence", "catalogVersion", "allergens"):
+            if raw.get(key) not in (None, "", [], {}):
+                candidate[key] = raw[key]
+        if candidate["name"]:
+            out.append(candidate)
+    return out
+
+
 def _diet_substitutions(recipe, profile, violations):
     diet = str(profile.get("diet") or "omnivore").lower()
     group = {"pescatarian": 0, "vegetarian": 1, "vegan": 2}.get(diet)
@@ -393,6 +447,25 @@ def _diet_substitutions(recipe, profile, violations):
         if not hits[group]:
             unresolved |= _explicit_diet_conflict(item, diet)
             continue
+
+        mounted = _mounted_candidates(item, profile, diet, group)
+        if mounted is not None:
+            if not mounted:
+                unresolved = True
+                continue
+            names = recipe_ingredient_names({"ingredients": [item]})
+            substitutions.append({
+                "ingredientIndex": index,
+                "original": names[0] if names else text,
+                "replacement": mounted[0],
+                "alternatives": mounted,
+                "candidateCount": len(mounted),
+                "source": "ingredient_catalog",
+                "reason": "diet:" + diet,
+                "advisory": True,
+            })
+            continue
+
         words = set(hits[group])
         options = []
         if _has_any_phrase(text, _GELATIN_TERMS):
@@ -446,8 +519,16 @@ def _diet_substitutions(recipe, profile, violations):
             unresolved = True
             continue
         names = recipe_ingredient_names({"ingredients": [item]})
-        substitutions.append({"ingredientIndex": index, "original": names[0] if names else text,
-            "replacement": candidate, "reason": "diet:" + diet, "advisory": True})
+        substitutions.append({
+            "ingredientIndex": index,
+            "original": names[0] if names else text,
+            "replacement": candidate,
+            "alternatives": [candidate],
+            "candidateCount": 1,
+            "source": "legacy_text_fallback",
+            "reason": "diet:" + diet,
+            "advisory": True,
+        })
 
     # Recipe-level evidence must be accounted for by concrete ingredient rows.
     keys, _ = _excluded_values(recipe)
