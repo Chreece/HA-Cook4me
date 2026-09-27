@@ -211,7 +211,10 @@ def ingredient_choices(payload, language, query="", limit=None):
             search_aliases.update(search_aliases_for_locale for search_aliases_for_locale in search_aliases_map.get(name_key(cleaned), ()))
         if terms and not matches(search_aliases):
             continue
-        row = {key: deepcopy(raw[key]) for key in ("id", "key", "conceptId", "classification", "nutritionEligible", "lifecycle") if key in raw}
+        row = {key: deepcopy(raw[key]) for key in (
+            "id", "key", "conceptId", "classification", "nutritionEligible", "lifecycle",
+            "substitutions", "substitutionDiets", "substitutionCatalogVersion"
+        ) if key in raw}
         # One display choice can represent several exact source rows for the
         # same cleaned food name. Keep reviewed lifecycle metadata when only
         # one profile is present in that display family, without changing the
