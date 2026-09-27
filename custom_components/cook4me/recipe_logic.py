@@ -599,6 +599,16 @@ def diet_substitution_coverage(
             return False
         if not str(replacement.get("name") or replacement.get("key") or "").strip():
             return False
+        alternatives = row.get("alternatives")
+        if alternatives is not None:
+            if not isinstance(alternatives, list) or not alternatives:
+                return False
+            if any(
+                not isinstance(candidate, dict)
+                or not str(candidate.get("name") or candidate.get("key") or "").strip()
+                for candidate in alternatives
+            ):
+                return False
         covered.add(index)
     return covered == required
 
@@ -648,9 +658,17 @@ def _ingredient_changes(recipe, profile, substitutions):
         if not reasons:
             continue
         names = recipe_ingredient_names({"ingredients": [item]})
-        changes.append({"ingredientIndex": index, "original": names[0] if names else text,
-                        "reasons": reasons, "replacement": suggested.get(index, {}).get("replacement"),
-                        "advisory": True})
+        suggestion = suggested.get(index, {})
+        changes.append({
+            "ingredientIndex": index,
+            "original": names[0] if names else text,
+            "reasons": reasons,
+            "replacement": suggestion.get("replacement"),
+            "alternatives": suggestion.get("alternatives") or [],
+            "candidateCount": int(suggestion.get("candidateCount") or 0),
+            "substitutionSource": suggestion.get("source"),
+            "advisory": True,
+        })
     return changes
 
 
@@ -737,6 +755,16 @@ def score_recipe(recipe: dict[str, Any], profile: dict[str, Any]) -> dict[str, A
         "substitutions": substitutions,
         "ingredientChanges": _ingredient_changes(recipe, profile, substitutions),
         "substitutionCoverageComplete": substitution_coverage_complete,
+        "substitutionCandidateCount": sum(
+            len(row.get("alternatives") or [])
+            for row in substitutions
+            if isinstance(row, dict)
+        ),
+        "substitutionSources": sorted({
+            str(row.get("source"))
+            for row in substitutions
+            if isinstance(row, dict) and row.get("source")
+        }),
         "eligibleWithSubstitutions": complete,
         "requiresSubstitutions": complete,
         "score": round(score, 1),
