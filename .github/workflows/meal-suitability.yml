@@ -39,6 +39,8 @@ jobs:
         run: |
           python tests/test_all_diet_substitutions_v251.py
           node tests/test_all_diet_substitutions_v251.mjs
+      - name: Catalog-wide unresolved diet substitution audit
+        run: python tests/audit_diet_substitution_catalog_v252.py
       - name: Retained progress, cancellation and variety
         run: |
           python tests/test_week_progress_v200.py
