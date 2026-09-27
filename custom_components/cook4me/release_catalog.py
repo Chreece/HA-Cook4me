@@ -153,7 +153,25 @@ def ingredient_opening_window(ingredient: Any, lot: dict[str, Any], *, temperatu
 
 
 def ingredient_choices(language: str, query: str = "", limit: int | None = None):
-    return _core._presentation.ingredient_choices(load_release_catalog(), language, query, limit)
+    rows = _core._presentation.ingredient_choices(load_release_catalog(), language, query, limit)
+    # Display choices intentionally group exact provider rows. Some legacy source
+    # rows are unclassified and therefore do not receive canonical lifecycle
+    # metadata on the authoritative catalog row. The picker may still use the
+    # reviewed canonical profile for display/season filtering; stock/opening
+    # actions continue resolving the exact provider identity server-side.
+    data = _core._lifecycle.load_lifecycle_data()
+    for row in rows:
+        if row.get("lifecycle"):
+            continue
+        profile_id = data.get("canonicalNames", {}).get(
+            _core._lifecycle._name(row.get("canonicalName"))
+        )
+        if not profile_id:
+            continue
+        profile = deepcopy(data["profiles"][profile_id])
+        profile.update(schemaVersion=1, version=data["version"], profileId=profile_id)
+        row["lifecycle"] = profile
+    return rows
 
 
 def ingredient_display_name(ingredient: Any, language: str) -> str:
