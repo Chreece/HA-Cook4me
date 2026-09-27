@@ -14,7 +14,7 @@ class GreekCatalogAuditV188Tests(unittest.TestCase):
         manifest=MANIFEST.read_text(encoding="utf-8")
         self.assertIn("cook4me-recipe-hub-panel-v180",panel)
         self.assertIn("cook4me-panel-v180.js",panel)
-        self.assertIn("/cook4me_static/2026.9.22.7",panel)
+        self.assertIn("/cook4me_static/2026.9.27.2/runtime-v249",panel)
         self.assertIn('"version": "2026.9.22.7"',manifest)
 
     def test_forty_third_pass_promotes_common_greek_labels(self):
