@@ -54,7 +54,13 @@ _FISH_WORDS.update({
     "pulpo", "anchoas", "garnalen", "kabeljauw", "zalm", "tonijn",
     "καλαμαρι", "καλαμαρια", "χταποδι", "μυδια", "αντζουγιες", "γαυρος", "μπακαλιαρος",
 })
-_ANIMAL_DERIVATIVES = {"gelatin", "gelatine", "gelatina", "ζελατινη", "rennet", "animal rennet", "isinglass"}
+_ANIMAL_DERIVATIVES = {
+    "gelatin", "gelatine", "gelatina", "ζελατινη", "ζελατίνη",
+    "rennet", "animal rennet", "lab", "tierisches lab", "presure", "présure",
+    "caglio", "cuajo", "πυτια", "πυτιά",
+    "isinglass", "hausenblase", "colle de poisson", "colla di pesce",
+    "cola de pescado", "ιχθυοκολλα", "ιχθυόκολλα",
+}
 _MEAT_WORDS |= _ANIMAL_DERIVATIVES
 _ANIMAL_WORDS = _MEAT_WORDS | _FISH_WORDS
 
@@ -64,9 +70,17 @@ _NON_VEGAN_WORDS = _ANIMAL_WORDS | {
     "yogurt", "yoghurt", "joghurt", "γιαουρτι", "γιαούρτι", "egg", "eggs", "ei", "eier", "αυγο", "αυγό",
     "αυγα", "αυγά", "honey", "honig", "μελι", "μέλι", "gelatin", "gelatine", "ζελατινη", "ζελατίνη",
 }
-_NON_VEGAN_WORDS.update({"lait", "beurre", "fromage", "creme", "oeuf", "oeufs", "œuf", "œufs", "miel",
+_NON_VEGAN_WORDS.update({
+    "lait", "beurre", "fromage", "creme", "oeuf", "oeufs", "œuf", "œufs", "miel",
     "latte", "burro", "formaggio", "panna", "uovo", "uova", "miele", "leche", "mantequilla", "queso", "huevo", "huevos",
-    "whey", "casein", "ghee", "yolks", "yolk", "whites", "mozzarella", "feta", "ricotta", "quark", "kefir"})
+    "whey", "casein", "molke", "kasein", "käsein", "lactoserum", "lactosérum", "caseine", "caséine",
+    "siero di latte", "caseina", "suero de leche", "caseína", "ορος γαλακτος", "ορός γάλακτος", "καζεινη", "καζεΐνη",
+    "ghee", "yolks", "yolk", "whites", "egg white", "egg whites", "egg yolk", "egg yolks",
+    "eiweiss", "eiweiß", "eigelb", "ασπραδι", "ασπράδι", "κροκος", "κρόκος",
+    "blanc d oeuf", "blanc d'œuf", "jaune d oeuf", "jaune d'œuf",
+    "albume", "tuorlo", "clara de huevo", "yema de huevo",
+    "mozzarella", "feta", "ricotta", "quark", "kefir",
+})
 
 _PESCATARIAN_EXCLUSION_KEYS = {
     "MEAT", "BEEF", "PORK", "POULTRY", "CHICKEN", "TURKEY", "LAMB", "VEAL", "DUCK", "GELATIN", "LARD",
@@ -287,21 +301,81 @@ def _explicit_diet_conflict(item, diet):
 
 
 # Culinary suggestions, never rewritten cloud recipes or invented nutrient data.
-# Deliberately no generic replacement for gelatin, rennet or whole eggs: their
-# functional role cannot be established from an ingredient list alone.
+# Every candidate is concrete enough to display and to run through the existing
+# allergy/avoid-term checks.  Ordering is intentional: prefer the closest common
+# replacement, then fall back to alternatives with different allergen profiles.
 _DIET_REPLACEMENTS = {
     "tofu": ("Firm tofu", ("soy",)),
     "mushrooms": ("Mushrooms", ()),
     "chickpeas": ("Chickpeas", ()),
     "stock": ("Vegetable stock", ("celery",)),
-    "cream": ("Oat cream", ("gluten",)),
-    "milk": ("Oat milk", ("gluten",)),
+    "mushroom_stock": ("Mushroom stock", ()),
+    "oat_cream": ("Oat cream", ("gluten",)),
+    "soy_cream": ("Soy cream", ("soy",)),
+    "coconut_cream": ("Coconut cream", ()),
+    "oat_milk": ("Oat milk", ("gluten",)),
+    "soy_milk": ("Soy milk", ("soy",)),
+    "rice_milk": ("Rice milk", ()),
     "oil": ("Olive oil", ()),
-    "yogurt": ("Soy yogurt", ("soy",)),
+    "soy_yogurt": ("Soy yogurt", ("soy",)),
+    "coconut_yogurt": ("Coconut yogurt", ()),
     "sweetener": ("Maple syrup", ()),
-    "sauce": ("Soy sauce", ("soy", "gluten")),
+    "soy_sauce": ("Soy sauce", ("soy", "gluten")),
+    "coconut_aminos": ("Coconut aminos", ()),
+    "agar": ("Agar-agar", ()),
+    "microbial_rennet": ("Microbial rennet", ()),
+    "bentonite": ("Food-grade bentonite", ()),
+    "soy_cheese": ("Soy-based plant cheese", ("soy",)),
+    "cashew_cheese": ("Cashew-based plant cheese", ("tree_nut",)),
+    "nutritional_yeast": ("Nutritional yeast", ()),
+    "flax_egg": ("Flax egg", ()),
+    "aquafaba": ("Aquafaba (chickpea brine)", ()),
+    "pea_protein": ("Pea protein", ()),
 }
-_PLANT_PHRASES.update({"oat cream", "soy yogurt", "soya yogurt", "oyster mushrooms", "oyster mushroom"})
+
+_GELATIN_TERMS = ("gelatin", "gelatine", "gelatina", "ζελατινη", "ζελατίνη")
+_RENNET_TERMS = (
+    "rennet", "animal rennet", "lab", "tierisches lab", "presure", "présure",
+    "caglio", "cuajo", "πυτια", "πυτιά",
+)
+_ISINGLASS_TERMS = (
+    "isinglass", "hausenblase", "colle de poisson", "colla di pesce",
+    "cola de pescado", "ιχθυοκολλα", "ιχθυόκολλα",
+)
+_CHEESE_TERMS = (
+    "cheese", "kase", "käse", "τυρι", "τυρί", "parmesan", "parmesankase",
+    "parmesankäse", "fromage", "formaggio", "queso", "mozzarella", "feta",
+    "ricotta", "quark", "mascarpone",
+)
+_EGG_WHITE_TERMS = (
+    "egg white", "egg whites", "white of egg", "whites", "eiweiss", "eiweiß",
+    "ασπραδι", "ασπράδι", "blanc d oeuf", "blanc d'œuf", "albume", "clara de huevo",
+)
+_EGG_YOLK_TERMS = (
+    "egg yolk", "egg yolks", "yolk", "yolks", "eigelb", "κροκος", "κρόκος",
+    "jaune d oeuf", "jaune d'œuf", "tuorlo", "yema de huevo",
+)
+_EGG_TERMS = (
+    "egg", "eggs", "ei", "eier", "αυγο", "αυγό", "αυγα", "αυγά",
+    "oeuf", "oeufs", "œuf", "œufs", "uovo", "uova", "huevo", "huevos",
+)
+_WHEY_CASEIN_TERMS = (
+    "whey", "casein", "molke", "kasein", "käsein", "lactoserum", "lactosérum",
+    "caseine", "caséine", "siero di latte", "caseina", "suero de leche", "caseína",
+    "ορος γαλακτος", "ορός γάλακτος", "καζεινη", "καζεΐνη",
+)
+_KEFIR_TERMS = ("kefir",)
+
+_PLANT_PHRASES.update({
+    "oat cream", "soy cream", "coconut cream", "soy yogurt", "soya yogurt",
+    "coconut yogurt", "oyster mushrooms", "oyster mushroom", "soy milk",
+    "soya milk", "rice milk", "cashew cheese", "soy cheese", "plant cheese",
+    "microbial rennet", "flax egg",
+})
+
+
+def _has_any_phrase(text: str, phrases) -> bool:
+    return any(_contains_phrase(text, phrase) for phrase in phrases)
 
 
 def _diet_substitutions(recipe, profile, violations):
@@ -321,24 +395,40 @@ def _diet_substitutions(recipe, profile, violations):
             continue
         words = set(hits[group])
         options = []
-        if words & _ANIMAL_DERIVATIVES:
-            pass
+        if _has_any_phrase(text, _GELATIN_TERMS):
+            options = ["agar"]
+        elif _has_any_phrase(text, _RENNET_TERMS):
+            options = ["microbial_rennet"]
+        elif _has_any_phrase(text, _ISINGLASS_TERMS):
+            options = ["bentonite"]
         elif words & {"lard", "tallow", "suet", "schmalz"}:
             options = ["oil"]
         elif any(_contains_phrase(text, word) for word in ("fish sauce", "oyster sauce", "worcestershire", "sauce de poisson", "nuoc mam")):
-            options = ["sauce"]
+            options = ["soy_sauce", "coconut_aminos"]
         elif any(_contains_phrase(text, word) for word in ("stock", "broth", "bouillon", "brühe", "bruehe", "fond", "caldo")):
-            options = ["stock"]
+            options = ["stock", "mushroom_stock"]
         elif hits[1]:
             options = ["tofu", "mushrooms", "chickpeas"]
+        elif _has_any_phrase(text, _EGG_WHITE_TERMS):
+            options = ["aquafaba", "flax_egg"]
+        elif _has_any_phrase(text, _EGG_YOLK_TERMS):
+            options = ["flax_egg"]
+        elif _has_any_phrase(text, _EGG_TERMS):
+            options = ["flax_egg", "aquafaba"]
+        elif _has_any_phrase(text, _WHEY_CASEIN_TERMS):
+            options = ["pea_protein"]
+        elif _has_any_phrase(text, _KEFIR_TERMS):
+            options = ["soy_yogurt", "coconut_yogurt"]
+        elif _has_any_phrase(text, _CHEESE_TERMS):
+            options = ["soy_cheese", "cashew_cheese", "nutritional_yeast"]
         elif words & {"butter", "βουτυρο", "βούτυρο", "beurre", "burro", "mantequilla", "ghee"}:
             options = ["oil"]
         elif words & {"cream", "sahne", "creme", "panna", "κρεμα", "κρέμα"}:
-            options = ["cream"]
+            options = ["oat_cream", "soy_cream", "coconut_cream"]
         elif words & {"milk", "milch", "lait", "latte", "leche", "γαλα", "γάλα"}:
-            options = ["milk"]
+            options = ["oat_milk", "soy_milk", "rice_milk"]
         elif words & {"yogurt", "yoghurt", "joghurt", "γιαουρτι", "γιαούρτι"}:
-            options = ["yogurt"]
+            options = ["soy_yogurt", "coconut_yogurt"]
         elif words & {"honey", "honig", "miel", "miele", "μελι", "μέλι"}:
             options = ["sweetener"]
         candidate = None
