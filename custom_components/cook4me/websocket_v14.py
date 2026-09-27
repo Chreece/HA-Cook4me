@@ -130,6 +130,33 @@ async def ws_inventory_update(hass, connection, msg) -> None:
 
 
 @websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/v14/inventory_assign_ingredient",
+    vol.Optional("entry_id"): str,
+    vol.Required("identity"): str,
+    vol.Required("ingredient"): dict,
+    vol.Optional("language"): str,
+})
+@websocket_api.async_response
+async def ws_inventory_assign_ingredient(hass, connection, msg) -> None:
+    try:
+        bridge = legacy._bridge(hass, msg.get("entry_id"))
+        from .product_packages import resolve_ingredient_links
+        from .websocket_v33 import _catalog
+        catalog = await _catalog(hass, bridge, msg)
+        resolved = resolve_ingredient_links([msg["ingredient"]], catalog, strict=True)
+        if len(resolved) != 1:
+            raise ValueError("Choose a valid catalog ingredient")
+        await bridge.recipe_hub.async_inventory_assign_ingredient(
+            str(msg["identity"]), resolved[0]
+        )
+        await _reconcile_nutrition(bridge)
+        result = _state(bridge)
+    except Exception as exc:
+        legacy._send_error(connection, msg, exc); return
+    connection.send_result(msg["id"], result)
+
+
+@websocket_api.websocket_command({
     vol.Required("type"): "cook4me/v14/inventory_remove",
     vol.Optional("entry_id"): str,
     vol.Required("identity"): str,
