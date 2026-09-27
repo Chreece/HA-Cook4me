@@ -43,6 +43,8 @@ def load_substitution_catalog() -> dict[str, Any]:
         return {"schemaVersion": 1, "version": "invalid", "candidates": {}}
     if not isinstance(payload.get("candidates"), dict):
         payload["candidates"] = {}
+    if not isinstance(payload.get("sourceProfiles"), list):
+        payload["sourceProfiles"] = []
     return payload
 
 
@@ -57,6 +59,7 @@ def _target_lookup(payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
 
     def priority(row: dict[str, Any]) -> tuple:
         return (
+            row.get("classification") == "substitution",
             not bool(row.get("conceptId")),
             row.get("classification") in {"equipment", "other", "ambiguous"},
             not bool(row.get("key")),
@@ -81,15 +84,62 @@ def _target_ref(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def _virtual_target(key: str, name: str) -> dict[str, Any]:
+def _virtual_catalog_row(
+    key: str,
+    raw: dict[str, Any],
+    *,
+    version: str,
+) -> dict[str, Any]:
+    name = _text(raw.get("name")) or key
+    compatible = [
+        str(value).strip().lower()
+        for value in raw.get("compatibleDiets") or []
+        if str(value).strip()
+    ]
     return {
+        "id": f"substitution:{key}",
         "ingredientId": f"substitution:{key}",
         "key": f"substitution:{key}",
         "foodKey": f"substitution:{key}",
         "conceptId": f"concept:substitution:{key}",
         "canonicalName": name,
+        "classification": "substitution",
         "substitutionOnly": True,
+        "substitutionCompatibleDiets": list(dict.fromkeys(compatible)),
+        "substitutionAllergens": list(dict.fromkeys(
+            str(value).strip().lower()
+            for value in raw.get("allergens") or []
+            if str(value).strip()
+        )),
+        "substitutionCatalogVersion": version,
     }
+
+
+def _ensure_virtual_catalog_ingredients(
+    payload: dict[str, Any],
+    definitions: dict[str, Any],
+    *,
+    version: str,
+) -> int:
+    rows = payload.get("ingredients")
+    if not isinstance(rows, list):
+        return 0
+    existing = {
+        _text(row.get("id") or row.get("ingredientId"))
+        for row in rows
+        if isinstance(row, dict)
+    }
+    added = 0
+    for key, raw in definitions.items():
+        if not isinstance(raw, dict) or not raw.get("virtualCatalogIngredient"):
+            continue
+        ident = f"substitution:{key}"
+        if ident in existing:
+            continue
+        rows.append(_virtual_catalog_row(str(key), raw, version=version))
+        existing.add(ident)
+        added += 1
+    return added
 
 
 def _resolve_component(
@@ -155,11 +205,7 @@ def _resolve_candidate(
         result["components"] = resolved
         return result
 
-    if raw.get("virtualCatalogIngredient"):
-        result["target"] = _virtual_target(key, name)
-        return result
-
-    target_name = _text(raw.get("targetCanonicalName"))
+    target_name = _text(raw.get("targetCanonicalName")) or name
     target = lookup.get(_norm(target_name))
     if not isinstance(target, dict):
         return None
@@ -167,62 +213,45 @@ def _resolve_candidate(
     return result
 
 
-def _has_any(text: str, phrases) -> bool:
-    return any(_diet._contains_phrase(text, phrase) for phrase in phrases)
+def _matches_source_profile(
+    profile: dict[str, Any],
+    *,
+    text: str,
+    hits: tuple[tuple[str, ...], tuple[str, ...], tuple[str, ...]],
+) -> bool:
+    match = profile.get("match") if isinstance(profile.get("match"), dict) else {}
+    terms = [
+        str(value)
+        for value in match.get("terms") or []
+        if str(value).strip()
+    ]
+    if terms and any(_diet._contains_phrase(text, term) for term in terms):
+        return True
+    hit_name = _text(match.get("dietHit")).lower().replace("-", "_")
+    hit_index = {"meat": 0, "animal": 1, "non_vegan": 2}.get(hit_name)
+    return bool(hit_index is not None and hits[hit_index])
 
 
 def substitution_candidate_keys(ingredient: dict[str, Any]) -> list[str]:
-    """Return reviewed substitution profiles for one source ingredient."""
+    """Return ordered reviewed candidate keys from catalog-owned source profiles."""
     text = _diet._ingredient_text(ingredient)
     if not text:
         return []
     hits = _diet._diet_hits(text)
-    words = set(hits[2])
     if not any(hits):
         return []
-
-    if _has_any(text, _diet._GELATIN_TERMS):
-        return ["agar", "pectin", "cornstarch"]
-    if _has_any(text, _diet._RENNET_TERMS):
-        return ["microbial_rennet", "lemon_juice", "citric_acid"]
-    if _has_any(text, _diet._ISINGLASS_TERMS):
-        return ["bentonite"]
-    if words & {"lard", "tallow", "suet", "schmalz"}:
-        return ["olive_oil", "coconut_oil"]
-    if any(_diet._contains_phrase(text, value) for value in (
-        "fish sauce", "oyster sauce", "worcestershire", "sauce de poisson", "nuoc mam"
-    )):
-        return ["soy_sauce", "coconut_aminos"]
-    if any(_diet._contains_phrase(text, value) for value in (
-        "stock", "broth", "bouillon", "brühe", "bruehe", "fond", "caldo"
-    )):
-        return ["vegetable_stock", "vegetable_stock_cube", "water"]
-    if hits[1]:
-        return ["tofu", "mushrooms", "chickpeas"]
-    if _has_any(text, _diet._EGG_WHITE_TERMS):
-        return ["aquafaba", "ground_flaxseed_water", "cornstarch_water"]
-    if _has_any(text, _diet._EGG_YOLK_TERMS):
-        return ["ground_flaxseed_water", "tofu"]
-    if _has_any(text, _diet._EGG_TERMS):
-        return ["ground_flaxseed_water", "aquafaba", "tofu"]
-    if _has_any(text, _diet._WHEY_CASEIN_TERMS):
-        return ["pea_protein", "tofu"]
-    if _has_any(text, _diet._KEFIR_TERMS) or words & {
-        "yogurt", "yoghurt", "joghurt", "γιαουρτι", "γιαούρτι"
-    }:
-        return ["plant_yogurt", "tofu_lemon", "coconut_cream_lemon"]
-    if _has_any(text, _diet._CHEESE_TERMS):
-        return ["plant_cheese", "tofu", "nutritional_yeast"]
-    if words & {"butter", "βουτυρο", "βούτυρο", "beurre", "burro", "mantequilla", "ghee"}:
-        return ["olive_oil", "coconut_oil"]
-    if words & {"cream", "sahne", "creme", "panna", "κρεμα", "κρέμα"}:
-        return ["coconut_cream", "soy_cream"]
-    if words & {"milk", "milch", "lait", "latte", "leche", "γαλα", "γάλα"}:
-        return ["soy_milk", "rice_milk", "unsweetened_soy_milk"]
-    if words & {"honey", "honig", "miel", "miele", "μελι", "μέλι"}:
-        return ["maple_syrup", "agave_syrup", "sugar"]
+    catalog = load_substitution_catalog()
+    for profile in catalog.get("sourceProfiles") or []:
+        if not isinstance(profile, dict):
+            continue
+        if not _matches_source_profile(profile, text=text, hits=hits):
+            continue
+        return list(dict.fromkeys(
+            str(value).strip()
+            for value in profile.get("candidateKeys") or []
+            if str(value).strip()
+        ))
     return []
-
 
 def _source_diets(ingredient: dict[str, Any]) -> list[str]:
     text = _diet._ingredient_text(ingredient)
@@ -241,9 +270,12 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
     """Attach reviewed multi-candidate substitutions directly to catalog rows."""
     catalog = load_substitution_catalog()
     definitions = catalog.get("candidates") if isinstance(catalog.get("candidates"), dict) else {}
-    lookup = _target_lookup(payload)
     evidence = _text(catalog.get("evidence")) or "Cook4Me reviewed dietary substitution catalog"
     version = _text(catalog.get("version")) or "unknown"
+    virtual_ingredients = _ensure_virtual_catalog_ingredients(
+        payload, definitions, version=version
+    )
+    lookup = _target_lookup(payload)
 
     resolved: dict[str, dict[str, Any]] = {}
     unresolved_targets: list[str] = []
@@ -287,6 +319,11 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
         "ingredientCount": enriched,
         "candidateCount": candidates_attached,
         "resolvedProfiles": len(resolved),
+        "sourceProfiles": len([
+            row for row in catalog.get("sourceProfiles") or []
+            if isinstance(row, dict)
+        ]),
+        "virtualIngredientCount": virtual_ingredients,
         "unresolvedTargets": sorted(unresolved_targets),
         "missingProfiles": sorted(missing_profiles),
     }
