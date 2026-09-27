@@ -384,6 +384,54 @@ def _diet_substitutions(recipe, profile, violations):
     return substitutions, complete
 
 
+def diet_substitution_coverage(
+    recipe: dict[str, Any],
+    *,
+    diet: str,
+    substitutions: Any,
+    violations: Any = (),
+) -> bool:
+    """Require one concrete replacement for every diet-conflicting ingredient.
+
+    This is the final fail-closed invariant used by suggestion/ranking surfaces.
+    Recipe-level exclusion evidence is already reconciled by _diet_substitutions;
+    here we additionally prove that every concrete conflicting ingredient row has
+    exactly one usable replacement tied to that row's index.
+    """
+    diet = str(diet or "").lower()
+    group = {"pescatarian": 0, "vegetarian": 1, "vegan": 2}.get(diet)
+    if group is None or not isinstance(substitutions, list) or not substitutions:
+        return False
+    if any(str(value) != "diet:" + diet for value in violations or ()):
+        return False
+
+    required: set[int] = set()
+    for index, item in enumerate(recipe.get("ingredients") or []):
+        if not isinstance(item, dict):
+            continue
+        text = _ingredient_text(item)
+        hits = _diet_hits(text)
+        if hits[group] or _explicit_diet_conflict(item, diet):
+            required.add(index)
+    if not required:
+        return False
+
+    covered: set[int] = set()
+    for row in substitutions:
+        if not isinstance(row, dict):
+            return False
+        index = row.get("ingredientIndex")
+        replacement = row.get("replacement")
+        if isinstance(index, bool) or not isinstance(index, int):
+            return False
+        if index in covered or index not in required or not isinstance(replacement, dict):
+            return False
+        if not str(replacement.get("name") or replacement.get("key") or "").strip():
+            return False
+        covered.add(index)
+    return covered == required
+
+
 def _profile_excluded_rows(profile):
     value = profile.get("excludedIngredients")
     rows = []
@@ -498,6 +546,16 @@ def score_recipe(recipe: dict[str, Any], profile: dict[str, Any]) -> dict[str, A
     habit_bonus = min(0.10, 0.02 * len(habit_hits))
     safe = not violations
     substitutions, complete = _diet_substitutions(recipe, profile, violations)
+    substitution_coverage_complete = bool(
+        complete
+        and diet_substitution_coverage(
+            recipe,
+            diet=diet,
+            substitutions=substitutions,
+            violations=violations,
+        )
+    )
+    complete = substitution_coverage_complete
     score = (coverage + preference_bonus + habit_bonus) * 100 if safe else (-100 if complete else -1000)
 
     return {
@@ -507,6 +565,7 @@ def score_recipe(recipe: dict[str, Any], profile: dict[str, Any]) -> dict[str, A
         "dietRulesSignature": _profile_rules_signature(profile),
         "substitutions": substitutions,
         "ingredientChanges": _ingredient_changes(recipe, profile, substitutions),
+        "substitutionCoverageComplete": substitution_coverage_complete,
         "eligibleWithSubstitutions": complete,
         "requiresSubstitutions": complete,
         "score": round(score, 1),

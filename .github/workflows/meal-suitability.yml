@@ -24,10 +24,17 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - name: Meal eligibility and current shipped catalog
         run: python tests/test_meal_suitability_v206.py
       - name: Actual generator, replacements and search boundaries
         run: python tests/test_meal_selection_routes_v206.py
+      - name: Vegetarian fish substitutions stay complete and visible
+        run: |
+          python tests/test_diet_substitution_guard_v250.py
+          node tests/test_diet_substitution_guard_v250.mjs
       - name: Retained progress, cancellation and variety
         run: |
           python tests/test_week_progress_v200.py

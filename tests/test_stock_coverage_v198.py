@@ -103,13 +103,15 @@ class RuntimeSourceV198Tests(unittest.TestCase):
   import re
   text=(ROOT/'custom_components/cook4me/panel.py').read_text()
   revision=re.search(r'_URL_BASE = "[^"\n]*/runtime-v(\d+)"',text)
-  self.assertIsNotNone(revision)
-  runtime=revision.group(1);self.assertGreaterEqual(int(runtime),198)
+  constructor=re.search(r'_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v(\d+)"',text)
+  self.assertIsNotNone(revision);self.assertIsNotNone(constructor)
+  runtime=revision.group(1);element_runtime=constructor.group(1)
+  self.assertGreaterEqual(int(runtime),198);self.assertGreaterEqual(int(element_runtime),int(runtime))
   self.assertIn('&editor=196&assignment=249&runtime='+runtime,text)
-  self.assertIn('_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v'+runtime+'"',text)
+  self.assertIn('&diet=250',text)
   js=(ROOT/'custom_components/cook4me/frontend/cook4me-panel-v180.js').read_text()
   self.assertIn('ProductEditorMixin',js);self.assertIn('RecipeCoverageMixin',js)
-  self.assertIn('cook4me-recipe-hub-panel-v180-runtime-v'+runtime,js)
+  self.assertIn('cook4me-recipe-hub-panel-v180-runtime-v'+element_runtime,js)
  def test_setup_builds_stock_index_off_event_loop(self):
   source=(ROOT/'custom_components/cook4me/__init__.py').read_text();self.assertIn('await hass.async_add_executor_job(warm_stock_catalog)',source);self.assertIn('catalog and stock index ready in %.2f seconds',source)
 
