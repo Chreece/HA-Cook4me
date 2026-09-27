@@ -83,7 +83,7 @@ export const ReceiptQueueMixin=Base=>class extends Base{
     detail=document.createElement('details');detail.dataset.r232Receipt=row.id;
     detail.innerHTML='<summary><span class="r232-summary-main"><strong></strong><span role="status" aria-live="polite"></span><progress></progress></span><button type="button" class="btn secondary r232-receipt-remove" data-r232-receipt-remove></button></summary><div data-r232-lines></div>';
     detail.open=false;list.append(detail);
-    detail.ontoggle=()=>{if(detail.open){this._r232Expanded.add(row.id);if(!this._r232Details.has(row.id))void this._r232Poll();}else this._r232Expanded.delete(row.id);};
+    detail.ontoggle=()=>{if(detail.open){this._r232Expanded.add(row.id);if(this._r232Details.has(row.id))this._r232Paint();else void this._r232Poll();}else this._r232Expanded.delete(row.id);};
     const removeReceipt=detail.querySelector('[data-r232-receipt-remove]');
     removeReceipt.onclick=event=>{event.preventDefault();event.stopPropagation();void this._r232Action('remove',row.id,'');};
    }
