@@ -17,6 +17,17 @@ TARGET_NAMES = {
 }
 
 
+EXACT_TARGETS = (
+    "Tofu", "Button mushrooms", "Mushrooms", "Chickpeas", "Vegetable stock",
+    "Mushroom stock", "Coconut cream", "Oat cream", "Soy cream",
+    "Oat milk", "Soy milk", "Unsweetened soy milk", "Rice milk",
+    "Soy yogurt", "Coconut yogurt", "Maple syrup", "Soy sauce",
+    "Coconut aminos", "Agar agar", "Agar-agar", "Microbial rennet",
+    "Bentonite", "Nutritional yeast", "Flaxseed", "Ground flaxseed",
+    "Aquafaba", "Pea protein",
+)
+
+
 def norm(value):
     return " ".join(str(value or "").strip().casefold().replace("_"," ").split())
 
@@ -64,6 +75,25 @@ def main():
                 "allergens":info.get("allergens") or row.get("allergens"),
             })
 
+    exact = {}
+    for wanted in EXACT_TARGETS:
+        matches = [
+            {
+                "id": row.get("id"),
+                "key": row.get("key"),
+                "conceptId": row.get("conceptId"),
+                "canonicalName": row.get("canonicalName"),
+            }
+            for row in ingredients
+            if norm(row.get("canonicalName")) == norm(wanted)
+        ]
+        # Collapse repeated language/provider rows to distinct semantic targets.
+        unique = {}
+        for row in matches:
+            marker = row.get("conceptId") or row.get("key") or row.get("id")
+            unique.setdefault(str(marker), row)
+        exact[wanted] = list(unique.values())[:8]
+
     report={
         "ingredientCount":len(ingredients),
         "withConceptId":concepts,
@@ -74,6 +104,7 @@ def main():
         "targetCandidates":targets[:250],
     }
     print("INGREDIENT_SUBSTITUTION_METADATA_V253="+json.dumps(report,ensure_ascii=False))
+    print("SUBSTITUTION_TARGET_RESOLUTION_V253="+json.dumps(exact,ensure_ascii=False))
 
 
 if __name__=="__main__":
