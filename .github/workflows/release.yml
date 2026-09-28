@@ -145,20 +145,53 @@ jobs:
           python tests/test_greek_catalog_audit_v186.py
           python tests/test_greek_catalog_audit_v187.py
           python tests/test_greek_catalog_audit_v188.py
-      - name: Build HACS release archive
+      - name: Build compact HACS release archive
         run: |
-          rm -rf release
-          mkdir -p release/custom_components
-          cp -a custom_components/cook4me release/custom_components/
-          cd release
-          zip -qr ../HA-Cook4me.zip custom_components
+          python tools/build_hacs_release.py \
+            --output dist/cook4me.zip \
+            --version "${GITHUB_REF_NAME}" \
+            --report "${RUNNER_TEMP}/hacs-release.json"
       - name: Publish GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${GITHUB_REF_NAME}" HA-Cook4me.zip \
+          gh release create "${GITHUB_REF_NAME}" dist/cook4me.zip \
             --title "HA-Cook4me ${GITHUB_REF_NAME}" \
             --generate-notes
+
+  rolling:
+    if: github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, '[beta-release]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - name: Build and validate compact HACS payload
+        id: package
+        run: |
+          VERSION="$(date -u +'%Y.%-m.%-d').${GITHUB_RUN_NUMBER}"
+          echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
+          python -m compileall -q custom_components/cook4me
+          python tests/test_hacs_archive_v201.py
+          python tests/test_hacs_release_v256.py
+          python tools/build_hacs_release.py \
+            --output dist/cook4me.zip \
+            --version "${VERSION}" \
+            --report "${RUNNER_TEMP}/hacs-release.json"
+          cat "${RUNNER_TEMP}/hacs-release.json"
+      - name: Publish stable HACS release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.package.outputs.version }}
+        run: |
+          gh release create "${VERSION}" dist/cook4me.zip \
+            --target "${GITHUB_SHA}" \
+            --title "HA-Cook4me ${VERSION}" \
+            --generate-notes \
+            --latest
 
   beta:
     if: github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[beta-release]')
@@ -179,13 +212,13 @@ jobs:
           python tests/test_nutrient_scopes_v128.py
           python tests/test_delivery_queue_v129.py
           python tests/test_photoreal_device_v130.py
-      - name: Build HACS beta archive
+      - name: Build compact HACS beta archive
         run: |
-          rm -rf release
-          mkdir -p release/custom_components
-          cp -a custom_components/cook4me release/custom_components/
-          cd release
-          zip -qr ../HA-Cook4me.zip custom_components
+          VERSION="$(python -c 'import json; print(json.load(open("custom_components/cook4me/manifest.json"))["version"])')"
+          python tools/build_hacs_release.py \
+            --output dist/cook4me.zip \
+            --version "${VERSION}" \
+            --report "${RUNNER_TEMP}/hacs-release.json"
       - name: Publish prerelease
         env:
           GH_TOKEN: ${{ github.token }}
@@ -196,7 +229,7 @@ jobs:
             echo "Release ${TAG} already exists"
             exit 1
           fi
-          gh release create "${TAG}" HA-Cook4me.zip \
+          gh release create "${TAG}" dist/cook4me.zip \
             --target "${GITHUB_SHA}" \
             --title "HA-Cook4me ${VERSION} beta" \
             --generate-notes \
