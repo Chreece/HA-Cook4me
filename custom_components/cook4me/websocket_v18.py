@@ -648,6 +648,7 @@ async def async_ingredient_info(hass, connection, msg) -> None:
         generic = nutrition_store.get_generic(identity) if identity else None
         catalog_nutrition = release_catalog.ingredient_nutrition_profile(ingredient)
         catalog_substitutions = release_catalog.ingredient_substitution_candidates(ingredient)
+        catalog_substitution_allergens = release_catalog.ingredient_substitution_allergens(ingredient)
         exact_lots = (
             nutrition_store.stock_lots.get(identity, []) if identity else []
         )
@@ -710,8 +711,10 @@ async def async_ingredient_info(hass, connection, msg) -> None:
                        else ({"key": stock.get("key")} if stock and stock.get("key") else {})),
                     "name": release_catalog.ingredient_display_name(ingredient, msg.get("language") or "en") or name or (stock or {}).get("name") or "Ingredient",
                     "substitutions": catalog_substitutions,
+                    "substitutionAllergens": catalog_substitution_allergens,
                 },
                 "catalogSubstitutions": catalog_substitutions,
+                "catalogSubstitutionAllergens": catalog_substitution_allergens,
                 "stock": stock,
                 "genericNutrition": generic,
                 "catalogNutrition": catalog_nutrition,
