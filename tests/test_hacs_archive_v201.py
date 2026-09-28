@@ -1,7 +1,7 @@
-"""Verify the HACS source archive, including the active panel's import closure.
+"""Verify the compact source fallback archive and active frontend import closure.
 
-Only archived distribution files change. The checkout and catalog bytes do not.
-No HA, credentials, inventory, provider, or live configuration are accessed.
+HACS release installs now use cook4me.zip; this still protects the repository
+archive for source/manual fallback use.
 """
 from __future__ import annotations
 
@@ -111,8 +111,10 @@ class HacsArchiveTests(unittest.TestCase):
     def test_hacs_metadata_license_and_readme_remain(self):
         for path in ('hacs.json', 'LICENSE', 'README.md', RUNTIME+'manifest.json'):
             self.assertEqual(self.files[path], self.source[path], path)
-        self.assertFalse(json.loads(self.files['hacs.json']).get('zip_release', False),
-                         'Do not switch update channels without a compatible release asset')
+        hacs = json.loads(self.files['hacs.json'])
+        self.assertTrue(hacs.get('zip_release'))
+        self.assertEqual(hacs.get('filename'), 'cook4me.zip')
+        self.assertTrue(hacs.get('hide_default_branch'))
 
     def test_development_files_stay_in_git_not_in_download_archive(self):
         self.assertTrue(any(p.startswith('tools/') for p in self.source))
@@ -151,7 +153,7 @@ def report(baseline: str, output: Path, github_sha: str | None) -> None:
     current_files = zip_members(current)
     details = {'baseline': baseline, 'checkout': git('rev-parse', 'HEAD').decode().strip(),
                'before': sizes(previous), 'after': sizes(current),
-               'scope': 'Distribution archive only; no live HA timing.'}
+               'scope': 'Source fallback archive only; HACS uses cook4me.zip releases.'}
     details['zip_reduction_percent'] = round(100*(1-len(current)/len(previous)), 2)
     # Mirror the relevant HACS extraction step, without running the integration.
     for label, archive_bytes in [('before', previous), ('after', current)]:
