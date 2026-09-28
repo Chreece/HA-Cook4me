@@ -89,6 +89,23 @@ class StockCoverageV198Tests(unittest.TestCase):
   row=check(ingredient(amount=None),stock());self.assertIsNone(row['coverage'])
  def test_unlimited_stock_retained(self):
   row=check(ingredient(),[{'key':'rice','name':'Ρύζι','unit':'g','unlimited':True}]);self.assertEqual(row['coverage'],1)
+ def test_legacy_grouped_unlimited_assignment_recovers_recipe_source_id(self):
+  sc.warm_stock_catalog({'ingredients':[
+   {'id':'salt-display','canonicalName':'Salt','classification':'food','translations':{'el':'Αλάτι'}},
+   {'id':'salt-recipe','canonicalName':'Sodium chloride','classification':'food','translations':{'el':'Αλάτι'}},
+  ]})
+  inventory=[{'key':'salt-cellar','name':'Salt cellar','unit':'g','unlimited':True,
+              'ingredientLinks':[{'key':'salt-display','name':'Αλάτι'}]}]
+  row=check(ingredient('salt-recipe','Αλάτι',1,'g'),inventory)
+  self.assertEqual(row['coverage'],1);self.assertEqual(row['status'],'enough');self.assertTrue(row['unlimited'])
+ def test_legacy_grouped_assignment_requires_the_exact_persisted_picker_label(self):
+  sc.warm_stock_catalog({'ingredients':[
+   {'id':'salt-display','canonicalName':'Salt','classification':'food','translations':{'el':'Αλάτι'}},
+   {'id':'salt-recipe','canonicalName':'Sodium chloride','classification':'food','translations':{'el':'Αλάτι'}},
+  ]})
+  inventory=[{'key':'salt-cellar','name':'Salt cellar','unit':'g','unlimited':True,
+              'ingredientLinks':[{'key':'salt-display','name':'Different label'}]}]
+  self.assertEqual(check(ingredient('salt-recipe','Αλάτι',1,'g'),inventory)['coverage'],0)
  def test_recipe_and_storage_never_mutate(self):
   recipe={'ingredients':[ingredient('rice-el',unit='γρ.')]};inventory=stock(unit='γραμμάρια');before=deepcopy((recipe,inventory));feasibility(recipe,inventory);self.assertEqual((recipe,inventory),before)
  def test_empty_index_is_safe_and_direct_ids_still_match(self):
