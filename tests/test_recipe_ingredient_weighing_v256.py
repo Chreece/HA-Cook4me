@@ -34,7 +34,8 @@ class IngredientWeighingV256Tests(unittest.TestCase):
         self.assertIn('/runtime-v249',panel)
         self.assertIn('runtime-v257',panel)
         self.assertIn('&runtime=249&diet=254&weigh=257',panel)
-        self.assertIn("runtime-v256",active)\n        self.assertIn("recipe-ingredient-weighing-v257.js",active)
+        self.assertIn("runtime-v256",active)
+        self.assertIn("recipe-ingredient-weighing-v257.js",active)
         self.assertIn("data-cook4me-ui-revision','257",active)
 
 
