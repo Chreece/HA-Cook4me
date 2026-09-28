@@ -252,7 +252,13 @@ export const RecipeIngredientWeighingMixin=Base=>class extends Base{
  async _showRecipe(...args){
   const content=this.shadowRoot?.getElementById('content')||null;
   const scrollTop=content?.scrollTop??0,scrollLeft=content?.scrollLeft??0;
-  const result=await super._showRecipe(...args);
+  this._v256OpeningRecipe=true;
+  let result;
+  try{result=await super._showRecipe(...args);}
+  finally{
+   this._v256OpeningRecipe=false;
+   this._v63RecipeDialog?.removeAttribute('data-v256-preparing');
+  }
   const close=this._v63CloseRecipe;
   if(close&&!close._v256StableClose){
    const restore=()=>{
@@ -275,6 +281,7 @@ export const RecipeIngredientWeighingMixin=Base=>class extends Base{
    return;
   }
   const result=super._renderRecipeDialog();
+  if(this._v256OpeningRecipe&&this._v63RecipeDialog)this._v63RecipeDialog.setAttribute('data-v256-preparing','');
   if(recipe){
    this._v256RemoveLegacyWeighing(recipe);
    this._v256DecorateIngredients(recipe);
@@ -284,6 +291,7 @@ export const RecipeIngredientWeighingMixin=Base=>class extends Base{
  _v256Styles(){
   if(!this.shadowRoot||this.shadowRoot.querySelector('#v256IngredientWeighingStyles'))return;
   const style=document.createElement('style');style.id='v256IngredientWeighingStyles';style.textContent=`
+   [data-recipe-dialog][data-v256-preparing]{visibility:hidden!important}
    .rx-v66-ingredients{display:grid;gap:8px}
    .rx-v66-ingredients .v256-ingredient-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:9px;padding:8px 9px;border:1px solid var(--divider-color);border-radius:12px;background:color-mix(in srgb,var(--card-background-color) 94%,var(--primary-color) 6%)}
    .rx-v66-ingredients .v256-ingredient-main{min-width:0;width:100%;border:0!important;background:transparent!important;border-radius:8px!important;padding:4px 5px!important;box-shadow:none!important}
