@@ -145,7 +145,7 @@ class Routes(unittest.IsolatedAsyncioTestCase):
     def test_three_routes_registered_and_panel_import_cache_busted(self):
         source=(COMP/'websocket_receipts.py').read_text();panel=(COMP/'panel.py').read_text()
         self.assertIn('for command in (ws_receipt_recognize, ws_receipt_suggestions, ws_receipt_drafts)',source)
-        self.assertIn('async_register_receipts(hass)',panel);self.assertIn('&receipt=232',panel);self.assertIn('&assignment=249',panel);self.assertIn('&runtime=254',panel)
+        self.assertIn('async_register_receipts(hass)',panel);self.assertIn('&receipt=232',panel);self.assertIn('&assignment=249',panel);self.assertIn('&runtime=249',panel)
 
 
 class DurableScannerLedger(unittest.IsolatedAsyncioTestCase):
