@@ -57,6 +57,12 @@ def ingredient_identities(item: Any) -> set[str]:
             text = _text(value)
             if text:
                 identities.add(text)
+        # Catalog picker choices can represent several exact provider rows.
+        # These are explicit reviewed source IDs, not fuzzy/name aliases.
+        for value in item.get("sourceIngredientIds") or []:
+            text = _text(value)
+            if text:
+                identities.add(f"k:{text}")
     return identities
 
 
@@ -968,6 +974,16 @@ def normalize_ingredient_links(value):
             continue
         row = {"key": _text(raw.get("key") or raw.get("ingredientId") or raw.get("id")),
                "name": _text(raw.get("name") or raw.get("foodName"))}
+        source_ids = list(dict.fromkeys(
+            _text(value)
+            for value in raw.get("sourceIngredientIds") or []
+            if _text(value)
+        ))
+        if source_ids:
+            row["sourceIngredientIds"] = source_ids
+        display_group_id = _text(raw.get("displayGroupId"))
+        if display_group_id:
+            row["displayGroupId"] = display_group_id
         identity = inventory_identity(row)
         if row["name"] and identity not in seen:
             result.append(row)
@@ -1025,7 +1041,9 @@ def stock_for_ingredient(stock, ingredient, used=None):
     candidates, fallback = [], None
     for row in stock:
         row_identity = inventory_identity(row)
-        primary = row_identity in wanted
+        # Calculation copies may carry reviewed semantic aliases in identities;
+        # persisted stock remains anchored to its primary inventory identity.
+        primary = bool(wanted & ingredient_identities(row))
         row_linked = {
             identity
             for link in row.get("ingredientLinks") or []
