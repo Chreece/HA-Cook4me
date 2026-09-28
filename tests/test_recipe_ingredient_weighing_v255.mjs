@@ -65,6 +65,8 @@ test('v255 remains registered while the active panel advances independently',()=
  assert.match(active,/runtime-v255/);
  assert.match(active,/runtime-v256/);
  assert.match(active,/runtime-v257/);
+ assert.match(active,/runtime-v258/);
  assert.match(active,/recipe-ingredient-weighing-v257\.js/);
- assert.match(active,/data-cook4me-ui-revision','257'/);
+ assert.match(active,/recipe-fullscreen-guard-v258\.js/);
+ assert.match(active,/data-cook4me-ui-revision','258'/);
 });
