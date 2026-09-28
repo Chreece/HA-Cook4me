@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from functools import lru_cache
+import gzip
 import json
 from pathlib import Path
 import re
@@ -86,6 +87,17 @@ def _prepare_runtime_indexes(payload: dict[str, Any]) -> None:
     payload["_runtimeRawVariantCount"] = raw_variant_count
 
 
+def _catalog_text(path: Path) -> str:
+    """Read source JSON or the compressed HACS release catalog."""
+    if path.exists():
+        return path.read_text(encoding="utf-8")
+    compressed = Path(str(path) + ".gz")
+    if compressed.exists():
+        with gzip.open(compressed, "rt", encoding="utf-8") as handle:
+            return handle.read()
+    raise OSError(path)
+
+
 @lru_cache(maxsize=1)
 def load_release_catalog() -> dict[str, Any]:
     """Load and index the immutable release catalog shipped with the integration.
@@ -96,7 +108,7 @@ def load_release_catalog() -> dict[str, Any]:
     first-parsed on the Home Assistant event loop.
     """
     try:
-        payload = json.loads(_CATALOG_PATH.read_text(encoding="utf-8"))
+        payload = json.loads(_catalog_text(_CATALOG_PATH))
     except (OSError, json.JSONDecodeError):
         return _empty_catalog("missing")
     if not isinstance(payload, dict) or int(payload.get("schemaVersion") or 0) != _SCHEMA_VERSION:
