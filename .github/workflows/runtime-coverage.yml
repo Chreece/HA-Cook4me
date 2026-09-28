@@ -30,5 +30,8 @@ jobs:
           python tests/test_universal_stock_coverage.py
           python tests/test_reviewed_portion_stock_coverage.py
           python tests/test_ingredient_stock_assignment_v249.py
+          python tests/test_recipe_ingredient_weighing_v255.py
       - name: Coverage display and both weekly folding generations
-        run: node --test tests/test_recipe_coverage_v198.mjs
+        run: |
+          node --test tests/test_recipe_coverage_v198.mjs
+          node --test tests/test_recipe_ingredient_weighing_v255.mjs

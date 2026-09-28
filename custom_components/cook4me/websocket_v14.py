@@ -32,6 +32,21 @@ def _state(bridge) -> dict[str, Any]:
     }
 
 
+def _merge_consumption_reports(*reports: Any) -> dict[str, list[dict[str, Any]]]:
+    """Combine earlier weighed deductions with the final confirmation report."""
+    result: dict[str, list[dict[str, Any]]] = {
+        key: [] for key in ("deducted", "deductedLots", "skipped", "depleted")
+    }
+    for report in reports:
+        if not isinstance(report, dict):
+            continue
+        for key in result:
+            rows = report.get(key)
+            if isinstance(rows, list):
+                result[key].extend(row for row in rows if isinstance(row, dict))
+    return result
+
+
 async def _reconcile_nutrition(bridge) -> None:
     store = await nutrition_store_for_bridge(bridge)
     await async_reconcile_nutrition_inventory(
@@ -199,6 +214,24 @@ async def ws_consumption_confirm(hass, connection, msg) -> None:
             consumptions,
             strict=bool(msg.get("strict")),
         )
+        completed = (
+            result.get("completedRecipe")
+            if isinstance(result.get("completedRecipe"), dict)
+            else {}
+        )
+        scale_store = await smart_scale_store_for_bridge(bridge)
+        scale_session = scale_store.session_for(completed) or {}
+        immediate_reports = [
+            row.get("deductionReport")
+            for row in scale_session.get("measurements") or []
+            if isinstance(row, dict)
+            and row.get("stockDeducted") is True
+            and isinstance(row.get("deductionReport"), dict)
+        ]
+        result["report"] = _merge_consumption_reports(
+            *immediate_reports, result.get("report")
+        )
+
         nutrition_store = await nutrition_store_for_bridge(bridge)
         consumed_nutrition = await async_consume_nutrition_report(
             nutrition_store, result.get("report") or {}
@@ -215,7 +248,6 @@ async def ws_consumption_confirm(hass, connection, msg) -> None:
         )
         result["mealCost"] = meal_cost
 
-        completed = result.get("completedRecipe") if isinstance(result.get("completedRecipe"), dict) else {}
         history = await meal_history_store_for_bridge(bridge)
         meal_record = await history.async_record(
             recipe=completed, nutrition=consumed_nutrition,
@@ -230,8 +262,6 @@ async def ws_consumption_confirm(hass, connection, msg) -> None:
             meal_record, cost=meal_cost
         )
 
-        scale_store = await smart_scale_store_for_bridge(bridge)
-        scale_session = scale_store.session_for(completed) or {}
         batch_weight = scale_session.get("batchWeightGrams")
         leftover = result.get("leftover")
         if isinstance(leftover, dict) and batch_weight not in (None, ""):

@@ -35,7 +35,7 @@ assert.match(info,/catalogSubstitutions/);
 assert.match(info,/data-v253-ingredient-substitutions/);
 assert.match(info,/selected diet and active exclusions/);
 assert.match(panel,/runtime-v254/);
-assert.match(registration,/runtime-v254/);
+assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v\d+"/);
 assert.match(registration,/diet=254/);
 
 console.log('CATALOG_OWNED_SUBSTITUTIONS_V254_FRONTEND=PASS');

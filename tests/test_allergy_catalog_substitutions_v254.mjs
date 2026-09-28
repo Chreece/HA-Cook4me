@@ -48,13 +48,13 @@ const catalog=readFileSync(new URL('../custom_components/cook4me/catalog/ingredi
 
 assert.match(panel,/diet-substitution-guard-v254\.js/);
 assert.match(panel,/ingredient-substitution-info-v254\.js/);
-assert.match(panel,/data-cook4me-ui-revision','254/);
+assert.match(panel,/data-cook4me-ui-revision','\d+/);
 assert.match(info,/Diet & allergy substitutions/);
 assert.match(info,/cross-contact/);
 assert.match(info,/catalogSubstitutionAllergens/);
 assert.match(catalog,/"triggerAllergens"/);
 assert.match(catalog,/"unsupportedWithoutContext": \[/);
-assert.match(registration,/runtime-v254/);
+assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v\d+"/);
 assert.match(registration,/diet=254/);
 
 console.log('ALLERGY_CATALOG_SUBSTITUTIONS_V254_FRONTEND=PASS');

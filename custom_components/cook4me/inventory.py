@@ -778,6 +778,11 @@ def recipe_consumption_items(recipe: dict[str, Any], inventory: Any) -> list[dic
     for ingredient in recipe.get("ingredients") or []:
         if not isinstance(ingredient, dict):
             continue
+        # "Save weight" already consumed this ingredient's finite stock.
+        # Leave it on the measured recipe/history copy, but do not build a
+        # second post-cook deduction request for the same amount.
+        if ingredient.get("scaleStockDeducted") is True:
+            continue
         current = _find_stock(stock, ingredient)
         if not current:
             continue

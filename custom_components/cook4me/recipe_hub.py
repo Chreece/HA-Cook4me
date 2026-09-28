@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import math
 from collections import Counter
 from contextlib import asynccontextmanager
 from copy import deepcopy
@@ -21,8 +22,10 @@ from .inventory import (
     inventory_identity,
     apply_consumption,
     consumption_shortfalls,
+    convert_amount,
     restore_consumption,
     normalize_inventory,
+    stock_for_ingredient,
     recipe_consumption_items,
     recipe_expiry_priority,
     remove_inventory_item,
@@ -82,6 +85,7 @@ class Cook4MeRecipeHub:
             "uiPreferences": deepcopy(_DEFAULT_UI_PREFERENCES),
             "userUiPreferences": {},
             "pendingConsumption": None,
+            "weighedConsumptionReceipts": {},
         }
 
     async def async_load(self) -> None:
@@ -112,6 +116,11 @@ class Cook4MeRecipeHub:
             merged_ui.update(ui_preferences)
             self._data["uiPreferences"] = self._normalize_ui_preferences(merged_ui)
         pending = saved.get("pendingConsumption")
+        weighed_receipts = saved.get("weighedConsumptionReceipts")
+        if isinstance(weighed_receipts, dict):
+            self._data["weighedConsumptionReceipts"] = dict(
+                list(weighed_receipts.items())[-200:]
+            )
         from .shared_recipe_filters import normalize_preferences
         users = saved.get("userUiPreferences")
         if isinstance(users, dict):
@@ -480,6 +489,103 @@ class Cook4MeRecipeHub:
             await self._save()
             return self.profile
 
+    async def async_commit_weighed_ingredient(
+        self,
+        request_id: str,
+        ingredient: dict[str, Any],
+        *,
+        grams: Any,
+        previous_report: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Save one weighed amount and immediately consume matching finite stock.
+
+        request_id makes retries idempotent. Re-weighing can pass the report from
+        the previous saved measurement; that deduction is restored inside the same
+        durable mutation before the replacement amount is applied.
+        """
+        request_id = str(request_id or "").strip()
+        if not 16 <= len(request_id) <= 80:
+            raise ValueError("Weighed ingredient request ID is invalid")
+        try:
+            amount = float(str(grams).strip().replace(",", "."))
+        except (TypeError, ValueError):
+            amount = float("nan")
+        if not math.isfinite(amount) or amount <= 0:
+            raise ValueError("Ingredient weight must be greater than zero")
+        if not isinstance(ingredient, dict):
+            raise ValueError("Ingredient is invalid")
+
+        async with self._durable_mutation():
+            receipts = self._data.setdefault("weighedConsumptionReceipts", {})
+            existing = receipts.get(request_id)
+            if isinstance(existing, dict):
+                return {"receipt": deepcopy(existing), "profile": self.profile}
+
+            profile = deepcopy(self._data["profile"])
+            house = profile.get("houseIngredients") or []
+            restored: dict[str, Any] = {"restored": [], "skipped": []}
+            if isinstance(previous_report, dict) and previous_report.get("deductedLots"):
+                house, restored = restore_consumption(house, previous_report)
+
+            # Use the same read-only catalog identity evidence as recipe stock
+            # coverage, including reviewed grouped/legacy assignments.
+            from .stock_coverage import coverage_ingredient, coverage_stock
+            calculation_stock = coverage_stock(normalize_inventory(house))
+            current = stock_for_ingredient(
+                calculation_stock, coverage_ingredient(ingredient)
+            )
+
+            report: dict[str, list[dict[str, Any]]] = {
+                key: [] for key in ("deducted", "deductedLots", "skipped", "depleted")
+            }
+            assigned = current is not None
+            if current is not None:
+                request = {
+                    "identity": inventory_identity(current),
+                    "name": str(
+                        ingredient.get("foodName")
+                        or ingredient.get("name")
+                        or current.get("name")
+                        or ""
+                    ),
+                    "quantity": amount,
+                    "unit": "g",
+                    "consume": True,
+                }
+                house, report = apply_consumption(house, [request])
+
+            deducted_grams = 0.0
+            for row in report.get("deductedLots") or []:
+                converted = convert_amount(
+                    row.get("quantity"), row.get("unit", ""), "g"
+                )
+                if converted is not None:
+                    deducted_grams += float(converted)
+            deducted = deducted_grams > 1e-9
+            skipped = report.get("skipped") or []
+            reason = str(skipped[0].get("reason") or "") if skipped else ""
+            receipt = {
+                "requestId": request_id,
+                "grams": round(amount, 6),
+                "assigned": assigned,
+                "deducted": deducted,
+                "deductedGrams": round(deducted_grams, 6),
+                "reason": reason,
+                "report": deepcopy(report),
+                "restored": deepcopy(restored),
+                "savedAt": datetime.now(timezone.utc).isoformat(),
+            }
+
+            profile["houseIngredients"] = house
+            profile["pantry"] = [row["name"] for row in house]
+            self._data["profile"] = self._normalize_profile(profile)
+            receipts[request_id] = receipt
+            self._data["weighedConsumptionReceipts"] = dict(
+                list(receipts.items())[-200:]
+            )
+            await self._save()
+            return {"receipt": deepcopy(receipt), "profile": self.profile}
+
     async def async_prepare_consumption(self, recipe: dict[str, Any]) -> dict[str, Any] | None:
         # Build the deduction choices under the same lock as the inventory
         # snapshot they will be saved beside. A failed or queued stock edit must
@@ -488,7 +594,11 @@ class Cook4MeRecipeHub:
             ingredients = recipe_consumption_items(
                 recipe, self._data["profile"].get("houseIngredients")
             )
-            if not ingredients:
+            already_deducted = [
+                row for row in recipe.get("ingredients") or []
+                if isinstance(row, dict) and row.get("scaleStockDeducted") is True
+            ]
+            if not ingredients and not already_deducted:
                 return None
             servings = recipe.get("servings") or recipe.get("groupSize")
             yield_data = recipe.get("yield") if isinstance(recipe.get("yield"), dict) else {}
@@ -502,6 +612,7 @@ class Cook4MeRecipeHub:
                 "servings": servings,
                 "recipeIngredients": deepcopy(recipe.get("ingredients") or []),
                 "ingredients": ingredients,
+                "immediateWeighedDeduction": bool(already_deducted),
             }
             self._data["pendingConsumption"] = pending
             await self._save()

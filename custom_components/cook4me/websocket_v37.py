@@ -45,6 +45,7 @@ def async_register(hass: HomeAssistant) -> None:
         ws_container_save,
         ws_container_delete,
         ws_measurement_record,
+        ws_ingredient_weight_commit,
         ws_batch_weight_set,
         ws_session_clear,
         ws_recipe_scale,
@@ -169,6 +170,80 @@ async def ws_measurement_record(hass, connection, msg) -> None:
             grams=msg.get("grams"),
         )
         result = {"session": session, **await _state(hass, bridge, recipe=recipe)}
+    except Exception as exc:
+        legacy._send_error(connection, msg, exc)
+        return
+    connection.send_result(msg["id"], result)
+
+
+@websocket_api.websocket_command(
+    {
+        vol.Required("type"): "cook4me/v37/ingredient_weight_commit",
+        vol.Optional("entry_id"): str,
+        vol.Required("request_id"): vol.All(str, vol.Length(min=16, max=80)),
+        vol.Required("recipe"): dict,
+        vol.Required("ingredient_index"): vol.Coerce(int),
+        vol.Required("ingredient"): dict,
+        vol.Required("grams"): vol.Any(int, float, str),
+    }
+)
+@websocket_api.async_response
+async def ws_ingredient_weight_commit(hass, connection, msg) -> None:
+    """Save one measured ingredient and immediately deduct matching stock."""
+    try:
+        bridge = legacy._bridge(hass, msg.get("entry_id"))
+        recipe = dict(msg["recipe"])
+        ingredient = dict(msg["ingredient"])
+        ingredient_index = int(msg["ingredient_index"])
+        request_id = str(msg["request_id"])
+
+        store = await smart_scale_store_for_bridge(bridge)
+        previous_session = store.session_for(recipe) or {}
+        previous = next(
+            (
+                row
+                for row in previous_session.get("measurements") or []
+                if isinstance(row, dict)
+                and int(row.get("ingredientIndex", -1)) == ingredient_index
+            ),
+            None,
+        )
+        previous_report = (
+            previous.get("deductionReport")
+            if isinstance(previous, dict)
+            and previous.get("stockDeducted") is True
+            and isinstance(previous.get("deductionReport"), dict)
+            else None
+        )
+
+        committed = await bridge.recipe_hub.async_commit_weighed_ingredient(
+            request_id,
+            ingredient,
+            grams=msg.get("grams"),
+            previous_report=previous_report,
+        )
+        receipt = committed.get("receipt") or {}
+        session = await store.async_record_measurement(
+            recipe,
+            ingredient_index=ingredient_index,
+            ingredient=ingredient,
+            grams=msg.get("grams"),
+            request_id=request_id,
+            stock_deducted=receipt.get("deducted") is True,
+            deduction_report=(
+                receipt.get("report")
+                if receipt.get("deducted") is True
+                and isinstance(receipt.get("report"), dict)
+                else None
+            ),
+        )
+        update_expiry_notification(bridge)
+        result = {
+            "session": session,
+            "deduction": receipt,
+            "houseIngredients": bridge.recipe_hub.profile.get("houseIngredients") or [],
+            **await _state(hass, bridge, recipe=recipe),
+        }
     except Exception as exc:
         legacy._send_error(connection, msg, exc)
         return
