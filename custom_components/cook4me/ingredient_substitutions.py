@@ -332,11 +332,57 @@ def substitution_source_profiles(ingredient: dict[str, Any]) -> list[dict[str, A
     ]
 
 
+def _candidate_source_profile(ingredient: dict[str, Any]) -> dict[str, Any] | None:
+    """Choose the most specific matching profile for replacement candidates.
+
+    Allergy triggers may aggregate across profiles, but candidate semantics must
+    retain the catalog's specificity ordering. A concrete phrase such as
+    "fish sauce", "egg white", or "chicken stock" therefore wins over generic
+    animal/allergen fallbacks.
+    """
+    text = _diet._ingredient_text(ingredient)
+    if not text:
+        return None
+    hits = _diet._diet_hits(text)
+    allergen_hits = _ingredient_allergen_hits(ingredient)
+    profiles = substitution_source_profiles(ingredient)
+    if not profiles:
+        return None
+
+    best: dict[str, Any] | None = None
+    best_score: tuple[int, int] = (-1, -1)
+    for order, profile in enumerate(profiles):
+        match = profile.get("match") if isinstance(profile.get("match"), dict) else {}
+        matched_terms = [
+            str(value)
+            for value in match.get("terms") or []
+            if str(value).strip() and _diet._contains_phrase(text, str(value))
+        ]
+        if matched_terms:
+            specificity = max(len(_diet.normalize_text(value).split()) for value in matched_terms)
+            score = (3, specificity)
+        else:
+            hit_name = _text(match.get("dietHit")).lower().replace("-", "_")
+            hit_index = {"meat": 0, "animal": 1, "non_vegan": 2}.get(hit_name)
+            if hit_index is not None and hits[hit_index]:
+                score = (2, 0)
+            else:
+                allergen = _text(match.get("allergenHit")).lower().replace("-", "_").replace(" ", "_")
+                score = (1, 0) if allergen and allergen in allergen_hits else (0, 0)
+        # Strictly greater keeps catalog order as the deterministic tie-breaker.
+        if score > best_score:
+            best = profile
+            best_score = score
+    return best
+
+
 def substitution_candidate_keys(ingredient: dict[str, Any]) -> list[str]:
-    """Return ordered reviewed candidate keys from all matching catalog profiles."""
+    """Return reviewed candidates from the most specific matching source profile."""
+    profile = _candidate_source_profile(ingredient)
+    if not isinstance(profile, dict):
+        return []
     return list(dict.fromkeys(
         str(value).strip()
-        for profile in substitution_source_profiles(ingredient)
         for value in profile.get("candidateKeys") or []
         if str(value).strip()
     ))
@@ -397,12 +443,7 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
         if row.get("substitutionOnly") or row.get("classification") == "substitution":
             continue
         profiles = substitution_source_profiles(row)
-        keys = list(dict.fromkeys(
-            str(value).strip()
-            for profile in profiles
-            for value in profile.get("candidateKeys") or []
-            if str(value).strip()
-        ))
+        keys = substitution_candidate_keys(row)
         if not keys:
             continue
         candidates = []
