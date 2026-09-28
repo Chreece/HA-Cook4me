@@ -63,6 +63,13 @@ test('fullscreen nutrition updates patch content instead of rebuilding whole dia
  assert.match(source,/_v256PatchNutrition\(recipe\)/);
 });
 
+test('fullscreen first-open renders are hidden until structure is ready',()=>{
+ assert.match(source,/this\._v256OpeningRecipe=true/);
+ assert.match(source,/setAttribute\('data-v256-preparing',''\)/);
+ assert.match(source,/removeAttribute\('data-v256-preparing'\)/);
+ assert.match(source,/\[data-recipe-dialog\]\[data-v256-preparing\]\{visibility:hidden!important\}/);
+});
+
 test('fullscreen close restores underlying page scroll position',()=>{
  assert.match(source,/const scrollTop=content\?\.scrollTop\?\?0,scrollLeft=content\?\.scrollLeft\?\?0/);
  assert.match(source,/content\.scrollTop=scrollTop;content\.scrollLeft=scrollLeft/);
