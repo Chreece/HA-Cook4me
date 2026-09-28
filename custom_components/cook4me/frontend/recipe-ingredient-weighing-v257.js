@@ -163,7 +163,7 @@ export const RecipeIngredientWeighingMixin=Base=>class extends Base{
   this._v257PriceFollowups.set(key,next);
  }
  _v79PaintRecipe(recipe,state){
-  const result=super._v79PaintRecipe?.(recipe,state);
+  const result=super._v79PaintRecipe(recipe,state);
   if(this._opened===recipe&&this._v63RecipeDialog)this._v257PaintPrices(recipe,state?.cost||null);
   return result;
  }
