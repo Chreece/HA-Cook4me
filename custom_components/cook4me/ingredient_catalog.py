@@ -363,35 +363,40 @@ def enrich_match_with_house_keys(
     """Reconcile pantry availability without crossing authoritative provider IDs."""
     result = deepcopy(match)
     house = normalize_house_ingredients(house_ingredients)
-    identity_rows: list[dict[str, Any]] = []
     for row in house_ingredients if isinstance(house_ingredients, list) else []:
         if isinstance(row, dict):
-            identity_rows.append(row)
-            row_links = [
-                link for link in row.get("ingredientLinks") or []
-                if isinstance(link, dict)
-            ]
-            lot_links = [
+            house.extend(link for link in row.get("ingredientLinks") or [] if isinstance(link, dict))
+            house.extend(
                 link
                 for lot in row.get("lots") or []
                 for link in lot.get("ingredientLinks") or []
                 if isinstance(link, dict)
-            ]
-            identity_rows.extend(row_links)
-            identity_rows.extend(lot_links)
-            house.extend(row_links)
-            house.extend(lot_links)
+            )
     house_keys = {row["key"] for row in house if row.get("key")}
-    # Stock coverage owns the warmed, language-neutral alias index. Reuse it
-    # here so presence badges and quantity coverage agree for grouped catalog
-    # assignments, including representative-only links saved before this fix.
-    from .stock_coverage import coverage_ingredient
-    for row in identity_rows:
-        covered = coverage_ingredient(row)
-        for identity in covered.get("identities") or []:
-            identity = str(identity)
-            if identity.startswith("k:") and len(identity) > 2:
-                house_keys.add(identity[2:])
+    # Presence and quantity coverage must use the same reviewed identity evidence.
+    # The legacy flag only restores source IDs from the exact persisted picker
+    # representative + localized label pair; it never performs fuzzy matching.
+    from .stock_coverage import coverage_identities
+    house_identities: set[str] = set()
+    for row in house_ingredients if isinstance(house_ingredients, list) else []:
+        if not isinstance(row, dict):
+            continue
+        house_identities.update(
+            coverage_identities(row, legacy_assignment=True)
+        )
+        for link in row.get("ingredientLinks") or []:
+            if isinstance(link, dict):
+                house_identities.update(
+                    coverage_identities(link, legacy_assignment=True)
+                )
+        for lot in row.get("lots") or []:
+            if not isinstance(lot, dict):
+                continue
+            for link in lot.get("ingredientLinks") or []:
+                if isinstance(link, dict):
+                    house_identities.update(
+                        coverage_identities(link, legacy_assignment=True)
+                    )
     house_names = {_norm(row["name"]) for row in house if row.get("name")}
     house_keyless_names = {
         _norm(row["name"])
@@ -412,9 +417,14 @@ def enrich_match_with_house_keys(
         normalized = _norm(name)
 
         if key:
-            # Provider-backed ingredients may only match the same provider identity.
+            # Provider-backed ingredients match only reviewed stable identities.
             # Name fallback is retained solely for old keyless pantry rows.
-            at_home = key in house_keys or normalized in house_keyless_names
+            wanted_identities = coverage_identities(ingredient)
+            at_home = (
+                bool(wanted_identities & house_identities)
+                or key in house_keys
+                or normalized in house_keyless_names
+            )
             contradicted_name_match = (
                 not at_home
                 and normalized in (house_names | matched_names | missing_names)
