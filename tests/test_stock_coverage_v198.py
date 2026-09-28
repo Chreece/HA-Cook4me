@@ -109,6 +109,23 @@ class StockCoverageV198Tests(unittest.TestCase):
               'ingredientLinks':[{'key':'salt','name':'Salt'}]}]
   item=ingredient('salt-seasoning','Salt',1,'g');before=deepcopy((item,inventory))
   row=check(item,inventory);self.assertEqual(row['coverage'],1);self.assertEqual((item,inventory),before)
+ def test_legacy_localized_picker_assignment_recovers_different_raw_source_name(self):
+  sc.warm_stock_catalog({'ingredients':[
+   {'id':'salt-display','canonicalName':'Salt','classification':'food','translations':{'el':'Αλάτι'}},
+   {'id':'salt-recipe','canonicalName':'Sodium chloride','classification':'food','translations':{'el':'Αλάτι'}},
+  ]})
+  inventory=[{'key':'salt-cellar','name':'Salt cellar','unit':'g','unlimited':True,
+              'ingredientLinks':[{'key':'salt-display','name':'Αλάτι'}]}]
+  row=check(ingredient('salt-recipe','Αλάτι',1,'g'),inventory)
+  self.assertEqual(row['coverage'],1);self.assertEqual(row['status'],'enough');self.assertTrue(row['unlimited'])
+ def test_legacy_localized_picker_assignment_requires_exact_saved_label(self):
+  sc.warm_stock_catalog({'ingredients':[
+   {'id':'salt-display','canonicalName':'Salt','classification':'food','translations':{'el':'Αλάτι'}},
+   {'id':'salt-recipe','canonicalName':'Sodium chloride','classification':'food','translations':{'el':'Αλάτι'}},
+  ]})
+  inventory=[{'key':'salt-cellar','name':'Salt cellar','unit':'g','unlimited':True,
+              'ingredientLinks':[{'key':'salt-display','name':'Different label'}]}]
+  self.assertEqual(check(ingredient('salt-recipe','Αλάτι',1,'g'),inventory)['coverage'],0)
  def test_recipe_and_storage_never_mutate(self):
   recipe={'ingredients':[ingredient('rice-el',unit='γρ.')]};inventory=stock(unit='γραμμάρια');before=deepcopy((recipe,inventory));feasibility(recipe,inventory);self.assertEqual((recipe,inventory),before)
  def test_empty_index_is_safe_and_direct_ids_still_match(self):
@@ -136,7 +153,8 @@ class RuntimeSourceV198Tests(unittest.TestCase):
   source=(ROOT/'custom_components/cook4me/__init__.py').read_text();self.assertIn('await hass.async_add_executor_job(warm_stock_catalog)',source);self.assertIn('catalog and stock index ready in %.2f seconds',source)
  def test_pantry_presence_reuses_warmed_stock_aliases(self):
   source=(ROOT/'custom_components/cook4me/ingredient_catalog.py').read_text()
-  self.assertIn('from .stock_coverage import coverage_ingredient',source)
-  self.assertIn('house_keys.add(identity[2:])',source)
+  self.assertIn('from .stock_coverage import coverage_identities',source)
+  self.assertIn('legacy_assignment=True',source)
+  self.assertIn('wanted_identities & house_identities',source)
 
 if __name__=='__main__':unittest.main()
