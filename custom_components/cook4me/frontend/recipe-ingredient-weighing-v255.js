@@ -36,16 +36,29 @@ export const RecipeIngredientWeighingMixin=Base=>class extends Base{
   const state=this._v255State(recipe,index),measurement=this._v255Measurement(index);
   const amount=control.querySelector('[data-v255-amount]'),start=control.querySelector('[data-v255-start]');
   const save=control.querySelector('[data-v255-save]'),cancel=control.querySelector('[data-v255-cancel]');
-  if(state.active){
+  const reading=this._v116Reading?.()||null;
+  const scaleOn=!!reading;
+  if(state.active&&scaleOn){
    amount?.setAttribute('data-v116-live','');
-   const reading=this._v116Reading?.();
-   if(amount)amount.textContent=reading?`${this._v116Num(reading.net)} g`:(this._v116Text?.('off')||'—');
+   if(amount)amount.textContent=`${this._v116Num(reading.net)} g`;
    start.hidden=true;save.hidden=false;cancel.hidden=false;save.disabled=state.saving;cancel.disabled=state.saving;
   }else{
    amount?.removeAttribute('data-v116-live');
    if(amount)amount.textContent=measurement&&Number.isFinite(Number(measurement.grams))?`${this._v116Num(measurement.grams)} g`:'';
    start.hidden=false;save.hidden=true;cancel.hidden=true;start.disabled=false;
   }
+ }
+ _v116Live(){
+  const result=super._v116Live?.();
+  const recipe=this._opened;
+  if(recipe&&this._v63RecipeDialog){
+   this._v63RecipeDialog.querySelectorAll('[data-v255-weigh-control]').forEach(control=>{
+    const row=control.closest('li'),button=row?.querySelector('[data-v66-ingredient]');
+    const index=Number(button?.dataset?.v66Ingredient);
+    if(Number.isInteger(index))this._v255PaintControl(control,recipe,index);
+   });
+  }
+  return result;
  }
  _v255Message(deduction){
   if(deduction?.deducted){
@@ -111,6 +124,20 @@ export const RecipeIngredientWeighingMixin=Base=>class extends Base{
   for(const button of overlay.querySelectorAll('[data-v66-ingredient]')){
    const index=Number(button.dataset.v66Ingredient);if(!Number.isInteger(index))continue;
    const row=button.closest('li');if(!row)continue;
+   row.classList.add('v255-ingredient-row');
+   button.classList.add('v255-ingredient-main');
+   let meta=row.querySelector('[data-v255-meta]');
+   if(!meta){
+    meta=document.createElement('div');meta.dataset.v255Meta='';meta.className='v255-ingredient-meta';
+    const coverage=[...button.children].find(node=>node.classList?.contains('chip'));
+    const price=button.querySelector('[data-v79-item]');
+    if(price){price.classList.add('v255-ingredient-price');meta.append(price);}
+    if(coverage){coverage.classList.add('v255-ingredient-coverage');meta.append(coverage);}
+    button.after(meta);
+   }else{
+    const price=button.querySelector('[data-v79-item]');
+    if(price&&!meta.contains(price)){price.classList.add('v255-ingredient-price');meta.prepend(price);}
+   }
    let control=row.querySelector('[data-v255-weigh-control]');
    if(!control){
     control=document.createElement('div');control.dataset.v255WeighControl='';control.className='v255-weigh-control';
@@ -138,11 +165,28 @@ export const RecipeIngredientWeighingMixin=Base=>class extends Base{
  _v255Styles(){
   if(!this.shadowRoot||this.shadowRoot.querySelector('#v255IngredientWeighingStyles'))return;
   const style=document.createElement('style');style.id='v255IngredientWeighingStyles';style.textContent=`
-   .rx-v66-ingredients li{display:grid;grid-template-columns:minmax(0,1fr);gap:6px}
-   .v255-weigh-control{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap;padding:0 0 6px}
+   .rx-v66-ingredients{display:grid;gap:8px}
+   .rx-v66-ingredients .v255-ingredient-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:9px;padding:8px 9px;border:1px solid var(--divider-color);border-radius:12px;background:color-mix(in srgb,var(--card-background-color) 94%,var(--primary-color) 6%)}
+   .rx-v66-ingredients .v255-ingredient-main{min-width:0;width:100%;border:0!important;background:transparent!important;border-radius:8px!important;padding:4px 5px!important;box-shadow:none!important}
+   .rx-v66-ingredients .v255-ingredient-main>span:first-child{min-width:0}
+   .v255-ingredient-meta{display:flex;align-items:center;justify-content:flex-end;gap:7px;white-space:nowrap}
+   .v255-ingredient-price{display:inline-flex!important;align-items:center;margin:0!important;padding:5px 8px;border-radius:999px;background:color-mix(in srgb,var(--primary-color) 10%,transparent);color:var(--primary-color)!important;font-size:12px!important;font-weight:650;line-height:1.2}
+   .v255-ingredient-price:empty{display:none!important}
+   .v255-ingredient-coverage{margin:0;flex:0 0 auto}
+   .v255-weigh-control{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:nowrap;padding:0}
    .v255-weigh-amount{min-width:58px;text-align:right;font-variant-numeric:tabular-nums}
-   .v255-weigh-control .btn{min-height:38px;padding:7px 10px}
-   @media(max-width:520px){.v255-weigh-control{justify-content:flex-start}.v255-weigh-amount{min-width:0;margin-right:auto}}
+   .v255-weigh-control .btn{min-height:38px;padding:7px 10px;white-space:nowrap}
+   @media(max-width:760px){
+    .rx-v66-ingredients .v255-ingredient-row{grid-template-columns:minmax(0,1fr) auto}
+    .v255-ingredient-meta{grid-column:2;grid-row:1}
+    .v255-weigh-control{grid-column:1/-1;grid-row:2;justify-content:flex-end;padding-top:2px}
+   }
+   @media(max-width:520px){
+    .rx-v66-ingredients .v255-ingredient-row{grid-template-columns:minmax(0,1fr);gap:7px}
+    .v255-ingredient-meta{grid-column:1;grid-row:2;justify-content:flex-start;flex-wrap:wrap}
+    .v255-weigh-control{grid-column:1;grid-row:3;justify-content:flex-start;flex-wrap:wrap}
+    .v255-weigh-amount{min-width:0;margin-right:auto}
+   }
   `;this.shadowRoot.append(style);
  }
 };

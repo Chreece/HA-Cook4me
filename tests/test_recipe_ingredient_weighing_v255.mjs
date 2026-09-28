@@ -12,12 +12,35 @@ test('per ingredient controls replace the recipe-level weighing section',()=>{
  assert.match(source,/data-v116-live/);
 });
 
+test('ingredient amount price stock coverage and weighing share one visual row',()=>{
+ assert.match(source,/row\.classList\.add\('v255-ingredient-row'\)/);
+ assert.match(source,/button\.classList\.add\('v255-ingredient-main'\)/);
+ assert.match(source,/price=button\.querySelector\('\[data-v79-item\]'\)/);
+ assert.match(source,/coverage=\[\.\.\.button\.children\]\.find/);
+ assert.match(source,/meta\.append\(price\)/);
+ assert.match(source,/meta\.append\(coverage\)/);
+ assert.match(source,/grid-template-columns:minmax\(0,1fr\) auto auto/);
+ assert.match(source,/@media\(max-width:760px\)/);
+ assert.match(source,/@media\(max-width:520px\)/);
+ assert.match(source,/\.v255-ingredient-price:empty\{display:none!important\}/);
+});
+
 test('labels use the correct weigh verb and explicit save cancel actions',()=>{
  assert.match(source,/weigh:'Weigh'/);
  assert.match(source,/save:'Save weight'/);
  assert.match(source,/cancel:'Cancel'/);
  assert.match(source,/weigh:'Wiegen'/);
  assert.match(source,/weigh:'Ζύγισμα'/);
+});
+
+test('save and cancel require weighing mode and a live scale reading',()=>{
+ assert.match(source,/const scaleOn=!!reading/);
+ assert.match(source,/if\(state\.active&&scaleOn\)/);
+ assert.match(source,/start\.hidden=true;save\.hidden=false;cancel\.hidden=false/);
+ assert.match(source,/start\.hidden=false;save\.hidden=true;cancel\.hidden=true/);
+ assert.match(source,/_v116Live\(\)\{/);
+ assert.match(source,/querySelectorAll\('\[data-v255-weigh-control\]'\)/);
+ assert.match(source,/_v255PaintControl\(control,recipe,index\)/);
 });
 
 test('save calls the idempotent ingredient weight commit endpoint',()=>{
