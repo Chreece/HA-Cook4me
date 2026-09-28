@@ -213,7 +213,7 @@ def ingredient_choices(payload, language, query="", limit=None):
             continue
         row = {key: deepcopy(raw[key]) for key in (
             "id", "key", "conceptId", "classification", "nutritionEligible", "lifecycle",
-            "substitutions", "substitutionDiets", "substitutionCatalogVersion", "substitutionOnly"
+            "substitutions", "substitutionDiets", "substitutionAllergens", "substitutionCatalogVersion", "substitutionOnly"
         ) if key in raw}
         # One display choice can represent several exact source rows for the
         # same cleaned food name. Keep reviewed lifecycle metadata when only
