@@ -352,11 +352,19 @@ def apply_recipe_measurements(recipe: dict[str, Any], session: Any) -> dict[str,
         ingredient["unit"] = "g"
         ingredient["weight"] = {"quantity": round(float(grams), 6), "unit": "g"}
         ingredient["scaleMeasured"] = True
+        stock_deducted = measurement.get("stockDeducted") is True
+        ingredient["scaleStockDeducted"] = stock_deducted
         ingredient["scaleMeasurement"] = {
             "grams": round(float(grams), 6),
             "recordedAt": _text(measurement.get("recordedAt")),
             "originalQuantity": original_amount,
             "originalUnit": original_unit,
+            "stockDeducted": stock_deducted,
+            **(
+                {"deductionReport": deepcopy(measurement.get("deductionReport"))}
+                if stock_deducted and isinstance(measurement.get("deductionReport"), dict)
+                else {}
+            ),
         }
         ingredients[target_index] = ingredient
     result["ingredients"] = ingredients
@@ -664,6 +672,9 @@ class Cook4MeSmartScaleStore:
         ingredient_index: int,
         ingredient: dict[str, Any],
         grams: Any,
+        request_id: str = "",
+        stock_deducted: bool = False,
+        deduction_report: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         amount = _number(grams)
         if amount is None or amount <= 0:
@@ -674,6 +685,13 @@ class Cook4MeSmartScaleStore:
             "ingredientName": _text(ingredient.get("foodName") or ingredient.get("name"))[:200],
             "grams": round(amount, 6),
             "recordedAt": datetime.now(timezone.utc).isoformat(),
+            **({"requestId": _text(request_id)[:80]} if _text(request_id) else {}),
+            **({"stockDeducted": True} if stock_deducted else {}),
+            **(
+                {"deductionReport": deepcopy(deduction_report)}
+                if stock_deducted and isinstance(deduction_report, dict)
+                else {}
+            ),
         }
         async with self._lock:
             data = deepcopy(self._data)
