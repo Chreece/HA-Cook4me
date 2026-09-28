@@ -66,11 +66,12 @@ test('all v79 cost paints also repaint active v257 ingredient price chips',()=>{
  assert.match(source,/_v257PaintPrices\(recipe,state\?\.cost\|\|null\)/);
 });
 
-test('active panel and cache key use v257 without changing global runtime',()=>{
+test('v257 pricing remains active inside fullscreen guard v258',()=>{
  assert.match(active,/recipe-ingredient-weighing-v257\.js/);
  assert.match(active,/runtime-v257/);
- assert.match(active,/data-cook4me-ui-revision','257'/);
- assert.match(panelConfig,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v257"/);
+ assert.match(active,/runtime-v258/);
+ assert.match(active,/data-cook4me-ui-revision','258'/);
+ assert.match(panelConfig,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v258"/);
  assert.match(panelConfig,/runtime-v249/);
- assert.match(panelConfig,/weigh=257/);
+ assert.match(panelConfig,/weigh=257&fullscreen=258/);
 });
