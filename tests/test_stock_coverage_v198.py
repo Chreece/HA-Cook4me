@@ -21,6 +21,10 @@ CATALOG={'ingredients':[
  {'id':'garlic','canonicalName':'Garlic','classification':'food'},
  {'id':'chopped-garlic','canonicalName':'Chopped garlic','classification':'food'},
  {'id':'garlic-powder','canonicalName':'Garlic powder','classification':'food'},
+ {'id':'salt','canonicalName':'Salt','classification':'food'},
+ {'id':'salt-seasoning','canonicalName':'Salt (for seasoning)','classification':'food'},
+ {'id':'black-pepper','canonicalName':'Black pepper','classification':'food'},
+ {'id':'black-pepper-ground','canonicalName':'Black pepper, freshly ground','classification':'food'},
  {'id':'unconfirmed','canonicalName':'Rice','needsSemanticConfirmation':True},
  {'id':'equipment','canonicalName':'Rice','classification':'equipment'},
 ]}
@@ -89,6 +93,22 @@ class StockCoverageV198Tests(unittest.TestCase):
   row=check(ingredient(amount=None),stock());self.assertIsNone(row['coverage'])
  def test_unlimited_stock_retained(self):
   row=check(ingredient(),[{'key':'rice','name':'Ρύζι','unit':'g','unlimited':True}]);self.assertEqual(row['coverage'],1)
+ def test_unlimited_assigned_salt_and_pepper_cover_grouped_recipe_sources(self):
+  cases=[
+   ('salt','salt-seasoning','Salt'),
+   ('black-pepper','black-pepper-ground','Black pepper'),
+  ]
+  for assigned,requested,name in cases:
+   with self.subTest(assigned=assigned,requested=requested):
+    inventory=[{'key':'seasoning-bin','name':'Seasoning bin','unlimited':True,
+                'ingredientLinks':[{'key':assigned,'name':name}]}]
+    row=check(ingredient(requested,name,1,'g'),inventory)
+    self.assertEqual(row['coverage'],1,row);self.assertTrue(row['unlimited'])
+ def test_legacy_unlimited_assignment_is_read_only_during_coverage(self):
+  inventory=[{'key':'seasoning-bin','name':'Seasoning bin','unlimited':True,
+              'ingredientLinks':[{'key':'salt','name':'Salt'}]}]
+  item=ingredient('salt-seasoning','Salt',1,'g');before=deepcopy((item,inventory))
+  row=check(item,inventory);self.assertEqual(row['coverage'],1);self.assertEqual((item,inventory),before)
  def test_recipe_and_storage_never_mutate(self):
   recipe={'ingredients':[ingredient('rice-el',unit='γρ.')]};inventory=stock(unit='γραμμάρια');before=deepcopy((recipe,inventory));feasibility(recipe,inventory);self.assertEqual((recipe,inventory),before)
  def test_empty_index_is_safe_and_direct_ids_still_match(self):
@@ -114,5 +134,9 @@ class RuntimeSourceV198Tests(unittest.TestCase):
   self.assertIn('cook4me-recipe-hub-panel-v180-runtime-v'+element_runtime,js)
  def test_setup_builds_stock_index_off_event_loop(self):
   source=(ROOT/'custom_components/cook4me/__init__.py').read_text();self.assertIn('await hass.async_add_executor_job(warm_stock_catalog)',source);self.assertIn('catalog and stock index ready in %.2f seconds',source)
+ def test_pantry_presence_reuses_warmed_stock_aliases(self):
+  source=(ROOT/'custom_components/cook4me/ingredient_catalog.py').read_text()
+  self.assertIn('from .stock_coverage import coverage_ingredient',source)
+  self.assertIn('house_keys.add(identity[2:])',source)
 
 if __name__=='__main__':unittest.main()
