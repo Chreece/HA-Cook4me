@@ -76,9 +76,11 @@ test('fullscreen close restores underlying page scroll position',()=>{
  assert.match(source,/requestAnimationFrame\?\.\(restore\)/);
 });
 
-test('v256 remains registered while active panel advances to v257',()=>{
+test('v256 remains registered while active panel advances through v258',()=>{
  assert.match(active,/runtime-v256/);
  assert.match(active,/runtime-v257/);
+ assert.match(active,/runtime-v258/);
  assert.match(active,/recipe-ingredient-weighing-v257\.js/);
- assert.match(active,/data-cook4me-ui-revision','257'/);
+ assert.match(active,/recipe-fullscreen-guard-v258\.js/);
+ assert.match(active,/data-cook4me-ui-revision','258'/);
 });
