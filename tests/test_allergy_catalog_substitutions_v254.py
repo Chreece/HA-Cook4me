@@ -82,6 +82,9 @@ class AllergyCatalogSubstitutionTests(unittest.TestCase):
             target("almond", "Almond", allergens=("tree_nut",)),
             target("provider-soy", "Provider protein", allergens=("soy",)),
             target("sulfite-additive", "Preservative", allergens=("sulfites",)),
+            target("fish-sauce", "Fish sauce", allergens=("fish",)),
+            target("chicken-stock", "Chicken stock"),
+            target("egg-white", "Egg white", allergens=("egg",)),
         ]
         self.payload = {"ingredients": [*TARGETS, *self.sources]}
         self.summary = subs.enrich_catalog_substitutions(self.payload)
@@ -99,6 +102,20 @@ class AllergyCatalogSubstitutionTests(unittest.TestCase):
         self.assertEqual(catalog["unsupportedAllergySubstitutions"], ["sulfites"])
         self.assertGreater(self.summary["allergySourceProfiles"], 0)
         self.assertGreater(self.summary["allergyIngredientCount"], 0)
+
+    def test_specific_catalog_profiles_beat_generic_allergy_or_protein_fallbacks(self):
+        self.assertEqual(
+            [row["key"] for row in self.by_id["fish-sauce"]["substitutions"]],
+            ["soy_sauce", "coconut_aminos"],
+        )
+        self.assertEqual(
+            [row["key"] for row in self.by_id["chicken-stock"]["substitutions"]],
+            ["vegetable_stock", "vegetable_stock_cube", "water"],
+        )
+        self.assertEqual(
+            [row["key"] for row in self.by_id["egg-white"]["substitutions"]],
+            ["aquafaba", "ground_flaxseed_water", "cornstarch_water"],
+        )
 
     def test_plant_milks_do_not_inherit_dairy_allergy_triggers(self):
         for identifier in ("soy-milk", "soy-milk-unsweet", "rice-milk"):
