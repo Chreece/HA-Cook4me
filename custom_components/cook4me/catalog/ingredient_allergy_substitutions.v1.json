@@ -1,0 +1,325 @@
+{
+  "schemaVersion": 1,
+  "version": "2026.9.28.1",
+  "evidence": "Cook4Me reviewed allergy substitution catalog v1",
+  "candidates": {
+    "rice_flour": {
+      "name": "Rice flour",
+      "virtualCatalogIngredient": true,
+      "compatibleDiets": [
+        "omnivore",
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "flour",
+        "thickener"
+      ],
+      "confidence": "reviewed"
+    },
+    "sunflower_seed_butter": {
+      "name": "Sunflower seed butter",
+      "virtualCatalogIngredient": true,
+      "compatibleDiets": [
+        "omnivore",
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "allergens": [],
+      "contexts": [
+        "nut_butter",
+        "sesame_paste",
+        "spread"
+      ],
+      "confidence": "reviewed"
+    }
+  },
+  "sourceProfiles": [
+    {
+      "id": "milk",
+      "triggerAllergens": [
+        "milk",
+        "lactose"
+      ],
+      "requireDietHit": "non_vegan"
+    },
+    {
+      "id": "cream",
+      "triggerAllergens": [
+        "milk",
+        "lactose"
+      ],
+      "requireDietHit": "non_vegan"
+    },
+    {
+      "id": "butter",
+      "triggerAllergens": [
+        "milk",
+        "lactose"
+      ],
+      "requireDietHit": "non_vegan"
+    },
+    {
+      "id": "cheese",
+      "triggerAllergens": [
+        "milk"
+      ],
+      "requireDietHit": "non_vegan"
+    },
+    {
+      "id": "yogurt",
+      "triggerAllergens": [
+        "milk",
+        "lactose"
+      ],
+      "requireDietHit": "non_vegan"
+    },
+    {
+      "id": "whey_casein",
+      "triggerAllergens": [
+        "milk"
+      ],
+      "requireDietHit": "non_vegan"
+    },
+    {
+      "id": "egg",
+      "triggerAllergens": [
+        "egg"
+      ],
+      "requireDietHit": "non_vegan"
+    },
+    {
+      "id": "egg_white",
+      "triggerAllergens": [
+        "egg"
+      ],
+      "requireDietHit": "non_vegan"
+    },
+    {
+      "id": "egg_yolk",
+      "triggerAllergens": [
+        "egg"
+      ],
+      "requireDietHit": "non_vegan"
+    },
+    {
+      "id": "fish_allergy",
+      "match": {
+        "allergenHit": "fish"
+      },
+      "triggerAllergens": [
+        "fish"
+      ],
+      "candidateKeys": [
+        "tofu",
+        "mushrooms",
+        "chickpeas"
+      ]
+    },
+    {
+      "id": "shellfish_allergy",
+      "match": {
+        "allergenHit": "shellfish"
+      },
+      "triggerAllergens": [
+        "shellfish"
+      ],
+      "candidateKeys": [
+        "tofu",
+        "mushrooms",
+        "chickpeas"
+      ]
+    },
+    {
+      "id": "gluten_wheat_allergy",
+      "match": {
+        "allergenHit": "gluten",
+        "terms": [
+          "wheat",
+          "wheat flour",
+          "weizen",
+          "weizenmehl",
+          "σιτάρι",
+          "αλεύρι σίτου",
+          "farine de blé",
+          "farina di grano",
+          "harina de trigo"
+        ]
+      },
+      "triggerAllergens": [
+        "gluten"
+      ],
+      "candidateKeys": [
+        "rice_flour",
+        "cornstarch"
+      ]
+    },
+    {
+      "id": "peanut_allergy",
+      "match": {
+        "allergenHit": "peanut",
+        "terms": [
+          "peanut",
+          "peanuts",
+          "peanut butter",
+          "erdnuss",
+          "erdnüsse",
+          "erdnussbutter",
+          "αράπικο φιστίκι",
+          "φυστικοβούτυρο"
+        ]
+      },
+      "triggerAllergens": [
+        "peanut"
+      ],
+      "candidateKeys": [
+        "sunflower_seed_butter"
+      ]
+    },
+    {
+      "id": "tree_nut_allergy",
+      "match": {
+        "allergenHit": "tree_nut",
+        "terms": [
+          "almond",
+          "hazelnut",
+          "walnut",
+          "cashew",
+          "pistachio",
+          "mandel",
+          "haselnuss",
+          "walnuss",
+          "κάσιους",
+          "αμύγδαλο",
+          "φουντούκι",
+          "καρύδι",
+          "φιστίκι αιγίνης"
+        ]
+      },
+      "triggerAllergens": [
+        "tree_nut"
+      ],
+      "candidateKeys": [
+        "sunflower_seed_butter"
+      ]
+    },
+    {
+      "id": "soy_sauce_allergy",
+      "match": {
+        "terms": [
+          "soy sauce",
+          "soya sauce",
+          "sojasauce",
+          "sojasoße",
+          "σάλτσα σόγιας"
+        ]
+      },
+      "triggerAllergens": [
+        "soy"
+      ],
+      "candidateKeys": [
+        "coconut_aminos"
+      ]
+    },
+    {
+      "id": "soy_protein_allergy",
+      "match": {
+        "allergenHit": "soy",
+        "terms": [
+          "tofu",
+          "tempeh",
+          "edamame",
+          "soy protein",
+          "soya protein"
+        ]
+      },
+      "triggerAllergens": [
+        "soy"
+      ],
+      "candidateKeys": [
+        "chickpeas",
+        "mushrooms",
+        "pea_protein"
+      ]
+    },
+    {
+      "id": "sesame_allergy",
+      "match": {
+        "allergenHit": "sesame",
+        "terms": [
+          "sesame",
+          "sesame seeds",
+          "tahini",
+          "sesam",
+          "ταχίνι",
+          "σουσάμι"
+        ]
+      },
+      "triggerAllergens": [
+        "sesame"
+      ],
+      "candidateKeys": [
+        "sunflower_seed_butter",
+        "olive_oil"
+      ]
+    },
+    {
+      "id": "celery_allergy",
+      "match": {
+        "allergenHit": "celery"
+      },
+      "triggerAllergens": [
+        "celery"
+      ],
+      "candidateKeys": [
+        "water"
+      ]
+    },
+    {
+      "id": "mustard_allergy",
+      "match": {
+        "allergenHit": "mustard",
+        "terms": [
+          "mustard",
+          "senf",
+          "moutarde",
+          "senape",
+          "mostaza",
+          "μουστάρδα"
+        ]
+      },
+      "triggerAllergens": [
+        "mustard"
+      ],
+      "candidateKeys": [
+        "lemon_juice"
+      ]
+    },
+    {
+      "id": "lupin_allergy",
+      "match": {
+        "allergenHit": "lupin",
+        "terms": [
+          "lupin",
+          "lupine",
+          "lupinen",
+          "lupinenmehl",
+          "λούπινο"
+        ]
+      },
+      "triggerAllergens": [
+        "lupin"
+      ],
+      "candidateKeys": [
+        "rice_flour",
+        "cornstarch"
+      ]
+    }
+  ],
+  "unsupportedWithoutContext": [
+    "sulfites"
+  ]
+}

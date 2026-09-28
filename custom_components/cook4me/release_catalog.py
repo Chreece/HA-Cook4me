@@ -205,6 +205,18 @@ def ingredient_substitution_candidates(ingredient: Any) -> list[dict[str, Any]]:
     return deepcopy(raw.get("substitutions") or [])
 
 
+def ingredient_substitution_allergens(ingredient: Any) -> list[str]:
+    """Return reviewed allergy triggers for one exact catalog ingredient."""
+    raw = _core._global_ingredient(load_release_catalog(), ingredient)
+    if not isinstance(raw, dict):
+        return []
+    return list(dict.fromkeys(
+        str(value).strip().lower()
+        for value in raw.get("substitutionAllergens") or []
+        if str(value).strip()
+    ))
+
+
 def ingredient_stock_identities(ingredient: Any) -> tuple[str, ...]:
     """Return stable inventory identities for one semantic ingredient concept.
 

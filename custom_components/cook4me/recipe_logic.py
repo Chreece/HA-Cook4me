@@ -400,6 +400,87 @@ def _excluded_catalog_identities(profile):
     return values
 
 
+_ALLERGEN_TERM_ALIASES = {
+    "gluten": {"gluten", "wheat", "wheat flour", "weizen", "weizenmehl", "σιταρι", "σιτάρι"},
+    "milk": {"milk", "dairy", "milch", "milchprodukte", "γαλα", "γάλα", "γαλακτοκομικα", "γαλακτοκομικά"},
+    "lactose": {"lactose", "laktose"},
+    "egg": {"egg", "eggs", "ei", "eier", "αυγο", "αυγό", "αυγα", "αυγά"},
+    "fish": {"fish", "fisch", "ψαρι", "ψάρι"},
+    "shellfish": {"shellfish", "seafood", "crustacean", "crustaceans", "mollusc", "molluscs", "meeresfruchte", "meeresfrüchte", "θαλασσινα", "θαλασσινά"},
+    "peanut": {"peanut", "peanuts", "erdnuss", "erdnüsse", "αραπικο φιστικι", "αράπικο φιστίκι"},
+    "tree_nut": {"tree nut", "tree nuts", "nuts", "nut", "nusse", "nüsse", "ξηροι καρποι", "ξηροί καρποί", "almond", "hazelnut", "walnut", "cashew", "pistachio", "mandel", "haselnuss", "walnuss", "αμυγδαλο", "αμύγδαλο", "φουντουκι", "φουντούκι", "καρυδι", "καρύδι", "κασιους", "κάσιους"},
+    "soy": {"soy", "soya", "soja", "soybean", "soybeans", "σογια", "σόγια"},
+    "sesame": {"sesame", "sesam", "tahini", "σουσαμι", "σουσάμι", "ταχινι", "ταχίνι"},
+    "celery": {"celery", "sellerie", "σελινο", "σέλινο"},
+    "mustard": {"mustard", "senf", "moutarde", "senape", "mostaza", "μουσταρδα", "μουστάρδα"},
+    "sulfites": {"sulfite", "sulfites", "sulphite", "sulphites", "sulfite", "sulfites"},
+    "lupin": {"lupin", "lupine", "lupinen", "lupinenmehl", "λουπινο", "λούπινο"},
+}
+
+
+def _allergen_keys_for_term(term):
+    token = normalize_text(term)
+    if not token:
+        return set()
+    direct = token.replace(" ", "_")
+    result = {direct} if direct in _ALLERGEN_TERM_ALIASES else set()
+    for key, aliases in _ALLERGEN_TERM_ALIASES.items():
+        if any(_contains_phrase(token, alias) or _contains_phrase(alias, token) for alias in aliases):
+            result.add(key)
+    # Dairy exclusions should also reject candidates whose evidence is explicitly
+    # lactose-related, while a lactose-only profile need not reject every dairy
+    # ingredient when the catalog has reviewed a lactose-safe replacement.
+    if "milk" in result and token in {"dairy", "milchprodukte", "γαλακτοκομικα", "γαλακτοκομικά"}:
+        result.add("lactose")
+    return result
+
+
+def _ingredient_allergen_evidence(item):
+    if not isinstance(item, dict):
+        return set()
+    intelligence = item.get("intelligence") if isinstance(item.get("intelligence"), dict) else {}
+    raw = intelligence.get("allergens") if isinstance(intelligence.get("allergens"), dict) else (
+        item.get("allergens") if isinstance(item.get("allergens"), dict) else {}
+    )
+    present = set()
+    for key, value in raw.items():
+        state = str(value).strip().lower().replace("-", "_").replace(" ", "_")
+        if value is True or state in {"present", "contains", "incompatible", "yes", "true"}:
+            normalized = str(key).strip().lower().replace("-", "_").replace(" ", "_")
+            if normalized in {"tree_nuts", "nuts"}:
+                normalized = "tree_nut"
+            elif normalized in {"peanuts"}:
+                normalized = "peanut"
+            present.add(normalized)
+    return present
+
+
+def _source_substitution_allergens(item):
+    if not isinstance(item, dict):
+        return set()
+    return {
+        str(value).strip().lower().replace("-", "_").replace(" ", "_")
+        for value in item.get("substitutionAllergens") or []
+        if str(value).strip()
+    }
+
+
+def _ingredient_allergen_conflict(item, term):
+    keys = _allergen_keys_for_term(term)
+    return bool(keys and keys & (_ingredient_allergen_evidence(item) | _source_substitution_allergens(item)))
+
+
+def _active_allergen_terms(profile):
+    out = []
+    for value in profile.get("allergies") or []:
+        if str(value).strip():
+            out.append(str(value))
+    for value in profile.get("avoid") or []:
+        if str(value).strip() and _allergen_keys_for_term(value):
+            out.append(str(value))
+    return list(dict.fromkeys(out))
+
+
 def _mounted_candidates(item, profile, diet, group):
     raw_rows = item.get("substitutions") if isinstance(item, dict) else None
     if not isinstance(raw_rows, list):
@@ -408,23 +489,44 @@ def _mounted_candidates(item, profile, diet, group):
         *(str(value) for value in profile.get("allergies") or []),
         *(str(value) for value in profile.get("avoid") or []),
     ]
-    allergies = [str(value) for value in profile.get("allergies") or [] if str(value).strip()]
+    allergy_terms = _active_allergen_terms(profile)
     excluded_identities = _excluded_catalog_identities(profile)
     out = []
     for raw in raw_rows:
         if not isinstance(raw, dict):
             continue
         compatible = [str(value).lower() for value in raw.get("compatibleDiets") or []]
-        if compatible and diet not in compatible:
+        if compatible and diet != "omnivore" and diet not in compatible:
             continue
-        if raw.get("allergenEvidence") == "unknown" and allergies:
+        if raw.get("allergenEvidence") == "unknown" and allergy_terms:
             continue
         safety_text = _mounted_candidate_text(raw)
-        if any(_matches_term(safety_text, term) for term in restrictions if term.strip()):
+        candidate_allergens = {
+            str(value).strip().lower().replace("-", "_").replace(" ", "_")
+            for value in raw.get("allergens") or []
+            if str(value).strip()
+        }
+        blocked = False
+        for term in restrictions:
+            if not term.strip():
+                continue
+            allergen_keys = _allergen_keys_for_term(term)
+            if allergen_keys:
+                # Reviewed catalog allergen evidence is authoritative here.
+                # Product-category words such as "milk" in "rice milk" describe
+                # culinary function, not the presence of the milk allergen.
+                if candidate_allergens & allergen_keys:
+                    blocked = True
+                    break
+                continue
+            if _matches_term(safety_text, term):
+                blocked = True
+                break
+        if blocked:
             continue
         if excluded_identities and _candidate_catalog_identities(raw) & excluded_identities:
             continue
-        if _diet_hits(normalize_text(str(raw.get("name") or "")))[group]:
+        if group is not None and _diet_hits(normalize_text(str(raw.get("name") or "")))[group]:
             continue
         candidate = {
             "key": str(raw.get("key") or ""),
@@ -503,6 +605,125 @@ def _diet_substitutions(recipe, profile, violations):
     only_diet = all(value == "diet:" + diet for value in violations)
     complete = bool(substitutions) and not unresolved and only_diet
     return substitutions, complete
+
+
+
+def _restriction_reasons(item, profile, *, requested=None):
+    """Return profile conflicts tied to one concrete ingredient row."""
+    requested = set(str(value) for value in (requested or []))
+    diet = str(profile.get("diet") or "omnivore").lower()
+    group = {"pescatarian": 0, "vegetarian": 1, "vegan": 2}.get(diet)
+    text = _ingredient_text(item)
+    reasons = []
+
+    if group is not None and (_diet_hits(text)[group] or _explicit_diet_conflict(item, diet)):
+        reason = "diet:" + diet
+        if not requested or reason in requested:
+            reasons.append(reason)
+
+    source_allergens = _source_substitution_allergens(item)
+    for kind, key in (("allergy", "allergies"), ("avoid", "avoid")):
+        for term in profile.get(key) or []:
+            term = str(term)
+            if not term.strip():
+                continue
+            reason = f"{kind}:{term}"
+            if requested and reason not in requested:
+                continue
+            canonical = _allergen_keys_for_term(term)
+            if _matches_term(text, term) or bool(source_allergens & canonical) or _ingredient_allergen_conflict(item, term):
+                reasons.append(reason)
+
+    for name in _profile_excluded_matches({"ingredients": [item]}, profile):
+        reason = "excluded:" + name
+        if not requested or reason in requested:
+            reasons.append(reason)
+    return list(dict.fromkeys(reasons))
+
+
+def _restriction_substitutions(recipe, profile, violations):
+    """Mount reviewed catalog candidates for diet and allergy/exclusion conflicts."""
+    requested = set(str(value) for value in violations or [])
+    if not requested:
+        return [], False
+
+    diet = str(profile.get("diet") or "omnivore").lower()
+    group = {"pescatarian": 0, "vegetarian": 1, "vegan": 2}.get(diet)
+    substitutions = []
+    covered = set()
+    unresolved = False
+
+    for index, item in enumerate(recipe.get("ingredients") or []):
+        reasons = _restriction_reasons(item, profile, requested=requested)
+        if not reasons:
+            continue
+        mounted = _mounted_candidates(item, profile, diet, group)
+        if not mounted:
+            unresolved = True
+            continue
+        names = recipe_ingredient_names({"ingredients": [item]})
+        substitutions.append({
+            "ingredientIndex": index,
+            "original": names[0] if names else _ingredient_text(item),
+            "replacement": mounted[0],
+            "alternatives": mounted,
+            "candidateCount": len(mounted),
+            "source": "ingredient_catalog",
+            "reason": reasons[0],
+            "reasons": reasons,
+            "advisory": True,
+        })
+        covered.update(reasons)
+
+    # Any recipe-level flag that cannot be tied to an actual catalog ingredient
+    # stays unresolved. This prevents a broad provider exclusion flag from being
+    # "fixed" by an unrelated replacement.
+    complete = bool(substitutions) and not unresolved and requested <= covered
+    return substitutions, complete
+
+
+def restriction_substitution_coverage(recipe, *, profile, substitutions, violations):
+    """Final fail-closed proof for combined diet/allergy substitutions."""
+    requested = set(str(value) for value in violations or [])
+    if not requested or not isinstance(substitutions, list) or not substitutions:
+        return False
+
+    required = {}
+    represented = set()
+    for index, item in enumerate(recipe.get("ingredients") or []):
+        reasons = set(_restriction_reasons(item, profile, requested=requested))
+        if reasons:
+            required[index] = reasons
+            represented.update(reasons)
+    if represented != requested:
+        return False
+
+    covered = set()
+    for row in substitutions:
+        if not isinstance(row, dict):
+            return False
+        index = row.get("ingredientIndex")
+        replacement = row.get("replacement")
+        if isinstance(index, bool) or not isinstance(index, int):
+            return False
+        if index in covered or index not in required or not isinstance(replacement, dict):
+            return False
+        if not str(replacement.get("name") or replacement.get("key") or "").strip():
+            return False
+        alternatives = row.get("alternatives")
+        if not isinstance(alternatives, list) or not alternatives:
+            return False
+        if any(
+            not isinstance(candidate, dict)
+            or not str(candidate.get("name") or candidate.get("key") or "").strip()
+            for candidate in alternatives
+        ):
+            return False
+        row_reasons = set(str(value) for value in row.get("reasons") or [row.get("reason")] if value)
+        if not required[index] <= row_reasons:
+            return False
+        covered.add(index)
+    return covered == set(required)
 
 
 def diet_substitution_coverage(
@@ -652,10 +873,18 @@ def score_recipe(recipe: dict[str, Any], profile: dict[str, Any]) -> dict[str, A
         violations.append("diet:vegan")
 
     for term in allergies:
-        if _matches_term(safety_text, term) or _matches_exclusion_key(term, exclusion_keys):
+        if (
+            _matches_term(safety_text, term)
+            or _matches_exclusion_key(term, exclusion_keys)
+            or any(_ingredient_allergen_conflict(item, term) for item in ingredients)
+        ):
             violations.append(f"allergy:{term}")
     for term in avoid:
-        if _matches_term(safety_text, term) or _matches_exclusion_key(term, exclusion_keys):
+        if (
+            _matches_term(safety_text, term)
+            or _matches_exclusion_key(term, exclusion_keys)
+            or any(_ingredient_allergen_conflict(item, term) for item in ingredients)
+        ):
             violations.append(f"avoid:{term}")
 
     violations.extend("excluded:" + name for name in _profile_excluded_matches(recipe, profile))
@@ -684,12 +913,12 @@ def score_recipe(recipe: dict[str, Any], profile: dict[str, Any]) -> dict[str, A
     preference_bonus = min(0.15, 0.03 * len(preference_hits))
     habit_bonus = min(0.10, 0.02 * len(habit_hits))
     safe = not violations
-    substitutions, complete = _diet_substitutions(recipe, profile, violations)
+    substitutions, complete = _restriction_substitutions(recipe, profile, violations)
     substitution_coverage_complete = bool(
         complete
-        and diet_substitution_coverage(
+        and restriction_substitution_coverage(
             recipe,
-            diet=diet,
+            profile=profile,
             substitutions=substitutions,
             violations=violations,
         )

@@ -19,7 +19,12 @@ with sync_playwright() as p:
         page=browser.new_page(viewport={'width':width,'height':height},reduced_motion='reduce')
         errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
         page.set_default_timeout(7000)
-        page.set_content(html);page.wait_for_function('window.ready')
+        page.set_content(html)
+        try:
+            page.wait_for_function('window.ready')
+        except Exception:
+            print('PRE_READY_PAGE_ERRORS:', errors, flush=True)
+            raise
         page.evaluate("""()=>{
           app.show('profile');window.originalApi=app._api.bind(app);window.releaseDetails={};
           app._api=(type,data)=>type.endsWith('/product_details')

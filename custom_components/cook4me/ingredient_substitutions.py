@@ -21,6 +21,7 @@ except ImportError:  # Standalone unit-test import via spec_from_file_location.
     _spec.loader.exec_module(_diet)
 
 _DATA_PATH = Path(__file__).with_name("catalog") / "ingredient_substitutions.v1.json"
+_ALLERGY_DATA_PATH = Path(__file__).with_name("catalog") / "ingredient_allergy_substitutions.v1.json"
 
 
 def _text(value: Any) -> str:
@@ -31,6 +32,45 @@ def _norm(value: Any) -> str:
     text = unicodedata.normalize("NFKD", _text(value).casefold())
     text = "".join(ch for ch in text if not unicodedata.category(ch).startswith("M"))
     return " ".join(re.findall(r"[^\W_]+", text, re.UNICODE))
+
+
+def _merge_catalog_overlay(payload: dict[str, Any], overlay: dict[str, Any]) -> dict[str, Any]:
+    """Merge reviewed allergy metadata without duplicating the diet catalog."""
+    if not isinstance(overlay, dict) or int(overlay.get("schemaVersion") or 0) != 1:
+        return payload
+    candidates = payload.setdefault("candidates", {})
+    for key, value in (overlay.get("candidates") or {}).items():
+        if isinstance(value, dict):
+            candidates[str(key)] = deepcopy(value)
+
+    profiles = [deepcopy(row) for row in payload.get("sourceProfiles") or [] if isinstance(row, dict)]
+    by_id = {
+        str(row.get("id")): index
+        for index, row in enumerate(profiles)
+        if str(row.get("id") or "").strip()
+    }
+    for raw in overlay.get("sourceProfiles") or []:
+        if not isinstance(raw, dict):
+            continue
+        ident = str(raw.get("id") or "").strip()
+        if ident and ident in by_id:
+            merged = deepcopy(profiles[by_id[ident]])
+            merged.update(deepcopy(raw))
+            profiles[by_id[ident]] = merged
+        else:
+            profiles.append(deepcopy(raw))
+            if ident:
+                by_id[ident] = len(profiles) - 1
+    payload["sourceProfiles"] = profiles
+    payload["allergyCatalogVersion"] = str(overlay.get("version") or "unknown")
+    payload["unsupportedAllergySubstitutions"] = list(
+        dict.fromkeys(
+            str(value).strip().lower()
+            for value in overlay.get("unsupportedWithoutContext") or []
+            if str(value).strip()
+        )
+    )
+    return payload
 
 
 @lru_cache(maxsize=1)
@@ -45,7 +85,11 @@ def load_substitution_catalog() -> dict[str, Any]:
         payload["candidates"] = {}
     if not isinstance(payload.get("sourceProfiles"), list):
         payload["sourceProfiles"] = []
-    return payload
+    try:
+        overlay = json.loads(_ALLERGY_DATA_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        overlay = {}
+    return _merge_catalog_overlay(payload, overlay)
 
 
 def _target_lookup(payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -217,11 +261,33 @@ def _resolve_candidate(
     return result
 
 
+def _ingredient_allergen_hits(ingredient: dict[str, Any]) -> set[str]:
+    intelligence = (
+        ingredient.get("intelligence")
+        if isinstance(ingredient.get("intelligence"), dict)
+        else {}
+    )
+    raw = (
+        intelligence.get("allergens")
+        if isinstance(intelligence.get("allergens"), dict)
+        else ingredient.get("allergens")
+        if isinstance(ingredient.get("allergens"), dict)
+        else {}
+    )
+    present = set()
+    for key, value in raw.items():
+        state = str(value).strip().lower().replace("-", "_").replace(" ", "_")
+        if value is True or state in {"present", "contains", "incompatible", "yes", "true"}:
+            present.add(str(key).strip().lower().replace("-", "_").replace(" ", "_"))
+    return present
+
+
 def _matches_source_profile(
     profile: dict[str, Any],
     *,
     text: str,
     hits: tuple[tuple[str, ...], tuple[str, ...], tuple[str, ...]],
+    allergen_hits: set[str],
 ) -> bool:
     match = profile.get("match") if isinstance(profile.get("match"), dict) else {}
     terms = [
@@ -229,33 +295,98 @@ def _matches_source_profile(
         for value in match.get("terms") or []
         if str(value).strip()
     ]
-    if terms and any(_diet._contains_phrase(text, term) for term in terms):
+    term_match = bool(terms and any(_diet._contains_phrase(text, term) for term in terms))
+    if term_match:
+        required_hit = _text(profile.get("requireDietHit")).lower().replace("-", "_")
+        required_index = {"meat": 0, "animal": 1, "non_vegan": 2}.get(required_hit)
+        if required_hit and (required_index is None or not hits[required_index]):
+            term_match = False
+    if term_match:
         return True
     hit_name = _text(match.get("dietHit")).lower().replace("-", "_")
     hit_index = {"meat": 0, "animal": 1, "non_vegan": 2}.get(hit_name)
-    return bool(hit_index is not None and hits[hit_index])
+    if hit_index is not None and hits[hit_index]:
+        return True
+    allergen = _text(match.get("allergenHit")).lower().replace("-", "_").replace(" ", "_")
+    return bool(allergen and allergen in allergen_hits)
 
 
-def substitution_candidate_keys(ingredient: dict[str, Any]) -> list[str]:
-    """Return ordered reviewed candidate keys from catalog-owned source profiles."""
+def substitution_source_profiles(ingredient: dict[str, Any]) -> list[dict[str, Any]]:
+    """Return every reviewed source profile that applies to this ingredient."""
     text = _diet._ingredient_text(ingredient)
     if not text:
         return []
     hits = _diet._diet_hits(text)
-    if not any(hits):
-        return []
+    allergen_hits = _ingredient_allergen_hits(ingredient)
     catalog = load_substitution_catalog()
-    for profile in catalog.get("sourceProfiles") or []:
-        if not isinstance(profile, dict):
-            continue
-        if not _matches_source_profile(profile, text=text, hits=hits):
-            continue
-        return list(dict.fromkeys(
-            str(value).strip()
-            for value in profile.get("candidateKeys") or []
-            if str(value).strip()
-        ))
-    return []
+    return [
+        profile
+        for profile in catalog.get("sourceProfiles") or []
+        if isinstance(profile, dict)
+        and _matches_source_profile(
+            profile,
+            text=text,
+            hits=hits,
+            allergen_hits=allergen_hits,
+        )
+    ]
+
+
+def _candidate_source_profile(ingredient: dict[str, Any]) -> dict[str, Any] | None:
+    """Choose the most specific matching profile for replacement candidates.
+
+    Allergy triggers may aggregate across profiles, but candidate semantics must
+    retain the catalog's specificity ordering. A concrete phrase such as
+    "fish sauce", "egg white", or "chicken stock" therefore wins over generic
+    animal/allergen fallbacks.
+    """
+    text = _diet._ingredient_text(ingredient)
+    if not text:
+        return None
+    hits = _diet._diet_hits(text)
+    allergen_hits = _ingredient_allergen_hits(ingredient)
+    profiles = substitution_source_profiles(ingredient)
+    if not profiles:
+        return None
+
+    best: dict[str, Any] | None = None
+    best_score: tuple[int, int] = (-1, -1)
+    for order, profile in enumerate(profiles):
+        match = profile.get("match") if isinstance(profile.get("match"), dict) else {}
+        matched_terms = [
+            str(value)
+            for value in match.get("terms") or []
+            if str(value).strip() and _diet._contains_phrase(text, str(value))
+        ]
+        if matched_terms:
+            specificity = max(len(_diet.normalize_text(value).split()) for value in matched_terms)
+            score = (3, specificity)
+        else:
+            hit_name = _text(match.get("dietHit")).lower().replace("-", "_")
+            hit_index = {"meat": 0, "animal": 1, "non_vegan": 2}.get(hit_name)
+            if hit_index is not None and hits[hit_index]:
+                score = (2, 0)
+            else:
+                allergen = _text(match.get("allergenHit")).lower().replace("-", "_").replace(" ", "_")
+                score = (1, 0) if allergen and allergen in allergen_hits else (0, 0)
+        # Strictly greater keeps catalog order as the deterministic tie-breaker.
+        if score > best_score:
+            best = profile
+            best_score = score
+    return best
+
+
+def substitution_candidate_keys(ingredient: dict[str, Any]) -> list[str]:
+    """Return reviewed candidates from the most specific matching source profile."""
+    profile = _candidate_source_profile(ingredient)
+    if not isinstance(profile, dict):
+        return []
+    return list(dict.fromkeys(
+        str(value).strip()
+        for value in profile.get("candidateKeys") or []
+        if str(value).strip()
+    ))
+
 
 def _source_diets(ingredient: dict[str, Any]) -> list[str]:
     text = _diet._ingredient_text(ingredient)
@@ -268,6 +399,15 @@ def _source_diets(ingredient: dict[str, Any]) -> list[str]:
     if hits[2]:
         result.append("vegan")
     return result
+
+
+def _source_allergens(profiles: list[dict[str, Any]]) -> list[str]:
+    return list(dict.fromkeys(
+        str(value).strip().lower().replace("-", "_").replace(" ", "_")
+        for profile in profiles
+        for value in profile.get("triggerAllergens") or []
+        if str(value).strip()
+    ))
 
 
 def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
@@ -302,6 +442,7 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
             continue
         if row.get("substitutionOnly") or row.get("classification") == "substitution":
             continue
+        profiles = substitution_source_profiles(row)
         keys = substitution_candidate_keys(row)
         if not keys:
             continue
@@ -316,6 +457,9 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
             continue
         row["substitutions"] = candidates
         row["substitutionDiets"] = _source_diets(row)
+        source_allergens = _source_allergens(profiles)
+        if source_allergens:
+            row["substitutionAllergens"] = source_allergens
         row["substitutionCatalogVersion"] = version
         enriched += 1
         candidates_attached += len(candidates)
@@ -329,6 +473,16 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
             row for row in catalog.get("sourceProfiles") or []
             if isinstance(row, dict)
         ]),
+        "allergySourceProfiles": len([
+            row for row in catalog.get("sourceProfiles") or []
+            if isinstance(row, dict) and row.get("triggerAllergens")
+        ]),
+        "allergyIngredientCount": len([
+            row for row in payload.get("ingredients") or []
+            if isinstance(row, dict) and row.get("substitutionAllergens")
+        ]),
+        "allergyCatalogVersion": str(catalog.get("allergyCatalogVersion") or ""),
+        "unsupportedAllergySubstitutions": list(catalog.get("unsupportedAllergySubstitutions") or []),
         "virtualIngredientCount": virtual_ingredients,
         "unresolvedTargets": sorted(unresolved_targets),
         "missingProfiles": sorted(missing_profiles),
