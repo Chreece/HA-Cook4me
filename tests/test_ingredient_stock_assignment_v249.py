@@ -1,4 +1,5 @@
 """Ingredient info can link a reviewed catalog ingredient to existing stock."""
+import ast
 from pathlib import Path
 import sys
 import types
@@ -11,6 +12,23 @@ sys.modules[pkg.__name__]=pkg
 from assignment_v249 import inventory
 
 COMP=ROOT/'custom_components/cook4me'
+
+
+def resolve_links(values, catalog, *, strict=False):
+    """Execute the production resolver without importing HA nutrition modules."""
+    path=COMP/'product_packages.py'
+    tree=ast.parse(path.read_text(encoding='utf-8'))
+    node=next(
+        item for item in tree.body
+        if isinstance(item,ast.FunctionDef) and item.name=='resolve_ingredient_links'
+    )
+    module=types.ModuleType('assignment_v249.product_link_resolver')
+    module.__package__='assignment_v249'
+    module.__file__=str(path)
+    module.deepcopy=__import__('copy').deepcopy
+    module.inventory_identity=inventory.inventory_identity
+    exec(compile(ast.Module(body=[node],type_ignores=[]),str(path),'exec'),module.__dict__)
+    return module.resolve_ingredient_links(values,catalog,strict=strict)
 
 
 class IngredientStockAssignmentV249Tests(unittest.TestCase):
@@ -36,6 +54,49 @@ class IngredientStockAssignmentV249Tests(unittest.TestCase):
         linked=inventory.stock_for_ingredient(result,{'key':'catalog-rice','name':'Rice'})
         self.assertEqual(linked['quantity'],500)
         self.assertEqual(len(linked['lots']),2)
+
+    def test_grouped_catalog_assignment_keeps_exact_recipe_source_identity(self):
+        catalog=[{
+            'id':'salt-display','key':'salt-display','ingredientId':'salt-display',
+            'name':'Αλάτι','sourceIngredientIds':['salt-display','salt-recipe'],
+            'displayGroupId':'ingredient:salt',
+        }]
+        resolved=resolve_links(
+            [{'key':'salt-recipe','name':'Αλάτι'}],catalog,strict=True
+        )
+        self.assertEqual(resolved[0]['key'],'salt-recipe')
+        self.assertEqual(
+            resolved[0]['sourceIngredientIds'],
+            ['salt-display','salt-recipe'],
+        )
+        self.assertEqual(resolved[0]['displayGroupId'],'ingredient:salt')
+
+        stock=[{
+            'key':'salt-cellar','name':'Salt cellar','unlimited':True,
+        }]
+        assigned=inventory.assign_inventory_ingredient(
+            stock,'k:salt-cellar',resolved[0]
+        )
+        found=inventory.stock_for_ingredient(
+            assigned,{'key':'salt-recipe','name':'Αλάτι'}
+        )
+        self.assertIsNotNone(found)
+        self.assertTrue(found['unlimited'])
+
+    def test_explicit_picker_source_ids_are_stable_inventory_identities(self):
+        link=inventory.normalize_ingredient_links([{
+            'key':'salt-display','name':'Αλάτι',
+            'sourceIngredientIds':['salt-display','salt-recipe','salt-recipe'],
+            'displayGroupId':'ingredient:salt',
+        }])[0]
+        self.assertEqual(
+            link['sourceIngredientIds'],['salt-display','salt-recipe']
+        )
+        self.assertEqual(link['displayGroupId'],'ingredient:salt')
+        self.assertEqual(
+            inventory.ingredient_identities(link),
+            {'k:salt-display','k:salt-recipe'},
+        )
 
     def test_unlimited_stock_gets_row_link_and_existing_links_are_preserved(self):
         stock=[{
