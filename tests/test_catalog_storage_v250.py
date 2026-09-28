@@ -36,6 +36,45 @@ class CatalogRuntimeStorageTests(unittest.TestCase):
             self.assertFalse(source.exists())
             self.assertEqual(target.read_bytes(), b'{"catalogVersion":"new"}')
 
+
+    def test_promotes_compressed_release_catalog_and_removes_stale_raw_runtime(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "installed" / "custom_components" / "cook4me" / "catalog" / "merged_catalog.v1.json"
+            source.parent.mkdir(parents=True)
+            source_gz = Path(str(source) + ".gz")
+            source_gz.write_bytes(b"compressed-new")
+            target = storage.runtime_catalog_path(root / "config")
+            target.parent.mkdir(parents=True)
+            target.write_bytes(b"stale-raw")
+
+            resolved = storage.prepare_release_catalog_storage(
+                root / "config", packaged_path=source
+            )
+
+            target_gz = Path(str(target) + ".gz")
+            self.assertEqual(resolved, target)
+            self.assertFalse(source_gz.exists())
+            self.assertFalse(target.exists())
+            self.assertEqual(target_gz.read_bytes(), b"compressed-new")
+
+    def test_existing_compressed_runtime_catalog_is_used_after_promotion(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "missing" / "merged_catalog.v1.json"
+            target = storage.runtime_catalog_path(root / "config")
+            target_gz = Path(str(target) + ".gz")
+            target_gz.parent.mkdir(parents=True)
+            target_gz.write_bytes(b"persistent-gzip")
+
+            resolved = storage.prepare_release_catalog_storage(
+                root / "config", packaged_path=source
+            )
+
+            self.assertEqual(resolved, target)
+            self.assertFalse(target.exists())
+            self.assertEqual(target_gz.read_bytes(), b"persistent-gzip")
+
     def test_existing_runtime_catalog_is_used_when_package_is_already_promoted(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

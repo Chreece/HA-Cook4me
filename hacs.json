@@ -1,4 +1,7 @@
 {
   "name": "HA-Cook4me",
-  "homeassistant": "2026.3.0"
+  "homeassistant": "2026.3.0",
+  "zip_release": true,
+  "filename": "cook4me.zip",
+  "hide_default_branch": true
 }
