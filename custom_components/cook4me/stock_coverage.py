@@ -9,6 +9,8 @@ from __future__ import annotations
 from collections import defaultdict
 from typing import Any
 
+from .catalog_amounts import catalog_name
+from .catalog_presentation import clean_name, name_key
 from .inventory import inventory_identity
 from .price_identity import pricing_name
 from .price_units import price_ingredient
@@ -46,6 +48,15 @@ def warm_stock_catalog(payload: dict[str, Any] | None = None) -> int:
         tags = []
         if exact_name:
             tags.append("name:" + " ".join(exact_name.casefold().split()))
+        # The catalog picker can expose one reviewed ingredient choice for
+        # several source IDs after removing recipe-use annotations such as
+        # "(for seasoning)". Keep the stock matcher aligned with that exact
+        # picker-family contract so a reviewed assignment covers every source
+        # identity represented by the choice. This is still language-neutral
+        # and never merges by translated labels.
+        family = name_key(catalog_name(clean_name(canonical))) if canonical and safe else ""
+        if family:
+            tags.append("family:" + family)
         concept = str(row.get("conceptId") or "")
         if safe and concept.startswith("concept:food:"):
             tags.append(concept)
@@ -80,8 +91,15 @@ def coverage_ingredient(raw: dict[str, Any]) -> dict[str, Any]:
     if canonical:
         item["canonicalName"] = canonical
     explicit = {str(value) for value in item.get("identities", []) if isinstance(value, str) and value}
+    source_ids = {
+        "k:" + str(value).strip()
+        for value in item.get("sourceIngredientIds") or []
+        if str(value).strip()
+    }
     direct = inventory_identity(item)
-    item["identities"] = sorted(explicit | set(identities) | ({direct} if direct else set()))
+    item["identities"] = sorted(
+        explicit | source_ids | set(identities) | ({direct} if direct else set())
+    )
     # Explicit SI unit IDs / reviewed localized symbols only. No inference of
     # grams per bunch, slice or package. Ingredient-specific portions are handled
     # by food_intelligence after stock has been identified.
@@ -89,9 +107,38 @@ def coverage_ingredient(raw: dict[str, Any]) -> dict[str, Any]:
 
 
 def coverage_stock(stock: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Normalize stored measurement labels in a copy, never the saved inventory."""
-    result = [dict(row) for row in stock]
-    for row in result:
+    """Normalize stock copies and expand saved catalog links for calculations.
+
+    Older assignments persisted only the representative catalog key. Expand
+    those links through the warmed immutable catalog index at read time so
+    existing unlimited/finite stock immediately covers every reviewed source
+    identity in the same catalog choice, without rewriting saved inventory.
+    """
+    result: list[dict[str, Any]] = []
+    for source in stock:
+        row = dict(source)
         unit = price_ingredient({"quantity": 1, "unit": row.get("unit", "")})["unit"]
         row["unit"] = unit
+        links = source.get("ingredientLinks")
+        if isinstance(links, list):
+            row["ingredientLinks"] = [
+                coverage_ingredient(link) for link in links if isinstance(link, dict)
+            ]
+        lots = source.get("lots")
+        if isinstance(lots, list):
+            normalized_lots = []
+            for source_lot in lots:
+                if not isinstance(source_lot, dict):
+                    continue
+                lot = dict(source_lot)
+                lot_links = source_lot.get("ingredientLinks")
+                if isinstance(lot_links, list):
+                    lot["ingredientLinks"] = [
+                        coverage_ingredient(link)
+                        for link in lot_links
+                        if isinstance(link, dict)
+                    ]
+                normalized_lots.append(lot)
+            row["lots"] = normalized_lots
+        result.append(row)
     return result

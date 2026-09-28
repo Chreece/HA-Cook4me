@@ -57,6 +57,10 @@ def ingredient_identities(item: Any) -> set[str]:
             text = _text(value)
             if text:
                 identities.add(text)
+        for value in item.get("sourceIngredientIds") or []:
+            text = _text(value)
+            if text:
+                identities.add(text if text.startswith("k:") else f"k:{text}")
     return identities
 
 
@@ -961,17 +965,40 @@ def format_stock(row: dict[str, Any]) -> str:
 
 
 def normalize_ingredient_links(value):
-    """Persist stable catalogue identities, never another copy of the stock."""
-    result, seen = [], set()
+    """Persist stable catalogue identities, never another copy of the stock.
+
+    Grouped catalog choices also retain their reviewed source IDs. Re-saving an
+    older representative-only link enriches it instead of silently discarding
+    the stronger identity evidence.
+    """
+    result: list[dict[str, Any]] = []
+    index: dict[str, int] = {}
     for raw in value if isinstance(value, list) else []:
         if not isinstance(raw, dict):
             continue
         row = {"key": _text(raw.get("key") or raw.get("ingredientId") or raw.get("id")),
                "name": _text(raw.get("name") or raw.get("foodName"))}
+        source_ids = list(dict.fromkeys(
+            _text(value)
+            for value in raw.get("sourceIngredientIds") or []
+            if _text(value)
+        ))
+        if source_ids:
+            row["sourceIngredientIds"] = source_ids
         identity = inventory_identity(row)
-        if row["name"] and identity not in seen:
-            result.append(row)
-            seen.add(identity)
+        if not row["name"] or not identity:
+            continue
+        if identity in index:
+            current = result[index[identity]]
+            merged = list(dict.fromkeys([
+                *(current.get("sourceIngredientIds") or []),
+                *source_ids,
+            ]))
+            if merged:
+                current["sourceIngredientIds"] = merged
+            continue
+        index[identity] = len(result)
+        result.append(row)
     return result
 
 

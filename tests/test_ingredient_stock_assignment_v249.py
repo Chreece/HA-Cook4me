@@ -55,6 +55,34 @@ class IngredientStockAssignmentV249Tests(unittest.TestCase):
         )
         self.assertEqual(again[0]['ingredientLinks'],result[0]['ingredientLinks'])
 
+    def test_grouped_catalog_source_ids_survive_assignment_and_match_recipe_source(self):
+        stock=[{
+            'key':'seasoning','name':'Seasoning','unit':'pcs','unlimited':True,
+            'ingredientLinks':[{'key':'salt','name':'Salt'}],
+        }]
+        result=inventory.assign_inventory_ingredient(
+            stock,'k:seasoning',{
+                'key':'pepper','name':'Pepper',
+                'sourceIngredientIds':['pepper','pepper-ground','pepper-fresh'],
+            }
+        )
+        link=next(item for item in result[0]['ingredientLinks'] if item['key']=='pepper')
+        self.assertEqual(
+            link['sourceIngredientIds'],
+            ['pepper','pepper-ground','pepper-fresh'],
+        )
+        found=inventory.stock_for_ingredient(
+            result,{'key':'pepper-ground','name':'Pepper'}
+        )
+        self.assertIsNotNone(found)
+        self.assertTrue(found['unlimited'])
+
+        enriched=inventory.normalize_ingredient_links([
+            {'key':'pepper','name':'Pepper'},
+            {'key':'pepper','name':'Pepper','sourceIngredientIds':['pepper-ground']},
+        ])
+        self.assertEqual(enriched[0]['sourceIngredientIds'],['pepper-ground'])
+
     def test_primary_identity_is_already_assigned_and_missing_stock_is_rejected(self):
         stock=[{'key':'rice','name':'Rice','unit':'g','lots':[{'id':'a','quantity':100}]}]
         same=inventory.assign_inventory_ingredient(stock,'k:rice',{'key':'rice','name':'Rice'})
