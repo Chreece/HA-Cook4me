@@ -83,7 +83,10 @@ def warm_stock_catalog(payload: dict[str, Any] | None = None) -> int:
     assignment_aliases: dict[tuple[str, str], set[str]] = defaultdict(set)
     for language in ("en", "de", "el"):
         for choice in ingredient_choices(payload, language):
-            primary = inventory_identity(choice)
+            # websocket_v33._catalog promotes ingredientId/id to "key" before
+            # the assignment is persisted; mirror that exact stored identity.
+            choice_key = _key(choice)
+            primary = f"k:{choice_key}" if choice_key else inventory_identity(choice)
             label = _name_key(choice.get("name"))
             source_ids = {
                 f"k:{str(value).strip()}"
