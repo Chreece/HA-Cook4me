@@ -435,6 +435,26 @@ def _allergen_keys_for_term(term):
     return result
 
 
+def _ingredient_allergen_evidence(item):
+    if not isinstance(item, dict):
+        return set()
+    intelligence = item.get("intelligence") if isinstance(item.get("intelligence"), dict) else {}
+    raw = intelligence.get("allergens") if isinstance(intelligence.get("allergens"), dict) else (
+        item.get("allergens") if isinstance(item.get("allergens"), dict) else {}
+    )
+    present = set()
+    for key, value in raw.items():
+        state = str(value).strip().lower().replace("-", "_").replace(" ", "_")
+        if value is True or state in {"present", "contains", "incompatible", "yes", "true"}:
+            normalized = str(key).strip().lower().replace("-", "_").replace(" ", "_")
+            if normalized in {"tree_nuts", "nuts"}:
+                normalized = "tree_nut"
+            elif normalized in {"peanuts"}:
+                normalized = "peanut"
+            present.add(normalized)
+    return present
+
+
 def _source_substitution_allergens(item):
     if not isinstance(item, dict):
         return set()
@@ -443,6 +463,11 @@ def _source_substitution_allergens(item):
         for value in item.get("substitutionAllergens") or []
         if str(value).strip()
     }
+
+
+def _ingredient_allergen_conflict(item, term):
+    keys = _allergen_keys_for_term(term)
+    return bool(keys and keys & (_ingredient_allergen_evidence(item) | _source_substitution_allergens(item)))
 
 
 def _active_allergen_terms(profile):
@@ -585,7 +610,7 @@ def _restriction_reasons(item, profile, *, requested=None):
             if requested and reason not in requested:
                 continue
             canonical = _allergen_keys_for_term(term)
-            if _matches_term(text, term) or bool(source_allergens & canonical):
+            if _matches_term(text, term) or bool(source_allergens & canonical) or _ingredient_allergen_conflict(item, term):
                 reasons.append(reason)
 
     for name in _profile_excluded_matches({"ingredients": [item]}, profile):
@@ -827,10 +852,18 @@ def score_recipe(recipe: dict[str, Any], profile: dict[str, Any]) -> dict[str, A
         violations.append("diet:vegan")
 
     for term in allergies:
-        if _matches_term(safety_text, term) or _matches_exclusion_key(term, exclusion_keys):
+        if (
+            _matches_term(safety_text, term)
+            or _matches_exclusion_key(term, exclusion_keys)
+            or any(_ingredient_allergen_conflict(item, term) for item in ingredients)
+        ):
             violations.append(f"allergy:{term}")
     for term in avoid:
-        if _matches_term(safety_text, term) or _matches_exclusion_key(term, exclusion_keys):
+        if (
+            _matches_term(safety_text, term)
+            or _matches_exclusion_key(term, exclusion_keys)
+            or any(_ingredient_allergen_conflict(item, term) for item in ingredients)
+        ):
             violations.append(f"avoid:{term}")
 
     violations.extend("excluded:" + name for name in _profile_excluded_matches(recipe, profile))
