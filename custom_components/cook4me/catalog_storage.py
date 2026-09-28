@@ -12,6 +12,10 @@ _PACKAGED_CATALOG = Path(__file__).with_name("catalog") / "merged_catalog.v1.jso
 _RUNTIME_CATALOG = Path(".storage") / "cook4me" / "runtime_catalog" / "merged_catalog.v1.json"
 
 
+def _gzip_path(path: Path) -> Path:
+    return Path(str(path) + ".gz")
+
+
 def _is_repository_checkout(path: Path) -> bool:
     """Keep tracked source files intact when Cook4Me runs from a git checkout."""
     for parent in path.parents:
@@ -49,25 +53,43 @@ def prepare_release_catalog_storage(
     Source checkouts are deliberately left untouched.
     """
     source = Path(packaged_path) if packaged_path is not None else _PACKAGED_CATALOG
+    source_gz = _gzip_path(source)
     target = runtime_catalog_path(config_dir)
+    target_gz = _gzip_path(target)
 
-    if not source.exists():
-        return target if target.exists() else source
+    if not source.exists() and not source_gz.exists():
+        if target.exists() or target_gz.exists():
+            return target
+        return source
     if not allow_source_checkout and _is_repository_checkout(source):
         return source
+
+    # Release ZIPs use the compressed catalog; source archives/checkouts retain
+    # the raw JSON. Keep the persistent copy in the same representation that was
+    # shipped so restart promotion never expands 80+ MB onto disk.
+    moving_compressed = not source.exists() and source_gz.exists()
+    actual_source = source_gz if moving_compressed else source
+    actual_target = target_gz if moving_compressed else target
 
     try:
         target.parent.mkdir(parents=True, exist_ok=True)
         try:
-            os.replace(source, target)
+            os.replace(actual_source, actual_target)
         except OSError as err:
             if err.errno != errno.EXDEV:
                 raise
             # Defensive fallback for unusual split-mount configurations.
-            temporary = target.with_name(target.name + ".tmp")
-            shutil.copyfile(source, temporary)
-            os.replace(temporary, target)
-            source.unlink()
+            temporary = actual_target.with_name(actual_target.name + ".tmp")
+            shutil.copyfile(actual_source, temporary)
+            os.replace(temporary, actual_target)
+            actual_source.unlink()
+
+        # Never let an older representation shadow the catalog just installed.
+        stale = target if moving_compressed else target_gz
+        try:
+            stale.unlink()
+        except FileNotFoundError:
+            pass
         return target
     except OSError:
         # Installation correctness wins over the optimization. If promotion
