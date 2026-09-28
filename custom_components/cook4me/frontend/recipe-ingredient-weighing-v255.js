@@ -36,16 +36,29 @@ export const RecipeIngredientWeighingMixin=Base=>class extends Base{
   const state=this._v255State(recipe,index),measurement=this._v255Measurement(index);
   const amount=control.querySelector('[data-v255-amount]'),start=control.querySelector('[data-v255-start]');
   const save=control.querySelector('[data-v255-save]'),cancel=control.querySelector('[data-v255-cancel]');
-  if(state.active){
+  const reading=this._v116Reading?.()||null;
+  const scaleOn=!!reading;
+  if(state.active&&scaleOn){
    amount?.setAttribute('data-v116-live','');
-   const reading=this._v116Reading?.();
-   if(amount)amount.textContent=reading?`${this._v116Num(reading.net)} g`:(this._v116Text?.('off')||'—');
+   if(amount)amount.textContent=`${this._v116Num(reading.net)} g`;
    start.hidden=true;save.hidden=false;cancel.hidden=false;save.disabled=state.saving;cancel.disabled=state.saving;
   }else{
    amount?.removeAttribute('data-v116-live');
    if(amount)amount.textContent=measurement&&Number.isFinite(Number(measurement.grams))?`${this._v116Num(measurement.grams)} g`:'';
    start.hidden=false;save.hidden=true;cancel.hidden=true;start.disabled=false;
   }
+ }
+ _v116Live(){
+  const result=super._v116Live?.();
+  const recipe=this._opened;
+  if(recipe&&this._v63RecipeDialog){
+   this._v63RecipeDialog.querySelectorAll('[data-v255-weigh-control]').forEach(control=>{
+    const row=control.closest('li'),button=row?.querySelector('[data-v66-ingredient]');
+    const index=Number(button?.dataset?.v66Ingredient);
+    if(Number.isInteger(index))this._v255PaintControl(control,recipe,index);
+   });
+  }
+  return result;
  }
  _v255Message(deduction){
   if(deduction?.deducted){
