@@ -32,10 +32,10 @@ assert.match(panel,/diet-substitution-guard-v254\.js/);
 assert.match(panel,/ingredient-substitution-info-v254\.js/);
 assert.match(panel,/IngredientSubstitutionInfoMixin/);
 assert.match(info,/catalogSubstitutions/);
-assert.match(info,/data-v254-ingredient-substitutions/);
+assert.match(info,/data-v253-ingredient-substitutions/);
 assert.match(info,/selected diet and active exclusions/);
 assert.match(panel,/runtime-v254/);
 assert.match(registration,/runtime-v254/);
-assert.match(registration,/diet=253/);
+assert.match(registration,/diet=254/);
 
 console.log('CATALOG_OWNED_SUBSTITUTIONS_V254_FRONTEND=PASS');
