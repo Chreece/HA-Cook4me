@@ -985,6 +985,9 @@ def normalize_ingredient_links(value):
         ))
         if source_ids:
             row["sourceIngredientIds"] = source_ids
+        display_group_id = _text(raw.get("displayGroupId"))
+        if display_group_id:
+            row["displayGroupId"] = display_group_id
         identity = inventory_identity(row)
         if not row["name"] or not identity:
             continue
@@ -996,6 +999,8 @@ def normalize_ingredient_links(value):
             ]))
             if merged:
                 current["sourceIngredientIds"] = merged
+            if row.get("displayGroupId") and not current.get("displayGroupId"):
+                current["displayGroupId"] = row["displayGroupId"]
             continue
         index[identity] = len(result)
         result.append(row)
@@ -1052,7 +1057,9 @@ def stock_for_ingredient(stock, ingredient, used=None):
     candidates, fallback = [], None
     for row in stock:
         row_identity = inventory_identity(row)
-        primary = row_identity in wanted
+        # Calculation copies can carry reviewed aliases in identities/source IDs.
+        # Persistent stock remains anchored to its primary inventory identity.
+        primary = bool(wanted & ingredient_identities(row))
         row_linked = {
             identity
             for link in row.get("ingredientLinks") or []
