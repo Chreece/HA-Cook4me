@@ -5,6 +5,7 @@ import {
   dietReplacementLabel,
   substitutionAdaptation,
 } from '../custom_components/cook4me/frontend/diet-substitution-guard-v254.js';
+import {IngredientSubstitutionInfoMixin} from '../custom_components/cook4me/frontend/ingredient-substitution-info-v254.js';
 
 const adapted={
  match:{
@@ -24,6 +25,8 @@ const adapted={
   }],
  },
 };
+
+assert.equal(typeof IngredientSubstitutionInfoMixin,'function');
 
 const state=substitutionAdaptation(adapted,'omnivore');
 assert.equal(state.allowed,true);
