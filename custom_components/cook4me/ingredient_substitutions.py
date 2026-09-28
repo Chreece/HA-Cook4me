@@ -295,7 +295,13 @@ def _matches_source_profile(
         for value in match.get("terms") or []
         if str(value).strip()
     ]
-    if terms and any(_diet._contains_phrase(text, term) for term in terms):
+    term_match = bool(terms and any(_diet._contains_phrase(text, term) for term in terms))
+    if term_match:
+        required_hit = _text(profile.get("requireDietHit")).lower().replace("-", "_")
+        required_index = {"meat": 0, "animal": 1, "non_vegan": 2}.get(required_hit)
+        if required_hit and (required_index is None or not hits[required_index]):
+            term_match = False
+    if term_match:
         return True
     hit_name = _text(match.get("dietHit")).lower().replace("-", "_")
     hit_index = {"meat": 0, "animal": 1, "non_vegan": 2}.get(hit_name)
