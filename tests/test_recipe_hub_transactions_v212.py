@@ -34,6 +34,8 @@ inventory.inventory_identity = lambda row: (
     "k:" + str(row.get("key")) if isinstance(row, dict) and row.get("key") else ""
 )
 inventory.normalize_inventory = lambda rows: deepcopy(rows or [])
+inventory.convert_amount = lambda value, _from, _to: float(value) if value not in (None, "") else None
+inventory.stock_for_ingredient = lambda rows, ingredient, used=None: None
 def add_inventory_item(rows, ingredient, *, quantity=None, unit="", unlimited=False, best_before="", lot_metadata=None):
     result = deepcopy(rows or [])
     result.append({
