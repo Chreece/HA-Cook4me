@@ -38,3 +38,4 @@ jobs:
           node --test tests/test_recipe_ingredient_weighing_v255.mjs
           node --test tests/test_recipe_ingredient_weighing_v256.mjs
           node --test tests/test_recipe_row_prices_v257.mjs
+          node --test tests/test_recipe_fullscreen_guard_v258.mjs
