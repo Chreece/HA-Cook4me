@@ -7,6 +7,7 @@ import importlib.util
 import io
 import json
 from pathlib import Path
+import posixpath
 import re
 import tempfile
 import unittest
@@ -52,9 +53,12 @@ def module_closure(files: dict[str, bytes], entry: str) -> set[str]:
         for specifier in IMPORTS.findall(source):
             if not specifier.startswith("."):
                 continue
-            target = str((Path(path).parent / specifier.split("?", 1)[0]).as_posix())
-            while "/../" in target:
-                target = str(Path(target))
+            target = posixpath.normpath(
+                posixpath.join(
+                    posixpath.dirname(path),
+                    specifier.split("?", 1)[0].split("#", 1)[0],
+                )
+            )
             pending.append(target)
     return seen
 
