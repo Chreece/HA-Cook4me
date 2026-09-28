@@ -33,6 +33,16 @@ test('labels use the correct weigh verb and explicit save cancel actions',()=>{
  assert.match(source,/weigh:'Ζύγισμα'/);
 });
 
+test('save and cancel require weighing mode and a live scale reading',()=>{
+ assert.match(source,/const scaleOn=!!reading/);
+ assert.match(source,/if\(state\.active&&scaleOn\)/);
+ assert.match(source,/start\.hidden=true;save\.hidden=false;cancel\.hidden=false/);
+ assert.match(source,/start\.hidden=false;save\.hidden=true;cancel\.hidden=true/);
+ assert.match(source,/_v116Live\(\)\{/);
+ assert.match(source,/querySelectorAll\('\[data-v255-weigh-control\]'\)/);
+ assert.match(source,/_v255PaintControl\(control,recipe,index\)/);
+});
+
 test('save calls the idempotent ingredient weight commit endpoint',()=>{
  assert.match(source,/cook4me\/v37\/ingredient_weight_commit/);
  assert.match(source,/request_id:state\.requestId/);
