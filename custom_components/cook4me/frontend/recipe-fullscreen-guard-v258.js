@@ -1,6 +1,6 @@
 export const RecipeFullscreenGuardMixin=Base=>class extends Base{
  connectedCallback(){
-  super.connectedCallback?.();
+  if(super.connectedCallback)super.connectedCallback();
   if(!this._v258VisibilityHandler){
    this._v258VisibilityHandler=()=>{
     if(globalThis.document?.visibilityState==='visible')void this._v258SyncWakeLock();
@@ -16,7 +16,7 @@ export const RecipeFullscreenGuardMixin=Base=>class extends Base{
    globalThis.document?.removeEventListener?.('visibilitychange',this._v258VisibilityHandler);
    this._v258VisibilityHandler=null;
   }
-  super.disconnectedCallback?.();
+  if(super.disconnectedCallback)super.disconnectedCallback();
  }
  _v258StyleState(node,property){
   return {
