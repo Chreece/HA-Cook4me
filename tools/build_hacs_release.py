@@ -69,6 +69,7 @@ def build(output: Path, *, version: str | None = None) -> dict:
 
     included: list[str] = []
     source_runtime_bytes = 0
+    legacy_install_bytes = 0
     packaged_runtime_bytes = 0
 
     with ZipFile(output, "w", compression=ZIP_DEFLATED, compresslevel=9) as archive:
@@ -76,7 +77,10 @@ def build(output: Path, *, version: str | None = None) -> dict:
             source = INTEGRATION / relative
             if not source.is_file():
                 continue
-            source_runtime_bytes += source.stat().st_size
+            size = source.stat().st_size
+            source_runtime_bytes += size
+            if not retired(relative):
+                legacy_install_bytes += size
             if relative == RAW_CATALOG or retired(relative):
                 continue
             data = manifest_bytes(version) if relative == "manifest.json" else source.read_bytes()
@@ -94,12 +98,13 @@ def build(output: Path, *, version: str | None = None) -> dict:
         "files": len(included),
         "zipBytes": output.stat().st_size,
         "sourceRuntimeBytes": source_runtime_bytes,
+        "legacyInstallBytes": legacy_install_bytes,
         "packagedRuntimeBytes": packaged_runtime_bytes,
         "rawCatalogBytes": len(raw_catalog),
         "compressedCatalogBytes": len(compressed_catalog),
         "catalogCompressionPercent": round(100 * (1 - len(compressed_catalog) / len(raw_catalog)), 2),
         "installedPayloadReductionPercent": round(
-            100 * (1 - packaged_runtime_bytes / source_runtime_bytes), 2
+            100 * (1 - packaged_runtime_bytes / legacy_install_bytes), 2
         ),
         "catalogSha256": hashlib.sha256(raw_catalog).hexdigest(),
         "compressedCatalogSha256": hashlib.sha256(compressed_catalog).hexdigest(),
