@@ -26,7 +26,7 @@ assert.equal(dietReplacementLabel('ground_flaxseed_water','de'),'Gemahlene Leins
 assert.equal(dietReplacementLabel('plant_yogurt','el'),'Φυτικό γιαούρτι');
 
 const panel=readFileSync(new URL('../custom_components/cook4me/frontend/cook4me-panel-v180.js',import.meta.url),'utf8');
-const info=readFileSync(new URL('../custom_components/cook4me/frontend/ingredient-substitution-info-v254.js',import.meta.url),'utf8');
+const info=readFileSync(new URL('../custom_components/cook4me/frontend/ingredient-substitution-info-v253.js',import.meta.url),'utf8');
 const registration=readFileSync(new URL('../custom_components/cook4me/panel.py',import.meta.url),'utf8');
 assert.match(panel,/diet-substitution-guard-v254\.js/);
 assert.match(panel,/ingredient-substitution-info-v254\.js/);
