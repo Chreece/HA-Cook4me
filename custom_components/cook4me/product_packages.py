@@ -49,17 +49,32 @@ async def replace_package_nutrition(store, inventory, lot_id, nutrition):
 
 
 def resolve_ingredient_links(values, catalog, *, strict=False):
+    """Validate catalog links without replacing an exact recipe source identity.
+
+    A display choice can represent several provider ingredient IDs.  Ingredient
+    Info sends the exact recipe source ID the user clicked; keep that ID after
+    validation instead of silently collapsing it to the display representative.
+    """
     from .inventory import normalize_ingredient_links
     lookup = {}
     for row in catalog:
-        lookup[inventory_identity(row)] = row
+        primary = inventory_identity(row)
+        lookup[primary] = (row, primary)
         for key in row.get("sourceIngredientIds") or []:
-            lookup['k:' + key] = row
+            lookup["k:" + key] = (row, "k:" + key)
     resolved = []
     for item in values:
-        current = lookup.get(inventory_identity(item))
-        if current:
-            resolved.append(current)
+        requested = inventory_identity(item)
+        match = lookup.get(requested)
+        if match:
+            current, matched_identity = match
+            selected = deepcopy(current)
+            if matched_identity.startswith("k:") and matched_identity != inventory_identity(current):
+                source_id = matched_identity[2:]
+                selected["key"] = source_id
+                selected["ingredientId"] = source_id
+                selected["id"] = source_id
+            resolved.append(selected)
         elif strict:
             raise ValueError("Choose every linked ingredient from the Cook4Me catalog")
     return normalize_ingredient_links(resolved)
