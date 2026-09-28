@@ -217,4 +217,5 @@ if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v248'))customEleme
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v249'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v249',class extends Cook4MeRecipeHubPanelV180{});
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v250'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v250',class extends Cook4MeRecipeHubPanelV180{});
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v251'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v251',class extends Cook4MeRecipeHubPanelV180{});
-if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v253'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v253',class extends Cook4MeRecipeHubPanelV180{});\nif(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v254'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v254',class extends Cook4MeRecipeHubPanelV180{});
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v253'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v253',class extends Cook4MeRecipeHubPanelV180{});
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v254'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v254',class extends Cook4MeRecipeHubPanelV180{});
