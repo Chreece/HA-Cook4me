@@ -363,16 +363,35 @@ def enrich_match_with_house_keys(
     """Reconcile pantry availability without crossing authoritative provider IDs."""
     result = deepcopy(match)
     house = normalize_house_ingredients(house_ingredients)
+    identity_rows: list[dict[str, Any]] = []
     for row in house_ingredients if isinstance(house_ingredients, list) else []:
         if isinstance(row, dict):
-            house.extend(link for link in row.get("ingredientLinks") or [] if isinstance(link, dict))
-            house.extend(
+            identity_rows.append(row)
+            row_links = [
+                link for link in row.get("ingredientLinks") or []
+                if isinstance(link, dict)
+            ]
+            lot_links = [
                 link
                 for lot in row.get("lots") or []
                 for link in lot.get("ingredientLinks") or []
                 if isinstance(link, dict)
-            )
+            ]
+            identity_rows.extend(row_links)
+            identity_rows.extend(lot_links)
+            house.extend(row_links)
+            house.extend(lot_links)
     house_keys = {row["key"] for row in house if row.get("key")}
+    # Stock coverage owns the warmed, language-neutral alias index. Reuse it
+    # here so presence badges and quantity coverage agree for grouped catalog
+    # assignments, including representative-only links saved before this fix.
+    from .stock_coverage import coverage_ingredient
+    for row in identity_rows:
+        covered = coverage_ingredient(row)
+        for identity in covered.get("identities") or []:
+            identity = str(identity)
+            if identity.startswith("k:") and len(identity) > 2:
+                house_keys.add(identity[2:])
     house_names = {_norm(row["name"]) for row in house if row.get("name")}
     house_keyless_names = {
         _norm(row["name"])
