@@ -1,0 +1,42 @@
+"""Recipe ingredient weighing v256 state/undo regressions."""
+from pathlib import Path
+import unittest
+
+ROOT=Path(__file__).resolve().parents[1]
+COMP=ROOT/"custom_components"/"cook4me"
+
+
+class IngredientWeighingV256Tests(unittest.TestCase):
+    def test_saved_weight_cancel_is_backend_reversible_and_idempotent(self):
+        hub=(COMP/"recipe_hub.py").read_text(encoding="utf-8")
+        scale=(COMP/"smart_scale.py").read_text(encoding="utf-8")
+        route=(COMP/"websocket_v37.py").read_text(encoding="utf-8")
+
+        self.assertIn("async def async_cancel_weighed_ingredient",hub)
+        self.assertIn('receipt.get("cancelledAt") or receipt.get("supersededBy")',hub)
+        self.assertIn("restore_consumption(house, report)",hub)
+        self.assertIn('updated["cancelled"] = True',hub)
+        self.assertIn("async def async_remove_measurement",scale)
+        self.assertIn('"cook4me/v37/ingredient_weight_cancel"',route)
+        self.assertIn("async_cancel_weighed_ingredient",route)
+        self.assertIn("async_remove_measurement",route)
+
+    def test_reweigh_marks_previous_receipt_superseded(self):
+        hub=(COMP/"recipe_hub.py").read_text(encoding="utf-8")
+        route=(COMP/"websocket_v37.py").read_text(encoding="utf-8")
+        self.assertIn("previous_request_id",hub)
+        self.assertIn('previous_receipt["supersededBy"] = request_id',hub)
+        self.assertIn("previous_request_id=(",route)
+
+    def test_v256_runtime_wiring_keeps_global_runtime_scoped(self):
+        panel=(COMP/"panel.py").read_text(encoding="utf-8")
+        active=(COMP/"frontend"/"cook4me-panel-v180.js").read_text(encoding="utf-8")
+        self.assertIn('/runtime-v249',panel)
+        self.assertIn('runtime-v256',panel)
+        self.assertIn('&runtime=249&diet=254&weigh=256',panel)
+        self.assertIn("recipe-ingredient-weighing-v256.js",active)
+        self.assertIn("data-cook4me-ui-revision','256",active)
+
+
+if __name__=="__main__":
+    unittest.main(verbosity=2)
