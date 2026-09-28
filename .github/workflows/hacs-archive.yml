@@ -26,7 +26,7 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
-      - name: Verify HACS archive contents and measure the download
+      - name: Verify source fallback and compact HACS release payload
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
@@ -36,11 +36,20 @@ jobs:
             --baseline "$BASE_SHA" \
             --github-sha "$HEAD_SHA" \
             --report "$RUNNER_TEMP/hacs-archive.json"
-      - name: Archive measurements
+          python tests/test_hacs_release_v256.py
+          python tools/build_hacs_release.py \
+            --output "$RUNNER_TEMP/cook4me.zip" \
+            --report "$RUNNER_TEMP/hacs-release.json"
+      - name: HACS payload measurements
         if: always()
         run: |
+          if [ -f "$RUNNER_TEMP/hacs-release.json" ]; then
+            printf '### HACS compact release payload\n\n```json\n' >> "$GITHUB_STEP_SUMMARY"
+            cat "$RUNNER_TEMP/hacs-release.json" >> "$GITHUB_STEP_SUMMARY"
+            printf '\n```\n\n' >> "$GITHUB_STEP_SUMMARY"
+          fi
           if [ -f "$RUNNER_TEMP/hacs-archive.json" ]; then
-            printf '### HACS source archive measurements\n\n```json\n' >> "$GITHUB_STEP_SUMMARY"
+            printf '### Source fallback archive\n\n```json\n' >> "$GITHUB_STEP_SUMMARY"
             cat "$RUNNER_TEMP/hacs-archive.json" >> "$GITHUB_STEP_SUMMARY"
             printf '\n```\n\nRunner timings are not measurements of the user’s Home Assistant.\n' >> "$GITHUB_STEP_SUMMARY"
           fi
