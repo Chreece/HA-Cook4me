@@ -1,4 +1,4 @@
-import {RecipeIngredientWeighingMixin} from './recipe-ingredient-weighing-v256.js';
+import {RecipeIngredientWeighingMixin} from './recipe-ingredient-weighing-v257.js';
 import {IngredientSubstitutionInfoMixin} from './ingredient-substitution-info-v254.js';
 import {DietSubstitutionGuardMixin} from './diet-substitution-guard-v254.js';
 import {IngredientStockAssignmentMixin} from './ingredient-stock-assignment-v249.js';
@@ -176,7 +176,7 @@ class Cook4MeRecipeHubPanelV180 extends BasePanel{
  _renderTab(){
   const result=super._renderTab();
   this.setAttribute('data-cook4me-build','2026.9.27.5');
-  this.setAttribute('data-cook4me-ui-revision','256');
+  this.setAttribute('data-cook4me-ui-revision','257');
   this._v180Styles();
   return result;
  }
@@ -222,3 +222,4 @@ if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v253'))customEleme
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v254'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v254',class extends Cook4MeRecipeHubPanelV180{});
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v255'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v255',class extends Cook4MeRecipeHubPanelV180{});
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v256'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v256',class extends Cook4MeRecipeHubPanelV180{});
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v257'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v257',class extends Cook4MeRecipeHubPanelV180{});
