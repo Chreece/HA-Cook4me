@@ -46,6 +46,7 @@ def async_register(hass: HomeAssistant) -> None:
         ws_container_delete,
         ws_measurement_record,
         ws_ingredient_weight_commit,
+        ws_ingredient_weight_cancel,
         ws_batch_weight_set,
         ws_session_clear,
         ws_recipe_scale,
@@ -221,6 +222,11 @@ async def ws_ingredient_weight_commit(hass, connection, msg) -> None:
             ingredient,
             grams=msg.get("grams"),
             previous_report=previous_report,
+            previous_request_id=(
+                str(previous.get("requestId") or "")
+                if isinstance(previous, dict)
+                else ""
+            ),
         )
         receipt = committed.get("receipt") or {}
         session = await store.async_record_measurement(
@@ -241,6 +247,67 @@ async def ws_ingredient_weight_commit(hass, connection, msg) -> None:
         result = {
             "session": session,
             "deduction": receipt,
+            "houseIngredients": bridge.recipe_hub.profile.get("houseIngredients") or [],
+            **await _state(hass, bridge, recipe=recipe),
+        }
+    except Exception as exc:
+        legacy._send_error(connection, msg, exc)
+        return
+    connection.send_result(msg["id"], result)
+
+
+@websocket_api.websocket_command(
+    {
+        vol.Required("type"): "cook4me/v37/ingredient_weight_cancel",
+        vol.Optional("entry_id"): str,
+        vol.Required("recipe"): dict,
+        vol.Required("ingredient_index"): vol.Coerce(int),
+    }
+)
+@websocket_api.async_response
+async def ws_ingredient_weight_cancel(hass, connection, msg) -> None:
+    """Remove one saved ingredient weight and undo its immediate stock deduction."""
+    try:
+        bridge = legacy._bridge(hass, msg.get("entry_id"))
+        recipe = dict(msg["recipe"])
+        ingredient_index = int(msg["ingredient_index"])
+        store = await smart_scale_store_for_bridge(bridge)
+        session = store.session_for(recipe) or {}
+        measurement = next(
+            (
+                row
+                for row in session.get("measurements") or []
+                if isinstance(row, dict)
+                and int(row.get("ingredientIndex", -1)) == ingredient_index
+            ),
+            None,
+        )
+
+        cancellation = None
+        request_id = (
+            str(measurement.get("requestId") or "")
+            if isinstance(measurement, dict)
+            else ""
+        )
+        if request_id:
+            cancellation = await bridge.recipe_hub.async_cancel_weighed_ingredient(
+                request_id,
+                deduction_report=(
+                    measurement.get("deductionReport")
+                    if isinstance(measurement, dict)
+                    and isinstance(measurement.get("deductionReport"), dict)
+                    else None
+                ),
+            )
+
+        updated_session = await store.async_remove_measurement(
+            recipe, ingredient_index=ingredient_index
+        )
+        update_expiry_notification(bridge)
+        result = {
+            "session": updated_session,
+            "cancelled": measurement is not None,
+            "cancellation": cancellation,
             "houseIngredients": bridge.recipe_hub.profile.get("houseIngredients") or [],
             **await _state(hass, bridge, recipe=recipe),
         }

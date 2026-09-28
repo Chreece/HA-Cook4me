@@ -708,6 +708,30 @@ class Cook4MeSmartScaleStore:
             await self._commit(data)
         return deepcopy(session)
 
+    async def async_remove_measurement(
+        self, recipe: dict[str, Any], *, ingredient_index: int
+    ) -> dict[str, Any] | None:
+        """Remove one saved ingredient measurement without touching other scale data."""
+        if not isinstance(recipe, dict):
+            return None
+        async with self._lock:
+            data = deepcopy(self._data)
+            key = self._session_key(recipe, data)
+            if not key or not isinstance(data["sessions"].get(key), dict):
+                return None
+            session = data["sessions"][key]
+            rows = [
+                row for row in session.get("measurements") or []
+                if int(row.get("ingredientIndex", -1)) != int(ingredient_index)
+            ]
+            if len(rows) == len(session.get("measurements") or []):
+                return deepcopy(session)
+            session["measurements"] = rows
+            session["updatedAt"] = datetime.now(timezone.utc).isoformat()
+            data["sessions"][key] = session
+            await self._commit(data)
+            return deepcopy(session)
+
     async def async_set_batch_weight(self, recipe: dict[str, Any], grams: Any) -> dict[str, Any]:
         amount = _number(grams)
         if amount is None or amount <= 0:

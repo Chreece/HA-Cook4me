@@ -496,6 +496,7 @@ class Cook4MeRecipeHub:
         *,
         grams: Any,
         previous_report: dict[str, Any] | None = None,
+        previous_request_id: str = "",
     ) -> dict[str, Any]:
         """Save one weighed amount and immediately consume matching finite stock.
 
@@ -524,8 +525,29 @@ class Cook4MeRecipeHub:
             profile = deepcopy(self._data["profile"])
             house = profile.get("houseIngredients") or []
             restored: dict[str, Any] = {"restored": [], "skipped": []}
-            if isinstance(previous_report, dict) and previous_report.get("deductedLots"):
+            previous_request_id = str(previous_request_id or "").strip()
+            previous_receipt = (
+                receipts.get(previous_request_id)
+                if previous_request_id and previous_request_id != request_id
+                else None
+            )
+            previous_is_active = not (
+                isinstance(previous_receipt, dict)
+                and (
+                    previous_receipt.get("cancelledAt")
+                    or previous_receipt.get("supersededBy")
+                )
+            )
+            if (
+                previous_is_active
+                and isinstance(previous_report, dict)
+                and previous_report.get("deductedLots")
+            ):
                 house, restored = restore_consumption(house, previous_report)
+            if isinstance(previous_receipt, dict) and previous_request_id != request_id:
+                previous_receipt["supersededBy"] = request_id
+                previous_receipt["supersededAt"] = datetime.now(timezone.utc).isoformat()
+                receipts[previous_request_id] = previous_receipt
 
             # Use the same read-only catalog identity evidence as recipe stock
             # coverage, including reviewed grouped/legacy assignments.
@@ -585,6 +607,59 @@ class Cook4MeRecipeHub:
             )
             await self._save()
             return {"receipt": deepcopy(receipt), "profile": self.profile}
+
+    async def async_cancel_weighed_ingredient(
+        self,
+        request_id: str,
+        *,
+        deduction_report: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Undo one saved weighed ingredient and restore its immediate stock use.
+
+        The receipt is marked cancelled before returning so retries are idempotent
+        even if the smart-scale session update has to be retried separately.
+        """
+        request_id = str(request_id or "").strip()
+        if not 16 <= len(request_id) <= 80:
+            raise ValueError("Weighed ingredient request ID is invalid")
+
+        async with self._durable_mutation():
+            receipts = self._data.setdefault("weighedConsumptionReceipts", {})
+            receipt = receipts.get(request_id)
+            if isinstance(receipt, dict) and (
+                receipt.get("cancelledAt") or receipt.get("supersededBy")
+            ):
+                return {"receipt": deepcopy(receipt), "profile": self.profile}
+
+            profile = deepcopy(self._data["profile"])
+            house = profile.get("houseIngredients") or []
+            report = (
+                receipt.get("report")
+                if isinstance(receipt, dict)
+                and isinstance(receipt.get("report"), dict)
+                else deduction_report
+            )
+            restored: dict[str, Any] = {"restored": [], "skipped": []}
+            if isinstance(report, dict) and report.get("deductedLots"):
+                house, restored = restore_consumption(house, report)
+
+            now = datetime.now(timezone.utc).isoformat()
+            updated = deepcopy(receipt) if isinstance(receipt, dict) else {
+                "requestId": request_id
+            }
+            updated["cancelledAt"] = now
+            updated["cancelled"] = True
+            updated["cancelRestore"] = deepcopy(restored)
+            receipts[request_id] = updated
+
+            profile["houseIngredients"] = house
+            profile["pantry"] = [row["name"] for row in house]
+            self._data["profile"] = self._normalize_profile(profile)
+            self._data["weighedConsumptionReceipts"] = dict(
+                list(receipts.items())[-200:]
+            )
+            await self._save()
+            return {"receipt": deepcopy(updated), "profile": self.profile}
 
     async def async_prepare_consumption(self, recipe: dict[str, Any]) -> dict[str, Any] | None:
         # Build the deduction choices under the same lock as the inventory
