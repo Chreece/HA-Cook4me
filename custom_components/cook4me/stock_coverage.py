@@ -91,8 +91,15 @@ def coverage_ingredient(raw: dict[str, Any]) -> dict[str, Any]:
     if canonical:
         item["canonicalName"] = canonical
     explicit = {str(value) for value in item.get("identities", []) if isinstance(value, str) and value}
+    source_ids = {
+        "k:" + str(value).strip()
+        for value in item.get("sourceIngredientIds") or []
+        if str(value).strip()
+    }
     direct = inventory_identity(item)
-    item["identities"] = sorted(explicit | set(identities) | ({direct} if direct else set()))
+    item["identities"] = sorted(
+        explicit | source_ids | set(identities) | ({direct} if direct else set())
+    )
     # Explicit SI unit IDs / reviewed localized symbols only. No inference of
     # grams per bunch, slice or package. Ingredient-specific portions are handled
     # by food_intelligence after stock has been identified.
