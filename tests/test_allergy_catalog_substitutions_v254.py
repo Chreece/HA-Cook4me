@@ -100,6 +100,13 @@ class AllergyCatalogSubstitutionTests(unittest.TestCase):
         self.assertGreater(self.summary["allergySourceProfiles"], 0)
         self.assertGreater(self.summary["allergyIngredientCount"], 0)
 
+    def test_plant_milks_do_not_inherit_dairy_allergy_triggers(self):
+        for identifier in ("soy-milk", "soy-milk-unsweet", "rice-milk"):
+            with self.subTest(identifier=identifier):
+                row = self.by_id[identifier]
+                self.assertNotIn("milk", row.get("substitutionAllergens") or [])
+                self.assertNotIn("lactose", row.get("substitutionAllergens") or [])
+
     def test_milk_allergy_can_use_catalog_replacements_on_omnivore_profile(self):
         milk = self.by_id["milk"]
         self.assertEqual(milk["substitutionAllergens"], ["milk", "lactose"])
