@@ -60,8 +60,10 @@ test('cancel is local only and returns to weigh without an API call',()=>{
  assert.match(block,/state\.requestId=''/);
 });
 
-test('active panel applies v255 mixin and constructor',()=>{
+test('v255 remains registered while the active panel advances independently',()=>{
  assert.match(active,/RecipeIngredientWeighingMixin/);
  assert.match(active,/runtime-v255/);
- assert.match(active,/data-cook4me-ui-revision','255'/);
+ assert.match(active,/runtime-v256/);
+ assert.match(active,/recipe-ingredient-weighing-v256\.js/);
+ assert.match(active,/data-cook4me-ui-revision','256'/);
 });
