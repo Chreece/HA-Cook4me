@@ -62,7 +62,7 @@ test('pending background price hydration gets bounded forced follow-ups',()=>{
 
 test('all v79 cost paints also repaint active v257 ingredient price chips',()=>{
  assert.match(source,/_v79PaintRecipe\(recipe,state\)/);
- assert.match(source,/super\._v79PaintRecipe\?\.\(recipe,state\)/);
+ assert.match(source,/super\._v79PaintRecipe\(recipe,state\)/);
  assert.match(source,/_v257PaintPrices\(recipe,state\?\.cost\|\|null\)/);
 });
 
