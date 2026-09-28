@@ -373,6 +373,30 @@ def enrich_match_with_house_keys(
                 if isinstance(link, dict)
             )
     house_keys = {row["key"] for row in house if row.get("key")}
+    # Presence and quantity coverage must use the same reviewed catalog identity
+    # evidence. This also restores source IDs lost by the v249 assignment writer.
+    from .stock_coverage import coverage_identities
+    house_identities: set[str] = set()
+    for row in house_ingredients if isinstance(house_ingredients, list) else []:
+        if not isinstance(row, dict):
+            continue
+        house_identities.update(
+            coverage_identities(row, legacy_assignment=True)
+        )
+        for link in row.get("ingredientLinks") or []:
+            if isinstance(link, dict):
+                house_identities.update(
+                    coverage_identities(link, legacy_assignment=True)
+                )
+        for lot in row.get("lots") or []:
+            if not isinstance(lot, dict):
+                continue
+            for link in lot.get("ingredientLinks") or []:
+                if isinstance(link, dict):
+                    house_identities.update(
+                        coverage_identities(link, legacy_assignment=True)
+                    )
+
     house_names = {_norm(row["name"]) for row in house if row.get("name")}
     house_keyless_names = {
         _norm(row["name"])
@@ -393,9 +417,14 @@ def enrich_match_with_house_keys(
         normalized = _norm(name)
 
         if key:
-            # Provider-backed ingredients may only match the same provider identity.
+            # Provider-backed ingredients match only reviewed stable identities.
             # Name fallback is retained solely for old keyless pantry rows.
-            at_home = key in house_keys or normalized in house_keyless_names
+            wanted_identities = coverage_identities(ingredient)
+            at_home = (
+                bool(wanted_identities & house_identities)
+                or key in house_keys
+                or normalized in house_keyless_names
+            )
             contradicted_name_match = (
                 not at_home
                 and normalized in (house_names | matched_names | missing_names)
