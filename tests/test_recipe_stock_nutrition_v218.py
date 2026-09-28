@@ -201,7 +201,7 @@ class WiringTests(unittest.TestCase):
         active=(FRONTEND/"cook4me-panel-v180.js").read_text()
         ux=(FRONTEND/"ux-fixes-v218.js").read_text()
         self.assertIn("/runtime-v254",panel)
-        self.assertIn("&runtime=249",panel)
+        self.assertIn("&runtime=254",panel)
         self.assertIn("UXFixesMixin",active)
         self.assertIn("IngredientStockAssignmentMixin",active)
         self.assertIn("runtime-v249",active)
