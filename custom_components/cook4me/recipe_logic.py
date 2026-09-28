@@ -501,7 +501,28 @@ def _mounted_candidates(item, profile, diet, group):
         if raw.get("allergenEvidence") == "unknown" and allergy_terms:
             continue
         safety_text = _mounted_candidate_text(raw)
-        if any(_matches_term(safety_text, term) for term in restrictions if term.strip()):
+        candidate_allergens = {
+            str(value).strip().lower().replace("-", "_").replace(" ", "_")
+            for value in raw.get("allergens") or []
+            if str(value).strip()
+        }
+        blocked = False
+        for term in restrictions:
+            if not term.strip():
+                continue
+            allergen_keys = _allergen_keys_for_term(term)
+            if allergen_keys:
+                # Reviewed catalog allergen evidence is authoritative here.
+                # Product-category words such as "milk" in "rice milk" describe
+                # culinary function, not the presence of the milk allergen.
+                if candidate_allergens & allergen_keys:
+                    blocked = True
+                    break
+                continue
+            if _matches_term(safety_text, term):
+                blocked = True
+                break
+        if blocked:
             continue
         if excluded_identities and _candidate_catalog_identities(raw) & excluded_identities:
             continue
