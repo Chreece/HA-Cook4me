@@ -127,6 +127,93 @@ def load_substitution_catalog() -> dict[str, Any]:
     return _merge_catalog_overlay(payload, overlay)
 
 
+def _binding_signature(binding: dict[str, Any]) -> tuple[str, tuple[str, ...]]:
+    return (
+        _text(binding.get("profileId")),
+        tuple(sorted(
+            _text(value).lower()
+            for value in binding.get("substitutionDiets") or []
+            if _text(value)
+        )),
+    )
+
+
+def _catalog_with_payload_binding_concepts(
+    catalog: dict[str, Any],
+    payload: dict[str, Any],
+) -> dict[str, Any]:
+    """Expand reviewed provider-ID bindings to exact catalog concept siblings.
+
+    Runtime matching never uses labels here. Each bound provider ID is resolved
+    to its catalog conceptId; source-local rows sharing that exact concept inherit
+    the reviewed profile. Conflicting concept claims are omitted fail-closed.
+    """
+    result = deepcopy(catalog)
+    bindings = [
+        row for row in result.get("ingredientBindings") or []
+        if isinstance(row, dict)
+    ]
+    if not bindings:
+        return result
+
+    rows_by_id: dict[str, list[dict[str, Any]]] = {}
+    for row in payload.get("ingredients") or []:
+        if not isinstance(row, dict):
+            continue
+        for value in (
+            row.get("id"),
+            row.get("ingredientId"),
+            row.get("key"),
+            row.get("foodKey"),
+            *(row.get("sourceIngredientIds") or []),
+        ):
+            ident = _text(value)
+            if ident:
+                rows_by_id.setdefault(ident, []).append(row)
+
+    explicit_concepts = {
+        _text(value)
+        for binding in bindings
+        for value in binding.get("conceptIds") or []
+        if _text(value)
+    }
+    claims: dict[str, list[int]] = {}
+    for index, binding in enumerate(bindings):
+        for ident in binding.get("ingredientIds") or []:
+            for row in rows_by_id.get(_text(ident), ()):
+                concept = _text(row.get("conceptId"))
+                if concept and concept not in explicit_concepts:
+                    claims.setdefault(concept, []).append(index)
+
+    expanded = 0
+    ambiguous = 0
+    for concept, indices in claims.items():
+        unique_indices = list(dict.fromkeys(indices))
+        signatures = {
+            _binding_signature(bindings[index]) for index in unique_indices
+        }
+        if len(signatures) != 1:
+            ambiguous += 1
+            continue
+        binding = bindings[unique_indices[0]]
+        concepts = list(dict.fromkeys([
+            *(
+                _text(value)
+                for value in binding.get("conceptIds") or []
+                if _text(value)
+            ),
+            concept,
+        ]))
+        binding["conceptIds"] = concepts
+        expanded += 1
+
+    result["ingredientBindings"] = bindings
+    result["_runtimeBindingConceptExpansion"] = {
+        "expandedConcepts": expanded,
+        "ambiguousConcepts": ambiguous,
+    }
+    return result
+
 def _catalog_binding(
     ingredient: dict[str, Any],
     catalog: dict[str, Any],
@@ -630,7 +717,9 @@ def _source_allergens(profiles: list[dict[str, Any]]) -> list[str]:
 
 def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
     """Attach reviewed multi-candidate substitutions directly to catalog rows."""
-    catalog = load_substitution_catalog()
+    catalog = _catalog_with_payload_binding_concepts(
+        load_substitution_catalog(), payload
+    )
     definitions = catalog.get("candidates") if isinstance(catalog.get("candidates"), dict) else {}
     evidence = _text(catalog.get("evidence")) or "Cook4Me reviewed dietary substitution catalog"
     version = _text(catalog.get("version")) or "unknown"
@@ -718,6 +807,18 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
         ]),
         "providerBindingCatalogVersion": _text(
             catalog.get("providerBindingCatalogVersion")
+        ),
+        "expandedBindingConcepts": int(
+            (catalog.get("_runtimeBindingConceptExpansion") or {}).get(
+                "expandedConcepts"
+            )
+            or 0
+        ),
+        "ambiguousBindingConcepts": int(
+            (catalog.get("_runtimeBindingConceptExpansion") or {}).get(
+                "ambiguousConcepts"
+            )
+            or 0
         ),
         "allergySourceProfiles": len([
             row for row in catalog.get("sourceProfiles") or []
