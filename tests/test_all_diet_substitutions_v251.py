@@ -304,6 +304,84 @@ class AllDietSubstitutionTests(unittest.TestCase):
                 self.assertTrue(pescatarian["safe"], pescatarian)
                 self.assertFalse(pescatarian["requiresSubstitutions"], pescatarian)
 
+    def test_localized_source_id_inherits_unanimous_concept_diet_substitution(self):
+        concept = "concept:food:shared-fish"
+        donor = {
+            "id": "global-fish",
+            "conceptId": concept,
+            "canonicalName": "Reviewed fish",
+            "classification": "food",
+            "substitutionDiets": ["vegetarian", "vegan"],
+            "substitutions": [
+                {"key": "tofu", "name": "Firm tofu", "compatibleDiets": ["vegetarian", "vegan"]},
+                {"key": "mushrooms", "name": "Mushrooms", "compatibleDiets": ["vegetarian", "vegan"]},
+            ],
+            "substitutionCatalogVersion": "test",
+        }
+        payload = {
+            "_runtimeIngredientById": {"global-fish": donor},
+            "_runtimeIngredientsByConcept": {concept: [donor]},
+        }
+        old_loader = release.load_release_catalog
+        release.load_release_catalog = lambda: payload
+        try:
+            displayed = {
+                "ingredientId": "local:el:opaque-fish",
+                "conceptId": concept,
+                "name": "Αδιαφανές τοπικό όνομα",
+                "foodName": "Αδιαφανές τοπικό όνομα",
+            }
+            row = release.ingredient_safety_evidence(displayed)
+            self.assertEqual(row["name"], displayed["name"])
+            self.assertEqual(row["canonicalName"], "Reviewed fish")
+            self.assertTrue(row["conceptDietSubstitutionResolved"])
+            self.assertEqual(row["substitutionDiets"], ["vegetarian", "vegan"])
+            self.assertEqual([item["key"] for item in row["substitutions"]], ["tofu", "mushrooms"])
+            match = logic.score_recipe(
+                {"title": "Opaque", "ingredients": [row]},
+                profile("vegetarian"),
+            )
+            self.assertFalse(match["safe"], match)
+            self.assertTrue(match["eligibleWithSubstitutions"], match)
+            self.assertTrue(match["substitutionCoverageComplete"], match)
+            self.assertEqual(match["substitutions"][0]["replacement"]["key"], "tofu")
+        finally:
+            release.load_release_catalog = old_loader
+
+    def test_concept_fallback_requires_one_unanimous_substitution_signature(self):
+        concept = "concept:food:ambiguous"
+        fish = {
+            "id": "fish-donor",
+            "conceptId": concept,
+            "canonicalName": "Fish donor",
+            "substitutionDiets": ["vegetarian", "vegan"],
+            "substitutions": [{"key": "tofu", "name": "Firm tofu"}],
+        }
+        meat = {
+            "id": "meat-donor",
+            "conceptId": concept,
+            "canonicalName": "Meat donor",
+            "substitutionDiets": ["pescatarian", "vegetarian", "vegan"],
+            "substitutions": [{"key": "mushrooms", "name": "Mushrooms"}],
+        }
+        payload = {
+            "_runtimeIngredientById": {},
+            "_runtimeIngredientsByConcept": {concept: [fish, meat]},
+        }
+        old_loader = release.load_release_catalog
+        release.load_release_catalog = lambda: payload
+        try:
+            row = release.ingredient_safety_evidence({
+                "ingredientId": "local:ambiguous",
+                "conceptId": concept,
+                "name": "Opaque ingredient",
+            })
+            self.assertNotIn("conceptDietSubstitutionResolved", row)
+            self.assertNotIn("substitutionDiets", row)
+            self.assertNotIn("substitutions", row)
+        finally:
+            release.load_release_catalog = old_loader
+
     def test_release_catalog_has_exact_identity_bindings_for_reported_fish(self):
         payload = release.load_release_catalog()
         expected = {
