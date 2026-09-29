@@ -124,6 +124,17 @@ class AllDietSubstitutionTests(unittest.TestCase):
             ["tofu", "tofu", "agar", "bentonite"],
         )
 
+    def test_chicken_fillet_and_skate_are_never_bare_vegetarian_suggestions(self):
+        for ingredient in ("Chicken fillet", "Skate", "Skate wing", "Σαλάχι"):
+            with self.subTest(ingredient=ingredient):
+                match = logic.score_recipe(recipe(ingredient), profile("vegetarian"))
+                self.assertFalse(match["safe"], match)
+                self.assertTrue(match["eligibleWithSubstitutions"], match)
+                self.assertTrue(match["requiresSubstitutions"], match)
+                self.assertTrue(match["substitutionCoverageComplete"], match)
+                self.assertEqual(match["substitutions"][0]["replacement"]["key"], "tofu")
+                self.assertGreaterEqual(len(match["substitutions"][0]["alternatives"]), 1)
+
     def test_vegan_mixed_recipe_gets_replacement_for_every_conflict(self):
         self.assert_adapted(
             "vegan",
