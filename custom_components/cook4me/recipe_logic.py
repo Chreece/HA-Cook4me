@@ -53,6 +53,7 @@ _FISH_WORDS.update({
     "acciughe", "merluzzo", "pescado", "atun", "gambas", "mejillones", "calamares",
     "pulpo", "anchoas", "garnalen", "kabeljauw", "zalm", "tonijn",
     "καλαμαρι", "καλαμαρια", "χταποδι", "μυδια", "αντζουγιες", "γαυρος", "μπακαλιαρος",
+    "skate", "skate wing", "ray", "ray wing", "stingray", "σαλαχι", "σαλάχι",
 })
 _ANIMAL_DERIVATIVES = {
     "gelatin", "gelatine", "gelatina", "ζελατινη", "ζελατίνη",
