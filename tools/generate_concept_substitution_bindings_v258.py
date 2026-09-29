@@ -41,11 +41,68 @@ def concept_id(row: Any) -> str:
     return value if CONCEPT_ID.fullmatch(value) else ""
 
 
-def signature(row: dict[str, Any]) -> tuple[str, tuple[str, ...]]:
-    profile = subs._candidate_source_profile(row)
-    profile_id = text(profile.get("id")) if isinstance(profile, dict) else ""
+def diet_profile_id(row: dict[str, Any]) -> str:
+    """Choose a reviewed replacement profile for a diet conflict, never allergy."""
     diets = tuple(subs._source_diets(row))
-    return profile_id, diets
+    if not diets:
+        return ""
+    ingredient_text = logic._ingredient_text(row) if 'logic' in globals() else subs._diet._ingredient_text(row)
+    hits = logic._diet_hits(ingredient_text) if 'logic' in globals() else subs._diet._diet_hits(ingredient_text)
+    profiles = [
+        profile
+        for profile in subs.substitution_source_profiles(row)
+        if isinstance(profile, dict)
+        and not text(profile.get("id")).endswith("_allergy")
+        and not (
+            isinstance(profile.get("match"), dict)
+            and profile["match"].get("allergenHit")
+        )
+    ]
+    if not profiles:
+        return ""
+
+    # A profile must explain the strictest diet conflict on this source.
+    if "pescatarian" in diets:
+        allowed = {"animal_protein", "gelatin", "rennet", "animal_fat", "stock"}
+    elif "vegetarian" in diets:
+        allowed = {"animal_protein", "isinglass", "fish_sauce", "stock"}
+    else:
+        allowed = {
+            "milk", "cream", "butter", "cheese", "yogurt", "whey_casein",
+            "egg", "egg_white", "egg_yolk", "honey",
+        }
+    profiles = [profile for profile in profiles if text(profile.get("id")) in allowed]
+    if not profiles:
+        return ""
+
+    best = None
+    best_score = (-1, -1)
+    for profile in profiles:
+        match = profile.get("match") if isinstance(profile.get("match"), dict) else {}
+        terms = [
+            str(value) for value in match.get("terms") or []
+            if str(value).strip()
+        ]
+        matched = [
+            value for value in terms
+            if (logic._contains_phrase(ingredient_text, value) if 'logic' in globals()
+                else subs._diet._contains_phrase(ingredient_text, value))
+        ]
+        if matched:
+            normalize = logic.normalize_text if 'logic' in globals() else subs._diet.normalize_text
+            score = (3, max(len(normalize(value).split()) for value in matched))
+        else:
+            hit_name = text(match.get("dietHit")).lower().replace("-", "_")
+            hit_index = {"meat": 0, "animal": 1, "non_vegan": 2}.get(hit_name)
+            score = (2, 0) if hit_index is not None and hits[hit_index] else (0, 0)
+        if score > best_score:
+            best = profile
+            best_score = score
+    return text(best.get("id")) if isinstance(best, dict) and best_score[0] > 0 else ""
+
+
+def signature(row: dict[str, Any]) -> tuple[str, tuple[str, ...]]:
+    return diet_profile_id(row), tuple(subs._source_diets(row))
 
 
 def main() -> None:
