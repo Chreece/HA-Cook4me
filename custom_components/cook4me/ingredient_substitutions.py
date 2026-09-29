@@ -23,7 +23,6 @@ except ImportError:  # Standalone unit-test import via spec_from_file_location.
 _DATA_PATH = Path(__file__).with_name("catalog") / "ingredient_substitutions.v1.json"
 _PROVIDER_DATA_PATH = Path(__file__).with_name("catalog") / "provider_ingredient_substitutions.v1.json"
 _CONCEPT_DATA_PATH = Path(__file__).with_name("catalog") / "concept_ingredient_substitutions.v1.json"
-_CONCEPT_PART_GLOB = "concept_ingredient_substitutions.v1.part*.json"
 _ALLERGY_DATA_PATH = Path(__file__).with_name("catalog") / "ingredient_allergy_substitutions.v1.json"
 
 
@@ -35,38 +34,6 @@ def _norm(value: Any) -> str:
     text = unicodedata.normalize("NFKD", _text(value).casefold())
     text = "".join(ch for ch in text if not unicodedata.category(ch).startswith("M"))
     return " ".join(re.findall(r"[^\W_]+", text, re.UNICODE))
-
-
-def _load_binding_overlay(path: Path, *, part_glob: str = "") -> dict[str, Any]:
-    """Load one generated exact-ID overlay, optionally from deterministic parts."""
-    try:
-        payload = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        payload = {}
-    if payload:
-        return payload
-    if not part_glob:
-        return {}
-    bindings: list[dict[str, Any]] = []
-    version = ""
-    for part in sorted(path.parent.glob(part_glob)):
-        try:
-            chunk = json.loads(part.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError):
-            continue
-        if not isinstance(chunk, dict) or int(chunk.get("schemaVersion") or 0) != 1:
-            continue
-        version = version or _text(chunk.get("version"))
-        bindings.extend(
-            deepcopy(row)
-            for row in chunk.get("ingredientBindings") or []
-            if isinstance(row, dict)
-        )
-    return {
-        "schemaVersion": 1,
-        "version": version or "missing",
-        "ingredientBindings": bindings,
-    }
 
 
 def _merge_binding_overlay(payload: dict[str, Any], overlay: dict[str, Any]) -> dict[str, Any]:
@@ -154,9 +121,10 @@ def load_substitution_catalog() -> dict[str, Any]:
     except (OSError, json.JSONDecodeError):
         provider_overlay = {}
     payload = _merge_binding_overlay(payload, provider_overlay)
-    concept_overlay = _load_binding_overlay(
-        _CONCEPT_DATA_PATH, part_glob=_CONCEPT_PART_GLOB
-    )
+    try:
+        concept_overlay = json.loads(_CONCEPT_DATA_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        concept_overlay = {}
     payload = _merge_binding_overlay(payload, concept_overlay)
     payload["conceptBindingCatalogVersion"] = _text(
         concept_overlay.get("version")
