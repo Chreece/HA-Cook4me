@@ -149,8 +149,16 @@ class RuntimeSourceV198Tests(unittest.TestCase):
   js=(ROOT/'custom_components/cook4me/frontend/cook4me-panel-v180.js').read_text()
   self.assertIn('ProductEditorMixin',js);self.assertIn('RecipeCoverageMixin',js)
   self.assertIn('cook4me-recipe-hub-panel-v180-runtime-v'+element_runtime,js)
- def test_setup_builds_stock_index_off_event_loop(self):
-  source=(ROOT/'custom_components/cook4me/__init__.py').read_text();self.assertIn('await hass.async_add_executor_job(warm_stock_catalog)',source);self.assertIn('catalog and stock index ready in %.2f seconds',source)
+ def test_setup_schedules_catalog_warmup_without_blocking_domain_setup(self):
+  source=(ROOT/'custom_components/cook4me/__init__.py').read_text()
+  runtime=(ROOT/'custom_components/cook4me/catalog_runtime.py').read_text()
+  self.assertIn('start_catalog_warmup(hass)',source)
+  self.assertNotIn('await async_warm_release_catalog(hass)',source)
+  self.assertNotIn('await hass.async_add_executor_job(warm_stock_catalog)',source)
+  self.assertIn('hass.async_create_background_task',runtime)
+  self.assertIn('await async_warm_release_catalog(hass)',runtime)
+  self.assertIn('hass.async_add_executor_job(\n            warm_stock_catalog, payload\n        )',runtime)
+  self.assertIn('await asyncio.shield(task)',runtime)
  def test_pantry_presence_reuses_warmed_stock_aliases(self):
   source=(ROOT/'custom_components/cook4me/ingredient_catalog.py').read_text()
   self.assertIn('from .stock_coverage import coverage_identities',source)
