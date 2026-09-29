@@ -122,6 +122,20 @@ class HacsReleaseV256Tests(unittest.TestCase):
         self.assertIn("frontend/" + entry.group(1), closure)
         self.assertFalse(any(RETIRED.fullmatch(path) and int(RETIRED.fullmatch(path).group(1)) < 126 for path in closure))
 
+    def test_generated_concept_substitution_overlay_is_packaged(self):
+        name = "catalog/concept_ingredient_substitutions.v1.json"
+        self.assertIn(name, self.files)
+        payload = json.loads(self.files[name])
+        self.assertEqual(payload.get("schemaVersion"), 1)
+        bindings = payload.get("ingredientBindings") or []
+        self.assertGreaterEqual(len(bindings), 10)
+        self.assertGreater(
+            sum(len(row.get("conceptIds") or []) for row in bindings),
+            1000,
+        )
+        self.assertTrue(self.report["generatedConceptBindingsIncluded"])
+        self.assertGreater(self.report["generatedConceptBindingsBytes"], 10000)
+
     def test_runtime_loader_reads_gzip_when_json_is_not_installed(self):
         legacy = load_module(
             "cook4me_release_catalog_legacy_gzip_test",
