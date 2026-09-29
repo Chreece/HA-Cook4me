@@ -16,6 +16,7 @@ from .ingredient_catalog import (
     shopping_item_name,
 )
 from . import recipe_languages
+from .catalog_runtime import async_ensure_catalog_ready
 from . import release_catalog as release_index
 from . import websocket as legacy
 from . import websocket_v5 as v5
@@ -107,6 +108,8 @@ async def _ingredient_catalog(
 
     # Common offline-first ingredient source: UI, AI mapping, substitutions,
     # shopping reconciliation and nutrition identity lookup all inherit it.
+    if not refresh:
+        await async_ensure_catalog_ready(hass)
     if release_index.release_catalog_ready() and not refresh:
         items = release_index.ingredient_rows(language)
         if items:
