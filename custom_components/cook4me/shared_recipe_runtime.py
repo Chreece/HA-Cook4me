@@ -40,11 +40,11 @@ async def processor(bridge, filters, *, language="en", rank=True, score_targets=
     house = bridge.recipe_hub.profile.get("houseIngredients") or []
     costs = await cost_store_for_bridge(bridge) if settings["maxCost"] is not None else None
     market = None
-    if settings["seasonalIngredients"] or (costs is not None and cost_calculator is None):
+    if settings.get("seasonalIngredients") is True or (costs is not None and cost_calculator is None):
         from .automatic_prices import price_settings
         market = await price_settings(bridge)
     season_country, season_month = "", None
-    if settings["seasonalIngredients"]:
+    if settings.get("seasonalIngredients") is True:
         from datetime import datetime
         from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
         season_country = str((market or {}).get("country") or "").strip().upper()
