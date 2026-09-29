@@ -237,6 +237,30 @@ class AllDietSubstitutionTests(unittest.TestCase):
         self.assertFalse(match["requiresSubstitutions"], match)
         self.assertEqual(match["substitutions"], [])
 
+    def test_provider_ids_mount_catalog_substitutions_without_food_words(self):
+        cases = (
+            ("M_FOOD_41", "pescatarian", ["pescatarian", "vegetarian", "vegan"], "tofu"),
+            ("M_FOOD_13", "vegetarian", ["vegetarian", "vegan"], "tofu"),
+            ("M_FOOD_263", "vegan", ["vegan"], "soy_milk"),
+            ("M_FOOD_340", "vegan", ["vegan"], "ground_flaxseed_water"),
+        )
+        for ingredient_id, diet, expected_diets, replacement in cases:
+            with self.subTest(ingredient_id=ingredient_id, diet=diet):
+                source = catalog_row(ingredient_id, "Opaque provider ingredient")
+                payload = {"ingredients": [*(dict(row) for row in TARGETS), source]}
+                summary = subs.enrich_catalog_substitutions(payload)
+                self.assertEqual(summary["missingProfiles"], [])
+                self.assertEqual(source["substitutionDiets"], expected_diets)
+                self.assertTrue(source.get("substitutionBindingId", "").startswith("provider_"))
+                match = logic.score_recipe(
+                    {"title": "Opaque", "ingredients": [source]},
+                    profile(diet),
+                )
+                self.assertFalse(match["safe"], match)
+                self.assertTrue(match["eligibleWithSubstitutions"], match)
+                self.assertTrue(match["substitutionCoverageComplete"], match)
+                self.assertEqual(match["substitutions"][0]["replacement"]["key"], replacement)
+
     def test_catalog_bound_red_mullet_and_dogfish_ignore_display_language(self):
         cases = (
             ("concept:food:6d9fa4590ae08aeadd5d", "red_mullet_family"),
