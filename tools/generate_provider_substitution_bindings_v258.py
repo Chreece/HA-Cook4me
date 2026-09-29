@@ -97,6 +97,23 @@ def main() -> None:
     covered_occurrences = 0
     profile_counts = Counter()
 
+    # Build reviewed concept-level bindings offline. Runtime never classifies by
+    # these labels; it consumes only the emitted stable concept IDs. A concept is
+    # emitted only when every informative catalog row agrees on one
+    # (profileId, substitutionDiets) signature.
+    concept_signatures: dict[str, set[tuple[str, tuple[str, ...]]]] = defaultdict(set)
+    concept_rows: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in payload.get("ingredients") or []:
+        if not isinstance(row, dict):
+            continue
+        concept = text(row.get("conceptId"))
+        if not concept:
+            continue
+        concept_rows[concept].append(row)
+        signature = binding_signature(row)
+        if signature[0] or signature[1]:
+            concept_signatures[concept].add(signature)
+
     for ident in sorted(occurrences, key=lambda value: int(value.rsplit("_", 1)[1])):
         rows = occurrences[ident]
         source = global_rows.get(ident)
@@ -128,6 +145,55 @@ def main() -> None:
         profile_counts[profile] += 1
         covered_occurrences += count
 
+    concept_groups: dict[tuple[str, tuple[str, ...]], list[str]] = defaultdict(list)
+    ambiguous_concepts = []
+    untouched_concepts = 0
+    for concept in sorted(concept_rows):
+        signatures = concept_signatures.get(concept) or set()
+        if not signatures:
+            untouched_concepts += 1
+            continue
+        if len(signatures) != 1:
+            ambiguous_concepts.append({
+                "conceptId": concept,
+                "reason": "conflicting-reviewed-signatures",
+                "signatures": [
+                    {"profileId": profile, "substitutionDiets": list(diets)}
+                    for profile, diets in sorted(signatures)
+                ],
+                "labels": list(dict.fromkeys(
+                    label(row) for row in concept_rows[concept] if label(row)
+                ))[:12],
+            })
+            continue
+        profile, diets = next(iter(signatures))
+        if diets and not profile:
+            ambiguous_concepts.append({
+                "conceptId": concept,
+                "reason": "diet-conflict-without-reviewed-profile",
+                "substitutionDiets": list(diets),
+                "labels": list(dict.fromkeys(
+                    label(row) for row in concept_rows[concept] if label(row)
+                ))[:12],
+            })
+            continue
+        if not profile:
+            untouched_concepts += 1
+            continue
+        concept_groups[(profile, diets)].append(concept)
+
+    for (profile, diets), concept_ids in sorted(
+        concept_groups.items(), key=lambda item: (item[0][0], item[0][1])
+    ):
+        suffix = "_".join(diets) if diets else "allergy"
+        bindings.append({
+            "id": f"concept_{profile}_{suffix}",
+            "conceptIds": sorted(concept_ids),
+            "profileId": profile,
+            "substitutionDiets": list(diets),
+            "evidence": "offline unanimous concept-ID migration from current catalog",
+        })
+
     top_provider_ids = sorted(
         occurrences,
         key=lambda ident: (-len(occurrences[ident]), ident),
@@ -157,13 +223,25 @@ def main() -> None:
             "providerIdsSeen": len(occurrences),
             "providerGlobalRows": len(global_rows),
             "bindings": len(bindings),
+            "providerBindings": len([
+                row for row in bindings if row.get("ingredientIds")
+            ]),
+            "conceptBindings": len([
+                row for row in bindings if row.get("conceptIds")
+            ]),
+            "conceptIds": sum(
+                len(row.get("conceptIds") or []) for row in bindings
+            ),
             "ambiguousProviderIds": len(ambiguous),
+            "ambiguousConcepts": len(ambiguous_concepts),
             "untouchedProviderIds": untouched,
+            "untouchedConcepts": untouched_concepts,
             "boundOccurrences": covered_occurrences,
             "profileCounts": dict(sorted(profile_counts.items())),
         },
         "ingredientBindings": bindings,
         "ambiguous": ambiguous,
+        "ambiguousConcepts": ambiguous_concepts,
         "diagnostics": diagnostics,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
