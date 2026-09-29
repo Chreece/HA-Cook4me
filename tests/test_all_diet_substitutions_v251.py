@@ -141,65 +141,79 @@ class AllDietSubstitutionTests(unittest.TestCase):
                 self.assertEqual(match["substitutions"][0]["replacement"]["key"], "tofu")
                 self.assertGreaterEqual(len(match["substitutions"][0]["alternatives"]), 1)
 
-    def test_catalog_identity_diagnostic_for_red_mullet_and_dogfish(self):
-        payload = release.load_release_catalog()
-        found = []
-        for row in payload.get("ingredients") or []:
-            if not isinstance(row, dict):
-                continue
-            canonical = logic.normalize_text(
-                row.get("canonicalName")
-                or row.get("name")
-                or row.get("foodName")
-                or ""
-            )
-            if any(term in canonical for term in ("mullet", "dogfish", "shark")):
-                found.append({
-                    "id": row.get("id") or row.get("ingredientId"),
-                    "key": row.get("key") or row.get("foodKey"),
-                    "conceptId": row.get("conceptId"),
-                    "canonicalName": row.get("canonicalName"),
-                    "classification": row.get("classification"),
-                    "substitutionDiets": row.get("substitutionDiets"),
-                })
-        print("V258_CATALOG_IDENTITIES=" + repr(found))
-        self.assertTrue(found)
-
-    def test_red_mullet_and_dogfish_never_appear_bare_for_vegetarian(self):
+    def test_catalog_bound_red_mullet_and_dogfish_ignore_display_language(self):
         cases = (
-            "Rotbarbenfilet",
-            "Dornhai",
-            "Red mullet",
-            "Red mullet fillet",
-            "Dogfish",
-            "Spiny dogfish",
-            "Shark",
+            ("concept:food:6d9fa4590ae08aeadd5d", "red_mullet_family"),
+            ("concept:food:80a6f48cbd8439928d4c", "dogfish_family"),
         )
-        for ingredient in cases:
-            with self.subTest(ingredient=ingredient):
+        for concept_id, binding_id in cases:
+            with self.subTest(concept_id=concept_id):
+                source = catalog_row("opaque-source", "Opaque catalog ingredient")
+                source["conceptId"] = concept_id
+                payload = {
+                    "ingredients": [
+                        *(dict(row) for row in TARGETS),
+                        source,
+                    ]
+                }
+                summary = subs.enrich_catalog_substitutions(payload)
+                self.assertEqual(summary["missingProfiles"], [])
+                self.assertEqual(summary["unresolvedTargets"], [])
+                self.assertEqual(source["substitutionBindingId"], binding_id)
+                self.assertEqual(source["substitutionDiets"], ["vegetarian", "vegan"])
+                self.assertEqual(
+                    [row["key"] for row in source["substitutions"]],
+                    ["tofu", "mushrooms", "chickpeas"],
+                )
+
                 vegetarian = logic.score_recipe(
-                    recipe(ingredient), profile("vegetarian")
+                    {"title": "Opaque", "ingredients": [source]},
+                    profile("vegetarian"),
                 )
                 self.assertFalse(vegetarian["safe"], vegetarian)
-                self.assertTrue(
-                    vegetarian["eligibleWithSubstitutions"], vegetarian
-                )
-                self.assertTrue(vegetarian["requiresSubstitutions"], vegetarian)
-                self.assertTrue(
-                    vegetarian["substitutionCoverageComplete"], vegetarian
-                )
+                self.assertTrue(vegetarian["eligibleWithSubstitutions"], vegetarian)
+                self.assertTrue(vegetarian["substitutionCoverageComplete"], vegetarian)
                 self.assertEqual(
                     vegetarian["substitutions"][0]["replacement"]["key"], "tofu"
                 )
-                self.assertGreaterEqual(
-                    len(vegetarian["substitutions"][0]["alternatives"]), 1
-                )
 
                 pescatarian = logic.score_recipe(
-                    recipe(ingredient), profile("pescatarian")
+                    {"title": "Opaque", "ingredients": [source]},
+                    profile("pescatarian"),
                 )
                 self.assertTrue(pescatarian["safe"], pescatarian)
                 self.assertFalse(pescatarian["requiresSubstitutions"], pescatarian)
+
+    def test_release_catalog_has_exact_identity_bindings_for_reported_fish(self):
+        payload = release.load_release_catalog()
+        expected = {
+            "concept:food:6d9fa4590ae08aeadd5d": "red_mullet_family",
+            "concept:food:80a6f48cbd8439928d4c": "dogfish_family",
+        }
+        by_concept = payload.get("_runtimeIngredientsByConcept") or {}
+        for concept_id, binding_id in expected.items():
+            with self.subTest(concept_id=concept_id):
+                rows = [
+                    row for row in by_concept.get(concept_id, ())
+                    if isinstance(row, dict)
+                ]
+                self.assertTrue(rows, concept_id)
+                self.assertTrue(
+                    all(row.get("substitutionBindingId") == binding_id for row in rows),
+                    rows,
+                )
+                self.assertTrue(
+                    all(row.get("substitutionDiets") == ["vegetarian", "vegan"] for row in rows),
+                    rows,
+                )
+                self.assertTrue(
+                    all(
+                        [candidate.get("key") for candidate in row.get("substitutions") or []]
+                        == ["tofu", "mushrooms", "chickpeas"]
+                        for row in rows
+                    ),
+                    rows,
+                )
 
     def test_localized_labels_use_english_catalog_identity_for_diet_and_substitutions(self):
         source_rows = {
