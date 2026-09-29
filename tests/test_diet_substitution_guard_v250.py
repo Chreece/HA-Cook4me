@@ -37,8 +37,21 @@ _TARGETS = [
 ]
 
 
-def catalog_recipe(*names):
-    ingredients = [_row(f"source-{index}", name) for index, name in enumerate(names)]
+def _source(identifier, name, *, pescatarian="compatible", vegetarian="compatible", vegan="compatible"):
+    row = _row(identifier, name)
+    row["intelligence"] = {
+        "diets": {
+            "omnivore": "compatible",
+            "pescatarian": pescatarian,
+            "vegetarian": vegetarian,
+            "vegan": vegan,
+        }
+    }
+    return row
+
+
+def catalog_recipe(*ingredients):
+    ingredients = [dict(row) for row in ingredients]
     payload = {"ingredients": [*(dict(row) for row in _TARGETS), *ingredients]}
     summary = subs.enrich_catalog_substitutions(payload)
     if summary["missingProfiles"]:
@@ -58,7 +71,10 @@ class VegetarianFishSubstitutionGuardTests(unittest.TestCase):
         }
 
     def test_fish_suggestion_has_concrete_replacement_and_complete_coverage(self):
-        recipe = catalog_recipe("Cod", "Carrots")
+        recipe = catalog_recipe(
+            _source("cod", "Cod", vegetarian="incompatible", vegan="incompatible"),
+            _source("carrots", "Carrots"),
+        )
         match = logic.score_recipe(recipe, self.profile())
 
         self.assertFalse(match["safe"])
@@ -69,7 +85,11 @@ class VegetarianFishSubstitutionGuardTests(unittest.TestCase):
         self.assertTrue(match["substitutions"][0]["replacement"]["name"])
 
     def test_every_fish_row_requires_its_own_replacement(self):
-        recipe = catalog_recipe("Cod", "Salmon", "Potatoes")
+        recipe = catalog_recipe(
+            _source("cod", "Cod", vegetarian="incompatible", vegan="incompatible"),
+            _source("salmon", "Salmon", vegetarian="incompatible", vegan="incompatible"),
+            _source("potatoes", "Potatoes"),
+        )
         match = logic.score_recipe(recipe, self.profile())
 
         self.assertTrue(match["substitutionCoverageComplete"])
@@ -106,7 +126,9 @@ class VegetarianFishSubstitutionGuardTests(unittest.TestCase):
         self.assertEqual(match["substitutions"], [])
 
     def test_allergy_or_avoid_violation_cannot_be_hidden_by_diet_substitution(self):
-        recipe = catalog_recipe("Cod")
+        recipe = catalog_recipe(
+            _source("cod", "Cod", vegetarian="incompatible", vegan="incompatible")
+        )
         profile = self.profile()
         profile["avoid"] = ["tofu", "mushrooms", "chickpeas"]
         match = logic.score_recipe(recipe, profile)
