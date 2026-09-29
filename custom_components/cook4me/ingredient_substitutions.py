@@ -22,6 +22,7 @@ except ImportError:  # Standalone unit-test import via spec_from_file_location.
 
 _DATA_PATH = Path(__file__).with_name("catalog") / "ingredient_substitutions.v1.json"
 _PROVIDER_DATA_PATH = Path(__file__).with_name("catalog") / "provider_ingredient_substitutions.v1.json"
+_CONCEPT_DATA_PATH = Path(__file__).with_name("catalog") / "concept_ingredient_substitutions.v1.json"
 _ALLERGY_DATA_PATH = Path(__file__).with_name("catalog") / "ingredient_allergy_substitutions.v1.json"
 
 
@@ -120,6 +121,14 @@ def load_substitution_catalog() -> dict[str, Any]:
     except (OSError, json.JSONDecodeError):
         provider_overlay = {}
     payload = _merge_binding_overlay(payload, provider_overlay)
+    try:
+        concept_overlay = json.loads(_CONCEPT_DATA_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        concept_overlay = {}
+    payload = _merge_binding_overlay(payload, concept_overlay)
+    payload["conceptBindingCatalogVersion"] = _text(
+        concept_overlay.get("version")
+    ) or "missing"
     try:
         overlay = json.loads(_ALLERGY_DATA_PATH.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
@@ -807,6 +816,9 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
         ]),
         "providerBindingCatalogVersion": _text(
             catalog.get("providerBindingCatalogVersion")
+        ),
+        "conceptBindingCatalogVersion": _text(
+            catalog.get("conceptBindingCatalogVersion")
         ),
         "expandedBindingConcepts": int(
             (catalog.get("_runtimeBindingConceptExpansion") or {}).get(
