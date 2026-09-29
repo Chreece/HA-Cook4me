@@ -84,7 +84,7 @@ class SeasonFilterTests(unittest.TestCase):
 
     def test_runtime_passes_market_country_and_ha_timezone_month_to_shared_filter(self):
         runtime=(ROOT/'custom_components/cook4me/shared_recipe_runtime.py').read_text()
-        self.assertIn('settings["seasonalIngredients"] or (costs is not None and cost_calculator is None)', runtime)
+        self.assertIn('settings.get("seasonalIngredients") is True or (costs is not None and cost_calculator is None)', runtime)
         self.assertIn('ZoneInfo(str(getattr(bridge.hass.config, "time_zone", "") or "UTC"))', runtime)
         self.assertIn('season_country=season_country, season_month=season_month', runtime)
 
