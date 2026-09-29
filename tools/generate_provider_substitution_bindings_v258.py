@@ -139,6 +139,22 @@ def main() -> None:
         profile_counts[profile] += 1
         covered_occurrences += count
 
+    top_provider_ids = sorted(
+        occurrences,
+        key=lambda ident: (-len(occurrences[ident]), ident),
+    )[:30]
+    diagnostics = []
+    for ident in top_provider_ids:
+        sample = occurrences[ident][0]
+        diagnostics.append({
+            "ingredientId": ident,
+            "occurrences": len(occurrences[ident]),
+            "row": sample,
+            "ingredientText": logic._ingredient_text(sample),
+            "sourceDiets": list(subs._source_diets(sample)),
+            "candidateProfileId": profile_id(sample),
+        })
+
     result = {
         "schemaVersion": 1,
         "kind": "cook4me-provider-substitution-bindings-proposal",
@@ -158,6 +174,7 @@ def main() -> None:
         },
         "ingredientBindings": bindings,
         "ambiguous": ambiguous,
+        "diagnostics": diagnostics,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
