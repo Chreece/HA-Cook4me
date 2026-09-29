@@ -78,11 +78,59 @@ def profile(diet: str, *, allergies=(), avoid=()):
     }
 
 
+_SOURCE_FIXTURES = {
+    "Chicken": ("incompatible", "incompatible", "incompatible", ""),
+    "Chicken fillet": ("incompatible", "incompatible", "incompatible", ""),
+    "Skate": ("compatible", "incompatible", "incompatible", ""),
+    "Skate wing": ("compatible", "incompatible", "incompatible", ""),
+    "Salmon": ("compatible", "incompatible", "incompatible", ""),
+    "Beef": ("incompatible", "incompatible", "incompatible", ""),
+    "Gelatin": ("incompatible", "incompatible", "incompatible", "gelatin"),
+    "Animal rennet": ("incompatible", "incompatible", "incompatible", "rennet"),
+    "Lard": ("incompatible", "incompatible", "incompatible", "animal_fat"),
+    "Isinglass": ("compatible", "incompatible", "incompatible", "isinglass"),
+    "Milk": ("compatible", "compatible", "incompatible", "milk"),
+    "Cream": ("compatible", "compatible", "incompatible", "cream"),
+    "Butter": ("compatible", "compatible", "incompatible", "butter"),
+    "Yogurt": ("compatible", "compatible", "incompatible", "yogurt"),
+    "Honey": ("compatible", "compatible", "incompatible", "honey"),
+    "Cheese": ("compatible", "compatible", "incompatible", "cheese"),
+    "Egg": ("compatible", "compatible", "incompatible", "egg"),
+    "Egg whites": ("compatible", "compatible", "incompatible", "egg_white"),
+    "Whey": ("compatible", "compatible", "incompatible", "whey_casein"),
+    "Fish sauce": ("compatible", "incompatible", "incompatible", "fish_sauce"),
+    "Chicken stock": ("incompatible", "incompatible", "incompatible", "stock"),
+}
+
+
+def resolved_source(identifier: str, name: str, *, diets, substitution_class=""):
+    row = catalog_row(identifier, name)
+    row["intelligence"] = {
+        "diets": {
+            "omnivore": "compatible",
+            "pescatarian": diets[0],
+            "vegetarian": diets[1],
+            "vegan": diets[2],
+        },
+        "substitutionClass": substitution_class,
+    }
+    return row
+
+
 def recipe(*ingredients: str):
-    sources = [
-        catalog_row(f"source-{index}-{logic.normalize_text(name)}", name)
-        for index, name in enumerate(ingredients)
-    ]
+    sources = []
+    for index, name in enumerate(ingredients):
+        if name not in _SOURCE_FIXTURES:
+            raise AssertionError(f"Missing explicit catalog fixture for {name!r}")
+        pescatarian, vegetarian, vegan, substitution_class = _SOURCE_FIXTURES[name]
+        sources.append(
+            resolved_source(
+                f"source-{index}",
+                name,
+                diets=(pescatarian, vegetarian, vegan),
+                substitution_class=substitution_class,
+            )
+        )
     payload = {
         "ingredients": [
             *(dict(row) for row in TARGETS),
@@ -418,19 +466,29 @@ class AllDietSubstitutionTests(unittest.TestCase):
         self.assertFalse(match["eligibleWithSubstitutions"])
         self.assertFalse(match["substitutionCoverageComplete"])
 
-    def test_multilingual_derivatives_are_replaced(self):
+    def test_resolved_substitution_classes_ignore_display_labels(self):
         cases = [
-            ("pescatarian", "Tierisches Lab", "microbial_rennet"),
-            ("vegetarian", "Présure", "microbial_rennet"),
-            ("vegetarian", "Ιχθυόκολλα", "bentonite"),
-            ("vegan", "Molke", "pea_protein"),
-            ("vegan", "Ορός γάλακτος", "pea_protein"),
-            ("vegan", "Eiweiß", "aquafaba"),
-            ("vegan", "Yema de huevo", "ground_flaxseed_water"),
+            ("pescatarian", "opaque-rennet-a", ("incompatible", "incompatible", "incompatible"), "rennet", "microbial_rennet"),
+            ("vegetarian", "opaque-isinglass", ("compatible", "incompatible", "incompatible"), "isinglass", "bentonite"),
+            ("vegan", "opaque-whey", ("compatible", "compatible", "incompatible"), "whey_casein", "pea_protein"),
+            ("vegan", "opaque-egg-white", ("compatible", "compatible", "incompatible"), "egg_white", "aquafaba"),
+            ("vegan", "opaque-egg-yolk", ("compatible", "compatible", "incompatible"), "egg_yolk", "ground_flaxseed_water"),
         ]
-        for diet, ingredient, expected in cases:
-            with self.subTest(diet=diet, ingredient=ingredient):
-                match = logic.score_recipe(recipe(ingredient), profile(diet))
+        for index, (diet, label, diets, substitution_class, expected) in enumerate(cases):
+            with self.subTest(diet=diet, substitution_class=substitution_class):
+                source = resolved_source(
+                    f"opaque-{index}",
+                    label,
+                    diets=diets,
+                    substitution_class=substitution_class,
+                )
+                payload = {"ingredients": [*(dict(row) for row in TARGETS), source]}
+                summary = subs.enrich_catalog_substitutions(payload)
+                self.assertEqual(summary["missingProfiles"], [])
+                match = logic.score_recipe(
+                    {"title": "Opaque", "ingredients": [source]},
+                    profile(diet),
+                )
                 self.assertTrue(match["eligibleWithSubstitutions"], match)
                 self.assertTrue(match["substitutionCoverageComplete"])
                 self.assertEqual(match["substitutions"][0]["replacement"]["key"], expected)
