@@ -141,6 +141,42 @@ class AllDietSubstitutionTests(unittest.TestCase):
                 self.assertEqual(match["substitutions"][0]["replacement"]["key"], "tofu")
                 self.assertGreaterEqual(len(match["substitutions"][0]["alternatives"]), 1)
 
+    def test_red_mullet_and_dogfish_never_appear_bare_for_vegetarian(self):
+        cases = (
+            "Rotbarbenfilet",
+            "Dornhai",
+            "Red mullet",
+            "Red mullet fillet",
+            "Dogfish",
+            "Spiny dogfish",
+            "Shark",
+        )
+        for ingredient in cases:
+            with self.subTest(ingredient=ingredient):
+                vegetarian = logic.score_recipe(
+                    recipe(ingredient), profile("vegetarian")
+                )
+                self.assertFalse(vegetarian["safe"], vegetarian)
+                self.assertTrue(
+                    vegetarian["eligibleWithSubstitutions"], vegetarian
+                )
+                self.assertTrue(vegetarian["requiresSubstitutions"], vegetarian)
+                self.assertTrue(
+                    vegetarian["substitutionCoverageComplete"], vegetarian
+                )
+                self.assertEqual(
+                    vegetarian["substitutions"][0]["replacement"]["key"], "tofu"
+                )
+                self.assertGreaterEqual(
+                    len(vegetarian["substitutions"][0]["alternatives"]), 1
+                )
+
+                pescatarian = logic.score_recipe(
+                    recipe(ingredient), profile("pescatarian")
+                )
+                self.assertTrue(pescatarian["safe"], pescatarian)
+                self.assertFalse(pescatarian["requiresSubstitutions"], pescatarian)
+
     def test_localized_labels_use_english_catalog_identity_for_diet_and_substitutions(self):
         source_rows = {
             "chicken-fillets": {
