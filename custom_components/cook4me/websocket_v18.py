@@ -12,6 +12,7 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.util import dt as dt_util
 
 from . import recipe_languages, release_catalog
+from .catalog_runtime import async_ensure_catalog_ready
 from . import websocket as legacy
 from . import websocket_v5 as v5
 from . import websocket_v10 as v10
@@ -639,6 +640,7 @@ async def async_ingredient_info(hass, connection, msg) -> None:
     """Shared handler body; HA's decorated command schedules work and returns None."""
     try:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
+        await async_ensure_catalog_ready(hass)
         ingredient = dict(msg["ingredient"])
         name = ingredient_name(ingredient)
         house = bridge.recipe_hub.profile.get("houseIngredients") or []
