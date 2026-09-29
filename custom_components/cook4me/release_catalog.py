@@ -197,6 +197,50 @@ def ingredient_display_name(ingredient: Any, language: str) -> str:
     return _core._presentation.display_name(raw or ingredient, language)
 
 
+def _concept_diet_substitution_source(
+    payload: dict[str, Any], ingredient: dict[str, Any]
+) -> dict[str, Any] | None:
+    """Resolve only unanimous reviewed diet-substitution metadata by concept.
+
+    Localized recipe rows often have source-local IDs but retain the stable
+    catalog conceptId. Exact ID lookup remains first choice. Concept fallback is
+    intentionally narrower than _global_ingredient(): it is used only for diet
+    substitution evidence and only when every reviewed donor agrees on the same
+    incompatible diets and replacement candidates.
+    """
+    concept_id = _text(ingredient.get("conceptId"))
+    if not concept_id:
+        return None
+    rows = [
+        row
+        for row in (payload.get("_runtimeIngredientsByConcept") or {}).get(
+            concept_id, ()
+        )
+        if isinstance(row, dict)
+    ]
+    signatures: dict[tuple[tuple[str, ...], tuple[str, ...]], list[dict[str, Any]]] = {}
+    for row in rows:
+        diets = tuple(sorted(dict.fromkeys(
+            _text(value).lower()
+            for value in row.get("substitutionDiets") or []
+            if _text(value)
+        )))
+        candidates = tuple(
+            _text(candidate.get("key"))
+            or _text((candidate.get("target") or {}).get("conceptId"))
+            or _text((candidate.get("target") or {}).get("ingredientId"))
+            for candidate in row.get("substitutions") or []
+            if isinstance(candidate, dict)
+        )
+        candidates = tuple(value for value in candidates if value)
+        if not diets or not candidates:
+            continue
+        signatures.setdefault((diets, candidates), []).append(row)
+    if len(signatures) != 1:
+        return None
+    return next(iter(signatures.values()))[0]
+
+
 def ingredient_safety_evidence(ingredient: Any) -> Any:
     """Resolve one localized ingredient to authoritative catalog safety metadata.
 
@@ -210,6 +254,21 @@ def ingredient_safety_evidence(ingredient: Any) -> Any:
     payload = load_release_catalog()
     out = _core._enrich_display_ingredient(payload, ingredient)
     source = _core._global_ingredient(payload, ingredient)
+    concept_source = None
+    if not isinstance(source, dict):
+        concept_source = _concept_diet_substitution_source(payload, ingredient)
+        source = concept_source
+        if isinstance(concept_source, dict):
+            # Copy only the reviewed dietary substitution contract. Do not use
+            # concept fallback for nutrition, lifecycle or arbitrary metadata.
+            for field in (
+                "substitutions",
+                "substitutionDiets",
+                "substitutionCatalogVersion",
+            ):
+                if concept_source.get(field) not in (None, "", {}, []):
+                    out[field] = deepcopy(concept_source[field])
+            out["conceptDietSubstitutionResolved"] = True
     if isinstance(source, dict):
         canonical = _text(
             source.get("canonicalName")
