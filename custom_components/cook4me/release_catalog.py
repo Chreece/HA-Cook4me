@@ -93,7 +93,15 @@ async def async_warm_release_catalog(hass: Any) -> dict[str, Any]:
 
 
 def release_catalog_ready() -> bool:
-    payload = load_release_catalog()
+    """Return readiness without causing a cold catalog load.
+
+    This function is called from Home Assistant async request paths. A cold
+    readiness check must never become the place where the ~80 MiB catalog is
+    decompressed, parsed and indexed on MainThread.
+    """
+    if load_release_catalog.cache_info().currsize == 0:
+        return False
+    payload = load_release_catalog()  # cache hit only
     return bool(
         payload.get("complete")
         and isinstance(payload.get("recipes"), list)
