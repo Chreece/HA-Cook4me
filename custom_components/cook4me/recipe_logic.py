@@ -54,6 +54,10 @@ _FISH_WORDS.update({
     "pulpo", "anchoas", "garnalen", "kabeljauw", "zalm", "tonijn",
     "καλαμαρι", "καλαμαρια", "χταποδι", "μυδια", "αντζουγιες", "γαυρος", "μπακαλιαρος",
     "skate", "skate wing", "ray", "ray wing", "stingray", "σαλαχι", "σαλάχι",
+    "red mullet", "red mullet fillet", "mullet", "mullet fillet",
+    "dogfish", "spiny dogfish", "shark", "shark fillet",
+    "rotbarbe", "rotbarbenfilet", "rotbarben filet", "meerbarbe",
+    "dornhai", "dornhaifilet", "dornhai filet",
 })
 _ANIMAL_DERIVATIVES = {
     "gelatin", "gelatine", "gelatina", "ζελατινη", "ζελατίνη",
