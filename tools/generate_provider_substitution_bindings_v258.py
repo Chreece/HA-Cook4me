@@ -73,6 +73,12 @@ def main() -> None:
     args = parser.parse_args()
 
     payload = json.loads(CATALOG.read_text(encoding="utf-8"))
+    global_rows: dict[str, dict[str, Any]] = {}
+    for row in payload.get("ingredients") or []:
+        ident = provider_id(row)
+        if ident:
+            global_rows[ident] = row
+
     occurrences: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for recipe in payload.get("recipes") or []:
         if not isinstance(recipe, dict):
@@ -93,41 +99,24 @@ def main() -> None:
 
     for ident in sorted(occurrences, key=lambda value: int(value.rsplit("_", 1)[1])):
         rows = occurrences[ident]
-        signatures = Counter(binding_signature(row) for row in rows)
-        relevant = {
-            signature: count
-            for signature, count in signatures.items()
-            if signature[0] or signature[1]
-        }
-        if not relevant:
+        source = global_rows.get(ident)
+        if not isinstance(source, dict):
             untouched += 1
             continue
-        if len(relevant) != 1 or sum(relevant.values()) != len(rows):
-            ambiguous.append({
-                "ingredientId": ident,
-                "occurrences": len(rows),
-                "signatures": [
-                    {
-                        "profileId": signature[0],
-                        "substitutionDiets": list(signature[1]),
-                        "count": count,
-                    }
-                    for signature, count in signatures.most_common()
-                ],
-                "labels": sorted({label(row) for row in rows if label(row)})[:12],
-            })
+        profile, diets = binding_signature(source)
+        if not profile and not diets:
+            untouched += 1
             continue
-
-        (profile, diets), count = next(iter(relevant.items()))
-        if not profile:
+        if diets and not profile:
             ambiguous.append({
                 "ingredientId": ident,
                 "occurrences": len(rows),
                 "reason": "diet-conflict-without-reviewed-profile",
                 "substitutionDiets": list(diets),
-                "labels": sorted({label(row) for row in rows if label(row)})[:12],
+                "labels": [label(source)] if label(source) else [],
             })
             continue
+        count = len(rows)
 
         bindings.append({
             "id": "provider_" + ident.lower(),
@@ -145,7 +134,7 @@ def main() -> None:
     )[:30]
     diagnostics = []
     for ident in top_provider_ids:
-        sample = occurrences[ident][0]
+        sample = global_rows.get(ident) or occurrences[ident][0]
         diagnostics.append({
             "ingredientId": ident,
             "occurrences": len(occurrences[ident]),
@@ -166,6 +155,7 @@ def main() -> None:
         },
         "summary": {
             "providerIdsSeen": len(occurrences),
+            "providerGlobalRows": len(global_rows),
             "bindings": len(bindings),
             "ambiguousProviderIds": len(ambiguous),
             "untouchedProviderIds": untouched,
