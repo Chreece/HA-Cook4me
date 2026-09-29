@@ -55,6 +55,7 @@ def _state(hass, bridge, user):
 async def _catalog(hass, bridge, msg):
     from . import release_catalog
     language = str(msg.get("language") or v11._device_language(bridge))
+    await async_ensure_catalog_ready(hass)
     if release_catalog.release_catalog_ready():
         # The release catalog is immutable for the lifetime of this integration
         # process. Cache each language once so scan -> review -> save does not
