@@ -141,6 +141,30 @@ class AllDietSubstitutionTests(unittest.TestCase):
                 self.assertEqual(match["substitutions"][0]["replacement"]["key"], "tofu")
                 self.assertGreaterEqual(len(match["substitutions"][0]["alternatives"]), 1)
 
+    def test_catalog_identity_diagnostic_for_red_mullet_and_dogfish(self):
+        payload = release.load_release_catalog()
+        found = []
+        for row in payload.get("ingredients") or []:
+            if not isinstance(row, dict):
+                continue
+            canonical = logic.normalize_text(
+                row.get("canonicalName")
+                or row.get("name")
+                or row.get("foodName")
+                or ""
+            )
+            if any(term in canonical for term in ("mullet", "dogfish", "shark")):
+                found.append({
+                    "id": row.get("id") or row.get("ingredientId"),
+                    "key": row.get("key") or row.get("foodKey"),
+                    "conceptId": row.get("conceptId"),
+                    "canonicalName": row.get("canonicalName"),
+                    "classification": row.get("classification"),
+                    "substitutionDiets": row.get("substitutionDiets"),
+                })
+        print("V258_CATALOG_IDENTITIES=" + repr(found))
+        self.assertTrue(found)
+
     def test_red_mullet_and_dogfish_never_appear_bare_for_vegetarian(self):
         cases = (
             "Rotbarbenfilet",
