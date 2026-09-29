@@ -120,7 +120,11 @@ def is_cooking_guide(recipe: Any) -> bool:
         if not isinstance(item, dict):
             return False
         canonical = _strings(item, ("canonicalName",))
-        names = canonical or _strings(item, ("foodName", "name", "originalName"))
+        localized = _strings(item, ("foodName", "name", "originalName"))
+        # Canonical stays first for food-vs-cooking-aid identity, but retain
+        # exact localized/original labels too so a Greek recipe title can match
+        # the same English-canonical one-food guide without fuzzy guessing.
+        names = list(dict.fromkeys([*canonical, *localized]))
         if not names:
             return False  # An unresolved row could be another real ingredient.
         if _aid_name(names[0]) in _AIDS:
