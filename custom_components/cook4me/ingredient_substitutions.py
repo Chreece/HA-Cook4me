@@ -21,6 +21,7 @@ except ImportError:  # Standalone unit-test import via spec_from_file_location.
     _spec.loader.exec_module(_diet)
 
 _DATA_PATH = Path(__file__).with_name("catalog") / "ingredient_substitutions.v1.json"
+_PROVIDER_DATA_PATH = Path(__file__).with_name("catalog") / "provider_ingredient_substitutions.v1.json"
 _ALLERGY_DATA_PATH = Path(__file__).with_name("catalog") / "ingredient_allergy_substitutions.v1.json"
 
 
@@ -32,6 +33,33 @@ def _norm(value: Any) -> str:
     text = unicodedata.normalize("NFKD", _text(value).casefold())
     text = "".join(ch for ch in text if not unicodedata.category(ch).startswith("M"))
     return " ".join(re.findall(r"[^\W_]+", text, re.UNICODE))
+
+
+def _merge_binding_overlay(payload: dict[str, Any], overlay: dict[str, Any]) -> dict[str, Any]:
+    """Append stable provider-ID bindings without changing profile definitions."""
+    if not isinstance(overlay, dict) or int(overlay.get("schemaVersion") or 0) != 1:
+        return payload
+    bindings = [
+        deepcopy(row)
+        for row in payload.get("ingredientBindings") or []
+        if isinstance(row, dict)
+    ]
+    binding_ids = {
+        _text(row.get("id"))
+        for row in bindings
+        if _text(row.get("id"))
+    }
+    for raw in overlay.get("ingredientBindings") or []:
+        if not isinstance(raw, dict):
+            continue
+        ident = _text(raw.get("id"))
+        if not ident or ident in binding_ids:
+            continue
+        bindings.append(deepcopy(raw))
+        binding_ids.add(ident)
+    payload["ingredientBindings"] = bindings
+    payload["providerBindingCatalogVersion"] = _text(overlay.get("version")) or "unknown"
+    return payload
 
 
 def _merge_catalog_overlay(payload: dict[str, Any], overlay: dict[str, Any]) -> dict[str, Any]:
@@ -87,6 +115,11 @@ def load_substitution_catalog() -> dict[str, Any]:
         payload["sourceProfiles"] = []
     if not isinstance(payload.get("ingredientBindings"), list):
         payload["ingredientBindings"] = []
+    try:
+        provider_overlay = json.loads(_PROVIDER_DATA_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        provider_overlay = {}
+    payload = _merge_binding_overlay(payload, provider_overlay)
     try:
         overlay = json.loads(_ALLERGY_DATA_PATH.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
@@ -683,6 +716,9 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
             row for row in catalog.get("ingredientBindings") or []
             if isinstance(row, dict)
         ]),
+        "providerBindingCatalogVersion": _text(
+            catalog.get("providerBindingCatalogVersion")
+        ),
         "allergySourceProfiles": len([
             row for row in catalog.get("sourceProfiles") or []
             if isinstance(row, dict) and row.get("triggerAllergens")
