@@ -141,6 +141,54 @@ class AllDietSubstitutionTests(unittest.TestCase):
                 self.assertEqual(match["substitutions"][0]["replacement"]["key"], "tofu")
                 self.assertGreaterEqual(len(match["substitutions"][0]["alternatives"]), 1)
 
+    def test_resolved_catalog_diet_intelligence_drives_substitution_without_food_words(self):
+        source = catalog_row("opaque-animal", "Opaque ingredient")
+        source["conceptId"] = "concept:food:opaque-animal"
+        source["intelligence"] = {
+            "diets": {
+                "omnivore": "compatible",
+                "pescatarian": "compatible",
+                "vegetarian": "incompatible",
+                "vegan": "incompatible",
+            },
+            "substitutionClass": "",
+        }
+        payload = {"ingredients": [*(dict(row) for row in TARGETS), source]}
+        summary = subs.enrich_catalog_substitutions(payload)
+        self.assertEqual(summary["missingProfiles"], [])
+        self.assertEqual(source["substitutionDiets"], ["vegetarian", "vegan"])
+        self.assertEqual(
+            [row["key"] for row in source["substitutions"]],
+            ["tofu", "mushrooms", "chickpeas"],
+        )
+        match = logic.score_recipe(
+            {"title": "Opaque", "ingredients": [source]},
+            profile("vegetarian"),
+        )
+        self.assertFalse(match["safe"], match)
+        self.assertTrue(match["eligibleWithSubstitutions"], match)
+        self.assertEqual(match["substitutions"][0]["replacement"]["key"], "tofu")
+
+    def test_resolved_catalog_compatibility_beats_animal_looking_display_text(self):
+        source = catalog_row("plant-chicken", "Chicken style plant protein")
+        source["conceptId"] = "concept:food:plant-chicken"
+        source["intelligence"] = {
+            "diets": {
+                "omnivore": "compatible",
+                "pescatarian": "compatible",
+                "vegetarian": "compatible",
+                "vegan": "compatible",
+            },
+            "substitutionClass": "",
+        }
+        match = logic.score_recipe(
+            {"title": "Plant protein", "ingredients": [source]},
+            profile("vegetarian"),
+        )
+        self.assertTrue(match["safe"], match)
+        self.assertFalse(match["requiresSubstitutions"], match)
+        self.assertEqual(match["substitutions"], [])
+
     def test_catalog_bound_red_mullet_and_dogfish_ignore_display_language(self):
         cases = (
             ("concept:food:6d9fa4590ae08aeadd5d", "red_mullet_family"),
