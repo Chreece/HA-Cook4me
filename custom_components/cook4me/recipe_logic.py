@@ -225,6 +225,31 @@ def _contains_phrase(text: str, phrase: str) -> bool:
 
 # Exact plant-food phrases prevent coconut milk / cocoa butter being mistaken
 # for dairy. A separate animal ingredient in the same row still causes a hit.
+_GREEK_DIET_TOKEN_ALIASES = {
+    # Common genitive forms used by curated Greek ingredient labels.
+    # Map them back to the exact diet tokens already reviewed below.
+    "κρεατος": "κρεας",
+    "μοσχαριου": "μοσχαρι",
+    "χοιρινου": "χοιρινο",
+    "κοτοπουλου": "κοτοπουλο",
+    "γαλοπουλας": "γαλοπουλα",
+    "αρνιου": "αρνι",
+    "λουκανικου": "λουκανικο",
+    "ψαριου": "ψαρι",
+    "σολομου": "σολομος",
+    "τονου": "τονος",
+    "γαριδας": "γαριδα",
+    "γαριδων": "γαριδες",
+    "μυδιου": "μυδι",
+    "μυδιων": "μυδια",
+    "καλαμαριου": "καλαμαρι",
+    "χταποδιου": "χταποδι",
+    "γαυρου": "γαυρος",
+    "μπακαλιαρου": "μπακαλιαρος",
+    "σαλαχιου": "σαλαχι",
+}
+
+
 _PLANT_PHRASES = {"coconut milk", "coconut cream", "cocoa butter", "peanut butter", "almond butter",
     "soy milk", "soya milk", "oat milk", "almond milk", "rice milk", "cashew milk",
     "kokosmilch", "kokoscreme", "kakaobutter", "erdnussbutter", "hafermilch", "mandelmilch",
@@ -241,7 +266,12 @@ def _diet_hits(text: str) -> tuple[tuple[str, ...], tuple[str, ...], tuple[str, 
     for phrase, replacement in {"goat cheese": "cheese", "goat s cheese": "cheese",
             "goat milk": "milk", "goat s milk": "milk"}.items():
         text = re.sub(r"(?<!\w)" + re.escape(phrase) + r"(?!\w)", replacement, text)
-    tokens = set(text.split())
+    mapped_tokens = [
+        _GREEK_DIET_TOKEN_ALIASES.get(token, token)
+        for token in text.split()
+    ]
+    text = " ".join(mapped_tokens)
+    tokens = set(mapped_tokens)
     def hits(words):
         return tuple(sorted(word for word in words if
             (normalize_text(word) in tokens if " " not in normalize_text(word) else _contains_phrase(text, word))))
