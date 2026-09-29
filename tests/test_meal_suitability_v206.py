@@ -50,6 +50,19 @@ class Classification(unittest.TestCase):
     def test_multilingual_exact_food_titles(self):
         for title,name,water in [('Reis','Reis','Wasser'),('Karotten','Karotten','Wasser'),('Riz','Riz','Eau'),('Ρύζι','Ρύζι','Νερό'),('ΡΥΖΙ','Ρύζι','Νερό'),('Arroz','Arroz','Agua')]:
             with self.subTest(title=title):self.assertTrue(is_cooking_guide(recipe(title,[{'name':name},{'name':water}])))
+    def test_cross_language_animal_guides_match_exact_localized_food_name(self):
+        cases = [
+            ("Φιλέτο κοτόπουλου", "Chicken fillet", "Φιλέτο κοτόπουλου"),
+            ("Σαλάχι", "Skate", "Σαλάχι"),
+        ]
+        for title, canonical, localized in cases:
+            with self.subTest(title=title):
+                row = food(canonical, name=localized)
+                row["foodName"] = localized
+                r = recipe(title, [row])
+                r["canonicalName"] = ""
+                self.assertTrue(is_cooking_guide(r), r)
+
     def test_canonical_evidence_independent_of_ui_name(self):
         r=recipe('Cauliflower',[food('Cauliflower',name='Κουνουπίδι'),food('Water',name='Νερό')]);r['title']='Blumenkohl';self.assertTrue(is_cooking_guide(r))
     def test_basic_cooking_prefixes(self):
