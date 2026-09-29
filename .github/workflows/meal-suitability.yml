@@ -49,6 +49,21 @@ jobs:
           node tests/test_allergy_catalog_substitutions_v254.mjs
       - name: Ingredient substitution metadata audit
         run: python tests/audit_ingredient_substitution_metadata_v253.py
+      - name: Generate exact substitution binding proposals
+        run: |
+          python tools/generate_provider_substitution_bindings_v258.py \
+            --output custom_components/cook4me/catalog/provider_ingredient_substitutions.generated.v1.json
+          python tools/generate_concept_substitution_bindings_v258.py \
+            --output custom_components/cook4me/catalog/concept_ingredient_substitutions.v1.json
+      - name: Upload exact substitution binding proposals
+        uses: actions/upload-artifact@v4
+        with:
+          name: substitution-bindings-v258
+          path: |
+            custom_components/cook4me/catalog/provider_ingredient_substitutions.generated.v1.json
+            custom_components/cook4me/catalog/concept_ingredient_substitutions.v1.json
+          if-no-files-found: error
+          retention-days: 3
       - name: Catalog-wide unresolved diet substitution audit
         run: python tests/audit_diet_substitution_catalog_v252.py
       - name: Retained progress, cancellation and variety

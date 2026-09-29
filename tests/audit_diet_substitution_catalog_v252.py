@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / "custom_components" / "cook4me" / "catalog" / "merged_catalog.v1.json"
 LOGIC = ROOT / "custom_components" / "cook4me" / "recipe_logic.py"
 SUBSTITUTIONS = ROOT / "custom_components" / "cook4me" / "ingredient_substitutions.py"
+RELEASE = ROOT / "custom_components" / "cook4me" / "release_catalog.py"
 
 spec = importlib.util.spec_from_file_location("cook4me_recipe_logic_catalog_audit", LOGIC)
 assert spec is not None and spec.loader is not None
@@ -21,6 +22,13 @@ sub_spec = importlib.util.spec_from_file_location(
 assert sub_spec is not None and sub_spec.loader is not None
 substitutions = importlib.util.module_from_spec(sub_spec)
 sub_spec.loader.exec_module(substitutions)
+
+release_spec = importlib.util.spec_from_file_location(
+    "cook4me_release_catalog_catalog_audit", RELEASE
+)
+assert release_spec is not None and release_spec.loader is not None
+release = importlib.util.module_from_spec(release_spec)
+release_spec.loader.exec_module(release)
 
 DIETS = ("pescatarian", "vegetarian", "vegan")
 
@@ -61,21 +69,10 @@ def _ingredient_lookup(payload):
 
 
 def _resolved_ingredient(raw, lookup):
-    if not isinstance(raw, dict):
-        return raw
-    source = next((lookup.get(value) for value in _identity_values(raw) if value in lookup), None)
-    if not isinstance(source, dict):
-        return raw
-    out = dict(source)
-    out.update(raw)
-    if raw.get("originalName"):
-        out["originalName"] = raw["originalName"]
-    if not out.get("canonicalName"):
-        out["canonicalName"] = source.get("canonicalName") or source.get("name") or source.get("foodName")
-    for key in ("intelligence", "diets", "allergens", "classification", "conceptId"):
-        if key not in out and key in source:
-            out[key] = source[key]
-    return out
+    # Mirror the production recommendation path exactly. Exact catalog IDs are
+    # preferred; localized source-local IDs may inherit only unanimous reviewed
+    # diet-substitution metadata through their stable conceptId.
+    return release.ingredient_safety_evidence(raw)
 
 
 def _candidate(recipe, variant, lookup):
@@ -97,11 +94,13 @@ def _candidate(recipe, variant, lookup):
 
 
 def main():
-    payload = json.loads(CATALOG.read_text(encoding="utf-8"))
-    substitution_summary = substitutions.enrich_catalog_substitutions(payload)
+    payload = release.load_release_catalog()
+    substitution_summary = payload.get("_runtimeSubstitutionSummary") or {}
     lookup = _ingredient_lookup(payload)
     unresolved = Counter()
     unresolved_examples = defaultdict(list)
+    unresolved_concepts = Counter()
+    unresolved_concept_examples = defaultdict(list)
     totals = Counter()
     adapted = Counter()
     safe = Counter()
@@ -162,14 +161,41 @@ def main():
                     name = _text(change.get("original")) or "<unnamed>"
                     key = (diet, language, logic.normalize_text(name) or name.casefold())
                     unresolved[key] += 1
+                    index = change.get("ingredientIndex")
+                    ingredient = (
+                        candidate.get("ingredients", [])[index]
+                        if isinstance(index, int)
+                        and 0 <= index < len(candidate.get("ingredients") or [])
+                        else {}
+                    )
+                    concept_id = _text(ingredient.get("conceptId")) if isinstance(ingredient, dict) else ""
+                    ingredient_id = next(iter(_identity_values(ingredient)), "") if isinstance(ingredient, dict) else ""
+                    concept_key = (diet, concept_id or "<missing-concept>", ingredient_id or "<missing-id>")
+                    unresolved_concepts[concept_key] += 1
+                    intelligence = (
+                        ingredient.get("intelligence")
+                        if isinstance(ingredient, dict)
+                        and isinstance(ingredient.get("intelligence"), dict)
+                        else {}
+                    )
+                    concept_example = {
+                        "ingredient": name,
+                        "title": title,
+                        "variantId": variant_id,
+                        "language": language,
+                        "conceptId": concept_id,
+                        "ingredientId": ingredient_id,
+                        "classification": ingredient.get("classification") if isinstance(ingredient, dict) else None,
+                        "dietEligible": ingredient.get("dietEligible") if isinstance(ingredient, dict) else None,
+                        "diets": intelligence.get("diets") if isinstance(intelligence.get("diets"), dict) else ingredient.get("diets") if isinstance(ingredient, dict) else None,
+                        "substitutionClass": intelligence.get("substitutionClass") or ingredient.get("substitutionClass") if isinstance(ingredient, dict) else None,
+                        "substitutionDiets": ingredient.get("substitutionDiets") if isinstance(ingredient, dict) else None,
+                        "substitutionBindingId": ingredient.get("substitutionBindingId") if isinstance(ingredient, dict) else None,
+                    }
+                    if len(unresolved_concept_examples[concept_key]) < 3:
+                        unresolved_concept_examples[concept_key].append(concept_example)
                     if len(unresolved_examples[key]) < 3:
-                        unresolved_examples[key].append(
-                            {
-                                "ingredient": name,
-                                "title": title,
-                                "variantId": variant_id,
-                            }
-                        )
+                        unresolved_examples[key].append(concept_example)
 
     rows = []
     for (diet, language, normalized), count in unresolved.most_common():
@@ -195,6 +221,18 @@ def main():
         "catalogSubstitutionSummary": substitution_summary,
         "unresolvedOccurrences": sum(unresolved.values()),
         "unresolvedGroups": len(unresolved),
+        "unresolvedConceptCount": len(unresolved_concepts),
+        "topUnresolvedConcepts": [
+            {
+                "diet": diet,
+                "conceptId": concept_id,
+                "ingredientId": ingredient_id,
+                "count": count,
+                "examples": unresolved_concept_examples[(diet, concept_id, ingredient_id)],
+            }
+            for (diet, concept_id, ingredient_id), count
+            in unresolved_concepts.most_common(160)
+        ],
         "topUnresolved": rows[:120],
     }
     print("DIET_SUBSTITUTION_CATALOG_AUDIT=" + json.dumps(report, ensure_ascii=False))

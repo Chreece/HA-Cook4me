@@ -56,6 +56,28 @@ TARGETS = [
 ]
 
 
+def resolved_source(
+    identifier,
+    name,
+    *,
+    pescatarian="compatible",
+    vegetarian="compatible",
+    vegan="compatible",
+    substitution_class="",
+):
+    row = target(identifier, name)
+    row["intelligence"] = {
+        "diets": {
+            "omnivore": "compatible",
+            "pescatarian": pescatarian,
+            "vegetarian": vegetarian,
+            "vegan": vegan,
+        },
+        "substitutionClass": substitution_class,
+    }
+    return row
+
+
 def profile(diet, *, allergies=(), avoid=()):
     return {
         "diet": diet,
@@ -70,16 +92,16 @@ def profile(diet, *, allergies=(), avoid=()):
 class CatalogOwnedSubstitutionTests(unittest.TestCase):
     def setUp(self):
         self.sources = [
-            target("cod", "Cod"),
-            target("milk", "Milk"),
-            target("egg-white", "Egg whites"),
-            target("gelatin", "Gelatin"),
-            target("rennet", "Animal rennet"),
-            target("stock", "Chicken stock"),
-            target("honey", "Honey"),
-            target("cheese", "Cheese"),
-            target("yogurt", "Yogurt"),
-            target("whey", "Whey"),
+            resolved_source("cod", "Cod", vegetarian="incompatible", vegan="incompatible"),
+            resolved_source("milk", "Milk", vegan="incompatible", substitution_class="milk"),
+            resolved_source("egg-white", "Egg whites", vegan="incompatible", substitution_class="egg_white"),
+            resolved_source("gelatin", "Gelatin", pescatarian="incompatible", vegetarian="incompatible", vegan="incompatible", substitution_class="gelatin"),
+            resolved_source("rennet", "Animal rennet", pescatarian="incompatible", vegetarian="incompatible", vegan="incompatible", substitution_class="rennet"),
+            resolved_source("stock", "Chicken stock", pescatarian="incompatible", vegetarian="incompatible", vegan="incompatible", substitution_class="stock"),
+            resolved_source("honey", "Honey", vegan="incompatible", substitution_class="honey"),
+            resolved_source("cheese", "Cheese", vegan="incompatible", substitution_class="cheese"),
+            resolved_source("yogurt", "Yogurt", vegan="incompatible", substitution_class="yogurt"),
+            resolved_source("whey", "Whey", vegan="incompatible", substitution_class="whey_casein"),
         ]
         self.payload = {"ingredients": [*TARGETS, *self.sources]}
         self.summary = subs.enrich_catalog_substitutions(self.payload)

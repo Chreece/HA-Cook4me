@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from functools import lru_cache
+import gzip
 import json
 from pathlib import Path
 import re
@@ -21,6 +22,9 @@ except ImportError:  # Standalone unit-test import via spec_from_file_location.
     _spec.loader.exec_module(_diet)
 
 _DATA_PATH = Path(__file__).with_name("catalog") / "ingredient_substitutions.v1.json"
+_PROVIDER_DATA_PATH = Path(__file__).with_name("catalog") / "provider_ingredient_substitutions.v1.json"
+_GENERATED_PROVIDER_DATA_PATH = Path(__file__).with_name("catalog") / "provider_ingredient_substitutions.generated.v1.json"
+_CONCEPT_DATA_PATH = Path(__file__).with_name("catalog") / "concept_ingredient_substitutions.v1.json"
 _ALLERGY_DATA_PATH = Path(__file__).with_name("catalog") / "ingredient_allergy_substitutions.v1.json"
 
 
@@ -32,6 +36,33 @@ def _norm(value: Any) -> str:
     text = unicodedata.normalize("NFKD", _text(value).casefold())
     text = "".join(ch for ch in text if not unicodedata.category(ch).startswith("M"))
     return " ".join(re.findall(r"[^\W_]+", text, re.UNICODE))
+
+
+def _merge_binding_overlay(payload: dict[str, Any], overlay: dict[str, Any]) -> dict[str, Any]:
+    """Append stable provider-ID bindings without changing profile definitions."""
+    if not isinstance(overlay, dict) or int(overlay.get("schemaVersion") or 0) != 1:
+        return payload
+    bindings = [
+        deepcopy(row)
+        for row in payload.get("ingredientBindings") or []
+        if isinstance(row, dict)
+    ]
+    binding_ids = {
+        _text(row.get("id"))
+        for row in bindings
+        if _text(row.get("id"))
+    }
+    for raw in overlay.get("ingredientBindings") or []:
+        if not isinstance(raw, dict):
+            continue
+        ident = _text(raw.get("id"))
+        if not ident or ident in binding_ids:
+            continue
+        bindings.append(deepcopy(raw))
+        binding_ids.add(ident)
+    payload["ingredientBindings"] = bindings
+    payload["providerBindingCatalogVersion"] = _text(overlay.get("version")) or "unknown"
+    return payload
 
 
 def _merge_catalog_overlay(payload: dict[str, Any], overlay: dict[str, Any]) -> dict[str, Any]:
@@ -85,11 +116,175 @@ def load_substitution_catalog() -> dict[str, Any]:
         payload["candidates"] = {}
     if not isinstance(payload.get("sourceProfiles"), list):
         payload["sourceProfiles"] = []
+    if not isinstance(payload.get("ingredientBindings"), list):
+        payload["ingredientBindings"] = []
+    try:
+        provider_overlay = json.loads(_PROVIDER_DATA_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        provider_overlay = {}
+    payload = _merge_binding_overlay(payload, provider_overlay)
+    try:
+        generated_provider_overlay = json.loads(
+            _GENERATED_PROVIDER_DATA_PATH.read_text(encoding="utf-8")
+        )
+    except (OSError, json.JSONDecodeError):
+        generated_provider_overlay = {}
+    payload = _merge_binding_overlay(payload, generated_provider_overlay)
+    try:
+        concept_overlay = json.loads(_CONCEPT_DATA_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        try:
+            with gzip.open(
+                Path(str(_CONCEPT_DATA_PATH) + ".gz"), "rt", encoding="utf-8"
+            ) as handle:
+                concept_overlay = json.load(handle)
+        except (OSError, json.JSONDecodeError):
+            concept_overlay = {}
+    payload = _merge_binding_overlay(payload, concept_overlay)
+    payload["conceptBindingCatalogVersion"] = _text(
+        concept_overlay.get("version")
+    ) or "missing"
     try:
         overlay = json.loads(_ALLERGY_DATA_PATH.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         overlay = {}
     return _merge_catalog_overlay(payload, overlay)
+
+
+def _binding_signature(binding: dict[str, Any]) -> tuple[str, tuple[str, ...]]:
+    return (
+        _text(binding.get("profileId")),
+        tuple(sorted(
+            _text(value).lower()
+            for value in binding.get("substitutionDiets") or []
+            if _text(value)
+        )),
+    )
+
+
+def _catalog_with_payload_binding_concepts(
+    catalog: dict[str, Any],
+    payload: dict[str, Any],
+) -> dict[str, Any]:
+    """Expand reviewed provider-ID bindings to exact catalog concept siblings.
+
+    Runtime matching never uses labels here. Each bound provider ID is resolved
+    to its catalog conceptId; source-local rows sharing that exact concept inherit
+    the reviewed profile. Conflicting concept claims are omitted fail-closed.
+    """
+    result = deepcopy(catalog)
+    bindings = [
+        row for row in result.get("ingredientBindings") or []
+        if isinstance(row, dict)
+    ]
+    if not bindings:
+        return result
+
+    rows_by_id: dict[str, list[dict[str, Any]]] = {}
+    for row in payload.get("ingredients") or []:
+        if not isinstance(row, dict):
+            continue
+        for value in (
+            row.get("id"),
+            row.get("ingredientId"),
+            row.get("key"),
+            row.get("foodKey"),
+            *(row.get("sourceIngredientIds") or []),
+        ):
+            ident = _text(value)
+            if ident:
+                rows_by_id.setdefault(ident, []).append(row)
+
+    explicit_concepts = {
+        _text(value)
+        for binding in bindings
+        for value in binding.get("conceptIds") or []
+        if _text(value)
+    }
+    claims: dict[str, list[int]] = {}
+    for index, binding in enumerate(bindings):
+        for ident in binding.get("ingredientIds") or []:
+            for row in rows_by_id.get(_text(ident), ()):
+                concept = _text(row.get("conceptId"))
+                if concept and concept not in explicit_concepts:
+                    claims.setdefault(concept, []).append(index)
+
+    expanded = 0
+    ambiguous = 0
+    for concept, indices in claims.items():
+        unique_indices = list(dict.fromkeys(indices))
+        signatures = {
+            _binding_signature(bindings[index]) for index in unique_indices
+        }
+        if len(signatures) != 1:
+            ambiguous += 1
+            continue
+        binding = bindings[unique_indices[0]]
+        concepts = list(dict.fromkeys([
+            *(
+                _text(value)
+                for value in binding.get("conceptIds") or []
+                if _text(value)
+            ),
+            concept,
+        ]))
+        binding["conceptIds"] = concepts
+        expanded += 1
+
+    result["ingredientBindings"] = bindings
+    result["_runtimeBindingConceptExpansion"] = {
+        "expandedConcepts": expanded,
+        "ambiguousConcepts": ambiguous,
+    }
+    return result
+
+def _catalog_binding(
+    ingredient: dict[str, Any],
+    catalog: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Return an exact reviewed catalog binding by ID/concept, never by label."""
+    ingredient_ids = {
+        _text(value)
+        for value in (
+            ingredient.get("id"),
+            ingredient.get("ingredientId"),
+            ingredient.get("key"),
+            ingredient.get("foodKey"),
+            *(ingredient.get("sourceIngredientIds") or []),
+        )
+        if _text(value)
+    }
+    concept_ids = {
+        _text(ingredient.get("conceptId"))
+    } if _text(ingredient.get("conceptId")) else set()
+    for raw in catalog.get("ingredientBindings") or []:
+        if not isinstance(raw, dict):
+            continue
+        bound_ids = {
+            _text(value) for value in raw.get("ingredientIds") or [] if _text(value)
+        }
+        bound_concepts = {
+            _text(value) for value in raw.get("conceptIds") or [] if _text(value)
+        }
+        if ingredient_ids & bound_ids or concept_ids & bound_concepts:
+            return raw
+    return None
+
+
+def _binding_profile(
+    binding: dict[str, Any] | None,
+    catalog: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not isinstance(binding, dict):
+        return None
+    wanted = _text(binding.get("profileId"))
+    return next(
+        (
+            row for row in catalog.get("sourceProfiles") or []
+            if isinstance(row, dict) and _text(row.get("id")) == wanted
+        ),
+        None,
+    )
 
 
 def _target_lookup(payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -282,6 +477,140 @@ def _ingredient_allergen_hits(ingredient: dict[str, Any]) -> set[str]:
     return present
 
 
+def _ingredient_diet_states(ingredient: dict[str, Any]) -> dict[str, str]:
+    """Return explicit catalog diet evidence; never infer it from display text."""
+    intelligence = (
+        ingredient.get("intelligence")
+        if isinstance(ingredient.get("intelligence"), dict)
+        else {}
+    )
+    raw = (
+        intelligence.get("diets")
+        if isinstance(intelligence.get("diets"), dict)
+        else ingredient.get("diets")
+        if isinstance(ingredient.get("diets"), dict)
+        else {}
+    )
+    result: dict[str, str] = {}
+    for diet in ("pescatarian", "vegetarian", "vegan"):
+        if diet not in raw:
+            continue
+        value = raw.get(diet)
+        if value is True:
+            result[diet] = "compatible"
+            continue
+        if value is False:
+            result[diet] = "incompatible"
+            continue
+        state = _text(value).lower().replace("-", "_").replace(" ", "_")
+        if state in {"compatible", "safe", "allowed", "yes", "true"}:
+            result[diet] = "compatible"
+        elif state in {"incompatible", "unsafe", "blocked", "no", "false", "present"}:
+            result[diet] = "incompatible"
+        else:
+            result[diet] = "unknown"
+    return result
+
+
+def _ingredient_substitution_class(ingredient: dict[str, Any]) -> str:
+    intelligence = (
+        ingredient.get("intelligence")
+        if isinstance(ingredient.get("intelligence"), dict)
+        else {}
+    )
+    return _text(
+        intelligence.get("substitutionClass")
+        or ingredient.get("substitutionClass")
+    )
+
+
+def _profile_by_id(catalog: dict[str, Any], profile_id: str) -> dict[str, Any] | None:
+    wanted = _text(profile_id)
+    if not wanted:
+        return None
+    return next(
+        (
+            row for row in catalog.get("sourceProfiles") or []
+            if isinstance(row, dict) and _text(row.get("id")) == wanted
+        ),
+        None,
+    )
+
+
+def _catalog_source_profiles(
+    ingredient: dict[str, Any],
+    catalog: dict[str, Any],
+    *,
+    binding: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
+    """Resolve profiles for a catalog row from catalog evidence only.
+
+    Official/resolved ingredients must never depend on a localized/canonical
+    label to determine dietary incompatibility or replacement semantics.
+    """
+    profiles: list[dict[str, Any]] = []
+
+    def add(profile: dict[str, Any] | None) -> None:
+        if isinstance(profile, dict) and profile not in profiles:
+            profiles.append(profile)
+
+    add(_binding_profile(binding, catalog))
+
+    substitution_class = _ingredient_substitution_class(ingredient)
+    add(_profile_by_id(catalog, substitution_class))
+
+    diets = _ingredient_diet_states(ingredient)
+    allergens = _ingredient_allergen_hits(ingredient)
+    diet_key = {
+        "meat": "pescatarian",
+        "animal": "vegetarian",
+        "non_vegan": "vegan",
+    }
+    for profile in catalog.get("sourceProfiles") or []:
+        if not isinstance(profile, dict):
+            continue
+        match = profile.get("match") if isinstance(profile.get("match"), dict) else {}
+        hit_name = _text(match.get("dietHit")).lower().replace("-", "_")
+        wanted_diet = diet_key.get(hit_name)
+        if wanted_diet and diets.get(wanted_diet) == "incompatible":
+            add(profile)
+            continue
+        allergen = _text(match.get("allergenHit")).lower().replace("-", "_").replace(" ", "_")
+        if allergen and allergen in allergens:
+            add(profile)
+    return profiles
+
+
+def _catalog_candidate_profile(
+    ingredient: dict[str, Any],
+    catalog: dict[str, Any],
+    *,
+    binding: dict[str, Any] | None = None,
+) -> dict[str, Any] | None:
+    """Choose a replacement profile using only exact catalog metadata."""
+    bound = _binding_profile(binding, catalog)
+    if isinstance(bound, dict):
+        return bound
+    classified = _profile_by_id(catalog, _ingredient_substitution_class(ingredient))
+    if isinstance(classified, dict):
+        return classified
+
+    diets = _ingredient_diet_states(ingredient)
+    profiles = _catalog_source_profiles(ingredient, catalog, binding=binding)
+    # Prefer the narrowest diet incompatibility: meat > animal > non-vegan.
+    wanted = (
+        "meat" if diets.get("pescatarian") == "incompatible"
+        else "animal" if diets.get("vegetarian") == "incompatible"
+        else "non_vegan" if diets.get("vegan") == "incompatible"
+        else ""
+    )
+    for profile in profiles:
+        match = profile.get("match") if isinstance(profile.get("match"), dict) else {}
+        if _text(match.get("dietHit")).lower().replace("-", "_") == wanted:
+            return profile
+    return profiles[0] if profiles else None
+
+
 def _matches_source_profile(
     profile: dict[str, Any],
     *,
@@ -412,7 +741,9 @@ def _source_allergens(profiles: list[dict[str, Any]]) -> list[str]:
 
 def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
     """Attach reviewed multi-candidate substitutions directly to catalog rows."""
-    catalog = load_substitution_catalog()
+    catalog = _catalog_with_payload_binding_concepts(
+        load_substitution_catalog(), payload
+    )
     definitions = catalog.get("candidates") if isinstance(catalog.get("candidates"), dict) else {}
     evidence = _text(catalog.get("evidence")) or "Cook4Me reviewed dietary substitution catalog"
     version = _text(catalog.get("version")) or "unknown"
@@ -442,8 +773,18 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
             continue
         if row.get("substitutionOnly") or row.get("classification") == "substitution":
             continue
-        profiles = substitution_source_profiles(row)
-        keys = substitution_candidate_keys(row)
+        binding = _catalog_binding(row, catalog)
+        profiles = _catalog_source_profiles(row, catalog, binding=binding)
+        candidate_profile = _catalog_candidate_profile(
+            row, catalog, binding=binding
+        )
+        keys = list(dict.fromkeys(
+            str(value).strip()
+            for value in (
+                candidate_profile.get("candidateKeys") if isinstance(candidate_profile, dict) else []
+            )
+            if str(value).strip()
+        ))
         if not keys:
             continue
         candidates = []
@@ -456,7 +797,18 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
         if not candidates:
             continue
         row["substitutions"] = candidates
-        row["substitutionDiets"] = _source_diets(row)
+        bound_diets = [
+            str(value).strip().lower()
+            for value in (binding or {}).get("substitutionDiets") or []
+            if str(value).strip()
+        ]
+        explicit_diets = [
+            diet for diet, state in _ingredient_diet_states(row).items()
+            if state == "incompatible"
+        ]
+        row["substitutionDiets"] = list(dict.fromkeys(bound_diets or explicit_diets))
+        if isinstance(binding, dict) and _text(binding.get("id")):
+            row["substitutionBindingId"] = _text(binding.get("id"))
         source_allergens = _source_allergens(profiles)
         if source_allergens:
             row["substitutionAllergens"] = source_allergens
@@ -473,6 +825,28 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
             row for row in catalog.get("sourceProfiles") or []
             if isinstance(row, dict)
         ]),
+        "ingredientBindings": len([
+            row for row in catalog.get("ingredientBindings") or []
+            if isinstance(row, dict)
+        ]),
+        "providerBindingCatalogVersion": _text(
+            catalog.get("providerBindingCatalogVersion")
+        ),
+        "conceptBindingCatalogVersion": _text(
+            catalog.get("conceptBindingCatalogVersion")
+        ),
+        "expandedBindingConcepts": int(
+            (catalog.get("_runtimeBindingConceptExpansion") or {}).get(
+                "expandedConcepts"
+            )
+            or 0
+        ),
+        "ambiguousBindingConcepts": int(
+            (catalog.get("_runtimeBindingConceptExpansion") or {}).get(
+                "ambiguousConcepts"
+            )
+            or 0
+        ),
         "allergySourceProfiles": len([
             row for row in catalog.get("sourceProfiles") or []
             if isinstance(row, dict) and row.get("triggerAllergens")

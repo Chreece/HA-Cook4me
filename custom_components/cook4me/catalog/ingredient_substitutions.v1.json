@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "2026.9.27.2",
+  "version": "2026.9.29.1",
   "evidence": "Cook4Me reviewed dietary substitution catalog v1",
   "candidates": {
     "tofu": {
@@ -901,6 +901,40 @@
         "maple_syrup",
         "agave_syrup",
         "sugar"
+      ]
+    }
+  ],
+  "ingredientBindings": [
+    {
+      "id": "red_mullet_family",
+      "conceptIds": [
+        "concept:food:b353aa401795f972534f",
+        "concept:food:37c2636db3087fb053ff",
+        "concept:food:6d9fa4590ae08aeadd5d",
+        "concept:food:2f0f933ff44a6c3afc4d",
+        "concept:food:3c75e9a55fb2308d1cce"
+      ],
+      "ingredientIds": [
+        "M_FOOD_431"
+      ],
+      "profileId": "animal_protein",
+      "substitutionDiets": [
+        "vegetarian",
+        "vegan"
+      ]
+    },
+    {
+      "id": "dogfish_family",
+      "conceptIds": [
+        "concept:food:b6fa1a77cc8d917f7e4e",
+        "concept:food:80a6f48cbd8439928d4c",
+        "concept:food:c888d866ce67a3de9731"
+      ],
+      "ingredientIds": [],
+      "profileId": "animal_protein",
+      "substitutionDiets": [
+        "vegetarian",
+        "vegan"
       ]
     }
   ]

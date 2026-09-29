@@ -1,0 +1,492 @@
+{
+  "schemaVersion": 1,
+  "version": "2026.9.29.1",
+  "evidence": "Cook4Me reviewed provider ingredient substitution bindings v1",
+  "policy": {
+    "runtimeUsesLabels": false,
+    "stableProviderIdsOnly": true,
+    "ambiguousProviderIdsOmitted": true,
+    "generatedFromCurrentOfflineCatalog": true
+  },
+  "ingredientBindings": [
+    {
+      "id": "provider_animal_protein_meat",
+      "profileId": "animal_protein",
+      "substitutionDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "ingredientIds": [
+        "M_FOOD_4",
+        "M_FOOD_5",
+        "M_FOOD_7",
+        "M_FOOD_14",
+        "M_FOOD_15",
+        "M_FOOD_26",
+        "M_FOOD_41",
+        "M_FOOD_45",
+        "M_FOOD_46",
+        "M_FOOD_57",
+        "M_FOOD_70",
+        "M_FOOD_73",
+        "M_FOOD_87",
+        "M_FOOD_97",
+        "M_FOOD_104",
+        "M_FOOD_135",
+        "M_FOOD_139",
+        "M_FOOD_140",
+        "M_FOOD_141",
+        "M_FOOD_156",
+        "M_FOOD_157",
+        "M_FOOD_158",
+        "M_FOOD_163",
+        "M_FOOD_167",
+        "M_FOOD_172",
+        "M_FOOD_173",
+        "M_FOOD_174",
+        "M_FOOD_178",
+        "M_FOOD_179",
+        "M_FOOD_180",
+        "M_FOOD_181",
+        "M_FOOD_195",
+        "M_FOOD_198",
+        "M_FOOD_199",
+        "M_FOOD_200",
+        "M_FOOD_202",
+        "M_FOOD_206",
+        "M_FOOD_207",
+        "M_FOOD_219",
+        "M_FOOD_247",
+        "M_FOOD_248",
+        "M_FOOD_249",
+        "M_FOOD_250",
+        "M_FOOD_251",
+        "M_FOOD_253",
+        "M_FOOD_254",
+        "M_FOOD_273",
+        "M_FOOD_274",
+        "M_FOOD_275",
+        "M_FOOD_276",
+        "M_FOOD_277",
+        "M_FOOD_278",
+        "M_FOOD_296",
+        "M_FOOD_299",
+        "M_FOOD_320",
+        "M_FOOD_335",
+        "M_FOOD_356",
+        "M_FOOD_365",
+        "M_FOOD_375",
+        "M_FOOD_379",
+        "M_FOOD_387",
+        "M_FOOD_396",
+        "M_FOOD_401",
+        "M_FOOD_403",
+        "M_FOOD_420",
+        "M_FOOD_423",
+        "M_FOOD_428",
+        "M_FOOD_429",
+        "M_FOOD_430",
+        "M_FOOD_446",
+        "M_FOOD_447",
+        "M_FOOD_448",
+        "M_FOOD_450",
+        "M_FOOD_451",
+        "M_FOOD_452",
+        "M_FOOD_456",
+        "M_FOOD_466",
+        "M_FOOD_481",
+        "M_FOOD_482",
+        "M_FOOD_485",
+        "M_FOOD_501",
+        "M_FOOD_506",
+        "M_FOOD_520",
+        "M_FOOD_537",
+        "M_FOOD_545",
+        "M_FOOD_556",
+        "M_FOOD_557",
+        "M_FOOD_577",
+        "M_FOOD_582",
+        "M_FOOD_583",
+        "M_FOOD_585",
+        "M_FOOD_588",
+        "M_FOOD_596",
+        "M_FOOD_597",
+        "M_FOOD_599",
+        "M_FOOD_600",
+        "M_FOOD_619",
+        "M_FOOD_625",
+        "M_FOOD_626",
+        "M_FOOD_627",
+        "M_FOOD_628",
+        "M_FOOD_636",
+        "M_FOOD_637",
+        "M_FOOD_638",
+        "M_FOOD_640",
+        "M_FOOD_641",
+        "M_FOOD_651",
+        "M_FOOD_699",
+        "M_FOOD_729",
+        "M_FOOD_731",
+        "M_FOOD_782",
+        "M_FOOD_795",
+        "M_FOOD_798",
+        "M_FOOD_799",
+        "M_FOOD_800",
+        "M_FOOD_807",
+        "M_FOOD_819"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_animal_protein_fish",
+      "profileId": "animal_protein",
+      "substitutionDiets": [
+        "vegetarian",
+        "vegan"
+      ],
+      "ingredientIds": [
+        "M_FOOD_13",
+        "M_FOOD_66",
+        "M_FOOD_148",
+        "M_FOOD_154",
+        "M_FOOD_164",
+        "M_FOOD_168",
+        "M_FOOD_170",
+        "M_FOOD_182",
+        "M_FOOD_196",
+        "M_FOOD_216",
+        "M_FOOD_232",
+        "M_FOOD_241",
+        "M_FOOD_287",
+        "M_FOOD_288",
+        "M_FOOD_291",
+        "M_FOOD_302",
+        "M_FOOD_310",
+        "M_FOOD_321",
+        "M_FOOD_322",
+        "M_FOOD_353",
+        "M_FOOD_436",
+        "M_FOOD_441",
+        "M_FOOD_454",
+        "M_FOOD_455",
+        "M_FOOD_464",
+        "M_FOOD_472",
+        "M_FOOD_475",
+        "M_FOOD_483",
+        "M_FOOD_502",
+        "M_FOOD_510",
+        "M_FOOD_521",
+        "M_FOOD_522",
+        "M_FOOD_523",
+        "M_FOOD_538",
+        "M_FOOD_558",
+        "M_FOOD_575",
+        "M_FOOD_584",
+        "M_FOOD_593",
+        "M_FOOD_615",
+        "M_FOOD_633",
+        "M_FOOD_646",
+        "M_FOOD_730",
+        "M_FOOD_772",
+        "M_FOOD_774",
+        "M_FOOD_778",
+        "M_FOOD_789",
+        "M_FOOD_833"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_butter",
+      "profileId": "butter",
+      "substitutionDiets": [
+        "vegan"
+      ],
+      "ingredientIds": [
+        "M_FOOD_33",
+        "M_FOOD_35"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_cheese",
+      "profileId": "cheese",
+      "substitutionDiets": [
+        "vegan"
+      ],
+      "ingredientIds": [
+        "M_FOOD_65",
+        "M_FOOD_96",
+        "M_FOOD_129",
+        "M_FOOD_184",
+        "M_FOOD_191",
+        "M_FOOD_212",
+        "M_FOOD_213",
+        "M_FOOD_262",
+        "M_FOOD_305",
+        "M_FOOD_314",
+        "M_FOOD_318",
+        "M_FOOD_325",
+        "M_FOOD_359",
+        "M_FOOD_373",
+        "M_FOOD_411",
+        "M_FOOD_419",
+        "M_FOOD_543",
+        "M_FOOD_551",
+        "M_FOOD_560",
+        "M_FOOD_561",
+        "M_FOOD_562",
+        "M_FOOD_692"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_cream",
+      "profileId": "cream",
+      "substitutionDiets": [
+        "vegan"
+      ],
+      "ingredientIds": [
+        "M_FOOD_92",
+        "M_FOOD_149",
+        "M_FOOD_150",
+        "M_FOOD_151",
+        "M_FOOD_152",
+        "M_FOOD_567",
+        "M_FOOD_614",
+        "M_FOOD_681",
+        "M_FOOD_825"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_egg",
+      "profileId": "egg",
+      "substitutionDiets": [
+        "vegan"
+      ],
+      "ingredientIds": [
+        "M_FOOD_340"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_egg_white",
+      "profileId": "egg_white",
+      "substitutionDiets": [
+        "vegan"
+      ],
+      "ingredientIds": [
+        "M_FOOD_42"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_egg_yolk",
+      "profileId": "egg_yolk",
+      "substitutionDiets": [
+        "vegan"
+      ],
+      "ingredientIds": [
+        "M_FOOD_252"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_fish_sauce",
+      "profileId": "fish_sauce",
+      "substitutionDiets": [
+        "vegetarian",
+        "vegan"
+      ],
+      "ingredientIds": [
+        "M_FOOD_338",
+        "M_FOOD_443"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_gelatin",
+      "profileId": "gelatin",
+      "substitutionDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "ingredientIds": [
+        "M_FOOD_192",
+        "M_FOOD_218"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_gluten_wheat_allergy",
+      "profileId": "gluten_wheat_allergy",
+      "substitutionDiets": [],
+      "ingredientIds": [
+        "M_FOOD_43",
+        "M_FOOD_58",
+        "M_FOOD_336",
+        "M_FOOD_732"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_honey",
+      "profileId": "honey",
+      "substitutionDiets": [
+        "vegan"
+      ],
+      "ingredientIds": [
+        "M_FOOD_313",
+        "M_FOOD_769"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_milk",
+      "profileId": "milk",
+      "substitutionDiets": [
+        "vegan"
+      ],
+      "ingredientIds": [
+        "M_FOOD_101",
+        "M_FOOD_134",
+        "M_FOOD_263",
+        "M_FOOD_264",
+        "M_FOOD_266",
+        "M_FOOD_268",
+        "M_FOOD_269",
+        "M_FOOD_270",
+        "M_FOOD_271"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_mustard_allergy",
+      "profileId": "mustard_allergy",
+      "substitutionDiets": [],
+      "ingredientIds": [
+        "M_FOOD_323",
+        "M_FOOD_324",
+        "M_FOOD_608"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_peanut_allergy",
+      "profileId": "peanut_allergy",
+      "substitutionDiets": [],
+      "ingredientIds": [
+        "M_FOOD_34",
+        "M_FOOD_67"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_sesame_allergy",
+      "profileId": "sesame_allergy",
+      "substitutionDiets": [],
+      "ingredientIds": [
+        "M_FOOD_226",
+        "M_FOOD_244",
+        "M_FOOD_459",
+        "M_FOOD_706"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_soy_protein_allergy",
+      "profileId": "soy_protein_allergy",
+      "substitutionDiets": [],
+      "ingredientIds": [
+        "M_FOOD_477",
+        "M_FOOD_587",
+        "M_FOOD_589",
+        "M_FOOD_662",
+        "M_FOOD_733",
+        "M_FOOD_734",
+        "M_FOOD_838"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_soy_sauce_allergy",
+      "profileId": "soy_sauce_allergy",
+      "substitutionDiets": [],
+      "ingredientIds": [
+        "M_FOOD_444"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_stock_safe",
+      "profileId": "stock",
+      "substitutionDiets": [],
+      "ingredientIds": [
+        "M_FOOD_49",
+        "M_FOOD_50",
+        "M_FOOD_52",
+        "M_FOOD_55"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_stock_meat",
+      "profileId": "stock",
+      "substitutionDiets": [
+        "pescatarian",
+        "vegetarian",
+        "vegan"
+      ],
+      "ingredientIds": [
+        "M_FOOD_51",
+        "M_FOOD_53",
+        "M_FOOD_54",
+        "M_FOOD_56",
+        "M_FOOD_208",
+        "M_FOOD_209",
+        "M_FOOD_659"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_stock_fish",
+      "profileId": "stock",
+      "substitutionDiets": [
+        "vegetarian",
+        "vegan"
+      ],
+      "ingredientIds": [
+        "M_FOOD_214"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_tree_nut_allergy",
+      "profileId": "tree_nut_allergy",
+      "substitutionDiets": [],
+      "ingredientIds": [
+        "M_FOOD_10",
+        "M_FOOD_265",
+        "M_FOOD_329",
+        "M_FOOD_331",
+        "M_FOOD_332",
+        "M_FOOD_380",
+        "M_FOOD_705"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    },
+    {
+      "id": "provider_yogurt",
+      "profileId": "yogurt",
+      "substitutionDiets": [
+        "vegan"
+      ],
+      "ingredientIds": [
+        "M_FOOD_497"
+      ],
+      "evidence": "offline provider-ID migration from stable catalog global ingredient"
+    }
+  ]
+}

@@ -21,17 +21,36 @@ subs = load("cook4me_ingredient_substitutions_v254_test", "ingredient_substituti
 intelligence = load("cook4me_ingredient_intelligence_v254_test", "ingredient_intelligence.py")
 
 
-def target(identifier, name, *, allergens=None):
+def target(
+    identifier,
+    name,
+    *,
+    allergens=None,
+    diets=None,
+    substitution_class="",
+):
     row = {
         "id": identifier,
         "conceptId": f"concept:food:{identifier}",
         "canonicalName": name,
         "classification": "food",
     }
+    intelligence_row = {}
     if allergens:
-        row["intelligence"] = {
-            "allergens": {key: "present" for key in allergens}
+        intelligence_row["allergens"] = {
+            key: "present" for key in allergens
         }
+    if diets:
+        intelligence_row["diets"] = {
+            "omnivore": "compatible",
+            "pescatarian": diets.get("pescatarian", "compatible"),
+            "vegetarian": diets.get("vegetarian", "compatible"),
+            "vegan": diets.get("vegan", "compatible"),
+        }
+    if substitution_class:
+        intelligence_row["substitutionClass"] = substitution_class
+    if intelligence_row:
+        row["intelligence"] = intelligence_row
     return row
 
 
@@ -52,7 +71,7 @@ TARGETS = [
     target("maple", "Maple syrup"),
     target("agave", "Agave syrup"),
     target("sugar", "Sugar"),
-    target("soy-sauce", "Soy sauce"),
+    target("soy-sauce", "Soy sauce", allergens=("soy", "gluten"), substitution_class="soy_sauce_allergy"),
     target("agar", "Agar-agar"),
     target("pectin", "Pectin"),
     target("cornstarch", "Cornstarch"),
@@ -76,15 +95,43 @@ def profile(diet="omnivore", *, allergies=(), avoid=()):
 class AllergyCatalogSubstitutionTests(unittest.TestCase):
     def setUp(self):
         self.sources = [
-            target("milk", "Milk", allergens=("milk", "lactose")),
-            target("egg", "Egg", allergens=("egg",)),
+            target(
+                "milk", "Milk",
+                allergens=("milk", "lactose"),
+                diets={"vegan": "incompatible"},
+                substitution_class="milk",
+            ),
+            target(
+                "egg", "Egg",
+                allergens=("egg",),
+                diets={"vegan": "incompatible"},
+                substitution_class="egg",
+            ),
             target("wheat-flour", "Wheat flour", allergens=("gluten",)),
             target("almond", "Almond", allergens=("tree_nut",)),
             target("provider-soy", "Provider protein", allergens=("soy",)),
             target("sulfite-additive", "Preservative", allergens=("sulfites",)),
-            target("fish-sauce", "Fish sauce", allergens=("fish",)),
-            target("chicken-stock", "Chicken stock"),
-            target("egg-white", "Egg white", allergens=("egg",)),
+            target(
+                "fish-sauce", "Fish sauce",
+                allergens=("fish",),
+                diets={"vegetarian": "incompatible", "vegan": "incompatible"},
+                substitution_class="fish_sauce",
+            ),
+            target(
+                "chicken-stock", "Chicken stock",
+                diets={
+                    "pescatarian": "incompatible",
+                    "vegetarian": "incompatible",
+                    "vegan": "incompatible",
+                },
+                substitution_class="stock",
+            ),
+            target(
+                "egg-white", "Egg white",
+                allergens=("egg",),
+                diets={"vegan": "incompatible"},
+                substitution_class="egg_white",
+            ),
         ]
         self.payload = {"ingredients": [*TARGETS, *self.sources]}
         self.summary = subs.enrich_catalog_substitutions(self.payload)
