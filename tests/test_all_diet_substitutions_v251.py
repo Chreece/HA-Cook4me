@@ -261,6 +261,56 @@ class AllDietSubstitutionTests(unittest.TestCase):
                 self.assertTrue(match["substitutionCoverageComplete"], match)
                 self.assertEqual(match["substitutions"][0]["replacement"]["key"], replacement)
 
+    def test_provider_binding_expands_to_exact_localized_concept_sibling(self):
+        concept = "concept:food:provider-shared-fish"
+        provider = catalog_row("M_FOOD_13", "Opaque provider fish")
+        provider["conceptId"] = concept
+        localized = catalog_row("local:xx:opaque-fish", "Opaque localized fish")
+        localized["conceptId"] = concept
+        payload = {
+            "ingredients": [
+                *(dict(row) for row in TARGETS),
+                provider,
+                localized,
+            ]
+        }
+        summary = subs.enrich_catalog_substitutions(payload)
+        self.assertGreaterEqual(summary["expandedBindingConcepts"], 1)
+        self.assertEqual(summary["ambiguousBindingConcepts"], 0)
+        self.assertEqual(localized["substitutionBindingId"], "provider_animal_protein_fish")
+        self.assertEqual(localized["substitutionDiets"], ["vegetarian", "vegan"])
+        self.assertEqual(
+            [row["key"] for row in localized["substitutions"]],
+            ["tofu", "mushrooms", "chickpeas"],
+        )
+        match = logic.score_recipe(
+            {"title": "Opaque", "ingredients": [localized]},
+            profile("vegetarian"),
+        )
+        self.assertFalse(match["safe"], match)
+        self.assertTrue(match["eligibleWithSubstitutions"], match)
+        self.assertTrue(match["substitutionCoverageComplete"], match)
+
+    def test_conflicting_provider_signatures_do_not_auto_bind_shared_concept(self):
+        concept = "concept:food:ambiguous-provider-concept"
+        fish = catalog_row("M_FOOD_13", "Opaque fish")
+        fish["conceptId"] = concept
+        meat = catalog_row("M_FOOD_4", "Opaque meat")
+        meat["conceptId"] = concept
+        localized = catalog_row("local:xx:opaque", "Opaque localized ingredient")
+        localized["conceptId"] = concept
+        payload = {
+            "ingredients": [
+                *(dict(row) for row in TARGETS),
+                fish, meat, localized,
+            ]
+        }
+        summary = subs.enrich_catalog_substitutions(payload)
+        self.assertGreaterEqual(summary["ambiguousBindingConcepts"], 1)
+        self.assertNotIn("substitutionBindingId", localized)
+        self.assertNotIn("substitutionDiets", localized)
+        self.assertNotIn("substitutions", localized)
+
     def test_catalog_bound_red_mullet_and_dogfish_ignore_display_language(self):
         cases = (
             ("concept:food:6d9fa4590ae08aeadd5d", "red_mullet_family"),
