@@ -296,6 +296,7 @@ def main() -> None:
 
     result = {
         "schemaVersion": 1,
+        "version": "2026.9.29.2",
         "kind": "cook4me-provider-substitution-bindings-proposal",
         "policy": {
             "runtimeUsesLabels": False,
