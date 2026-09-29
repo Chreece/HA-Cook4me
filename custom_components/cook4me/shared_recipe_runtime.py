@@ -39,14 +39,27 @@ async def processor(bridge, filters, *, language="en", rank=True, score_targets=
     settings = resolve_filters(bridge.recipe_hub.profile, normalize_filters(filters))
     house = bridge.recipe_hub.profile.get("houseIngredients") or []
     costs = await cost_store_for_bridge(bridge) if settings["maxCost"] is not None else None
+    market = None
+    if settings.get("seasonalIngredients") is True or (costs is not None and cost_calculator is None):
+        from .automatic_prices import price_settings
+        market = await price_settings(bridge)
+    season_country, season_month = "", None
+    if settings.get("seasonalIngredients") is True:
+        from datetime import datetime
+        from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
+        season_country = str((market or {}).get("country") or "").strip().upper()
+        try:
+            zone = ZoneInfo(str(getattr(bridge.hass.config, "time_zone", "") or "UTC"))
+            season_month = datetime.now(zone).month
+        except (TypeError, ValueError, ZoneInfoNotFoundError):
+            season_month = datetime.now().month
     nutrients = await nutrition_store_for_bridge(bridge)
     history = await meal_history_store_for_bridge(bridge)
     recent = v18._recent_identities(history.recent(200), days=int(settings["avoidRecentDays"] or 0))
     aliases = await bridge.hass.async_add_executor_job(ingredient_aliases, language) if settings["ingredients"] else {}
     if costs is not None and cost_calculator is None:
-        from .automatic_prices import offline_price_inputs, price_settings
+        from .automatic_prices import offline_price_inputs
         from .release_catalog import async_warm_release_catalog
-        market = await price_settings(bridge)
         catalog = await async_warm_release_catalog(bridge.hass)
         lookup = {str(row[key]): row for row in catalog["ingredients"]
                   for key in ("key", "foodKey", "id", "ingredientId") if row.get(key)}
@@ -69,5 +82,6 @@ async def processor(bridge, filters, *, language="en", rank=True, score_targets=
         return apply_filters(rows, settings, ingredient_groups=aliases,
             cost=cost_calculator,
             nutrition=lambda row: calculate_recipe_nutrition_fefo(row, house, generic=generic, stock_lots=stock_lots),
-            score_targets=score_targets, progress=progress)
+            score_targets=score_targets, progress=progress,
+            season_country=season_country, season_month=season_month)
     return process
