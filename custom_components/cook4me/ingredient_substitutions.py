@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from functools import lru_cache
+import gzip
 import json
 from pathlib import Path
 import re
@@ -124,7 +125,13 @@ def load_substitution_catalog() -> dict[str, Any]:
     try:
         concept_overlay = json.loads(_CONCEPT_DATA_PATH.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
-        concept_overlay = {}
+        try:
+            with gzip.open(
+                Path(str(_CONCEPT_DATA_PATH) + ".gz"), "rt", encoding="utf-8"
+            ) as handle:
+                concept_overlay = json.load(handle)
+        except (OSError, json.JSONDecodeError):
+            concept_overlay = {}
     payload = _merge_binding_overlay(payload, concept_overlay)
     payload["conceptBindingCatalogVersion"] = _text(
         concept_overlay.get("version")
