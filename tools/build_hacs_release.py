@@ -14,6 +14,7 @@ import json
 from pathlib import Path
 import re
 import subprocess
+import sys
 from zipfile import ZIP_DEFLATED, ZIP_STORED, ZipFile, ZipInfo
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,6 +22,7 @@ INTEGRATION = ROOT / "custom_components" / "cook4me"
 PREFIX = "custom_components/cook4me/"
 RAW_CATALOG = "catalog/merged_catalog.v1.json"
 GZ_CATALOG = RAW_CATALOG + ".gz"
+GENERATED_CONCEPT_BINDINGS = "catalog/concept_ingredient_substitutions.v1.json"
 RETIRED_BUNDLE = re.compile(r"frontend/cook4me-panel-v(\d+)-bundle\.js$")
 
 
@@ -33,6 +35,18 @@ def tracked_runtime_files() -> list[str]:
         for path in output.split("\0")
         if path and path.startswith(PREFIX)
     ]
+
+
+def ensure_generated_concept_bindings() -> Path:
+    """Generate the exact concept-ID substitution overlay for the release."""
+    output = INTEGRATION / GENERATED_CONCEPT_BINDINGS
+    subprocess.check_call([
+        sys.executable,
+        str(ROOT / "tools" / "generate_concept_substitution_bindings_v258.py"),
+        "--output",
+        str(output),
+    ])
+    return output
 
 
 def retired(path: str) -> bool:
@@ -63,7 +77,10 @@ def add_bytes(archive: ZipFile, name: str, data: bytes, *, stored: bool = False)
 
 
 def build(output: Path, *, version: str | None = None) -> dict:
+    generated_concept = ensure_generated_concept_bindings()
     files = tracked_runtime_files()
+    if GENERATED_CONCEPT_BINDINGS not in files:
+        files.append(GENERATED_CONCEPT_BINDINGS)
     raw_catalog, compressed_catalog = gzip_catalog()
     output.parent.mkdir(parents=True, exist_ok=True)
 
@@ -111,6 +128,8 @@ def build(output: Path, *, version: str | None = None) -> dict:
         "rawCatalogIncluded": RAW_CATALOG in included,
         "compressedCatalogIncluded": GZ_CATALOG in included,
         "retiredBundlesIncluded": sum(retired(path) for path in included),
+        "generatedConceptBindingsIncluded": GENERATED_CONCEPT_BINDINGS in included,
+        "generatedConceptBindingsBytes": generated_concept.stat().st_size,
     }
     return report
 
