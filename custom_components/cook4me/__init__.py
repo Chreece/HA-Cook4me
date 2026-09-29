@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import logging
-from time import monotonic
 from typing import Any
 from copy import deepcopy
 
@@ -13,7 +11,7 @@ from homeassistant.exceptions import HomeAssistantError
 
 from . import websocket_v10 as recipe_search_api
 from .bridge import Cook4MeBridge
-from .catalog_storage import prepare_release_catalog_storage
+from .catalog_runtime import start_catalog_warmup
 from .const import (
     CONF_LANGUAGE,
     DATA_BRIDGES,
@@ -27,8 +25,6 @@ from .expiry import (
     update_expiry_notification,
 )
 from .panel import async_register_panel
-from .release_catalog import async_warm_release_catalog, set_release_catalog_path
-from .stock_coverage import warm_stock_catalog
 from .notifications import Cook4MeNotifications, event_key
 from .smart_scale import apply_recipe_measurements, smart_scale_store_for_bridge
 from .websocket import async_register as async_register_websocket
@@ -185,31 +181,11 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     data = hass.data.setdefault(DOMAIN, {})
     data.setdefault(DATA_BRIDGES, {})
 
-    # A complete release catalog can contain thousands of recipes and nutrient
-    # profiles. Parse it once in HA's executor during integration setup so the
-    # first panel/search request never pays a synchronous JSON parse on the
-    # event loop. load_release_catalog() is LRU-cached after this warm-up.
-    # Both expensive catalog preparation and the small stock identity index
-    # stay off HA's event loop. Log elapsed time, not recipe or inventory data.
-    started = monotonic()
-    config_dir = getattr(getattr(hass, "config", None), "config_dir", None)
-    if config_dir:
-        catalog_path = await hass.async_add_executor_job(
-            prepare_release_catalog_storage, config_dir
-        )
-        set_release_catalog_path(catalog_path)
-    await async_warm_release_catalog(hass)
-    await hass.async_add_executor_job(warm_stock_catalog)
-    logging.getLogger(__name__).info(
-        "Cook4Me catalog and stock index ready in %.2f seconds", monotonic() - started
-    )
-    from .price_measurements import _portions, _densities
-    from .price_snapshot import _load as load_price_snapshot
-    from .price_benchmarks import warm_price_benchmarks
-    await hass.async_add_executor_job(_portions)
-    await hass.async_add_executor_job(_densities)
-    await hass.async_add_executor_job(load_price_snapshot)
-    await hass.async_add_executor_job(warm_price_benchmarks)
+    # The immutable release catalog can take tens of seconds to decompress,
+    # parse and index. Start that work immediately, but do not hold Home
+    # Assistant's domain setup open for it. Catalog-backed request routes await
+    # this same shared task before accessing the catalog.
+    start_catalog_warmup(hass)
 
     async def handle_send_recipe(call: ServiceCall) -> dict[str, Any] | None:
         bridge = _get_bridge(hass, call.data.get("entry_id"))
