@@ -1,8 +1,8 @@
-// An optional catalog view, not a restriction on stock, recipes or purchases.
+// Opt-in catalog and recipe-result filter; inventory and purchase data are unchanged.
 const TEXT={
- en:{label:'Seasonal ingredients',help:'Use the seasonal calendar for your shopping country. Ingredients without a reviewed calendar and selected ingredients stay visible.',country:'Choose your shopping country in Integration settings.'},
- de:{label:'Saisonale Zutaten',help:'Saisonkalender für dein Einkaufsland verwenden. Zutaten ohne geprüften Kalender und ausgewählte Zutaten bleiben sichtbar.',country:'Wähle dein Einkaufsland in den Integrationseinstellungen.'},
- el:{label:'Υλικά εποχής',help:'Χρήση του ημερολογίου εποχικότητας για τη χώρα αγορών. Τα υλικά χωρίς ελεγμένο ημερολόγιο και τα επιλεγμένα υλικά παραμένουν ορατά.',country:'Επίλεξε τη χώρα αγορών στις ρυθμίσεις ενσωμάτωσης.'}
+ en:{label:'Seasonal ingredients',help:'Use the seasonal calendar for your shopping country. Recipes with reviewed out-of-season ingredients are hidden; unknown seasonality stays available. Selected ingredients stay visible so they can be removed.',country:'Choose your shopping country in Integration settings.'},
+ de:{label:'Saisonale Zutaten',help:'Saisonkalender für dein Einkaufsland verwenden. Rezepte mit geprüften Zutaten außerhalb der Saison werden ausgeblendet; unbekannte Saison bleibt verfügbar. Ausgewählte Zutaten bleiben zum Abwählen sichtbar.',country:'Wähle dein Einkaufsland in den Integrationseinstellungen.'},
+ el:{label:'Υλικά εποχής',help:'Χρήση του ημερολογίου εποχικότητας για τη χώρα αγορών. Συνταγές με ελεγμένα υλικά εκτός εποχής αποκρύπτονται· η άγνωστη εποχικότητα παραμένει διαθέσιμη. Τα επιλεγμένα υλικά μένουν ορατά ώστε να μπορούν να αφαιρεθούν.',country:'Επίλεξε τη χώρα αγορών στις ρυθμίσεις ενσωμάτωσης.'}
 };
 const language=value=>String(value||'en').toLowerCase().split(/[-_]/)[0];
 
