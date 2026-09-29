@@ -85,11 +85,62 @@ def load_substitution_catalog() -> dict[str, Any]:
         payload["candidates"] = {}
     if not isinstance(payload.get("sourceProfiles"), list):
         payload["sourceProfiles"] = []
+    if not isinstance(payload.get("ingredientBindings"), list):
+        payload["ingredientBindings"] = []
     try:
         overlay = json.loads(_ALLERGY_DATA_PATH.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         overlay = {}
     return _merge_catalog_overlay(payload, overlay)
+
+
+def _catalog_binding(
+    ingredient: dict[str, Any],
+    catalog: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Return an exact reviewed catalog binding by ID/concept, never by label."""
+    ingredient_ids = {
+        _text(value)
+        for value in (
+            ingredient.get("id"),
+            ingredient.get("ingredientId"),
+            ingredient.get("key"),
+            ingredient.get("foodKey"),
+            *(ingredient.get("sourceIngredientIds") or []),
+        )
+        if _text(value)
+    }
+    concept_ids = {
+        _text(ingredient.get("conceptId"))
+    } if _text(ingredient.get("conceptId")) else set()
+    for raw in catalog.get("ingredientBindings") or []:
+        if not isinstance(raw, dict):
+            continue
+        bound_ids = {
+            _text(value) for value in raw.get("ingredientIds") or [] if _text(value)
+        }
+        bound_concepts = {
+            _text(value) for value in raw.get("conceptIds") or [] if _text(value)
+        }
+        if ingredient_ids & bound_ids or concept_ids & bound_concepts:
+            return raw
+    return None
+
+
+def _binding_profile(
+    binding: dict[str, Any] | None,
+    catalog: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not isinstance(binding, dict):
+        return None
+    wanted = _text(binding.get("profileId"))
+    return next(
+        (
+            row for row in catalog.get("sourceProfiles") or []
+            if isinstance(row, dict) and _text(row.get("id")) == wanted
+        ),
+        None,
+    )
 
 
 def _target_lookup(payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -442,8 +493,20 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
             continue
         if row.get("substitutionOnly") or row.get("classification") == "substitution":
             continue
+        binding = _catalog_binding(row, catalog)
+        binding_profile = _binding_profile(binding, catalog)
         profiles = substitution_source_profiles(row)
-        keys = substitution_candidate_keys(row)
+        if isinstance(binding_profile, dict):
+            profiles = [binding_profile, *[
+                profile for profile in profiles if profile is not binding_profile
+            ]]
+            keys = list(dict.fromkeys(
+                str(value).strip()
+                for value in binding_profile.get("candidateKeys") or []
+                if str(value).strip()
+            ))
+        else:
+            keys = substitution_candidate_keys(row)
         if not keys:
             continue
         candidates = []
@@ -456,7 +519,14 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
         if not candidates:
             continue
         row["substitutions"] = candidates
-        row["substitutionDiets"] = _source_diets(row)
+        bound_diets = [
+            str(value).strip().lower()
+            for value in (binding or {}).get("substitutionDiets") or []
+            if str(value).strip()
+        ]
+        row["substitutionDiets"] = list(dict.fromkeys(bound_diets)) or _source_diets(row)
+        if isinstance(binding, dict) and _text(binding.get("id")):
+            row["substitutionBindingId"] = _text(binding.get("id"))
         source_allergens = _source_allergens(profiles)
         if source_allergens:
             row["substitutionAllergens"] = source_allergens
@@ -471,6 +541,10 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
         "resolvedProfiles": len(resolved),
         "sourceProfiles": len([
             row for row in catalog.get("sourceProfiles") or []
+            if isinstance(row, dict)
+        ]),
+        "ingredientBindings": len([
+            row for row in catalog.get("ingredientBindings") or []
             if isinstance(row, dict)
         ]),
         "allergySourceProfiles": len([
