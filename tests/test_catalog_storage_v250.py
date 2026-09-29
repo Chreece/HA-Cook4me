@@ -135,19 +135,26 @@ class CatalogRuntimeStorageTests(unittest.TestCase):
             self.assertTrue(source.exists())
             self.assertFalse(storage.runtime_catalog_path(config).exists())
 
-    def test_wiring_prepares_storage_before_catalog_warmup(self):
+    def test_wiring_prepares_storage_before_background_catalog_warmup(self):
         init_source = (ROOT / "custom_components" / "cook4me" / "__init__.py").read_text(
             encoding="utf-8"
         )
+        runtime_source = (
+            ROOT / "custom_components" / "cook4me" / "catalog_runtime.py"
+        ).read_text(encoding="utf-8")
         release_source = (
             ROOT / "custom_components" / "cook4me" / "release_catalog.py"
         ).read_text(encoding="utf-8")
 
-        prepare_at = init_source.index("prepare_release_catalog_storage, config_dir")
-        path_at = init_source.index("set_release_catalog_path(catalog_path)")
-        warm_at = init_source.index("await async_warm_release_catalog(hass)")
+        self.assertIn("start_catalog_warmup(hass)", init_source)
+        self.assertNotIn("prepare_release_catalog_storage, config_dir", init_source)
+        prepare_at = runtime_source.index("prepare_release_catalog_storage, config_dir")
+        path_at = runtime_source.index("set_release_catalog_path(catalog_path)")
+        warm_at = runtime_source.index("await async_warm_release_catalog(hass)")
+        stock_at = runtime_source.index("warm_stock_catalog, payload")
         self.assertLess(prepare_at, path_at)
         self.assertLess(path_at, warm_at)
+        self.assertLess(warm_at, stock_at)
         self.assertIn("def set_release_catalog_path(path: str | Path)", release_source)
         self.assertIn("_core._legacy._CATALOG_PATH = target", release_source)
 

@@ -9,6 +9,7 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.exceptions import HomeAssistantError
 
 from . import recipe_catalog_diagnostics as catalog_diag
+from .catalog_runtime import async_ensure_catalog_ready
 from . import release_catalog as release_index
 from . import websocket as legacy
 from . import websocket_v5 as v5
@@ -151,7 +152,10 @@ async def _search_with_diagnostic(
     refresh: bool,
 ) -> dict[str, Any]:
     # Common offline-first layer: Today, Week, AI mapping, recommendations and
-    # older internal callers all inherit the reviewed release catalog.
+    # older internal callers all inherit the reviewed release catalog. If startup
+    # warming is still running, await that executor-backed shared task here.
+    if not refresh:
+        await async_ensure_catalog_ready(hass)
     if release_index.release_catalog_ready() and not refresh:
         return _release_search(
             bridge,

@@ -5,6 +5,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 BENCH = ROOT / "custom_components" / "cook4me" / "price_benchmarks.py"
 INIT = ROOT / "custom_components" / "cook4me" / "__init__.py"
+RUNTIME = ROOT / "custom_components" / "cook4me" / "catalog_runtime.py"
 
 
 class PriceBenchmarkEventLoopTests(unittest.TestCase):
@@ -36,12 +37,15 @@ class PriceBenchmarkEventLoopTests(unittest.TestCase):
         self.assertFalse(calls_named(funcs["_groups"], "open"))
         self.assertTrue(calls_named(funcs["_groups"], "get_running_loop"))
 
-    def test_home_assistant_setup_warms_benchmarks_in_executor(self):
-        source = INIT.read_text(encoding="utf-8")
-        self.assertIn("from .price_benchmarks import warm_price_benchmarks", source)
+    def test_home_assistant_background_warmup_preloads_benchmarks_in_executor(self):
+        setup = INIT.read_text(encoding="utf-8")
+        runtime = RUNTIME.read_text(encoding="utf-8")
+        self.assertIn("start_catalog_warmup(hass)", setup)
+        self.assertNotIn("warm_price_benchmarks", setup)
+        self.assertIn("from .price_benchmarks import warm_price_benchmarks", runtime)
         self.assertIn(
-            "await hass.async_add_executor_job(warm_price_benchmarks)",
-            source,
+            "hass.async_add_executor_job(warm_price_benchmarks)",
+            runtime,
         )
 
     def test_event_loop_path_refuses_lazy_disk_io(self):
