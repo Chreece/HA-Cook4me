@@ -53,7 +53,9 @@ class Classification(unittest.TestCase):
     def test_cross_language_animal_guides_match_exact_localized_food_name(self):
         cases = [
             ("Φιλέτο κοτόπουλου", "Chicken fillet", "Φιλέτο κοτόπουλου"),
+            ("Κομμάτια φιλέτου κοτόπουλου", "Chicken fillet pieces", "Κομμάτια φιλέτου κοτόπουλου"),
             ("Σαλάχι", "Skate", "Σαλάχι"),
+            ("Φτερούγα σαλαχιού", "Skate wing", "Φτερούγα σαλαχιού"),
         ]
         for title, canonical, localized in cases:
             with self.subTest(title=title):
