@@ -249,20 +249,33 @@ def _diet_hits(text: str) -> tuple[tuple[str, ...], tuple[str, ...], tuple[str, 
 
 
 def dietary_flags(recipe: dict[str, Any]) -> dict[str, Any]:
-    texts = [_ingredient_text(x) for x in recipe.get("ingredients") or []]
+    ingredients = list(recipe.get("ingredients") or [])
+    texts = [_ingredient_text(x) for x in ingredients]
     exclusion_keys, _ = _excluded_values(recipe)
-    groups = [_diet_hits(text) for text in texts]
+    diet_order = ("pescatarian", "vegetarian", "vegan")
+    groups = []
+    for item, text in zip(ingredients, texts, strict=False):
+        raw_hits = _diet_hits(text)
+        groups.append(tuple(
+            () if _catalog_diet_state(item, diet) is not None else raw_hits[index]
+            for index, diet in enumerate(diet_order)
+        ))
     meat_hits, animal_hits, non_vegan_hits = [sorted({word for group in groups for word in group[index]}) for index in range(3)]
     pesc_exclusion_hits = sorted(exclusion_keys & _PESCATARIAN_EXCLUSION_KEYS)
     veg_exclusion_hits = sorted(exclusion_keys & _VEGETARIAN_EXCLUSION_KEYS)
     vegan_exclusion_hits = sorted(exclusion_keys & _VEGAN_EXCLUSION_KEYS)
 
-    known = bool(texts) and all(text.strip() for text in texts)
-    forbidden = {diet: any(_explicit_diet_conflict(item, diet) for item in recipe.get("ingredients") or [])
-        for diet in ("pescatarian", "vegetarian", "vegan")}
+    known = bool(ingredients) and all(
+        _catalog_diet_state(item, "vegan") is not None or text.strip()
+        for item, text in zip(ingredients, texts, strict=False)
+    )
+    forbidden = {
+        diet: any(_diet_conflict(item, diet, text) for item, text in zip(ingredients, texts, strict=False))
+        for diet in diet_order
+    }
     pescatarian = known and not meat_hits and not pesc_exclusion_hits and not forbidden["pescatarian"]
     vegetarian = known and not animal_hits and not veg_exclusion_hits and not forbidden["vegetarian"]
-    vegan = vegetarian and not non_vegan_hits and not vegan_exclusion_hits and not forbidden["vegan"]
+    vegan = known and not non_vegan_hits and not vegan_exclusion_hits and not forbidden["vegan"]
     return {
         "pescatarian": pescatarian,
         "vegetarian": vegetarian,
@@ -271,7 +284,7 @@ def dietary_flags(recipe: dict[str, Any]) -> dict[str, Any]:
         "animalIngredientHits": animal_hits,
         "nonVeganIngredientHits": non_vegan_hits,
         "exclusionKeys": sorted(exclusion_keys),
-        "inference": "ingredient_text_and_backend_exclusions",
+        "inference": "catalog_diet_evidence_then_legacy_text_and_backend_exclusions",
         "ingredientEvidenceAvailable": known,
     }
 
@@ -292,19 +305,50 @@ def _matches_exclusion_key(term: str, exclusion_keys: set[str]) -> bool:
     return bool(aliases & exclusion_keys)
 
 
-def _explicit_diet_conflict(item, diet):
+def _catalog_diet_state(item, diet):
+    """Return explicit catalog diet state, or None when no catalog evidence exists."""
     if not isinstance(item, dict):
-        return False
-    if str(diet or "").lower() in {
+        return None
+    diet = str(diet or "").lower()
+    if diet in {
         str(value).lower()
         for value in item.get("substitutionDiets") or []
         if str(value).strip()
     }:
-        return True
+        return "incompatible"
     intelligence = item.get("intelligence") if isinstance(item.get("intelligence"), dict) else {}
     diets = intelligence.get("diets") or item.get("diets") or {}
-    state = diets.get(diet) if isinstance(diets, dict) else None
-    return state is False or state == "incompatible"
+    if not isinstance(diets, dict) or diet not in diets:
+        return None
+    value = diets.get(diet)
+    if value is True:
+        return "compatible"
+    if value is False:
+        return "incompatible"
+    state = str(value or "").strip().lower().replace("-", "_").replace(" ", "_")
+    if state in {"compatible", "safe", "allowed", "yes", "true"}:
+        return "compatible"
+    if state in {"incompatible", "unsafe", "blocked", "no", "false", "present"}:
+        return "incompatible"
+    return "unknown"
+
+
+def _explicit_diet_conflict(item, diet):
+    return _catalog_diet_state(item, diet) == "incompatible"
+
+
+def _diet_conflict(item, diet, text=None):
+    """Use catalog diet evidence first; text is legacy fallback only."""
+    state = _catalog_diet_state(item, diet)
+    if state is not None:
+        # Unknown catalog evidence is not safe enough for recommendation.
+        return state != "compatible"
+    group = {"pescatarian": 0, "vegetarian": 1, "vegan": 2}.get(
+        str(diet or "").lower()
+    )
+    if group is None:
+        return False
+    return bool(_diet_hits(text if text is not None else _ingredient_text(item))[group])
 
 
 # Dietary incompatibility detection remains local and conservative. Replacement
@@ -552,10 +596,11 @@ def _diet_substitutions(recipe, profile, violations):
     ingredient_hits = []
     for index, item in enumerate(recipe.get("ingredients") or []):
         text = _ingredient_text(item)
-        unresolved |= not bool(text)
-        hits = _diet_hits(text)
+        catalog_state = _catalog_diet_state(item, diet)
+        unresolved |= catalog_state is None and not bool(text)
+        hits = _diet_hits(text) if catalog_state is None else ((), (), ())
         ingredient_hits.append(hits)
-        conflicting = bool(hits[group] or _explicit_diet_conflict(item, diet))
+        conflicting = _diet_conflict(item, diet, text)
         if not conflicting:
             continue
 
@@ -617,7 +662,7 @@ def _restriction_reasons(item, profile, *, requested=None):
     text = _ingredient_text(item)
     reasons = []
 
-    if group is not None and (_diet_hits(text)[group] or _explicit_diet_conflict(item, diet)):
+    if group is not None and _diet_conflict(item, diet, text):
         reason = "diet:" + diet
         if not requested or reason in requested:
             reasons.append(reason)
@@ -753,8 +798,7 @@ def diet_substitution_coverage(
         if not isinstance(item, dict):
             continue
         text = _ingredient_text(item)
-        hits = _diet_hits(text)
-        if hits[group] or _explicit_diet_conflict(item, diet):
+        if _diet_conflict(item, diet, text):
             required.add(index)
     if not required:
         return False
@@ -821,7 +865,7 @@ def _ingredient_changes(recipe, profile, substitutions):
     for index, item in enumerate(recipe.get("ingredients") or []):
         text = _ingredient_text(item)
         reasons = []
-        if group is not None and (_diet_hits(text)[group] or _explicit_diet_conflict(item, diet)):
+        if group is not None and _diet_conflict(item, diet, text):
             reasons.append("diet:" + diet)
         for kind, key in (("allergy", "allergies"), ("avoid", "avoid")):
             reasons.extend(f"{kind}:{term}" for term in profile.get(key) or []
