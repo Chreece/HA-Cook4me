@@ -18,7 +18,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 COMP = ROOT / "custom_components" / "cook4me"
 CATALOG = COMP / "catalog" / "merged_catalog.v1.json"
-CONCEPT_ID = re.compile(r"^concept:food:[0-9a-f]+$")
+CONCEPT_ID = re.compile(r"^concept:(?:food|source|equipment):[0-9a-f]+$")
 
 
 def load(name: str, filename: str):
@@ -112,12 +112,27 @@ def main() -> None:
 
     payload = json.loads(CATALOG.read_text(encoding="utf-8"))
     by_concept: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for row in payload.get("ingredients") or []:
+
+    def add_row(row: Any) -> None:
         if not isinstance(row, dict):
-            continue
+            return
         ident = concept_id(row)
         if ident:
             by_concept[ident].append(row)
+
+    # Stable source/equipment concepts can exist only on publication ingredient
+    # rows, not in the global ingredient table. Include both sources when
+    # generating build-time exact-ID bindings; runtime still consumes IDs only.
+    for row in payload.get("ingredients") or []:
+        add_row(row)
+    for recipe in payload.get("recipes") or []:
+        if not isinstance(recipe, dict):
+            continue
+        for variant in recipe.get("variants") or []:
+            if not isinstance(variant, dict):
+                continue
+            for row in variant.get("ingredients") or []:
+                add_row(row)
 
     grouped: dict[tuple[str, tuple[str, ...]], list[str]] = defaultdict(list)
     ambiguous = []
@@ -188,6 +203,7 @@ def main() -> None:
         "policy": {
             "runtimeUsesLabels": False,
             "stableConceptIdsOnly": True,
+            "conceptNamespaces": ["food", "source", "equipment"],
             "ambiguousConceptsOmitted": True,
             "generatedFromCurrentOfflineCatalog": True,
             "sourceProfilesRemainReviewedCatalogDefinitions": True,
