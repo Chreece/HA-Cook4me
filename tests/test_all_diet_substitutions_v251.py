@@ -125,7 +125,15 @@ class AllDietSubstitutionTests(unittest.TestCase):
         )
 
     def test_chicken_fillet_and_skate_are_never_bare_vegetarian_suggestions(self):
-        for ingredient in ("Chicken fillet", "Skate", "Skate wing", "Σαλάχι"):
+        for ingredient in (
+            "Chicken fillet",
+            "Skate",
+            "Skate wing",
+            "Σαλάχι",
+            "Φιλέτο κοτόπουλου",
+            "Κομμάτια φιλέτου κοτόπουλου",
+            "Φτερούγα σαλαχιού",
+        ):
             with self.subTest(ingredient=ingredient):
                 match = logic.score_recipe(recipe(ingredient), profile("vegetarian"))
                 self.assertFalse(match["safe"], match)
@@ -134,6 +142,19 @@ class AllDietSubstitutionTests(unittest.TestCase):
                 self.assertTrue(match["substitutionCoverageComplete"], match)
                 self.assertEqual(match["substitutions"][0]["replacement"]["key"], "tofu")
                 self.assertGreaterEqual(len(match["substitutions"][0]["alternatives"]), 1)
+
+    def test_greek_genitive_animal_labels_normalize_before_diet_classification(self):
+        cases = {
+            "Φιλέτο κοτόπουλου": "κοτοπουλο",
+            "Φτερούγα σαλαχιού": "σαλαχι",
+            "Φιλέτο σολομού": "σολομος",
+            "Ζωμός ψαριού": "ψαρι",
+        }
+        for ingredient, expected_hit in cases.items():
+            with self.subTest(ingredient=ingredient):
+                flags = logic.dietary_flags({"ingredients": [{"name": ingredient}]})
+                self.assertFalse(flags["vegetarian"], flags)
+                self.assertIn(expected_hit, flags["animalIngredientHits"])
 
     def test_vegan_mixed_recipe_gets_replacement_for_every_conflict(self):
         self.assert_adapted(
