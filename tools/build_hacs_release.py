@@ -23,6 +23,7 @@ PREFIX = "custom_components/cook4me/"
 RAW_CATALOG = "catalog/merged_catalog.v1.json"
 GZ_CATALOG = RAW_CATALOG + ".gz"
 GENERATED_CONCEPT_BINDINGS = "catalog/concept_ingredient_substitutions.v1.json"
+GENERATED_PROVIDER_BINDINGS = "catalog/provider_ingredient_substitutions.generated.v1.json"
 RETIRED_BUNDLE = re.compile(r"frontend/cook4me-panel-v(\d+)-bundle\.js$")
 
 
@@ -35,6 +36,18 @@ def tracked_runtime_files() -> list[str]:
         for path in output.split("\0")
         if path and path.startswith(PREFIX)
     ]
+
+
+def ensure_generated_provider_bindings() -> Path:
+    """Generate exact stable provider-ID diet bindings for the release."""
+    output = INTEGRATION / GENERATED_PROVIDER_BINDINGS
+    subprocess.check_call([
+        sys.executable,
+        str(ROOT / "tools" / "generate_provider_substitution_bindings_v258.py"),
+        "--output",
+        str(output),
+    ])
+    return output
 
 
 def ensure_generated_concept_bindings() -> Path:
@@ -77,10 +90,12 @@ def add_bytes(archive: ZipFile, name: str, data: bytes, *, stored: bool = False)
 
 
 def build(output: Path, *, version: str | None = None) -> dict:
+    generated_provider = ensure_generated_provider_bindings()
     generated_concept = ensure_generated_concept_bindings()
     files = tracked_runtime_files()
-    if GENERATED_CONCEPT_BINDINGS not in files:
-        files.append(GENERATED_CONCEPT_BINDINGS)
+    for generated in (GENERATED_PROVIDER_BINDINGS, GENERATED_CONCEPT_BINDINGS):
+        if generated not in files:
+            files.append(generated)
     raw_catalog, compressed_catalog = gzip_catalog()
     output.parent.mkdir(parents=True, exist_ok=True)
 
@@ -130,6 +145,8 @@ def build(output: Path, *, version: str | None = None) -> dict:
         "retiredBundlesIncluded": sum(retired(path) for path in included),
         "generatedConceptBindingsIncluded": GENERATED_CONCEPT_BINDINGS in included,
         "generatedConceptBindingsBytes": generated_concept.stat().st_size,
+        "generatedProviderBindingsIncluded": GENERATED_PROVIDER_BINDINGS in included,
+        "generatedProviderBindingsBytes": generated_provider.stat().st_size,
     }
     return report
 
