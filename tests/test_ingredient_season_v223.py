@@ -30,4 +30,63 @@ class SeasonFilterTests(unittest.TestCase):
             self.assertTrue({'DE','GR'}.issubset(countries))
             self.assertTrue(all(row['displayLanguage']==language for row in rows))
 
+    def test_recipe_results_apply_the_same_reviewed_country_calendar(self):
+        def ingredient(name, months, country='DE'):
+            return {
+                'name': name,
+                'lifecycle': {'seasonality': {'status': 'reviewed', 'regions': [
+                    {'country': country, 'months': months}
+                ]}},
+            }
+
+        def recipe(title, *ingredients):
+            return {
+                'title': title,
+                'mealTypes': ['dinner'],
+                'ingredients': list(ingredients),
+                'match': {'score': 0},
+            }
+
+        rows = [
+            recipe('September vegetables', ingredient('Pumpkin', [9, 10])),
+            recipe('Spring asparagus', ingredient('Asparagus', [4, 5, 6])),
+            recipe('Mixed plate', ingredient('Pumpkin', [9, 10]), ingredient('Asparagus', [4, 5, 6])),
+            recipe('Unknown calendar', {'name': 'Unreviewed ingredient'}),
+            recipe('Preserved food', {'name': 'Canned beans', 'lifecycle': {
+                'seasonality': {'status': 'not_applicable'},
+            }}),
+        ]
+        filtered = filters.apply_filters(
+            rows, {'seasonalIngredients': True},
+            season_country='DE', season_month=9, score_targets=False,
+        )
+        self.assertEqual(
+            [row['title'] for row in filtered],
+            ['September vegetables', 'Unknown calendar', 'Preserved food'],
+        )
+        unfiltered = filters.apply_filters(
+            rows, {'seasonalIngredients': False},
+            season_country='DE', season_month=9, score_targets=False,
+        )
+        self.assertEqual(len(unfiltered), len(rows))
+
+    def test_recipe_season_uses_shopping_country_and_keeps_unknown_country_evidence(self):
+        ingredient = {
+            'lifecycle': {'seasonality': {'status': 'reviewed', 'regions': [
+                {'country': 'DE', 'months': [4, 5, 6]},
+                {'country': 'GR', 'months': [9, 10]},
+            ]}},
+        }
+        self.assertFalse(filters.seasonal_ingredient_visible(ingredient, 'DE', 9))
+        self.assertTrue(filters.seasonal_ingredient_visible(ingredient, 'GR', 9))
+        self.assertTrue(filters.seasonal_ingredient_visible(ingredient, 'FR', 9))
+        self.assertTrue(filters.seasonal_ingredient_visible(ingredient, 'DE', None))
+
+    def test_runtime_passes_market_country_and_ha_timezone_month_to_shared_filter(self):
+        runtime=(ROOT/'custom_components/cook4me/shared_recipe_runtime.py').read_text()
+        self.assertIn('settings["seasonalIngredients"] or (costs is not None and cost_calculator is None)', runtime)
+        self.assertIn('ZoneInfo(str(getattr(bridge.hass.config, "time_zone", "") or "UTC"))', runtime)
+        self.assertIn('season_country=season_country, season_month=season_month', runtime)
+
+
 if __name__=='__main__':unittest.main()
