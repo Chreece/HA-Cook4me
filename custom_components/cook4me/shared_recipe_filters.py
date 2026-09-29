@@ -100,7 +100,37 @@ def recipe_target_scope(settings, recipe):
     return ({}, None)
 
 
-def apply_filters(rows, filters, *, ingredient_groups=None, cost=None, nutrition=None, recent=(), score_targets=True, progress=None):
+def seasonal_ingredient_visible(ingredient, country, month):
+    """Mirror the opt-in catalog season view for one materialized recipe ingredient."""
+    if not isinstance(ingredient, dict) or type(month) is not int or not 1 <= month <= 12:
+        return True
+    season = (ingredient.get("lifecycle") or {}).get("seasonality") or {}
+    if season.get("status") != "reviewed":
+        return True
+    country = str(country or "").strip().upper()
+    region = next((
+        row for row in season.get("regions") or []
+        if isinstance(row, dict) and row.get("country") == country
+    ), None)
+    months = region.get("months") if region else None
+    if not isinstance(months, list) or not months or any(
+            type(value) is not int or not 1 <= value <= 12 for value in months):
+        return True
+    return month in months
+
+
+def recipe_seasonally_available(recipe, country, month):
+    """A recipe survives when none of its reviewed ingredients is out of season."""
+    if not isinstance(recipe, dict):
+        return True
+    return all(
+        seasonal_ingredient_visible(ingredient, country, month)
+        for ingredient in recipe.get("ingredients") or []
+    )
+
+
+def apply_filters(rows, filters, *, ingredient_groups=None, cost=None, nutrition=None, recent=(),
+                  score_targets=True, progress=None, season_country="", season_month=None):
     """Filter before pagination/selection. Unknown costs never count as free."""
     settings = normalize_filters(filters)
     groups = ingredient_groups or {}
@@ -112,6 +142,9 @@ def apply_filters(rows, filters, *, ingredient_groups=None, cost=None, nutrition
         if settings["mealTypes"] and not recipe_matches_meal_types(source, settings["mealTypes"]):
             continue
         if source.get("displayFamilyId") in recent or source.get("displayVariantId") in recent:
+            continue
+        if settings["seasonalIngredients"] and not recipe_seasonally_available(
+                source, season_country, season_month):
             continue
         match = source.get("match") or {}
         if match.get("requiresSubstitutions") and (settings["onlyHome"] or
