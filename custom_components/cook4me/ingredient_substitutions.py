@@ -333,6 +333,140 @@ def _ingredient_allergen_hits(ingredient: dict[str, Any]) -> set[str]:
     return present
 
 
+def _ingredient_diet_states(ingredient: dict[str, Any]) -> dict[str, str]:
+    """Return explicit catalog diet evidence; never infer it from display text."""
+    intelligence = (
+        ingredient.get("intelligence")
+        if isinstance(ingredient.get("intelligence"), dict)
+        else {}
+    )
+    raw = (
+        intelligence.get("diets")
+        if isinstance(intelligence.get("diets"), dict)
+        else ingredient.get("diets")
+        if isinstance(ingredient.get("diets"), dict)
+        else {}
+    )
+    result: dict[str, str] = {}
+    for diet in ("pescatarian", "vegetarian", "vegan"):
+        if diet not in raw:
+            continue
+        value = raw.get(diet)
+        if value is True:
+            result[diet] = "compatible"
+            continue
+        if value is False:
+            result[diet] = "incompatible"
+            continue
+        state = _text(value).lower().replace("-", "_").replace(" ", "_")
+        if state in {"compatible", "safe", "allowed", "yes", "true"}:
+            result[diet] = "compatible"
+        elif state in {"incompatible", "unsafe", "blocked", "no", "false", "present"}:
+            result[diet] = "incompatible"
+        else:
+            result[diet] = "unknown"
+    return result
+
+
+def _ingredient_substitution_class(ingredient: dict[str, Any]) -> str:
+    intelligence = (
+        ingredient.get("intelligence")
+        if isinstance(ingredient.get("intelligence"), dict)
+        else {}
+    )
+    return _text(
+        intelligence.get("substitutionClass")
+        or ingredient.get("substitutionClass")
+    )
+
+
+def _profile_by_id(catalog: dict[str, Any], profile_id: str) -> dict[str, Any] | None:
+    wanted = _text(profile_id)
+    if not wanted:
+        return None
+    return next(
+        (
+            row for row in catalog.get("sourceProfiles") or []
+            if isinstance(row, dict) and _text(row.get("id")) == wanted
+        ),
+        None,
+    )
+
+
+def _catalog_source_profiles(
+    ingredient: dict[str, Any],
+    catalog: dict[str, Any],
+    *,
+    binding: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
+    """Resolve profiles for a catalog row from catalog evidence only.
+
+    Official/resolved ingredients must never depend on a localized/canonical
+    label to determine dietary incompatibility or replacement semantics.
+    """
+    profiles: list[dict[str, Any]] = []
+
+    def add(profile: dict[str, Any] | None) -> None:
+        if isinstance(profile, dict) and profile not in profiles:
+            profiles.append(profile)
+
+    add(_binding_profile(binding, catalog))
+
+    substitution_class = _ingredient_substitution_class(ingredient)
+    add(_profile_by_id(catalog, substitution_class))
+
+    diets = _ingredient_diet_states(ingredient)
+    allergens = _ingredient_allergen_hits(ingredient)
+    diet_key = {
+        "meat": "pescatarian",
+        "animal": "vegetarian",
+        "non_vegan": "vegan",
+    }
+    for profile in catalog.get("sourceProfiles") or []:
+        if not isinstance(profile, dict):
+            continue
+        match = profile.get("match") if isinstance(profile.get("match"), dict) else {}
+        hit_name = _text(match.get("dietHit")).lower().replace("-", "_")
+        wanted_diet = diet_key.get(hit_name)
+        if wanted_diet and diets.get(wanted_diet) == "incompatible":
+            add(profile)
+            continue
+        allergen = _text(match.get("allergenHit")).lower().replace("-", "_").replace(" ", "_")
+        if allergen and allergen in allergens:
+            add(profile)
+    return profiles
+
+
+def _catalog_candidate_profile(
+    ingredient: dict[str, Any],
+    catalog: dict[str, Any],
+    *,
+    binding: dict[str, Any] | None = None,
+) -> dict[str, Any] | None:
+    """Choose a replacement profile using only exact catalog metadata."""
+    bound = _binding_profile(binding, catalog)
+    if isinstance(bound, dict):
+        return bound
+    classified = _profile_by_id(catalog, _ingredient_substitution_class(ingredient))
+    if isinstance(classified, dict):
+        return classified
+
+    diets = _ingredient_diet_states(ingredient)
+    profiles = _catalog_source_profiles(ingredient, catalog, binding=binding)
+    # Prefer the narrowest diet incompatibility: meat > animal > non-vegan.
+    wanted = (
+        "meat" if diets.get("pescatarian") == "incompatible"
+        else "animal" if diets.get("vegetarian") == "incompatible"
+        else "non_vegan" if diets.get("vegan") == "incompatible"
+        else ""
+    )
+    for profile in profiles:
+        match = profile.get("match") if isinstance(profile.get("match"), dict) else {}
+        if _text(match.get("dietHit")).lower().replace("-", "_") == wanted:
+            return profile
+    return profiles[0] if profiles else None
+
+
 def _matches_source_profile(
     profile: dict[str, Any],
     *,
@@ -494,19 +628,17 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
         if row.get("substitutionOnly") or row.get("classification") == "substitution":
             continue
         binding = _catalog_binding(row, catalog)
-        binding_profile = _binding_profile(binding, catalog)
-        profiles = substitution_source_profiles(row)
-        if isinstance(binding_profile, dict):
-            profiles = [binding_profile, *[
-                profile for profile in profiles if profile is not binding_profile
-            ]]
-            keys = list(dict.fromkeys(
-                str(value).strip()
-                for value in binding_profile.get("candidateKeys") or []
-                if str(value).strip()
-            ))
-        else:
-            keys = substitution_candidate_keys(row)
+        profiles = _catalog_source_profiles(row, catalog, binding=binding)
+        candidate_profile = _catalog_candidate_profile(
+            row, catalog, binding=binding
+        )
+        keys = list(dict.fromkeys(
+            str(value).strip()
+            for value in (
+                candidate_profile.get("candidateKeys") if isinstance(candidate_profile, dict) else []
+            )
+            if str(value).strip()
+        ))
         if not keys:
             continue
         candidates = []
@@ -524,7 +656,11 @@ def enrich_catalog_substitutions(payload: dict[str, Any]) -> dict[str, Any]:
             for value in (binding or {}).get("substitutionDiets") or []
             if str(value).strip()
         ]
-        row["substitutionDiets"] = list(dict.fromkeys(bound_diets)) or _source_diets(row)
+        explicit_diets = [
+            diet for diet, state in _ingredient_diet_states(row).items()
+            if state == "incompatible"
+        ]
+        row["substitutionDiets"] = list(dict.fromkeys(bound_diets or explicit_diets))
         if isinstance(binding, dict) and _text(binding.get("id")):
             row["substitutionBindingId"] = _text(binding.get("id"))
         source_allergens = _source_allergens(profiles)
