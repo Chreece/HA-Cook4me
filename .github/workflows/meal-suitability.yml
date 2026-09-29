@@ -52,7 +52,7 @@ jobs:
       - name: Generate exact substitution binding proposals
         run: |
           python tools/generate_provider_substitution_bindings_v258.py \
-            --output "$RUNNER_TEMP/provider-substitution-bindings-v258.json"
+            --output custom_components/cook4me/catalog/provider_ingredient_substitutions.generated.v1.json
           python tools/generate_concept_substitution_bindings_v258.py \
             --output custom_components/cook4me/catalog/concept_ingredient_substitutions.v1.json
       - name: Upload exact substitution binding proposals
@@ -60,7 +60,7 @@ jobs:
         with:
           name: substitution-bindings-v258
           path: |
-            ${{ runner.temp }}/provider-substitution-bindings-v258.json
+            custom_components/cook4me/catalog/provider_ingredient_substitutions.generated.v1.json
             custom_components/cook4me/catalog/concept_ingredient_substitutions.v1.json
           if-no-files-found: error
           retention-days: 3
