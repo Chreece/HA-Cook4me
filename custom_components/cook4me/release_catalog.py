@@ -197,6 +197,42 @@ def ingredient_display_name(ingredient: Any, language: str) -> str:
     return _core._presentation.display_name(raw or ingredient, language)
 
 
+def ingredient_safety_evidence(ingredient: Any) -> Any:
+    """Resolve one localized ingredient to authoritative catalog safety metadata.
+
+    UI/display labels may be translated. Diet and substitution decisions must use
+    the immutable catalog identity instead, so a Greek/German/etc. label cannot
+    change whether an ingredient is meat/fish or which reviewed replacements
+    apply.
+    """
+    if not isinstance(ingredient, dict):
+        return deepcopy(ingredient)
+    payload = load_release_catalog()
+    out = _core._enrich_display_ingredient(payload, ingredient)
+    source = _core._global_ingredient(payload, ingredient)
+    if isinstance(source, dict):
+        canonical = _text(
+            source.get("canonicalName")
+            or source.get("name")
+            or source.get("foodName")
+        )
+        if canonical:
+            out["canonicalName"] = canonical
+    return out
+
+
+def recipe_safety_evidence(recipe: Any) -> Any:
+    """Return a scoring copy enriched from catalog IDs, preserving UI labels."""
+    if not isinstance(recipe, dict):
+        return deepcopy(recipe)
+    out = deepcopy(recipe)
+    out["ingredients"] = [
+        ingredient_safety_evidence(item)
+        for item in recipe.get("ingredients") or []
+    ]
+    return out
+
+
 def ingredient_substitution_candidates(ingredient: Any) -> list[dict[str, Any]]:
     """Return all reviewed substitution candidates owned by one catalog ingredient."""
     raw = _core._global_ingredient(load_release_catalog(), ingredient)

@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 COMPONENT = ROOT / "custom_components" / "cook4me"
 LOGIC_PATH = COMPONENT / "recipe_logic.py"
 SUBS_PATH = COMPONENT / "ingredient_substitutions.py"
+RELEASE_PATH = COMPONENT / "release_catalog.py"
 
 spec = importlib.util.spec_from_file_location("cook4me_recipe_logic_v251_test", LOGIC_PATH)
 assert spec is not None and spec.loader is not None
@@ -18,6 +19,11 @@ sub_spec = importlib.util.spec_from_file_location("cook4me_substitutions_v251_te
 assert sub_spec is not None and sub_spec.loader is not None
 subs = importlib.util.module_from_spec(sub_spec)
 sub_spec.loader.exec_module(subs)
+
+release_spec = importlib.util.spec_from_file_location("cook4me_release_catalog_v257_test", RELEASE_PATH)
+assert release_spec is not None and release_spec.loader is not None
+release = importlib.util.module_from_spec(release_spec)
+release_spec.loader.exec_module(release)
 
 
 def catalog_row(identifier: str, name: str) -> dict:
@@ -125,7 +131,7 @@ class AllDietSubstitutionTests(unittest.TestCase):
         )
 
     def test_chicken_fillet_and_skate_are_never_bare_vegetarian_suggestions(self):
-        for ingredient in ("Chicken fillet", "Skate", "Skate wing", "Σαλάχι"):
+        for ingredient in ("Chicken fillet", "Skate", "Skate wing"):
             with self.subTest(ingredient=ingredient):
                 match = logic.score_recipe(recipe(ingredient), profile("vegetarian"))
                 self.assertFalse(match["safe"], match)
@@ -134,6 +140,75 @@ class AllDietSubstitutionTests(unittest.TestCase):
                 self.assertTrue(match["substitutionCoverageComplete"], match)
                 self.assertEqual(match["substitutions"][0]["replacement"]["key"], "tofu")
                 self.assertGreaterEqual(len(match["substitutions"][0]["alternatives"]), 1)
+
+    def test_localized_labels_use_english_catalog_identity_for_diet_and_substitutions(self):
+        source_rows = {
+            "chicken-fillets": {
+                "id": "chicken-fillets",
+                "canonicalName": "Chicken fillet pieces",
+                "classification": "food",
+                "substitutionDiets": ["pescatarian", "vegetarian", "vegan"],
+                "substitutions": [
+                    {
+                        "key": "tofu",
+                        "name": "Firm tofu",
+                        "compatibleDiets": ["pescatarian", "vegetarian", "vegan"],
+                        "allergens": ["soy"],
+                    },
+                    {
+                        "key": "mushrooms",
+                        "name": "Mushrooms",
+                        "compatibleDiets": ["pescatarian", "vegetarian", "vegan"],
+                        "allergens": [],
+                    },
+                ],
+            },
+            "skate-wing": {
+                "id": "skate-wing",
+                "canonicalName": "Skate wing",
+                "classification": "food",
+                "substitutionDiets": ["vegetarian", "vegan"],
+                "substitutions": [
+                    {
+                        "key": "tofu",
+                        "name": "Firm tofu",
+                        "compatibleDiets": ["vegetarian", "vegan"],
+                        "allergens": ["soy"],
+                    },
+                    {
+                        "key": "mushrooms",
+                        "name": "Mushrooms",
+                        "compatibleDiets": ["vegetarian", "vegan"],
+                        "allergens": [],
+                    },
+                ],
+            },
+        }
+        payload = {"_runtimeIngredientById": source_rows}
+        old_loader = release.load_release_catalog
+        release.load_release_catalog = lambda: payload
+        try:
+            cases = [
+                ("chicken-fillets", "Κομμάτια φιλέτου κοτόπουλου", "Chicken fillet pieces"),
+                ("skate-wing", "Φτερούγα σαλαχιού", "Skate wing"),
+            ]
+            for ingredient_id, localized, canonical in cases:
+                with self.subTest(localized=localized):
+                    displayed = {"ingredientId": ingredient_id, "name": localized, "foodName": localized}
+                    scoring = release.recipe_safety_evidence(
+                        {"title": localized, "ingredients": [displayed]}
+                    )
+                    row = scoring["ingredients"][0]
+                    self.assertEqual(row["name"], localized)
+                    self.assertEqual(row["canonicalName"], canonical)
+                    match = logic.score_recipe(scoring, profile("vegetarian"))
+                    self.assertFalse(match["safe"], match)
+                    self.assertTrue(match["eligibleWithSubstitutions"], match)
+                    self.assertTrue(match["requiresSubstitutions"], match)
+                    self.assertTrue(match["substitutionCoverageComplete"], match)
+                    self.assertEqual(match["substitutions"][0]["replacement"]["key"], "tofu")
+        finally:
+            release.load_release_catalog = old_loader
 
     def test_vegan_mixed_recipe_gets_replacement_for_every_conflict(self):
         self.assert_adapted(

@@ -32,6 +32,7 @@ from .inventory import (
     update_inventory_item,
 )
 from .recipe_logic import normalize_manual_recipe, normalize_text, recipe_ingredient_names, score_recipe
+from .release_catalog import recipe_safety_evidence
 from .storage_locations import normalize_locations, edit_location, validate_location
 
 _STORAGE_VERSION = 1
@@ -871,8 +872,9 @@ class Cook4MeRecipeHub:
         if diet_filters is not None:
             from .diet_profiles import scoring_profile
             profile = scoring_profile(profile, diet_filters)
-        base_match = score_recipe(result, profile)
-        match = enrich_match_with_house_keys(result, base_match, house)
+        scoring_recipe = recipe_safety_evidence(result)
+        base_match = score_recipe(scoring_recipe, profile)
+        match = enrich_match_with_house_keys(scoring_recipe, base_match, house)
         if match.get("safe"):
             quantity = recipe_quantity_feasibility(
                 result,
