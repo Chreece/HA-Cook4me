@@ -18,7 +18,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 COMP = ROOT / "custom_components" / "cook4me"
 CATALOG = COMP / "catalog" / "merged_catalog.v1.json"
-PROVIDER_ID = re.compile(r"^M_FOOD_\d+$")
+PROVIDER_ID = re.compile(r"^(?:M_FOOD|MARKETINGFOOD)_\d+$")
 
 
 def load(name: str, filename: str):
@@ -173,23 +173,48 @@ def main() -> None:
         if signature[0] or signature[1]:
             concept_signatures[concept].add(signature)
 
-    for ident in sorted(occurrences, key=lambda value: int(value.rsplit("_", 1)[1])):
+    def provider_sort(value: str) -> tuple[str, int]:
+        prefix, number = value.rsplit("_", 1)
+        return prefix, int(number)
+
+    for ident in sorted(occurrences, key=provider_sort):
         rows = occurrences[ident]
-        source = global_rows.get(ident)
-        if not isinstance(source, dict):
+        evidence_rows = [
+            row for row in ([global_rows.get(ident)] + rows)
+            if isinstance(row, dict)
+        ]
+        informative = {
+            binding_signature(row)
+            for row in evidence_rows
+            if any(binding_signature(row))
+        }
+        if not informative:
             untouched += 1
             continue
-        profile, diets = binding_signature(source)
-        if not profile and not diets:
-            untouched += 1
+        if len(informative) != 1:
+            ambiguous.append({
+                "ingredientId": ident,
+                "occurrences": len(rows),
+                "reason": "conflicting-reviewed-signatures",
+                "signatures": [
+                    {"profileId": profile, "substitutionDiets": list(diets)}
+                    for profile, diets in sorted(informative)
+                ],
+                "labels": list(dict.fromkeys(
+                    label(row) for row in evidence_rows if label(row)
+                ))[:12],
+            })
             continue
+        profile, diets = next(iter(informative))
         if diets and not profile:
             ambiguous.append({
                 "ingredientId": ident,
                 "occurrences": len(rows),
                 "reason": "diet-conflict-without-reviewed-profile",
                 "substitutionDiets": list(diets),
-                "labels": [label(source)] if label(source) else [],
+                "labels": list(dict.fromkeys(
+                    label(row) for row in evidence_rows if label(row)
+                ))[:12],
             })
             continue
         count = len(rows)
@@ -199,7 +224,7 @@ def main() -> None:
             "ingredientIds": [ident],
             "profileId": profile,
             "substitutionDiets": list(diets),
-            "evidence": "offline provider-ID migration from stable catalog occurrences",
+            "evidence": "offline provider-ID migration from unanimous stable catalog occurrences",
         })
         profile_counts[profile] += 1
         covered_occurrences += count
@@ -275,6 +300,7 @@ def main() -> None:
         "policy": {
             "runtimeUsesLabels": False,
             "stableProviderIdsOnly": True,
+            "providerNamespaces": ["M_FOOD", "MARKETINGFOOD"],
             "ambiguousProviderIdsOmitted": True,
             "profileDefinitionsRemainIngredientSubstitutionCatalog": True,
         },
