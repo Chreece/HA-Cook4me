@@ -279,7 +279,8 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
         )
         rows = found["items"]
         candidate_history = compact_candidate_history(
-            saved.get("candidateHistory", []), rows
+            saved.get("candidateHistory", []),
+            found.get("candidateHistoryDelta") or rows,
         )
         for row in rows:
             row["todayCatalogLanguage"] = row.get("language")
