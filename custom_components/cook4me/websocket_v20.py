@@ -480,7 +480,7 @@ async def _generate_week(
             filters=shared_filters,
             progress=progress,
             exact_nutrition_limit=_MAX_WEEK_CANDIDATES,
-            candidate_history=lifecycle.candidate_history,
+            candidate_history=getattr(lifecycle, "candidate_history", []),
         )
         candidates, errors = result["items"], []
     else:
@@ -792,7 +792,7 @@ async def _generate_week(
         for slot_id, shape in planned_shape.items()
     )
     await lifecycle.async_replace_week(week_start, planned)
-    if shared_filters is not None:
+    if shared_filters is not None and hasattr(lifecycle, "async_record_candidate_history"):
         from .shared_recipe_runtime import _candidate_identity
         await lifecycle.async_record_candidate_history(
             [_candidate_identity(row) for row in candidates]
