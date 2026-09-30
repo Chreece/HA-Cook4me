@@ -382,7 +382,7 @@ async def processor(
                     diet_filters=(
                         settings if "dietProfile" in settings else None
                     ),
-                    for_suggestions=True,
+                    for_suggestions=for_suggestions,
                     progress=None,
                 )
                 filtered_chunk = apply_filters(
