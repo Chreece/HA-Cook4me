@@ -28,7 +28,9 @@ jobs:
         with:
           node-version: '22'
       - name: Worker cancellation and empty-week generation
-        run: python tests/test_week_progress_v200.py
+        run: |
+          python tests/test_week_progress_v200.py
+          python tests/test_suggestion_nutrition_bound_v260.py
       - name: Stage counters and honest time estimates
         run: node --test tests/test_week_progress_v200.mjs
       - name: Browser test dependency
