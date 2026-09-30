@@ -2,14 +2,29 @@
 from .shared_recipe_filters import apply_filters, ingredient_aliases, normalize_filters
 
 
-def _bounded_suggestion_candidates(rows, settings, languages, limit):
-    """Keep a diverse bounded shortlist before exact inventory nutrition work."""
+def _bounded_suggestion_candidates(
+    rows,
+    settings,
+    languages,
+    limit,
+    rotation_keys=None,
+):
+    """Keep a strong but rotating shortlist before exact nutrition work.
+
+    Every eligible recipe remains part of the long-term candidate pool. A stable
+    quality reserve is kept on every run while the remaining capacity walks a
+    deterministic window through the full filtered catalog. Existing Today
+    suggestion history or the current Week plan changes that window between
+    generations without using random state.
+    """
+    from hashlib import sha256
     from .today_logic import recipe_matches_meal_types
 
     try:
         maximum = max(1, int(limit))
     except (TypeError, ValueError):
         return rows
+    rows = list(rows)
     if len(rows) <= maximum:
         return rows
 
@@ -23,6 +38,13 @@ def _bounded_suggestion_candidates(rows, settings, languages, limit):
         code = str(value or "").strip().lower().replace("_", "-").split("-", 1)[0]
         if code and code not in catalogs:
             catalogs.append(code)
+
+    keys = [str(value) for value in (rotation_keys or []) if str(value)]
+    offset = 0
+    if keys and rows:
+        digest = sha256("\x1f".join(keys).encode("utf-8")).digest()
+        offset = int.from_bytes(digest[:8], "big") % len(rows)
+    rotated = rows[offset:] + rows[:offset] if offset else rows
 
     chosen = []
     seen = set()
@@ -44,14 +66,12 @@ def _bounded_suggestion_candidates(rows, settings, languages, limit):
         chosen.append(row)
         return True
 
-    # First preserve at least one candidate for every requested meal/catalog pair
-    # that actually exists. This prevents a globally strong dinner catalog from
-    # crowding breakfast or another selected source language out of the exact
-    # nutrition shortlist.
+    # Preserve every requested meal/catalog combination that is actually
+    # represented in the rotated window.
     if meal_types and catalogs:
         for meal_type in meal_types:
             for catalog in catalogs:
-                for row in rows:
+                for row in rotated:
                     if (
                         row_language(row) == catalog
                         and recipe_matches_meal_types(row, [meal_type])
@@ -61,12 +81,16 @@ def _bounded_suggestion_candidates(rows, settings, languages, limit):
                 if len(chosen) >= maximum:
                     return chosen
 
-    # Reserve roughly half of the shortlist for meal-category coverage.
+    # Keep explicit category and catalog diversity, but leave most of the budget
+    # available for the rotating full-catalog window.
     if meal_types:
-        meal_quota = max(4, min(24, maximum // max(1, len(meal_types) * 2)))
+        meal_quota = max(
+            4,
+            min(12, maximum // max(1, len(meal_types) * 4)),
+        )
         for meal_type in meal_types:
             count = 0
-            for row in rows:
+            for row in rotated:
                 if not recipe_matches_meal_types(row, [meal_type]):
                     continue
                 if add(row):
@@ -74,12 +98,14 @@ def _bounded_suggestion_candidates(rows, settings, languages, limit):
                 if count >= meal_quota or len(chosen) >= maximum:
                     break
 
-    # Reserve another slice for catalog-language diversity.
     if catalogs:
-        language_quota = max(3, min(16, maximum // max(1, len(catalogs) * 4)))
+        language_quota = max(
+            3,
+            min(8, maximum // max(1, len(catalogs) * 4)),
+        )
         for catalog in catalogs:
             count = 0
-            for row in rows:
+            for row in rotated:
                 if row_language(row) != catalog:
                     continue
                 if add(row):
@@ -87,13 +113,22 @@ def _bounded_suggestion_candidates(rows, settings, languages, limit):
                 if count >= language_quota or len(chosen) >= maximum:
                     break
 
-    # Fill the remainder in the existing score order.
-    for row in rows:
+    # Always retain a quality reserve from the strongest cheap-pass candidates,
+    # so rotation broadens variety without turning generation into random meals.
+    quality_reserve = min(maximum, max(16, min(48, maximum // 4)))
+    for row in rows[:quality_reserve]:
+        if len(chosen) >= maximum:
+            break
+        add(row)
+
+    # Fill everything else from the rotated full eligible catalog. Because the
+    # rotation key changes with the prior suggestions/plan, repeated generation
+    # exposes different recipes to exact nutrition scoring.
+    for row in rotated:
         if len(chosen) >= maximum:
             break
         add(row)
     return chosen
-
 
 def executor_progress(callback):
     """Marshal executor progress onto HA's event loop before firing events."""
@@ -112,6 +147,7 @@ async def search_filtered(
     filters,
     progress=None,
     exact_nutrition_limit=None,
+    rotation_keys=None,
 ):
     from functools import partial
     from . import release_catalog
@@ -128,6 +164,7 @@ async def search_filtered(
             for_suggestions=True,
             exact_nutrition_limit=exact_nutrition_limit,
             candidate_languages=languages,
+            rotation_keys=rotation_keys,
         )
         return await report.run(bridge.hass, partial(
             release_catalog.search_release_recipes,
@@ -157,6 +194,7 @@ async def processor(
     for_suggestions=False,
     exact_nutrition_limit=None,
     candidate_languages=None,
+    rotation_keys=None,
 ):
     from . import websocket_v13 as v13
     from . import websocket_v18 as v18
@@ -276,6 +314,7 @@ async def processor(
                 settings,
                 candidate_languages,
                 exact_nutrition_limit,
+                rotation_keys=rotation_keys,
             )
             # A max-cost prefilter has already attached the exact cost to each
             # surviving row, so the final pass can reuse it rather than calculate
