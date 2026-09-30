@@ -470,6 +470,7 @@ async def _generate_week(
         raise ValueError("The selected meal is no longer in the next seven days")
     if progress:
         progress("catalog_index", message="Preparing weekly candidates")
+    candidate_history_delta = []
     if shared_filters is not None and await hass.async_add_executor_job(release_catalog.release_catalog_ready):
         from .shared_recipe_runtime import search_filtered
         result = await search_filtered(
@@ -483,6 +484,7 @@ async def _generate_week(
             candidate_history=getattr(lifecycle, "candidate_history", []),
         )
         candidates, errors = result["items"], []
+        candidate_history_delta = result.get("candidateHistoryDelta") or []
     else:
         candidates, errors = await _week_candidates(
             hass, bridge, lifecycle,
@@ -795,7 +797,8 @@ async def _generate_week(
     if shared_filters is not None and hasattr(lifecycle, "async_record_candidate_history"):
         from .shared_recipe_runtime import _candidate_identity
         await lifecycle.async_record_candidate_history(
-            [_candidate_identity(row) for row in candidates]
+            candidate_history_delta
+            or [_candidate_identity(row) for row in candidates]
         )
     if progress:
         progress("persist", completed=1, total=1, message="Weekly plan saved")

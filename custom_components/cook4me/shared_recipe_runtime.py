@@ -14,9 +14,11 @@ def compact_candidate_history(previous, rows, maximum=12000):
     """Keep oldest->newest unique family IDs so the whole catalog can rotate."""
     ordered = []
     seen = set()
-    for value in list(previous or []) + [
-        _candidate_identity(row) for row in rows if isinstance(row, dict)
-    ]:
+    incoming = [
+        _candidate_identity(row) if isinstance(row, dict) else str(row or "").strip()
+        for row in (rows or [])
+    ]
+    for value in list(previous or []) + incoming:
         value = str(value or "").strip()
         if not value:
             continue
@@ -38,12 +40,12 @@ def _bounded_suggestion_candidates(
     """Rotate a diverse exact-nutrition shortlist across every eligible recipe."""
     from .today_logic import recipe_matches_meal_types
 
+    if not rows:
+        return []
     try:
-        maximum = max(1, int(limit))
+        maximum = min(len(rows), max(1, int(limit)))
     except (TypeError, ValueError):
-        return rows
-    if len(rows) <= maximum:
-        return rows
+        maximum = len(rows)
 
     meal_types = [
         str(value)
@@ -144,6 +146,49 @@ def _bounded_suggestion_candidates(
         add(row)
     return chosen
 
+
+def _cheap_suggestion_prefilter(
+    rows,
+    settings,
+    *,
+    ingredient_groups=None,
+    season_country="",
+    season_month=None,
+):
+    """Apply filters that do not require per-recipe stock/diet scoring."""
+    from .shared_recipe_filters import recipe_seasonally_available
+    from .today_logic import recipe_matches_meal_types
+
+    groups = ingredient_groups or {}
+    selected = [
+        set(groups.get(key, [key.removeprefix("k:").removeprefix("i:")]))
+        for key in settings.get("ingredients") or []
+    ]
+    result = []
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        if settings.get("mealTypes") and not recipe_matches_meal_types(
+            row, settings["mealTypes"]
+        ):
+            continue
+        if settings.get("seasonalIngredients") and not recipe_seasonally_available(
+            row, season_country, season_month
+        ):
+            continue
+        if selected:
+            identities = {
+                str(ingredient.get(key) or "")
+                for ingredient in row.get("ingredients") or []
+                if isinstance(ingredient, dict)
+                for key in ("ingredientId", "key", "foodKey", "id")
+                if ingredient.get(key)
+            }
+            if any(not aliases.intersection(identities) for aliases in selected):
+                continue
+        result.append(row)
+    return result
+
 def executor_progress(callback):
     """Marshal executor progress onto HA's event loop before firing events."""
     import asyncio
@@ -180,7 +225,7 @@ async def search_filtered(
             candidate_languages=languages,
             candidate_history=candidate_history,
         )
-        return await report.run(bridge.hass, partial(
+        result = await report.run(bridge.hass, partial(
             release_catalog.search_release_recipes,
             query,
             language=language,
@@ -192,6 +237,14 @@ async def search_filtered(
             filter_rows=process,
             progress=report,
         ))
+        if exact_nutrition_limit is not None and isinstance(result, dict):
+            result["candidateHistoryDelta"] = list(
+                getattr(process, "candidate_history_delta", [])
+            )
+            result["candidateScannedCount"] = int(
+                getattr(process, "candidate_scanned_count", 0)
+            )
+        return result
     finally:
         report.close()
 
@@ -279,63 +332,112 @@ async def processor(
         # for every recipe in the catalog; the calculation does not mutate them.
         generic, stock_lots = nutrients.generic, nutrients.stock_lots
         rows = [row for row in rows if recipe_identity(row) not in recent]
-        if rank or "dietProfile" in settings:
-            rows = v13._rank_filtered(
-                bridge,
-                rows,
-                diet=settings["diet"],
-                limit=max(1, len(rows)),
-                unlimited=True,
-                diet_filters=settings if "dietProfile" in settings else None,
-                for_suggestions=for_suggestions,
-                progress=(
-                    lambda done, total: progress(
-                        "ranking", completed=done, total=total
-                    )
-                )
-                if progress
-                else None,
-            )
+        process.candidate_history_delta = []
+        process.candidate_scanned_count = 0
 
-        # Today/Week suggestion generation used to run exact FEFO nutrition for
-        # every catalog recipe (9k+ on the full release). Apply every hard filter
-        # first using already-compiled catalog nutrition, retain a diverse bounded
-        # shortlist, and only then calculate user/inventory-specific nutrition.
-        # Manual/official search keeps the historical unbounded behavior unless a
-        # caller explicitly opts into this bound.
-        if (
-            exact_nutrition_limit is not None
-            and for_suggestions
-            and len(rows) > max(1, int(exact_nutrition_limit))
-        ):
-            prefilter_settings = dict(settings)
-            # Expiry preference is a score adjustment, not an eligibility rule.
-            # Keep the base score untouched until the final exact pass.
-            prefilter_settings["preferExpiring"] = True
-            rows = apply_filters(
+        bounded_suggestions = (
+            exact_nutrition_limit is not None and for_suggestions
+        )
+        final_cost_calculator = cost_calculator
+
+        if bounded_suggestions:
+            target = max(1, int(exact_nutrition_limit))
+            rows = _cheap_suggestion_prefilter(
                 rows,
-                prefilter_settings,
+                settings,
                 ingredient_groups=aliases,
-                cost=cost_calculator,
-                nutrition=None,
-                score_targets=False,
-                progress=None,
                 season_country=season_country,
                 season_month=season_month,
             )
-            rows = _bounded_suggestion_candidates(
+            ordered = _bounded_suggestion_candidates(
                 rows,
                 settings,
                 candidate_languages,
-                exact_nutrition_limit,
+                len(rows) or 1,
                 candidate_history=candidate_history,
             )
-            # A max-cost prefilter has already attached the exact cost to each
-            # surviving row, so the final pass can reuse it rather than calculate
-            # the same price twice.
+
+            # Expensive diet/substitution, exact stock quantity and expiry ranking
+            # now runs only on rotating chunks. Stop once enough fully eligible
+            # recipes exist for the exact-nutrition window. This preserves access
+            # to the entire catalog over time without a 9k+ heavy ranking pass.
+            accepted = []
+            evaluated = []
+            batch_size = max(32, min(96, target))
+            prefilter_settings = dict(settings)
+            # Final scoring applies this preference once, after exact nutrition.
+            prefilter_settings["preferExpiring"] = True
+
+            for offset in range(0, len(ordered), batch_size):
+                chunk = ordered[offset : offset + batch_size]
+                if not chunk:
+                    break
+                evaluated.extend(chunk)
+                ranked_chunk = v13._rank_filtered(
+                    bridge,
+                    chunk,
+                    diet=settings["diet"],
+                    limit=max(1, len(chunk)),
+                    unlimited=True,
+                    diet_filters=(
+                        settings if "dietProfile" in settings else None
+                    ),
+                    for_suggestions=for_suggestions,
+                    progress=None,
+                )
+                filtered_chunk = apply_filters(
+                    ranked_chunk,
+                    prefilter_settings,
+                    ingredient_groups=aliases,
+                    cost=cost_calculator,
+                    nutrition=None,
+                    score_targets=False,
+                    progress=None,
+                    season_country=season_country,
+                    season_month=season_month,
+                )
+                accepted.extend(filtered_chunk)
+                process.candidate_scanned_count = len(evaluated)
+                process.candidate_history_delta = [
+                    _candidate_identity(row) for row in evaluated
+                    if _candidate_identity(row)
+                ]
+                if progress:
+                    progress(
+                        "ranking",
+                        completed=min(len(accepted), target),
+                        total=target,
+                        message=(
+                            f"{len(evaluated)} catalog candidates checked"
+                        ),
+                    )
+                if len(accepted) >= target:
+                    break
+
+            rows = accepted[:target]
+            # maxCost, when enabled, was already calculated in the bounded
+            # eligibility pass and is attached to each surviving row.
             final_cost_calculator = None
         else:
-            final_cost_calculator = cost_calculator
+            if rank or "dietProfile" in settings:
+                rows = v13._rank_filtered(
+                    bridge,
+                    rows,
+                    diet=settings["diet"],
+                    limit=max(1, len(rows)),
+                    unlimited=True,
+                    diet_filters=(
+                        settings if "dietProfile" in settings else None
+                    ),
+                    for_suggestions=for_suggestions,
+                    progress=(
+                        lambda done, total: progress(
+                            "ranking", completed=done, total=total
+                        )
+                    )
+                    if progress
+                    else None,
+                )
 
         return apply_filters(
             rows,
