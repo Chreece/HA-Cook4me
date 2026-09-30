@@ -171,6 +171,7 @@ def recipe_quantity_feasibility(
     inventory: Any,
     *,
     availability: Any = None,
+    prepared_stock: Any = None,
 ) -> dict[str, Any]:
     """Compare recipe requirements with actual stock without guessing units.
 
@@ -179,7 +180,11 @@ def recipe_quantity_feasibility(
     amounts or incompatible units are reported as unknown rather than pretending
     that presence means enough stock exists.
     """
-    stock = coverage_stock(normalize_inventory(inventory))
+    stock = (
+        prepared_stock
+        if isinstance(prepared_stock, list)
+        else coverage_stock(normalize_inventory(inventory))
+    )
     availability_rows = availability if isinstance(availability, list) else []
     rows: list[dict[str, Any]] = []
     known_fractions: list[float] = []
