@@ -48,10 +48,23 @@ def _compact_match(value: Any) -> dict[str, Any] | None:
         "nutritionGoalCoverage", "calorieTarget", "caloriePerServing",
         "calorieDelta", "calorieTargetBonus", "todayBaseScore",
         "safe", "diet", "dietCheckVersion", "dietRulesSignature", "dietary", "violations",
-        "requiresSubstitutions", "eligibleWithSubstitutions", "substitutions", "ingredientChanges",
+        "requiresSubstitutions", "eligibleWithSubstitutions",
+        "substitutionCoverageComplete", "substitutionCandidateCount",
+        "substitutionSources", "substitutions", "ingredientChanges",
         "missingIngredientCount", "quantityShortageCount",
     )
     out = {key: deepcopy(value[key]) for key in keys if key in value}
+    # v260 persisted adapted Today cards before substitutionCoverageComplete was
+    # included in the compact match. In diet rules v76, both of these flags are
+    # assigned from the exact same validated coverage boolean, so reconstructing
+    # the omitted field is a lossless migration rather than a new safety guess.
+    if (
+        "substitutionCoverageComplete" not in out
+        and int(value.get("dietCheckVersion") or 0) == 76
+        and value.get("requiresSubstitutions") is True
+        and value.get("eligibleWithSubstitutions") is True
+    ):
+        out["substitutionCoverageComplete"] = True
     shortages = value.get("quantityShortages")
     if isinstance(shortages, list):
         out["quantityShortageCount"] = len(shortages)
