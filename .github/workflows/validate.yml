@@ -103,6 +103,7 @@ jobs:
           node --check custom_components/cook4me/frontend/fullscreen-progress-guard-v260.js
           node --check custom_components/cook4me/frontend/today-substitution-persistence-v261.js
           node --check custom_components/cook4me/frontend/fullscreen-stability-v262.js
+          node --check custom_components/cook4me/frontend/seasonal-filter-state-v263.js
           node --check custom_components/cook4me/frontend/ingredient-stock-assignment-v249.js
           python tests/test_menu_footer_v126.py
           python tests/test_announcement_settings_v127.py
@@ -172,6 +173,7 @@ jobs:
           python tests/test_today_substitution_persistence_v261.py
           node --test tests/test_today_substitution_persistence_v261.mjs
           node --test tests/test_fullscreen_return_stability_v262.mjs
+          node --test tests/test_seasonal_filter_state_v263.mjs
           python tests/test_greek_catalog_audit_v182.py
           python tests/test_greek_catalog_audit_v183.py
           python tests/test_greek_catalog_audit_v184.py
