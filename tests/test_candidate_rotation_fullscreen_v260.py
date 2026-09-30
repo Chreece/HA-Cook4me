@@ -142,8 +142,8 @@ class WiringTests(unittest.TestCase):
         self.assertIn("_MAX_CANDIDATE_HISTORY = 12000", today_store)
         self.assertIn('"candidateHistory"] = candidate_history[-_MAX_CANDIDATE_HISTORY:]', today_store)
 
-        self.assertIn("candidate_history=lifecycle.candidate_history", week_ws)
-        self.assertIn("async_record_candidate_history", week_ws)
+        self.assertIn('candidate_history=getattr(lifecycle, "candidate_history", [])', week_ws)
+        self.assertIn('hasattr(lifecycle, "async_record_candidate_history")', week_ws)\n        self.assertIn("async_record_candidate_history", week_ws)
         self.assertIn("def candidate_history(self)", lifecycle)
         self.assertIn("async def async_record_candidate_history", lifecycle)
 
