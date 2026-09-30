@@ -79,7 +79,9 @@ export const FullscreenStabilityMixin=Base=>class extends Base{
  }
  _v260Styles(){
   if(!this.shadowRoot||this.shadowRoot.querySelector('#fullscreenStabilityV260'))return;
-  const style=document.createElement('style');
+  const doc=this.ownerDocument||globalThis.document;
+  if(!doc?.createElement)return;
+  const style=doc.createElement('style');
   style.id='fullscreenStabilityV260';
   style.textContent=`
    /* Removing/completing a progress card must repaint only the progress stack,
