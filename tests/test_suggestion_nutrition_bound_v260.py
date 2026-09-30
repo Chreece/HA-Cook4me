@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import ast
 import asyncio
-from hashlib import sha256
 from copy import deepcopy
 from pathlib import Path
 import sys
