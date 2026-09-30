@@ -15,8 +15,10 @@ from .ingredient_catalog import enrich_match_with_house_keys
 from .inventory import (
     DEFAULT_EXPIRY_WARNING_DAYS,
     expiring_inventory_items,
+    normalize_inventory,
     recipe_expiry_priority,
 )
+from .stock_coverage import coverage_stock
 from .recipe_logic import score_recipe
 
 _DIET_FILTERS = ("profile", "omnivore", "pescatarian", "vegetarian", "vegan")
@@ -75,6 +77,8 @@ def _rank_filtered(
         from .diet_profiles import scoring_profile
         profile = scoring_profile(profile, diet_filters)
     house = profile.get("houseIngredients") or []
+    normalized_house = normalize_inventory(house)
+    quantity_stock = coverage_stock(normalized_house)
     today = dt_util.now().date()
 
     scored: list[dict[str, Any]] = []
@@ -108,6 +112,7 @@ def _rank_filtered(
             result,
             house,
             availability=result["match"].get("ingredientAvailability"),
+            prepared_stock=quantity_stock,
         )
         result["match"]["quantityCoverage"] = quantity["quantityCoverage"]
         result["match"]["quantityConfidence"] = quantity["confidence"]
@@ -121,6 +126,7 @@ def _rank_filtered(
             house,
             today=today,
             within_days=DEFAULT_EXPIRY_WARNING_DAYS,
+            prepared_inventory=normalized_house,
         )
         base_score = float(result["match"].get("score") or 0.0)
         expiry_priority = float(expiry.get("priority") or 0.0)
