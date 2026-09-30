@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import ast
 import asyncio
+from hashlib import sha256
 from copy import deepcopy
 from pathlib import Path
 import sys
@@ -140,6 +141,42 @@ def fake_apply_filters(
 
 
 class SuggestionBoundTests(unittest.IsolatedAsyncioTestCase):
+    def test_rotation_keeps_quality_reserve_but_changes_full_catalog_window(self):
+        ns = {"__name__": NAME + ".rotation", "__package__": NAME}
+        functions(
+            COMP / "shared_recipe_runtime.py",
+            {"_bounded_suggestion_candidates"},
+            ns,
+        )
+        rows = [
+            {
+                "id": str(index),
+                "language": "de" if index % 2 == 0 else "fr",
+                "mealTypes": ["breakfast"] if index % 3 == 0 else ["dinner"],
+                "match": {"score": 2000 - index},
+            }
+            for index in range(1000)
+        ]
+        settings = {"mealTypes": ["breakfast", "dinner"]}
+        first = ns["_bounded_suggestion_candidates"](
+            rows, settings, ["de", "fr"], 100, rotation_keys=["first-plan"]
+        )
+        second = ns["_bounded_suggestion_candidates"](
+            rows, settings, ["de", "fr"], 100, rotation_keys=["second-plan"]
+        )
+        first_ids = {row["id"] for row in first}
+        second_ids = {row["id"] for row in second}
+
+        self.assertEqual(len(first), 100)
+        self.assertEqual(len(second), 100)
+        self.assertNotEqual(first_ids, second_ids)
+        # The strongest quarter remains in play every time.
+        self.assertTrue({str(index) for index in range(25)}.issubset(first_ids))
+        self.assertTrue({str(index) for index in range(25)}.issubset(second_ids))
+        # Rotation reaches beyond a permanently fixed top-100 shortlist.
+        self.assertTrue(any(int(value) >= 100 for value in first_ids))
+        self.assertTrue(any(int(value) >= 100 for value in second_ids))
+
     async def test_9519_recipe_catalog_runs_exact_nutrition_only_for_shortlist(self):
         exact_calls = []
         progress_events = []
@@ -207,6 +244,7 @@ class SuggestionBoundTests(unittest.IsolatedAsyncioTestCase):
             for_suggestions=True,
             exact_nutrition_limit=192,
             candidate_languages=["de", "fr"],
+            rotation_keys=["prior-family-a", "prior-family-b"],
             progress=lambda phase, **values: progress_events.append(
                 (phase, values)
             ),
@@ -247,6 +285,10 @@ class SuggestionBoundTests(unittest.IsolatedAsyncioTestCase):
         ]
         self.assertTrue(nutrition_totals)
         self.assertLessEqual(max(nutrition_totals), 192)
+        self.assertTrue(
+            any(int(recipe_id) >= 192 for recipe_id in exact_calls),
+            "rotation never reached outside the old fixed top shortlist",
+        )
 
     async def test_unbounded_processor_keeps_historical_exact_behavior(self):
         exact_calls = []
@@ -331,6 +373,9 @@ class WiringTests(unittest.TestCase):
         )
         self.assertIn("nutrition=None", runtime)
         self.assertIn("_bounded_suggestion_candidates(", runtime)
+        self.assertIn("rotation_keys=rotation_keys", runtime)
+        self.assertIn("rotation_keys=rotation_keys", today)
+        self.assertIn("rotation_keys=rotation_keys", week)
 
     def test_fefo_copies_only_relevant_lots_not_whole_store(self):
         source = (COMP / "nutrition_fefo.py").read_text(encoding="utf-8")
