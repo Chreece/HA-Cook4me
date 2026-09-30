@@ -68,6 +68,8 @@ def _rank_filtered(
     for_suggestions: bool = True,
 ) -> list[dict[str, Any]]:
     """Rank meal suggestions; manual search/validation can retain cooking guides."""
+    from .inventory import normalize_inventory
+    from .stock_coverage import coverage_stock
     from .recipe_suitability import is_cooking_guide
     profile = deepcopy(bridge.recipe_hub.profile)
     profile["habitTerms"] = bridge.recipe_hub.habit_terms
