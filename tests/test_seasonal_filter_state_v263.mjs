@@ -105,6 +105,22 @@ test('server restore preserves seasonal choice in its owning view',async()=>{
  assert.equal(panel._filters().seasonalIngredients,true);
 });
 
+
+test('actual seasonal control writes through the normal per-view filter preference path',()=>{
+ const season=readFileSync(
+  new URL('../custom_components/cook4me/frontend/ingredient-season-v223.js',import.meta.url),
+  'utf8',
+ );
+ const filters=readFileSync(
+  new URL('../custom_components/cook4me/frontend/cook4me-panel-v63.js',import.meta.url),
+  'utf8',
+ );
+ assert.match(season,/input\.dataset\.field='seasonalIngredients'/);
+ assert.match(season,/_persistPreferences\(\{filters:\{\.\.\.this\._filters\(\),seasonalIngredients:input\.checked\}\}\)/);
+ assert.match(filters,/next\[input\.dataset\.field\]=input\.type==="checkbox"\?input\.checked:input\.value/);
+ assert.match(filters,/_persistPreferences\(\{filters:next\}\)/);
+});
+
 test('active seasonal choice is rendered outside the filter button and opens ingredients filter',()=>{
  const source=readFileSync(
   new URL('../custom_components/cook4me/frontend/seasonal-filter-state-v263.js',import.meta.url),
