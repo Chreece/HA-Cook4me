@@ -23,7 +23,7 @@ STEPS=[
 ]
 
 def renderer_html():
-    module=(ROOT/'custom_components/cook4me/frontend/recipe-step-modes-v204.js').read_bytes()
+    module=(ROOT/'custom_components/cook4me/frontend/recipe-step-modes-v259.js').read_bytes()
     url='data:text/javascript;base64,'+base64.b64encode(module).decode()
     source=(ROOT/'custom_components/cook4me/frontend/cook4me-panel-v66.js').read_text()
     body=source[source.index(' _v66Body('):source.index('\n _v66IngredientName(')]
@@ -31,7 +31,8 @@ def renderer_html():
     import {RecipeStepModesMixin,decorateStepModes} from "'''+url+'''";
     class Boundary extends HTMLElement {
      constructor(){super();this.attachShadow({mode:'open'});this.language='el';}
-     _uiIngredientLanguage(){return this.language;}
+     _langCode(){return this.language;}
+     _uiIngredientLanguage(){return 'fr';}
      _escape(value){return String(value??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;');}
      _t(value){return value;}_languageName(value){return value;}_v66IngredientName(value){return value.name;}
      _coverage(){return {percent:null};}_displayAmount(){return '';}_servingOptions(){return [];}_servings(){return 2;}
@@ -70,6 +71,7 @@ with sync_playwright() as p:
         check(page,"app.shadowRoot.querySelector('#modePreview [data-v66-step=\"3\"] .v204-mode-list').textContent.includes('→')",prefix+'multiple modes shown in order')
         check(page,"app.shadowRoot.querySelector('#modePreview [data-v66-step=\"4\"] [data-v204-mode=missing]')!==null",prefix+'opaque program is not guessed from instructions')
         check(page,"!window.injected&&!app.shadowRoot.querySelector('#modePreview .v204-step-modes img')",prefix+'program names rendered as text not markup')
+        check(page,"!app.shadowRoot.querySelector('#modePreview').textContent.includes('<img src=x')&&app.shadowRoot.querySelector('#modePreview').textContent.includes('Άλλη λειτουργία μαγειρέματος')",prefix+'unknown source-language program is not visible and uses UI-language fallback')
         check(page,"JSON.stringify(modeRecipe)===originalModes",prefix+'recipe data and instructions not modified')
         page.evaluate('drawModes();drawModes()')
         check(page,"app.shadowRoot.querySelectorAll('#modePreview [data-v204-step-modes]').length===5&&app.shadowRoot.querySelectorAll('#stepModesV204').length===1",prefix+'repeat rendering does not duplicate badges or stylesheet')
@@ -77,13 +79,13 @@ with sync_playwright() as p:
         check(page,"!app.shadowRoot.querySelector('#modePreview .v204-step-modes button, #modePreview .v204-step-modes input')",prefix+'badges are information not cooker controls')
         if not args.full_chain:
             page.evaluate("app.language='de';drawModes()")
-        else:page.evaluate("app._uiIngredientLanguage=()=> 'de';drawModes()")
-        check(page,"app.shadowRoot.querySelector('#modePreview [data-v204-mode=pressure]').textContent.includes('Druckgaren')",prefix+'UI-language change updates mode')
+        else:page.evaluate("app._langCode=()=> 'de';app._uiIngredientLanguage=()=> 'fr';drawModes()")
+        check(page,"app.shadowRoot.querySelector('#modePreview [data-v204-mode=pressure]').textContent.includes('Druckgaren')",prefix+'actual UI-language change updates mode even when ingredient language differs')
         if args.screenshots and not args.full_chain:page.screenshot(path=str(args.screenshots/f'step-modes-{width}.png'),full_page=True)
         page.evaluate("modeRecipe.steps=[];drawModes()")
         check(page,"!app.shadowRoot.querySelector('#modePreview [data-v204-step-modes]')",prefix+'empty recipe does not retain stale badges')
         if args.full_chain:
-            page.evaluate('steps=>{app.shadowRoot.getElementById("modePreview").remove();app._uiIngredientLanguage=()=>"el";app.show("today");const r=app._todayResults[0];r.steps=steps;const s=app._v66State(r);s.expanded=true;s.sections.add("steps");app._renderTab()}',STEPS)
+            page.evaluate('steps=>{app.shadowRoot.getElementById("modePreview").remove();app._langCode=()=>"el";app._uiIngredientLanguage=()=>"de";app.show("today");const r=app._todayResults[0];r.steps=steps;const s=app._v66State(r);s.expanded=true;s.sections.add("steps");app._renderTab()}',STEPS)
             check(page,"app.shadowRoot.querySelector('article.ui203-recipe [data-v204-mode=pressure]')!==null",prefix+'actual v203 card renderer retains step modes')
             page.locator('[data-v66-photo]').first.click()
             page.wait_for_function('app._v63RecipeDialog?.isConnected')
