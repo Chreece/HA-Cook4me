@@ -712,10 +712,15 @@ def recipe_expiry_priority(
     *,
     today: date | None = None,
     within_days: int = DEFAULT_EXPIRY_WARNING_DAYS,
+    prepared_inventory: Any = None,
 ) -> dict[str, Any]:
     reference = today or date.today()
     horizon = max(0, int(within_days))
-    stock = normalize_inventory(inventory)
+    stock = (
+        prepared_inventory
+        if isinstance(prepared_inventory, list)
+        else normalize_inventory(inventory)
+    )
     seen: set[str] = set()
     seen_lots: set[str] = set()
     matches: list[dict[str, Any]] = []
