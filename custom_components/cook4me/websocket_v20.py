@@ -471,7 +471,7 @@ async def _generate_week(
     if progress:
         progress("catalog_index", message="Preparing weekly candidates")
     if shared_filters is not None and await hass.async_add_executor_job(release_catalog.release_catalog_ready):
-        from .shared_recipe_runtime import search_filtered
+        from .shared_recipe_runtime import search_filtered, compact_candidate_history
         result = await search_filtered(
             bridge,
             query=query,
@@ -480,6 +480,7 @@ async def _generate_week(
             filters=shared_filters,
             progress=progress,
             exact_nutrition_limit=_MAX_WEEK_CANDIDATES,
+            candidate_history=lifecycle.candidate_history,
         )
         candidates, errors = result["items"], []
     else:
@@ -791,6 +792,11 @@ async def _generate_week(
         for slot_id, shape in planned_shape.items()
     )
     await lifecycle.async_replace_week(week_start, planned)
+    if shared_filters is not None:
+        from .shared_recipe_runtime import compact_candidate_history
+        await lifecycle.async_record_candidate_history(
+            compact_candidate_history(lifecycle.candidate_history, candidates)
+        )
     if progress:
         progress("persist", completed=1, total=1, message="Weekly plan saved")
     return {
