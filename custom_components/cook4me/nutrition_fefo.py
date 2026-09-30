@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from copy import deepcopy
 import math
 from typing import Any
 
@@ -105,7 +104,7 @@ def calculate_recipe_nutrition_fefo(
     """Predict meal nutrition from the same inventory batch order used for FEFO consumption."""
     stock = normalize_inventory(inventory)
     generic = generic or {}
-    stock_lots = deepcopy(stock_lots or {})
+    stock_lots = stock_lots or {}
     totals: dict[str, float] = {}
     details: list[dict[str, Any]] = []
     fractions: list[float] = []
@@ -127,7 +126,17 @@ def calculate_recipe_nutrition_fefo(
         required_remaining = amount
         covered = 0.0
         lot_ids = {lot.get("id") for lot in (current or {}).get("lots") or []}
-        exact_pool = [row for owner, records in stock_lots.items() for row in records if isinstance(row, dict) and (owner == identity or row.get("inventoryLotId") in lot_ids)] if isinstance(stock_lots, dict) else []
+        # Work on shallow copies of only the relevant lot records. The allocator
+        # updates quantity/unit while consuming this recipe; copying the complete
+        # nutrition-lot store once per candidate made Today generation scale with
+        # the entire stored nutrition database.
+        exact_pool = [
+            dict(row)
+            for owner, records in stock_lots.items()
+            for row in records
+            if isinstance(row, dict)
+            and (owner == identity or row.get("inventoryLotId") in lot_ids)
+        ] if isinstance(stock_lots, dict) else []
         generic_profile = _generic_profile(generic, identity)
 
         if current and not current.get("unlimited"):

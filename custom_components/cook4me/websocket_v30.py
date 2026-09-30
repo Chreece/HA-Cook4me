@@ -36,6 +36,7 @@ from .today_multilang import select_catalog_balanced
 from .today_plan_store import today_plan_store_for_bridge
 
 _PROGRESS_ID = vol.Optional("client_operation_id", default="")
+_MAX_TODAY_EXACT_NUTRITION_CANDIDATES = 192
 
 
 def _text(value: Any) -> str:
@@ -264,8 +265,15 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
             languages = list(dict.fromkeys(str(code).lower().replace("_", "-").split("-", 1)[0]
                 for code in msg.get("languages", []) if recipe_languages.is_official_catalog_language(code)))
         coordinator.progress(operation, "catalog_index")
-        found = await search_filtered(bridge, query=_text(msg.get("query")), languages=languages, language=msg.get("ui_language", "en"), filters=filters,
-            progress=lambda phase, **values: coordinator.progress(operation, phase, **values))
+        found = await search_filtered(
+            bridge,
+            query=_text(msg.get("query")),
+            languages=languages,
+            language=msg.get("ui_language", "en"),
+            filters=filters,
+            progress=lambda phase, **values: coordinator.progress(operation, phase, **values),
+            exact_nutrition_limit=_MAX_TODAY_EXACT_NUTRITION_CANDIDATES,
+        )
         rows = found["items"]
         for row in rows:
             row["todayCatalogLanguage"] = row.get("language")
