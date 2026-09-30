@@ -472,7 +472,15 @@ async def _generate_week(
         progress("catalog_index", message="Preparing weekly candidates")
     if shared_filters is not None and await hass.async_add_executor_job(release_catalog.release_catalog_ready):
         from .shared_recipe_runtime import search_filtered
-        result = await search_filtered(bridge, query=query, languages=languages, language=ui_language, filters=shared_filters, progress=progress)
+        result = await search_filtered(
+            bridge,
+            query=query,
+            languages=languages,
+            language=ui_language,
+            filters=shared_filters,
+            progress=progress,
+            exact_nutrition_limit=_MAX_WEEK_CANDIDATES,
+        )
         candidates, errors = result["items"], []
     else:
         candidates, errors = await _week_candidates(
