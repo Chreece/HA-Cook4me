@@ -126,8 +126,8 @@ test('active seasonal choice is rendered outside the filter button and opens ing
   new URL('../custom_components/cook4me/frontend/seasonal-filter-state-v263.js',import.meta.url),
   'utf8',
  );
- assert.match(source,/data\.v263ActiveFilters/);
- assert.match(source,/data\.v263ActiveFilter='seasonalIngredients'/);
+ assert.match(source,/summary\.dataset\.v263ActiveFilters=''/);
+ assert.match(source,/chip\.dataset\.v263ActiveFilter='seasonalIngredients'/);
  assert.match(source,/bar\.insertAdjacentElement\('afterend',summary\)/);
  assert.match(source,/_showFilter\('ingredients'\)/);
 });
