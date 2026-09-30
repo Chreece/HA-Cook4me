@@ -30,7 +30,9 @@ jobs:
       - name: Source program evidence and translations
         run: python tests/test_recipe_step_modes_v204.py
       - name: Step mode localization
-        run: node --test tests/test_recipe_step_modes_v204.mjs
+        run: |
+          node --test tests/test_recipe_step_modes_v204.mjs
+          node --test tests/test_recipe_step_modes_v259.mjs
       - name: Compact header names, permissions and quiet manual steps
         run: |
           python tests/test_device_header_v207.py
@@ -47,5 +49,6 @@ jobs:
         run: |
           python -m compileall -q custom_components/cook4me
           node --check custom_components/cook4me/frontend/recipe-step-modes-v204.js
+          node --check custom_components/cook4me/frontend/recipe-step-modes-v259.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v180.js
           node --check custom_components/cook4me/frontend/device-header-v207.js
