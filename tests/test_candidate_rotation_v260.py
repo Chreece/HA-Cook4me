@@ -123,7 +123,7 @@ class CandidateRotationTests(unittest.TestCase):
         self.assertIn("candidate_rotation_cursor=rotation_cursor", today)
         self.assertIn("recent_candidates=suggestion_history", today)
         self.assertIn("_TODAY_CANDIDATE_ROTATION_STEP = 144", today)
-        self.assertIn("def _week_candidate_rotation(", week)
+        self.assertIn('rotation_seed = "|".join(sorted(recent_candidates))', week)
         self.assertIn("candidate_rotation_cursor=rotation_cursor", week)
         self.assertIn("recent_candidates=recent_candidates", week)
 
