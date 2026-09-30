@@ -2,9 +2,24 @@
 from .shared_recipe_filters import apply_filters, ingredient_aliases, normalize_filters
 
 
-def _bounded_suggestion_candidates(rows, settings, languages, limit):
-    """Keep a diverse bounded shortlist before exact inventory nutrition work."""
-    from .today_logic import recipe_matches_meal_types
+def _bounded_suggestion_candidates(
+    rows,
+    settings,
+    languages,
+    limit,
+    *,
+    rotation_cursor=0,
+    recent_candidates=(),
+):
+    """Keep a diverse rotating shortlist before exact inventory nutrition work.
+
+    The whole eligible catalog remains reachable over repeated generations:
+    a quality anchor is kept from the current score order, while most shortlist
+    slots advance through the remaining eligible pool. Recently suggested
+    families are moved behind unseen candidates, but remain available once the
+    eligible pool is exhausted.
+    """
+    from .today_logic import recipe_identity, recipe_matches_meal_types
 
     try:
         maximum = max(1, int(limit))
@@ -12,6 +27,11 @@ def _bounded_suggestion_candidates(rows, settings, languages, limit):
         return rows
     if len(rows) <= maximum:
         return rows
+
+    try:
+        cursor = max(0, int(rotation_cursor))
+    except (TypeError, ValueError):
+        cursor = 0
 
     meal_types = [
         str(value)
@@ -24,8 +44,22 @@ def _bounded_suggestion_candidates(rows, settings, languages, limit):
         if code and code not in catalogs:
             catalogs.append(code)
 
-    chosen = []
-    seen = set()
+    recent = set()
+    for value in recent_candidates or ():
+        if isinstance(value, dict):
+            ident = str(
+                value.get("familyId")
+                or value.get("displayFamilyId")
+                or recipe_identity(value)
+                or ""
+            )
+        else:
+            ident = str(value or "")
+        if ident:
+            recent.add(ident)
+
+    def identity(row):
+        return str(row.get("displayFamilyId") or recipe_identity(row) or id(row))
 
     def row_language(row):
         value = (
@@ -36,22 +70,42 @@ def _bounded_suggestion_candidates(rows, settings, languages, limit):
         )
         return str(value).strip().lower().replace("_", "-").split("-", 1)[0]
 
+    # Preserve score order within the unseen/recent partitions. This means the
+    # anchor is still high quality, while the rotating portion walks the entire
+    # eligible catalog instead of becoming a permanent top-N window.
+    unseen = [row for row in rows if identity(row) not in recent]
+    seen_recently = [row for row in rows if identity(row) in recent]
+    ordered = [*unseen, *seen_recently]
+    if not ordered:
+        return []
+
+    chosen = []
+    selected_ids = set()
+
     def add(row):
-        marker = id(row)
-        if marker in seen or len(chosen) >= maximum:
+        marker = identity(row)
+        if marker in selected_ids or len(chosen) >= maximum:
             return False
-        seen.add(marker)
+        selected_ids.add(marker)
         chosen.append(row)
         return True
 
-    # First preserve at least one candidate for every requested meal/catalog pair
-    # that actually exists. This prevents a globally strong dinner catalog from
-    # crowding breakfast or another selected source language out of the exact
-    # nutrition shortlist.
+    # Keep about one quarter of the shortlist anchored to the current strongest
+    # eligible recipes. The remaining three quarters rotate through the whole
+    # catalog, so exact nutrition stays bounded without shrinking long-term
+    # variety to a fixed candidate set.
+    anchor_quota = max(8, min(maximum // 4, 48))
+    for row in ordered:
+        if len(chosen) >= anchor_quota:
+            break
+        add(row)
+
+    # Guarantee requested meal/catalog combinations before filling the rotating
+    # window. Prefer unseen recipes; recently suggested rows are fallback only.
     if meal_types and catalogs:
         for meal_type in meal_types:
             for catalog in catalogs:
-                for row in rows:
+                for row in ordered:
                     if (
                         row_language(row) == catalog
                         and recipe_matches_meal_types(row, [meal_type])
@@ -61,39 +115,18 @@ def _bounded_suggestion_candidates(rows, settings, languages, limit):
                 if len(chosen) >= maximum:
                     return chosen
 
-    # Reserve roughly half of the shortlist for meal-category coverage.
-    if meal_types:
-        meal_quota = max(4, min(24, maximum // max(1, len(meal_types) * 2)))
-        for meal_type in meal_types:
-            count = 0
-            for row in rows:
-                if not recipe_matches_meal_types(row, [meal_type]):
-                    continue
-                if add(row):
-                    count += 1
-                if count >= meal_quota or len(chosen) >= maximum:
-                    break
+    # Walk through the remainder with a persistent/deterministic cursor. The
+    # modulo wrap means every eligible row can eventually enter exact nutrition.
+    remaining = [row for row in ordered if identity(row) not in selected_ids]
+    if remaining:
+        offset = cursor % len(remaining)
+        rotating = remaining[offset:] + remaining[:offset]
+        for row in rotating:
+            if len(chosen) >= maximum:
+                break
+            add(row)
 
-    # Reserve another slice for catalog-language diversity.
-    if catalogs:
-        language_quota = max(3, min(16, maximum // max(1, len(catalogs) * 4)))
-        for catalog in catalogs:
-            count = 0
-            for row in rows:
-                if row_language(row) != catalog:
-                    continue
-                if add(row):
-                    count += 1
-                if count >= language_quota or len(chosen) >= maximum:
-                    break
-
-    # Fill the remainder in the existing score order.
-    for row in rows:
-        if len(chosen) >= maximum:
-            break
-        add(row)
     return chosen
-
 
 def executor_progress(callback):
     """Marshal executor progress onto HA's event loop before firing events."""
@@ -112,6 +145,8 @@ async def search_filtered(
     filters,
     progress=None,
     exact_nutrition_limit=None,
+    candidate_rotation_cursor=0,
+    recent_candidates=(),
 ):
     from functools import partial
     from . import release_catalog
@@ -128,6 +163,8 @@ async def search_filtered(
             for_suggestions=True,
             exact_nutrition_limit=exact_nutrition_limit,
             candidate_languages=languages,
+            candidate_rotation_cursor=candidate_rotation_cursor,
+            recent_candidates=recent_candidates,
         )
         return await report.run(bridge.hass, partial(
             release_catalog.search_release_recipes,
@@ -157,6 +194,8 @@ async def processor(
     for_suggestions=False,
     exact_nutrition_limit=None,
     candidate_languages=None,
+    candidate_rotation_cursor=0,
+    recent_candidates=(),
 ):
     from . import websocket_v13 as v13
     from . import websocket_v18 as v18
@@ -276,6 +315,8 @@ async def processor(
                 settings,
                 candidate_languages,
                 exact_nutrition_limit,
+                rotation_cursor=candidate_rotation_cursor,
+                recent_candidates=recent_candidates,
             )
             # A max-cost prefilter has already attached the exact cost to each
             # surviving row, so the final pass can reuse it rather than calculate
