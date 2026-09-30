@@ -466,6 +466,11 @@ async def _generate_week(
     target_ids = set(replace_slot_ids or ([replace_slot_id] if replace_slot_id else []))
     end = (date.fromisoformat(week_start) + timedelta(days=6)).isoformat()
     eligible_ids = {row["id"] for row in original_slots if week_start <= _text(row.get("date")) <= end}
+    rotation_keys = [
+        signature(row.get("recipe"))
+        for row in original_slots
+        if week_start <= _text(row.get("date")) <= end and row.get("recipe")
+    ]
     if replacing and (not target_ids or not target_ids.issubset(eligible_ids)):
         raise ValueError("The selected meal is no longer in the next seven days")
     if progress:
@@ -480,6 +485,7 @@ async def _generate_week(
             filters=shared_filters,
             progress=progress,
             exact_nutrition_limit=_MAX_WEEK_CANDIDATES,
+            rotation_keys=rotation_keys,
         )
         candidates, errors = result["items"], []
     else:
