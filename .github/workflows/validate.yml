@@ -101,6 +101,7 @@ jobs:
           node --check custom_components/cook4me/frontend/cook4me-panel-v179.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v180.js
           node --check custom_components/cook4me/frontend/fullscreen-progress-guard-v260.js
+          node --check custom_components/cook4me/frontend/today-substitution-persistence-v261.js
           node --check custom_components/cook4me/frontend/ingredient-stock-assignment-v249.js
           python tests/test_menu_footer_v126.py
           python tests/test_announcement_settings_v127.py
@@ -167,6 +168,8 @@ jobs:
           python tests/test_scanner_manual_fallback_v180.py
           python tests/test_candidate_rotation_fullscreen_v260.py
           python tests/test_bounded_ranking_v261.py
+          python tests/test_today_substitution_persistence_v261.py
+          node --test tests/test_today_substitution_persistence_v261.mjs
           python tests/test_greek_catalog_audit_v182.py
           python tests/test_greek_catalog_audit_v183.py
           python tests/test_greek_catalog_audit_v184.py
