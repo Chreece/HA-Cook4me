@@ -156,8 +156,8 @@ class WiringTests(unittest.TestCase):
         registration = (COMP / "panel.py").read_text(encoding="utf-8")
 
         self.assertIn("FullscreenProgressGuardMixin", panel)
-        self.assertIn("runtime-v261", panel)
-        self.assertIn("runtime-v261", registration)
+        self.assertIn("runtime-v262", panel)
+        self.assertIn("runtime-v262", registration)
         self.assertIn("progress=260", registration)
         self.assertIn("contain:layout paint style", guard)
         self.assertIn("v260-progress-hidden", guard)
