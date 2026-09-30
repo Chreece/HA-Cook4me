@@ -436,6 +436,7 @@ class Cook4MeMealLifecycleStore:
             "substitutions": {},
             "mealCosts": {},
             "leftoverOperations": {},
+            "candidateHistory": [],
             "settings": {
                 "mealTypes": list(_DEFAULT_MEAL_TYPES),
                 "weekdayMealTypes": {
@@ -476,6 +477,20 @@ class Cook4MeMealLifecycleStore:
                     for item_key, item_value in list(raw.items())[-maximum:]
                     if isinstance(item_value, dict)
                 }
+            candidate_history = []
+            seen_candidates = set()
+            for value in saved.get("candidateHistory") or []:
+                value = _text(value)
+                if not value:
+                    continue
+                if value in seen_candidates:
+                    candidate_history = [
+                        item for item in candidate_history if item != value
+                    ]
+                else:
+                    seen_candidates.add(value)
+                candidate_history.append(value)
+            self._data["candidateHistory"] = candidate_history[-12000:]
             settings = saved.get("settings") if isinstance(saved.get("settings"), dict) else {}
             raw_types = settings.get("mealTypes") if isinstance(settings.get("mealTypes"), list) else list(_DEFAULT_MEAL_TYPES)
             meal_types = _ordered_meal_types(raw_types)
@@ -521,8 +536,31 @@ class Cook4MeMealLifecycleStore:
         return deepcopy(self._data["leftovers"])
 
     @property
+    def candidate_history(self) -> list[str]:
+        return list(self._data.get("candidateHistory") or [])
+
+    @property
     def settings(self) -> dict[str, Any]:
         return deepcopy(self._data["settings"])
+
+    @_durable_mutation
+    async def async_record_candidate_history(
+        self, values: Any, *, maximum: int = 12000
+    ) -> list[str]:
+        history = list(self._data.get("candidateHistory") or [])
+        seen = set(history)
+        for value in values if isinstance(values, (list, tuple)) else []:
+            value = _text(value)
+            if not value:
+                continue
+            if value in seen:
+                history = [item for item in history if item != value]
+            else:
+                seen.add(value)
+            history.append(value)
+        self._data["candidateHistory"] = history[-max(1, int(maximum)):]
+        await self._save()
+        return self.candidate_history
 
     def snapshot(self, inventory: Any = None, *, start_date: date | None = None) -> dict[str, Any]:
         result = {

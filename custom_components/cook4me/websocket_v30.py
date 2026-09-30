@@ -254,7 +254,7 @@ async def _catalog_candidates(hass: HomeAssistant, bridge, *, languages: list[st
 
 async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinator, operation) -> dict[str, Any]:
     if isinstance(msg.get("shared_filters"), dict) and release_catalog_ready():
-        from .shared_recipe_runtime import search_filtered
+        from .shared_recipe_runtime import search_filtered, compact_candidate_history
         filters = {**msg["shared_filters"], "mealTypes": msg.get("meal_types") or msg["shared_filters"].get("mealTypes", [])}
         from .diet_profiles import resolve_filters
         from .shared_recipe_filters import daily_targets, normalize_filters
@@ -264,6 +264,8 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
         if msg.get("group_by_meal_type"):
             languages = list(dict.fromkeys(str(code).lower().replace("_", "-").split("-", 1)[0]
                 for code in msg.get("languages", []) if recipe_languages.is_official_catalog_language(code)))
+        store = await today_plan_store_for_bridge(bridge)
+        saved = store.snapshot or {}
         coordinator.progress(operation, "catalog_index")
         found = await search_filtered(
             bridge,
@@ -273,15 +275,17 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
             filters=filters,
             progress=lambda phase, **values: coordinator.progress(operation, phase, **values),
             exact_nutrition_limit=_MAX_TODAY_EXACT_NUTRITION_CANDIDATES,
+            candidate_history=saved.get("candidateHistory", []),
         )
         rows = found["items"]
+        candidate_history = compact_candidate_history(
+            saved.get("candidateHistory", []), rows
+        )
         for row in rows:
             row["todayCatalogLanguage"] = row.get("language")
             row["deviceCanAccept"] = bridge.can_accept_recipe
-        store = await today_plan_store_for_bridge(bridge)
         if msg.get("group_by_meal_type"):
             from .today_multilang import select_today_categories
-            saved = store.snapshot or {}
             selected = await hass.async_add_executor_job(
                 select_today_categories,
                 rows,
@@ -299,9 +303,17 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
                 diversity=bool(msg.get("variety", True)),
                 daily_targets=profile_daily_targets,
             )}
-        result = {"date": dt_util.now().date().isoformat(), **selected, "candidateCount": len(rows), "rankedCount": len(rows), "catalogErrors": [], "catalogMode": "release_offline", "filters": filters}
+        result = {
+            "date": dt_util.now().date().isoformat(),
+            **selected,
+            "candidateCount": len(rows),
+            "rankedCount": len(rows),
+            "catalogErrors": [],
+            "catalogMode": "release_offline",
+            "filters": filters,
+        }
         coordinator.progress(operation, "persist")
-        await store.async_set(result)
+        await store.async_set({**result, "candidateHistory": candidate_history})
         coordinator.progress(operation, "persist", completed=1, total=1, message="Today plan saved locally")
         return result
     languages = v18._languages(bridge, msg.get("languages"))
@@ -440,7 +452,11 @@ async def _seed_entry(hass: HomeAssistant, entry_id: str, bridge) -> tuple[dict[
     today = today_store.snapshot
     if isinstance(today, dict):
         per_entry["todayResults"] = deepcopy(today.get("items") or [])
-        per_entry["todayMeta"] = {key: deepcopy(value) for key, value in today.items() if key != "items"}
+        per_entry["todayMeta"] = {
+            key: deepcopy(value)
+            for key, value in today.items()
+            if key not in {"items", "candidateHistory"}
+        }
     per_entry["releaseCatalog"] = release_catalog_summary()
     return entry, per_entry
 

@@ -10,6 +10,7 @@ from .const import DOMAIN
 
 _STORAGE_VERSION = 1
 _MAX_ITEMS = 16
+_MAX_CANDIDATE_HISTORY = 12000
 
 
 def _text(value: Any) -> str:
@@ -110,6 +111,18 @@ def compact_today_result(result: Any) -> dict[str, Any] | None:
             out[key] = deepcopy(result[key])
     from .today_multilang import compact_suggestion_history
     out["suggestionHistory"] = compact_suggestion_history(result.get("suggestionHistory"))
+    candidate_history = []
+    seen = set()
+    for value in result.get("candidateHistory") or []:
+        value = str(value or "").strip()
+        if not value:
+            continue
+        if value in seen:
+            candidate_history = [item for item in candidate_history if item != value]
+        else:
+            seen.add(value)
+        candidate_history.append(value)
+    out["candidateHistory"] = candidate_history[-_MAX_CANDIDATE_HISTORY:]
     return out
 
 

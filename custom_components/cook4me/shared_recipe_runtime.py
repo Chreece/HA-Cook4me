@@ -2,8 +2,40 @@
 from .shared_recipe_filters import apply_filters, ingredient_aliases, normalize_filters
 
 
-def _bounded_suggestion_candidates(rows, settings, languages, limit):
-    """Keep a diverse bounded shortlist before exact inventory nutrition work."""
+def _candidate_identity(row):
+    """Stable recipe-family identity used only for shortlist rotation."""
+    from .today_logic import recipe_identity
+    if not isinstance(row, dict):
+        return ""
+    return str(row.get("displayFamilyId") or recipe_identity(row) or "").strip()
+
+
+def compact_candidate_history(previous, rows, maximum=12000):
+    """Keep oldest->newest unique family IDs so the whole catalog can rotate."""
+    ordered = []
+    seen = set()
+    for value in list(previous or []) + [
+        _candidate_identity(row) for row in rows if isinstance(row, dict)
+    ]:
+        value = str(value or "").strip()
+        if not value:
+            continue
+        if value in seen:
+            ordered = [item for item in ordered if item != value]
+        else:
+            seen.add(value)
+        ordered.append(value)
+    return ordered[-max(1, int(maximum)):]
+
+
+def _bounded_suggestion_candidates(
+    rows,
+    settings,
+    languages,
+    limit,
+    candidate_history=None,
+):
+    """Rotate a diverse exact-nutrition shortlist across every eligible recipe."""
     from .today_logic import recipe_matches_meal_types
 
     try:
@@ -24,6 +56,27 @@ def _bounded_suggestion_candidates(rows, settings, languages, limit):
         if code and code not in catalogs:
             catalogs.append(code)
 
+    # candidate_history is oldest -> newest. Recipes never exact-scored before
+    # come first; once all eligible families have been visited, the oldest exact
+    # candidates rotate back in. Existing score order breaks ties, preserving
+    # quality while ensuring the bounded window eventually traverses the entire
+    # eligible catalog instead of becoming a permanent top-192/top-180 pool.
+    last_seen = {
+        str(value): index
+        for index, value in enumerate(candidate_history or [])
+        if str(value)
+    }
+    source_order = {id(row): index for index, row in enumerate(rows)}
+
+    def rotation_key(row):
+        ident = _candidate_identity(row)
+        return (
+            1 if ident in last_seen else 0,
+            last_seen.get(ident, -1),
+            source_order[id(row)],
+        )
+
+    rotated = sorted(rows, key=rotation_key)
     chosen = []
     seen = set()
 
@@ -44,14 +97,12 @@ def _bounded_suggestion_candidates(rows, settings, languages, limit):
         chosen.append(row)
         return True
 
-    # First preserve at least one candidate for every requested meal/catalog pair
-    # that actually exists. This prevents a globally strong dinner catalog from
-    # crowding breakfast or another selected source language out of the exact
-    # nutrition shortlist.
+    # First preserve one rotating candidate for every requested meal/catalog pair
+    # that currently exists.
     if meal_types and catalogs:
         for meal_type in meal_types:
             for catalog in catalogs:
-                for row in rows:
+                for row in rotated:
                     if (
                         row_language(row) == catalog
                         and recipe_matches_meal_types(row, [meal_type])
@@ -61,12 +112,12 @@ def _bounded_suggestion_candidates(rows, settings, languages, limit):
                 if len(chosen) >= maximum:
                     return chosen
 
-    # Reserve roughly half of the shortlist for meal-category coverage.
+    # Reserve category coverage from the rotating order.
     if meal_types:
         meal_quota = max(4, min(24, maximum // max(1, len(meal_types) * 2)))
         for meal_type in meal_types:
             count = 0
-            for row in rows:
+            for row in rotated:
                 if not recipe_matches_meal_types(row, [meal_type]):
                     continue
                 if add(row):
@@ -74,12 +125,12 @@ def _bounded_suggestion_candidates(rows, settings, languages, limit):
                 if count >= meal_quota or len(chosen) >= maximum:
                     break
 
-    # Reserve another slice for catalog-language diversity.
+    # Reserve catalog-language coverage from the rotating order.
     if catalogs:
         language_quota = max(3, min(16, maximum // max(1, len(catalogs) * 4)))
         for catalog in catalogs:
             count = 0
-            for row in rows:
+            for row in rotated:
                 if row_language(row) != catalog:
                     continue
                 if add(row):
@@ -87,13 +138,11 @@ def _bounded_suggestion_candidates(rows, settings, languages, limit):
                 if count >= language_quota or len(chosen) >= maximum:
                     break
 
-    # Fill the remainder in the existing score order.
-    for row in rows:
+    for row in rotated:
         if len(chosen) >= maximum:
             break
         add(row)
     return chosen
-
 
 def executor_progress(callback):
     """Marshal executor progress onto HA's event loop before firing events."""
@@ -112,6 +161,7 @@ async def search_filtered(
     filters,
     progress=None,
     exact_nutrition_limit=None,
+    candidate_history=None,
 ):
     from functools import partial
     from . import release_catalog
@@ -128,6 +178,7 @@ async def search_filtered(
             for_suggestions=True,
             exact_nutrition_limit=exact_nutrition_limit,
             candidate_languages=languages,
+            candidate_history=candidate_history,
         )
         return await report.run(bridge.hass, partial(
             release_catalog.search_release_recipes,
@@ -157,6 +208,7 @@ async def processor(
     for_suggestions=False,
     exact_nutrition_limit=None,
     candidate_languages=None,
+    candidate_history=None,
 ):
     from . import websocket_v13 as v13
     from . import websocket_v18 as v18
@@ -276,6 +328,7 @@ async def processor(
                 settings,
                 candidate_languages,
                 exact_nutrition_limit,
+                candidate_history=candidate_history,
             )
             # A max-cost prefilter has already attached the exact cost to each
             # surviving row, so the final pass can reuse it rather than calculate
