@@ -237,7 +237,7 @@ async def search_filtered(
             filter_rows=process,
             progress=report,
         ))
-        if isinstance(result, dict):
+        if exact_nutrition_limit is not None and isinstance(result, dict):
             result["candidateHistoryDelta"] = list(
                 getattr(process, "candidate_history_delta", [])
             )
