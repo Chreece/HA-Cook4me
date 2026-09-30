@@ -105,6 +105,7 @@ def compact_today_result(result: Any) -> dict[str, Any] | None:
         "candidateCount", "rankedCount", "catalogCandidateCounts",
         "catalogRankedCounts", "catalogSelectedCounts", "catalogLanguagesUsed",
         "filters", "catalogMode", "catalogVersion", "categoryCounts", "emptyMealTypes",
+        "candidateRotationCursor",
     ):
         if key in result:
             out[key] = deepcopy(result[key])
