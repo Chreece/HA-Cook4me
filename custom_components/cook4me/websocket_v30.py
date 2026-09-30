@@ -37,6 +37,7 @@ from .today_plan_store import today_plan_store_for_bridge
 
 _PROGRESS_ID = vol.Optional("client_operation_id", default="")
 _MAX_TODAY_EXACT_NUTRITION_CANDIDATES = 192
+_TODAY_CANDIDATE_ROTATION_STEP = 144
 
 
 def _text(value: Any) -> str:
@@ -264,6 +265,10 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
         if msg.get("group_by_meal_type"):
             languages = list(dict.fromkeys(str(code).lower().replace("_", "-").split("-", 1)[0]
                 for code in msg.get("languages", []) if recipe_languages.is_official_catalog_language(code)))
+        store = await today_plan_store_for_bridge(bridge)
+        saved = store.snapshot or {}
+        rotation_cursor = int(saved.get("candidateRotationCursor") or 0)
+        suggestion_history = saved.get("suggestionHistory") or []
         coordinator.progress(operation, "catalog_index")
         found = await search_filtered(
             bridge,
@@ -273,15 +278,15 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
             filters=filters,
             progress=lambda phase, **values: coordinator.progress(operation, phase, **values),
             exact_nutrition_limit=_MAX_TODAY_EXACT_NUTRITION_CANDIDATES,
+            candidate_rotation_cursor=rotation_cursor,
+            recent_candidates=suggestion_history,
         )
         rows = found["items"]
         for row in rows:
             row["todayCatalogLanguage"] = row.get("language")
             row["deviceCanAccept"] = bridge.can_accept_recipe
-        store = await today_plan_store_for_bridge(bridge)
         if msg.get("group_by_meal_type"):
             from .today_multilang import select_today_categories
-            saved = store.snapshot or {}
             selected = await hass.async_add_executor_job(
                 select_today_categories,
                 rows,
@@ -299,7 +304,16 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
                 diversity=bool(msg.get("variety", True)),
                 daily_targets=profile_daily_targets,
             )}
-        result = {"date": dt_util.now().date().isoformat(), **selected, "candidateCount": len(rows), "rankedCount": len(rows), "catalogErrors": [], "catalogMode": "release_offline", "filters": filters}
+        result = {
+            "date": dt_util.now().date().isoformat(),
+            **selected,
+            "candidateCount": len(rows),
+            "rankedCount": len(rows),
+            "catalogErrors": [],
+            "catalogMode": "release_offline",
+            "filters": filters,
+            "candidateRotationCursor": rotation_cursor + _TODAY_CANDIDATE_ROTATION_STEP,
+        }
         coordinator.progress(operation, "persist")
         await store.async_set(result)
         coordinator.progress(operation, "persist", completed=1, total=1, message="Today plan saved locally")
