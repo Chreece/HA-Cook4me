@@ -264,6 +264,19 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
         if msg.get("group_by_meal_type"):
             languages = list(dict.fromkeys(str(code).lower().replace("_", "-").split("-", 1)[0]
                 for code in msg.get("languages", []) if recipe_languages.is_official_catalog_language(code)))
+        store = await today_plan_store_for_bridge(bridge)
+        saved = store.snapshot or {}
+        rotation_keys = [
+            f"{_text(row.get('familyId'))}:{_text(row.get('language'))}"
+            for row in saved.get("suggestionHistory") or []
+            if isinstance(row, dict) and _text(row.get("familyId"))
+        ]
+        if not rotation_keys:
+            rotation_keys = [
+                recipe_identity(row)
+                for row in saved.get("items") or []
+                if isinstance(row, dict) and recipe_identity(row)
+            ]
         coordinator.progress(operation, "catalog_index")
         found = await search_filtered(
             bridge,
@@ -273,15 +286,14 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
             filters=filters,
             progress=lambda phase, **values: coordinator.progress(operation, phase, **values),
             exact_nutrition_limit=_MAX_TODAY_EXACT_NUTRITION_CANDIDATES,
+            rotation_keys=rotation_keys,
         )
         rows = found["items"]
         for row in rows:
             row["todayCatalogLanguage"] = row.get("language")
             row["deviceCanAccept"] = bridge.can_accept_recipe
-        store = await today_plan_store_for_bridge(bridge)
         if msg.get("group_by_meal_type"):
             from .today_multilang import select_today_categories
-            saved = store.snapshot or {}
             selected = await hass.async_add_executor_job(
                 select_today_categories,
                 rows,
