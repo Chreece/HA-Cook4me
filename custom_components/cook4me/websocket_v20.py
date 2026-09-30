@@ -4,7 +4,6 @@ import asyncio
 from copy import deepcopy
 from datetime import date, datetime, timedelta, timezone
 from functools import partial
-import hashlib
 import re
 from typing import Any
 from uuid import uuid4
@@ -55,21 +54,6 @@ _SHOPPING_RE = re.compile(
 
 def _text(value: Any) -> str:
     return str(value or "").strip()
-
-
-def _week_candidate_rotation(slots: Any, week_start: str, week_end: str) -> tuple[int, list[str]]:
-    """Derive a stable next shortlist position from the plan being replaced."""
-    identities = [
-        recipe_identity(row.get("recipe"))
-        for row in (slots if isinstance(slots, list) else [])
-        if week_start <= _text(row.get("date")) <= week_end and row.get("recipe")
-    ]
-    identities = [value for value in identities if value]
-    if not identities:
-        return 0, []
-    payload = "|".join(sorted(identities)).encode("utf-8", "ignore")
-    cursor = int.from_bytes(hashlib.sha256(payload).digest()[:8], "big")
-    return cursor, identities
 
 
 def _emit_week_progress(
@@ -488,8 +472,16 @@ async def _generate_week(
         progress("catalog_index", message="Preparing weekly candidates")
     if shared_filters is not None and await hass.async_add_executor_job(release_catalog.release_catalog_ready):
         from .shared_recipe_runtime import search_filtered
-        rotation_cursor, recent_candidates = _week_candidate_rotation(
-            original_slots, week_start, end
+        recent_candidates = [
+            recipe_identity(row.get("recipe"))
+            for row in original_slots
+            if week_start <= _text(row.get("date")) <= end and row.get("recipe")
+        ]
+        recent_candidates = [value for value in recent_candidates if value]
+        rotation_seed = "|".join(sorted(recent_candidates))
+        rotation_cursor = sum(
+            (index + 1) * ord(char)
+            for index, char in enumerate(rotation_seed)
         )
         result = await search_filtered(
             bridge,
