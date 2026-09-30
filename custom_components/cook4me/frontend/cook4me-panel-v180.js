@@ -12,7 +12,7 @@ import {IngredientNamesMixin} from './ingredient-names-v221.js';
 import {UXFixesMixin} from './ux-fixes-v218.js';
 import {ProductEditGuardMixin} from './product-edit-guard-v208.js';
 import {CompactDeviceHeaderMixin} from './device-header-v207.js';
-import {RecipeStepModesMixin} from './recipe-step-modes-v204.js';
+import {RecipeStepModesMixin} from './recipe-step-modes-v259.js';
 import {AppDesignMixin} from './app-design-v203.js';
 import {SelectedFilterMixin} from './filter-selection-v202.js';
 import {RecipeGapsMixin} from './recipe-gaps-v202.js';
@@ -177,7 +177,7 @@ class Cook4MeRecipeHubPanelV180 extends BasePanel{
  _renderTab(){
   const result=super._renderTab();
   this.setAttribute('data-cook4me-build','2026.9.27.5');
-  this.setAttribute('data-cook4me-ui-revision','258');
+  this.setAttribute('data-cook4me-ui-revision','259');
   this._v180Styles();
   return result;
  }
@@ -225,3 +225,4 @@ if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v255'))customEleme
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v256'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v256',class extends Cook4MeRecipeHubPanelV180{});
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v257'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v257',class extends Cook4MeRecipeHubPanelV180{});
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v258'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v258',class extends Cook4MeRecipeHubPanelV180{});
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v259'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v259',class extends Cook4MeRecipeHubPanelV180{});
