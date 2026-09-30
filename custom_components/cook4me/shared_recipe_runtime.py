@@ -297,7 +297,6 @@ async def processor(
             ),
             score_targets=score_targets,
             progress=progress,
-            season_country=season_country,
-            season_month=season_month,
+            season_country=season_country, season_month=season_month,
         )
     return process
