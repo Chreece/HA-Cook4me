@@ -311,10 +311,9 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
             "catalogErrors": [],
             "catalogMode": "release_offline",
             "filters": filters,
-            "candidateHistory": candidate_history,
         }
         coordinator.progress(operation, "persist")
-        await store.async_set(result)
+        await store.async_set({**result, "candidateHistory": candidate_history})
         coordinator.progress(operation, "persist", completed=1, total=1, message="Today plan saved locally")
         return result
     languages = v18._languages(bridge, msg.get("languages"))
@@ -453,7 +452,11 @@ async def _seed_entry(hass: HomeAssistant, entry_id: str, bridge) -> tuple[dict[
     today = today_store.snapshot
     if isinstance(today, dict):
         per_entry["todayResults"] = deepcopy(today.get("items") or [])
-        per_entry["todayMeta"] = {key: deepcopy(value) for key, value in today.items() if key != "items"}
+        per_entry["todayMeta"] = {
+            key: deepcopy(value)
+            for key, value in today.items()
+            if key not in {"items", "candidateHistory"}
+        }
     per_entry["releaseCatalog"] = release_catalog_summary()
     return entry, per_entry
 
