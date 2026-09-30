@@ -14,9 +14,11 @@ def compact_candidate_history(previous, rows, maximum=12000):
     """Keep oldest->newest unique family IDs so the whole catalog can rotate."""
     ordered = []
     seen = set()
-    for value in list(previous or []) + [
-        _candidate_identity(row) for row in rows if isinstance(row, dict)
-    ]:
+    incoming = [
+        _candidate_identity(row) if isinstance(row, dict) else str(row or "").strip()
+        for row in (rows or [])
+    ]
+    for value in list(previous or []) + incoming:
         value = str(value or "").strip()
         if not value:
             continue
