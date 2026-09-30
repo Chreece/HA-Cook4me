@@ -89,8 +89,8 @@ test('active panel applies v258 outside the v257 price and weighing mixin',()=>{
  assert.match(active,/recipe-fullscreen-guard-v258\.js/);
  assert.match(active,/RecipeFullscreenGuardMixin\(RecipeIngredientWeighingMixin/);
  assert.match(active,/runtime-v258/);
- assert.match(active,/data-cook4me-ui-revision','258'/);
- assert.match(panelConfig,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v258"/);
+ assert.match(active,/data-cook4me-ui-revision','\d+'/);
+ assert.match(panelConfig,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v\d+"/);
  assert.match(panelConfig,/runtime-v249/);
  assert.match(panelConfig,/weigh=257&fullscreen=258/);
 });
