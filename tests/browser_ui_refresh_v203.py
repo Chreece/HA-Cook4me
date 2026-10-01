@@ -182,9 +182,9 @@ with sync_playwright() as p:
         page.evaluate("(()=>{app.remove();const outer=document.createElement('section');document.body.append(outer);const r=outer.attachShadow({mode:'open'});const a=document.createElement('cook4me-ui-fixture-v203');r.append(a);window.app=a;a.seed();a.show('today')})()")
         page.locator('[data-v66-photo]').first.click()
         page.wait_for_function('app._v63RecipeDialog?.isConnected')
-        page.locator('[data-recipe-dialog] details.ui203-more > summary').click()
+        check(page,"!app._v63RecipeDialog.querySelector('details.ui203-more')",prefix+'nested fullscreen has no More disclosure')
         page.keyboard.press('Escape')
-        check(page,"app._v63RecipeDialog?.isConnected&&!app._v63RecipeDialog.querySelector('details.ui203-more[open]')",prefix+'More keyboard dismissal works inside nested HA shadow roots')
+        check(page,"!app._v63RecipeDialog?.isConnected",prefix+'Escape closes fullscreen inside nested HA shadow roots')
         # Same live controls survive idempotent decoration, and no mutation storm.
         page.evaluate("window.uiNodes=[...app.shadowRoot.querySelectorAll('#tabs button')];window.mutations=0;window.uiObserver=new MutationObserver(ms=>window.mutations+=ms.length);uiObserver.observe(app.shadowRoot,{subtree:true,childList:true});for(let i=0;i<20;i++)app._ui203Page()")
         page.wait_for_timeout(100)
