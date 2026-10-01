@@ -1050,10 +1050,11 @@ class Cook4MeRecipeHub:
 
     def rank(self, recipes: list[dict[str, Any]], limit: int = 12) -> list[dict[str, Any]]:
         from .recipe_suitability import meal_candidates
+        blacklist_check = getattr(self, "is_recipe_blacklisted", None)
         scored = [
             self.annotate(x)
             for x in meal_candidates(recipes)
-            if not self.is_recipe_blacklisted(x)
+            if not callable(blacklist_check) or not blacklist_check(x)
         ]
         safe = [x for x in scored if x.get("match", {}).get("safe") or x.get("match", {}).get("eligibleWithSubstitutions")]
         safe.sort(key=lambda x: x.get("match", {}).get("score", -1000), reverse=True)
