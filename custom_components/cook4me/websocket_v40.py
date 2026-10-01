@@ -11,25 +11,36 @@ from .websocket_v32 import _authorized
 
 
 @websocket_api.websocket_command({
-    vol.Required("type"): "cook4me/v40/recipe_blacklist",
+    vol.Required("type"): "cook4me/recipe_blacklist_add",
     vol.Required("entry_id"): str,
-    vol.Required("action"): vol.In(("add", "remove")),
-    vol.Optional("recipe"): dict,
-    vol.Optional("keys"): [str],
+    vol.Required("recipe"): dict,
 })
 @websocket_api.async_response
-async def ws_recipe_blacklist(hass, connection, msg):
+async def ws_recipe_blacklist_add(hass, connection, msg):
     try:
         bridge = _authorized(hass, connection, msg)
         current = bridge.recipe_hub.profile.get("recipeBlacklist") or []
-        action = msg["action"]
-        if action == "add":
-            recipe = msg.get("recipe")
-            if not isinstance(recipe, dict):
-                raise ValueError("Recipe is required")
-            updated = add_blacklist(current, recipe)
-        else:
-            updated = remove_blacklist(current, msg.get("keys") or [])
+        updated = add_blacklist(current, dict(msg["recipe"]))
+        profile = await bridge.recipe_hub.async_set_profile({"recipeBlacklist": updated})
+        connection.send_result(msg["id"], {
+            "recipeBlacklist": profile.get("recipeBlacklist") or [],
+            "profile": profile,
+        })
+    except Exception as exc:
+        legacy._send_error(connection, msg, exc)
+
+
+@websocket_api.websocket_command({
+    vol.Required("type"): "cook4me/recipe_blacklist_remove",
+    vol.Required("entry_id"): str,
+    vol.Required("identity"): str,
+})
+@websocket_api.async_response
+async def ws_recipe_blacklist_remove(hass, connection, msg):
+    try:
+        bridge = _authorized(hass, connection, msg)
+        current = bridge.recipe_hub.profile.get("recipeBlacklist") or []
+        updated = remove_blacklist(current, [msg["identity"]])
         profile = await bridge.recipe_hub.async_set_profile({"recipeBlacklist": updated})
         connection.send_result(msg["id"], {
             "recipeBlacklist": profile.get("recipeBlacklist") or [],
@@ -41,4 +52,5 @@ async def ws_recipe_blacklist(hass, connection, msg):
 
 @callback
 def async_register(hass):
-    websocket_api.async_register_command(hass, ws_recipe_blacklist)
+    websocket_api.async_register_command(hass, ws_recipe_blacklist_add)
+    websocket_api.async_register_command(hass, ws_recipe_blacklist_remove)
