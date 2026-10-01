@@ -95,6 +95,10 @@ diet.text_list = lambda value: list(value or []) if isinstance(value, list) else
 diet.scoring_profile = lambda profile, _filters: deepcopy(profile)
 sys.modules[diet.__name__] = diet
 
+suitability = ModuleType(PKG + ".recipe_suitability")
+suitability.meal_candidates = lambda rows: list(rows or [])
+sys.modules[suitability.__name__] = suitability
+
 shared = ModuleType(PKG + ".shared_recipe_filters")
 shared.normalize_preferences = lambda value: deepcopy(value or {})
 shared.merge_preferences = lambda old, patch: {**deepcopy(old or {}), **deepcopy(patch or {})}
