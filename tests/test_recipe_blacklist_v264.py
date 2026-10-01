@@ -11,6 +11,7 @@ class RecipeBlacklistV264Tests(unittest.TestCase):
         websocket=(COMP/"websocket.py").read_text(encoding="utf-8")
         v10=(COMP/"websocket_v10.py").read_text(encoding="utf-8")
         v13=(COMP/"websocket_v13.py").read_text(encoding="utf-8")
+        v30=(COMP/"websocket_v30.py").read_text(encoding="utf-8")
         shared=(COMP/"shared_recipe_runtime.py").read_text(encoding="utf-8")
         weekly=(COMP/"weekly_plan.py").read_text(encoding="utf-8")
         book=(COMP/"websocket_v18.py").read_text(encoding="utf-8")
@@ -25,10 +26,13 @@ class RecipeBlacklistV264Tests(unittest.TestCase):
         self.assertIn("bridge.recipe_hub.is_recipe_blacklisted(item)",websocket)
         self.assertIn("_hide_blacklisted",v10)
         self.assertIn("bridge.recipe_hub.is_recipe_blacklisted(recipe)",v13)
+        self.assertIn("bridge.recipe_hub.is_recipe_blacklisted(item)",v30)
+        self.assertIn('per_entry["todayResults"] = bridge.recipe_hub.filter_blacklisted(',v30)
         self.assertIn("not bridge.recipe_hub.is_recipe_blacklisted(row)",shared)
         self.assertIn("bridge.recipe_hub.is_recipe_blacklisted(recipe)",weekly)
         self.assertIn('for collection in ("favorites", "recipeList")',book)
         self.assertIn("bridge.recipe_hub.filter_blacklisted(",book)
+        self.assertIn("official = bridge.recipe_hub.filter_blacklisted(",book)
 
     def test_active_panel_is_cache_busted_to_v264(self):
         panel=(COMP/"frontend"/"cook4me-panel-v180.js").read_text(encoding="utf-8")
