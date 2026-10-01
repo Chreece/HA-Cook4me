@@ -13,13 +13,7 @@ from homeassistant.helpers.storage import Store
 
 from .const import DOMAIN
 from .stock_allocation import allocate_stock
-from .inventory import (
-    convert_amount,
-    ingredient_identities,
-    inventory_identity,
-    normalize_inventory,
-    stock_for_ingredient,
-)
+from .inventory import convert_amount, inventory_identity, normalize_inventory
 from .today_logic import recipe_identity
 
 _STORAGE_VERSION = 1
@@ -347,6 +341,9 @@ def _shopping_candidate(raw: dict[str, Any]) -> dict[str, Any]:
 
 def _replacement_is_in_storage(stock: list[dict[str, Any]], candidate: dict[str, Any]) -> bool:
     """Presence is enough for a choice row; replacement ratios are intentionally not guessed."""
+    # Keep the import lazy because lifecycle transaction tests deliberately
+    # provide a tiny inventory stub and never exercise shopping resolution.
+    from .inventory import stock_for_ingredient
     view = stock_for_ingredient(stock, candidate)
     if view is None:
         return False
@@ -402,12 +399,22 @@ def _shopping_slots_and_replacements(
 
             fingerprints = []
             for candidate in candidates:
-                identities = sorted(ingredient_identities(candidate))
+                identities = {
+                    _text(value)
+                    for value in candidate.get("identities") or []
+                    if _text(value)
+                }
+                direct = inventory_identity(candidate)
+                if direct:
+                    identities.add(direct)
+                for value in candidate.get("sourceIngredientIds") or []:
+                    value = _text(value)
+                    if value:
+                        identities.add(value if value.startswith("k:") else f"k:{value}")
                 fingerprints.append(
-                    identities[0]
+                    sorted(identities)[0]
                     if identities
-                    else inventory_identity(candidate)
-                    or _text(candidate.get("name"))
+                    else _text(candidate.get("name"))
                 )
             group_key = tuple(sorted(value for value in fingerprints if value))
             if not group_key:
