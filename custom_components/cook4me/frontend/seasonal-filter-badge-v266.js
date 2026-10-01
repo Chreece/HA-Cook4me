@@ -53,7 +53,7 @@ export const SeasonalFilterBadgeMixin=Base=>class extends Base{
   return result;
  }
  _v100Layout(...args){
-  const result=super._v100Layout?.(...args);
+  const result=super._v100Layout(...args);
   this._v266DecorateSeasonalIngredientButton(this.shadowRoot);
   return result;
  }
