@@ -125,6 +125,13 @@ async def _seed_entry(hass: HomeAssistant, entry_id: str, bridge) -> tuple[dict[
     language = v11._device_language(bridge)
     book = await recipe_book_store_for_bridge(bridge)
     catalog = await _cached_catalog(bridge, language)
+    visible_recipes = bridge.recipe_hub.filter_blacklisted(hub.get("recipes") or [])
+    book_snapshot = book.snapshot()
+    for collection in ("favorites", "recipeList"):
+        if isinstance(book_snapshot.get(collection), list):
+            book_snapshot[collection] = bridge.recipe_hub.filter_blacklisted(
+                book_snapshot[collection]
+            )
     entry = {
         "entry_id": entry_id,
         "title": bridge.entry.title,
@@ -133,7 +140,7 @@ async def _seed_entry(hass: HomeAssistant, entry_id: str, bridge) -> tuple[dict[
         "loadedRecipe": v27._loaded_recipe_summary(bridge.loaded_recipe),
         "state": v27._state_summary(getattr(bridge, "data", None)),
         "profile": deepcopy(profile),
-        "recipes": deepcopy(hub.get("recipes") or []),
+        "recipes": visible_recipes,
         "history": deepcopy(hub.get("history") or []),
         "habitTerms": bridge.recipe_hub.habit_terms,
         "configuredLanguage": str(bridge.entry.data.get(CONF_LANGUAGE, DEFAULT_LANGUAGE)),
@@ -143,11 +150,11 @@ async def _seed_entry(hass: HomeAssistant, entry_id: str, bridge) -> tuple[dict[
         "capabilities": _capabilities(hass, bridge),
         "uiPreferences": deepcopy(bridge.recipe_hub.ui_preferences),
         "bookState": {
-            **book.snapshot(),
+            **book_snapshot,
             "deviceConnected": bool(bridge.available),
             "deviceCanAccept": bool(bridge.can_accept_recipe),
             "loadedRecipe": v27._loaded_recipe_summary(bridge.loaded_recipe),
-            "myRecipes": deepcopy(hub.get("recipes") or []),
+            "myRecipes": visible_recipes,
         },
         "todayOptions": _today_options(bridge),
         "ingredientCatalog": deepcopy(catalog.get("items") if catalog else []),
