@@ -88,6 +88,39 @@ def shopping_display_unit(unit, quantity, language, *, unit_key=""):
     return str(forms[0 if one else min(1, len(forms) - 1)])
 
 
+def _replacement_candidate_label(candidate, language):
+    """Render a reviewed replacement through its real catalog target(s)."""
+    original = str(
+        candidate.get("originalName")
+        or candidate.get("name")
+        or candidate.get("foodName")
+        or candidate.get("key")
+        or ""
+    ).strip()
+    components = candidate.get("components")
+    if isinstance(components, list) and components:
+        labels = []
+        for component in components:
+            target = component.get("target") if isinstance(component, dict) else None
+            if not isinstance(target, dict):
+                return original
+            label = (
+                release_catalog.ingredient_display_name(target, language)
+                or str(target.get("canonicalName") or target.get("name") or "").strip()
+            )
+            if not label:
+                return original
+            labels.append(str(label).strip())
+        if labels:
+            return " + ".join(labels)
+
+    target = candidate.get("target") if isinstance(candidate.get("target"), dict) else candidate
+    return (
+        release_catalog.ingredient_display_name(target, language)
+        or original
+    )
+
+
 def shopping_rows(
     rows,
     language,
@@ -144,14 +177,8 @@ def shopping_rows(
                     or candidate.get("key")
                     or ""
                 ).strip()
-                display = (
-                    release_catalog.ingredient_display_name(candidate, ui_language)
-                    or original_candidate
-                )
-                market_name = (
-                    release_catalog.ingredient_display_name(candidate, market_language)
-                    or original_candidate
-                )
+                display = _replacement_candidate_label(candidate, ui_language)
+                market_name = _replacement_candidate_label(candidate, market_language)
                 aliases = []
                 for value in (market_name, original_candidate):
                     value = str(value or "").strip()
