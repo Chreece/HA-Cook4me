@@ -24,7 +24,7 @@ test('seasonal marker is separate from the existing manual-count badge',()=>{
  assert.match(source,/bottom:-5px/);
 });
 
-test('active panel cache-busts v266 without changing the v265 element contract',()=>{
+test('active panel cache-busts v266 without changing the v266 element contract',()=>{
  const active=readFileSync(
   new URL('../custom_components/cook4me/frontend/cook4me-panel-v180.js',import.meta.url),
   'utf8',
@@ -36,5 +36,5 @@ test('active panel cache-busts v266 without changing the v265 element contract',
  assert.match(active,/seasonal-filter-badge-v266\.js/);
  assert.match(active,/SeasonalFilterBadgeMixin\(RecipeActionRowMixin/);
  assert.match(registration,/seasonalbadge=266/);
- assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v265"/);
+ assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v266"/);
 });
