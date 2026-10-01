@@ -254,9 +254,16 @@ class Announcements:
             raise ValueError("Selected TTS is no longer available")
         self.report(user.id, "speaking")
         async with asyncio.timeout(30):
+            # Never reuse provider-default TTS audio across Cook4Me events.
+            # Fixed phase phrases repeat often, while recipe/step text is mostly
+            # unique. With HA's TTS cache enabled, a provider/voice change can
+            # therefore leave only the repeated phase phrases backed by older
+            # cached audio, which sounds exactly like two different voices.
+            # Event de-duplication already prevents replay spam, so regenerating
+            # the announcement is the safer and deterministic behavior here.
             await self.hass.services.async_call("tts", "speak", {
                 "entity_id": settings["tts"], "media_player_entity_id": players,
-                "message": translated, "language": settings["language"], "cache": True,
+                "message": translated, "language": settings["language"], "cache": False,
                 "options": {"voice": settings["voice"]} if settings["voice"] else {},
             }, blocking=True, context=Context(user_id=user.id))
         if delivered is not None:
