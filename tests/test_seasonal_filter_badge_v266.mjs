@@ -20,6 +20,8 @@ test('seasonal marker is separate from the existing manual-count badge',()=>{
  assert.match(source,/new Set\(Array\.isArray\(filters\.ingredients\)/);
  assert.doesNotMatch(source,/v98-filter-count.*remove/);
  assert.match(source,/button\.append\(marker\)/);
+ assert.match(source,/_v263SeasonalIndicator\(container\)/);
+ assert.match(source,/data-v263-active-filters/);
  assert.match(source,/right:-5px/);
  assert.match(source,/bottom:-5px/);
 });
