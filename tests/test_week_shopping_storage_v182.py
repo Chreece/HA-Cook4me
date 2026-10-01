@@ -160,6 +160,119 @@ class WeekShoppingStorageV182Tests(unittest.TestCase):
         self.assertEqual(rows[0]["unit"],"tbsp")
         self.assertEqual(rows[0]["available"],0)
 
+    def _replacement_slot(self,slot_id="2026-09-22:dinner",date="2026-09-22"):
+        return {
+            "id":slot_id,
+            "date":date,
+            "mealType":"dinner",
+            "selected":True,
+            "recipe":{
+                "title":"Adapted dinner",
+                "ingredients":[
+                    {"key":"chicken","name":"Chicken","quantity":200,"unit":"g"},
+                    {"key":"rice","name":"Rice","quantity":100,"unit":"g"},
+                ],
+                "match":{
+                    "requiresSubstitutions":True,
+                    "eligibleWithSubstitutions":True,
+                    "substitutionCoverageComplete":True,
+                    "substitutions":[{
+                        "ingredientIndex":0,
+                        "original":"Chicken",
+                        "replacement":{"key":"tofu","name":"Tofu"},
+                        "alternatives":[
+                            {"key":"tofu","name":"Tofu"},
+                            {"key":"mushrooms","name":"Mushrooms"},
+                            {"key":"chickpeas","name":"Chickpeas"},
+                        ],
+                    }],
+                },
+            },
+        }
+
+    def test_week_shopping_keeps_normal_ingredients_and_groups_missing_replacements(self):
+        rows=self.meal.shopping_delta([self._replacement_slot()],[])
+        ordinary=[row for row in rows if not row.get("alternativeGroup")]
+        choices=[row for row in rows if row.get("alternativeGroup")]
+        self.assertEqual([(row["name"],row["quantity"],row["unit"]) for row in ordinary],[("Rice",100.0,"g")])
+        self.assertEqual(len(choices),1)
+        self.assertEqual(
+            [row["key"] for row in choices[0]["alternativeCandidates"]],
+            ["tofu","mushrooms","chickpeas"],
+        )
+        self.assertIsNone(choices[0]["quantity"])
+        self.assertEqual(choices[0]["unit"],"")
+        self.assertNotIn("Chicken",[row["name"] for row in rows])
+
+    def test_any_replacement_in_storage_suppresses_the_choice_row(self):
+        inventory=[{
+            "key":"product-tofu",
+            "name":"Tofu package",
+            "unit":"g",
+            "lots":[{
+                "id":"tofu-lot",
+                "quantity":180,
+                "ingredientLinks":[{"key":"tofu","name":"Tofu"}],
+            }],
+        }]
+        rows=self.meal.shopping_delta([self._replacement_slot()],inventory)
+        self.assertFalse(any(row.get("alternativeGroup") for row in rows))
+        self.assertEqual([(row["name"],row["quantity"]) for row in rows],[("Rice",100.0)])
+
+    def test_replacement_storage_uses_semantic_catalog_aliases(self):
+        slot=self._replacement_slot()
+        candidate=slot["recipe"]["match"]["substitutions"][0]["alternatives"][0]
+        candidate["_testIdentities"]=["k:tofu","k:tofu-storage"]
+        slot["recipe"]["match"]["substitutions"][0]["replacement"]=candidate
+        inventory=[{
+            "key":"scanned-tofu-product",
+            "name":"Scanned tofu",
+            "unit":"g",
+            "lots":[{
+                "id":"tofu-alias-lot",
+                "quantity":50,
+                "ingredientLinks":[{"key":"tofu-storage","name":"Tofu"}],
+            }],
+        }]
+        rows=self.meal.shopping_delta([slot],inventory)
+        self.assertFalse(any(row.get("alternativeGroup") for row in rows))
+
+    def test_same_replacement_choices_are_one_row_across_the_week(self):
+        first=self._replacement_slot("2026-09-22:dinner","2026-09-22")
+        second=self._replacement_slot("2026-09-23:dinner","2026-09-23")
+        rows=self.meal.shopping_delta([first,second],[])
+        choices=[row for row in rows if row.get("alternativeGroup")]
+        self.assertEqual(len(choices),1)
+        self.assertEqual(choices[0]["slots"],["2026-09-22:dinner","2026-09-23:dinner"])
+        rice=next(row for row in rows if row.get("name")=="Rice")
+        self.assertEqual(rice["quantity"],200.0)
+
+    def test_replacement_choices_render_as_one_localized_or_row(self):
+        rows=self.shopping.shopping_rows(
+            [{
+                "identity":"alternatives:k:tofu|k:mushrooms|k:chickpeas",
+                "name":"Tofu / Mushrooms / Chickpeas",
+                "quantity":None,
+                "unit":"",
+                "alternativeGroup":True,
+                "alternativeCandidates":[
+                    {"key":"tofu","name":"Τόφου"},
+                    {"key":"mushrooms","name":"Μανιτάρια"},
+                    {"key":"chickpeas","name":"Ρεβίθια"},
+                ],
+            }],
+            "el","GR",(),"el",
+        )
+        self.assertEqual(rows[0]["name"],"Τόφου ή Μανιτάρια ή Ρεβίθια")
+        self.assertEqual(rows[0]["shoppingDisplayName"],rows[0]["name"])
+        self.assertEqual(rows[0]["displayUnit"],"")
+
+    def test_week_add_shopping_no_longer_blocks_valid_replacement_recipes(self):
+        source=(PKG/"websocket_v20.py").read_text(encoding="utf-8")
+        self.assertNotIn("Some planned recipes still need ingredient replacements.",source)
+        self.assertIn('if row.get("alternativeGroup"):',source)
+        self.assertIn("summary = name",source)
+
     def test_week_state_localizes_all_reservation_buckets(self):
         source=(PKG/"websocket_v20.py").read_text(encoding="utf-8")
         self.assertIn('for bucket in ("items", "unknown", "shortages")',source)
