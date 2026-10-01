@@ -88,6 +88,39 @@ def shopping_display_unit(unit, quantity, language, *, unit_key=""):
     return str(forms[0 if one else min(1, len(forms) - 1)])
 
 
+def _replacement_candidate_label(candidate, language):
+    """Render a reviewed replacement through its real catalog target(s)."""
+    original = str(
+        candidate.get("originalName")
+        or candidate.get("name")
+        or candidate.get("foodName")
+        or candidate.get("key")
+        or ""
+    ).strip()
+    components = candidate.get("components")
+    if isinstance(components, list) and components:
+        labels = []
+        for component in components:
+            target = component.get("target") if isinstance(component, dict) else None
+            if not isinstance(target, dict):
+                return original
+            label = (
+                release_catalog.ingredient_display_name(target, language)
+                or str(target.get("canonicalName") or target.get("name") or "").strip()
+            )
+            if not label:
+                return original
+            labels.append(str(label).strip())
+        if labels:
+            return " + ".join(labels)
+
+    target = candidate.get("target") if isinstance(candidate.get("target"), dict) else candidate
+    return (
+        release_catalog.ingredient_display_name(target, language)
+        or original
+    )
+
+
 def shopping_rows(
     rows,
     language,
@@ -128,6 +161,62 @@ def shopping_rows(
             result.append(raw)  # User-entered text is already intentional.
             continue
         item = deepcopy(raw)
+
+        if item.get("alternativeGroup"):
+            candidates = [
+                row for row in item.get("alternativeCandidates") or []
+                if isinstance(row, dict)
+            ]
+            option_names = []
+            seen_options = set()
+            for candidate in candidates:
+                original_candidate = str(
+                    candidate.get("originalName")
+                    or candidate.get("name")
+                    or candidate.get("foodName")
+                    or candidate.get("key")
+                    or ""
+                ).strip()
+                display = _replacement_candidate_label(candidate, ui_language)
+                market_name = _replacement_candidate_label(candidate, market_language)
+                aliases = []
+                for value in (market_name, original_candidate):
+                    value = str(value or "").strip()
+                    if not value or value.casefold() == str(display).casefold():
+                        continue
+                    if value.casefold() in {label.casefold() for label in aliases}:
+                        continue
+                    aliases.append(value)
+                option = str(display).strip() + (
+                    f" ({'; '.join(aliases)})" if aliases else ""
+                )
+                if option and option.casefold() not in seen_options:
+                    seen_options.add(option.casefold())
+                    option_names.append(option)
+
+            separator = {"en": " or ", "de": " oder ", "el": " ή "}.get(
+                ui_language, " / "
+            )
+            display_name = separator.join(option_names) or str(item.get("name") or "").strip()
+            item["originalName"] = " / ".join(
+                str(value).strip()
+                for value in item.get("originals") or []
+                if str(value).strip()
+            )
+            item["uiLanguage"] = ui_language
+            item["supermarketLanguage"] = market_language
+            item["uiName"] = display_name
+            item["supermarketName"] = display_name
+            item["shoppingDisplayName"] = display_name
+            item["alternativeDisplayNames"] = option_names
+            item["displayUnit"] = ""
+            item["name"] = display_name
+            if "foodName" in item:
+                item["foodName"] = display_name
+            item.pop("applicationDescription", None)
+            result.append(item)
+            continue
+
         identity = item.get("identity") or inventory_identity(item)
         if str(identity).startswith("k:") and not (
             item.get("key") or item.get("foodKey")

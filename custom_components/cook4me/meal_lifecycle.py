@@ -288,8 +288,191 @@ def reservation_status(slots: Any, inventory: Any) -> dict[str, Any]:
     }
 
 
+def _shopping_substitution_plan(recipe: Any) -> list[dict[str, Any]]:
+    """Return validated replacement choices for one adapted recipe."""
+    if not isinstance(recipe, dict):
+        return []
+    match = recipe.get("match") if isinstance(recipe.get("match"), dict) else {}
+    if not match.get("requiresSubstitutions"):
+        return []
+    raw_rows = match.get("substitutions")
+    ingredients = recipe.get("ingredients") if isinstance(recipe.get("ingredients"), list) else []
+    if not isinstance(raw_rows, list) or not raw_rows:
+        raise ValueError("A planned recipe has incomplete ingredient replacement choices")
+
+    result: list[dict[str, Any]] = []
+    for raw in raw_rows:
+        if not isinstance(raw, dict):
+            raise ValueError("A planned recipe has incomplete ingredient replacement choices")
+        index = raw.get("ingredientIndex")
+        if isinstance(index, bool) or not isinstance(index, int) or index < 0 or index >= len(ingredients):
+            raise ValueError("A planned recipe has an invalid ingredient replacement")
+        raw_candidates = raw.get("alternatives")
+        if not isinstance(raw_candidates, list) or not raw_candidates:
+            replacement = raw.get("replacement")
+            raw_candidates = [replacement] if isinstance(replacement, dict) else []
+        candidates = [deepcopy(row) for row in raw_candidates if isinstance(row, dict)]
+        if not candidates:
+            raise ValueError("A planned recipe has no usable ingredient replacement choices")
+        source_ingredient = ingredients[index] if isinstance(ingredients[index], dict) else {}
+        result.append({
+            "ingredientIndex": index,
+            "original": _text(raw.get("original") or source_ingredient.get("name") or source_ingredient.get("foodName")),
+            "candidates": candidates,
+        })
+    return result
+
+
+def _shopping_candidate(raw: dict[str, Any]) -> dict[str, Any]:
+    """Attach the same semantic catalog identities used by normal stock matching."""
+    candidate = deepcopy(raw)
+    semantic_rows = [candidate]
+    if isinstance(candidate.get("target"), dict):
+        semantic_rows.append(candidate["target"])
+
+    identities: list[str] = []
+    try:
+        from .release_catalog import ingredient_stock_identities
+        for semantic in semantic_rows:
+            identities.extend(ingredient_stock_identities(semantic))
+    except Exception:
+        identities = []
+
+    for semantic in semantic_rows:
+        direct = inventory_identity(semantic)
+        if direct:
+            identities.append(direct)
+    identities = list(dict.fromkeys(str(value) for value in identities if value))
+    if identities:
+        candidate["identities"] = identities
+    return candidate
+
+
+def _replacement_is_in_storage(stock: list[dict[str, Any]], candidate: dict[str, Any]) -> bool:
+    """Presence is enough for a choice row; replacement ratios are intentionally not guessed."""
+    components = candidate.get("components")
+    if isinstance(components, list) and components:
+        # Composite replacements (for example flaxseed + water) are available
+        # only when every reviewed component is represented in storage.
+        for component in components:
+            target = component.get("target") if isinstance(component, dict) else None
+            if not isinstance(target, dict):
+                return False
+            if not _replacement_is_in_storage(stock, _shopping_candidate(target)):
+                return False
+        return True
+
+    # Keep the import lazy because lifecycle transaction tests deliberately
+    # provide a tiny inventory stub and never exercise shopping resolution.
+    from .inventory import stock_for_ingredient
+    view = stock_for_ingredient(stock, candidate)
+    if view is None:
+        return False
+    if view.get("unlimited"):
+        return True
+    quantity = _number(view.get("quantity"))
+    # A stored item with an unknown amount still exists in storage. An explicit
+    # zero, however, is depleted and must not suppress the shopping choice.
+    return quantity is None or quantity > 1e-9
+
+
+def _shopping_slots_and_replacements(
+    slots: Any,
+    inventory: Any,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Remove incompatible originals and emit one OR-row for missing replacements."""
+    stock = normalize_inventory(inventory)
+    adapted_slots: list[dict[str, Any]] = []
+    groups: dict[tuple[str, ...], dict[str, Any]] = {}
+
+    for raw_slot in slots if isinstance(slots, list) else []:
+        slot = _slot(raw_slot)
+        if slot is None:
+            continue
+        if not slot["selected"] or slot.get("leftoverId"):
+            adapted_slots.append(slot)
+            continue
+
+        recipe = slot.get("recipe") or {}
+        substitutions = _shopping_substitution_plan(recipe)
+        if not substitutions:
+            adapted_slots.append(slot)
+            continue
+
+        # The incompatible originals must never leak into normal shopping
+        # shortages. Keep every other ingredient from the recipe.
+        replaced_indexes = {row["ingredientIndex"] for row in substitutions}
+        adapted = deepcopy(slot)
+        adapted["recipe"]["ingredients"] = [
+            deepcopy(raw)
+            for index, raw in enumerate(recipe.get("ingredients") or [])
+            if index not in replaced_indexes
+        ]
+        match = dict(adapted["recipe"].get("match") or {})
+        match["requiresSubstitutions"] = False
+        adapted["recipe"]["match"] = match
+        adapted_slots.append(adapted)
+
+        for substitution in substitutions:
+            candidates = [_shopping_candidate(row) for row in substitution["candidates"]]
+            if any(_replacement_is_in_storage(stock, candidate) for candidate in candidates):
+                continue
+
+            fingerprints = []
+            for candidate in candidates:
+                identities = {
+                    _text(value)
+                    for value in candidate.get("identities") or []
+                    if _text(value)
+                }
+                direct = inventory_identity(candidate)
+                if direct:
+                    identities.add(direct)
+                for value in candidate.get("sourceIngredientIds") or []:
+                    value = _text(value)
+                    if value:
+                        identities.add(value if value.startswith("k:") else f"k:{value}")
+                fingerprints.append(
+                    sorted(identities)[0]
+                    if identities
+                    else _text(candidate.get("name"))
+                )
+            group_key = tuple(sorted(value for value in fingerprints if value))
+            if not group_key:
+                continue
+
+            existing = groups.get(group_key)
+            if existing is not None:
+                if slot["id"] not in existing["slots"]:
+                    existing["slots"].append(slot["id"])
+                original = substitution.get("original")
+                if original and original not in existing["originals"]:
+                    existing["originals"].append(original)
+                continue
+
+            groups[group_key] = {
+                "identity": "alternatives:" + "|".join(group_key),
+                "name": " / ".join(
+                    _text(candidate.get("name") or candidate.get("key"))
+                    for candidate in candidates
+                    if _text(candidate.get("name") or candidate.get("key"))
+                ),
+                "quantity": None,
+                "unit": "",
+                "required": None,
+                "available": 0.0,
+                "slots": [slot["id"]],
+                "alternativeGroup": True,
+                "alternativeCandidates": candidates,
+                "originals": [substitution["original"]] if substitution.get("original") else [],
+            }
+
+    return adapted_slots, list(groups.values())
+
+
 def shopping_delta(slots: Any, inventory: Any) -> list[dict[str, Any]]:
-    return [
+    adapted_slots, replacement_rows = _shopping_slots_and_replacements(slots, inventory)
+    ordinary_rows = [
         {
             "identity": row["identity"],
             "name": row["name"],
@@ -299,8 +482,9 @@ def shopping_delta(slots: Any, inventory: Any) -> list[dict[str, Any]]:
             "available": row["available"],
             "slots": row.get("slots") or [],
         }
-        for row in reservation_status(slots, inventory)["shortages"]
+        for row in reservation_status(adapted_slots, inventory)["shortages"]
     ]
+    return ordinary_rows + replacement_rows
 
 
 def _nutrition_totals(value: Any) -> dict[str, float]:
