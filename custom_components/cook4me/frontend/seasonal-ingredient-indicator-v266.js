@@ -48,12 +48,15 @@ export const SeasonalIngredientIndicatorMixin=Base=>class extends Base{
    leaf.setAttribute('aria-hidden','true');
    badge.append(leaf);
    button.append(badge);
+  }
 
-   const description=seasonalIngredientDescription(this._v266Language(),button.dataset.v93Label||'',filters);
-   if(description){
-    button.title=description;
-    button.setAttribute('aria-label',description);
-   }
+  const base=button.dataset.v93Label||button.getAttribute('aria-label')||button.title||'Ingredients';
+  const description=seasonal
+   ?seasonalIngredientDescription(this._v266Language(),base,filters)
+   :(manualCount?base+': '+manualCount:base);
+  if(description){
+   button.title=description;
+   button.setAttribute('aria-label',description);
   }
 
   this._v266Styles();
