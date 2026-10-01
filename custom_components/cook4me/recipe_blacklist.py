@@ -30,7 +30,7 @@ def _text(value: Any) -> str:
 def _title_key(value: Any) -> str:
     text = unicodedata.normalize("NFKD", _text(value).casefold())
     text = "".join(ch for ch in text if not unicodedata.category(ch).startswith("M"))
-    text = re.sub(r"[^a-z0-9]+", " ", text).strip()
+    text = " ".join("".join(ch if ch.isalnum() else " " for ch in text).split())
     return f"title:{text}" if text else ""
 
 
@@ -81,9 +81,12 @@ def normalize_blacklist(value: Any) -> list[dict[str, Any]]:
             continue
         title = _text(raw.get("title"))[:300]
         item = {
+            "identity": keys[0],
+            "identities": keys,
             "keys": keys,
             "title": title or "Recipe",
             "language": _text(raw.get("language") or raw.get("selectedLanguage"))[:24],
+            "source": _text(raw.get("source"))[:80],
             "image": _text(raw.get("image") or raw.get("imageUrl") or raw.get("cover"))[:1000],
             "blacklistedAt": _text(raw.get("blacklistedAt"))[:64],
         }
@@ -99,9 +102,12 @@ def blacklist_entry(recipe: dict[str, Any]) -> dict[str, Any]:
     if not keys:
         raise ValueError("This recipe does not have a stable identity to blacklist")
     return {
+        "identity": keys[0],
+        "identities": keys,
         "keys": keys,
         "title": _text(recipe.get("title"))[:300] or "Recipe",
         "language": _text(recipe.get("selectedLanguage") or recipe.get("language"))[:24],
+        "source": _text(recipe.get("source"))[:80],
         "image": _text(recipe.get("image") or recipe.get("imageUrl") or recipe.get("cover"))[:1000],
         "blacklistedAt": datetime.now(timezone.utc).isoformat(),
     }
