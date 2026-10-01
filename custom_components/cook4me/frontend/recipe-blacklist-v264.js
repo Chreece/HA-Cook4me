@@ -154,10 +154,14 @@ export const RecipeBlacklistMixin=Base=>class extends Base{
  }
  _v66BindRecipe(container,recipe,...args){
   const result=super._v66BindRecipe(container,recipe,...args);
+  if(!this._v264IsBlacklisted(recipe)){
+   const actions=container?.querySelector?.('.rx-v66-actions');
+   if(actions&&!actions.querySelector('[data-v264-blacklist]'))actions.append(this._v264BlacklistButton(recipe));
+  }
   container?.querySelectorAll?.('[data-v264-blacklist]').forEach(button=>{
    if(button._v264Bound)return;button._v264Bound=true;
    button.addEventListener('click',event=>{
-    event.preventDefault();event.stopPropagation();void this._v264Blacklist(recipe);
+    event.preventDefault();event.stopImmediatePropagation();event.stopPropagation();void this._v264Blacklist(recipe);
    });
   });
   return result;
