@@ -320,9 +320,10 @@ def _shopping_substitution_plan(recipe: Any) -> list[dict[str, Any]]:
         candidates = [deepcopy(row) for row in raw_candidates if isinstance(row, dict)]
         if not candidates:
             raise ValueError("A planned recipe has no usable ingredient replacement choices")
+        source_ingredient = ingredients[index] if isinstance(ingredients[index], dict) else {}
         result.append({
             "ingredientIndex": index,
-            "original": _text(raw.get("original") or (ingredients[index] or {}).get("name")),
+            "original": _text(raw.get("original") or source_ingredient.get("name") or source_ingredient.get("foodName")),
             "candidates": candidates,
         })
     return result
