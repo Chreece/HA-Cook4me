@@ -35,6 +35,10 @@ async def refresh_plan(bridge, state, *, filters=None, language="en", progress=N
             if not isinstance(recipe, dict):
                 missing(slot, "processing_error")
                 continue
+            blacklist_check = getattr(bridge.recipe_hub, "is_recipe_blacklisted", None)
+            if callable(blacklist_check) and blacklist_check(recipe):
+                missing(slot, "blacklisted")
+                continue
             recipe = deepcopy(recipe)
             if not slot.get("leftoverId"):
                 nutrition = await bridge.hass.async_add_executor_job(

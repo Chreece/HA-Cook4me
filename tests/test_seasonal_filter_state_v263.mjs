@@ -132,7 +132,7 @@ test('active seasonal choice is rendered outside the filter button and opens ing
  assert.match(source,/_showFilter\('ingredients'\)/);
 });
 
-test('active panel and registration use runtime v263',()=>{
+test('active panel and registration use runtime v264',()=>{
  const panel=readFileSync(
   new URL('../custom_components/cook4me/frontend/cook4me-panel-v180.js',import.meta.url),
   'utf8',
@@ -143,8 +143,8 @@ test('active panel and registration use runtime v263',()=>{
  );
  assert.match(panel,/seasonal-filter-state-v263\.js/);
  assert.match(panel,/SeasonalFilterStateMixin\(FullscreenStabilityMixin/);
- assert.match(panel,/data-cook4me-ui-revision','263'/);
- assert.match(panel,/runtime-v263/);
- assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v263"/);
+ assert.match(panel,/data-cook4me-ui-revision','264'/);
+ assert.match(panel,/runtime-v264/);
+ assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v264"/);
  assert.match(registration,/seasonal=263/);
 });

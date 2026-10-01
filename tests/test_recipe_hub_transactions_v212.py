@@ -95,6 +95,10 @@ diet.text_list = lambda value: list(value or []) if isinstance(value, list) else
 diet.scoring_profile = lambda profile, _filters: deepcopy(profile)
 sys.modules[diet.__name__] = diet
 
+suitability = ModuleType(PKG + ".recipe_suitability")
+suitability.meal_candidates = lambda rows: list(rows or [])
+sys.modules[suitability.__name__] = suitability
+
 shared = ModuleType(PKG + ".shared_recipe_filters")
 shared.normalize_preferences = lambda value: deepcopy(value or {})
 shared.merge_preferences = lambda old, patch: {**deepcopy(old or {}), **deepcopy(patch or {})}
@@ -283,6 +287,58 @@ class FailedWriteRollbackTests(unittest.IsolatedAsyncioTestCase):
         with self.assertRaises(asyncio.CancelledError):
             await task
         self.assertEqual(h.ui_preferences, before)
+
+
+class RecipeBlacklistTests(unittest.IsolatedAsyncioTestCase):
+    async def test_blacklist_persists_family_aliases_and_undo_restores_recipe(self):
+        h = hub()
+        recipe = {
+            "displayFamilyId": "family-1",
+            "groupingFunctionalId": "group-1",
+            "variantFunctionalId": "variant-1",
+            "title": "Never again",
+            "language": "de",
+            "source": "official",
+        }
+        result = await h.async_blacklist_recipe(recipe)
+        row = result["entry"]
+        self.assertEqual(row["identity"], "displayFamilyId:family-1")
+        self.assertIn("groupingFunctionalId:group-1", row["identities"])
+        self.assertTrue(h.is_recipe_blacklisted(recipe))
+        self.assertTrue(h.is_recipe_blacklisted({
+            "groupingFunctionalId": "group-1",
+            "variantFunctionalId": "different-variant",
+            "title": "Translated title",
+        }))
+        self.assertEqual(h.snapshot(), h._store.saved)
+
+        removed = await h.async_unblacklist_recipe(row["identity"])
+        self.assertTrue(removed["removed"])
+        self.assertFalse(h.is_recipe_blacklisted(recipe))
+        self.assertEqual(h.profile["recipeBlacklist"], [])
+        self.assertEqual(h.snapshot(), h._store.saved)
+
+    async def test_rank_and_filter_never_return_blacklisted_recipe(self):
+        h = hub()
+        blocked = {"groupingFunctionalId": "blocked", "title": "Blocked"}
+        allowed = {"groupingFunctionalId": "allowed", "title": "Allowed"}
+        await h.async_blacklist_recipe(blocked)
+
+        self.assertEqual(
+            [row["title"] for row in h.filter_blacklisted([blocked, allowed])],
+            ["Allowed"],
+        )
+        self.assertEqual([row["title"] for row in h.rank([blocked, allowed])], ["Allowed"])
+
+    async def test_failed_blacklist_write_rolls_back_memory(self):
+        h = hub()
+        before = h.profile
+        h._store.fail = True
+        with self.assertRaises(OSError):
+            await h.async_blacklist_recipe(
+                {"groupingFunctionalId": "blocked", "title": "Blocked"}
+            )
+        self.assertEqual(h.profile, before)
 
 
 class ConcurrencyTests(unittest.IsolatedAsyncioTestCase):

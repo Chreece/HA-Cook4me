@@ -86,9 +86,9 @@ test('active runtime layers stability outside the existing fullscreen guards',()
   active,
   /FullscreenStabilityMixin\(TodaySubstitutionPersistenceMixin\(FullscreenProgressGuardMixin\(RecipeFullscreenGuardMixin/,
  );
- assert.match(active,/data-cook4me-ui-revision','263'/);
- assert.match(active,/runtime-v263/);
- assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v263"/);
+ assert.match(active,/data-cook4me-ui-revision','264'/);
+ assert.match(active,/runtime-v264/);
+ assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v264"/);
  assert.match(registration,/stability=262/);
  assert.match(registration,/seasonal=263/);
 });

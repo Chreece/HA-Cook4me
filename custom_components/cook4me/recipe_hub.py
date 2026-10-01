@@ -42,6 +42,7 @@ _DEFAULT_PROFILE: dict[str, Any] = {
     "allergies": [],
     "avoid": [],
     "preferences": [],
+    "recipeBlacklist": [],
     "householdMembers": [],
     # pantry is retained for storage/backwards compatibility. New UI writes the
     # structured houseIngredients stock list; pantry mirrors display names for
@@ -165,6 +166,38 @@ class Cook4MeRecipeHub:
         out["houseIngredients"] = house
         out["pantry"] = [row["name"] for row in house]
         out["storageLocations"] = normalize_locations(profile.get("storageLocations"))
+        blacklist = []
+        seen_blacklist = set()
+        for raw in profile.get("recipeBlacklist") or []:
+            if isinstance(raw, str):
+                identity = raw.strip()
+                row = {"identity": identity, "title": ""}
+            elif isinstance(raw, dict):
+                identity = str(raw.get("identity") or "").strip()
+                aliases = []
+                for value in raw.get("identities") or []:
+                    value = str(value or "").strip()
+                    if value and len(value) <= 500 and value not in aliases:
+                        aliases.append(value)
+                if identity and identity not in aliases:
+                    aliases.insert(0, identity)
+                row = {
+                    "identity": identity,
+                    "identities": aliases[:16],
+                    "title": str(raw.get("title") or "").strip()[:300],
+                    "source": str(raw.get("source") or "").strip()[:120],
+                    "language": str(raw.get("language") or "").strip()[:40],
+                    "blacklistedAt": str(raw.get("blacklistedAt") or "").strip()[:80],
+                }
+            else:
+                continue
+            if not identity or len(identity) > 500 or identity in seen_blacklist:
+                continue
+            seen_blacklist.add(identity)
+            blacklist.append(row)
+            if len(blacklist) >= 12000:
+                break
+        out["recipeBlacklist"] = blacklist
         out["scannerAiTaskEntityId"] = str(profile.get("scannerAiTaskEntityId") or "")[:160]
         return out
 
@@ -244,6 +277,135 @@ class Cook4MeRecipeHub:
     @property
     def habit_terms(self) -> list[str]:
         return self._habit_terms()
+
+    @staticmethod
+    def recipe_blacklist_identities(recipe: Any) -> tuple[str, ...]:
+        if not isinstance(recipe, dict):
+            return ()
+        identities = []
+        for key in (
+            "displayFamilyId",
+            "groupingFunctionalId",
+            "groupingId",
+            "recipeFunctionalId",
+            "variantFunctionalId",
+            "functionalId",
+            "id",
+        ):
+            value = str(recipe.get(key) or "").strip()
+            identity = f"{key}:{value}" if value else ""
+            if identity and identity not in identities:
+                identities.append(identity)
+        if not identities:
+            title = normalize_text(recipe.get("title") or recipe.get("canonicalName"))
+            if title:
+                identities.append(f"title:{title}")
+        return tuple(identities)
+
+    @classmethod
+    def recipe_blacklist_identity(cls, recipe: Any) -> str:
+        identities = cls.recipe_blacklist_identities(recipe)
+        return identities[0] if identities else ""
+
+    def is_recipe_blacklisted(self, recipe: Any) -> bool:
+        identities = set(self.recipe_blacklist_identities(recipe))
+        if not identities:
+            return False
+        for row in self._data["profile"].get("recipeBlacklist") or []:
+            if not isinstance(row, dict):
+                continue
+            blocked = {
+                str(value)
+                for value in [row.get("identity"), *(row.get("identities") or [])]
+                if str(value or "").strip()
+            }
+            if identities & blocked:
+                return True
+        return False
+
+    def filter_blacklisted(self, recipes: Any) -> list[dict[str, Any]]:
+        rows = recipes if isinstance(recipes, list) else []
+        return [
+            deepcopy(row)
+            for row in rows
+            if isinstance(row, dict) and not self.is_recipe_blacklisted(row)
+        ]
+
+    async def async_blacklist_recipe(self, recipe: dict[str, Any]) -> dict[str, Any]:
+        identities = list(self.recipe_blacklist_identities(recipe))
+        identity = identities[0] if identities else ""
+        if not identity:
+            raise ValueError("Recipe requires a stable identity before it can be blacklisted")
+        entry = {
+            "identity": identity,
+            "identities": identities,
+            "title": str(recipe.get("title") or recipe.get("canonicalName") or identity).strip()[:300],
+            "source": str(recipe.get("source") or "").strip()[:120],
+            "language": str(
+                recipe.get("selectedLanguage")
+                or recipe.get("language")
+                or recipe.get("sourceLanguage")
+                or ""
+            ).strip()[:40],
+            "blacklistedAt": datetime.now(timezone.utc).isoformat(),
+        }
+        async with self._durable_mutation():
+            profile = deepcopy(self._data["profile"])
+            wanted = set(identities)
+            rows = []
+            first_blacklisted_at = ""
+            for row in profile.get("recipeBlacklist") or []:
+                if not isinstance(row, dict):
+                    continue
+                blocked = {
+                    str(value).strip()
+                    for value in [row.get("identity"), *(row.get("identities") or [])]
+                    if str(value or "").strip()
+                }
+                if wanted & blocked:
+                    first_blacklisted_at = first_blacklisted_at or str(row.get("blacklistedAt") or "")
+                    wanted.update(blocked)
+                    continue
+                rows.append(row)
+            entry["identities"] = list(dict.fromkeys([identity, *sorted(wanted - {identity})]))[:16]
+            if first_blacklisted_at:
+                entry["blacklistedAt"] = first_blacklisted_at
+            rows.append(entry)
+            profile["recipeBlacklist"] = rows
+            self._data["profile"] = self._normalize_profile(profile)
+            await self._save()
+            saved = next(
+                (
+                    row for row in self._data["profile"].get("recipeBlacklist") or []
+                    if row.get("identity") == identity
+                ),
+                entry,
+            )
+            return {"profile": self.profile, "entry": deepcopy(saved)}
+
+    async def async_unblacklist_recipe(self, identity: str) -> dict[str, Any]:
+        identity = str(identity or "").strip()
+        if not identity:
+            raise ValueError("Recipe blacklist identity is required")
+        async with self._durable_mutation():
+            profile = deepcopy(self._data["profile"])
+            before = len(profile.get("recipeBlacklist") or [])
+            profile["recipeBlacklist"] = [
+                row for row in profile.get("recipeBlacklist") or []
+                if not isinstance(row, dict)
+                or identity not in {
+                    str(value).strip()
+                    for value in [row.get("identity"), *(row.get("identities") or [])]
+                    if str(value or "").strip()
+                }
+            ]
+            self._data["profile"] = self._normalize_profile(profile)
+            await self._save()
+            return {
+                "profile": self.profile,
+                "removed": before != len(profile["recipeBlacklist"]),
+                "identity": identity,
+            }
 
     async def async_set_profile(self, profile: dict[str, Any]) -> dict[str, Any]:
         async with self._durable_mutation():
@@ -909,7 +1071,12 @@ class Cook4MeRecipeHub:
 
     def rank(self, recipes: list[dict[str, Any]], limit: int = 12) -> list[dict[str, Any]]:
         from .recipe_suitability import meal_candidates
-        scored = [self.annotate(x) for x in meal_candidates(recipes)]
+        blacklist_check = getattr(self, "is_recipe_blacklisted", None)
+        scored = [
+            self.annotate(x)
+            for x in meal_candidates(recipes)
+            if not callable(blacklist_check) or not blacklist_check(x)
+        ]
         safe = [x for x in scored if x.get("match", {}).get("safe") or x.get("match", {}).get("eligibleWithSubstitutions")]
         safe.sort(key=lambda x: x.get("match", {}).get("score", -1000), reverse=True)
         return safe[: max(1, min(int(limit), 50))]

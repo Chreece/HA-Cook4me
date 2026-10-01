@@ -140,6 +140,12 @@ def _is_catalog_rejection(exc: Exception) -> bool:
     )
 
 
+def _hide_blacklisted(bridge, result: dict[str, Any]) -> dict[str, Any]:
+    output = dict(result)
+    output["items"] = bridge.recipe_hub.filter_blacklisted(output.get("items") or [])
+    return output
+
+
 async def _search_with_diagnostic(
     hass: HomeAssistant,
     bridge,
@@ -157,13 +163,16 @@ async def _search_with_diagnostic(
     if not refresh:
         await async_ensure_catalog_ready(hass)
     if release_index.release_catalog_ready() and not refresh:
-        return _release_search(
+        return _hide_blacklisted(
             bridge,
-            query=query,
-            page=page,
-            size=size,
-            language=language,
-            strict_language=strict_language,
+            _release_search(
+                bridge,
+                query=query,
+                page=page,
+                size=size,
+                language=language,
+                strict_language=strict_language,
+            ),
         )
 
     try:
@@ -181,7 +190,7 @@ async def _search_with_diagnostic(
         result["cacheHit"] = cache_hit
         result["searchContract"] = raw.get("searchContract") or "apk-searchrecipesv2-v4"
         result["catalogAuthRefresh"] = "krups-http-only"
-        return result
+        return _hide_blacklisted(bridge, result)
     except Exception as exc:
         if not _is_catalog_rejection(exc):
             raise
@@ -210,7 +219,7 @@ async def _search_with_diagnostic(
                     "catalogDiagnostic": diagnostic,
                     "catalogDiagnosticSummary": catalog_diag.diagnostic_summary(diagnostic),
                 })
-                return result
+                return _hide_blacklisted(bridge, result)
         return {
             "ok": False,
             "items": [],
