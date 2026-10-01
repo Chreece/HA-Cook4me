@@ -44,6 +44,7 @@ _DEFAULT_PROFILE: dict[str, Any] = {
     "preferences": [],
     "recipeBlacklist": [],
     "householdMembers": [],
+    "recipeBlacklist": [],
     # pantry is retained for storage/backwards compatibility. New UI writes the
     # structured houseIngredients stock list; pantry mirrors display names for
     # older ranking/AI code.
@@ -199,6 +200,8 @@ class Cook4MeRecipeHub:
                 break
         out["recipeBlacklist"] = blacklist
         out["scannerAiTaskEntityId"] = str(profile.get("scannerAiTaskEntityId") or "")[:160]
+        from .recipe_blacklist import normalize_blacklist
+        out["recipeBlacklist"] = normalize_blacklist(profile.get("recipeBlacklist"))
         return out
 
     @staticmethod
