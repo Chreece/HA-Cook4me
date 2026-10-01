@@ -331,7 +331,12 @@ async def processor(
         # These properties return deep copies. Snapshot once per pass, not twice
         # for every recipe in the catalog; the calculation does not mutate them.
         generic, stock_lots = nutrients.generic, nutrients.stock_lots
-        rows = [row for row in rows if recipe_identity(row) not in recent]
+        rows = [
+            row
+            for row in rows
+            if recipe_identity(row) not in recent
+            and not bridge.recipe_hub.is_recipe_blacklisted(row)
+        ]
         process.candidate_history_delta = []
         process.candidate_scanned_count = 0
 
