@@ -65,6 +65,11 @@ with sync_playwright() as p:
         # Per-view filters unchanged; styling itself does not write preferences.
         page.evaluate("app.show('today');app._filters().maxCost=2;app.show('official');app._filters().maxCost=8;app.show('today')")
         check(page,"app._filters().maxCost===2",prefix+'per-view filters stay independent')
+        page.evaluate("app._filters().ingredients=[];app._filters().seasonalIngredients=true;app._renderTab()")
+        check(page,"(()=>{const b=app.shadowRoot.querySelector('[data-filter=ingredients]');return !!b&&!!b.querySelector('[data-v266-seasonal-badge]')&&!b.querySelector('.v98-filter-count')&&b.querySelector(':scope > ha-icon')?.getAttribute('icon')==='mdi:food-apple-outline'&&b.getAttribute('aria-label')==='Υλικά εποχής'})()",prefix+'seasonal-only ingredients use a leaf badge instead of count 1')
+        page.evaluate("app._filters().ingredients=['carrot','tomato'];app._renderTab()")
+        check(page,"(()=>{const b=app.shadowRoot.querySelector('[data-filter=ingredients]');return !!b&&!!b.querySelector('[data-v266-seasonal-badge]')&&b.querySelector('.v98-filter-count')?.textContent==='2'&&b.querySelector(':scope > ha-icon')?.getAttribute('icon')==='mdi:food-apple'&&b.getAttribute('aria-label')==='Υλικά εποχής + 2 επιλεγμένα'})()",prefix+'seasonal plus manual ingredients show leaf and manual count separately')
+        page.evaluate("app._filters().ingredients=[];app._filters().seasonalIngredients=false;app._renderTab()")
         # Every action stays as its original node, but all buttons are icon-only in one row.
         card=page.locator('article.ui203-recipe').first
         check(page,"(()=>{const d=app.shadowRoot.querySelector('article.ui203-recipe .ui203-action-dock'),b=[...d.querySelectorAll('button')];if(b.length<5)return false;const top=b[0].getBoundingClientRect().top;return !d.querySelector('details.ui203-more')&&!d.querySelector('.ui203-action-label')&&b.every(x=>Math.abs(x.getBoundingClientRect().top-top)<2)&&d.scrollWidth<=d.clientWidth+1})()",prefix+'all recipe action icons fit one row')
