@@ -63,7 +63,7 @@ def _annotate_search(bridge, raw: dict[str, Any]) -> dict[str, Any]:
     result = deepcopy(raw)
     items: list[dict[str, Any]] = []
     for item in result.get("items") or []:
-        if not isinstance(item, dict):
+        if not isinstance(item, dict) or bridge.recipe_hub.is_recipe_blacklisted(item):
             continue
         row = bridge.recipe_hub.annotate(item)
         row["deviceCanAccept"] = bridge.can_accept_recipe
@@ -266,6 +266,11 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
                 for code in msg.get("languages", []) if recipe_languages.is_official_catalog_language(code)))
         store = await today_plan_store_for_bridge(bridge)
         saved = store.snapshot or {}
+        if isinstance(saved.get("items"), list):
+            saved = {
+                **saved,
+                "items": bridge.recipe_hub.filter_blacklisted(saved["items"]),
+            }
         coordinator.progress(operation, "catalog_index")
         found = await search_filtered(
             bridge,
@@ -452,7 +457,9 @@ async def _seed_entry(hass: HomeAssistant, entry_id: str, bridge) -> tuple[dict[
     today_store = await today_plan_store_for_bridge(bridge)
     today = today_store.snapshot
     if isinstance(today, dict):
-        per_entry["todayResults"] = deepcopy(today.get("items") or [])
+        per_entry["todayResults"] = bridge.recipe_hub.filter_blacklisted(
+            today.get("items") or []
+        )
         per_entry["todayMeta"] = {
             key: deepcopy(value)
             for key, value in today.items()
