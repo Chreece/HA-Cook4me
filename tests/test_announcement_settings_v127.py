@@ -49,6 +49,16 @@ class AnnouncementSettingsV127Tests(unittest.TestCase):
         self.assertIn('result["language"] = tts["defaultLanguage"]',settings)
         self.assertIn('result["language"] not in tts["languages"]',settings)
 
+    def test_all_announcement_kinds_use_one_uncached_tts_voice_path(self):
+        announcements=ANNOUNCEMENTS.read_text(encoding="utf-8")
+        # Cooking states, recipe titles, steps and test speech all converge on
+        # the same _speak() tts.speak call with the same saved voice options.
+        self.assertEqual(announcements.count('async_call("tts", "speak"'),1)
+        self.assertIn('"cache": False',announcements)
+        self.assertIn('"options": {"voice": settings["voice"]} if settings["voice"] else {}',announcements)
+        self.assertIn('await self.speak(user, settings, text, delivered=delivered,',announcements)
+        self.assertIn('await self.speak(user, settings, message_for([("test", "test")]',announcements)
+
     def test_default_ai_task_is_dynamic_and_all_tts_ai_is_supported(self):
         ui=(FRONTEND/"cook4me-panel-v127.js").read_text(encoding="utf-8")
         settings=SETTINGS.read_text(encoding="utf-8")
