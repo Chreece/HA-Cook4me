@@ -89,6 +89,8 @@ def _rank_filtered(
             progress(completed - 1, len(recipes))
         if not isinstance(recipe, dict):
             continue
+        if bridge.recipe_hub.is_recipe_blacklisted(recipe):
+            continue
         if for_suggestions and is_cooking_guide(recipe):
             continue
         result = deepcopy(recipe)
