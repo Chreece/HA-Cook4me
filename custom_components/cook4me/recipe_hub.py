@@ -174,8 +174,16 @@ class Cook4MeRecipeHub:
                 row = {"identity": identity, "title": ""}
             elif isinstance(raw, dict):
                 identity = str(raw.get("identity") or "").strip()
+                aliases = []
+                for value in raw.get("identities") or []:
+                    value = str(value or "").strip()
+                    if value and len(value) <= 500 and value not in aliases:
+                        aliases.append(value)
+                if identity and identity not in aliases:
+                    aliases.insert(0, identity)
                 row = {
                     "identity": identity,
+                    "identities": aliases[:16],
                     "title": str(raw.get("title") or "").strip()[:300],
                     "source": str(raw.get("source") or "").strip()[:120],
                     "language": str(raw.get("language") or "").strip()[:40],
@@ -271,9 +279,10 @@ class Cook4MeRecipeHub:
         return self._habit_terms()
 
     @staticmethod
-    def recipe_blacklist_identity(recipe: Any) -> str:
+    def recipe_blacklist_identities(recipe: Any) -> tuple[str, ...]:
         if not isinstance(recipe, dict):
-            return ""
+            return ()
+        identities = []
         for key in (
             "displayFamilyId",
             "groupingFunctionalId",
@@ -284,19 +293,35 @@ class Cook4MeRecipeHub:
             "id",
         ):
             value = str(recipe.get(key) or "").strip()
-            if value:
-                return f"{key}:{value}"
-        title = normalize_text(recipe.get("title") or recipe.get("canonicalName"))
-        return f"title:{title}" if title else ""
+            identity = f"{key}:{value}" if value else ""
+            if identity and identity not in identities:
+                identities.append(identity)
+        if not identities:
+            title = normalize_text(recipe.get("title") or recipe.get("canonicalName"))
+            if title:
+                identities.append(f"title:{title}")
+        return tuple(identities)
+
+    @classmethod
+    def recipe_blacklist_identity(cls, recipe: Any) -> str:
+        identities = cls.recipe_blacklist_identities(recipe)
+        return identities[0] if identities else ""
 
     def is_recipe_blacklisted(self, recipe: Any) -> bool:
-        identity = self.recipe_blacklist_identity(recipe)
-        if not identity:
+        identities = set(self.recipe_blacklist_identities(recipe))
+        if not identities:
             return False
-        return any(
-            isinstance(row, dict) and row.get("identity") == identity
-            for row in self._data["profile"].get("recipeBlacklist") or []
-        )
+        for row in self._data["profile"].get("recipeBlacklist") or []:
+            if not isinstance(row, dict):
+                continue
+            blocked = {
+                str(value)
+                for value in [row.get("identity"), *(row.get("identities") or [])]
+                if str(value or "").strip()
+            }
+            if identities & blocked:
+                return True
+        return False
 
     def filter_blacklisted(self, recipes: Any) -> list[dict[str, Any]]:
         rows = recipes if isinstance(recipes, list) else []
@@ -312,6 +337,7 @@ class Cook4MeRecipeHub:
             raise ValueError("Recipe requires a stable identity before it can be blacklisted")
         entry = {
             "identity": identity,
+            "identities": list(self.recipe_blacklist_identities(recipe)),
             "title": str(recipe.get("title") or recipe.get("canonicalName") or identity).strip()[:300],
             "source": str(recipe.get("source") or "").strip()[:120],
             "language": str(
