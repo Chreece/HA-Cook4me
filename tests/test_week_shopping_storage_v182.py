@@ -237,6 +237,23 @@ class WeekShoppingStorageV182Tests(unittest.TestCase):
         rows=self.meal.shopping_delta([slot],inventory)
         self.assertFalse(any(row.get("alternativeGroup") for row in rows))
 
+    def test_replacement_target_reference_matches_real_catalog_storage_identity(self):
+        slot=self._replacement_slot()
+        candidate=slot["recipe"]["match"]["substitutions"][0]["alternatives"][0]
+        candidate["target"]={"ingredientId":"catalog-tofu","canonicalName":"Tofu"}
+        inventory=[{
+            "key":"scanned-tofu",
+            "name":"Scanned tofu",
+            "unit":"g",
+            "lots":[{
+                "id":"catalog-tofu-lot",
+                "quantity":90,
+                "ingredientLinks":[{"key":"catalog-tofu","name":"Tofu"}],
+            }],
+        }]
+        rows=self.meal.shopping_delta([slot],inventory)
+        self.assertFalse(any(row.get("alternativeGroup") for row in rows))
+
     def test_same_replacement_choices_are_one_row_across_the_week(self):
         first=self._replacement_slot("2026-09-22:dinner","2026-09-22")
         second=self._replacement_slot("2026-09-23:dinner","2026-09-23")
