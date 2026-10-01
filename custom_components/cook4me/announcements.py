@@ -261,6 +261,12 @@ class Announcements:
             # cached audio, which sounds exactly like two different voices.
             # Event de-duplication already prevents replay spam, so regenerating
             # the announcement is the safer and deterministic behavior here.
+            _LOGGER.debug(
+                "Cook4Me TTS profile entity=%s language=%s voice=%s cache=false",
+                settings["tts"],
+                settings["language"],
+                settings["voice"] or "<provider-default>",
+            )
             await self.hass.services.async_call("tts", "speak", {
                 "entity_id": settings["tts"], "media_player_entity_id": players,
                 "message": translated, "language": settings["language"], "cache": False,
