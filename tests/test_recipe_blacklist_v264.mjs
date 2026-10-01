@@ -57,11 +57,11 @@ test('active runtime exposes blacklist button and Diet undo list',()=>{
   new URL('../custom_components/cook4me/panel.py',import.meta.url),
   'utf8',
  );
- assert.match(mixin,/data\.v264Blacklist/);
+ assert.match(mixin,/dataset\.v264Blacklist/);
  assert.match(mixin,/cook4me\/recipe_blacklist_add/);
  assert.match(mixin,/cook4me\/recipe_blacklist_remove/);
  assert.match(mixin,/_v83RenderProfiles\(container,state\)/);
- assert.match(mixin,/data\.v264Undo/);
+ assert.match(mixin,/dataset\.v264Undo/);
  assert.match(panel,/recipe-blacklist-v264\.js/);
  assert.match(panel,/RecipeBlacklistMixin\(SeasonalFilterStateMixin/);
  assert.match(panel,/data-cook4me-ui-revision','264'/);
