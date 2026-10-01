@@ -87,7 +87,7 @@ test('active mixin takes cooking-mode language only from actual UI language',()=
   assert.doesNotMatch(mixin,/_uiIngredientLanguage/);
 });
 
-test('active panel keeps v259 step modes under v265 runtime without changing global static runtime',()=>{
+test('active panel keeps v259 step modes under v266 runtime without changing global static runtime',()=>{
   const panel=readFileSync(
     new URL('../custom_components/cook4me/frontend/cook4me-panel-v180.js',import.meta.url),
     'utf8',
@@ -97,10 +97,10 @@ test('active panel keeps v259 step modes under v265 runtime without changing glo
     'utf8',
   );
   assert.match(panel,/recipe-step-modes-v259\.js/);
-  assert.match(panel,/data-cook4me-ui-revision','265'/);
+  assert.match(panel,/data-cook4me-ui-revision','266'/);
   assert.match(panel,/runtime-v259/);
   assert.match(registration,/_URL_BASE = "\/cook4me_static\/2026\.9\.27\.2\/runtime-v249"/);
-  assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v265"/);
+  assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v266"/);
   assert.match(registration,/modes=259/);
   assert.match(registration,/progress=260/);
   assert.match(registration,/today=261/);
