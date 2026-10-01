@@ -325,7 +325,9 @@ async def processor(
             )
 
     def process(rows):
-        rows = bridge.recipe_hub.filter_blacklisted(rows)
+        blacklist_filter = getattr(bridge.recipe_hub, "filter_blacklisted", None)
+        if callable(blacklist_filter):
+            rows = blacklist_filter(rows)
         if for_suggestions:
             from .recipe_suitability import meal_candidates
             rows = meal_candidates(rows)
