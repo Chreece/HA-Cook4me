@@ -275,7 +275,6 @@ async def processor(
     profile = bridge.recipe_hub.profile
     settings = resolve_filters(profile, normalize_filters(filters))
     house = profile.get("houseIngredients") or []
-    blacklist = profile.get("recipeBlacklist") or []
     costs = await cost_store_for_bridge(bridge) if settings["maxCost"] is not None else None
     market = None
     if settings.get("seasonalIngredients") is True or (costs is not None and cost_calculator is None):
@@ -326,8 +325,7 @@ async def processor(
             )
 
     def process(rows):
-        from .recipe_blacklist import filter_blacklisted
-        rows = filter_blacklisted(rows, blacklist)
+        rows = bridge.recipe_hub.filter_blacklisted(rows)
         if for_suggestions:
             from .recipe_suitability import meal_candidates
             rows = meal_candidates(rows)
@@ -335,13 +333,7 @@ async def processor(
         # These properties return deep copies. Snapshot once per pass, not twice
         # for every recipe in the catalog; the calculation does not mutate them.
         generic, stock_lots = nutrients.generic, nutrients.stock_lots
-        blacklist_check = getattr(bridge.recipe_hub, "is_recipe_blacklisted", None)
-        rows = [
-            row
-            for row in rows
-            if recipe_identity(row) not in recent
-            and (not callable(blacklist_check) or not blacklist_check(row))
-        ]
+        rows = [row for row in rows if recipe_identity(row) not in recent]
         process.candidate_history_delta = []
         process.candidate_scanned_count = 0
 
