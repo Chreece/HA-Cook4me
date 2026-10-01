@@ -201,6 +201,8 @@ def async_register(hass: HomeAssistant) -> None:
         ws_recommend,
         ws_send_recipe,
         ws_profile_save,
+        ws_recipe_blacklist_add,
+        ws_recipe_blacklist_remove,
         ws_recipe_save,
         ws_recipe_delete,
     ):
@@ -223,7 +225,10 @@ def ws_overview(hass: HomeAssistant, connection: websocket_api.ActiveConnection,
                 "loadedRecipe": bridge.loaded_recipe,
                 "state": dict(bridge.data),
                 "profile": bridge.recipe_hub.profile,
-                "recipes": [bridge.recipe_hub.annotate(recipe) for recipe in bridge.recipe_hub.recipes],
+                "recipes": [
+                    bridge.recipe_hub.annotate(recipe)
+                    for recipe in bridge.recipe_hub.filter_blacklisted(bridge.recipe_hub.recipes)
+                ],
                 "history": bridge.recipe_hub.snapshot().get("history", []),
                 "habitTerms": bridge.recipe_hub.habit_terms,
                 "configuredLanguage": str(bridge.entry.data.get(CONF_LANGUAGE, DEFAULT_LANGUAGE)),
@@ -290,7 +295,7 @@ async def ws_search(hass: HomeAssistant, connection: websocket_api.ActiveConnect
             bridge._search_cache[cache_key] = (time.monotonic(), deepcopy(result))
         items = []
         for item in result.get("items") or []:
-            if not isinstance(item, dict):
+            if not isinstance(item, dict) or bridge.recipe_hub.is_recipe_blacklisted(item):
                 continue
             annotated = bridge.recipe_hub.annotate(item)
             annotated["deviceCanAccept"] = bridge.can_accept_recipe
@@ -455,6 +460,50 @@ async def ws_profile_save(hass: HomeAssistant, connection: websocket_api.ActiveC
     try:
         bridge = _bridge(hass, msg.get("entry_id"))
         result = await bridge.recipe_hub.async_set_profile(msg["profile"])
+    except Exception as exc:
+        _send_error(connection, msg, exc)
+        return
+    connection.send_result(msg["id"], result)
+
+
+@websocket_api.websocket_command(
+    {
+        vol.Required("type"): "cook4me/recipe_blacklist_add",
+        vol.Optional("entry_id"): str,
+        vol.Required("recipe"): dict,
+    }
+)
+@websocket_api.async_response
+async def ws_recipe_blacklist_add(
+    hass: HomeAssistant,
+    connection: websocket_api.ActiveConnection,
+    msg: dict[str, Any],
+) -> None:
+    try:
+        bridge = _bridge(hass, msg.get("entry_id"))
+        result = await bridge.recipe_hub.async_blacklist_recipe(msg["recipe"])
+    except Exception as exc:
+        _send_error(connection, msg, exc)
+        return
+    connection.send_result(msg["id"], result)
+
+
+@websocket_api.websocket_command(
+    {
+        vol.Required("type"): "cook4me/recipe_blacklist_remove",
+        vol.Optional("entry_id"): str,
+        vol.Required("identity"): str,
+    }
+)
+@websocket_api.async_response
+async def ws_recipe_blacklist_remove(
+    hass: HomeAssistant,
+    connection: websocket_api.ActiveConnection,
+    msg: dict[str, Any],
+) -> None:
+    try:
+        bridge = _bridge(hass, msg.get("entry_id"))
+        result = await bridge.recipe_hub.async_unblacklist_recipe(msg["identity"])
     except Exception as exc:
         _send_error(connection, msg, exc)
         return
