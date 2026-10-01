@@ -148,12 +148,8 @@ export const RecipeBlacklistMixin=Base=>class extends Base{
   if(this._v264IsBlacklisted(recipe))return '';
   const html=super._recipeCard(recipe,custom);if(!html)return html;
   const node=this._v67Dom?.(html)||(()=>{const wrapper=document.createElement('div');wrapper.innerHTML=html;return wrapper;})();
-  const card=node.firstElementChild,title=card?.querySelector?.('.rx-v66-title');
-  if(title&&!title.querySelector('[data-v264-blacklist]')){
-   const button=this._v264BlacklistButton(recipe);
-   const expand=title.querySelector('[data-v66-action="expand"]');
-   title.insertBefore(button,expand||null);
-  }
+  const card=node.firstElementChild,actions=card?.querySelector?.('.rx-v66-actions');
+  if(actions&&!actions.querySelector('[data-v264-blacklist]'))actions.append(this._v264BlacklistButton(recipe));
   return node.innerHTML;
  }
  _v66BindRecipe(container,recipe,...args){
