@@ -934,14 +934,21 @@ async def _shopping_add(hass: HomeAssistant, rows: list[dict[str, Any]]) -> dict
     }
     added = []
     for row in rows:
-        quantity = _number(row.get("quantity"))
-        unit = _text(row.get("unit"))
-        display_unit = _text(row.get("displayUnit") or unit)
         name = _text(row.get("name"))
-        if quantity is None or quantity <= 0 or not unit or not name:
-            continue
-        shown = str(int(quantity)) if float(quantity).is_integer() else f"{quantity:g}"
-        summary = f"{shown} {display_unit} {name}".strip()
+        if row.get("alternativeGroup"):
+            # Replacement ratios differ by ingredient, so the single OR-row is
+            # intentionally quantity-free rather than inventing a shared amount.
+            summary = name
+            if not summary:
+                continue
+        else:
+            quantity = _number(row.get("quantity"))
+            unit = _text(row.get("unit"))
+            display_unit = _text(row.get("displayUnit") or unit)
+            if quantity is None or quantity <= 0 or not unit or not name:
+                continue
+            shown = str(int(quantity)) if float(quantity).is_integer() else f"{quantity:g}"
+            summary = f"{shown} {display_unit} {name}".strip()
         if summary.casefold() in existing:
             continue
         await hass.services.async_call(
@@ -1266,15 +1273,6 @@ async def ws_week_add_shopping(hass, connection, msg) -> None:
                     bridge,
                     shared_filters=msg["shared_filters"],
                     ui_language=msg.get("ui_language", "en"),
-                )
-            if any(
-                (((slot.get("recipe") or {}).get("match") or {}).get("requiresSubstitutions"))
-                for slot in snapshot["slots"]
-                if slot.get("selected") is not False
-            ):
-                raise ValueError(
-                    "Some planned recipes still need ingredient replacements. "
-                    "Resolve those recipes before adding the week to shopping."
                 )
             rows = snapshot["shoppingDelta"]
             from .shopping_presentation import (
