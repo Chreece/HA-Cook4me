@@ -299,9 +299,10 @@ class Cook4MeRecipeHub:
         )
 
     def filter_blacklisted(self, recipes: Any) -> list[dict[str, Any]]:
+        rows = recipes if isinstance(recipes, list) else []
         return [
             deepcopy(row)
-            for row in recipes if isinstance(recipes, list) else []
+            for row in rows
             if isinstance(row, dict) and not self.is_recipe_blacklisted(row)
         ]
 
