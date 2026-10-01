@@ -28,6 +28,16 @@ After selecting an ingredient, the information button opens its details and the 
 
 Both search and dropdown remain on the same row at 360 px. Action buttons move below them on narrow displays.
 
+## Voice consistency
+
+Cook4Me announcements now request fresh TTS audio instead of reusing Home Assistant's
+persistent TTS cache. This is intentional: the short fixed cooking-state phrases repeat
+often, while recipe titles and step instructions are usually unique. If the underlying
+TTS provider or its default voice changes while cached phase phrases remain on disk,
+those repeated phrases can keep the old voice while the dynamic announcements use the
+new one. All announcement kinds still use the same selected TTS entity, output language
+and saved voice option; only cache reuse is disabled.
+
 ## Deterministic announcements when AI is unavailable
 
 - Fixed cooking-state, connection and test messages are already translated and bypass AI entirely.
