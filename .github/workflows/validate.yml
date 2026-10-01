@@ -106,6 +106,7 @@ jobs:
           node --check custom_components/cook4me/frontend/seasonal-filter-state-v263.js
           node --check custom_components/cook4me/frontend/recipe-blacklist-v264.js
           node --check custom_components/cook4me/frontend/recipe-action-row-v265.js
+          node --check custom_components/cook4me/frontend/seasonal-filter-badge-v266.js
           node --check custom_components/cook4me/frontend/ingredient-stock-assignment-v249.js
           python tests/test_menu_footer_v126.py
           python tests/test_announcement_settings_v127.py
@@ -179,6 +180,7 @@ jobs:
           python tests/test_recipe_blacklist_v264.py
           node --test tests/test_recipe_blacklist_v264.mjs
           node --test tests/test_recipe_action_row_v265.mjs
+          node --test tests/test_seasonal_filter_badge_v266.mjs
           python tests/test_recipe_hub_transactions_v212.py
           python tests/test_greek_catalog_audit_v182.py
           python tests/test_greek_catalog_audit_v183.py

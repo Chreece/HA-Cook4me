@@ -36,8 +36,8 @@ test('blacklist action is present in the dock and removed from fullscreen header
 test('active runtime loads v265 outside the existing blacklist mixin',()=>{
  assert.match(active,/recipe-action-row-v265\.js/);
  assert.match(active,/RecipeActionRowMixin\(RecipeBlacklistMixin/);
- assert.match(active,/data-cook4me-ui-revision','265'/);
- assert.match(active,/runtime-v265/);
- assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v265"/);
+ assert.match(active,/data-cook4me-ui-revision','266'/);
+ assert.match(active,/runtime-v266/);
+ assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v266"/);
  assert.match(registration,/actionrow=265/);
 });
