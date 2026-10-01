@@ -461,14 +461,22 @@ async def ws_recipe_book_state(hass, connection, msg) -> None:
         bridge = legacy._bridge(hass, msg.get("entry_id"))
         store = await recipe_book_store_for_bridge(bridge)
         await _reconcile_queued_send(bridge, store)
+        snapshot = store.snapshot()
+        for collection in ("favorites", "recipeList"):
+            if isinstance(snapshot.get(collection), list):
+                snapshot[collection] = bridge.recipe_hub.filter_blacklisted(
+                    snapshot[collection]
+                )
         connection.send_result(
             msg["id"],
             {
-                **store.snapshot(),
+                **snapshot,
                 "deviceConnected": bridge.available,
                 "deviceCanAccept": bridge.can_accept_recipe,
                 "loadedRecipe": bridge.loaded_recipe,
-                "myRecipes": bridge.recipe_hub.recipes,
+                "myRecipes": bridge.recipe_hub.filter_blacklisted(
+                    bridge.recipe_hub.recipes
+                ),
             },
         )
     except Exception as exc:
@@ -659,9 +667,11 @@ async def async_ingredient_info(hass, connection, msg) -> None:
         book = await recipe_book_store_for_bridge(bridge)
         book_state = book.snapshot()
         saved = _usage_from_saved(
-            bridge.recipe_hub.recipes
-            + list(book_state.get("favorites") or [])
-            + list(book_state.get("recipeList") or []),
+            bridge.recipe_hub.filter_blacklisted(
+                bridge.recipe_hub.recipes
+                + list(book_state.get("favorites") or [])
+                + list(book_state.get("recipeList") or [])
+            ),
             stock or ingredient,
         )
         reference_language = msg.get("language") or "en"
