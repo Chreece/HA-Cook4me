@@ -11,6 +11,12 @@ export const SeasonalFilterBadgeMixin=Base=>class extends Base{
   const row=TEXT[code]||TEXT.en;
   return count>0?row.combined(count):row.seasonal;
  }
+ _v263SeasonalIndicator(container){
+  // v263 rendered seasonal as a second standalone leaf control. v266 makes
+  // seasonal a state of the real Ingredients button instead, so there is only
+  // one control to understand and no misleading extra active-filter button.
+  container?.querySelector?.(':scope > [data-v263-active-filters]')?.remove();
+ }
  _v266DecorateSeasonalIngredientButton(root=this.shadowRoot){
   const button=root?.querySelector?.('.rx-shared-filters [data-filter="ingredients"],.v100-filter-slot [data-filter="ingredients"]');
   if(!button)return;
@@ -21,12 +27,7 @@ export const SeasonalFilterBadgeMixin=Base=>class extends Base{
   button.querySelectorAll(':scope > .v266-seasonal-marker').forEach(node=>node.remove());
   button.toggleAttribute('data-v266-seasonal',seasonal);
 
-  if(!seasonal){
-   const base=this._t?.('preferredIngredients')||this._t?.('ingredients')||'Ingredients';
-   button.title=base;
-   button.setAttribute('aria-label',base);
-   return;
-  }
+  if(!seasonal)return;
 
   const marker=document.createElement('span');
   marker.className='v266-seasonal-marker';
@@ -67,12 +68,14 @@ export const SeasonalFilterBadgeMixin=Base=>class extends Base{
   const style=document.createElement('style');
   style.id='v266SeasonalFilterBadgeStyles';
   style.textContent=`
-   .rx-shared-filters [data-filter="ingredients"][data-v266-seasonal]{
+   .rx-shared-filters [data-filter="ingredients"][data-v266-seasonal],
+   .v100-filter-slot [data-filter="ingredients"][data-v266-seasonal]{
     position:relative!important;
     border-color:color-mix(in srgb,var(--primary-color) 72%,var(--divider-color))!important;
     box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--primary-color) 24%,transparent);
    }
-   .rx-shared-filters [data-filter="ingredients"]>.v266-seasonal-marker{
+   .rx-shared-filters [data-filter="ingredients"]>.v266-seasonal-marker,
+   .v100-filter-slot [data-filter="ingredients"]>.v266-seasonal-marker{
     position:absolute;
     right:-5px;
     bottom:-5px;
@@ -89,7 +92,8 @@ export const SeasonalFilterBadgeMixin=Base=>class extends Base{
     pointer-events:none;
     box-shadow:0 1px 4px #0005;
    }
-   .rx-shared-filters [data-filter="ingredients"]>.v266-seasonal-marker ha-icon{
+   .rx-shared-filters [data-filter="ingredients"]>.v266-seasonal-marker ha-icon,
+   .v100-filter-slot [data-filter="ingredients"]>.v266-seasonal-marker ha-icon{
     --mdc-icon-size:11px!important;
     width:11px;
     height:11px;
