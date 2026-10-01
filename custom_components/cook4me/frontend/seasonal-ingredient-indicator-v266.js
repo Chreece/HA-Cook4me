@@ -67,8 +67,7 @@ export const SeasonalIngredientIndicatorMixin=Base=>class extends Base{
 
  _renderTab(...args){
   const result=super._renderTab(...args);
-  const root=this.shadowRoot;
-  this._v266DecorateIngredientFilter(root?.querySelector?.('#content')||root);
+  this._v266DecorateIngredientFilter(this.shadowRoot);
   return result;
  }
 
