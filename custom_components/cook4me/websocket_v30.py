@@ -60,9 +60,13 @@ def _client_operation_id(msg: dict[str, Any]) -> str:
 
 
 def _annotate_search(bridge, raw: dict[str, Any]) -> dict[str, Any]:
+    from .recipe_blacklist import blacklist_matches
     result = deepcopy(raw)
+    blacklist = bridge.recipe_hub.profile.get("recipeBlacklist") or []
     items: list[dict[str, Any]] = []
     for item in result.get("items") or []:
+        if blacklist_matches(item, blacklist):
+            continue
         if not isinstance(item, dict) or bridge.recipe_hub.is_recipe_blacklisted(item):
             continue
         row = bridge.recipe_hub.annotate(item)
