@@ -272,8 +272,10 @@ async def processor(
     from .nutrition_fefo import calculate_recipe_nutrition_fefo
     from .today_logic import recipe_identity
     from .diet_profiles import resolve_filters
-    settings = resolve_filters(bridge.recipe_hub.profile, normalize_filters(filters))
-    house = bridge.recipe_hub.profile.get("houseIngredients") or []
+    profile = bridge.recipe_hub.profile
+    settings = resolve_filters(profile, normalize_filters(filters))
+    house = profile.get("houseIngredients") or []
+    blacklist = profile.get("recipeBlacklist") or []
     costs = await cost_store_for_bridge(bridge) if settings["maxCost"] is not None else None
     market = None
     if settings.get("seasonalIngredients") is True or (costs is not None and cost_calculator is None):
@@ -324,6 +326,8 @@ async def processor(
             )
 
     def process(rows):
+        from .recipe_blacklist import filter_blacklisted
+        rows = filter_blacklisted(rows, blacklist)
         if for_suggestions:
             from .recipe_suitability import meal_candidates
             rows = meal_candidates(rows)
