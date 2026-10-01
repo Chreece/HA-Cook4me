@@ -109,7 +109,7 @@ async def async_register_panel(hass: HomeAssistant) -> None:
         hass=hass,
         frontend_url_path=DOMAIN,
         webcomponent_name=_PANEL_ELEMENT,
-        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.27.2&scanner=194&receipt=232&editor=196&assignment=249&runtime=249&diet=254&weigh=257&fullscreen=258&modes=259&progress=260&today=261&stability=262&seasonal=263&blacklist=264&actionrow=265",
+        module_url=f"{_URL_BASE}/{_PANEL_MODULE}?v=2026.9.27.2&scanner=194&receipt=232&editor=196&assignment=249&runtime=249&diet=254&weigh=257&fullscreen=258&modes=259&progress=260&today=261&stability=262&seasonal=263&blacklist=264&actionrow=265&seasonalbadge=266",
         sidebar_title="Cook4Me",
         sidebar_icon="mdi:pot-steam",
         embed_iframe=False,
