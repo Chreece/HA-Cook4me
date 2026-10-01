@@ -705,11 +705,11 @@ async def async_ingredient_info(hass, connection, msg) -> None:
                         refresh=False,
                     )
                 if search.get("ok", True):
-                    official = [
+                    official = bridge.recipe_hub.filter_blacklisted([
                         row
                         for row in search.get("items") or []
                         if isinstance(row, dict)
-                    ][:12]
+                    ])[:12]
             except Exception:
                 official = []
 
