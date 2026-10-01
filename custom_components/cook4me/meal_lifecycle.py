@@ -326,21 +326,42 @@ def _shopping_substitution_plan(recipe: Any) -> list[dict[str, Any]]:
 def _shopping_candidate(raw: dict[str, Any]) -> dict[str, Any]:
     """Attach the same semantic catalog identities used by normal stock matching."""
     candidate = deepcopy(raw)
+    semantic_rows = [candidate]
+    if isinstance(candidate.get("target"), dict):
+        semantic_rows.append(candidate["target"])
+
+    identities: list[str] = []
     try:
         from .release_catalog import ingredient_stock_identities
-        identities = list(ingredient_stock_identities(candidate))
+        for semantic in semantic_rows:
+            identities.extend(ingredient_stock_identities(semantic))
     except Exception:
         identities = []
-    direct = inventory_identity(candidate)
-    if direct and direct not in identities:
-        identities.insert(0, direct)
+
+    for semantic in semantic_rows:
+        direct = inventory_identity(semantic)
+        if direct:
+            identities.append(direct)
+    identities = list(dict.fromkeys(str(value) for value in identities if value))
     if identities:
-        candidate["identities"] = list(dict.fromkeys(str(value) for value in identities if value))
+        candidate["identities"] = identities
     return candidate
 
 
 def _replacement_is_in_storage(stock: list[dict[str, Any]], candidate: dict[str, Any]) -> bool:
     """Presence is enough for a choice row; replacement ratios are intentionally not guessed."""
+    components = candidate.get("components")
+    if isinstance(components, list) and components:
+        # Composite replacements (for example flaxseed + water) are available
+        # only when every reviewed component is represented in storage.
+        for component in components:
+            target = component.get("target") if isinstance(component, dict) else None
+            if not isinstance(target, dict):
+                return False
+            if not _replacement_is_in_storage(stock, _shopping_candidate(target)):
+                return False
+        return True
+
     # Keep the import lazy because lifecycle transaction tests deliberately
     # provide a tiny inventory stub and never exercise shopping resolution.
     from .inventory import stock_for_ingredient
