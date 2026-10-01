@@ -67,7 +67,7 @@ with sync_playwright() as p:
         check(page,"app._filters().maxCost===2",prefix+'per-view filters stay independent')
         # Seasonal ingredient filtering has its own leaf marker; manual selections keep the number badge.
         page.evaluate("(()=>{const f=app._filters();window.v266FilterSaved={seasonal:f.seasonalIngredients,ingredients:[...(f.ingredients||[])]};f.seasonalIngredients=true;f.ingredients=[];app._renderTab()})()")
-        check(page,"(()=>{const b=app.shadowRoot.querySelector('[data-filter=ingredients]');return !!b?.querySelector('.v266-seasonal-marker')&&!b.querySelector('.v98-filter-count')&&b.getAttribute('aria-label')==='Υλικά εποχής'})()",prefix+'seasonal-only ingredient filter shows leaf instead of number')
+        check(page,"(()=>{const b=app.shadowRoot.querySelector('[data-filter=ingredients]');return !!b?.querySelector('.v266-seasonal-marker')&&!b.querySelector('.v98-filter-count')&&b.getAttribute('aria-label')==='Υλικά εποχής'&&!app.shadowRoot.querySelector('[data-v263-active-filter=seasonalIngredients]')})()",prefix+'seasonal-only ingredient filter uses one leaf-marked Ingredients button')
         page.evaluate("(()=>{const f=app._filters();f.ingredients=['k:carrot','k:onion'];app._renderTab()})()")
         check(page,"(()=>{const b=app.shadowRoot.querySelector('[data-filter=ingredients]');return !!b?.querySelector('.v266-seasonal-marker')&&b.querySelector('.v98-filter-count')?.textContent==='2'&&b.getAttribute('aria-label')?.includes('2')})()",prefix+'seasonal plus manual ingredients shows leaf and manual count')
         page.evaluate("(()=>{const f=app._filters(),s=window.v266FilterSaved||{};f.seasonalIngredients=s.seasonal===true;f.ingredients=[...(s.ingredients||[])];app._renderTab()})()")
