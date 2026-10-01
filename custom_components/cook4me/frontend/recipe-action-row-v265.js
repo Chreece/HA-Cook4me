@@ -25,7 +25,7 @@ export const RecipeActionRowMixin=Base=>class extends Base{
   return typeof this._v264BlacklistButton==='function'?this._v264BlacklistButton(recipe):null;
  }
  _v265BindBlacklist(button,recipe){
-  if(!button||button._v265Bound)return;
+  if(!button||button._v264Bound||button._v265Bound)return;
   button._v265Bound=true;
   button.addEventListener('click',event=>{
    event.preventDefault();
