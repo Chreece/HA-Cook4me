@@ -35,7 +35,8 @@ async def refresh_plan(bridge, state, *, filters=None, language="en", progress=N
             if not isinstance(recipe, dict):
                 missing(slot, "processing_error")
                 continue
-            if bridge.recipe_hub.is_recipe_blacklisted(recipe):
+            blacklist_check = getattr(bridge.recipe_hub, "is_recipe_blacklisted", None)
+            if callable(blacklist_check) and blacklist_check(recipe):
                 missing(slot, "blacklisted")
                 continue
             recipe = deepcopy(recipe)
