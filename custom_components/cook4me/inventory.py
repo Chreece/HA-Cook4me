@@ -731,6 +731,11 @@ def recipe_expiry_priority(
         current = _find_stock(stock, ingredient)
         if not current:
             continue
+        # Unlimited/non-ending ingredients are never a consumption choice.
+        # They are available by definition and must not appear in the post-cook
+        # deduction editor or be turned into a finite stock mutation.
+        if current.get("unlimited"):
+            continue
         ident = inventory_identity(current)
         if not ident or ident in seen:
             continue
@@ -1246,8 +1251,68 @@ def _consume_inventory(inventory, consumptions):
     return rows, report
 
 
+def _rebase_consumptions_to_current_stock(inventory, consumptions):
+    """Make a confirmation act on the current stock instead of a stale UI snapshot.
+
+    The confirmation button is an action, not an optimistic-lock review step.
+    If a selected package disappeared or changed while the editor was open, keep
+    the selected stock identity and amount but fall back to current FEFO lots.
+    Unlimited stock is explicitly non-depleting and is ignored.
+    """
+    rows = normalize_inventory(inventory)
+    rebased = []
+    for raw in consumptions if isinstance(consumptions, list) else []:
+        if not isinstance(raw, dict):
+            continue
+        request = deepcopy(raw)
+        if not request.get("consume", True):
+            rebased.append(request)
+            continue
+        ident = _text(request.get("identity"))
+        current = next(
+            (row for row in rows if ident and inventory_identity(row) == ident),
+            None,
+        )
+        if current is None:
+            current = _find_stock(rows, request)
+            if current is not None:
+                request["identity"] = inventory_identity(current)
+        if current is None:
+            rebased.append(request)
+            continue
+        if current.get("unlimited"):
+            request["consume"] = False
+            request.pop("lotId", None)
+            request["packageOpenings"] = []
+            rebased.append(request)
+            continue
+        if not _text(request.get("unit")) and _text(current.get("unit")):
+            request["unit"] = _text(current.get("unit"))
+        selected_lot = _text(request.get("lotId"))
+        current_lot_ids = {
+            _text(lot.get("id"))
+            for lot in current.get("lots") or []
+            if _text(lot.get("id"))
+        }
+        if selected_lot and selected_lot not in current_lot_ids:
+            # The selected package has already moved/depleted. FEFO on the
+            # current row is the deterministic fallback; never fail the click.
+            request.pop("lotId", None)
+        openings = request.get("packageOpenings", [])
+        if isinstance(openings, list):
+            request["packageOpenings"] = [
+                deepcopy(item)
+                for item in openings
+                if isinstance(item, dict)
+                and _text(item.get("lotId")) in current_lot_ids
+            ]
+        rebased.append(request)
+    return rebased
+
+
 def apply_consumption(inventory, consumptions):
-    """Commit opening changes only for exact packages actually consumed."""
+    """Deduct requested finite amounts from current stock, rebasing stale lots."""
+    consumptions = _rebase_consumptions_to_current_stock(inventory, consumptions)
     for request in consumptions:
         openings = request.get("packageOpenings", []) if isinstance(request, dict) else []
         if not isinstance(openings, list) or any(
