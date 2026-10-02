@@ -873,11 +873,14 @@ class Cook4MeRecipeHub:
                 profile.get("houseIngredients"), consumptions
             )
             if strict:
+                # Confirm means commit the deduction. Current-stock rebasing in
+                # apply_consumption() already falls back from stale package IDs
+                # and clamps an over-request to what is actually available.
+                # Keep shortfalls as diagnostics instead of rejecting the user's
+                # explicit confirmation and leaving the pending card stuck.
                 shortfalls = consumption_shortfalls(consumptions, report)
                 if shortfalls:
-                    raise ValueError(
-                        "The selected storage amount is no longer available; reload stock and review the deduction"
-                    )
+                    report["shortfalls"] = shortfalls
             profile["houseIngredients"] = house
             profile["pantry"] = [row["name"] for row in house]
             self._data["profile"] = self._normalize_profile(profile)
