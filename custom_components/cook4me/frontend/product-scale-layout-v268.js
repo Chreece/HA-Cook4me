@@ -5,10 +5,12 @@ export const ProductScaleLayoutMixin=Base=>class extends Base{
   const dialog=this._v78Dialog;
   const block=dialog?.querySelector?.('[data-v154-container-field]');
   const quantityField=dialog?.querySelector?.('main [data-draft="quantity"]')?.closest?.('.field, label');
-  if(block&&quantityField){
+  const weightRow=quantityField?.closest?.('.v78-fields')||quantityField;
+  if(block&&weightRow){
    // Move the existing controls instead of cloning them so the v154 listeners,
-   // selected container and deduct-tare state remain exactly the same.
-   if(quantityField.nextElementSibling!==block)quantityField.insertAdjacentElement('afterend',block);
+   // selected container and deduct-tare state remain exactly the same. Place the
+   // block after the whole amount/unit row so Unit stays beside Amount.
+   if(weightRow.nextElementSibling!==block)weightRow.insertAdjacentElement('afterend',block);
    block.classList.add('v268-scale-container');
   }
   this._v268ScaleLayoutStyles();
@@ -20,7 +22,6 @@ export const ProductScaleLayoutMixin=Base=>class extends Base{
   style.id='v268ProductScaleLayoutStyles';
   style.textContent=`
    .v112-editor [data-v154-container-field].v268-scale-container{
-    grid-column:1 / -1;
     width:100%;
     box-sizing:border-box;
     margin:2px 0 8px!important;
