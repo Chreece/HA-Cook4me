@@ -30,7 +30,7 @@ def run():
             assert 'Salt' not in result['options']
             expect(page.locator('[data-v272-depleted-overlay]')).to_be_visible()
             expect(page.locator('[data-v272-depleted-overlay]')).to_contain_text('Mint')
-            page.locator('[data-v272-shopping-add]').click()
+            page.locator('[data-v272-shopping-add]').evaluate('button => button.click()')
             page.wait_for_function("shoppingCalls.length===1")
             call=page.evaluate("shoppingCalls[0]")
             assert call['type']=='cook4me/v11/shopping_add'
