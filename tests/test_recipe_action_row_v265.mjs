@@ -38,6 +38,6 @@ test('active runtime loads v265 outside the existing blacklist mixin',()=>{
  assert.match(active,/RecipeActionRowMixin\(RecipeBlacklistMixin/);
  assert.match(active,/data-cook4me-ui-revision','268'/);
  assert.match(active,/runtime-v268/);
- assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v271"/);
+ assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v272"/);
  assert.match(registration,/actionrow=265/);
 });
