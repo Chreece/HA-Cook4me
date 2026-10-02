@@ -40,13 +40,13 @@ class RecipeBlacklistV264Tests(unittest.TestCase):
         self.assertIn("bridge.recipe_hub.filter_blacklisted(",book)
         self.assertIn("official = bridge.recipe_hub.filter_blacklisted(",book)
 
-    def test_active_panel_is_cache_busted_to_v265(self):
+    def test_active_panel_is_cache_busted_to_v269(self):
         panel=(COMP/"frontend"/"cook4me-panel-v180.js").read_text(encoding="utf-8")
         registration=(COMP/"panel.py").read_text(encoding="utf-8")
         self.assertIn("RecipeBlacklistMixin",panel)
         self.assertIn("runtime-v268",panel)
         self.assertIn("data-cook4me-ui-revision','268'",panel)
-        self.assertIn("runtime-v268",registration)
+        self.assertIn("runtime-v269",registration)
         self.assertIn("blacklist=264",registration)
 
 

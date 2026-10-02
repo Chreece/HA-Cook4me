@@ -24,7 +24,7 @@ test('seasonal leaf icon is explicitly centered in the round badge',()=>{
  assert.match(source,/margin:0!important/);
 });
 
-test('v267 seasonal badge remains active inside runtime v268',()=>{
+test('v267 seasonal badge remains active inside runtime v269',()=>{
  const active=readFileSync(
   new URL('../custom_components/cook4me/frontend/cook4me-panel-v180.js',import.meta.url),
   'utf8',
@@ -37,5 +37,5 @@ test('v267 seasonal badge remains active inside runtime v268',()=>{
  assert.match(active,/data-cook4me-ui-revision','268'/);
  assert.match(active,/runtime-v268/);
  assert.match(registration,/seasonalbadge=267/);
- assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v268"/);
+ assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v269"/);
 });

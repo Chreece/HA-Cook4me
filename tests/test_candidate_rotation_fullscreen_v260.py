@@ -157,7 +157,7 @@ class WiringTests(unittest.TestCase):
 
         self.assertIn("FullscreenProgressGuardMixin", panel)
         self.assertIn("runtime-v268", panel)
-        self.assertIn("runtime-v268", registration)
+        self.assertIn("runtime-v269", registration)
         self.assertIn("progress=260", registration)
         self.assertIn("contain:layout paint style", guard)
         self.assertIn("v260-progress-hidden", guard)

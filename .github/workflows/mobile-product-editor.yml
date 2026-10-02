@@ -1,0 +1,44 @@
+name: Mobile product editor
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mobile-product-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  mobile-product:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Retain reproducible source snapshot
+        run: git ls-files -z | xargs -0 zip -q /tmp/mobile-product-source.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mobile-product-source
+          path: /tmp/mobile-product-source.zip
+          retention-days: 2
+      - run: pip install playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Frontend syntax
+        run: |
+          node --check custom_components/cook4me/frontend/mobile-product-v269.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-v269.js
+      - name: Real mobile product interactions
+        run: python tests/browser_mobile_product_v269.py
