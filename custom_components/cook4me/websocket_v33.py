@@ -15,6 +15,7 @@ from homeassistant.components.ai_task.const import AITaskEntityFeature, DATA_COM
 from homeassistant.core import callback
 
 from . import websocket as legacy
+from .catalog_runtime import async_ensure_catalog_ready
 from . import websocket_v5 as v5, websocket_v11 as v11, websocket_v15 as v15, websocket_v23 as v23
 from .websocket_v32 import _authorized
 from .barcode import normalize_barcode
