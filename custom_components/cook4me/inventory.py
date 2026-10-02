@@ -1285,8 +1285,22 @@ def _rebase_consumptions_to_current_stock(inventory, consumptions):
             request["packageOpenings"] = []
             rebased.append(request)
             continue
-        if not _text(request.get("unit")) and _text(current.get("unit")):
-            request["unit"] = _text(current.get("unit"))
+        current_unit = _text(current.get("unit"))
+        requested_amount = _quantity(request.get("quantity"))
+        requested_unit = _text(request.get("unit"))
+        if current_unit and not requested_unit:
+            request["unit"] = current_unit
+        elif (
+            current_unit
+            and requested_amount is not None
+            and convert_amount(requested_amount, requested_unit, current_unit) is None
+        ):
+            # The user explicitly confirmed a deduction but the recipe unit and
+            # stored package unit describe different dimensions (for example
+            # tablespoons vs pieces). There is no defensible conversion factor.
+            # Treat the entered numeric amount as stock units and clamp it to the
+            # actual available quantity so confirmation is never a silent no-op.
+            request["unit"] = current_unit
         selected_lot = _text(request.get("lotId"))
         current_lot_ids = {
             _text(lot.get("id"))
