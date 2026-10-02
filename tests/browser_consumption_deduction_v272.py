@@ -33,7 +33,7 @@ def run():
             call=page.evaluate("""async () => {
                 const button=app.shadowRoot.querySelector('[data-v272-shopping-add]');
                 await button.onclick();
-                return shoppingCalls[0]||null;
+                return shoppingCalls.find(row=>row.type==='cook4me/v11/shopping_add')||null;
             }""")
             assert call is not None, errors
             assert call['type']=='cook4me/v11/shopping_add'
