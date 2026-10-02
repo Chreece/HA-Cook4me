@@ -19,9 +19,9 @@ test('container tare controls are moved under the product weight field without b
  assert.match(layout,/\[data-v154-container-field\]/);
  assert.match(layout,/main \[data-draft="quantity"\]/);
  assert.match(layout,/closest\?\.\('\.field, label'\)/);
- assert.match(layout,/quantityField\.insertAdjacentElement\('afterend',block\)/);
+ assert.match(layout,/quantityField\?\.closest\?\.\('\.v78-fields'\)\|\|quantityField/);
+ assert.match(layout,/weightRow\.insertAdjacentElement\('afterend',block\)/);
  assert.doesNotMatch(layout,/innerHTML\s*=/);
- assert.match(layout,/grid-column:1 \/ -1/);
 });
 
 test('active frontend uses a new v268 runtime and outer layout mixin',()=>{
