@@ -791,7 +791,9 @@ def recipe_consumption_items(recipe: dict[str, Any], inventory: Any) -> list[dic
         if ingredient.get("scaleStockDeducted") is True:
             continue
         current = _find_stock(stock, ingredient)
-        if not current:
+        if not current or current.get("unlimited"):
+            # Unlimited/non-ending ingredients are availability markers, not
+            # consumable stock. Never offer them for post-meal deduction.
             continue
         ident = inventory_identity(current)
         amount, unit = _recipe_amount(ingredient)
