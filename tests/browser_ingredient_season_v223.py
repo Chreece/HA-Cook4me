@@ -56,7 +56,7 @@ def run():
             assert section.locator('option').count()==2  # preserved food stays available
             section.locator('[data-v84-search]').fill('')
 
-            # Scanner shares the current view's toggle and retains assigned rows.
+            # Product assignment has no seasonal filter, even when recipes do.
             page.evaluate("""async () => {
                 await app._v78Open('manual');
                 app._v78Draft.ingredient=catalog[1];app._v78Draft.ingredientLinks=[catalog[1]];
@@ -64,17 +64,14 @@ def run():
                 app._v78IngredientOptions();
             }""")
             picker=page.locator('[data-v114-links]')
-            expect(picker.locator('[data-v223-toggle]')).to_be_checked()
-            assert picker.locator('[data-v114-link]').count()==4
-            assert page.locator('[data-v194-index]').count()==4
+            expect(picker.locator('[data-v223-toggle]')).to_have_count(0)
+            assert picker.locator('[data-v114-link]').count()==5
+            assert page.locator('[data-v194-index]').count()==5
             selected=picker.locator('label').filter(has_text='Σπαράγγι (Spargel)').locator('input')
             expect(selected).to_be_checked()
             selected.click()
-            assert picker.locator('[data-v114-link]').count()==3
-            picker.locator('[data-v223-toggle]').uncheck()
             assert picker.locator('[data-v114-link]').count()==5
-            assert page.locator('[data-v194-index]').count()==5
-            expect(section.locator('[data-v223-toggle]')).not_to_be_checked()
+            expect(section.locator('[data-v223-toggle]')).to_be_checked()
             page.evaluate('app._v78Dirty=false;app._v78Close();app.show("today");app._showFilter("ingredients")')
 
             overlay=page.locator('[data-filter-dialog="ingredients"]')

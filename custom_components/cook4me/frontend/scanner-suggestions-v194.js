@@ -42,8 +42,8 @@ export const ScannerSuggestionsMixin=Base=>class extends Base{
   const rows=scannerSuggestionRows(localized,id),links=this._v114Links?.()||[d.ingredient].filter(Boolean);
   const picked=new Set(links.map(id)),busy=!!this._v78Busy||!!this._v78Submitted;
   const query=String(d.query||'').trim();
-  const seasonal=new Set(this._v223SeasonRows?.(rows.map(item=>item.ingredient),picked,id)||rows.map(item=>item.ingredient));
-  const visible=rows.filter(item=>seasonal.has(item.ingredient)).filter(item=>picked.has(id(item.ingredient))||!query||
+  // Product assignment is not a recipe-season filter.
+  const visible=rows.filter(item=>picked.has(id(item.ingredient))||!query||
     (this._ingredientQueryMatches?this._ingredientQueryMatches(item.ingredient,query):item.ingredient.name.toLocaleLowerCase().includes(query.toLocaleLowerCase())));
   const signature=JSON.stringify([lang,rows,query,[...picked],busy,visible.map(item=>id(item.ingredient)),this._v140MarketCatalogKey]);
   if(holder._v194Signature===signature&&holder._v194Source===sourceSuggestions&&holder.querySelector('[data-v194-list]'))return;

@@ -11,18 +11,24 @@ import re
 import unicodedata
 
 try:
-    from .catalog_search_index import _strings, normalize_search_text, query_terms
+    from .catalog_search_index import _strings, normalize_search_text
     from .catalog_amounts import catalog_name
+    from .catalog_name_search import food_name_aliases, NAME_SEARCH_VERSION, name_search_tokens
 except ImportError:  # Standalone offline catalog tools.
     import importlib.util
     spec = importlib.util.spec_from_file_location("cook4me_presentation_search", Path(__file__).with_name("catalog_search_index.py"))
     search = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(search)
-    _strings, normalize_search_text, query_terms = search._strings, search.normalize_search_text, search.query_terms
+    _strings, normalize_search_text = search._strings, search.normalize_search_text
     spec = importlib.util.spec_from_file_location("cook4me_catalog_amounts", Path(__file__).with_name("catalog_amounts.py"))
     amounts = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(amounts)
     catalog_name = amounts.catalog_name
+    spec = importlib.util.spec_from_file_location("cook4me_name_search", Path(__file__).with_name("catalog_name_search.py"))
+    name_search = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(name_search)
+    food_name_aliases, NAME_SEARCH_VERSION = name_search.food_name_aliases, name_search.NAME_SEARCH_VERSION
+    name_search_tokens = name_search.name_search_tokens
 
 
 def norm(value):
@@ -148,11 +154,13 @@ def excluded_names():
 
 def ingredient_choices(payload, language, query="", limit=None):
     """One choice per cleaned name, retaining all source IDs as display metadata."""
-    terms = query_terms(query, language, (payload.get("_runtimeSearchIndex") or {}).get("catalogQueryAliases"))
+    # Ingredient aliases already contain the source languages and reviewed names.
+    # Recipe-level query expansion can turn Pfeffer into the ambiguous English
+    # pepper and match vegetables/peppermint; never expand ingredient identities.
+    terms = tuple(normalize_search_text(query).split())
     def matches(aliases):
-        texts = [normalize_search_text(alias).split() for alias in aliases if alias]
-        return all(any(all(any(token.startswith(word) for token in text) for word in alternative.split())
-            for text in texts for alternative in alternatives) for alternatives in terms)
+        texts = [name_search_tokens(alias) for alias in aliases if alias]
+        return any(all(any(token.startswith(word) for token in text) for word in terms) for text in texts)
     def food_name(raw):
         return catalog_name(clean_name(raw.get("canonicalName")))
     def priority(raw):
@@ -209,7 +217,8 @@ def ingredient_choices(payload, language, query="", limit=None):
             search_aliases.update(_strings(member.get("aliases")))
             search_aliases.update(locale[name_key(cleaned)] for locale in labels().values() if name_key(cleaned) in locale)
             search_aliases.update(search_aliases_for_locale for search_aliases_for_locale in search_aliases_map.get(name_key(cleaned), ()))
-        if terms and not matches(search_aliases):
+        name_aliases = food_name_aliases(search_aliases, names=(name, food_name(raw)))
+        if terms and not matches(name_aliases):
             continue
         row = {key: deepcopy(raw[key]) for key in (
             "id", "key", "conceptId", "classification", "nutritionEligible", "lifecycle",
@@ -228,6 +237,8 @@ def ingredient_choices(payload, language, query="", limit=None):
             row["lifecycle"] = deepcopy(reviewed_lifecycle[0])
         row.update(ingredientId=raw["id"], name=name, foodName=name, canonicalName=food_name(raw), displayGroupId="ingredient:"+hashlib.sha256(canonical.encode()).hexdigest()[:16], sourceIngredientIds=[member["id"] for member in members], displayLanguage=language, presentationVersion=63)
         row["searchAliases"] = sorted(alias for alias in search_aliases if alias)
+        row["nameSearchAliases"] = name_aliases
+        row["nameSearchVersion"] = NAME_SEARCH_VERSION
         if raw.get("key"):
             row["foodKey"] = raw["key"]
         choices.append(row)
