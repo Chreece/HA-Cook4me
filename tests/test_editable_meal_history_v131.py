@@ -47,6 +47,61 @@ class EditableMealHistoryV131Tests(unittest.TestCase):
         self.assertEqual(shortfalls[0]["requested"],80)
         self.assertEqual(shortfalls[0]["deducted"],50)
 
+    def test_confirmed_consumption_falls_back_from_stale_or_small_lot(self):
+        stock=[{
+            "key":"paprika","name":"Paprika","unit":"g","quantity":30,
+            "lots":[
+                {"id":"old","quantity":10,"bestBefore":"2026-10-03"},
+                {"id":"new","quantity":20,"bestBefore":"2026-11-03"},
+            ],
+        }]
+        request={
+            "identity":"k:paprika","quantity":25,"unit":"g","consume":True,
+            "lotId":"old","fallbackFefo":True,
+        }
+        after,report=inventory.apply_consumption(stock,[request])
+        self.assertEqual(report["deducted"][0]["quantity"],25)
+        self.assertEqual(sum(row["quantity"] for row in report["deductedLots"]),25)
+        self.assertEqual(after[0]["quantity"],5)
+        self.assertEqual(after[0]["lots"][0]["id"],"new")
+        self.assertEqual(after[0]["lots"][0]["quantity"],5)
+
+        missing={**request,"lotId":"already-gone","quantity":5}
+        after2,report2=inventory.apply_consumption(after,[missing])
+        self.assertEqual(report2["deducted"][0]["quantity"],5)
+        self.assertEqual(after2,[])
+        self.assertEqual(report2["depleted"][0]["name"],"Paprika")
+
+    def test_unlimited_stock_is_never_offered_as_recipe_consumption(self):
+        stock=[
+            {"key":"salt","name":"Salt","unit":"","unlimited":True},
+            {"key":"paprika","name":"Paprika","unit":"g","quantity":20},
+        ]
+        recipe={"ingredients":[
+            {"key":"salt","name":"Salt","quantity":1,"unit":"g"},
+            {"key":"paprika","name":"Paprika","quantity":5,"unit":"g"},
+        ]}
+        rows=inventory.recipe_consumption_items(recipe,stock)
+        self.assertEqual([row["identity"] for row in rows],["k:paprika"])
+        self.assertFalse(any(row.get("stockUnlimited") for row in rows))
+
+    def test_confirm_button_commits_available_stock_and_prompts_for_depleted_items(self):
+        hub=(ROOT/"custom_components"/"cook4me"/"recipe_hub.py").read_text(encoding="utf-8")
+        websocket=(ROOT/"custom_components"/"cook4me"/"websocket_v14.py").read_text(encoding="utf-8")
+        ui=(ROOT/"custom_components"/"cook4me"/"frontend"/"cook4me-panel-v131.js").read_text(encoding="utf-8")
+        panel=(ROOT/"custom_components"/"cook4me"/"panel.py").read_text(encoding="utf-8")
+        self.assertIn("commit_available: bool = False",hub)
+        self.assertIn('"fallbackFefo": True',hub)
+        self.assertIn('report["shortfalls"] = shortfalls',hub)
+        self.assertIn('vol.Optional("commit_available", default=False): bool',websocket)
+        self.assertIn("commit_available=bool(msg.get(\"commit_available\"))",websocket)
+        self.assertIn("commit_available:true",ui)
+        self.assertIn("_v131PromptDepleted",ui)
+        self.assertIn("cook4me/v11/shopping_add",ui)
+        self.assertIn("if(row?.unlimited)continue",ui)
+        self.assertIn("row?.stockUnlimited",ui)
+        self.assertIn("runtime-v272",panel)
+
     def test_finished_notification_deep_links_to_consumption_editor(self):
         source=(ROOT/"custom_components"/"cook4me"/"__init__.py").read_text(encoding="utf-8")
         self.assertIn('editor_path = f"/cook4me?consumption={pending_id}"',source)
