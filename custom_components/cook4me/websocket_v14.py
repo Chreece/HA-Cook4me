@@ -196,6 +196,7 @@ async def ws_inventory_remove(hass, connection, msg) -> None:
     vol.Required("ingredients"): [dict],
     vol.Optional("allocations"): [dict],
     vol.Optional("strict", default=False): bool,
+    vol.Optional("commit_available", default=False): bool,
 })
 @websocket_api.async_response
 async def ws_consumption_confirm(hass, connection, msg) -> None:
@@ -213,6 +214,7 @@ async def ws_consumption_confirm(hass, connection, msg) -> None:
             str(msg["pending_id"]),
             consumptions,
             strict=bool(msg.get("strict")),
+            commit_available=bool(msg.get("commit_available")),
         )
         completed = (
             result.get("completedRecipe")
