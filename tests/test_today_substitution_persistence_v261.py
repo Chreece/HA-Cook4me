@@ -86,7 +86,7 @@ class TodaySubstitutionPersistenceTests(unittest.TestCase):
         saved = compact(old)
         self.assertIs(saved["substitutionCoverageComplete"], True)
 
-    def test_runtime_keeps_v261_fast_shell_under_v265_panel(self):
+    def test_runtime_keeps_v261_fast_shell_under_v269_panel(self):
         mixin = (
             COMP / "frontend" / "today-substitution-persistence-v261.js"
         ).read_text(encoding="utf-8")
@@ -99,7 +99,7 @@ class TodaySubstitutionPersistenceTests(unittest.TestCase):
         self.assertIn("substitutions", mixin)
         self.assertIn("TodaySubstitutionPersistenceMixin", panel)
         self.assertIn("data-cook4me-ui-revision','268'", panel)
-        self.assertIn("runtime-v268", registration)
+        self.assertIn("runtime-v269", registration)
         self.assertIn("today=261", registration)
         self.assertIn("stability=262", registration)
         self.assertIn("seasonal=263", registration)
