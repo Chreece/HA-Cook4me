@@ -29,6 +29,6 @@ test('active frontend retains the v268 layout beneath the v269 mobile refinement
  assert.match(active,/ProductScaleLayoutMixin\(SeasonalFilterBadgeMixin/);
  assert.match(active,/data-cook4me-ui-revision','268'/);
  assert.match(active,/runtime-v268/);
- assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v271"/);
+ assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v272"/);
  assert.match(registration,/productscale=268/);
 });
