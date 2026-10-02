@@ -1,3 +1,4 @@
+import {KitchenStockScanMixin} from './kitchen-stock-scan-v271.js';
 import {ProductCatalogMixin} from './product-catalog-v270.js';
 import {MobileProductMixin} from './mobile-product-v269.js';
 import {ProductScaleLayoutMixin} from './product-scale-layout-v268.js';
@@ -258,3 +259,5 @@ if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v268'))customEleme
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v269'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v269',MobileProductMixin(Cook4MeRecipeHubPanelV180));
 
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v270'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v270',ProductCatalogMixin(MobileProductMixin(Cook4MeRecipeHubPanelV180)));
+
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v271'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v271',KitchenStockScanMixin(ProductCatalogMixin(MobileProductMixin(Cook4MeRecipeHubPanelV180))));

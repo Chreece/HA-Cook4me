@@ -38,6 +38,8 @@ jobs:
       - run: python -m playwright install --with-deps chromium
       - name: Frontend syntax
         run: |
+          node --check custom_components/cook4me/frontend/kitchen-stock-scan-v271.js
+          node --test tests/test_kitchen_stock_scan_v271.mjs
           node --check custom_components/cook4me/frontend/ingredient-name-search-v270.js
           node --check custom_components/cook4me/frontend/product-catalog-v270.js
           node --check custom_components/cook4me/frontend/mobile-product-v269.js
@@ -48,3 +50,4 @@ jobs:
         run: |
           python tests/browser_mobile_product_v269.py
           python tests/browser_product_catalog_v270.py
+          python tests/browser_kitchen_stock_scan_v271.py

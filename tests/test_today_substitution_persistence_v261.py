@@ -99,7 +99,7 @@ class TodaySubstitutionPersistenceTests(unittest.TestCase):
         self.assertIn("substitutions", mixin)
         self.assertIn("TodaySubstitutionPersistenceMixin", panel)
         self.assertIn("data-cook4me-ui-revision','268'", panel)
-        self.assertIn("runtime-v270", registration)
+        self.assertIn("runtime-v271", registration)
         self.assertIn("today=261", registration)
         self.assertIn("stability=262", registration)
         self.assertIn("seasonal=263", registration)
