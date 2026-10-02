@@ -731,11 +731,6 @@ def recipe_expiry_priority(
         current = _find_stock(stock, ingredient)
         if not current:
             continue
-        # Unlimited/non-ending ingredients are never a consumption choice.
-        # They are available by definition and must not appear in the post-cook
-        # deduction editor or be turned into a finite stock mutation.
-        if current.get("unlimited"):
-            continue
         ident = inventory_identity(current)
         if not ident or ident in seen:
             continue
@@ -795,6 +790,10 @@ def recipe_consumption_items(recipe: dict[str, Any], inventory: Any) -> list[dic
             continue
         current = _find_stock(stock, ingredient)
         if not current:
+            continue
+        # Unlimited/non-ending ingredients are available by definition and
+        # must never be offered as a finite post-cook deduction.
+        if current.get("unlimited"):
             continue
         ident = inventory_identity(current)
         amount, unit = _recipe_amount(ingredient)
