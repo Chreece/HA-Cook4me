@@ -69,6 +69,11 @@ class CatalogStartupSourceTests(unittest.TestCase):
         for filename, marker in expected.items():
             with self.subTest(filename=filename):
                 source = (COMP / filename).read_text(encoding="utf-8")
+                self.assertIn(
+                    "from .catalog_runtime import async_ensure_catalog_ready",
+                    source,
+                    f"{filename} calls async_ensure_catalog_ready but does not import it",
+                )
                 self.assertIn(marker, source)
 
     def test_warmup_reports_stage_timings(self):
