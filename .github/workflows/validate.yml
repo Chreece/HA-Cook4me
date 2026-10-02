@@ -108,6 +108,7 @@ jobs:
           node --check custom_components/cook4me/frontend/recipe-action-row-v265.js
           node --check custom_components/cook4me/frontend/seasonal-filter-badge-v266.js
           node --check custom_components/cook4me/frontend/seasonal-filter-badge-v267.js
+          node --check custom_components/cook4me/frontend/product-scale-layout-v268.js
           node --check custom_components/cook4me/frontend/ingredient-stock-assignment-v249.js
           python tests/test_menu_footer_v126.py
           python tests/test_announcement_settings_v127.py
@@ -172,6 +173,7 @@ jobs:
           python tests/test_week_shopping_storage_v182.py
           python tests/test_week_ui_state_v179.py
           python tests/test_scanner_manual_fallback_v180.py
+          python tests/test_catalog_background_warm_v257.py
           python tests/test_candidate_rotation_fullscreen_v260.py
           python tests/test_bounded_ranking_v261.py
           python tests/test_today_substitution_persistence_v261.py
@@ -183,6 +185,7 @@ jobs:
           node --test tests/test_recipe_action_row_v265.mjs
           node --test tests/test_seasonal_filter_badge_v266.mjs
           node --test tests/test_seasonal_filter_badge_v267.mjs
+          node --test tests/test_product_scale_layout_v268.mjs
           python tests/test_recipe_hub_transactions_v212.py
           python tests/test_greek_catalog_audit_v182.py
           python tests/test_greek_catalog_audit_v183.py

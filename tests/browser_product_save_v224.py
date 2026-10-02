@@ -28,6 +28,11 @@ def run():
                 };
                 window.background=app._api('cook4me/v22/ai_create',{entry_id:app._entryId}).catch(error=>{window.backgroundError=error;});
                 await app._v78Open('manual');
+                const quantityField=app._v78Dialog.querySelector('main [data-draft="quantity"]')?.closest('.field, label');
+                const weightRow=quantityField?.closest('.v78-fields')||quantityField;
+                const containerBlock=app._v78Dialog.querySelector('[data-v154-container-field]');
+                if(!weightRow||!containerBlock||weightRow.nextElementSibling!==containerBlock)
+                    throw new Error('Container tare controls are not grouped directly under scale/weight');
                 app._v78Dialog.querySelector('[data-v112-barcode-edit]').value='1234567890123';
                 await app._v196Lookup();
                 const d=app._v78Draft;
