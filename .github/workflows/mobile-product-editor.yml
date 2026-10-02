@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: '22'
       - name: Retain reproducible source snapshot
-        run: git archive --format=zip --output=/tmp/mobile-product-source.zip HEAD
+        run: git ls-files -z | xargs -0 zip -q /tmp/mobile-product-source.zip
       - uses: actions/upload-artifact@v4
         with:
           name: mobile-product-source
