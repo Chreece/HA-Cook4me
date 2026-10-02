@@ -40,3 +40,19 @@ test('active runtime registers v272 outside v271 and cache busts registration',(
  assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v272"/);
  assert.match(registration,/consumption=272/);
 });
+
+
+test('unlimited stock is absent from deduction source options',()=>{
+ class Base{
+  constructor(){this._houseIngredients=[{key:'salt',name:'Salt',unlimited:true},{key:'mint',name:'Mint',quantity:2,unit:'pcs'}];}
+  _stockIdentity(row){return 'k:'+row.key;}
+  _stockText(row){return row.unlimited?'∞':String(row.quantity)+' '+row.unit;}
+  _escape(value){return String(value);}
+  _v131Text(){return 'previous';}
+ }
+ const panel=new (ConsumptionDeductionMixin(Base))();
+ const html=panel._v131StockOptions('k:mint');
+ assert.match(html,/Mint/);
+ assert.doesNotMatch(html,/Salt/);
+ assert.doesNotMatch(html,/∞/);
+});
