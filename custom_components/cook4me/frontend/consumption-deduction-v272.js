@@ -21,6 +21,23 @@ export const ConsumptionDeductionMixin=Base=>class extends Base{
   const lang=String(this._uiIngredientLanguage?.()||this._langCode?.()||'en').split(/[-_]/)[0];
   return (TEXT[lang]||TEXT.en)[key]||TEXT.en[key]||key;
  }
+ _v131StockOptions(selected='',historical=null){
+  const rows=this._houseIngredients||[],seen=new Set(),options=[];
+  for(const row of rows){
+   if(row?.unlimited)continue;
+   const identity=this._stockIdentity(row);if(!identity||seen.has(identity))continue;seen.add(identity);
+   const label=`${row.name||identity} · ${this._stockText(row)}`;
+   options.push(`<option value="${this._escape(identity)}" ${identity===selected?'selected':''}>${this._escape(label)}</option>`);
+  }
+  if(selected&&!seen.has(selected)){
+   const live=(this._houseIngredients||[]).find(row=>this._stockIdentity(row)===selected);
+   if(!live?.unlimited){
+    const label=`${historical?.name||selected} · ${this._v131Text('previousStock')}`;
+    options.unshift(`<option value="${this._escape(selected)}" selected>${this._escape(label)}</option>`);
+   }
+  }
+  return options.join('');
+ }
  _v272FinitePendingRow(base,container){
   if(base?.stockUnlimited)return false;
   const identity=String(container?.querySelector?.('[data-v131-stock]')?.value||base?.identity||'');
