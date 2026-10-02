@@ -38,12 +38,16 @@ jobs:
       - run: python -m playwright install --with-deps chromium
       - name: Frontend syntax
         run: |
+          node --check custom_components/cook4me/frontend/consumption-deduction-v272.js
+          node --test tests/test_consumption_deduction_v272.mjs
           node --check custom_components/cook4me/frontend/kitchen-stock-scan-v271.js
           node --test tests/test_kitchen_stock_scan_v271.mjs
           node --check custom_components/cook4me/frontend/ingredient-name-search-v270.js
           node --check custom_components/cook4me/frontend/product-catalog-v270.js
           node --check custom_components/cook4me/frontend/mobile-product-v269.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v269.js
+      - name: Consumption deduction semantics
+        run: python tests/test_consumption_deduction_v272.py
       - name: Catalog-name projection and full-corpus audit
         run: python tests/test_catalog_name_search_v270.py
       - name: Real mobile product interactions
