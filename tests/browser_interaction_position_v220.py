@@ -37,8 +37,11 @@ def scanner(page):
         }));
         app._v78IngredientOptions();
     }""")
-    assert page.locator('[data-v114-link]').count() == 3293
-    first=page.locator('.v114-link-list label:has-text("Ingredient 1500") input')
+    assert page.locator('[data-v114-link]').count() == 60
+    # The complete catalog is paginated instead of mounting 3,293 controls.
+    page.evaluate("() => { for(let i=0;i<25;i++)app._v78Dialog.querySelector('[data-v270-next]').click(); }")
+    assert '3293' in page.locator('[data-v270-count]').inner_text()
+    first=page.locator('.v114-link-list label:has-text("Ingredient 1540") input')
     first.scroll_into_view_if_needed()
     before=page.evaluate(READ)
     assert before['list'] > 1000
@@ -46,7 +49,7 @@ def scanner(page):
     unchanged(before, page.evaluate(READ), 'first assignment')
     assert first.evaluate('(n)=>n.getRootNode().activeElement===n')
     # An adjacent ingredient stays available, and Space can undo its selection.
-    second=page.locator('.v114-link-list label:has-text("Ingredient 1501") input')
+    second=page.locator('.v114-link-list label:has-text("Ingredient 1541") input')
     click_here(page,second)
     assert second.is_checked()
     unchanged(before, page.evaluate(READ), 'second assignment')
@@ -72,6 +75,7 @@ def scanner(page):
     # A delayed product/price refresh must preserve an actively edited field.
     search=page.locator('[data-v78-search]')
     search.fill('Ingredient 15')
+    page.wait_for_function("!app._v270QueryTimer && app._v78Dialog.querySelector('[data-v114-links]')._v270State.query==='ingredient 15'")
     before=page.evaluate(READ)
     page.evaluate('app._v78RenderCapture()')
     page.wait_for_timeout(80)
@@ -79,6 +83,7 @@ def scanner(page):
     assert search.input_value() == 'Ingredient 15'
     assert search.evaluate('(n)=>n.getRootNode().activeElement===n')
     search.fill('')
+    page.wait_for_function("!app._v270QueryTimer && app._v78Dialog.querySelector('[data-v114-links]')._v270State.query===''")
 
     # A queued layout correction must yield to a subsequent user scroll.
     page.evaluate("""() => {

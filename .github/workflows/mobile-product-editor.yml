@@ -16,7 +16,7 @@ concurrency:
 jobs:
   mobile-product:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v7
         with:
@@ -38,7 +38,13 @@ jobs:
       - run: python -m playwright install --with-deps chromium
       - name: Frontend syntax
         run: |
+          node --check custom_components/cook4me/frontend/ingredient-name-search-v270.js
+          node --check custom_components/cook4me/frontend/product-catalog-v270.js
           node --check custom_components/cook4me/frontend/mobile-product-v269.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v269.js
+      - name: Catalog-name projection and full-corpus audit
+        run: python tests/test_catalog_name_search_v270.py
       - name: Real mobile product interactions
-        run: python tests/browser_mobile_product_v269.py
+        run: |
+          python tests/browser_mobile_product_v269.py
+          python tests/browser_product_catalog_v270.py

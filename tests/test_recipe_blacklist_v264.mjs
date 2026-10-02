@@ -66,6 +66,6 @@ test('active runtime exposes blacklist button and Diet undo list',()=>{
  assert.match(panel,/RecipeBlacklistMixin\(SeasonalFilterStateMixin/);
  assert.match(panel,/data-cook4me-ui-revision','268'/);
  assert.match(panel,/runtime-v268/);
- assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v269"/);
+ assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v270"/);
  assert.match(registration,/blacklist=264/);
 });
