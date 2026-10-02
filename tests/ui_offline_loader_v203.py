@@ -39,7 +39,7 @@ def local_html(root: Path) -> str:
     imports={'ui203/'+path:'data:text/javascript;base64,'+base64.b64encode(source.encode()).decode() for path,source in sources.items()}
     html=(root/'tests/ui_refresh_fixture_v203.html').read_text()
     html=html.replace("'../custom_components/cook4me/frontend/cook4me-panel-v180.js'", "'ui203/"+entry+"'")
-    html=re.sub(r"const Base=customElements.get\('[^']+'\);", "const Base=customElements.get("+json.dumps(element)+");",html,count=1)
+    html=re.sub(r"const Base=customElements.get\('[^']+'\);", f"const Base=customElements.get('{element}');",html,count=1)
     # about:blank has opaque-origin storage; this isolated in-memory store is the
     # browser-storage boundary, not production persistence code.
     html=html.replace('<script type="module">','<script type="importmap">'+json.dumps({'imports':imports})+'</script><script type="module">\nconst testStorage=new Map();Object.defineProperty(window,"localStorage",{value:{getItem:k=>testStorage.get(k)||null,setItem:(k,v)=>testStorage.set(k,v),removeItem:k=>testStorage.delete(k),clear:()=>testStorage.clear()}});')
