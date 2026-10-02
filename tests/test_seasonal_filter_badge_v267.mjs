@@ -37,5 +37,5 @@ test('v267 seasonal badge remains active inside runtime v269',()=>{
  assert.match(active,/data-cook4me-ui-revision','268'/);
  assert.match(active,/runtime-v268/);
  assert.match(registration,/seasonalbadge=267/);
- assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v271"/);
+ assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v272"/);
 });
