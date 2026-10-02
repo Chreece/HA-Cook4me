@@ -729,7 +729,9 @@ def recipe_expiry_priority(
         if not isinstance(ingredient, dict):
             continue
         current = _find_stock(stock, ingredient)
-        if not current:
+        if not current or current.get("unlimited"):
+            # Unlimited/non-ending ingredients are availability markers, not
+            # consumable stock. Never offer them for post-meal deduction.
             continue
         ident = inventory_identity(current)
         if not ident or ident in seen:
@@ -789,7 +791,9 @@ def recipe_consumption_items(recipe: dict[str, Any], inventory: Any) -> list[dic
         if ingredient.get("scaleStockDeducted") is True:
             continue
         current = _find_stock(stock, ingredient)
-        if not current:
+        if not current or current.get("unlimited"):
+            # Unlimited/non-ending ingredients are availability markers, not
+            # consumable stock. Never offer them for post-meal deduction.
             continue
         ident = inventory_identity(current)
         amount, unit = _recipe_amount(ingredient)
@@ -856,13 +860,35 @@ def _apply_primary_consumption(
         to_deduct = min(stock_quantity, requested_in_stock_unit)
         remaining_request = to_deduct
         lots = deepcopy(current.get("lots") or [])
-        lots.sort(key=_lot_sort_key)
+        selected_lot = _text(request.get("lotId"))
+        fallback_fefo = bool(request.get("fallbackFefo"))
+        if selected_lot and fallback_fefo:
+            # Honour the package the user saw first. If that package changed,
+            # disappeared or is too small by confirmation time, continue from
+            # the current stock using FEFO instead of rejecting the deduction.
+            lots.sort(
+                key=lambda lot: (
+                    0 if _text(lot.get("id")) == selected_lot else 1,
+                    _lot_sort_key(lot),
+                )
+            )
+        else:
+            lots.sort(key=_lot_sort_key)
         kept: list[dict[str, Any]] = []
         for lot in lots:
             lot_amount = float(lot.get("quantity") or 0.0)
             if lot_amount <= 0:
                 continue
-            take = min(lot_amount, remaining_request) if remaining_request > 1e-12 and (not request.get("lotId") or request["lotId"] == lot.get("id")) else 0.0
+            eligible = (
+                not selected_lot
+                or selected_lot == _text(lot.get("id"))
+                or fallback_fefo
+            )
+            take = (
+                min(lot_amount, remaining_request)
+                if remaining_request > 1e-12 and eligible
+                else 0.0
+            )
             left = lot_amount - take
             if take > 1e-12:
                 opening = next((item for item in request.get("packageOpenings", [])

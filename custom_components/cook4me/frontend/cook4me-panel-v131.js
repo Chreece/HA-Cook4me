@@ -9,7 +9,8 @@ const V131_TEXT={
   editMeal:'Edit meal',saveMeal:'Save changes',historyEdited:'Meal history and storage usage updated',
   people:'Who ate it?',servingsEaten:'Servings eaten',ingredientsUsed:'Storage ingredients used',
   addUsage:'Add storage ingredient',remove:'Remove',close:'Close',stockUsageHelp:'Changing these rows restores the previous deduction first, then applies the edited deduction to storage.',
-  noLots:'No separate batches',openEditor:'Open consumption editor'
+  noLots:'No separate batches',openEditor:'Open consumption editor',
+  shoppingAsk:'These ingredients reached zero. Add them to the shopping list?',addShopping:'Add to shopping list',notNow:'Not now',shoppingAdded:'Added to shopping list'
  },
  de:{
   usedFrom:'Aus Vorrat verwendet',batch:'Charge / Packung',autoBatch:'Automatisch (FEFO)',previousStock:'zuvor verwendeter Vorrat',
@@ -17,7 +18,8 @@ const V131_TEXT={
   editMeal:'Mahlzeit bearbeiten',saveMeal:'Änderungen speichern',historyEdited:'Mahlzeitenverlauf und Vorratsverbrauch aktualisiert',
   people:'Wer hat davon gegessen?',servingsEaten:'Gegessene Portionen',ingredientsUsed:'Verwendete Vorratszutaten',
   addUsage:'Vorratszutat hinzufügen',remove:'Entfernen',close:'Schließen',stockUsageHelp:'Beim Ändern werden zuerst die bisherigen Abzüge zurückgebucht und danach die neuen Abzüge auf den Vorrat angewendet.',
-  noLots:'Keine getrennten Chargen',openEditor:'Verbrauchseditor öffnen'
+  noLots:'Keine getrennten Chargen',openEditor:'Verbrauchseditor öffnen',
+  shoppingAsk:'Diese Zutaten sind jetzt aufgebraucht. Zur Einkaufsliste hinzufügen?',addShopping:'Zur Einkaufsliste',notNow:'Nicht jetzt',shoppingAdded:'Zur Einkaufsliste hinzugefügt'
  },
  el:{
   usedFrom:'Χρησιμοποιήθηκε από το απόθεμα',batch:'Παρτίδα / συσκευασία',autoBatch:'Αυτόματα (FEFO)',previousStock:'απόθεμα που χρησιμοποιήθηκε πριν',
@@ -25,7 +27,8 @@ const V131_TEXT={
   editMeal:'Επεξεργασία γεύματος',saveMeal:'Αποθήκευση αλλαγών',historyEdited:'Ενημερώθηκαν το ιστορικό γεύματος και οι ποσότητες αποθέματος',
   people:'Ποιος έφαγε;',servingsEaten:'Μερίδες που καταναλώθηκαν',ingredientsUsed:'Υλικά αποθέματος που χρησιμοποιήθηκαν',
   addUsage:'Προσθήκη υλικού αποθέματος',remove:'Αφαίρεση',close:'Κλείσιμο',stockUsageHelp:'Όταν αλλάζεις αυτά τα στοιχεία, επαναφέρεται πρώτα η προηγούμενη αφαίρεση και μετά εφαρμόζεται η νέα αφαίρεση στο απόθεμα.',
-  noLots:'Δεν υπάρχουν ξεχωριστές παρτίδες',openEditor:'Άνοιγμα επεξεργασίας κατανάλωσης'
+  noLots:'Δεν υπάρχουν ξεχωριστές παρτίδες',openEditor:'Άνοιγμα επεξεργασίας κατανάλωσης',
+  shoppingAsk:'Αυτά τα υλικά μηδενίστηκαν. Να προστεθούν στη λίστα αγορών;',addShopping:'Προσθήκη στις αγορές',notNow:'Όχι τώρα',shoppingAdded:'Προστέθηκαν στη λίστα αγορών'
  }
 };
 
@@ -49,6 +52,7 @@ class Cook4MeRecipeHubPanelV131 extends BasePanel{
  _v131StockOptions(selected='',historical=null){
   const rows=this._houseIngredients||[],seen=new Set(),options=[];
   for(const row of rows){
+   if(row?.unlimited)continue;
    const identity=this._stockIdentity(row);if(!identity||seen.has(identity))continue;seen.add(identity);
    const label=`${row.name||identity} · ${this._stockText(row)}`;
    options.push(`<option value="${this._escape(identity)}" ${identity===selected?'selected':''}>${this._escape(label)}</option>`);
@@ -86,7 +90,11 @@ class Cook4MeRecipeHubPanelV131 extends BasePanel{
  }
  _pendingHtml(){
   const pending=this._pendingConsumption;if(!pending?.id)return'';
-  const rows=(pending.ingredients||[]).map((row,index)=>{
+  const rows=(pending.ingredients||[]).map((row,index)=>({row,index})).filter(({row})=>{
+   if(row?.stockUnlimited)return false;
+   const current=this._v131StockRow(row?.identity||'');
+   return !current?.unlimited;
+  }).map(({row,index})=>{
    const selected=row.identity||'',amount=row.quantity??'',unit=row.unit||row.stockUnit||'';
    return `<div class="v131-consume-row" data-consume-row="${index}">
     <label class="v131-consume-check"><input data-consume-check type="checkbox" checked> ${this._escape(this._t('consume'))}</label>
@@ -120,11 +128,35 @@ class Cook4MeRecipeHubPanelV131 extends BasePanel{
    });
    const allocations=[];c.querySelectorAll('[data-v131-allocation][data-v131-prefix="pending"]').forEach(input=>{const servings=Number(input.value);if(Number.isFinite(servings)&&servings>0)allocations.push({name:String(input.dataset.v131Allocation||''),servings});});
    try{
-    const result=await this._api('cook4me/v14/consumption_confirm',{entry_id:this._entryId,pending_id:pending.id,ingredients,allocations,strict:true});
+    const result=await this._api('cook4me/v14/consumption_confirm',{entry_id:this._entryId,pending_id:pending.id,ingredients,allocations,strict:true,commit_available:true});
+    const depleted=(result?.report?.depleted||[]).filter(row=>row&&row.name);
     this._houseIngredients=result?.houseIngredients||result?.profile?.houseIngredients||[];this._pendingConsumption=null;this._syncEntryProfile();this._foodState=null;this._v131ClearConsumptionLink();this._message(result?.mealHistoryRecord?this._t('mealRecorded'):this._t('consumptionUpdated'));this._renderProfile(c);
+    if(depleted.length)this._v131PromptDepleted(depleted);
    }catch(error){this._message(`${this._t('error')}: ${error.message||error}`,true);}
   });
   c.querySelector('#clearConsumption')?.addEventListener('click',async()=>{try{await this._api('cook4me/v14/consumption_clear',{entry_id:this._entryId,pending_id:pending.id});this._pendingConsumption=null;this._v131ClearConsumptionLink();this._renderProfile(c);}catch(error){this._message(`${this._t('error')}: ${error.message||error}`,true);}});
+ }
+ _v131PromptDepleted(rows){
+  const unique=[...new Map((rows||[]).map(row=>[String(row.identity||row.name||''),row])).values()].filter(row=>row?.name);
+  if(!unique.length)return;
+  this.shadowRoot?.querySelector('[data-v131-depleted-dialog]')?.remove();
+  const dialog=document.createElement('dialog');dialog.dataset.v131DepletedDialog='';dialog.className='v131-depleted-dialog';
+  dialog.innerHTML=`<form method="dialog"><h2>${this._escape(this._v131Text('shoppingAsk'))}</h2><ul>${unique.map(row=>`<li>${this._escape(row.name)}</li>`).join('')}</ul><p class="muted" data-v131-shopping-status></p><div class="toolbar"><button type="button" class="btn" data-v131-add-shopping>${this._escape(this._v131Text('addShopping'))}</button><button type="button" class="btn secondary" data-v131-not-now>${this._escape(this._v131Text('notNow'))}</button></div></form>`;
+  this.shadowRoot.append(dialog);dialog.showModal?.();
+  const close=()=>{dialog.close?.();dialog.remove();};
+  dialog.querySelector('[data-v131-not-now]').onclick=close;
+  dialog.addEventListener('cancel',event=>{event.preventDefault();close();});
+  dialog.querySelector('[data-v131-add-shopping]').onclick=async()=>{
+   const button=dialog.querySelector('[data-v131-add-shopping]'),status=dialog.querySelector('[data-v131-shopping-status]');
+   if(button)button.disabled=true;
+   try{
+    const result=await this._api('cook4me/v11/shopping_add',{entry_id:this._entryId,ingredients:unique.map(row=>({name:row.name})),ui_language:this._uiIngredientLanguage?.()||this._langCode?.()||'en'});
+    this._shoppingItems=null;this._message(`${this._v131Text('shoppingAdded')}${result?.count!=null?` · ${result.count}`:''}`);close();
+   }catch(error){
+    if(status)status.textContent=`${this._t('error')}: ${error.message||error}`;
+    if(button)button.disabled=false;
+   }
+  };
  }
  _v131ClearConsumptionLink(){
   this._v131ConsumptionLink='';
@@ -204,7 +236,8 @@ class Cook4MeRecipeHubPanelV131 extends BasePanel{
    .v131-allocations{margin-top:16px;padding-top:14px;border-top:1px solid var(--divider-color)}.v131-allocation-grid{margin-top:9px}.v131-editor-actions{margin-top:14px}
    .v131-deep-linked{animation:v131Highlight 1.8s ease-out 1}
    .v131-history{margin-top:14px}.v131-history-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}.v131-history-list{margin-top:12px}.v131-history-row{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid var(--divider-color)}.v131-history-main{min-width:0}.v131-used-history{margin-top:5px}.v131-history-row>.btn{flex:0 0 auto}
-   .v131-history-dialog{width:min(980px,calc(100vw - 24px));max-height:88vh}.v131-history-dialog section{margin-top:18px}.v131-history-usage{display:grid;grid-template-columns:minmax(180px,1.5fr) minmax(170px,1.35fr) minmax(90px,.55fr) minmax(80px,.5fr) auto;gap:9px;align-items:end;padding:10px 0;border-bottom:1px solid var(--divider-color)}.v131-history-dialog footer{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
+   .v131-history-dialog{width:min(980px,calc(100vw - 24px));max-height:88vh}.v131-history-dialog section{margin-top:18px}
+   .v131-depleted-dialog{width:min(520px,calc(100vw - 24px));border:1px solid var(--divider-color);border-radius:16px;padding:22px;background:var(--card-background-color);color:var(--primary-text-color)}.v131-depleted-dialog::backdrop{background:#0008}.v131-depleted-dialog h2{margin-top:0}.v131-depleted-dialog ul{margin:12px 0 18px;padding-inline-start:22px}.v131-depleted-dialog .toolbar{justify-content:flex-end}.v131-history-usage{display:grid;grid-template-columns:minmax(180px,1.5fr) minmax(170px,1.35fr) minmax(90px,.55fr) minmax(80px,.5fr) auto;gap:9px;align-items:end;padding:10px 0;border-bottom:1px solid var(--divider-color)}.v131-history-dialog footer{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
    @keyframes v131Highlight{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--primary-color) 60%,transparent)}45%{box-shadow:0 0 0 7px color-mix(in srgb,var(--primary-color) 18%,transparent)}100%{box-shadow:none}}
    @media(max-width:900px){.v131-consume-row{grid-template-columns:1fr 1fr}.v131-consume-check,.v131-recipe-used{grid-column:1/-1}.v131-history-usage{grid-template-columns:1fr 1fr}.v131-history-usage>.btn{grid-column:1/-1}.v131-history-row{align-items:stretch;flex-direction:column}.v131-history-row>.btn{align-self:flex-start}}
    @media(max-width:560px){.v131-consume-row,.v131-history-usage{grid-template-columns:1fr}.v131-consume-row>*{grid-column:1!important}.v131-history-dialog footer{flex-direction:column}.v131-history-dialog footer .btn{width:100%}}

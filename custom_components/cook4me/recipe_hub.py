@@ -862,6 +862,7 @@ class Cook4MeRecipeHub:
         consumptions: list[dict[str, Any]],
         *,
         strict: bool = False,
+        commit_available: bool = False,
     ) -> dict[str, Any]:
         async with self._durable_mutation():
             pending = self._data.get("pendingConsumption")
@@ -869,15 +870,32 @@ class Cook4MeRecipeHub:
                 raise ValueError("Consumption confirmation is no longer pending")
             completed = deepcopy(pending)
             profile = deepcopy(self._data["profile"])
+            effective_consumptions = (
+                [
+                    {**row, "fallbackFefo": True}
+                    if isinstance(row, dict) and row.get("consume", True)
+                    else row
+                    for row in consumptions
+                ]
+                if commit_available
+                else consumptions
+            )
             house, report = apply_consumption(
-                profile.get("houseIngredients"), consumptions
+                profile.get("houseIngredients"), effective_consumptions
             )
             if strict:
-                shortfalls = consumption_shortfalls(consumptions, report)
+                shortfalls = consumption_shortfalls(effective_consumptions, report)
                 if shortfalls:
-                    raise ValueError(
-                        "The selected storage amount is no longer available; reload stock and review the deduction"
-                    )
+                    if commit_available:
+                        # The confirmation button is a commit action: deduct all
+                        # stock that is still available now and report any amount
+                        # that could not exist, rather than rolling back the
+                        # deductions because the UI snapshot became stale.
+                        report["shortfalls"] = shortfalls
+                    else:
+                        raise ValueError(
+                            "The selected storage amount is no longer available; reload stock and review the deduction"
+                        )
             profile["houseIngredients"] = house
             profile["pantry"] = [row["name"] for row in house]
             self._data["profile"] = self._normalize_profile(profile)

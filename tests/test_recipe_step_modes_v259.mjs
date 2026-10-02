@@ -100,7 +100,7 @@ test('active panel keeps v259 step modes under v269 runtime without changing glo
   assert.match(panel,/data-cook4me-ui-revision','268'/);
   assert.match(panel,/runtime-v259/);
   assert.match(registration,/_URL_BASE = "\/cook4me_static\/2026\.9\.27\.2\/runtime-v249"/);
-  assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v271"/);
+  assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v272"/);
   assert.match(registration,/modes=259/);
   assert.match(registration,/progress=260/);
   assert.match(registration,/today=261/);
