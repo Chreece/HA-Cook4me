@@ -54,6 +54,6 @@ test('active runtime includes stock/search/scan continuation with cache busting'
  const panel=readFileSync(new URL('frontend/cook4me-panel-v180.js',root),'utf8');
  const registration=readFileSync(new URL('panel.py',root),'utf8');
  assert.match(panel,/KitchenStockScanMixin\(ProductCatalogMixin\(MobileProductMixin/);
- assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v271"/);
+ assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v272"/);
  assert.match(registration,/stockscan=271/);
 });
