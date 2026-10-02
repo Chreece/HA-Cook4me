@@ -55,3 +55,4 @@ jobs:
           python tests/browser_mobile_product_v269.py
           python tests/browser_product_catalog_v270.py
           python tests/browser_kitchen_stock_scan_v271.py
+          python tests/browser_consumption_deduction_v272.py
