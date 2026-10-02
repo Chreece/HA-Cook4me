@@ -46,7 +46,7 @@ class RecipeBlacklistV264Tests(unittest.TestCase):
         self.assertIn("RecipeBlacklistMixin",panel)
         self.assertIn("runtime-v268",panel)
         self.assertIn("data-cook4me-ui-revision','268'",panel)
-        self.assertIn("runtime-v271",registration)
+        self.assertIn("runtime-v272",registration)
         self.assertIn("blacklist=264",registration)
 
 
