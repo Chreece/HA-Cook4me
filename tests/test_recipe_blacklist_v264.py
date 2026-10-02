@@ -44,9 +44,9 @@ class RecipeBlacklistV264Tests(unittest.TestCase):
         panel=(COMP/"frontend"/"cook4me-panel-v180.js").read_text(encoding="utf-8")
         registration=(COMP/"panel.py").read_text(encoding="utf-8")
         self.assertIn("RecipeBlacklistMixin",panel)
-        self.assertIn("runtime-v266",panel)
-        self.assertIn("data-cook4me-ui-revision','266'",panel)
-        self.assertIn("runtime-v266",registration)
+        self.assertIn("runtime-v267",panel)
+        self.assertIn("data-cook4me-ui-revision','267'",panel)
+        self.assertIn("runtime-v267",registration)
         self.assertIn("blacklist=264",registration)
 
 
