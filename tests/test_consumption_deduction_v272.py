@@ -31,3 +31,11 @@ def test_confirm_backend_keeps_shortfalls_as_diagnostics_instead_of_raising():
     block=source[source.index("async def async_confirm_consumption"):source.index("async def async_revise_consumption")]
     assert 'report["shortfalls"] = shortfalls' in block
     assert "The selected storage amount is no longer available" not in block
+
+
+def test_confirmed_incompatible_units_are_not_a_silent_noop():
+    stock=[{"key":"mint","name":"Mint","unit":"pcs","lots":[{"id":"mint-pack","quantity":1}]}]
+    rows,report=inventory.apply_consumption(stock,[{"identity":"k:mint","name":"Mint","quantity":2,"unit":"tbsp","consume":True}])
+    assert rows==[]
+    assert report["deducted"][0]["quantity"]==1
+    assert report["deducted"][0]["unit"]=="pcs"
