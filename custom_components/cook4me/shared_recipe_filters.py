@@ -84,6 +84,60 @@ def daily_targets(value):
     return deepcopy(scoped.get("daily") or {})
 
 
+def missing_ingredient_count(match):
+    """Count genuinely absent ingredient identities, not quantity uncertainty.
+
+    quantityShortages answers whether the amount on hand is sufficient. Max
+    missing ingredients is about ingredient presence. A present ingredient with
+    an unknown recipe amount, stock amount, or incompatible unit therefore does
+    not consume a missing slot.
+    """
+    if not isinstance(match, dict):
+        return 0
+    availability = match.get("ingredientAvailability")
+    if isinstance(availability, list):
+        seen = set()
+        for row in availability:
+            if not isinstance(row, dict) or row.get("status") != "missing":
+                continue
+            key = str(row.get("key") or "").strip()
+            name = " ".join(str(row.get("name") or "").casefold().split())
+            marker = ("k", key) if key else ("n", name)
+            if key or name:
+                seen.add(marker)
+        return len(seen)
+    seen = {
+        " ".join(str(value or "").casefold().split())
+        for value in match.get("missingIngredients") or []
+        if str(value or "").strip()
+    }
+    return len(seen)
+
+
+def home_missing_filter_allows(match, *, only_home=False, max_missing=None):
+    """Apply Home/Max-missing controls with literal ingredient semantics.
+
+    Blank Max missing keeps the historical strict quantity-aware onlyHome
+    behavior. Zero is also strict. Positive values allow at most N genuinely
+    absent ingredients. Quantity uncertainty for ingredients already present
+    does not count as absence.
+    """
+    if not isinstance(match, dict):
+        return not only_home and max_missing is None
+    count = missing_ingredient_count(match)
+    if max_missing is not None:
+        try:
+            limit = max(0, int(float(max_missing)))
+        except (TypeError, ValueError):
+            limit = 0
+        if only_home and limit == 0:
+            return bool(match.get("fullyAvailableByQuantity"))
+        return count <= limit
+    if only_home:
+        return bool(match.get("fullyAvailableByQuantity"))
+    return True
+
+
 def recipe_target_scope(settings, recipe):
     """Pick the applicable meal-specific target set for one recipe."""
     scoped = settings.get("nutrientTargets")
@@ -147,13 +201,16 @@ def apply_filters(rows, filters, *, ingredient_groups=None, cost=None, nutrition
                 source, season_country, season_month):
             continue
         match = source.get("match") or {}
-        if match.get("requiresSubstitutions") and (settings["onlyHome"] or
-                settings["maxCost"] is not None or settings["maxMissing"] is not None):
-            # A replacement's quantity/price cannot be borrowed from the original.
+        if match.get("requiresSubstitutions") and (
+                settings["onlyHome"] or settings["maxCost"] is not None):
+            # Replacement quantity/price cannot be borrowed from the original.
+            # Max-missing alone is not a substitution filter.
             continue
-        if settings["onlyHome"] and not match.get("fullyAvailableByQuantity"):
-            continue
-        if settings["maxMissing"] is not None and len(match.get("quantityShortages") or []) > settings["maxMissing"]:
+        if not home_missing_filter_allows(
+                match,
+                only_home=settings["onlyHome"],
+                max_missing=settings["maxMissing"],
+        ):
             continue
         identities = {str(row.get(key) or "") for row in source.get("ingredients", []) if isinstance(row, dict) for key in ("ingredientId", "key", "foodKey", "id")}
         if any(not aliases.intersection(identities) for aliases in selected):

@@ -31,6 +31,7 @@ from .recipe_cache import stable_cache_key
 from .recipe_cost_cache import recipe_cost_cache_for_bridge
 from .release_catalog import ingredient_rows, release_catalog_ready, release_catalog_summary, search_release_recipes
 from .request_coordinator import request_coordinator
+from .shared_recipe_filters import home_missing_filter_allows
 from .today_logic import calorie_target_bonus, normalize_meal_types, recipe_identity, recipe_matches_meal_types
 from .today_multilang import select_catalog_balanced
 from .today_plan_store import today_plan_store_for_bridge
@@ -358,11 +359,11 @@ async def _today(hass: HomeAssistant, bridge, msg: dict[str, Any], *, coordinato
     coordinator.progress(operation, "nutrition", completed=0, total=total_ranked or 1, message="Calculating meal nutrition")
     for index, item in enumerate(ranked, start=1):
         match = item.setdefault("match", {})
-        if only_home and not bool(match.get("fullyAvailableByQuantity")):
-            coordinator.progress(operation, "nutrition", completed=index, total=total_ranked or 1)
-            continue
-        shortages = match.get("quantityShortages") if isinstance(match.get("quantityShortages"), list) else []
-        if max_missing is not None and len(shortages) > int(max_missing):
+        if not home_missing_filter_allows(
+                match,
+                only_home=only_home,
+                max_missing=max_missing,
+        ):
             coordinator.progress(operation, "nutrition", completed=index, total=total_ranked or 1)
             continue
         current_score = float(match.get("score") or 0.0)
