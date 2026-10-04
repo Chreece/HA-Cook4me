@@ -353,18 +353,22 @@ async def processor(
                 season_country=season_country,
                 season_month=season_month,
             )
+            # The expensive pass must be bounded independently from catalog
+            # size. Candidate history rotates this finite window across requests,
+            # so breadth is preserved over time without one Today request ranking
+            # thousands of recipes when restrictive filters reject most rows.
+            scan_budget = min(len(rows), max(target, target * 2))
             ordered = _bounded_suggestion_candidates(
                 rows,
                 settings,
                 candidate_languages,
-                len(rows) or 1,
+                scan_budget or 1,
                 candidate_history=candidate_history,
             )
 
             # Expensive diet/substitution, exact stock quantity and expiry ranking
-            # now runs only on rotating chunks. Stop once enough fully eligible
-            # recipes exist for the exact-nutrition window. This preserves access
-            # to the entire catalog over time without a 9k+ heavy ranking pass.
+            # runs only on the rotating bounded scan window. Stop earlier once
+            # enough fully eligible recipes exist for the exact-nutrition window.
             accepted = []
             evaluated = []
             # Keep the longest unreported ranking window bounded. _rank_filtered
