@@ -33,6 +33,8 @@ jobs:
         run: python tests/test_persistence_audit_v209.py
       - name: Bounded Today generation progress
         run: python tests/test_today_progress_v273.py
+      - name: Literal max-missing ingredient semantics
+        run: python tests/test_max_missing_v274.py
       - name: Durable weekly lifecycle and leftovers
         run: python tests/test_lifecycle_transactions_v210.py
       - name: Durable nutrition and recipe-cost cache
