@@ -353,30 +353,60 @@ async def processor(
                 season_country=season_country,
                 season_month=season_month,
             )
+            # The expensive pass must be bounded independently from catalog
+            # size. Candidate history rotates this finite window across requests,
+            # so breadth is preserved over time without one Today request ranking
+            # thousands of recipes when restrictive filters reject most rows.
+            scan_budget = min(len(rows), max(target, target * 2))
             ordered = _bounded_suggestion_candidates(
                 rows,
                 settings,
                 candidate_languages,
-                len(rows) or 1,
+                scan_budget or 1,
                 candidate_history=candidate_history,
             )
 
             # Expensive diet/substitution, exact stock quantity and expiry ranking
-            # now runs only on rotating chunks. Stop once enough fully eligible
-            # recipes exist for the exact-nutrition window. This preserves access
-            # to the entire catalog over time without a 9k+ heavy ranking pass.
+            # runs only on the rotating bounded scan window. Stop earlier once
+            # enough fully eligible recipes exist for the exact-nutrition window.
             accepted = []
             evaluated = []
-            batch_size = max(32, min(96, target))
+            # Keep the longest unreported ranking window bounded. _rank_filtered
+            # performs expensive diet/substitution/quantity work per recipe, so a
+            # 96-row batch could leave Today visibly at 0/192 for a long time.
+            batch_size = max(8, min(32, target))
+            total_ordered = len(ordered)
             prefilter_settings = dict(settings)
             # Final scoring applies this preference once, after exact nutrition.
             prefilter_settings["preferExpiring"] = True
 
-            for offset in range(0, len(ordered), batch_size):
+            for offset in range(0, total_ordered, batch_size):
                 chunk = ordered[offset : offset + batch_size]
                 if not chunk:
                     break
-                evaluated.extend(chunk)
+
+                def ranking_progress(done, _chunk_total):
+                    if not progress:
+                        return
+                    try:
+                        local_done = max(0, min(len(chunk), int(done)))
+                    except (TypeError, ValueError):
+                        local_done = 0
+                    checked = min(total_ordered, offset + local_done)
+                    progress(
+                        "ranking",
+                        completed=checked,
+                        total=total_ordered or 1,
+                        message=(
+                            f"{checked}/{total_ordered} catalog candidates checked · "
+                            f"{min(len(accepted), target)}/{target} eligible"
+                        ),
+                    )
+
+                # Report actual evaluated work, not accepted-result count. A
+                # rejected candidate is still completed work and must advance the
+                # progress card/cancellation checkpoints.
+                ranking_progress(0, len(chunk))
                 ranked_chunk = v13._rank_filtered(
                     bridge,
                     chunk,
@@ -387,8 +417,9 @@ async def processor(
                         settings if "dietProfile" in settings else None
                     ),
                     for_suggestions=for_suggestions,
-                    progress=None,
+                    progress=ranking_progress,
                 )
+                evaluated.extend(chunk)
                 filtered_chunk = apply_filters(
                     ranked_chunk,
                     prefilter_settings,
@@ -409,10 +440,11 @@ async def processor(
                 if progress:
                     progress(
                         "ranking",
-                        completed=min(len(accepted), target),
-                        total=target,
+                        completed=len(evaluated),
+                        total=total_ordered or 1,
                         message=(
-                            f"{len(evaluated)} catalog candidates checked"
+                            f"{len(evaluated)}/{total_ordered} catalog candidates checked · "
+                            f"{min(len(accepted), target)}/{target} eligible"
                         ),
                     )
                 if len(accepted) >= target:

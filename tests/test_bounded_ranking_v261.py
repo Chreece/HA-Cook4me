@@ -238,7 +238,7 @@ class BoundedRankingTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(len(result), 192)
         self.assertEqual(len(exact_calls), 192)
         self.assertTrue(ranking_batches)
-        self.assertLessEqual(max(map(len, ranking_batches)), 96)
+        self.assertLessEqual(max(map(len, ranking_batches)), 32)
         self.assertLess(sum(map(len, ranking_batches)), 500)
         self.assertEqual(process.candidate_scanned_count, sum(map(len, ranking_batches)))
         self.assertEqual(
@@ -253,8 +253,15 @@ class BoundedRankingTests(unittest.IsolatedAsyncioTestCase):
             if phase == "ranking" and values.get("total") is not None
         ]
         self.assertTrue(ranking_totals)
-        self.assertEqual(set(ranking_totals), {192})
+        self.assertEqual(set(ranking_totals), {384})
         self.assertNotIn(9565, ranking_totals)
+        ranking_completed = [
+            int(values["completed"])
+            for phase, values in progress_events
+            if phase == "ranking" and values.get("completed") is not None
+        ]
+        self.assertTrue(any(value > 0 for value in ranking_completed))
+        self.assertGreater(max(ranking_completed), 192)
 
         nutrition_totals = [
             int(values["total"])
