@@ -31,6 +31,8 @@ jobs:
         run: python tests/test_general_audit_v208.py
       - name: Durable Today history and smart-scale stores
         run: python tests/test_persistence_audit_v209.py
+      - name: Bounded Today generation progress
+        run: python tests/test_today_progress_v273.py
       - name: Durable weekly lifecycle and leftovers
         run: python tests/test_lifecycle_transactions_v210.py
       - name: Durable nutrition and recipe-cost cache
