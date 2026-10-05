@@ -7,8 +7,6 @@
 
 # HA-Cook4me — Recipe Hub
 
-💙 **Enjoying this hobby project? [Send a voluntary thank-you via Ko-fi](https://ko-fi.com/chreece).**
-
 [![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz/)
 ![Version](https://img.shields.io/badge/version-2026.9.6.12-blue.svg)
 
