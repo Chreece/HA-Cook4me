@@ -48,7 +48,7 @@ class Cook4MeBridge:
         self._initial_state_monitor: asyncio.Task | None = None
         self._watcher_stage = "not_started"
         self._last_watcher_exit_code: int | None = None
-        self._last_reconnect_warning = 0.0
+        self._last_reconnect_warning: float | None = None
         self._proc: asyncio.subprocess.Process | None = None
         self._stopping = False
         self._first_state = asyncio.Event()
