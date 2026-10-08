@@ -78,7 +78,7 @@ def bridge_fixture():
     bridge._stopping = False
     bridge._watcher_stage = "not_started"
     bridge._last_watcher_exit_code = None
-    bridge._last_reconnect_warning = 0
+    bridge._last_reconnect_warning = None
     bridge._base_cmd = lambda: ["python", "-u", "vendor-placeholder"]
     bridge._env = lambda: {}
     bridge._stop_process = AsyncMock()
