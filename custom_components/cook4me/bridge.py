@@ -41,9 +41,14 @@ class Cook4MeBridge:
     def __init__(self, hass: HomeAssistant, entry: ConfigEntry) -> None:
         self.hass = hass
         self.entry = entry
-        self.data: dict[str, Any] = {}
+        # Cloud connectivity is optional for offline recipes, stock, and the panel.
+        self.data: dict[str, Any] = {"connected": False, "available": False}
         self._listeners: list[Callable[[], None]] = []
         self._task: asyncio.Task | None = None
+        self._initial_state_monitor: asyncio.Task | None = None
+        self._watcher_stage = "not_started"
+        self._last_watcher_exit_code: int | None = None
+        self._last_reconnect_warning: float | None = None
         self._proc: asyncio.subprocess.Process | None = None
         self._stopping = False
         self._first_state = asyncio.Event()
@@ -89,27 +94,35 @@ class Cook4MeBridge:
         ]
 
     async def async_start(self) -> None:
+        """Load local state immediately; never make HA startup await a cloud snapshot."""
         await self.recipe_hub.async_load()
         self._stopping = False
         self._first_state.clear()
-        self._task = self.hass.async_create_background_task(self._run_forever(), "cook4me_mqtt")
-        first_state = asyncio.create_task(self._first_state.wait())
+        self._watcher_stage = "starting"
+        self._last_watcher_exit_code = None
         try:
-            done, _ = await asyncio.wait((first_state, self._task), timeout=75,
-                                         return_when=asyncio.FIRST_COMPLETED)
-            if self._task in done:
-                err = self._task.exception()
-                if isinstance(err, ConfigEntryAuthFailed):
-                    raise err
-                raise ConfigEntryNotReady(str(err or "Cook4Me connection failed"))
-            if not self._first_state.is_set():
-                raise ConfigEntryNotReady("Timed out waiting for initial Cook4Me state")
+            self._task = self.hass.async_create_background_task(
+                self._run_forever(), "cook4me_mqtt"
+            )
+            self._initial_state_monitor = self.hass.async_create_background_task(
+                self._warn_if_initial_state_missing(), "cook4me_initial_state_watchdog"
+            )
         except BaseException:
             await self.async_stop()
             raise
-        finally:
-            first_state.cancel()
-            await asyncio.gather(first_state, return_exceptions=True)
+
+    async def _warn_if_initial_state_missing(self, timeout: float = 75) -> None:
+        """Report a stalled cloud bootstrap without unloading offline features."""
+        try:
+            await asyncio.wait_for(self._first_state.wait(), timeout)
+        except TimeoutError:
+            if not self._stopping:
+                _LOGGER.warning(
+                    "Cook4Me initial cloud state missing after %.0fs "
+                    "(stage=%s, last watcher exit=%s). The integration stays "
+                    "loaded offline while the cloud watcher continues retrying.",
+                    timeout, self._watcher_stage, self._last_watcher_exit_code,
+                )
 
     def async_create_task(self, coro, name: str) -> asyncio.Task:
         """Track device-owned work so a reload cannot leave it running."""
@@ -154,6 +167,8 @@ class Cook4MeBridge:
         tasks = set(self._background_tasks)
         if self._task is not None:
             tasks.add(self._task)
+        if self._initial_state_monitor is not None:
+            tasks.add(self._initial_state_monitor)
         for task in tasks:
             task.cancel()
         await asyncio.gather(*tasks, return_exceptions=True)
@@ -161,7 +176,7 @@ class Cook4MeBridge:
                              return_exceptions=True)
         if self._proc is not None:
             await self._stop_process(self._proc)
-        self._task = self._proc = None
+        self._task = self._proc = self._initial_state_monitor = None
         self._mark_disconnected()
 
     def _notify_listeners(self) -> None:
@@ -279,6 +294,7 @@ class Cook4MeBridge:
         self._apply_recipe_metadata()
         self._maybe_schedule_recipe_metadata()
         self._first_state.set()
+        self._watcher_stage = "live"
         self._notify_listeners()
 
     async def _run_forever(self) -> None:
@@ -289,11 +305,13 @@ class Cook4MeBridge:
             rc = None
             got_state = False
             try:
+                self._watcher_stage = "starting"
                 proc = self._proc = await asyncio.create_subprocess_exec(
                     *self._base_cmd(), "watch-state", cwd=str(vendor), env=self._env(),
                     stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE,
                 )
                 assert proc.stdout and proc.stderr
+                self._watcher_stage = "client_startup"
                 stderr_task = asyncio.create_task(self._drain_stderr(proc.stderr))
                 while line := await proc.stdout.readline():
                     text = line.decode("utf-8", "replace").strip()
@@ -321,15 +339,34 @@ class Cook4MeBridge:
             if self._stopping:
                 return
             failures += 1
-            if not got_state and failures >= 2 and not self._first_state.is_set():
-                raise ConfigEntryNotReady(f"Cook4Me watcher exited repeatedly (rc={rc})")
+            self._last_watcher_exit_code = rc
+            if not got_state and failures in (2, 10) and not self._first_state.is_set():
+                _LOGGER.warning(
+                    "Cook4Me cloud watcher exited %s times without an initial "
+                    "state (last exit code=%s); retrying in the background.",
+                    failures, rc,
+                )
             await asyncio.sleep(min(30, failures * 3))
 
     async def _drain_stderr(self, stream: asyncio.StreamReader) -> None:
         while line := await stream.readline():
             text = line.decode("utf-8", "replace").strip()
-            if text:
-                _LOGGER.debug("Cook4Me client: %s", text)
+            if text.startswith("COOK4ME_BOOT_PHASE="):
+                stage = text.partition("=")[2]
+                if stage in {"app_config", "authentication", "aws_credentials", "mqtt_initial_state"}:
+                    self._watcher_stage = stage
+            elif text.startswith("MQTT reconnect"):
+                # Vendor errors can contain signed URLs. Only expose the class.
+                fields = text.split(":", 2)
+                reason = fields[1].strip() if len(fields) > 1 else "unknown"
+                if not reason.isidentifier():
+                    reason = "unknown"
+                now = time.monotonic()
+                if self._last_reconnect_warning is None or now - self._last_reconnect_warning >= 60:
+                    _LOGGER.warning("Cook4Me cloud MQTT reconnecting (%s)", reason)
+                    self._last_reconnect_warning = now
+            elif text:
+                _LOGGER.debug("Cook4Me client emitted a diagnostic line")
 
     async def _run_client_json(self, *args: str, timeout: float = 90) -> dict[str, Any]:
         if self._stopping:

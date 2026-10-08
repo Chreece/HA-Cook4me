@@ -26,10 +26,15 @@ def run_auth(a):
     if subprocess.run(cmd).returncode:raise SystemExit(1)
     if not token_valid(60):raise RuntimeError('Authentication produced no usable id_token')
 def prepare(a):
+    # Fixed, non-sensitive progress markers for the HA bootstrap watchdog.
+    print('COOK4ME_BOOT_PHASE=app_config', file=sys.stderr, flush=True)
     cfg=c4m.read_apk_config(a.apk)
-    if a.force_login or not token_valid():run_auth(a)
+    if a.force_login or not token_valid():
+        print('COOK4ME_BOOT_PHASE=authentication', file=sys.stderr, flush=True)
+        run_auth(a)
     else:print('KRUPS token          : cached and valid')
     if a.auth_only:return cfg,None
+    print('COOK4ME_BOOT_PHASE=aws_credentials', file=sys.stderr, flush=True)
     if not a.force_aws and aws_valid():
         print('AWS credentials      : cached and valid'); creds=c4m.load_json(AWS)
     else:
@@ -67,6 +72,7 @@ def main():
                     if a.command=='watch':
                         for x in c4m.watch_cooking(cfg,creds): dump(x)
                     elif a.command=='watch-state':
+                        print('COOK4ME_BOOT_PHASE=mqtt_initial_state', file=sys.stderr, flush=True)
                         for x in c4m.watch_state(cfg,creds): dump(x)
                     else:
                         for x in c4m.watch_topics(cfg,creds,include_shadow=True): dump(x)

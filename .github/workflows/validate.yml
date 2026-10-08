@@ -26,6 +26,7 @@ jobs:
       - name: Minimal source validation
         run: |
           python scripts/version.py validate
+          python tests/test_bridge_offline_startup.py
           python tests/test_ingredient_lifecycle.py
           python tests/test_catalog_lifecycle_v227.py
           python tests/test_catalog_lifecycle_v228.py
