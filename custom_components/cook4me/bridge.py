@@ -362,7 +362,7 @@ class Cook4MeBridge:
                 if not reason.isidentifier():
                     reason = "unknown"
                 now = time.monotonic()
-                if now - self._last_reconnect_warning >= 60:
+                if self._last_reconnect_warning is None or now - self._last_reconnect_warning >= 60:
                     _LOGGER.warning("Cook4Me cloud MQTT reconnecting (%s)", reason)
                     self._last_reconnect_warning = now
             elif text:
