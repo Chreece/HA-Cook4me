@@ -7,7 +7,7 @@ set -Eeuo pipefail
 set +x
 umask 077
 [[ $EUID -eq 0 ]] || { echo "Use sudo bash, not source"; exit 1; }
-for executable in docker curl git python3 flock cmp stat readlink mktemp chown chmod mv cp; do
+for executable in docker curl git python3 flock cmp stat readlink mktemp chown chmod mv cp tar tee; do
   command -v "$executable" >/dev/null || { echo "Missing command: $executable"; exit 1; }
 done
 
@@ -72,6 +72,13 @@ rollback() {
   fi
   cleanup
   echo "COOK4ME_DEPLOY_RESULT=FAIL"
+  printf 'COOK4ME_DEPLOY_RESULT=FAIL\n' > "$BACKUP/status.txt"
+  PROOF="/home/chreece/cook4me-deploy-proof-$STAMP.tar.gz"
+  if [[ -f "$BACKUP/deploy.log" ]]; then
+    tar -czf "$PROOF" -C "$BACKUP" status.txt deploy.log 2>/dev/null || :
+    if [[ -n $(printenv SUDO_USER || true) ]]; then chown "$(printenv SUDO_USER)" "$PROOF" || :; fi
+    echo "DEPLOYMENT_EVIDENCE=$PROOF"
+  fi
   echo "BACKUP=$BACKUP"
   echo "LOG=$LOG"
   exit "$code"
@@ -84,6 +91,25 @@ trap 'rollback 130' INT TERM HUP
   echo "Unsafe staging filesystem"; false;
 }
 exec > >(tee -a "$LOG") 2>&1
+# Do not overwrite unknown local work, even when the source download is pinned.
+# Allow both the known released main baseline and the exact tested candidate.
+for spec in \
+  'cook4me_auto.py 10c85d217e0d876e8f05afd00a94ce7e4751f6f8 cdbf155f59d0b4174655aceca72570fdf6fe1485' \
+  'cook4me_phonefree.py 9d6ba72930bd6cd23ef2c6341332a834ca4b4e77 4786eaf2d30a24448cf8c3c5cf075a3207443d6a'; do
+  read -r name known_baseline candidate <<<"$spec"
+  installed=$(git hash-object "$LIVE/$name")
+  if [[ "$installed" != "$known_baseline" && "$installed" != "$candidate" ]]; then
+    echo "Refusing to overwrite unexpected locally installed code: $name (blob $installed)"
+    false
+  fi
+done
+if [[ -f "$LIVE/adaptive_transport.py" ]]; then
+  installed=$(git hash-object "$LIVE/adaptive_transport.py")
+  [[ "$installed" == c00951326b14e8a99909133c3710e7564088f592 ]] || {
+    echo "Refusing to overwrite unknown adaptive_transport.py (blob $installed)"; false;
+  }
+fi
+echo "Installed-file baseline verification: PASS"
 echo "Preparing exact live-tested Cook4Me files, source commit $SOURCE_SHA"
 for spec in \
   'cook4me_auto.py cdbf155f59d0b4174655aceca72570fdf6fe1485' \
@@ -147,6 +173,13 @@ trap - ERR INT TERM HUP
 cleanup
 echo
 echo "COOK4ME_DEPLOY_RESULT=PASS"
+printf 'COOK4ME_DEPLOY_RESULT=PASS\nCANDIDATE_SOURCE=%s\n' "$SOURCE_SHA" > "$BACKUP/status.txt"
+PROOF="/home/chreece/cook4me-deploy-proof-$STAMP.tar.gz"
+tar -czf "$PROOF" -C "$BACKUP" metadata.txt status.txt deploy.log
+if [[ -n $(printenv SUDO_USER || true) ]]; then
+  chown "$(printenv SUDO_USER)" "$PROOF" || :
+fi
+echo "DEPLOYMENT_EVIDENCE=$PROOF"
 echo "CANDIDATE_SOURCE=$SOURCE_SHA"
 echo "BACKUP=$BACKUP"
 echo "LOG=$LOG"
