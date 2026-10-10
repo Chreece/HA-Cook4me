@@ -25,7 +25,7 @@ def run_auth(a):
     print('KRUPS token          : missing/expired; running browserless login')
     if subprocess.run(cmd).returncode:raise SystemExit(1)
     if not token_valid(60):raise RuntimeError('Authentication produced no usable id_token')
-def prepare(a):
+def prepare(a, *, require_aws=True):
     # Fixed, non-sensitive progress markers for the HA bootstrap watchdog.
     print('COOK4ME_BOOT_PHASE=app_config', file=sys.stderr, flush=True)
     cfg=c4m.read_apk_config(a.apk)
@@ -33,7 +33,7 @@ def prepare(a):
         print('COOK4ME_BOOT_PHASE=authentication', file=sys.stderr, flush=True)
         run_auth(a)
     else:print('KRUPS token          : cached and valid')
-    if a.auth_only:return cfg,None
+    if a.auth_only or not require_aws:return cfg,None
     print('COOK4ME_BOOT_PHASE=aws_credentials', file=sys.stderr, flush=True)
     if not a.force_aws and aws_valid():
         print('AWS credentials      : cached and valid'); creds=c4m.load_json(AWS)
@@ -49,7 +49,11 @@ def main():
     ap.add_argument('--apk',type=Path); ap.add_argument('--device-uuid'); ap.add_argument('--json-lines',action='store_true'); ap.add_argument('--country',default='DE'); ap.add_argument('--language',default='de'); ap.add_argument('--app-version',default='36.0.0-RC3'); ap.add_argument('--force-login',action='store_true'); ap.add_argument('--force-aws',action='store_true'); ap.add_argument('--no-save-credentials',action='store_true'); ap.add_argument('--auth-only',action='store_true')
     sub=ap.add_subparsers(dest='command'); sub.add_parser('test'); sub.add_parser('status'); sub.add_parser('shadow'); sub.add_parser('watch'); sub.add_parser('watch-all'); sub.add_parser('state'); sub.add_parser('watch-state'); sub.add_parser('discover'); m=sub.add_parser('recipe-metadata'); m.add_argument('recipe_id'); m.add_argument('variant_id'); sr=sub.add_parser('search-recipes'); sr.add_argument('query', nargs='?', default=''); sr.add_argument('--page',type=int,default=0); sr.add_argument('--size',type=int,default=20); sr.add_argument('--max-details',type=int,default=20); sr.add_argument('--no-details',action='store_true'); r=sub.add_parser('send-recipe'); r.add_argument('functional_id'); r.add_argument('variant_id')
     a=ap.parse_args(); a.command=a.command or 'test';
-    global JSON_LINES; JSON_LINES=a.json_lines; cfg,creds=prepare(a);
+    # Owned appliance discovery reads KRUPS /profiles/me, not AWS IoT.
+    # Do not block the HA config flow on unrelated Cognito credential requests.
+    global JSON_LINES; JSON_LINES=a.json_lines; cfg,creds=prepare(
+        a, require_aws=(a.command != 'discover')
+    );
     if a.device_uuid: c4m.set_device_uuid(a.device_uuid)
     if a.auth_only:print('READY                : KRUPS authentication available');return
     if a.command=='discover': dump({'appliances':c4m.discover_appliances(cfg,creds,c4m.load_json(TOKENS),a.country,a.language,a.app_version)}); return
