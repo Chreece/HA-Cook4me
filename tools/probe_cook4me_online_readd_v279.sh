@@ -182,8 +182,32 @@ with tempfile.TemporaryDirectory(prefix="cook4me-online-readd-proof-") as home:
         sys.exit(0)
     (cache/"tokens.json").write_text(json.dumps(tokens))
     os.chmod(cache/"tokens.json",0o600)
-    found=stage("ACCOUNT_OWNED_DISCOVERY",
-        lambda: client.discover_appliances(cfg,None,tokens,"DE","de",version))
+    # Execute the same vendor discovery command used by HA's config flow.
+    # Account-owned device JSON remains in memory; only result counts are logged.
+    def candidate_discovery():
+        command=[sys.executable,"-u",str(VENDOR/"cook4me_auto.py"),
+                 "--country","DE","--language","de","--app-version",version,
+                 "--json-lines","--no-save-credentials","discover"]
+        result=subprocess.run(command,stdin=subprocess.DEVNULL,cwd=VENDOR,
+                              stdout=subprocess.PIPE,stderr=subprocess.PIPE,
+                              timeout=75,check=False)
+        devices=[]
+        for line in result.stdout.decode("utf-8","replace").splitlines():
+            if not line.startswith("{"):continue
+            try:
+                obj=json.loads(line)
+            except ValueError:continue
+            if isinstance(obj,dict) and isinstance(obj.get("appliances"),list):
+                devices=obj["appliances"]
+        stages=[line.partition("=")[2] for line in result.stderr.decode("utf-8","replace").splitlines()
+                if line.startswith("COOK4ME_BOOT_PHASE=")]
+        no_aws="aws_credentials" not in stages
+        event("DISCOVERY_NO_AWS",no_aws)
+        if result.returncode!=0 or not no_aws or not devices:
+            raise RuntimeError("CandidateDiscoveryFailed")
+        return devices
+
+    found=stage("REAL_HA_CONFIG_FLOW_DISCOVERY",candidate_discovery)
     if found is None:
         event("RESULT","INCOMPLETE_DISCOVERY")
         sys.exit(0)
