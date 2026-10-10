@@ -198,12 +198,9 @@ class RealHTTPProxyMatrix(unittest.TestCase):
             captured=[]
             relay=threading.Thread(target=self.serve_proxy,args=(proxy,target,captured),daemon=True)
             relay.start()
-            original=websocket.create_connection
-            def ws_with_custom_ca(url,**kw):
-                kw['sslopt']={'ca_certs':directory+'/cert.pem','cert_reqs':ssl.CERT_REQUIRED,'check_hostname':True}
-                return original(url,**kw)
-            env={'HTTPS_PROXY':f'http://user:secret@127.0.0.1:{port}','NO_PROXY':''}
-            with patch.dict(os.environ,env,clear=True), patch.object(websocket,'create_connection',side_effect=ws_with_custom_ca):
+            env={'HTTPS_PROXY':f'http://user:secret@127.0.0.1:{port}',
+                 'NO_PROXY':'','WEBSOCKET_CLIENT_CA_BUNDLE':directory+'/cert.pem'}
+            with patch.dict(os.environ,env,clear=True):
                 ws=at.create_mqtt_websocket(f'wss://localhost:{target}/mqtt','localhost',timeout=3)
                 self.assertTrue(ws.connected)
                 ws.close()
