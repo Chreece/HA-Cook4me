@@ -92,6 +92,21 @@ for family_name, family in (('ipv4',socket.AF_INET),('ipv6',socket.AF_INET6)):
    event('MQTT_TCP',family_name,'PASS','seconds',round(time.monotonic()-start,2))
   except Exception as e:event('MQTT_TCP',family_name,'FAIL',type(e).__name__,'seconds',round(time.monotonic()-start,2))
  except Exception as e:event('MQTT_DNS',family_name,'FAIL',type(e).__name__)
+# An IPv4 TLS probe needs no KRUPS session or AWS credentials.
+# Run it before authentication so a login problem cannot hide the result.
+import ssl
+def mqtt_ipv4_tls():
+ host=mqtt_host
+ addresses=socket.getaddrinfo(host,443,socket.AF_INET,socket.SOCK_STREAM)
+ if not addresses:raise OSError('No IPv4 DNS result')
+ af,kind,proto,_,address=addresses[0]
+ with socket.socket(af,kind,proto) as raw:
+  raw.settimeout(8)
+  raw.connect(address)
+  with ssl.create_default_context().wrap_socket(raw,server_hostname=host) as tls:
+   event('IPV4_TLS_VERSION',tls.version())
+   return True
+phase('mqtt_ipv4_tls_no_auth',mqtt_ipv4_tls)
 root=pathlib.Path('/config/custom_components/cook4me')
 with tempfile.TemporaryDirectory(prefix='cook4me-live-proof-') as home:
  os.environ['HOME']=home;sys.path.insert(0,str(root/'vendor'))
@@ -122,11 +137,30 @@ with tempfile.TemporaryDirectory(prefix='cook4me-live-proof-') as home:
    os.killpg(p.pid,signal.SIGKILL);p.communicate();event('AUTH_TIMEOUT',110)
   try:tokens=json.loads((td/'tokens.json').read_text())
   except Exception:tokens=None
-  for q in (pathlib.Path(home)/'cook4me-re').glob('krups-plain-http-auth-*.log'):
+  for q in sorted((pathlib.Path(home)/'cook4me-re').glob('krups-plain-http-auth-*.log')):
    try:
-    s=q.read_text();d=json.loads(s[s.index('\n{')+1:]); names=[v for v in d.get('stages',[]) if isinstance(v,str) and re.fullmatch('[a-zA-Z0-9_:-]{1,60}',v)]
+    raw_log=q.read_text()
+    d=json.loads(raw_log[raw_log.index('\n{')+1:])
+    names=[v for v in d.get('stages',[]) if isinstance(v,str) and re.fullmatch('[a-zA-Z0-9_:-]{1,60}',v)]
     event('AUTH_STAGES',','.join(names) or 'none','callback',bool(d.get('callback_observed')))
-   except Exception:event('AUTH_DIAGNOSTIC','not_parseable')
+    error=str(d.get('error') or '')
+    # Only pre-reviewed, fixed error categories enter the archive.
+    reason=(
+     'missing_login_frontdoor_redirect' if 'no frontdoor redirect' in error
+     else 'oauth_callback_missing' if 'final approval action' in error
+     else 'loginflow_redirect_missing' if 'redirect could not be extracted' in error
+     else 'transport_error' if 'transport error' in error.lower()
+     else 'http_error' if re.search(r'HTTP [1-5][0-9]{2}',error)
+     else 'other_error' if error else 'none'
+    )
+    cls=error.partition(':')[0]
+    if not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]{0,63}',cls):cls='unknown'
+    calls=d.get('http') or []
+    last=calls[-1] if isinstance(calls,list) and calls else {}
+    last_status=last.get('status') if isinstance(last,dict) else None
+    if not isinstance(last_status,int):last_status='unknown'
+    event('AUTH_FAILURE_CLASS',cls,'reason',reason,'last_http_status',last_status,'http_calls',len(calls))
+   except Exception as exc:event('AUTH_DIAGNOSTIC','unreadable',type(exc).__name__)
  if not tokens or not tokens.get('access_token') or not tokens.get('id_token'):
   event('STOP','no_authenticated_account');sys.exit(0)
  try:old=c4m.curl_requests.get
