@@ -74,7 +74,14 @@ import sys
 import tempfile
 import time
 import hashlib
+import signal
 
+def _deadline(_signal, _frame):
+    print("RESULT PROBE_DEADLINE_EXCEEDED", flush=True)
+    raise SystemExit(124)
+
+signal.signal(signal.SIGALRM, _deadline)
+signal.alarm(245)
 ROOT = Path(__file__).resolve().parent
 VENDOR = ROOT / "custom_components/cook4me/vendor"
 
