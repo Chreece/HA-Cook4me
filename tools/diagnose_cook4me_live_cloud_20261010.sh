@@ -143,6 +143,61 @@ with tempfile.TemporaryDirectory(prefix='cook4me-live-proof-') as home:
  if devices is None:event('STOP','discovery_failed');sys.exit(0)
  event('ACCOUNT_DEVICE_COUNT',len(devices))
  if not devices:sys.exit(0)
+
+ # Real end-to-end A/B: run the exact proposed discovery-only source patch
+ # in a temporary vendor tree, on the same authenticated account.
+ # Verify its Git blob SHA matches the reviewed branch. No HA files changed.
+ import shutil
+ original_vendor=root/'vendor/cook4me_auto.py'
+ patched_client=pathlib.Path(home)/'candidate_vendor/cook4me_auto.py'
+ try:
+  shutil.copytree(root/'vendor',patched_client.parent)
+  original=patched_client.read_text(encoding='utf-8')
+  edits=(
+   ('def prepare(a):\n','def prepare(a, *, require_aws=True):\n'),
+   ('    if a.auth_only:return cfg,None\n','    if a.auth_only or not require_aws:return cfg,None\n'),
+   ('    global JSON_LINES; JSON_LINES=a.json_lines; cfg,creds=prepare(a);\n',
+    "    # Owned appliance discovery reads KRUPS /profiles/me, not AWS IoT.\n    # Do not block the HA config flow on unrelated Cognito credential requests.\n    global JSON_LINES; JSON_LINES=a.json_lines; cfg,creds=prepare(\n        a, require_aws=(a.command != 'discover')\n    );\n"),
+  )
+  for before,after in edits:
+   if original.count(before)!=1:raise ValueError('vendor_source_mismatch')
+   original=original.replace(before,after,1)
+  raw=original.encode()
+  object_id=hashlib.sha1(('blob '+str(len(raw))+'\0').encode()+raw).hexdigest()
+  if object_id!='cdbf155f59d0b4174655aceca72570fdf6fe1485':
+   event('CANDIDATE_VERIFY','FAIL','blob_mismatch')
+  else:
+   event('CANDIDATE_VERIFY','PASS','exact_reviewed_source')
+   patched_client.write_bytes(raw)
+   env=dict(os.environ)
+   env['HOME']=home
+   env['COOK4ME_EMAIL']=''
+   env['COOK4ME_PASSWORD']=''
+   started=time.monotonic()
+   try:
+    p=subprocess.run(
+     [sys.executable,'-u',str(patched_client),'--country','DE',
+      '--language','de','--app-version','36.0.0-RC3','--json-lines','discover'],
+     cwd=str(patched_client.parent),env=env,input=b'',capture_output=True,
+     timeout=90,check=False,
+    )
+    outputs=p.stdout.decode('utf-8','replace').splitlines()
+    results=[]
+    for line in outputs:
+     if line.startswith('{'):
+      try:results.append(json.loads(line))
+      except json.JSONDecodeError:pass
+    rows=results[-1].get('appliances') if results and isinstance(results[-1],dict) else None
+    count=len(rows) if isinstance(rows,list) else -1
+    stages=[line.partition('=')[2] for line in p.stderr.decode('utf-8','replace').splitlines() if line.startswith('COOK4ME_BOOT_PHASE=')]
+    safe_stages=[x for x in stages if x in ('app_config','authentication','aws_credentials','mqtt_initial_state')]
+    event('CANDIDATE_CLI_RESULT','PASS' if p.returncode==0 and count==len(devices) else 'FAIL',
+          'exit',p.returncode,'appliances',count,'seconds',round(time.monotonic()-started,2),
+          'stages',','.join(safe_stages) or 'none')
+   except subprocess.TimeoutExpired:
+    event('CANDIDATE_CLI_RESULT','TIMEOUT_90s')
+ except Exception as exc:event('CANDIDATE_VERIFY','SKIPPED',type(exc).__name__)
+
  # Distinguish Cognito GetId from GetCredentialsForIdentity, without
  # exposing identity IDs, tokens, endpoint headers, or response bodies.
  raw_cognito=c4m.cognito_call
