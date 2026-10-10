@@ -9,7 +9,7 @@ CONFIG=/home/chreece/homeassistant/config
 [[ $(docker inspect -f '{{.State.Running}}' "$HA" 2>/dev/null) == true ]] || { echo 'Home Assistant is not running'; exit 1; }
 [[ -f "$CONFIG/custom_components/cook4me/bridge.py" ]] || { echo 'Cook4Me files missing'; exit 1; }
 WORK=$(mktemp -d /tmp/cook4me-live-XXXXXX)
-FILE="/home/chreece/cook4me-mqtt-phases-$(date -u +%Y%m%d-%H%M%S).tar.gz"
+FILE="/home/chreece/cook4me-ipv4-ab-$(date -u +%Y%m%d-%H%M%S).tar.gz"
 trap 'unset COOK4ME_EMAIL COOK4ME_PASSWORD 2>/dev/null || :; rm -rf -- "$WORK"' EXIT
 python3 - "$CONFIG" >"$WORK/installation.txt" <<'PY'
 import json,hashlib,pathlib,sys
@@ -171,13 +171,13 @@ with tempfile.TemporaryDirectory(prefix='cook4me-live-proof-') as home:
    patched_client.write_bytes(raw)
    env=dict(os.environ)
    env['HOME']=home
-   env['COOK4ME_EMAIL']=''
-   env['COOK4ME_PASSWORD']=''
+   env['COOK4ME_EMAIL']=os.environ.get('COOK4ME_EMAIL','')
+   env['COOK4ME_PASSWORD']=os.environ.get('COOK4ME_PASSWORD','')
    started=time.monotonic()
    try:
     p=subprocess.run(
      [sys.executable,'-u',str(patched_client),'--country','DE',
-      '--language','de','--app-version','36.0.0-RC3','--json-lines','discover'],
+      '--language','de','--app-version','36.0.0-RC3','--json-lines','--no-save-credentials','discover'],
      cwd=str(patched_client.parent),env=env,input=b'',capture_output=True,
      timeout=90,check=False,
     )
@@ -213,7 +213,29 @@ with tempfile.TemporaryDirectory(prefix='cook4me-live-proof-') as home:
    event('COGNITO_FAIL',safe_target,type(exc).__name__,'http',match.group(1) if match else 'none','seconds',round(time.monotonic()-started,2))
    raise
  c4m.cognito_call=tracked_cognito
- creds=phase('real_aws_cognito_credentials',lambda:c4m.aws_credentials(cfg,tokens['id_token']))
+ # Previous evidence: IPv6 TCP timed out, IPv4 TCP connected in 0.02s.
+ # Force IPv4 only for exact AWS hosts; do not affect KRUPS account traffic.
+ orig_addrinfo=socket.getaddrinfo
+ aws_hosts={'cognito-identity.eu-west-1.amazonaws.com',c4m.MQTT_ENDPOINT}
+ address_mode=['ipv4']
+ def traced_addrinfo(host,port,family=0,type=0,proto=0,flags=0):
+  name=str(host or '').lower()
+  if address_mode[0]=='ipv4' and name in aws_hosts:
+   records=orig_addrinfo(host,port,socket.AF_INET,type,proto,flags)
+   event('DNS_IPV4_ONLY','cognito' if name.startswith('cognito-identity') else 'mqtt','count',len(records))
+   return records
+  return orig_addrinfo(host,port,family,type,proto,flags)
+ socket.getaddrinfo=traced_addrinfo
+ # TLS over IPv4 must work before we attribute problems to signed WebSocket.
+ import ssl
+ def ipv4_tls():
+  with socket.create_connection((c4m.MQTT_ENDPOINT,443),timeout=6) as raw:
+   raw.settimeout(6)
+   with ssl.create_default_context().wrap_socket(raw,server_hostname=c4m.MQTT_ENDPOINT) as tls:
+    event('MQTT_IPV4_TLS','PASS',tls.version())
+    return True
+ phase('mqtt_ipv4_tls',ipv4_tls)
+ creds=phase('real_aws_cognito_credentials_ipv4',lambda:c4m.aws_credentials(cfg,tokens['id_token']))
  if creds is None:event('STOP','aws_credentials_failed');sys.exit(0)
 
  # MQTT wire-stage instrumentation: distinguish WebSocket upgrade, CONNACK,
@@ -253,16 +275,22 @@ with tempfile.TemporaryDirectory(prefix='cook4me-live-proof-') as home:
   if not value:continue
   alias=hashlib.sha256(value.encode()).hexdigest()[:10];c4m.set_device_uuid(value)
   event('DEVICE_HASH',alias)
+  # Compare the default client with forced IPv4 using the SAME live credentials.
+  address_mode[0]='default'
   packet_counter[0]=0
-  shadow=phase('iot_shadow_get_'+alias,lambda:c4m.shadow_get(cfg,creds,timeout=13))
+  control=phase('iot_default_shadow_get_'+alias,lambda:c4m.shadow_get(cfg,creds,timeout=13))
+  event('CONTROL_STATUS','response' if control is not None else 'no_response')
+  address_mode[0]='ipv4'
+  packet_counter[0]=0
+  shadow=phase('iot_ipv4_shadow_get_'+alias,lambda:c4m.shadow_get(cfg,creds,timeout=13))
   if shadow is not None:
    state=c4m._shadow_reported_from_payload(shadow)
    status=state.get('status') if isinstance(state,dict) else None
    event('SHADOW_CONNECTED',alias, status.get('connected') if isinstance(status,dict) else 'not_reported')
   packet_counter[0]=0
-  cooking=phase('iot_cooking_get_'+alias,lambda:c4m.cooking_status(cfg,creds,timeout=13))
+  cooking=phase('iot_ipv4_cooking_get_'+alias,lambda:c4m.cooking_status(cfg,creds,timeout=13))
   if cooking is not None:event('COOKING_RESPONSE_TYPE',type(cooking).__name__)
- event('LIVE_TEST_COMPLETE','No HA configuration modified')
+ event('LIVE_TEST_COMPLETE','No HA configuration modified','AWS IPv4 A/B')
 PY
 RC=$?
 set -e
