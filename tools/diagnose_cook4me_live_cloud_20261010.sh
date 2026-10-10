@@ -74,11 +74,8 @@ def phase(name,fn):
   m=re.search(r'HTTP\s*(\d{3})',str(e));event('FAIL',name,type(e).__name__,'http='+str(m.group(1) if m else 'none'),'seconds='+str(round(time.monotonic()-t,2)));return None
  event('PASS',name,'seconds='+str(round(time.monotonic()-t,2)));return r
 
-for label,host in [('platform','sebplatform.api.groupe-seb.com'),('cognito','cognito-identity.eu-west-1.amazonaws.com'),('mqtt','a1p8u39dc9ign8-ats.iot.eu-west-1.amazonaws.com')]:
- def tcp():
-  with socket.create_connection((host,443),timeout=7):return True
- phase('tcp_'+label,tcp)
-
+# Previous live proof already established that these three TCP endpoints are reachable.
+# Do not repeat those broad tests; investigate only the MQTT connection.
 # Separate DNS/address-family reachability from WebSocket and MQTT protocol.
 mqtt_host='a1p8u39dc9ign8-ats.iot.eu-west-1.amazonaws.com'
 for family_name, family in (('ipv4',socket.AF_INET),('ipv6',socket.AF_INET6)):
@@ -116,10 +113,11 @@ with tempfile.TemporaryDirectory(prefix='cook4me-live-proof-') as home:
  elif os.getenv('COOK4ME_EMAIL') and os.getenv('COOK4ME_PASSWORD'):
   event('START','real_krups_login')
   cmd=[sys.executable,str(root/'vendor/cook4me_plain_http_auth.py'),'--country','DE','--language','de','--app-version','36.0.0-RC3','--no-save-credentials']
+  auth_started=time.monotonic()
   p=subprocess.Popen(cmd,stdin=subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE,start_new_session=True)
   try:
    out,err=p.communicate(timeout=110)
-   event('AUTH_EXIT',p.returncode,'stdout_bytes',len(out),'stderr_bytes',len(err))
+   event('AUTH_EXIT',p.returncode,'stdout_bytes',len(out),'stderr_bytes',len(err),'seconds',round(time.monotonic()-auth_started,2))
   except subprocess.TimeoutExpired:
    os.killpg(p.pid,signal.SIGKILL);p.communicate();event('AUTH_TIMEOUT',110)
   try:tokens=json.loads((td/'tokens.json').read_text())
