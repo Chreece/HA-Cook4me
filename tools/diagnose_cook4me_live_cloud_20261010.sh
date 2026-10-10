@@ -9,7 +9,7 @@ CONFIG=/home/chreece/homeassistant/config
 [[ $(docker inspect -f '{{.State.Running}}' "$HA" 2>/dev/null) == true ]] || { echo 'Home Assistant is not running'; exit 1; }
 [[ -f "$CONFIG/custom_components/cook4me/bridge.py" ]] || { echo 'Cook4Me files missing'; exit 1; }
 WORK=$(mktemp -d /tmp/cook4me-live-XXXXXX)
-FILE="/home/chreece/cook4me-evidence-$(date -u +%Y%m%d-%H%M%S).tar.gz"
+FILE="/home/chreece/cook4me-mqtt-phases-$(date -u +%Y%m%d-%H%M%S).tar.gz"
 trap 'unset COOK4ME_EMAIL COOK4ME_PASSWORD 2>/dev/null || :; rm -rf -- "$WORK"' EXIT
 python3 - "$CONFIG" >"$WORK/installation.txt" <<'PY'
 import json,hashlib,pathlib,sys
@@ -78,6 +78,23 @@ for label,host in [('platform','sebplatform.api.groupe-seb.com'),('cognito','cog
  def tcp():
   with socket.create_connection((host,443),timeout=7):return True
  phase('tcp_'+label,tcp)
+
+# Separate DNS/address-family reachability from WebSocket and MQTT protocol.
+mqtt_host='a1p8u39dc9ign8-ats.iot.eu-west-1.amazonaws.com'
+for family_name, family in (('ipv4',socket.AF_INET),('ipv6',socket.AF_INET6)):
+ try:
+  records=socket.getaddrinfo(mqtt_host,443,family,socket.SOCK_STREAM)
+  event('MQTT_DNS',family_name,'addresses',len(records))
+  if not records:continue
+  _,kind,proto,_,address=records[0]
+  start=time.monotonic()
+  try:
+   with socket.socket(family,kind,proto) as connection:
+    connection.settimeout(5)
+    connection.connect(address)
+   event('MQTT_TCP',family_name,'PASS','seconds',round(time.monotonic()-start,2))
+  except Exception as e:event('MQTT_TCP',family_name,'FAIL',type(e).__name__,'seconds',round(time.monotonic()-start,2))
+ except Exception as e:event('MQTT_DNS',family_name,'FAIL',type(e).__name__)
 root=pathlib.Path('/config/custom_components/cook4me')
 with tempfile.TemporaryDirectory(prefix='cook4me-live-proof-') as home:
  os.environ['HOME']=home;sys.path.insert(0,str(root/'vendor'))
@@ -128,18 +145,68 @@ with tempfile.TemporaryDirectory(prefix='cook4me-live-proof-') as home:
  if devices is None:event('STOP','discovery_failed');sys.exit(0)
  event('ACCOUNT_DEVICE_COUNT',len(devices))
  if not devices:sys.exit(0)
+ # Distinguish Cognito GetId from GetCredentialsForIdentity, without
+ # exposing identity IDs, tokens, endpoint headers, or response bodies.
+ raw_cognito=c4m.cognito_call
+ def tracked_cognito(region,target,body):
+  safe_target=target if target in ('GetId','GetCredentialsForIdentity') else 'other'
+  started=time.monotonic();event('COGNITO_START',safe_target)
+  try:
+   result=raw_cognito(region,target,body)
+   event('COGNITO_PASS',safe_target,'seconds',round(time.monotonic()-started,2))
+   return result
+  except Exception as exc:
+   match=re.search(r'HTTP\s*(\d{3})',str(exc))
+   event('COGNITO_FAIL',safe_target,type(exc).__name__,'http',match.group(1) if match else 'none','seconds',round(time.monotonic()-started,2))
+   raise
+ c4m.cognito_call=tracked_cognito
  creds=phase('real_aws_cognito_credentials',lambda:c4m.aws_credentials(cfg,tokens['id_token']))
  if creds is None:event('STOP','aws_credentials_failed');sys.exit(0)
+
+ # MQTT wire-stage instrumentation: distinguish WebSocket upgrade, CONNACK,
+ # SUBACK, and response. Never log signed URLs, raw packets, or credentials.
+ try:
+  import websocket
+ except ImportError:
+  event('STOP','websocket_client_missing');sys.exit(0)
+ raw_ws_connect=websocket.create_connection
+ def tracked_ws_connect(*args,**kwargs):
+  started=time.monotonic();event('MQTT_WS_START')
+  try:
+   result=raw_ws_connect(*args,**kwargs)
+   event('MQTT_WS_PASS','seconds',round(time.monotonic()-started,2))
+   return result
+  except Exception as exc:
+   event('MQTT_WS_FAIL',type(exc).__name__,'seconds',round(time.monotonic()-started,2))
+   raise
+ websocket.create_connection=tracked_ws_connect
+ raw_read=c4m.mqtt_read_packet
+ packet_counter=[0]
+ def tracked_read(ws,timeout=15):
+  packet_counter[0]+=1
+  kind=('connack','suback','response' if packet_counter[0]>=3 else 'unknown')[min(packet_counter[0]-1,2)]
+  started=time.monotonic();event('MQTT_READ_START',kind,'timeout',int(timeout))
+  try:
+   packet=raw_read(ws,timeout)
+   event('MQTT_READ_PASS',kind,'packet_type',packet[0],'seconds',round(time.monotonic()-started,2))
+   return packet
+  except Exception as exc:
+   event('MQTT_READ_FAIL',kind,type(exc).__name__,'seconds',round(time.monotonic()-started,2))
+   raise
+ c4m.mqtt_read_packet=tracked_read
+ event('PROXY_ENV_FLAGS',*(key+':'+str(bool(os.environ.get(key))) for key in ('HTTP_PROXY','HTTPS_PROXY','ALL_PROXY','NO_PROXY')))
  for device in devices[:2]:
   value=str(device.get('uuid') or '')
   if not value:continue
   alias=hashlib.sha256(value.encode()).hexdigest()[:10];c4m.set_device_uuid(value)
   event('DEVICE_HASH',alias)
+  packet_counter[0]=0
   shadow=phase('iot_shadow_get_'+alias,lambda:c4m.shadow_get(cfg,creds,timeout=13))
   if shadow is not None:
    state=c4m._shadow_reported_from_payload(shadow)
    status=state.get('status') if isinstance(state,dict) else None
    event('SHADOW_CONNECTED',alias, status.get('connected') if isinstance(status,dict) else 'not_reported')
+  packet_counter[0]=0
   cooking=phase('iot_cooking_get_'+alias,lambda:c4m.cooking_status(cfg,creds,timeout=13))
   if cooking is not None:event('COOKING_RESPONSE_TYPE',type(cooking).__name__)
  event('LIVE_TEST_COMPLETE','No HA configuration modified')
