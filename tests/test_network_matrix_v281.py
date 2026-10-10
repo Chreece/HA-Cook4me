@@ -121,10 +121,12 @@ class NetworkMatrix(unittest.TestCase):
                         ws.close()
             t.join(2)
 
-    def test_both_families_fail_fast_and_no_default_route_changes(self):
+    def test_both_families_refused_returns_bounded_error(self):
         ports=[]
         for family in (socket.AF_INET,socket.AF_INET6):
-            sock=sock_listener(family);ports.append(sock.getsockname()[1]);sock.close()
+            try: sock=sock_listener(family)
+            except OSError as exc: self.skipTest(f"IPv6 loopback unavailable: {exc}")
+            ports.append(sock.getsockname()[1]);sock.close()
         start=time.monotonic()
         with patch.object(at,'_alternating_addresses',return_value=addresses(*ports)):
             with self.assertRaises((OSError,TimeoutError)):
