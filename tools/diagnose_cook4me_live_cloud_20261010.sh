@@ -330,6 +330,11 @@ RC=$?
 set -e
 unset COOK4ME_EMAIL COOK4ME_PASSWORD
 printf 'probe_exit_code=%s\n' "$RC" >>"$WORK/installation.txt"
+if grep -Eq '^STOP (no_authenticated_account|aws_credentials_failed|probe_deadline_280s|discovery_failed)' "$WORK/live.txt"; then
+ echo 'evidence_status=INCOMPLETE' >>"$WORK/installation.txt"
+else
+ echo 'evidence_status=COMPLETE_OR_CHECK_LIVE_RESULT' >>"$WORK/installation.txt"
+fi
 tar -czf "$FILE" -C "$WORK" .
 if [[ -n "${SUDO_USER:-}" && "$SUDO_USER" != root ]]; then chown "$SUDO_USER" "$FILE" || :;fi
 printf '\nEvidence archive: %s\n' "$FILE"
