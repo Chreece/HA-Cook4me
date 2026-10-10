@@ -310,12 +310,41 @@ def cognito_call(region, target, body):
         'X-Amz-Target':f'AWSCognitoIdentityService.{target}',
         'Accept':'application/json',
     })
+    # curl-cffi uses libcurl's dual-stack Happy Eyeballs and honors system
+    # proxy/VPN routing. urllib.request's sequential socket fallback can spend
+    # the full 20-second timeout on each unreachable IPv6 address.
+    if curl_requests is None:
+        raise RuntimeError('Cognito HTTPS transport requires curl-cffi')
     try:
-        with urllib.request.urlopen(req,timeout=20) as r:
-            return json.loads(r.read())
-    except urllib.error.HTTPError as e:
-        txt=e.read().decode('utf-8','replace')
-        raise RuntimeError(f'Cognito {target} HTTP {e.code}: {txt}') from None
+        response = curl_requests.post(
+            url, data=data, headers=dict(req.header_items()), timeout=20,
+            impersonate='chrome',
+        )
+    except Exception as exc:
+        raise RuntimeError(f'Cognito {target} transport failed ({type(exc).__name__})') from None
+    status = int(response.status_code)
+    if not 200 <= status < 300:
+        # Expose only the response classification needed for OIDC candidate
+        # fallback, never tokens, signed URLs or arbitrary backend body text.
+        try:
+            detail = response.json()
+        except Exception:
+            detail = {}
+        if not isinstance(detail, dict):
+            detail = {}
+        raw_code = str(detail.get('__type') or detail.get('code') or detail.get('Code') or '')
+        code = ''.join(c for c in raw_code.rsplit('#',1)[-1] if c.isalnum() or c in '_-')[:80]
+        message = str(detail.get('message') or detail.get('Message') or '')
+        hint = (
+            'Issuer doesn\'t match providerName'
+            if 'Issuer doesn' in message and 'providerName' in message else
+            'login token' if 'login token' in message else ''
+        )
+        raise RuntimeError(f'Cognito {target} HTTP {status}: {code} {hint}'.strip())
+    try:
+        return response.json()
+    except (ValueError, TypeError) as exc:
+        raise RuntimeError(f'Cognito {target} returned invalid JSON ({type(exc).__name__})') from None
 
 
 def jwt_claims(token):
@@ -505,8 +534,11 @@ def mqtt_open(cfg, creds, client_prefix='cook4me-phonefree', keepalive=1200):
         import websocket
     except ImportError:
         raise SystemExit('Install websocket-client in this venv: pip install websocket-client')
+    # The signed URL remains unchanged. Only the underlying TCP/TLS family
+    # selection is adaptive; proxies retain websocket-client's own transport.
+    import adaptive_transport
     url,host=signed_wss(MQTT_ENDPOINT,cfg['region'],creds)
-    ws=websocket.create_connection(url,timeout=15,subprotocols=['mqtt'],suppress_origin=True,host=host)
+    ws=adaptive_transport.create_mqtt_websocket(url, MQTT_ENDPOINT, timeout=15)
     ws.send_binary(mqtt_connect(f'{client_prefix}-{int(time.time())}', keepalive=keepalive))
     ptype,_,body=mqtt_read_packet(ws)
     if ptype != 2 or len(body)<2 or body[-1] != 0:
