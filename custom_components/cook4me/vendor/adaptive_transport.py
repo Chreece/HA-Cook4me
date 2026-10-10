@@ -156,25 +156,49 @@ def connect_tls_dual_stack(
         selector.close()
 
 
-def _proxy_in_use(host: str) -> bool:
-    """Use websocket-client's own proxy decisions, including NO_PROXY."""
-    try:
-        from websocket._url import get_proxy_info
-        return bool(get_proxy_info(host, is_secure=True)[0])
-    except Exception:
-        # If proxy resolution is ambiguous, never bypass a configured proxy.
-        return bool(os.environ.get("https_proxy") or os.environ.get("HTTPS_PROXY") or
-                    os.environ.get("wss_proxy") or os.environ.get("WSS_PROXY") or
-                    os.environ.get("all_proxy") or os.environ.get("ALL_PROXY"))
+def _proxy_options(host: str, timeout: float) -> dict | None:
+    """Honor HTTPS/WSS/ALL proxy URLs and NO_PROXY without direct fallback.
+
+    websocket-client handles HTTP CONNECT or SOCKS negotiation. Only direct
+    connections use preconnected TLS sockets. Never downgrade an HTTPS proxy.
+    """
+    from urllib.parse import unquote, urlsplit
+    from websocket._url import _is_no_proxy_host
+
+    raw = next((os.environ.get(name) for name in (
+        "wss_proxy", "WSS_PROXY", "https_proxy", "HTTPS_PROXY",
+        "all_proxy", "ALL_PROXY",
+    ) if os.environ.get(name)), None)
+    if not raw or _is_no_proxy_host(host, None):
+        return None
+    parsed = urlsplit(raw if "://" in raw else "http://" + raw)
+    scheme = parsed.scheme.lower()
+    if scheme == "https":
+        raise OSError("Cook4Me WebSocket cannot use TLS-to-proxy with websocket-client")
+    if scheme not in {"http", "socks4", "socks4a", "socks5", "socks5h"}:
+        raise OSError("Cook4Me WebSocket proxy scheme is not supported")
+    if not parsed.hostname:
+        raise OSError("Cook4Me WebSocket proxy hostname is missing")
+    port = parsed.port or (1080 if scheme.startswith("socks") else 80)
+    auth = ((unquote(parsed.username), unquote(parsed.password or ""))
+            if parsed.username is not None else None)
+    return {
+        "http_proxy_host": parsed.hostname,
+        "http_proxy_port": port,
+        "proxy_type": scheme,
+        "http_proxy_auth": auth,
+        "http_proxy_timeout": timeout,
+    }
 
 
 def create_mqtt_websocket(url: str, host: str, *, timeout: float = 15.0):
-    """Preserve websocket-client's proxy path; use dual-stack TLS when direct."""
+    """Preserve configured proxy routes; use dual-stack TLS when direct."""
     import websocket
 
     options = dict(timeout=timeout, subprotocols=["mqtt"], suppress_origin=True, host=f"{host}:443")
-    if _proxy_in_use(host):
-        return websocket.create_connection(url, **options)
+    proxy_options = _proxy_options(host, timeout)
+    if proxy_options is not None:
+        return websocket.create_connection(url, **options, **proxy_options)
     tls_socket = connect_tls_dual_stack(host, 443, timeout=timeout)
     try:
         return websocket.create_connection(url, socket=tls_socket, **options)
