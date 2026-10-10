@@ -64,6 +64,9 @@ timeout --signal=TERM --kill-after=10s 300s docker exec -i --user 0 -e COOK4ME_E
 import contextlib,hashlib,io,json,os,pathlib,re,signal,socket,subprocess,sys,tempfile,time,urllib.parse
 
 def event(*items):print(*items,file=sys.__stdout__,flush=True)
+def _deadline(_signal,_frame):
+ event('STOP','probe_deadline_280s');raise SystemExit(124)
+signal.signal(signal.SIGALRM,_deadline);signal.alarm(280)
 def phase(name,fn):
  t=time.monotonic();event('START',name)
  try:r=fn()
