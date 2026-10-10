@@ -212,6 +212,13 @@ with tempfile.TemporaryDirectory(prefix="cook4me-signed-proof-") as home:
     else:
         event("RESULT","SIGNED_CONNECT_AND_DEVICE_READ_PASS")
 PY
+python3 - "$WORK/runner.py" <<'PY'
+from pathlib import Path
+import sys
+path=Path(sys.argv[1])
+compile(path.read_bytes(),str(path),'exec')
+print("Signed-probe Python preflight: PASS")
+PY
 docker cp "$WORK/runner.py" "$HA:$REMOTE/runner.py" >/dev/null
 CACHED=$(docker exec -i --user 0 "$HA" python3 - <<'PY'
 import base64,json,time
