@@ -55,6 +55,7 @@ tail -3 "$WORK/regressions.txt"
 if (( TEST_RC != 0 )); then
     printf 'RESULT=REGRESSION_FAIL\n' >"$WORK/status.txt"
     tar -czf "$OUT" -C "$WORK" regressions.txt status.txt
+    if [[ -n $(printenv SUDO_USER || true) ]]; then chown "$(printenv SUDO_USER)" "$OUT" || :; fi
     echo "Evidence: $OUT"
     exit 0
 fi
@@ -176,6 +177,7 @@ with tempfile.TemporaryDirectory(prefix="cook4me-signed-proof-") as home:
         event("RESULT","INCOMPLETE_AWS_CREDENTIALS")
         sys.exit(0)
     outcomes=[]
+    full_state=[]
     for item in found[:2]:
         device_uuid=str(item.get("uuid") or "")
         if not device_uuid:continue
@@ -202,10 +204,16 @@ with tempfile.TemporaryDirectory(prefix="cook4me-signed-proof-") as home:
                       lambda:client.cooking_status(cfg,creds,timeout=12))
         if cooking is not None:
             event("COOKING_RESPONSE_TYPE",type(cooking).__name__)
-    event("RESULT","SIGNED_CONNECT_SUCCESS" if outcomes and all(outcomes) else "SIGNED_CONNECT_FAILED")
+        full_state.append(shadow is not None and cooking is not None)
+    if not outcomes or not all(outcomes):
+        event("RESULT","SIGNED_CONNECT_FAILED")
+    elif not full_state or not all(full_state):
+        event("RESULT","SIGNED_CONNECT_PASS_DEVICE_READ_INCOMPLETE")
+    else:
+        event("RESULT","SIGNED_CONNECT_AND_DEVICE_READ_PASS")
 PY
 docker cp "$WORK/runner.py" "$HA:$REMOTE/runner.py" >/dev/null
-CACHED=$(docker exec --user 0 "$HA" python3 - <<'PY'
+CACHED=$(docker exec -i --user 0 "$HA" python3 - <<'PY'
 import base64,json,time
 from pathlib import Path
 valid=False
