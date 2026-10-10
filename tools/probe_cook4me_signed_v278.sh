@@ -102,7 +102,17 @@ def classify_auth_log(home):
     try:
         raw=files[-1].read_text()
         data=json.loads(raw[raw.index("\n{")+1:])
-        event("AUTH_STAGES",",".join(data.get("stages") or []) or "none")
+        stages=[str(v) for v in (data.get("stages") or []) if isinstance(v,str) and re.fullmatch(r'[A-Za-z0-9_:-]{1,80}',v)]
+        event("AUTH_STAGES",",".join(stages) or "none")
+        history=data.get("http") or []
+        statuses=[str(row.get("status")) for row in history if isinstance(row,dict) and isinstance(row.get("status"),int)]
+        event("AUTH_HTTP_STATUS_CHAIN",",".join(statuses[-15:]) or "none")
+        excerpt=str(data.get("login_a4j_excerpt") or "")
+        event("AUTH_A4J_STRUCTURE",
+              "redirect_tag",bool(re.search(r'<redirect',excerpt,re.I)),
+              "frontdoor_mentioned","frontdoor" in excerpt.lower(),
+              "login_page_mentioned","loginpage" in excerpt.lower(),
+              "size",len(excerpt))
         message=str(data.get("error") or "")
         category=("login_a4j_redirect" if "no frontdoor redirect" in message.lower()
            else "oauth_callback" if "final approval action" in message.lower()
