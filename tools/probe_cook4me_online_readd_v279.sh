@@ -221,40 +221,84 @@ with tempfile.TemporaryDirectory(prefix="cook4me-online-readd-proof-") as home:
         event("RESULT","INCOMPLETE_AWS_CREDENTIALS")
         sys.exit(0)
     outcomes=[]
-    full_state=[]
     for item in found[:2]:
         device_uuid=str(item.get("uuid") or "")
         if not device_uuid:continue
         event("DEVICE_HASH",hashlib.sha256(device_uuid.encode()).hexdigest()[:12])
         client.set_device_uuid(device_uuid)
-        def connect():
-            socket=client.mqtt_open(cfg,creds)
-            try:
-                return True
-            finally:
-                socket.close()
-        connected=stage("SIGNED_MQTT_CONNACK",connect)
-        outcomes.append(bool(connected))
-        if not connected:
+
+        # Shadow GET authenticates MQTT and reads cloud device availability.
+        # The separate signed CONNECT proved OK in the previous run.
+        shadow=stage("SIGNED_SHADOW_GET",lambda:client.shadow_get(cfg,creds,timeout=12))
+        if shadow is None:
+            outcomes.append("SIGNED_SHADOW_FAILED")
             continue
-        shadow=stage("SIGNED_SHADOW_GET",
-                     lambda:client.shadow_get(cfg,creds,timeout=12))
-        if shadow is not None:
-            reported=client._shadow_reported_from_payload(shadow)
-            status=reported.get("status") if isinstance(reported,dict) else {}
-            state=status.get("connected") if isinstance(status,dict) else None
-            event("SHADOW_DEVICE_CONNECTED",state if isinstance(state,bool) else "unknown")
-        cooking=stage("SIGNED_COOKING_GET",
-                      lambda:client.cooking_status(cfg,creds,timeout=12))
+        def cloud_state(reply):
+            reported=client._shadow_reported_from_payload(reply)
+            status=reported.get("status") if isinstance(reported,dict) else None
+            raw=status.get("connected") if isinstance(status,dict) else None
+            return raw if isinstance(raw,bool) else None
+        connected=cloud_state(shadow)
+        event("SHADOW_DEVICE_CONNECTED",connected if connected is not None else "unknown")
+        for attempt in range(3):
+            if connected is True:break
+            event("WAITING_FOR_COOKER_ONLINE",attempt+1)
+            time.sleep(8)
+            fresh=stage("SHADOW_RECHECK",lambda:client.shadow_get(cfg,creds,timeout=12))
+            if fresh is None:break
+            shadow=fresh
+            connected=cloud_state(shadow)
+            event("SHADOW_DEVICE_CONNECTED",connected if connected is not None else "unknown")
+        if connected is not True:
+            outcomes.append("COOKER_OFFLINE_OR_STATUS_UNKNOWN")
+            continue
+
+        cooking=stage("ONLINE_COOKING_STATUS",lambda:client.cooking_status(cfg,creds,timeout=12))
         if cooking is not None:
             event("COOKING_RESPONSE_TYPE",type(cooking).__name__)
-        full_state.append(shadow is not None and cooking is not None)
-    if not outcomes or not all(outcomes):
-        event("RESULT","SIGNED_CONNECT_FAILED")
-    elif not full_state or not all(full_state):
-        event("RESULT","SIGNED_CONNECT_PASS_DEVICE_READ_INCOMPLETE")
+            combined=client.combined_state(cooking,shadow)
+            event("INTEGRATION_AVAILABLE",combined.get("available"))
+            outcomes.append("ONLINE_OK" if combined.get("available") is True else "STATE_NOT_AVAILABLE")
+            continue
+
+        # Only when cooker claims online but the response is missing: check
+        # actual SUBACK permissions and receive a single read-only publish.
+        def diagnose_topic():
+            base="COO001/"+device_uuid
+            ws=client.mqtt_open(cfg,creds,client_prefix="cook4me-online-check")
+            try:
+                ws.send_binary(client.mqtt_subscribe_packet(1,[(base+"/cookingStatus",0)]))
+                ptype,_flags,body=client.mqtt_read_packet(ws,8)
+                if ptype!=9 or len(body)<3:
+                    event("COOKING_SUBACK","INVALID")
+                    return False
+                grant=body[2]
+                event("COOKING_SUBACK_GRANT",grant)
+                if int.from_bytes(body[:2],"big")!=1 or grant==128:
+                    return False
+                ws.send_binary(client.mqtt_publish_packet(base+"/getCookingStatus","{}"))
+                expires=time.monotonic()+10
+                while time.monotonic()<expires:
+                    try:
+                        ptype,flags,raw=client.mqtt_read_packet(ws,min(3,max(.2,expires-time.monotonic())))
+                    except Exception as exc:
+                        if client._is_ws_timeout(exc):continue
+                        raise
+                    if ptype!=3:continue
+                    topic,_payload,_pid=client.mqtt_decode_publish(flags,raw)
+                    if topic==base+"/cookingStatus":
+                        event("COOKING_PUBLISH","RECEIVED")
+                        return True
+                event("COOKING_PUBLISH","MISSING_10S")
+                return False
+            finally:
+                ws.close()
+        recovered=stage("ONLINE_COOKING_TOPIC_DIAG",diagnose_topic)
+        outcomes.append("TOPIC_RECOVERED" if recovered else "ONLINE_BUT_NO_COOKING_STATUS")
+    if outcomes and all(x=="ONLINE_OK" for x in outcomes):
+        event("RESULT","READY_FOR_HA_READD")
     else:
-        event("RESULT","SIGNED_CONNECT_AND_DEVICE_READ_PASS")
+        event("RESULT",",".join(outcomes) if outcomes else "NO_USABLE_DEVICE_UUID")
 PY
 python3 - "$WORK/runner.py" <<'PY'
 from pathlib import Path
