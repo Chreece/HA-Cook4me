@@ -77,6 +77,27 @@ for(const [mode,names] of Object.entries({
  ]
 }))for(const name of names)aliases.set(normalize(name),mode);
 
+// Exact SEB (programKey, programName) pairs from official bounded multi-market
+// recipe queries, cross-checked with the anonymized local recipe-mode audit.
+// The PROGRAM_n key alone is NEVER treated as a mode. This distinction is
+// important for unverified devices and e.g. the generic German "Garen unter Druck".
+// Recorded provenance: docs/SEB_PROGRAM_NAME_AUDIT_V286.md.
+export const SEB_REVIEWED_PROGRAM_NAMES=Object.freeze({
+ "PROGRAM_200156":Object.freeze({mode:"high_pressure",names:Object.freeze(["Cocción con alta presión","Cottura alta pressione","Cozedura a alta pressão","Cuisson haute pression","Garen unter Druck","Gotowanie pod wysokim ciśnieniem","Gătire la presiune înaltă","High Pressure Cooking","Kuhanje pod visokim pritiskom","Magas nyomású főzés","Varenie pod vysokým tlakom","Vaření pod vysokým tlakem","Yüksek basınçlı pişirme","Готвене под високо налягане","Приготовление под высоким давлением","Приготування під високим тиском","طهي بضغط عالي","圧力調理","고압 조리"])}),
+ "PROGRAM_200157":Object.freeze({mode:"low_pressure",names:Object.freeze(["Cocción con baja presión","Cuisson basse pression","Gotowanie pod niskim ciśnieniem","Varenie pod nízkym tlakom","Vaření pod nízkým tlakem","Готвене под ниско налягане","Приготовление под низким давлением","低壓烹飪","저압 조리"])}),
+ "PROGRAM_200159":Object.freeze({mode:"browning",names:Object.freeze(["Alourar","Anbraten","Browning","Dorage","Dorar","Mühürleme","Opékání","Pirítás","Prženje","Rosolare","Rumenire","Smażenie","Запечатване","تحمير","炒める"])}),
+ "PROGRAM_200161":Object.freeze({mode:"keep_warm",names:Object.freeze(["Keep Warm","Maintien au chaud","Mantener en caliente","Mantenimento in caldo","Menţinere la cald","Održavanje topline","Sıcak tutma","Tartsa melegen","Udržať teplé","Udržování teploty","Utrzymywanie ciepła","Warmhalten","Поддържане на топлината","Підтримання тепла","الاحتفاظ بالحرارة","保温","保溫","보온"])}),
+});
+const reviewedSEBPairs=new Map();
+for(const [key,{mode,names}] of Object.entries(SEB_REVIEWED_PROGRAM_NAMES)){
+ for(const name of names){
+  const identity=key+'\\u0000'+normalize(name);
+  const previous=reviewedSEBPairs.get(identity);
+  if(previous&&previous!==mode)throw new Error('Conflicting reviewed Cook4Me program pair');
+  reviewedSEBPairs.set(identity,mode);
+ }
+}
+
 function strings(language){return MODE_TEXT[String(language||'en').toLowerCase().split(/[-_]/)[0]]||MODE_TEXT.en;}
 function validProgram(row){
  if(!object(row))return false;
@@ -95,7 +116,10 @@ export function stepCookingModes(step,language='en'){
   // the mode. Never put the provider-language source name into visible UI text.
   const sourceMode=aliases.get(normalize(sourceName))||null;
   const keyMode=aliases.get(normalize(programKey))||null;
-  const mode=sourceMode||keyMode||null;
+  // An exact SEB program ID + observed localized name is stronger than a
+  // generic word like "Pressure cooking", but IDs by themselves prove nothing.
+  const reviewedMode=sourceName?reviewedSEBPairs.get(programKey+'\\u0000'+normalize(sourceName))||null:null;
+  const mode=reviewedMode||sourceMode||keyMode||null;
   return {kind:mode?'program':sourceName?'source':'missing',mode,
    label:mode?labels[mode]:sourceName?labels.other:labels.unknown,sourceName,programKey};
  });
