@@ -28,6 +28,7 @@ class FixtureBase {
   this.calls=[];this.messages=[];this.syncCount=0;
  }
  _langCode(){return 'el';}
+ _escape(value){return String(value??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;');}
  _prefKey(){return 'fixture-person';}
  _stockIdentity(row){return 'k:'+row.key;}
  _v112GroupKey(row){return 'k:'+row.key;}
