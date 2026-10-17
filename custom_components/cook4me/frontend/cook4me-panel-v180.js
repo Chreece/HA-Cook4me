@@ -41,7 +41,7 @@ const V179='cook4me-recipe-hub-panel-v179';
 if(!customElements.get(V179))await import('./cook4me-panel-v179.js?v=2026.9.22.6');
 const PreviousPanel=IngredientSeasonMixin(InteractionPositionMixin(PackageOpeningMixin(IngredientNamesMixin(UXFixesMixin(CompactDeviceHeaderMixin(RecipeStepModesMixin(AppDesignMixin(SelectedFilterMixin(RecipeGapsMixin(ScannerCameraMixin(WeeklyProgressMixin(ViewFiltersMixin(ReceiptLauncherMixin(RecipeCoverageMixin(ProductEditGuardMixin(ProductEditorMixin(ReceiptScannerMixin(ScannerSuggestionsMixin(customElements.get(V179))))))))))))))))))));
 
-const BasePanel=LoadedDeviceRecipeMixin(ProductScaleLayoutMixin(SeasonalFilterBadgeMixin(RecipeActionRowMixin(RecipeBlacklistMixin(SeasonalFilterStateMixin(FullscreenStabilityMixin(TodaySubstitutionPersistenceMixin(FullscreenProgressGuardMixin(RecipeFullscreenGuardMixin(RecipeIngredientWeighingMixin(IngredientSubstitutionInfoMixin(DietSubstitutionGuardMixin(IngredientStockAssignmentMixin(UnlimitedStockLinksMixin(ReceiptQueueMixin(PreviousPanel)))))))))))))));
+const BasePanel=LoadedDeviceRecipeMixin(ProductScaleLayoutMixin(SeasonalFilterBadgeMixin(RecipeActionRowMixin(RecipeBlacklistMixin(SeasonalFilterStateMixin(FullscreenStabilityMixin(TodaySubstitutionPersistenceMixin(FullscreenProgressGuardMixin(RecipeFullscreenGuardMixin(RecipeIngredientWeighingMixin(IngredientSubstitutionInfoMixin(DietSubstitutionGuardMixin(IngredientStockAssignmentMixin(UnlimitedStockLinksMixin(ReceiptQueueMixin(PreviousPanel))))))))))))))));
 const V180_TEXT={
  en:{
   manualOutside:'Tap outside the barcode box to enter the product manually.',
