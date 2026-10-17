@@ -110,8 +110,9 @@ function recordStep(step,recipeIdentity,fileId,index){
   if(mode){
    counts.resolved++;summary.modes[mode]=(summary.modes[mode]||0)+1;
   }else if(name)counts.unknownNamed++;
-  if(kind==='companion')counts.possibleCompanionPrograms++;
   else counts.unknownKeyOnly++;
+  // Companion references are a SUBSET of unknown-named, not extra misses.
+  if(kind==='companion')counts.possibleCompanionPrograms++;
   if(/^PROGRAM[_ -]?\d+$/i.test(key))counts.opaqueKeys++;
   if(mode)continue;
   const label=name||'(no programName)';

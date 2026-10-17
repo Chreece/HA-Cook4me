@@ -10,7 +10,7 @@ done
 ROOT="${COOK4ME_HA_CONFIG:-$HOME/homeassistant/config}"
 OUTDIR="$HOME/projects/cook4me/logs"
 BASE="https://raw.githubusercontent.com/Chreece/HA-Cook4me/audit/cook4me-program-modes-v285"
-SCANNER_SHA="a175fae41fc8fda7c70260b8e91ff3aced65bdf2"
+SCANNER_SHA="9a080e95228c765c4026a209580c487ef9041daf"
 CANDIDATE_SHA="0b49acb6373d0737b9c0c056666a05f045fc1a13"
 WORK=$(mktemp -d /tmp/cook4me-programs-v289.XXXXXXXX)
 trap 'rm -rf "$WORK"' EXIT

@@ -46,6 +46,8 @@ test('audit reports exact unresolved source modes, key-only and metadata gaps wi
   assert.equal(data.scan.possibleCompanionPrograms,1);
   assert.ok(data.unknownPrograms.some(x=>x.programName==='Manual P'&&x.reason==='companion_program_not_a_cook4me_mode'));
   assert.equal(data.scan.unknownKeyOnly,1);
+  assert.equal(data.scan.resolved+data.scan.unknownNamed+data.scan.unknownKeyOnly,data.scan.programReferences,
+   'program evidence falls into exactly one coverage category');
   assert.equal(data.scan.noStepProgramEvidence,1);
   assert.equal(data.scan.foreignApplianceOperations,0,'explicit Cook4Me sequences take precedence');
   assert.ok(data.unknownPrograms.some(x=>x.programName==='Unpublished SEB mode alpha'));
