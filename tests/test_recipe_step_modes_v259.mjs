@@ -6,6 +6,8 @@ import {
   MODE_TEXT,
   SEB_REVIEWED_PROGRAM_NAMES,
   SEB_REVIEWED_LOCALIZED_PROGRAM_NAMES,
+  SEB_ADDITIONAL_REVIEWED_PROGRAM_PAIRS,
+  SEB_COMPANION_PROGRAM_NAMES,
 } from '../custom_components/cook4me/frontend/recipe-step-modes-v259.js';
 
 test('Greek UI localizes known German recipe mode',()=>{
@@ -154,7 +156,7 @@ test('all 30 exact pairs in October 17 deep SEB sample resolve with source-local
 test('newly observed names do not authorize opaque ID or mismatched-name guessing',()=>{
  for(const [key,name] of [
   ['PROGRAM_200160','Unknown program'],['PROGRAM_200157','Unknown program'],
-  ['PROGRAM_200160','煮燉'],['PROGRAM_200063','Braten bei hoher Hitze'],
+  ['PROGRAM_200160','Unknown Chinese publisher name'],['PROGRAM_200063','Unknown German publisher name'],
   ['PROGRAM_200160','Düşük basınçlı pişirme'],
  ]){
   assert.equal(stepCookingModes({programKey:key,programName:name},'el')[0].mode,null,key+' / '+name);
@@ -175,7 +177,7 @@ test('confirmed German SEB pair is high pressure, but generic source without ID 
 test('unknown key/name combinations cannot inherit unrelated reviewed meanings',()=>{
  for(const [programKey,programName] of [
   ['PROGRAM_200156','Unknown bespoke step'],['PROGRAM_200159','Unknown bespoke step'],
-  ['PROGRAM_200160','煮燉'],['PROGRAM_200063','Estofado alto'],
+  ['PROGRAM_200160','Braten bei hoher Hitze'],['PROGRAM_200063','煮燉'],
   ['PROGRAM_200018','Manual P'],['PROGRAM_000005','Slow cook P2'],
  ]){
   assert.equal(stepCookingModes({programKey,programName},'el')[0].mode,null,
@@ -185,6 +187,66 @@ test('unknown key/name combinations cannot inherit unrelated reviewed meanings',
   assert.equal(stepCookingModes({programKey},'el')[0].mode,null,
    'a numeric program key alone is never enough');
  }
+});
+
+
+test('remaining 7 Cook4Me source occurrences use six reviewed pairs, without hiding intensity or boiling',()=>{
+ const expected=[
+  ['PROGRAM_200160','Варка на слабом огне','simmering',1],
+  ['PROGRAM_200160','煮燉','simmering',2],
+  ['PROGRAM_200160','غليان','boiling',1],
+  ['PROGRAM_200063','Braten bei hoher Hitze','high_browning',1],
+  ['PROGRAM_200063','Estofado alto','high_browning',1],
+  ['PROGRAM_200063','Magas stir fry','high_browning',1],
+ ];
+ const observed=SEB_ADDITIONAL_REVIEWED_PROGRAM_PAIRS.flatMap(x=>x.names.map(name=>[x.programKey,name,x.mode]));
+ assert.equal(observed.length,6);
+ for(const [key,name,mode] of expected){
+  assert.ok(observed.some(x=>x[0]===key&&x[1]===name&&x[2]===mode));
+  for(const lang of ['en','de','el','fr']){
+   const row=stepCookingModes({programKey:key,programName:name},lang)[0];
+   assert.equal(row.kind,'program');
+   assert.equal(row.mode,mode,key+' / '+name+' / '+lang);
+   assert.equal(row.label,MODE_TEXT[lang][mode]);
+  }
+ }
+ assert.equal(expected.reduce((a,row)=>a+row[3],0),7);
+ const specimen=stepCookingModes({programKey:'PROGRAM_200063',programName:'Estofado alto'},'el')[0];
+ assert.equal(specimen.label,'Δυνατό σοτάρισμα');
+ assert.equal(stepCookingModes({programKey:'PROGRAM_200160',programName:'غليان'},'en')[0].label,'Boiling');
+ for(const [key,name] of [['PROGRAM_200063','غليان'],['PROGRAM_200160','Magas stir fry']])
+  assert.equal(stepCookingModes({programKey:key,programName:name},'en')[0].mode,null);
+});
+
+test('Companion Manual P / Slow cook P1-P3 are identified without creating false Cook4Me modes',()=>{
+ const expected=[
+  ['PROGRAM_200018','Manual P',5],['PROGRAM_000013','Manual P',2],
+  ['PROGRAM_200009','Slow cook P1',3],['PROGRAM_000004','Slow cook P1',1],
+  ['PROGRAM_000005','Slow cook P2',1],['PROGRAM_200011','Slow cook P3',1],
+ ];
+ assert.equal(Object.keys(SEB_COMPANION_PROGRAM_NAMES).length,expected.length);
+ assert.equal(expected.reduce((sum,row)=>sum+row[2],0),13);
+ for(const [key,name] of expected){
+  assert.equal(SEB_COMPANION_PROGRAM_NAMES[key],name);
+  for(const lang of ['en','de','el','fr']){
+   const row=stepCookingModes({programKey:key,programName:name},lang)[0];
+   assert.equal(row.kind,'companion');
+   assert.equal(row.mode,null);
+   assert.equal(row.label,MODE_TEXT[lang].companion+': '+name);
+  }
+  const wrong=stepCookingModes({programKey:key,programName:'Unrecognized mode name'},'el')[0];
+  assert.equal(wrong.kind,'source');
+  assert.equal(wrong.mode,null);
+  assert.equal(stepCookingModes({programKey:key},'en')[0].kind,'missing');
+ }
+ const foreign=stepCookingModes({programs:[
+  {programKey:'PROGRAM_200018',programName:'Manual P',applianceGroup:'APPLIANCE_GROUP_1'},
+ ]},'en')[0];
+ assert.equal(foreign.mode,null);
+ assert.equal(foreign.kind,'missing');
+ const unknown=stepCookingModes({programKey:'PROGRAM_999',programName:'Unexpected vendor name'},'el')[0];
+ assert.equal(unknown.kind,'source');
+ assert.equal(unknown.label,MODE_TEXT.el.other);
 });
 
 test('the SEB translation matrix renders correctly in all supported UI languages',()=>{

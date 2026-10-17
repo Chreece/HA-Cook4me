@@ -55,7 +55,7 @@ if(typeof stepCookingModes!=='function')throw Error('Cook4Me mode resolver unava
 const summary={
  schema:1, source:'Cook4Me production recipe-step resolver', timestamp:new Date().toISOString(),
  inputs:[], scan:{objects:0,recipeContainers:0,recipesWithSteps:0,steps:0,programReferences:0,
-  resolved:0,unknownNamed:0,unknownKeyOnly:0,noStepProgramEvidence:0,
+  resolved:0,unknownNamed:0,unknownKeyOnly:0,possibleCompanionPrograms:0,noStepProgramEvidence:0,
   manualSteps:0,opaqueKeys:0,foreignApplianceOperations:0},
  modes:{},unknownPrograms:{},sourceKeyConflicts:{},samples:[],
  warnings:[],
@@ -110,13 +110,14 @@ function recordStep(step,recipeIdentity,fileId,index){
   if(mode){
    counts.resolved++;summary.modes[mode]=(summary.modes[mode]||0)+1;
   }else if(name)counts.unknownNamed++;
+  if(kind==='companion')counts.possibleCompanionPrograms++;
   else counts.unknownKeyOnly++;
   if(/^PROGRAM[_ -]?\d+$/i.test(key))counts.opaqueKeys++;
   if(mode)continue;
   const label=name||'(no programName)';
   const identity=(name||'')+'\u0000'+key;
   const record=groups.get(identity)||{programName:label,programKey:key||null,
-    occurrences:0,examples:[],reason:name?'unknown_named_program':'key_only_or_opaque'};
+    occurrences:0,examples:[],reason:kind==='companion'?'companion_program_not_a_cook4me_mode':name?'unknown_named_program':'key_only_or_opaque'};
   record.occurrences++;
   if(record.examples.length<3)record.examples.push(anonymous);
   groups.set(identity,record);

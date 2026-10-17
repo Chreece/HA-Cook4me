@@ -24,6 +24,8 @@ test('audit reports exact unresolved source modes, key-only and metadata gaps wi
     {instruction:'Warm phase',programs:[{programName:'Warm holding',programKey:'PROGRAM_77'}]},
     {instruction:'Mystery',programs:[{programName:'Unpublished SEB mode alpha',programKey:'PROGRAM_99'}]},
     {instruction:'Opaque',programs:[{programKey:'PROGRAM_987'}]},
+    {instruction:'High-heat',programs:[{programKey:'PROGRAM_200063',programName:'Braten bei hoher Hitze'}]},
+    {instruction:'Cross-device',programs:[{programKey:'PROGRAM_200018',programName:'Manual P'}]},
     {instruction:'No program in source'},
    ]},
    {steps:[{sequences:[
@@ -39,8 +41,10 @@ test('audit reports exact unresolved source modes, key-only and metadata gaps wi
   assert.equal(ran.status,2,'unresolved catalog program is a finding, not a success');
   assert.equal(ran.stderr,'');
   const data=JSON.parse(fs.readFileSync(result,'utf8'));
-  assert.equal(data.scan.resolved,3);
-  assert.equal(data.scan.unknownNamed,1);
+  assert.equal(data.scan.resolved,4);
+  assert.equal(data.scan.unknownNamed,2);
+  assert.equal(data.scan.possibleCompanionPrograms,1);
+  assert.ok(data.unknownPrograms.some(x=>x.programName==='Manual P'&&x.reason==='companion_program_not_a_cook4me_mode'));
   assert.equal(data.scan.unknownKeyOnly,1);
   assert.equal(data.scan.noStepProgramEvidence,1);
   assert.equal(data.scan.foreignApplianceOperations,0,'explicit Cook4Me sequences take precedence');

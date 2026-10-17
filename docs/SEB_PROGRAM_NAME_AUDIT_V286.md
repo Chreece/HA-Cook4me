@@ -190,3 +190,55 @@ Run the read-only `tools/run_cook4me_mode_audit_v288.sh` against the actual
 Home Assistant recipe caches and release catalog with the verified candidate
 resolver. This audit neither installs a candidate, alters stock, nor commands
 the appliance. Inspect its full coverage and remaining names before releasing.
+
+## Complete local catalog audit and Cook4Me/Companion distinction (17 October 2026)
+
+Uploaded sanitized `cook4me-recipe-programs-full-20261017-181612.tar.gz`
+from the hash-pinned candidate runner. The audit produced **no scanner
+warnings**, scanned the 16,952-row local release catalog and 156 cached recipe
+details, and found 256 unique recipe containers with 1,447 steps.
+Of those, **361** program references had named evidence, **341** resolved,
+**20** remained in 12 exact key/name pairs; **1,086** steps had no program
+metadata, including **482** classified manual/preparation steps.
+
+After reviewing those 12 pairs, **six** new exact key/name pairs cover
+**seven occurrences** as *Cook4Me source cooking modes*:
+- `PROGRAM_200063` / `Braten bei hoher Hitze` (DE),
+  `Estofado alto` (ES), `Magas stir fry` (HU):
+  **high-heat browning**. Spanish `Estofado alto` is misleading in isolation,
+  but actual official Cookeo recipe directions say `Dorar` (brown) at this
+  program; German/Hungarian Cookeo instructions explicitly describe high-heat
+  browning. Preserves the high intensity instead of flattening to browning.
+- `PROGRAM_200160` / `Варка на слабом огне` (RU),
+  `煮燉` (ZH): **simmering/braising** wording (three cached occurrences).
+- `PROGRAM_200160` / `غليان` (AR): **boiling** (one occurrence),
+  explicitly **not** relabeled as gentle simmering.
+
+This means **348/361 (96.40%) projected recognition** in the original full
+local archive; rerun the read-only scanner to obtain a measured result.
+
+The other six pairs (**13 references**) are named `Manual P`,
+`Slow cook P1`, `Slow cook P2`, and `Slow cook P3` across six IDs.
+These are documented **Companion** kitchen-robot programs, not a
+Cook4Me mode. They must not be converted into a fake Cook4Me pressure or
+slow-cooking device setting. The recipe UI now shows a localized
+`Companion program (not Cook4Me): <trusted exact program name>`
+chip. It preserves the original name, and the audit separately counts
+`possibleCompanionPrograms`, retaining these references in the unresolved
+count until original recipe appliance provenance can be independently
+verified. Zero mismatched/key-only source IDs gain a false mapping.
+
+Manufacturer evidence:
+- Companion recipe with all four modes:
+  https://www.moulinex.fr/recette/detail/PRO/saumon-a-laneth-accompagne-de-legumes/3072685
+- Cookeo DE high-heat browning:
+  https://www.tefal.de/rezepte/detail/PRO/champions-rahm-so%C3%9Fe/2633682
+- Cookeo ES "Estofado alto" in an explicit `Dorar` step:
+  https://www.moulinex.es/recetas/detail/PRO/pollo-y-patatas-cocidos-a-fuego-lento/3164396
+- Cookeo HU "Magas stir fry" labeled `Erős pirítás`:
+  https://www.tefal.hu/recept/detail/index/source/PRO/id/833921/
+
+The revised hash-pinned `tools/run_cook4me_mode_audit_v289.sh` scans the
+candidate without installing it, and preserves the cooker's operating state,
+the saved recipes, user stock, Home Assistant availability, and SSH connection.
+Do not merge/release until this follow-up report and CI are reviewed.

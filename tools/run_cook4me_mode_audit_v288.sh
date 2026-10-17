@@ -9,7 +9,7 @@ for c in curl git node python3 tar mktemp mkdir date; do
 done
 ROOT="${COOK4ME_HA_CONFIG:-$HOME/homeassistant/config}"
 OUTDIR="$HOME/projects/cook4me/logs"
-BASE="https://raw.githubusercontent.com/Chreece/HA-Cook4me/audit/cook4me-program-modes-v285"
+BASE="https://raw.githubusercontent.com/Chreece/HA-Cook4me/ea9e29c0c8aac3362c2801dba1a0d9135925f291"
 SCANNER_SHA="0d2b803568757404996e1a930d6d30efca7a43b8"
 CANDIDATE_SHA="4eeeb2a2e82d8aa16a8be8040fb745c67703719e"
 WORK=$(mktemp -d /tmp/cook4me-programs-v288.XXXXXXXX)

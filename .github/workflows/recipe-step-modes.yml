@@ -59,3 +59,4 @@ jobs:
           node --check custom_components/cook4me/frontend/cook4me-panel-v180.js
           node --check custom_components/cook4me/frontend/device-header-v207.js
           bash -n tools/run_cook4me_mode_audit_v288.sh
+          bash -n tools/run_cook4me_mode_audit_v289.sh
