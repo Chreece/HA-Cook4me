@@ -1,3 +1,4 @@
+import {LoadedDeviceRecipeMixin} from './loaded-device-recipe-v284.js';
 import {ConsumptionDeductionMixin} from './consumption-deduction-v272.js';
 import {KitchenStockScanMixin} from './kitchen-stock-scan-v271.js';
 import {ProductCatalogMixin} from './product-catalog-v270.js';
@@ -40,7 +41,7 @@ const V179='cook4me-recipe-hub-panel-v179';
 if(!customElements.get(V179))await import('./cook4me-panel-v179.js?v=2026.9.22.6');
 const PreviousPanel=IngredientSeasonMixin(InteractionPositionMixin(PackageOpeningMixin(IngredientNamesMixin(UXFixesMixin(CompactDeviceHeaderMixin(RecipeStepModesMixin(AppDesignMixin(SelectedFilterMixin(RecipeGapsMixin(ScannerCameraMixin(WeeklyProgressMixin(ViewFiltersMixin(ReceiptLauncherMixin(RecipeCoverageMixin(ProductEditGuardMixin(ProductEditorMixin(ReceiptScannerMixin(ScannerSuggestionsMixin(customElements.get(V179))))))))))))))))))));
 
-const BasePanel=ProductScaleLayoutMixin(SeasonalFilterBadgeMixin(RecipeActionRowMixin(RecipeBlacklistMixin(SeasonalFilterStateMixin(FullscreenStabilityMixin(TodaySubstitutionPersistenceMixin(FullscreenProgressGuardMixin(RecipeFullscreenGuardMixin(RecipeIngredientWeighingMixin(IngredientSubstitutionInfoMixin(DietSubstitutionGuardMixin(IngredientStockAssignmentMixin(UnlimitedStockLinksMixin(ReceiptQueueMixin(PreviousPanel)))))))))))))));
+const BasePanel=LoadedDeviceRecipeMixin(ProductScaleLayoutMixin(SeasonalFilterBadgeMixin(RecipeActionRowMixin(RecipeBlacklistMixin(SeasonalFilterStateMixin(FullscreenStabilityMixin(TodaySubstitutionPersistenceMixin(FullscreenProgressGuardMixin(RecipeFullscreenGuardMixin(RecipeIngredientWeighingMixin(IngredientSubstitutionInfoMixin(DietSubstitutionGuardMixin(IngredientStockAssignmentMixin(UnlimitedStockLinksMixin(ReceiptQueueMixin(PreviousPanel)))))))))))))));
 const V180_TEXT={
  en:{
   manualOutside:'Tap outside the barcode box to enter the product manually.',
@@ -264,3 +265,4 @@ if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v270'))customEleme
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v271'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v271',KitchenStockScanMixin(ProductCatalogMixin(MobileProductMixin(Cook4MeRecipeHubPanelV180))));
 
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v272'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v272',ConsumptionDeductionMixin(KitchenStockScanMixin(ProductCatalogMixin(MobileProductMixin(Cook4MeRecipeHubPanelV180)))));
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v284'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v284',class extends Cook4MeRecipeHubPanelV180{});
