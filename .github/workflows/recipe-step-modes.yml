@@ -33,6 +33,7 @@ jobs:
         run: |
           node --test tests/test_recipe_step_modes_v204.mjs
           node --test tests/test_recipe_step_modes_v259.mjs
+          node --test tests/test_recipe_step_modes_v290.mjs
       - name: Audit all available recipe program evidence
         run: node --test tests/test_program_mode_audit_v285.mjs
       - name: Validate bounded official SEB API name audit (offline fixtures)
@@ -56,6 +57,7 @@ jobs:
           python -m compileall -q custom_components/cook4me
           node --check custom_components/cook4me/frontend/recipe-step-modes-v204.js
           node --check custom_components/cook4me/frontend/recipe-step-modes-v259.js
+          node --check custom_components/cook4me/frontend/recipe-step-modes-v290.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v180.js
           node --check custom_components/cook4me/frontend/device-header-v207.js
           bash -n tools/run_cook4me_mode_audit_v288.sh

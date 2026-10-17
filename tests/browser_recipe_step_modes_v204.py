@@ -22,8 +22,19 @@ STEPS=[
  {'programName':'<img src=x onerror="window.injected=true">','instruction':'Original source text, not HTML.'},
 ]
 
+# SEB recipe program evidence from the user's October 17 audit.
+CROSS_LANGUAGE_STEPS=[
+ {'programs':[{'programKey':'PROGRAM_200159','programName':'Prženje'}],'instruction':'Croatian browning'},
+ {'programs':[{'programKey':'PROGRAM_200156','programName':'Kuhanje pod visokim pritiskom'}],'instruction':'Croatian pressure'},
+ {'programs':[{'programKey':'PROGRAM_200161','programName':'Održavanje topline'}],'instruction':'Croatian keep warm'},
+ {'programs':[{'programKey':'PROGRAM_200159','programName':'Smażenie'}],'instruction':'Polish browning'},
+ {'programs':[{'programKey':'PROGRAM_200157','programName':'Kuhanje na nizkem pritisku'}],'instruction':'Slovenian low pressure'},
+ {'programs':[{'programKey':'PROGRAM_200159','programName':'Pečenje'}],'instruction':'Slovenian browning'},
+ {'programs':[{'programKey':'PROGRAM_200161','programName':'Ohranjanje toplote'}],'instruction':'Slovenian keep warm'}
+]
+
 def renderer_html():
-    module=(ROOT/'custom_components/cook4me/frontend/recipe-step-modes-v259.js').read_bytes()
+    module=(ROOT/'custom_components/cook4me/frontend/recipe-step-modes-v290.js').read_bytes()
     url='data:text/javascript;base64,'+base64.b64encode(module).decode()
     source=(ROOT/'custom_components/cook4me/frontend/cook4me-panel-v66.js').read_text()
     body=source[source.index(' _v66Body('):source.index('\n _v66IngredientName(')]
@@ -82,6 +93,13 @@ with sync_playwright() as p:
         else:page.evaluate("app._langCode=()=> 'de';app._uiIngredientLanguage=()=> 'fr';drawModes()")
         check(page,"app.shadowRoot.querySelector('#modePreview [data-v204-mode=pressure]').textContent.includes('Druckgaren')",prefix+'actual UI-language change updates mode even when ingredient language differs')
         if args.screenshots and not args.full_chain:page.screenshot(path=str(args.screenshots/f'step-modes-{width}.png'),full_page=True)
+
+        # All source languages render their mode labels in the Greek UI.
+        page.evaluate('steps=>{app.language="el";app._langCode=()=> "el";modeRecipe.steps=steps;drawModes()}', CROSS_LANGUAGE_STEPS)
+        check(page,"app.shadowRoot.querySelectorAll('#modePreview [data-v204-step-modes]').length===7",prefix+'all seven multilingual SEB program chips render')
+        check(page,"JSON.stringify([...app.shadowRoot.querySelectorAll('#modePreview [data-v204-mode]')].map(x=>x.dataset.v204Mode))===JSON.stringify(['browning','high_pressure','keep_warm','browning','low_pressure','browning','keep_warm'])",prefix+'shared SEB programs map to validated cooking-mode families')
+        check(page,"[...app.shadowRoot.querySelectorAll('#modePreview [data-v204-mode]')].map(x=>x.textContent).join('|')==='Ρόδισμα / σοτάρισμα|Μαγείρεμα σε υψηλή πίεση|Διατήρηση θερμοκρασίας|Ρόδισμα / σοτάρισμα|Μαγείρεμα σε χαμηλή πίεση|Ρόδισμα / σοτάρισμα|Διατήρηση θερμοκρασίας'",prefix+'Croatian, Polish and Slovenian program names show localized Greek labels')
+        page.evaluate('steps=>{modeRecipe.steps=steps;drawModes()}', STEPS)
         page.evaluate("modeRecipe.steps=[];drawModes()")
         check(page,"!app.shadowRoot.querySelector('#modePreview [data-v204-step-modes]')",prefix+'empty recipe does not retain stale badges')
         if args.full_chain:

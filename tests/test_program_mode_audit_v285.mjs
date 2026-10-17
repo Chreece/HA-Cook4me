@@ -7,7 +7,7 @@ import {spawnSync} from 'node:child_process';
 
 const repo=path.resolve(import.meta.dirname,'..');
 const script=path.join(repo,'tools/audit_cook4me_program_modes_v285.mjs');
-const modes=path.join(repo,'custom_components/cook4me/frontend/recipe-step-modes-v259.js');
+const modes=path.join(repo,'custom_components/cook4me/frontend/recipe-step-modes-v290.js');
 const mk=(dir,name,content)=>{
  const p=path.join(dir,name);fs.mkdirSync(path.dirname(p),{recursive:true});fs.writeFileSync(p,JSON.stringify(content));return p;
 };
@@ -17,7 +17,7 @@ test('audit reports exact unresolved source modes, key-only and metadata gaps wi
  try{
   const integration=path.join(root,'custom_components/cook4me');
   fs.mkdirSync(path.join(integration,'frontend'),{recursive:true});
-  fs.copyFileSync(modes,path.join(integration,'frontend/recipe-step-modes-v259.js'));
+  fs.copyFileSync(modes,path.join(integration,'frontend/recipe-step-modes-v290.js'));
   const fixture={recipes:[
    {displayVariantId:'private-recipe-123',title:'Private family dinner',steps:[
     {instruction:'Pressure phase',programs:[{programName:'High pressure cooking',programKey:'PROGRAM_1'}]},
@@ -64,7 +64,7 @@ test('no-step catalog is reported as incomplete coverage, not as fully mapped',(
  try{
   const integration=path.join(root,'custom_components/cook4me');
   fs.mkdirSync(path.join(integration,'frontend'),{recursive:true});
-  fs.copyFileSync(modes,path.join(integration,'frontend/recipe-step-modes-v259.js'));
+  fs.copyFileSync(modes,path.join(integration,'frontend/recipe-step-modes-v290.js'));
   mk(root,'.storage/cook4me/runtime_catalog/merged_catalog.v1.json',{recipes:[{title:'Just summary'}]});
   const ran=spawnSync(process.execPath,[script,'--root',root],{encoding:'utf8'});
   assert.equal(ran.status,2);
