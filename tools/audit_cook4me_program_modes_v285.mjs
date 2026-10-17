@@ -189,8 +189,16 @@ const catalog=findCatalog();
 if(catalog){
  try{
   const obj=readJSON(catalog);
-  inspectPayload(obj,'release_catalog');
+  // Release catalogs contain a very large unrelated ingredient/search-index tree.
+  // Only recipe rows can contain cooking step programs; bypass those indexes.
+  if(obj&&Array.isArray(obj.recipes)){
+   inspectPayload({recipes:obj.recipes},'release_catalog');
+  }else{
+   inspectPayload(obj,'release_catalog');
+   summary.warnings.push('RELEASE_CATALOG_RECIPE_ARRAY_UNEXPECTED');
+  }
   summary.inputs.push({kind:'release_catalog',compressed:catalog.endsWith('.gz'),
+   recipeRows:Array.isArray(obj?.recipes)?obj.recipes.length:null,
    bytesOnDisk:fs.statSync(catalog).size});
  }catch(e){summary.warnings.push('CATALOG_READ_ERROR '+e.constructor.name);}
 }else summary.warnings.push('RELEASE_CATALOG_NOT_FOUND');
