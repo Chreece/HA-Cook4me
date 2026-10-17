@@ -1,3 +1,4 @@
+import {LoadedDeviceRecipeMixin} from './loaded-device-recipe-v284.js';
 import {ConsumptionDeductionMixin} from './consumption-deduction-v272.js';
 import {KitchenStockScanMixin} from './kitchen-stock-scan-v271.js';
 import {ProductCatalogMixin} from './product-catalog-v270.js';
@@ -264,3 +265,4 @@ if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v270'))customEleme
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v271'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v271',KitchenStockScanMixin(ProductCatalogMixin(MobileProductMixin(Cook4MeRecipeHubPanelV180))));
 
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v272'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v272',ConsumptionDeductionMixin(KitchenStockScanMixin(ProductCatalogMixin(MobileProductMixin(Cook4MeRecipeHubPanelV180)))));
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v284'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v284',LoadedDeviceRecipeMixin(customElements.get('cook4me-recipe-hub-panel-v180-runtime-v272')));

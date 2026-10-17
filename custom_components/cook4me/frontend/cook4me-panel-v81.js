@@ -113,7 +113,9 @@ class Cook4MeRecipeHubPanelV81 extends BasePanel{
   }
   rows.push(['UI '+this._v72Text('firmware'),s.uiFirmware||'—'],['Wi-Fi '+this._v72Text('firmware'),s.wifiFirmware||'—']);
   const html=rows.map(([key,value])=>`<dt>${e(key)}</dt><dd>${e(value)}</dd>`).join('');
-  const details=dialog.querySelector('[data-v81-details]');if(details.innerHTML!==html)details.innerHTML=html;
+  // Compare the source rows, not the augmented DOM: later feature mixins may
+  // install an accessible recipe link inside <dd> without changing the values.
+  const details=dialog.querySelector('[data-v81-details]');if(details._v81SourceHtml!==html){details.innerHTML=html;details._v81SourceHtml=html;}
  }
  _v81Cooker(phase){
   const safe=PHASES.has(phase)||['offline','unknown','waiting','unavailable','updating'].includes(phase)?phase:'unknown';

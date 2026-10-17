@@ -20,7 +20,7 @@ for(const [mode,names] of Object.entries({
  steam:['steam','steam cooking','vapeur'],
  simmering:['simmer','simmern','mijotage'],gentle:['gentle cooking','sanftes garen'],
  reheat:['reheat','réchauffage','réchauffement','reheating'],
- keep_warm:['keeping warm','warm halten','maintenir au chaud'],
+ keep_warm:['keeping warm','warm holding','warm hold','hold warm','keep warm mode','warm halten','maintenir au chaud'],
  preheat:['preheat'],slow:['slow cook']
 }))for(const name of names)aliases.set(normalize(name),mode);
 
