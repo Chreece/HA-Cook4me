@@ -4,13 +4,13 @@ set -Eeuo pipefail
 set +x
 umask 077
 [[ $EUID == 0 ]] || { echo "Run using sudo bash"; exit 1; }
-for exe in curl docker git python3 node flock mktemp cp mv rm chmod chown stat tar tee grep; do
+for exe in curl docker git python3 node flock mktemp cp mv rm chmod chown stat tar tee grep ln; do
   command -v "$exe" >/dev/null || { echo "Required command $exe missing; nothing changed"; exit 1; }
 done
 CONFIG=/home/chreece/homeassistant/config
 RUNTIME="$CONFIG/custom_components/cook4me"
 HA=homeassistant
-GITHUB="https://raw.githubusercontent.com/Chreece/HA-Cook4me/9ac96e34a37e269197cfcf24407d9309c7f7663f/custom_components/cook4me"
+GITHUB="https://raw.githubusercontent.com/Chreece/HA-Cook4me/9ac96e34a37e269197cfcf24407d9309c7f7663f"
 LOGROOT=/home/chreece/projects/cook4me/logs
 BACKUPROOT=/home/chreece/projects/cook4me/recovery
 [[ -f "$RUNTIME/panel.py" && -d "$RUNTIME/frontend" ]] || { echo "Cook4Me frontend missing"; exit 1; }
@@ -75,7 +75,9 @@ echo "Staging exact v284 candidate and regression tests; Home Assistant untouche
 while read -r path expected; do
   [[ -z "$path" ]] && continue
   mkdir -p "$STAGE/$(dirname "$path")"
-  curl -fLsS --retry 3 --connect-timeout 12 --max-time 80 "$GITHUB/$path" -o "$STAGE/$path"
+  if [[ "$path" == tests/* ]]; then url="$GITHUB/$path"
+  else url="$GITHUB/custom_components/cook4me/$path"; fi
+  curl -fLsS --retry 3 --connect-timeout 12 --max-time 80 "$url" -o "$STAGE/$path"
   [[ "$(git hash-object "$STAGE/$path")" == "$expected" ]] || { echo "Candidate hash mismatch: $path"; false; }
 done <<'MANIFEST'
 frontend/loaded-device-recipe-v284.js dc34e6a9cdae2e1bdb6c83274b735184fbce81f9
@@ -86,6 +88,10 @@ panel.py 385f7eef7cd2905d29d3e5ddb2bebd0b3c5eb660
 tests/test_loaded_device_recipe_v284.mjs 741edc1bfd190cafd06c939815a847e4c7574697
 tests/test_recipe_step_modes_v259.mjs edab6a3d4551150455aaa3654eb2982387e5afb4
 MANIFEST
+# Retain repository-relative imports for the exact node:test files.
+mkdir -p "$STAGE/custom_components/cook4me"
+ln -s "$STAGE/frontend" "$STAGE/custom_components/cook4me/frontend"
+ln -s "$STAGE/panel.py" "$STAGE/custom_components/cook4me/panel.py"
 printf '{"type":"module"}\n' >"$STAGE/package.json"
 python3 - "$STAGE/panel.py" <<'PY'
 from pathlib import Path
