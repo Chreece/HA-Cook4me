@@ -6,6 +6,7 @@
  *
  * node tools/audit_cook4me_program_modes_v285.mjs
  * node tools/audit_cook4me_program_modes_v285.mjs --root /path/to/config --json /tmp/modes.json
+ * node tools/audit_cook4me_program_modes_v285.mjs --root /path/to/config --resolver /tmp/verified-candidate.js
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -43,7 +44,9 @@ function findCatalog(){
  ];
  return options.find(file=>fs.existsSync(file))||null;
 }
-const modePath=path.join(integration,'frontend/recipe-step-modes-v259.js');
+// --resolver allows auditing a verified candidate without installing it.
+// The default resolver remains the installed Home Assistant version.
+const modePath=path.resolve(argument('--resolver',path.join(integration,'frontend/recipe-step-modes-v259.js')));
 const source=fs.readFileSync(modePath,'utf8');
 // The source module is loaded unchanged, not reimplemented in a second language.
 const resolver=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));

@@ -33,7 +33,9 @@ test('audit reports exact unresolved source modes, key-only and metadata gaps wi
   ]};
   mk(root,'.storage/cook4me/runtime_catalog/merged_catalog.v1.json',fixture);
   const result=path.join(root,'report.json');
-  const ran=spawnSync(process.execPath,[script,'--root',root,'--json',result],{encoding:'utf8'});
+  const candidate=path.join(root,'read-only-candidate.js');
+  fs.copyFileSync(modes,candidate);
+  const ran=spawnSync(process.execPath,[script,'--root',root,'--resolver',candidate,'--json',result],{encoding:'utf8'});
   assert.equal(ran.status,2,'unresolved catalog program is a finding, not a success');
   assert.equal(ran.stderr,'');
   const data=JSON.parse(fs.readFileSync(result,'utf8'));
@@ -47,6 +49,7 @@ test('audit reports exact unresolved source modes, key-only and metadata gaps wi
   assert.ok(!fs.readFileSync(result,'utf8').includes('Private family dinner'));
   assert.ok(!fs.readFileSync(result,'utf8').includes('private-recipe-123'));
   assert.equal(data.inputs[0].kind,'release_catalog');
+  assert.ok(fs.existsSync(candidate),'audit uses separate candidate file without altering installed source');
  }finally{fs.rmSync(root,{recursive:true,force:true});}
 });
 

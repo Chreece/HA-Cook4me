@@ -154,3 +154,39 @@ mapping of every SEB recipe `PROGRAM_n` ID to a model program.
 Regression tests in `tests/test_recipe_step_modes_v259.mjs` cover all 61
 pairs, German generic-pressure versus verified high-pressure distinction,
 all UI languages, key-only protection, and every unresolved sample category.
+
+## Deeper official eight-market SEB audit (17 October 2026)
+
+The sanitized `cook4me-seb-deep-programs-20261017-170353.json` covers Cook4Me
+appliance group 15 on sampled SEB recipe search pages **1, 5 and 12** in
+DE, FR, ES, IT, PL, CZ, GB and TR. The report records **72** detail attempts,
+**67** successful details, **24** successful searches, and **104** network actions
+including configuration requests. **30** distinct exact source-name/key pairs,
+**5** unique keys and **8** markets with usable details were observed. It is
+not an exhaustive SEB catalog: some detail requests failed with
+`SEB_DETAIL_CatalogAuthError`.
+
+- Newly observed `PROGRAM_200160` with Polish name `Gotowanie na wolnym
+  ogniu` (one observation) is confirmed *simmering*. Other names for this
+  opaque key are **not** silently assumed to mean simmering.
+- Newly verified `PROGRAM_200157` names `Düşük basınçlı pişirme` (Turkish)
+  and `Low Pressure Cooking` (English) mean *low-pressure cooking*.
+- Exception: the same key was named `Dampfgaren` in three German recipe
+  details, which means *steaming*. This exact German source pair is kept
+  as steam rather than translated based on the opaque key's English name.
+
+The reviewed name matrix now has **64** standard exact name/key pairs and **1**
+explicit German source-locale exception. All **30** distinct pairs present in
+the deeper API sample have a localized mode label in English, German, Greek,
+and French. Numeric IDs alone remain unusable as cooking-mode evidence.
+
+The prior **94.46% projected** local sample recognition is **not** a fresh
+measured coverage result. Manual P, Slow cook P1/P2/P3, key
+`PROGRAM_200063`, and other names under `PROGRAM_200160` remain
+unverified as Cook4Me modes. Moulinex publishes Manual P and Slow cook P1
+for Companion recipes too, so applying them universally to Cookeo is unsafe.
+
+Run the read-only `tools/run_cook4me_mode_audit_v288.sh` against the actual
+Home Assistant recipe caches and release catalog with the verified candidate
+resolver. This audit neither installs a candidate, alters stock, nor commands
+the appliance. Inspect its full coverage and remaining names before releasing.

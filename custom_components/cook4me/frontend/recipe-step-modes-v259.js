@@ -84,17 +84,25 @@ for(const [mode,names] of Object.entries({
 // Recorded provenance: docs/SEB_PROGRAM_NAME_AUDIT_V286.md.
 export const SEB_REVIEWED_PROGRAM_NAMES=Object.freeze({
  "PROGRAM_200156":Object.freeze({mode:"high_pressure",names:Object.freeze(["Cocción con alta presión","Cottura alta pressione","Cozedura a alta pressão","Cuisson haute pression","Garen unter Druck","Gotowanie pod wysokim ciśnieniem","Gătire la presiune înaltă","High Pressure Cooking","Kuhanje pod visokim pritiskom","Magas nyomású főzés","Varenie pod vysokým tlakom","Vaření pod vysokým tlakem","Yüksek basınçlı pişirme","Готвене под високо налягане","Приготовление под высоким давлением","Приготування під високим тиском","طهي بضغط عالي","圧力調理","고압 조리"])}),
- "PROGRAM_200157":Object.freeze({mode:"low_pressure",names:Object.freeze(["Cocción con baja presión","Cuisson basse pression","Gotowanie pod niskim ciśnieniem","Varenie pod nízkym tlakom","Vaření pod nízkým tlakem","Готвене под ниско налягане","Приготовление под низким давлением","低壓烹飪","저압 조리"])}),
+ "PROGRAM_200157":Object.freeze({mode:"low_pressure",names:Object.freeze(["Cocción con baja presión","Cuisson basse pression","Düşük basınçlı pişirme","Gotowanie pod niskim ciśnieniem","Low Pressure Cooking","Varenie pod nízkym tlakom","Vaření pod nízkým tlakem","Готвене под ниско налягане","Приготовление под низким давлением","低壓烹飪","저압 조리"])}),
  "PROGRAM_200159":Object.freeze({mode:"browning",names:Object.freeze(["Alourar","Anbraten","Browning","Dorage","Dorar","Mühürleme","Opékání","Pirítás","Prženje","Rosolare","Rumenire","Smażenie","Запечатване","تحمير","炒める"])}),
+ "PROGRAM_200160":Object.freeze({mode:"simmering",names:Object.freeze(["Gotowanie na wolnym ogniu"])}),
  "PROGRAM_200161":Object.freeze({mode:"keep_warm",names:Object.freeze(["Keep Warm","Maintien au chaud","Mantener en caliente","Mantenimento in caldo","Menţinere la cald","Održavanje topline","Sıcak tutma","Tartsa melegen","Udržať teplé","Udržování teploty","Utrzymywanie ciepła","Warmhalten","Поддържане на топлината","Підтримання тепла","الاحتفاظ بالحرارة","保温","保溫","보온"])}),
 });
+// The same opaque key is named "Dampfgaren" (steaming) in Germany and low
+// pressure in other markets. Respect the exact *localized source pair*.
+export const SEB_REVIEWED_LOCALIZED_PROGRAM_NAMES=Object.freeze({
+ "PROGRAM_200157":Object.freeze({mode:"steam",names:Object.freeze(["Dampfgaren"])}),
+});
 const reviewedSEBPairs=new Map();
-for(const [key,{mode,names}] of Object.entries(SEB_REVIEWED_PROGRAM_NAMES)){
- for(const name of names){
-  const identity=key+'\\u0000'+normalize(name);
-  const previous=reviewedSEBPairs.get(identity);
-  if(previous&&previous!==mode)throw new Error('Conflicting reviewed Cook4Me program pair');
-  reviewedSEBPairs.set(identity,mode);
+for(const group of [SEB_REVIEWED_PROGRAM_NAMES,SEB_REVIEWED_LOCALIZED_PROGRAM_NAMES]){
+ for(const [key,{mode,names}] of Object.entries(group)){
+  for(const name of names){
+   const identity=key+'\\u0000'+normalize(name);
+   const previous=reviewedSEBPairs.get(identity);
+   if(previous&&previous!==mode)throw new Error('Conflicting reviewed Cook4Me program pair');
+   reviewedSEBPairs.set(identity,mode);
+  }
  }
 }
 
