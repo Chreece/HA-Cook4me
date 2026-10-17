@@ -158,7 +158,7 @@ class WiringTests(unittest.TestCase):
         self.assertIn("FullscreenProgressGuardMixin", panel)
         self.assertIn("runtime-v268", panel)
         self.assertIn("runtime-v272", panel)  # The previous runtime remains registered.
-        self.assertIn("runtime-v284", registration)  # The active element is versioned.
+        self.assertIn("runtime-v290", registration)  # The active element is versioned.
         self.assertIn("progress=260", registration)
         self.assertIn("contain:layout paint style", guard)
         self.assertIn("v260-progress-hidden", guard)
