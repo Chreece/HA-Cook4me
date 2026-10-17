@@ -100,3 +100,57 @@ Preserve existing behavior for:
 
 Review ambiguous Manual P, slow-cook tiers, high stir-fry and simmer/boil
 before adding new mappings. Report missing data rather than inventing modes.
+
+
+## Official SEB API result and evidence-backed mapping (17 October 2026)
+
+Uploaded read-only SEB report: `cook4me-seb-official-programs-20261017-161424.tar.gz`.
+
+- 10 markets queried, **8** returning full recipe details; 30 successful details
+  from 36 attempts; 56 bounded actions.
+- **25 distinct source-name / program-key pairs** and **4 distinct IDs** observed.
+  All four correlate with earlier cached SEB recipe evidence from more locales.
+- Portugal had no successful details, and Netherlands returned no searched
+  variants; `SEB_DETAIL_CatalogAuthError` plus `INCOMPLETE_MARKET_COVERAGE`
+  warn against treating this sample as exhaustive.
+- Source identifiers were preserved; no user recipes, credentials, stock, or
+  account-specific IDs are part of the report.
+
+| SEB program key | Reviewed semantic class | Source languages/markets |
+| --- | --- | --- |
+| `PROGRAM_200156` | High pressure | de, fr, es, it, pl, cs, en, tr |
+| `PROGRAM_200157` | Low pressure | fr |
+| `PROGRAM_200159` | Browning/searing | de, fr, es, it, pl, cs, en, tr |
+| `PROGRAM_200161` | Keep warm | de, fr, es, it, pl, cs, en, tr |
+
+Cross-checking both user-provided audit archives yields **61 distinct reviewed
+(key, exact localized name) pairs**: 25 pairs from the bounded current API
+sample and further cached SEB recipe names consistent with those four keys.
+The UI resolver `recipe-step-modes-v259.js` recognizes these **pairs only**.
+It does *not* map an arbitrary unknown name or a numeric `PROGRAM_n` ID alone.
+
+The previously captured local sample contained 361 program references, 141
+recognized and 220 unrecognized. The newly reviewed pairs can resolve exactly
+**200** of the 220 previously unknown references; projected coverage for that
+same sample becomes **341 / 361 = 94.46%**, with 20 unresolved. A fresh audit
+may contain more recipe steps because the catalog scanner was corrected after
+the original sample.
+
+| Remaining unreviewed source key | Misses in original sample | Program name or ambiguity |
+| --- | ---: | --- |
+| `PROGRAM_200018` | 5 | Manual P |
+| `PROGRAM_000013` | 2 | Manual P |
+| `PROGRAM_200009` | 3 | Slow cook P1 |
+| `PROGRAM_000004` | 1 | Slow cook P1 |
+| `PROGRAM_000005` | 1 | Slow cook P2 |
+| `PROGRAM_200011` | 1 | Slow cook P3 |
+| `PROGRAM_200160` | 4 | Simmering/boiling/braising, ambiguous terminology |
+| `PROGRAM_200063` | 3 | High-heat fry/stir-fry, conflicting translated names |
+
+**Do not infer** the meaning of any of these eight program IDs. Manufacturer
+documentation lists 13 model-specific Cookeo Touch modes, but that is not a
+mapping of every SEB recipe `PROGRAM_n` ID to a model program.
+
+Regression tests in `tests/test_recipe_step_modes_v259.mjs` cover all 61
+pairs, German generic-pressure versus verified high-pressure distinction,
+all UI languages, key-only protection, and every unresolved sample category.
