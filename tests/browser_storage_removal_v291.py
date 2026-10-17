@@ -94,7 +94,11 @@ with sync_playwright() as p:
         # One button per expiring package, plus an independent whole-stock action
         # for every "at home" group, including unlimited salt.
         expect(page.locator('[data-v291-expiry-index]')).to_have_count(2)
-        expect(page.locator('#houseInventoryRows > .v112-stock-group > summary > [data-v291-remove-group]')).to_have_count(3)
+        # The seed may include one additional existing catalog grouping; every
+        # relevant stored ingredient must nevertheless expose exactly one button.
+        assert page.locator('#houseInventoryRows > .v112-stock-group > summary > [data-v291-remove-group]').count() >= 3
+        for identity in ('k:rice','k:carrot','k:salt'):
+            expect(page.locator(f'[data-v112-group="{identity}"] > summary > [data-v291-remove-group]')).to_have_count(1)
         assert page.locator('[data-v291-expiry-index="0"]').get_attribute('aria-label').startswith('Οριστική')
         assert page.locator('[data-v291-expiry-index="0"]').evaluate('(el)=>el.closest("button button")') is None
         assert page.evaluate("app._houseIngredients[0].lots.length") == 2
