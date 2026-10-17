@@ -10,7 +10,7 @@ done
 CONFIG=/home/chreece/homeassistant/config
 RUNTIME="$CONFIG/custom_components/cook4me"
 HA=homeassistant
-GITHUB="https://raw.githubusercontent.com/Chreece/HA-Cook4me/1153fa35ea86f02c1606ba42ef69657feae0da84"
+GITHUB="https://raw.githubusercontent.com/Chreece/HA-Cook4me/cef1ea50272ad35b9e5a78de95a28cd64c7512c6"
 LOGROOT=/home/chreece/projects/cook4me/logs
 BACKUPROOT=/home/chreece/projects/cook4me/recovery
 [[ -f "$RUNTIME/panel.py" && -d "$RUNTIME/frontend" ]] || { echo "Cook4Me frontend missing"; exit 1; }
@@ -37,7 +37,7 @@ HAD_MODULE=0
 [[ -f "$RUNTIME/frontend/loaded-device-recipe-v284.js" ]] && HAD_MODULE=1
 record_report(){
   local status="$1"
-  printf 'RESULT=%s\nSOURCE_COMMIT=1153fa35ea86f02c1606ba42ef69657feae0da84\n' "$status" >"$BACKUP/status.txt"
+  printf 'RESULT=%s\nSOURCE_COMMIT=cef1ea50272ad35b9e5a78de95a28cd64c7512c6\n' "$status" >"$BACKUP/status.txt"
   tar -czf "$REPORT" -C "$BACKUP" status.txt install.log || :
   local owner
   owner=$(printenv SUDO_USER || true)
@@ -83,9 +83,9 @@ done <<'MANIFEST'
 frontend/loaded-device-recipe-v284.js 41b8d7ebfb1b4a223e52e5bc565b195746817b66
 frontend/recipe-step-modes-v259.js eef1f1c1f5ffa29689f5399a97e8f244e0dea2f1
 frontend/cook4me-panel-v81.js d0ec4929c1aba5a3ff93853fe3b0b34cde3a06f7
-frontend/cook4me-panel-v180.js b59a861f9977a9e49c1cedf2938c2fd547d5db74
+frontend/cook4me-panel-v180.js 7e12f641d1cf1321107b9f5602623b10172fdbdc
 panel.py 385f7eef7cd2905d29d3e5ddb2bebd0b3c5eb660
-tests/test_loaded_device_recipe_v284.mjs dc695ca08fbb26f2565f216813c70aa4f1962359
+tests/test_loaded_device_recipe_v284.mjs 620d8ec8cf3108b607059734b0119bed9cf37041
 tests/test_recipe_step_modes_v259.mjs edab6a3d4551150455aaa3654eb2982387e5afb4
 MANIFEST
 # Retain repository-relative imports for the exact node:test files.
@@ -114,7 +114,7 @@ while read -r path baseline candidate; do
 done <<'BASELINES'
 frontend/recipe-step-modes-v259.js 107d0f6a293ed9aa51f3737126ece18b7fd7b5ca eef1f1c1f5ffa29689f5399a97e8f244e0dea2f1
 frontend/cook4me-panel-v81.js cfbf48194abe53c21d5118cd91888efc64bbee89 d0ec4929c1aba5a3ff93853fe3b0b34cde3a06f7
-frontend/cook4me-panel-v180.js 0bcbbb579ba483fee4ad48788c61c527f740959f b59a861f9977a9e49c1cedf2938c2fd547d5db74
+frontend/cook4me-panel-v180.js 0bcbbb579ba483fee4ad48788c61c527f740959f 7e12f641d1cf1321107b9f5602623b10172fdbdc
 panel.py 28a680e25014813efec4dd370bb686126c9225a5 385f7eef7cd2905d29d3e5ddb2bebd0b3c5eb660
 BASELINES
 if (( HAD_MODULE )); then
@@ -145,9 +145,9 @@ done <<'MANIFEST'
 frontend/loaded-device-recipe-v284.js 41b8d7ebfb1b4a223e52e5bc565b195746817b66
 frontend/recipe-step-modes-v259.js eef1f1c1f5ffa29689f5399a97e8f244e0dea2f1
 frontend/cook4me-panel-v81.js d0ec4929c1aba5a3ff93853fe3b0b34cde3a06f7
-frontend/cook4me-panel-v180.js b59a861f9977a9e49c1cedf2938c2fd547d5db74
+frontend/cook4me-panel-v180.js 7e12f641d1cf1321107b9f5602623b10172fdbdc
 panel.py 385f7eef7cd2905d29d3e5ddb2bebd0b3c5eb660
-tests/test_loaded_device_recipe_v284.mjs dc695ca08fbb26f2565f216813c70aa4f1962359
+tests/test_loaded_device_recipe_v284.mjs 620d8ec8cf3108b607059734b0119bed9cf37041
 tests/test_recipe_step_modes_v259.mjs edab6a3d4551150455aaa3654eb2982387e5afb4
 MANIFEST
 docker start "$HA" >/dev/null
@@ -164,9 +164,9 @@ done <<'MANIFEST'
 frontend/loaded-device-recipe-v284.js 41b8d7ebfb1b4a223e52e5bc565b195746817b66
 frontend/recipe-step-modes-v259.js eef1f1c1f5ffa29689f5399a97e8f244e0dea2f1
 frontend/cook4me-panel-v81.js d0ec4929c1aba5a3ff93853fe3b0b34cde3a06f7
-frontend/cook4me-panel-v180.js b59a861f9977a9e49c1cedf2938c2fd547d5db74
+frontend/cook4me-panel-v180.js 7e12f641d1cf1321107b9f5602623b10172fdbdc
 panel.py 385f7eef7cd2905d29d3e5ddb2bebd0b3c5eb660
-tests/test_loaded_device_recipe_v284.mjs dc695ca08fbb26f2565f216813c70aa4f1962359
+tests/test_loaded_device_recipe_v284.mjs 620d8ec8cf3108b607059734b0119bed9cf37041
 tests/test_recipe_step_modes_v259.mjs edab6a3d4551150455aaa3654eb2982387e5afb4
 MANIFEST
 STOPPED=0
