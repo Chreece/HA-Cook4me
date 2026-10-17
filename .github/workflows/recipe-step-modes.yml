@@ -33,6 +33,8 @@ jobs:
         run: |
           node --test tests/test_recipe_step_modes_v204.mjs
           node --test tests/test_recipe_step_modes_v259.mjs
+      - name: Audit all available recipe program evidence
+        run: node --test tests/test_program_mode_audit_v285.mjs
       - name: Compact header names, permissions and quiet manual steps
         run: |
           python tests/test_device_header_v207.py
