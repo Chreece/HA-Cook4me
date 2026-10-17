@@ -16,15 +16,15 @@ WORK=$(mktemp -d /tmp/cook4me-programs-v288.XXXXXXXX)
 trap 'rm -rf "$WORK"' EXIT
 [[ -d "$ROOT/.storage" ]] || { echo "Missing Home Assistant .storage: $ROOT"; exit 1; }
 curl -fLsS --retry 3 --connect-timeout 12 --max-time 80 "$BASE/tools/audit_cook4me_program_modes_v285.mjs" -o "$WORK/audit.mjs"
-curl -fLsS --retry 3 --connect-timeout 12 --max-time 80 "$BASE/custom_components/cook4me/frontend/recipe-step-modes-v259.js" -o "$WORK/candidate.js"
+curl -fLsS --retry 3 --connect-timeout 12 --max-time 80 "$BASE/custom_components/cook4me/frontend/recipe-step-modes-v259.js" -o "$WORK/candidate.mjs"
 [[ "$(git hash-object "$WORK/audit.mjs")" == "$SCANNER_SHA" ]] || { echo 'Scanner content hash mismatch'; exit 1; }
-[[ "$(git hash-object "$WORK/candidate.js")" == "$CANDIDATE_SHA" ]] || { echo 'Mode candidate content hash mismatch'; exit 1; }
+[[ "$(git hash-object "$WORK/candidate.mjs")" == "$CANDIDATE_SHA" ]] || { echo 'Mode candidate content hash mismatch'; exit 1; }
 node --check "$WORK/audit.mjs"
-node --check "$WORK/candidate.js"
+node --check "$WORK/candidate.mjs"
 mkdir -p "$OUTDIR"
 REPORT="$OUTDIR/cook4me-recipe-programs-full-$(date -u +%Y%m%d-%H%M%S).tar.gz"
 set +e
-node "$WORK/audit.mjs" --root "$ROOT" --resolver "$WORK/candidate.js" --json "$WORK/programs.json" > "$WORK/stdout.json" 2> "$WORK/errors.log"
+node "$WORK/audit.mjs" --root "$ROOT" --resolver "$WORK/candidate.mjs" --json "$WORK/programs.json" > "$WORK/stdout.json" 2> "$WORK/errors.log"
 rc=$?
 set -e
 if [[ "$rc" != 0 && "$rc" != 2 ]] || [[ ! -s "$WORK/programs.json" ]]; then
