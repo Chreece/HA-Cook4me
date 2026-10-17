@@ -265,4 +265,4 @@ if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v270'))customEleme
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v271'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v271',KitchenStockScanMixin(ProductCatalogMixin(MobileProductMixin(Cook4MeRecipeHubPanelV180))));
 
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v272'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v272',ConsumptionDeductionMixin(KitchenStockScanMixin(ProductCatalogMixin(MobileProductMixin(Cook4MeRecipeHubPanelV180)))));
-if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v284'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v284',LoadedDeviceRecipeMixin(Cook4MeRecipeHubPanelV180));
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v284'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v284',LoadedDeviceRecipeMixin(customElements.get('cook4me-recipe-hub-panel-v180-runtime-v272')));
