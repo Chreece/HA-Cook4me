@@ -35,6 +35,10 @@ jobs:
           node --test tests/test_recipe_step_modes_v259.mjs
       - name: Audit all available recipe program evidence
         run: node --test tests/test_program_mode_audit_v285.mjs
+      - name: Validate bounded official SEB API name audit (offline fixtures)
+        run: |
+          python -m py_compile tools/audit_seb_official_programs_v286.py
+          python tools/audit_seb_official_programs_v286.py --offline-self-test
       - name: Compact header names, permissions and quiet manual steps
         run: |
           python tests/test_device_header_v207.py
