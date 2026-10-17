@@ -165,7 +165,8 @@ test('runtime owns final mixin, version-busted UI and stable device-info row upd
  const panel=readFileSync(new URL('panel.py',root),'utf8');
  const legacy=readFileSync(new URL('frontend/cook4me-panel-v81.js',root),'utf8');
  const feature=readFileSync(new URL('frontend/loaded-device-recipe-v284.js',root),'utf8');
- assert.match(app,/LoadedDeviceRecipeMixin\(ProductScaleLayoutMixin/);
+ assert.match(app,/const BasePanel=ProductScaleLayoutMixin/);
+ assert.match(app,/runtime-v284'\),LoadedDeviceRecipeMixin\(Cook4MeRecipeHubPanelV180\)/);
  assert.match(app,/runtime-v284/);
  assert.match(panel,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v284"/);
  assert.match(panel,/loadedrecipe=284/);
