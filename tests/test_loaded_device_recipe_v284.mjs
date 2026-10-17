@@ -146,6 +146,19 @@ test('device info creates accessible button and opens the existing exact-edition
  }finally{globalThis.document=previous;}
 });
 
+test('disappearing variant removes the stale recipe action without guessing by title',()=>{
+ const previous=globalThis.document;globalThis.document={createElement:()=>new FakeButton()};
+ try{
+  const panel=new Panel();panel._v81RenderInfo();
+  assert.equal(panel.buttons.length,1);
+  panel.view={live:true,state:{...live().state,variantFunctionalId:''}};
+  panel._v81RenderInfo();
+  assert.equal(panel.fakeCell.textContent,'Risotto');
+  panel.buttons[0].click();
+  assert.equal(panel.showCalls.length,0);
+ }finally{globalThis.document=previous;}
+});
+
 test('stale recipe/other entry/user cannot open a previous device recipe',()=>{
  const previous=globalThis.document;globalThis.document={createElement:()=>new FakeButton()};
  try{
