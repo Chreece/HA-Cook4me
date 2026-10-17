@@ -182,7 +182,7 @@ test('runtime owns final mixin, version-busted UI and stable device-info row upd
  assert.match(app,/runtime-v272',ConsumptionDeductionMixin\(KitchenStockScanMixin\(ProductCatalogMixin\(MobileProductMixin\(Cook4MeRecipeHubPanelV180\)\)\)\)\)/);
  assert.match(app,/customElements\.define\('cook4me-recipe-hub-panel-v180-runtime-v284',LoadedDeviceRecipeMixin\(customElements\.get\('cook4me-recipe-hub-panel-v180-runtime-v272'\)\)\)/);
  assert.match(app,/runtime-v284/);
- assert.match(panel,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v284"/);
+ assert.match(panel,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v290"/);
  assert.match(panel,/loadedrecipe=284/);
  assert.match(legacy,/_v81SourceHtml!==html/);
  assert.match(feature,/chips\.length>1/);
