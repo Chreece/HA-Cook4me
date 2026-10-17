@@ -25,7 +25,7 @@ import {IngredientNamesMixin} from './ingredient-names-v221.js';
 import {UXFixesMixin} from './ux-fixes-v218.js';
 import {ProductEditGuardMixin} from './product-edit-guard-v208.js';
 import {CompactDeviceHeaderMixin} from './device-header-v207.js';
-import {RecipeStepModesMixin} from './recipe-step-modes-v259.js';
+import {RecipeStepModesMixin} from './recipe-step-modes-v290.js';
 import {AppDesignMixin} from './app-design-v203.js';
 import {SelectedFilterMixin} from './filter-selection-v202.js';
 import {RecipeGapsMixin} from './recipe-gaps-v202.js';
@@ -266,3 +266,5 @@ if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v271'))customEleme
 
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v272'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v272',ConsumptionDeductionMixin(KitchenStockScanMixin(ProductCatalogMixin(MobileProductMixin(Cook4MeRecipeHubPanelV180)))));
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v284'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v284',LoadedDeviceRecipeMixin(customElements.get('cook4me-recipe-hub-panel-v180-runtime-v272')));
+// New element identity loads v290 even if an older element is already registered.
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v290'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v290',class extends customElements.get('cook4me-recipe-hub-panel-v180-runtime-v284'){});

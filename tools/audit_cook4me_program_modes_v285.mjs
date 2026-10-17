@@ -46,7 +46,7 @@ function findCatalog(){
 }
 // --resolver allows auditing a verified candidate without installing it.
 // The default resolver remains the installed Home Assistant version.
-const modePath=path.resolve(argument('--resolver',path.join(integration,'frontend/recipe-step-modes-v259.js')));
+const modePath=path.resolve(argument('--resolver',path.join(integration,'frontend/recipe-step-modes-v290.js')));
 const source=fs.readFileSync(modePath,'utf8');
 // The source module is loaded unchanged, not reimplemented in a second language.
 const resolver=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));

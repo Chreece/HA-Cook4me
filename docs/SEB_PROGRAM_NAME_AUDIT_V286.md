@@ -242,3 +242,42 @@ The revised hash-pinned `tools/run_cook4me_mode_audit_v289.sh` scans the
 candidate without installing it, and preserves the cooker's operating state,
 the saved recipes, user stock, Home Assistant availability, and SSH connection.
 Do not merge/release until this follow-up report and CI are reviewed.
+
+## Multi-language source program alignment and frontend cache refresh (17 October 2026)
+
+The read-only `cook4me-missing-modes-20261017-191945.tar.gz` scan
+contains 160 cached SEB recipe details, 81 observed program-language rows
+(80 distinct `programKey` + `programName` pairs), no scanner warnings,
+and 373 program references. Before this update: 357 recognized, 13
+Companion-only (not real Cook4Me cooking modes), **three new unknown names**.
+
+The SEB source-pair registry gains these verified Slovenian names alongside
+names with the same IDs across other markets:
+
+| SEB ID | Source name | Canonical mode | Greek UI label |
+| --- | --- | --- | --- |
+| `PROGRAM_200157` | `Kuhanje na nizkem pritisku` | low_pressure | Μαγείρεμα σε χαμηλή πίεση |
+| `PROGRAM_200159` | `Pečenje` | browning | Ρόδισμα / σοτάρισμα |
+| `PROGRAM_200161` | `Ohranjanje toplote` | keep_warm | Διατήρηση θερμοκρασίας |
+
+Each verified source ID/name pair selects an abstract cooking mode; the
+visible label is localized using the active UI language, independent of the
+recipe's source language. Do not build ad hoc language-to-Greek translations
+or guess numeric IDs when no recognized source name exists.
+`PROGRAM_200157` + `Dampfgaren` still means steaming, not low pressure.
+`PROGRAM_200160` Arabic boiling is not the same as simmering.
+Companion P1/P2/P3 remains marked as a non-Cook4Me program.
+
+The earlier Croatian `Prženje` and Polish `Smażenie` pairs were already
+reviewed, while user screenshots showed the generic "other" chip. The current
+production source was correct but the browser-loaded module could be stale:
+we now import the new **`recipe-step-modes-v290.js`** and register
+**`cook4me-recipe-hub-panel-v180-runtime-v290`** with a new
+`modes=290` URL parameter, ensuring new ESM identity and panel name.
+The previous v259 file is kept unmodified.
+
+The 80 distinct pair regression is run across all four UI languages; browser
+tests exercise the original shared recipe renderer and full frontend chain
+with Croatian, Polish and Slovenian steps. The next host audit's projected
+mode coverage is **360/373 (96.51%)**, excluding 13 Companion source
+programs. Local cache audit is still a sample of the overall SEB catalog.

@@ -7,7 +7,7 @@ import {spawnSync} from 'node:child_process';
 
 const repo=path.resolve(import.meta.dirname,'..');
 const script=path.join(repo,'tools/audit_cook4me_program_modes_v285.mjs');
-const modes=path.join(repo,'custom_components/cook4me/frontend/recipe-step-modes-v259.js');
+const modes=path.join(repo,'custom_components/cook4me/frontend/recipe-step-modes-v290.js');
 const mk=(dir,name,content)=>{
  const p=path.join(dir,name);fs.mkdirSync(path.dirname(p),{recursive:true});fs.writeFileSync(p,JSON.stringify(content));return p;
 };
