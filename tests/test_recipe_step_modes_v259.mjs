@@ -4,6 +4,7 @@ import {readFileSync} from 'node:fs';
 import {
   stepCookingModes,
   MODE_TEXT,
+  SEB_REVIEWED_PROGRAM_NAMES,
 } from '../custom_components/cook4me/frontend/recipe-step-modes-v259.js';
 
 test('Greek UI localizes known German recipe mode',()=>{
@@ -106,4 +107,52 @@ test('active panel keeps v259 step modes under v269 runtime without changing glo
   assert.match(registration,/today=261/);
   assert.match(registration,/stability=262/);
   assert.match(registration,/seasonal=263/);
+});
+
+
+test('exact observed SEB program IDs AND multilingual names resolve 61 reviewed pairs',()=>{
+ const expected={PROGRAM_200156:'high_pressure',PROGRAM_200157:'low_pressure',
+   PROGRAM_200159:'browning',PROGRAM_200161:'keep_warm'};
+ assert.deepEqual(Object.keys(SEB_REVIEWED_PROGRAM_NAMES).sort(),Object.keys(expected).sort());
+ const count=Object.values(SEB_REVIEWED_PROGRAM_NAMES).reduce((sum,row)=>sum+row.names.length,0);
+ assert.equal(count,61);
+ for(const [key,record] of Object.entries(SEB_REVIEWED_PROGRAM_NAMES)){
+  assert.equal(record.mode,expected[key]);
+  for(const originalName of record.names){
+   const result=stepCookingModes({programKey:key,programName:originalName},'el')[0];
+   assert.equal(result.mode,record.mode,key+' / '+originalName);
+   assert.equal(result.label,MODE_TEXT.el[record.mode],key+' / '+originalName);
+   assert.equal(result.sourceName,originalName,'source evidence remains preserved');
+  }
+ }
+});
+
+test('confirmed German SEB pair is high pressure, but generic source without ID remains generic pressure',()=>{
+ assert.equal(stepCookingModes({programKey:'PROGRAM_200156',programName:'Garen unter Druck'},'en')[0].mode,'high_pressure');
+ assert.equal(stepCookingModes({programName:'Garen unter Druck'},'de')[0].mode,'pressure');
+ assert.equal(stepCookingModes({programKey:'PROGRAM_200159',programName:'Garen unter Druck'},'en')[0].mode,'pressure');
+});
+
+test('unknown key/name combinations cannot inherit unrelated reviewed meanings',()=>{
+ for(const [programKey,programName] of [
+  ['PROGRAM_200156','Unknown bespoke step'],['PROGRAM_200159','Unknown bespoke step'],
+  ['PROGRAM_200160','煮燉'],['PROGRAM_200063','Estofado alto'],
+  ['PROGRAM_200018','Manual P'],['PROGRAM_000005','Slow cook P2'],
+ ]){
+  assert.equal(stepCookingModes({programKey,programName},'el')[0].mode,null,
+    'not reviewed: '+programKey+' / '+programName);
+ }
+ for(const programKey of Object.keys(SEB_REVIEWED_PROGRAM_NAMES)){
+  assert.equal(stepCookingModes({programKey},'el')[0].mode,null,
+   'a numeric program key alone is never enough');
+ }
+});
+
+test('the SEB translation matrix renders correctly in all supported UI languages',()=>{
+ const pressure={programKey:'PROGRAM_200156',programName:'High Pressure Cooking'};
+ const warmer={programKey:'PROGRAM_200161',programName:'Sıcak tutma'};
+ for(const lang of ['en','de','el','fr']){
+  assert.equal(stepCookingModes(pressure,lang)[0].label,MODE_TEXT[lang].high_pressure);
+  assert.equal(stepCookingModes(warmer,lang)[0].label,MODE_TEXT[lang].keep_warm);
+ }
 });
