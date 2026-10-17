@@ -225,7 +225,7 @@ def audit(arguments) -> dict:
             requests["configurationContexts"] += 1
             # Reuses the official config and url-connexion paths with save=False.
             pcfg = catalog._platform_context(
-                cfg, device_country, device_lang, app_version)
+                cfg, country, language, app_version)
             throttle()
         except Exception as exc:
             info["reason"] = "SEB_PLATFORM_CONFIG_" + type(exc).__name__
@@ -244,7 +244,7 @@ def audit(arguments) -> dict:
             data, _auth_mode = catalog._http_json(
                 "POST", search_url,
                 headers_iter=catalog._request_headers(
-                    cfg, tokens, country, device_lang, app_version, search_url, pcfg),
+                    cfg, tokens, country, language, app_version, search_url, pcfg),
                 params=params, body=body, timeout=25,
             )
             requests["successfulSearches"] += 1
@@ -271,7 +271,7 @@ def audit(arguments) -> dict:
                 requests["recipeDetails"] += 1
                 detail = catalog.recipe_detail(
                     cfg, tokens, variant, country=country, language=language,
-                    configured_language=device_lang, app_version=app_version, pcfg=pcfg)
+                    configured_language=language, app_version=app_version, pcfg=pcfg)
                 requests["successfulDetails"] += 1
                 info["detailsLoaded"] += 1
                 pairs = program_rows(detail)
