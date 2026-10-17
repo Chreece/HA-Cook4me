@@ -1,9 +1,9 @@
 // Display recipe program evidence, never infer a mode from instruction prose.
 export const MODE_TEXT={
- en:{label:'Cooking mode',help:'Mode specified by this recipe step, not the device’s live status.',unknown:'Cooking mode not specified',source:'Source program',other:'Other cooking mode',pressure:'Pressure cooking',high_pressure:'High-pressure cooking',low_pressure:'Low-pressure cooking',browning:'Browning',steam:'Steaming',simmering:'Simmering',gentle:'Gentle cooking',reheat:'Reheating',keep_warm:'Keep warm',slow:'Slow cooking',quick:'Quick cooking',preheat:'Preheating',preparation:'Preparation',serving:'Serving'},
- de:{label:'Garmodus',help:'Modus dieses Rezeptschritts, nicht der aktuelle Gerätestatus.',unknown:'Garmodus nicht angegeben',source:'Originalprogramm',other:'Anderer Garmodus',pressure:'Druckgaren',high_pressure:'Garen unter hohem Druck',low_pressure:'Garen unter niedrigem Druck',browning:'Anbraten',steam:'Dampfgaren',simmering:'Köcheln',gentle:'Schonendes Garen',reheat:'Aufwärmen',keep_warm:'Warmhalten',slow:'Langsames Garen',quick:'Schnellgaren',preheat:'Vorheizen',preparation:'Vorbereitung',serving:'Servieren'},
- el:{label:'Λειτουργία μαγειρέματος',help:'Λειτουργία που ορίζει αυτό το βήμα της συνταγής, όχι η τρέχουσα κατάσταση της συσκευής.',unknown:'Δεν ορίζεται λειτουργία μαγειρέματος',source:'Αρχικό πρόγραμμα',other:'Άλλη λειτουργία μαγειρέματος',pressure:'Μαγείρεμα υπό πίεση',high_pressure:'Μαγείρεμα σε υψηλή πίεση',low_pressure:'Μαγείρεμα σε χαμηλή πίεση',browning:'Ρόδισμα / σοτάρισμα',steam:'Μαγείρεμα στον ατμό',simmering:'Σιγανό βράσιμο',gentle:'Ήπιο μαγείρεμα',reheat:'Αναθέρμανση',keep_warm:'Διατήρηση θερμοκρασίας',slow:'Αργό μαγείρεμα',quick:'Γρήγορο μαγείρεμα',preheat:'Προθέρμανση',preparation:'Προετοιμασία',serving:'Σερβίρισμα'},
- fr:{label:'Mode de cuisson',help:'Mode indiqué pour cette étape de la recette, pas l’état actuel de l’appareil.',unknown:'Mode de cuisson non précisé',source:'Programme original',other:'Autre mode de cuisson',pressure:'Cuisson sous pression',high_pressure:'Cuisson sous haute pression',low_pressure:'Cuisson sous basse pression',browning:'Dorer',steam:'Cuisson vapeur',simmering:'Mijoter',gentle:'Cuisson douce',reheat:'Réchauffer',keep_warm:'Maintien au chaud',slow:'Cuisson lente',quick:'Cuisson rapide',preheat:'Préchauffage',preparation:'Préparation',serving:'Service'}
+ en:{label:'Cooking mode',help:'Mode specified by this recipe step, not the device’s live status.',unknown:'Cooking mode not specified',source:'Source program',other:'Other cooking mode',companion:'Companion program (not Cook4Me)',high_browning:'High-heat browning',boiling:'Boiling',pressure:'Pressure cooking',high_pressure:'High-pressure cooking',low_pressure:'Low-pressure cooking',browning:'Browning',steam:'Steaming',simmering:'Simmering',gentle:'Gentle cooking',reheat:'Reheating',keep_warm:'Keep warm',slow:'Slow cooking',quick:'Quick cooking',preheat:'Preheating',preparation:'Preparation',serving:'Serving'},
+ de:{label:'Garmodus',help:'Modus dieses Rezeptschritts, nicht der aktuelle Gerätestatus.',unknown:'Garmodus nicht angegeben',source:'Originalprogramm',other:'Anderer Garmodus',companion:'Companion-Programm (nicht Cook4Me)',high_browning:'Anbraten bei hoher Hitze',boiling:'Kochen',pressure:'Druckgaren',high_pressure:'Garen unter hohem Druck',low_pressure:'Garen unter niedrigem Druck',browning:'Anbraten',steam:'Dampfgaren',simmering:'Köcheln',gentle:'Schonendes Garen',reheat:'Aufwärmen',keep_warm:'Warmhalten',slow:'Langsames Garen',quick:'Schnellgaren',preheat:'Vorheizen',preparation:'Vorbereitung',serving:'Servieren'},
+ el:{label:'Λειτουργία μαγειρέματος',help:'Λειτουργία που ορίζει αυτό το βήμα της συνταγής, όχι η τρέχουσα κατάσταση της συσκευής.',unknown:'Δεν ορίζεται λειτουργία μαγειρέματος',source:'Αρχικό πρόγραμμα',other:'Άλλη λειτουργία μαγειρέματος',companion:'Πρόγραμμα Companion (όχι Cook4Me)',high_browning:'Δυνατό σοτάρισμα',boiling:'Βράσιμο',pressure:'Μαγείρεμα υπό πίεση',high_pressure:'Μαγείρεμα σε υψηλή πίεση',low_pressure:'Μαγείρεμα σε χαμηλή πίεση',browning:'Ρόδισμα / σοτάρισμα',steam:'Μαγείρεμα στον ατμό',simmering:'Σιγανό βράσιμο',gentle:'Ήπιο μαγείρεμα',reheat:'Αναθέρμανση',keep_warm:'Διατήρηση θερμοκρασίας',slow:'Αργό μαγείρεμα',quick:'Γρήγορο μαγείρεμα',preheat:'Προθέρμανση',preparation:'Προετοιμασία',serving:'Σερβίρισμα'},
+ fr:{label:'Mode de cuisson',help:'Mode indiqué pour cette étape de la recette, pas l’état actuel de l’appareil.',unknown:'Mode de cuisson non précisé',source:'Programme original',other:'Autre mode de cuisson',companion:'Programme Companion (pas Cookeo)',high_browning:'Dorage à haute température',boiling:'Ébullition',pressure:'Cuisson sous pression',high_pressure:'Cuisson sous haute pression',low_pressure:'Cuisson sous basse pression',browning:'Dorer',steam:'Cuisson vapeur',simmering:'Mijoter',gentle:'Cuisson douce',reheat:'Réchauffer',keep_warm:'Maintien au chaud',slow:'Cuisson lente',quick:'Cuisson rapide',preheat:'Préchauffage',preparation:'Préparation',serving:'Service'}
 };
 const object=value=>!!value&&typeof value==='object'&&!Array.isArray(value);
 const text=value=>typeof value==='string'?value.trim():'';
@@ -77,6 +77,61 @@ for(const [mode,names] of Object.entries({
  ]
 }))for(const name of names)aliases.set(normalize(name),mode);
 
+// Exact SEB (programKey, programName) pairs from official bounded multi-market
+// recipe queries, cross-checked with the anonymized local recipe-mode audit.
+// The PROGRAM_n key alone is NEVER treated as a mode. This distinction is
+// important for unverified devices and e.g. the generic German "Garen unter Druck".
+// Recorded provenance: docs/SEB_PROGRAM_NAME_AUDIT_V286.md.
+export const SEB_REVIEWED_PROGRAM_NAMES=Object.freeze({
+ "PROGRAM_200156":Object.freeze({mode:"high_pressure",names:Object.freeze(["Cocción con alta presión","Cottura alta pressione","Cozedura a alta pressão","Cuisson haute pression","Garen unter Druck","Gotowanie pod wysokim ciśnieniem","Gătire la presiune înaltă","High Pressure Cooking","Kuhanje pod visokim pritiskom","Magas nyomású főzés","Varenie pod vysokým tlakom","Vaření pod vysokým tlakem","Yüksek basınçlı pişirme","Готвене под високо налягане","Приготовление под высоким давлением","Приготування під високим тиском","طهي بضغط عالي","圧力調理","고압 조리"])}),
+ "PROGRAM_200157":Object.freeze({mode:"low_pressure",names:Object.freeze(["Cocción con baja presión","Cuisson basse pression","Düşük basınçlı pişirme","Gotowanie pod niskim ciśnieniem","Low Pressure Cooking","Varenie pod nízkym tlakom","Vaření pod nízkým tlakem","Готвене под ниско налягане","Приготовление под низким давлением","低壓烹飪","저압 조리"])}),
+ "PROGRAM_200159":Object.freeze({mode:"browning",names:Object.freeze(["Alourar","Anbraten","Browning","Dorage","Dorar","Mühürleme","Opékání","Pirítás","Prženje","Rosolare","Rumenire","Smażenie","Запечатване","تحمير","炒める"])}),
+ "PROGRAM_200160":Object.freeze({mode:"simmering",names:Object.freeze(["Gotowanie na wolnym ogniu"])}),
+ "PROGRAM_200161":Object.freeze({mode:"keep_warm",names:Object.freeze(["Keep Warm","Maintien au chaud","Mantener en caliente","Mantenimento in caldo","Menţinere la cald","Održavanje topline","Sıcak tutma","Tartsa melegen","Udržať teplé","Udržování teploty","Utrzymywanie ciepła","Warmhalten","Поддържане на топлината","Підтримання тепла","الاحتفاظ بالحرارة","保温","保溫","보온"])}),
+});
+// The same opaque key is named "Dampfgaren" (steaming) in Germany and low
+// pressure in other markets. Respect the exact *localized source pair*.
+export const SEB_REVIEWED_LOCALIZED_PROGRAM_NAMES=Object.freeze({
+ "PROGRAM_200157":Object.freeze({mode:"steam",names:Object.freeze(["Dampfgaren"])}),
+});
+
+// Additional exact-name pairs observed in the full local recipe-mode audit.
+// Identity always requires BOTH numeric key and normalized publisher name.
+// Arabic "غليان" explicitly means boiling, not gentle simmering. Similarly,
+// "Estofado alto" means high-heat browning in actual official Cookeo recipe
+// instructions, despite the misleading Spanish literal translation.
+export const SEB_ADDITIONAL_REVIEWED_PROGRAM_PAIRS=Object.freeze([
+ Object.freeze({programKey:"PROGRAM_200160",mode:"simmering",names:Object.freeze(["Варка на слабом огне","煮燉"])}),
+ Object.freeze({programKey:"PROGRAM_200160",mode:"boiling",names:Object.freeze(["غليان"])}),
+ Object.freeze({programKey:"PROGRAM_200063",mode:"high_browning",names:Object.freeze(["Braten bei hoher Hitze","Estofado alto","Magas stir fry"])}),
+]);
+// SEB's Companion robot uses separate programs for chopping/stirring and
+// Slow cook P1-P3. They are NOT Cook4Me appliance cooking modes. Expose their
+// trusted exact names with a visible device-mismatch label, never send them to
+// the Cook4Me cooker, and do not count them as resolved Cook4Me programs.
+export const SEB_COMPANION_PROGRAM_NAMES=Object.freeze({
+ "PROGRAM_200018":"Manual P",
+ "PROGRAM_000013":"Manual P",
+ "PROGRAM_200009":"Slow cook P1",
+ "PROGRAM_000004":"Slow cook P1",
+ "PROGRAM_000005":"Slow cook P2",
+ "PROGRAM_200011":"Slow cook P3",
+});
+
+const reviewedSEBPairs=new Map();
+function putReviewedPair(key,mode,name){
+ const identity=key+'\\u0000'+normalize(name);
+ const previous=reviewedSEBPairs.get(identity);
+ if(previous&&previous!==mode)throw new Error('Conflicting reviewed Cook4Me program pair');
+ reviewedSEBPairs.set(identity,mode);
+}
+for(const group of [SEB_REVIEWED_PROGRAM_NAMES,SEB_REVIEWED_LOCALIZED_PROGRAM_NAMES]){
+ for(const [key,{mode,names}] of Object.entries(group))
+  for(const name of names)putReviewedPair(key,mode,name);
+}
+for(const {programKey,mode,names} of SEB_ADDITIONAL_REVIEWED_PROGRAM_PAIRS)
+ for(const name of names)putReviewedPair(programKey,mode,name);
+
 function strings(language){return MODE_TEXT[String(language||'en').toLowerCase().split(/[-_]/)[0]]||MODE_TEXT.en;}
 function validProgram(row){
  if(!object(row))return false;
@@ -95,9 +150,15 @@ export function stepCookingModes(step,language='en'){
   // the mode. Never put the provider-language source name into visible UI text.
   const sourceMode=aliases.get(normalize(sourceName))||null;
   const keyMode=aliases.get(normalize(programKey))||null;
-  const mode=sourceMode||keyMode||null;
-  return {kind:mode?'program':sourceName?'source':'missing',mode,
-   label:mode?labels[mode]:sourceName?labels.other:labels.unknown,sourceName,programKey};
+  // An exact SEB program ID + observed localized name is stronger than a
+  // generic word like "Pressure cooking", but IDs by themselves prove nothing.
+  const reviewedMode=sourceName?reviewedSEBPairs.get(programKey+'\\u0000'+normalize(sourceName))||null:null;
+  const mode=reviewedMode||sourceMode||keyMode||null;
+  const companionName=sourceName&&SEB_COMPANION_PROGRAM_NAMES[programKey]||'';
+  const isCompanion=!mode&&!!companionName&&normalize(sourceName)===normalize(companionName);
+  return {kind:mode?'program':isCompanion?'companion':sourceName?'source':'missing',mode,
+   label:mode?labels[mode]:isCompanion?labels.companion+': '+companionName:sourceName?labels.other:labels.unknown,
+   sourceName,programKey};
  });
  // A preparation type is not an automatic device program. Generic cooking or
  // opaque STEP_TYPE identifiers cannot establish which mode will be used.
@@ -134,7 +195,7 @@ export function decorateStepModes(root,recipe,language='en'){
   for(const [position,mode] of operations.entries()){
    if(position){const arrow=document.createElement('span');arrow.className='v204-mode-arrow';arrow.textContent='→';modes.append(arrow);}
    const chip=document.createElement('span');chip.className='v204-mode-chip';chip.dataset.v204Mode=mode.mode||mode.kind;
-   const glyph=document.createElement('ha-icon');glyph.setAttribute('icon',mode.kind==='manual'?'mdi:hand-back-right-outline':mode.kind==='missing'?'mdi:help-circle-outline':'mdi:pot-steam');glyph.setAttribute('aria-hidden','true');
+   const glyph=document.createElement('ha-icon');glyph.setAttribute('icon',mode.kind==='manual'?'mdi:hand-back-right-outline':mode.kind==='companion'?'mdi:alert-circle-outline':mode.kind==='missing'?'mdi:help-circle-outline':'mdi:pot-steam');glyph.setAttribute('aria-hidden','true');
    const name=document.createElement('span');name.textContent=mode.label;chip.append(glyph,name);
    const evidence=[mode.sourceName,mode.programKey].filter(Boolean).join(' · ');
    if(evidence)chip.title=labels.source+': '+evidence;
@@ -151,7 +212,7 @@ export const STEP_MODE_CSS=`
  .v204-mode-list{display:flex;flex-wrap:wrap;align-items:center;gap:6px;max-width:100%}
  .v204-mode-chip{display:inline-flex;align-items:center;gap:6px;max-width:100%;box-sizing:border-box;padding:5px 9px;border-radius:10px;border:1px solid var(--divider-color);background:color-mix(in srgb,var(--primary-color) 9%,var(--card-background-color));color:var(--primary-text-color);font-size:.85rem;font-weight:600;line-height:1.45;white-space:normal;overflow-wrap:anywhere}
  .v204-mode-chip ha-icon{--mdc-icon-size:17px;display:inline-flex;flex:0 0 17px}
- .v204-mode-chip[data-v204-mode=missing],.v204-mode-chip[data-v204-mode=preparation],.v204-mode-chip[data-v204-mode=serving]{background:var(--secondary-background-color,var(--card-background-color));font-weight:400}
+ .v204-mode-chip[data-v204-mode=companion],.v204-mode-chip[data-v204-mode=missing],.v204-mode-chip[data-v204-mode=preparation],.v204-mode-chip[data-v204-mode=serving]{background:var(--secondary-background-color,var(--card-background-color));font-weight:400}
  .v204-mode-arrow{color:var(--secondary-text-color)}
  @media(forced-colors:active){.v204-mode-chip{border-color:CanvasText}}
 `;
