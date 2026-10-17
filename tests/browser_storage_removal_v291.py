@@ -59,8 +59,11 @@ SETUP = r"""() => {
    removalRequests.push({type,data:structuredClone(data)});
    if(data.expected_version!=='v1')throw Error('Wrong version');
    const rows=structuredClone(app._houseIngredients);
-   for(const row of rows)row.lots=(row.lots||[]).filter(lot=>lot.id!==data.lot_id);
-   return {houseIngredients:rows.filter(row=>row.unlimited||row.lots.length)};
+   return {houseIngredients:rows.flatMap(row=>{
+    if(!row.lots?.some(lot=>lot.id===data.lot_id))return [row];
+    const lots=row.lots.filter(lot=>lot.id!==data.lot_id);
+    return lots.length?[{...row,lots,quantity:lots.reduce((sum,lot)=>sum+Number(lot.quantity||0),0)}]:[];
+   })};
   }
   if(type==='cook4me/v14/inventory_remove'){
    removalRequests.push({type,data:structuredClone(data)});
@@ -91,25 +94,26 @@ with sync_playwright() as p:
         page.wait_for_function('window.ready')
         page.evaluate(SETUP)
 
-        # One button per expiring package, plus an independent whole-stock action
-        # for every "at home" group, including unlimited salt.
+        # Stock groups are PRODUCT-name groups (v114), not ingredient IDs.
+        # A rice ingredient can have two different named products and the
+        # complete remove action must affect only the chosen product group.
         expect(page.locator('[data-v291-expiry-index]')).to_have_count(2)
-        # The seed may include one additional existing catalog grouping; every
-        # relevant stored ingredient must nevertheless expose exactly one button.
-        assert page.locator('#houseInventoryRows > .v112-stock-group > summary > [data-v291-remove-group]').count() >= 3
-        group_ids=page.evaluate("""() => Object.fromEntries(
-            ['rice','carrot','salt'].map(key => {
-                const row=app._houseIngredients.find(item=>item.key===key);
-                return [key,row?app._v112GroupKey(row):null];
-            })
-        )""")
-        existing=page.locator('#houseInventoryRows > .v112-stock-group').evaluate_all(
-            '(rows)=>rows.map(row=>({key:row.dataset.v112Group,title:row.querySelector("summary strong")?.textContent}))'
+        groups=page.locator('#houseInventoryRows > .v112-stock-group')
+        existing=groups.evaluate_all(
+            '(rows)=>rows.map(row=>({key:row.dataset.v112Group,title:row.querySelector("summary strong")?.textContent,remove:!!row.querySelector("summary [data-v291-remove-group]"),lotIds:[...row.querySelectorAll("[data-v112-edit-lot]")].map(el=>el.dataset.v112EditLot)}))'
         )
-        print(f'STOCK_GROUP_KEYS={existing}; RESOLVED_TARGETS={group_ids}',flush=True)
-        for key,identity in group_ids.items():
-            assert identity, f'Missing inventory row for {key}'
-            expect(page.locator(f'[data-v112-group="{identity}"] > summary > [data-v291-remove-group]')).to_have_count(1)
+        assert len(existing)>=4,existing
+        assert all(row['remove'] for row in existing),existing
+        def group_key(title):
+            matches=[row['key'] for row in existing if (row['title'] or '').startswith(title)]
+            assert len(matches)==1,(title,existing)
+            return matches[0]
+        salt_key=group_key('Αλάτι')
+        old_key=group_key('Ρύζι παλιό')
+        new_key=group_key('Ρύζι νέο')
+        carrot_key=group_key('Καρότο')
+        assert old_key!=new_key
+        print(f'RENDERED_STOCK_GROUPS={existing}',flush=True)
         assert page.locator('[data-v291-expiry-index="0"]').get_attribute('aria-label').startswith('Οριστική')
         assert page.locator('[data-v291-expiry-index="0"]').evaluate('(el)=>el.closest("button button")') is None
         assert page.evaluate("app._houseIngredients[0].lots.length") == 2
@@ -122,9 +126,9 @@ with sync_playwright() as p:
         assert page.evaluate('confirmations[0].includes("παραμείνουν")')
 
         # Cancel a full group deletion and confirm the details accordion stays shut.
-        page.locator(f'[data-v112-group="{group_ids["salt"]}"] > summary > [data-v291-remove-group]').click()
+        page.locator(f'[data-v112-group="{salt_key}"] > summary > [data-v291-remove-group]').click()
         assert page.evaluate('removalRequests.length') == 0
-        assert not page.locator(f'[data-v112-group="{group_ids["salt"]}"]').get_attribute('open')
+        assert not page.locator(f'[data-v112-group="{salt_key}"]').get_attribute('open')
 
         # Delete only the expired Rice lot, preserving the newer Rice package.
         page.evaluate('confirmDecision=true')
@@ -133,16 +137,26 @@ with sync_playwright() as p:
         assert page.evaluate("app._houseIngredients.find(x=>x.key==='rice').lots.map(x=>x.id)") == ['lot-new']
         assert page.evaluate("removalRequests.find(x=>x.type==='cook4me/v33/product_remove').data.expected_version") == 'v1'
         expect(page.locator('[data-v291-expiry-index]')).to_have_count(1)
-        expect(page.locator(f'[data-v112-group="{group_ids["rice"]}"]')).to_have_count(1)
+        expect(page.locator(f'[data-v112-group="{new_key}"]')).to_have_count(1)
 
-        # Remove the unlimited salt entry from At home, with a full inventory
-        # removal (not one batch and not a client-only row hide).
-        page.locator(f'[data-v112-group="{group_ids["salt"]}"] > summary > [data-v291-remove-group]').click()
+        # The other product under Rice is still visible. Remove that complete
+        # At home PRODUCT entry, without redirecting to the ingredient's ID.
+        expect(page.locator(f'[data-v112-group="{old_key}"]')).to_have_count(0)
+        expect(page.locator(f'[data-v112-group="{new_key}"]')).to_have_count(1)
+        page.locator(f'[data-v112-group="{new_key}"] > summary > [data-v291-remove-group]').click()
+        page.wait_for_function("!app._v291Removing && removalRequests.filter(x=>x.type==='cook4me/v33/product_remove').length===2")
+        assert page.evaluate("!app._houseIngredients.some(x=>x.key==='rice')")
+        expect(page.locator(f'[data-v112-group="{new_key}"]')).to_have_count(0)
+        assert page.evaluate("app._houseIngredients.some(x=>x.key==='carrot')")
+
+        # Unlimited stock has no physical package. Remove its entire inventory
+        # row rather than attempting to remove a fabricated lot.
+        page.locator(f'[data-v112-group="{salt_key}"] > summary > [data-v291-remove-group]').click()
         page.wait_for_function("removalRequests.some(x=>x.type==='cook4me/v14/inventory_remove') && !app._v291Removing")
         assert page.evaluate("!app._houseIngredients.some(x=>x.key==='salt')")
-        expect(page.locator(f'[data-v112-group="{group_ids["salt"]}"]')).to_have_count(0)
+        expect(page.locator(f'[data-v112-group="{salt_key}"]')).to_have_count(0)
         assert page.evaluate("removalRequests.find(x=>x.type==='cook4me/v14/inventory_remove').data.identity") == 'k:salt'
-        assert page.evaluate("app._houseIngredients.some(x=>x.key==='carrot')")
+        expect(page.locator(f'[data-v112-group="{carrot_key}"]')).to_have_count(1)
         assert not errors,errors
         print(f'PASS {width}px: lot-only and entire-stock actions, Greek confirmations, cancellation, exact server requests, synchronized lists',flush=True)
         page.close()

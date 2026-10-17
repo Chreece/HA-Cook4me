@@ -19,6 +19,30 @@ export const stockGroupIdentities=(rows,groupKey,getGroupKey,getIdentity)=>{
  return [...ids];
 };
 
+// Product-name groups from the actual v114 renderer are made of physical
+// lots, not necessarily the ingredient's canonical inventory identity.
+// Always resolve the exact rendered package IDs first. Legacy unlimited
+// stock groups expose data-stock-row indices and delete whole identities.
+export const stockGroupTarget=(group,rows,getGroupKey,getIdentity)=>{
+ if(!group||!Array.isArray(rows))return null;
+ const lotIds=[...new Set([...group.querySelectorAll('[data-v112-edit-lot]')]
+  .map(el=>String(el.dataset.v112EditLot||'').trim()).filter(Boolean))];
+ if(lotIds.length){
+  const present=new Set(rows.flatMap(row=>Array.isArray(row?.lots)?row.lots:[])
+   .map(lot=>String(lot?.id||'').trim()).filter(Boolean));
+  // A stale package ID must never be silently redirected to a whole
+  // ingredient or to another product group.
+  if(lotIds.some(id=>!present.has(id)))return null;
+  return {kind:'lots',scope:'group',lotIds};
+ }
+ const indexes=[...new Set([...group.querySelectorAll('[data-stock-row]')]
+  .map(el=>Number(el.dataset.stockRow)).filter(i=>Number.isInteger(i)&&i>=0&&i<rows.length))];
+ const identities=indexes.length?
+  [...new Set(indexes.map(i=>getIdentity(rows[i])).filter(id=>typeof id==='string'&&id.trim()))]:
+  stockGroupIdentities(rows,String(group.dataset.v112Group||''),getGroupKey,getIdentity);
+ return identities.length?{kind:'ingredient',scope:'group',identities}:null;
+};
+
 export const STORAGE_REMOVE_TEXT={
  en:{
   removeLot:'Remove this package completely from storage',
@@ -110,11 +134,11 @@ export const StorageRemovalMixin=Base=>class extends Base{
    button.append(glyph);group.querySelector(':scope > summary')?.append(button);
    button.onclick=event=>{
     event.preventDefault();event.stopPropagation();
-    const identities=stockGroupIdentities(
-     this._houseIngredients,key,row=>this._v112GroupKey(row),row=>this._stockIdentity(row)
+    const target=stockGroupTarget(
+     group,this._houseIngredients,row=>this._v112GroupKey(row),row=>this._stockIdentity(row)
     );
-    if(!identities.length)return;
-    void this._v291Remove({kind:'ingredient',scope:'group',identities},name);
+    if(!target)return;
+    void this._v291Remove(target,name);
    };
   }
  }
@@ -178,21 +202,26 @@ export const StorageRemovalMixin=Base=>class extends Base{
  async _v291Remove(target,name){
   if(this._v291Removing||!this._entryId||!target)return;
   if(target.kind==='ingredient'&&!(target.identities||[]).length)return;
+  if(target.kind==='lots'&&!(target.lotIds||[]).length)return;
   if(!this._v291Confirm(target,name))return;
   const entryId=this._entryId,context=this._prefKey();
   this._v291Removing=true;this._v291ToggleButtons(true);
   try{
-   if(target.kind==='lot'){
-    const details=await this._api('cook4me/v33/product_details',{
-     entry_id:entryId,lot_id:target.lotId,language:this._uiIngredientLanguage?.()||'en'
-    });
-    if(context!==this._prefKey())return;
-    if(String(details?.lot?.id||'')!==target.lotId||!details?.version)throw Error(this._v291Text('changed'));
-    const state=await this._api('cook4me/v33/product_remove',{
-     entry_id:entryId,lot_id:target.lotId,expected_version:details.version
-    });
-    if(context!==this._prefKey())return;
-    this._v291AcceptState(state);
+   if(target.kind==='lot'||target.kind==='lots'){
+    const lotIds=target.kind==='lot'?[target.lotId]:[...new Set(target.lotIds)];
+    for(const lotId of lotIds){
+     if(context!==this._prefKey())return;
+     const details=await this._api('cook4me/v33/product_details',{
+      entry_id:entryId,lot_id:lotId,language:this._uiIngredientLanguage?.()||'en'
+     });
+     if(context!==this._prefKey())return;
+     if(String(details?.lot?.id||'')!==lotId||!details?.version)throw Error(this._v291Text('changed'));
+     const state=await this._api('cook4me/v33/product_remove',{
+      entry_id:entryId,lot_id:lotId,expected_version:details.version
+     });
+     if(context!==this._prefKey())return;
+     this._v291AcceptState(state);
+    }
    }else{
     for(const identity of [...new Set(target.identities)]){
      if(context!==this._prefKey())return;

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
- expiryStorageTarget, stockGroupIdentities, StorageRemovalMixin, STORAGE_REMOVE_TEXT
+ expiryStorageTarget, stockGroupIdentities, stockGroupTarget, StorageRemovalMixin, STORAGE_REMOVE_TEXT
 } from '../custom_components/cook4me/frontend/storage-removal-v291.js';
 
 test('expiring item always selects its single stable package; fallback is explicit whole ingredient',()=>{
@@ -15,6 +15,40 @@ test('a grouped stock row resolves ALL underlying inventory identities without d
  assert.deepEqual(stockGroupIdentities(rows,'rice',r=>r.group,r=>r.id),['k:rice','k:rice-2']);
  assert.deepEqual(stockGroupIdentities(rows,'none',r=>r.group,r=>r.id),[]);
  assert.deepEqual(stockGroupIdentities(rows,'rice',r=>r.group,()=>''),[]);
+});
+
+
+test('product-name group deletes exactly its displayed lots, not all of the ingredient',()=>{
+ const rows=[
+  {key:'rice',lots:[{id:'lot-old',productName:'Old rice'},{id:'lot-new',productName:'New rice'}]},
+  {key:'carrot',lots:[{id:'lot-carrot',productName:'Carrot'}]}
+ ];
+ const group={
+  dataset:{v112Group:'new rice'},
+  querySelectorAll(selector){
+   if(selector==='[data-v112-edit-lot]')return [{dataset:{v112EditLot:'lot-new'}}];
+   return [];
+  }
+ };
+ const target=stockGroupTarget(group,rows,()=> 'k:rice',row=>'k:'+row.key);
+ assert.deepEqual(target,{kind:'lots',scope:'group',lotIds:['lot-new']});
+ assert.equal(stockGroupTarget(
+  {...group,querySelectorAll:selector=>selector==='[data-v112-edit-lot]'?[{dataset:{v112EditLot:'stale-lot'}}]:[]},
+  rows,()=> 'k:rice',row=>'k:'+row.key
+ ),null,'stale product grouping must fail closed rather than deleting whole ingredient');
+});
+
+test('legacy unlimited stock groups use stable row indexes to delete one whole ingredient',()=>{
+ const rows=[{key:'rice',lots:[{id:'lot-a'}]},{key:'salt',unlimited:true}];
+ const group={
+  dataset:{v112Group:'salt'},
+  querySelectorAll(selector){
+   if(selector==='[data-stock-row]')return [{dataset:{stockRow:'1'}}];
+   return [];
+  }
+ };
+ assert.deepEqual(stockGroupTarget(group,rows,row=>'k:'+row.key,row=>'k:'+row.key),
+  {kind:'ingredient',scope:'group',identities:['k:salt']});
 });
 
 class FixtureBase {
@@ -100,6 +134,33 @@ test('At home removal deletes all inventory from one group and retains other ing
   assert.deepEqual(instance._houseIngredients.map(x=>x.key),['salt']);
   assert.equal(instance.syncCount,1);
   assert.equal(instance._v291Removing,false);
+ }finally{globalThis.confirm=original;}
+});
+
+
+test('At home removes the entire displayed product group via individual versioned lots',async()=>{
+ const original=globalThis.confirm;globalThis.confirm=()=>true;
+ try{
+  const instance=new Fixture();
+  await instance._v291Remove({kind:'lots',scope:'group',lotIds:['lot-new']},'New rice');
+  assert.deepEqual(instance.calls.map(x=>x.type),[
+   'cook4me/v33/product_details','cook4me/v33/product_remove'
+  ]);
+  assert.deepEqual(instance._houseIngredients.find(x=>x.key==='rice').lots.map(l=>l.id),['lot-old']);
+  assert.equal(instance._houseIngredients.find(x=>x.key==='salt').unlimited,true);
+ }finally{globalThis.confirm=original;}
+});
+
+test('multi-package product group confirms once and removes all matching lots',async()=>{
+ const original=globalThis.confirm;let prompts=0;
+ globalThis.confirm=()=>{prompts++;return true;};
+ try{
+  const instance=new Fixture();
+  await instance._v291Remove({kind:'lots',scope:'group',lotIds:['lot-old','lot-new']},'Rice product');
+  assert.equal(prompts,1);
+  assert.equal(instance.calls.filter(x=>x.type==='cook4me/v33/product_remove').length,2);
+  assert.deepEqual(instance._houseIngredients.find(x=>x.key==='rice').lots,[]);
+  assert.equal(instance._houseIngredients.some(x=>x.key==='salt'),true);
  }finally{globalThis.confirm=original;}
 });
 
