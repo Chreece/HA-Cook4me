@@ -62,15 +62,22 @@ export const LoadedDeviceRecipeMixin=Base=>class extends Base{
  }
  _v81RenderInfo(...args){
   const result=super._v81RenderInfo(...args);
-  const dialog=this._v81InfoDialog,view=this._v81View?.(),entry=this._entry?.();
+  const dialog=this._v81InfoDialog;
+  if(!dialog?.isConnected)return result;
+  const view=this._v81View?.(),entry=this._entry?.();
   const target=loadedRecipeTarget(entry,view);
-  if(!dialog?.isConnected||!target)return result;
   const details=dialog.querySelector('[data-v81-details]');
   const dt=[...details?.querySelectorAll('dt')||[]]
    .find(node=>node.textContent===this._v81Text('recipe'));
   const cell=dt?.nextElementSibling;
   if(cell?.tagName!=='DD')return result;
   const old=cell.querySelector('[data-v284-loaded-recipe]');
+  if(!target){
+   // A cooker can retain the same title while its variant ID disappears.
+   // Remove stale clickable controls rather than leaving an inert button.
+   if(old)cell.textContent=str(view?.state?.recipeTitle)||str(entry?.loadedRecipe?.title);
+   return result;
+  }
   // _v81RenderInfo caches the canonical row HTML, so the same button survives
   // regular device subscriptions and retains keyboard focus.
   if(old?.dataset.variant===target.variant&&old?.textContent===(target.title||this._v284Text('recipe')))return result;
