@@ -97,7 +97,18 @@ with sync_playwright() as p:
         # The seed may include one additional existing catalog grouping; every
         # relevant stored ingredient must nevertheless expose exactly one button.
         assert page.locator('#houseInventoryRows > .v112-stock-group > summary > [data-v291-remove-group]').count() >= 3
-        for identity in ('k:rice','k:carrot','k:salt'):
+        group_ids=page.evaluate("""() => Object.fromEntries(
+            ['rice','carrot','salt'].map(key => {
+                const row=app._houseIngredients.find(item=>item.key===key);
+                return [key,row?app._v112GroupKey(row):null];
+            })
+        )""")
+        existing=page.locator('#houseInventoryRows > .v112-stock-group').evaluate_all(
+            '(rows)=>rows.map(row=>({key:row.dataset.v112Group,title:row.querySelector("summary strong")?.textContent}))'
+        )
+        print(f'STOCK_GROUP_KEYS={existing}; RESOLVED_TARGETS={group_ids}',flush=True)
+        for key,identity in group_ids.items():
+            assert identity, f'Missing inventory row for {key}'
             expect(page.locator(f'[data-v112-group="{identity}"] > summary > [data-v291-remove-group]')).to_have_count(1)
         assert page.locator('[data-v291-expiry-index="0"]').get_attribute('aria-label').startswith('Οριστική')
         assert page.locator('[data-v291-expiry-index="0"]').evaluate('(el)=>el.closest("button button")') is None
@@ -111,9 +122,9 @@ with sync_playwright() as p:
         assert page.evaluate('confirmations[0].includes("παραμείνουν")')
 
         # Cancel a full group deletion and confirm the details accordion stays shut.
-        page.locator('[data-v112-group="k:salt"] > summary > [data-v291-remove-group]').click()
+        page.locator(f'[data-v112-group="{group_ids["salt"]}"] > summary > [data-v291-remove-group]').click()
         assert page.evaluate('removalRequests.length') == 0
-        assert not page.locator('[data-v112-group="k:salt"]').get_attribute('open')
+        assert not page.locator(f'[data-v112-group="{group_ids["salt"]}"]').get_attribute('open')
 
         # Delete only the expired Rice lot, preserving the newer Rice package.
         page.evaluate('confirmDecision=true')
@@ -122,14 +133,14 @@ with sync_playwright() as p:
         assert page.evaluate("app._houseIngredients.find(x=>x.key==='rice').lots.map(x=>x.id)") == ['lot-new']
         assert page.evaluate("removalRequests.find(x=>x.type==='cook4me/v33/product_remove').data.expected_version") == 'v1'
         expect(page.locator('[data-v291-expiry-index]')).to_have_count(1)
-        expect(page.locator('[data-v112-group="k:rice"]')).to_have_count(1)
+        expect(page.locator(f'[data-v112-group="{group_ids["rice"]}"]')).to_have_count(1)
 
         # Remove the unlimited salt entry from At home, with a full inventory
         # removal (not one batch and not a client-only row hide).
-        page.locator('[data-v112-group="k:salt"] > summary > [data-v291-remove-group]').click()
+        page.locator(f'[data-v112-group="{group_ids["salt"]}"] > summary > [data-v291-remove-group]').click()
         page.wait_for_function("removalRequests.some(x=>x.type==='cook4me/v14/inventory_remove') && !app._v291Removing")
         assert page.evaluate("!app._houseIngredients.some(x=>x.key==='salt')")
-        expect(page.locator('[data-v112-group="k:salt"]')).to_have_count(0)
+        expect(page.locator(f'[data-v112-group="{group_ids["salt"]}"]')).to_have_count(0)
         assert page.evaluate("removalRequests.find(x=>x.type==='cook4me/v14/inventory_remove').data.identity") == 'k:salt'
         assert page.evaluate("app._houseIngredients.some(x=>x.key==='carrot')")
         assert not errors,errors
