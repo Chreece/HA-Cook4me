@@ -93,6 +93,16 @@ with sync_playwright() as p:
         page.set_content(HTML)
         page.wait_for_function('window.ready')
         page.evaluate(SETUP)
+        # The At home inventory is inside a collapsible stock details section.
+        # Count locators can see hidden elements, but a real click requires
+        # the parent section to be explicitly open, just as a user opens it.
+        page.evaluate("""() => {
+            const rows=app.shadowRoot.querySelector('#houseInventoryRows');
+            for(let parent=rows?.parentElement;parent;parent=parent.parentElement)
+                if(parent.tagName==='DETAILS')parent.open=true;
+            const stock=app.shadowRoot.querySelector('[data-v78-section="stock"]');
+            if(stock)stock.hidden=false;
+        }""")
 
         # Stock groups are PRODUCT-name groups (v114), not ingredient IDs.
         # A rice ingredient can have two different named products and the
