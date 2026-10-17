@@ -105,7 +105,7 @@ test('active panel imports v290 modes with a fresh custom element and module URL
   assert.match(panel,/data-cook4me-ui-revision','268'/);
   assert.match(panel,/runtime-v259/);
   assert.match(registration,/_URL_BASE = "\/cook4me_static\/2026\.9\.27\.2\/runtime-v249"/);
-  assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v290"/);
+  assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v291"/);
   assert.match(registration,/modes=290/);
   assert.match(registration,/progress=260/);
   assert.match(registration,/today=261/);

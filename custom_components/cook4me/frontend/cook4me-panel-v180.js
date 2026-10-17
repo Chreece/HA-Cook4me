@@ -1,3 +1,4 @@
+import {StorageRemovalMixin} from './storage-removal-v291.js';
 import {LoadedDeviceRecipeMixin} from './loaded-device-recipe-v284.js';
 import {ConsumptionDeductionMixin} from './consumption-deduction-v272.js';
 import {KitchenStockScanMixin} from './kitchen-stock-scan-v271.js';
@@ -268,3 +269,5 @@ if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v272'))customEleme
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v284'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v284',LoadedDeviceRecipeMixin(customElements.get('cook4me-recipe-hub-panel-v180-runtime-v272')));
 // New element identity loads v290 even if an older element is already registered.
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v290'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v290',class extends customElements.get('cook4me-recipe-hub-panel-v180-runtime-v284'){});
+// Versioned stock removal tools for expiry lots and home inventory groups.
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v291'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v291',StorageRemovalMixin(customElements.get('cook4me-recipe-hub-panel-v180-runtime-v290')));

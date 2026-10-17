@@ -34,6 +34,7 @@ jobs:
           node --test tests/test_recipe_step_modes_v204.mjs
           node --test tests/test_recipe_step_modes_v259.mjs
           node --test tests/test_recipe_step_modes_v290.mjs
+          node --test tests/test_storage_removal_v291.mjs
       - name: Audit all available recipe program evidence
         run: node --test tests/test_program_mode_audit_v285.mjs
       - name: Validate bounded official SEB API name audit (offline fixtures)
@@ -50,6 +51,8 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Current full frontend and original step handlers
         run: python tests/browser_recipe_step_modes_v204.py --full-chain
+      - name: Complete stock removal in real mobile and desktop frontend
+        run: python tests/browser_storage_removal_v291.py
       - name: Compact header in full current frontend
         run: python tests/browser_device_header_v207.py --full-chain
       - name: Syntax
@@ -58,6 +61,7 @@ jobs:
           node --check custom_components/cook4me/frontend/recipe-step-modes-v204.js
           node --check custom_components/cook4me/frontend/recipe-step-modes-v259.js
           node --check custom_components/cook4me/frontend/recipe-step-modes-v290.js
+          node --check custom_components/cook4me/frontend/storage-removal-v291.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v180.js
           node --check custom_components/cook4me/frontend/device-header-v207.js
           bash -n tools/run_cook4me_mode_audit_v288.sh
