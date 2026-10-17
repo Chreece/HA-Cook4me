@@ -53,24 +53,38 @@ const summary={
  schema:1, source:'Cook4Me production recipe-step resolver', timestamp:new Date().toISOString(),
  inputs:[], scan:{objects:0,recipeContainers:0,recipesWithSteps:0,steps:0,programReferences:0,
   resolved:0,unknownNamed:0,unknownKeyOnly:0,noStepProgramEvidence:0,
-  manualSteps:0,opaqueKeys:0},
+  manualSteps:0,opaqueKeys:0,foreignApplianceOperations:0},
  modes:{},unknownPrograms:{},sourceKeyConflicts:{},samples:[],
  warnings:[],
 };
 const counts=summary.scan;
-const seenStepSignatures=new Set();
-const groups=new Map(),conflicts=new Map();
+const groups=new Map();
 const acceptable=s=>typeof s==='string'?s.trim():'';
+function groupName(row){
+ const raw=row?.applianceGroup;
+ return typeof raw==='string'?raw.trim():acceptable(raw?.key);
+}
 function programRow(step){
- const p=Array.isArray(step.programs)?step.programs:
-  (step.programName||step.programKey)?[step]:[];
- return p.filter(x=>x&&typeof x==='object'&&!Array.isArray(x));
+ if(Array.isArray(step.programs))return step.programs.filter(x=>x&&typeof x==='object'&&!Array.isArray(x));
+ if(step.programName||step.programKey)return [step];
+ if(!Array.isArray(step.sequences))return [];
+ const rows=step.sequences.filter(x=>x&&typeof x==='object'&&!Array.isArray(x));
+ const scoped=rows.filter(x=>groupName(x)==='APPLIANCE_GROUP_15');
+ const selected=scoped.length?scoped:rows.filter(x=>!groupName(x));
+ const found=[];
+ for(const row of selected)for(const operation of Array.isArray(row.operations)?row.operations:[]){
+  const program=operation?.program;
+  if(!program||typeof program!=='object'||Array.isArray(program))continue;
+  const name=acceptable(program.name),key=acceptable(program.key);
+  if(name||key)found.push({programName:name,programKey:key,applianceGroup:groupName(row)});
+ }
+ return found;
 }
 function recordStep(step,recipeIdentity,fileId,index){
  if(!step||typeof step!=='object'||Array.isArray(step))return;
  const programs=programRow(step);
  counts.steps++;
- const res=stepCookingModes(step,'en');
+ const res=stepCookingModes(Array.isArray(step.programs)?step:step.sequences?{...step,programs}:step,'en');
  const group=programs.length?programs:[{}];
  if(!programs.length){
   counts.noStepProgramEvidence++;
@@ -80,8 +94,11 @@ function recordStep(step,recipeIdentity,fileId,index){
   const row=group[j];
   const evidence=programs.length?row:null;
   if(!evidence)continue;
+  if(groupName(row)&&groupName(row)!=='APPLIANCE_GROUP_15'){
+   counts.foreignApplianceOperations++;continue;
+  }
   const name=acceptable(row.programName),key=acceptable(row.programKey);
-  const resolved=res[j]||stepCookingModes(row,'en')[0];
+  const resolved=stepCookingModes(row,'en')[0];
   // If the UI skips foreign appliance groups, follow its effective output.
   const kind=resolved?.kind||'missing',mode=resolved?.mode||null;
   const rawIdentity=name+'|'+key+'|'+(row.applianceGroup||'');
@@ -119,7 +136,7 @@ function inspectPayload(payload,fileId){
   }
   if(Array.isArray(value.steps)&&value.steps.length&&
     value.steps.some(x=>x&&typeof x==='object'&&
-      ('programName' in x||'programKey' in x||'programs' in x||'sequences' in x))){
+      ('programName' in x||'programKey' in x||'programs' in x||'sequences' in x||'instruction' in x||'instructions' in x||'typeName' in x))){
    counts.recipeContainers++;counts.recipesWithSteps++;
    const ident=acceptable(value.displayVariantId)||acceptable(value.searchVariantId)||
     acceptable(value.variantFunctionalId)||acceptable(value.functionalId)||identity;
@@ -155,6 +172,18 @@ for(const name of stores){
   }
   summary.inputs.push({kind:'recipe_cache',storeHash:hash(name),detailRecords:records});
  }catch(e){summary.warnings.push('RECIPE_CACHE_READ_ERROR '+hash(name)+' '+e.constructor.name);}
+}
+// Saved, user-authored recipes may carry program fields not present in the catalog.
+for(const name of stores.map(n=>n.replace(/\.recipe_cache$/,'.recipe_hub'))){
+ const file=path.join(storesDir,name);
+ if(!fs.existsSync(file))continue;
+ try{
+  const data=readJSON(file),recipes=data?.data?.recipes;
+  if(Array.isArray(recipes)){
+   inspectPayload(recipes,'saved_recipes:'+hash(name));
+   summary.inputs.push({kind:'saved_recipe_hub',storeHash:hash(name),recipeCount:recipes.length});
+  }
+ }catch(e){summary.warnings.push('RECIPE_HUB_READ_ERROR '+hash(name)+' '+e.constructor.name);}
 }
 const catalog=findCatalog();
 if(catalog){
