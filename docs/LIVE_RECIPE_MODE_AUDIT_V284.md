@@ -66,3 +66,11 @@ still required before public release.
 
 Only frontend files and the panel registration change. Appliance state,
 storage, inventory, credentials and cooking commands are untouched.
+
+## Full runtime inheritance
+
+The v284 element explicitly wraps the **previous active v272 constructor**, not
+only the v180 base panel. This retains the v269 MobileProduct, v270 ProductCatalog,
+v271 KitchenStockScan and v272 ConsumptionDeduction behavior, including tare,
+scanner, pantry and consumption controls. Legacy v198–v272 constructors remain
+unchanged for consumers of those versions.
