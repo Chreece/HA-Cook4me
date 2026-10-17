@@ -94,7 +94,7 @@ with sync_playwright() as p:
         # One button per expiring package, plus an independent whole-stock action
         # for every "at home" group, including unlimited salt.
         expect(page.locator('[data-v291-expiry-index]')).to_have_count(2)
-        expect(page.locator('#houseInventoryRows > .v112-stock-group > [data-v291-remove-group]')).to_have_count(3)
+        expect(page.locator('#houseInventoryRows > .v112-stock-group > summary > [data-v291-remove-group]')).to_have_count(3)
         assert page.locator('[data-v291-expiry-index="0"]').get_attribute('aria-label').startswith('Οριστική')
         assert page.locator('[data-v291-expiry-index="0"]').evaluate('(el)=>el.closest("button button")') is None
         assert page.evaluate("app._houseIngredients[0].lots.length") == 2
@@ -107,7 +107,7 @@ with sync_playwright() as p:
         assert page.evaluate('confirmations[0].includes("παραμείνουν")')
 
         # Cancel a full group deletion and confirm the details accordion stays shut.
-        page.locator('[data-v112-group="k:salt"] > [data-v291-remove-group]').click()
+        page.locator('[data-v112-group="k:salt"] > summary > [data-v291-remove-group]').click()
         assert page.evaluate('removalRequests.length') == 0
         assert not page.locator('[data-v112-group="k:salt"]').get_attribute('open')
 
@@ -122,7 +122,7 @@ with sync_playwright() as p:
 
         # Remove the unlimited salt entry from At home, with a full inventory
         # removal (not one batch and not a client-only row hide).
-        page.locator('[data-v112-group="k:salt"] > [data-v291-remove-group]').click()
+        page.locator('[data-v112-group="k:salt"] > summary > [data-v291-remove-group]').click()
         page.wait_for_function("removalRequests.some(x=>x.type==='cook4me/v14/inventory_remove') && !app._v291Removing")
         assert page.evaluate("!app._houseIngredients.some(x=>x.key==='salt')")
         expect(page.locator('[data-v112-group="k:salt"]')).to_have_count(0)

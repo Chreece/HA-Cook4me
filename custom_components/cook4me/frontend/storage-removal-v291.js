@@ -97,7 +97,7 @@ export const StorageRemovalMixin=Base=>class extends Base{
   const groups=root?.querySelectorAll?.('#houseInventoryRows > .v112-stock-group')||[];
   for(const group of groups){
    const key=String(group.dataset.v112Group||'');
-   if(!key||group.querySelector(':scope > [data-v291-remove-group]'))continue;
+   if(!key||group.querySelector(':scope > summary [data-v291-remove-group]'))continue;
    const name=group.querySelector(':scope > summary strong')?.textContent?.trim()||this._v291Text('item');
    group.classList.add('v291-stock-group');
    const button=document.createElement('button');
@@ -107,7 +107,7 @@ export const StorageRemovalMixin=Base=>class extends Base{
    button.title=button.ariaLabel=this._v291Text('removeGroup')+': '+name;
    const glyph=document.createElement('ha-icon');
    glyph.setAttribute('icon','mdi:delete-outline');glyph.setAttribute('aria-hidden','true');
-   button.append(glyph);group.append(button);
+   button.append(glyph);group.querySelector(':scope > summary')?.append(button);
    button.onclick=event=>{
     event.preventDefault();event.stopPropagation();
     const identities=stockGroupIdentities(
@@ -231,7 +231,7 @@ export const StorageRemovalMixin=Base=>class extends Base{
 .v291-remove-btn ha-icon{--mdc-icon-size:21px}\
 .v291-stock-group{position:relative}\
 .v291-stock-group>summary{padding-inline-end:70px!important;min-height:36px}\
-.v291-stock-group>[data-v291-remove-group]{position:absolute;inset-inline-end:12px;top:10px;width:40px;min-width:40px;min-height:40px}\
+.v291-stock-group>summary>[data-v291-remove-group]{position:absolute;inset-inline-end:12px;top:10px;width:40px;min-width:40px;min-height:40px}\
 @media(max-width:620px){.v291-expiry-wrap{grid-template-columns:minmax(0,1fr) 40px;gap:5px}.v291-expiry-wrap>.v291-remove-btn{width:40px;min-width:40px}}';
   this.shadowRoot.append(style);
  }
