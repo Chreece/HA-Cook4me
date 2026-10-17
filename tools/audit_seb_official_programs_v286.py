@@ -20,7 +20,7 @@ import time
 from typing import Any
 
 DEFAULT_MARKETS = "DE:de,FR:fr,ES:es,IT:it,PL:pl,CZ:cs,PT:pt,NL:nl,GB:en,TR:tr"
-MAX_TOTAL_ACTIONS = 90
+MAX_TOTAL_ACTIONS = 180
 LANG_RE = re.compile(r"^[a-z]{2,3}$")
 COUNTRY_RE = re.compile(r"^[A-Z]{2}$")
 GROUP = "APPLIANCE_GROUP_15"
@@ -112,6 +112,22 @@ def parse_markets(raw: str) -> list[tuple[str, str]]:
     return out
 
 
+def parse_page_indices(raw: str) -> list[int]:
+    """Explicit, bounded search page sampling; never guess any backend facet."""
+    result = []
+    for field in str(raw).split(","):
+        if not field or not field.strip().isdigit():
+            raise ValueError("Page indices must be a comma-separated list of nonnegative integers")
+        number = int(field)
+        if number > 500:
+            raise ValueError("Page index exceeds safe audit bound")
+        if number not in result:
+            result.append(number)
+    if not 1 <= len(result) <= 5:
+        raise ValueError("Select 1 to 5 SEB search pages")
+    return result
+
+
 def digest(value: str) -> str:
     return sha256(value.encode()).hexdigest()[:12]
 
@@ -147,6 +163,7 @@ def collect_names(rows: list[tuple[str, str]], *, country: str, language: str,
 
 def offline_self_test() -> None:
     assert parse_markets("DE:de,FR:fr,DE:de") == [("DE", "de"), ("FR", "fr")]
+    assert parse_page_indices("0,3,12,3") == [0,3,12]
     fixture = {
         "steps": [
             {"programs": [
@@ -191,9 +208,11 @@ def audit(arguments) -> dict:
         raise RuntimeError("SEB endpoint is not HTTPS")
     tokens, device_country, device_lang, app_version = token_doc(path)
     markets = parse_markets(arguments.markets)
+    pages = parse_page_indices(arguments.page_indices)
     report = audited_report()
     report["parameters"] = {
         "markets": [country+":"+lang for country, lang in markets],
+        "pages": pages,
         "maxActions": arguments.max_actions,
         "detailsPerMarket": arguments.details_per_market,
         "pageSize": arguments.page_size,
@@ -230,58 +249,67 @@ def audit(arguments) -> dict:
         except Exception as exc:
             info["reason"] = "SEB_PLATFORM_CONFIG_" + type(exc).__name__
             continue
-        search_url = cfg["platform_base_url"].rstrip("/") + "/common-api/v4/search/recipes"
-        body = proven.search_body(language, f"GS_{country}")
-        params = {
-            "lang": language, "market": f"GS_{country}", "page": 0,
-            "size": arguments.page_size, "q": "",
-            "groupBy": "", "myUniverse": "false", "myOwnRecipe": "false",
-            "withAutomaticSpellcheck": "true",
-        }
-        try:
-            action_count += 1
-            requests["recipeSearches"] += 1
-            data, _auth_mode = catalog._http_json(
-                "POST", search_url,
-                headers_iter=catalog._request_headers(
-                    cfg, tokens, country, language, app_version, search_url, pcfg),
-                params=params, body=body, timeout=25,
-            )
-            requests["successfulSearches"] += 1
-            throttle()
-        except Exception as exc:
-            info["reason"] = "SEB_SEARCH_" + type(exc).__name__
-            continue
-
-        variants = []
-        for row in data.get("content", []) if isinstance(data, dict) else []:
-            if isinstance(row, dict):
-                lightweight = catalog._light_search_row(row)
-                variant = lightweight.get("searchVariantId") if isinstance(lightweight, dict) else None
-                if variant and variant not in variants:
-                    variants.append(variant)
-        info["recipeVariantsDiscovered"] = len(variants)
-        info["result"] = "search_ok"
-        for variant in variants[:arguments.details_per_market]:
+        seen_variants: set[str] = set()
+        info["pagesScanned"] = []
+        for page in pages:
             if not allowed():
-                report["warnings"].append("BOUNDED_AUDIT_STOPPED")
+                if "BOUNDED_AUDIT_STOPPED" not in report["warnings"]:
+                    report["warnings"].append("BOUNDED_AUDIT_STOPPED")
                 break
+            info["pagesScanned"].append(page)
+            search_url = cfg["platform_base_url"].rstrip("/") + "/common-api/v4/search/recipes"
+            body = proven.search_body(language, f"GS_{country}")
+            params = {
+                "lang": language, "market": f"GS_{country}", "page": page,
+                "size": arguments.page_size, "q": "",
+                "groupBy": "", "myUniverse": "false", "myOwnRecipe": "false",
+                "withAutomaticSpellcheck": "true",
+            }
             try:
                 action_count += 1
-                requests["recipeDetails"] += 1
-                detail = catalog.recipe_detail(
-                    cfg, tokens, variant, country=country, language=language,
-                    configured_language=language, app_version=app_version, pcfg=pcfg)
-                requests["successfulDetails"] += 1
-                info["detailsLoaded"] += 1
-                pairs = program_rows(detail)
-                info["programPairsObserved"] += len(pairs)
-                collect_names(pairs, country=country, language=language, inventory=inventory)
+                requests["recipeSearches"] += 1
+                data, _auth_mode = catalog._http_json(
+                    "POST", search_url,
+                    headers_iter=catalog._request_headers(
+                        cfg, tokens, country, language, app_version, search_url, pcfg),
+                    params=params, body=body, timeout=25,
+                )
+                requests["successfulSearches"] += 1
                 throttle()
             except Exception as exc:
-                reason = "SEB_DETAIL_" + type(exc).__name__
-                if reason not in report["warnings"]:
-                    report["warnings"].append(reason)
+                info["reason"] = "SEB_SEARCH_" + type(exc).__name__
+                continue
+
+            variants = []
+            for row in data.get("content", []) if isinstance(data, dict) else []:
+                if isinstance(row, dict):
+                    lightweight = catalog._light_search_row(row)
+                    variant = lightweight.get("searchVariantId") if isinstance(lightweight, dict) else None
+                    if variant and variant not in seen_variants:
+                        variants.append(variant)
+                        seen_variants.add(variant)
+            info["recipeVariantsDiscovered"] += len(variants)
+            info["result"] = "search_ok"
+            for variant in variants[:arguments.details_per_market]:
+                if not allowed():
+                    report["warnings"].append("BOUNDED_AUDIT_STOPPED")
+                    break
+                try:
+                    action_count += 1
+                    requests["recipeDetails"] += 1
+                    detail = catalog.recipe_detail(
+                        cfg, tokens, variant, country=country, language=language,
+                        configured_language=language, app_version=app_version, pcfg=pcfg)
+                    requests["successfulDetails"] += 1
+                    info["detailsLoaded"] += 1
+                    pairs = program_rows(detail)
+                    info["programPairsObserved"] += len(pairs)
+                    collect_names(pairs, country=country, language=language, inventory=inventory)
+                    throttle()
+                except Exception as exc:
+                    reason = "SEB_DETAIL_" + type(exc).__name__
+                    if reason not in report["warnings"]:
+                        report["warnings"].append(reason)
         if info["detailsLoaded"]:
             info["result"] = "details_ok"
     report["programs"] = sorted(
@@ -313,6 +341,7 @@ def main() -> None:
     p = argparse.ArgumentParser(description="Read-only official SEB cooking-program name audit")
     p.add_argument("--root", default="/config")
     p.add_argument("--markets", default=DEFAULT_MARKETS)
+    p.add_argument("--page-indices", default="0", help="Page numbers, e.g. 0,3,12")
     p.add_argument("--page-size", type=int, default=12)
     p.add_argument("--details-per-market", type=int, default=4)
     p.add_argument("--max-actions", type=int, default=52)
@@ -325,7 +354,7 @@ def main() -> None:
         return
     if not 1 <= args.page_size <= 30 or not 1 <= args.details_per_market <= 12:
         p.error("page-size or details-per-market outside safe audit limits")
-    if not 1 <= args.max_actions <= MAX_TOTAL_ACTIONS or not 15 <= args.max_seconds <= 600:
+    if not 1 <= args.max_actions <= MAX_TOTAL_ACTIONS or not 15 <= args.max_seconds <= 900:
         p.error("request/time cap outside safe bounds")
     if args.delay < 0.25 or args.delay > 6:
         p.error("delay must be between 0.25 and 6 seconds")
