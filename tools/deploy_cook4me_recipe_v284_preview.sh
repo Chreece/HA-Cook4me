@@ -10,7 +10,7 @@ done
 CONFIG=/home/chreece/homeassistant/config
 RUNTIME="$CONFIG/custom_components/cook4me"
 HA=homeassistant
-GITHUB="https://raw.githubusercontent.com/Chreece/HA-Cook4me/9ac96e34a37e269197cfcf24407d9309c7f7663f"
+GITHUB="https://raw.githubusercontent.com/Chreece/HA-Cook4me/1153fa35ea86f02c1606ba42ef69657feae0da84"
 LOGROOT=/home/chreece/projects/cook4me/logs
 BACKUPROOT=/home/chreece/projects/cook4me/recovery
 [[ -f "$RUNTIME/panel.py" && -d "$RUNTIME/frontend" ]] || { echo "Cook4Me frontend missing"; exit 1; }
@@ -37,7 +37,7 @@ HAD_MODULE=0
 [[ -f "$RUNTIME/frontend/loaded-device-recipe-v284.js" ]] && HAD_MODULE=1
 record_report(){
   local status="$1"
-  printf 'RESULT=%s\nSOURCE_COMMIT=9ac96e34a37e269197cfcf24407d9309c7f7663f\n' "$status" >"$BACKUP/status.txt"
+  printf 'RESULT=%s\nSOURCE_COMMIT=1153fa35ea86f02c1606ba42ef69657feae0da84\n' "$status" >"$BACKUP/status.txt"
   tar -czf "$REPORT" -C "$BACKUP" status.txt install.log || :
   local owner
   owner=$(printenv SUDO_USER || true)
@@ -80,12 +80,12 @@ while read -r path expected; do
   curl -fLsS --retry 3 --connect-timeout 12 --max-time 80 "$url" -o "$STAGE/$path"
   [[ "$(git hash-object "$STAGE/$path")" == "$expected" ]] || { echo "Candidate hash mismatch: $path"; false; }
 done <<'MANIFEST'
-frontend/loaded-device-recipe-v284.js dc34e6a9cdae2e1bdb6c83274b735184fbce81f9
+frontend/loaded-device-recipe-v284.js 41b8d7ebfb1b4a223e52e5bc565b195746817b66
 frontend/recipe-step-modes-v259.js eef1f1c1f5ffa29689f5399a97e8f244e0dea2f1
 frontend/cook4me-panel-v81.js d0ec4929c1aba5a3ff93853fe3b0b34cde3a06f7
-frontend/cook4me-panel-v180.js bbabb8f4468a10d0e754617293e0a4d0f6fca4bf
+frontend/cook4me-panel-v180.js b59a861f9977a9e49c1cedf2938c2fd547d5db74
 panel.py 385f7eef7cd2905d29d3e5ddb2bebd0b3c5eb660
-tests/test_loaded_device_recipe_v284.mjs 741edc1bfd190cafd06c939815a847e4c7574697
+tests/test_loaded_device_recipe_v284.mjs dc695ca08fbb26f2565f216813c70aa4f1962359
 tests/test_recipe_step_modes_v259.mjs edab6a3d4551150455aaa3654eb2982387e5afb4
 MANIFEST
 # Retain repository-relative imports for the exact node:test files.
@@ -100,6 +100,10 @@ p=Path(sys.argv[1])
 compile(p.read_bytes(),str(p),"exec")
 print('Python registration syntax: PASS')
 PY
+echo "Checking candidate JavaScript syntax before running focused tests"
+for path in frontend/loaded-device-recipe-v284.js frontend/recipe-step-modes-v259.js frontend/cook4me-panel-v81.js frontend/cook4me-panel-v180.js; do
+  node --check "$STAGE/$path"
+done
 echo "Running v284 navigation/mode tests and retained v259 mode tests"
 node --test "$STAGE/tests/test_loaded_device_recipe_v284.mjs" "$STAGE/tests/test_recipe_step_modes_v259.mjs"
 echo "RECIPE_REGRESSIONS=PASS"
@@ -110,11 +114,11 @@ while read -r path baseline candidate; do
 done <<'BASELINES'
 frontend/recipe-step-modes-v259.js 107d0f6a293ed9aa51f3737126ece18b7fd7b5ca eef1f1c1f5ffa29689f5399a97e8f244e0dea2f1
 frontend/cook4me-panel-v81.js cfbf48194abe53c21d5118cd91888efc64bbee89 d0ec4929c1aba5a3ff93853fe3b0b34cde3a06f7
-frontend/cook4me-panel-v180.js 0bcbbb579ba483fee4ad48788c61c527f740959f bbabb8f4468a10d0e754617293e0a4d0f6fca4bf
+frontend/cook4me-panel-v180.js 0bcbbb579ba483fee4ad48788c61c527f740959f b59a861f9977a9e49c1cedf2938c2fd547d5db74
 panel.py 28a680e25014813efec4dd370bb686126c9225a5 385f7eef7cd2905d29d3e5ddb2bebd0b3c5eb660
 BASELINES
 if (( HAD_MODULE )); then
-  [[ "$(git hash-object "$RUNTIME/frontend/loaded-device-recipe-v284.js")" == dc34e6a9cdae2e1bdb6c83274b735184fbce81f9 ]] || { echo "Unknown existing v284 source"; false; }
+  [[ "$(git hash-object "$RUNTIME/frontend/loaded-device-recipe-v284.js")" == 41b8d7ebfb1b4a223e52e5bc565b195746817b66 ]] || { echo "Unknown existing v284 source"; false; }
 fi
 [[ "$(stat -c %d "$STAGE")" == "$(stat -c %d "$RUNTIME")" ]] || { echo "Staging filesystem mismatch"; false; }
 for path in frontend/recipe-step-modes-v259.js frontend/cook4me-panel-v81.js frontend/cook4me-panel-v180.js panel.py; do
@@ -138,12 +142,12 @@ while read -r path expected; do
   fi
   mv -f "$STAGE/$path" "$RUNTIME/$path"
 done <<'MANIFEST'
-frontend/loaded-device-recipe-v284.js dc34e6a9cdae2e1bdb6c83274b735184fbce81f9
+frontend/loaded-device-recipe-v284.js 41b8d7ebfb1b4a223e52e5bc565b195746817b66
 frontend/recipe-step-modes-v259.js eef1f1c1f5ffa29689f5399a97e8f244e0dea2f1
 frontend/cook4me-panel-v81.js d0ec4929c1aba5a3ff93853fe3b0b34cde3a06f7
-frontend/cook4me-panel-v180.js bbabb8f4468a10d0e754617293e0a4d0f6fca4bf
+frontend/cook4me-panel-v180.js b59a861f9977a9e49c1cedf2938c2fd547d5db74
 panel.py 385f7eef7cd2905d29d3e5ddb2bebd0b3c5eb660
-tests/test_loaded_device_recipe_v284.mjs 741edc1bfd190cafd06c939815a847e4c7574697
+tests/test_loaded_device_recipe_v284.mjs dc695ca08fbb26f2565f216813c70aa4f1962359
 tests/test_recipe_step_modes_v259.mjs edab6a3d4551150455aaa3654eb2982387e5afb4
 MANIFEST
 docker start "$HA" >/dev/null
@@ -157,12 +161,12 @@ while read -r path expected; do
   [[ -z "$path" || "$path" == tests/* ]] && continue
   [[ "$(git hash-object "$RUNTIME/$path")" == "$expected" ]] || { echo "Installed file mismatch: $path"; false; }
 done <<'MANIFEST'
-frontend/loaded-device-recipe-v284.js dc34e6a9cdae2e1bdb6c83274b735184fbce81f9
+frontend/loaded-device-recipe-v284.js 41b8d7ebfb1b4a223e52e5bc565b195746817b66
 frontend/recipe-step-modes-v259.js eef1f1c1f5ffa29689f5399a97e8f244e0dea2f1
 frontend/cook4me-panel-v81.js d0ec4929c1aba5a3ff93853fe3b0b34cde3a06f7
-frontend/cook4me-panel-v180.js bbabb8f4468a10d0e754617293e0a4d0f6fca4bf
+frontend/cook4me-panel-v180.js b59a861f9977a9e49c1cedf2938c2fd547d5db74
 panel.py 385f7eef7cd2905d29d3e5ddb2bebd0b3c5eb660
-tests/test_loaded_device_recipe_v284.mjs 741edc1bfd190cafd06c939815a847e4c7574697
+tests/test_loaded_device_recipe_v284.mjs dc695ca08fbb26f2565f216813c70aa4f1962359
 tests/test_recipe_step_modes_v259.mjs edab6a3d4551150455aaa3654eb2982387e5afb4
 MANIFEST
 STOPPED=0
