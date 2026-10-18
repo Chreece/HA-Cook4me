@@ -27,6 +27,7 @@ jobs:
         run: |
           python tests/test_stock_coverage_v198.py
           python tests/test_stock_allocation_v292.py
+          python tests/test_unlimited_stock_audit_v293.py
           python tests/test_catalog_stock_v198.py
           python tests/test_universal_stock_coverage.py
           python tests/test_reviewed_portion_stock_coverage.py

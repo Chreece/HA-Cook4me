@@ -243,6 +243,27 @@ def recipe_quantity_feasibility(
             "requiredUnit": required_unit,
         }
 
+        # A verified unlimited inventory assignment covers the ingredient
+        # even when this recipe edition omits a measurable required amount.
+        # Check it before unknown_requirement: otherwise "salt as needed"
+        # becomes "—" despite saved unlimited salt. This is scoped to an
+        # actual matched current stock row, never a guessed pantry staple.
+        if current is not None and current.get("unlimited"):
+            row = {
+                **base,
+                "status": "enough",
+                "availableQuantity": None,
+                "availableUnit": current.get("unit", ""),
+                "unlimited": True,
+                "missingQuantity": 0.0,
+                "missingUnit": required_unit,
+                "coverage": 1.0,
+                "confidence": "exact",
+            }
+            rows.append(row)
+            known_fractions.append(1.0)
+            continue
+
         if required is None:
             row = {**base, "status": "unknown_requirement", "coverage": None, "confidence": "unknown"}
             if current is not None:
@@ -266,22 +287,6 @@ def recipe_quantity_feasibility(
             rows.append(row)
             shortages.append(deepcopy(row))
             known_fractions.append(0.0)
-            continue
-
-        if current.get("unlimited"):
-            row = {
-                **base,
-                "status": "enough",
-                "availableQuantity": None,
-                "availableUnit": current.get("unit", ""),
-                "unlimited": True,
-                "missingQuantity": 0.0,
-                "missingUnit": required_unit,
-                "coverage": 1.0,
-                "confidence": "exact",
-            }
-            rows.append(row)
-            known_fractions.append(1.0)
             continue
 
         stock_amount = _number(current.get("quantity"))

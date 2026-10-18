@@ -22,6 +22,10 @@ _STOCK_CATALOG: dict[str, tuple[str, tuple[str, ...]]] = {}
 # Reconstruct that exact reviewed picker choice once at startup so old saved
 # assignments regain their source IDs without rewriting inventory.
 _LEGACY_ASSIGNMENT_ALIASES: dict[tuple[str, str], tuple[str, ...]] = {}
+# Display-picker sourceIngredientIds can include unrelated translated-name
+# members. Only known explicitly unconfirmed provider IDs are rejected here;
+# direct source keys and explicitly persisted package links stay authoritative.
+_KNOWN_UNSAFE_CATALOG_IDS: frozenset[str] = frozenset()
 
 
 def _assignment_label_key(value: Any) -> str:
@@ -85,22 +89,48 @@ def warm_stock_catalog(payload: dict[str, Any] | None = None) -> int:
         value = (canonical, tuple(sorted(related)))
         for key in keys:
             index[key] = value
+    # A locale picker may put identical translated names into one *display*
+    # choice even when a source food is explicitly marked unconfirmed. Those
+    # member IDs are not evidence that two foods can share physical stock.
+    # Keep the historical picker-label recovery only for validated food IDs.
+    safe_provider_ids = {
+        f"k:{str(row[field]).strip()}"
+        for row in sources
+        if row.get("classification", "food") == "food"
+        and not row.get("needsSemanticConfirmation", False)
+        and not row.get("substitutionOnly", False)
+        for field in ("id", "key", "foodKey", "ingredientId")
+        if row.get(field) and str(row[field]).strip()
+    }
+    known_unsafe_ids = frozenset({
+        f"k:{str(row[field]).strip()}"
+        for row in sources
+        if row.get("classification", "food") != "food"
+        or row.get("needsSemanticConfirmation", False)
+        or row.get("substitutionOnly", False)
+        for field in ("id", "key", "foodKey", "ingredientId")
+        if row.get(field) and str(row[field]).strip()
+    })
     assignment_aliases: dict[tuple[str, str], set[str]] = defaultdict(set)
     for language in ("en", "de", "el"):
         for choice in ingredient_choices(payload, language):
             choice_key = _key(choice)
             primary = f"k:{choice_key}" if choice_key else inventory_identity(choice)
+            if primary not in safe_provider_ids:
+                continue
             label = _assignment_label_key(choice.get("name"))
             source_ids = {
                 f"k:{str(value).strip()}"
                 for value in choice.get("sourceIngredientIds") or []
                 if str(value).strip()
+                and f"k:{str(value).strip()}" in safe_provider_ids
             }
             if primary and label and len(source_ids) > 1:
                 assignment_aliases[(primary, label)].update(source_ids)
 
-    global _STOCK_CATALOG, _LEGACY_ASSIGNMENT_ALIASES
+    global _STOCK_CATALOG, _LEGACY_ASSIGNMENT_ALIASES, _KNOWN_UNSAFE_CATALOG_IDS
     _STOCK_CATALOG = index
+    _KNOWN_UNSAFE_CATALOG_IDS = known_unsafe_ids
     _LEGACY_ASSIGNMENT_ALIASES = {
         key: tuple(sorted(values)) for key, values in assignment_aliases.items()
     }
@@ -123,6 +153,7 @@ def coverage_identities(
         f"k:{str(value).strip()}"
         for value in raw.get("sourceIngredientIds") or []
         if str(value).strip()
+        and f"k:{str(value).strip()}" not in _KNOWN_UNSAFE_CATALOG_IDS
     )
     direct = inventory_identity(raw)
     if direct:
