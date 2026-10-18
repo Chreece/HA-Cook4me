@@ -1,3 +1,4 @@
+import {IngredientsHomeFilterMixin as IngredientsHomeFilterMixinV293} from './ingredient-home-filter-v293.js';
 import {IngredientsHomeFilterMixin} from './ingredient-home-filter-v292.js';
 import {StorageRemovalMixin} from './storage-removal-v291.js';
 import {LoadedDeviceRecipeMixin} from './loaded-device-recipe-v284.js';
@@ -275,3 +276,6 @@ if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v291'))customEleme
 // The Ingredients dialog owns the Home options, and the same stock links drive
 // stored-location and availability presentation.
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v292'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v292',IngredientsHomeFilterMixin(customElements.get('cook4me-recipe-hub-panel-v180-runtime-v291')));
+// Apply the new mixin to v291 directly, NOT to v292: nesting two filter
+// implementations would duplicate dialog controls and stale card handlers.
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v293'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v293',IngredientsHomeFilterMixinV293(customElements.get('cook4me-recipe-hub-panel-v180-runtime-v291')));
