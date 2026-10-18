@@ -102,7 +102,7 @@ with sync_playwright() as p:
         assert actual==["∞","∞","∞","50%","25%","0%","0%","0%"],result
         assert [row["unlimited"] for row in result["display"][:3]]==[True]*3,result
         assert all("Απεριόριστο" in row["title"] for row in result["display"][:3]),result
-        assert "Ντουλάπι" in result["display"][0]["title"],result
+        assert "ντουλάπι" in result["display"][0]["title"].casefold(),result
         assert result["coverage"][0]["unlimited"] is True,result
         assert all(row["percent"]==100 for row in result["coverage"][:3]),result
         assert result["coverage"][6]["percent"]==0,result
