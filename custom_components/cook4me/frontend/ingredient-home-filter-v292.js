@@ -109,6 +109,36 @@ export const IngredientsHomeFilterMixin=Base=>class extends Base{
   const code=String(this._langCode?.()||this._uiIngredientLanguage?.()||'en').toLowerCase().split(/[-_]/)[0];
   return reconcileStoredIngredient(result,this._v292Stock(item),TEXT[code]||TEXT.en);
  }
+ _v66Body(recipe,custom,state,slot=null){
+  // Lower frontend layers can replace the original recipe coverage chip with
+  // a separate storage-home badge after v66 has assembled its HTML. This
+  // final render pass updates that EXISTING badge without losing the linked
+  // storage location or claiming an invented percentage.
+  const html=super._v66Body(recipe,custom,state,slot);
+  if(typeof html!=='string'||!recipe?.ingredients?.length)return html;
+  const root=document.createElement('div');
+  root.innerHTML=html;
+  root.querySelectorAll('[data-v66-ingredient]').forEach(button=>{
+   const i=Number(button.dataset.v66Ingredient);
+   if(!Number.isInteger(i)||i<0)return;
+   const item=recipe.ingredients[i];
+   const coverage=item&&this._coverage(recipe,item);
+   if(coverage?.status!=='at_home_quantity_unverified')return;
+   const chips=[...button.querySelectorAll('.chip')];
+   const chip=chips.find(node=>node.querySelector('ha-icon[icon="mdi:home-outline"]'))||chips.at(-1);
+   if(!chip)return;
+   // Retain the existing icon and any proven storage-place text. Replace
+   // only the stale direct text that used to say zero or unknown availability.
+   for(const child of [...chip.childNodes])if(child.nodeType===Node.TEXT_NODE)child.remove();
+   for(const span of [...chip.querySelectorAll(':scope > span')])span.remove();
+   chip.append(document.createTextNode(coverage.displayLabel));
+   const oldTitle=String(chip.title||'').replace(/:\s*(?:—|0%)\s*$/u,'').trim();
+   chip.title=[oldTitle,coverage.displayTitle].filter(Boolean).join(' · ');
+   chip.setAttribute('aria-label',chip.title);
+   chip.dataset.v292Presence='true';
+  });
+  return root.innerHTML;
+ }
  _bindCards(container,...args){
   const result=super._bindCards(container,...args);
   for(const card of container?.querySelectorAll?.('[data-v66-ref]')||[]){

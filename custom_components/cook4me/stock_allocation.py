@@ -36,13 +36,15 @@ def allocate_stock(stock, requests):
     }
     lots = []
     for row in stock:
-        # Use the same reviewed, language-neutral identities as
-        # stock_for_ingredient(). The quantity solver used to keep ONLY the
-        # primary row key and lot-level links; a row-level catalog assignment
-        # could locate a real package for the UI, yet allocate zero grams.
-        # Read-only coverage_stock() may also attach verified source aliases.
-        # All aliases still share one physical lot capacity in the flow graph.
-        row_identities = ingredient_identities(row)
+        # Only the primary row identity and EXPLICIT saved ingredient links
+        # are allowed to give a physical lot another allocation identity.
+        # A calculation copy may have broad catalog aliases in "identities".
+        # Those cannot grant a new lot edge: some are semantically unconfirmed,
+        # and the existing test guarantees unconfirmed foods cannot borrow
+        # another item's stock just because a display name looks identical.
+        # Row-level links, however, are deliberate product assignments and
+        # must be honored just like individual lot links.
+        row_identities = {inventory_identity(row)}
         row_identities.update(
             identity
             for link in row.get("ingredientLinks") or []

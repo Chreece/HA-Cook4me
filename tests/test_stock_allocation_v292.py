@@ -83,7 +83,7 @@ class MultilingualStockLotAssignment(unittest.TestCase):
         self.assertEqual(row["status"],"incompatible_unit",row)
         self.assertIsNone(row["coverage"])
 
-    def test_read_only_stock_aliases_propagate_to_lot_graph(self):
+    def test_unconfirmed_only_stock_aliases_cannot_grant_lot_capacity(self):
         stock=[{
             "key":"packaged-rice","name":"Packaged rice","unit":"g",
             "identities":["k:rice-ja"],
@@ -91,8 +91,13 @@ class MultilingualStockLotAssignment(unittest.TestCase):
         }]
         from coverage_v292.stock_allocation import allocate_stock
         rows=allocate_stock(stock,[{**requirement("rice-ja",150),"consume":True}])
-        self.assertEqual(rows[0]["quantity"],150.0,rows)
-        self.assertEqual(rows[0]["lots"][0]["sourceIdentity"],"k:packaged-rice")
+        self.assertEqual(rows[0]["quantity"],0.0,rows)
+        self.assertEqual(rows[0]["lots"],[],rows)
+        # A reviewed assignment to this physical lot grants the path.
+        stock[0]["ingredientLinks"]=[{"key":"rice-ja","name":"米"}]
+        assigned=allocate_stock(stock,[{**requirement("rice-ja",150),"consume":True}])
+        self.assertEqual(assigned[0]["quantity"],150.0,assigned)
+        self.assertEqual(assigned[0]["lots"][0]["sourceIdentity"],"k:packaged-rice")
 
 if __name__=="__main__":
     unittest.main()
