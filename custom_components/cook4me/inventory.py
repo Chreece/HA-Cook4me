@@ -339,6 +339,15 @@ def _normalized_row(raw: Any) -> dict[str, Any] | None:
             if metadata.get(key):
                 row[key] = metadata[key]
         return _refresh_row_totals(row)
+    # Some already-saved products carry an explicit catalog assignment on
+    # the finite ingredient row rather than on each physical package. Preserve
+    # that reviewed user assignment when normalizing inventory, exactly as
+    # unlimited stock and package-level assignments already do. Otherwise the
+    # location picker can find the product but the read-only quantity solver
+    # loses the same identity and reports zero.
+    finite_links = normalize_ingredient_links(raw.get("ingredientLinks"))
+    if finite_links:
+        row["ingredientLinks"] = finite_links
     if isinstance(raw.get("lots"), list):
         row["lots"] = deepcopy(raw["lots"])
     else:
@@ -427,6 +436,14 @@ def normalize_inventory(value: Any) -> list[dict[str, Any]]:
                     _append_lot_converted(
                         current, lot, from_unit=str(row.get("unit") or ""), strict=False
                     )
+                # Merging duplicate ingredient rows must not discard reviewed
+                # row-level assignments present on either incoming record.
+                joined_links = normalize_ingredient_links([
+                    *(current.get("ingredientLinks") or []),
+                    *(row.get("ingredientLinks") or []),
+                ])
+                if joined_links:
+                    current["ingredientLinks"] = joined_links
                 _refresh_row_totals(current)
         if len(out) >= _MAX_ITEMS:
             break

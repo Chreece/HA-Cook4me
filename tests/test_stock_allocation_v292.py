@@ -69,6 +69,55 @@ class MultilingualStockLotAssignment(unittest.TestCase):
         self.assertEqual(row["coverage"],0.0,row)
         self.assertEqual(row["status"],"shortage")
 
+
+    def test_finite_row_assignment_survives_inventory_normalization(self):
+        from coverage_v292.inventory import normalize_inventory
+        stored=imported_package()
+        saved=normalize_inventory(stored)
+        self.assertEqual(
+            {link["key"] for link in saved[0].get("ingredientLinks",[])},
+            {"rice-ja","rice-ko"}
+        )
+        self.assertEqual(saved[0]["quantity"],200.0)
+        self.assertEqual(saved[0]["lots"][0]["storageLocationId"],"pantry")
+        row=recipe_quantity_feasibility(
+            {"ingredients":[requirement("rice-ja",100)]},saved
+        )["items"][0]
+        self.assertEqual(row["coverage"],1.0,row)
+
+    def test_duplicate_rows_keep_both_explicit_links_without_doubling_stock(self):
+        from coverage_v292.inventory import normalize_inventory
+        first=imported_package(quantity=100,links=[{"key":"rice-ja","name":"米"}])
+        second=imported_package(quantity=75,links=[{"key":"rice-ko","name":"쌀"}])
+        second[0]["lots"][0]["id"]="lot-rice-2"
+        saved=normalize_inventory(first+second)
+        self.assertEqual(len(saved),1)
+        self.assertEqual(saved[0]["quantity"],175.0)
+        self.assertEqual(
+            {link["key"] for link in saved[0].get("ingredientLinks",[])},
+            {"rice-ja","rice-ko"}
+        )
+        self.assertEqual(
+            recipe_quantity_feasibility(
+                {"ingredients":[requirement("rice-ko",100)]},saved
+            )["items"][0]["coverage"],
+            1.0
+        )
+
+    def test_unconfirmed_food_cannot_borrow_stored_rice_using_catalog_name(self):
+        from coverage_v292.stock_coverage import warm_stock_catalog
+        warm_stock_catalog({"ingredients":[
+           {"id":"rice","canonicalName":"Rice","classification":"food"},
+           {"id":"unconfirmed","canonicalName":"Rice",
+            "needsSemanticConfirmation":True}
+        ]})
+        row=recipe_quantity_feasibility(
+            {"ingredients":[requirement("unconfirmed",100,"g","米")]},
+            [{"key":"rice","name":"米","unit":"g",
+              "lots":[{"id":"lot-known","quantity":500}]}]
+        )["items"][0]
+        self.assertEqual(row["coverage"],0,row)
+
     def test_only_lot_links_also_match_without_row_links(self):
         stock=imported_package(links=[])
         stock[0]["lots"][0]["ingredientLinks"]=[{"key":"rice-ja","name":"米"}]
