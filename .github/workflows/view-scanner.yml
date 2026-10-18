@@ -45,6 +45,7 @@ jobs:
           python -m compileall -q custom_components/cook4me
           node --check custom_components/cook4me/frontend/view-filters-v199.js
           node --check custom_components/cook4me/frontend/ingredient-home-filter-v292.js
+          node --check custom_components/cook4me/frontend/ingredient-home-filter-v293.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v66.js
           node --check custom_components/cook4me/frontend/receipt-launcher-v199.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v179.js
