@@ -62,6 +62,7 @@ jobs:
           node --check custom_components/cook4me/frontend/recipe-step-modes-v259.js
           node --check custom_components/cook4me/frontend/recipe-step-modes-v290.js
           node --check custom_components/cook4me/frontend/storage-removal-v291.js
+          node --check custom_components/cook4me/frontend/stock-consistency-v293.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v180.js
           node --check custom_components/cook4me/frontend/device-header-v207.js
           bash -n tools/run_cook4me_mode_audit_v288.sh
