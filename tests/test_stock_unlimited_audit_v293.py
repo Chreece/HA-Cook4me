@@ -32,19 +32,19 @@ class AvailabilityAudit(unittest.TestCase):
 
  def test_unlimited_salt_stale_missing_annotation(self):
     result=self.check(item("salt"),stock("salt",unlimited=True))
-    self.assertEqual(result["status"],"staple")
+    self.assertEqual(result["status"],"enough")
     self.assertEqual(result["coverage"],1)
     self.assertTrue(result["unlimited"])
 
  def test_unlimited_with_unknown_recipe_amount(self):
     result=self.check(item("salt",None,""),stock("salt",unlimited=True))
     self.assertEqual(result["coverage"],1)
-    self.assertEqual(result["status"],"staple")
+    self.assertEqual(result["status"],"enough")
 
  def test_unlimited_source_catalog_assignment(self):
     result=self.check(item("salt-seb-ja"),stock("salt-bin",unlimited=True,links=["salt-seb-ja"]))
     self.assertEqual(result["coverage"],1)
-    self.assertEqual(result["status"],"staple")
+    self.assertEqual(result["status"],"enough")
 
  def test_finite_stale_missing_still_uses_actual_amount(self):
     result=self.check(item("rice",100),stock("rice",count=200))

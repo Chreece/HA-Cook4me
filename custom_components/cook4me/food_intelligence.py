@@ -225,7 +225,7 @@ def recipe_quantity_feasibility(
                 "identity": inventory_identity(current),
                 "ingredientIndex": ingredient_index,
                 "name": name,
-                "status": "staple",
+                "status": "enough",
                 "unlimited": True,
                 "coverage": 1.0,
                 "confidence": "staple",
