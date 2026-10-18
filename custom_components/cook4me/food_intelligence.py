@@ -243,6 +243,25 @@ def recipe_quantity_feasibility(
             "requiredUnit": required_unit,
         }
 
+        # A verified unlimited pantry item covers any recipe demand, even
+        # when a source-language recipe omits the quantity or uses an
+        # unreviewed unit. Test this BEFORE declaring the amount unknown.
+        if current is not None and current.get("unlimited") is True:
+            row = {
+                **base,
+                "status": "enough",
+                "availableQuantity": None,
+                "availableUnit": current.get("unit", ""),
+                "unlimited": True,
+                "missingQuantity": 0.0,
+                "missingUnit": required_unit,
+                "coverage": 1.0,
+                "confidence": "exact",
+            }
+            rows.append(row)
+            known_fractions.append(1.0)
+            continue
+
         if required is None:
             row = {**base, "status": "unknown_requirement", "coverage": None, "confidence": "unknown"}
             if current is not None:
@@ -266,22 +285,6 @@ def recipe_quantity_feasibility(
             rows.append(row)
             shortages.append(deepcopy(row))
             known_fractions.append(0.0)
-            continue
-
-        if current.get("unlimited"):
-            row = {
-                **base,
-                "status": "enough",
-                "availableQuantity": None,
-                "availableUnit": current.get("unit", ""),
-                "unlimited": True,
-                "missingQuantity": 0.0,
-                "missingUnit": required_unit,
-                "coverage": 1.0,
-                "confidence": "exact",
-            }
-            rows.append(row)
-            known_fractions.append(1.0)
             continue
 
         stock_amount = _number(current.get("quantity"))
