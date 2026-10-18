@@ -221,8 +221,16 @@ def recipe_quantity_feasibility(
         # when an old catalog/recipe availability row says "missing". This
         # must work without a known source quantity or compatible unit.
         if current is not None and current.get("unlimited"):
+            # Report the RECIPE source key in addition to the physical stock
+            # identity. A linked salt container may be "k:salt-bin" while
+            # the published recipe uses "salt-seb-ja". The fullscreen and
+            # aggregate coverage readers require the source identity to
+            # associate this exact unlimited result with its ingredient.
+            # Preserve the existing "enough" + "unlimited" API contract.
             rows.append({
                 "identity": inventory_identity(current),
+                **({"key": _text(ingredient.get("foodKey") or ingredient.get("key"))}
+                   if ingredient.get("foodKey") or ingredient.get("key") else {}),
                 "ingredientIndex": ingredient_index,
                 "name": name,
                 "status": "enough",
@@ -232,6 +240,10 @@ def recipe_quantity_feasibility(
                 "availableQuantity": None,
                 "missingQuantity": 0.0,
             })
+            # Physically stocked unlimited ingredients are included in the
+            # coverage average exactly once. Declared conventional staples
+            # (the branch below) stay intentionally excluded.
+            known_fractions.append(1.0)
             continue
         if status == "staple":
             rows.append({
