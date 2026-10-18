@@ -77,7 +77,13 @@ def run():
             overlay=page.locator('[data-filter-dialog="ingredients"]')
             toggle=overlay.locator('[data-v223-toggle]')
             expect(toggle).not_to_be_checked()
-            asparagus=overlay.locator('[data-list="ingredients"][value="k:asparagus"]')
+            # v292 keeps ingredient choices folded until users ask to see them.
+            # The seasonal checkbox remains visible outside that disclosure.
+            fold=overlay.locator('[data-v292-fold]')
+            expect(fold).to_have_attribute('aria-expanded','false')
+            expect(asparagus := overlay.locator('[data-list="ingredients"][value="k:asparagus"]')).to_be_hidden()
+            fold.click()
+            expect(fold).to_have_attribute('aria-expanded','true')
             asparagus.check();toggle.check()
             expect(asparagus).to_be_visible()
             expect(overlay.locator('[value="k:strawberry"]')).to_be_hidden()
@@ -98,6 +104,10 @@ def run():
             assert page.evaluate('preferences.at(-1).filtersByView.today.seasonalIngredients') is True
             page.evaluate('app._showFilter("ingredients")')
             expect(overlay.locator('[data-v223-toggle]')).to_be_checked()
+            fold=overlay.locator('[data-v292-fold]')
+            expect(fold).to_have_attribute('aria-expanded','false')
+            fold.click()
+            expect(fold).to_have_attribute('aria-expanded','true')
 
             # Same language, different shopping country: an open picker refreshes.
             page.evaluate("app._v79Settings.country='GR';app._v140LoadSupermarketCatalog()")

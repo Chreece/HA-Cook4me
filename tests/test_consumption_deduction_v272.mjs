@@ -37,7 +37,7 @@ test('active runtime registers v272 outside v271 and cache busts registration',(
  const registration=readFileSync(new URL('../custom_components/cook4me/panel.py',import.meta.url),'utf8');
  assert.match(panel,/consumption-deduction-v272\.js/);
  assert.match(panel,/runtime-v272/);
- assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v291"/);
+ assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v292"/);
  assert.match(registration,/consumption=272/);
 });
 

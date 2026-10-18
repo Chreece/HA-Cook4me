@@ -36,14 +36,25 @@ def allocate_stock(stock, requests):
     }
     lots = []
     for row in stock:
+        # Only the primary row identity and EXPLICIT saved ingredient links
+        # are allowed to give a physical lot another allocation identity.
+        # A calculation copy may have broad catalog aliases in "identities".
+        # Those cannot grant a new lot edge: some are semantically unconfirmed,
+        # and the existing test guarantees unconfirmed foods cannot borrow
+        # another item's stock just because a display name looks identical.
+        # Row-level links, however, are deliberate product assignments and
+        # must be honored just like individual lot links.
+        row_identities = {inventory_identity(row)}
+        row_identities.update(
+            identity
+            for link in row.get("ingredientLinks") or []
+            for identity in ingredient_identities(link)
+        )
         for lot in row.get("lots") or []:
-            identities = {
-                inventory_identity(row),
-                *(
-                    identity
-                    for link in lot.get("ingredientLinks") or []
-                    for identity in ingredient_identities(link)
-                ),
+            identities = row_identities | {
+                identity
+                for link in lot.get("ingredientLinks") or []
+                for identity in ingredient_identities(link)
             }
             if not identities & wanted_identities:
                 continue
