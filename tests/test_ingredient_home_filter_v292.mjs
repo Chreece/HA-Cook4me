@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {
  homeControlsCount,ingredientControlsCount,hasStoredAmount,
  reconcileStoredIngredient,IngredientsHomeFilterMixin
-} from '../custom_components/cook4me/frontend/ingredient-home-filter-v292.js';
+} from '../custom_components/cook4me/frontend/ingredient-home-filter-v293.js';
 
 const greek={present:'Στο σπίτι',presentTitle:'Υπάρχει, ελέγξτε την ποσότητα'};
 

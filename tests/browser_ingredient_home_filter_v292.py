@@ -107,6 +107,38 @@ with sync_playwright() as p:
         assert 'Στο σπίτι' in result['html'],result
         assert result['unrelated']['percent']==0,result
 
+        # Unlimited salt must be displayed as unlimited even when the recipe
+        # was previously cached as missing/unknown. An unrelated salt-like
+        # identity cannot borrow the quantity merely by sharing a label.
+        salt=page.evaluate("""() => {
+          app._ingredientCatalog=[
+            {key:'salt',name:'Αλάτι',sourceIngredientIds:['salt-source']},
+            {key:'salt-source',name:'Salt',sourceIngredientIds:['salt']}
+          ];
+          app._v219IdentityCache=null;
+          app._houseIngredients=[
+            {key:'salt-container',name:'Salt jar',unlimited:true,
+             ingredientLinks:[{key:'salt-source',name:'Salt'}],
+             storageLocationId:'pantry'}
+          ];
+          const item={key:'salt-source',name:'Αλάτι',quantity:null,unit:''};
+          const recipe={ingredients:[item],
+            match:{quantityAvailability:[{key:'salt-source',status:'missing',coverage:0}],
+              ingredientAvailability:[{key:'salt-source',status:'missing'}]}};
+          const coverage=app._coverage(recipe,item);
+          const html=app._v66Body(recipe,false,{sections:new Set(['ingredients'])});
+          const unrelated={key:'unrelated-salt',name:'Αλάτι',quantity:1,unit:'g'};
+          const otherRecipe={ingredients:[unrelated],
+             match:{quantityAvailability:[{key:'unrelated-salt',status:'missing',coverage:0}]}};
+          return {coverage,html,unrelated:app._coverage(otherRecipe,unrelated)};
+        }""")
+        assert salt['coverage']['status']=='staple',salt
+        assert salt['coverage']['percent']==100,salt
+        assert salt['coverage']['displayLabel']=='∞',salt
+        assert '∞' in salt['html'],salt
+        assert salt['unrelated']['percent']==0,salt
+
+
         assert not errors,errors
         print(f'PASS {width}px: one merged filter, collapsed ingredient picker, persisted controls, Korean rice presence, unrelated-key safeguards',flush=True)
         page.close()

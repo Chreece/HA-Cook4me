@@ -217,6 +217,22 @@ def recipe_quantity_feasibility(
         if not name:
             continue
         status = _availability_status(ingredient, availability_rows)
+        # The physically assigned unlimited package is authoritative even
+        # when an old catalog/recipe availability row says "missing". This
+        # must work without a known source quantity or compatible unit.
+        if current is not None and current.get("unlimited"):
+            rows.append({
+                "identity": inventory_identity(current),
+                "ingredientIndex": ingredient_index,
+                "name": name,
+                "status": "enough",
+                "unlimited": True,
+                "coverage": 1.0,
+                "confidence": "staple",
+                "availableQuantity": None,
+                "missingQuantity": 0.0,
+            })
+            continue
         if status == "staple":
             rows.append({
                 "identity": inventory_identity(ingredient),
