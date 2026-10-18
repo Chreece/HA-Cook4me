@@ -20,6 +20,19 @@ export const physicallyStored=row=>{
  const n=Number(row?.quantity);
  return row?.quantity!==''&&row?.quantity!=null&&Number.isFinite(n)&&n>0;
 };
+// The cupboard/location label must use the same physical-stock evidence as
+// the quantity badge. A zero-quantity lot can retain historical metadata, but
+// must not be presented as currently stored food. Legacy finite rows without
+// lots may still hold an explicit positive amount and storageLocationId.
+export function availableLocationIds(row){
+ if(!row||typeof row!=='object')return [];
+ if(row.unlimited===true)return row.storageLocationId?[row.storageLocationId]:[];
+ if(Array.isArray(row.lots)&&row.lots.length){
+  return row.lots.filter(lot=>physicallyStored({lots:[lot]}))
+   .map(lot=>lot?.storageLocationId).filter(Boolean);
+ }
+ return physicallyStored(row)&&row.storageLocationId?[row.storageLocationId]:[];
+}
 export function unlimitedIngredientCoverage(coverage,stock,words){
  if(!coverage||!Array.isArray(stock)||!stock.some(row=>row?.unlimited===true))return coverage;
  // Unlimited is explicit physical stock; it does not require the publisher's
@@ -44,6 +57,17 @@ export const StockConsistencyMixin=Base=>class extends Base{
  }
  _v293Stock(item){
   return typeof this._v292Stock==='function'?this._v292Stock(item):[];
+ }
+ _v218StorageNames(item){
+  const names=[],locations=new Map((this._v78Locations?.()||[])
+   .map(row=>[String(row.id),String(row.name||'')]));
+  for(const row of this._v293Stock(item)){
+   for(const id of availableLocationIds(row)){
+    const name=locations.get(String(id));
+    if(name&&!names.includes(name))names.push(name);
+   }
+  }
+  return names;
  }
  _coverage(recipe,item){
   let result=super._coverage(recipe,item);

@@ -108,8 +108,9 @@ with sync_playwright() as p:
         assert result["coverage"][6]["percent"]==0,result
         assert result["coverage"][7]["percent"]==0,result
         assert result["locations"][6]==[],result
-        assert result["locations"][7]!=[],result
-        # The storage location alone must never turn a depleted lot into stock.
+        assert result["locations"][7]==[],result
+        assert "Ντουλάπι μπαχαρικών" in result["locations"][0],result
+        # Depleted stock must lose its current location as well as availability.
         assert result["coverage"][7]["status"]=="shortage",result
         assert not errors,errors
         print(f"PASS {width}px: unlimited salt/pepper/water, allocated rice, zero lots, incompatible units and safe multilingual identities",flush=True)

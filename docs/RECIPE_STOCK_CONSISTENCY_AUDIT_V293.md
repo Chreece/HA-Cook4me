@@ -34,6 +34,9 @@ The audit covers:
 3. The photo-level recipe badge used cached `match.quantityCoverage` even when
    the live pantry had a reviewed unlimited match. This could contradict the
    fullscreen ingredient badges.
+4. The storage-location renderer listed places from every historical lot,
+   including packages at **zero quantity**, and omitted a location from some
+   legacy positive finite-stock rows that have no `lots` array.
 
 ## Correct behavior
 
@@ -51,7 +54,10 @@ The audit covers:
 - **Unknown or incompatible measurement**: remain unknown unless a physically
   linked unlimited item makes the requirement automatically satisfiable.
 - **Depleted physical lots**: cached row totals must not turn lots with
-  zero quantity into a positive stock match.
+  zero quantity into a positive stock match; depleted-lot storage locations
+  are not shown as places with usable food.
+- **Legacy positive finite rows**: a stored location still appears when an
+  explicit quantity is positive even if the older stock record has no lots.
 - **Shared physical package**: the existing allocation graph spends one lot
   only once across all recipe lines.
 - **Price unknown**: the per-ingredient *price* may independently remain `—`.

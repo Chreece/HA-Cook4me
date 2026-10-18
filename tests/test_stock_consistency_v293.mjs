@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
- physicallyStored, unlimitedIngredientCoverage, aggregateIngredientCoverage,
+ physicallyStored, availableLocationIds, unlimitedIngredientCoverage, aggregateIngredientCoverage,
  StockConsistencyMixin
 } from '../custom_components/cook4me/frontend/stock-consistency-v293.js';
 
@@ -82,6 +82,34 @@ class Base{
  _langCode(){return 'el';}
 }
 const Panel=StockConsistencyMixin(Base);
+
+
+test('stored-place lookup excludes depleted lots and preserves real unlimited/legacy stock',()=>{
+ assert.deepEqual(availableLocationIds({lots:[
+  {quantity:0,storageLocationId:'old-shelf'},
+  {quantity:150,storageLocationId:'pantry'},
+  {quantity:100,storageLocationId:'pantry'}
+ ]}),['pantry','pantry']);
+ assert.deepEqual(availableLocationIds({
+  unlimited:true,storageLocationId:'spices'}),['spices']);
+ assert.deepEqual(availableLocationIds({
+  quantity:250,storageLocationId:'legacy-cupboard'}),['legacy-cupboard']);
+ assert.deepEqual(availableLocationIds({
+  quantity:0,storageLocationId:'ghost'}),[]);
+ assert.deepEqual(availableLocationIds({
+  quantity:300,lots:[{quantity:0,storageLocationId:'old-shelf'}]}),[]);
+ const p=new Panel();
+ p.inventory=[{key:'rice',quantity:300,lots:[
+  {quantity:0,storageLocationId:'old-shelf'},
+  {quantity:150,storageLocationId:'pantry'},
+  {quantity:25,storageLocationId:'pantry'}
+ ]}];
+ p._v78Locations=()=>[
+  {id:'old-shelf',name:'Ghost'},
+  {id:'pantry',name:'Pantry'}
+ ];
+ assert.deepEqual(p._v218StorageNames({key:'rice'}),['Pantry']);
+});
 
 test('panel scopes infinity to stable IDs, never shared Greek display labels',()=>{
  const p=new Panel();
