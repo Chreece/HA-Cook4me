@@ -23,7 +23,9 @@ const directIds=item=>{
   if(id)ids.add(id);
  };
  for(const key of ['key','foodKey','ingredientId','id'])add(item[key]);
- for(const id of item.sourceIngredientIds||[])add(id);
+ // sourceIngredientIds is display-picker metadata: it can include several
+ // unrelated provider foods that happen to share a translated name.
+ // Those IDs never grant an *explicit* infinite package assignment.
  return ids;
 };
 export function explicitlyAssignedToIngredient(item,row){

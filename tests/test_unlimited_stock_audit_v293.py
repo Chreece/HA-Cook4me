@@ -116,6 +116,30 @@ class InfiniteIngredientCoverageAudit(unittest.TestCase):
         self.assertIsNone(wrong["items"][0]["coverage"], wrong)
         self.assertFalse(wrong["fullyAvailable"])
 
+    def test_unconfirmed_picker_members_never_become_infinite_aliases(self):
+        # A picker may group two IDs by the translated word "Salt". Only
+        # reviewed provider IDs may be recovered from that grouping.
+        warm_stock_catalog({"ingredients": [
+            {"id":"salt-known","canonicalName":"Salt","classification":"food",
+             "translations":{"el":"Αλάτι"}},
+            {"id":"salt-known-ko","canonicalName":"Salt","classification":"food",
+             "translations":{"el":"Αλάτι"}},
+            {"id":"salt-unconfirmed","canonicalName":"Salt",
+             "needsSemanticConfirmation":True,"translations":{"el":"Αλάτι"}}
+        ]})
+        house = stock("seasoning-shelf", links=[{
+            "key":"salt-known","name":"Αλάτι",
+            "sourceIngredientIds":["salt-known","salt-known-ko","salt-unconfirmed"]
+        }])
+        original=deepcopy(house)
+        valid=feasibility([item("salt-known-ko", None, "g", "소금")],house)
+        invalid=feasibility([item("salt-unconfirmed", None, "g", "Αλάτι")],house,
+                            availability=[{"key":"salt-unconfirmed","status":"missing"}])
+        self.assertEqual(valid["items"][0]["coverage"],1.0,valid)
+        self.assertIsNone(invalid["items"][0]["coverage"],invalid)
+        self.assertFalse(invalid["fullyAvailable"])
+        self.assertEqual(house,original)
+
     def test_recipe_with_multiple_infinite_and_finite_requirements(self):
         house = stock("salt") + stock("pepper") + stock("rice", unlimited=False, quantity=50)
         recipe = [item("salt", None), item("rice", 100), item("pepper", None)]

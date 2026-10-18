@@ -37,6 +37,16 @@ says nothing about a product's purchase price, calories or other nutrients.
    recipe whose every requirement is proven unlimited no longer has an
    erroneous `—` aggregate availability badge.
 
+4. A further negative regression exposed that the legacy localized
+   ingredient picker could put an **unconfirmed provider ID** into the same
+   display group as reviewed food IDs. That display grouping is not proof of
+   ingredient equivalence. Legacy picker-alias recovery now filters known
+   unconfirmed/non-food IDs, and general `sourceIngredientIds` metadata
+   cannot grant those IDs stock through a read-only matching copy. The
+   frontend's explicit infinite-stock reconciliation likewise ignores
+   display-only source-ID lists: it requires a primary stock ID or a saved
+   row/lot ingredient assignment.
+
 ## Safety and semantics
 
 - An ingredient name translated to Greek does **not** prove it is the
@@ -58,6 +68,8 @@ says nothing about a product's purchase price, calories or other nutrients.
 
 ## Regression matrix
 
+- **Backend:** reviewed versus unconfirmed provider aliases and legacy
+  multilingual ingredient-picker groups, alongside explicit row-level links.
 - **Backend:** salt, pepper, sugar, water, flour, oil, vinegar, rice and
   other arbitrary unlimited foods; empty/missing recipe quantities;
   incompatible or missing source units; alternate Japanese/Korean

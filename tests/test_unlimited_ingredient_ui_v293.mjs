@@ -64,6 +64,10 @@ test('only explicitly saved catalog identities prove an infinite cross-language 
   }]}),true);
  assert.equal(explicitlyAssignedToIngredient({key:'salt-ko'},
   {key:'seasoning-bin',unlimited:true,ingredientLinks:[]}),false);
+ assert.equal(explicitlyAssignedToIngredient({key:'salt-unknown',name:'Αλάτι'},
+  {key:'seasoning-bin',name:'Αλάτι',unlimited:true,
+   ingredientLinks:[{key:'salt-display',name:'Αλάτι',sourceIngredientIds:['salt-unknown','salt-ko']}]}),
+  false,'display-picker source IDs are not a confirmed stock assignment');
 });
 
 class Fixture {
