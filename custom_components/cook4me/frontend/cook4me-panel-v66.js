@@ -188,9 +188,9 @@ class Cook4MeRecipeHubPanelV66 extends BasePanel{
   const ingredients=(recipe.ingredients||[]).map((item,index)=>{
    const original=typeof item==="string"?item:item.originalName||item.name||item.foodName||"";
    const display=typeof item==="string"?item:item.displayName||this._v66IngredientName(item)||original;
-   const coverage=this._coverage(recipe,item),percent=Number.isFinite(coverage.percent)?`${coverage.percent}%`:"—";
+   const coverage=this._coverage(recipe,item),percent=coverage?.displayLabel||(Number.isFinite(coverage?.percent)?`${coverage.percent}%`:"—"),coverageTitle=coverage?.displayTitle||this._t("coverage");
    const quantity=typeof item==="object"?this._displayAmount(item.quantity,item.unit,item.unitKey,item):"";
-   return `<li><button type="button" data-v66-ingredient="${index}"><span>${escape(display)} <small>(${escape(original)})</small>${quantity?`<small class="rx-v66-quantity">${escape(quantity)}</small>`:""}</span><span class="chip" title="${escape(this._t("coverage"))}">${percent}</span></button></li>`;
+   return `<li><button type="button" data-v66-ingredient="${index}"><span>${escape(display)} <small>(${escape(original)})</small>${quantity?`<small class="rx-v66-quantity">${escape(quantity)}</small>`:""}</span><span class="chip" title="${escape(coverageTitle)}">${escape(percent)}</span></button></li>`;
   }).join("");
   const languages=recipe.languageVariants?.length?recipe.languageVariants:[{language:recipe.language||this._uiIngredientLanguage()}];
   const selected=recipe.selectedLanguage||recipe.language;

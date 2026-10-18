@@ -108,7 +108,7 @@ test('panel and HA registration activate the new module and element',()=>{
  const reg=read('../custom_components/cook4me/panel.py');
  assert.match(panel,/from '\.\/recipe-step-modes-v290\.js'/);
  assert.match(panel,/customElements\.define\('cook4me-recipe-hub-panel-v180-runtime-v290'/);
- assert.match(reg,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v291"/);
+ assert.match(reg,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v292"/);
  assert.match(reg,/modes=290/);
  assert.doesNotMatch(reg,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v284"/);
 });

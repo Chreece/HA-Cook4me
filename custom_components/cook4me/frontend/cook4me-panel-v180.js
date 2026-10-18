@@ -1,3 +1,4 @@
+import {IngredientsHomeFilterMixin} from './ingredient-home-filter-v292.js';
 import {StorageRemovalMixin} from './storage-removal-v291.js';
 import {LoadedDeviceRecipeMixin} from './loaded-device-recipe-v284.js';
 import {ConsumptionDeductionMixin} from './consumption-deduction-v272.js';
@@ -271,3 +272,6 @@ if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v284'))customEleme
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v290'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v290',class extends customElements.get('cook4me-recipe-hub-panel-v180-runtime-v284'){});
 // Versioned stock removal tools for expiry lots and home inventory groups.
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v291'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v291',StorageRemovalMixin(customElements.get('cook4me-recipe-hub-panel-v180-runtime-v290')));
+// The Ingredients dialog owns the Home options, and the same stock links drive
+// stored-location and availability presentation.
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v292'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v292',IngredientsHomeFilterMixin(customElements.get('cook4me-recipe-hub-panel-v180-runtime-v291')));
