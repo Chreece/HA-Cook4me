@@ -30,12 +30,18 @@ the row primary identity and individual lot links. For a Japanese/Korean recipe
 ingredient whose stored package was linked at the row level, the same package
 could be discoverable for storage places but contribute *zero* usable stock.
 
-The allocation graph now uses `ingredient_identities(row)` (including reviewed
-aliases), row-level ingredient links and lot-level ingredient links for each
-physical lot. A physical package still contributes capacity only once across
-multiple recipe requirements. No stock is written or renamed, no translated
-display name is treated as an identity, and unknown unit conversions remain
-unknown.
+The allocation graph now uses the **primary stored ingredient identity**
+plus explicitly saved row-level and lot-level `ingredientLinks` for each
+physical lot. Finite package normalization also preserves and merges those
+explicit assignments. Broad calculated catalog aliases are deliberately
+**not** allowed to grant additional physical-lot capacity: otherwise an
+unconfirmed food could borrow a different product's stock. Reviewed aliases
+remain available for read-only lookup, but only explicit source assignments
+or the stored primary ID establish allocation edges.
+
+A physical package contributes capacity only once across multiple recipe
+requirements. No inventory is changed by a read, translated display names
+never establish matches, and unsupported conversions remain unknown.
 
 Stored recipes may also contain old match/quantity annotations. When a live
 stock package has a positive quantity (or is unlimited) and is provably linked
