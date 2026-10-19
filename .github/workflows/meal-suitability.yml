@@ -56,7 +56,7 @@ jobs:
           python tools/generate_concept_substitution_bindings_v258.py \
             --output custom_components/cook4me/catalog/concept_ingredient_substitutions.v1.json
       - name: Upload exact substitution binding proposals
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: substitution-bindings-v258
           path: |
