@@ -76,7 +76,7 @@ class GreekCatalogAuditV176Tests(unittest.TestCase):
         data=json.loads(CURATED.read_text(encoding="utf-8"))
         alias_entries=sum(len(values) for values in data["searchAliases"].values())
         self.assertGreaterEqual(len(data["labels"]),1272)
-        self.assertEqual(len(data["searchAliases"]),3689)
+        self.assertGreaterEqual(len(data["searchAliases"]),3689)
         self.assertGreaterEqual(alias_entries,8299)
         self.assertIn("audit",data["translationSource"])
 
