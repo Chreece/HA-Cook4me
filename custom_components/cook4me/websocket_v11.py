@@ -111,10 +111,7 @@ async def _ingredient_catalog(
     if not refresh:
         await async_ensure_catalog_ready(hass)
     if release_index.release_catalog_ready() and not refresh:
-        # Present one localized food choice per reviewed display family (e.g.
-        # English Eggs and German Ei both shown as Greek Αυγό). Keep every
-        # sourceIngredientId so pantry assignments and recipe matches remain exact.
-        items = release_index.ingredient_choices(language)
+        items = release_index.ingredient_rows(language)
         if items:
             summary = release_index.release_catalog_summary()
             return {
