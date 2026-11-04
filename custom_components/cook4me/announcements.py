@@ -11,7 +11,7 @@ import time
 
 from homeassistant.core import Context
 
-from .device_settings import DEFAULT_AI_TASK, choices, device_access
+from .device_settings import DEFAULT_AI_TASK, choices, device_access, hub_choices
 
 _LOGGER = logging.getLogger(__name__)
 ACTIVE = {"preparation", "add_ingredient", "warming", "cooking", "depressurization", "keep_warm", "ready", "active"}
@@ -212,10 +212,51 @@ class Announcements:
         async with self.delivery_lock:
             return await self._speak(user, settings, text, still_current=still_current, delivered=delivered, translate=translate)
 
+    async def _send_hub(self, user, settings, text, *, still_current, delivered):
+        """Hand the event to Hub exactly once; Hub owns AI, TTS and fallback routing."""
+        user = await self.hass.auth.async_get_user(user.id)
+        if (self.closed or not user or not device_access(self.hass, self.bridge, user)
+                or not still_current()):
+            self.report(user.id if user else "", "skipped")
+            return
+        hub = hub_choices(self.hass, user)
+        if not hub["announcementHubAvailable"]:
+            raise ValueError("Announcement Hub is not available")
+        automatic = settings["hub_auto_routing"]
+        areas = () if automatic else tuple(settings["hub_areas"])
+        persons = () if automatic else tuple(settings["hub_persons"])
+        if not automatic:
+            if not areas and not persons:
+                raise ValueError("Select a room or person for manual Announcement Hub routing")
+            if not set(areas) <= {row["id"] for row in hub["hubAreas"]}:
+                raise ValueError("Some selected Announcement Hub rooms are unavailable")
+            if not set(persons) <= {row["id"] for row in hub["hubPersons"]}:
+                raise ValueError("Some selected Announcement Hub people are unavailable")
+        signature = ("announcement_hub", text, automatic, areas, persons)
+        if delivered is not None and signature in delivered:
+            self.report(user.id, "skipped")
+            return
+        payload = {"text": text, "title": "Cook4Me", "level": "info"}
+        if not automatic:
+            payload.update({"manual_targets": True, "area": list(areas),
+                            "target_person": list(persons)})
+        self.report(user.id, "speaking")
+        async with asyncio.timeout(30):
+            await self.hass.services.async_call(
+                "notify", "announcement_hub", payload, blocking=True,
+                context=Context(user_id=user.id),
+            )
+        if delivered is not None:
+            delivered.add(signature)
+        self.report(user.id, "done")
+
     async def _speak(self, user, settings, text, *, still_current, delivered, translate):
         if self.closed or not still_current():
             self.report(user.id, "skipped")
             return
+        if settings.get("announcement_hub"):
+            return await self._send_hub(user, settings, text,
+                                        still_current=still_current, delivered=delivered)
         options = choices(self.hass, user)
         tts = next((t for t in options["tts"] if t["id"] == settings["tts"]), None)
         players = [p for p in settings["players"] if p in {r["id"] for r in options["players"]}]
@@ -285,7 +326,12 @@ class Announcements:
                 settings = self.settings.for_user(user_id)
                 if not settings["enabled"] or not device_access(self.hass, self.bridge, user) or not self.current(data, events, created):
                     continue
-                text = message_for(events, data, settings)
+                if settings.get("announcement_hub") and not settings.get("language"):
+                    locale = (getattr(user, "language", None)
+                              or getattr(self.hass.config, "language", None) or "en")
+                    text = message_for(events, data, {**settings, "language": locale})
+                else:
+                    text = message_for(events, data, settings)
                 if not text:
                     continue
                 try:
@@ -312,7 +358,12 @@ class Announcements:
         if not settings["enabled"]:
             raise ValueError("Save and enable announcements before testing")
         try:
-            await self.speak(user, settings, message_for([("test", "test")], {}, settings),
+            phrase_settings = settings
+            if settings.get("announcement_hub") and not settings.get("language"):
+                locale = (getattr(user, "language", None)
+                          or getattr(self.hass.config, "language", None) or "en")
+                phrase_settings = {**settings, "language": locale}
+            await self.speak(user, settings, message_for([("test", "test")], {}, phrase_settings),
                              translate=bool(settings.get("ai_all")),
                              still_current=lambda: self.settings.for_user(user.id) == settings)
         except Exception as exc:
