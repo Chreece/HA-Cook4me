@@ -212,9 +212,12 @@ jobs:
           python tests/test_nutrient_scopes_v128.py
           python tests/test_delivery_queue_v129.py
           python tests/test_photoreal_device_v130.py
+          python tests/test_recipe_ai_locale_isolation_v71.py
       - name: Build compact HACS beta archive
+        id: package
         run: |
-          VERSION="$(python -c 'import json; print(json.load(open("custom_components/cook4me/manifest.json"))["version"])')"
+          VERSION="$(date -u +'%Y.%-m.%-d').${GITHUB_RUN_NUMBER}"
+          echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
           python tools/build_hacs_release.py \
             --output dist/cook4me.zip \
             --version "${VERSION}" \
@@ -223,7 +226,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          VERSION="$(python -c 'import json; print(json.load(open("custom_components/cook4me/manifest.json"))["version"])')"
+          VERSION="${{ steps.package.outputs.version }}"
           TAG="beta-${VERSION}"
           if gh release view "${TAG}" >/dev/null 2>&1; then
             echo "Release ${TAG} already exists"
