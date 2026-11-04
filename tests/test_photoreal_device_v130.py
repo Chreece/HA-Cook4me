@@ -53,7 +53,7 @@ class PhotorealDeviceV130Tests(unittest.TestCase):
         self.assertIn("cook4me-panel-bootstrap-v294.js",panel)
         self.assertIn('/cook4me_static/2026.11.4.1/runtime-v294',panel)
         self.assertIn('?v=2026.11.4.1',panel)
-        self.assertIn('"version": "2026.9.22.7"',manifest)
+        self.assertIn('"version": "2026.11.4.1"',manifest)
         self.assertIn("if(!customElements.get(V133))await import('./cook4me-panel-v133.js?v=2026.9.20.7')",v134)
         self.assertIn("if(!customElements.get(V132))await import('./cook4me-panel-v132.js?v=2026.9.20.6')",v133)
         self.assertIn("if(!customElements.get(V131))await import('./cook4me-panel-v131.js?v=2026.9.20.5')",v132)

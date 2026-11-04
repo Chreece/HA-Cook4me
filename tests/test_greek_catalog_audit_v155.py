@@ -28,7 +28,7 @@ class GreekCatalogAuditV155Tests(unittest.TestCase):
         self.assertIn("cook4me-panel-bootstrap-v294.js",panel)
         self.assertIn("/cook4me_static/2026.11.4.1/runtime-v294",panel)
         self.assertIn("?v=2026.11.4.1",panel)
-        self.assertIn('"version": "2026.9.22.7"',manifest)
+        self.assertIn('"version": "2026.11.4.1"',manifest)
         self.assertIn("cook4me-panel-v154.js?v=2026.9.21.19",ui)
 
     def test_singular_food_labels_are_not_pluralized(self):

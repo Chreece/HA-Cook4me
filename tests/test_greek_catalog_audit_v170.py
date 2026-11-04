@@ -28,7 +28,7 @@ class GreekCatalogAuditV170Tests(unittest.TestCase):
         self.assertIn("cook4me-panel-bootstrap-v294.js",panel)
         self.assertIn("/cook4me_static/2026.11.4.1/runtime-v294",panel)
         self.assertIn("?v=2026.11.4.1",panel)
-        self.assertIn('"version": "2026.9.22.7"',manifest)
+        self.assertIn('"version": "2026.11.4.1"',manifest)
         self.assertIn("cook4me-panel-v169.js?v=2026.9.21.34",ui)
 
     def test_form_and_measure_details_are_preserved(self):

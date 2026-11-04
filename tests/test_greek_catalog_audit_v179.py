@@ -16,7 +16,7 @@ class GreekCatalogAuditV179Tests(unittest.TestCase):
         self.assertIn("cook4me-quick-panel-v294",panel)
         self.assertIn("cook4me-panel-bootstrap-v294.js",panel)
         self.assertIn("/cook4me_static/2026.11.4.1/runtime-v294",panel)
-        self.assertIn('"version": "2026.9.22.7"',manifest)
+        self.assertIn('"version": "2026.11.4.1"',manifest)
 
     def test_thirty_fourth_pass_preserves_missing_semantics(self):
         labels=json.loads(CURATED.read_text(encoding="utf-8"))["labels"]

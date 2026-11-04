@@ -65,7 +65,7 @@ class SupermarketLanguageDeviceV140Tests(unittest.TestCase):
         self.assertIn("cook4me-panel-bootstrap-v294.js",panel)
         self.assertIn("/cook4me_static/2026.11.4.1/runtime-v294",panel)
         self.assertIn("?v=2026.11.4.1",panel)
-        self.assertIn('"version": "2026.9.22.7"',manifest)
+        self.assertIn('"version": "2026.11.4.1"',manifest)
         self.assertIn(
             "if(!customElements.get(V139))await import('./cook4me-panel-v139.js?v=2026.9.21.4')",
             ui,
