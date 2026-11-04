@@ -58,10 +58,16 @@ def _parse_ai_json(value: Any) -> dict[str, Any] | None:
     return parsed if isinstance(parsed, dict) else None
 
 
+def _plain_translation_text(value: Any) -> str:
+    """Keep language/country/market objects out of generated AI prompts."""
+    return value.strip() if isinstance(value, str) else ""
+
+
 def _clean_string_list(value: Any, max_items: int = 80) -> list[str]:
     if not isinstance(value, list):
         return []
-    return [str(item).strip() for item in value[:max_items] if str(item).strip()]
+    return [text for item in value[:max_items]
+            if (text := _plain_translation_text(item))]
 
 
 def _translation_payload(recipe: dict[str, Any]) -> dict[str, Any]:
@@ -71,13 +77,17 @@ def _translation_payload(recipe: dict[str, Any]) -> dict[str, Any]:
             text = item.strip()
         elif isinstance(item, dict):
             parts = []
-            if item.get("quantity") not in (None, ""):
-                parts.append(str(item["quantity"]))
-            if item.get("unit"):
-                parts.append(str(item["unit"]))
-            name = item.get("name") or item.get("foodName") or item.get("applicationDescription")
+            amount = item.get("quantity")
+            if type(amount) in (int, float) or isinstance(amount, str):
+                if str(amount).strip():
+                    parts.append(str(amount).strip())
+            unit = _plain_translation_text(item.get("unit"))
+            if unit:
+                parts.append(unit)
+            name = next((text for field in ("name", "foodName", "applicationDescription")
+                         if (text := _plain_translation_text(item.get(field)))), "")
             if name:
-                parts.append(str(name))
+                parts.append(name)
             text = " ".join(parts).strip()
         else:
             text = ""
@@ -89,13 +99,10 @@ def _translation_payload(recipe: dict[str, Any]) -> dict[str, Any]:
         if isinstance(item, str):
             text = item.strip()
         elif isinstance(item, dict):
-            text = str(
-                item.get("instruction")
-                or item.get("applicationDescription")
-                or item.get("applianceDescription")
-                or item.get("programName")
-                or ""
-            ).strip()
+            text = next((value for field in (
+                "instruction", "applicationDescription", "applianceDescription",
+                "programName"
+            ) if (value := _plain_translation_text(item.get(field)))), "")
         else:
             text = ""
         if text:
@@ -103,7 +110,7 @@ def _translation_payload(recipe: dict[str, Any]) -> dict[str, Any]:
 
     missing = _clean_string_list((recipe.get("match") or {}).get("missingIngredients"), 30)
     return {
-        "title": str(recipe.get("title") or "").strip(),
+        "title": _plain_translation_text(recipe.get("title")),
         "ingredients": ingredients[:80],
         "steps": steps[:80],
         "missing": missing,
