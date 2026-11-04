@@ -213,11 +213,12 @@ class Announcements:
             return await self._speak(user, settings, text, still_current=still_current, delivered=delivered, translate=translate)
 
     async def _send_hub(self, user, settings, text, *, still_current, delivered):
-        """Hand the event to Hub exactly once; Hub owns AI, TTS and fallback routing."""
-        user = await self.hass.auth.async_get_user(user.id)
+        """Queue via Hub, which owns TTS, AI and room/people delivery."""
+        user_id = user.id
+        user = await self.hass.auth.async_get_user(user_id)
         if (self.closed or not user or not device_access(self.hass, self.bridge, user)
                 or not still_current()):
-            self.report(user.id if user else "", "skipped")
+            self.report(user_id, "skipped")
             return
         hub = hub_choices(self.hass, user)
         if not hub["announcementHubAvailable"]:
@@ -232,23 +233,49 @@ class Announcements:
                 raise ValueError("Some selected Announcement Hub rooms are unavailable")
             if not set(persons) <= {row["id"] for row in hub["hubPersons"]}:
                 raise ValueError("Some selected Announcement Hub people are unavailable")
-        signature = ("announcement_hub", text, automatic, areas, persons)
-        if delivered is not None and signature in delivered:
-            self.report(user.id, "skipped")
-            return
-        payload = {"text": text, "title": "Cook4Me", "level": "info"}
-        if not automatic:
-            payload.update({"manual_targets": True, "area": list(areas),
-                            "target_person": list(persons)})
-        self.report(user.id, "speaking")
-        async with asyncio.timeout(30):
-            await self.hass.services.async_call(
-                "notify", "announcement_hub", payload, blocking=True,
-                context=Context(user_id=user.id),
-            )
-        if delivered is not None:
-            delivered.add(signature)
-        self.report(user.id, "done")
+
+        common = {"text": text, "title": "Cook4Me", "level": "info"}
+        # The Hub service deliberately rejects target_person combined with
+        # manual_targets/area. Room and person routes must be separate jobs.
+        if automatic:
+            routes = [("auto", (), common)]
+        else:
+            routes = []
+            if areas:
+                routes.append(("room", areas, {**common, "manual_targets": True,
+                                               "area": list(areas)}))
+            if persons:
+                routes.append(("person", persons, {**common,
+                                                   "target_person": list(persons)}))
+
+        sent = False
+        failures = []
+        for kind, targets, payload in routes:
+            if self.closed or not still_current():
+                self.report(user_id, "skipped")
+                break
+            signature = ("announcement_hub", text, kind, targets)
+            if delivered is not None and signature in delivered:
+                continue
+            self.report(user_id, "speaking")
+            try:
+                async with asyncio.timeout(30):
+                    await self.hass.services.async_call(
+                        "notify", "announcement_hub", payload, blocking=True,
+                        context=Context(user_id=user_id),
+                    )
+            except Exception as exc:
+                failures.append(f"{kind}: {exc}")
+                continue
+            if delivered is not None:
+                delivered.add(signature)
+            sent = True
+        if failures:
+            raise ValueError("Announcement Hub failed to queue: " + "; ".join(failures))
+        if sent:
+            self.report(user_id, "done")
+        elif not self.closed and still_current():
+            self.report(user_id, "skipped")
 
     async def _speak(self, user, settings, text, *, still_current, delivered, translate):
         if self.closed or not still_current():
