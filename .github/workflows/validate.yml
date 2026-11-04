@@ -101,6 +101,8 @@ jobs:
           node --check custom_components/cook4me/frontend/cook4me-panel-v178.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v179.js
           node --check custom_components/cook4me/frontend/cook4me-panel-v180.js
+          node --check custom_components/cook4me/frontend/cook4me-panel-bootstrap-v294.js
+          node --check custom_components/cook4me/frontend/announcement-hub-v294.js
           node --check custom_components/cook4me/frontend/fullscreen-progress-guard-v260.js
           node --check custom_components/cook4me/frontend/today-substitution-persistence-v261.js
           node --check custom_components/cook4me/frontend/fullscreen-stability-v262.js
@@ -113,6 +115,7 @@ jobs:
           node --check custom_components/cook4me/frontend/ingredient-stock-assignment-v249.js
           python tests/test_menu_footer_v126.py
           python tests/test_announcement_settings_v127.py
+          python tests/test_cook4me_hub_v294.py
           python tests/test_nutrient_scopes_v128.py
           python tests/test_delivery_queue_v129.py
           python tests/test_photoreal_device_v130.py
