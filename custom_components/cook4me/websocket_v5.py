@@ -132,8 +132,9 @@ async def _translate_with_default_ai_task(
         {"id": str(index), **_translation_payload(recipe)}
         for index, recipe in enumerate(recipes[:8])
     ]
+    target_code = str(target_language or "").strip().lower().replace("_", "-").split("-", 1)[0]
     instructions = (
-        f"Translate the following recipe display text to language code {target_language}. "
+        f"Translate the following recipe display text to language code {target_code}. "
         "Translate only human-readable text. Never change, round, invent, remove, or reorder "
         "numbers, quantities, units, temperatures, times, ingredient entries, or steps. "
         "Do not add cooking advice. Keep each id exactly unchanged. Return ONLY valid JSON "
