@@ -228,8 +228,9 @@ async def _raw_detail(
 
 
 def _translation_prompt(prepared: list[dict[str, Any]], target_language: str) -> str:
+    target_code = str(target_language or "").strip().lower().replace("_", "-").split("-", 1)[0]
     return (
-        f"Translate the following recipe display text to language code {target_language}. "
+        f"Translate the following recipe display text to language code {target_code}. "
         "Translate only human-readable text. Never change, round, invent, remove, or reorder "
         "numbers, quantities, units, temperatures, times, ingredient entries, or steps. "
         "Do not add cooking advice. Keep each id exactly unchanged. Return ONLY valid JSON "
