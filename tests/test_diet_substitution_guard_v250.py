@@ -145,7 +145,7 @@ class VegetarianFishSubstitutionGuardTests(unittest.TestCase):
         self.assertIn('get("substitutionCoverageComplete") is not True', ranking)
         bootstrap = (ROOT / "custom_components" / "cook4me" / "frontend" / "cook4me-panel-bootstrap-v294.js").read_text(encoding="utf-8")
         self.assertIn('_PANEL_ELEMENT = "cook4me-quick-panel-v294"', panel)
-        runtime = re.search(r"const PANEL_TAG = 'cook4me-recipe-hub-panel-v180-runtime-v(\\d+)'", bootstrap)
+        runtime = re.search(r"const PANEL_TAG = 'cook4me-recipe-hub-panel-v180-runtime-v(\d+)'", bootstrap)
         self.assertIsNotNone(runtime)
         self.assertGreaterEqual(int(runtime.group(1)), 250)
         self.assertIn("DietSubstitutionGuardMixin", active)
