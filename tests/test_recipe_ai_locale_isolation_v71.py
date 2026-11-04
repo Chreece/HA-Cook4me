@@ -119,6 +119,23 @@ class RecipeAiLocaleIsolationTests(unittest.TestCase):
         self.assertEqual(safe, {"title": "", "ingredients": [], "steps": ["Pressure"],
                                 "missing": ["Water"]})
 
+    def test_locale_dict_cannot_be_mistaken_for_step_or_ingredient_list(self):
+        malformed = {
+            **self.recipe,
+            "ingredients": {"country": MARKER, "language": "de"},
+            "steps": {"country": MARKER, "language": "de"},
+        }
+        modern = new_translation()
+        prompt = modern.translation_prompt(malformed, "el")
+        self.assertEqual(json.loads(prompt.split("Input: ", 1)[1])["steps"], [])
+        legacy = isolated_functions("websocket_v5.py", (
+            "_plain_translation_text", "_clean_string_list", "_translation_payload"
+        ))
+        payload = legacy["_translation_payload"](malformed)
+        self.assertEqual(payload["ingredients"], [])
+        self.assertEqual(payload["steps"], [])
+        self.assertNotIn(MARKER, json.dumps(payload))
+
     def test_v7_legacy_ai_prompt_uses_the_sanitized_payload(self):
         legacy = isolated_functions("websocket_v5.py", (
             "_plain_translation_text", "_clean_string_list", "_translation_payload"
