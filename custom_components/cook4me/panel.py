@@ -103,7 +103,7 @@ async def async_register_panel(hass: HomeAssistant) -> None:
         return
     frontend_dir = Path(__file__).parent / "frontend"
     await hass.http.async_register_static_paths(
-        [StaticPathConfig(_URL_BASE, path=str(frontend_dir), cache_headers=False)]
+        [StaticPathConfig(_URL_BASE, path=str(frontend_dir), cache_headers=True)]
     )
     await panel_custom.async_register_panel(
         hass=hass,
