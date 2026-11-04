@@ -146,7 +146,7 @@ class RuntimeSourceV198Tests(unittest.TestCase):
   self.assertIsNotNone(revision);self.assertIsNotNone(constructor)
   runtime=revision.group(1);element_runtime=constructor.group(1)
   self.assertGreaterEqual(int(runtime),198);self.assertGreaterEqual(int(element_runtime),int(runtime))
-  self.assertIn('&editor=196&assignment=249&runtime=249',text)
+  self.assertIn('&editor=196&assignment=249&runtime='+runtime,text)
   self.assertIn('&diet=254',text)
   js=(ROOT/'custom_components/cook4me/frontend/cook4me-panel-v180.js').read_text()
   self.assertIn('ProductEditorMixin',js);self.assertIn('RecipeCoverageMixin',js)
