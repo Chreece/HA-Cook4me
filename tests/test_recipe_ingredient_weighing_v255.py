@@ -89,12 +89,12 @@ class IngredientWeighingV255Tests(unittest.TestCase):
     def test_v255_runtime_wiring_keeps_global_runtime_scoped(self):
         panel=(COMP/"panel.py").read_text(encoding="utf-8")
         active=(COMP/"frontend"/"cook4me-panel-v180.js").read_text(encoding="utf-8")
-        self.assertIn('/runtime-v249',panel)
+        self.assertIn('/runtime-v294',panel)
         self.assertRegex(
             panel,
-            r'_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v\d+"',
+            r'_PANEL_ELEMENT = "cook4me-quick-panel-v294"',
         )
-        self.assertIn('&runtime=249&diet=254&weigh=257&fullscreen=258',panel)
+        self.assertIn('&runtime=294&diet=254&weigh=257&fullscreen=258',panel)
         self.assertIn("RecipeIngredientWeighingMixin",active)
         self.assertIn("runtime-v255",active)
         self.assertRegex(active,r"data-cook4me-ui-revision','\d+")
