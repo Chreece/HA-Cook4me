@@ -61,7 +61,8 @@ class RecipeAiLocaleIsolationTests(unittest.TestCase):
     def test_new_prompt_is_title_and_cooking_steps_only(self):
         t = new_translation()
         prompt = t.translation_prompt(self.recipe, "el-GR")
-        self.assertIn("language code el-GR", prompt)
+        self.assertIn("language code el.", prompt)
+        self.assertNotIn("el-GR", prompt)
         self.assertNotIn(MARKER, prompt)
         self.assertNotIn("de-DE", prompt)
         self.assertNotIn("GS_", prompt)
@@ -142,7 +143,9 @@ class RecipeAiLocaleIsolationTests(unittest.TestCase):
         ))
         v7 = isolated_functions("websocket_v7.py", ("_translation_prompt",))
         payload = {"id": "0", **legacy["_translation_payload"](self.recipe)}
-        prompt = v7["_translation_prompt"]([payload], "el")
+        prompt = v7["_translation_prompt"]([payload], "el-GR")
+        self.assertIn("language code el.", prompt)
+        self.assertNotIn("el-GR", prompt)
         self.assertNotIn(MARKER, prompt)
         self.assertNotIn("de-DE", prompt)
         self.assertEqual(json.loads(prompt.split("Input: ", 1)[1])["recipes"], [payload])
