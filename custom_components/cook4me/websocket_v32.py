@@ -9,7 +9,7 @@ from homeassistant.helpers import device_registry as dr
 from .const import DOMAIN
 
 from . import websocket as legacy
-from .device_settings import choices, device_access, device_read_access
+from .device_settings import choices, device_access, device_read_access, hub_choices
 
 
 def _authorized(hass, connection, msg):
@@ -32,7 +32,7 @@ async def ws_device_settings(hass, connection, msg):
             await bridge.device_settings.async_save(connection.user, msg["settings"])
         connection.send_result(msg["id"], {
             "settings": bridge.device_settings.for_user(connection.user.id),
-            "choices": choices(hass, connection.user),
+            "choices": {**choices(hass, connection.user), **hub_choices(hass, connection.user)},
             "status": bridge.announcements.status.get(connection.user.id),
         })
     except Exception as exc:

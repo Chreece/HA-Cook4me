@@ -19,8 +19,13 @@ class AnnouncementSettingsV127Tests(unittest.TestCase):
         v132=(FRONTEND/"cook4me-panel-v132.js").read_text(encoding="utf-8")
         v133=(FRONTEND/"cook4me-panel-v133.js").read_text(encoding="utf-8")
         v134=(FRONTEND/"cook4me-panel-v134.js").read_text(encoding="utf-8")
-        self.assertIn("cook4me-recipe-hub-panel-v180",panel)
-        self.assertIn("cook4me-panel-v180.js",panel)
+        # The active panel registers a lightweight shell first. The complete
+        # v180 runtime remains the final panel once all legacy modules finish.
+        boot=(FRONTEND/"cook4me-panel-bootstrap-v294.js").read_text(encoding="utf-8")
+        self.assertIn("cook4me-quick-panel-v294",panel)
+        self.assertIn("cook4me-panel-bootstrap-v294.js",panel)
+        self.assertIn("cook4me-recipe-hub-panel-v180",boot)
+        self.assertIn("cook4me-panel-v180.js",boot)
         self.assertIn('_URL_BASE = "/cook4me_static/',panel)
         self.assertIn('/runtime-v',panel)
         self.assertIn("if(!customElements.get(V133))await import('./cook4me-panel-v133.js?v=2026.9.20.7')",v134)

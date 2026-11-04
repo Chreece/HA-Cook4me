@@ -54,7 +54,7 @@ assert.match(info,/cross-contact/);
 assert.match(info,/catalogSubstitutionAllergens/);
 assert.match(catalog,/"triggerAllergens"/);
 assert.match(catalog,/"unsupportedWithoutContext": \[/);
-assert.match(registration,/_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v\d+"/);
+assert.match(registration,/_PANEL_ELEMENT = "cook4me-quick-panel-v294"/);
 assert.match(registration,/diet=254/);
 
 console.log('ALLERGY_CATALOG_SUBSTITUTIONS_V254_FRONTEND=PASS');

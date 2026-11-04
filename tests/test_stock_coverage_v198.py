@@ -140,7 +140,9 @@ class RuntimeSourceV198Tests(unittest.TestCase):
   import re
   text=(ROOT/'custom_components/cook4me/panel.py').read_text()
   revision=re.search(r'_URL_BASE = "[^"\n]*/runtime-v(\d+)"',text)
-  constructor=re.search(r'_PANEL_ELEMENT = "cook4me-recipe-hub-panel-v180-runtime-v(\d+)"',text)
+  boot=(ROOT/'custom_components/cook4me/frontend/cook4me-panel-bootstrap-v294.js').read_text()
+  self.assertIn('_PANEL_ELEMENT = "cook4me-quick-panel-v294"',text)
+  constructor=re.search(r"const PANEL_TAG = 'cook4me-recipe-hub-panel-v180-runtime-v(\d+)'",boot)
   self.assertIsNotNone(revision);self.assertIsNotNone(constructor)
   runtime=revision.group(1);element_runtime=constructor.group(1)
   self.assertGreaterEqual(int(runtime),198);self.assertGreaterEqual(int(element_runtime),int(runtime))

@@ -13,6 +13,13 @@ def local_html(root: Path) -> str:
     registration=(root/'custom_components/cook4me/panel.py').read_text()
     module=re.search(r'^_PANEL_MODULE = "([^"]+)"',registration,re.M)[1]
     element=re.search(r'^_PANEL_ELEMENT = "([^"]+)"',registration,re.M)[1]
+    # The shell is a navigation/performance wrapper, not the actual app class.
+    # UI integration fixtures must instantiate the same complete component
+    # that the shell mounts after its asynchronous import completes.
+    if module == "cook4me-panel-bootstrap-v294.js":
+        assert element == "cook4me-quick-panel-v294"
+        module = "cook4me-panel-v180.js"
+        element = "cook4me-recipe-hub-panel-v180-runtime-v294"
     entry='custom_components/cook4me/frontend/'+module
     todo=[entry]
     sources={}
