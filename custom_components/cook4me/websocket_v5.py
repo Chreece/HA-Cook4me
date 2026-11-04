@@ -72,7 +72,8 @@ def _clean_string_list(value: Any, max_items: int = 80) -> list[str]:
 
 def _translation_payload(recipe: dict[str, Any]) -> dict[str, Any]:
     ingredients: list[str] = []
-    for item in recipe.get("ingredients") or []:
+    ingredient_rows = recipe.get("ingredients")
+    for item in ingredient_rows if isinstance(ingredient_rows, (list, tuple)) else ():
         if isinstance(item, str):
             text = item.strip()
         elif isinstance(item, dict):
@@ -95,7 +96,8 @@ def _translation_payload(recipe: dict[str, Any]) -> dict[str, Any]:
             ingredients.append(text)
 
     steps: list[str] = []
-    for item in recipe.get("steps") or []:
+    step_rows = recipe.get("steps")
+    for item in step_rows if isinstance(step_rows, (list, tuple)) else ():
         if isinstance(item, str):
             text = item.strip()
         elif isinstance(item, dict):
