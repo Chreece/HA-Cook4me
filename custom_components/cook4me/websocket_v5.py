@@ -103,7 +103,7 @@ def _translation_payload(recipe: dict[str, Any]) -> dict[str, Any]:
         elif isinstance(item, dict):
             text = next((value for field in (
                 "instruction", "applicationDescription", "applianceDescription",
-                "programName"
+                "text", "description", "programName"
             ) if (value := _plain_translation_text(item.get(field)))), "")
         else:
             text = ""
