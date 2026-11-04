@@ -37,7 +37,7 @@ def _hub_method():
                            {"id": "person.sam", "name": "Sam"}],
         },
     }
-    exec(compile(ast.Module(body=[stub], type_ignores=[]), str(path), "exec"), fake)
+    exec(compile(ast.fix_missing_locations(ast.Module(body=[stub], type_ignores=[])), str(path), "exec"), fake)
     return fake["StandaloneAnnouncement"]
 
 
