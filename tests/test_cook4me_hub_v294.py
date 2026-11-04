@@ -150,7 +150,7 @@ class EggCatalogTests(unittest.TestCase):
     def test_catalog_endpoints_keep_display_identity(self):
         v11 = (COMP / "websocket_v11.py").read_text(encoding="utf-8")
         v31 = (COMP / "websocket_v31.py").read_text(encoding="utf-8")
-        self.assertIn("release_index.ingredient_choices(language)", v11)
+        self.assertIn("release_index.ingredient_rows(language)", v11)  # AI/stock exact IDs
         self.assertIn("release_catalog.ingredient_choices, language", v31)
 
 
