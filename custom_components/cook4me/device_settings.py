@@ -12,7 +12,9 @@ from .const import DOMAIN
 DEFAULT_AI_TASK = "__home_assistant_default__"
 DEFAULTS = {"enabled": False, "recipe": True, "steps": True, "state": True,
             "connection": False, "players": [], "tts": "", "ai": "",
-            "ai_all": False, "language": "", "voice": ""}
+            "ai_all": False, "language": "", "voice": "",
+            "announcement_hub": False, "hub_auto_routing": True,
+            "hub_areas": [], "hub_persons": []}
 LEGACY_KEYS = {"phase", "status", "recipe", "step", "instruction", "step_type",
                "program", "progress", "remaining_time", "elapsed_time",
                "last_connection", "last_disconnection", "ui_firmware",
@@ -98,6 +100,29 @@ def choices(hass, user):
             "defaultAiTaskId": default_ai_task}
 
 
+def hub_choices(hass, user):
+    """The Hub is an exclusive output path, not an alternative TTS provider."""
+    from homeassistant.helpers import area_registry as ar
+
+    areas = sorted(
+        ({"id": area.id, "name": area.name} for area in ar.async_get(hass).async_list_areas()),
+        key=lambda row: row["name"].casefold(),
+    )
+    persons = sorted(
+        ({"id": state.entity_id,
+          "name": state.attributes.get("friendly_name") or state.entity_id}
+         for state in hass.states.async_all("person")
+         if user and user.is_active
+         and user.permissions.check_entity(state.entity_id, POLICY_READ)),
+        key=lambda row: row["name"].casefold(),
+    )
+    return {
+        "announcementHubAvailable": hass.services.has_service("notify", "announcement_hub"),
+        "hubAreas": areas,
+        "hubPersons": persons,
+    }
+
+
 class DeviceSettings:
     def __init__(self, bridge):
         self.bridge = bridge
@@ -123,7 +148,8 @@ class DeviceSettings:
         if set(settings) - set(DEFAULTS):
             raise ValueError("Unknown announcement setting")
         result = {**self.for_user(user.id), **settings}
-        for key in ("enabled", "recipe", "steps", "state", "connection", "ai_all"):
+        for key in ("enabled", "recipe", "steps", "state", "connection", "ai_all",
+                    "announcement_hub", "hub_auto_routing"):
             if not isinstance(result[key], bool):
                 raise ValueError("Announcement switches must be booleans")
         for key in ("tts", "ai", "language", "voice"):
@@ -132,10 +158,27 @@ class DeviceSettings:
         if not isinstance(result["players"], list) or len(result["players"]) > 32 or not all(isinstance(p, str) for p in result["players"]):
             raise ValueError("Select up to 32 media players")
         result["players"] = list(dict.fromkeys(result["players"]))
+        for key in ("hub_areas", "hub_persons"):
+            values = result[key]
+            if (not isinstance(values, list) or len(values) > 64
+                    or not all(isinstance(item, str) and 0 < len(item) <= 255 for item in values)):
+                raise ValueError("Select up to 64 valid Announcement Hub targets")
+            result[key] = list(dict.fromkeys(values))
+        if result["announcement_hub"]:
+            hub = hub_choices(self.bridge.hass, user)
+            if not hub["announcementHubAvailable"]:
+                raise ValueError("Announcement Hub is not available in Home Assistant")
+            if not result["hub_auto_routing"]:
+                if not result["hub_areas"] and not result["hub_persons"]:
+                    raise ValueError("Choose a room or person, or enable automatic Hub routing")
+                if not set(result["hub_areas"]) <= {row["id"] for row in hub["hubAreas"]}:
+                    raise ValueError("Select valid Home Assistant rooms")
+                if not set(result["hub_persons"]) <= {row["id"] for row in hub["hubPersons"]}:
+                    raise ValueError("Select people you are allowed to access")
         options = choices(self.bridge.hass, user)
         # TTS and speakers must be usable. An optional saved AI selection can
         # remain unavailable: deterministic announcements continue without it.
-        if result["enabled"]:
+        if result["enabled"] and not result["announcement_hub"]:
             if not result["players"] or not set(result["players"]) <= {p["id"] for p in options["players"]}:
                 raise ValueError("Select available media players you can control")
             tts = next((t for t in options["tts"] if t["id"] == result["tts"]), None)
