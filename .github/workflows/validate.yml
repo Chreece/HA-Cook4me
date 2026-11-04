@@ -36,6 +36,7 @@ jobs:
           python tests/test_catalog_lifecycle_v247.py
           python tests/test_ingredient_stock_assignment_v249.py
           python tests/test_notifications_once.py
+          python tests/test_recipe_ai_locale_isolation_v71.py
           python tools/audit_ingredient_lifecycle.py
           python -m compileall -q custom_components/cook4me
           python - <<'PY'
