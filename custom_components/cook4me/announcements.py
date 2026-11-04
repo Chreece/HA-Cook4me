@@ -353,7 +353,9 @@ class Announcements:
                 settings = self.settings.for_user(user_id)
                 if not settings["enabled"] or not device_access(self.hass, self.bridge, user) or not self.current(data, events, created):
                     continue
-                if settings.get("announcement_hub") and not settings.get("language"):
+                if settings.get("announcement_hub"):
+                    # Hub owns voice/language targeting. A previously selected
+                    # TTS language must not leak into the exclusive Hub mode.
                     locale = (getattr(user, "language", None)
                               or getattr(self.hass.config, "language", None) or "en")
                     text = message_for(events, data, {**settings, "language": locale})
@@ -386,7 +388,7 @@ class Announcements:
             raise ValueError("Save and enable announcements before testing")
         try:
             phrase_settings = settings
-            if settings.get("announcement_hub") and not settings.get("language"):
+            if settings.get("announcement_hub"):
                 locale = (getattr(user, "language", None)
                           or getattr(self.hass.config, "language", None) or "en")
                 phrase_settings = {**settings, "language": locale}
