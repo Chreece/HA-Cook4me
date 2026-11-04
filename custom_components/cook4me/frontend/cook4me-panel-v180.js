@@ -1,3 +1,4 @@
+import {AnnouncementHubMixin} from './announcement-hub-v294.js';
 import {IngredientsHomeFilterMixin} from './ingredient-home-filter-v293.js';
 import {StorageRemovalMixin} from './storage-removal-v291.js';
 import {LoadedDeviceRecipeMixin} from './loaded-device-recipe-v284.js';
@@ -278,3 +279,5 @@ if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v292'))customEleme
 
 // Updated stock semantics: a fresh element identity prevents stale frontend reuse.
 if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v293'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v293',class extends customElements.get('cook4me-recipe-hub-panel-v180-runtime-v292'){});
+// Exclusive Announcement Hub routing; preserved legacy TTS for existing users.
+if(!customElements.get('cook4me-recipe-hub-panel-v180-runtime-v294'))customElements.define('cook4me-recipe-hub-panel-v180-runtime-v294',AnnouncementHubMixin(customElements.get('cook4me-recipe-hub-panel-v180-runtime-v293')));
